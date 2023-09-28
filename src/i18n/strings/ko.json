@@ -104,7 +104,6 @@
     "Yesterday": "어제",
     "Wednesday": "수요일",
     "Thank you!": "감사합니다!",
-    "This event could not be displayed": "이 이벤트를 표시할 수 없음",
     "PM": "오후",
     "AM": "오전",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s년 %(monthName)s %(day)s일 (%(weekDayName)s)",
@@ -215,10 +214,8 @@
     "Folder": "폴더",
     "Power level": "권한 등급",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "암호화된 메시지는 종단간 암호화로 보호됩니다. 오직 당신과 상대방만 이 메시지를 읽을 수 있는 키를 갖습니다.",
-    "Back up your keys before signing out to avoid losing them.": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
-    "Edit message": "메시지 편집",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "이 방을 업그레이드하면 현재 방의 인스턴스는 문을 닫고 같은 이름의 업그레이드된 방을 만듭니다.",
     "This room has already been upgraded.": "이 방은 이미 업그레이드됬습니다.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "이 방은 방 버전 <roomVersion />에서 실행 중이고, 이 홈서버가 <i>불안정</i>으로 표시됩니다.",
@@ -310,7 +307,6 @@
     "Invalid base_url for m.identity_server": "잘못된 m.identity_server 용 base_url",
     "Identity server URL does not appear to be a valid identity server": "ID 서버 URL이 올바른 ID 서버가 아님",
     "General failure": "일반적인 실패",
-    "Set up": "설정",
     "Deactivate user?": "사용자를 비활성화합니까?",
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "사용자를 비활성화하면 사용자는 로그아웃되며 다시 로그인할 수 없게 됩니다. 또한 사용자는 모든 방에서 떠나게 됩니다. 이 작업은 돌이킬 수 없습니다. 이 사용자를 비활성화하겠습니까?",
     "Deactivate user": "사용자 비활성화",
@@ -584,7 +580,8 @@
         "poll_button_no_perms_title": "권한 필요",
         "poll_button": "투표",
         "format_italics": "기울게",
-        "replying_title": "답장 중"
+        "replying_title": "답장 중",
+        "edit_composer_label": "메시지 편집"
     },
     "Code": "코드",
     "power_level": {
@@ -976,7 +973,8 @@
             "view_source": "소스 보기",
             "external_url": "출처 URL",
             "report": "보고"
-        }
+        },
+        "error_no_renderer": "이 이벤트를 표시할 수 없음"
     },
     "slash_command": {
         "spoiler": "스포일러로서 주어진 메시지를 전송",
@@ -1190,6 +1188,10 @@
         "recovery_method_removed": {
             "title": "복구 방식 제거됨",
             "warning": "이 복구 방식을 제거하지 않으면, 공격자가 계정에 접근을 시도할 지도 모릅니다. 설정에서 계정 비밀번호를 바꾸고 즉시 새 복구 방식을 설정하세요."
+        },
+        "setup_secure_backup": {
+            "explainer": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
+            "title": "설정"
         }
     },
     "emoji": {

@@ -29,7 +29,6 @@
     "Moderator": "Moderator",
     "Thank you!": "Mercés !",
     "Ok": "Validar",
-    "Set up": "Parametrar",
     "Fish": "Pes",
     "Butterfly": "Parpalhòl",
     "Tree": "Arborescéncia",
@@ -48,7 +47,6 @@
     "Headphones": "Escotadors",
     "Folder": "Dorsièr",
     "Show more": "Ne veire mai",
-    "Unencrypted": "Pas chifrat",
     "Demote": "Retrogradar",
     "Are you sure?": "O volètz vertadièrament ?",
     "Sunday": "Dimenge",
@@ -119,7 +117,8 @@
         "authentication": "Autentificacion",
         "rooms": "Salas",
         "low_priority": "Febla prioritat",
-        "historical": "Istoric"
+        "historical": "Istoric",
+        "unencrypted": "Pas chifrat"
     },
     "action": {
         "continue": "Contunhar",
@@ -368,6 +367,9 @@
     "encryption": {
         "verification": {
             "cancelling": "Anullacion…"
+        },
+        "setup_secure_backup": {
+            "title": "Parametrar"
         }
     },
     "invite": {

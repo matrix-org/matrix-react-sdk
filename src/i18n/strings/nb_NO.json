@@ -93,7 +93,6 @@
     "Cancel All": "Avbryt alt",
     "Home": "Hjem",
     "Your password has been reset.": "Passordet ditt har blitt tilbakestilt.",
-    "Set up": "Sett opp",
     "Lion": "Løve",
     "Pig": "Gris",
     "Rabbit": "Kanin",
@@ -117,8 +116,6 @@
     "Ball": "Ball",
     "Guitar": "Gitar",
     "Deactivate account": "Deaktiver kontoen",
-    "Edit message": "Rediger meldingen",
-    "Unencrypted": "Ukryptert",
     "Deactivate user?": "Vil du deaktivere brukeren?",
     "Deactivate user": "Deaktiver brukeren",
     "%(duration)ss": "%(duration)ss",
@@ -169,7 +166,6 @@
     "Show more": "Vis mer",
     "Warning!": "Advarsel!",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
-    "Back up your keys before signing out to avoid losing them.": "Ta sikkerhetskopi av nøklene dine før du logger av for å unngå å miste dem.",
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Scroll to most recent messages": "Hopp bort til de nyeste meldingene",
@@ -290,8 +286,6 @@
     "The server is offline.": "Denne tjeneren er offline.",
     "Wrong file type": "Feil filtype",
     "Looks good!": "Ser bra ut!",
-    "Your message was sent": "Meldingen ble sendt",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten.",
     "Encrypted by a deleted session": "Kryptert av en slettet sesjon",
     "Jordan": "Jordan",
     "Jersey": "Jersey",
@@ -694,7 +688,8 @@
         "low_priority": "Lavprioritet",
         "historical": "Historisk",
         "go_to_settings": "Gå til Innstillinger",
-        "setup_secure_messages": "Sett opp sikre meldinger"
+        "setup_secure_messages": "Sett opp sikre meldinger",
+        "unencrypted": "Ukryptert"
     },
     "action": {
         "continue": "Fortsett",
@@ -856,7 +851,8 @@
         "room_upgraded_link": "Samtalen fortsetter her.",
         "poll_button_no_perms_title": "Tillatelse kreves",
         "format_italics": "Kursiv",
-        "replying_title": "Svarer på"
+        "replying_title": "Svarer på",
+        "edit_composer_label": "Rediger meldingen"
     },
     "Code": "Kode",
     "power_level": {
@@ -1257,7 +1253,8 @@
         },
         "url_preview": {
             "close": "Lukk forhåndsvisning"
-        }
+        },
+        "send_state_sent": "Meldingen ble sendt"
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",
@@ -1461,7 +1458,12 @@
         "not_supported": "<ikke støttet>",
         "new_recovery_method_detected": {
             "title": "Ny gjenopprettingsmetode"
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Ta sikkerhetskopi av nøklene dine før du logger av for å unngå å miste dem.",
+            "title": "Sett opp"
+        },
+        "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten."
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",

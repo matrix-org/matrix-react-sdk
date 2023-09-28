@@ -197,7 +197,6 @@
     "Ok": "Togha",
     "Accepting…": "ag Glacadh leis…",
     "Lock": "Glasáil",
-    "Unencrypted": "Gan chriptiú",
     "Home": "Tús",
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
@@ -411,7 +410,8 @@
         "authentication": "Fíordheimhniú",
         "rooms": "Seomraí",
         "low_priority": "Tosaíocht íseal",
-        "historical": "Stairiúil"
+        "historical": "Stairiúil",
+        "unencrypted": "Gan chriptiú"
     },
     "action": {
         "continue": "Lean ar aghaidh",

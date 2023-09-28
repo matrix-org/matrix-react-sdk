@@ -133,7 +133,6 @@
         "one": "1 verificēta sesija",
         "other": "%(count)s verificētas sesijas"
     },
-    "Encrypted by an unverified session": "Šifrēts ar neverificētu sesiju",
     "Verify your other session using one of the options below.": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
     "Philippines": "Filipīnas",
     "Waiting for %(displayName)s to accept…": "Gaida, kamēr %(displayName)s akceptēs…",
@@ -152,7 +151,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Messages in this room are not end-to-end encrypted.": "Ziņām šajā istabā netiek piemērota pilnīga šifrēšana.",
-    "This room is end-to-end encrypted": "Šajā istabā tiek veikta pilnīga šifrēšana",
     "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
@@ -213,7 +211,6 @@
     "Share room": "Dalīties ar istabu",
     "Cancel search": "Atcelt meklējumu",
     "Flag": "Karogs",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Šīs šifrētās ziņas autentiskums nevar tikt garantēts šajā ierīcē.",
     "Recent Conversations": "Nesenās sarunas",
     "Start a conversation with someone using their name or username (like <userId/>).": "Uzsāciet sarunu ar citiem, izmantojot vārdu vai lietotājvārdu (piemērs - <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Uzsāciet sarunu ar citiem, izmantojot vārdu, epasta adresi vai lietotājvārdu (piemērs - <userId/>).",
@@ -300,7 +297,6 @@
     "You don't have permission to delete the address.": "Jums nav atļaujas dzēst adresi.",
     "Add some now": "Pievienot kādu tagad",
     "You don't currently have any stickerpacks enabled": "Neviena uzlīmju paka nav iespējota",
-    "Your message was sent": "Jūsu ziņa ir nosūtīta",
     "You signed in to a new session without verifying it:": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
     "%(count)s people you know have already joined": {
         "other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
@@ -1363,7 +1359,8 @@
                 "one": "Rādīt %(count)s citu priekšskatījumu",
                 "other": "Rādīt %(count)s citus priekšskatījumus"
             }
-        }
+        },
+        "send_state_sent": "Jūsu ziņa ir nosūtīta"
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",
@@ -1617,7 +1614,10 @@
         "set_up_toast_title": "Iestatīt drošu rezerves dublēšanu",
         "verify_toast_title": "Verificēt šo sesiju",
         "verify_toast_description": "Citi lietotāji var neuzskatīt to par uzticamu",
-        "not_supported": "<netiek atbalstīts>"
+        "not_supported": "<netiek atbalstīts>",
+        "cross_signing_room_normal": "Šajā istabā tiek veikta pilnīga šifrēšana",
+        "event_shield_reason_authenticity_not_guaranteed": "Šīs šifrētās ziņas autentiskums nevar tikt garantēts šajā ierīcē.",
+        "event_shield_reason_mismatched_sender_key": "Šifrēts ar neverificētu sesiju"
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",

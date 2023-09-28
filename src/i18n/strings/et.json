@@ -69,7 +69,6 @@
     "Your browser likely removed this data when running low on disk space.": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu.",
     "Find others by phone or email": "Leia teisi kasutajaid telefoninumbri või e-posti aadressi alusel",
     "Be found by phone or email": "Ole leitav telefoninumbri või e-posti aadressi alusel",
-    "Encrypted by an unverified session": "Krüptitud verifitseerimata sessiooni poolt",
     "Encryption not enabled": "Krüptimine ei ole kasutusel",
     "The encryption used by this room isn't supported.": "Selles jututoas kasutatud krüptimine ei ole toetatud.",
     "Message Actions": "Tegevused sõnumitega",
@@ -137,21 +136,12 @@
     "Server did not require any authentication": "Server ei nõudnud mitte mingisugust autentimist",
     "Recent Conversations": "Hiljutised vestlused",
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Sinu sõnumit ei saadetud, kuna see koduserver on saavutanud igakuise aktiivsete kasutajate piiri. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
-    "This room is end-to-end encrypted": "See jututuba on läbivalt krüptitud",
-    "Everyone in this room is verified": "Kõik kasutajad siin nututoas on verifitseeritud",
-    "Edit message": "Muuda sõnumit",
-    "Unencrypted": "Krüptimata",
     "Encrypted by a deleted session": "Krüptitud kustutatud sessiooni poolt",
     "Scroll to most recent messages": "Mine viimaste sõnumite juurde",
     "No recent messages by %(user)s found": "Kasutajalt %(user)s ei leitud hiljutisi sõnumeid",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Vaata kas ajajoonel ülespool leidub varasemaid sõnumeid.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Kui sõnumeid on väga palju, siis võib nüüd aega kuluda. Oodates palun ära tee ühtegi päringut ega andmevärskendust.",
     "Failed to mute user": "Kasutaja summutamine ebaõnnestus",
-    "This user has not verified all of their sessions.": "See kasutaja ei ole verifitseerinud kõiki oma sessioone.",
-    "You have not verified this user.": "Sa ei ole seda kasutajat verifitseerinud.",
-    "You have verified this user. This user has verified all of their sessions.": "Sa oled selle kasutaja verifitseerinud. See kasutaja on verifitseerinud kõik nende sessioonid.",
-    "Someone is using an unknown session": "Keegi kasutab tundmatut sessiooni",
-    "This event could not be displayed": "Seda sündmust ei õnnestunud kuvada",
     "Room Name": "Jututoa nimi",
     "Room Topic": "Jututoa teema",
     "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
@@ -222,7 +212,6 @@
     "Anchor": "Ankur",
     "Headphones": "Kõrvaklapid",
     "Folder": "Kaust",
-    "Set up": "Võta kasutusele",
     "Show more": "Näita rohkem",
     "Warning!": "Hoiatus!",
     "Close dialog": "Sulge dialoog",
@@ -374,8 +363,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
     "Ok": "Sobib",
     "IRC display name width": "IRC kuvatava nime laius",
-    "Back up your keys before signing out to avoid losing them.": "Vältimaks nende kaotamist, varunda krüptovõtmed enne väljalogimist.",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Selle krüptitud sõnumi autentsus pole selles seadmes tagatud.",
     "and %(count)s others...": {
         "other": "ja %(count)s muud...",
         "one": "ja üks muu..."
@@ -831,7 +818,6 @@
     "Create a new room": "Loo uus jututuba",
     "Space selection": "Kogukonnakeskuse valik",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Kuna sa vähendad enda õigusi, siis sul ei pruugi hiljem olla võimalik seda muutust tagasi pöörata. Kui sa juhtumisi oled viimane haldusõigustega kasutaja kogukonnakeskuses, siis hiljem on võimatu samu õigusi tagasi saada.",
-    "Your message was sent": "Sinu sõnum sai saadetud",
     "Leave space": "Lahku kogukonnakeskusest",
     "Create a space": "Loo kogukonnakeskus",
     "%(count)s members": {
@@ -878,7 +864,6 @@
         "one": "Vaata üht liiget",
         "other": "Vaata kõiki %(count)s liiget"
     },
-    "Failed to send": "Saatmine ei õnnestunud",
     "Want to add a new room instead?": "Kas sa selle asemel soovid lisada jututuba?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Lisan jututuba...",
@@ -1062,7 +1047,6 @@
     "You cancelled verification on your other device.": "Sina tühistasid verifitseerimise oma teises seadmes.",
     "Almost there! Is your other device showing the same shield?": "Peaaegu valmis! Kas sinu teine seade kuvab sama kilpi?",
     "To proceed, please accept the verification request on your other device.": "Jätkamaks palun võta vastu verifitseerimispalve oma teises seadmes.",
-    "From a thread": "Jutulõngast",
     "Could not fetch location": "Asukoha tuvastamine ei õnnestunud",
     "Remove from room": "Eemalda jututoast",
     "Failed to remove user": "Kasutaja eemaldamine ebaõnnestus",
@@ -1224,7 +1208,6 @@
     "Error starting verification": "Viga verifitseerimise alustamisel",
     "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
     "Unable to decrypt message": "Sõnumi dekrüptimine ei õnnestunud",
-    "This message could not be decrypted": "Seda sõnumit ei õnnestunud dekrüptida",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "Text": "Tekst",
     "Create a link": "Tee link",
@@ -1247,8 +1230,6 @@
     "Checking…": "Kontrollin…",
     "Waiting for partner to confirm…": "Ootan teise osapoole kinnitust…",
     "Adding…": "Lisan…",
-    "Encrypting your message…": "Krüptin sinu sõnumit…",
-    "Sending your message…": "Saadan sinu sõnumit…",
     "Starting export process…": "Alustame eksportimist…",
     "Loading polls": "Laadin küsitlusi",
     "Due to decryption errors, some votes may not be counted": "Dekrüptimisvigade tõttu jääb osa hääli lugemata",
@@ -1414,7 +1395,8 @@
         "low_priority": "Vähetähtis",
         "historical": "Ammune",
         "go_to_settings": "Ava seadistused",
-        "setup_secure_messages": "Võta kasutusele krüptitud sõnumid"
+        "setup_secure_messages": "Võta kasutusele krüptitud sõnumid",
+        "unencrypted": "Krüptimata"
     },
     "action": {
         "continue": "Jätka",
@@ -1750,7 +1732,8 @@
         "formatting_toolbar_label": "Vormindame andmeid",
         "format_italics": "Kaldkiri",
         "format_insert_link": "Lisa link",
-        "replying_title": "Vastan"
+        "replying_title": "Vastan",
+        "edit_composer_label": "Muuda sõnumit"
     },
     "Link": "Link",
     "Code": "Kood",
@@ -2852,7 +2835,14 @@
             "one": "Seda nägi %(count)s lugeja",
             "other": "Seda nägid %(count)s lugejat"
         },
-        "read_receipts_label": "Lugemisteatised"
+        "read_receipts_label": "Lugemisteatised",
+        "thread_info_basic": "Jutulõngast",
+        "error_no_renderer": "Seda sündmust ei õnnestunud kuvada",
+        "undecryptable_tooltip": "Seda sõnumit ei õnnestunud dekrüptida",
+        "send_state_sending": "Saadan sinu sõnumit…",
+        "send_state_encrypting": "Krüptin sinu sõnumit…",
+        "send_state_sent": "Sinu sõnum sai saadetud",
+        "send_state_failed": "Saatmine ei õnnestunud"
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -3331,7 +3321,19 @@
             "description_1": "Oleme tuvastanud, et selles sessioonis ei leidu turvafraasi ega krüptitud sõnumite turvavõtit.",
             "description_2": "Kui sa tegid seda juhuslikult, siis sa võid selles sessioonis uuesti seadistada sõnumite krüptimise, mille tulemusel krüptime uuesti kõik sõnumid ja loome uue taastamise meetodi.",
             "warning": "Kui sa ei ole ise taastamise meetodeid eemaldanud, siis võib olla tegemist ründega sinu konto vastu. Palun vaheta koheselt oma kasutajakonto salasõna ning määra seadistustes uus taastemeetod."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Vältimaks nende kaotamist, varunda krüptovõtmed enne väljalogimist.",
+            "title": "Võta kasutusele"
+        },
+        "cross_signing_user_warning": "See kasutaja ei ole verifitseerinud kõiki oma sessioone.",
+        "cross_signing_user_normal": "Sa ei ole seda kasutajat verifitseerinud.",
+        "cross_signing_user_verified": "Sa oled selle kasutaja verifitseerinud. See kasutaja on verifitseerinud kõik nende sessioonid.",
+        "cross_signing_room_warning": "Keegi kasutab tundmatut sessiooni",
+        "cross_signing_room_normal": "See jututuba on läbivalt krüptitud",
+        "cross_signing_room_verified": "Kõik kasutajad siin nututoas on verifitseeritud",
+        "event_shield_reason_authenticity_not_guaranteed": "Selle krüptitud sõnumi autentsus pole selles seadmes tagatud.",
+        "event_shield_reason_mismatched_sender_key": "Krüptitud verifitseerimata sessiooni poolt"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",

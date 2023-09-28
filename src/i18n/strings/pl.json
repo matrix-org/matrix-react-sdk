@@ -136,7 +136,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "Ten pokój nie jest publiczny. Nie będziesz w stanie do niego dołączyć bez zaproszenia.",
     "Demote yourself?": "Zdegradować siebie?",
     "Demote": "Degraduj",
-    "This event could not be displayed": "Ten event nie może zostać wyświetlony",
     "You don't currently have any stickerpacks enabled": "Nie masz obecnie włączonych żadnych pakietów naklejek",
     "Updating %(brand)s": "Aktualizowanie %(brand)s",
     "Only room administrators will see this warning": "Tylko administratorzy pokojów widzą to ostrzeżenie",
@@ -220,11 +219,9 @@
     "Hammer": "Młotek",
     "Unable to restore backup": "Przywrócenie kopii zapasowej jest niemożliwe",
     "edited": "edytowane",
-    "Edit message": "Edytuj wiadomość",
     "Thumbs up": "Kciuk w górę",
     "Ball": "Piłka",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zaszyfrowane wiadomości są zabezpieczone przy użyciu szyfrowania end-to-end. Tylko Ty oraz ich adresaci posiadają klucze do ich rozszyfrowania.",
-    "Back up your keys before signing out to avoid losing them.": "Utwórz kopię zapasową kluczy przed wylogowaniem, aby ich nie utracić.",
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
     "Deactivate account": "Dezaktywuj konto",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nie zdołano wczytać zdarzenia, na które odpowiedziano, może ono nie istnieć lub nie masz uprawnienia, by je zobaczyć.",
@@ -448,7 +445,6 @@
     "Incompatible Database": "Niekompatybilna baza danych",
     "Information": "Informacje",
     "Accepting…": "Akceptowanie…",
-    "Unencrypted": "Nieszyfrowane",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Jemen",
@@ -602,12 +598,9 @@
     "The room upgrade could not be completed": "Uaktualnienie pokoju nie mogło zostać ukończone",
     "Failed to upgrade room": "Nie udało się uaktualnić pokoju",
     "Backup version:": "Wersja kopii zapasowej:",
-    "Set up": "Konfiguruj",
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
-    "Everyone in this room is verified": "Wszyscy w tym pokoju są zweryfikowani",
-    "This room is end-to-end encrypted": "Ten pokój jest szyfrowany end-to-end",
     "Scroll to most recent messages": "Przewiń do najnowszych wiadomości",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
     "Server Options": "Opcje serwera",
@@ -716,20 +709,8 @@
         "one": "1 uczestnik",
         "other": "%(count)s uczestników"
     },
-    "Failed to send": "Nie udało się wysłać",
-    "Your message was sent": "Twoja wiadomość została wysłana",
-    "Encrypting your message…": "Szyfrowanie Twojej wiadomości…",
-    "Sending your message…": "Wysyłanie Twojej wiadomości…",
-    "This message could not be decrypted": "Wiadomość nie mogła zostać rozszyfrowana",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Autentyczność tej wiadomości szyfrowanej nie jest gwarantowana na tym urządzeniu.",
     "Encrypted by a deleted session": "Zaszyfrowano przez usuniętą sesję",
-    "Encrypted by an unverified session": "Zaszyfrowano przez sesję niezweryfikowaną",
     " in <strong>%(room)s</strong>": " w <strong>%(room)s</strong>",
-    "From a thread": "Z wątku",
-    "Someone is using an unknown session": "Ktoś używa nieznanej sesji",
-    "You have verified this user. This user has verified all of their sessions.": "Zweryfikowałeś tego użytkownika. Użytkownik zweryfikował wszystkie swoje sesje.",
-    "You have not verified this user.": "Nie zweryfikowałeś tego użytkownika.",
-    "This user has not verified all of their sessions.": "Ten użytkownik nie zweryfikował wszystkich swoich sesji.",
     "This room has already been upgraded.": "Ten pokój został już ulepszony.",
     "Joined": "Dołączono",
     "Show Labs settings": "Pokaż ustawienia laboratoriów",
@@ -1413,7 +1394,8 @@
         "low_priority": "Niski priorytet",
         "historical": "Historyczne",
         "go_to_settings": "Przejdź do ustawień",
-        "setup_secure_messages": "Skonfiguruj bezpieczne wiadomości"
+        "setup_secure_messages": "Skonfiguruj bezpieczne wiadomości",
+        "unencrypted": "Nieszyfrowane"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -1749,7 +1731,8 @@
         "formatting_toolbar_label": "Formatowanie",
         "format_italics": "Kursywa",
         "format_insert_link": "Wprowadź link",
-        "replying_title": "Odpowiadanie"
+        "replying_title": "Odpowiadanie",
+        "edit_composer_label": "Edytuj wiadomość"
     },
     "Link": "Link",
     "Code": "Kod",
@@ -2847,7 +2830,14 @@
             "one": "Odczytane przez %(count)s osobę",
             "other": "Odczytane przez %(count)s osób"
         },
-        "read_receipts_label": "Czytaj potwierdzenia"
+        "read_receipts_label": "Czytaj potwierdzenia",
+        "thread_info_basic": "Z wątku",
+        "error_no_renderer": "Ten event nie może zostać wyświetlony",
+        "undecryptable_tooltip": "Wiadomość nie mogła zostać rozszyfrowana",
+        "send_state_sending": "Wysyłanie Twojej wiadomości…",
+        "send_state_encrypting": "Szyfrowanie Twojej wiadomości…",
+        "send_state_sent": "Twoja wiadomość została wysłana",
+        "send_state_failed": "Nie udało się wysłać"
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -3326,7 +3316,19 @@
             "description_1": "Ta sesja wykryła, że Twoja fraza bezpieczeństwa i klucz dla bezpiecznych wiadomości zostały usunięte.",
             "description_2": "Jeśli zrobiłeś to przez pomyłkę, możesz ustawić bezpieczne wiadomości w tej sesji, co zaszyfruje ponownie historię wiadomości za pomocą nowej metody odzyskiwania.",
             "warning": "Jeśli nie usunąłeś metody odzyskiwania, atakujący może próbować dostać się na Twoje konto. Zmień hasło konta i natychmiast ustaw nową metodę odzyskiwania w Ustawieniach."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Utwórz kopię zapasową kluczy przed wylogowaniem, aby ich nie utracić.",
+            "title": "Konfiguruj"
+        },
+        "cross_signing_user_warning": "Ten użytkownik nie zweryfikował wszystkich swoich sesji.",
+        "cross_signing_user_normal": "Nie zweryfikowałeś tego użytkownika.",
+        "cross_signing_user_verified": "Zweryfikowałeś tego użytkownika. Użytkownik zweryfikował wszystkie swoje sesje.",
+        "cross_signing_room_warning": "Ktoś używa nieznanej sesji",
+        "cross_signing_room_normal": "Ten pokój jest szyfrowany end-to-end",
+        "cross_signing_room_verified": "Wszyscy w tym pokoju są zweryfikowani",
+        "event_shield_reason_authenticity_not_guaranteed": "Autentyczność tej wiadomości szyfrowanej nie jest gwarantowana na tym urządzeniu.",
+        "event_shield_reason_mismatched_sender_key": "Zaszyfrowano przez sesję niezweryfikowaną"
     },
     "emoji": {
         "category_frequently_used": "Często używane",

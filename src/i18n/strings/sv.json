@@ -139,7 +139,6 @@
     "Share User": "Dela användare",
     "Share Room Message": "Dela rumsmeddelande",
     "Link to selected message": "Länk till valt meddelande",
-    "This event could not be displayed": "Den här händelsen kunde inte visas",
     "Demote yourself?": "Degradera dig själv?",
     "Demote": "Degradera",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kan inte skicka några meddelanden innan du granskar och godkänner <consentLink>våra villkor</consentLink>.",
@@ -272,7 +271,6 @@
     "Cancel All": "Avbryt alla",
     "Upload Error": "Uppladdningsfel",
     "Deactivate account": "Inaktivera konto",
-    "Edit message": "Redigera meddelande",
     "No recent messages by %(user)s found": "Inga nyliga meddelanden från %(user)s hittades",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Pröva att skrolla upp i tidslinjen för att se om det finns några tidigare.",
     "Remove recent messages by %(user)s": "Ta bort nyliga meddelanden från %(user)s",
@@ -334,23 +332,12 @@
     "Your homeserver has exceeded its user limit.": "Din hemserver har överskridit sin användargräns.",
     "Your homeserver has exceeded one of its resource limits.": "Din hemserver har överskridit en av sina resursgränser.",
     "Ok": "OK",
-    "Set up": "Sätt upp",
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
     "This backup is trusted because it has been restored on this session": "Den här säkerhetskopian är betrodd för att den har återställts på den här sessionen",
-    "Back up your keys before signing out to avoid losing them.": "Säkerhetskopiera dina nycklar innan du loggar ut för att undvika att du blir av med dem.",
     "Start using Key Backup": "Börja använda nyckelsäkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
-    "This user has not verified all of their sessions.": "Den här användaren har inte verifierat alla sina sessioner.",
-    "You have not verified this user.": "Du har inte verifierat den här användaren.",
-    "You have verified this user. This user has verified all of their sessions.": "Du har verifierat den här användaren. Den här användaren har verifierat alla sina sessioner.",
-    "Someone is using an unknown session": "Någon använder en okänd session",
-    "This room is end-to-end encrypted": "Det här rummet är totalsträckskrypterat",
-    "Everyone in this room is verified": "Alla i det här rummet är verifierade",
-    "Encrypted by an unverified session": "Krypterat av en overifierad session",
-    "Unencrypted": "Okrypterat",
     "Encrypted by a deleted session": "Krypterat av en raderad session",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
     "Scroll to most recent messages": "Skrolla till de senaste meddelandena",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
     "This room has already been upgraded.": "Det här rummet har redan uppgraderats.",
@@ -834,7 +821,6 @@
     "Create a new room": "Skapa ett nytt rum",
     "Space selection": "Utrymmesval",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Du kommer inte kunna ångra den här ändringen eftersom du degraderar dig själv, och om du är den sista privilegierade användaren i utrymmet så kommer det att vara omöjligt att återfå utrymmet.",
-    "Your message was sent": "Ditt meddelande skickades",
     "Leave space": "Lämna utrymmet",
     "Create a space": "Skapa ett utrymme",
     "<inviter/> invites you": "<inviter/> bjuder in dig",
@@ -877,7 +863,6 @@
     "Retry all": "Försök alla igen",
     "Some of your messages have not been sent": "Vissa av dina meddelanden har inte skickats",
     "Including %(commaSeparatedMembers)s": "Inklusive %(commaSeparatedMembers)s",
-    "Failed to send": "Misslyckades att skicka",
     "Search names and descriptions": "Sök namn och beskrivningar",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
@@ -1006,7 +991,6 @@
     "Themes": "Teman",
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
-    "From a thread": "Från en tråd",
     "Vote not registered": "Röst registrerades inte",
     "Reply in thread": "Svara i tråd",
     "Pick a date to jump to": "Välj ett datum att hoppa till",
@@ -1220,7 +1204,6 @@
     "The linking wasn't completed in the required time.": "Länkningen slutfördes inte inom den krävda tiden.",
     "Sign in new device": "Logga in ny enhet",
     "Unable to decrypt message": "Kunde inte avkryptera meddelande",
-    "This message could not be decrypted": "Det här meddelandet kunde inte avkrypteras",
     "Sign out of all devices": "Logga ut ur alla enheter",
     "Confirm new password": "Bekräfta nytt lösenord",
     "Too many attempts in a short time. Retry after %(timeout)s.": "För många försök under en kort tid. Pröva igen efter %(timeout)s.",
@@ -1247,8 +1230,6 @@
     "Checking…": "Kontrollerar …",
     "Waiting for partner to confirm…": "Väntar på att andra parten ska bekräfta …",
     "Adding…": "Lägger till …",
-    "Encrypting your message…": "Krypterar ditt meddelande …",
-    "Sending your message…": "Skickar ditt meddelande …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "View poll": "Visa omröstning",
@@ -1409,7 +1390,8 @@
         "low_priority": "Låg prioritet",
         "historical": "Historiska",
         "go_to_settings": "Gå till inställningarna",
-        "setup_secure_messages": "Ställ in säkra meddelanden"
+        "setup_secure_messages": "Ställ in säkra meddelanden",
+        "unencrypted": "Okrypterat"
     },
     "action": {
         "continue": "Fortsätt",
@@ -1744,7 +1726,8 @@
         "formatting_toolbar_label": "Formatering",
         "format_italics": "Kursiv",
         "format_insert_link": "Infoga länk",
-        "replying_title": "Svarar"
+        "replying_title": "Svarar",
+        "edit_composer_label": "Redigera meddelande"
     },
     "Link": "Länk",
     "Code": "Kod",
@@ -2805,7 +2788,14 @@
             "one": "Sedd av %(count)s person",
             "other": "Sedd av %(count)s personer"
         },
-        "read_receipts_label": "Läskvitton"
+        "read_receipts_label": "Läskvitton",
+        "thread_info_basic": "Från en tråd",
+        "error_no_renderer": "Den här händelsen kunde inte visas",
+        "undecryptable_tooltip": "Det här meddelandet kunde inte avkrypteras",
+        "send_state_sending": "Skickar ditt meddelande …",
+        "send_state_encrypting": "Krypterar ditt meddelande …",
+        "send_state_sent": "Ditt meddelande skickades",
+        "send_state_failed": "Misslyckades att skicka"
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -3283,7 +3273,19 @@
             "description_1": "Den här sessionen har detekterat att din säkerhetsfras och -nyckel för säkra meddelanden har tagits bort.",
             "description_2": "Om du gjorde det av misstag kan du ställa in säkra meddelanden på den här sessionen som krypterar sessionens meddelandehistorik igen med en ny återställningsmetod.",
             "warning": "Om du inte tog bort återställningsmetoden kan en angripare försöka komma åt ditt konto. Byt ditt kontolösenord och ställ in en ny återställningsmetod omedelbart i inställningarna."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Säkerhetskopiera dina nycklar innan du loggar ut för att undvika att du blir av med dem.",
+            "title": "Sätt upp"
+        },
+        "cross_signing_user_warning": "Den här användaren har inte verifierat alla sina sessioner.",
+        "cross_signing_user_normal": "Du har inte verifierat den här användaren.",
+        "cross_signing_user_verified": "Du har verifierat den här användaren. Den här användaren har verifierat alla sina sessioner.",
+        "cross_signing_room_warning": "Någon använder en okänd session",
+        "cross_signing_room_normal": "Det här rummet är totalsträckskrypterat",
+        "cross_signing_room_verified": "Alla i det här rummet är verifierade",
+        "event_shield_reason_authenticity_not_guaranteed": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
+        "event_shield_reason_mismatched_sender_key": "Krypterat av en overifierad session"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",

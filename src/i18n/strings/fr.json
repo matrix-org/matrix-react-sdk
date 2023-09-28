@@ -142,7 +142,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Vous ne pouvez voir aucun message tant que vous ne lisez et n’acceptez pas nos <consentLink>conditions générales</consentLink>.",
     "Demote yourself?": "Vous rétrograder ?",
     "Demote": "Rétrograder",
-    "This event could not be displayed": "Cet évènement n’a pas pu être affiché",
     "Only room administrators will see this warning": "Seuls les administrateurs du salon verront cet avertissement",
     "Upgrade Room Version": "Mettre à niveau la version du salon",
     "Create a new room with the same name, description and avatar": "Créer un salon avec le même nom, la même description et le même avatar",
@@ -170,7 +169,6 @@
     "No backup found!": "Aucune sauvegarde n’a été trouvée !",
     "Failed to decrypt %(failedCount)s sessions!": "Le déchiffrement de %(failedCount)s sessions a échoué !",
     "Invalid homeserver discovery response": "Réponse de découverte du serveur d’accueil non valide",
-    "Set up": "Configurer",
     "Invalid identity server discovery response": "Réponse non valide lors de la découverte du serveur d'identité",
     "General failure": "Erreur générale",
     "Unable to load commit detail: %(msg)s": "Impossible de charger les détails de l’envoi : %(msg)s",
@@ -251,7 +249,6 @@
     "Couldn't load page": "Impossible de charger la page",
     "Your password has been reset.": "Votre mot de passe a été réinitialisé.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Les messages chiffrés sont sécurisés avec un chiffrement de bout en bout. Seuls vous et le(s) destinataire(s) ont les clés pour lire ces messages.",
-    "Back up your keys before signing out to avoid losing them.": "Sauvegardez vos clés avant de vous déconnecter pour éviter de les perdre.",
     "Start using Key Backup": "Commencer à utiliser la sauvegarde de clés",
     "I don't want my encrypted messages": "Je ne veux pas de mes messages chiffrés",
     "Manually export keys": "Exporter manuellement les clés",
@@ -296,7 +293,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "L’URL du serveur d’accueil ne semble pas être un serveur d’accueil Matrix valide",
     "Invalid base_url for m.identity_server": "base_url pour m.identity_server non valide",
     "Identity server URL does not appear to be a valid identity server": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
-    "Edit message": "Modifier le message",
     "Upload all": "Tout envoyer",
     "Edited at %(date)s. Click to view edits.": "Modifié le %(date)s. Cliquer pour voir les modifications.",
     "Message edits": "Modifications du message",
@@ -347,7 +343,6 @@
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
     "Verification Request": "Demande de vérification",
-    "Unencrypted": "Non chiffré",
     "Upgrade private room": "Mettre à niveau le salon privé",
     "Upgrade public room": "Mettre à niveau le salon public",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "La mise à niveau d’un salon est une action avancée et qui est généralement recommandée quand un salon est instable à cause d’anomalies, de fonctionnalités manquantes ou de failles de sécurité.",
@@ -372,8 +367,6 @@
     "Verify User": "Vérifier l’utilisateur",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Pour une sécurité supplémentaire, vérifiez cet utilisateur en comparant un code à usage unique sur vos deux appareils.",
     "Start Verification": "Commencer la vérification",
-    "This room is end-to-end encrypted": "Ce salon est chiffré de bout en bout",
-    "Everyone in this room is verified": "Tout le monde dans ce salon est vérifié",
     "Waiting for %(displayName)s to accept…": "En attente d’acceptation par %(displayName)s…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
     "Your messages are not secure": "Vos messages ne sont pas sécurisés",
@@ -385,10 +378,6 @@
     "If you can't scan the code above, verify by comparing unique emoji.": "Si vous ne pouvez pas scanner le code ci-dessus, vérifiez en comparant des émojis uniques.",
     "You've successfully verified %(displayName)s!": "Vous avez vérifié %(displayName)s !",
     "This backup is trusted because it has been restored on this session": "Cette sauvegarde est fiable car elle a été restaurée sur cette session",
-    "This user has not verified all of their sessions.": "Cet utilisateur n’a pas vérifié toutes ses sessions.",
-    "You have verified this user. This user has verified all of their sessions.": "Vous avez vérifié cet utilisateur. Cet utilisateur a vérifié toutes ses sessions.",
-    "Someone is using an unknown session": "Quelqu’un utilise une session inconnue",
-    "Encrypted by an unverified session": "Chiffré par une session non vérifiée",
     "Encrypted by a deleted session": "Chiffré par une session supprimée",
     "%(count)s sessions": {
         "other": "%(count)s sessions",
@@ -404,7 +393,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Vérifier cet utilisateur marquera sa session comme fiable, et marquera aussi votre session comme fiable pour lui.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Vérifier cet appareil le marquera comme fiable. Faire confiance à cette appareil vous permettra à vous et aux autres utilisateurs d’être tranquilles lors de l’utilisation de messages chiffrés.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Vérifier cet appareil le marquera comme fiable, et les utilisateurs qui ont vérifié avec vous feront confiance à cet appareil.",
-    "You have not verified this user.": "Vous n’avez pas vérifié cet utilisateur.",
     "Destroy cross-signing keys?": "Détruire les clés de signature croisée ?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La suppression des clés de signature croisée est permanente. Tous ceux que vous avez vérifié vont voir des alertes de sécurité. Il est peu probable que ce soit ce que vous voulez faire, sauf si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
     "Clear cross-signing keys": "Vider les clés de signature croisée",
@@ -492,7 +480,6 @@
     "Switch theme": "Changer le thème",
     "Message preview": "Aperçu de message",
     "Looks good!": "Ça a l’air correct !",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "L’authenticité de ce message chiffré ne peut pas être garantie sur cet appareil.",
     "Wrong file type": "Mauvais type de fichier",
     "Security Phrase": "Phrase de sécurité",
     "Security Key": "Clé de sécurité",
@@ -834,7 +821,6 @@
     "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
     "Create a new room": "Créer un nouveau salon",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vous ne pourrez pas annuler ce changement puisque vous vous rétrogradez. Si vous êtes le dernier utilisateur a privilèges de cet espace, il deviendra impossible d’en reprendre contrôle.",
-    "Your message was sent": "Votre message a été envoyé",
     "Leave space": "Quitter l’espace",
     "Create a space": "Créer un espace",
     "Space selection": "Sélection d’un espace",
@@ -878,7 +864,6 @@
         "one": "Afficher le membre",
         "other": "Afficher les %(count)s membres"
     },
-    "Failed to send": "Échec de l’envoi",
     "Want to add a new room instead?": "Voulez-vous plutôt ajouter un nouveau salon ?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Ajout du salon…",
@@ -1062,7 +1047,6 @@
     "You cancelled verification on your other device.": "Vous avez annulé la vérification dans votre autre appareil.",
     "Almost there! Is your other device showing the same shield?": "On y est presque ! Votre autre appareil affiche-t-il le même bouclier ?",
     "To proceed, please accept the verification request on your other device.": "Pour continuer, veuillez accepter la demande de vérification sur votre autre appareil.",
-    "From a thread": "Depuis un fil de discussion",
     "Could not fetch location": "Impossible de récupérer la position",
     "Message pending moderation": "Message en attente de modération",
     "Message pending moderation: %(reason)s": "Message en attente de modération : %(reason)s",
@@ -1224,7 +1208,6 @@
     "Error starting verification": "Erreur en démarrant la vérification",
     "<w>WARNING:</w> <description/>": "<w>ATTENTION :</w> <description/>",
     "Unable to decrypt message": "Impossible de déchiffrer le message",
-    "This message could not be decrypted": "Ce message n’a pas pu être déchiffré",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
     "Text": "Texte",
     "Create a link": "Crée un lien",
@@ -1247,8 +1230,6 @@
     "Checking…": "Vérification…",
     "Waiting for partner to confirm…": "Attente de la confirmation du partenaire…",
     "Adding…": "Ajout…",
-    "Encrypting your message…": "Chiffrement de votre message…",
-    "Sending your message…": "Envoi de votre message…",
     "Starting export process…": "Démarrage du processus d’export…",
     "Loading polls": "Chargement des sondages",
     "Ended a poll": "Sondage terminé",
@@ -1414,7 +1395,8 @@
         "low_priority": "Priorité basse",
         "historical": "Historique",
         "go_to_settings": "Aller aux paramètres",
-        "setup_secure_messages": "Configurer les messages sécurisés"
+        "setup_secure_messages": "Configurer les messages sécurisés",
+        "unencrypted": "Non chiffré"
     },
     "action": {
         "continue": "Continuer",
@@ -1750,7 +1732,8 @@
         "formatting_toolbar_label": "Formatage",
         "format_italics": "Italique",
         "format_insert_link": "Insérer un lien",
-        "replying_title": "Répond"
+        "replying_title": "Répond",
+        "edit_composer_label": "Modifier le message"
     },
     "Link": "Lien",
     "Code": "Code",
@@ -2852,7 +2835,14 @@
             "one": "Vu par %(count)s personne",
             "other": "Vu par %(count)s personnes"
         },
-        "read_receipts_label": "Accusés de réception"
+        "read_receipts_label": "Accusés de réception",
+        "thread_info_basic": "Depuis un fil de discussion",
+        "error_no_renderer": "Cet évènement n’a pas pu être affiché",
+        "undecryptable_tooltip": "Ce message n’a pas pu être déchiffré",
+        "send_state_sending": "Envoi de votre message…",
+        "send_state_encrypting": "Chiffrement de votre message…",
+        "send_state_sent": "Votre message a été envoyé",
+        "send_state_failed": "Échec de l’envoi"
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -3331,7 +3321,19 @@
             "description_1": "Cette session a détecté que votre phrase secrète et clé de sécurité pour les messages sécurisés ont été supprimées.",
             "description_2": "Si vous l’avez fait accidentellement, vous pouvez configurer les messages sécurisés sur cette session ce qui re-chiffrera l’historique des messages de cette session avec une nouvelle méthode de récupération.",
             "warning": "Si vous n’avez pas supprimé la méthode de récupération, un attaquant peut être en train d’essayer d’accéder à votre compte. Modifiez le mot de passe de votre compte et configurez une nouvelle méthode de récupération dans les réglages."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Sauvegardez vos clés avant de vous déconnecter pour éviter de les perdre.",
+            "title": "Configurer"
+        },
+        "cross_signing_user_warning": "Cet utilisateur n’a pas vérifié toutes ses sessions.",
+        "cross_signing_user_normal": "Vous n’avez pas vérifié cet utilisateur.",
+        "cross_signing_user_verified": "Vous avez vérifié cet utilisateur. Cet utilisateur a vérifié toutes ses sessions.",
+        "cross_signing_room_warning": "Quelqu’un utilise une session inconnue",
+        "cross_signing_room_normal": "Ce salon est chiffré de bout en bout",
+        "cross_signing_room_verified": "Tout le monde dans ce salon est vérifié",
+        "event_shield_reason_authenticity_not_guaranteed": "L’authenticité de ce message chiffré ne peut pas être garantie sur cet appareil.",
+        "event_shield_reason_mismatched_sender_key": "Chiffré par une session non vérifiée"
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",

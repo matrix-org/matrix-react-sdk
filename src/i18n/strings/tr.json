@@ -223,8 +223,6 @@
     "Cake": "Kek",
     "Heart": "Kalp",
     "Trophy": "Ödül",
-    "Edit message": "Mesajı düzenle",
-    "Unencrypted": "Şifrelenmemiş",
     "Remove %(count)s messages": {
         "other": "%(count)s mesajı sil",
         "one": "1 mesajı sil"
@@ -266,7 +264,6 @@
     "You sent a verification request": "Doğrulama isteği gönderdiniz",
     "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
-    "This event could not be displayed": "Bu olay görüntülenemedi",
     "Demote yourself?": "Kendinin rütbeni düşür?",
     "Demote": "Rütbe Düşür",
     "Remove recent messages": "Son mesajları sil",
@@ -290,10 +287,6 @@
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
     "Show more": "Daha fazla göster",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
-    "This user has not verified all of their sessions.": "Bu kullanıcı bütün oturumlarında doğrulanmamış.",
-    "You have not verified this user.": "Bu kullanıcıyı doğrulamadınız.",
-    "Someone is using an unknown session": "Birisi bilinmeyen bir oturum kullanıyor",
-    "Everyone in this room is verified": "Bu odadaki herkes doğrulanmış",
     "Upload %(count)s other files": {
         "other": "%(count)s diğer dosyaları yükle",
         "one": "%(count)s dosyayı sağla"
@@ -320,16 +313,12 @@
     "Recent Conversations": "Güncel Sohbetler",
     "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
     "Lock": "Kilit",
-    "You have verified this user. This user has verified all of their sessions.": "Bu kullanıcıyı doğruladınız. Bu kullanıcı tüm oturumlarını doğruladı.",
-    "This room is end-to-end encrypted": "Bu oda uçtan uça şifreli",
-    "Encrypted by an unverified session": "Doğrulanmamış bir oturum tarafından şifrelenmiş",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
     "Incoming Verification Request": "Gelen Doğrulama İsteği",
     "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
     "Identity server URL does not appear to be a valid identity server": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
-    "Set up": "Ayarla",
     "Upgrade public room": "Açık odayı güncelle",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
     "We encountered an error trying to restore your previous session.": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
@@ -622,7 +611,6 @@
     "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
     "Error creating address": "Adres oluşturulurken hata",
     "Scroll to most recent messages": "En son mesajlara git",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Bu şifrelenmiş mesajın güvenilirliği bu cihazda garanti edilemez.",
     "Australia": "Avustralya",
     "Aruba": "Aruba",
     "Armenia": "Ermenistan",
@@ -665,7 +653,6 @@
     "Accepting…": "Kabul ediliyor…",
     "Room avatar": "Oda avatarı",
     "Open dial pad": "Arama tuşlarını aç",
-    "Back up your keys before signing out to avoid losing them.": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
     "Enter a server name": "Sunucu adı girin",
     "Can't find this server or its room list": "Sunucuda veya oda listesinde bulunamıyor",
     "Add a new server": "Yeni sunucu ekle",
@@ -695,7 +682,6 @@
     "We didn't find a microphone on your device. Please check your settings and try again.": "Cihazınızda bir mikrofon bulamadık. Lütfen ayarlarınızı kontrol edin ve tekrar deneyin.",
     "No microphone found": "Mikrofon bulunamadı",
     "View message": "Mesajı görüntüle",
-    "Your message was sent": "Mesajınız gönderildi",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -773,7 +759,8 @@
         "low_priority": "Düşük öncelikli",
         "historical": "Tarihi",
         "go_to_settings": "Ayarlara Git",
-        "setup_secure_messages": "Güvenli Mesajları Ayarla"
+        "setup_secure_messages": "Güvenli Mesajları Ayarla",
+        "unencrypted": "Şifrelenmemiş"
     },
     "action": {
         "continue": "Devam Et",
@@ -935,7 +922,8 @@
         "no_perms_notice": "Bu odaya göndermeye izniniz yok",
         "poll_button_no_perms_title": "İzin Gerekli",
         "format_italics": "Eğik",
-        "replying_title": "Cevap yazıyor"
+        "replying_title": "Cevap yazıyor",
+        "edit_composer_label": "Mesajı düzenle"
     },
     "Code": "Kod",
     "power_level": {
@@ -1492,7 +1480,9 @@
         },
         "url_preview": {
             "close": "Önizlemeyi kapat"
-        }
+        },
+        "error_no_renderer": "Bu olay görüntülenemedi",
+        "send_state_sent": "Mesajınız gönderildi"
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",
@@ -1764,7 +1754,19 @@
         },
         "recovery_method_removed": {
             "title": "Kurtarma Yöntemi Silindi"
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
+            "title": "Ayarla"
+        },
+        "cross_signing_user_warning": "Bu kullanıcı bütün oturumlarında doğrulanmamış.",
+        "cross_signing_user_normal": "Bu kullanıcıyı doğrulamadınız.",
+        "cross_signing_user_verified": "Bu kullanıcıyı doğruladınız. Bu kullanıcı tüm oturumlarını doğruladı.",
+        "cross_signing_room_warning": "Birisi bilinmeyen bir oturum kullanıyor",
+        "cross_signing_room_normal": "Bu oda uçtan uça şifreli",
+        "cross_signing_room_verified": "Bu odadaki herkes doğrulanmış",
+        "event_shield_reason_authenticity_not_guaranteed": "Bu şifrelenmiş mesajın güvenilirliği bu cihazda garanti edilemez.",
+        "event_shield_reason_mismatched_sender_key": "Doğrulanmamış bir oturum tarafından şifrelenmiş"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",

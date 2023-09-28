@@ -123,10 +123,8 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
-    "This event could not be displayed": "Este evento não pôde ser exibido",
     "Share Link to User": "Compartilhar este usuário",
     "Share room": "Compartilhar sala",
-    "Set up": "Configurar",
     "Only room administrators will see this warning": "Somente administradores de sala verão esse alerta",
     "You don't currently have any stickerpacks enabled": "No momento, você não tem pacotes de figurinhas ativados",
     "Demote": "Reduzir privilégio",
@@ -241,7 +239,6 @@
     "Headphones": "Fones de ouvido",
     "Folder": "Pasta",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "As mensagens estão protegidas com a criptografia de ponta a ponta. Somente você e o(s) destinatário(s) têm as chaves para ler essas mensagens.",
-    "Back up your keys before signing out to avoid losing them.": "Faça o backup das suas chaves antes de sair, para evitar perdê-las.",
     "Start using Key Backup": "Comece a usar backup de chave",
     "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
     "Verify your other session using one of the options below.": "Confirme suas outras sessões usando uma das opções abaixo.",
@@ -255,11 +252,7 @@
     "Lock": "Cadeado",
     "Show more": "Mostrar mais",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
-    "This room is end-to-end encrypted": "Esta sala é criptografada de ponta a ponta",
-    "Encrypted by an unverified session": "Criptografada por uma sessão não confirmada",
-    "Unencrypted": "Descriptografada",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "A autenticidade desta mensagem criptografada não pode ser garantida neste aparelho.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Atualizar esta sala irá fechar a instância atual da sala e criar uma sala atualizada com o mesmo nome.",
     "Start Verification": "Iniciar confirmação",
     "Messages in this room are end-to-end encrypted.": "As mensagens nesta sala estão criptografadas de ponta a ponta.",
@@ -354,12 +347,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Room Topic": "Descrição da sala",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
-    "This user has not verified all of their sessions.": "Este usuário não confirmou todas as próprias sessões.",
-    "You have not verified this user.": "Você não confirmou este usuário.",
-    "You have verified this user. This user has verified all of their sessions.": "Você confirmou este usuário. Este usuário confirmou todas as próprias sessões.",
-    "Someone is using an unknown session": "Alguém está usando uma sessão desconhecida",
-    "Everyone in this room is verified": "Todos nesta sala estão confirmados",
-    "Edit message": "Editar mensagem",
     "Scroll to most recent messages": "Ir para as mensagens recentes",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
     "Failed to revoke invite": "Falha ao revogar o convite",
@@ -831,14 +818,12 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de e-mail, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Create a new room": "Criar uma nova sala",
-    "Your message was sent": "A sua mensagem foi enviada",
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "This space has no local addresses": "Este espaço não tem endereços locais",
     "No microphone found": "Nenhum microfone encontrado",
     "Unable to access your microphone": "Não foi possível acessar seu microfone",
     "View message": "Ver mensagem",
-    "Failed to send": "Falhou a enviar",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
     "Search for rooms or people": "Procurar por salas ou pessoas",
@@ -1084,7 +1069,8 @@
         "low_priority": "Baixa prioridade",
         "historical": "Histórico",
         "go_to_settings": "Ir para as configurações",
-        "setup_secure_messages": "Configurar mensagens seguras"
+        "setup_secure_messages": "Configurar mensagens seguras",
+        "unencrypted": "Descriptografada"
     },
     "action": {
         "continue": "Continuar",
@@ -1308,7 +1294,8 @@
         "poll_button_no_perms_description": "Você não tem permissão para iniciar enquetes nesta sala.",
         "format_italics": "Itálico",
         "format_insert_link": "Inserir link",
-        "replying_title": "Em resposta a"
+        "replying_title": "Em resposta a",
+        "edit_composer_label": "Editar mensagem"
     },
     "Link": "Ligação",
     "Code": "Código",
@@ -2081,7 +2068,10 @@
         "read_receipt_title": {
             "one": "Visto por %(count)s pessoa",
             "other": "Visto por %(count)s pessoas"
-        }
+        },
+        "error_no_renderer": "Este evento não pôde ser exibido",
+        "send_state_sent": "A sua mensagem foi enviada",
+        "send_state_failed": "Falhou a enviar"
     },
     "slash_command": {
         "spoiler": "Envia esta mensagem como spoiler",
@@ -2491,7 +2481,19 @@
             "description_1": "Esta sessão detectou que a sua Frase de Segurança e a chave para mensagens seguras foram removidas.",
             "description_2": "Se você fez isso acidentalmente, você pode configurar Mensagens Seguras nesta sessão, o que vai re-criptografar o histórico de mensagens desta sessão com uma nova opção de recuperação.",
             "warning": "Se você não excluiu a opção de recuperação, um invasor pode estar tentando acessar sua conta. Altere a senha da sua conta e defina imediatamente uma nova opção de recuperação nas Configurações."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Faça o backup das suas chaves antes de sair, para evitar perdê-las.",
+            "title": "Configurar"
+        },
+        "cross_signing_user_warning": "Este usuário não confirmou todas as próprias sessões.",
+        "cross_signing_user_normal": "Você não confirmou este usuário.",
+        "cross_signing_user_verified": "Você confirmou este usuário. Este usuário confirmou todas as próprias sessões.",
+        "cross_signing_room_warning": "Alguém está usando uma sessão desconhecida",
+        "cross_signing_room_normal": "Esta sala é criptografada de ponta a ponta",
+        "cross_signing_room_verified": "Todos nesta sala estão confirmados",
+        "event_shield_reason_authenticity_not_guaranteed": "A autenticidade desta mensagem criptografada não pode ser garantida neste aparelho.",
+        "event_shield_reason_mismatched_sender_key": "Criptografada por uma sessão não confirmada"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",

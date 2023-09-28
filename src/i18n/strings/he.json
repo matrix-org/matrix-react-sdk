@@ -303,7 +303,6 @@
     "You signed in to a new session without verifying it:": "נכנסתם דרך התחברות חדשה מבלי לאמת אותה:",
     "Backup version:": "גירסת גיבוי:",
     "This backup is trusted because it has been restored on this session": "ניתן לסמוך על גיבוי זה מכיוון שהוא שוחזר בהפעלה זו",
-    "Set up": "הגדר",
     "Show more": "הצג יותר",
     "Folder": "תקיה",
     "Headphones": "אוזניות",
@@ -582,18 +581,7 @@
         "other": "ו %(count)s אחרים..."
     },
     "Scroll to most recent messages": "גלול להודעות האחרונות",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "לא ניתן להבטיח את האותנטיות של הודעה מוצפנת זו במכשיר זה.",
     "Encrypted by a deleted session": "הוצפן על ידי מושב שנמחק",
-    "Unencrypted": "לא מוצפן",
-    "Encrypted by an unverified session": "הוצפן על ידי מושב לא מאומת",
-    "This event could not be displayed": "לא ניתן להציג את הארוע הזה",
-    "Edit message": "ערוך הודעה",
-    "Everyone in this room is verified": "כולם מאומתים בחדר זה",
-    "This room is end-to-end encrypted": "חדר זה מוצפן מקצה לקצה",
-    "Someone is using an unknown session": "מישהו משתמש בהפעלה לא ידועה",
-    "You have verified this user. This user has verified all of their sessions.": "אימתת משתמש זה. משתמש זה אימת את כל ההפעלות שלו.",
-    "You have not verified this user.": "לא אימתת משתמש זה.",
-    "This user has not verified all of their sessions.": "משתמש זה לא אימת את כל ההפעלות שלו.",
     "Cancel search": "בטל חיפוש",
     "Can't load this message": "לא ניתן לטעון הודעה זו",
     "Submit logs": "הגש יומנים",
@@ -605,7 +593,6 @@
     "Add an Integration": "הוסף אינטגרציה",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
     "Deactivate account": "סגור חשבון",
-    "Back up your keys before signing out to avoid losing them.": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
     "Are you sure you want to leave the room '%(roomName)s'?": "האם אתה בטוח שברצונך לעזוב את החדר '%(roomName)s'?",
     "This room is not public. You will not be able to rejoin without an invite.": "חדר זה אינו ציבורי. לא תוכל להצטרף שוב ללא הזמנה.",
     "Failed to reject invitation": "דחיית ההזמנה נכשלה",
@@ -821,13 +808,11 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "אתחול חיפוש ההודעות נכשל. בדוק את <a>ההגדרות שלך</a> למידע נוסף",
     "Connection failed": "החיבור נכשל",
     "Failed to remove user": "הסרת המשתמש נכשלה",
-    "Failed to send": "השליחה נכשלה",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
     "Send voice message": "שלח הודעה קולית",
-    "Your message was sent": "ההודעה שלך נשלחה",
     "Copy link to thread": "העתק קישור לשרשור",
     "Create a space": "צור מרחב עבודה",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
@@ -866,7 +851,6 @@
     "Thread options": "אפשרויות שרשור",
     "Can't create a thread from an event with an existing relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים",
     "Open thread": "פתיחת שרשור",
-    "From a thread": "משרשור",
     "Reply in thread": "מענה בשרשור",
     "Verify this device": "אמתו את מכשיר זה",
     "Unable to verify this device": "לא ניתן לאמת את מכשיר זה",
@@ -1015,7 +999,8 @@
         "low_priority": "עדיפות נמוכה",
         "historical": "היסטוריה",
         "go_to_settings": "עבור להגדרות",
-        "setup_secure_messages": "הגדר הודעות מאובטחות"
+        "setup_secure_messages": "הגדר הודעות מאובטחות",
+        "unencrypted": "לא מוצפן"
     },
     "action": {
         "continue": "המשך",
@@ -1248,7 +1233,8 @@
         "poll_button_no_perms_description": "אין לכם הרשאה להתחיל סקר בחדר זה.",
         "poll_button": "סקר",
         "format_italics": "נטוי",
-        "replying_title": "משיבים"
+        "replying_title": "משיבים",
+        "edit_composer_label": "ערוך הודעה"
     },
     "Code": "קוד",
     "power_level": {
@@ -1968,7 +1954,11 @@
         },
         "url_preview": {
             "close": "סגור תצוגה מקדימה"
-        }
+        },
+        "thread_info_basic": "משרשור",
+        "error_no_renderer": "לא ניתן להציג את הארוע הזה",
+        "send_state_sent": "ההודעה שלך נשלחה",
+        "send_state_failed": "השליחה נכשלה"
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2350,7 +2340,19 @@
             "title": "שיטת השחזור הוסרה",
             "description_2": "אם עשית זאת בטעות, באפשרותך להגדיר הודעות מאובטחות בהפעלה זו אשר תצפין מחדש את היסטוריית ההודעות של הפגישה בשיטת שחזור חדשה.",
             "warning": "אם לא הסרת את שיטת השחזור, ייתכן שתוקף מנסה לגשת לחשבונך. שנה את סיסמת החשבון שלך והגדר מיד שיטת שחזור חדשה בהגדרות."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
+            "title": "הגדר"
+        },
+        "cross_signing_user_warning": "משתמש זה לא אימת את כל ההפעלות שלו.",
+        "cross_signing_user_normal": "לא אימתת משתמש זה.",
+        "cross_signing_user_verified": "אימתת משתמש זה. משתמש זה אימת את כל ההפעלות שלו.",
+        "cross_signing_room_warning": "מישהו משתמש בהפעלה לא ידועה",
+        "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה",
+        "cross_signing_room_verified": "כולם מאומתים בחדר זה",
+        "event_shield_reason_authenticity_not_guaranteed": "לא ניתן להבטיח את האותנטיות של הודעה מוצפנת זו במכשיר זה.",
+        "event_shield_reason_mismatched_sender_key": "הוצפן על ידי מושב לא מאומת"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",

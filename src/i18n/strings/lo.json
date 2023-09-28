@@ -274,22 +274,9 @@
     "Peru": "ເປຣູ",
     "Paraguay": "ປາຣາກວາຍ",
     "Message Actions": "ການດຳເນີນການທາງຂໍ້ຄວາມ",
-    "Failed to send": "ການສົ່ງບໍ່ສຳເລັດ",
-    "Your message was sent": "ຂໍ້ຄວາມຂອງທ່ານຖືກສົ່ງໄປແລ້ວ",
     "Encrypted by a deleted session": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ຖືກລຶບ",
-    "Unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
-    "Encrypted by an unverified session": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ",
     "Copy link to thread": "ສຳເນົາລິ້ງໃສ່ກະທູ້",
     "View in room": "ເບິ່ງຢູ່ໃນຫ້ອງ",
-    "This event could not be displayed": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
-    "From a thread": "ຈາກກະທູ້",
-    "Edit message": "ແກ້ໄຂຂໍ້ຄວາມ",
-    "Everyone in this room is verified": "ທຸກຄົນຢູ່ໃນຫ້ອງນີ້ໄດ້ຮັບການຢັ້ງຢືນແລ້ວ",
-    "This room is end-to-end encrypted": "ຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ເຖິງປາຍທາງ",
-    "Someone is using an unknown session": "ບາງຄົນກໍາລັງໃຊ້ເງື່ອນໄຂທີ່ບໍ່ຮູ້ຈັກ",
-    "You have verified this user. This user has verified all of their sessions.": "ທ່ານໄດ້ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ແລ້ວ. ຜູ້ໃຊ້ນີ້ໄດ້ຢັ້ງຢືນທຸກເງິຶອນໄຂຂອງເຂົາເຈົ້າແລ້ວ.",
-    "You have not verified this user.": "ທ່ານຍັງບໍ່ໄດ້ຢືນຢັນຜູ້ໃຊ້ນີ້.",
-    "This user has not verified all of their sessions.": "ຜູ້ໃຊ້ນີ້ຍັງບໍ່ໄດ້ຢຶນຢັນການເຂົ້າຮ່ວມຂອງເຂົາເຈົ້າທັງຫມົດຂອງ.",
     "Warning!": "ແຈ້ງເຕືອນ!",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
@@ -975,8 +962,6 @@
     "Leave space": "ອອກຈາກພື້ນທີ່",
     "Leave some rooms": "ອອກຈາກບາງຫ້ອງ",
     "Leave all rooms": "ອອກຈາກຫ້ອງທັງຫມົດ",
-    "Set up": "ຕັ້ງຄ່າ",
-    "Back up your keys before signing out to avoid losing them.": "ສຳຮອງຂໍ້ມູນກະແຈຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍຂໍ້ມູນ.",
     "Backup version:": "ເວີຊັ້ນສໍາຮອງຂໍ້ມູນ:",
     "This backup is trusted because it has been restored on this session": "ການສຳຮອງຂໍ້ມູນນີ້ແມ່ນເຊື່ອຖືໄດ້ເນື່ອງຈາກຖືກກູ້ຄືນໃນລະບົບນີ້",
     "Fish": "ປາ",
@@ -1091,7 +1076,6 @@
     "Failed to send logs: ": "ສົ່ງບັນທຶກບໍ່ສຳເລັດ: ",
     "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
     "Scroll to most recent messages": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
@@ -1255,7 +1239,8 @@
         "low_priority": "ບູລິມະສິດຕໍ່າ",
         "historical": "ປະຫວັດ",
         "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ",
-        "setup_secure_messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ"
+        "setup_secure_messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ",
+        "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1516,7 +1501,8 @@
         "poll_button": "ການສໍາຫລວດ",
         "format_italics": "ໂຕໜັງສືອຽງ",
         "format_insert_link": "ໃສ່ລິ້ງ",
-        "replying_title": "ກຳລັງຕອບກັບ"
+        "replying_title": "ກຳລັງຕອບກັບ",
+        "edit_composer_label": "ແກ້ໄຂຂໍ້ຄວາມ"
     },
     "Code": "ລະຫັດ",
     "power_level": {
@@ -2352,7 +2338,11 @@
             "one": "ເຫັນໂດຍ %(count)s ຄົນ",
             "other": "ເຫັນໂດຍ %(count)s ຄົນ"
         },
-        "read_receipts_label": "ຢັ້ງຢືນອ່ານແລ້ວ"
+        "read_receipts_label": "ຢັ້ງຢືນອ່ານແລ້ວ",
+        "thread_info_basic": "ຈາກກະທູ້",
+        "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
+        "send_state_sent": "ຂໍ້ຄວາມຂອງທ່ານຖືກສົ່ງໄປແລ້ວ",
+        "send_state_failed": "ການສົ່ງບໍ່ສຳເລັດ"
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -2777,7 +2767,19 @@
             "description_1": "ລະບົບນີ້ໄດ້ກວດພົບປະໂຫຍກຄວາມປອດໄພ ແລະ ກະແຈຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານໄດ້ຖືກເອົາອອກແລ້ວ.",
             "description_2": "ຖ້າທ່ານດຳເນີນການສິ່ງນີ້ໂດຍບໍ່ໄດ້ຕັ້ງໃຈ, ທ່ານສາມາດຕັ້ງຄ່າຄວາມປອດໄພຂອງຂໍ້ຄວາມ ໃນລະບົບນີ້ ເຊິ່ງຈະມີການເຂົ້າລະຫັດປະຫວັດຂໍ້ຄວາມຂອງລະບົບນີ້ຄືນໃໝ່ດ້ວຍຂະບວນການກູ້ຂໍ້ມູນໃໝ່.",
             "warning": "ຖ້າທ່ານບໍ່ໄດ້ລືບຂະບວນການກູ້ຄືນ, ຜູ້ໂຈມຕີອາດຈະພະຍາຍາມເຂົ້າເຖິງບັນຊີຂອງທ່ານ. ປ່ຽນລະຫັດຜ່ານບັນຊີຂອງທ່ານ ແລະ ກຳນົດຂະບວນການກູ້ຄືນໃໝ່ທັນທີໃນການຕັ້ງຄ່າ."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "ສຳຮອງຂໍ້ມູນກະແຈຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍຂໍ້ມູນ.",
+            "title": "ຕັ້ງຄ່າ"
+        },
+        "cross_signing_user_warning": "ຜູ້ໃຊ້ນີ້ຍັງບໍ່ໄດ້ຢຶນຢັນການເຂົ້າຮ່ວມຂອງເຂົາເຈົ້າທັງຫມົດຂອງ.",
+        "cross_signing_user_normal": "ທ່ານຍັງບໍ່ໄດ້ຢືນຢັນຜູ້ໃຊ້ນີ້.",
+        "cross_signing_user_verified": "ທ່ານໄດ້ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ແລ້ວ. ຜູ້ໃຊ້ນີ້ໄດ້ຢັ້ງຢືນທຸກເງິຶອນໄຂຂອງເຂົາເຈົ້າແລ້ວ.",
+        "cross_signing_room_warning": "ບາງຄົນກໍາລັງໃຊ້ເງື່ອນໄຂທີ່ບໍ່ຮູ້ຈັກ",
+        "cross_signing_room_normal": "ຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ເຖິງປາຍທາງ",
+        "cross_signing_room_verified": "ທຸກຄົນຢູ່ໃນຫ້ອງນີ້ໄດ້ຮັບການຢັ້ງຢືນແລ້ວ",
+        "event_shield_reason_authenticity_not_guaranteed": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
+        "event_shield_reason_mismatched_sender_key": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",

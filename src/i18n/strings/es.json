@@ -100,7 +100,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s de %(monthName)s de %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s de %(monthName)s del %(fullYear)s a las %(time)s",
     "Restricted": "Restringido",
-    "This event could not be displayed": "No se ha podido mostrar este evento",
     "Demote yourself?": "¿Quitarte permisos a ti mismo?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "No podrás deshacer este cambio ya que estás quitándote permisos a ti mismo, si eres el último usuario con privilegios de la sala te resultará imposible recuperarlos.",
     "Demote": "Quitar permisos",
@@ -219,7 +218,6 @@
     "Headphones": "Auriculares",
     "Folder": "Carpeta",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Los mensajes cifrados son seguros con el cifrado punto a punto. Solo tú y el/los destinatario/s tiene/n las claves para leer estos mensajes.",
-    "Back up your keys before signing out to avoid losing them.": "Haz copia de seguridad de tus claves antes de cerrar sesión para evitar perderlas.",
     "Start using Key Backup": "Comenzar a usar la copia de claves",
     "Add some now": "Añadir alguno ahora",
     "Main address": "Dirección principal",
@@ -288,15 +286,7 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) inició una nueva sesión sin verificarla:",
     "Ask this user to verify their session, or manually verify it below.": "Pídele al usuario que verifique su sesión, o verifícala manualmente a continuación.",
     "Not Trusted": "No es de confianza",
-    "Set up": "Configurar",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
-    "This user has not verified all of their sessions.": "Este usuario no ha verificado todas sus sesiones.",
-    "You have not verified this user.": "No has verificado a este usuario.",
-    "You have verified this user. This user has verified all of their sessions.": "Usted ha verificado este usuario. Este usuario ha verificado todas sus sesiones.",
-    "Someone is using an unknown session": "Alguien está usando una sesión desconocida",
-    "This room is end-to-end encrypted": "Esta sala usa cifrado de extremo a extremo",
-    "Everyone in this room is verified": "Todos los participantes en esta sala están verificados",
-    "Edit message": "Editar mensaje",
     "Language Dropdown": "Lista selección de idiomas",
     "Power level": "Nivel de poder",
     "e.g. my-room": "p.ej. mi-sala",
@@ -339,8 +329,6 @@
     "a device cross-signing signature": "una firma para la firma cruzada de dispositivos",
     "a key signature": "un firma de clave",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontró un error durante la carga de:",
-    "Encrypted by an unverified session": "Cifrado por una sesión no verificada",
-    "Unencrypted": "Sin cifrar",
     "Encrypted by a deleted session": "Cifrado por una sesión eliminada",
     "Scroll to most recent messages": "Ir a los mensajes más recientes",
     "No recent messages by %(user)s found": "No se han encontrado mensajes recientes de %(user)s",
@@ -473,7 +461,6 @@
     "Ok": "Ok",
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
     "Your homeserver has exceeded one of its resource limits.": "Tú servidor ha excedido el limite de sus recursos.",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "La autenticidad de este mensaje cifrado no puede ser garantizada en este dispositivo.",
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Error creating address": "Error al crear la dirección",
@@ -834,7 +821,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
     "Create a new room": "Crear una sala nueva",
     "Space selection": "Selección de espacio",
-    "Your message was sent": "Mensaje enviado",
     "Leave space": "Salir del espacio",
     "Create a space": "Crear un espacio",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
@@ -877,7 +863,6 @@
         "one": "Ver 1 miembro",
         "other": "Ver los %(count)s miembros"
     },
-    "Failed to send": "No se ha podido mandar",
     "Want to add a new room instead?": "¿Quieres añadir una sala nueva en su lugar?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Añadiendo salas… (%(progress)s de %(count)s)",
@@ -1067,7 +1052,6 @@
     "Close this widget to view it in this panel": "Cierra este accesorio para verlo en este panel",
     "Unpin this widget to view it in this panel": "Deja de fijar este accesorio para verlo en este panel",
     "To proceed, please accept the verification request on your other device.": "Para continuar, acepta la solicitud de verificación en tu otro dispositivo.",
-    "From a thread": "Desde un hilo",
     "Message pending moderation": "Mensaje esperando revisión",
     "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
     "Pick a date to jump to": "Elige la fecha a la que saltar",
@@ -1224,7 +1208,6 @@
     "Error starting verification": "Error al empezar la verificación",
     "Text": "Texto",
     "Create a link": "Crear un enlace",
-    "This message could not be decrypted": "No se ha podido descifrar este mensaje",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
     "Connecting…": "Conectando…",
     "Scan QR code": "Escanear código QR",
@@ -1248,8 +1231,6 @@
     "Edit link": "Editar enlace",
     "Search all rooms": "Buscar en todas las salas",
     "Search this room": "Buscar en esta sala",
-    "Encrypting your message…": "Cifrando tu mensaje…",
-    "Sending your message…": "Enviando tu mensaje…",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -1383,7 +1364,8 @@
         "low_priority": "Prioridad baja",
         "historical": "Historial",
         "go_to_settings": "Ir a la configuración",
-        "setup_secure_messages": "Configurar mensajes seguros"
+        "setup_secure_messages": "Configurar mensajes seguros",
+        "unencrypted": "Sin cifrar"
     },
     "action": {
         "continue": "Continuar",
@@ -1707,7 +1689,8 @@
         "formatting_toolbar_label": "Formato",
         "format_italics": "Cursiva",
         "format_insert_link": "Insertar enlace",
-        "replying_title": "Respondiendo"
+        "replying_title": "Respondiendo",
+        "edit_composer_label": "Editar mensaje"
     },
     "Link": "Enlace",
     "Code": "Código",
@@ -2719,7 +2702,14 @@
             "one": "%(count)s persona lo ha visto",
             "other": "%(count)s personas lo han visto"
         },
-        "read_receipts_label": "Acuses de recibo"
+        "read_receipts_label": "Acuses de recibo",
+        "thread_info_basic": "Desde un hilo",
+        "error_no_renderer": "No se ha podido mostrar este evento",
+        "undecryptable_tooltip": "No se ha podido descifrar este mensaje",
+        "send_state_sending": "Enviando tu mensaje…",
+        "send_state_encrypting": "Cifrando tu mensaje…",
+        "send_state_sent": "Mensaje enviado",
+        "send_state_failed": "No se ha podido mandar"
     },
     "slash_command": {
         "spoiler": "Envía el mensaje como un spoiler",
@@ -3184,7 +3174,19 @@
             "description_1": "Esta sesión ha detectado que tu frase de seguridad y clave para mensajes seguros ha sido eliminada.",
             "description_2": "Si hizo esto accidentalmente, puede configurar Mensajes seguros en esta sesión que volverá a cifrar el historial de mensajes de esta sesión con un nuevo método de recuperación.",
             "warning": "Si no eliminó el método de recuperación, es posible que un atacante esté intentando acceder a su cuenta. Cambie la contraseña de su cuenta y configure un nuevo método de recuperación inmediatamente en Configuración."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Haz copia de seguridad de tus claves antes de cerrar sesión para evitar perderlas.",
+            "title": "Configurar"
+        },
+        "cross_signing_user_warning": "Este usuario no ha verificado todas sus sesiones.",
+        "cross_signing_user_normal": "No has verificado a este usuario.",
+        "cross_signing_user_verified": "Usted ha verificado este usuario. Este usuario ha verificado todas sus sesiones.",
+        "cross_signing_room_warning": "Alguien está usando una sesión desconocida",
+        "cross_signing_room_normal": "Esta sala usa cifrado de extremo a extremo",
+        "cross_signing_room_verified": "Todos los participantes en esta sala están verificados",
+        "event_shield_reason_authenticity_not_guaranteed": "La autenticidad de este mensaje cifrado no puede ser garantizada en este dispositivo.",
+        "event_shield_reason_mismatched_sender_key": "Cifrado por una sesión no verificada"
     },
     "emoji": {
         "category_frequently_used": "Frecuente",

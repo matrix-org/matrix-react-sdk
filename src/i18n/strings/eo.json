@@ -201,20 +201,16 @@
     "Could not load user profile": "Ne povis enlegi profilon de uzanto",
     "Your password has been reset.": "Vi reagordis vian pasvorton.",
     "General failure": "Ĝenerala fiasko",
-    "Set up": "Agordi",
     "Santa": "Kristnaska viro",
     "Thumbs up": "Dikfingro supren",
     "Paperclip": "Paperkuntenilo",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Ĉifritaj mesaĝoj estas sekurigitaj per tutvoja ĉifrado. Nur vi kaj la ricevonto(j) havas la ŝlosilojn necesajn por legado.",
-    "Back up your keys before signing out to avoid losing them.": "Savkopiu viajn ŝlosilojn antaŭ adiaŭo, por ilin ne perdi.",
-    "This event could not be displayed": "Ĉi tiu okazo ne povis montriĝi",
     "This room is not public. You will not be able to rejoin without an invite.": "Ĉi tiu ĉambro ne estas publika. Vi ne povos re-aliĝi sen invito.",
     "Revoke invite": "Nuligi inviton",
     "Invited by %(sender)s": "Invitita de %(sender)s",
     "Error updating main address": "Ĝisdatigo de la ĉefa adreso eraris",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Ĝisdatigo de la ĉefa adreso de la ĉambro eraris. Aŭ la servilo tion ne permesas, aŭ io misfunkciis.",
     "edited": "redaktita",
-    "Edit message": "Redakti mesaĝon",
     "This room has already been upgraded.": "Ĉi tiu ĉambro jam gradaltiĝis.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Ĉi tiu ĉambro uzas ĉambran version <roomVersion />, kiun la hejmservilo markis kiel <i>nestabilan</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Gradaltigo de la ĉambro forigos la nunan ĉambron kaj kreos novan kun la sama nomo.",
@@ -342,9 +338,6 @@
     "Close dialog": "Fermi interagujon",
     "Command Help": "Helpo pri komando",
     "Lock": "Seruro",
-    "This room is end-to-end encrypted": "Ĉi tiu ĉambro uzas tutvojan ĉifradon",
-    "Everyone in this room is verified": "Ĉiu en la ĉambro estas kontrolita",
-    "Unencrypted": "Neĉifrita",
     "Direct Messages": "Individuaj ĉambroj",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
     "Verify User": "Kontroli uzanton",
@@ -360,11 +353,6 @@
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
-    "This user has not verified all of their sessions.": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
-    "You have not verified this user.": "Vi ne kontrolis tiun ĉi uzanton.",
-    "You have verified this user. This user has verified all of their sessions.": "Vi kontrolis tiun ĉi uzanton. Ĝi kontrolis ĉiomon da siaj salutaĵoj.",
-    "Someone is using an unknown session": "Iu uzas nekonatan salutaĵon",
-    "Encrypted by an unverified session": "Ĉifrita de nekontrolita salutaĵo",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Eraris ĝisdatigo de la alternativaj adresoj de la ĉambro. Eble la servilo ne permesas tion, aŭ io dumtempe ne funkcias.",
     "Waiting for %(displayName)s to accept…": "Atendante akcepton de %(displayName)s…",
@@ -489,7 +477,6 @@
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
     "Ok": "Bone",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
     "Message preview": "Antaŭrigardo al mesaĝo",
     "Wrong file type": "Neĝusta dosiertipo",
     "Looks good!": "Ŝajnas bona!",
@@ -843,7 +830,6 @@
     "Space selection": "Elekto de aro",
     "Edit devices": "Redakti aparatojn",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Vi ne povos malfari ĉi tiun ŝanĝon, ĉar vi malrangaltigas vin mem; se vi estas la lasta altranga uzanto de la aro, vi ne plu povos rehavi viajn rajtojn.",
-    "Your message was sent": "Via mesaĝo sendiĝis",
     "Leave space": "Forlasi aron",
     "Create a space": "Krei aron",
     "You may want to try a different search or check for typos.": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
@@ -860,7 +846,6 @@
         "one": "Montri 1 anon",
         "other": "Montri ĉiujn %(count)s anojn"
     },
-    "Failed to send": "Malsukcesis sendi",
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
@@ -1091,7 +1076,8 @@
         "low_priority": "Malpli gravaj",
         "historical": "Estintaj",
         "go_to_settings": "Iri al agordoj",
-        "setup_secure_messages": "Agordi Sekurajn mesaĝojn"
+        "setup_secure_messages": "Agordi Sekurajn mesaĝojn",
+        "unencrypted": "Neĉifrita"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1329,7 +1315,8 @@
         "poll_button_no_perms_title": "Necesas permeso",
         "poll_button": "Balotenketo",
         "format_italics": "Kursive",
-        "replying_title": "Respondante"
+        "replying_title": "Respondante",
+        "edit_composer_label": "Redakti mesaĝon"
     },
     "Code": "Kodo",
     "power_level": {
@@ -2061,7 +2048,10 @@
                 "other": "Montri %(count)s aliajn antaŭrigardojn"
             },
             "close": "Fermi antaŭrigardon"
-        }
+        },
+        "error_no_renderer": "Ĉi tiu okazo ne povis montriĝi",
+        "send_state_sent": "Via mesaĝo sendiĝis",
+        "send_state_failed": "Malsukcesis sendi"
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",
@@ -2474,7 +2464,19 @@
             "description_1": "Tiu ĉi salutaĵo trovis, ke viaj Sekureca frazo kaj ŝlosilo por Sekuraj mesaĝoj foriĝis.",
             "description_2": "Se vi faris tion akcidente, vi povas agordi Sekurajn mesaĝojn en ĉi tiu salutaĵo, kio reĉifros la historion de mesaj de ĉi tiu salutaĵo kun nova rehava metodo.",
             "warning": "Se vi ne forigis la rehavan metodon, eble atakanto provas aliri vian konton. Vi tuj ŝanĝu la pasvorton de via konto, kaj agordu novan rehavan metodon en la agordoj."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Savkopiu viajn ŝlosilojn antaŭ adiaŭo, por ilin ne perdi.",
+            "title": "Agordi"
+        },
+        "cross_signing_user_warning": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
+        "cross_signing_user_normal": "Vi ne kontrolis tiun ĉi uzanton.",
+        "cross_signing_user_verified": "Vi kontrolis tiun ĉi uzanton. Ĝi kontrolis ĉiomon da siaj salutaĵoj.",
+        "cross_signing_room_warning": "Iu uzas nekonatan salutaĵon",
+        "cross_signing_room_normal": "Ĉi tiu ĉambro uzas tutvojan ĉifradon",
+        "cross_signing_room_verified": "Ĉiu en la ĉambro estas kontrolita",
+        "event_shield_reason_authenticity_not_guaranteed": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
+        "event_shield_reason_mismatched_sender_key": "Ĉifrita de nekontrolita salutaĵo"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",

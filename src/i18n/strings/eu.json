@@ -142,7 +142,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ezin duzu mezurik bidali <consentLink>gure termino eta baldintzak</consentLink> irakurri eta onartu arte.",
     "Demote yourself?": "Jaitsi zure burua mailaz?",
     "Demote": "Jaitzi mailaz",
-    "This event could not be displayed": "Ezin izan da gertakari hau bistaratu",
     "Only room administrators will see this warning": "Gelaren administratzaileek besterik ez dute abisu hau ikusiko",
     "Failed to upgrade room": "Huts egin du gela eguneratzea",
     "The room upgrade could not be completed": "Ezin izan da gelaren eguneraketa osatu",
@@ -169,7 +168,6 @@
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
     "Failed to decrypt %(failedCount)s sessions!": "Ezin izan dira %(failedCount)s saio deszifratu!",
     "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
-    "Set up": "Ezarri",
     "General failure": "Hutsegite orokorra",
     "Unable to load commit detail: %(msg)s": "Ezin izan dira xehetasunak kargatu: %(msg)s",
     "Invalid identity server discovery response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
@@ -232,7 +230,6 @@
     "Main address": "Helbide nagusia",
     "Your password has been reset.": "Zure pasahitza berrezarri da.",
     "Start using Key Backup": "Hasi gakoen babes-kopia egiten",
-    "Back up your keys before signing out to avoid losing them.": "Egin gakoen babes-kopia bat saioa amaitu aurretik, galdu nahi ez badituzu.",
     "Headphones": "Aurikularrak",
     "Folder": "Karpeta",
     "Flag": "Bandera",
@@ -271,7 +268,6 @@
     "This room has already been upgraded.": "Gela hau dagoeneko eguneratu da.",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Gela honek <roomVersion /> bertsioa du, eta hasiera-zerbitzariak<i>ez egonkor</i> gisa markatu du.",
     "edited": "editatua",
-    "Edit message": "Editatu mezua",
     "Notes": "Oharrak",
     "Sign out and remove encryption keys?": "Amaitu saioa eta kendu zifratze gakoak?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Etorkizunean hau ekiditeko, <a>bidali guri egunkariak</a>.",
@@ -346,7 +342,6 @@
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
-    "Unencrypted": "Zifratu gabe",
     "Hide verified sessions": "Ezkutatu egiaztatutako saioak",
     "%(count)s verified sessions": {
         "other": "%(count)s egiaztatutako saio",
@@ -367,16 +362,10 @@
     "Something went wrong trying to invite the users.": "Okerren bat egon da erabiltzaileak gonbidatzen saiatzean.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Ezin izan ditugu erabiltzaile horiek gonbidatu. Egiaztatu gonbidatu nahi dituzun erabiltzaileak eta saiatu berriro.",
     "Recently Direct Messaged": "Berriki mezu zuzena bidalita",
-    "This room is end-to-end encrypted": "Gela hau muturretik muturrera zifratuta dago",
-    "Everyone in this room is verified": "Gelako guztiak egiaztatuta daude",
     "Verify User": "Egiaztatu erabiltzailea",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Segurtasun gehiagorako, egiaztatu erabiltzaile hau aldi-bakarrerako kode bat bi gailuetan egiaztatuz.",
     "Start Verification": "Hasi egiaztaketa",
     "This backup is trusted because it has been restored on this session": "Babes-kopia hau fidagarritzat jotzen da saio honetan berrekuratu delako",
-    "This user has not verified all of their sessions.": "Erabiltzaile honek ez ditu bere saio guztiak egiaztatu.",
-    "You have not verified this user.": "Ez duzu erabiltzaile hau egiaztatu.",
-    "Someone is using an unknown session": "Baten batek saio ezezagun bat erabiltzen du",
-    "Encrypted by an unverified session": "Egiaztatu gabeko saio batek zifratua",
     "Encrypted by a deleted session": "Ezabatutako saio batek zifratua",
     "Your messages are not secure": "Zure mezuak ez daude babestuta",
     "Your homeserver": "Zure hasiera-zerbitzaria",
@@ -397,7 +386,6 @@
     "Session name": "Saioaren izena",
     "Session key": "Saioaren gakoa",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
-    "You have verified this user. This user has verified all of their sessions.": "Erabiltzaile hau egiaztatu duzu. Erabiltzaile honek bere saio guztiak egiaztatu ditu.",
     "Waiting for %(displayName)s to accept…": "%(displayName)s(e)k onartu bitartean zain…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Zuen mezuak babestuta daude eta soilik zuk eta hartzaileak dituzue hauek desblokeatzeko gakoak.",
     "One of the following may be compromised:": "Hauetakoren bat konprometituta egon daiteke:",
@@ -565,7 +553,8 @@
         "low_priority": "Lehentasun baxua",
         "historical": "Historiala",
         "go_to_settings": "Joan ezarpenetara",
-        "setup_secure_messages": "Ezarri mezu seguruak"
+        "setup_secure_messages": "Ezarri mezu seguruak",
+        "unencrypted": "Zifratu gabe"
     },
     "action": {
         "continue": "Jarraitu",
@@ -731,7 +720,8 @@
         "no_perms_notice": "Ez duzu gela honetara mezuak bidaltzeko baimenik",
         "poll_button_no_perms_title": "Baimena beharrezkoa",
         "format_italics": "Etzana",
-        "replying_title": "Erantzuten"
+        "replying_title": "Erantzuten",
+        "edit_composer_label": "Editatu mezua"
     },
     "Code": "Kodea",
     "power_level": {
@@ -1211,7 +1201,8 @@
         },
         "url_preview": {
             "close": "Itxi aurrebista"
-        }
+        },
+        "error_no_renderer": "Ezin izan da gertakari hau bistaratu"
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",
@@ -1439,7 +1430,18 @@
             "title": "Berreskuratze metodoa kendu da",
             "description_2": "Nahi gabe egin baduzu hau, Mezu seguruak ezarri ditzakezu saio honetan eta saioaren mezuen historiala berriro zifratuko da berreskuratze metodo berriarekin.",
             "warning": "Ez baduzu berreskuratze metodoa kendu, agian erasotzaile bat zure mezuen historialera sarbidea lortu nahi du. Aldatu kontuaren pasahitza eta ezarri berreskuratze metodo berri bat berehala ezarpenetan."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Egin gakoen babes-kopia bat saioa amaitu aurretik, galdu nahi ez badituzu.",
+            "title": "Ezarri"
+        },
+        "cross_signing_user_warning": "Erabiltzaile honek ez ditu bere saio guztiak egiaztatu.",
+        "cross_signing_user_normal": "Ez duzu erabiltzaile hau egiaztatu.",
+        "cross_signing_user_verified": "Erabiltzaile hau egiaztatu duzu. Erabiltzaile honek bere saio guztiak egiaztatu ditu.",
+        "cross_signing_room_warning": "Baten batek saio ezezagun bat erabiltzen du",
+        "cross_signing_room_normal": "Gela hau muturretik muturrera zifratuta dago",
+        "cross_signing_room_verified": "Gelako guztiak egiaztatuta daude",
+        "event_shield_reason_mismatched_sender_key": "Egiaztatu gabeko saio batek zifratua"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",

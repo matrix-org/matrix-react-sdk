@@ -374,15 +374,6 @@
     },
     "Send voice message": "Στείλτε φωνητικό μήνυμα",
     "Scroll to most recent messages": "Κύλιση στα πιο πρόσφατα μηνύματα",
-    "Failed to send": "Αποτυχία αποστολής",
-    "Your message was sent": "Το μήνυμά σας στάλθηκε",
-    "Edit message": "Επεξεργασία μηνύματος",
-    "Everyone in this room is verified": "Όλοι σε αυτό το δωμάτιο έχουν επαληθευτεί",
-    "This room is end-to-end encrypted": "Αυτό το δωμάτιο έχει κρυπτογράφηση από άκρο σε άκρο",
-    "Someone is using an unknown session": "Κάποιος χρησιμοποιεί μια άγνωστη συνεδρία",
-    "You have verified this user. This user has verified all of their sessions.": "Έχετε επαληθεύσει αυτόν τον χρήστη. Αυτός ο χρήστης έχει επαληθεύσει όλες τις συνεδρίες του.",
-    "You have not verified this user.": "Δεν έχετε επαληθεύσει αυτόν τον χρήστη.",
-    "This user has not verified all of their sessions.": "Αυτός ο χρήστης δεν έχει επαληθεύσει όλες τις συνεδρίες του.",
     "Backup version:": "Έκδοση αντιγράφου ασφαλείας:",
     "Developer": "Προγραμματιστής",
     "Experimental": "Πειραματικό",
@@ -455,7 +446,6 @@
     "Ball": "Μπάλα",
     "Trophy": "Τρόπαιο",
     "Rocket": "Πύραυλος",
-    "Back up your keys before signing out to avoid losing them.": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
@@ -474,9 +464,7 @@
     "You sent a verification request": "Στείλατε ένα αίτημα επαλήθευσης",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "View message": "Προβολή μηνύματος",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Η αυθεντικότητα αυτού του κρυπτογραφημένου μηνύματος δεν είναι εγγυημένη σε αυτήν τη συσκευή.",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
-    "Unencrypted": "Μη κρυπτογραφημένο",
     "Message Actions": "Ενέργειες μηνυμάτων",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
     "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
@@ -509,11 +497,8 @@
     "Clear cache and resync": "Εκκαθάριση προσωρινής μνήμης και επανασυγχρονισμός",
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
-    "Encrypted by an unverified session": "Κρυπτογραφήθηκε από μια μη επαληθευμένη συνεδρία",
     "Copy link to thread": "Αντιγραφή συνδέσμου στο νήμα εκτέλεσης",
     "View in room": "Δείτε στο δωμάτιο",
-    "This event could not be displayed": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος",
-    "From a thread": "Από ένα νήμα εκτέλεσης",
     "Continuing without email": "Συνέχεια χωρίς email",
     "Upgrade Room Version": "Αναβάθμιση Έκδοσης Δωματίου",
     "Upgrade this room to version %(version)s": "Αναβαθμίστε αυτό το δωμάτιο στην έκδοση %(version)s",
@@ -1070,7 +1055,6 @@
     "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
     "a new master key signature": "μια νέα υπογραφή κύριου κλειδιού",
     "We couldn't create your DM.": "Δεν μπορέσαμε να δημιουργήσουμε το DM σας.",
-    "Set up": "Εγκατάσταση",
     "Joined": "Συνδέθηκε",
     "Joining": "Συνδέετε",
     "Avatar": "Avatar",
@@ -1245,7 +1229,8 @@
         "low_priority": "Χαμηλής προτεραιότητας",
         "historical": "Ιστορικό",
         "go_to_settings": "Μετάβαση στις Ρυθμίσεις",
-        "setup_secure_messages": "Ρύθμιση ασφαλών μηνυμάτων"
+        "setup_secure_messages": "Ρύθμιση ασφαλών μηνυμάτων",
+        "unencrypted": "Μη κρυπτογραφημένο"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -1514,7 +1499,8 @@
         "poll_button": "Ψηφοφορία",
         "format_italics": "Πλάγια",
         "format_insert_link": "Εισαγωγή συνδέσμου",
-        "replying_title": "Απαντώντας"
+        "replying_title": "Απαντώντας",
+        "edit_composer_label": "Επεξεργασία μηνύματος"
     },
     "Code": "Κωδικός",
     "power_level": {
@@ -2350,7 +2336,11 @@
         "read_receipt_title": {
             "one": "Αναγνώστηκε από %(count)s άτομο",
             "other": "Αναγνώστηκε από %(count)s άτομα"
-        }
+        },
+        "thread_info_basic": "Από ένα νήμα εκτέλεσης",
+        "error_no_renderer": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος",
+        "send_state_sent": "Το μήνυμά σας στάλθηκε",
+        "send_state_failed": "Αποτυχία αποστολής"
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -2771,7 +2761,19 @@
             "description_1": "Αυτή η συνεδρία εντόπισε ότι η φράση ασφαλείας σας και το κλειδί για τα ασφαλή μηνύματα σας έχουν αφαιρεθεί.",
             "description_2": "Εάν το κάνατε κατά λάθος, μπορείτε να ρυθμίσετε τα Ασφαλή Μηνύματα σε αυτήν τη συνεδρία, τα οποία θα κρυπτογραφούν εκ νέου το ιστορικό μηνυμάτων αυτής της συνεδρίας με μια νέα μέθοδο ανάκτησης.",
             "warning": "Εάν δεν καταργήσατε τη μέθοδο ανάκτησης, ένας εισβολέας μπορεί να προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας. Αλλάξτε τον κωδικό πρόσβασης του λογαριασμού σας και ορίστε μια νέα μέθοδο ανάκτησης αμέσως στις Ρυθμίσεις."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Δημιουργήστε αντίγραφα ασφαλείας των κλειδιών σας πριν αποσυνδεθείτε για να μην τα χάσετε.",
+            "title": "Εγκατάσταση"
+        },
+        "cross_signing_user_warning": "Αυτός ο χρήστης δεν έχει επαληθεύσει όλες τις συνεδρίες του.",
+        "cross_signing_user_normal": "Δεν έχετε επαληθεύσει αυτόν τον χρήστη.",
+        "cross_signing_user_verified": "Έχετε επαληθεύσει αυτόν τον χρήστη. Αυτός ο χρήστης έχει επαληθεύσει όλες τις συνεδρίες του.",
+        "cross_signing_room_warning": "Κάποιος χρησιμοποιεί μια άγνωστη συνεδρία",
+        "cross_signing_room_normal": "Αυτό το δωμάτιο έχει κρυπτογράφηση από άκρο σε άκρο",
+        "cross_signing_room_verified": "Όλοι σε αυτό το δωμάτιο έχουν επαληθευτεί",
+        "event_shield_reason_authenticity_not_guaranteed": "Η αυθεντικότητα αυτού του κρυπτογραφημένου μηνύματος δεν είναι εγγυημένη σε αυτήν τη συσκευή.",
+        "event_shield_reason_mismatched_sender_key": "Κρυπτογραφήθηκε από μια μη επαληθευμένη συνεδρία"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",

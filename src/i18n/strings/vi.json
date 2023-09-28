@@ -627,8 +627,6 @@
     "Room avatar": "Hình đại diện phòng",
     "Room Topic": "Chủ đề phòng",
     "Room Name": "Tên phòng",
-    "Set up": "Cài đặt",
-    "Back up your keys before signing out to avoid losing them.": "Sao lưu chìa khóa của bạn trước khi đăng xuất để tránh mất chúng.",
     "Backup version:": "Phiên bản dự phòng:",
     "This backup is trusted because it has been restored on this session": "Bản sao lưu này đáng tin cậy vì nó đã được khôi phục trong phiên này",
     "Home": "Nhà",
@@ -702,24 +700,11 @@
         "other": "và %(count)s khác…"
     },
     "Scroll to most recent messages": "Di chuyển đến các tin nhắn gần đây nhất",
-    "Failed to send": "Gửi thất bại",
-    "Your message was sent": "Tin nhắn của bạn đã được gửi đi",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Tính xác thực của tin nhắn được mã hóa này không thể được đảm bảo trên thiết bị này.",
     "Encrypted by a deleted session": "Được mã hóa bởi một phiên đã xóa",
-    "Unencrypted": "Không được mã hóa",
-    "Encrypted by an unverified session": "Được mã hóa bởi một phiên chưa được xác thực",
-    "This event could not be displayed": "Sự kiện này không thể được hiển thị",
     "%(count)s reply": {
         "one": "%(count)s trả lời",
         "other": "%(count)s trả lời"
     },
-    "Edit message": "Chỉnh sửa tin nhắn",
-    "Everyone in this room is verified": "Mọi người trong phòng này đã được xác thực",
-    "This room is end-to-end encrypted": "Phòng này được mã hóa end-to-end",
-    "Someone is using an unknown session": "Ai đó đang sử dụng một phiên không xác định",
-    "You have verified this user. This user has verified all of their sessions.": "Bạn đã xác thực người dùng này. Người dùng này đã xác thực tất cả các phiên của họ.",
-    "You have not verified this user.": "Bạn chưa xác thực người dùng này.",
-    "This user has not verified all of their sessions.": "Người dùng này chưa xác thực tất cả các phiên của họ.",
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
@@ -1108,9 +1093,6 @@
     "Create a link": "Tạo liên kết",
     "Text": "Chữ",
     "Error starting verification": "Lỗi khi bắt đầu xác thực",
-    "Encrypting your message…": "Đang mã hóa tin nhắn…",
-    "Sending your message…": "Đang gửi tin nhắn…",
-    "This message could not be decrypted": "Không giải mã được tin nhắn",
     "Remove from space": "Loại bỏ khỏi space",
     "Disinvite from space": "Hủy lời mời vào space",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
@@ -1289,7 +1271,8 @@
         "low_priority": "Ưu tiên thấp",
         "historical": "Lịch sử",
         "go_to_settings": "Đi tới Cài đặt",
-        "setup_secure_messages": "Cài đặt Tin nhắn được bảo toàn"
+        "setup_secure_messages": "Cài đặt Tin nhắn được bảo toàn",
+        "unencrypted": "Không được mã hóa"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1598,7 +1581,8 @@
         "formatting_toolbar_label": "Định dạng",
         "format_italics": "In nghiêng",
         "format_insert_link": "Chèn liên kết",
-        "replying_title": "Đang trả lời"
+        "replying_title": "Đang trả lời",
+        "edit_composer_label": "Chỉnh sửa tin nhắn"
     },
     "Link": "Liên kết",
     "Code": "Mã",
@@ -2611,7 +2595,13 @@
             "one": "Gửi bởi %(count)s người",
             "other": "Gửi bởi %(count)s người"
         },
-        "read_receipts_label": "Thông báo đã đọc"
+        "read_receipts_label": "Thông báo đã đọc",
+        "error_no_renderer": "Sự kiện này không thể được hiển thị",
+        "undecryptable_tooltip": "Không giải mã được tin nhắn",
+        "send_state_sending": "Đang gửi tin nhắn…",
+        "send_state_encrypting": "Đang mã hóa tin nhắn…",
+        "send_state_sent": "Tin nhắn của bạn đã được gửi đi",
+        "send_state_failed": "Gửi thất bại"
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -3090,7 +3080,19 @@
             "description_1": "Phiên này đã phát hiện rằng Cụm từ bảo mật và khóa cho Tin nhắn an toàn của bạn đã bị xóa.",
             "description_2": "Nếu bạn vô tình làm điều này, bạn có thể Cài đặt Tin nhắn được bảo toàn trên phiên này. Tính năng này sẽ mã hóa lại lịch sử tin nhắn của phiên này bằng một phương pháp khôi phục mới.",
             "warning": "Nếu bạn không xóa phương pháp khôi phục, kẻ tấn công có thể đang cố truy cập vào tài khoản của bạn. Thay đổi mật khẩu tài khoản của bạn và đặt phương pháp khôi phục mới ngay lập tức trong Cài đặt."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Sao lưu chìa khóa của bạn trước khi đăng xuất để tránh mất chúng.",
+            "title": "Cài đặt"
+        },
+        "cross_signing_user_warning": "Người dùng này chưa xác thực tất cả các phiên của họ.",
+        "cross_signing_user_normal": "Bạn chưa xác thực người dùng này.",
+        "cross_signing_user_verified": "Bạn đã xác thực người dùng này. Người dùng này đã xác thực tất cả các phiên của họ.",
+        "cross_signing_room_warning": "Ai đó đang sử dụng một phiên không xác định",
+        "cross_signing_room_normal": "Phòng này được mã hóa end-to-end",
+        "cross_signing_room_verified": "Mọi người trong phòng này đã được xác thực",
+        "event_shield_reason_authenticity_not_guaranteed": "Tính xác thực của tin nhắn được mã hóa này không thể được đảm bảo trên thiết bị này.",
+        "event_shield_reason_mismatched_sender_key": "Được mã hóa bởi một phiên chưa được xác thực"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",

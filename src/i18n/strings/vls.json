@@ -93,9 +93,7 @@
     "Warning!": "Let ip!",
     "Are you sure?": "Zy je zeker?",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleuterde berichtn zyn beveiligd me eind-tout-eind-versleuterienge. Alleene d’ountvanger(s) en gy èn de sleuters vo deze berichtn te leezn.",
-    "Back up your keys before signing out to avoid losing them.": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
     "Start using Key Backup": "Begint me de sleuterback-up te gebruukn",
-    "This event could not be displayed": "Deze gebeurtenisse kostege nie weergegeevn wordn",
     "Failed to ban user": "Verbann van gebruuker es mislukt",
     "Demote yourself?": "Jen eigen degradeern?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Je kut deze actie nie oungedoan moakn omda je jen eigen degradeert. A je de latste bevoorrechte gebruuker in ’t gesprek zyt, is ’t ounmeuglik van deze rechtn were te krygn.",
@@ -164,7 +162,6 @@
     "Create new room": "E nieuw gesprek anmoakn",
     "collapse": "toeklappn",
     "expand": "uutklappn",
-    "Edit message": "Bericht bewerkn",
     "Power level": "Machtsniveau",
     "Custom level": "Angepast niveau",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kostege de gebeurtenisse woarip da der gereageerd gewist was nie loadn. Allichte bestoa ze nie, of è je geen toeloatienge vo ze te bekykn.",
@@ -296,7 +293,6 @@
     "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
     "General failure": "Algemene foute",
     "Session ID": "Sessie-ID",
-    "Set up": "Instelln",
     "Edited at %(date)s. Click to view edits.": "Bewerkt ip %(date)s. Klikt vo de bewerkiengn te bekykn.",
     "Message edits": "Berichtbewerkiengn",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
@@ -444,7 +440,8 @@
         "room_upgraded_notice": "Dit gesprek is vervangn gewist en is nie langer actief.",
         "no_perms_notice": "J’èt geen toestemmienge voor in dit gesprek te postn",
         "poll_button_no_perms_title": "Toestemmienge vereist",
-        "replying_title": "An ’t beantwoordn"
+        "replying_title": "An ’t beantwoordn",
+        "edit_composer_label": "Bericht bewerkn"
     },
     "Code": "Code",
     "power_level": {
@@ -767,7 +764,8 @@
         },
         "context_menu": {
             "external_url": "Bron-URL"
-        }
+        },
+        "error_no_renderer": "Deze gebeurtenisse kostege nie weergegeevn wordn"
     },
     "slash_command": {
         "shrug": "Plakt ¯\\_(ツ)_/¯ vóór e bericht zounder ipmoak",
@@ -927,6 +925,10 @@
         "recovery_method_removed": {
             "title": "Herstelmethode verwyderd",
             "warning": "A je de herstelmethode nie è verwyderd, is ’t meuglik dat der een anvaller toegank tout jen account probeert te verkrygn. Wyzigt ounmiddellik jen accountpaswoord en stelt e nieuwe herstelmethode in in d’instelliengn."
+        },
+        "setup_secure_backup": {
+            "explainer": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
+            "title": "Instelln"
         }
     },
     "auth": {

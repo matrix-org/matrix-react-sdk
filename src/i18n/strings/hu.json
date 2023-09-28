@@ -142,7 +142,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Nem tudsz üzenetet küldeni amíg nem olvasod el és nem fogadod el a <consentLink>felhasználási feltételeket</consentLink>.",
     "Demote yourself?": "Lefokozod magad?",
     "Demote": "Lefokozás",
-    "This event could not be displayed": "Az eseményt nem lehet megjeleníteni",
     "Only room administrators will see this warning": "Csak a szoba adminisztrátorai látják ezt a figyelmeztetést",
     "Upgrade Room Version": "Szoba verziójának fejlesztése",
     "Create a new room with the same name, description and avatar": "Új szoba készítése ugyanazzal a névvel, leírással és profilképpel",
@@ -170,7 +169,6 @@
     "No backup found!": "Mentés nem található!",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s kapcsolatot nem lehet visszafejteni!",
     "Invalid homeserver discovery response": "A Matrix-kiszolgáló felderítésére kapott válasz érvénytelen",
-    "Set up": "Beállítás",
     "Invalid identity server discovery response": "Az azonosítási kiszolgáló felderítésére érkezett válasz érvénytelen",
     "General failure": "Általános hiba",
     "Unable to load commit detail: %(msg)s": "A véglegesítés részleteinek betöltése sikertelen: %(msg)s",
@@ -251,7 +249,6 @@
     "Couldn't load page": "Az oldal nem tölthető be",
     "Your password has been reset.": "A jelszavad újra beállításra került.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "A titkosított üzenetek végponttól végpontig titkosítással védettek. Csak neked és a címzetteknek lehet meg a kulcs az üzenet visszafejtéséhez.",
-    "Back up your keys before signing out to avoid losing them.": "Mentse a kulcsait a kiszolgálóra kijelentkezés előtt, hogy ne veszítse el azokat.",
     "Start using Key Backup": "Kulcs mentés használatának megkezdése",
     "I don't want my encrypted messages": "Nincs szükségem a titkosított üzeneteimre",
     "Manually export keys": "Kulcsok kézi mentése",
@@ -296,7 +293,6 @@
     "Invalid base_url for m.identity_server": "Érvénytelen base_url az m.identity_server -hez",
     "Identity server URL does not appear to be a valid identity server": "Az azonosítási kiszolgáló webcíme nem tűnik érvényesnek",
     "edited": "szerkesztve",
-    "Edit message": "Üzenet szerkesztése",
     "Upload all": "Összes feltöltése",
     "Edited at %(date)s. Click to view edits.": "Szerkesztés ideje: %(date)s. Kattintson a szerkesztések megtekintéséhez.",
     "Message edits": "Üzenetszerkesztések",
@@ -347,7 +343,6 @@
     "Integrations are disabled": "Az integrációk le vannak tiltva",
     "Integrations not allowed": "Az integrációk nem engedélyezettek",
     "Verification Request": "Ellenőrzési kérés",
-    "Unencrypted": "Titkosítatlan",
     "Upgrade private room": "Privát szoba fejlesztése",
     "Upgrade public room": "Nyilvános szoba fejlesztése",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "A szoba frissítése nem egyszerű művelet, általában a szoba hibás működése, hiányzó funkció vagy biztonsági sérülékenység esetén javasolt.",
@@ -372,14 +367,7 @@
     "Verify User": "Felhasználó ellenőrzése",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "A biztonság fokozásáért ellenőrizd ezt a felhasználót egy egyszeri kód egyeztetésével mindkettőtök készülékén.",
     "Start Verification": "Ellenőrzés elindítása",
-    "This room is end-to-end encrypted": "Ez a szoba végpontok közötti titkosítást használ",
-    "Everyone in this room is verified": "A szobában mindenki ellenőrizve van",
     "This backup is trusted because it has been restored on this session": "Ez a mentés megbízható, mert ebben a munkamenetben lett helyreállítva",
-    "This user has not verified all of their sessions.": "Ez a felhasználó még nem ellenőrizte az összes munkamenetét.",
-    "You have not verified this user.": "Még nem ellenőrizted ezt a felhasználót.",
-    "You have verified this user. This user has verified all of their sessions.": "Ezt a felhasználót ellenőrizted. Ez a felhasználó hitelesítette az összes munkamenetét.",
-    "Someone is using an unknown session": "Valaki ellenőrizetlen munkamenetet használ",
-    "Encrypted by an unverified session": "Ellenőrizetlen munkamenet titkosította",
     "Encrypted by a deleted session": "Törölt munkamenet által lett titkosítva",
     "Waiting for %(displayName)s to accept…": "%(displayName)s felhasználóra várakozás az elfogadáshoz…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Az üzenete biztonságban van, és csak Ön és a címzettek rendelkeznek a visszafejtéshez szükséges egyedi kulcsokkal.",
@@ -492,7 +480,6 @@
     "Message preview": "Üzenet előnézet",
     "Switch theme": "Kinézet váltása",
     "Looks good!": "Jónak tűnik!",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "A titkosított üzenetek valódiságát ezen az eszközön nem lehet garantálni.",
     "Wrong file type": "A fájltípus hibás",
     "Security Phrase": "Biztonsági jelmondat",
     "Security Key": "Biztonsági kulcs",
@@ -835,7 +822,6 @@
     "Create a new room": "Új szoba készítése",
     "Space selection": "Tér kiválasztása",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Nem fogja tudni visszavonni ezt a változtatást, mert lefokozza magát, ha Ön az utolsó privilegizált felhasználó a térben, akkor lehetetlen lesz a jogosultságok visszanyerése.",
-    "Your message was sent": "Üzenet elküldve",
     "Leave space": "Tér elhagyása",
     "Create a space": "Tér létrehozása",
     "<inviter/> invites you": "<inviter/> meghívta",
@@ -878,7 +864,6 @@
         "one": "1 résztvevő megmutatása",
         "other": "Az összes %(count)s résztvevő megmutatása"
     },
-    "Failed to send": "Küldés sikertelen",
     "Want to add a new room instead?": "Inkább új szobát adna hozzá?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Szobák hozzáadása…",
@@ -1070,7 +1055,6 @@
     "Remove them from specific things I'm able to": "Eltávolításuk bizonyos helyekről ahonnan lehet",
     "Remove them from everything I'm able to": "Eltávolításuk mindenhonnan ahonnan csak lehet",
     "Remove from %(roomName)s": "Eltávolít innen: %(roomName)s",
-    "From a thread": "Az üzenetszálból",
     "Pick a date to jump to": "Idő kiválasztása az ugráshoz",
     "Jump to date": "Ugrás időpontra",
     "The beginning of the room": "A szoba indulása",
@@ -1224,7 +1208,6 @@
     "We were unable to start a chat with the other user.": "A beszélgetést a másik felhasználóval nem lehetett elindítani.",
     "Error starting verification": "Ellenőrzés indításakor hiba lépett fel",
     "Unable to decrypt message": "Üzenet visszafejtése sikertelen",
-    "This message could not be decrypted": "Ezt az üzenetet nem lehet visszafejteni",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
     "Text": "Szöveg",
     "Create a link": "Hivatkozás készítése",
@@ -1247,8 +1230,6 @@
     "Waiting for partner to confirm…": "Várakozás a partner megerősítésére…",
     "Adding…": "Hozzáadás…",
     "Declining…": "Elutasítás…",
-    "Encrypting your message…": "Üzenet titkosítása…",
-    "Sending your message…": "Üzenet küldése…",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Loading polls": "Szavazások betöltése",
     "Ended a poll": "Lezárta a szavazást",
@@ -1405,7 +1386,8 @@
         "low_priority": "Alacsony prioritás",
         "historical": "Archív",
         "go_to_settings": "Irány a Beállítások",
-        "setup_secure_messages": "Biztonságos Üzenetek beállítása"
+        "setup_secure_messages": "Biztonságos Üzenetek beállítása",
+        "unencrypted": "Titkosítatlan"
     },
     "action": {
         "continue": "Folytatás",
@@ -1733,7 +1715,8 @@
         "formatting_toolbar_label": "Formázás",
         "format_italics": "Dőlt",
         "format_insert_link": "Link beillesztése",
-        "replying_title": "Válasz"
+        "replying_title": "Válasz",
+        "edit_composer_label": "Üzenet szerkesztése"
     },
     "Link": "Hivatkozás",
     "Code": "Kód",
@@ -2787,7 +2770,14 @@
             "one": "%(count)s ember látta",
             "other": "%(count)s ember látta"
         },
-        "read_receipts_label": "Olvasási visszajelzés"
+        "read_receipts_label": "Olvasási visszajelzés",
+        "thread_info_basic": "Az üzenetszálból",
+        "error_no_renderer": "Az eseményt nem lehet megjeleníteni",
+        "undecryptable_tooltip": "Ezt az üzenetet nem lehet visszafejteni",
+        "send_state_sending": "Üzenet küldése…",
+        "send_state_encrypting": "Üzenet titkosítása…",
+        "send_state_sent": "Üzenet elküldve",
+        "send_state_failed": "Küldés sikertelen"
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",
@@ -3258,7 +3248,19 @@
             "description_1": "A munkamenet észrevette, hogy a biztonságos üzenetek biztonsági jelmondata és kulcsa törölve lett.",
             "description_2": "Ha véletlenül tette, akkor beállíthatja a biztonságos üzeneteket ebben a munkamenetben, ami újra titkosítja a régi üzeneteket a helyreállítási móddal.",
             "warning": "Ha nem Ön törölte a helyreállítási módot, akkor lehet, hogy egy támadó hozzá akar férni a fiókjához. Azonnal változtassa meg a jelszavát, és állítson be egy helyreállítási módot a Beállításokban."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Mentse a kulcsait a kiszolgálóra kijelentkezés előtt, hogy ne veszítse el azokat.",
+            "title": "Beállítás"
+        },
+        "cross_signing_user_warning": "Ez a felhasználó még nem ellenőrizte az összes munkamenetét.",
+        "cross_signing_user_normal": "Még nem ellenőrizted ezt a felhasználót.",
+        "cross_signing_user_verified": "Ezt a felhasználót ellenőrizted. Ez a felhasználó hitelesítette az összes munkamenetét.",
+        "cross_signing_room_warning": "Valaki ellenőrizetlen munkamenetet használ",
+        "cross_signing_room_normal": "Ez a szoba végpontok közötti titkosítást használ",
+        "cross_signing_room_verified": "A szobában mindenki ellenőrizve van",
+        "event_shield_reason_authenticity_not_guaranteed": "A titkosított üzenetek valódiságát ezen az eszközön nem lehet garantálni.",
+        "event_shield_reason_mismatched_sender_key": "Ellenőrizetlen munkamenet titkosította"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",

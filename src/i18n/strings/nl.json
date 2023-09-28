@@ -132,7 +132,6 @@
     "Send Logs": "Logs versturen",
     "We encountered an error trying to restore your previous session.": "Het herstel van je vorige sessie is mislukt.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Het wissen van de browseropslag zal het probleem misschien verhelpen, maar zal je ook uitloggen en je gehele versleutelde kamergeschiedenis onleesbaar maken.",
-    "This event could not be displayed": "Deze gebeurtenis kon niet weergegeven worden",
     "Demote yourself?": "Jezelf degraderen?",
     "Demote": "Degraderen",
     "Share Link to User": "Koppeling naar persoon delen",
@@ -206,7 +205,6 @@
     "Headphones": "Koptelefoon",
     "Folder": "Map",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
-    "Back up your keys before signing out to avoid losing them.": "Maak een back-up van je sleutels voordat je jezelf afmeldt om ze niet te verliezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
     "Only room administrators will see this warning": "Enkel kamerbeheerders zullen deze waarschuwing zien",
     "Add some now": "Voeg er nu een paar toe",
@@ -263,7 +261,6 @@
     "Invalid homeserver discovery response": "Ongeldig homeserver-vindbaarheids-antwoord",
     "Invalid identity server discovery response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
     "General failure": "Algemene fout",
-    "Set up": "Instellen",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Deze kamer draait op kamerversie <roomVersion />, die door deze homeserver als <i>onstabiel</i> is gemarkeerd.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Upgraden zal de huidige versie van deze kamer sluiten, en onder dezelfde naam een geüpgraded versie starten.",
     "Failed to revoke invite": "Intrekken van uitnodiging is mislukt",
@@ -290,7 +287,6 @@
     "Upload Error": "Fout bij versturen van bestand",
     "This room has already been upgraded.": "Deze kamer is reeds geüpgraded.",
     "edited": "bewerkt",
-    "Edit message": "Bericht bewerken",
     "Some characters not allowed": "Sommige tekens zijn niet toegestaan",
     "Failed to get autodiscovery configuration from server": "Ophalen van auto-vindbaarheidsconfiguratie van server is mislukt",
     "Invalid base_url for m.homeserver": "Ongeldige base_url voor m.homeserver",
@@ -329,16 +325,8 @@
     "Close dialog": "Dialoog sluiten",
     "Lock": "Hangslot",
     "Show more": "Meer tonen",
-    "This user has not verified all of their sessions.": "Deze persoon heeft niet al zijn sessies geverifieerd.",
-    "You have not verified this user.": "Je hebt deze persoon niet geverifieerd.",
-    "You have verified this user. This user has verified all of their sessions.": "Je hebt deze persoon geverifieerd. Deze persoon heeft al zijn sessies geverifieerd.",
-    "Someone is using an unknown session": "Iemand gebruikt een onbekende sessie",
-    "This room is end-to-end encrypted": "Deze kamer is eind-tot-eind-versleuteld",
-    "Everyone in this room is verified": "Iedereen in deze kamer is geverifieerd",
     "Direct Messages": "Direct gesprek",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
-    "Encrypted by an unverified session": "Versleuteld door een niet-geverifieerde sessie",
-    "Unencrypted": "Onversleuteld",
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
     "Failed to deactivate user": "Deactiveren van persoon is mislukt",
     "Failed to connect to integration manager": "Verbinding met integratiebeheerder is mislukt",
@@ -680,7 +668,6 @@
     "Error creating address": "Fout bij aanmaken van het adres",
     "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "Er is een fout opgetreden bij het bijwerken van de bijnaam van de kamer. Dit wordt mogelijk niet toegestaan door de server of er is een tijdelijk probleem opgetreden.",
     "Scroll to most recent messages": "Spring naar meest recente bericht",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
     "Backup version:": "Versie reservekopie:",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
@@ -834,7 +821,6 @@
     "Create a new room": "Nieuwe kamer aanmaken",
     "Space selection": "Space-selectie",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Je kan deze wijziging niet ongedaan maken, omdat je jezelf rechten ontneemt. Als je de laatst bevoegde persoon in de Space bent zal het onmogelijk zijn om weer rechten te krijgen.",
-    "Your message was sent": "Je bericht is verstuurd",
     "Leave space": "Space verlaten",
     "Create a space": "Space maken",
     "<inviter/> invites you": "<inviter/> nodigt je uit",
@@ -877,7 +863,6 @@
         "one": "1 lid bekijken",
         "other": "Bekijk alle %(count)s personen"
     },
-    "Failed to send": "Versturen is mislukt",
     "Want to add a new room instead?": "Wil je anders een nieuwe kamer toevoegen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Kamer toevoegen...",
@@ -1070,7 +1055,6 @@
     "Remove them from specific things I'm able to": "Verwijder ze van specifieke dingen die ik kan",
     "Remove them from everything I'm able to": "Verwijder ze van alles wat ik kan",
     "Remove from %(roomName)s": "Verwijderen uit %(roomName)s",
-    "From a thread": "Uit een conversatie",
     "Wait!": "Wacht!",
     "This address does not point at this room": "Dit adres verwijst niet naar deze kamer",
     "Pick a date to jump to": "Kies een datum om naar toe te springen",
@@ -1326,7 +1310,8 @@
         "low_priority": "Lage prioriteit",
         "historical": "Historisch",
         "go_to_settings": "Ga naar instellingen",
-        "setup_secure_messages": "Beveiligde berichten instellen"
+        "setup_secure_messages": "Beveiligde berichten instellen",
+        "unencrypted": "Onversleuteld"
     },
     "action": {
         "continue": "Doorgaan",
@@ -1616,7 +1601,8 @@
         "mode_rich_text": "Opmaak tonen",
         "format_italics": "Cursief",
         "format_insert_link": "Koppeling invoegen",
-        "replying_title": "Aan het beantwoorden"
+        "replying_title": "Aan het beantwoorden",
+        "edit_composer_label": "Bericht bewerken"
     },
     "Code": "Code",
     "power_level": {
@@ -2578,7 +2564,11 @@
             "one": "Gezien door %(count)s persoon",
             "other": "Gezien door %(count)s mensen"
         },
-        "read_receipts_label": "Leesbevestigingen"
+        "read_receipts_label": "Leesbevestigingen",
+        "thread_info_basic": "Uit een conversatie",
+        "error_no_renderer": "Deze gebeurtenis kon niet weergegeven worden",
+        "send_state_sent": "Je bericht is verstuurd",
+        "send_state_failed": "Versturen is mislukt"
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3024,7 +3014,19 @@
             "description_1": "Deze sessie heeft ontdekt dat je veiligheidswachtwoord en -sleutel voor versleutelde berichten zijn verwijderd.",
             "description_2": "Als je dit per ongeluk hebt gedaan, kan je beveiligde berichten op deze sessie instellen, waarmee de berichtgeschiedenis van deze sessie opnieuw zal versleuteld worden aan de hand van een nieuwe herstelmethode.",
             "warning": "Als je de herstelmethode niet hebt verwijderd, is het mogelijk dat er een aanvaller toegang tot jouw account probeert te verkrijgen. Wijzig onmiddellijk je wachtwoord en stel bij instellingen een nieuwe herstelmethode in."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Maak een back-up van je sleutels voordat je jezelf afmeldt om ze niet te verliezen.",
+            "title": "Instellen"
+        },
+        "cross_signing_user_warning": "Deze persoon heeft niet al zijn sessies geverifieerd.",
+        "cross_signing_user_normal": "Je hebt deze persoon niet geverifieerd.",
+        "cross_signing_user_verified": "Je hebt deze persoon geverifieerd. Deze persoon heeft al zijn sessies geverifieerd.",
+        "cross_signing_room_warning": "Iemand gebruikt een onbekende sessie",
+        "cross_signing_room_normal": "Deze kamer is eind-tot-eind-versleuteld",
+        "cross_signing_room_verified": "Iedereen in deze kamer is geverifieerd",
+        "event_shield_reason_authenticity_not_guaranteed": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
+        "event_shield_reason_mismatched_sender_key": "Versleuteld door een niet-geverifieerde sessie"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",

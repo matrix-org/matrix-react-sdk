@@ -80,7 +80,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Yesεa tilas",
-    "Set up": "Sbadu",
     "Pencil": "Akeryun",
     "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
@@ -117,8 +116,6 @@
     "Gift": "Asefk",
     "Light bulb": "Taftilt",
     "Deactivate account": "Sens amiḍan",
-    "This room is end-to-end encrypted": "Taxxamt-a tettwawgelhen seg yixef ɣer yixef",
-    "Edit message": "Ẓreg izen",
     "Encrypted by a deleted session": "Yettuwgelhen s texxamt yettwakksen",
     "Scroll to most recent messages": "Drurem ɣer yiznan akk n melmi kan",
     "and %(count)s others...": {
@@ -312,15 +309,6 @@
     "Invalid base_url for m.identity_server": "D arameɣtu base_url i m.identity_server",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
-    "This user has not verified all of their sessions.": "Aseqdac-a ur issenqed ara akk tiɣimiyin-ines.",
-    "You have not verified this user.": "Ur tesneqdeḍ aea aseqdac-a.",
-    "You have verified this user. This user has verified all of their sessions.": "Tesneqdeḍ aseqdac-a. Aseqdac-a issenqed akk tiɣimiyin-ines.",
-    "Someone is using an unknown session": "Yella win yesseqdacen tiɣimit tarussint",
-    "Everyone in this room is verified": "Yal yiwen deg taxxamt-a yettwasenqed",
-    "This event could not be displayed": "Tadyant-a ur tezmir ad d-tettwaskan",
-    "Encrypted by an unverified session": "Yettuwgelhen s tɣimit ur nettwasenqed ara",
-    "Unencrypted": "Ur yettwawgelhen ara",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -365,7 +353,6 @@
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Thumbs up": "Adebbuz d asawen",
     "This backup is trusted because it has been restored on this session": "Aḥraz yettwaḍman acku yuɣal-d seg tɣimit-a",
-    "Back up your keys before signing out to avoid losing them.": "Ḥrez tisura-ik·im send tuffɣa i wakken ur ttruḥunt ara.",
     "Security Phrase": "Tafyirt n tɣellist",
     "Restoring keys from backup": "Tiririt n tsura seg uḥraz",
     "%(completed)s of %(total)s keys restored": "%(completed)s n %(total)s tsura i yettwarran",
@@ -841,7 +828,8 @@
         "low_priority": "Tazwart taddayt",
         "historical": "Amazray",
         "go_to_settings": "Ddu ɣer yiɣewwaren",
-        "setup_secure_messages": "Sbadu iznan iɣelsanen"
+        "setup_secure_messages": "Sbadu iznan iɣelsanen",
+        "unencrypted": "Ur yettwawgelhen ara"
     },
     "action": {
         "continue": "Kemmel",
@@ -1015,7 +1003,8 @@
         "no_perms_notice": "Ur tesεiḍ ara tasiregt ad d-tsuffɣeḍ deg texxamt-a",
         "poll_button_no_perms_title": "Tasiregt tlaq",
         "format_italics": "Uknan",
-        "replying_title": "Tiririt"
+        "replying_title": "Tiririt",
+        "edit_composer_label": "Ẓreg izen"
     },
     "Code": "Tangalt",
     "power_level": {
@@ -1535,7 +1524,8 @@
         },
         "url_preview": {
             "close": "Mdel taskant"
-        }
+        },
+        "error_no_renderer": "Tadyant-a ur tezmir ad d-tettwaskan"
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",
@@ -1793,7 +1783,19 @@
             "title": "Tarrayt n ujebber tettwakkes",
             "description_2": "Ma yella tgiḍ aya war ma tebniḍ, tzemreḍ ad tsewleḍ iznan uffiren deg tɣimit-a ayen ara yalsen awgelhen n umazray n yiznan n texxamt-a s tarrayt n tririt tamaynut.",
             "warning": "Ma yella ur tekkiseḍ ara tarrayt n tririt tamaynut, yezmer ad yili umaker ara iɛerḍen ad yekcem ɣer umiḍan-ik·im. Beddel awal uffir n umiḍan-ik·im syen sbadu tarrayt n tririt tamaynut din din deg yiɣewwaren."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Ḥrez tisura-ik·im send tuffɣa i wakken ur ttruḥunt ara.",
+            "title": "Sbadu"
+        },
+        "cross_signing_user_warning": "Aseqdac-a ur issenqed ara akk tiɣimiyin-ines.",
+        "cross_signing_user_normal": "Ur tesneqdeḍ aea aseqdac-a.",
+        "cross_signing_user_verified": "Tesneqdeḍ aseqdac-a. Aseqdac-a issenqed akk tiɣimiyin-ines.",
+        "cross_signing_room_warning": "Yella win yesseqdacen tiɣimit tarussint",
+        "cross_signing_room_normal": "Taxxamt-a tettwawgelhen seg yixef ɣer yixef",
+        "cross_signing_room_verified": "Yal yiwen deg taxxamt-a yettwasenqed",
+        "event_shield_reason_authenticity_not_guaranteed": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
+        "event_shield_reason_mismatched_sender_key": "Yettuwgelhen s tɣimit ur nettwasenqed ara"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",

@@ -138,7 +138,6 @@
     "Share User": "Zdieľať používateľa",
     "Link to selected message": "Odkaz na vybratú správu",
     "Share Room Message": "Zdieľať správu z miestnosti",
-    "This event could not be displayed": "Nie je možné zobraziť túto udalosť",
     "Demote yourself?": "Znížiť vlastnú úroveň oprávnení?",
     "Demote": "Znížiť",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Nemôžete posielať žiadne správy, kým si neprečítate a neodsúhlasíte <consentLink>naše zmluvné podmienky</consentLink>.",
@@ -156,7 +155,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
     "Updating %(brand)s": "Prebieha aktualizácia %(brand)s",
-    "Set up": "Nastaviť",
     "Add some now": "Pridajte si nejaké teraz",
     "The following users may not exist": "Nasledujúci používatelia pravdepodobne neexistujú",
     "Unable to load commit detail: %(msg)s": "Nie je možné načítať podrobnosti pre commit: %(msg)s",
@@ -240,7 +238,6 @@
     "Headphones": "Slúchadlá",
     "Folder": "Fascikel",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Šifrované správy sú zabezpečené end-to-end šifrovaním. Kľúče na čítanie týchto správ máte len vy a príjemca (príjemcovia).",
-    "Back up your keys before signing out to avoid losing them.": "Zálohujte si šifrovacie kľúče pred odhlásením, aby ste zabránili ich strate.",
     "Start using Key Backup": "Začnite používať zálohovanie kľúčov",
     "Error updating main address": "Chyba pri aktualizácii hlavnej adresy",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Pri aktualizácii hlavnej adresy miestnosti došlo k chybe. Server to nemusí povoliť alebo došlo k dočasnému zlyhaniu.",
@@ -286,13 +283,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Na vašom domovskom serveri bol prekročený jeden z limitov systémových zdrojov.",
     "Ok": "Ok",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Ak chcete nahlásiť bezpečnostný problém týkajúci sa Matrix-u, prečítajte si, prosím, <a>zásady zverejňovania informácií o bezpečnosti Matrix.org</a>.",
-    "This user has not verified all of their sessions.": "Tento používateľ si neoveril všetky svoje relácie.",
-    "You have not verified this user.": "Tohto používateľa ste neoverili.",
-    "You have verified this user. This user has verified all of their sessions.": "Tohto používateľa ste overili. Tento používateľ si overil všetky svoje relácie.",
-    "Someone is using an unknown session": "Niekto používa neznámu reláciu",
-    "This room is end-to-end encrypted": "Táto miestnosť je end-to-end šifrovaná",
-    "Everyone in this room is verified": "Všetci v tejto miestnosti sú overení",
-    "Edit message": "Upraviť správu",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Jemen",
@@ -543,13 +533,11 @@
     "United States": "Spojené Štáty",
     "United Kingdom": "Spojené Kráľovstvo",
     "Encrypted by a deleted session": "Šifrované odstránenou reláciou",
-    "Encrypted by an unverified session": "Šifrované neoverenou reláciou",
     "You cancelled": "Zrušili ste overenie",
     "You cancelled verifying %(name)s": "Zrušili ste overenie používateľa %(name)s",
     "You cancelled verification.": "Zrušili ste overenie.",
     "%(name)s wants to verify": "%(name)s chce overiť",
     "Encryption not enabled": "Šifrovanie nie je zapnuté",
-    "Unencrypted": "Nešifrované",
     "Search spaces": "Hľadať priestory",
     "Search for spaces": "Hľadať priestory",
     "You sent a verification request": "Odoslali ste žiadosť o overenie",
@@ -583,7 +571,6 @@
     "Private space (invite only)": "Súkromný priestor (len pre pozvaných)",
     "Rooms and spaces": "Miestnosti a priestory",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
     "You're all caught up.": "Všetko ste už stihli.",
     "In encrypted rooms, verify all users to ensure it's secure.": "V šifrovaných miestnostiach overte všetkých používateľov, aby ste zaistili ich bezpečnosť.",
     "Verify all users in a room to ensure it's secure.": "Overte všetkých používateľov v miestnosti, aby ste sa uistili, že je zabezpečená.",
@@ -762,7 +749,6 @@
     "Your homeserver doesn't seem to support this feature.": "Zdá sa, že váš domovský server túto funkciu nepodporuje.",
     "Your messages are not secure": "Vaše správy nie sú zabezpečené",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vaše správy sú zabezpečené a jedinečné kľúče na ich odomknutie máte len vy a príjemca.",
-    "Your message was sent": "Vaša správa bola odoslaná",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Pri tejto relácii ste už predtým použili novšiu verziu %(brand)s. Ak chcete túto verziu znovu používať s end-to-end šifrovaním, budete sa musieť odhlásiť a znova prihlásiť.",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Úspešne ste overili %(deviceName)s (%(deviceId)s)!",
     "You've successfully verified %(displayName)s!": "Úspešne ste overili %(displayName)s!",
@@ -842,7 +828,6 @@
         "other": "%(count)s ľudí, ktorých poznáte, sa už pripojilo"
     },
     "Including %(commaSeparatedMembers)s": "Vrátane %(commaSeparatedMembers)s",
-    "Failed to send": "Nepodarilo sa odoslať",
     "Reset everything": "Obnoviť všetko",
     "View message": "Zobraziť správu",
     "We couldn't create your DM.": "Nemohli sme vytvoriť vašu priamu správu.",
@@ -1049,7 +1034,6 @@
     "Failed to end poll": "Nepodarilo sa ukončiť anketu",
     "Sorry, the poll did not end. Please try again.": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
     "Reply in thread": "Odpovedať vo vlákne",
-    "From a thread": "Z vlákna",
     "Transfer": "Presmerovať",
     "A call can only be transferred to a single user.": "Hovor je možné presmerovať len na jedného používateľa.",
     "Unban from %(roomName)s": "Zrušiť zákaz vstup do %(roomName)s",
@@ -1224,7 +1208,6 @@
     "Error starting verification": "Chyba pri spustení overovania",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNENIE:</w> <description/>",
     "Unable to decrypt message": "Nie je možné dešifrovať správu",
-    "This message could not be decrypted": "Túto správu sa nepodarilo dešifrovať",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "Text": "Text",
     "Create a link": "Vytvoriť odkaz",
@@ -1247,8 +1230,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Ak to chcete urobiť, povoľte v Nastaveniach položku \"%(manageIntegrations)s\".",
     "Waiting for partner to confirm…": "Čakanie na potvrdenie od partnera…",
     "Adding…": "Pridávanie…",
-    "Encrypting your message…": "Šifrovanie vašej správy…",
-    "Sending your message…": "Odosielanie vašej správy…",
     "Starting export process…": "Spustenie procesu exportu…",
     "Loading polls": "Načítavanie ankiet",
     "Ended a poll": "Ukončil anketu",
@@ -1414,7 +1395,8 @@
         "low_priority": "Nízka priorita",
         "historical": "Historické",
         "go_to_settings": "Otvoriť nastavenia",
-        "setup_secure_messages": "Nastavenie zabezpečených správ"
+        "setup_secure_messages": "Nastavenie zabezpečených správ",
+        "unencrypted": "Nešifrované"
     },
     "action": {
         "continue": "Pokračovať",
@@ -1750,7 +1732,8 @@
         "formatting_toolbar_label": "Formátovanie",
         "format_italics": "Kurzíva",
         "format_insert_link": "Vložiť odkaz",
-        "replying_title": "Odpoveď"
+        "replying_title": "Odpoveď",
+        "edit_composer_label": "Upraviť správu"
     },
     "Link": "Odkaz",
     "Code": "Kód",
@@ -2852,7 +2835,14 @@
             "one": "Videl %(count)s človek",
             "other": "Videlo %(count)s ľudí"
         },
-        "read_receipts_label": "Potvrdenia o prečítaní"
+        "read_receipts_label": "Potvrdenia o prečítaní",
+        "thread_info_basic": "Z vlákna",
+        "error_no_renderer": "Nie je možné zobraziť túto udalosť",
+        "undecryptable_tooltip": "Túto správu sa nepodarilo dešifrovať",
+        "send_state_sending": "Odosielanie vašej správy…",
+        "send_state_encrypting": "Šifrovanie vašej správy…",
+        "send_state_sent": "Vaša správa bola odoslaná",
+        "send_state_failed": "Nepodarilo sa odoslať"
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -3331,7 +3321,19 @@
             "description_1": "Táto relácia zistila, že vaša bezpečnostná fráza a kľúč pre zabezpečené správy boli odstránené.",
             "description_2": "Ak ste to urobili omylom, môžete v tejto relácii nastaviť Zabezpečené správy, ktoré znovu zašifrujú históriu správ tejto relácie pomocou novej metódy obnovy.",
             "warning": "Ak ste neodstránili spôsob obnovenia vy, je možné, že útočník sa pokúša dostať k vášmu účtu. Radšej si ihneď zmeňte vaše heslo a nastavte si nový spôsob obnovenia v Nastaveniach."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Zálohujte si šifrovacie kľúče pred odhlásením, aby ste zabránili ich strate.",
+            "title": "Nastaviť"
+        },
+        "cross_signing_user_warning": "Tento používateľ si neoveril všetky svoje relácie.",
+        "cross_signing_user_normal": "Tohto používateľa ste neoverili.",
+        "cross_signing_user_verified": "Tohto používateľa ste overili. Tento používateľ si overil všetky svoje relácie.",
+        "cross_signing_room_warning": "Niekto používa neznámu reláciu",
+        "cross_signing_room_normal": "Táto miestnosť je end-to-end šifrovaná",
+        "cross_signing_room_verified": "Všetci v tejto miestnosti sú overení",
+        "event_shield_reason_authenticity_not_guaranteed": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
+        "event_shield_reason_mismatched_sender_key": "Šifrované neoverenou reláciou"
     },
     "emoji": {
         "category_frequently_used": "Často používané",

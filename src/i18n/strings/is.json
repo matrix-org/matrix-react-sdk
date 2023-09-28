@@ -100,9 +100,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Notaðu <a>tölvuforritið</a> til að sjá öll dulrituð gögn",
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
-    "Encrypted by an unverified session": "Dulritað meðf ósannreyndu tæki",
-    "This room is end-to-end encrypted": "Þessi spjallrás er enda-í-enda dulrituð",
-    "Unencrypted": "Ódulritað",
     "Messages in this room are end-to-end encrypted.": "Skilaboð í þessari spjallrás eru enda-í-enda dulrituð.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
     "Room settings": "Stillingar spjallrásar",
@@ -112,8 +109,6 @@
     "Preparing to download logs": "Undirbý niðurhal atvikaskráa",
     "Download %(text)s": "Niðurhala %(text)s",
     "Share Link to User": "Deila Hlekk að Notanda",
-    "You have verified this user. This user has verified all of their sessions.": "Þú hefur sannreynt þennan notanda. Þessi notandi hefur sannreynt öll tæki þeirra.",
-    "This user has not verified all of their sessions.": "Þessi notandi hefur ekki sannreynt öll tæki þeirra.",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
@@ -491,8 +486,6 @@
     "No microphone found": "Enginn hljóðnemi fannst",
     "Recently viewed": "Nýlega skoðað",
     "View message": "Sjá skilaboð",
-    "Failed to send": "Mistókst að senda",
-    "Your message was sent": "Skilaboðin þín voru send",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
     "Folder": "Mappa",
@@ -561,7 +554,6 @@
         "other": "og %(count)s til viðbótar..."
     },
     "View in room": "Skoða á spjallrás",
-    "Set up": "Setja upp",
     "Copy link to thread": "Afrita tengil á spjallþráð",
     "Create a space": "Búa til svæði",
     "Guitar": "Gítar",
@@ -614,7 +606,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) skráði sig inn í nýja setu án þess að sannvotta hana:",
     "You signed in to a new session without verifying it:": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
     "Your messages are not secure": "Skilaboðin þín eru ekki örugg",
-    "Back up your keys before signing out to avoid losing them.": "Taktu öryggisafrit af dulritunarlyklunum áður en þú skráir þig út svo þeir tapist ekki.",
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
     "Rooms and spaces": "Spjallrásir og svæði",
@@ -759,16 +750,10 @@
         "one": "Sjá 1 meðlim",
         "other": "Sjá alla %(count)s meðlimina"
     },
-    "This event could not be displayed": "Ekki tókst að birta þennan atburð",
-    "Edit message": "Breyta skilaboðum",
-    "Everyone in this room is verified": "Allir á þessari spjallrás eru staðfestir",
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
     "Call declined": "Símtali hafnað",
     "Message Actions": "Aðgerðir skilaboða",
-    "From a thread": "Úr spjallþræði",
-    "Someone is using an unknown session": "Einhver er að nota óþekkta setu",
-    "You have not verified this user.": "Þér hefur ekki sannreynt þennan notanda.",
     "General failure": "Almenn bilun",
     "You don't have permission": "Þú hefur ekki heimild",
     "Retry all": "Prófa aftur allt",
@@ -1073,7 +1058,6 @@
     "We didn't find a microphone on your device. Please check your settings and try again.": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur.",
     "We were unable to access your microphone. Please check your browser settings and try again.": "Gat ekki tengst hljóðnemanum þínum. Skoðaðu stillingar vafrans þíns og reyndu aftur.",
     "Unable to decrypt message": "Tókst ekki að afkóða skilaboð",
-    "This message could not be decrypted": "Þessi skilaboð er ekki hægt að afkóða",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -1188,7 +1172,8 @@
         "low_priority": "Lítill forgangur",
         "historical": "Ferilskráning",
         "go_to_settings": "Fara í stillingar",
-        "setup_secure_messages": "Setja upp örugg skilaboð"
+        "setup_secure_messages": "Setja upp örugg skilaboð",
+        "unencrypted": "Ódulritað"
     },
     "action": {
         "continue": "Halda áfram",
@@ -1485,7 +1470,8 @@
         "mode_rich_text": "Sýna sniðmótun",
         "format_italics": "Skáletrað",
         "format_insert_link": "Setja inn tengil",
-        "replying_title": "Svara"
+        "replying_title": "Svara",
+        "edit_composer_label": "Breyta skilaboðum"
     },
     "Link": "Tengill",
     "Code": "Kóði",
@@ -2414,7 +2400,12 @@
             "one": "Séð af %(count)s aðila",
             "other": "Séð af %(count)s aðilum"
         },
-        "read_receipts_label": "Leskvittanir"
+        "read_receipts_label": "Leskvittanir",
+        "thread_info_basic": "Úr spjallþræði",
+        "error_no_renderer": "Ekki tókst að birta þennan atburð",
+        "undecryptable_tooltip": "Þessi skilaboð er ekki hægt að afkóða",
+        "send_state_sent": "Skilaboðin þín voru send",
+        "send_state_failed": "Mistókst að senda"
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
@@ -2836,7 +2827,18 @@
         },
         "recovery_method_removed": {
             "title": "Endurheimtuaðferð fjarlægð"
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Taktu öryggisafrit af dulritunarlyklunum áður en þú skráir þig út svo þeir tapist ekki.",
+            "title": "Setja upp"
+        },
+        "cross_signing_user_warning": "Þessi notandi hefur ekki sannreynt öll tæki þeirra.",
+        "cross_signing_user_normal": "Þér hefur ekki sannreynt þennan notanda.",
+        "cross_signing_user_verified": "Þú hefur sannreynt þennan notanda. Þessi notandi hefur sannreynt öll tæki þeirra.",
+        "cross_signing_room_warning": "Einhver er að nota óþekkta setu",
+        "cross_signing_room_normal": "Þessi spjallrás er enda-í-enda dulrituð",
+        "cross_signing_room_verified": "Allir á þessari spjallrás eru staðfestir",
+        "event_shield_reason_mismatched_sender_key": "Dulritað meðf ósannreyndu tæki"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",

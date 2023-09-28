@@ -142,7 +142,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Du kannst keine Nachrichten senden bis du <consentLink>unsere Geschäftsbedingungen</consentLink> gelesen und akzeptiert hast.",
     "Demote yourself?": "Dein eigenes Berechtigungslevel herabsetzen?",
     "Demote": "Zurückstufen",
-    "This event could not be displayed": "Dieses Ereignis konnte nicht angezeigt werden",
     "Only room administrators will see this warning": "Nur Raumadministratoren werden diese Nachricht sehen",
     "Upgrade Room Version": "Raumversion aktualisieren",
     "Create a new room with the same name, description and avatar": "Einen neuen Raum mit demselben Namen, Beschreibung und Profilbild erstellen",
@@ -167,7 +166,6 @@
     "Continue With Encryption Disabled": "Mit deaktivierter Verschlüsselung fortfahren",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
-    "Set up": "Einrichten",
     "Unable to load commit detail: %(msg)s": "Konnte Übermittlungsdetails nicht laden: %(msg)s",
     "Unable to load backup status": "Konnte Sicherungsstatus nicht laden",
     "Failed to decrypt %(failedCount)s sessions!": "Konnte %(failedCount)s Sitzungen nicht entschlüsseln!",
@@ -245,7 +243,6 @@
     "Room Topic": "Raumthema",
     "Incoming Verification Request": "Eingehende Verifikationsanfrage",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Verschlüsselte Nachrichten sind mit Ende-zu-Ende-Verschlüsselung gesichert. Nur du und der/die Empfänger haben die Schlüssel um diese Nachrichten zu lesen.",
-    "Back up your keys before signing out to avoid losing them.": "Um deine Schlüssel nicht zu verlieren, musst du sie vor der Abmeldung sichern.",
     "Start using Key Backup": "Beginne Schlüsselsicherung zu nutzen",
     "Are you sure you want to sign out?": "Bist du sicher, dass du dich abmelden möchtest?",
     "Manually export keys": "Schlüssel manuell exportieren",
@@ -265,7 +262,6 @@
     "Room Settings - %(roomName)s": "Raumeinstellungen - %(roomName)s",
     "Could not load user profile": "Konnte Nutzerprofil nicht laden",
     "edited": "bearbeitet",
-    "Edit message": "Nachricht bearbeiten",
     "Upload files": "Dateien hochladen",
     "Upload all": "Alle hochladen",
     "Cancel All": "Alle abbrechen",
@@ -279,8 +275,6 @@
     "Recently Direct Messaged": "Zuletzt kontaktiert",
     "Command Help": "Befehl Hilfe",
     "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
-    "This user has not verified all of their sessions.": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
-    "You have verified this user. This user has verified all of their sessions.": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) hat sich zu einer neuen Sitzung angemeldet, ohne sie zu verifizieren:",
     "%(count)s verified sessions": {
@@ -316,8 +310,6 @@
     "Remove recent messages": "Kürzlich gesendete Nachrichten entfernen",
     "Show more": "Mehr zeigen",
     "This backup is trusted because it has been restored on this session": "Dieser Sicherung wird vertraut, da sie während dieser Sitzung wiederhergestellt wurde",
-    "Encrypted by an unverified session": "Von einer nicht verifizierten Sitzung verschlüsselt",
-    "Unencrypted": "Unverschlüsselt",
     "Encrypted by a deleted session": "Von einer gelöschten Sitzung verschlüsselt",
     "The encryption used by this room isn't supported.": "Die von diesem Raum verwendete Verschlüsselung wird nicht unterstützt.",
     "e.g. my-room": "z. B. mein-raum",
@@ -331,12 +323,8 @@
     "Clear all data": "Alle Daten löschen",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Bestätige die Deaktivierung deines Kontos, indem du deine Identität mithilfe deines Single-Sign-On-Anbieters nachweist.",
     "Confirm account deactivation": "Deaktivierung des Kontos bestätigen",
-    "Someone is using an unknown session": "Jemand verwendet eine unbekannte Sitzung",
-    "This room is end-to-end encrypted": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "You have not verified this user.": "Du hast diesen Nutzer nicht verifiziert.",
-    "Everyone in this room is verified": "Alle in diesem Raum sind verifiziert",
     "Scroll to most recent messages": "Zur neusten Nachricht springen",
     "No recent messages by %(user)s found": "Keine neuen Nachrichten von %(user)s gefunden",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
@@ -491,7 +479,6 @@
     "Switch theme": "Design wechseln",
     "Message preview": "Nachrichtenvorschau",
     "Looks good!": "Sieht gut aus!",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
     "Wrong file type": "Falscher Dateityp",
     "This room is public": "Dieser Raum ist öffentlich",
     "Edited at %(date)s": "Geändert am %(date)s",
@@ -828,7 +815,6 @@
     },
     "Create a new room": "Neuen Raum erstellen",
     "Create a space": "Neuen Space erstellen",
-    "Your message was sent": "Die Nachricht wurde gesendet",
     "Leave space": "Space verlassen",
     "<inviter/> invites you": "Du wirst von <inviter/> eingeladen",
     "No results found": "Keine Ergebnisse",
@@ -867,7 +853,6 @@
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
     "View message": "Nachricht anzeigen",
-    "Failed to send": "Fehler beim Senden",
     "View all %(count)s members": {
         "other": "Alle %(count)s Mitglieder anzeigen",
         "one": "Mitglied anzeigen"
@@ -1057,7 +1042,6 @@
     "Remove from room": "Aus Raum entfernen",
     "Failed to remove user": "Fehler beim entfernen des Nutzers",
     "Remove from %(roomName)s": "Aus %(roomName)s entfernen",
-    "From a thread": "Aus einem Thread",
     "Remove them from specific things I'm able to": "Person aus gewählten, mir möglichen, Bereichen entfernen",
     "Remove them from everything I'm able to": "Person aus allen, mir möglichen Bereichen entfernen",
     "To proceed, please accept the verification request on your other device.": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
@@ -1224,7 +1208,6 @@
     "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
     "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
     "Unable to decrypt message": "Nachrichten-Entschlüsselung nicht möglich",
-    "This message could not be decrypted": "Diese Nachricht konnte nicht enschlüsselt werden",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Text": "Text",
     "Create a link": "Link erstellen",
@@ -1247,8 +1230,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktiviere „%(manageIntegrations)s“ in den Einstellungen, um dies zu tun.",
     "Waiting for partner to confirm…": "Warte auf Bestätigung des Gesprächspartners …",
     "Adding…": "Füge hinzu …",
-    "Encrypting your message…": "Verschlüssele deine Nachricht …",
-    "Sending your message…": "Sende deine Nachricht …",
     "Starting export process…": "Beginne Exportvorgang …",
     "Loading polls": "Lade Umfragen",
     "The sender has blocked you from receiving this message": "Der Absender hat dich vom Erhalt dieser Nachricht ausgeschlossen",
@@ -1414,7 +1395,8 @@
         "low_priority": "Niedrige Priorität",
         "historical": "Archiv",
         "go_to_settings": "Gehe zu Einstellungen",
-        "setup_secure_messages": "Richte sichere Nachrichten ein"
+        "setup_secure_messages": "Richte sichere Nachrichten ein",
+        "unencrypted": "Unverschlüsselt"
     },
     "action": {
         "continue": "Fortfahren",
@@ -1751,7 +1733,8 @@
         "formatting_toolbar_label": "Formatierung",
         "format_italics": "Kursiv",
         "format_insert_link": "Link einfügen",
-        "replying_title": "Antwortet"
+        "replying_title": "Antwortet",
+        "edit_composer_label": "Nachricht bearbeiten"
     },
     "Link": "Link",
     "Code": "Code",
@@ -2853,7 +2836,14 @@
             "one": "Von %(count)s Person gesehen",
             "other": "Von %(count)s Personen gesehen"
         },
-        "read_receipts_label": "Lesebestätigungen"
+        "read_receipts_label": "Lesebestätigungen",
+        "thread_info_basic": "Aus einem Thread",
+        "error_no_renderer": "Dieses Ereignis konnte nicht angezeigt werden",
+        "undecryptable_tooltip": "Diese Nachricht konnte nicht enschlüsselt werden",
+        "send_state_sending": "Sende deine Nachricht …",
+        "send_state_encrypting": "Verschlüssele deine Nachricht …",
+        "send_state_sent": "Die Nachricht wurde gesendet",
+        "send_state_failed": "Fehler beim Senden"
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -3338,7 +3328,19 @@
             "description_1": "In dieser Sitzung wurde festgestellt, dass deine Sicherheitsphrase und dein Schlüssel für sichere Nachrichten entfernt wurden.",
             "description_2": "Wenn du dies versehentlich getan hast, kannst du in dieser Sitzung \"sichere Nachrichten\" einrichten, die den Nachrichtenverlauf dieser Sitzung mit einer neuen Wiederherstellungsmethode erneut verschlüsseln.",
             "warning": "Wenn du die Wiederherstellungsmethode nicht gelöscht hast, kann ein Angreifer versuchen, Zugang zu deinem Konto zu bekommen. Ändere dein Passwort und richte sofort eine neue Wiederherstellungsmethode in den Einstellungen ein."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Um deine Schlüssel nicht zu verlieren, musst du sie vor der Abmeldung sichern.",
+            "title": "Einrichten"
+        },
+        "cross_signing_user_warning": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
+        "cross_signing_user_normal": "Du hast diesen Nutzer nicht verifiziert.",
+        "cross_signing_user_verified": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
+        "cross_signing_room_warning": "Jemand verwendet eine unbekannte Sitzung",
+        "cross_signing_room_normal": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
+        "cross_signing_room_verified": "Alle in diesem Raum sind verifiziert",
+        "event_shield_reason_authenticity_not_guaranteed": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
+        "event_shield_reason_mismatched_sender_key": "Von einer nicht verifizierten Sitzung verschlüsselt"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",

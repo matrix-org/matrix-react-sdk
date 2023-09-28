@@ -139,7 +139,6 @@
     "Share User": "Compartir usuaria",
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
-    "This event could not be displayed": "Non se puido amosar este evento",
     "Demote yourself?": "Baixarse a ti mesma de rango?",
     "Demote": "Baixar de rango",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Non vas poder enviar mensaxes ata que revises e aceptes <consentLink>os nosos termos e condicións</consentLink>.",
@@ -171,7 +170,6 @@
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
     "Your homeserver has exceeded one of its resource limits.": "O teu servidor superou un dous seus límites de recursos.",
     "Ok": "Ok",
-    "Set up": "Configurar",
     "Join millions for free on the largest public server": "Únete a millóns de persoas gratuitamente no maior servidor público",
     "IRC display name width": "Ancho do nome mostrado de IRC",
     "Dog": "Can",
@@ -240,18 +238,8 @@
     "Show more": "Mostrar máis",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "As mensaxes cifradas están seguras con cifrado de extremo-a-extremo. Só ti e o correpondente(s) tedes as chaves para ler as mensaxes.",
     "This backup is trusted because it has been restored on this session": "Esta copia é de confianza porque foi restaurada nesta sesión",
-    "Back up your keys before signing out to avoid losing them.": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
-    "This user has not verified all of their sessions.": "Esta usuaria non verificou ningunha das súas sesións.",
-    "You have not verified this user.": "Non verificaches esta usuaria.",
-    "You have verified this user. This user has verified all of their sessions.": "Verificaches esta usuaria. A usuaria verificou todas as súas sesións.",
-    "Someone is using an unknown session": "Alguén está a usar unha sesión descoñecida",
-    "This room is end-to-end encrypted": "Esta sala está cifrada extremo-a-extremo",
-    "Everyone in this room is verified": "Todas nesta sala están verificadas",
-    "Edit message": "Editar mensaxe",
-    "Encrypted by an unverified session": "Cifrada por unha sesión non verificada",
-    "Unencrypted": "Non cifrada",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Scroll to most recent messages": "Ir ás mensaxes máis recentes",
     "Message preview": "Vista previa da mensaxe",
@@ -415,7 +403,6 @@
     "Upload completed": "Subida completa",
     "Cancelled signature upload": "Cancelada a subida da sinatura",
     "Unable to upload": "Non foi posible a subida",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "A autenticidade desta mensaxe cifrada non está garantida neste dispositivo.",
     "Signature upload success": "Subeuse correctamente a sinatura",
     "Signature upload failed": "Fallou a subida da sinatura",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Anteriormente utilizaches %(brand)s en %(host)s con carga preguiceira de membros. Nesta versión a carga preguiceira está desactivada. Como a caché local non é compatible entre as dúas configuracións, %(brand)s precisa volver a sincronizar a conta.",
@@ -835,7 +822,6 @@
     "Create a new room": "Crear unha nova sala",
     "Space selection": "Selección de Espazos",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Non poderás desfacer este cambio xa que te estás degradando a ti mesma, se es a última usuaria con privilexios no espazo será imposible volver a obter os privilexios.",
-    "Your message was sent": "Enviouse a túa mensaxe",
     "Leave space": "Saír do espazo",
     "Create a space": "Crear un espazo",
     "<inviter/> invites you": "<inviter/> convídate",
@@ -878,7 +864,6 @@
         "one": "Ver 1 membro",
         "other": "Ver tódolos %(count)s membros"
     },
-    "Failed to send": "Fallou o envío",
     "Want to add a new room instead?": "Queres engadir unha nova sala?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Engadindo sala...",
@@ -1064,7 +1049,6 @@
     "Remove them from everything I'm able to": "Eliminar de tódolos lugares nos que podo facelo",
     "Remove from %(roomName)s": "Eliminar de %(roomName)s",
     "To proceed, please accept the verification request on your other device.": "Para seguir, acepta a solicitude de verificación no teu outro dispositivo.",
-    "From a thread": "Desde un fío",
     "Wait!": "Agarda!",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
@@ -1302,7 +1286,8 @@
         "low_priority": "Baixa prioridade",
         "historical": "Historial",
         "go_to_settings": "Ir a Axustes",
-        "setup_secure_messages": "Configurar Mensaxes Seguras"
+        "setup_secure_messages": "Configurar Mensaxes Seguras",
+        "unencrypted": "Non cifrada"
     },
     "action": {
         "continue": "Continuar",
@@ -1588,7 +1573,8 @@
         "poll_button": "Enquisa",
         "format_italics": "Cursiva",
         "format_insert_link": "Escribir ligazón",
-        "replying_title": "Respondendo"
+        "replying_title": "Respondendo",
+        "edit_composer_label": "Editar mensaxe"
     },
     "Code": "Código",
     "power_level": {
@@ -2524,7 +2510,11 @@
             "one": "Visto por %(count)s persoa",
             "other": "Visto por %(count)s persoas"
         },
-        "read_receipts_label": "Resgados de lectura"
+        "read_receipts_label": "Resgados de lectura",
+        "thread_info_basic": "Desde un fío",
+        "error_no_renderer": "Non se puido amosar este evento",
+        "send_state_sent": "Enviouse a túa mensaxe",
+        "send_state_failed": "Fallou o envío"
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -2953,7 +2943,19 @@
             "description_1": "Esta sesión detectou que se eliminaron a túa Frase de Seguridade e chave para Mensaxes Seguras.",
             "description_2": "Se fixeches esto sen querer, podes configurar Mensaxes Seguras nesta sesión e volverá a cifrar as mensaxes da sesión cun novo método de recuperación.",
             "warning": "Se non eliminaches o método de recuperación, un atacante podería estar a intentar acceder á túa conta. Cambia inmediatamente o contrasinal da conta e establece un novo método de recuperación nos Axustes."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
+            "title": "Configurar"
+        },
+        "cross_signing_user_warning": "Esta usuaria non verificou ningunha das súas sesións.",
+        "cross_signing_user_normal": "Non verificaches esta usuaria.",
+        "cross_signing_user_verified": "Verificaches esta usuaria. A usuaria verificou todas as súas sesións.",
+        "cross_signing_room_warning": "Alguén está a usar unha sesión descoñecida",
+        "cross_signing_room_normal": "Esta sala está cifrada extremo-a-extremo",
+        "cross_signing_room_verified": "Todas nesta sala están verificadas",
+        "event_shield_reason_authenticity_not_guaranteed": "A autenticidade desta mensaxe cifrada non está garantida neste dispositivo.",
+        "event_shield_reason_mismatched_sender_key": "Cifrada por unha sesión non verificada"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",

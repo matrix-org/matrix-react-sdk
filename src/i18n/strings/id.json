@@ -322,7 +322,6 @@
     "Resume": "Lanjutkan",
     "Information": "Informasi",
     "Widgets": "Widget",
-    "Unencrypted": "Tidak Dienkripsi",
     "Lock": "Gembok",
     "Accepting…": "Menerima…",
     "Mushroom": "Jamur",
@@ -397,7 +396,6 @@
     "Upload files": "Unggah file",
     "Power level": "Tingkat daya",
     "Revoke invite": "Hapus undangan",
-    "Edit message": "Edit pesan",
     "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
@@ -412,7 +410,6 @@
     "Invite anyway": "Undang saja",
     "Demote yourself?": "Turunkan diri Anda?",
     "Share room": "Bagikan ruangan",
-    "Set up": "Siapkan",
     "Send Logs": "Kirim Catatan",
     "Filter results": "Saring hasil",
     "Logs sent": "Catatan terkirim",
@@ -439,7 +436,6 @@
     "Hold": "Jeda",
     "Transfer": "Pindah",
     "Sending": "Mengirim",
-    "Back up your keys before signing out to avoid losing them.": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
@@ -516,24 +512,13 @@
         "other": "dan %(count)s lainnya..."
     },
     "Scroll to most recent messages": "Gulir ke pesan yang terbaru",
-    "Failed to send": "Gagal untuk dikirim",
-    "Your message was sent": "Pesan Anda telah terkirim",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Keaslian pesan terenkripsi ini tidak dapat dijamin pada perangkat ini.",
     "Encrypted by a deleted session": "Terenkripsi oleh sesi yang terhapus",
-    "Encrypted by an unverified session": "Terenkripsi oleh sesi yang belum diverifikasi",
     "Reply in thread": "Balas di utasan",
     "Message Actions": "Aksi Pesan",
-    "This event could not be displayed": "Peristiwa ini tidak dapat ditampilkan",
     "%(count)s reply": {
         "one": "%(count)s balasan",
         "other": "%(count)s balasan"
     },
-    "Everyone in this room is verified": "Semuanya di ruangan ini telah terverifikasi",
-    "This room is end-to-end encrypted": "Ruangan ini dienkripsi secara ujung ke ujung",
-    "Someone is using an unknown session": "Seseorang menggunakan sesi yang tidak dikenal",
-    "You have verified this user. This user has verified all of their sessions.": "Anda telah memverifikasi pengguna ini. Pengguna ini telah memverifikasi semua sesinya.",
-    "You have not verified this user.": "Anda belum memverifikasi pengguna ini.",
-    "This user has not verified all of their sessions.": "Pengguna ini belum memverifikasi semua sesinya.",
     "Can't load this message": "Tidak dapat memuat pesan ini",
     "Submit logs": "Kirim catatan",
     "Edited at %(date)s. Click to view edits.": "Diedit di %(date)s. Klik untuk melihat editan.",
@@ -1063,7 +1048,6 @@
     "Almost there! Is your other device showing the same shield?": "Hampir selesai! Apakah perangkat lain Anda menampilkan perisai yang sama?",
     "To proceed, please accept the verification request on your other device.": "Untuk melanjutkan, mohon terima permintaan verifikasi di perangkat Anda yang lain.",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
-    "From a thread": "Dari sebuah utasan",
     "Remove from %(roomName)s": "Keluarkan dari %(roomName)s",
     "Remove from room": "Keluarkan dari ruangan",
     "Failed to remove user": "Gagal untuk mengeluarkan pengguna",
@@ -1224,7 +1208,6 @@
     "Error starting verification": "Terjadi kesalahan memulai verifikasi",
     "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
     "Unable to decrypt message": "Tidak dapat mendekripsi pesan",
-    "This message could not be decrypted": "Pesan ini tidak dapat didekripsi",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "Text": "Teks",
     "Create a link": "Buat sebuah tautan",
@@ -1247,8 +1230,6 @@
     "Checking…": "Memeriksa…",
     "Waiting for partner to confirm…": "Menunggu pengguna untuk konfirmasi…",
     "Adding…": "Menambahkan…",
-    "Encrypting your message…": "Mengenkripsi pesan Anda…",
-    "Sending your message…": "Mengirim pesan Anda…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Loading polls": "Memuat pemungutan suara",
     "Ended a poll": "Mengakhiri sebuah pemungutan suara",
@@ -1414,7 +1395,8 @@
         "low_priority": "Prioritas rendah",
         "historical": "Riwayat",
         "go_to_settings": "Pergi ke Pengaturan",
-        "setup_secure_messages": "Siapkan Pesan Aman"
+        "setup_secure_messages": "Siapkan Pesan Aman",
+        "unencrypted": "Tidak Dienkripsi"
     },
     "action": {
         "continue": "Lanjut",
@@ -1751,7 +1733,8 @@
         "formatting_toolbar_label": "Format",
         "format_italics": "Miring",
         "format_insert_link": "Tambahkan tautan",
-        "replying_title": "Membalas"
+        "replying_title": "Membalas",
+        "edit_composer_label": "Edit pesan"
     },
     "Link": "Tautan",
     "Code": "Kode",
@@ -2853,7 +2836,14 @@
             "one": "Dilihat oleh %(count)s orang",
             "other": "Dilihat oleh %(count)s orang"
         },
-        "read_receipts_label": "Laporan dibaca"
+        "read_receipts_label": "Laporan dibaca",
+        "thread_info_basic": "Dari sebuah utasan",
+        "error_no_renderer": "Peristiwa ini tidak dapat ditampilkan",
+        "undecryptable_tooltip": "Pesan ini tidak dapat didekripsi",
+        "send_state_sending": "Mengirim pesan Anda…",
+        "send_state_encrypting": "Mengenkripsi pesan Anda…",
+        "send_state_sent": "Pesan Anda telah terkirim",
+        "send_state_failed": "Gagal untuk dikirim"
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -3338,7 +3328,19 @@
             "description_1": "Sesi ini telah mendeteksi bahwa Frasa Keamanan dan kunci untuk Pesan Aman Anda telah dihapus.",
             "description_2": "Jika Anda melakukan ini secara tidak sengaja, Anda dapat mengatur Pesan Aman pada sesi ini yang akan mengenkripsi ulang riwayat pesan sesi ini dengan metode pemulihan baru.",
             "warning": "Jika Anda tidak menghapus metode pemulihan, sebuah penyerang mungkin mencoba mengakses akun Anda. Ubah kata sandi akun Anda dan segera tetapkan metode pemulihan baru di Pengaturan."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
+            "title": "Siapkan"
+        },
+        "cross_signing_user_warning": "Pengguna ini belum memverifikasi semua sesinya.",
+        "cross_signing_user_normal": "Anda belum memverifikasi pengguna ini.",
+        "cross_signing_user_verified": "Anda telah memverifikasi pengguna ini. Pengguna ini telah memverifikasi semua sesinya.",
+        "cross_signing_room_warning": "Seseorang menggunakan sesi yang tidak dikenal",
+        "cross_signing_room_normal": "Ruangan ini dienkripsi secara ujung ke ujung",
+        "cross_signing_room_verified": "Semuanya di ruangan ini telah terverifikasi",
+        "event_shield_reason_authenticity_not_guaranteed": "Keaslian pesan terenkripsi ini tidak dapat dijamin pada perangkat ini.",
+        "event_shield_reason_mismatched_sender_key": "Terenkripsi oleh sesi yang belum diverifikasi"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",

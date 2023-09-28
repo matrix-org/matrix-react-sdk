@@ -28,7 +28,6 @@
     "Moderator": "Moderator",
     "Send": "Send",
     "Warning!": "Åtvaring!",
-    "This event could not be displayed": "Denne hendingen kunne ikkje visast",
     "Failed to ban user": "Fekk ikkje til å stenge ute brukaren",
     "Demote yourself?": "Senke ditt eige tilgangsnivå?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Du kan ikkje gjera om på denne endringa sidan du senkar tilgangsnivået ditt. Viss du er den siste privilegerte brukaren i rommet vil det bli umogleg å få tilbake tilgangsrettane.",
@@ -156,7 +155,6 @@
     "Invalid base_url for m.identity_server": "Feil base_url for m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
     "General failure": "Generell feil",
-    "Set up": "Sett opp",
     "Scroll to most recent messages": "Gå til dei nyaste meldingane",
     "No recent messages by %(user)s found": "Fann ingen nyare meldingar frå %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prøv å rulle oppover i historikken for å sjå om det finst nokon eldre.",
@@ -202,8 +200,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
-    "This room is end-to-end encrypted": "Dette rommet er ende-til-ende kryptert",
-    "Encrypted by an unverified session": "Kryptert av ein ikkje-verifisert sesjon",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
     "Messages in this room are end-to-end encrypted.": "Meldingar i dette rommet er ende-til-ende kryptert.",
     "Messages in this room are not end-to-end encrypted.": "Meldingar i dette rommet er ikkje ende-til-ende kryptert.",
@@ -808,7 +804,8 @@
         },
         "url_preview": {
             "close": "Lukk førehandsvisninga"
-        }
+        },
+        "error_no_renderer": "Denne hendingen kunne ikkje visast"
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",
@@ -1194,7 +1191,12 @@
         "recovery_method_removed": {
             "title": "Gjenopprettingsmetode fjerna",
             "warning": "Viss du ikkje fjerna gjenopprettingsmetoden, kan ein angripar prøve å bryte seg inn på kontoen din. Endre kontopassordet ditt og sett ein opp ein ny gjenopprettingsmetode umidellbart under Innstillingar."
-        }
+        },
+        "setup_secure_backup": {
+            "title": "Sett opp"
+        },
+        "cross_signing_room_normal": "Dette rommet er ende-til-ende kryptert",
+        "event_shield_reason_mismatched_sender_key": "Kryptert av ein ikkje-verifisert sesjon"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",

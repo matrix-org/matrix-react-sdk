@@ -316,7 +316,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                             notification={StaticNotificationState.forSymbol("!", NotificationColor.Red)}
                         />
                     </span>
-                    <span className="text-warning">{_t("Failed to send")}</span>
+                    <span className="text-warning">{_t("timeline|send_state_failed")}</span>
                 </span>
             );
         }

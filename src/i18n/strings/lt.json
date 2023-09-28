@@ -78,7 +78,6 @@
     "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
     "Return to login screen": "Grįžti į prisijungimą",
     "Session ID": "Seanso ID",
-    "This event could not be displayed": "Nepavyko parodyti šio įvykio",
     "Failed to ban user": "Nepavyko užblokuoti vartotojo",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)s min",
@@ -111,7 +110,6 @@
     },
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
-    "Set up": "Nustatyti",
     "Preparing to send logs": "Ruošiamasi išsiųsti žurnalus",
     "Incompatible Database": "Nesuderinama duomenų bazė",
     "Incompatible local cache": "Nesuderinamas vietinis podėlis",
@@ -153,7 +151,6 @@
     "Command Help": "Komandų pagalba",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet nepavyko jos rasti.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
-    "Back up your keys before signing out to avoid losing them.": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo.",
     "Start using Key Backup": "Pradėti naudoti atsarginę raktų kopiją",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Atnaujinimas išjungs dabartinę kambario instanciją ir sukurs atnaujintą kambarį tuo pačiu pavadinimu.",
     "Other published addresses:": "Kiti paskelbti adresai:",
@@ -175,7 +172,6 @@
     "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
     "You'll lose access to your encrypted messages": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Įspėjimas</b>: atsarginę raktų kopiją sukurkite tik iš patikimo kompiuterio.",
-    "This room is end-to-end encrypted": "Šis kambarys visapusiškai užšifruotas",
     "Messages in this room are end-to-end encrypted.": "Žinutės šiame kambaryje yra visapusiškai užšifruotos.",
     "Messages in this room are not end-to-end encrypted.": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
     "Confirm Removal": "Patvirtinkite pašalinimą",
@@ -275,10 +271,6 @@
     "Anchor": "Inkaras",
     "Headphones": "Ausinės",
     "Folder": "Aplankas",
-    "This user has not verified all of their sessions.": "Šis vartotojas nepatvirtino visų savo seansų.",
-    "You have not verified this user.": "Jūs nepatvirtinote šio vartotojo.",
-    "You have verified this user. This user has verified all of their sessions.": "Jūs patvirtinote šį vartotoją. Šis vartotojas patvirtino visus savo seansus.",
-    "Everyone in this room is verified": "Visi šiame kambaryje yra patvirtinti",
     "Encrypted by a deleted session": "Užšifruota ištrinto seanso",
     "If you can't scan the code above, verify by comparing unique emoji.": "Jei nuskaityti aukščiau esančio kodo negalite, patvirtinkite palygindami unikalius jaustukus.",
     "You've successfully verified your device!": "Jūs sėkmingai patvirtinote savo įrenginį!",
@@ -336,9 +328,6 @@
     "Notes": "Pastabos",
     "Integrations are disabled": "Integracijos yra išjungtos",
     "Integrations not allowed": "Integracijos neleidžiamos",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Šiame įrenginyje negalima užtikrinti šios užšifruotos žinutės autentiškumo.",
-    "Unencrypted": "Neužšifruota",
-    "Encrypted by an unverified session": "Užšifruota nepatvirtinto seanso",
     "Main address": "Pagrindinis adresas",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Atnaujinant pagrindinį kambario adresą įvyko klaida. Gali būti, kad serveris to neleidžia arba įvyko laikina klaida.",
     "Error updating main address": "Atnaujinant pagrindinį adresą įvyko klaida",
@@ -393,7 +382,6 @@
     "Security Phrase": "Slaptafrazė",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Anksčiau šiame seanse naudojote naujesnę %(brand)s versiją. Norėdami vėl naudoti šią versiją su visapusiu šifravimu, turėsite atsijungti ir prisijungti iš naujo.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Tam, kad neprarastumėte savo pokalbių istorijos, prieš atsijungdami turite eksportuoti kambario raktus. Norėdami tai padaryti, turėsite grįžti į naujesnę %(brand)s versiją",
-    "Someone is using an unknown session": "Kažkas naudoja nežinomą seansą",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors, naudojant jų vardą, el. pašto adresą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
     "Azerbaijan": "Azerbaidžanas",
@@ -743,12 +731,8 @@
     "View message": "Žiūrėti žinutę",
     "Send voice message": "Siųsti balso žinutę",
     "Scroll to most recent messages": "Slinkite prie naujausių žinučių",
-    "Failed to send": "Nepavyko išsiųsti",
-    "Your message was sent": "Jūsų žinutė išsiųsta",
     "Copy link to thread": "Kopijuoti nuorodą į temą",
     "View in room": "Peržiūrėti kambaryje",
-    "From a thread": "Iš temos",
-    "Edit message": "Redaguoti žinutę",
     "Latvia": "Latvija",
     "Japan": "Japonija",
     "Italy": "Italija",
@@ -849,7 +833,8 @@
         "rooms": "Kambariai",
         "low_priority": "Žemo prioriteto",
         "historical": "Istoriniai",
-        "go_to_settings": "Eiti į Nustatymus"
+        "go_to_settings": "Eiti į Nustatymus",
+        "unencrypted": "Neužšifruota"
     },
     "action": {
         "continue": "Tęsti",
@@ -1055,7 +1040,8 @@
         "poll_button": "Apklausa",
         "format_italics": "Kursyvas",
         "format_insert_link": "Įterpti nuorodą",
-        "replying_title": "Atsakoma"
+        "replying_title": "Atsakoma",
+        "edit_composer_label": "Redaguoti žinutę"
     },
     "Code": "Kodas",
     "power_level": {
@@ -1799,7 +1785,11 @@
             "one": "Matė %(count)s žmogus",
             "other": "Matė %(count)s žmonės"
         },
-        "read_receipts_label": "Skaitymo kvitai"
+        "read_receipts_label": "Skaitymo kvitai",
+        "thread_info_basic": "Iš temos",
+        "error_no_renderer": "Nepavyko parodyti šio įvykio",
+        "send_state_sent": "Jūsų žinutė išsiųsta",
+        "send_state_failed": "Nepavyko išsiųsti"
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -2185,7 +2175,19 @@
             "title": "Atgavimo Metodas Pašalintas",
             "description_2": "Jei tai padarėte netyčia, šiame seanse galite nustatyti saugias žinutes, kurios pakartotinai užšifruos šio seanso žinučių istoriją nauju atgavimo metodu.",
             "warning": "Jei jūs nepašalinote paskyros atgavimo metodo, gali būti, kad užpuolikas bando patekti į jūsų paskyrą. Nedelsiant nustatymuose pakeiskite savo paskyros slaptažodį ir nustatykite naują atgavimo metodą."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo.",
+            "title": "Nustatyti"
+        },
+        "cross_signing_user_warning": "Šis vartotojas nepatvirtino visų savo seansų.",
+        "cross_signing_user_normal": "Jūs nepatvirtinote šio vartotojo.",
+        "cross_signing_user_verified": "Jūs patvirtinote šį vartotoją. Šis vartotojas patvirtino visus savo seansus.",
+        "cross_signing_room_warning": "Kažkas naudoja nežinomą seansą",
+        "cross_signing_room_normal": "Šis kambarys visapusiškai užšifruotas",
+        "cross_signing_room_verified": "Visi šiame kambaryje yra patvirtinti",
+        "event_shield_reason_authenticity_not_guaranteed": "Šiame įrenginyje negalima užtikrinti šios užšifruotos žinutės autentiškumo.",
+        "event_shield_reason_mismatched_sender_key": "Užšifruota nepatvirtinto seanso"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",

@@ -139,7 +139,6 @@
     "Share User": "Condividi utente",
     "Share Room Message": "Condividi messaggio stanza",
     "Link to selected message": "Link al messaggio selezionato",
-    "This event could not be displayed": "Questo evento non può essere mostrato",
     "Demote yourself?": "Vuoi declassarti?",
     "Demote": "Declassa",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Non puoi inviare alcun messaggio fino a quando non leggi ed accetti <consentLink>i nostri termini e condizioni</consentLink>.",
@@ -170,7 +169,6 @@
     "No backup found!": "Nessun backup trovato!",
     "Failed to decrypt %(failedCount)s sessions!": "Decifrazione di %(failedCount)s sessioni fallita!",
     "Invalid homeserver discovery response": "Risposta della ricerca homeserver non valida",
-    "Set up": "Imposta",
     "Invalid identity server discovery response": "Risposta non valida cercando server di identità",
     "General failure": "Guasto generale",
     "Unable to load commit detail: %(msg)s": "Caricamento dettagli del commit fallito: %(msg)s",
@@ -241,7 +239,6 @@
     "Headphones": "Auricolari",
     "Folder": "Cartella",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "I messaggi cifrati sono resi sicuri con una crittografia end-to-end. Solo tu e il/i destinatario/i avete le chiavi per leggere questi messaggi.",
-    "Back up your keys before signing out to avoid losing them.": "Fai una copia delle tue chiavi prima di disconnetterti per evitare di perderle.",
     "Start using Key Backup": "Inizia ad usare il backup chiavi",
     "Error updating main address": "Errore di aggiornamento indirizzo principale",
     "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "Si è verificato un errore aggiornando l'indirizzo principale della stanza. Potrebbe non essere permesso dal server o un problema temporaneo.",
@@ -273,7 +270,6 @@
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
     "This room has already been upgraded.": "Questa stanza è già stata aggiornata.",
     "edited": "modificato",
-    "Edit message": "Modifica messaggio",
     "Notes": "Note",
     "Sign out and remove encryption keys?": "Disconnettere e rimuovere le chiavi di crittografia?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Per aiutarci a prevenire questa cosa in futuro, <a>inviaci i log</a>.",
@@ -347,7 +343,6 @@
     "Integrations are disabled": "Le integrazioni sono disattivate",
     "Integrations not allowed": "Integrazioni non permesse",
     "Verification Request": "Richiesta verifica",
-    "Unencrypted": "Non criptato",
     "Upgrade private room": "Aggiorna stanza privata",
     "Upgrade public room": "Aggiorna stanza pubblica",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aggiornare una stanza è un'azione avanzata ed è consigliabile quando una stanza non è stabile a causa di errori, funzioni mancanti o vulnerabilità di sicurezza.",
@@ -372,14 +367,7 @@
     "Verify User": "Verifica utente",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Per maggiore sicurezza, verifica questo utente controllando un codice univoco sui vostri dispositivi.",
     "Start Verification": "Inizia la verifica",
-    "This room is end-to-end encrypted": "Questa stanza è cifrata end-to-end",
-    "Everyone in this room is verified": "Tutti in questa stanza sono verificati",
     "This backup is trusted because it has been restored on this session": "Questo backup è fidato perchè è stato ripristinato in questa sessione",
-    "This user has not verified all of their sessions.": "Questo utente non ha verificato tutte le sue sessioni.",
-    "You have not verified this user.": "Non hai verificato questo utente.",
-    "You have verified this user. This user has verified all of their sessions.": "Hai verificato questo utente. Questo utente ha verificato tutte le sue sessioni.",
-    "Someone is using an unknown session": "Qualcuno sta usando una sessione sconosciuta",
-    "Encrypted by an unverified session": "Cifrato da una sessione non verificata",
     "Encrypted by a deleted session": "Cifrato da una sessione eliminata",
     "Waiting for %(displayName)s to accept…": "In attesa che %(displayName)s accetti…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "I tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
@@ -492,7 +480,6 @@
     "Switch theme": "Cambia tema",
     "Message preview": "Anteprima messaggio",
     "Looks good!": "Sembra giusta!",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
     "Wrong file type": "Tipo di file errato",
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
@@ -835,7 +822,6 @@
     "Create a new room": "Crea nuova stanza",
     "Space selection": "Selezione spazio",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Non potrai annullare questa modifica dato che ti stai declassando, se sei l'ultimo utente privilegiato nello spazio sarà impossibile riottenere il grado.",
-    "Your message was sent": "Il tuo messaggio è stato inviato",
     "Leave space": "Esci dallo spazio",
     "Create a space": "Crea uno spazio",
     "<inviter/> invites you": "<inviter/> ti ha invitato/a",
@@ -878,7 +864,6 @@
         "one": "Vedi 1 membro",
         "other": "Vedi tutti i %(count)s membri"
     },
-    "Failed to send": "Invio fallito",
     "Want to add a new room instead?": "Vuoi invece aggiungere una nuova stanza?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Aggiunta stanza...",
@@ -1063,7 +1048,6 @@
     "Almost there! Is your other device showing the same shield?": "Quasi fatto! L'altro dispositivo sta mostrando lo stesso scudo?",
     "To proceed, please accept the verification request on your other device.": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
     "Could not fetch location": "Impossibile rilevare la posizione",
-    "From a thread": "Da una conversazione",
     "Remove from room": "Rimuovi dalla stanza",
     "Failed to remove user": "Rimozione utente fallita",
     "Remove them from specific things I'm able to": "Rimuovilo da cose specifiche dove posso farlo",
@@ -1224,7 +1208,6 @@
     "We were unable to start a chat with the other user.": "Non siamo riusciti ad avviare la conversazione con l'altro utente.",
     "Error starting verification": "Errore di avvio della verifica",
     "Unable to decrypt message": "Impossibile decifrare il messaggio",
-    "This message could not be decrypted": "Non è stato possibile decifrare questo messaggio",
     "Text": "Testo",
     "Create a link": "Crea un collegamento",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
@@ -1247,8 +1230,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Attiva '%(manageIntegrations)s' nelle impostazioni per continuare.",
     "Waiting for partner to confirm…": "In attesa che il partner confermi…",
     "Adding…": "Aggiunta…",
-    "Encrypting your message…": "Crittazione del tuo messaggio…",
-    "Sending your message…": "Invio del tuo messaggio…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Loading polls": "Caricamento sondaggi",
     "Ended a poll": "Terminato un sondaggio",
@@ -1414,7 +1395,8 @@
         "low_priority": "Bassa priorità",
         "historical": "Cronologia",
         "go_to_settings": "Vai alle impostazioni",
-        "setup_secure_messages": "Imposta i messaggi sicuri"
+        "setup_secure_messages": "Imposta i messaggi sicuri",
+        "unencrypted": "Non criptato"
     },
     "action": {
         "continue": "Continua",
@@ -1751,7 +1733,8 @@
         "formatting_toolbar_label": "Formattazione",
         "format_italics": "Corsivo",
         "format_insert_link": "Inserisci collegamento",
-        "replying_title": "Rispondere"
+        "replying_title": "Rispondere",
+        "edit_composer_label": "Modifica messaggio"
     },
     "Link": "Collegamento",
     "Code": "Codice",
@@ -2853,7 +2836,14 @@
             "one": "Visto da %(count)s persona",
             "other": "Visto da %(count)s persone"
         },
-        "read_receipts_label": "Ricevuta di lettura"
+        "read_receipts_label": "Ricevuta di lettura",
+        "thread_info_basic": "Da una conversazione",
+        "error_no_renderer": "Questo evento non può essere mostrato",
+        "undecryptable_tooltip": "Non è stato possibile decifrare questo messaggio",
+        "send_state_sending": "Invio del tuo messaggio…",
+        "send_state_encrypting": "Crittazione del tuo messaggio…",
+        "send_state_sent": "Il tuo messaggio è stato inviato",
+        "send_state_failed": "Invio fallito"
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -3338,7 +3328,19 @@
             "description_1": "Questa sessione ha rilevato che la tua password di sicurezza e la chiave per i messaggi sicuri sono state rimosse.",
             "description_2": "Se l'hai fatto accidentalmente, puoi configurare Messaggi Sicuri su questa sessione che cripterà nuovamente la cronologia dei messaggi con un nuovo metodo di recupero.",
             "warning": "Se non hai rimosso il metodo di ripristino, è possibile che un aggressore stia cercando di accedere al tuo account. Cambia la password del tuo account e imposta immediatamente un nuovo metodo di recupero nelle impostazioni."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Fai una copia delle tue chiavi prima di disconnetterti per evitare di perderle.",
+            "title": "Imposta"
+        },
+        "cross_signing_user_warning": "Questo utente non ha verificato tutte le sue sessioni.",
+        "cross_signing_user_normal": "Non hai verificato questo utente.",
+        "cross_signing_user_verified": "Hai verificato questo utente. Questo utente ha verificato tutte le sue sessioni.",
+        "cross_signing_room_warning": "Qualcuno sta usando una sessione sconosciuta",
+        "cross_signing_room_normal": "Questa stanza è cifrata end-to-end",
+        "cross_signing_room_verified": "Tutti in questa stanza sono verificati",
+        "event_shield_reason_authenticity_not_guaranteed": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
+        "event_shield_reason_mismatched_sender_key": "Cifrato da una sessione non verificata"
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",

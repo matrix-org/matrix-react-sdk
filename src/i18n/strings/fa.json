@@ -19,7 +19,6 @@
     "Search…": "جستجو…",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
-    "Set up": "برپایی",
     "Failed to ban user": "کاربر مسدود نشد",
     "Error decrypting attachment": "خطا در رمزگشایی پیوست",
     "Email address": "آدرس ایمیل",
@@ -622,12 +621,7 @@
         "other": "و %(count)s مورد دیگر ..."
     },
     "Scroll to most recent messages": "به جدیدترین پیام‌ها بروید",
-    "Failed to send": "ارسال با خطا مواجه شد",
-    "Your message was sent": "پیام شما ارسال شد",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "صحت این پیام رمزگذاری شده در این دستگاه تضمین نمی شود.",
     "Encrypted by a deleted session": "با یک نشست حذف شده رمزگذاری شده است",
-    "Unencrypted": "رمزگذاری نشده",
-    "Encrypted by an unverified session": "توسط یک نشست تأیید نشده رمزگذاری شده است",
     "Language Dropdown": "منو زبان",
     "View message": "مشاهده پیام",
     "Information": "اطلاعات",
@@ -666,14 +660,7 @@
     "You declined": "شما رد کردید",
     "%(name)s accepted": "%(name)s پذیرفت",
     "You accepted": "پذیرفتید",
-    "Everyone in this room is verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
-    "This room is end-to-end encrypted": "این اتاق به صورت سرتاسر رمزشده است",
-    "Someone is using an unknown session": "فردی از یک نشست ناشناس استفاده می‌کند",
-    "You have verified this user. This user has verified all of their sessions.": "شما این کاربر را تائید کرده‌اید. این کاربر تمام نشست‌های خود را تائيد کرده‌است.",
-    "You have not verified this user.": "شما این کاربر را تائید نکرده‌اید.",
-    "This user has not verified all of their sessions.": "این کاربر هیچ‌کدام از نشست‌های خود را تائید نکرده است.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",
-    "Back up your keys before signing out to avoid losing them.": "پیش از خروج از حساب کاربری، از کلید‌های خود پشتیبان بگیرید تا آن‌ها را از دست ندهید.",
     "Backup version:": "نسخه‌ی پشتیبان:",
     "This backup is trusted because it has been restored on this session": "این نسخه‌ی پشتیبان قابل اعتماد است چرا که بر روی این نشست بازیابی شد",
     "Show more": "نمایش بیشتر",
@@ -778,8 +765,6 @@
     "Dog": "سگ",
     "Dial pad": "صفحه شماره‌گیری",
     "IRC display name width": "عرض نمایش نام‌های IRC",
-    "This event could not be displayed": "امکان نمایش این رخداد وجود ندارد",
-    "Edit message": "ویرایش پیام",
     "Return to login screen": "بازگشت به صفحه‌ی ورود",
     "Your password has been reset.": "گذرواژه‌ی شما با موفقیت تغییر کرد.",
     "New passwords must match each other.": "گذرواژه‌ی جدید باید مطابقت داشته باشند.",
@@ -996,7 +981,8 @@
         "low_priority": "اولویت کم",
         "historical": "تاریخی",
         "go_to_settings": "برو به تنظیمات",
-        "setup_secure_messages": "پیام‌رسانی امن را تنظیم کنید"
+        "setup_secure_messages": "پیام‌رسانی امن را تنظیم کنید",
+        "unencrypted": "رمزگذاری نشده"
     },
     "action": {
         "continue": "ادامه",
@@ -1228,7 +1214,8 @@
         "close_sticker_picker": "پنهان سازی استیکرها",
         "poll_button_no_perms_title": "اجازه نیاز است",
         "format_italics": "مورب",
-        "replying_title": "پاسخ دادن"
+        "replying_title": "پاسخ دادن",
+        "edit_composer_label": "ویرایش پیام"
     },
     "Code": "کد",
     "power_level": {
@@ -1867,7 +1854,10 @@
         },
         "url_preview": {
             "close": "بستن پیش نمایش"
-        }
+        },
+        "error_no_renderer": "امکان نمایش این رخداد وجود ندارد",
+        "send_state_sent": "پیام شما ارسال شد",
+        "send_state_failed": "ارسال با خطا مواجه شد"
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",
@@ -2186,7 +2176,19 @@
             "description_1": "نشست فعلی تشخیص داده که عبارت امنیتی و کلید لازم شما برای پیام‌رسانی امن حذف شده‌است.",
             "description_2": "اگر این کار را به صورت تصادفی انجام دادید، می‌توانید سازوکار پیام امن را برای این نشست تنظیم کرده که باعث می‌شود تمام تاریخچه‌ی این نشست با استفاده از یک روش جدیدِ بازیابی، مجددا رمزشود.",
             "warning": "اگر متد بازیابی را حذف نکرده‌اید، ممکن است حمله‌کننده‌ای سعی در دسترسی به حساب‌کاربری شما داشته باشد. گذرواژه حساب کاربری خود را تغییر داده و فورا یک روش بازیابی را از بخش تنظیمات خود تنظیم کنید."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "پیش از خروج از حساب کاربری، از کلید‌های خود پشتیبان بگیرید تا آن‌ها را از دست ندهید.",
+            "title": "برپایی"
+        },
+        "cross_signing_user_warning": "این کاربر هیچ‌کدام از نشست‌های خود را تائید نکرده است.",
+        "cross_signing_user_normal": "شما این کاربر را تائید نکرده‌اید.",
+        "cross_signing_user_verified": "شما این کاربر را تائید کرده‌اید. این کاربر تمام نشست‌های خود را تائيد کرده‌است.",
+        "cross_signing_room_warning": "فردی از یک نشست ناشناس استفاده می‌کند",
+        "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است",
+        "cross_signing_room_verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
+        "event_shield_reason_authenticity_not_guaranteed": "صحت این پیام رمزگذاری شده در این دستگاه تضمین نمی شود.",
+        "event_shield_reason_mismatched_sender_key": "توسط یک نشست تأیید نشده رمزگذاری شده است"
     },
     "emoji": {
         "category_frequently_used": "متداول",

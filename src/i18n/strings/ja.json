@@ -53,7 +53,6 @@
     "Restricted": "制限",
     "Moderator": "モデレーター",
     "Warning!": "警告！",
-    "This event could not be displayed": "このイベントは表示できませんでした",
     "Demote yourself?": "自身を降格しますか？",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "あなたは自分自身を降格させようとしています。この変更は取り消せません。あなたがルームの中で最後の特権ユーザーである場合、特権を再取得することはできなくなります。",
     "Demote": "降格する",
@@ -168,7 +167,6 @@
     "Room Topic": "ルームのトピック",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
     "Remove recent messages": "最近のメッセージを削除",
-    "Back up your keys before signing out to avoid losing them.": "鍵を失くさないよう、サインアウトする前にバックアップしてください。",
     "Start using Key Backup": "鍵のバックアップを使用開始",
     "Edited at %(date)s. Click to view edits.": "%(date)sに編集済。クリックすると変更履歴を表示。",
     "edited": "編集済",
@@ -180,8 +178,6 @@
     "The encryption used by this room isn't supported.": "このルームで使用されている暗号化はサポートされていません。",
     "Session name": "セッション名",
     "Session key": "セッションキー",
-    "This room is end-to-end encrypted": "このルームはエンドツーエンドで暗号化されています",
-    "Encrypted by an unverified session": "未認証のセッションによる暗号化",
     "Direct Messages": "ダイレクトメッセージ",
     "Power level": "権限レベル",
     "Removing…": "削除しています…",
@@ -223,7 +219,6 @@
     "Switch theme": "テーマを切り替える",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
-    "Unencrypted": "暗号化されていません",
     "Encrypted by a deleted session": "削除済のセッションによる暗号化",
     "Scroll to most recent messages": "最新のメッセージを表示",
     "Your server": "あなたのサーバー",
@@ -236,7 +231,6 @@
     "Upload all": "全てアップロード",
     "Add widgets, bridges & bots": "ウィジェット、ブリッジ、ボットの追加",
     "Widgets": "ウィジェット",
-    "Everyone in this room is verified": "このルーム内の全員を認証済",
     "Verify all users in a room to ensure it's secure.": "ルームの全てのユーザーを認証すると、ルームが安全であることを確認できます。",
     "You've successfully verified %(displayName)s!": "%(displayName)sは正常に認証されました！",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s（%(deviceId)s）は正常に認証されました！",
@@ -274,7 +268,6 @@
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "このルームはホームサーバーが<i>不安定</i>と判断したルームバージョン<roomVersion />で動作しています。",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "このルームをアップグレードすると、現在のルームの使用を終了し、アップグレードしたルームを同じ名前で作成します。",
     "This room has already been upgraded.": "このルームは既にアップグレードされています。",
-    "Set up": "設定",
     "Folder": "フォルダー",
     "Headphones": "ヘッドホン",
     "Anchor": "いかり",
@@ -390,12 +383,6 @@
     "South Korea": "韓国",
     "South Georgia & South Sandwich Islands": "南ジョージア&南サンドイッチ諸島",
     "Open dial pad": "ダイヤルパッドを開く",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "この暗号化されたメッセージの真正性はこの端末では保証できません。",
-    "Edit message": "メッセージを編集",
-    "Someone is using an unknown session": "誰かが不明なセッションを使用しています",
-    "You have verified this user. This user has verified all of their sessions.": "このユーザーを認証しました。このユーザーは全てのセッションを認証しました。",
-    "You have not verified this user.": "あなたはこのユーザーを認証していません。",
-    "This user has not verified all of their sessions.": "このユーザーは全てのセッションを確認していません。",
     "South Africa": "南アフリカ",
     "Somalia": "ソマリア",
     "Solomon Islands": "ソロモン諸島",
@@ -653,7 +640,6 @@
     "Error removing address": "アドレスを削除する際にエラーが発生しました",
     "There was an error removing that address. It may no longer exist or a temporary error occurred.": "アドレスを削除する際にエラーが発生しました。既にルームが存在しないか、一時的なエラーが発生しました。",
     "You don't have permission to delete the address.": "アドレスを削除する権限がありません。",
-    "Your message was sent": "メッセージが送信されました",
     "Leave space": "スペースから退出",
     "Create a space": "スペースを作成",
     "Edit devices": "端末を編集",
@@ -672,7 +658,6 @@
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "Files": "ファイル",
     "Export chat": "チャットをエクスポート",
-    "Failed to send": "送信に失敗しました",
     "Close dialog": "ダイアログを閉じる",
     "Preparing to download logs": "ログのダウンロードを準備しています",
     "Send voice message": "音声メッセージを送信",
@@ -908,7 +893,6 @@
     "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。",
     "Only do this if you have no other device to complete verification with.": "認証を行える端末がない場合のみ行ってください。",
     "You may contact me if you have any follow up questions": "追加で確認が必要な事項がある場合は、連絡可",
-    "From a thread": "スレッドから",
     "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
     "My current location": "自分の現在の位置情報",
     "My live location": "自分の位置情報（ライブ）",
@@ -1141,7 +1125,6 @@
     "Create a link": "リンクを作成",
     "Edit link": "リンクを編集",
     "Unable to decrypt message": "メッセージを復号化できません",
-    "This message could not be decrypted": "このメッセージを復号化できませんでした",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
     "An error occurred while stopping your live location, please try again": "位置情報（ライブ）を停止している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location, please try again": "位置情報（ライブ）を共有している際にエラーが発生しました。もう一度やり直してください",
@@ -1247,8 +1230,6 @@
     "Checking…": "確認しています…",
     "Waiting for partner to confirm…": "相手の承認を待機しています…",
     "Adding…": "追加しています…",
-    "Encrypting your message…": "メッセージを暗号化しています…",
-    "Sending your message…": "メッセージを送信しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "common": {
         "about": "概要",
@@ -1365,7 +1346,8 @@
         "low_priority": "低優先度",
         "historical": "履歴",
         "go_to_settings": "設定を開く",
-        "setup_secure_messages": "セキュアメッセージを設定"
+        "setup_secure_messages": "セキュアメッセージを設定",
+        "unencrypted": "暗号化されていません"
     },
     "action": {
         "continue": "続行",
@@ -1681,7 +1663,8 @@
         "mode_rich_text": "フォーマットを表示",
         "format_italics": "斜字体",
         "format_insert_link": "リンクを挿入",
-        "replying_title": "以下に返信"
+        "replying_title": "以下に返信",
+        "edit_composer_label": "メッセージを編集"
     },
     "Link": "リンク",
     "Code": "コード",
@@ -2715,7 +2698,14 @@
             "one": "%(count)s人が閲覧済",
             "other": "%(count)s人が閲覧済"
         },
-        "read_receipts_label": "開封確認メッセージ"
+        "read_receipts_label": "開封確認メッセージ",
+        "thread_info_basic": "スレッドから",
+        "error_no_renderer": "このイベントは表示できませんでした",
+        "undecryptable_tooltip": "このメッセージを復号化できませんでした",
+        "send_state_sending": "メッセージを送信しています…",
+        "send_state_encrypting": "メッセージを暗号化しています…",
+        "send_state_sent": "メッセージが送信されました",
+        "send_state_failed": "送信に失敗しました"
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3171,7 +3161,19 @@
             "description_1": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
             "description_2": "偶然削除してしまった場合は、このセッションで、メッセージの暗号化を設定することができます。設定すると、新しい復元方法でセッションのデータを改めて暗号化します。",
             "warning": "復元方法を削除しなかった場合、攻撃者があなたのアカウントにアクセスしようとしている可能性があります。設定画面でアカウントのパスワードを至急変更し、新しい復元方法を設定してください。"
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "鍵を失くさないよう、サインアウトする前にバックアップしてください。",
+            "title": "設定"
+        },
+        "cross_signing_user_warning": "このユーザーは全てのセッションを確認していません。",
+        "cross_signing_user_normal": "あなたはこのユーザーを認証していません。",
+        "cross_signing_user_verified": "このユーザーを認証しました。このユーザーは全てのセッションを認証しました。",
+        "cross_signing_room_warning": "誰かが不明なセッションを使用しています",
+        "cross_signing_room_normal": "このルームはエンドツーエンドで暗号化されています",
+        "cross_signing_room_verified": "このルーム内の全員を認証済",
+        "event_shield_reason_authenticity_not_guaranteed": "この暗号化されたメッセージの真正性はこの端末では保証できません。",
+        "event_shield_reason_mismatched_sender_key": "未認証のセッションによる暗号化"
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",

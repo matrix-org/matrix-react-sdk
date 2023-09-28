@@ -118,7 +118,6 @@
     "Add some now": "Shtohen ca tani",
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
-    "This event could not be displayed": "Ky akt s’u shfaq dot",
     "Only room administrators will see this warning": "Këtë sinjalizim mund ta shohin vetëm përgjegjësit e dhomës",
     "Incompatible local cache": "Fshehtinë vendore e papërputhshme",
     "Updating %(brand)s": "%(brand)s-i po përditësohet",
@@ -168,7 +167,6 @@
     "No backup found!": "S’u gjet kopjeruajtje!",
     "Failed to decrypt %(failedCount)s sessions!": "S’u arrit të shfshehtëzohet sesioni %(failedCount)s!",
     "Invalid homeserver discovery response": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
-    "Set up": "Rregulloje",
     "Invalid identity server discovery response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
     "Unable to load commit detail: %(msg)s": "S’arrihet të ngarkohen hollësi depozitimi: %(msg)s",
     "The following users may not exist": "Përdoruesit vijues mund të mos ekzistojnë",
@@ -248,7 +246,6 @@
     "Hourglass": "Klepsidër",
     "Key": "Kyç",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Mesazhet e fshehtëzuar sigurohen me fshehtëzim skaj-më-skaj. Vetëm ju dhe marrësi(t) kanë kyçet për të lexuar këto mesazhe.",
-    "Back up your keys before signing out to avoid losing them.": "Kopjeruajini kyçet tuaj, përpara se të dilni, që të shmangni humbjen e tyre.",
     "Start using Key Backup": "Fillo të përdorësh Kopjeruajtje Kyçesh",
     "I don't want my encrypted messages": "Nuk i dua mesazhet e mia të fshehtëzuar",
     "Manually export keys": "Eksporto dorazi kyçet",
@@ -266,7 +263,6 @@
     "Revoke invite": "Shfuqizoje ftesën",
     "Invited by %(sender)s": "Ftuar nga %(sender)s",
     "edited": "e përpunuar",
-    "Edit message": "Përpunoni mesazhin",
     "Notes": "Shënime",
     "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
     "Missing session data": "Mungojnë të dhëna sesioni",
@@ -346,7 +342,6 @@
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
     "Verification Request": "Kërkesë Verifikimi",
-    "Unencrypted": "Të pafshehtëzuara",
     "Upgrade private room": "Përmirëso dhomë private",
     "Upgrade public room": "Përmirëso dhomë publike",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Përmirësimi i një dhome është një veprim i thelluar dhe zakonisht rekomandohet kur një dhomë është e papërdorshme, për shkak të metash, veçorish që i mungojnë ose cenueshmëri sigurie.",
@@ -362,8 +357,6 @@
     "Recent Conversations": "Biseda Së Fundi",
     "Direct Messages": "Mesazhe të Drejtpërdrejtë",
     "Country Dropdown": "Menu Hapmbyll Vendesh",
-    "This room is end-to-end encrypted": "Kjo dhomë është e fshehtëzuar skaj-më-skaj",
-    "Everyone in this room is verified": "Gjithkush në këtë dhomë është verifikuar",
     "Verify User": "Verifikoni Përdoruesin",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "Për siguri ekstra, verifikojeni këtë përdorues duke kontrolluar në të dyja pajisjet tuaja një kod njëpërdorimsh.",
     "Start Verification": "Fillo Verifikimin",
@@ -372,11 +365,6 @@
     "Failed to find the following users": "S’u arrit të gjendeshin përdoruesit vijues",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Përdoruesit vijues mund të mos ekzistojnë ose janë të pavlefshëm, dhe s’mund të ftohen: %(csvNames)s",
     "This backup is trusted because it has been restored on this session": "Kjo kopjeruajtje është e besuar, ngaqë është rikthyer në këtë sesion",
-    "This user has not verified all of their sessions.": "Ky përdorues s’ka verifikuar krejt sesionet e tij.",
-    "You have not verified this user.": "S’e keni verifikuar këtë përdorues.",
-    "You have verified this user. This user has verified all of their sessions.": "E keni verifikuar këtë përdorues. Ky përdorues ka verifikuar krejt sesionet e veta.",
-    "Someone is using an unknown session": "Dikush po përdor një sesion të panjohur",
-    "Encrypted by an unverified session": "Fshehtëzuar nga një sesion i paverifikuar",
     "Encrypted by a deleted session": "Fshehtëzuar nga një sesion i fshirë",
     "Waiting for %(displayName)s to accept…": "Po pritet për %(displayName)s të pranojë…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Mesazhet tuaj janë të sigurt dhe vetëm ju dhe marrësi kanë kyçet unikë për t’i shkyçur.",
@@ -491,7 +479,6 @@
     "Switch theme": "Ndërroni temën",
     "Message preview": "Paraparje mesazhi",
     "Looks good!": "Mirë duket!",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
     "Wrong file type": "Lloj i gabuar kartele",
     "Security Phrase": "Frazë Sigurie",
     "Security Key": "Kyç Sigurie",
@@ -832,7 +819,6 @@
     "Create a new room": "Krijoni dhomë të re",
     "Space selection": "Përzgjedhje hapësire",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "S’do të jeni në gjendje ta zhbëni këtë ndryshim, teksa zhgradoni veten, nëse jeni përdoruesi i fundit i privilegjuar te hapësira, s’do të jetë e mundur të rifitoni privilegjet.",
-    "Your message was sent": "Mesazhi juaj u dërgua",
     "Leave space": "Braktiseni hapësirën",
     "Create a space": "Krijoni një hapësirë",
     "<inviter/> invites you": "<inviter/> ju fton",
@@ -874,7 +860,6 @@
         "one": "Shihni 1 anëtar",
         "other": "Shihni krejt %(count)s anëtarët"
     },
-    "Failed to send": "S’u arrit të dërgohet",
     "Search names and descriptions": "Kërko te emra dhe përshkrime",
     "You may contact me if you have any follow up questions": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme",
     "To leave the beta, visit your settings.": "Që të braktisni beta-n, vizitoni rregullimet tuaja.",
@@ -1061,7 +1046,6 @@
     "You cancelled verification on your other device.": "E anuluat verifikimin në pajisjen tuaj tjetër.",
     "Almost there! Is your other device showing the same shield?": "Thuajse mbaruam! A po shfaq pajisja juaj të njëjtën mburojë?",
     "To proceed, please accept the verification request on your other device.": "Që të vazhdoni më tej, ju lutemi, pranoni në pajisjen tuaj tjetër kërkesën për verifikim.",
-    "From a thread": "Nga një rrjedhë",
     "Could not fetch location": "S’u pru dot vendndodhja",
     "Remove from room": "Hiqeni prej dhome",
     "Failed to remove user": "S’u arrit të hiqej përdoruesi",
@@ -1223,7 +1207,6 @@
     "Error starting verification": "Gabim në nisje verifikimi",
     "<w>WARNING:</w> <description/>": "<w>KUJDES:</w> <description/>",
     "Unable to decrypt message": "S’arrihet të shfshehtëzohet mesazhi",
-    "This message could not be decrypted": "Ky mesazh s’u shfshehtëzua dot",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "Text": "Tekst",
     "Create a link": "Krijoni një lidhje",
@@ -1245,8 +1228,6 @@
     "Waiting for partner to confirm…": "Po pritet ripohimi nga partneri…",
     "Adding…": "Po shtohet…",
     "Declining…": "Po hidhet poshtë…",
-    "Encrypting your message…": "Po fshehtëzohet meszhi juaj…",
-    "Sending your message…": "Po dërgohet mesazhi juaj…",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Loading polls": "Po ngarkohen pyetësorë",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
@@ -1405,7 +1386,8 @@
         "low_priority": "Me përparësi të ulët",
         "historical": "Të dikurshme",
         "go_to_settings": "Kalo te Rregullimet",
-        "setup_secure_messages": "Rregulloni Mesazhi të Sigurt"
+        "setup_secure_messages": "Rregulloni Mesazhi të Sigurt",
+        "unencrypted": "Të pafshehtëzuara"
     },
     "action": {
         "continue": "Vazhdo",
@@ -1730,7 +1712,8 @@
         "formatting_toolbar_label": "Formatim",
         "format_italics": "Të pjerrëta",
         "format_insert_link": "Futni lidhje",
-        "replying_title": "Po përgjigjet"
+        "replying_title": "Po përgjigjet",
+        "edit_composer_label": "Përpunoni mesazhin"
     },
     "Link": "Lidhje",
     "Code": "Kod",
@@ -2780,7 +2763,14 @@
             "one": "Parë nga %(count)s person",
             "other": "Parë nga %(count)s vetë"
         },
-        "read_receipts_label": "Dëftesa leximi"
+        "read_receipts_label": "Dëftesa leximi",
+        "thread_info_basic": "Nga një rrjedhë",
+        "error_no_renderer": "Ky akt s’u shfaq dot",
+        "undecryptable_tooltip": "Ky mesazh s’u shfshehtëzua dot",
+        "send_state_sending": "Po dërgohet mesazhi juaj…",
+        "send_state_encrypting": "Po fshehtëzohet meszhi juaj…",
+        "send_state_sent": "Mesazhi juaj u dërgua",
+        "send_state_failed": "S’u arrit të dërgohet"
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -3250,7 +3240,19 @@
             "description_1": "Ky sesion ka pikasur se Fraza e Sigurisë dhe kyçi juaj për Mesazhe të Sigurt janë hequr.",
             "description_2": "Nëse këtë e keni bërë pa dashje, mund të ujdisni Mesazhe të Sigurt në këtë sesion, gjë që do të sjellë rifshehtëzimin e historikut të mesazheve të sesionit me një metodë të re rimarrjesh.",
             "warning": "Nëse metodën e re të rimarrjeve s’e keni hequr ju, dikush mund të jetë duke u rrekur të hyjë në llogarinë tuaj. Ndryshoni menjëherë fjalëkalimin e llogarisë tuaj, te Rregullimet, dhe caktoni një metodë të re rimarrjesh."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Kopjeruajini kyçet tuaj, përpara se të dilni, që të shmangni humbjen e tyre.",
+            "title": "Rregulloje"
+        },
+        "cross_signing_user_warning": "Ky përdorues s’ka verifikuar krejt sesionet e tij.",
+        "cross_signing_user_normal": "S’e keni verifikuar këtë përdorues.",
+        "cross_signing_user_verified": "E keni verifikuar këtë përdorues. Ky përdorues ka verifikuar krejt sesionet e veta.",
+        "cross_signing_room_warning": "Dikush po përdor një sesion të panjohur",
+        "cross_signing_room_normal": "Kjo dhomë është e fshehtëzuar skaj-më-skaj",
+        "cross_signing_room_verified": "Gjithkush në këtë dhomë është verifikuar",
+        "event_shield_reason_authenticity_not_guaranteed": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
+        "event_shield_reason_mismatched_sender_key": "Fshehtëzuar nga një sesion i paverifikuar"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",

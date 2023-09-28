@@ -795,6 +795,7 @@
         "deselect_all": "Deselect all",
         "select_all": "Select all",
         "emoji": "Emoji",
+        "unencrypted": "Unencrypted",
         "sticker": "Sticker",
         "public_room": "Public room",
         "video_room": "Video room",
@@ -1235,6 +1236,21 @@
         "cross_signing_untrusted": "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.",
         "cross_signing_not_ready": "Cross-signing is not set up.",
         "not_supported": "<not supported>",
+        "setup_secure_backup": {
+            "explainer": "Back up your keys before signing out to avoid losing them.",
+            "title": "Set up"
+        },
+        "cross_signing_user_warning": "This user has not verified all of their sessions.",
+        "cross_signing_user_normal": "You have not verified this user.",
+        "cross_signing_user_verified": "You have verified this user. This user has verified all of their sessions.",
+        "cross_signing_room_warning": "Someone is using an unknown session",
+        "cross_signing_room_normal": "This room is end-to-end encrypted",
+        "cross_signing_room_verified": "Everyone in this room is verified",
+        "event_shield_reason_unverified_identity": "Encrypted by an unverified user.",
+        "event_shield_reason_unsigned_device": "Encrypted by a device not verified by its owner.",
+        "event_shield_reason_unknown_device": "Encrypted by an unknown or deleted device.",
+        "event_shield_reason_authenticity_not_guaranteed": "The authenticity of this encrypted message can't be guaranteed on this device.",
+        "event_shield_reason_mismatched_sender_key": "Encrypted by an unverified session",
         "old_version_detected_title": "Old cryptography data detected",
         "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
         "verification_requested_toast_title": "Verification requested",
@@ -1498,6 +1514,13 @@
         "m.call.hangup": {
             "dm": "Call ended"
         },
+        "thread_info_basic": "From a thread",
+        "error_no_renderer": "This event could not be displayed",
+        "undecryptable_tooltip": "This message could not be decrypted",
+        "send_state_sending": "Sending your message…",
+        "send_state_encrypting": "Encrypting your message…",
+        "send_state_sent": "Your message was sent",
+        "send_state_failed": "Failed to send",
         "no_permission_messages_before_invite": "You don't have permission to view messages from before you were invited.",
         "no_permission_messages_before_join": "You don't have permission to view messages from before you joined.",
         "encrypted_historical_messages_unavailable": "Encrypted messages before this point are unavailable.",
@@ -2657,8 +2680,6 @@
         "manage_title": "Manage integrations",
         "explainer": "Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf."
     },
-    "Back up your keys before signing out to avoid losing them.": "Back up your keys before signing out to avoid losing them.",
-    "Set up": "Set up",
     "identity_server": {
         "url_not_https": "Identity server URL must be HTTPS",
         "error_invalid": "Not a valid identity server (status code %(code)s)",
@@ -2707,47 +2728,8 @@
         "twemoji_colr": "The <colr>twemoji-colr</colr> font is © <author>Mozilla Foundation</author> used under the terms of <terms>Apache 2.0</terms>.",
         "twemoji": "The <twemoji>Twemoji</twemoji> emoji art is © <author>Twitter, Inc and other contributors</author> used under the terms of <terms>CC-BY 4.0</terms>."
     },
-    "This user has not verified all of their sessions.": "This user has not verified all of their sessions.",
-    "You have not verified this user.": "You have not verified this user.",
-    "You have verified this user. This user has verified all of their sessions.": "You have verified this user. This user has verified all of their sessions.",
-    "Someone is using an unknown session": "Someone is using an unknown session",
-    "This room is end-to-end encrypted": "This room is end-to-end encrypted",
-    "Everyone in this room is verified": "Everyone in this room is verified",
-    "Edit message": "Edit message",
-    "From a thread": "From a thread",
-    "Encrypted by an unverified user.": "Encrypted by an unverified user.",
-    "Encrypted by a device not verified by its owner.": "Encrypted by a device not verified by its owner.",
-    "Encrypted by an unknown or deleted device.": "Encrypted by an unknown or deleted device.",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "The authenticity of this encrypted message can't be guaranteed on this device.",
-    "Encrypted by an unverified session": "Encrypted by an unverified session",
-    "This event could not be displayed": "This event could not be displayed",
-    " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
-    "Unencrypted": "Unencrypted",
-    "This message could not be decrypted": "This message could not be decrypted",
-    "Sending your message…": "Sending your message…",
-    "Encrypting your message…": "Encrypting your message…",
-    "Your message was sent": "Your message was sent",
-    "Failed to send": "Failed to send",
-    "Scroll to most recent messages": "Scroll to most recent messages",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s results)",
-        "one": "(~%(count)s result)"
-    },
-    "%(count)s participants": {
-        "other": "%(count)s participants",
-        "one": "1 participant"
-    },
-    "and %(count)s others...": {
-        "other": "and %(count)s others...",
-        "one": "and one other..."
-    },
-    "member_list": {
-        "invite_button_no_perms_tooltip": "You do not have permission to invite users",
-        "invited_list_heading": "Invited",
-        "filter_placeholder": "Filter room members",
-        "power_label": "%(userName)s (power %(powerLevelNumber)s)"
-    },
     "composer": {
+        "edit_composer_label": "Edit message",
         "send_button_title": "Send message",
         "placeholder_thread_encrypted": "Reply to encrypted thread…",
         "placeholder_thread": "Reply to thread…",
@@ -2793,6 +2775,26 @@
             "user_description": "Users",
             "user_a11y": "User Autocomplete"
         }
+    },
+    " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
+    "Scroll to most recent messages": "Scroll to most recent messages",
+    "(~%(count)s results)": {
+        "other": "(~%(count)s results)",
+        "one": "(~%(count)s result)"
+    },
+    "%(count)s participants": {
+        "other": "%(count)s participants",
+        "one": "1 participant"
+    },
+    "and %(count)s others...": {
+        "other": "and %(count)s others...",
+        "one": "and one other..."
+    },
+    "member_list": {
+        "invite_button_no_perms_tooltip": "You do not have permission to invite users",
+        "invited_list_heading": "Invited",
+        "filter_placeholder": "Filter room members",
+        "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     },
     "View message": "View message",
     "presence": {

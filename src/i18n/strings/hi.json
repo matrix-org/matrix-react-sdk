@@ -29,7 +29,6 @@
     "Moderator": "मध्यस्थ",
     "Send": "भेजें",
     "Warning!": "चेतावनी!",
-    "This event could not be displayed": "यह घटना प्रदर्शित नहीं की जा सकी",
     "Failed to ban user": "उपयोगकर्ता को प्रतिबंधित करने में विफल",
     "Demote yourself?": "खुद को अवनत करें?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "आप इस बदलाव को पूर्ववत नहीं कर पाएंगे क्योंकि आप स्वयं को अवनत कर रहे हैं, अगर आप रूम में आखिरी विशेषाधिकार प्राप्त उपयोगकर्ता हैं तो विशेषाधिकार हासिल करना असंभव होगा।",
@@ -110,7 +109,6 @@
     "Headphones": "हेडफोन",
     "Folder": "फ़ोल्डर",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "एन्क्रिप्ट किए गए संदेश एंड-टू-एंड एन्क्रिप्शन के साथ सुरक्षित हैं। केवल आपके और प्राप्तकर्ता के पास ही इन संदेशों को पढ़ने की कुंजी है।",
-    "Back up your keys before signing out to avoid losing them.": "उन्हें खोने से बचने के लिए साइन आउट करने से पहले अपनी कुंजियों का बैकअप लें।",
     "Start using Key Backup": "कुंजी बैकअप का उपयोग करना शुरू करें",
     "Scissors": "कैंची",
     "Mongolia": "मंगोलिया",
@@ -497,7 +495,8 @@
         "m.room.power_levels": {
             "changed": "%(senderName)s ने %(powerLevelDiffText)s के पावर स्तर को बदल दिया।",
             "user_from_to": "%(userId)s का %(fromPowerLevel)s से %(toPowerLevel)s"
-        }
+        },
+        "error_no_renderer": "यह घटना प्रदर्शित नहीं की जा सकी"
     },
     "slash_command": {
         "shrug": "एक सादे पाठ संदेश के लिए ¯\\_(ツ)_/¯ प्रस्तुत करता है",
@@ -601,7 +600,10 @@
         },
         "export_unsupported": "आपका ब्राउज़र आवश्यक क्रिप्टोग्राफी एक्सटेंशन का समर्थन नहीं करता है",
         "import_invalid_passphrase": "प्रमाणीकरण जांच विफल: गलत पासवर्ड?",
-        "not_supported": "<समर्थित नहीं>"
+        "not_supported": "<समर्थित नहीं>",
+        "setup_secure_backup": {
+            "explainer": "उन्हें खोने से बचने के लिए साइन आउट करने से पहले अपनी कुंजियों का बैकअप लें।"
+        }
     },
     "auth": {
         "sso": "केवल हस्ताक्षर के ऊपर",

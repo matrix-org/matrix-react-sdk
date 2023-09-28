@@ -218,14 +218,12 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jos olet aikaisemmin käyttänyt uudempaa versiota %(brand)sista, istuntosi voi olla epäyhteensopiva tämän version kanssa. Sulje tämä ikkuna ja yritä uudemman version kanssa.",
     "Thumbs up": "Peukut ylös",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Salatut viestit turvataan päästä päähän -salauksella. Vain sinä ja viestien vastaanottaja(t) omaavat avaimet näiden viestien lukemiseen.",
-    "Back up your keys before signing out to avoid losing them.": "Varmuuskopioi avaimesi ennen kuin kirjaudut ulos välttääksesi avainten menetyksen.",
     "Start using Key Backup": "Aloita avainvarmuuskopion käyttö",
     "Manually export keys": "Vie avaimet käsin",
     "Share User": "Jaa käyttäjä",
     "Share Room Message": "Jaa huoneviesti",
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
-    "This event could not be displayed": "Tätä tapahtumaa ei voitu näyttää",
     "Demote yourself?": "Alenna itsesi?",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Et voi perua tätä muutosta, koska olet alentamassa itseäsi. Jos olet viimeinen oikeutettu henkilö tässä huoneessa, oikeuksia ei voi enää saada takaisin.",
     "Demote": "Alenna",
@@ -270,7 +268,6 @@
     "Your password has been reset.": "Salasanasi on nollattu.",
     "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
     "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
-    "Set up": "Ota käyttöön",
     "This room has already been upgraded.": "Tämä huone on jo päivitetty.",
     "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
     "Missing session data": "Istunnon dataa puuttuu",
@@ -292,7 +289,6 @@
     "edited": "muokattu",
     "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
-    "Edit message": "Muokkaa viestiä",
     "Notes": "Huomautukset",
     "Edited at %(date)s. Click to view edits.": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset.",
     "Message edits": "Viestin muokkaukset",
@@ -347,7 +343,6 @@
     "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
     "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
     "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
-    "Unencrypted": "Suojaamaton",
     "Hide verified sessions": "Piilota varmennetut istunnot",
     "%(count)s verified sessions": {
         "other": "%(count)s varmennettua istuntoa",
@@ -366,7 +361,6 @@
     "Lock": "Lukko",
     "Waiting for %(displayName)s to accept…": "Odotetaan, että %(displayName)s hyväksyy…",
     "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
-    "Someone is using an unknown session": "Joku käyttää tuntematonta istuntoa",
     "%(count)s sessions": {
         "other": "%(count)s istuntoa",
         "one": "%(count)s istunto"
@@ -421,12 +415,6 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s avaimen palautus onnistui",
     "IRC display name width": "IRC-näyttönimen leveys",
     "This backup is trusted because it has been restored on this session": "Tähän varmuuskopioon luotetaan, koska se on palautettu tässä istunnossa",
-    "This user has not verified all of their sessions.": "Tämä käyttäjä ei ole varmentanut kaikkia istuntojaan.",
-    "You have not verified this user.": "Et ole varmentanut tätä käyttäjää.",
-    "You have verified this user. This user has verified all of their sessions.": "Olet varmentanut tämän käyttäjän. Tämä käyttäjä on varmentanut kaikki istuntonsa.",
-    "This room is end-to-end encrypted": "Tämä huone käyttää päästä päähän -salausta",
-    "Everyone in this room is verified": "Kaikki tämän huoneen käyttäjät on varmennettu",
-    "Encrypted by an unverified session": "Salattu varmentamattoman istunnon toimesta",
     "Encrypted by a deleted session": "Salattu poistetun istunnon toimesta",
     "Start Verification": "Aloita varmennus",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Viestisi ovat turvattu, ja vain sinulla ja vastaanottajalla on avaimet viestien lukemiseen.",
@@ -801,7 +789,6 @@
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "Create a new room": "Luo uusi huone",
     "Edit devices": "Muokkaa laitteita",
-    "Your message was sent": "Viestisi lähetettiin",
     "Search names and descriptions": "Etsi nimistä ja kuvauksista",
     "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
     "Sending": "Lähetetään",
@@ -835,7 +822,6 @@
     "We didn't find a microphone on your device. Please check your settings and try again.": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen.",
     "No microphone found": "Mikrofonia ei löytynyt",
     "Unable to access your microphone": "Mikrofonia ei voi käyttää",
-    "Failed to send": "Lähettäminen epäonnistui",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Rooms and spaces": "Huoneet ja avaruudet",
     "Unable to copy a link to the room to the clipboard.": "Huoneen linkin kopiointi leikepöydälle ei onnistu.",
@@ -994,7 +980,6 @@
     "This address does not point at this room": "Tämä osoite ei osoita tähän huoneeseen",
     "Missing room name or separator e.g. (my-room:domain.org)": "Puuttuva huoneen nimi tai erotin, esim. (oma-huone:verkkotunnus.org)",
     "We couldn't send your location": "Emme voineet lähettää sijaintiasi",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Device verified": "Laite vahvistettu",
     "Verify this device": "Vahvista tämä laite",
@@ -1053,7 +1038,6 @@
     "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Copy link to thread": "Kopioi linkki ketjuun",
-    "From a thread": "Ketjusta",
     "Messaging": "Viestintä",
     "Enter Security Phrase": "Kirjoita turvalause",
     "Incorrect Security Phrase": "Virheellinen turvalause",
@@ -1131,7 +1115,6 @@
     "Confirm new password": "Vahvista uusi salasana",
     "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
     "Unable to decrypt message": "Viestin salauksen purkaminen ei onnistu",
-    "This message could not be decrypted": "Tämän viestin salausta ei voitu purkaa",
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
@@ -1181,8 +1164,6 @@
     "Poll history": "Kyselyhistoria",
     "Edit link": "Muokkaa linkkiä",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
-    "Encrypting your message…": "Salataan viestiäsi…",
-    "Sending your message…": "Lähetetään viestiäsi…",
     "Error details": "Virheen tiedot",
     "common": {
         "about": "Tietoa",
@@ -1300,7 +1281,8 @@
         "low_priority": "Matala prioriteetti",
         "historical": "Vanhat",
         "go_to_settings": "Siirry asetuksiin",
-        "setup_secure_messages": "Ota käyttöön salatut viestit"
+        "setup_secure_messages": "Ota käyttöön salatut viestit",
+        "unencrypted": "Suojaamaton"
     },
     "action": {
         "continue": "Jatka",
@@ -1607,7 +1589,8 @@
         "formatting_toolbar_label": "Muotoilu",
         "format_italics": "Kursivoitu",
         "format_insert_link": "Lisää linkki",
-        "replying_title": "Vastataan"
+        "replying_title": "Vastataan",
+        "edit_composer_label": "Muokkaa viestiä"
     },
     "Link": "Linkki",
     "Code": "Koodi",
@@ -2573,7 +2556,14 @@
             "one": "Nähnyt yksi ihminen",
             "other": "Nähnyt %(count)s ihmistä"
         },
-        "read_receipts_label": "Lukukuittaukset"
+        "read_receipts_label": "Lukukuittaukset",
+        "thread_info_basic": "Ketjusta",
+        "error_no_renderer": "Tätä tapahtumaa ei voitu näyttää",
+        "undecryptable_tooltip": "Tämän viestin salausta ei voitu purkaa",
+        "send_state_sending": "Lähetetään viestiäsi…",
+        "send_state_encrypting": "Salataan viestiäsi…",
+        "send_state_sent": "Viestisi lähetettiin",
+        "send_state_failed": "Lähettäminen epäonnistui"
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3021,7 +3011,19 @@
         "recovery_method_removed": {
             "title": "Palautustapa poistettu",
             "warning": "Jos et poistanut palautustapaa, hyökkääjä saattaa yrittää käyttää tiliäsi. Vaihda tilisi salasana ja aseta uusi palautustapa asetuksissa välittömästi."
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "Varmuuskopioi avaimesi ennen kuin kirjaudut ulos välttääksesi avainten menetyksen.",
+            "title": "Ota käyttöön"
+        },
+        "cross_signing_user_warning": "Tämä käyttäjä ei ole varmentanut kaikkia istuntojaan.",
+        "cross_signing_user_normal": "Et ole varmentanut tätä käyttäjää.",
+        "cross_signing_user_verified": "Olet varmentanut tämän käyttäjän. Tämä käyttäjä on varmentanut kaikki istuntonsa.",
+        "cross_signing_room_warning": "Joku käyttää tuntematonta istuntoa",
+        "cross_signing_room_normal": "Tämä huone käyttää päästä päähän -salausta",
+        "cross_signing_room_verified": "Kaikki tämän huoneen käyttäjät on varmennettu",
+        "event_shield_reason_authenticity_not_guaranteed": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
+        "event_shield_reason_mismatched_sender_key": "Salattu varmentamattoman istunnon toimesta"
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",

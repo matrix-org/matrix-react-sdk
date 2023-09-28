@@ -148,13 +148,9 @@
         "other": "و %(count)s أخر..."
     },
     "Scroll to most recent messages": "انتقل إلى أحدث الرسائل",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "لا يمكن ضمان موثوقية هذه الرسالة المشفرة على هذا الجهاز.",
     "Encrypted by a deleted session": "مشفرة باتصال محذوف",
-    "Unencrypted": "غير مشفر",
-    "Encrypted by an unverified session": "مشفرة باتصال لم يتم التحقق منه",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "للإبلاغ عن مشكلة أمنية متعلقة بMatrix ، يرجى قراءة <a>سياسة الإفصاح الأمني</a> في Matrix.org.",
     "Deactivate account": "تعطيل الحساب",
-    "Back up your keys before signing out to avoid losing them.": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
     "Backup version:": "نسخة الاحتياطي:",
     "This backup is trusted because it has been restored on this session": "هذا الاحتياطي موثوق به لأنه تمت استعادته في هذا الاتصال",
     "You've successfully verified your device!": "لقد نجحت في التحقق من جهازك!",
@@ -222,19 +218,10 @@
     "Room avatar": "صورة الغرفة",
     "Room Topic": "موضوع الغرفة",
     "Room Name": "اسم الغرفة",
-    "Set up": "تأسيس",
     "Warning!": "إنذار!",
     "Show more": "أظهر أكثر",
     "Dog": "كلب",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
-    "This event could not be displayed": "تعذر عرض هذا الحدث",
-    "Edit message": "تعديل الرسالة",
-    "Everyone in this room is verified": "تم التحقق من جميع من في هذه الغرفة",
-    "This room is end-to-end encrypted": "هذه الغرفة مشفرة من طرف إلى طرف",
-    "Someone is using an unknown session": "شخص ما يستخدم اتصالاً غير معروف",
-    "You have verified this user. This user has verified all of their sessions.": "لقد تحققت من هذا المستخدم. لقد تحقق هذا المستخدم من جميع اتصالاته.",
-    "You have not verified this user.": "أنت لم تتحقق من هذا المستخدم.",
-    "This user has not verified all of their sessions.": "هذا المستخدم لم يتحقق من جميع اتصالاته.",
     "Ok": "حسنا",
     "Your homeserver has exceeded one of its resource limits.": "لقد تجاوز خادمك أحد حدود موارده.",
     "Your homeserver has exceeded its user limit.": "لقد تجاوز خادمك حد عدد المستخدمين.",
@@ -450,7 +437,8 @@
         "authentication": "المصادقة",
         "rooms": "الغرف",
         "low_priority": "أولوية منخفضة",
-        "historical": "تاريخي"
+        "historical": "تاريخي",
+        "unencrypted": "غير مشفر"
     },
     "action": {
         "continue": "واصِل",
@@ -542,7 +530,8 @@
         "no_perms_notice": "ليس لديك إذن للنشر في هذه الغرفة",
         "poll_button_no_perms_title": "التصريح مطلوب",
         "format_italics": "مائل",
-        "replying_title": "الرد"
+        "replying_title": "الرد",
+        "edit_composer_label": "تعديل الرسالة"
     },
     "power_level": {
         "default": "المبدئي",
@@ -887,7 +876,8 @@
         },
         "url_preview": {
             "close": "إغلاق المعاينة"
-        }
+        },
+        "error_no_renderer": "تعذر عرض هذا الحدث"
     },
     "slash_command": {
         "shrug": "ادخل احد الرموز ¯\\_(ツ)_/¯ قبل نص الرسالة",
@@ -1139,7 +1129,19 @@
         "cross_signing_ready": "التوقيع المتبادل جاهز للاستخدام.",
         "cross_signing_untrusted": "يحتوي حسابك على هوية توقيع متبادل في وحدة تخزين سرية ، لكن هذا الاتصال لم يثق به بعد.",
         "cross_signing_not_ready": "لم يتم إعداد التوقيع المتبادل.",
-        "not_supported": "<غير معتمد>"
+        "not_supported": "<غير معتمد>",
+        "setup_secure_backup": {
+            "explainer": "أضف مفاتيحك للاحتياطي قبل تسجيل الخروج لتتجنب ضياعها.",
+            "title": "تأسيس"
+        },
+        "cross_signing_user_warning": "هذا المستخدم لم يتحقق من جميع اتصالاته.",
+        "cross_signing_user_normal": "أنت لم تتحقق من هذا المستخدم.",
+        "cross_signing_user_verified": "لقد تحققت من هذا المستخدم. لقد تحقق هذا المستخدم من جميع اتصالاته.",
+        "cross_signing_room_warning": "شخص ما يستخدم اتصالاً غير معروف",
+        "cross_signing_room_normal": "هذه الغرفة مشفرة من طرف إلى طرف",
+        "cross_signing_room_verified": "تم التحقق من جميع من في هذه الغرفة",
+        "event_shield_reason_authenticity_not_guaranteed": "لا يمكن ضمان موثوقية هذه الرسالة المشفرة على هذا الجهاز.",
+        "event_shield_reason_mismatched_sender_key": "مشفرة باتصال لم يتم التحقق منه"
     },
     "emoji": {
         "category_frequently_used": "كثيرة الاستعمال",

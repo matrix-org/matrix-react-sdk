@@ -142,7 +142,6 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "您在審閱並同意<consentLink>我們的條款與細則</consentLink>前無法傳送訊息。",
     "Demote yourself?": "將您自己降級？",
     "Demote": "降級",
-    "This event could not be displayed": "此活動無法顯示",
     "Only room administrators will see this warning": "僅聊天室管理員會看到此警告",
     "Upgrade Room Version": "更新聊天室版本",
     "Create a new room with the same name, description and avatar": "使用同樣的名稱、描述與大頭照建立新聊天室",
@@ -169,7 +168,6 @@
     "No backup found!": "找不到備份！",
     "Failed to decrypt %(failedCount)s sessions!": "無法解密 %(failedCount)s 個工作階段！",
     "Invalid homeserver discovery response": "家伺服器的探索回應無效",
-    "Set up": "設定",
     "Invalid identity server discovery response": "身份伺服器探索回應無效",
     "General failure": "一般錯誤",
     "Unable to load commit detail: %(msg)s": "無法載入遞交的詳細資訊：%(msg)s",
@@ -250,7 +248,6 @@
     "Couldn't load page": "無法載入頁面",
     "Your password has been reset.": "您的密碼已重設。",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密訊息是使用端對端加密。只有您和接收者才有金鑰可以閱讀這些訊息。",
-    "Back up your keys before signing out to avoid losing them.": "請在登出前備份您的金鑰，以免遺失。",
     "Start using Key Backup": "開始使用金鑰備份",
     "I don't want my encrypted messages": "我不要我的加密訊息了",
     "Manually export keys": "手動匯出金鑰",
@@ -289,7 +286,6 @@
     "Upload Error": "上傳錯誤",
     "This room has already been upgraded.": "此聊天室已升級。",
     "edited": "已編輯",
-    "Edit message": "編輯訊息",
     "Some characters not allowed": "不允許某些字元",
     "Failed to get autodiscovery configuration from server": "無法從伺服器取得自動探索設定",
     "Invalid base_url for m.homeserver": "無效的 m.homeserver base_url",
@@ -346,7 +342,6 @@
     "Integrations are disabled": "整合已停用",
     "Integrations not allowed": "不允許整合",
     "Verification Request": "驗證請求",
-    "Unencrypted": "未加密",
     "Upgrade private room": "升級私密聊天室",
     "Upgrade public room": "升級公開聊天室",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "升級聊天室為進階動作，通常建議在聊天室因為錯誤而不穩定、缺少功能或安全漏洞等才升級。",
@@ -371,13 +366,7 @@
     "Verify User": "驗證使用者",
     "For extra security, verify this user by checking a one-time code on both of your devices.": "為了提高安全性，請透過檢查您兩個裝置上的一次性代碼來驗證此使用者。",
     "Start Verification": "開始驗證",
-    "This room is end-to-end encrypted": "此聊天室已端對端加密",
-    "Everyone in this room is verified": "此聊天室中每個人都已驗證",
     "This backup is trusted because it has been restored on this session": "此備份已受信任，因為它已在此工作階段上復原",
-    "This user has not verified all of their sessions.": "此使用者尚未驗證他們的所有工作階段。",
-    "You have verified this user. This user has verified all of their sessions.": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
-    "Someone is using an unknown session": "某人正在使用未知的工作階段",
-    "Encrypted by an unverified session": "已由未驗證的工作階段加密",
     "Encrypted by a deleted session": "被已刪除的工作階段加密",
     "Waiting for %(displayName)s to accept…": "正在等待 %(displayName)s 接受…",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "您的訊息已受保護，只有您與收件人才有獨特的金鑰將其解鎖。",
@@ -403,7 +392,6 @@
     "The encryption used by this room isn't supported.": "不支援此聊天室使用的加密。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "驗證此裝置，並標記為可受信任。由您將裝置標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "驗證此裝置將會將其標記為受信任，且已驗證您的使用者將會信任此裝置。",
-    "You have not verified this user.": "您尚未驗證此使用者。",
     "Destroy cross-signing keys?": "摧毀交叉簽署金鑰？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
     "Clear cross-signing keys": "清除交叉簽署金鑰",
@@ -491,7 +479,6 @@
     "Switch theme": "切換佈景主題",
     "Message preview": "訊息預覽",
     "Looks good!": "看起來真棒！",
-    "The authenticity of this encrypted message can't be guaranteed on this device.": "無法在此裝置上保證加密訊息的真實性。",
     "Wrong file type": "錯誤的檔案類型",
     "Security Phrase": "安全密語",
     "Security Key": "安全金鑰",
@@ -835,7 +822,6 @@
     "Create a new room": "建立新聊天室",
     "Space selection": "選取聊天空間",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "如果您將自己降級，將無法撤銷此變更，而且如果您是空間中的最後一個特殊權限使用者，將無法再取得這類特殊權限。",
-    "Your message was sent": "您的訊息已傳送",
     "Leave space": "離開聊天空間",
     "Create a space": "建立聊天空間",
     "<inviter/> invites you": "<inviter/> 邀請您",
@@ -878,7 +864,6 @@
         "one": "檢視 1 個成員",
         "other": "檢視全部 %(count)s 個成員"
     },
-    "Failed to send": "傳送失敗",
     "Want to add a new room instead?": "想要新增新聊天室嗎？",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "正在新增聊天室…",
@@ -1062,7 +1047,6 @@
     "You cancelled verification on your other device.": "您在其他裝置上取消了驗證。",
     "Almost there! Is your other device showing the same shield?": "快好了！您的其他裝置是否顯示了相同的盾牌？",
     "To proceed, please accept the verification request on your other device.": "要繼續，請在您的其他裝置上接受驗證請求。",
-    "From a thread": "來自討論串",
     "Could not fetch location": "無法取得位置",
     "Remove from room": "踢出此聊天室",
     "Failed to remove user": "無法移除使用者",
@@ -1224,7 +1208,6 @@
     "We were unable to start a chat with the other user.": "我們無法與其他使用者開始聊天。",
     "Error starting verification": "開始驗證時發生錯誤",
     "Unable to decrypt message": "無法解密訊息",
-    "This message could not be decrypted": "此訊息無法解密",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
     "Text": "文字",
     "Create a link": "建立連結",
@@ -1247,8 +1230,6 @@
     "Checking…": "正在檢查…",
     "Waiting for partner to confirm…": "正在等待夥伴確認…",
     "Adding…": "正在新增…",
-    "Encrypting your message…": "正在加密您的訊息…",
-    "Sending your message…": "正在傳送您的訊息…",
     "Starting export process…": "正在開始匯出流程…",
     "Loading polls": "正在載入投票",
     "Ended a poll": "投票已結束",
@@ -1414,7 +1395,8 @@
         "low_priority": "低優先度",
         "historical": "歷史",
         "go_to_settings": "前往設定",
-        "setup_secure_messages": "設定安全訊息"
+        "setup_secure_messages": "設定安全訊息",
+        "unencrypted": "未加密"
     },
     "action": {
         "continue": "繼續",
@@ -1750,7 +1732,8 @@
         "formatting_toolbar_label": "格式化",
         "format_italics": "斜體",
         "format_insert_link": "插入連結",
-        "replying_title": "正在回覆"
+        "replying_title": "正在回覆",
+        "edit_composer_label": "編輯訊息"
     },
     "Link": "連結",
     "Code": "代碼",
@@ -2852,7 +2835,14 @@
             "one": "已被 %(count)s 個人看過",
             "other": "已被 %(count)s 個人看過"
         },
-        "read_receipts_label": "讀取回條"
+        "read_receipts_label": "讀取回條",
+        "thread_info_basic": "來自討論串",
+        "error_no_renderer": "此活動無法顯示",
+        "undecryptable_tooltip": "此訊息無法解密",
+        "send_state_sending": "正在傳送您的訊息…",
+        "send_state_encrypting": "正在加密您的訊息…",
+        "send_state_sent": "您的訊息已傳送",
+        "send_state_failed": "傳送失敗"
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -3331,7 +3321,19 @@
             "description_1": "此工作階段偵測到您的安全密語以及安全訊息金鑰已被移除。",
             "description_2": "如果您不小心這樣做了，您可以在此工作階段上設定安全訊息，這將會以新的復原方法重新加密此工作階段的訊息歷史。",
             "warning": "如果您沒有移除復原方法，攻擊者可能會試圖存取您的帳號。請立刻在設定中變更您帳號的密碼並設定新的復原方式。"
-        }
+        },
+        "setup_secure_backup": {
+            "explainer": "請在登出前備份您的金鑰，以免遺失。",
+            "title": "設定"
+        },
+        "cross_signing_user_warning": "此使用者尚未驗證他們的所有工作階段。",
+        "cross_signing_user_normal": "您尚未驗證此使用者。",
+        "cross_signing_user_verified": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
+        "cross_signing_room_warning": "某人正在使用未知的工作階段",
+        "cross_signing_room_normal": "此聊天室已端對端加密",
+        "cross_signing_room_verified": "此聊天室中每個人都已驗證",
+        "event_shield_reason_authenticity_not_guaranteed": "無法在此裝置上保證加密訊息的真實性。",
+        "event_shield_reason_mismatched_sender_key": "已由未驗證的工作階段加密"
     },
     "emoji": {
         "category_frequently_used": "經常使用",
