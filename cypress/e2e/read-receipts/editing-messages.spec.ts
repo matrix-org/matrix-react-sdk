@@ -344,7 +344,8 @@ describe("Read receipts", () => {
                 // Then is it still unread
                 assertRead(room2);
             });
-            it("A room where all threaded edits are read is still read after restart", () => {
+            // XXX: fails because it flakes, sometimes having 2 unread messages instead of 1
+            it.skip("A room where all threaded edits are read is still read after restart", () => {
                 goTo(room2);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
                 assertUnread(room2, 1);
