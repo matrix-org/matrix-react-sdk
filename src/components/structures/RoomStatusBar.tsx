@@ -222,15 +222,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 resourceLimitError.data.limit_type,
                 resourceLimitError.data.admin_contact,
                 {
-                    "monthly_active_user": _td(
-                        "room|status_bar|monthly_user_limit_reached",
-                    ),
-                    "hs_disabled": _td(
-                        "room|status_bar|homeserver_blocked",
-                    ),
-                    "": _td(
-                        "room|status_bar|exceeded_resource_limit",
-                    ),
+                    "monthly_active_user": _td("room|status_bar|monthly_user_limit_reached"),
+                    "hs_disabled": _td("room|status_bar|homeserver_blocked"),
+                    "": _td("room|status_bar|exceeded_resource_limit"),
                 },
             );
         } else {
