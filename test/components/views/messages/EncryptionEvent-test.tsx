@@ -16,9 +16,11 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { MatrixClient, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
+import { Action } from "../../../../src/dispatcher/actions";
+import dispatcher from "../../../../src/dispatcher/dispatcher";
 import EncryptionEvent from "../../../../src/components/views/messages/EncryptionEvent";
 import { createTestClient, mkMessage } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -111,6 +113,59 @@ describe("EncryptionEvent", () => {
         it("should show the expected texts", () => {
             expect(client.isRoomEncrypted).toHaveBeenCalledWith(roomId);
             checkTexts("Encryption not enabled", "The encryption used by this room isn't supported.");
+        });
+    });
+
+    describe("for an encrypted DM room", () => {
+        const otherUserId = "@alice:example.com";
+        const otherUserMember = new RoomMember(roomId, otherUserId);
+        const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
+
+        beforeEach(() => {
+            // Create a new test room.
+            const room = new Room(roomId, client, client.getUserId()!);
+            mocked(client.getRoom).mockReturnValue(room);
+
+            // Make client think that the room is encrypted.
+            event.event.content!.algorithm = algorithm;
+            mocked(client.isRoomEncrypted).mockReturnValue(true);
+
+            // Make the client think there is another user in the room,
+            // and that it is a direct message room.
+            jest.spyOn(DMRoomMap, "shared").mockReturnValue({
+                getUserIdForRoomId: (_roomId: string) => otherUserId,
+            } as unknown as DMRoomMap);
+
+            // More faking of the other user in the room.
+            jest.spyOn(room, "getMember").mockImplementation((_: string) => otherUserMember);
+        });
+
+        it("should show a link to the user's profile to verify them with", () => {
+            renderEncryptionEvent(client, event);
+
+            // Check that the expected title of the encrypted DM card exists and has the expected text.
+            screen.getByText("Encryption enabled");
+
+            // Check that the link to the user's profile in the subtitle exists.
+            const linkToProfile = screen.getByText("their profile");
+
+            // Check that the non-linkified text in the subtitle is correct.
+            // Then check that the link to the profile is contained within the card subtitle.
+            expect(
+                screen.getByText(`Messages here are end-to-end encrypted. Verify @alice:example.com in`, {
+                    exact: false,
+                }),
+            ).toContainElement(linkToProfile);
+
+            // Click on the link to the user's profile.
+            fireEvent.click(linkToProfile);
+
+            // Ensure a dispatch to open the user's profile was emitted.
+            expect(dispatchSpy).toHaveBeenCalledWith({
+                action: Action.ViewUser,
+                member: otherUserMember,
+                push: false,
+            });
         });
     });
 
