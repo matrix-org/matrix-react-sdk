@@ -285,8 +285,6 @@ function findRoomByName(room: string): Chainable<Room> {
 export function openThread(rootMessage: string) {
     cy.log("Open thread", rootMessage);
     cy.get(".mx_RoomView_body", { log: false }).within(() => {
-        // TODO: using "contains" here means we have to be careful on the names
-        // of our thread roots - would be better if we could match exact text
         cy.contains(".mx_EventTile[data-scroll-tokens]", rootMessage, { log: false })
             .realHover()
             .findByRole("button", { name: "Reply in thread", log: false })
