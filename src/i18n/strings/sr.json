@@ -50,7 +50,6 @@
     },
     "Join Room": "Приступи соби",
     "unknown error code": "непознати код грешке",
-    "Failed to forget room %(errCode)s": "Нисам успео да заборавим собу %(errCode)s",
     "Jump to first unread message.": "Скочи на прву непрочитану поруку.",
     "not specified": "није наведено",
     "This room has no local addresses": "Ова соба нема локалних адреса",
@@ -80,31 +79,7 @@
     "Verification Pending": "Чека се на проверу",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверите ваш мејл и кликните на везу унутар њега. Када ово урадите, кликните на дугме „настави“.",
     "This will allow you to reset your password and receive notifications.": "Ово омогућава поновно постављање лозинке и примање обавештења.",
-    "Reject invitation": "Одбиј позивницу",
-    "Are you sure you want to reject the invitation?": "Да ли сте сигурни да желите одбити позивницу?",
-    "Failed to reject invitation": "Нисам успео да одбијем позивницу",
-    "Are you sure you want to leave the room '%(roomName)s'?": "Да ли сте сигурни да желите напустити собу „%(roomName)s“?",
     "<a>In reply to</a> <pill>": "<a>Као одговор за</a> <pill>",
-    "This room is not public. You will not be able to rejoin without an invite.": "Ова соба није јавна. Нећете моћи да поново приступите без позивнице.",
-    "Connectivity to the server has been lost.": "Веза ка серверу је прекинута.",
-    "Sent messages will be stored until your connection has returned.": "Послате поруке биће сачуване док се веза не успостави поново.",
-    "You seem to be uploading files, are you sure you want to quit?": "Изгледа да отпремате датотеке. Да ли сте сигурни да желите изаћи?",
-    "You seem to be in a call, are you sure you want to quit?": "Изгледа да сте у позиву. Да ли сте сигурни да желите изаћи?",
-    "Search failed": "Претрага је неуспешна",
-    "Server may be unavailable, overloaded, or search timed out :(": "Сервер је можда недоступан, преоптерећен или је истекло време претраживања :(",
-    "No more results": "Нема више резултата",
-    "Failed to reject invite": "Нисам успео да одбацим позивницу",
-    "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Покушао сам да учитам одређену тачку у временској линији ове собе али ви немате овлашћења за преглед наведене поруке.",
-    "Tried to load a specific point in this room's timeline, but was unable to find it.": "Покушао сам да учитам одређену тачку у временској линији ове собе али нисам могао да је нађем.",
-    "Failed to load timeline position": "Нисам могао да учитам позицију у временској линији",
-    "Uploading %(filename)s and %(count)s others": {
-        "other": "Отпремам датотеку %(filename)s и још %(count)s других",
-        "one": "Отпремам датотеку %(filename)s и %(count)s других датотека"
-    },
-    "Uploading %(filename)s": "Отпремам датотеку %(filename)s",
-    "A new password must be entered.": "Морате унети нову лозинку.",
-    "New passwords must match each other.": "Нове лозинке се морају подударати.",
-    "Return to login screen": "Врати ме на екран за пријаву",
     "Session ID": "ИД сесије",
     "Sunday": "Недеља",
     "Today": "Данас",
@@ -164,7 +139,6 @@
     "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
-    "General failure": "Општа грешка",
     "Light bulb": "сијалица",
     "Failed to revoke invite": "Неуспех при отказивању позивнице",
     "Revoke invite": "Откажи позивницу",
@@ -496,24 +470,19 @@
     "Lion": "лав",
     "Cat": "мачка",
     "Dog": "Пас",
-    "You may want to try a different search or check for typos.": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
     "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
     "Cancel search": "Откажи претрагу",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
     "Clear all data": "Очисти све податке",
-    "Couldn't load page": "Учитавање странице није успело",
     "Sign in with SSO": "Пријавите се помоћу SSO",
     "Kosovo": "/",
-    "Country Dropdown": "Падајући списак земаља",
-    "This homeserver would like to make sure you are not a robot.": "Овај кућни сервер жели да се увери да нисте робот.",
     "End": "",
     "Deactivate account": "Деактивирај налог",
     "Server name": "Име сервера",
     "Enter the name of a new server you want to explore.": "Унесите име новог сервера који желите да истражите.",
     "Add a new server": "Додајте нови сервер",
     "Your server": "Ваш сервер",
-    "This room is public": "Ова соба је јавна",
     "Use the <a>Desktop app</a> to see all encrypted files": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
     "Not Trusted": "Није поуздано",
     "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
@@ -683,7 +652,6 @@
         "poll_button_no_perms_title": "Неопходна је дозвола",
         "replying_title": "Одговара"
     },
-    "Code": "Код",
     "power_level": {
         "default": "Подразумевано",
         "restricted": "Ограничено",
@@ -1037,6 +1005,11 @@
         "creation_summary_room": "Корисник %(creator)s је направио и подесио собу.",
         "context_menu": {
             "external_url": "Адреса извора"
+        },
+        "load_error": {
+            "no_permission": "Покушао сам да учитам одређену тачку у временској линији ове собе али ви немате овлашћења за преглед наведене поруке.",
+            "unable_to_find": "Покушао сам да учитам одређену тачку у временској линији ове собе али нисам могао да је нађем.",
+            "title": "Нисам могао да учитам позицију у временској линији"
         }
     },
     "slash_command": {
@@ -1116,7 +1089,6 @@
         "offline": "Ван мреже",
         "away": "Неприсутан"
     },
-    "Unknown": "Непознато",
     "voip": {
         "hangup": "Спусти слушалицу",
         "voice_call": "Гласовни позив",
@@ -1265,7 +1237,8 @@
             "sso_failed": "Нешто је пошло по наопако у потврђивању вашег идентитета. Откажите и покушајте поново.",
             "fallback_button": "Започните идентификацију",
             "sso_title": "Користи јединствену пријаву за наставак",
-            "sso_body": "Потврдите додавање ове е-адресе коришћењем јединствене пријаве за доказивање вашег идентитета."
+            "sso_body": "Потврдите додавање ове е-адресе коришћењем јединствене пријаве за доказивање вашег идентитета.",
+            "code": "Код"
         },
         "password_field_label": "Унесите лозинку",
         "password_field_strong_label": "Лепа, јака лозинка!",
@@ -1289,7 +1262,17 @@
         "no_hs_url_provided": "Није наведен УРЛ сервера",
         "autodiscovery_unexpected_error_hs": "Неочекивана грешка при откривању подешавања сервера",
         "incorrect_credentials_detail": "Знајте да се пријављујете на сервер %(hs)s, не на matrix.org.",
-        "create_account_title": "Направи налог"
+        "create_account_title": "Направи налог",
+        "captcha_description": "Овај кућни сервер жели да се увери да нисте робот.",
+        "country_dropdown": "Падајући списак земаља",
+        "reset_password": {
+            "password_not_entered": "Морате унети нову лозинку.",
+            "passwords_mismatch": "Нове лозинке се морају подударати.",
+            "return_to_login": "Врати ме на екран за пријаву"
+        },
+        "common_failures": {
+            "general_failure": "Општа грешка"
+        }
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1437,7 +1420,8 @@
         },
         "invite_this_room": "Позови у ову собу",
         "header": {
-            "forget_room_button": "Заборави собу"
+            "forget_room_button": "Заборави собу",
+            "room_is_public": "Ова соба је јавна"
         },
         "forget_room": "Заборави ову собу",
         "link_email_to_receive_3pid_invite": "Повежите ову е-пошту са својим налогом у Подешавањима да бисте директно добијали позиве у %(brand)s.",
@@ -1445,7 +1429,20 @@
         "invite_email_mismatch_suggestion": "Поделите ову е-пошту у подешавањима да бисте директно добијали позиве у %(brand)s.",
         "dm_invite_action": "Започни ћаскање",
         "not_found_title_name": "Соба %(roomName)s не постоји.",
-        "inaccessible_name": "Соба %(roomName)s није доступна у овом тренутку."
+        "inaccessible_name": "Соба %(roomName)s није доступна у овом тренутку.",
+        "status_bar": {
+            "server_connectivity_lost_title": "Веза ка серверу је прекинута.",
+            "server_connectivity_lost_description": "Послате поруке биће сачуване док се веза не успостави поново."
+        },
+        "failed_reject_invite": "Нисам успео да одбацим позивницу",
+        "inviter_unknown": "Непознато",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Отпремам датотеку %(filename)s и још %(count)s других",
+                "one": "Отпремам датотеку %(filename)s и %(count)s других датотека"
+            },
+            "uploading_single_file": "Отпремам датотеку %(filename)s"
+        }
     },
     "file_panel": {
         "guest_note": "Морате се <a>регистровати</a> да бисте користили ову могућност",
@@ -1454,7 +1451,8 @@
     "space": {
         "context_menu": {
             "explore": "Истражи собе"
-        }
+        },
+        "no_search_result_hint": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке."
     },
     "terms": {
         "tos": "Услови коришћења",
@@ -1533,5 +1531,27 @@
         "invited_list_heading": "Позван",
         "filter_placeholder": "Филтрирај чланове собе",
         "power_label": "%(userName)s (снага %(powerLevelNumber)s)"
+    },
+    "cant_load_page": "Учитавање странице није успело",
+    "reject_invitation_dialog": {
+        "title": "Одбиј позивницу",
+        "confirmation": "Да ли сте сигурни да желите одбити позивницу?",
+        "failed": "Нисам успео да одбијем позивницу"
+    },
+    "leave_room_dialog": {
+        "room_rejoin_warning": "Ова соба није јавна. Нећете моћи да поново приступите без позивнице.",
+        "leave_room_question": "Да ли сте сигурни да желите напустити собу „%(roomName)s“?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Нисам успео да заборавим собу %(errCode)s",
+        "search_failed": {
+            "title": "Претрага је неуспешна",
+            "server_unavailable": "Сервер је можда недоступан, преоптерећен или је истекло време претраживања :("
+        }
+    },
+    "no_more_results": "Нема више резултата",
+    "quit_warning": {
+        "file_upload_in_progress": "Изгледа да отпремате датотеке. Да ли сте сигурни да желите изаћи?",
+        "call_in_progress": "Изгледа да сте у позиву. Да ли сте сигурни да желите изаћи?"
     }
 }

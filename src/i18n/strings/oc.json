@@ -73,7 +73,6 @@
     "Email address": "Adreça de corrièl",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
-    "Search failed": "La recèrca a fracassat",
     "common": {
         "mute": "Copar lo son",
         "no_results": "Pas cap de resultat",
@@ -238,7 +237,6 @@
         "offline": "Fòra linha",
         "away": "Absent"
     },
-    "Unknown": "Desconegut",
     "slash_command": {
         "usage": "Usatge",
         "category_messages": "Messatges",
@@ -402,7 +400,8 @@
         "invite_title": "Volètz rejonher %(roomName)s ?",
         "invite_subtitle": "<userName/> vos convidèt",
         "invite_reject_ignore": "Regetar e ignorar",
-        "not_found_title_name": "%(roomName)s existís pas."
+        "not_found_title_name": "%(roomName)s existís pas.",
+        "inviter_unknown": "Desconegut"
     },
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",
@@ -410,5 +409,10 @@
     },
     "member_list": {
         "invited_list_heading": "Convidat"
+    },
+    "error_dialog": {
+        "search_failed": {
+            "title": "La recèrca a fracassat"
+        }
     }
 }

@@ -1,13 +1,9 @@
 {
     "Create new room": "Luo uusi huone",
-    "Failed to forget room %(errCode)s": "Huoneen unohtaminen epäonnistui %(errCode)s",
     "unknown error code": "tuntematon virhekoodi",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
-    "A new password must be entered.": "Sinun täytyy syöttää uusi salasana.",
     "An error has occurred.": "Tapahtui virhe.",
     "Are you sure?": "Oletko varma?",
-    "Are you sure you want to leave the room '%(roomName)s'?": "Oletko varma että haluat poistua huoneesta '%(roomName)s'?",
-    "Are you sure you want to reject the invitation?": "Oletko varma että haluat hylätä kutsun?",
     "and %(count)s others...": {
         "other": "ja %(count)s muuta...",
         "one": "ja yksi muu..."
@@ -17,28 +13,15 @@
     "Email address": "Sähköpostiosoite",
     "Error decrypting attachment": "Virhe purettaessa liitteen salausta",
     "Failed to ban user": "Porttikiellon antaminen epäonnistui",
-    "Failed to load timeline position": "Aikajanapaikan lataaminen epäonnistui",
     "Failed to mute user": "Käyttäjän mykistäminen epäonnistui",
-    "Failed to reject invite": "Kutsun hylkääminen epäonnistui",
-    "Failed to reject invitation": "Kutsun hylkääminen epäonnistui",
     "Join Room": "Liity huoneeseen",
     "Jump to first unread message.": "Hyppää ensimmäiseen lukemattomaan viestiin.",
     "Moderator": "Valvoja",
-    "New passwords must match each other.": "Uusien salasanojen on vastattava toisiaan.",
     "not specified": "ei määritetty",
     "AM": "ap.",
     "PM": "ip.",
-    "No more results": "Ei enempää tuloksia",
-    "Reject invitation": "Hylkää kutsu",
-    "Return to login screen": "Palaa kirjautumissivulle",
-    "Search failed": "Haku epäonnistui",
     "Session ID": "Istuntotunniste",
     "This room has no local addresses": "Tällä huoneella ei ole paikallista osoitetta",
-    "Uploading %(filename)s": "Lähetetään %(filename)s",
-    "Uploading %(filename)s and %(count)s others": {
-        "one": "Lähetetään %(filename)s ja %(count)s muuta",
-        "other": "Lähetetään %(filename)s ja %(count)s muuta"
-    },
     "Home": "Etusivu",
     "Invalid file%(extra)s": "Virheellinen tiedosto%(extra)s",
     "Warning!": "Varoitus!",
@@ -49,8 +32,6 @@
     "Thu": "to",
     "Fri": "pe",
     "Sat": "la",
-    "Connectivity to the server has been lost.": "Yhteys palvelimeen menetettiin.",
-    "Sent messages will be stored until your connection has returned.": "Lähetetyt viestit tallennetaan kunnes yhteys on taas muodostettu.",
     "(~%(count)s results)": {
         "one": "(~%(count)s tulos)",
         "other": "(~%(count)s tulosta)"
@@ -59,12 +40,7 @@
     "Unable to restore session": "Istunnon palautus epäonnistui",
     "Decrypt %(text)s": "Pura %(text)s",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
-    "Server may be unavailable, overloaded, or search timed out :(": "Palvelin saattaa olla saavuttamattomissa, ylikuormitettu tai haku kesti liian kauan :(",
-    "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
-    "Tried to load a specific point in this room's timeline, but was unable to find it.": "Huoneen aikajanan tietty hetki yritettiin ladata, mutta sitä ei löytynyt.",
     "Verification Pending": "Varmennus odottaa",
-    "You seem to be in a call, are you sure you want to quit?": "Sinulla näyttää olevan puhelu kesken. Haluatko varmasti lopettaa?",
-    "You seem to be uploading files, are you sure you want to quit?": "Näytät lähettävän tiedostoja. Oletko varma että haluat lopettaa?",
     "Jan": "tammi",
     "Feb": "helmi",
     "Mar": "maalis",
@@ -119,7 +95,6 @@
     "Wednesday": "Keskiviikko",
     "Thank you!": "Kiitos!",
     "<a>In reply to</a> <pill>": "<a>Vastauksena käyttäjälle</a> <pill>",
-    "This room is not public. You will not be able to rejoin without an invite.": "Tämä huone ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
     "Dog": "Koira",
     "Cat": "Kissa",
     "Lion": "Leijona",
@@ -188,9 +163,7 @@
     "Link to most recent message": "Linkitä viimeisimpään viestiin",
     "Continue With Encryption Disabled": "Jatka salaus poistettuna käytöstä",
     "You don't currently have any stickerpacks enabled": "Sinulla ei ole tarrapaketteja käytössä",
-    "Couldn't load page": "Sivun lataaminen ei onnistunut",
     "Email (optional)": "Sähköposti (valinnainen)",
-    "This homeserver would like to make sure you are not a robot.": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
     "No backup found!": "Varmuuskopiota ei löytynyt!",
     "Unable to restore backup": "Varmuuskopion palauttaminen ei onnistu",
     "Link to selected message": "Linkitä valittuun viestiin",
@@ -255,11 +228,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s istunnon purkaminen epäonnistui!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
     "Join millions for free on the largest public server": "Liity ilmaiseksi miljoonien joukkoon suurimmalla julkisella palvelimella",
-    "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Et voi lähettää viestejä ennen kuin luet ja hyväksyt <consentLink>käyttöehtomme</consentLink>.",
-    "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Viestiäsi ei lähetetty, koska tämä kotipalvelin on saavuttanut kuukausittaisten aktiivisten käyttäjien rajan. <a>Ota yhteyttä palvelun ylläpitäjään</a> jatkaaksesi palvelun käyttämistä.",
-    "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Viestiäsi ei lähetetty, koska tämä kotipalvelin on ylittänyt resurssirajan. <a>Ota yhteyttä palvelun ylläpitäjään</a> jatkaaksesi palvelun käyttämistä.",
-    "Could not load user profile": "Käyttäjäprofiilia ei voitu ladata",
-    "General failure": "Yleinen virhe",
     "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.": "Tämä huone pyörii versiolla <roomVersion />, jonka tämä kotipalvelin on merkannut <i>epävakaaksi</i>.",
     "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.": "Huoneen päivittäminen sulkee huoneen nykyisen instanssin ja luo päivitetyn huoneen samalla nimellä.",
     "Failed to revoke invite": "Kutsun kumoaminen epäonnistui",
@@ -267,9 +235,6 @@
     "Revoke invite": "Kumoa kutsu",
     "Invited by %(sender)s": "Kutsuttu henkilön %(sender)s toimesta",
     "Remember my selection for this widget": "Muista valintani tälle sovelmalle",
-    "Your password has been reset.": "Salasanasi on nollattu.",
-    "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
-    "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
     "Set up": "Ota käyttöön",
     "This room has already been upgraded.": "Tämä huone on jo päivitetty.",
     "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
@@ -287,8 +252,6 @@
     "Cancel All": "Peruuta kaikki",
     "Upload Error": "Lähetysvirhe",
     "Some characters not allowed": "Osaa merkeistä ei sallita",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
-    "Identity server URL does not appear to be a valid identity server": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
     "edited": "muokattu",
     "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
@@ -344,9 +307,6 @@
     "Integrations are disabled": "Integraatiot ovat pois käytöstä",
     "Integrations not allowed": "Integraatioiden käyttö on kielletty",
     "Verification Request": "Varmennuspyyntö",
-    "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
-    "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
-    "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
     "Unencrypted": "Suojaamaton",
     "Hide verified sessions": "Piilota varmennetut istunnot",
     "%(count)s verified sessions": {
@@ -359,7 +319,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Huoneen päivittäminen on monimutkainen toimenpide ja yleensä sitä suositellaan, kun huone on epävakaa bugien, puuttuvien ominaisuuksien tai tietoturvaongelmien takia.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Tämä yleensä vaikuttaa siihen, miten huonetta käsitellään palvelimella. Jos sinulla on ongelmia %(brand)stisi kanssa, <a>ilmoita virheestä</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Olat päivittämässä tätä huonetta versiosta <oldVersion/> versioon <newVersion/>.",
-    "Country Dropdown": "Maapudotusvalikko",
     "Show more": "Näytä lisää",
     "Recent Conversations": "Viimeaikaiset keskustelut",
     "Direct Messages": "Yksityisviestit",
@@ -476,7 +435,6 @@
     "This address is already in use": "Tämä osoite on jo käytössä",
     "Switch theme": "Vaihda teemaa",
     "Looks good!": "Hyvältä näyttää!",
-    "This room is public": "Tämä huone on julkinen",
     "Video conference started by %(senderName)s": "%(senderName)s aloitti ryhmävideopuhelun",
     "Video conference updated by %(senderName)s": "%(senderName)s päivitti ryhmävideopuhelun",
     "Video conference ended by %(senderName)s": "%(senderName)s päätti ryhmävideopuhelun",
@@ -782,11 +740,9 @@
     "Approve widget permissions": "Hyväksy sovelman käyttöoikeudet",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
     "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
-    "Open dial pad": "Avaa näppäimistö",
     "Dial pad": "Näppäimistö",
     "Recent changes that have not yet been received": "Tuoreet muutokset, joita ei ole vielä otettu vastaan",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
-    "You may want to try a different search or check for typos.": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
     "No results found": "Tuloksia ei löytynyt",
     "%(count)s rooms": {
         "one": "%(count)s huone",
@@ -796,19 +752,12 @@
         "one": "%(count)s jäsen",
         "other": "%(count)s jäsentä"
     },
-    "You don't have permission": "Sinulla ei ole lupaa",
     "Remember this": "Muista tämä",
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "Create a new room": "Luo uusi huone",
     "Edit devices": "Muokkaa laitteita",
     "Your message was sent": "Viestisi lähetettiin",
-    "Search names and descriptions": "Etsi nimistä ja kuvauksista",
-    "You can select all or individual messages to retry or delete": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
     "Sending": "Lähetetään",
-    "Retry all": "Yritä kaikkia uudelleen",
-    "Delete all": "Poista kaikki",
-    "Some of your messages have not been sent": "Osaa viesteistäsi ei ole lähetetty",
-    "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Olet ainoa henkilö täällä. Jos lähdet, kukaan ei voi liittyä tulevaisuudessa, et myöskään sinä.",
     "The server is not configured to indicate what the problem is (CORS).": "Palvelinta ei ole säädetty ilmoittamaan, mikä ongelma on kyseessä (CORS).",
     "Invited people will be able to read old messages.": "Kutsutut ihmiset voivat lukea vanhoja viestejä.",
     "We couldn't create your DM.": "Yksityisviestiä ei voitu luoda.",
@@ -837,11 +786,6 @@
     "Unable to access your microphone": "Mikrofonia ei voi käyttää",
     "Failed to send": "Lähettäminen epäonnistui",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
-    "Rooms and spaces": "Huoneet ja avaruudet",
-    "Unable to copy a link to the room to the clipboard.": "Huoneen linkin kopiointi leikepöydälle ei onnistu.",
-    "Unable to copy room link": "Huoneen linkin kopiointi ei onnistu",
-    "Error downloading audio": "Virhe ääntä ladattaessa",
-    "Avatar": "Avatar",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
     "Search for rooms or people": "Etsi huoneita tai ihmisiä",
@@ -864,7 +808,6 @@
     "Stop recording": "Pysäytä nauhoittaminen",
     "Send voice message": "Lähetä ääniviesti",
     "Space visibility": "Avaruuden näkyvyys",
-    "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
     "You are about to leave <spaceName/>.": "Olet aikeissa poistua avaruudesta <spaceName/>.",
@@ -883,8 +826,6 @@
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "Create a new space": "Luo uusi avaruus",
     "Create a space": "Luo avaruus",
-    "Skip verification for now": "Ohita vahvistus toistaiseksi",
-    "Results": "Tulokset",
     "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
     "User Directory": "Käyttäjähakemisto",
     "MB": "Mt",
@@ -911,7 +852,6 @@
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
     "Files": "Tiedostot",
-    "This space is not public. You will not be able to rejoin without an invite.": "Tämä avaruus ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
     "Other rooms in %(spaceName)s": "Muut huoneet avaruudessa %(spaceName)s",
     "Spaces you're in": "Avaruudet, joissa olet",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Tämä ryhmittelee yksityisviestisi avaruuden jäsenten kanssa. Tämän poistaminen päältä piilottaa kyseiset keskustelut sinun näkymästäsi avaruudessa %(spaceName)s.",
@@ -996,13 +936,7 @@
     "We couldn't send your location": "Emme voineet lähettää sijaintiasi",
     "The authenticity of this encrypted message can't be guaranteed on this device.": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
-    "Device verified": "Laite vahvistettu",
-    "Verify this device": "Vahvista tämä laite",
-    "Unable to verify this device": "Tätä laitetta ei voitu vahvistaa",
     "Joined": "Liitytty",
-    "Joining": "Liitytään",
-    "Wait!": "Odota!",
-    "Unnamed audio": "Nimetön ääni",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
     "Verify other device": "Vahvista toinen laite",
@@ -1087,18 +1021,6 @@
     "Add new server…": "Lisää uusi palvelin…",
     "Remove server “%(roomServer)s”": "Poista palvelin ”%(roomServer)s”",
     "Moderation": "Moderointi",
-    "Waiting for device to sign in": "Odotetaan laitteen sisäänkirjautumista",
-    "Review and approve the sign in": "Katselmoi ja hyväksy sisäänkirjautuminen",
-    "Devices connected": "Yhdistetyt laitteet",
-    "An unexpected error occurred.": "Tapahtui odottamaton virhe.",
-    "The request was cancelled.": "Pyyntö peruttiin.",
-    "The other device isn't signed in.": "Toinen laite ei ole sisäänkirjautunut.",
-    "The other device is already signed in.": "Toinen laite on jo sisäänkirjautunut.",
-    "The request was declined on the other device.": "Pyyntö hylättiin toiselta laitteelta.",
-    "Linking with this device is not supported.": "Tämän laitteen kanssa linkittäminen ei ole tuettu.",
-    "The scanned code is invalid.": "Skannattu koodi on virheellinen.",
-    "The linking wasn't completed in the required time.": "Linkitystä ei suoritettu vaaditussa ajassa.",
-    "Stop and close": "Pysäytä ja sulje",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s tai %(recoveryFile)s",
     "Online community members": "Verkkoyhteisöjen jäsenet",
     "Coworkers and teams": "Työkaverit ja tiimit",
@@ -1115,7 +1037,6 @@
     "Room info": "Huoneen tiedot",
     "Search for": "Etsittävät kohteet",
     "Show Labs settings": "Näytä laboratorion asetukset",
-    "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
@@ -1125,15 +1046,10 @@
     "Saved Items": "Tallennetut kohteet",
     "Reply in thread": "Vastaa ketjuun",
     "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
-    "Sign in new device": "Kirjaa sisään uusi laite",
     "Drop a Pin": "Sijoita karttaneula",
-    "Sign out of all devices": "Kirjaudu ulos kaikista laitteista",
-    "Confirm new password": "Vahvista uusi salasana",
     "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
     "Unable to decrypt message": "Viestin salauksen purkaminen ei onnistu",
     "This message could not be decrypted": "Tämän viestin salausta ei voitu purkaa",
-    "Too many attempts in a short time. Retry after %(timeout)s.": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
-    "Too many attempts in a short time. Wait some time before trying again.": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
     "Ban them from everything I'm able to": "Anna porttikielto kaikkeen, mihin pystyn",
     "Unban them from everything I'm able to": "Poista porttikielto kaikesta, mihin pystyn",
@@ -1146,7 +1062,6 @@
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
-    "Connecting…": "Yhdistetään…",
     "Fetching keys from server…": "Noudetaan avaimia palvelimelta…",
     "Checking…": "Tarkistetaan…",
     "Invites by email can only be sent one at a time": "Sähköpostikutsuja voi lähettää vain yhden kerrallaan",
@@ -1300,7 +1215,8 @@
         "low_priority": "Matala prioriteetti",
         "historical": "Vanhat",
         "go_to_settings": "Siirry asetuksiin",
-        "setup_secure_messages": "Ota käyttöön salatut viestit"
+        "setup_secure_messages": "Ota käyttöön salatut viestit",
+        "avatar": "Avatar"
     },
     "action": {
         "continue": "Jatka",
@@ -1610,7 +1526,6 @@
         "replying_title": "Vastataan"
     },
     "Link": "Linkki",
-    "Code": "Koodi",
     "power_level": {
         "default": "Oletus",
         "restricted": "Rajoitettu",
@@ -2573,7 +2488,16 @@
             "one": "Nähnyt yksi ihminen",
             "other": "Nähnyt %(count)s ihmistä"
         },
-        "read_receipts_label": "Lukukuittaukset"
+        "read_receipts_label": "Lukukuittaukset",
+        "m.audio": {
+            "unnamed_audio": "Nimetön ääni",
+            "error_downloading_audio": "Virhe ääntä ladattaessa"
+        },
+        "load_error": {
+            "no_permission": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
+            "unable_to_find": "Huoneen aikajanan tietty hetki yritettiin ladata, mutta sitä ei löytynyt.",
+            "title": "Aikajanapaikan lataaminen epäonnistui"
+        }
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -2674,7 +2598,6 @@
         "offline": "Poissa verkosta",
         "away": "Poissa"
     },
-    "Unknown": "Tuntematon",
     "event_preview": {
         "m.call.answer": {
             "you": "Liityit puheluun",
@@ -2991,7 +2914,13 @@
             "verify_using_device": "Vahvista toisella laitteella",
             "verification_success_with_backup": "Uusi laitteesi on nyt vahvistettu. Laitteella on pääsy salattuihin viesteihisi, ja muut käyttäjät näkevät sen luotettuna.",
             "verification_success_without_backup": "Uusi laitteesi on nyt vahvistettu. Muut käyttäjät näkevät sen luotettuna.",
-            "verify_later": "Vahvistan myöhemmin"
+            "verify_later": "Vahvistan myöhemmin",
+            "after_new_login": {
+                "unable_to_verify": "Tätä laitetta ei voitu vahvistaa",
+                "verify_this_device": "Vahvista tämä laite",
+                "device_verified": "Laite vahvistettu",
+                "skip_verification": "Ohita vahvistus toistaiseksi"
+            }
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -3163,7 +3092,8 @@
             "sso_failed": "Jokin meni pieleen henkilöllisyyttä vahvistaessa. Peruuta ja yritä uudelleen.",
             "fallback_button": "Aloita tunnistus",
             "sso_title": "Jatka kertakirjautumista käyttäen",
-            "sso_body": "Vahvista tämän sähköpostiosoitteen lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen."
+            "sso_body": "Vahvista tämän sähköpostiosoitteen lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
+            "code": "Koodi"
         },
         "password_field_label": "Syötä salasana",
         "password_field_strong_label": "Hyvä, vahva salasana!",
@@ -3196,7 +3126,45 @@
         "create_account_title": "Luo tili",
         "failed_soft_logout_homeserver": "Uudelleenautentikointi epäonnistui kotipalvelinongelmasta johtuen",
         "soft_logout_subheading": "Poista henkilökohtaiset tiedot",
-        "forgot_password_send_email": "Lähetä sähköpostia"
+        "forgot_password_send_email": "Lähetä sähköpostia",
+        "captcha_description": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
+        "country_dropdown": "Maapudotusvalikko",
+        "qr_code_login": {
+            "sign_in_new_device": "Kirjaa sisään uusi laite",
+            "error_linking_incomplete": "Linkitystä ei suoritettu vaaditussa ajassa.",
+            "error_invalid_scanned_code": "Skannattu koodi on virheellinen.",
+            "error_device_unsupported": "Tämän laitteen kanssa linkittäminen ei ole tuettu.",
+            "error_request_declined": "Pyyntö hylättiin toiselta laitteelta.",
+            "error_device_already_signed_in": "Toinen laite on jo sisäänkirjautunut.",
+            "error_device_not_signed_in": "Toinen laite ei ole sisäänkirjautunut.",
+            "error_request_cancelled": "Pyyntö peruttiin.",
+            "error_unexpected": "Tapahtui odottamaton virhe.",
+            "devices_connected": "Yhdistetyt laitteet",
+            "review_and_approve": "Katselmoi ja hyväksy sisäänkirjautuminen",
+            "connecting": "Yhdistetään…",
+            "waiting_for_device": "Odotetaan laitteen sisäänkirjautumista"
+        },
+        "reset_password": {
+            "rate_limit_error": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
+            "rate_limit_error_with_time": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
+            "confirm_new_password": "Vahvista uusi salasana",
+            "password_not_entered": "Sinun täytyy syöttää uusi salasana.",
+            "passwords_mismatch": "Uusien salasanojen on vastattava toisiaan.",
+            "sign_out_other_devices": "Kirjaudu ulos kaikista laitteista",
+            "reset_successful": "Salasanasi on nollattu.",
+            "devices_logout_success": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
+            "return_to_login": "Palaa kirjautumissivulle"
+        },
+        "common_failures": {
+            "invalid_homeserver_discovery": "Epäkelpo kotipalvelimen etsinnän vastaus",
+            "cannot_find_autodiscovery_config": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
+            "invalid_homeserver_base_url": "Epäkelpo base_url palvelimelle m.homeserver",
+            "homeserver_url_invalid": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
+            "invalid_identity_server_discovery": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
+            "invalid_identity_server_base_url": "Epäkelpo base_url palvelimelle m.identity_server",
+            "invalid_identity_server_url": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
+            "general_failure": "Yleinen virhe"
+        }
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3441,7 +3409,13 @@
         "invite_link": "Jaa kutsulinkki",
         "invite": "Kutsu ihmisiä",
         "invite_description": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
-        "invite_this_space": "Kutsu tähän avaruuteen"
+        "invite_this_space": "Kutsu tähän avaruuteen",
+        "joining_space": "Liitytään",
+        "user_lacks_permission": "Sinulla ei ole lupaa",
+        "no_search_result_hint": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
+        "title_when_query_available": "Tulokset",
+        "title_when_query_unavailable": "Huoneet ja avaruudet",
+        "search_placeholder": "Etsi nimistä ja kuvauksista"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3459,7 +3433,8 @@
         "failed_load_map": "Kartan lataaminen ei onnistu",
         "click_move_pin": "Napsauta siirtääksesi karttaneulaa",
         "click_drop_pin": "Napsauta sijoittaaksesi karttaneulan",
-        "share_button": "Jaa sijainti"
+        "share_button": "Jaa sijainti",
+        "stop_and_close": "Pysäytä ja sulje"
     },
     "labs_mjolnir": {
         "room_name": "Tekemäni estot",
@@ -3599,7 +3574,8 @@
             "hide_widgets_button": "Piilota sovelmat",
             "show_widgets_button": "Näytä sovelmat",
             "close_call_button": "Lopeta puhelu",
-            "video_room_view_chat_button": "Näytä keskustelun aikajana"
+            "video_room_view_chat_button": "Näytä keskustelun aikajana",
+            "room_is_public": "Tämä huone on julkinen"
         },
         "joining_space": "Liitytään avaruuteen…",
         "joining_room": "Liitytään huoneeseen…",
@@ -3646,7 +3622,27 @@
         "inaccessible_name": "%(roomName)s ei ole saatavilla tällä hetkellä.",
         "inaccessible": "Tämä huone tai avaruus ei ole käytettävissä juuri tällä hetkellä.",
         "join_failed_needs_invite": "Huoneen %(roomName)s katseluun tarvitaan kutsu",
-        "join_failed_enable_video_rooms": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta"
+        "join_failed_enable_video_rooms": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
+        "status_bar": {
+            "requires_consent_agreement": "Et voi lähettää viestejä ennen kuin luet ja hyväksyt <consentLink>käyttöehtomme</consentLink>.",
+            "monthly_user_limit_reached": "Viestiäsi ei lähetetty, koska tämä kotipalvelin on saavuttanut kuukausittaisten aktiivisten käyttäjien rajan. <a>Ota yhteyttä palvelun ylläpitäjään</a> jatkaaksesi palvelun käyttämistä.",
+            "exceeded_resource_limit": "Viestiäsi ei lähetetty, koska tämä kotipalvelin on ylittänyt resurssirajan. <a>Ota yhteyttä palvelun ylläpitäjään</a> jatkaaksesi palvelun käyttämistä.",
+            "some_messages_not_sent": "Osaa viesteistäsi ei ole lähetetty",
+            "delete_all": "Poista kaikki",
+            "retry_all": "Yritä kaikkia uudelleen",
+            "select_messages_to_retry": "Voit valita kaikki tai yksittäisiä viestejä yritettäväksi uudelleen tai poistettavaksi",
+            "server_connectivity_lost_title": "Yhteys palvelimeen menetettiin.",
+            "server_connectivity_lost_description": "Lähetetyt viestit tallennetaan kunnes yhteys on taas muodostettu."
+        },
+        "failed_reject_invite": "Kutsun hylkääminen epäonnistui",
+        "inviter_unknown": "Tuntematon",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Lähetetään %(filename)s ja %(count)s muuta",
+                "other": "Lähetetään %(filename)s ja %(count)s muuta"
+            },
+            "uploading_single_file": "Lähetetään %(filename)s"
+        }
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3862,5 +3858,39 @@
         "invited_list_heading": "Kutsuttu",
         "filter_placeholder": "Suodata huoneen jäseniä",
         "power_label": "%(userName)s (oikeustaso %(powerLevelNumber)s)"
+    },
+    "cant_load_page": "Sivun lataaminen ei onnistunut",
+    "left_panel": {
+        "open_dial_pad": "Avaa näppäimistö"
+    },
+    "console_wait": "Odota!",
+    "reject_invitation_dialog": {
+        "title": "Hylkää kutsu",
+        "confirmation": "Oletko varma että haluat hylätä kutsun?",
+        "failed": "Kutsun hylkääminen epäonnistui"
+    },
+    "leave_room_dialog": {
+        "last_person_warning": "Olet ainoa henkilö täällä. Jos lähdet, kukaan ei voi liittyä tulevaisuudessa, et myöskään sinä.",
+        "space_rejoin_warning": "Tämä avaruus ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
+        "room_rejoin_warning": "Tämä huone ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
+        "leave_space_question": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
+        "leave_room_question": "Oletko varma että haluat poistua huoneesta '%(roomName)s'?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Huoneen unohtaminen epäonnistui %(errCode)s",
+        "copy_room_link_failed": {
+            "title": "Huoneen linkin kopiointi ei onnistu",
+            "description": "Huoneen linkin kopiointi leikepöydälle ei onnistu."
+        },
+        "search_failed": {
+            "title": "Haku epäonnistui",
+            "server_unavailable": "Palvelin saattaa olla saavuttamattomissa, ylikuormitettu tai haku kesti liian kauan :("
+        },
+        "error_loading_user_profile": "Käyttäjäprofiilia ei voitu ladata"
+    },
+    "no_more_results": "Ei enempää tuloksia",
+    "quit_warning": {
+        "file_upload_in_progress": "Näytät lähettävän tiedostoja. Oletko varma että haluat lopettaa?",
+        "call_in_progress": "Sinulla näyttää olevan puhelu kesken. Haluatko varmasti lopettaa?"
     }
 }

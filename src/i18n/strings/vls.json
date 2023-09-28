@@ -249,52 +249,12 @@
     "No backup found!": "Geen back-up gevoundn!",
     "Failed to decrypt %(failedCount)s sessions!": "Ountsleutern van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer.",
-    "Reject invitation": "Uutnodigienge weigern",
-    "Are you sure you want to reject the invitation?": "Zy je zeker da je d’uutnodigienge wil weigern?",
     "You cannot delete this message. (%(code)s)": "Je kut dit bericht nie verwydern. (%(code)s)",
     "unknown error code": "ounbekende foutcode",
-    "Failed to forget room %(errCode)s": "Vergeetn van gesprek is mislukt %(errCode)s",
     "Home": "Thuus",
-    "This homeserver would like to make sure you are not a robot.": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
     "Some characters not allowed": "Sommige tekens zyn nie toegeloatn",
     "Email (optional)": "E-mailadresse (optioneel)",
     "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
-    "Couldn't load page": "Kostege ’t blad nie loadn",
-    "Failed to reject invitation": "Weigern van d’uutnodigienge is mislukt",
-    "This room is not public. You will not be able to rejoin without an invite.": "Dit gesprek is nie openboar. Zounder uutnodigienge goa je nie were kunn toetreedn.",
-    "Are you sure you want to leave the room '%(roomName)s'?": "Zy je zeker da je wilt deuregoan uut ’t gesprek ‘%(roomName)s’?",
-    "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Je ku geen berichtn stuurn toutda je <consentLink>uzze algemene voorwoardn</consentLink> geleezn en anveird ghed èt.",
-    "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver z’n limiet vo moandeliks actieve gebruukers bereikt ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
-    "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Je bericht is nie verstuurd gewist omda deze thuusserver e systeembronlimiet overschreedn ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
-    "Connectivity to the server has been lost.": "De verbindienge me de server is verbrookn.",
-    "Sent messages will be stored until your connection has returned.": "Verstuurde berichtn goan ipgesloagn wordn toutda je verbindienge hersteld is.",
-    "You seem to be uploading files, are you sure you want to quit?": "’t Ziet er noar uut da je bestandn an ’t iploadn zyt, zy je zeker da je wilt afsluutn?",
-    "You seem to be in a call, are you sure you want to quit?": "’t Ziet er noar uut da je nog in gesprek zyt, zy je zeker da je wilt afsluutn?",
-    "Search failed": "Zoekn mislukt",
-    "Server may be unavailable, overloaded, or search timed out :(": "De server is misschiens ounbereikboar of overbelast, of ’t zoekn deurdege te lank :(",
-    "No more results": "Geen resultoatn nie mi",
-    "Failed to reject invite": "Weigern van d’uutnodigienge is mislukt",
-    "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "J’è geprobeerd van e gegeven punt in de tydslyn van dit gesprek te loadn, moa j’è geen toeloatienge vo ’t desbetreffend bericht te zien.",
-    "Tried to load a specific point in this room's timeline, but was unable to find it.": "Geprobeerd voor e gegeven punt in de tydslyn van dit gesprek te loadn, moar kostege dit nie viendn.",
-    "Failed to load timeline position": "Loadn van tydslynpositie is mislukt",
-    "Uploading %(filename)s and %(count)s others": {
-        "other": "%(filename)s en %(count)s andere wordn ipgeloadn",
-        "one": "%(filename)s en %(count)s ander wordn ipgeloadn"
-    },
-    "Uploading %(filename)s": "%(filename)s wordt ipgeloadn",
-    "Could not load user profile": "Kostege ’t gebruukersprofiel nie loadn",
-    "A new password must be entered.": "’t Moet e nieuw paswoord ingegeevn wordn.",
-    "New passwords must match each other.": "Nieuwe paswoordn moetn overeenkommn.",
-    "Your password has been reset.": "Je paswoord is heringesteld.",
-    "Return to login screen": "Were noa ’t anmeldiengsscherm",
-    "Invalid homeserver discovery response": "Oungeldig thuusserverountdekkiengsantwoord",
-    "Failed to get autodiscovery configuration from server": "Iphoaln van auto-ountdekkiengsconfiguroasje van server is mislukt",
-    "Invalid base_url for m.homeserver": "Oungeldige base_url vo m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
-    "Invalid identity server discovery response": "Oungeldig identiteitsserverountdekkiengsantwoord",
-    "Invalid base_url for m.identity_server": "Oungeldige base_url vo m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
-    "General failure": "Algemene foute",
     "Session ID": "Sessie-ID",
     "Set up": "Instelln",
     "Edited at %(date)s. Click to view edits.": "Bewerkt ip %(date)s. Klikt vo de bewerkiengn te bekykn.",
@@ -446,7 +406,6 @@
         "poll_button_no_perms_title": "Toestemmienge vereist",
         "replying_title": "An ’t beantwoordn"
     },
-    "Code": "Code",
     "power_level": {
         "default": "Standoard",
         "restricted": "Beperkten toegank",
@@ -767,6 +726,11 @@
         },
         "context_menu": {
             "external_url": "Bron-URL"
+        },
+        "load_error": {
+            "no_permission": "J’è geprobeerd van e gegeven punt in de tydslyn van dit gesprek te loadn, moa j’è geen toeloatienge vo ’t desbetreffend bericht te zien.",
+            "unable_to_find": "Geprobeerd voor e gegeven punt in de tydslyn van dit gesprek te loadn, moar kostege dit nie viendn.",
+            "title": "Loadn van tydslynpositie is mislukt"
         }
     },
     "slash_command": {
@@ -818,7 +782,6 @@
         "unknown": "Ounbekend",
         "offline": "Offline"
     },
-    "Unknown": "Ounbekend",
     "voip": {
         "hangup": "Iphangn",
         "voice_call": "Sproakiproep",
@@ -973,7 +936,8 @@
             "msisdn_token_incorrect": "Verkeerd bewys",
             "msisdn": "’t Is een smse noa %(msisdn)s verstuurd gewist",
             "msisdn_token_prompt": "Gift de code in da ’t er in stoat:",
-            "fallback_button": "Authenticoasje beginn"
+            "fallback_button": "Authenticoasje beginn",
+            "code": "Code"
         },
         "password_field_label": "Gif ’t paswoord in",
         "password_field_strong_label": "Dit is e sterk paswoord!",
@@ -998,7 +962,24 @@
         "incorrect_credentials_detail": "Zy je dervan bewust da je jen anmeldt by de %(hs)s-server, nie by matrix.org.",
         "create_account_title": "Account anmoakn",
         "failed_soft_logout_homeserver": "’t Heranmeldn is mislukt omwille van e probleem me de thuusserver",
-        "soft_logout_subheading": "Persoonlike gegeevns wissn"
+        "soft_logout_subheading": "Persoonlike gegeevns wissn",
+        "captcha_description": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
+        "reset_password": {
+            "password_not_entered": "’t Moet e nieuw paswoord ingegeevn wordn.",
+            "passwords_mismatch": "Nieuwe paswoordn moetn overeenkommn.",
+            "reset_successful": "Je paswoord is heringesteld.",
+            "return_to_login": "Were noa ’t anmeldiengsscherm"
+        },
+        "common_failures": {
+            "invalid_homeserver_discovery": "Oungeldig thuusserverountdekkiengsantwoord",
+            "cannot_find_autodiscovery_config": "Iphoaln van auto-ountdekkiengsconfiguroasje van server is mislukt",
+            "invalid_homeserver_base_url": "Oungeldige base_url vo m.homeserver",
+            "homeserver_url_invalid": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
+            "invalid_identity_server_discovery": "Oungeldig identiteitsserverountdekkiengsantwoord",
+            "invalid_identity_server_base_url": "Oungeldige base_url vo m.identity_server",
+            "invalid_identity_server_url": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
+            "general_failure": "Algemene foute"
+        }
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1091,7 +1072,23 @@
         "peek_join_prompt": "Je bekykt %(roomName)s. Wil je deran deelneemn?",
         "no_peek_join_prompt": "%(roomName)s ku nie bekeekn wordn. Wil je deran deelneemn?",
         "not_found_title_name": "%(roomName)s bestoa nie.",
-        "inaccessible_name": "%(roomName)s es vo de moment nie toegankelik."
+        "inaccessible_name": "%(roomName)s es vo de moment nie toegankelik.",
+        "status_bar": {
+            "requires_consent_agreement": "Je ku geen berichtn stuurn toutda je <consentLink>uzze algemene voorwoardn</consentLink> geleezn en anveird ghed èt.",
+            "monthly_user_limit_reached": "Je bericht is nie verstuurd gewist omda deze thuusserver z’n limiet vo moandeliks actieve gebruukers bereikt ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
+            "exceeded_resource_limit": "Je bericht is nie verstuurd gewist omda deze thuusserver e systeembronlimiet overschreedn ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
+            "server_connectivity_lost_title": "De verbindienge me de server is verbrookn.",
+            "server_connectivity_lost_description": "Verstuurde berichtn goan ipgesloagn wordn toutda je verbindienge hersteld is."
+        },
+        "failed_reject_invite": "Weigern van d’uutnodigienge is mislukt",
+        "inviter_unknown": "Ounbekend",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "%(filename)s en %(count)s andere wordn ipgeloadn",
+                "one": "%(filename)s en %(count)s ander wordn ipgeloadn"
+            },
+            "uploading_single_file": "%(filename)s wordt ipgeloadn"
+        }
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1204,5 +1201,28 @@
         "invited_list_heading": "Uutgenodigd",
         "filter_placeholder": "Gespreksleedn filtern",
         "power_label": "%(userName)s (macht %(powerLevelNumber)s)"
+    },
+    "cant_load_page": "Kostege ’t blad nie loadn",
+    "reject_invitation_dialog": {
+        "title": "Uutnodigienge weigern",
+        "confirmation": "Zy je zeker da je d’uutnodigienge wil weigern?",
+        "failed": "Weigern van d’uutnodigienge is mislukt"
+    },
+    "leave_room_dialog": {
+        "room_rejoin_warning": "Dit gesprek is nie openboar. Zounder uutnodigienge goa je nie were kunn toetreedn.",
+        "leave_room_question": "Zy je zeker da je wilt deuregoan uut ’t gesprek ‘%(roomName)s’?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Vergeetn van gesprek is mislukt %(errCode)s",
+        "search_failed": {
+            "title": "Zoekn mislukt",
+            "server_unavailable": "De server is misschiens ounbereikboar of overbelast, of ’t zoekn deurdege te lank :("
+        },
+        "error_loading_user_profile": "Kostege ’t gebruukersprofiel nie loadn"
+    },
+    "no_more_results": "Geen resultoatn nie mi",
+    "quit_warning": {
+        "file_upload_in_progress": "’t Ziet er noar uut da je bestandn an ’t iploadn zyt, zy je zeker da je wilt afsluutn?",
+        "call_in_progress": "’t Ziet er noar uut da je nog in gesprek zyt, zy je zeker da je wilt afsluutn?"
     }
 }

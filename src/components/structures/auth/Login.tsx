@@ -43,14 +43,14 @@ import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
-_td("Invalid homeserver discovery response");
-_td("Failed to get autodiscovery configuration from server");
-_td("Invalid base_url for m.homeserver");
-_td("Homeserver URL does not appear to be a valid Matrix homeserver");
-_td("Invalid identity server discovery response");
-_td("Invalid base_url for m.identity_server");
-_td("Identity server URL does not appear to be a valid identity server");
-_td("General failure");
+_td("auth|common_failures|invalid_homeserver_discovery");
+_td("auth|common_failures|cannot_find_autodiscovery_config");
+_td("auth|common_failures|invalid_homeserver_base_url");
+_td("auth|common_failures|homeserver_url_invalid");
+_td("auth|common_failures|invalid_identity_server_discovery");
+_td("auth|common_failures|invalid_identity_server_base_url");
+_td("auth|common_failures|invalid_identity_server_url");
+_td("auth|common_failures|general_failure");
 interface IProps {
     serverConfig: ValidatedServerConfig;
     // If true, the component will consider itself busy.

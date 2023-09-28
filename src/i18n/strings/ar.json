@@ -966,7 +966,6 @@
         "unknown": "غير معروف",
         "offline": "منفصل"
     },
-    "Unknown": "غير معروف",
     "event_preview": {
         "m.call.answer": {
             "you": "لقد انضممت إلى المكالمة",
@@ -1419,7 +1418,8 @@
         "peek_join_prompt": "أنت تعاين %(roomName)s. تريد الانضمام إليها؟",
         "no_peek_join_prompt": "لا يمكن معاينة %(roomName)s. هل تريد الانضمام إليها؟",
         "not_found_title_name": "الغرفة %(roomName)s ليست موجودة.",
-        "inaccessible_name": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي."
+        "inaccessible_name": "لا يمكن الوصول إلى %(roomName)s في الوقت الحالي.",
+        "inviter_unknown": "غير معروف"
     },
     "space": {
         "context_menu": {

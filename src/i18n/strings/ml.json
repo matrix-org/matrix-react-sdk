@@ -1,6 +1,5 @@
 {
     "Create new room": "പുതിയ റൂം സൃഷ്ടിക്കുക",
-    "Failed to forget room %(errCode)s": "%(errCode)s റൂം ഫോര്‍ഗെറ്റ് ചെയ്യുവാന്‍ സാധിച്ചില്ല",
     "unknown error code": "അപരിചിത എറര്‍ കോഡ്",
     "Sunday": "ഞായര്‍",
     "Today": "ഇന്ന്",
@@ -108,5 +107,8 @@
             "low_priority": "താഴ്ന്ന പരിഗണന"
         },
         "invite_this_room": "ഈ റൂമിലേക്ക് ക്ഷണിക്കുക"
+    },
+    "error_dialog": {
+        "forget_room_failed": "%(errCode)s റൂം ഫോര്‍ഗെറ്റ് ചെയ്യുവാന്‍ സാധിച്ചില്ല"
     }
 }

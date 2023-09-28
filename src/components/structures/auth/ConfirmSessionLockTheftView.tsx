@@ -37,7 +37,7 @@ export function ConfirmSessionLockTheftView(props: Props): JSX.Element {
             <div className="mx_ConfirmSessionLockTheftView_body">
                 <p>
                     {_t(
-                        '%(brand)s is open in another window. Click "%(label)s" to use %(brand)s here and disconnect the other window.',
+                        'error_app_opened_in_another_window',
                         { brand, label: _t("action|continue") },
                     )}
                 </p>

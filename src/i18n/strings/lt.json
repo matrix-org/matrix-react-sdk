@@ -12,7 +12,6 @@
     "Unnamed room": "Kambarys be pavadinimo",
     "Saturday": "Šeštadienis",
     "Monday": "Pirmadienis",
-    "Failed to forget room %(errCode)s": "Nepavyko pamiršti kambario %(errCode)s",
     "Wednesday": "Trečiadienis",
     "Send": "Siųsti",
     "unknown error code": "nežinomas klaidos kodas",
@@ -61,22 +60,6 @@
     "Error decrypting video": "Klaida iššifruojant vaizdo įrašą",
     "Email address": "El. pašto adresas",
     "Delete Widget": "Ištrinti valdiklį",
-    "Connectivity to the server has been lost.": "Jungiamumas su šiuo serveriu buvo prarastas.",
-    "Sent messages will be stored until your connection has returned.": "Išsiųstos žinutės bus saugomos tol, kol atsiras ryšys.",
-    "You seem to be uploading files, are you sure you want to quit?": "Panašu, kad jūs įkeliate failus, ar tikrai norite išeiti?",
-    "You seem to be in a call, are you sure you want to quit?": "Panašu, kad jūs dalyvaujate skambutyje, ar tikrai norite išeiti?",
-    "Search failed": "Paieška nepavyko",
-    "Server may be unavailable, overloaded, or search timed out :(": "Gali būti, kad serveris neprieinamas, perkrautas arba pasibaigė paieškai skirtas laikas :(",
-    "No more results": "Daugiau nėra jokių rezultatų",
-    "Failed to reject invite": "Nepavyko atmesti pakvietimo",
-    "Uploading %(filename)s and %(count)s others": {
-        "other": "Įkeliamas %(filename)s ir dar %(count)s failai",
-        "one": "Įkeliamas %(filename)s ir dar %(count)s failas"
-    },
-    "Uploading %(filename)s": "Įkeliamas %(filename)s",
-    "A new password must be entered.": "Privalo būti įvestas naujas slaptažodis.",
-    "New passwords must match each other.": "Nauji slaptažodžiai privalo sutapti.",
-    "Return to login screen": "Grįžti į prisijungimą",
     "Session ID": "Seanso ID",
     "This event could not be displayed": "Nepavyko parodyti šio įvykio",
     "Failed to ban user": "Nepavyko užblokuoti vartotojo",
@@ -138,9 +121,6 @@
     },
     "Cancel All": "Atšaukti visus",
     "Upload Error": "Įkėlimo klaida",
-    "This room is not public. You will not be able to rejoin without an invite.": "Šis kambarys nėra viešas. Jūs negalėsite prisijungti iš naujo be pakvietimo.",
-    "Are you sure you want to leave the room '%(roomName)s'?": "Ar tikrai norite išeiti iš kambario %(roomName)s?",
-    "General failure": "Bendras triktis",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Jūs neturėsite galimybės atšaukti šio keitimo, kadangi jūs žeminate savo privilegijas kambaryje. Jei jūs esate paskutinis privilegijuotas vartotojas kambaryje, atgauti privilegijas bus neįmanoma.",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Jūs neturėsite galimybės atšaukti šio keitimo, kadangi jūs paaukštinate vartotoją, suteikdami tokį patį galios lygį, kokį turite jūs.",
     "Email (optional)": "El. paštas (neprivaloma)",
@@ -151,7 +131,6 @@
     "Can't find this server or its room list": "Negalime rasti šio serverio arba jo kambarių sąrašo",
     "Recently Direct Messaged": "Neseniai tiesiogiai susirašyta",
     "Command Help": "Komandų pagalba",
-    "Tried to load a specific point in this room's timeline, but was unable to find it.": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet nepavyko jos rasti.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
     "Back up your keys before signing out to avoid losing them.": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo.",
     "Start using Key Backup": "Pradėti naudoti atsarginę raktų kopiją",
@@ -180,8 +159,6 @@
     "Messages in this room are not end-to-end encrypted.": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
     "Confirm Removal": "Patvirtinkite pašalinimą",
     "Manually export keys": "Eksportuoti raktus rankiniu būdu",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
-    "Your password has been reset.": "Jūsų slaptažodis buvo iš naujo nustatytas.",
     "Show more": "Rodyti daugiau",
     "Verify your other session using one of the options below.": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
     "Deactivate user?": "Deaktyvuoti vartotoją?",
@@ -208,10 +185,7 @@
     "Encryption not enabled": "Šifravimas neįjungtas",
     "Are you sure you want to deactivate your account? This is irreversible.": "Ar tikrai norite deaktyvuoti savo paskyrą? Tai yra negrįžtama.",
     "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
-    "Are you sure you want to reject the invitation?": "Ar tikrai norite atmesti pakvietimą?",
     "Room Topic": "Kambario Tema",
-    "Invalid homeserver discovery response": "Klaidingas serverio radimo atsakas",
-    "Invalid identity server discovery response": "Klaidingas tapatybės serverio radimo atsakas",
     "Dog": "Šuo",
     "Cat": "Katė",
     "Lion": "Liūtas",
@@ -303,8 +277,6 @@
     "Create a new room with the same name, description and avatar": "Sukurti naują kambarį su tuo pačiu pavadinimu, aprašymu ir pseudoportretu",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
-    "Failed to reject invitation": "Nepavyko atmesti pakvietimo",
-    "Reject invitation": "Atmesti pakvietimą",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "New published address (e.g. #alias:server)": "Naujas paskelbtas adresas (pvz.: #pavadinimas:server)",
     "Waiting for %(displayName)s to accept…": "Laukiama kol %(displayName)s sutiks…",
@@ -320,9 +292,6 @@
     "Click the button below to confirm setting up encryption.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
     "Deactivate account": "Deaktyvuoti paskyrą",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Pabandykite slinkti aukštyn laiko juostoje, kad sužinotumėte, ar yra ankstesnių.",
-    "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet jūs neturite leidimo peržiūrėti tos žinutės.",
-    "Failed to load timeline position": "Nepavyko įkelti laiko juostos pozicijos",
-    "Identity server URL does not appear to be a valid identity server": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
     "This backup is trusted because it has been restored on this session": "Ši atsarginė kopija yra patikima, nes buvo atkurta šiame seanse",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Šio seanso duomenų išvalymas yra negrįžtamas. Šifruotos žinutės bus prarastos, nebent buvo sukurta jų raktų atsarginė kopija.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Trūksta kai kurių seanso duomenų, įskaitant šifruotų žinučių raktus. Atsijunkite ir prisijunkite, kad tai išspręstumėte, atkurdami raktus iš atsarginės kopijos.",
@@ -382,7 +351,6 @@
     "Video conference updated by %(senderName)s": "%(senderName)s atnaujino video konferenciją",
     "Video conference ended by %(senderName)s": "%(senderName)s užbaigė video konferenciją",
     "Backup version:": "Atsarginės kopijos versija:",
-    "This homeserver would like to make sure you are not a robot.": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
     "Your messages are not secure": "Jūsų žinutės nėra saugios",
@@ -754,8 +722,6 @@
     "Italy": "Italija",
     "Public rooms": "Vieši kambariai",
     "Search for": "Ieškoti",
-    "Unable to copy a link to the room to the clipboard.": "Nepavyko nukopijuoti nuorodos į kambarį į iškarpinę.",
-    "Unable to copy room link": "Nepavyko nukopijuoti kambario nurodos",
     "common": {
         "about": "Apie",
         "analytics": "Analitika",
@@ -1057,7 +1023,6 @@
         "format_insert_link": "Įterpti nuorodą",
         "replying_title": "Atsakoma"
     },
-    "Code": "Kodas",
     "power_level": {
         "default": "Numatytas",
         "restricted": "Apribotas",
@@ -1799,7 +1764,12 @@
             "one": "Matė %(count)s žmogus",
             "other": "Matė %(count)s žmonės"
         },
-        "read_receipts_label": "Skaitymo kvitai"
+        "read_receipts_label": "Skaitymo kvitai",
+        "load_error": {
+            "no_permission": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet jūs neturite leidimo peržiūrėti tos žinutės.",
+            "unable_to_find": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet nepavyko jos rasti.",
+            "title": "Nepavyko įkelti laiko juostos pozicijos"
+        }
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -1875,7 +1845,6 @@
         "unknown": "Nežinoma",
         "offline": "Atsijungęs"
     },
-    "Unknown": "Nežinoma",
     "event_preview": {
         "m.call.answer": {
             "you": "Jūs prisijungėte prie skambučio",
@@ -2277,7 +2246,8 @@
             "msisdn_token_prompt": "Įveskite joje esantį kodą:",
             "fallback_button": "Pradėti tapatybės nustatymą",
             "sso_title": "Norėdami tęsti naudokite Vieną Prisijungimą",
-            "sso_body": "Patvirtinkite šio el. pašto adreso pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę."
+            "sso_body": "Patvirtinkite šio el. pašto adreso pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
+            "code": "Kodas"
         },
         "password_field_strong_label": "Puiku, stiprus slaptažodis!",
         "username_field_required_invalid": "Įveskite vartotojo vardą",
@@ -2300,7 +2270,21 @@
         "autodiscovery_unexpected_error_hs": "Netikėta klaida nusistatant serverio konfigūraciją",
         "autodiscovery_unexpected_error_is": "Netikėta klaida nusistatant tapatybės serverio konfigūraciją",
         "incorrect_credentials_detail": "Atkreipkite dėmesį, kad jūs jungiatės prie %(hs)s serverio, o ne matrix.org.",
-        "create_account_title": "Sukurti paskyrą"
+        "create_account_title": "Sukurti paskyrą",
+        "captcha_description": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
+        "reset_password": {
+            "password_not_entered": "Privalo būti įvestas naujas slaptažodis.",
+            "passwords_mismatch": "Nauji slaptažodžiai privalo sutapti.",
+            "reset_successful": "Jūsų slaptažodis buvo iš naujo nustatytas.",
+            "return_to_login": "Grįžti į prisijungimą"
+        },
+        "common_failures": {
+            "invalid_homeserver_discovery": "Klaidingas serverio radimo atsakas",
+            "homeserver_url_invalid": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
+            "invalid_identity_server_discovery": "Klaidingas tapatybės serverio radimo atsakas",
+            "invalid_identity_server_url": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
+            "general_failure": "Bendras triktis"
+        }
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2615,7 +2599,20 @@
         "inaccessible_subtitle_2": "Bandant patekti į kambarį ar erdvę buvo grąžinta %(errcode)s. Jei manote, kad šią žinutę matote klaidingai, <issueLink>pateikite pranešimą apie klaidą</issueLink>.",
         "join_failed_needs_invite": "Norint peržiūrėti %(roomName)s, turite gauti kvietimą",
         "view_failed_enable_video_rooms": "Norint peržiūrėti, pirmiausia įjunkite vaizdo kambarius laboratorijose",
-        "join_failed_enable_video_rooms": "Norint prisijungti, pirmiausia įjunkite vaizdo kambarius laboratorijose"
+        "join_failed_enable_video_rooms": "Norint prisijungti, pirmiausia įjunkite vaizdo kambarius laboratorijose",
+        "status_bar": {
+            "server_connectivity_lost_title": "Jungiamumas su šiuo serveriu buvo prarastas.",
+            "server_connectivity_lost_description": "Išsiųstos žinutės bus saugomos tol, kol atsiras ryšys."
+        },
+        "failed_reject_invite": "Nepavyko atmesti pakvietimo",
+        "inviter_unknown": "Nežinoma",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Įkeliamas %(filename)s ir dar %(count)s failai",
+                "one": "Įkeliamas %(filename)s ir dar %(count)s failas"
+            },
+            "uploading_single_file": "Įkeliamas %(filename)s"
+        }
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"
@@ -2789,5 +2786,30 @@
         "invited_list_heading": "Pakviesta",
         "filter_placeholder": "Filtruoti kambario dalyvius",
         "power_label": "%(userName)s (galia %(powerLevelNumber)s)"
+    },
+    "reject_invitation_dialog": {
+        "title": "Atmesti pakvietimą",
+        "confirmation": "Ar tikrai norite atmesti pakvietimą?",
+        "failed": "Nepavyko atmesti pakvietimo"
+    },
+    "leave_room_dialog": {
+        "room_rejoin_warning": "Šis kambarys nėra viešas. Jūs negalėsite prisijungti iš naujo be pakvietimo.",
+        "leave_room_question": "Ar tikrai norite išeiti iš kambario %(roomName)s?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Nepavyko pamiršti kambario %(errCode)s",
+        "copy_room_link_failed": {
+            "title": "Nepavyko nukopijuoti kambario nurodos",
+            "description": "Nepavyko nukopijuoti nuorodos į kambarį į iškarpinę."
+        },
+        "search_failed": {
+            "title": "Paieška nepavyko",
+            "server_unavailable": "Gali būti, kad serveris neprieinamas, perkrautas arba pasibaigė paieškai skirtas laikas :("
+        }
+    },
+    "no_more_results": "Daugiau nėra jokių rezultatų",
+    "quit_warning": {
+        "file_upload_in_progress": "Panašu, kad jūs įkeliate failus, ar tikrai norite išeiti?",
+        "call_in_progress": "Panašu, kad jūs dalyvaujate skambutyje, ar tikrai norite išeiti?"
     }
 }
