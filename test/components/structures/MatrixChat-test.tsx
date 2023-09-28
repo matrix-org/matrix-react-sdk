@@ -1152,7 +1152,7 @@ describe("<MatrixChat />", () => {
             expect(ssoClient.getSsoLoginUrl).toHaveBeenCalledWith('http://localhost/', 'sso', undefined, undefined);
             expect(window.localStorage.getItem(SSO_HOMESERVER_URL_KEY)).toEqual("matrix.example.com");
             expect(window.localStorage.getItem(SSO_ID_SERVER_URL_KEY)).toEqual("ident.example.com");
-            expect(hrefSetter).toHaveBeenCalledWith("http://my-sso-url");
+            expect(hrefSetter).toBeCalledWith("http://my-sso-url");
         });
     });
 
