@@ -126,9 +126,6 @@
     },
     "Join Room": "Rnu ɣer texxamt",
     "not specified": "ur iban ara",
-    "Start Verification": "Bdu asenqed",
-    "Verify User": "Senqed aseqdac",
-    "Your messages are not secure": "Iznan-inek·inem d ariɣelsanen",
     "Hide verified sessions": "Ffer tiɣimiyin yettwasneqden",
     "%(count)s sessions": {
         "other": "Tiɣimiyin n %(count)s",
@@ -234,8 +231,6 @@
     "Guitar": "Tagitaṛt",
     "Trumpet": "Lɣiḍa",
     "Bell": "Anayna",
-    "Accepting…": "Aqbal…",
-    "Your homeserver": "Aqeddac-ik·im agejdan",
     "Delete Widget": "Kkes awiǧit",
     "expand": "snefli",
     "Language Dropdown": "Tabdart n udrurem n tutlayin",
@@ -293,7 +288,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Taxxamt war isem",
-    "Share room": "Bḍu taxxamt",
     "Create new room": "Rnu taxxamt tamaynut",
     "unknown error code": "tangalt n tuccḍa tarussint",
     "You're all caught up.": "Tessawḍeḍ ad tqeḍɛeḍ kullec.",
@@ -390,13 +384,6 @@
     "Sent messages will be stored until your connection has returned.": "Iznan yettwaznen ad ttwakelsen alamma tuɣal-d tuqqna.",
     "You seem to be uploading files, are you sure you want to quit?": "Aql-ak·akem tessalayeḍ-d ifuyla, tebɣiḍ stidet ad teffɣeḍ?",
     "Server may be unavailable, overloaded, or search timed out :(": "Aqeddac yezmer ulac-it, iɛedda aɛebbi i ilaqen neɣ yekfa wakud n unadi:(",
-    "Waiting for %(displayName)s to accept…": "Aṛaǧu n %(displayName)s i uqbal…",
-    "Messages in this room are end-to-end encrypted.": "Iznan deg texxamt-a ttwawgelhen seg yixef ɣer yixef.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Iznan-inek·inem d iɣelsanen, ala kečč d uɣerwaḍ i yesɛan tisura tasufin i wakken ad asen-kksen awgelhen.",
-    "Messages in this room are not end-to-end encrypted.": "Iznan deg texxamt-a ur ttwawgelhen ara seg yixef ɣer yixef.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Deg texxamt yettwawgelhen, iznan-inek·inem d iɣelsanen ala kečč d uɣerwaḍ i yesɛan tisura tasufin i wakken ad asen-kksen awgelhen.",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "I wugar n tɣellist, senqed aseqdac-a s usenqed n tengalt i yiwet n tikkelt ɣef yibenkan-ik·im i sin.",
-    "One of the following may be compromised:": "Yiwen seg wayen i d-iteddun yezmer ad yettwaker:",
     "Information": "Talɣut",
     "Unable to load commit detail: %(msg)s": "D awezɣi ad d-tali telqayt n usentem: %(msg)s",
     "You cannot delete this message. (%(code)s)": "Ur tezmireḍ ara ad tekkseḍ izen-a. (%(code)s)",
@@ -464,8 +451,6 @@
     "Trophy": "Arraz",
     "Backup version:": "Lqem n uklas:",
     "Not encrypted": "Ur yettwawgelhen ara",
-    "Room settings": "Iɣewwaṛen n texxamt",
-    "Widgets": "Iwiǧiten",
     "Iraq": "ɛiṛaq",
     "Bosnia": "Busniya",
     "Mali": "Mali",
@@ -1740,7 +1725,10 @@
             "waiting_other_user": "Aṛaǧu n %(displayName)s i usenqed…",
             "cancelling": "Asefsex…",
             "unverified_sessions_toast_reject": "Ticki",
-            "unverified_session_toast_title": "Anekcam amaynut. D kečč/kemm?"
+            "unverified_session_toast_title": "Anekcam amaynut. D kečč/kemm?",
+            "waiting_for_user_accept": "Aṛaǧu n %(displayName)s i uqbal…",
+            "accepting": "Aqbal…",
+            "start_button": "Bdu asenqed"
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
@@ -1781,7 +1769,12 @@
         "cross_signing_room_normal": "Taxxamt-a tettwawgelhen seg yixef ɣer yixef",
         "cross_signing_room_verified": "Yal yiwen deg taxxamt-a yettwasenqed",
         "event_shield_reason_authenticity_not_guaranteed": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
-        "event_shield_reason_mismatched_sender_key": "Yettuwgelhen s tɣimit ur nettwasenqed ara"
+        "event_shield_reason_mismatched_sender_key": "Yettuwgelhen s tɣimit ur nettwasenqed ara",
+        "messages_not_secure": {
+            "title": "Iznan-inek·inem d ariɣelsanen",
+            "heading": "Yiwen seg wayen i d-iteddun yezmer ad yettwaker:",
+            "cause_1": "Aqeddac-ik·im agejdan"
+        }
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2246,6 +2239,17 @@
         "error_revoke_3pid_invite_description": "Tigtin n tinubga d awezɣi. Aqeddac yettmagar-d ahat ugur akka tura neɣ ur tesɛiḍ tisirag i iwulmen i wakken ad tagiḍ tinubga-a.",
         "admin_tools_section": "Ifecka n unedbal",
         "revoke_invite": "Sefesex tinnubga",
-        "invited_by": "Yettunced-d sɣur %(sender)s"
+        "invited_by": "Yettunced-d sɣur %(sender)s",
+        "room_encrypted": "Iznan deg texxamt-a ttwawgelhen seg yixef ɣer yixef.",
+        "room_encrypted_detail": "Iznan-inek·inem d iɣelsanen, ala kečč d uɣerwaḍ i yesɛan tisura tasufin i wakken ad asen-kksen awgelhen.",
+        "room_unencrypted": "Iznan deg texxamt-a ur ttwawgelhen ara seg yixef ɣer yixef.",
+        "room_unencrypted_detail": "Deg texxamt yettwawgelhen, iznan-inek·inem d iɣelsanen ala kečč d uɣerwaḍ i yesɛan tisura tasufin i wakken ad asen-kksen awgelhen.",
+        "verify_button": "Senqed aseqdac",
+        "verify_explainer": "I wugar n tɣellist, senqed aseqdac-a s usenqed n tengalt i yiwet n tikkelt ɣef yibenkan-ik·im i sin."
+    },
+    "right_panel": {
+        "widgets_section": "Iwiǧiten",
+        "share_button": "Bḍu taxxamt",
+        "settings_button": "Iɣewwaṛen n texxamt"
     }
 }

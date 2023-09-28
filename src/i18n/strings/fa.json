@@ -576,29 +576,8 @@
         "one": "1 نشست تأیید شده",
         "other": "%(count)s نشست تایید شده"
     },
-    "Room settings": "تنظیمات اتاق",
-    "Share room": "به اشتراک گذاری اتاق",
     "Not encrypted": "رمزگذاری نشده",
-    "Add widgets, bridges & bots": "افزودن ابزارک‌ها، پل‌ها و ربات‌ها",
-    "Edit widgets, bridges & bots": "ویرایش ابزارک ها ، پل ها و ربات ها",
-    "Widgets": "ابزارک ها",
-    "Set my room layout for everyone": "چیدمان اتاق من را برای همه تنظیم کن",
-    "You can only pin up to %(count)s widgets": {
-        "other": "فقط می توانید تا %(count)s ابزارک را پین کنید"
-    },
-    "One of the following may be compromised:": "ممکن است یکی از موارد زیر به در معرض خطر باشد:",
-    "Your homeserver": "سرور شما",
-    "Your messages are not secure": "پیام های شما ایمن نیستند",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "برای امنیت بیشتر، با بررسی کد یکبارمصرف در هر دو دستگاه، این کاربر را تأیید کنید.",
-    "Verify User": "تأیید هویت کاربر",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "در اتاق‌های رمزگذاری شده، پیام‌های شما امن هستند و فقط شما و گیرنده کلیدهای منحصر به فرد برای باز کردن قفل آن‌ها را دارید.",
-    "Messages in this room are not end-to-end encrypted.": "پیام های موجود در این اتاق به صورت سرتاسر رمزگذاری نشده‌اند.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "پیام‌های شما امن هستند و فقط شما و گیرنده کلیدهای منحصر به فرد برای باز کردن قفل آنها را دارید.",
     "Direct Messages": "پیام مستقیم",
-    "Messages in this room are end-to-end encrypted.": "پیام‌های موجود در این اتاق به صورت سرتاسر رمزگذاری شده‌اند.",
-    "Start Verification": "شروع تایید هویت",
-    "Accepting…": "پذیرش…",
-    "Waiting for %(displayName)s to accept…": "منتظر قبول کردن توسط %(displayName)s…",
     "Open dial pad": "باز کردن صفحه شماره‌گیری",
     "Join Room": "به اتاق بپیوندید",
     "(~%(count)s results)": {
@@ -2130,7 +2109,10 @@
             "unverified_sessions_toast_reject": "بعداً",
             "unverified_session_toast_title": "ورود جدید. آیا شما بودید؟",
             "request_toast_detail": "%(deviceId)s از %(ip)s",
-            "verification_description": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید."
+            "verification_description": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید.",
+            "waiting_for_user_accept": "منتظر قبول کردن توسط %(displayName)s…",
+            "accepting": "پذیرش…",
+            "start_button": "شروع تایید هویت"
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2174,7 +2156,12 @@
         "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است",
         "cross_signing_room_verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
         "event_shield_reason_authenticity_not_guaranteed": "صحت این پیام رمزگذاری شده در این دستگاه تضمین نمی شود.",
-        "event_shield_reason_mismatched_sender_key": "توسط یک نشست تأیید نشده رمزگذاری شده است"
+        "event_shield_reason_mismatched_sender_key": "توسط یک نشست تأیید نشده رمزگذاری شده است",
+        "messages_not_secure": {
+            "title": "پیام های شما ایمن نیستند",
+            "heading": "ممکن است یکی از موارد زیر به در معرض خطر باشد:",
+            "cause_1": "سرور شما"
+        }
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2458,7 +2445,8 @@
         "unencrypted_warning": "ابزارک ها از رمزگذاری پیام استفاده نمی کنند.",
         "added_by": "ابزارک اضافه شده توسط",
         "cookie_warning": "این ابزارک ممکن است از کوکی استفاده کند.",
-        "popout": "بیرون انداختن ابزارک"
+        "popout": "بیرون انداختن ابزارک",
+        "set_room_layout": "چیدمان اتاق من را برای همه تنظیم کن"
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2906,6 +2894,24 @@
         "error_revoke_3pid_invite_description": "دعوت لغو نشد. ممکن است سرور با یک مشکل موقتی روبرو شده باشد و یا اینکه شما مجوز کافی برای لغو دعوت را نداشته باشید.",
         "admin_tools_section": "ابزارهای مدیریت",
         "revoke_invite": "لغو دعوت",
-        "invited_by": "دعوت شده توسط %(sender)s"
+        "invited_by": "دعوت شده توسط %(sender)s",
+        "room_encrypted": "پیام‌های موجود در این اتاق به صورت سرتاسر رمزگذاری شده‌اند.",
+        "room_encrypted_detail": "پیام‌های شما امن هستند و فقط شما و گیرنده کلیدهای منحصر به فرد برای باز کردن قفل آنها را دارید.",
+        "room_unencrypted": "پیام های موجود در این اتاق به صورت سرتاسر رمزگذاری نشده‌اند.",
+        "room_unencrypted_detail": "در اتاق‌های رمزگذاری شده، پیام‌های شما امن هستند و فقط شما و گیرنده کلیدهای منحصر به فرد برای باز کردن قفل آن‌ها را دارید.",
+        "verify_button": "تأیید هویت کاربر",
+        "verify_explainer": "برای امنیت بیشتر، با بررسی کد یکبارمصرف در هر دو دستگاه، این کاربر را تأیید کنید."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "limits": {
+                "other": "فقط می توانید تا %(count)s ابزارک را پین کنید"
+            }
+        },
+        "widgets_section": "ابزارک ها",
+        "edit_integrations": "ویرایش ابزارک ها ، پل ها و ربات ها",
+        "add_integrations": "افزودن ابزارک‌ها، پل‌ها و ربات‌ها",
+        "share_button": "به اشتراک گذاری اتاق",
+        "settings_button": "تنظیمات اتاق"
     }
 }

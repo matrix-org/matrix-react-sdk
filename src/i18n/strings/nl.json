@@ -128,7 +128,6 @@
     "Demote yourself?": "Jezelf degraderen?",
     "Demote": "Degraderen",
     "Share Link to User": "Koppeling naar persoon delen",
-    "Share room": "Kamer delen",
     "Share Room": "Kamer delen",
     "Link to most recent message": "Koppeling naar meest recente bericht",
     "Share User": "Persoon delen",
@@ -307,16 +306,6 @@
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
     "Failed to deactivate user": "Deactiveren van persoon is mislukt",
     "Failed to connect to integration manager": "Verbinding met integratiebeheerder is mislukt",
-    "Waiting for %(displayName)s to accept…": "Wachten tot %(displayName)s aanvaardt…",
-    "Accepting…": "Toestaan…",
-    "Start Verification": "Verificatie beginnen",
-    "Messages in this room are end-to-end encrypted.": "De berichten in deze kamer worden eind-tot-eind-versleuteld.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Jouw berichten zijn beveiligd, en enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
-    "Verify User": "Persoon verifiëren",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Als extra beveiliging kan je deze persoon verifiëren door een eenmalige code op jullie toestellen te controleren.",
-    "Your messages are not secure": "Jouw berichten zijn niet veilig",
-    "One of the following may be compromised:": "Eén van volgende onderdelen kan gecompromitteerd zijn:",
-    "Your homeserver": "Jouw homeserver",
     "Not Trusted": "Niet vertrouwd",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s heeft zich aangemeld bij een nieuwe sessie zonder deze te verifiëren:",
     "Ask this user to verify their session, or manually verify it below.": "Vraag deze persoon de sessie te verifiëren, of verifieer het handmatig hieronder.",
@@ -331,7 +320,6 @@
     },
     "Hide sessions": "Sessies verbergen",
     "This client does not support end-to-end encryption.": "Deze cliënt biedt geen ondersteuning voor eind-tot-eind-versleuteling.",
-    "Messages in this room are not end-to-end encrypted.": "De berichten in deze kamer worden niet eind-tot-eind-versleuteld.",
     "Verify by scanning": "Verifiëren met scan",
     "Ask %(displayName)s to scan your code:": "Vraag %(displayName)s om jouw code te scannen:",
     "Verify by emoji": "Verifiëren met emoji",
@@ -663,13 +651,7 @@
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Je hebt %(deviceName)s (%(deviceId)s) geverifieerd!",
     "You've successfully verified your device!": "Je hebt je apparaat geverifieerd!",
     "Almost there! Is %(displayName)s showing the same shield?": "Bijna klaar! Toont %(displayName)s hetzelfde schild?",
-    "Room settings": "Kamerinstellingen",
     "Not encrypted": "Niet versleuteld",
-    "Widgets": "Widgets",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Je kunt maar %(count)s widgets vastzetten"
-    },
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "In versleutelde kamers zijn jouw berichten beveiligd, enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
     "A browser extension is preventing the request.": "Een invoertoepassing van je browser verhindert de aanvraag.",
@@ -763,9 +745,6 @@
     "Enter the name of a new server you want to explore.": "Voer de naam in van een nieuwe server die je wilt ontdekken.",
     "Submit logs": "Logs versturen",
     "Verify all users in a room to ensure it's secure.": "Controleer alle personen in een kamer om er zeker van te zijn dat het veilig is.",
-    "Add widgets, bridges & bots": "Widgets, bruggen & bots toevoegen",
-    "Edit widgets, bridges & bots": "Widgets, bruggen & bots bewerken",
-    "Set my room layout for everyone": "Stel mijn kamerindeling in voor iedereen",
     "Open dial pad": "Kiestoetsen openen",
     "Dial pad": "Kiestoetsen",
     "IRC display name width": "Breedte IRC-weergavenaam",
@@ -842,9 +821,6 @@
     "Message preview": "Voorbeeld van bericht",
     "Sent": "Verstuurd",
     "You don't have permission to do this": "Je hebt geen rechten om dit te doen",
-    "Pinned messages": "Vastgeprikte berichten",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Als je de rechten hebt, open dan het menu op elk bericht en selecteer <b>Vastprikken</b> om ze hier te zetten.",
-    "Nothing pinned, yet": "Nog niks vastgeprikt",
     "Please provide an address": "Geef een adres op",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
     "Unnamed audio": "Naamloze audio",
@@ -903,7 +879,6 @@
     "Don't leave any rooms": "Geen kamers verlaten",
     "MB": "MB",
     "In reply to <a>this message</a>": "In antwoord op <a>dit bericht</a>",
-    "Export chat": "Chat exporteren",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "Downloading": "Downloaden",
     "They won't be able to access whatever you're not an admin of.": "Ze zullen geen toegang hebben tot alles waar je geen beheerder van bent.",
@@ -934,12 +909,6 @@
         "other": "%(count)s stemmen"
     },
     "In encrypted rooms, verify all users to ensure it's secure.": "Controleer alle personen in versleutelde kamers om er zeker van te zijn dat het veilig is.",
-    "Files": "Bestanden",
-    "Close this widget to view it in this panel": "Sluit deze widget om het in dit paneel weer te geven",
-    "Unpin this widget to view it in this panel": "Maak deze widget los om het in dit paneel weer te geven",
-    "Yours, or the other users' session": "Jouw sessie, of die van de andere personen",
-    "Yours, or the other users' internet connection": "Jouw internetverbinding, of die van de andere personen",
-    "The homeserver the user you're verifying is connected to": "De homeserver waarmee de persoon die jij verifieert verbonden is",
     "Reply in thread": "Reageer in draad",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
@@ -954,7 +923,6 @@
     "Moderation": "Moderatie",
     "Messaging": "Messaging",
     "Spaces you know that contain this space": "Spaces die je kent met deze Space",
-    "Chat": "Chat",
     "Recently viewed": "Recent bekeken",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s stem uitgebracht. Stem om de resultaten te zien",
@@ -993,7 +961,6 @@
     "toggle event": "wissel gebeurtenis",
     "You cancelled verification on your other device.": "Je hebt de verificatie geannuleerd op het andere apparaat.",
     "Almost there! Is your other device showing the same shield?": "Je bent er bijna! Toont het andere apparaat hetzelfde schild?",
-    "To proceed, please accept the verification request on your other device.": "Om door te gaan, accepteer het verificatie verzoek op je andere apparaat.",
     "Could not fetch location": "Kan locatie niet ophalen",
     "Message pending moderation": "Bericht in afwachting van moderatie",
     "Message pending moderation: %(reason)s": "Bericht in afwachting van moderatie: %(reason)s",
@@ -1036,7 +1003,6 @@
     "Expand quotes": "Citaten uitvouwen",
     "Collapse quotes": "Citaten invouwen",
     "Can't create a thread from an event with an existing relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
-    "Pinned": "Vastgezet",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -1141,7 +1107,6 @@
     "Sign in new device": "Aanmelden nieuw apparaat",
     "Video call ended": "Video oproep beëindigd",
     "%(name)s started a video call": "%(name)s is een videogesprek gestart",
-    "Room info": "Kamer informatie",
     "common": {
         "about": "Over",
         "analytics": "Gebruiksgegevens",
@@ -2965,7 +2930,11 @@
             "verification_success_without_backup": "Jouw nieuwe apparaat is nu geverifieerd. Andere personen zien het nu als vertrouwd.",
             "verification_skip_warning": "Zonder verifiëren heb je geen toegang tot al je berichten en kan je als onvertrouwd aangemerkt staan bij anderen.",
             "verify_later": "Ik verifieer het later",
-            "verify_reset_warning_1": "Het resetten van je verificatiesleutels kan niet ongedaan worden gemaakt. Na het resetten heb je geen toegang meer tot oude versleutelde berichten, en vrienden die je eerder hebben geverifieerd zullen veiligheidswaarschuwingen zien totdat je opnieuw bij hen geverifieert bent."
+            "verify_reset_warning_1": "Het resetten van je verificatiesleutels kan niet ongedaan worden gemaakt. Na het resetten heb je geen toegang meer tot oude versleutelde berichten, en vrienden die je eerder hebben geverifieerd zullen veiligheidswaarschuwingen zien totdat je opnieuw bij hen geverifieert bent.",
+            "self_verification_hint": "Om door te gaan, accepteer het verificatie verzoek op je andere apparaat.",
+            "waiting_for_user_accept": "Wachten tot %(displayName)s aanvaardt…",
+            "accepting": "Toestaan…",
+            "start_button": "Verificatie beginnen"
         },
         "old_version_detected_title": "Oude cryptografiegegevens gedetecteerd",
         "old_version_detected_description": "Er zijn gegevens van een oudere versie van %(brand)s gevonden, die problemen veroorzaakt hebben met de eind-tot-eind-versleuteling in de oude versie. Onlangs vanuit de oude versie verzonden eind-tot-eind-versleutelde berichten zijn mogelijk onontsleutelbaar in deze versie. Ook kunnen berichten die met deze versie uitgewisseld zijn falen. Mocht je problemen ervaren, log dan opnieuw in. Exporteer je sleutels en importeer ze weer om je berichtgeschiedenis te behouden.",
@@ -3010,7 +2979,15 @@
         "cross_signing_room_normal": "Deze kamer is eind-tot-eind-versleuteld",
         "cross_signing_room_verified": "Iedereen in deze kamer is geverifieerd",
         "event_shield_reason_authenticity_not_guaranteed": "De echtheid van dit versleutelde bericht kan op dit apparaat niet worden gegarandeerd.",
-        "event_shield_reason_mismatched_sender_key": "Versleuteld door een niet-geverifieerde sessie"
+        "event_shield_reason_mismatched_sender_key": "Versleuteld door een niet-geverifieerde sessie",
+        "messages_not_secure": {
+            "title": "Jouw berichten zijn niet veilig",
+            "heading": "Eén van volgende onderdelen kan gecompromitteerd zijn:",
+            "cause_1": "Jouw homeserver",
+            "cause_2": "De homeserver waarmee de persoon die jij verifieert verbonden is",
+            "cause_3": "Jouw internetverbinding, of die van de andere personen",
+            "cause_4": "Jouw sessie, of die van de andere personen"
+        }
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",
@@ -3332,7 +3309,10 @@
         "error_loading": "Fout bij laden Widget",
         "error_mixed_content": "Fout - Gemengde inhoud",
         "unmaximise": "Maximaliseren ongedaan maken",
-        "popout": "Widget in nieuw venster openen"
+        "popout": "Widget in nieuw venster openen",
+        "unpin_to_view_right_panel": "Maak deze widget los om het in dit paneel weer te geven",
+        "close_to_view_right_panel": "Sluit deze widget om het in dit paneel weer te geven",
+        "set_room_layout": "Stel mijn kamerindeling in voor iedereen"
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3874,6 +3854,36 @@
         "error_revoke_3pid_invite_description": "Kon de uitnodiging niet intrekken. De server ondervindt mogelijk een tijdelijk probleem, of je hebt niet het recht de uitnodiging in te trekken.",
         "admin_tools_section": "Beheerdersgereedschap",
         "revoke_invite": "Uitnodiging intrekken",
-        "invited_by": "Uitgenodigd door %(sender)s"
+        "invited_by": "Uitgenodigd door %(sender)s",
+        "room_encrypted": "De berichten in deze kamer worden eind-tot-eind-versleuteld.",
+        "room_encrypted_detail": "Jouw berichten zijn beveiligd, en enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
+        "room_unencrypted": "De berichten in deze kamer worden niet eind-tot-eind-versleuteld.",
+        "room_unencrypted_detail": "In versleutelde kamers zijn jouw berichten beveiligd, enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
+        "verify_button": "Persoon verifiëren",
+        "verify_explainer": "Als extra beveiliging kan je deze persoon verifiëren door een eenmalige code op jullie toestellen te controleren."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Vastgeprikte berichten",
+            "empty": "Nog niks vastgeprikt",
+            "explainer": "Als je de rechten hebt, open dan het menu op elk bericht en selecteer <b>Vastprikken</b> om ze hier te zetten.",
+            "limits": {
+                "other": "Je kunt maar %(count)s widgets vastzetten"
+            }
+        },
+        "video_room_chat": {
+            "title": "Chat"
+        },
+        "room_summary_card": {
+            "title": "Kamer informatie"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Widgets, bruggen & bots bewerken",
+        "add_integrations": "Widgets, bruggen & bots toevoegen",
+        "files_button": "Bestanden",
+        "pinned_messages_button": "Vastgezet",
+        "export_chat_button": "Chat exporteren",
+        "share_button": "Kamer delen",
+        "settings_button": "Kamerinstellingen"
     }
 }

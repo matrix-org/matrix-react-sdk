@@ -126,7 +126,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не удается загрузить событие, на которое был дан ответ. Либо оно не существует, либо у вас нет разрешения на его просмотр.",
     "Share Link to User": "Поделиться ссылкой на пользователя",
-    "Share room": "Поделиться комнатой",
     "Share Room": "Поделиться комнатой",
     "Link to most recent message": "Ссылка на последнее сообщение",
     "Share User": "Поделиться пользователем",
@@ -301,7 +300,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Деактивация этого пользователя приведет к его выходу из системы и запрету повторного входа. Кроме того, они оставит все комнаты, в которых он участник. Это действие безповоротно. Вы уверены, что хотите деактивировать этого пользователя?",
     "Failed to deactivate user": "Не удалось деактивировать пользователя",
     "This client does not support end-to-end encryption.": "Этот клиент не поддерживает сквозное шифрование.",
-    "Messages in this room are not end-to-end encrypted.": "Сообщения в этой комнате не защищены сквозным шифрованием.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
     "Cancel search": "Отменить поиск",
@@ -325,13 +323,6 @@
     "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
     "Encrypted by a deleted session": "Зашифровано удалённым сеансом",
     "Failed to connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
-    "Waiting for %(displayName)s to accept…": "Ожидание принятия от %(displayName)s…",
-    "Accepting…": "Принятие…",
-    "Start Verification": "Начать проверку",
-    "Messages in this room are end-to-end encrypted.": "Сообщения в этой комнате защищены сквозным шифрованием.",
-    "Verify User": "Подтвердить пользователя",
-    "Your messages are not secure": "Ваши сообщения не защищены",
-    "Your homeserver": "Ваш домашний сервер",
     "%(count)s verified sessions": {
         "other": "Заверенных сеансов: %(count)s",
         "one": "1 заверенный сеанс"
@@ -357,7 +348,6 @@
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
     "You sent a verification request": "Вы отправили запрос подтверждения",
-    "One of the following may be compromised:": "Что-то из этого может быть скомпрометировано:",
     "%(name)s cancelled verifying": "%(name)s отменил(а) подтверждение",
     "Language Dropdown": "Список языков",
     "Enter a server name": "Введите имя сервера",
@@ -371,7 +361,6 @@
     "Session name": "Название сеанса",
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Для дополнительной безопасности подтвердите этого пользователя, сравнив одноразовый код на ваших устройствах.",
     "Start verification again from their profile.": "Начните подтверждение заново в профиле пользователя.",
     "Recent Conversations": "Недавние Диалоги",
     "a key signature": "отпечаток ключа",
@@ -387,8 +376,6 @@
     "Ok": "Хорошо",
     "Country Dropdown": "Выпадающий список стран",
     "This room is public": "Это публичная комната",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Ваши сообщения в безопасности, ключи для расшифровки есть только у вас и получателя.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "В зашифрованных комнатах ваши сообщения в безопасности: только у вас и у получателя есть ключи для расшифровки.",
     "You've successfully verified your device!": "Вы успешно подтвердили это устройство!",
     "Start verification again from the notification.": "Начните подтверждение заново с уведомления.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Вы заигнорировали этого пользователя, сообщение скрыто. <a>Показать</a>",
@@ -463,11 +450,7 @@
     "Preparing to download logs": "Подготовка к загрузке журналов",
     "Information": "Информация",
     "Not encrypted": "Не зашифровано",
-    "Room settings": "Настройки комнаты",
     "Backup version:": "Версия резервной копии:",
-    "Widgets": "Виджеты",
-    "Edit widgets, bridges & bots": "Редактировать виджеты, мосты и ботов",
-    "Add widgets, bridges & bots": "Добавить виджеты, мосты и ботов",
     "Start a conversation with someone using their name or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя или имя пользователя (например, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Unable to set up keys": "Невозможно настроить ключи",
@@ -483,9 +466,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
     "Modal Widget": "Модальный виджет",
     "Ignored attempt to disable encryption": "Игнорируемая попытка отключить шифрование",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Вы можете закрепить не более %(count)s виджетов"
-    },
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
@@ -769,7 +749,6 @@
     "Wrong Security Key": "Неправильный ключ безопасности",
     "Remember this": "Запомнить это",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Виджет проверит ваш идентификатор пользователя, но не сможет выполнять за вас действия:",
-    "Set my room layout for everyone": "Установить мой макет комнаты для всех",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -886,9 +865,6 @@
     "Missed call": "Пропущенный вызов",
     "Call back": "Перезвонить",
     "Call declined": "Вызов отклонён",
-    "Pinned messages": "Закреплённые сообщения",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Если у вас есть разрешения, откройте меню на любом сообщении и выберите <b>Закрепить</b>, чтобы поместить их сюда.",
-    "Nothing pinned, yet": "Пока ничего не закреплено",
     "Rooms and spaces": "Комнаты и пространства",
     "Results": "Результаты",
     "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
@@ -903,7 +879,6 @@
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
     "MB": "Мб",
     "In reply to <a>this message</a>": "В ответ на <a>это сообщение</a>",
-    "Export chat": "Экспорт чата",
     "Skip verification for now": "Пока пропустить проверку",
     "Really reset verification keys?": "Действительно сбросить ключи подтверждения?",
     "Ban from %(roomName)s": "Заблокировать в %(roomName)s",
@@ -990,14 +965,6 @@
     "Remove them from specific things I'm able to": "Удалить их из некоторых мест, где я могу",
     "Remove them from everything I'm able to": "Удалить их отовсюду, где я могу",
     "Remove from %(roomName)s": "Удалить из %(roomName)s",
-    "Files": "Файлы",
-    "Close this widget to view it in this panel": "Закройте виджет, чтобы просмотреть его на этой панели",
-    "Unpin this widget to view it in this panel": "Открепите виджет, чтобы просмотреть его на этой панели",
-    "Chat": "Чат",
-    "Yours, or the other users' session": "Ваши сеансы или сеансы других пользователей",
-    "Yours, or the other users' internet connection": "Ваше интернет-соединение или соединение других пользователей",
-    "The homeserver the user you're verifying is connected to": "Домашний сервер пользователя, которого вы подтверждаете",
-    "To proceed, please accept the verification request on your other device.": "Чтобы продолжить, пожалуйста, примите запрос на сверку в другом сеансе.",
     "Recently viewed": "Недавно просмотренные",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
@@ -1025,7 +992,6 @@
     "Expand quotes": "Развернуть цитаты",
     "Collapse quotes": "Свернуть цитаты",
     "Can't create a thread from an event with an existing relation": "Невозможно создать обсуждение из события с существующей связью",
-    "Pinned": "Закреплено",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "%(members)s and %(last)s": "%(members)s и %(last)s",
@@ -1121,7 +1087,6 @@
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
-    "Room info": "О комнате",
     "The homeserver doesn't support signing in another device.": "Домашний сервер не поддерживает вход с другого устройства.",
     "Check that the code below matches with your other device:": "Проверьте, чтобы код ниже совпадал с тем, что показан на другом устройстве:",
     "An unexpected error occurred.": "Произошла неожиданная ошибка.",
@@ -1130,9 +1095,7 @@
     "Error downloading image": "Ошибка при скачивании изображения",
     "Video call ended": "Видеозвонок завершён",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
-    "Error starting verification": "Ошибка при запуске подтверждения",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Poll history": "Опросы",
     "Active polls": "Активные опросы",
     "There are no active polls in this room": "В этой комнате нет активных опросов",
     "View poll in timeline": "Посмотреть опрос в ленте сообщений",
@@ -3034,7 +2997,12 @@
             "verification_success_without_backup": "Ваш новый сеанс заверен. Другие пользователи будут видеть его как заверенный.",
             "verification_skip_warning": "Без проверки вы не сможете получить доступ ко всем своим сообщениям и можете показаться другим людям недоверенным.",
             "verify_later": "Я заверю позже",
-            "verify_reset_warning_1": "Сброс ключей проверки нельзя отменить. После сброса вы не сможете получить доступ к старым зашифрованным сообщениям, а друзья, которые ранее проверили вас, будут видеть предупреждения о безопасности, пока вы не пройдете повторную проверку."
+            "verify_reset_warning_1": "Сброс ключей проверки нельзя отменить. После сброса вы не сможете получить доступ к старым зашифрованным сообщениям, а друзья, которые ранее проверили вас, будут видеть предупреждения о безопасности, пока вы не пройдете повторную проверку.",
+            "self_verification_hint": "Чтобы продолжить, пожалуйста, примите запрос на сверку в другом сеансе.",
+            "waiting_for_user_accept": "Ожидание принятия от %(displayName)s…",
+            "accepting": "Принятие…",
+            "start_button": "Начать проверку",
+            "error_starting_title": "Ошибка при запуске подтверждения"
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -3079,7 +3047,15 @@
         "cross_signing_room_normal": "Эта комната зашифрована сквозным шифрованием",
         "cross_signing_room_verified": "Все в этой комнате подтверждены",
         "event_shield_reason_authenticity_not_guaranteed": "Подлинность этого зашифрованного сообщения не может быть гарантирована на этом устройстве.",
-        "event_shield_reason_mismatched_sender_key": "Зашифровано неподтверждённым сеансом"
+        "event_shield_reason_mismatched_sender_key": "Зашифровано неподтверждённым сеансом",
+        "messages_not_secure": {
+            "title": "Ваши сообщения не защищены",
+            "heading": "Что-то из этого может быть скомпрометировано:",
+            "cause_1": "Ваш домашний сервер",
+            "cause_2": "Домашний сервер пользователя, которого вы подтверждаете",
+            "cause_3": "Ваше интернет-соединение или соединение других пользователей",
+            "cause_4": "Ваши сеансы или сеансы других пользователей"
+        }
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3407,7 +3383,10 @@
         "error_loading": "Ошибка загрузки виджета",
         "error_mixed_content": "Ошибка — Смешанное содержание",
         "unmaximise": "Развернуть",
-        "popout": "Всплывающий виджет"
+        "popout": "Всплывающий виджет",
+        "unpin_to_view_right_panel": "Открепите виджет, чтобы просмотреть его на этой панели",
+        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели",
+        "set_room_layout": "Установить мой макет комнаты для всех"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -3964,6 +3943,37 @@
         "error_revoke_3pid_invite_description": "Не удалось отозвать приглашение. Возможно, на сервере возникла вре́менная проблема или у вас недостаточно прав для отзыва приглашения.",
         "admin_tools_section": "Инструменты администратора",
         "revoke_invite": "Отозвать приглашение",
-        "invited_by": "Приглашен %(sender)s"
+        "invited_by": "Приглашен %(sender)s",
+        "room_encrypted": "Сообщения в этой комнате защищены сквозным шифрованием.",
+        "room_encrypted_detail": "Ваши сообщения в безопасности, ключи для расшифровки есть только у вас и получателя.",
+        "room_unencrypted": "Сообщения в этой комнате не защищены сквозным шифрованием.",
+        "room_unencrypted_detail": "В зашифрованных комнатах ваши сообщения в безопасности: только у вас и у получателя есть ключи для расшифровки.",
+        "verify_button": "Подтвердить пользователя",
+        "verify_explainer": "Для дополнительной безопасности подтвердите этого пользователя, сравнив одноразовый код на ваших устройствах."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Закреплённые сообщения",
+            "empty": "Пока ничего не закреплено",
+            "explainer": "Если у вас есть разрешения, откройте меню на любом сообщении и выберите <b>Закрепить</b>, чтобы поместить их сюда.",
+            "limits": {
+                "other": "Вы можете закрепить не более %(count)s виджетов"
+            }
+        },
+        "video_room_chat": {
+            "title": "Чат"
+        },
+        "room_summary_card": {
+            "title": "О комнате"
+        },
+        "widgets_section": "Виджеты",
+        "edit_integrations": "Редактировать виджеты, мосты и ботов",
+        "add_integrations": "Добавить виджеты, мосты и ботов",
+        "files_button": "Файлы",
+        "polls_button": "Опросы",
+        "pinned_messages_button": "Закреплено",
+        "export_chat_button": "Экспорт чата",
+        "share_button": "Поделиться комнатой",
+        "settings_button": "Настройки комнаты"
     }
 }

@@ -1449,10 +1449,10 @@ const BasicUserInfo: React.FC<{
         if (!cryptoEnabled) {
             text = _t("This client does not support end-to-end encryption.");
         } else if (room && !room.isSpaceRoom()) {
-            text = _t("Messages in this room are not end-to-end encrypted.");
+            text = _t("user_info|room_unencrypted");
         }
     } else if (!room.isSpaceRoom()) {
-        text = _t("Messages in this room are end-to-end encrypted.");
+        text = _t("user_info|room_encrypted");
     }
 
     let verifyButton;

@@ -191,10 +191,8 @@
     "Algeria": "an Ailgéir",
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
-    "Widgets": "Giuirléidí",
     "Information": "Eolas",
     "Ok": "Togha",
-    "Accepting…": "ag Glacadh leis…",
     "Lock": "Glasáil",
     "Home": "Tús",
     "Removing…": "ag Baint…",
@@ -319,7 +317,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "Rooms and spaces": "Seomraí agus spásanna",
-    "Share room": "Roinn seomra",
     "Join Room": "Téigh isteach an seomra",
     "(~%(count)s results)": {
         "one": "(~%(count)s toradh)",
@@ -759,7 +756,8 @@
             "complete_title": "Deimhnithe!",
             "complete_action": "Tuigthe",
             "cancelling": "ag Cealú…",
-            "unverified_sessions_toast_reject": "Níos deireanaí"
+            "unverified_sessions_toast_reject": "Níos deireanaí",
+            "accepting": "ag Glacadh leis…"
         },
         "cross_signing_ready_no_backup": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha."
     },
@@ -913,5 +911,9 @@
     },
     "user_info": {
         "admin_tools_section": "Uirlisí Riaracháin"
+    },
+    "right_panel": {
+        "widgets_section": "Giuirléidí",
+        "share_button": "Roinn seomra"
     }
 }

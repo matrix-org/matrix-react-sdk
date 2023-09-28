@@ -230,7 +230,6 @@
     "%(duration)sm": "%(duration)sdk",
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
-    "Share room": "Oda paylaş",
     "Failed to connect to integration manager": "Entegrasyon yöneticisine bağlanma başarısız",
     "Hide verified sessions": "Onaylı oturumları gizle",
     "%(count)s verified sessions": {
@@ -274,10 +273,6 @@
     },
     "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
     "Direct Messages": "Doğrudan Mesajlar",
-    "Start Verification": "Doğrulamayı Başlat",
-    "Verify User": "Kullanıcı Doğrula",
-    "Your messages are not secure": "Mesajlarınız korunmuyor",
-    "Your homeserver": "Ana sunucunuz",
     "Not Trusted": "Güvenilmiyor",
     "%(count)s sessions": {
         "other": "%(count)s oturum",
@@ -602,10 +597,8 @@
     "Dial pad": "Arama tuşları",
     "Verify all users in a room to ensure it's secure.": "Güvenli olduğuna emin olmak için odadaki tüm kullanıcıları onaylayın.",
     "No recent messages by %(user)s found": "%(user)s kullanıcısın hiç yeni ileti yok",
-    "Room settings": "Oda ayarları",
     "Not encrypted": "Şifrelenmemiş",
     "Backup version:": "Yedekleme sürümü:",
-    "Widgets": "Widgetlar",
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
     "Switch theme": "Temayı değiştir",
@@ -618,7 +611,6 @@
     "Hold": "Beklet",
     "Resume": "Devam et",
     "Information": "Bilgi",
-    "Accepting…": "Kabul ediliyor…",
     "Open dial pad": "Arama tuşlarını aç",
     "Enter a server name": "Sunucu adı girin",
     "Can't find this server or its room list": "Sunucuda veya oda listesinde bulunamıyor",
@@ -631,13 +623,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
     "Remove recent messages by %(user)s": "%(user)s kullanıcısından en son iletileri kaldır",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Daha önceden kalma iletilerin var olup olmadığını kontrol etmek için zaman çizelgesinde yukarı doğru kaydırın.",
-    "Set my room layout for everyone": "Oda düzenimi herkes için ayarla",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Fazladan güvenlik sağlamak için bu kullanıcıyı cihazlarınızdaki tek kezlik kod ile doğrulayın.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Şifrelenmiş odalarda iletileriniz şifreledir ve yalnızca sizde ve gönderdiğiniz kullanıcılarda iletileri açmak için anahtarlar vardır.",
-    "Messages in this room are not end-to-end encrypted.": "Bu odadaki iletiler uçtan uca şifreli değildir.",
-    "Messages in this room are end-to-end encrypted.": "Bu odadaki iletiler uçtan uca şifrelenmiştir.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "İletileriniz şifreledir ve yalnızca sizde ve gönderdiğiniz kullanıcılarda iletileri açmak için anahtarlar vardır.",
-    "Waiting for %(displayName)s to accept…": "%(displayName)s kullanıcısın onaylaması için bekleniliyor…",
     "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
     "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
@@ -1716,7 +1701,10 @@
             "waiting_other_user": "%(displayName)s ın doğrulaması için bekleniyor…",
             "cancelling": "İptal ediliyor…",
             "unverified_sessions_toast_reject": "Sonra",
-            "unverified_session_toast_title": "Yeni giriş. Bu siz miydiniz?"
+            "unverified_session_toast_title": "Yeni giriş. Bu siz miydiniz?",
+            "waiting_for_user_accept": "%(displayName)s kullanıcısın onaylaması için bekleniliyor…",
+            "accepting": "Kabul ediliyor…",
+            "start_button": "Doğrulamayı Başlat"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1752,7 +1740,11 @@
         "cross_signing_room_normal": "Bu oda uçtan uça şifreli",
         "cross_signing_room_verified": "Bu odadaki herkes doğrulanmış",
         "event_shield_reason_authenticity_not_guaranteed": "Bu şifrelenmiş mesajın güvenilirliği bu cihazda garanti edilemez.",
-        "event_shield_reason_mismatched_sender_key": "Doğrulanmamış bir oturum tarafından şifrelenmiş"
+        "event_shield_reason_mismatched_sender_key": "Doğrulanmamış bir oturum tarafından şifrelenmiş",
+        "messages_not_secure": {
+            "title": "Mesajlarınız korunmuyor",
+            "cause_1": "Ana sunucunuz"
+        }
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -1970,7 +1962,8 @@
         "shared_data_url": "%(brand)s Linki",
         "shared_data_room_id": "Oda ID",
         "shared_data_widget_id": "Görsel Bileşen ID si",
-        "popout": "Görsel bileşeni göster"
+        "popout": "Görsel bileşeni göster",
+        "set_room_layout": "Oda düzenimi herkes için ayarla"
     },
     "zxcvbn": {
         "suggestions": {
@@ -2280,6 +2273,17 @@
         "error_revoke_3pid_invite_description": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
         "admin_tools_section": "Admin Araçları",
         "revoke_invite": "Davet geri çekildi",
-        "invited_by": "%(sender)s tarafından davet"
+        "invited_by": "%(sender)s tarafından davet",
+        "room_encrypted": "Bu odadaki iletiler uçtan uca şifrelenmiştir.",
+        "room_encrypted_detail": "İletileriniz şifreledir ve yalnızca sizde ve gönderdiğiniz kullanıcılarda iletileri açmak için anahtarlar vardır.",
+        "room_unencrypted": "Bu odadaki iletiler uçtan uca şifreli değildir.",
+        "room_unencrypted_detail": "Şifrelenmiş odalarda iletileriniz şifreledir ve yalnızca sizde ve gönderdiğiniz kullanıcılarda iletileri açmak için anahtarlar vardır.",
+        "verify_button": "Kullanıcı Doğrula",
+        "verify_explainer": "Fazladan güvenlik sağlamak için bu kullanıcıyı cihazlarınızdaki tek kezlik kod ile doğrulayın."
+    },
+    "right_panel": {
+        "widgets_section": "Widgetlar",
+        "share_button": "Oda paylaş",
+        "settings_button": "Oda ayarları"
     }
 }

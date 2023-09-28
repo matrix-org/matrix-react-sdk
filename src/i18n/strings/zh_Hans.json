@@ -122,7 +122,6 @@
     "Demote yourself?": "是否降低你自己的权限？",
     "Demote": "降权",
     "Share Link to User": "分享链接给其他用户",
-    "Share room": "分享房间",
     "Clear Storage and Sign Out": "清除存储并登出",
     "Send Logs": "发送日志",
     "Share Room Message": "分享房间消息",
@@ -261,18 +260,6 @@
     "Encrypted by a deleted session": "由已删除的会话加密",
     "This room is public": "此房间为公共的",
     "Failed to connect to integration manager": "连接至集成管理器失败",
-    "Waiting for %(displayName)s to accept…": "正在等待%(displayName)s接受……",
-    "Accepting…": "正在接受……",
-    "Start Verification": "开始验证",
-    "Messages in this room are end-to-end encrypted.": "此房间内的消息端到端加密。",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "你的消息是安全的，只有你和接收者有解开它们的唯一密钥。",
-    "Messages in this room are not end-to-end encrypted.": "此房间内的消息未端到端加密。",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "在加密房间中，你的消息是安全的，只有你和接收者有解开它们的唯一密钥。",
-    "Verify User": "验证用户",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "为了更加安全，在你两个设备上检查一次性代码来验证此用户。",
-    "Your messages are not secure": "你的消息不安全",
-    "One of the following may be compromised:": "以下之一可能被损害：",
-    "Your homeserver": "你的家服务器",
     "%(count)s verified sessions": {
         "other": "%(count)s 个已验证的会话",
         "one": "1 个已验证的会话"
@@ -519,7 +506,6 @@
     "Afghanistan": "阿富汗",
     "United States": "美国",
     "United Kingdom": "英国",
-    "Room settings": "房间设置",
     "Dial pad": "拨号盘",
     "%(count)s members": {
         "one": "%(count)s 位成员",
@@ -631,15 +617,11 @@
     "This widget would like to:": "此挂件想要：",
     "Approve widget permissions": "批准挂件权限",
     "Modal Widget": "模态框挂件（Modal Widget）",
-    "Set my room layout for everyone": "将我的房间布局设置给所有人",
-    "Edit widgets, bridges & bots": "编辑挂件、桥接和机器人",
-    "Add widgets, bridges & bots": "添加挂件、桥接和机器人",
     "Join the conference at the top of this room": "点击房间顶部加入会议",
     "Join the conference from the room information card on the right": "从右侧的房间信息卡片加入会议",
     "Video conference ended by %(senderName)s": "由 %(senderName)s 结束的视频会议",
     "Video conference updated by %(senderName)s": "由 %(senderName)s 更新的视频会议",
     "Video conference started by %(senderName)s": "由 %(senderName)s 发起的视频会议",
-    "Widgets": "挂件",
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
     "Invite by email": "通过邮箱邀请",
@@ -817,9 +799,6 @@
     "Add reaction": "添加反应",
     "Error processing voice message": "处理语音消息时发生错误",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "当你将自己降级后，你将无法撤销此更改。如果你是此空间的最后一名拥有权限的用户，则无法重新获得权限。",
-    "You can only pin up to %(count)s widgets": {
-        "other": "你仅能固定 %(count)s 个挂件"
-    },
     "Are you sure you want to leave the space '%(spaceName)s'?": "你确定要离开空间「%(spaceName)s」吗？",
     "This space is not public. You will not be able to rejoin without an invite.": "此空间并不公开。在没有得到邀请的情况下，你将无法重新加入。",
     "You are the only person here. If you leave, no one will be able to join in the future, including you.": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
@@ -842,9 +821,6 @@
     "Message preview": "消息预览",
     "Sent": "已发送",
     "You don't have permission to do this": "你无权执行此操作",
-    "Pinned messages": "已固定的消息",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "如果你拥有权限，请打开任何消息的菜单并选择<b>固定</b>将它们粘贴至此。",
-    "Nothing pinned, yet": "尚无固定任何东西",
     "Please provide an address": "请提供地址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
@@ -903,7 +879,6 @@
     "Don't leave any rooms": "不离开任何房间",
     "MB": "MB",
     "In reply to <a>this message</a>": "答复<a>此消息</a>",
-    "Export chat": "导出聊天",
     "Skip verification for now": "暂时跳过验证",
     "Really reset verification keys?": "确实要重置验证密钥？",
     "Disinvite from %(roomName)s": "取消邀请加入 %(roomName)s",
@@ -925,15 +900,9 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
     "If you can't see who you're looking for, send them your invite link below.": "如果您看不到您要找的人，请将您的邀请链接发送给他们。",
     "In encrypted rooms, verify all users to ensure it's secure.": "在加密房间中，验证所有用户以确保其安全。",
-    "Yours, or the other users' session": "你或其他用户的会话",
-    "Yours, or the other users' internet connection": "你或其他用户的互联网连接",
-    "The homeserver the user you're verifying is connected to": "你正在验证的用户所连接的家服务器",
     "Thread options": "消息列选项",
     "Reply in thread": "在消息列中回复",
     "Forget": "忘记",
-    "Files": "文件",
-    "Close this widget to view it in this panel": "关闭此小部件以在此面板中查看",
-    "Unpin this widget to view it in this panel": "取消固定此小部件以在此面板中查看",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s 和其他 %(count)s 个空间",
         "other": "%(spaceName)s 和其他 %(count)s 个空间"
@@ -954,7 +923,6 @@
     "Moderation": "审核",
     "Messaging": "消息传递",
     "Spaces you know that contain this space": "你知道的包含这个空间的空间",
-    "Chat": "聊天",
     "Recently viewed": "最近查看",
     "%(count)s votes cast. Vote to see the results": {
         "one": "票数已达 %(count)s 票。要查看结果请亲自投票",
@@ -985,8 +953,6 @@
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "Failed to remove user": "移除用户失败",
-    "Pinned": "已固定",
-    "To proceed, please accept the verification request on your other device.": "要继续进行，请接受你另一设备上的验证请求。",
     "%(count)s participants": {
         "other": "%(count)s 名参与者",
         "one": "一名参与者"
@@ -1106,7 +1072,6 @@
     "Choose a locale": "选择区域设置",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
-    "Room info": "房间信息",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "common": {
         "about": "关于",
@@ -2940,7 +2905,11 @@
             "verification_success_without_backup": "你的新设备现已验证。其他用户将会视其为受信任的。",
             "verification_skip_warning": "如果不进行验证，您将无法访问您的所有消息，并且在其他人看来可能不受信任。",
             "verify_later": "我稍后进行验证",
-            "verify_reset_warning_1": "无法撤消重置验证密钥的操作。重置后，你将无法访问旧的加密消息，任何之前验证过你的朋友将看到安全警告，直到你再次和他们进行验证。"
+            "verify_reset_warning_1": "无法撤消重置验证密钥的操作。重置后，你将无法访问旧的加密消息，任何之前验证过你的朋友将看到安全警告，直到你再次和他们进行验证。",
+            "self_verification_hint": "要继续进行，请接受你另一设备上的验证请求。",
+            "waiting_for_user_accept": "正在等待%(displayName)s接受……",
+            "accepting": "正在接受……",
+            "start_button": "开始验证"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -2985,7 +2954,15 @@
         "cross_signing_room_normal": "此房间是端到端加密的",
         "cross_signing_room_verified": "房间中所有人都已被验证",
         "event_shield_reason_authenticity_not_guaranteed": "此加密消息的真实性无法在此设备上保证。",
-        "event_shield_reason_mismatched_sender_key": "由未验证的会话加密"
+        "event_shield_reason_mismatched_sender_key": "由未验证的会话加密",
+        "messages_not_secure": {
+            "title": "你的消息不安全",
+            "heading": "以下之一可能被损害：",
+            "cause_1": "你的家服务器",
+            "cause_2": "你正在验证的用户所连接的家服务器",
+            "cause_3": "你或其他用户的互联网连接",
+            "cause_4": "你或其他用户的会话"
+        }
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3308,7 +3285,10 @@
         "error_loading": "加载挂件时发生错误",
         "error_mixed_content": "错误 - 混合内容",
         "unmaximise": "取消最大化",
-        "popout": "在弹出式窗口中打开挂件"
+        "popout": "在弹出式窗口中打开挂件",
+        "unpin_to_view_right_panel": "取消固定此小部件以在此面板中查看",
+        "close_to_view_right_panel": "关闭此小部件以在此面板中查看",
+        "set_room_layout": "将我的房间布局设置给所有人"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3858,6 +3838,36 @@
         "error_revoke_3pid_invite_description": "无法撤销邀请。此服务器可能出现了临时错误，或者你没有足够的权限来撤销邀请。",
         "admin_tools_section": "管理员工具",
         "revoke_invite": "撤销邀请",
-        "invited_by": "被 %(sender)s 邀请"
+        "invited_by": "被 %(sender)s 邀请",
+        "room_encrypted": "此房间内的消息端到端加密。",
+        "room_encrypted_detail": "你的消息是安全的，只有你和接收者有解开它们的唯一密钥。",
+        "room_unencrypted": "此房间内的消息未端到端加密。",
+        "room_unencrypted_detail": "在加密房间中，你的消息是安全的，只有你和接收者有解开它们的唯一密钥。",
+        "verify_button": "验证用户",
+        "verify_explainer": "为了更加安全，在你两个设备上检查一次性代码来验证此用户。"
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "已固定的消息",
+            "empty": "尚无固定任何东西",
+            "explainer": "如果你拥有权限，请打开任何消息的菜单并选择<b>固定</b>将它们粘贴至此。",
+            "limits": {
+                "other": "你仅能固定 %(count)s 个挂件"
+            }
+        },
+        "video_room_chat": {
+            "title": "聊天"
+        },
+        "room_summary_card": {
+            "title": "房间信息"
+        },
+        "widgets_section": "挂件",
+        "edit_integrations": "编辑挂件、桥接和机器人",
+        "add_integrations": "添加挂件、桥接和机器人",
+        "files_button": "文件",
+        "pinned_messages_button": "已固定",
+        "export_chat_button": "导出聊天",
+        "share_button": "分享房间",
+        "settings_button": "房间设置"
     }
 }

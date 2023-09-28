@@ -107,8 +107,6 @@
     "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "Деактивація цього користувача виведе їх з системи й унеможливить вхід у майбутньому. До того ж вони вийдуть з усіх кімнат, у яких перебувають. Ця дія безповоротна. Ви впевнені, що хочете деактивувати цього користувача?",
     "Deactivate user": "Деактивувати користувача",
     "Failed to deactivate user": "Не вдалося деактивувати користувача",
-    "Messages in this room are end-to-end encrypted.": "Повідомлення у цій кімнаті захищено наскрізним шифруванням.",
-    "Messages in this room are not end-to-end encrypted.": "Повідомлення у цій кімнаті не захищено наскрізним шифруванням.",
     "You sent a verification request": "Ви надіслали запит перевірки",
     "Direct Messages": "Особисті повідомлення",
     "Room Settings - %(roomName)s": "Налаштування кімнати - %(roomName)s",
@@ -203,7 +201,6 @@
     "IRC display name width": "Ширина псевдоніма IRC",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Зашифровані повідомлення захищені наскрізним шифруванням. Лише ви та отримувачі повідомлень мають ключі для їх читання.",
     "Encrypted by a deleted session": "Зашифроване видаленим сеансом",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "У зашифрованих кімнатах ваші повідомлення є захищеними, тож тільки ви та отримувач маєте ключі для їх розблокування.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Звірте цього користувача щоб позначити його довіреним. Довіряння користувачам додає спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Звірте цей пристрій щоб позначити його довіреним. Довіряння цьому пристрою додає вам та іншим користувачам спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
@@ -482,10 +479,8 @@
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Ви не можете надсилати жодних повідомлень, поки не переглянете та не погодитесь з <consentLink>нашими умовами та положеннями</consentLink>.",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора.",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
-    "Room settings": "Налаштування кімнати",
     "Link to most recent message": "Посилання на останнє повідомлення",
     "Share Room": "Поділитись кімнатою",
-    "Share room": "Поділитись кімнатою",
     "Join the conference from the room information card on the right": "Приєднуйтесь до групового виклику з інформаційної картки кімнати праворуч",
     "edited": "змінено",
     "Edited at %(date)s. Click to view edits.": "Змінено %(date)s. Натисніть, щоб переглянути зміни.",
@@ -516,7 +511,6 @@
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
     "Confirm to continue": "Підтвердьте, щоб продовжити",
-    "Start Verification": "Почати перевірку",
     "Couldn't load page": "Не вдалося завантажити сторінку",
     "Country Dropdown": "Спадний список країн",
     "Avatar": "Аватар",
@@ -632,13 +626,6 @@
         "other": "Довірених сеансів: %(count)s"
     },
     "Not encrypted": "Не зашифровано",
-    "Add widgets, bridges & bots": "Додати віджети, мости та ботів",
-    "Edit widgets, bridges & bots": "Редагувати віджети, мости та ботів",
-    "Widgets": "Віджети",
-    "Your homeserver": "Ваш домашній сервер",
-    "Your messages are not secure": "Ваші повідомлення не захищені",
-    "Verify User": "Звірити користувача",
-    "Accepting…": "Прийняття…",
     "not specified": "не вказано",
     "Join Room": "Приєднатися до кімнати",
     "(~%(count)s results)": {
@@ -675,7 +662,6 @@
     "Message edits": "Редагування повідомлення",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ви раніше використовували новішу версію %(brand)s для цього сеансу. Щоб знову використовувати цю версію із наскрізним шифруванням, вам потрібно буде вийти та знову ввійти.",
     "To continue, use Single Sign On to prove your identity.": "Щоб продовжити, скористайтеся єдиним входом для підтвердження особи.",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Для додаткової безпеки перевірте цього користувача, звіривши одноразовий код на обох своїх пристроях.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Якщо звірити цей пристрій, його буде позначено надійним, а користувачі, які перевірили у вас, будуть довіряти цьому пристрою.",
     "Only do this if you have no other device to complete verification with.": "Робіть це лише якщо у вас немає іншого пристрою для виконання перевірки.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Видалення ключів перехресного підписування безповоротне. Усі, з ким ви звірили сеанси, бачитимуть сповіщення системи безпеки. Ви майже напевно не захочете цього робити, якщо тільки ви не втратили всі пристрої, з яких можна виконувати перехресне підписування.",
@@ -684,8 +670,6 @@
         "one": "%(spaceName)s і %(count)s інших",
         "other": "%(spaceName)s і %(count)s інших"
     },
-    "Files": "Файли",
-    "Export chat": "Експортувати бесіду",
     "Thread options": "Параметри гілки",
     "Reply in thread": "Відповісти у гілці",
     "Developer": "Розробка",
@@ -693,11 +677,9 @@
     "Experimental": "Експериментально",
     "Themes": "Теми",
     "Messaging": "Спілкування",
-    "Unpin this widget to view it in this panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
     "Vote not registered": "Голос не зареєстрований",
     "Sorry, your vote was not registered. Please try again.": "Не вдалося зареєструвати ваш голос. Просимо спробувати ще.",
     "Spaces you know that contain this space": "Відомі вам простори, до яких входить цей",
-    "Chat": "Бесіда",
     "No votes cast": "Жодного голосу",
     "Failed to end poll": "Не вдалося завершити опитування",
     "The poll has ended. No votes were cast.": "Опитування завершене. Жодного голосу не було.",
@@ -734,20 +716,6 @@
     "Find others by phone or email": "Шукати інших за номером телефону або е-поштою",
     "This will allow you to reset your password and receive notifications.": "Це дозволить вам скинути пароль і отримувати сповіщення.",
     "Reset event store?": "Очистити сховище подій?",
-    "Waiting for %(displayName)s to accept…": "Очікування згоди %(displayName)s…",
-    "Set my room layout for everyone": "Встановити мій вигляд кімнати всім",
-    "Close this widget to view it in this panel": "Закрийте віджет, щоб він зʼявився на цій панелі",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Закріпити можна до %(count)s віджетів"
-    },
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Ваші повідомлення захищені. Лише ви з отримувачем маєте унікальні ключі їхнього розшифрування.",
-    "Pinned messages": "Закріплені повідомлення",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Якщо маєте дозвіл, відкрийте меню будь-якого повідомлення й натисніть <b>Закріпити</b>, щоб додати його сюди.",
-    "Nothing pinned, yet": "Наразі нічого не закріплено",
-    "Yours, or the other users' session": "Ваш сеанс чи сеанс інших користувачів",
-    "Yours, or the other users' internet connection": "Ваше інтернет-з'єднання чи з'єднання інших користувачів",
-    "The homeserver the user you're verifying is connected to": "Домашній сервер користувача, якого ви підтверджуєте",
-    "One of the following may be compromised:": "Щось із переліченого може бути скомпрометовано:",
     "The server has denied your request.": "Сервер відхилив ваш запит.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Перейдіть до своєї е-пошти й натисніть на отримане посилання. Після цього натисніть «Продовжити».",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Якщо ви досі користувались новішою версією %(brand)s, ваш сеанс може бути несумісним із цією версією. Закрийте це вікно й поверніться до новішої версії.",
@@ -993,7 +961,6 @@
     "Verify other device": "Звірити інший пристрій",
     "You cancelled verification on your other device.": "Ви скасували звірення на іншому пристрої.",
     "Almost there! Is your other device showing the same shield?": "Майже готово! Чи показує інший пристрій такий самий щит?",
-    "To proceed, please accept the verification request on your other device.": "Щоб продовжити, прийміть запит підтвердження на вашому іншому пристрої.",
     "Could not fetch location": "Не вдалося отримати місцеперебування",
     "Remove from room": "Вилучити з кімнати",
     "Failed to remove user": "Не вдалося вилучити користувача",
@@ -1016,7 +983,6 @@
     "Join %(roomAddress)s": "Приєднатися до %(roomAddress)s",
     "Results will be visible when the poll is ended": "Результати будуть видимі після завершення опитування",
     "Search Dialog": "Вікно пошуку",
-    "Pinned": "Закріплені",
     "What location type do you want to share?": "Який вид місцеперебування поширити?",
     "Drop a Pin": "Маркер на карті",
     "My live location": "Змінне місцеперебування наживо",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
     "Video call ended": "Відеовиклик завершено",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
-    "Room info": "Відомості про кімнату",
     "Completing set up of your new device": "Завершення налаштування нового пристрою",
     "Waiting for device to sign in": "Очікування входу з пристрою",
     "Review and approve the sign in": "Розглянути та схвалити вхід",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Забагато спроб за короткий час. Повторіть спробу за %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Забагато спроб за короткий час. Зачекайте трохи, перш ніж повторити спробу.",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
-    "We were unable to start a chat with the other user.": "Ми не змогли розпочати бесіду з іншим користувачем.",
-    "Error starting verification": "Помилка запуску перевірки",
     "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Сервер повернув %(statusCode)s з кодом помилки %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Ми не змогли знайти подію, після %(dateString)s. Спробуйте вибрати ранішу дату.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Виникла помилка мережі під час спроби знайти та перейти до вказаної дати. Можливо, ваш домашній сервер не працює або виникли тимчасові проблеми з інтернет-з'єднанням. Повторіть спробу ще раз. Якщо це не допоможе, зверніться до адміністратора вашого домашнього сервера.",
-    "Poll history": "Історія опитувань",
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
@@ -3271,7 +3233,13 @@
             "verification_skip_warning": "До звірки ви матимете доступ не до всіх своїх повідомлень, а в інших ви можете позначатися недовіреними.",
             "verify_later": "Звірю пізніше",
             "verify_reset_warning_1": "Скидання ключів звірки неможливо скасувати. Після скидання, ви втратите доступ до старих зашифрованих повідомлень, а всі друзі, які раніше вас звіряли, бачитимуть застереження безпеки, поки ви не проведете звірку з ними знову.",
-            "verify_reset_warning_2": "Будь ласка, продовжуйте лише в разі втрати всіх своїх інших пристроїв та ключа безпеки."
+            "verify_reset_warning_2": "Будь ласка, продовжуйте лише в разі втрати всіх своїх інших пристроїв та ключа безпеки.",
+            "self_verification_hint": "Щоб продовжити, прийміть запит підтвердження на вашому іншому пристрої.",
+            "waiting_for_user_accept": "Очікування згоди %(displayName)s…",
+            "accepting": "Прийняття…",
+            "start_button": "Почати перевірку",
+            "error_starting_title": "Помилка запуску перевірки",
+            "error_starting_description": "Ми не змогли розпочати бесіду з іншим користувачем."
         },
         "old_version_detected_title": "Виявлено старі криптографічні дані",
         "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
@@ -3316,7 +3284,15 @@
         "cross_signing_room_normal": "Ця кімната є наскрізно зашифрованою",
         "cross_signing_room_verified": "Усі в цій кімнаті звірені",
         "event_shield_reason_authenticity_not_guaranteed": "Справжність цього зашифрованого повідомлення не може бути гарантованою на цьому пристрої.",
-        "event_shield_reason_mismatched_sender_key": "Зашифроване незвіреним сеансом"
+        "event_shield_reason_mismatched_sender_key": "Зашифроване незвіреним сеансом",
+        "messages_not_secure": {
+            "title": "Ваші повідомлення не захищені",
+            "heading": "Щось із переліченого може бути скомпрометовано:",
+            "cause_1": "Ваш домашній сервер",
+            "cause_2": "Домашній сервер користувача, якого ви підтверджуєте",
+            "cause_3": "Ваше інтернет-з'єднання чи з'єднання інших користувачів",
+            "cause_4": "Ваш сеанс чи сеанс інших користувачів"
+        }
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3672,7 +3648,10 @@
         "error_loading": "Помилка завантаження віджету",
         "error_mixed_content": "Помилка — змішаний вміст",
         "unmaximise": "Розгорнути",
-        "popout": "Спливний віджет"
+        "popout": "Спливний віджет",
+        "unpin_to_view_right_panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
+        "close_to_view_right_panel": "Закрийте віджет, щоб він зʼявився на цій панелі",
+        "set_room_layout": "Встановити мій вигляд кімнати всім"
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4277,6 +4256,37 @@
         "error_revoke_3pid_invite_description": "Не вдалось відкликати запрошення. Сервер може мати тимчасові збої або у вас немає достатніх дозволів щоб відкликати запрошення.",
         "admin_tools_section": "Засоби адміністрування",
         "revoke_invite": "Відкликати запрошення",
-        "invited_by": "Запрошення від %(sender)s"
+        "invited_by": "Запрошення від %(sender)s",
+        "room_encrypted": "Повідомлення у цій кімнаті захищено наскрізним шифруванням.",
+        "room_encrypted_detail": "Ваші повідомлення захищені. Лише ви з отримувачем маєте унікальні ключі їхнього розшифрування.",
+        "room_unencrypted": "Повідомлення у цій кімнаті не захищено наскрізним шифруванням.",
+        "room_unencrypted_detail": "У зашифрованих кімнатах ваші повідомлення є захищеними, тож тільки ви та отримувач маєте ключі для їх розблокування.",
+        "verify_button": "Звірити користувача",
+        "verify_explainer": "Для додаткової безпеки перевірте цього користувача, звіривши одноразовий код на обох своїх пристроях."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Закріплені повідомлення",
+            "empty": "Наразі нічого не закріплено",
+            "explainer": "Якщо маєте дозвіл, відкрийте меню будь-якого повідомлення й натисніть <b>Закріпити</b>, щоб додати його сюди.",
+            "limits": {
+                "other": "Закріпити можна до %(count)s віджетів"
+            }
+        },
+        "video_room_chat": {
+            "title": "Бесіда"
+        },
+        "room_summary_card": {
+            "title": "Відомості про кімнату"
+        },
+        "widgets_section": "Віджети",
+        "edit_integrations": "Редагувати віджети, мости та ботів",
+        "add_integrations": "Додати віджети, мости та ботів",
+        "files_button": "Файли",
+        "polls_button": "Історія опитувань",
+        "pinned_messages_button": "Закріплені",
+        "export_chat_button": "Експортувати бесіду",
+        "share_button": "Поділитись кімнатою",
+        "settings_button": "Налаштування кімнати"
     }
 }

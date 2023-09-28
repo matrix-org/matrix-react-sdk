@@ -126,7 +126,6 @@
     "Add an Integration": "Lägg till integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
     "Share Link to User": "Dela länk till användare",
-    "Share room": "Dela rum",
     "Share Room": "Dela rum",
     "Link to most recent message": "Länk till senaste meddelandet",
     "Share User": "Dela användare",
@@ -317,18 +316,6 @@
     "Start using Key Backup": "Börja använda nyckelsäkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
     "Encrypted by a deleted session": "Krypterat av en raderad session",
-    "Waiting for %(displayName)s to accept…": "Väntar på att %(displayName)s ska acceptera…",
-    "Accepting…": "Accepterar…",
-    "Start Verification": "Starta verifiering",
-    "Messages in this room are end-to-end encrypted.": "Meddelanden i det här rummet är totalsträckskrypterade.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Dina meddelanden är säkrade och endast du och mottagaren har de unika nycklarna för att låsa upp dem.",
-    "Messages in this room are not end-to-end encrypted.": "Meddelanden i detta rum är inte totalsträckskrypterade.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "I krypterade rum är dina meddelanden säkrade och endast du och mottagaren har de unika nycklarna för att låsa upp dem.",
-    "Verify User": "Verifiera användare",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "För extra säkerhet, verifiera den här användaren genom att kolla en engångskod på båda era enheter.",
-    "Your messages are not secure": "Dina meddelanden är inte säkra",
-    "One of the following may be compromised:": "Någon av följande kan vara äventyrad:",
-    "Your homeserver": "Din hemserver",
     "%(count)s verified sessions": {
         "other": "%(count)s verifierade sessioner",
         "one": "1 verifierad session"
@@ -463,11 +450,7 @@
     "Confirm encryption setup": "Bekräfta krypteringsinställning",
     "Click the button below to confirm setting up encryption.": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
     "Not encrypted": "Inte krypterad",
-    "Room settings": "Rumsinställningar",
     "Backup version:": "Version av säkerhetskopia:",
-    "Widgets": "Widgets",
-    "Edit widgets, bridges & bots": "Redigera widgets, bryggor och bottar",
-    "Add widgets, bridges & bots": "Lägg till widgets, bryggor och bottar",
     "Start a conversation with someone using their name or username (like <userId/>).": "Starta en konversation med någon med deras namn eller användarnamn (som <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
     "Unable to set up keys": "Kunde inte ställa in nycklar",
@@ -483,9 +466,6 @@
     "This version of %(brand)s does not support searching encrypted messages": "Den här versionen av %(brand)s stöder inte sökning bland krypterade meddelanden",
     "Data on this screen is shared with %(widgetDomain)s": "Data på den här skärmen delas med %(widgetDomain)s",
     "Modal Widget": "Dialogruta",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Du kan bara fästa upp till %(count)s widgets"
-    },
     "Canada": "Kanada",
     "Cameroon": "Kamerun",
     "Cambodia": "Kambodja",
@@ -756,7 +736,6 @@
     "Remember this": "Kom ihåg det här",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Den här widgeten kommer att verifiera ditt användar-ID, men kommer inte kunna utföra handlingar som dig:",
     "Allow this widget to verify your identity": "Tillåt att den här widgeten verifierar din identitet",
-    "Set my room layout for everyone": "Sätt mitt rumsarrangemang för alla",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Kan inte komma åt hemlig lagring. Vänligen verifiera att du angav rätt säkerhetsfras.",
     "Security Key mismatch": "Säkerhetsnyckeln matchade inte",
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "Säkerhetskopian kunde inte avkrypteras med den här säkerhetsnyckeln: vänligen verifiera att du har angett rätt säkerhetsnyckel.",
@@ -842,9 +821,6 @@
     "Message preview": "Meddelandeförhandsgranskning",
     "Sent": "Skickat",
     "You don't have permission to do this": "Du har inte behörighet att göra detta",
-    "Pinned messages": "Fästa meddelanden",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Om du har behörighet, öppna menyn på ett meddelande och välj <b>Fäst</b> för att fösta dem här.",
-    "Nothing pinned, yet": "Inget fäst än",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
     "Error processing audio message": "Fel vid hantering av ljudmeddelande",
     "Decrypting": "Avkrypterar",
@@ -912,7 +888,6 @@
     "Unban from %(roomName)s": "Avbanna från %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "De kommer fortfarande kunna komma åt saker du inte är admin för.",
     "Disinvite from %(roomName)s": "Häv inbjudan från %(roomName)s",
-    "Export chat": "Exportera chatt",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svar"
@@ -926,9 +901,6 @@
     "Thread options": "Trådalternativ",
     "If you can't see who you're looking for, send them your invite link below.": "Om du inte ser den du letar efter, skicka din inbjudningslänk nedan till denne.",
     "In encrypted rooms, verify all users to ensure it's secure.": "I krypterade rum, verifiera alla användare för att försäkra att det är säkert.",
-    "Yours, or the other users' session": "Din eller den andra användarens session",
-    "Yours, or the other users' internet connection": "Din eller den andra användarens internetuppkoppling",
-    "The homeserver the user you're verifying is connected to": "Hemservern användaren du verifierar är ansluten till",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -952,11 +924,6 @@
     "Remove them from specific things I'm able to": "Ta bort hen från specifika ställen jag kan",
     "Remove them from everything I'm able to": "Ta bort hen från allt jag kan",
     "Remove from %(roomName)s": "Ta bort från %(roomName)s",
-    "Files": "Filer",
-    "Close this widget to view it in this panel": "Stäng den här widgeten för att se den i den här panelen",
-    "Unpin this widget to view it in this panel": "Avfäst den här widgeten för att se den i den här panelen",
-    "Chat": "Chatt",
-    "To proceed, please accept the verification request on your other device.": "För att fortsätta, acceptera verifieringsförfrågan på din andra enhet.",
     "Recently viewed": "Nyligen sedda",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Could not fetch location": "Kunde inte hämta plats",
@@ -1016,7 +983,6 @@
     "Can't edit poll": "Kan inte redigera omröstning",
     "Search Dialog": "Sökdialog",
     "Results will be visible when the poll is ended": "Resultat kommer att visas när omröstningen avslutas",
-    "Pinned": "Fäst",
     "%(count)s participants": {
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
@@ -1125,9 +1091,6 @@
     "Unable to show image due to error": "Kunde inte visa bild på grund av fel",
     "Video call ended": "Videosamtal avslutades",
     "%(name)s started a video call": "%(name)s startade ett videosamtal",
-    "Room info": "Rumsinfo",
-    "We were unable to start a chat with the other user.": "Vi kunde inte starta en chatt med den andra användaren.",
-    "Error starting verification": "Fel vid start av verifiering",
     "Too many attempts in a short time. Wait some time before trying again.": "För många försök under för kort tid. Vänta ett tag innan du försöker igen.",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     "We're creating a room with %(names)s": "Vi skapar ett rum med %(names)s",
@@ -1189,7 +1152,6 @@
     "Past polls": "Tidigare omröstningar",
     "Active polls": "Aktiva omröstningar",
     "View poll in timeline": "Se omröstningen i tidslinjen",
-    "Poll history": "Omröstningshistorik",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ett nätverksfel uppstod vid försök att hitta och hoppa till det angivna datumet. Din hemserver kanske är nere eller så var det vara ett tillfälligt problem med din internetuppkoppling. Var god försök igen. Om detta fortsätter, kontakta din hemserveradministratör.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Vi kunde inte hitta en händelse från %(dateString)s eller senare. Pröva att välja ett tidigare datum.",
     "unavailable": "otillgänglig",
@@ -3223,7 +3185,13 @@
             "verification_skip_warning": "Om du inte verifierar så kommer du inte komma åt alla dina meddelanden och visas kanske som ej betrodd för andra.",
             "verify_later": "Jag verifierar senare",
             "verify_reset_warning_1": "Återställning av dina verifieringsnycklar kan inte ångras. Efter återställning så kommer du inte att komma åt dina krypterade meddelanden, och alla vänner som tidigare har verifierat dig kommer att se säkerhetsvarningar tills du återverifierar med dem.",
-            "verify_reset_warning_2": "Fortsätt bara om du är säker på att du har förlorat alla dina övriga enheter och din säkerhetsnyckel."
+            "verify_reset_warning_2": "Fortsätt bara om du är säker på att du har förlorat alla dina övriga enheter och din säkerhetsnyckel.",
+            "self_verification_hint": "För att fortsätta, acceptera verifieringsförfrågan på din andra enhet.",
+            "waiting_for_user_accept": "Väntar på att %(displayName)s ska acceptera…",
+            "accepting": "Accepterar…",
+            "start_button": "Starta verifiering",
+            "error_starting_title": "Fel vid start av verifiering",
+            "error_starting_description": "Vi kunde inte starta en chatt med den andra användaren."
         },
         "old_version_detected_title": "Gammal kryptografidata upptäckt",
         "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -3268,7 +3236,15 @@
         "cross_signing_room_normal": "Det här rummet är totalsträckskrypterat",
         "cross_signing_room_verified": "Alla i det här rummet är verifierade",
         "event_shield_reason_authenticity_not_guaranteed": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
-        "event_shield_reason_mismatched_sender_key": "Krypterat av en overifierad session"
+        "event_shield_reason_mismatched_sender_key": "Krypterat av en overifierad session",
+        "messages_not_secure": {
+            "title": "Dina meddelanden är inte säkra",
+            "heading": "Någon av följande kan vara äventyrad:",
+            "cause_1": "Din hemserver",
+            "cause_2": "Hemservern användaren du verifierar är ansluten till",
+            "cause_3": "Din eller den andra användarens internetuppkoppling",
+            "cause_4": "Din eller den andra användarens session"
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -3622,7 +3598,10 @@
         "error_loading": "Fel vid laddning av widget",
         "error_mixed_content": "Fel - blandat innehåll",
         "unmaximise": "Avmaximera",
-        "popout": "Poppa ut widget"
+        "popout": "Poppa ut widget",
+        "unpin_to_view_right_panel": "Avfäst den här widgeten för att se den i den här panelen",
+        "close_to_view_right_panel": "Stäng den här widgeten för att se den i den här panelen",
+        "set_room_layout": "Sätt mitt rumsarrangemang för alla"
     },
     "feedback": {
         "sent": "Återkoppling skickad",
@@ -4217,6 +4196,37 @@
         "error_revoke_3pid_invite_description": "Kunde inte återkalla inbjudan. Servern kan ha ett tillfälligt problem eller så har du inte tillräckliga behörigheter för att återkalla inbjudan.",
         "admin_tools_section": "Admin-verktyg",
         "revoke_invite": "Återkalla inbjudan",
-        "invited_by": "Inbjuden av %(sender)s"
+        "invited_by": "Inbjuden av %(sender)s",
+        "room_encrypted": "Meddelanden i det här rummet är totalsträckskrypterade.",
+        "room_encrypted_detail": "Dina meddelanden är säkrade och endast du och mottagaren har de unika nycklarna för att låsa upp dem.",
+        "room_unencrypted": "Meddelanden i detta rum är inte totalsträckskrypterade.",
+        "room_unencrypted_detail": "I krypterade rum är dina meddelanden säkrade och endast du och mottagaren har de unika nycklarna för att låsa upp dem.",
+        "verify_button": "Verifiera användare",
+        "verify_explainer": "För extra säkerhet, verifiera den här användaren genom att kolla en engångskod på båda era enheter."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Fästa meddelanden",
+            "empty": "Inget fäst än",
+            "explainer": "Om du har behörighet, öppna menyn på ett meddelande och välj <b>Fäst</b> för att fösta dem här.",
+            "limits": {
+                "other": "Du kan bara fästa upp till %(count)s widgets"
+            }
+        },
+        "video_room_chat": {
+            "title": "Chatt"
+        },
+        "room_summary_card": {
+            "title": "Rumsinfo"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Redigera widgets, bryggor och bottar",
+        "add_integrations": "Lägg till widgets, bryggor och bottar",
+        "files_button": "Filer",
+        "polls_button": "Omröstningshistorik",
+        "pinned_messages_button": "Fäst",
+        "export_chat_button": "Exportera chatt",
+        "share_button": "Dela rum",
+        "settings_button": "Rumsinställningar"
     }
 }

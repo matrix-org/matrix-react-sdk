@@ -1,6 +1,5 @@
 {
     "Unnamed room": "Sala sens nom",
-    "Share room": "Partejar la sala",
     "Sun": "Dg",
     "Mon": "Dl",
     "Tue": "Dm",
@@ -416,5 +415,8 @@
     },
     "user_info": {
         "admin_tools_section": "Aisinas d’administrator"
+    },
+    "right_panel": {
+        "share_button": "Partejar la sala"
     }
 }

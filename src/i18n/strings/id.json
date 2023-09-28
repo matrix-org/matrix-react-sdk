@@ -317,9 +317,7 @@
     "Removing…": "Menghilangkan…",
     "Resume": "Lanjutkan",
     "Information": "Informasi",
-    "Widgets": "Widget",
     "Lock": "Gembok",
-    "Accepting…": "Menerima…",
     "Mushroom": "Jamur",
     "Folder": "Map",
     "Scissors": "Gunting",
@@ -400,7 +398,6 @@
     "Incompatible Database": "Databasis Tidak Kompatibel",
     "Invite anyway": "Undang saja",
     "Demote yourself?": "Turunkan diri Anda?",
-    "Share room": "Bagikan ruangan",
     "Send Logs": "Kirim Catatan",
     "Filter results": "Saring hasil",
     "Logs sent": "Catatan terkirim",
@@ -434,28 +431,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Homeserver Anda telah melebihi batas sumber dayanya.",
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Untuk melaporkan masalah keamanan yang berkaitan dengan Matrix, mohon baca <a>Kebijakan Penyingkapan Keamanan</a> Matrix.org.",
-    "Close this widget to view it in this panel": "Tutup widget ini untuk menampilkannya di panel ini",
-    "Unpin this widget to view it in this panel": "Lepaskan pin widget ini untuk menampilkanya di panel ini",
-    "Pinned messages": "Pesan yang dipasangi pin",
-    "Nothing pinned, yet": "Belum ada yang dipasangi pin",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Anda hanya dapat memasang pin sampai %(count)s widget"
-    },
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Jika Anda memiliki izin, buka menunya di pesan apa saja dan pilih <b>Pin</b> untuk menempelkannya di sini.",
-    "Yours, or the other users' session": "Sesi Anda, atau pengguna yang lain",
-    "Yours, or the other users' internet connection": "Koneksi internet Anda, atau pengguna yang lain",
-    "The homeserver the user you're verifying is connected to": "Homeserver pengguna yang Anda memverifikasi",
-    "Your homeserver": "Homeserver Anda",
-    "One of the following may be compromised:": "Salah satu dari berikut ini dapat dikompromikan:",
-    "Your messages are not secure": "Pesan-pesan Anda tidak aman",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Untuk keamanan lebih, verifikasi pengguna ini dengan memeriksa kode satu kali di kedua perangkat Anda.",
-    "Verify User": "Verifikasi Pengguna",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Di ruangan terenkripsi, pesan Anda diamankan dan hanya Anda dan penerimanya mempunyai kunci yang unik untuk mengaksesnya.",
-    "Messages in this room are not end-to-end encrypted.": "Pesan di ruangan ini tidak dienkripsi secara ujung ke ujung.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Pesan Anda diamankan dan hanya Anda dan penerimanya mempunyai kunci yang unik untuk mengaksesnya.",
-    "Messages in this room are end-to-end encrypted.": "Pesan di ruangan ini terenkripsi secara ujung ke ujung.",
-    "Start Verification": "Mulai Verifikasi",
-    "Waiting for %(displayName)s to accept…": "Menunggu untuk %(displayName)s untuk menerima…",
     "Failed to connect to integration manager": "Gagal untuk menghubung ke manajer integrasi",
     "Create new room": "Buat ruangan baru",
     "and %(count)s others...": {
@@ -570,13 +545,7 @@
         "one": "1 sesi terverifikasi",
         "other": "%(count)s sesi terverifikasi"
     },
-    "Room settings": "Pengaturan ruangan",
-    "Export chat": "Ekspor obrolan",
-    "Files": "File",
     "Not encrypted": "Tidak terenkripsi",
-    "Add widgets, bridges & bots": "Tambahkan widget, jembatan & bot",
-    "Edit widgets, bridges & bots": "Edit widget, jembatan & bot",
-    "Set my room layout for everyone": "Tetapkan tata letak ruangan saya untuk semuanya",
     "Server did not return valid authentication information.": "Server tidak memberikan informasi autentikasi yang absah.",
     "Server did not require any authentication": "Server tidak membutuhkan autentikasi apa pun",
     "There was a problem communicating with the server. Please try again.": "Terjadi sebuah masalah ketika berkomunikasi dengan server. Mohon coba lagi.",
@@ -954,7 +923,6 @@
     "Moderation": "Moderasi",
     "Messaging": "Perpesanan",
     "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
-    "Chat": "Obrolan",
     "Recently viewed": "Baru saja dilihat",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s suara. Vote untuk melihat hasilnya",
@@ -993,7 +961,6 @@
     "Verify other device": "Verifikasi perangkat lain",
     "You cancelled verification on your other device.": "Anda membatalkan verifikasi di perangkat Anda yang lain.",
     "Almost there! Is your other device showing the same shield?": "Hampir selesai! Apakah perangkat lain Anda menampilkan perisai yang sama?",
-    "To proceed, please accept the verification request on your other device.": "Untuk melanjutkan, mohon terima permintaan verifikasi di perangkat Anda yang lain.",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "Remove from %(roomName)s": "Keluarkan dari %(roomName)s",
     "Remove from room": "Keluarkan dari ruangan",
@@ -1016,7 +983,6 @@
     "Join %(roomAddress)s": "Bergabung dengan %(roomAddress)s",
     "Results will be visible when the poll is ended": "Hasil akan tersedia setelah pemungutan suara berakhir",
     "Search Dialog": "Dialog Pencarian",
-    "Pinned": "Disematkan",
     "What location type do you want to share?": "Tipe lokasi apa yang Anda ingin bagikan?",
     "Drop a Pin": "Drop sebuah Pin",
     "My live location": "Lokasi langsung saya",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
     "Video call ended": "Panggilan video berakhir",
     "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
-    "Room info": "Informasi ruangan",
     "Completing set up of your new device": "Menyelesaikan penyiapan perangkat baru Anda",
     "Waiting for device to sign in": "Menunggu perangkat untuk masuk",
     "Review and approve the sign in": "Lihat dan perbolehkan pemasukan",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi.",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
-    "We were unable to start a chat with the other user.": "Kami tidak dapat memulai sebuah obrolan dengan pengguna lain.",
-    "Error starting verification": "Terjadi kesalahan memulai verifikasi",
     "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Server merespons dengan %(statusCode)s dengan kode kesalahan %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Kami tidak dapat menemukan peristiwa sebelumnya dari %(dateString)s. Coba pilih tanggal yang lebih awal.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Sebuah kesalahan jaringan terjadi saat mencari dan menuju ke tanggal yang diberikan. Homeserver Anda mungkin tidak tersedia atau ada masalah sementara dengan koneksi internet Anda. Silakan coba lagi. Jika ini masih berlanjut, silakan hubungi administrator homeserver Anda.",
-    "Poll history": "Riwayat pemungutan suara",
     "Start DM anyway": "Mulai percakapan langsung saja",
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
@@ -3278,7 +3240,13 @@
             "verification_skip_warning": "Tanpa memverifikasi, Anda tidak akan memiliki akses ke semua pesan Anda dan tampak tidak dipercayai kepada lainnya.",
             "verify_later": "Saya verifikasi nanti",
             "verify_reset_warning_1": "Mengatur ulang kunci verifikasi Anda tidak dapat dibatalkan. Setelah mengatur ulang, Anda tidak akan memiliki akses ke pesan terenkripsi lama, dan semua orang yang sebelumnya telah memverifikasi Anda akan melihat peringatan keamanan sampai Anda memverifikasi ulang dengan mereka.",
-            "verify_reset_warning_2": "Hanya lanjutkan jika Anda yakin Anda telah kehilangan semua perangkat lainnya dan kunci keamanan Anda."
+            "verify_reset_warning_2": "Hanya lanjutkan jika Anda yakin Anda telah kehilangan semua perangkat lainnya dan kunci keamanan Anda.",
+            "self_verification_hint": "Untuk melanjutkan, mohon terima permintaan verifikasi di perangkat Anda yang lain.",
+            "waiting_for_user_accept": "Menunggu untuk %(displayName)s untuk menerima…",
+            "accepting": "Menerima…",
+            "start_button": "Mulai Verifikasi",
+            "error_starting_title": "Terjadi kesalahan memulai verifikasi",
+            "error_starting_description": "Kami tidak dapat memulai sebuah obrolan dengan pengguna lain."
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3323,7 +3291,15 @@
         "cross_signing_room_normal": "Ruangan ini dienkripsi secara ujung ke ujung",
         "cross_signing_room_verified": "Semuanya di ruangan ini telah terverifikasi",
         "event_shield_reason_authenticity_not_guaranteed": "Keaslian pesan terenkripsi ini tidak dapat dijamin pada perangkat ini.",
-        "event_shield_reason_mismatched_sender_key": "Terenkripsi oleh sesi yang belum diverifikasi"
+        "event_shield_reason_mismatched_sender_key": "Terenkripsi oleh sesi yang belum diverifikasi",
+        "messages_not_secure": {
+            "title": "Pesan-pesan Anda tidak aman",
+            "heading": "Salah satu dari berikut ini dapat dikompromikan:",
+            "cause_1": "Homeserver Anda",
+            "cause_2": "Homeserver pengguna yang Anda memverifikasi",
+            "cause_3": "Koneksi internet Anda, atau pengguna yang lain",
+            "cause_4": "Sesi Anda, atau pengguna yang lain"
+        }
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3679,7 +3655,10 @@
         "error_loading": "Terjadi kesalahan saat memuat Widget",
         "error_mixed_content": "Terjadi kesalahan — Konten tercampur",
         "unmaximise": "Minimalkan",
-        "popout": "Widget popout"
+        "popout": "Widget popout",
+        "unpin_to_view_right_panel": "Lepaskan pin widget ini untuk menampilkanya di panel ini",
+        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini",
+        "set_room_layout": "Tetapkan tata letak ruangan saya untuk semuanya"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -4284,6 +4263,37 @@
         "error_revoke_3pid_invite_description": "Tidak dapat menghapus undangan. Server ini mungkin mengalami masalah sementara atau Anda tidak memiliki izin yang dibutuhkan untuk menghapus undangannya.",
         "admin_tools_section": "Peralatan Admin",
         "revoke_invite": "Hapus undangan",
-        "invited_by": "Diundang oleh %(sender)s"
+        "invited_by": "Diundang oleh %(sender)s",
+        "room_encrypted": "Pesan di ruangan ini terenkripsi secara ujung ke ujung.",
+        "room_encrypted_detail": "Pesan Anda diamankan dan hanya Anda dan penerimanya mempunyai kunci yang unik untuk mengaksesnya.",
+        "room_unencrypted": "Pesan di ruangan ini tidak dienkripsi secara ujung ke ujung.",
+        "room_unencrypted_detail": "Di ruangan terenkripsi, pesan Anda diamankan dan hanya Anda dan penerimanya mempunyai kunci yang unik untuk mengaksesnya.",
+        "verify_button": "Verifikasi Pengguna",
+        "verify_explainer": "Untuk keamanan lebih, verifikasi pengguna ini dengan memeriksa kode satu kali di kedua perangkat Anda."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Pesan yang dipasangi pin",
+            "empty": "Belum ada yang dipasangi pin",
+            "explainer": "Jika Anda memiliki izin, buka menunya di pesan apa saja dan pilih <b>Pin</b> untuk menempelkannya di sini.",
+            "limits": {
+                "other": "Anda hanya dapat memasang pin sampai %(count)s widget"
+            }
+        },
+        "video_room_chat": {
+            "title": "Obrolan"
+        },
+        "room_summary_card": {
+            "title": "Informasi ruangan"
+        },
+        "widgets_section": "Widget",
+        "edit_integrations": "Edit widget, jembatan & bot",
+        "add_integrations": "Tambahkan widget, jembatan & bot",
+        "files_button": "File",
+        "polls_button": "Riwayat pemungutan suara",
+        "pinned_messages_button": "Disematkan",
+        "export_chat_button": "Ekspor obrolan",
+        "share_button": "Bagikan ruangan",
+        "settings_button": "Pengaturan ruangan"
     }
 }

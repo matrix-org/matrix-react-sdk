@@ -376,20 +376,7 @@
     "Remove recent messages": "ລຶບຂໍ້ຄວາມຫຼ້າສຸດອອກ",
     "Failed to remove user": "ລຶບຜູ້ໃຊ້ອອກບໍ່ສຳເລັດ",
     "They'll still be able to access whatever you're not an admin of.": "ພວກເຂົາສາມາດເຂົ້າເຖິງອັນໃດກໍໄດ້ທີ່ທ່ານບໍ່ແມ່ນຜູ້ຄຸມລະບົບ.",
-    "Room settings": "ການຕັ້ງຄ່າຫ້ອງ",
-    "Share room": "ແບ່ງປັນຫ້ອງ",
-    "Export chat": "ສົ່ງການສົນທະນາອອກ",
-    "Pinned": "ໄດ້ປັກໝຸດ",
-    "Files": "ໄຟລ໌",
     "Not encrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
-    "Add widgets, bridges & bots": "ເພີ່ມວິດເຈັດ, ຂົວ ແລະບັອດ",
-    "Edit widgets, bridges & bots": "ແກ້ໄຂວິດເຈັດ, ຂົວ ແລະບັອດ",
-    "Set my room layout for everyone": "ກໍານົດຮູບແບບຫ້ອງຂອງຂ້ອຍສໍາລັບທຸກຄົນ",
-    "Close this widget to view it in this panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
-    "Unpin this widget to view it in this panel": "ຖອນປັກໝຸດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
-    "You can only pin up to %(count)s widgets": {
-        "other": "ທ່ານສາມາດປັກໝຸດໄດ້ເຖິງ %(count)s widget ເທົ່ານັ້ນ"
-    },
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
     "Missing domain separator e.g. (:domain.org)": "ຂາດຕົວແຍກໂດເມນ e.g. (:domain.org)",
     "e.g. my-room": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ",
@@ -488,26 +475,6 @@
         "one": "ຢືນຢັນ 1 session ແລ້ວ",
         "other": "%(count)sລະບົບຢືນຢັນແລ້ວ"
     },
-    "Chat": "ສົນທະນາ",
-    "Pinned messages": "ປັກໝຸດຂໍ້ຄວາມ",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "ຖ້າຫາກທ່ານມີການອະນຸຍາດ, ເປີດເມນູໃນຂໍ້ຄວາມໃດຫນຶ່ງ ແລະ ເລືອກ <b>Pin</b> ເພື່ອຕິດໃຫ້ເຂົາເຈົ້າຢູ່ທີ່ນີ້.",
-    "Nothing pinned, yet": "ບໍ່ມີຫຍັງຖືກປັກໝຸດ,",
-    "Yours, or the other users' session": "ຂອງທ່ານ , ຫຼື session ຂອງຜູ້ໃຊ້ອື່ນໆ",
-    "Yours, or the other users' internet connection": "ຂອງທ່ານ, ຫຼື ການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງຜູ້ໃຊ້ອື່ນ",
-    "The homeserver the user you're verifying is connected to": "homeserver ຜູ້ໃຊ້ທີ່ທ່ານກໍາລັງຢືນຢັນແມ່ນເຊື່ອມຕໍ່ກັບ",
-    "Your homeserver": "homeserver ຂອງທ່ານ",
-    "One of the following may be compromised:": "ຫນຶ່ງໃນຕໍ່ໄປນີ້ອາດຈະຖືກທໍາລາຍ:",
-    "Your messages are not secure": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ປອດໄພ",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "ເພື່ອຄວາມປອດໄພເພີ່ມເຕີມ, ກະລຸນາຢັ້ງຢືນຜູ້ໃຊ້ນີ້ໂດຍການກວດສອບລະຫັດຄັ້ງດຽວໃນອຸປະກອນຂອງທ່ານທັງສອງ.",
-    "Verify User": "ຢືນຢັນຜູ້ໃຊ້",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "ຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ, ຂໍ້ຄວາມຂອງທ່ານຖືກຮັກສາໄວ້ຢ່າງປອດໄພ ແລະມີພຽງແຕ່ທ່ານ ແລະຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈສະເພາະເພື່ອປົດລັອກພວກມັນ.",
-    "Messages in this room are not end-to-end encrypted.": "ຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ບໍ່ໄດ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ປາຍທາງ.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "ຂໍ້ຄວາມຂອງທ່ານປອດໄພ ແລະມີແຕ່ທ່ານ ແລະຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈສະເພາະເພື່ອປົດລັອກພວກມັນ.",
-    "Messages in this room are end-to-end encrypted.": "ຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງ.",
-    "Start Verification": "ເລີ່ມການຢັ້ງຢືນ",
-    "Accepting…": "ກຳລັງຍອມຮັບ…",
-    "Waiting for %(displayName)s to accept…": "ກຳລັງລໍຖ້າ %(displayName)s ຍອມຮັບ…",
-    "To proceed, please accept the verification request on your other device.": "ເພື່ອດຳເນີນການຕໍ່, ກະລຸນາຍອມຮັບຄຳຮ້ອງຂໍການຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ.",
     "not specified": "ບໍ່ໄດ້ລະບຸ",
     "%(count)s reply": {
         "one": "%(count)s ຕອບກັບ",
@@ -742,7 +709,6 @@
     "Experimental": "ທົດລອງ",
     "Themes": "ຫົວຂໍ້",
     "Moderation": "ປານກາງ",
-    "Widgets": "ວິດເຈັດ",
     "Recently viewed": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
     "What location type do you want to share?": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?",
     "Drop a Pin": "ປັກໝຸດ",
@@ -2718,7 +2684,11 @@
             "verification_success_without_backup": "ດຽວນີ້ອຸປະກອນໃໝ່ຂອງທ່ານໄດ້ຮັບການຢັ້ງຢືນແລ້ວ. ຜູ້ໃຊ້ອື່ນໆຈະເຫັນວ່າມັນເປັນທີ່ເຊື່ອຖືໄດ້.",
             "verification_skip_warning": "ໂດຍບໍ່ມີການຢັ້ງຢືນ, ທ່ານຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທັງຫມົດຂອງທ່ານ ແລະ ອາດຈະປາກົດວ່າບໍ່ຫນ້າເຊື່ອຖື.",
             "verify_later": "ຂ້ອຍຈະກວດສອບພາຍຫຼັງ",
-            "verify_reset_warning_1": "ການຕັ້ງຄ່າລະຫັດຢືນຢັນຂອງທ່ານບໍ່ສາມາດຍົກເລີກໄດ້. ຫຼັງຈາກການຕັ້ງຄ່າແລ້ວ, ທ່ານຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດເກົ່າໄດ້, ແລະ ໝູ່ເພື່ອນທີ່ຢືນຢັນໄປກ່ອນໜ້ານີ້ ທ່ານຈະເຫັນຄຳເຕືອນຄວາມປອດໄພຈົນກວ່າທ່ານຈະຢືນຢັນກັບພວກມັນຄືນໃໝ່."
+            "verify_reset_warning_1": "ການຕັ້ງຄ່າລະຫັດຢືນຢັນຂອງທ່ານບໍ່ສາມາດຍົກເລີກໄດ້. ຫຼັງຈາກການຕັ້ງຄ່າແລ້ວ, ທ່ານຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດເກົ່າໄດ້, ແລະ ໝູ່ເພື່ອນທີ່ຢືນຢັນໄປກ່ອນໜ້ານີ້ ທ່ານຈະເຫັນຄຳເຕືອນຄວາມປອດໄພຈົນກວ່າທ່ານຈະຢືນຢັນກັບພວກມັນຄືນໃໝ່.",
+            "self_verification_hint": "ເພື່ອດຳເນີນການຕໍ່, ກະລຸນາຍອມຮັບຄຳຮ້ອງຂໍການຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ.",
+            "waiting_for_user_accept": "ກຳລັງລໍຖ້າ %(displayName)s ຍອມຮັບ…",
+            "accepting": "ກຳລັງຍອມຮັບ…",
+            "start_button": "ເລີ່ມການຢັ້ງຢືນ"
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -2763,7 +2733,15 @@
         "cross_signing_room_normal": "ຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ເຖິງປາຍທາງ",
         "cross_signing_room_verified": "ທຸກຄົນຢູ່ໃນຫ້ອງນີ້ໄດ້ຮັບການຢັ້ງຢືນແລ້ວ",
         "event_shield_reason_authenticity_not_guaranteed": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
-        "event_shield_reason_mismatched_sender_key": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ"
+        "event_shield_reason_mismatched_sender_key": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ",
+        "messages_not_secure": {
+            "title": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ປອດໄພ",
+            "heading": "ຫນຶ່ງໃນຕໍ່ໄປນີ້ອາດຈະຖືກທໍາລາຍ:",
+            "cause_1": "homeserver ຂອງທ່ານ",
+            "cause_2": "homeserver ຜູ້ໃຊ້ທີ່ທ່ານກໍາລັງຢືນຢັນແມ່ນເຊື່ອມຕໍ່ກັບ",
+            "cause_3": "ຂອງທ່ານ, ຫຼື ການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງຜູ້ໃຊ້ອື່ນ",
+            "cause_4": "ຂອງທ່ານ , ຫຼື session ຂອງຜູ້ໃຊ້ອື່ນໆ"
+        }
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -3092,7 +3070,10 @@
         "cookie_warning": "widget ນີ້ອາດຈະໃຊ້ cookies.",
         "error_loading": "ເກີດຄວາມຜິດພາດໃນການໂຫຼດ Widget",
         "error_mixed_content": "ຂໍ້ຜິດພາດ - ເນື້ອຫາມີການປະສົມປະສານ",
-        "popout": "ວິດເຈັດ popout"
+        "popout": "ວິດເຈັດ popout",
+        "unpin_to_view_right_panel": "ຖອນປັກໝຸດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
+        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
+        "set_room_layout": "ກໍານົດຮູບແບບຫ້ອງຂອງຂ້ອຍສໍາລັບທຸກຄົນ"
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3588,6 +3569,33 @@
         "error_revoke_3pid_invite_description": "ບໍ່ສາມາດຖອນຄຳເຊີນໄດ້. ເຊີບເວີອາດຈະປະສົບບັນຫາຊົ່ວຄາວ ຫຼື ທ່ານບໍ່ມີສິດພຽງພໍໃນການຖອນຄຳເຊີນ.",
         "admin_tools_section": "ເຄື່ອງມືຜູ້ຄຸ້ມຄອງ",
         "revoke_invite": "ຍົກເລີກຄຳເຊີນ",
-        "invited_by": "ເຊີນໂດຍ%(sender)s"
+        "invited_by": "ເຊີນໂດຍ%(sender)s",
+        "room_encrypted": "ຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງ.",
+        "room_encrypted_detail": "ຂໍ້ຄວາມຂອງທ່ານປອດໄພ ແລະມີແຕ່ທ່ານ ແລະຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈສະເພາະເພື່ອປົດລັອກພວກມັນ.",
+        "room_unencrypted": "ຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ບໍ່ໄດ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ປາຍທາງ.",
+        "room_unencrypted_detail": "ຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ, ຂໍ້ຄວາມຂອງທ່ານຖືກຮັກສາໄວ້ຢ່າງປອດໄພ ແລະມີພຽງແຕ່ທ່ານ ແລະຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈສະເພາະເພື່ອປົດລັອກພວກມັນ.",
+        "verify_button": "ຢືນຢັນຜູ້ໃຊ້",
+        "verify_explainer": "ເພື່ອຄວາມປອດໄພເພີ່ມເຕີມ, ກະລຸນາຢັ້ງຢືນຜູ້ໃຊ້ນີ້ໂດຍການກວດສອບລະຫັດຄັ້ງດຽວໃນອຸປະກອນຂອງທ່ານທັງສອງ."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "ປັກໝຸດຂໍ້ຄວາມ",
+            "empty": "ບໍ່ມີຫຍັງຖືກປັກໝຸດ,",
+            "explainer": "ຖ້າຫາກທ່ານມີການອະນຸຍາດ, ເປີດເມນູໃນຂໍ້ຄວາມໃດຫນຶ່ງ ແລະ ເລືອກ <b>Pin</b> ເພື່ອຕິດໃຫ້ເຂົາເຈົ້າຢູ່ທີ່ນີ້.",
+            "limits": {
+                "other": "ທ່ານສາມາດປັກໝຸດໄດ້ເຖິງ %(count)s widget ເທົ່ານັ້ນ"
+            }
+        },
+        "video_room_chat": {
+            "title": "ສົນທະນາ"
+        },
+        "widgets_section": "ວິດເຈັດ",
+        "edit_integrations": "ແກ້ໄຂວິດເຈັດ, ຂົວ ແລະບັອດ",
+        "add_integrations": "ເພີ່ມວິດເຈັດ, ຂົວ ແລະບັອດ",
+        "files_button": "ໄຟລ໌",
+        "pinned_messages_button": "ໄດ້ປັກໝຸດ",
+        "export_chat_button": "ສົ່ງການສົນທະນາອອກ",
+        "share_button": "ແບ່ງປັນຫ້ອງ",
+        "settings_button": "ການຕັ້ງຄ່າຫ້ອງ"
     }
 }

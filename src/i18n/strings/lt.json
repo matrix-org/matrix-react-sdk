@@ -78,7 +78,6 @@
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
     "%(duration)sd": "%(duration)s d",
-    "Share room": "Bendrinti kambarį",
     "Demote yourself?": "Pažeminti save?",
     "Demote": "Pažeminti",
     "Share Link to User": "Dalintis nuoroda į vartotoją",
@@ -161,8 +160,6 @@
     "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
     "You'll lose access to your encrypted messages": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Įspėjimas</b>: atsarginę raktų kopiją sukurkite tik iš patikimo kompiuterio.",
-    "Messages in this room are end-to-end encrypted.": "Žinutės šiame kambaryje yra visapusiškai užšifruotos.",
-    "Messages in this room are not end-to-end encrypted.": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
     "Confirm Removal": "Patvirtinkite pašalinimą",
     "Manually export keys": "Eksportuoti raktus rankiniu būdu",
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
@@ -171,10 +168,6 @@
     "Deactivate user?": "Deaktyvuoti vartotoją?",
     "Deactivate user": "Deaktyvuoti vartotoją",
     "Failed to deactivate user": "Nepavyko deaktyvuoti vartotojo",
-    "Start Verification": "Pradėti patvirtinimą",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Šifruotuose kambariuose jūsų žinutės yra apsaugotos ir tik jūs ir gavėjas turite unikalius raktus joms atrakinti.",
-    "Verify User": "Patvirtinti Vartotoją",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Dėl papildomo saugumo patvirtinkite šį vartotoją patikrindami vienkartinį kodą abiejuose jūsų įrenginiuose.",
     "%(count)s verified sessions": {
         "other": "%(count)s patvirtintų seansų",
         "one": "1 patvirtintas seansas"
@@ -284,8 +277,6 @@
     "Failed to reject invitation": "Nepavyko atmesti pakvietimo",
     "Reject invitation": "Atmesti pakvietimą",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-    "Waiting for %(displayName)s to accept…": "Laukiama kol %(displayName)s sutiks…",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Jūsų žinutės yra apsaugotos ir tik jūs ir gavėjas turite unikalius raktus joms atrakinti.",
     "This client does not support end-to-end encryption.": "Šis klientas nepalaiko visapusio šifravimo.",
     "Start verification again from their profile.": "Pradėkite patvirtinimą iš naujo jų profilyje.",
     "The encryption used by this room isn't supported.": "Šiame kambaryje naudojamas šifravimas nėra palaikomas.",
@@ -313,17 +304,10 @@
     "Notes": "Pastabos",
     "Integrations are disabled": "Integracijos yra išjungtos",
     "Integrations not allowed": "Integracijos neleidžiamos",
-    "Room settings": "Kambario nustatymai",
     "Link to most recent message": "Nuoroda į naujausią žinutę",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors naudojant jų vardą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
     "Share Room Message": "Bendrinti Kambario Žinutę",
     "Share Room": "Bendrinti Kambarį",
-    "Add widgets, bridges & bots": "Pridėti valdiklius, tiltus ir botus",
-    "Edit widgets, bridges & bots": "Redaguoti valdiklius, tiltus ir botus",
-    "Widgets": "Valdikliai",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Galite prisegti tik iki %(count)s valdiklių"
-    },
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Jūs būsite nukreipti į trečiosios šalies svetainę, kad galėtumėte patvirtinti savo paskyrą naudojimui su %(integrationsUrl)s. Ar norite tęsti?",
     "Join millions for free on the largest public server": "Prisijunkite prie milijonų didžiausiame viešame serveryje nemokamai",
@@ -354,7 +338,6 @@
     "This homeserver would like to make sure you are not a robot.": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
-    "Your messages are not secure": "Jūsų žinutės nėra saugios",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Patvirtinant šį vartotoją, jo seansas bus pažymėtas kaip patikimas, taip pat jūsų seansas bus pažymėtas kaip patikimas jam.",
@@ -391,7 +374,6 @@
     "Reason (optional)": "Priežastis (nebūtina)",
     "Preparing to download logs": "Ruošiamasi parsiųsti žurnalus",
     "Server Options": "Serverio Parinktys",
-    "Your homeserver": "Jūsų serveris",
     "edited": "pakeista",
     "Edited at %(date)s. Click to view edits.": "Keista %(date)s. Spustelėkite kad peržiūrėti pakeitimus.",
     "Edited at %(date)s": "Keista %(date)s",
@@ -409,8 +391,6 @@
     "You accepted": "Jūs priėmėte",
     "Edit devices": "Redaguoti įrenginius",
     "Not encrypted": "Neužšifruota",
-    "Pinned messages": "Prisegtos žinutės",
-    "Nothing pinned, yet": "Kol kas nieko neprisegta",
     "Mexico": "Meksika",
     "Malaysia": "Malaizija",
     "Iraq": "Irakas",
@@ -630,20 +610,6 @@
     "Remove from space": "Pašalinti iš erdvės",
     "Disinvite from space": "Atšaukti kvietimą iš erdvės",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Negalėsite atšaukti šio pakeitimo, nes pažeminsite save, o jei esate paskutinis privilegijuotas naudotojas erdvėje, bus neįmanoma susigrąžinti privilegijų.",
-    "Export chat": "Eksportuoti pokalbį",
-    "Pinned": "Prisegta",
-    "Files": "Failai",
-    "Set my room layout for everyone": "Nustatyti savo kambario išdėstymą visiems",
-    "Close this widget to view it in this panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
-    "Unpin this widget to view it in this panel": "Atsekite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
-    "Chat": "Pokalbis",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Jei turite leidimus, atidarykite bet kurios žinutės meniu ir pasirinkite <b>Prisegti</b>, kad juos čia priklijuotumėte.",
-    "Yours, or the other users' session": "Jūsų arba kitų naudotojų sesija",
-    "Yours, or the other users' internet connection": "Jūsų arba kitų naudotojų interneto ryšys",
-    "The homeserver the user you're verifying is connected to": "Namų serveris, prie kurio yra prisijungęs patvirtinamas naudotojas",
-    "One of the following may be compromised:": "Gali būti pažeistas vienas iš šių:",
-    "Accepting…": "Priimama…",
-    "To proceed, please accept the verification request on your other device.": "Jei norite tęsti, priimkite patvirtinimo prašymą kitame savo įrenginyje.",
     "%(count)s reply": {
         "one": "%(count)s atsakymas",
         "other": "%(count)s atsakymai"
@@ -2130,7 +2096,11 @@
             "unverified_sessions_toast_description": "Peržiūrėkite, ar jūsų paskyra yra saugi",
             "unverified_sessions_toast_reject": "Vėliau",
             "unverified_session_toast_title": "Naujas prisijungimas. Ar tai jūs?",
-            "request_toast_detail": "%(deviceId)s iš %(ip)s"
+            "request_toast_detail": "%(deviceId)s iš %(ip)s",
+            "self_verification_hint": "Jei norite tęsti, priimkite patvirtinimo prašymą kitame savo įrenginyje.",
+            "waiting_for_user_accept": "Laukiama kol %(displayName)s sutiks…",
+            "accepting": "Priimama…",
+            "start_button": "Pradėti patvirtinimą"
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2171,7 +2141,15 @@
         "cross_signing_room_normal": "Šis kambarys visapusiškai užšifruotas",
         "cross_signing_room_verified": "Visi šiame kambaryje yra patvirtinti",
         "event_shield_reason_authenticity_not_guaranteed": "Šiame įrenginyje negalima užtikrinti šios užšifruotos žinutės autentiškumo.",
-        "event_shield_reason_mismatched_sender_key": "Užšifruota nepatvirtinto seanso"
+        "event_shield_reason_mismatched_sender_key": "Užšifruota nepatvirtinto seanso",
+        "messages_not_secure": {
+            "title": "Jūsų žinutės nėra saugios",
+            "heading": "Gali būti pažeistas vienas iš šių:",
+            "cause_1": "Jūsų serveris",
+            "cause_2": "Namų serveris, prie kurio yra prisijungęs patvirtinamas naudotojas",
+            "cause_3": "Jūsų arba kitų naudotojų interneto ryšys",
+            "cause_4": "Jūsų arba kitų naudotojų sesija"
+        }
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2398,7 +2376,10 @@
         "cookie_warning": "Šiame valdiklyje gali būti naudojami slapukai.",
         "error_loading": "Klaida kraunant Valdiklį",
         "error_mixed_content": "Klaida - Maišytas turinys",
-        "popout": "Iššokti valdiklį"
+        "popout": "Iššokti valdiklį",
+        "unpin_to_view_right_panel": "Atsekite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
+        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
+        "set_room_layout": "Nustatyti savo kambario išdėstymą visiems"
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2797,9 +2778,36 @@
         "error_revoke_3pid_invite_description": "Kvietimo atšaukti nepavyko. Gali būti, kad serveryje kilo laikina problema arba neturite pakankamų leidimų atšaukti kvietimą.",
         "admin_tools_section": "Administratoriaus įrankiai",
         "revoke_invite": "Atšaukti kvietimą",
-        "invited_by": "Pakvietė %(sender)s"
+        "invited_by": "Pakvietė %(sender)s",
+        "room_encrypted": "Žinutės šiame kambaryje yra visapusiškai užšifruotos.",
+        "room_encrypted_detail": "Jūsų žinutės yra apsaugotos ir tik jūs ir gavėjas turite unikalius raktus joms atrakinti.",
+        "room_unencrypted": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",
+        "room_unencrypted_detail": "Šifruotuose kambariuose jūsų žinutės yra apsaugotos ir tik jūs ir gavėjas turite unikalius raktus joms atrakinti.",
+        "verify_button": "Patvirtinti Vartotoją",
+        "verify_explainer": "Dėl papildomo saugumo patvirtinkite šį vartotoją patikrindami vienkartinį kodą abiejuose jūsų įrenginiuose."
     },
     "threads": {
         "open_thread": "Atidaryti temą"
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Prisegtos žinutės",
+            "empty": "Kol kas nieko neprisegta",
+            "explainer": "Jei turite leidimus, atidarykite bet kurios žinutės meniu ir pasirinkite <b>Prisegti</b>, kad juos čia priklijuotumėte.",
+            "limits": {
+                "other": "Galite prisegti tik iki %(count)s valdiklių"
+            }
+        },
+        "video_room_chat": {
+            "title": "Pokalbis"
+        },
+        "widgets_section": "Valdikliai",
+        "edit_integrations": "Redaguoti valdiklius, tiltus ir botus",
+        "add_integrations": "Pridėti valdiklius, tiltus ir botus",
+        "files_button": "Failai",
+        "pinned_messages_button": "Prisegta",
+        "export_chat_button": "Eksportuoti pokalbį",
+        "share_button": "Bendrinti kambarį",
+        "settings_button": "Kambario nustatymai"
     }
 }

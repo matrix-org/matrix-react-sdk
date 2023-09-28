@@ -102,8 +102,6 @@
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
     "Not Trusted": "na se lacri",
     "Ok": "je'e",
-    "Messages in this room are end-to-end encrypted.": ".i ro zilbe'i be fo le cei'i cu mifra",
-    "Messages in this room are not end-to-end encrypted.": ".i na pa zilbe'i be fo le cei'i cu mifra",
     "%(count)s verified sessions": {
         "other": ".i lacri %(count)s se samtcise'u",
         "one": ".i lacri pa se samtcise'u"
@@ -123,12 +121,10 @@
     },
     "Are you sure you want to leave the room '%(roomName)s'?": ".i xu do birti le du'u do kaidji le ka co'u pagbu le se zilbe'i be fo la'o zoi. %(roomName)s .zoi",
     "<a>In reply to</a> <pill>": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi",
-    "Share room": "nu jungau fi le du'u ve zilbe'i",
     "Share Link to User": "nu jungau pa pilno le du'u judri",
     "Share Room": "nu jungau fi le du'u ve zilbe'i",
     "Share User": "nu jungau fi le du'u pilno",
     "Share Room Message": "nu jungau fi le du'u notci",
-    "Waiting for %(displayName)s to accept…": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi zanru",
     "Ask %(displayName)s to scan your code:": ".i ko cpedu le ka gau ce'u kacma samymo'i le sinxa kei la'o zoi. %(displayName)s .zoi",
     "Almost there! Is %(displayName)s showing the same shield?": ".uo ru'e .i xu la'o zoi. %(displayName)s .zoi jarco ta'i tu'a pa sinxa poi mapti",
     "You've successfully verified %(displayName)s!": ".i do mo'u co'a lacri la'o zoi. %(displayName)s .zoi",
@@ -428,7 +424,8 @@
             "complete_action": "je'e",
             "waiting_other_user": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi mo'u co'a lacri",
             "cancelling": ".i ca'o co'u co'e",
-            "unverified_sessions_toast_reject": "nu ca na co'e"
+            "unverified_sessions_toast_reject": "nu ca na co'e",
+            "waiting_for_user_accept": ".i ca'o denpa lo nu la'o zoi. %(displayName)s .zoi zanru"
         },
         "export_unsupported": ".i le kibrbrauzero na ka'e pilno le mifra ciste poi jai sarcu",
         "import_invalid_passphrase": ".i pu fliba lo nu birti lo du'u curmi lo nu do jonse .i na'e drani xu japyvla",
@@ -528,6 +525,11 @@
         "default": "zmiselcu'a"
     },
     "user_info": {
-        "revoke_invite": "nu zukte le ka na ckaji le se friti"
+        "revoke_invite": "nu zukte le ka na ckaji le se friti",
+        "room_encrypted": ".i ro zilbe'i be fo le cei'i cu mifra",
+        "room_unencrypted": ".i na pa zilbe'i be fo le cei'i cu mifra"
+    },
+    "right_panel": {
+        "share_button": "nu jungau fi le du'u ve zilbe'i"
     }
 }

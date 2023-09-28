@@ -126,7 +126,6 @@
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Изчистване на запазените данни в браузъра може да поправи проблема, но ще Ви изкара от профила и ще направи шифрованите съобщения нечетими.",
     "Share Link to User": "Сподели връзка с потребител",
-    "Share room": "Сподели стаята",
     "Share Room": "Споделяне на стая",
     "Link to most recent message": "Създай връзка към най-новото съобщение",
     "Share User": "Споделяне на потребител",
@@ -302,7 +301,6 @@
     "Close dialog": "Затвори прозореца",
     "Failed to deactivate user": "Неуспешно деактивиране на потребител",
     "This client does not support end-to-end encryption.": "Този клиент не поддържа шифроване от край до край.",
-    "Messages in this room are not end-to-end encrypted.": "Съобщенията в тази стая не са шифровани от край до край.",
     "Show image": "Покажи снимката",
     "Cancel search": "Отмени търсенето",
     "You verified %(name)s": "Потвърдихте %(name)s",
@@ -320,7 +318,6 @@
         "other": "%(count)s потвърдени сесии",
         "one": "1 потвърдена сесия"
     },
-    "Messages in this room are end-to-end encrypted.": "Съобщенията в тази стая са шифровани от край-до-край.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Игнорирали сте този потребител, така че съобщението им е скрито. <a>Покажи така или иначе.</a>",
     "Language Dropdown": "Падащо меню за избор на език",
     "Integrations are disabled": "Интеграциите са изключени",
@@ -343,16 +340,6 @@
     "This backup is trusted because it has been restored on this session": "Това резервно копие е доверено, защото е било възстановено в текущата сесия",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",
     "Encrypted by a deleted session": "Шифровано от изтрита сесия",
-    "Waiting for %(displayName)s to accept…": "Изчаква се %(displayName)s да приеме…",
-    "Accepting…": "Приемане…",
-    "Start Verification": "Започни верификация",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Съобщенията ви са защитени и само вие и получателят имате уникалните ключове за да ги отключите.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "В шифровани стаи, съобщенията ви са защитени и само вие и получателят имате уникалните ключове за да ги отключите.",
-    "Verify User": "Потвърди потребителя",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "За допълнителна сигурност, потвърдете този потребител като проверите еднократен код на устройствата ви.",
-    "Your messages are not secure": "Съобщенията ви не са защитени",
-    "One of the following may be compromised:": "Едно от следните неща може да е било компрометирано:",
-    "Your homeserver": "Сървърът ви",
     "%(count)s sessions": {
         "other": "%(count)s сесии",
         "one": "%(count)s сесия"
@@ -481,14 +468,7 @@
     "Join the conference from the room information card on the right": "Присъединете се към конференцията от информацията за стаята в дясно",
     "Join the conference at the top of this room": "Присъединете се към конференцията в горната част на стаята",
     "Ignored attempt to disable encryption": "Опитът за изключване на шифроването беше игнориран",
-    "Room settings": "Настройки на стаята",
     "Not encrypted": "Не е шифровано",
-    "Add widgets, bridges & bots": "Добави приспособления, мостове и ботове",
-    "Edit widgets, bridges & bots": "Промени приспособления, мостове и ботове",
-    "Widgets": "Приспособления",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Може да закачите максимум %(count)s приспособления"
-    },
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
     "British Indian Ocean Territory": "Британска територия в Индийския океан",
@@ -1805,7 +1785,10 @@
             "unverified_sessions_toast_description": "Прегледайте, за да уверите, че профилът ви е в безопастност",
             "unverified_sessions_toast_reject": "По-късно",
             "unverified_session_toast_title": "Нов вход. Вие ли бяхте това?",
-            "request_toast_detail": "%(deviceId)s от %(ip)s"
+            "request_toast_detail": "%(deviceId)s от %(ip)s",
+            "waiting_for_user_accept": "Изчаква се %(displayName)s да приеме…",
+            "accepting": "Приемане…",
+            "start_button": "Започни верификация"
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
@@ -1848,7 +1831,12 @@
         "cross_signing_room_normal": "Тази стая е шифрована от-край-до-край",
         "cross_signing_room_verified": "Всички в тази стая са верифицирани",
         "event_shield_reason_authenticity_not_guaranteed": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
-        "event_shield_reason_mismatched_sender_key": "Шифровано от неверифицирана сесия"
+        "event_shield_reason_mismatched_sender_key": "Шифровано от неверифицирана сесия",
+        "messages_not_secure": {
+            "title": "Съобщенията ви не са защитени",
+            "heading": "Едно от следните неща може да е било компрометирано:",
+            "cause_1": "Сървърът ви"
+        }
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -2372,6 +2360,24 @@
         "error_revoke_3pid_invite_description": "Поканата не можа да бъде оттеглена. Или има временен проблем със сървъра, или нямате достатъчно права за да оттеглите поканата.",
         "admin_tools_section": "Инструменти на администратора",
         "revoke_invite": "Оттегли поканата",
-        "invited_by": "Поканен от %(sender)s"
+        "invited_by": "Поканен от %(sender)s",
+        "room_encrypted": "Съобщенията в тази стая са шифровани от край-до-край.",
+        "room_encrypted_detail": "Съобщенията ви са защитени и само вие и получателят имате уникалните ключове за да ги отключите.",
+        "room_unencrypted": "Съобщенията в тази стая не са шифровани от край до край.",
+        "room_unencrypted_detail": "В шифровани стаи, съобщенията ви са защитени и само вие и получателят имате уникалните ключове за да ги отключите.",
+        "verify_button": "Потвърди потребителя",
+        "verify_explainer": "За допълнителна сигурност, потвърдете този потребител като проверите еднократен код на устройствата ви."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "limits": {
+                "other": "Може да закачите максимум %(count)s приспособления"
+            }
+        },
+        "widgets_section": "Приспособления",
+        "edit_integrations": "Промени приспособления, мостове и ботове",
+        "add_integrations": "Добави приспособления, мостове и ботове",
+        "share_button": "Сподели стаята",
+        "settings_button": "Настройки на стаята"
     }
 }

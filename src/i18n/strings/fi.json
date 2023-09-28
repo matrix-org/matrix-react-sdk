@@ -173,7 +173,6 @@
     "Anchor": "Ankkuri",
     "Headphones": "Kuulokkeet",
     "Folder": "Kansio",
-    "Share room": "Jaa huone",
     "Share Room": "Jaa huone",
     "Link to most recent message": "Linkitä viimeisimpään viestiin",
     "Continue With Encryption Disabled": "Jatka salaus poistettuna käytöstä",
@@ -300,8 +299,6 @@
     "Failed to deactivate user": "Käyttäjän poistaminen epäonnistui",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
     "This client does not support end-to-end encryption.": "Tämä asiakasohjelma ei tue päästä päähän -salausta.",
-    "Messages in this room are not end-to-end encrypted.": "Tämän huoneen viestit eivät ole päästä päähän -salattuja.",
-    "Messages in this room are end-to-end encrypted.": "Tämän huoneen viestit ovat päästä päähän -salattuja.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Olet sivuuttanut tämän käyttäjän, joten hänen viestinsä on piilotettu. <a>Näytä silti.</a>",
     "You verified %(name)s": "Varmensit käyttäjän %(name)s",
     "You cancelled verifying %(name)s": "Peruutit käyttäjän %(name)s varmennuksen",
@@ -335,7 +332,6 @@
     "Recent Conversations": "Viimeaikaiset keskustelut",
     "Direct Messages": "Yksityisviestit",
     "Lock": "Lukko",
-    "Waiting for %(displayName)s to accept…": "Odotetaan, että %(displayName)s hyväksyy…",
     "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
     "%(count)s sessions": {
         "other": "%(count)s istuntoa",
@@ -346,9 +342,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
-    "Accepting…": "Hyväksytään…",
-    "One of the following may be compromised:": "Jokin seuraavista saattaa olla vaarantunut:",
-    "Your homeserver": "Kotipalvelimesi",
     "Encryption not enabled": "Salaus pois käytöstä",
     "The encryption used by this room isn't supported.": "Tämän huoneen käyttämää salausta ei tueta.",
     "You declined": "Kieltäydyit",
@@ -358,7 +351,6 @@
     "Not Trusted": "Ei luotettu",
     "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
-    "Your messages are not secure": "Viestisi eivät ole turvassa",
     "Enter a server name": "Syötä palvelimen nimi",
     "Looks good": "Hyvältä näyttää",
     "Can't find this server or its room list": "Tätä palvelinta tai sen huoneluetteloa ei löydy",
@@ -383,11 +375,6 @@
     "IRC display name width": "IRC-näyttönimen leveys",
     "This backup is trusted because it has been restored on this session": "Tähän varmuuskopioon luotetaan, koska se on palautettu tässä istunnossa",
     "Encrypted by a deleted session": "Salattu poistetun istunnon toimesta",
-    "Start Verification": "Aloita varmennus",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Viestisi ovat turvattu, ja vain sinulla ja vastaanottajalla on avaimet viestien lukemiseen.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Salausta käyttävissä huoneissa viestisi on turvattu, ja vain sinulla ja vastaanottajilla on yksityiset avaimet viestien lukemiseen.",
-    "Verify User": "Varmenna käyttäjä",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Lisäturvaksi, varmenna tämä käyttäjä tarkistamalla koodin kummankin laitteella.",
     "Verify by scanning": "Varmenna skannaamalla",
     "If you can't scan the code above, verify by comparing unique emoji.": "Jos et pysty skannaamaan yläpuolella olevaa koodia, varmenna vertaamalla emojia.",
     "Verify by comparing unique emoji.": "Varmenna vertaamalla uniikkia emojia.",
@@ -434,9 +421,6 @@
     "Join the conference at the top of this room": "Liity ryhmäpuheluun huoneen ylälaidassa",
     "Wrong file type": "Väärä tiedostotyyppi",
     "Room address": "Huoneen osoite",
-    "Add widgets, bridges & bots": "Lisää sovelmia, siltoja ja botteja",
-    "Edit widgets, bridges & bots": "Muokkaa sovelmia, siltoja ja botteja",
-    "Widgets": "Sovelmat",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
     "Server isn't responding": "Palvelin ei vastaa",
     "Click to view edits": "Napsauta nähdäksesi muokkaukset",
@@ -594,7 +578,6 @@
     "Eritrea": "Eritrea",
     "Equatorial Guinea": "Päiväntasaajan Guinea",
     "Moldova": "Moldova",
-    "Room settings": "Huoneen asetukset",
     "a device cross-signing signature": "laitteen ristiinvarmennuksen allekirjoitus",
     "a new cross-signing key signature": "Uusi ristiinvarmennuksen allekirjoitus",
     "Backup version:": "Varmuuskopiointiversio:",
@@ -709,9 +692,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Voit tarkastella kaikkia salattuja tiedostoja <a>työpöytäsovelluksella</a>",
     "Use the <a>Desktop app</a> to search encrypted messages": "Käytä salattuja viestejä <a>työpöytäsovelluksella</a>",
     "Ignored attempt to disable encryption": "Ohitettu yritys poistaa salaus käytöstä",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Voit kiinnittää enintään %(count)s sovelmaa"
-    },
     "This widget would like to:": "Tämä sovelma haluaa:",
     "The server has denied your request.": "Palvelin eväsi pyyntösi.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
@@ -802,8 +782,6 @@
     "Their device couldn't start the camera or microphone": "Laite ei voinut käyynnistää kameraa tai mikrofonia",
     "Connection failed": "Yhteys epäonnistui",
     "No answer": "Ei vastausta",
-    "Pinned messages": "Kiinnitetyt viestit",
-    "Nothing pinned, yet": "Ei mitään kiinnitetty, ei vielä",
     "Space visibility": "Avaruuden näkyvyys",
     "Are you sure you want to leave the space '%(spaceName)s'?": "Haluatko varmasti poistua avaruudesta '%(spaceName)s'?",
     "Leave space": "Poistu avaruudesta",
@@ -843,14 +821,12 @@
     "Downloading": "Ladataan",
     "Ban from %(roomName)s": "Anna porttikielto huoneeseen %(roomName)s",
     "Unban from %(roomName)s": "Poista porttikielto huoneeseen %(roomName)s",
-    "Export chat": "Vie keskustelu",
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
     },
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
-    "Files": "Tiedostot",
     "This space is not public. You will not be able to rejoin without an invite.": "Tämä avaruus ei ole julkinen. Et voi liittyä uudelleen ilman kutsua.",
     "Other rooms in %(spaceName)s": "Muut huoneet avaruudessa %(spaceName)s",
     "Spaces you're in": "Avaruudet, joissa olet",
@@ -903,8 +879,6 @@
     "Failed to remove user": "Käyttäjän poistaminen epäonnistui",
     "Remove them from everything I'm able to": "Poista kaikesta mihin pystyn",
     "Remove from %(roomName)s": "Poista huoneesta %(roomName)s",
-    "Yours, or the other users' session": "Sinun tai toisen osapuolen istunto",
-    "Yours, or the other users' internet connection": "Sinun tai toisen osapuolen internet-yhteys",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
@@ -914,9 +888,6 @@
     "Can't edit poll": "Kyselyä ei voi muokata",
     "Pick a date to jump to": "Valitse päivämäärä, mihin siirrytään",
     "Jump to date": "Siirry päivämäärään",
-    "Close this widget to view it in this panel": "Sulje sovelma näyttääksesi sen tässä paneelissa",
-    "Unpin this widget to view it in this panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
-    "Chat": "Keskustelu",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -981,8 +952,6 @@
     "Collapse quotes": "Supista lainaukset",
     "Could not connect media": "Ei voitu yhdistää mediaa",
     "Remove from space": "Poista avaruudesta",
-    "Pinned": "Kiinnitetty",
-    "Set my room layout for everyone": "Aseta minun huoneen asettelu kaikille",
     "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Messaging": "Viestintä",
@@ -995,7 +964,6 @@
     "Use your Security Key to continue.": "Käytä turva-avain jatkaaksesi.",
     "Invalid Security Key": "Virheellinen turva-avain",
     "Wrong Security Key": "Väärä turva-avain",
-    "To proceed, please accept the verification request on your other device.": "Jatka hyväksymällä vahvistuspyyntö toisella laitteella.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Vahvista tilin deaktivointi todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
     "Thread options": "Ketjun valinnat",
     "Start a group chat": "Aloita ryhmäkeskustelu",
@@ -1043,7 +1011,6 @@
     "Messages in this chat will be end-to-end encrypted.": "Tässä keskustelussa olevat viestit salataan päästä päähän.",
     "Video call ended": "Videopuhelu päättyi",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
-    "Room info": "Huoneen tiedot",
     "Search for": "Etsittävät kohteet",
     "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -1104,7 +1071,6 @@
     "View poll in timeline": "Näytä kysely aikajanalla",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Kaikki tämän käyttäjän lähettämät viestit ja kutsut sivuutetaan. Haluatko varmasti sivuuttaa hänet?",
     "Ignore %(user)s": "Sivuuta %(user)s",
-    "Poll history": "Kyselyhistoria",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "Error details": "Virheen tiedot",
     "common": {
@@ -2966,7 +2932,11 @@
             "verify_using_device": "Vahvista toisella laitteella",
             "verification_success_with_backup": "Uusi laitteesi on nyt vahvistettu. Laitteella on pääsy salattuihin viesteihisi, ja muut käyttäjät näkevät sen luotettuna.",
             "verification_success_without_backup": "Uusi laitteesi on nyt vahvistettu. Muut käyttäjät näkevät sen luotettuna.",
-            "verify_later": "Vahvistan myöhemmin"
+            "verify_later": "Vahvistan myöhemmin",
+            "self_verification_hint": "Jatka hyväksymällä vahvistuspyyntö toisella laitteella.",
+            "waiting_for_user_accept": "Odotetaan, että %(displayName)s hyväksyy…",
+            "accepting": "Hyväksytään…",
+            "start_button": "Aloita varmennus"
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -3008,7 +2978,14 @@
         "cross_signing_room_normal": "Tämä huone käyttää päästä päähän -salausta",
         "cross_signing_room_verified": "Kaikki tämän huoneen käyttäjät on varmennettu",
         "event_shield_reason_authenticity_not_guaranteed": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
-        "event_shield_reason_mismatched_sender_key": "Salattu varmentamattoman istunnon toimesta"
+        "event_shield_reason_mismatched_sender_key": "Salattu varmentamattoman istunnon toimesta",
+        "messages_not_secure": {
+            "title": "Viestisi eivät ole turvassa",
+            "heading": "Jokin seuraavista saattaa olla vaarantunut:",
+            "cause_1": "Kotipalvelimesi",
+            "cause_3": "Sinun tai toisen osapuolen internet-yhteys",
+            "cause_4": "Sinun tai toisen osapuolen istunto"
+        }
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",
@@ -3320,7 +3297,10 @@
         "cookie_warning": "Tämä sovelma saattaa käyttää evästeitä.",
         "error_loading": "Virhe sovelman lataamisessa",
         "error_mixed_content": "Virhe – sekasisältö",
-        "popout": "Avaa sovelma omassa ikkunassaan"
+        "popout": "Avaa sovelma omassa ikkunassaan",
+        "unpin_to_view_right_panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
+        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa",
+        "set_room_layout": "Aseta minun huoneen asettelu kaikille"
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3873,6 +3853,36 @@
         "error_revoke_3pid_invite_description": "Kutsun kumoaminen epäonnistui. Kyseessä saattaa olla väliaikainen ongelma tai sinulla ei ole tarvittavia oikeuksia kutsun kumoamiseen.",
         "admin_tools_section": "Ylläpitotyökalut",
         "revoke_invite": "Kumoa kutsu",
-        "invited_by": "Kutsuttu henkilön %(sender)s toimesta"
+        "invited_by": "Kutsuttu henkilön %(sender)s toimesta",
+        "room_encrypted": "Tämän huoneen viestit ovat päästä päähän -salattuja.",
+        "room_encrypted_detail": "Viestisi ovat turvattu, ja vain sinulla ja vastaanottajalla on avaimet viestien lukemiseen.",
+        "room_unencrypted": "Tämän huoneen viestit eivät ole päästä päähän -salattuja.",
+        "room_unencrypted_detail": "Salausta käyttävissä huoneissa viestisi on turvattu, ja vain sinulla ja vastaanottajilla on yksityiset avaimet viestien lukemiseen.",
+        "verify_button": "Varmenna käyttäjä",
+        "verify_explainer": "Lisäturvaksi, varmenna tämä käyttäjä tarkistamalla koodin kummankin laitteella."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Kiinnitetyt viestit",
+            "empty": "Ei mitään kiinnitetty, ei vielä",
+            "limits": {
+                "other": "Voit kiinnittää enintään %(count)s sovelmaa"
+            }
+        },
+        "video_room_chat": {
+            "title": "Keskustelu"
+        },
+        "room_summary_card": {
+            "title": "Huoneen tiedot"
+        },
+        "widgets_section": "Sovelmat",
+        "edit_integrations": "Muokkaa sovelmia, siltoja ja botteja",
+        "add_integrations": "Lisää sovelmia, siltoja ja botteja",
+        "files_button": "Tiedostot",
+        "polls_button": "Kyselyhistoria",
+        "pinned_messages_button": "Kiinnitetty",
+        "export_chat_button": "Vie keskustelu",
+        "share_button": "Jaa huone",
+        "settings_button": "Huoneen asetukset"
     }
 }

@@ -126,7 +126,6 @@
     "We encountered an error trying to restore your previous session.": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Den Browser-Speicher zu löschen kann das Problem lösen, wird dich aber abmelden und verschlüsselte Nachrichten unlesbar machen.",
     "Share Link to User": "Link zu Benutzer teilen",
-    "Share room": "Raum teilen",
     "Share Room": "Raum teilen",
     "Link to most recent message": "Link zur aktuellsten Nachricht",
     "Share User": "Teile Benutzer",
@@ -278,7 +277,6 @@
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
     "Session name": "Sitzungsname",
     "Sign out and remove encryption keys?": "Abmelden und Verschlüsselungsschlüssel entfernen?",
-    "Messages in this room are not end-to-end encrypted.": "Nachrichten in diesem Raum sind nicht Ende-zu-Ende verschlüsselt.",
     "Ask %(displayName)s to scan your code:": "Bitte %(displayName)s, deinen Code zu scannen:",
     "Verify by emoji": "Mit Emojis verifizieren",
     "Verify by comparing unique emoji.": "Durch den Vergleich einzigartiger Emojis verifizieren.",
@@ -313,17 +311,6 @@
     "Deactivate user": "Konto deaktivieren",
     "Failed to deactivate user": "Benutzer konnte nicht deaktiviert werden",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
-    "Waiting for %(displayName)s to accept…": "Warte auf die Annahme von %(displayName)s …",
-    "Accepting…": "Annehmen…",
-    "Start Verification": "Verifizierung starten",
-    "Messages in this room are end-to-end encrypted.": "Nachrichten in diesem Raum sind Ende-zu-Ende verschlüsselt.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Diese Nachricht ist verschlüsselt. Nur Sie und der Empfänger haben den Schlüssel, um die Nachricht zu entschlüsseln.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Nachrichten in verschlüsselten Räumen können nur von dir und vom Empfänger gelesen werden.",
-    "Verify User": "Nutzer verifizieren",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Für zusätzliche Sicherheit, verifiziere diesen Nutzer, durch Vergleichen eines Einmal-Codes auf euren beiden Geräten.",
-    "Your messages are not secure": "Deine Nachrichten sind nicht sicher",
-    "One of the following may be compromised:": "Eines der folgenden könnte kompromittiert sein:",
-    "Your homeserver": "Dein Heim-Server",
     "This client does not support end-to-end encryption.": "Diese Anwendung unterstützt keine Ende-zu-Ende-Verschlüsselung.",
     "Verify by scanning": "Verifizierung durch Scannen eines QR-Codes",
     "If you can't scan the code above, verify by comparing unique emoji.": "Wenn du obigen Code nicht erfassen kannst, verifiziere stattdessen durch den Vergleich von Emojis.",
@@ -464,11 +451,7 @@
     "Preparing to download logs": "Bereite das Herunterladen der Protokolle vor",
     "Information": "Information",
     "Not encrypted": "Nicht verschlüsselt",
-    "Room settings": "Raumeinstellungen",
     "Backup version:": "Version der Sicherung:",
-    "Widgets": "Widgets",
-    "Edit widgets, bridges & bots": "Widgets, Brücken und Bots bearbeiten",
-    "Add widgets, bridges & bots": "Widgets, Brücken und Bots hinzufügen",
     "Start a conversation with someone using their name or username (like <userId/>).": "Starte ein Gespräch unter Verwendung des Namen oder Benutzernamens des Gegenübers (z. B. <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Lade jemanden mittels Name oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Raum</a>.",
     "Unable to set up keys": "Schlüssel können nicht eingerichtet werden",
@@ -482,9 +465,6 @@
     "Video conference updated by %(senderName)s": "Videokonferenz wurde von %(senderName)s aktualisiert",
     "Video conference started by %(senderName)s": "Videokonferenz von %(senderName)s gestartet",
     "Ignored attempt to disable encryption": "Versuch, die Verschlüsselung zu deaktivieren, wurde ignoriert",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Du kannst nur %(count)s Widgets anheften"
-    },
     "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
     "Modal Widget": "Modales Widget",
     "Uzbekistan": "Usbekistan",
@@ -767,7 +747,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deinen Sicherheitsschlüssel eingibst.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Wenn du deine Sicherheitsphrase vergessen hast, kannst du <button1>deinen Sicherheitsschlüssel nutzen</button1> oder <button2>neue Wiederherstellungsoptionen einrichten</button2>",
     "Security Key mismatch": "Nicht übereinstimmende Sicherheitsschlüssel",
-    "Set my room layout for everyone": "Dein Raumlayout für alle setzen",
     "Remember this": "Dies merken",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Das Widget überprüft deine Nutzer-ID, kann jedoch keine Aktionen für dich ausführen:",
     "Allow this widget to verify your identity": "Erlaube diesem Widget deine Identität zu überprüfen",
@@ -839,12 +818,9 @@
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
     "Some suggestions may be hidden for privacy.": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein.",
     "Or send invite link": "Oder versende einen Einladungslink",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Sofern du die Berechtigung hast, öffne das Menü einer Nachricht und wähle <b>Anheften</b>, ⁣ um sie hier aufzubewahren.",
     "Search for rooms or people": "Räume oder Leute suchen",
     "Sent": "Gesendet",
     "You don't have permission to do this": "Du bist dazu nicht berechtigt",
-    "Pinned messages": "Angeheftete Nachrichten",
-    "Nothing pinned, yet": "Es ist nichts angepinnt. Noch nicht.",
     "Please provide an address": "Bitte gib eine Adresse an",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "Unnamed audio": "Unbenannte Audiodatei",
@@ -910,7 +886,6 @@
     "No answer": "Keine Antwort",
     "Unban from %(roomName)s": "Von %(roomName)s entbannen",
     "Disinvite from %(roomName)s": "Einladung für %(roomName)s zurückziehen",
-    "Export chat": "Unterhaltung exportieren",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
     "Joining": "Trete bei",
     "Thread options": "Thread-Optionen",
@@ -918,20 +893,15 @@
     "If you can't see who you're looking for, send them your invite link below.": "Wenn du die gesuchte Person nicht findest, sende ihr den Einladungslink zu.",
     "Add a space to a space you manage.": "Einen Space zu einem Space den du verwaltest hinzufügen.",
     "Ban from %(roomName)s": "Aus %(roomName)s verbannen",
-    "Yours, or the other users' session": "Die Sitzung von dir oder dem anderen Nutzer",
-    "Yours, or the other users' internet connection": "Die Internetverbindung von dir oder dem anderen Nutzer",
-    "The homeserver the user you're verifying is connected to": "Der Heim-Server der Person, die du verifizierst",
     "Could not connect media": "Konnte Medien nicht verbinden",
     "In encrypted rooms, verify all users to ensure it's secure.": "Verifiziere alle Benutzer in verschlüsselten Räumen, um die Sicherheit zu garantieren.",
     "They'll still be able to access whatever you're not an admin of.": "Die Person wird weiterhin Zutritt zu Bereichen haben, in denen du nicht administrierst.",
     "Reply in thread": "In Thread antworten",
     "Forget": "Vergessen",
-    "Files": "Dateien",
     "%(count)s votes": {
         "one": "%(count)s Stimme",
         "other": "%(count)s Stimmen"
     },
-    "Chat": "Unterhaltung",
     "Recently viewed": "Kürzlich besucht",
     "Developer": "Entwickler",
     "Experimental": "Experimentell",
@@ -978,8 +948,6 @@
     "Ban them from everything I'm able to": "Überall wo ich die Rechte dazu habe bannen",
     "Unban them from everything I'm able to": "Überall wo ich die Rechte dazu habe, entbannen",
     "Messaging": "Kommunikation",
-    "Close this widget to view it in this panel": "Widget schließen und in diesem Panel anzeigen",
-    "Unpin this widget to view it in this panel": "Widget nicht mehr anheften und in diesem Panel anzeigen",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
     "Device verified": "Gerät verifiziert",
@@ -991,7 +959,6 @@
     "Remove from %(roomName)s": "Aus %(roomName)s entfernen",
     "Remove them from specific things I'm able to": "Person aus gewählten, mir möglichen, Bereichen entfernen",
     "Remove them from everything I'm able to": "Person aus allen, mir möglichen Bereichen entfernen",
-    "To proceed, please accept the verification request on your other device.": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
     "Verify this device": "Dieses Gerät verifizieren",
     "Unable to verify this device": "Gerät konnte nicht verifiziert werden",
     "Verify other device": "Anderes Gerät verifizieren",
@@ -1010,7 +977,6 @@
     "Feedback sent! Thanks, we appreciate it!": "Rückmeldung gesendet! Danke, wir wissen es zu schätzen!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s und %(space2Name)s",
     "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
-    "Pinned": "Angeheftet",
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
     "Results will be visible when the poll is ended": "Ergebnisse werden nach Abschluss der Umfrage sichtbar",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "Video call ended": "Videoanruf beendet",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
-    "Room info": "Raum-Info",
     "Completing set up of your new device": "Schließe Anmeldung deines neuen Gerätes ab",
     "Waiting for device to sign in": "Warte auf Anmeldung des Gerätes",
     "Review and approve the sign in": "Überprüfe und genehmige die Anmeldung",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Zu viele Versuche in zu kurzer Zeit. Versuche es erneut nach %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Zu viele Versuche in zu kurzer Zeit. Warte ein wenig, bevor du es erneut versuchst.",
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
-    "Error starting verification": "Verifizierungbeginn fehlgeschlagen",
-    "We were unable to start a chat with the other user.": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
     "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Der Server gab %(statusCode)s mit dem Fehlercode %(errorCode)s zurück",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Wir konnten kein Ereignis nach dem %(dateString)s finden. Versuche, einen früheren Zeitpunkt zu wählen.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Während des Versuchs, zum Datum zu springen, trat ein Netzwerkfehler auf. Möglicherweise ist dein Heim-Server nicht erreichbar oder es liegt ein temporäres Problem mit deiner Internetverbindung vor. Bitte versuche es erneut. Falls dieser Fehler weiterhin auftritt, kontaktiere bitte deine Heim-Server-Administration.",
-    "Poll history": "Umfrageverlauf",
     "Start DM anyway": "Dennoch DM beginnen",
     "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
@@ -3278,7 +3240,13 @@
             "verification_skip_warning": "Ohne dich zu verifizieren wirst du keinen Zugriff auf alle deine Nachrichten haben und könntest für andere als nicht vertrauenswürdig erscheinen.",
             "verify_later": "Später verifizieren",
             "verify_reset_warning_1": "Das Zurücksetzen deiner Sicherheitsschlüssel kann nicht rückgängig gemacht werden. Nach dem Zurücksetzen wirst du alte Nachrichten nicht mehr lesen können un Freunde, die dich vorher verifiziert haben werden Sicherheitswarnungen bekommen, bis du dich erneut mit ihnen verifizierst.",
-            "verify_reset_warning_2": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast."
+            "verify_reset_warning_2": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
+            "self_verification_hint": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
+            "waiting_for_user_accept": "Warte auf die Annahme von %(displayName)s …",
+            "accepting": "Annehmen…",
+            "start_button": "Verifizierung starten",
+            "error_starting_title": "Verifizierungbeginn fehlgeschlagen",
+            "error_starting_description": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich."
         },
         "old_version_detected_title": "Alte Kryptografiedaten erkannt",
         "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
@@ -3323,7 +3291,15 @@
         "cross_signing_room_normal": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
         "cross_signing_room_verified": "Alle in diesem Raum sind verifiziert",
         "event_shield_reason_authenticity_not_guaranteed": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
-        "event_shield_reason_mismatched_sender_key": "Von einer nicht verifizierten Sitzung verschlüsselt"
+        "event_shield_reason_mismatched_sender_key": "Von einer nicht verifizierten Sitzung verschlüsselt",
+        "messages_not_secure": {
+            "title": "Deine Nachrichten sind nicht sicher",
+            "heading": "Eines der folgenden könnte kompromittiert sein:",
+            "cause_1": "Dein Heim-Server",
+            "cause_2": "Der Heim-Server der Person, die du verifizierst",
+            "cause_3": "Die Internetverbindung von dir oder dem anderen Nutzer",
+            "cause_4": "Die Sitzung von dir oder dem anderen Nutzer"
+        }
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3679,7 +3655,10 @@
         "error_loading": "Fehler beim Laden des Widgets",
         "error_mixed_content": "Fehler - Uneinheitlicher Inhalt",
         "unmaximise": "Maximieren rückgängig machen",
-        "popout": "Widget in eigenem Fenster öffnen"
+        "popout": "Widget in eigenem Fenster öffnen",
+        "unpin_to_view_right_panel": "Widget nicht mehr anheften und in diesem Panel anzeigen",
+        "close_to_view_right_panel": "Widget schließen und in diesem Panel anzeigen",
+        "set_room_layout": "Dein Raumlayout für alle setzen"
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -4284,6 +4263,37 @@
         "error_revoke_3pid_invite_description": "Die Einladung konnte nicht zurückgezogen werden. Der Server hat möglicherweise ein vorübergehendes Problem oder du hast nicht ausreichende Berechtigungen, um die Einladung zurückzuziehen.",
         "admin_tools_section": "Administrationswerkzeuge",
         "revoke_invite": "Einladung zurückziehen",
-        "invited_by": "%(sender)s eingeladen"
+        "invited_by": "%(sender)s eingeladen",
+        "room_encrypted": "Nachrichten in diesem Raum sind Ende-zu-Ende verschlüsselt.",
+        "room_encrypted_detail": "Diese Nachricht ist verschlüsselt. Nur Sie und der Empfänger haben den Schlüssel, um die Nachricht zu entschlüsseln.",
+        "room_unencrypted": "Nachrichten in diesem Raum sind nicht Ende-zu-Ende verschlüsselt.",
+        "room_unencrypted_detail": "Nachrichten in verschlüsselten Räumen können nur von dir und vom Empfänger gelesen werden.",
+        "verify_button": "Nutzer verifizieren",
+        "verify_explainer": "Für zusätzliche Sicherheit, verifiziere diesen Nutzer, durch Vergleichen eines Einmal-Codes auf euren beiden Geräten."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Angeheftete Nachrichten",
+            "empty": "Es ist nichts angepinnt. Noch nicht.",
+            "explainer": "Sofern du die Berechtigung hast, öffne das Menü einer Nachricht und wähle <b>Anheften</b>, ⁣ um sie hier aufzubewahren.",
+            "limits": {
+                "other": "Du kannst nur %(count)s Widgets anheften"
+            }
+        },
+        "video_room_chat": {
+            "title": "Unterhaltung"
+        },
+        "room_summary_card": {
+            "title": "Raum-Info"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Widgets, Brücken und Bots bearbeiten",
+        "add_integrations": "Widgets, Brücken und Bots hinzufügen",
+        "files_button": "Dateien",
+        "polls_button": "Umfrageverlauf",
+        "pinned_messages_button": "Angeheftet",
+        "export_chat_button": "Unterhaltung exportieren",
+        "share_button": "Raum teilen",
+        "settings_button": "Raumeinstellungen"
     }
 }

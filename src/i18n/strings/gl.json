@@ -126,7 +126,6 @@
     "We encountered an error trying to restore your previous session.": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Limpando o almacenamento do navegador podería resolver o problema, pero sairás da sesión e non poderás ler o historial cifrado da conversa.",
     "Share Link to User": "Compartir a ligazón coa usuaria",
-    "Share room": "Compartir sala",
     "Share Room": "Compartir sala",
     "Link to most recent message": "Ligazón ás mensaxes máis recentes",
     "Share User": "Compartir usuaria",
@@ -156,8 +155,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) conectouse a unha nova sesión sen verificala:",
     "Ask this user to verify their session, or manually verify it below.": "Pídelle a usuaria que verifique a súa sesión, ou verificaa manualmente aquí.",
     "Not Trusted": "Non confiable",
-    "Messages in this room are end-to-end encrypted.": "As mensaxes desta sala están cifradas de extremo-a-extremo.",
-    "Messages in this room are not end-to-end encrypted.": "As mensaxes desta sala non están cifradas de extremo-a-extremo.",
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
     "Your homeserver has exceeded one of its resource limits.": "O teu servidor superou un dous seus límites de recursos.",
     "Ok": "Ok",
@@ -233,16 +230,6 @@
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Message preview": "Vista previa da mensaxe",
     "Failed to connect to integration manager": "Fallou a conexión co xestor de integracións",
-    "Waiting for %(displayName)s to accept…": "Agardando a que %(displayName)s acepte…",
-    "Accepting…": "Aceptando…",
-    "Start Verification": "Comezar a Verificación",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "As túas mensaxes están seguras e só ti e o correspondente tedes as únicas chaves que as desbloquean.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Nas salas cifradas, as túas mensaxes están seguras e só ti e o correspondente tedes as únicas chaves que as desbloquean.",
-    "Verify User": "Verificar Usuaria",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Para maior seguridade, verifica esta usuaria comprobando o código temporal en dous dos teus dispositivos.",
-    "Your messages are not secure": "As túas mensaxes non están aseguradas",
-    "One of the following may be compromised:": "Un dos seguintes podería estar comprometido:",
-    "Your homeserver": "O teu servidor",
     "%(count)s verified sessions": {
         "other": "%(count)s sesións verificadas",
         "one": "1 sesión verificada"
@@ -464,14 +451,10 @@
     "Preparing to download logs": "Preparándose para descargar rexistro",
     "Information": "Información",
     "Not encrypted": "Sen cifrar",
-    "Room settings": "Axustes da sala",
     "Backup version:": "Versión da copia:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
     "Unable to set up keys": "Non se puideron configurar as chaves",
-    "Widgets": "Widgets",
-    "Edit widgets, bridges & bots": "Editar widgets, pontes e bots",
-    "Add widgets, bridges & bots": "Engade widgets, pontes e bots",
     "Use the <a>Desktop app</a> to see all encrypted files": "Usa a <a>app de Escritorio</a> para ver todos os ficheiros cifrados",
     "Use the <a>Desktop app</a> to search encrypted messages": "Usa a <a>app de Escritorio</a> para buscar mensaxes cifradas",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s non soporta o visionado dalgúns ficheiros cifrados",
@@ -482,9 +465,6 @@
     "Video conference updated by %(senderName)s": "Video conferencia actualizada por %(senderName)s",
     "Video conference started by %(senderName)s": "Video conferencia iniciada por %(senderName)s",
     "Ignored attempt to disable encryption": "Intento ignorado de desactivar o cifrado",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Só podes fixar ata %(count)s widgets"
-    },
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -767,7 +747,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Non se puido acceder ao almacenaxe segredo. Comproba que escribiches correctamente a Frase de Seguridade.",
     "Invalid Security Key": "Chave de Seguridade non válida",
     "Wrong Security Key": "Chave de Seguridade incorrecta",
-    "Set my room layout for everyone": "Establecer a miña disposición da sala para todas",
     "Allow this widget to verify your identity": "Permitir a este widget verificar a túa identidade",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
     "Remember this": "Lembrar isto",
@@ -842,9 +821,6 @@
     "Search for rooms or people": "Busca salas ou persoas",
     "Sent": "Enviado",
     "You don't have permission to do this": "Non tes permiso para facer isto",
-    "Pinned messages": "Mensaxes fixadas",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se tes permisos, abre o menú en calquera mensaxe e elixe <b>Fixar</b> para pegalos aquí.",
-    "Nothing pinned, yet": "Nada fixado, por agora",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
     "User Directory": "Directorio de Usuarias",
     "Please provide an address": "Proporciona un enderezo",
@@ -905,7 +881,6 @@
     "Really reset verification keys?": "Queres restablecer as chaves de verificación?",
     "MB": "MB",
     "In reply to <a>this message</a>": "En resposta a <a>esta mensaxe</a>",
-    "Export chat": "Exportar chat",
     "Downloading": "Descargando",
     "They won't be able to access whatever you're not an admin of.": "Non poderán acceder a calquera lugar no que non sexas administradora.",
     "Ban them from specific things I'm able to": "Vetalos en lugares específicos nos que eu poida",
@@ -923,12 +898,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
     "Joining": "Uníndote",
     "In encrypted rooms, verify all users to ensure it's secure.": "En salas cifradas, verfica tódalas usuarias para ter certeza de que é segura.",
-    "Files": "Ficheiros",
-    "Close this widget to view it in this panel": "Pecha este widget para velo neste panel",
-    "Unpin this widget to view it in this panel": "Desafixar este widget para velo neste panel",
-    "Yours, or the other users' session": "Túas, ou da sesión doutras persoas",
-    "Yours, or the other users' internet connection": "Da túa, ou da conexión a internet doutras persoas",
-    "The homeserver the user you're verifying is connected to": "O servidor ao que está conectado a persoa que estás verificando",
     "Reply in thread": "Responder nun fío",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
     "Thread options": "Opcións da conversa",
@@ -954,7 +923,6 @@
     "Moderation": "Moderación",
     "Messaging": "Conversando",
     "Spaces you know that contain this space": "Espazos que sabes conteñen este espazo",
-    "Chat": "Chat",
     "Recently viewed": "Visto recentemente",
     "%(count)s votes cast. Vote to see the results": {
         "other": "%(count)s votos recollidos. Vota para ver os resultados",
@@ -995,7 +963,6 @@
     "Remove them from specific things I'm able to": "Eliminar de lugares concretos nos que podo facelo",
     "Remove them from everything I'm able to": "Eliminar de tódolos lugares nos que podo facelo",
     "Remove from %(roomName)s": "Eliminar de %(roomName)s",
-    "To proceed, please accept the verification request on your other device.": "Para seguir, acepta a solicitude de verificación no teu outro dispositivo.",
     "Wait!": "Agarda!",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
@@ -1022,7 +989,6 @@
     "My current location": "Localización actual",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non enviou a túa localización. Inténtao máis tarde.",
     "We couldn't send your location": "Non puidemos enviar a túa localización",
-    "Pinned": "Fixado",
     "Click": "Premer",
     "Expand quotes": "Despregar as citas",
     "Collapse quotes": "Pregar as citas",
@@ -2894,7 +2860,11 @@
             "verification_success_without_backup": "O dispositivo xa está verificado. Outras persoas verano como confiable.",
             "verification_skip_warning": "Sen verificación non poderás acceder a tódalas túas mensaxes e poderían aparecer como non confiables ante outras persoas.",
             "verify_later": "Verificarei máis tarde",
-            "verify_reset_warning_1": "O restablecemento das chaves de seguridade non se pode desfacer. Tras o restablecemento, non terás acceso ás antigas mensaxes cifradas, e calquera amizade que verificaras con anterioridade vai ver un aviso de seguridade ata que volvades a verificarvos mutuamente."
+            "verify_reset_warning_1": "O restablecemento das chaves de seguridade non se pode desfacer. Tras o restablecemento, non terás acceso ás antigas mensaxes cifradas, e calquera amizade que verificaras con anterioridade vai ver un aviso de seguridade ata que volvades a verificarvos mutuamente.",
+            "self_verification_hint": "Para seguir, acepta a solicitude de verificación no teu outro dispositivo.",
+            "waiting_for_user_accept": "Agardando a que %(displayName)s acepte…",
+            "accepting": "Aceptando…",
+            "start_button": "Comezar a Verificación"
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -2939,7 +2909,15 @@
         "cross_signing_room_normal": "Esta sala está cifrada extremo-a-extremo",
         "cross_signing_room_verified": "Todas nesta sala están verificadas",
         "event_shield_reason_authenticity_not_guaranteed": "A autenticidade desta mensaxe cifrada non está garantida neste dispositivo.",
-        "event_shield_reason_mismatched_sender_key": "Cifrada por unha sesión non verificada"
+        "event_shield_reason_mismatched_sender_key": "Cifrada por unha sesión non verificada",
+        "messages_not_secure": {
+            "title": "As túas mensaxes non están aseguradas",
+            "heading": "Un dos seguintes podería estar comprometido:",
+            "cause_1": "O teu servidor",
+            "cause_2": "O servidor ao que está conectado a persoa que estás verificando",
+            "cause_3": "Da túa, ou da conexión a internet doutras persoas",
+            "cause_4": "Túas, ou da sesión doutras persoas"
+        }
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -3261,7 +3239,10 @@
         "error_loading": "Erro ao cargar o Widget",
         "error_mixed_content": "Erro - Contido variado",
         "unmaximise": "Restablecer",
-        "popout": "trebello emerxente"
+        "popout": "trebello emerxente",
+        "unpin_to_view_right_panel": "Desafixar este widget para velo neste panel",
+        "close_to_view_right_panel": "Pecha este widget para velo neste panel",
+        "set_room_layout": "Establecer a miña disposición da sala para todas"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3787,6 +3768,33 @@
         "error_revoke_3pid_invite_description": "Non se revogou o convite. O servidor podería estar experimentando un problema temporal ou non tes permisos suficientes para revogar o convite.",
         "admin_tools_section": "Ferramentas de administración",
         "revoke_invite": "Revogar convite",
-        "invited_by": "Convidada por %(sender)s"
+        "invited_by": "Convidada por %(sender)s",
+        "room_encrypted": "As mensaxes desta sala están cifradas de extremo-a-extremo.",
+        "room_encrypted_detail": "As túas mensaxes están seguras e só ti e o correspondente tedes as únicas chaves que as desbloquean.",
+        "room_unencrypted": "As mensaxes desta sala non están cifradas de extremo-a-extremo.",
+        "room_unencrypted_detail": "Nas salas cifradas, as túas mensaxes están seguras e só ti e o correspondente tedes as únicas chaves que as desbloquean.",
+        "verify_button": "Verificar Usuaria",
+        "verify_explainer": "Para maior seguridade, verifica esta usuaria comprobando o código temporal en dous dos teus dispositivos."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Mensaxes fixadas",
+            "empty": "Nada fixado, por agora",
+            "explainer": "Se tes permisos, abre o menú en calquera mensaxe e elixe <b>Fixar</b> para pegalos aquí.",
+            "limits": {
+                "other": "Só podes fixar ata %(count)s widgets"
+            }
+        },
+        "video_room_chat": {
+            "title": "Chat"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Editar widgets, pontes e bots",
+        "add_integrations": "Engade widgets, pontes e bots",
+        "files_button": "Ficheiros",
+        "pinned_messages_button": "Fixado",
+        "export_chat_button": "Exportar chat",
+        "share_button": "Compartir sala",
+        "settings_button": "Axustes da sala"
     }
 }

@@ -126,7 +126,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ezin izan da erantzundako gertaera kargatu, edo ez dago edo ez duzu ikusteko baimenik.",
     "Share Link to User": "Partekatu esteka erabiltzailearekin",
-    "Share room": "Partekatu gela",
     "Share Room": "Partekatu gela",
     "Link to most recent message": "Esteka azken mezura",
     "Share User": "Partekatu erabiltzailea",
@@ -302,7 +301,6 @@
     "Close dialog": "Itxi elkarrizketa-koadroa",
     "Failed to deactivate user": "Huts egin du erabiltzailea desaktibatzeak",
     "This client does not support end-to-end encryption.": "Bezero honek ez du muturretik muturrerako zifratzea onartzen.",
-    "Messages in this room are not end-to-end encrypted.": "Gela honetako mezuak ez daude muturretik muturrera zifratuta.",
     "Cancel search": "Ezeztatu bilaketa",
     "You verified %(name)s": "%(name)s egiaztatu duzu",
     "You cancelled verifying %(name)s": "%(name)s egiaztatzeari utzi diozu",
@@ -314,7 +312,6 @@
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
     "You sent a verification request": "Egiaztaketa eskari bat bidali duzu",
     "Failed to connect to integration manager": "Huts egin du integrazio kudeatzailera konektatzean",
-    "Messages in this room are end-to-end encrypted.": "Gela honetako mezuak muturretik muturrera zifratuta daude.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Erabiltzaile hau ezikusi duzu, beraz bere mezua ezkutatuta dago. <a>Erakutsi hala ere.</a>",
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
@@ -338,13 +335,8 @@
     "Something went wrong trying to invite the users.": "Okerren bat egon da erabiltzaileak gonbidatzen saiatzean.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Ezin izan ditugu erabiltzaile horiek gonbidatu. Egiaztatu gonbidatu nahi dituzun erabiltzaileak eta saiatu berriro.",
     "Recently Direct Messaged": "Berriki mezu zuzena bidalita",
-    "Verify User": "Egiaztatu erabiltzailea",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Segurtasun gehiagorako, egiaztatu erabiltzaile hau aldi-bakarrerako kode bat bi gailuetan egiaztatuz.",
-    "Start Verification": "Hasi egiaztaketa",
     "This backup is trusted because it has been restored on this session": "Babes-kopia hau fidagarritzat jotzen da saio honetan berrekuratu delako",
     "Encrypted by a deleted session": "Ezabatutako saio batek zifratua",
-    "Your messages are not secure": "Zure mezuak ez daude babestuta",
-    "Your homeserver": "Zure hasiera-zerbitzaria",
     "%(count)s sessions": {
         "other": "%(count)s saio",
         "one": "saio %(count)s"
@@ -362,12 +354,8 @@
     "Session name": "Saioaren izena",
     "Session key": "Saioaren gakoa",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
-    "Waiting for %(displayName)s to accept…": "%(displayName)s(e)k onartu bitartean zain…",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Zuen mezuak babestuta daude eta soilik zuk eta hartzaileak dituzue hauek desblokeatzeko gakoak.",
-    "One of the following may be compromised:": "Hauetakoren bat konprometituta egon daiteke:",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Egiztatu gailu hau fidagarri gisa markatzeko. Gailu hau fidagarritzat jotzeak lasaitasuna ematen du muturretik-muturrera zifratutako mezuak erabiltzean.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Gailu hau egiaztatzean fidagarri gisa markatuko da, eta egiaztatu zaituzten erabiltzaileek fidagarri gisa ikusiko dute.",
-    "Accepting…": "Onartzen…",
     "Not Trusted": "Ez konfiantzazkoa",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
     "Ask this user to verify their session, or manually verify it below.": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
@@ -397,7 +385,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Berretsi honako hau zure beste saioaren erabiltzaile-ezarpenetan agertzen denarekin alderatuz:",
     "Confirm this user's session by comparing the following with their User Settings:": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
     "If they don't match, the security of your communication may be compromised.": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
     "Verify all users in a room to ensure it's secure.": "Egiaztatu gela bateko erabiltzaile guztiak segurua dela baieztatzeko.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
     "Almost there! Is %(displayName)s showing the same shield?": "Ia amaitu duzu! %(displayName)s gailuak ezkutu bera erakusten du?",
@@ -1392,7 +1379,10 @@
             "waiting_other_user": "%(displayName)s egiaztatu bitartean zain…",
             "cancelling": "Ezeztatzen…",
             "unverified_sessions_toast_reject": "Geroago",
-            "unverified_session_toast_title": "Saio berria. Zu izan zara?"
+            "unverified_session_toast_title": "Saio berria. Zu izan zara?",
+            "waiting_for_user_accept": "%(displayName)s(e)k onartu bitartean zain…",
+            "accepting": "Onartzen…",
+            "start_button": "Hasi egiaztaketa"
         },
         "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
         "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
@@ -1427,7 +1417,12 @@
         "cross_signing_room_warning": "Baten batek saio ezezagun bat erabiltzen du",
         "cross_signing_room_normal": "Gela hau muturretik muturrera zifratuta dago",
         "cross_signing_room_verified": "Gelako guztiak egiaztatuta daude",
-        "event_shield_reason_mismatched_sender_key": "Egiaztatu gabeko saio batek zifratua"
+        "event_shield_reason_mismatched_sender_key": "Egiaztatu gabeko saio batek zifratua",
+        "messages_not_secure": {
+            "title": "Zure mezuak ez daude babestuta",
+            "heading": "Hauetakoren bat konprometituta egon daiteke:",
+            "cause_1": "Zure hasiera-zerbitzaria"
+        }
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1862,6 +1857,15 @@
         "error_revoke_3pid_invite_description": "Ezin izan da gonbidapena baliogabetu. Zerbitzariak une bateko arazoren bat izan lezake edo agian ez duzu gonbidapena baliogabetzeko baimen nahiko.",
         "admin_tools_section": "Administrazio-tresnak",
         "revoke_invite": "Indargabetu gonbidapena",
-        "invited_by": "%(sender)s erabiltzaileak gonbidatuta"
+        "invited_by": "%(sender)s erabiltzaileak gonbidatuta",
+        "room_encrypted": "Gela honetako mezuak muturretik muturrera zifratuta daude.",
+        "room_encrypted_detail": "Zuen mezuak babestuta daude eta soilik zuk eta hartzaileak dituzue hauek desblokeatzeko gakoak.",
+        "room_unencrypted": "Gela honetako mezuak ez daude muturretik muturrera zifratuta.",
+        "room_unencrypted_detail": "Gela zifratuetan, zuon mezuak babestuta daude, zuk zeuk eta hartzaileak bakarrik duzue hauek deszifratzeko gako bakanak.",
+        "verify_button": "Egiaztatu erabiltzailea",
+        "verify_explainer": "Segurtasun gehiagorako, egiaztatu erabiltzaile hau aldi-bakarrerako kode bat bi gailuetan egiaztatuz."
+    },
+    "right_panel": {
+        "share_button": "Partekatu gela"
     }
 }

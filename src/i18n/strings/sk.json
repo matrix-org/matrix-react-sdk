@@ -125,7 +125,6 @@
     "We encountered an error trying to restore your previous session.": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná.",
     "Share Link to User": "Zdieľať odkaz na používateľa",
-    "Share room": "Zdieľať miestnosť",
     "Share Room": "Zdieľať miestnosť",
     "Link to most recent message": "Odkaz na najnovšiu správu",
     "Share User": "Zdieľať používateľa",
@@ -537,8 +536,6 @@
         "one": "1 overená relácia",
         "other": "%(count)s overených relácií"
     },
-    "Messages in this room are not end-to-end encrypted.": "Správy v tejto miestnosti nie sú šifrované od vás až k príjemcovi.",
-    "Messages in this room are end-to-end encrypted.": "Správy v tejto miestnosti sú šifrované od vás až k príjemcovi.",
     "Sign out and remove encryption keys?": "Odhlásiť sa a odstrániť šifrovacie kľúče?",
     "Unable to copy a link to the room to the clipboard.": "Nie je možné skopírovať odkaz na miestnosť do schránky.",
     "Unable to copy room link": "Nie je možné skopírovať odkaz na miestnosť",
@@ -558,7 +555,6 @@
     "You're all caught up.": "Všetko ste už stihli.",
     "In encrypted rooms, verify all users to ensure it's secure.": "V šifrovaných miestnostiach overte všetkých používateľov, aby ste zaistili ich bezpečnosť.",
     "Verify all users in a room to ensure it's secure.": "Overte všetkých používateľov v miestnosti, aby ste sa uistili, že je zabezpečená.",
-    "The homeserver the user you're verifying is connected to": "Domovský server, ku ktorému je pripojený používateľ, ktorého overujete",
     "Allow this widget to verify your identity": "Umožniť tomuto widgetu overiť vašu totožnosť",
     "Verify by scanning": "Overte naskenovaním",
     "%(name)s cancelled verifying": "%(name)s zrušil/a overovanie",
@@ -575,16 +571,12 @@
     "You declined": "Zamietli ste overenie",
     "Session key": "Kľúč relácie",
     "Session name": "Názov relácie",
-    "Your homeserver": "Váš domovský server",
-    "Start Verification": "Spustiť overovanie",
-    "Verify User": "Overiť používateľa",
     "Verification Request": "Žiadosť o overenie",
     "Show image": "Zobraziť obrázok",
     "e.g. my-room": "napr. moja-miestnost",
     "Deactivate user?": "Deaktivovať používateľa?",
     "Upload all": "Nahrať všetko",
     "Cancel All": "Zrušiť všetky",
-    "Chat": "Konverzácia",
     "Developer": "Vývojárske",
     "Experimental": "Experimentálne",
     "Downloading": "Preberanie",
@@ -594,7 +586,6 @@
     "Sent": "Odoslané",
     "Sending": "Odosielanie",
     "Avatar": "Obrázok",
-    "Accepting…": "Akceptovanie…",
     "Notes": "Poznámky",
     "This address is already in use": "Táto adresa sa už používa",
     "This address is available to use": "Túto adresu je možné použiť",
@@ -629,12 +620,7 @@
     },
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
     "Information": "Informácie",
-    "Room settings": "Nastavenia miestnosti",
     "Room address": "Adresa miestnosti",
-    "Export chat": "Exportovať konverzáciu",
-    "Add widgets, bridges & bots": "Pridať widgety, premostenia a boty",
-    "Edit widgets, bridges & bots": "Upraviť widgety, premostenia a boty",
-    "Widgets": "Widgety",
     "Upload %(count)s other files": {
         "one": "Nahrať %(count)s ďalší súbor",
         "other": "Nahrať %(count)s ďalších súborov"
@@ -644,7 +630,6 @@
     "Upload files (%(current)s of %(total)s)": "Nahrať súbory (%(current)s z %(total)s)",
     "Upload files": "Nahrať súbory",
     "Use the <a>Desktop app</a> to see all encrypted files": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
-    "Files": "Súbory",
     "Invite to %(roomName)s": "Pozvať do miestnosti %(roomName)s",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "View all %(count)s members": {
@@ -681,14 +666,10 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
     "Use the <a>Desktop app</a> to search encrypted messages": "Použite <a>Desktop aplikáciu</a> na vyhľadávanie zašifrovaných správ",
     "Not encrypted": "Nie je zašifrované",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "V šifrovaných miestnostiach sú vaše správy zabezpečené a jedinečné kľúče na ich odomknutie máte len vy a príjemca.",
     "Close dialog": "Zavrieť dialógové okno",
-    "Close this widget to view it in this panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Ak máte oprávnenia, otvorte ponuku pri ľubovoľnej správe a výberom položky <b>Pripnúť</b> ich sem prilepíte.",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Určite, ktoré priestory budú mať prístup do tejto miestnosti. Ak je vybraný priestor, jeho členovia môžu nájsť a pripojiť sa k <RoomName/>.",
     "Select spaces": "Vybrať priestory",
-    "Set my room layout for everyone": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
     "Automatically invite members from this room to the new one": "Automaticky pozvať členov z tejto miestnosti do novej",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s vaším %(brand)s, nahláste prosím <a>chybu</a>.",
@@ -711,8 +692,6 @@
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ste jediným správcom tohto priestoru. Jeho opustenie bude znamenať, že nad ním nikto nebude mať kontrolu.",
     "Your firewall or anti-virus is blocking the request.": "Požiadavku blokuje váš firewall alebo antivírus.",
     "Your homeserver doesn't seem to support this feature.": "Zdá sa, že váš domovský server túto funkciu nepodporuje.",
-    "Your messages are not secure": "Vaše správy nie sú zabezpečené",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vaše správy sú zabezpečené a jedinečné kľúče na ich odomknutie máte len vy a príjemca.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Pri tejto relácii ste už predtým použili novšiu verziu %(brand)s. Ak chcete túto verziu znovu používať s end-to-end šifrovaním, budete sa musieť odhlásiť a znova prihlásiť.",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Úspešne ste overili %(deviceName)s (%(deviceId)s)!",
     "You've successfully verified %(displayName)s!": "Úspešne ste overili %(displayName)s!",
@@ -744,7 +723,6 @@
     "Open in OpenStreetMap": "Otvoriť v OpenStreetMap",
     "Message preview": "Náhľad správy",
     "Unknown failure: %(reason)s": "Neznáma chyba: %(reason)s",
-    "Nothing pinned, yet": "Zatiaľ nie je nič pripnuté",
     "Enter Security Key": "Zadajte bezpečnostný kľúč",
     "Enter Security Phrase": "Zadať bezpečnostnú frázu",
     "Incorrect Security Phrase": "Nesprávna bezpečnostná fráza",
@@ -764,7 +742,6 @@
     "Call declined": "Hovor odmietnutý",
     "Call back": "Zavolať späť",
     "Connection failed": "Pripojenie zlyhalo",
-    "Pinned messages": "Pripnuté správy",
     "Remember this": "Zapamätať si toto",
     "Dial pad": "Číselník",
     "Decline All": "Zamietnuť všetky",
@@ -815,7 +792,6 @@
     "Upload completed": "Nahrávanie dokončené",
     "Enter a server name": "Zadajte názov servera",
     "The encryption used by this room isn't supported.": "Šifrovanie používané v tejto miestnosti nie je podporované.",
-    "Waiting for %(displayName)s to accept…": "Čaká sa, kým to %(displayName)s prijme…",
     "Language Dropdown": "Rozbaľovací zoznam jazykov",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
     "Deactivate user": "Deaktivovať používateľa",
@@ -851,7 +827,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostnej frázy.",
     "Messaging": "Posielanie správ",
-    "To proceed, please accept the verification request on your other device.": "Ak chcete pokračovať, prijmite žiadosť o overenie na vašom druhom zariadení.",
     "Verify other device": "Overenie iného zariadenia",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zabudli ste alebo ste stratili všetky metódy obnovy? <a>Resetovať všetko</a>",
     "%(spaceName)s and %(count)s others": {
@@ -868,8 +843,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Overenie tohto používateľa označí jeho reláciu ako dôveryhodnú a zároveň označí vašu reláciu ako dôveryhodnú pre neho.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vymazanie všetkých údajov z tejto relácie je trvalé. Zašifrované správy sa stratia, pokiaľ neboli zálohované ich kľúče.",
     "Clear all data in this session?": "Vymazať všetky údaje v tejto relácii?",
-    "One of the following may be compromised:": "Jedna z nasledujúcich vecí môže byť narušená:",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "V záujme zvýšenia bezpečnosti overte tohto používateľa tak, že na oboch zariadeniach skontrolujete jednorazový kód.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Týchto používateľov sme nemohli pozvať. Skontrolujte prosím používateľov, ktorých chcete pozvať, a skúste to znova.",
     "Something went wrong trying to invite the users.": "Pri pokuse o pozvanie používateľov sa niečo pokazilo.",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Nasledujúci používatelia nemusia existovať alebo sú neplatní a nemožno ich pozvať: %(csvNames)s",
@@ -928,17 +901,11 @@
     "Can't load this message": "Nemožno načítať túto správu",
     "Error processing audio message": "Chyba pri spracovaní hlasovej správy",
     "Some encryption parameters have been changed.": "Niektoré parametre šifrovania boli zmenené.",
-    "Unpin this widget to view it in this panel": "Ak chcete tento widget zobraziť na tomto paneli, zrušte jeho pripnutie",
-    "Yours, or the other users' session": "Vaša relácia alebo relácia ostatných používateľov",
-    "Yours, or the other users' internet connection": "Vaše internetové pripojenie alebo internetové pripojenie ostatných používateľov",
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
     "Video conference updated by %(senderName)s": "Videokonferencia aktualizovaná používateľom %(senderName)s",
     "Video conference started by %(senderName)s": "Videokonferencia spustená používateľom %(senderName)s",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Môžete pripnúť iba %(count)s widgetov"
-    },
     "No answer": "Žiadna odpoveď",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
     "Data on this screen is shared with %(widgetDomain)s": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s",
@@ -1006,7 +973,6 @@
     "Could not connect media": "Nepodarilo sa pripojiť médiá",
     "They won't be able to access whatever you're not an admin of.": "Nebudú mať prístup k tomu, čoho nie ste správcom.",
     "They'll still be able to access whatever you're not an admin of.": "Stále budú mať prístup ku všetkému, čoho nie ste správcom.",
-    "Pinned": "Pripnuté",
     "Command Help": "Pomocník príkazov",
     "My live location": "Moja poloha v reálnom čase",
     "My current location": "Moja aktuálna poloha",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
     "Video call ended": "Videohovor ukončený",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
-    "Room info": "Informácie o miestnosti",
     "Completing set up of your new device": "Dokončenie nastavenia nového zariadenia",
     "Waiting for device to sign in": "Čaká sa na prihlásenie zariadenia",
     "Review and approve the sign in": "Skontrolujte a schváľte prihlásenie",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu.",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
-    "We were unable to start a chat with the other user.": "Nepodarilo sa nám spustiť konverzáciu s druhým používateľom.",
-    "Error starting verification": "Chyba pri spustení overovania",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNENIE:</w> <description/>",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Server vrátil %(statusCode)s s kódom chyby %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nepodarilo sa nám nájsť udalosť od dátumu %(dateString)s. Skúste vybrať skorší dátum.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Pri pokuse nájsť a prejsť na daný dátum došlo k sieťovej chybe. Váš domovský server môže byť vypnutý alebo sa vyskytol len dočasný problém s internetovým pripojením. Skúste to prosím znova. Ak to bude pokračovať, obráťte sa na správcu domovského servera.",
-    "Poll history": "História ankety",
     "Start DM anyway": "Spustiť priamu správu aj tak",
     "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
@@ -3271,7 +3233,13 @@
             "verification_skip_warning": "Bez overenia nebudete mať prístup ku všetkým svojim správam a pre ostatných sa môžete javiť ako nedôveryhodní.",
             "verify_later": "Overím to neskôr",
             "verify_reset_warning_1": "Vynulovanie overovacích kľúčov sa nedá vrátiť späť. Po vynulovaní nebudete mať prístup k starým zašifrovaným správam a všetci priatelia, ktorí vás predtým overili, uvidia bezpečnostné upozornenia, kým sa u nich znovu neoveríte.",
-            "verify_reset_warning_2": "Pokračujte prosím iba vtedy, ak ste si istí, že ste stratili všetky ostatné zariadenia a váš bezpečnostný kľúč."
+            "verify_reset_warning_2": "Pokračujte prosím iba vtedy, ak ste si istí, že ste stratili všetky ostatné zariadenia a váš bezpečnostný kľúč.",
+            "self_verification_hint": "Ak chcete pokračovať, prijmite žiadosť o overenie na vašom druhom zariadení.",
+            "waiting_for_user_accept": "Čaká sa, kým to %(displayName)s prijme…",
+            "accepting": "Akceptovanie…",
+            "start_button": "Spustiť overovanie",
+            "error_starting_title": "Chyba pri spustení overovania",
+            "error_starting_description": "Nepodarilo sa nám spustiť konverzáciu s druhým používateľom."
         },
         "old_version_detected_title": "Nájdené zastaralé kryptografické údaje",
         "old_version_detected_description": "Boli zistené údaje zo staršej verzie %(brand)s. To spôsobilo nefunkčnosť end-to-end kryptografie v staršej verzii. End-to-end šifrované správy, ktoré boli nedávno vymenené pri používaní staršej verzie, sa v tejto verzii nemusia dať dešifrovať. To môže spôsobiť aj zlyhanie správ vymenených pomocou tejto verzie. Ak sa vyskytnú problémy, odhláste sa a znova sa prihláste. Ak chcete zachovať históriu správ, exportujte a znovu importujte svoje kľúče.",
@@ -3316,7 +3284,15 @@
         "cross_signing_room_normal": "Táto miestnosť je end-to-end šifrovaná",
         "cross_signing_room_verified": "Všetci v tejto miestnosti sú overení",
         "event_shield_reason_authenticity_not_guaranteed": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
-        "event_shield_reason_mismatched_sender_key": "Šifrované neoverenou reláciou"
+        "event_shield_reason_mismatched_sender_key": "Šifrované neoverenou reláciou",
+        "messages_not_secure": {
+            "title": "Vaše správy nie sú zabezpečené",
+            "heading": "Jedna z nasledujúcich vecí môže byť narušená:",
+            "cause_1": "Váš domovský server",
+            "cause_2": "Domovský server, ku ktorému je pripojený používateľ, ktorého overujete",
+            "cause_3": "Vaše internetové pripojenie alebo internetové pripojenie ostatných používateľov",
+            "cause_4": "Vaša relácia alebo relácia ostatných používateľov"
+        }
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3672,7 +3648,10 @@
         "error_loading": "Chyba pri načítaní widgetu",
         "error_mixed_content": "Chyba - Zmiešaný obsah",
         "unmaximise": "Zrušiť maximalizáciu",
-        "popout": "Otvoriť widget v novom okne"
+        "popout": "Otvoriť widget v novom okne",
+        "unpin_to_view_right_panel": "Ak chcete tento widget zobraziť na tomto paneli, zrušte jeho pripnutie",
+        "close_to_view_right_panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli",
+        "set_room_layout": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých"
     },
     "feedback": {
         "sent": "Spätná väzba odoslaná",
@@ -4277,6 +4256,37 @@
         "error_revoke_3pid_invite_description": "Pozvánku nebolo možné odvolať. Na serveri môže byť dočasný problém alebo nemáte dostatočné oprávnenia na odvolanie pozvánky.",
         "admin_tools_section": "Nástroje správcu",
         "revoke_invite": "Odvolať pozvánku",
-        "invited_by": "Pozvaný používateľom %(sender)s"
+        "invited_by": "Pozvaný používateľom %(sender)s",
+        "room_encrypted": "Správy v tejto miestnosti sú šifrované od vás až k príjemcovi.",
+        "room_encrypted_detail": "Vaše správy sú zabezpečené a jedinečné kľúče na ich odomknutie máte len vy a príjemca.",
+        "room_unencrypted": "Správy v tejto miestnosti nie sú šifrované od vás až k príjemcovi.",
+        "room_unencrypted_detail": "V šifrovaných miestnostiach sú vaše správy zabezpečené a jedinečné kľúče na ich odomknutie máte len vy a príjemca.",
+        "verify_button": "Overiť používateľa",
+        "verify_explainer": "V záujme zvýšenia bezpečnosti overte tohto používateľa tak, že na oboch zariadeniach skontrolujete jednorazový kód."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Pripnuté správy",
+            "empty": "Zatiaľ nie je nič pripnuté",
+            "explainer": "Ak máte oprávnenia, otvorte ponuku pri ľubovoľnej správe a výberom položky <b>Pripnúť</b> ich sem prilepíte.",
+            "limits": {
+                "other": "Môžete pripnúť iba %(count)s widgetov"
+            }
+        },
+        "video_room_chat": {
+            "title": "Konverzácia"
+        },
+        "room_summary_card": {
+            "title": "Informácie o miestnosti"
+        },
+        "widgets_section": "Widgety",
+        "edit_integrations": "Upraviť widgety, premostenia a boty",
+        "add_integrations": "Pridať widgety, premostenia a boty",
+        "files_button": "Súbory",
+        "polls_button": "História ankety",
+        "pinned_messages_button": "Pripnuté",
+        "export_chat_button": "Exportovať konverzáciu",
+        "share_button": "Zdieľať miestnosť",
+        "settings_button": "Nastavenia miestnosti"
     }
 }

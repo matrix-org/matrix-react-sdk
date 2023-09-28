@@ -126,7 +126,6 @@
     "Send Logs": "Invia i log",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Eliminare l'archiviazione del browser potrebbe risolvere il problema, ma verrai disconnesso e la cronologia delle chat criptate sarà illeggibile.",
     "Share Link to User": "Condividi link utente",
-    "Share room": "Condividi stanza",
     "Share Room": "Condividi stanza",
     "Link to most recent message": "Link al messaggio più recente",
     "Share User": "Condividi utente",
@@ -303,7 +302,6 @@
     "Show image": "Mostra immagine",
     "Failed to deactivate user": "Disattivazione utente fallita",
     "This client does not support end-to-end encryption.": "Questo client non supporta la crittografia end-to-end.",
-    "Messages in this room are not end-to-end encrypted.": "I messaggi in questa stanza non sono cifrati end-to-end.",
     "Cancel search": "Annulla ricerca",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Hai ignorato questo utente, perciò il suo messaggio è nascosto. <a>Mostra comunque.</a>",
     "You verified %(name)s": "Hai verificato %(name)s",
@@ -315,7 +313,6 @@
     "%(name)s cancelled": "%(name)s ha annullato",
     "%(name)s wants to verify": "%(name)s vuole verificare",
     "You sent a verification request": "Hai inviato una richiesta di verifica",
-    "Messages in this room are end-to-end encrypted.": "I messaggi in questa stanza sono cifrati end-to-end.",
     "Failed to connect to integration manager": "Connessione al gestore di integrazioni fallita",
     "Integrations are disabled": "Le integrazioni sono disattivate",
     "Integrations not allowed": "Integrazioni non permesse",
@@ -340,16 +337,8 @@
     "Something went wrong trying to invite the users.": "Qualcosa è andato storto provando ad invitare gli utenti.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Impossibile invitare quegli utenti. Ricontrolla gli utenti che vuoi invitare e riprova.",
     "Recently Direct Messaged": "Contattati direttamente di recente",
-    "Verify User": "Verifica utente",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Per maggiore sicurezza, verifica questo utente controllando un codice univoco sui vostri dispositivi.",
-    "Start Verification": "Inizia la verifica",
     "This backup is trusted because it has been restored on this session": "Questo backup è fidato perchè è stato ripristinato in questa sessione",
     "Encrypted by a deleted session": "Cifrato da una sessione eliminata",
-    "Waiting for %(displayName)s to accept…": "In attesa che %(displayName)s accetti…",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "I tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
-    "Your messages are not secure": "I tuoi messaggi non sono sicuri",
-    "One of the following may be compromised:": "Uno dei seguenti potrebbe essere compromesso:",
-    "Your homeserver": "Il tuo homeserver",
     "%(count)s sessions": {
         "other": "%(count)s sessioni",
         "one": "%(count)s sessione"
@@ -379,7 +368,6 @@
     "You declined": "Hai rifiutato",
     "%(name)s declined": "%(name)s ha rifiutato",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Per segnalare un problema di sicurezza relativo a Matrix, leggi la <a>Politica di divulgazione della sicurezza</a> di Matrix.org .",
-    "Accepting…": "Accettazione…",
     "Enter a server name": "Inserisci il nome di un server",
     "Looks good": "Sembra giusto",
     "Can't find this server or its room list": "Impossibile trovare questo server o l'elenco delle sue stanze",
@@ -399,7 +387,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Conferma confrontando il seguente con le impostazioni utente nell'altra sessione:",
     "Confirm this user's session by comparing the following with their User Settings:": "Conferma questa sessione confrontando il seguente con le sue impostazioni utente:",
     "If they don't match, the security of your communication may be compromised.": "Se non corrispondono, la sicurezza delle tue comunicazioni potrebbe essere compromessa.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Nelle stanze cifrate, i tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
     "Verify all users in a room to ensure it's secure.": "Verifica tutti gli utenti in una stanza per confermare che sia sicura.",
     "Sign in with SSO": "Accedi con SSO",
     "Almost there! Is %(displayName)s showing the same shield?": "Quasi fatto! %(displayName)s sta mostrando lo stesso scudo?",
@@ -465,10 +452,6 @@
     "Information": "Informazione",
     "Backup version:": "Versione backup:",
     "Not encrypted": "Non cifrato",
-    "Room settings": "Impostazioni stanza",
-    "Widgets": "Widget",
-    "Edit widgets, bridges & bots": "Modifica widget, bridge e bot",
-    "Add widgets, bridges & bots": "Aggiungi widget, bridge e bot",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome o il nome utente (come <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questa stanza</a>.",
     "Unable to set up keys": "Impossibile impostare le chiavi",
@@ -482,9 +465,6 @@
     "Video conference updated by %(senderName)s": "Conferenza video aggiornata da %(senderName)s",
     "Video conference started by %(senderName)s": "Conferenza video iniziata da %(senderName)s",
     "Ignored attempt to disable encryption": "Tentativo di disattivare la crittografia ignorato",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Puoi ancorare al massimo %(count)s widget"
-    },
     "Data on this screen is shared with %(widgetDomain)s": "I dati in questa schermata vengono condivisi con %(widgetDomain)s",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questa stanza</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome, indirizzo email o nome utente (come <userId/>).",
@@ -767,7 +747,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Impossibile accedere all'archivio segreto. Verifica di avere inserito la password di sicurezza giusta.",
     "Invalid Security Key": "Chiave di sicurezza non valida",
     "Wrong Security Key": "Chiave di sicurezza sbagliata",
-    "Set my room layout for everyone": "Imposta la disposizione della stanza per tutti",
     "Allow this widget to verify your identity": "Permetti a questo widget di verificare la tua identità",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Il widget verificherà il tuo ID utente, ma non sarà un grado di eseguire azioni per te:",
     "Remember this": "Ricordalo",
@@ -842,9 +821,6 @@
     "Search for rooms or people": "Cerca stanze o persone",
     "Sent": "Inviato",
     "You don't have permission to do this": "Non hai il permesso per farlo",
-    "Nothing pinned, yet": "Non c'è ancora nulla di ancorato",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Se ne hai il permesso, apri il menu di qualsiasi messaggio e seleziona <b>Fissa</b> per ancorarlo qui.",
-    "Pinned messages": "Messaggi ancorati",
     "Please provide an address": "Inserisci un indirizzo",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
@@ -905,7 +881,6 @@
     "Really reset verification keys?": "Reimpostare le chiavi di verifica?",
     "MB": "MB",
     "In reply to <a>this message</a>": "In risposta a <a>questo messaggio</a>",
-    "Export chat": "Esporta conversazione",
     "Ban them from everything I'm able to": "Bandiscilo ovunque io possa farlo",
     "Unban them from everything I'm able to": "Riammettilo ovunque io possa farlo",
     "Ban from %(roomName)s": "Bandisci da %(roomName)s",
@@ -925,15 +900,9 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Riprendi l'accesso al tuo account e recupera le chiavi di crittografia memorizzate in questa sessione. Senza di esse, non sarai in grado di leggere tutti i tuoi messaggi sicuri in qualsiasi sessione.",
     "If you can't see who you're looking for, send them your invite link below.": "Se non vedi chi stai cercando, mandagli il collegamento di invito sottostante.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Nelle stanze cifrate, verifica tutti gli utenti per confermare che siano sicure.",
-    "Yours, or the other users' session": "La tua sessione o quella degli altri utenti",
-    "Yours, or the other users' internet connection": "La tua connessione internet o quella degli altri utenti",
-    "The homeserver the user you're verifying is connected to": "L'homeserver al quale è connesso l'utente che stai verificando",
     "Thread options": "Opzioni conversazione",
     "Reply in thread": "Rispondi nella conversazione",
     "Forget": "Dimentica",
-    "Files": "File",
-    "Close this widget to view it in this panel": "Chiudi questo widget per vederlo in questo pannello",
-    "Unpin this widget to view it in this panel": "Sblocca questo widget per vederlo in questo pannello",
     "Based on %(count)s votes": {
         "one": "Basato su %(count)s voto",
         "other": "Basato su %(count)s voti"
@@ -954,7 +923,6 @@
     "Themes": "Temi",
     "Moderation": "Moderazione",
     "Spaces you know that contain this space": "Spazi di cui sai che contengono questo spazio",
-    "Chat": "Chat",
     "%(count)s votes cast. Vote to see the results": {
         "one": "%(count)s voto. Vota per vedere i risultati",
         "other": "%(count)s voti. Vota per vedere i risultati"
@@ -993,7 +961,6 @@
     "Verify other device": "Verifica altro dispositivo",
     "You cancelled verification on your other device.": "Hai annullato la verifica nell'altro dispositivo.",
     "Almost there! Is your other device showing the same shield?": "Quasi fatto! L'altro dispositivo sta mostrando lo stesso scudo?",
-    "To proceed, please accept the verification request on your other device.": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
     "Could not fetch location": "Impossibile rilevare la posizione",
     "Remove from room": "Rimuovi dalla stanza",
     "Failed to remove user": "Rimozione utente fallita",
@@ -1020,7 +987,6 @@
     "Drop a Pin": "Lascia una puntina",
     "My live location": "La mia posizione in tempo reale",
     "My current location": "La mia posizione attuale",
-    "Pinned": "Fissato",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non ha potuto inviare la tua posizione. Riprova più tardi.",
     "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione",
     "Click": "Click",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "Video call ended": "Videochiamata terminata",
     "%(name)s started a video call": "%(name)s ha iniziato una videochiamata",
-    "Room info": "Info stanza",
     "Completing set up of your new device": "Completamento configurazione nuovo dispositivo",
     "Waiting for device to sign in": "In attesa che il dispositivo acceda",
     "Review and approve the sign in": "Verifica e approva l'accesso",
@@ -1150,8 +1115,6 @@
     "Too many attempts in a short time. Wait some time before trying again.": "Troppi tentativi in poco tempo. Attendi un po' prima di riprovare.",
     "Thread root ID: %(threadRootId)s": "ID root del thread: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>ATTENZIONE:</w> <description/>",
-    "We were unable to start a chat with the other user.": "Non siamo riusciti ad avviare la conversazione con l'altro utente.",
-    "Error starting verification": "Errore di avvio della verifica",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Non puoi iniziare un messaggio vocale perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare un messaggio vocale.",
     "Can't start voice message": "Impossibile iniziare il messaggio vocale",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Il server ha risposto %(statusCode)s con codice errore %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Non siamo riusciti a trovare un evento successivo al %(dateString)s. Prova con una data precedente.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Si è verificato un errore di rete tentando di trovare e saltare alla data scelta. Il tuo homeserver potrebbe essere irraggiungibile o c'è stato un problema temporaneo con la tua connessione. Riprova. Se persiste, contatta l'amministratore del tuo homeserver.",
-    "Poll history": "Cronologia sondaggi",
     "Start DM anyway": "Inizia il messaggio lo stesso",
     "Start DM anyway and never warn me again": "Inizia il messaggio lo stesso e non avvisarmi più",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque iniziare un messaggio diretto?",
@@ -3278,7 +3240,13 @@
             "verification_skip_warning": "Senza la verifica, non avrai accesso a tutti i tuoi messaggi e potresti apparire agli altri come non fidato.",
             "verify_later": "Verificherò dopo",
             "verify_reset_warning_1": "La reimpostazione delle chiavi di verifica non può essere annullata. Dopo averlo fatto, non avrai accesso ai vecchi messaggi cifrati, e gli amici che ti avevano verificato in precedenza vedranno avvisi di sicurezza fino a quando non ti ri-verifichi con loro.",
-            "verify_reset_warning_2": "Procedi solo se sei sicuro di avere perso tutti gli altri tuoi dispositivi e la chiave di sicurezza."
+            "verify_reset_warning_2": "Procedi solo se sei sicuro di avere perso tutti gli altri tuoi dispositivi e la chiave di sicurezza.",
+            "self_verification_hint": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
+            "waiting_for_user_accept": "In attesa che %(displayName)s accetti…",
+            "accepting": "Accettazione…",
+            "start_button": "Inizia la verifica",
+            "error_starting_title": "Errore di avvio della verifica",
+            "error_starting_description": "Non siamo riusciti ad avviare la conversazione con l'altro utente."
         },
         "old_version_detected_title": "Rilevati dati di crittografia obsoleti",
         "old_version_detected_description": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
@@ -3323,7 +3291,15 @@
         "cross_signing_room_normal": "Questa stanza è cifrata end-to-end",
         "cross_signing_room_verified": "Tutti in questa stanza sono verificati",
         "event_shield_reason_authenticity_not_guaranteed": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
-        "event_shield_reason_mismatched_sender_key": "Cifrato da una sessione non verificata"
+        "event_shield_reason_mismatched_sender_key": "Cifrato da una sessione non verificata",
+        "messages_not_secure": {
+            "title": "I tuoi messaggi non sono sicuri",
+            "heading": "Uno dei seguenti potrebbe essere compromesso:",
+            "cause_1": "Il tuo homeserver",
+            "cause_2": "L'homeserver al quale è connesso l'utente che stai verificando",
+            "cause_3": "La tua connessione internet o quella degli altri utenti",
+            "cause_4": "La tua sessione o quella degli altri utenti"
+        }
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",
@@ -3679,7 +3655,10 @@
         "error_loading": "Errore di caricamento del widget",
         "error_mixed_content": "Errore - Contenuto misto",
         "unmaximise": "Demassimizza",
-        "popout": "Oggetto a comparsa"
+        "popout": "Oggetto a comparsa",
+        "unpin_to_view_right_panel": "Sblocca questo widget per vederlo in questo pannello",
+        "close_to_view_right_panel": "Chiudi questo widget per vederlo in questo pannello",
+        "set_room_layout": "Imposta la disposizione della stanza per tutti"
     },
     "feedback": {
         "sent": "Feedback inviato",
@@ -4284,6 +4263,37 @@
         "error_revoke_3pid_invite_description": "Impossibile revocare l'invito. Il server potrebbe avere un problema temporaneo o non si dispone di autorizzazioni sufficienti per revocare l'invito.",
         "admin_tools_section": "Strumenti di amministrazione",
         "revoke_invite": "Revoca invito",
-        "invited_by": "Invitato/a da %(sender)s"
+        "invited_by": "Invitato/a da %(sender)s",
+        "room_encrypted": "I messaggi in questa stanza sono cifrati end-to-end.",
+        "room_encrypted_detail": "I tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
+        "room_unencrypted": "I messaggi in questa stanza non sono cifrati end-to-end.",
+        "room_unencrypted_detail": "Nelle stanze cifrate, i tuoi messaggi sono protetti e solo tu ed il destinatario avete le chiavi univoche per sbloccarli.",
+        "verify_button": "Verifica utente",
+        "verify_explainer": "Per maggiore sicurezza, verifica questo utente controllando un codice univoco sui vostri dispositivi."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Messaggi ancorati",
+            "empty": "Non c'è ancora nulla di ancorato",
+            "explainer": "Se ne hai il permesso, apri il menu di qualsiasi messaggio e seleziona <b>Fissa</b> per ancorarlo qui.",
+            "limits": {
+                "other": "Puoi ancorare al massimo %(count)s widget"
+            }
+        },
+        "video_room_chat": {
+            "title": "Chat"
+        },
+        "room_summary_card": {
+            "title": "Info stanza"
+        },
+        "widgets_section": "Widget",
+        "edit_integrations": "Modifica widget, bridge e bot",
+        "add_integrations": "Aggiungi widget, bridge e bot",
+        "files_button": "File",
+        "polls_button": "Cronologia sondaggi",
+        "pinned_messages_button": "Fissato",
+        "export_chat_button": "Esporta conversazione",
+        "share_button": "Condividi stanza",
+        "settings_button": "Impostazioni stanza"
     }
 }

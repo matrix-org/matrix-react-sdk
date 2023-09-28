@@ -95,9 +95,7 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Notaðu <a>tölvuforritið</a> til að sjá öll dulrituð gögn",
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
-    "Messages in this room are end-to-end encrypted.": "Skilaboð í þessari spjallrás eru enda-í-enda dulrituð.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
-    "Room settings": "Stillingar spjallrásar",
     "Room Settings - %(roomName)s": "Stillingar spjallrásar - %(roomName)s",
     "Recently Direct Messaged": "Nýsend bein skilaboð",
     "Direct Messages": "Bein skilaboð",
@@ -111,7 +109,6 @@
     "Hide verified sessions": "Fela sannreyndar setur",
     "Remove recent messages": "Fjarlægja nýleg skilaboð",
     "Remove recent messages by %(user)s": "Fjarlægja nýleg skilaboð frá %(user)s",
-    "Messages in this room are not end-to-end encrypted.": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",
     "Removing…": "Er að fjarlægja…",
     "edited": "breytti",
     "Banana": "Banani",
@@ -400,7 +397,6 @@
     "Experimental": "Á tilraunastigi",
     "Themes": "Þemu",
     "Moderation": "Umsjón",
-    "Widgets": "Viðmótshlutar",
     "Ok": "Í lagi",
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s og %(count)s til viðbótar",
@@ -468,9 +464,6 @@
     "Ban from %(roomName)s": "Banna í %(roomName)s",
     "Unban from %(roomName)s": "Afbanna í %(roomName)s",
     "Remove from room": "Fjarlægja úr spjallrás",
-    "Share room": "Deila spjallrás",
-    "Files": "Skrár",
-    "Chat": "Spjall",
     "Recently viewed": "Nýlega skoðað",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
@@ -562,7 +555,6 @@
     "Spanner": "Skrúflykill",
     "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
     "This homeserver would like to make sure you are not a robot.": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
-    "Your homeserver": "Heimaþjónninn þinn",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
     "Spaces you know that contain this room": "Svæði sem þú veist að innihalda þetta svæði",
     "Spaces you know that contain this space": "Svæði sem þú veist að innihalda þetta svæði",
@@ -582,7 +574,6 @@
     "Ask this user to verify their session, or manually verify it below.": "Biddu þennan notanda að sannreyna setuna sína, eða sannreyndu hana handvirkt hér fyrir neðan.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) skráði sig inn í nýja setu án þess að sannvotta hana:",
     "You signed in to a new session without verifying it:": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
-    "Your messages are not secure": "Skilaboðin þín eru ekki örugg",
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
     "Rooms and spaces": "Spjallrásir og svæði",
@@ -674,8 +665,6 @@
         "one": "%(count)s seta",
         "other": "%(count)s setur"
     },
-    "Export chat": "Flytja út spjall",
-    "Pinned": "Fest",
     "Share User": "Deila notanda",
     "Server isn't responding": "Netþjónninn er ekki að svara",
     "You're all caught up.": "Þú hefur klárað að lesa allt.",
@@ -758,7 +747,6 @@
     "%(name)s cancelled verifying": "%(name)s hætti við sannvottun",
     "%(displayName)s cancelled verification.": "%(displayName)s hætti við sannvottun.",
     "Ask %(displayName)s to scan your code:": "Biddu %(displayName)s um að skanna kóðann þinn:",
-    "Accepting…": "Samþykki…",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svör"
@@ -797,8 +785,6 @@
     "You verified %(name)s": "Þú sannreyndir %(name)s",
     "You cancelled verification.": "Þú hættir við sannvottun.",
     "Verification timed out.": "Sannvottun rann út á tíma.",
-    "Verify User": "Sannreyna notanda",
-    "Start Verification": "Hefja sannvottun",
     "Identity server URL does not appear to be a valid identity server": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
     "Invalid base_url for m.identity_server": "Ógilt base_url fyrir m.identity_server",
     "Joining": "Geng í hópinn",
@@ -821,9 +807,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Vantar heiti spjallrásar eða aðgreini, t.d. (spjallrásin-mín:lén.org)",
     "Missing domain separator e.g. (:domain.org)": "Vantar aðgreini léns, t.d. (:lén.org)",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Frumstilling leitar í skilaboðum mistókst, skoðaðu <a>stillingarnar þínar</a> til að fá nánari upplýsingar",
-    "Pinned messages": "Föst skilaboð",
-    "Nothing pinned, yet": "Ekkert fest, ennþá",
-    "One of the following may be compromised:": "Eitt af eftirfarandi gæti verið berskjaldað:",
     "Unable to verify this device": "Tókst ekki að sannreyna þetta tæki",
     "Unnamed audio": "Nafnlaust hljóð",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
@@ -884,11 +867,6 @@
     "Almost there! Is %(displayName)s showing the same shield?": "Næstum því búið! Sýnir %(displayName)s sama skjöldinn?",
     "Almost there! Is your other device showing the same shield?": "Næstum því búið! Sýnir hitt tækið þitt sama skjöldinn?",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að gefa notandanum jafn mikil völd og þú hefur sjálf/ur.",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Þú getur bara fest allt að %(count)s viðmótshluta"
-    },
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Öryggi skilaboðanna þinna er tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
-    "Waiting for %(displayName)s to accept…": "Bíð eftir að %(displayName)s samþykki…",
     "Your area is experiencing difficulties connecting to the internet.": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
     "Upgrade Room Version": "Uppfæra útgáfu spjallrásar",
     "Upgrade this room to version %(version)s": "Uppfæra þessa spjallrás í útgáfu %(version)s",
@@ -986,10 +964,6 @@
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
     "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
     "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
-    "Add widgets, bridges & bots": "Bæta við viðmótshlutum, brúm og vélmennum",
-    "Edit widgets, bridges & bots": "Breyta viðmótshlutum, brúm og vélmennum",
-    "Close this widget to view it in this panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi",
-    "Unpin this widget to view it in this panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Þú ert eini stjórnandi þessa svæðis. Ef þú yfirgefur það verður enginn annar sem er með stjórn yfir því.",
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
@@ -1004,11 +978,9 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
     "<w>WARNING:</w> <description/>": "<w>AÐVÖRUN:</w> <description/>",
     "Error downloading image": "Villa kom upp við að sækja mynd",
-    "Room info": "Upplýsingar um spjallrás",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Þú getur ekki afturkallað þessa aðgerð, þar sem þú ert að lækka sjálfa/n þig í tign, og ef þú ert síðasti notandinn með nógu mikil völd á þessu svæði, verður ómögulegt að ná aftur stjórn á því.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Á dulrituðum spjallrásum er öryggi skilaboðanna þinna tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -2789,7 +2761,10 @@
             "verify_using_key_or_phrase": "Sannreyna með öryggisfrasa",
             "verify_using_key": "Sannreyna með öryggislykli",
             "verify_using_device": "Sannreyna með öðru tæki",
-            "verify_later": "Ég mun sannreyna síðar"
+            "verify_later": "Ég mun sannreyna síðar",
+            "waiting_for_user_accept": "Bíð eftir að %(displayName)s samþykki…",
+            "accepting": "Samþykki…",
+            "start_button": "Hefja sannvottun"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -2826,7 +2801,12 @@
         "cross_signing_room_warning": "Einhver er að nota óþekkta setu",
         "cross_signing_room_normal": "Þessi spjallrás er enda-í-enda dulrituð",
         "cross_signing_room_verified": "Allir á þessari spjallrás eru staðfestir",
-        "event_shield_reason_mismatched_sender_key": "Dulritað meðf ósannreyndu tæki"
+        "event_shield_reason_mismatched_sender_key": "Dulritað meðf ósannreyndu tæki",
+        "messages_not_secure": {
+            "title": "Skilaboðin þín eru ekki örugg",
+            "heading": "Eitt af eftirfarandi gæti verið berskjaldað:",
+            "cause_1": "Heimaþjónninn þinn"
+        }
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3149,7 +3129,9 @@
         "error_loading": "Villa við að hlaða inn viðmótshluta",
         "error_mixed_content": "Villa - blandað efni",
         "unmaximise": "Ekki-hámarka",
-        "popout": "Sprettviðmótshluti"
+        "popout": "Sprettviðmótshluti",
+        "unpin_to_view_right_panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
+        "close_to_view_right_panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi"
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3663,6 +3645,34 @@
         "error_revoke_3pid_invite_title": "Mistókst að afturkalla boð",
         "admin_tools_section": "Kerfisstjóratól",
         "revoke_invite": "Afturkalla boð",
-        "invited_by": "Boðið af %(sender)s"
+        "invited_by": "Boðið af %(sender)s",
+        "room_encrypted": "Skilaboð í þessari spjallrás eru enda-í-enda dulrituð.",
+        "room_encrypted_detail": "Öryggi skilaboðanna þinna er tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
+        "room_unencrypted": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",
+        "room_unencrypted_detail": "Á dulrituðum spjallrásum er öryggi skilaboðanna þinna tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
+        "verify_button": "Sannreyna notanda"
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Föst skilaboð",
+            "empty": "Ekkert fest, ennþá",
+            "limits": {
+                "other": "Þú getur bara fest allt að %(count)s viðmótshluta"
+            }
+        },
+        "video_room_chat": {
+            "title": "Spjall"
+        },
+        "room_summary_card": {
+            "title": "Upplýsingar um spjallrás"
+        },
+        "widgets_section": "Viðmótshlutar",
+        "edit_integrations": "Breyta viðmótshlutum, brúm og vélmennum",
+        "add_integrations": "Bæta við viðmótshlutum, brúm og vélmennum",
+        "files_button": "Skrár",
+        "pinned_messages_button": "Fest",
+        "export_chat_button": "Flytja út spjall",
+        "share_button": "Deila spjallrás",
+        "settings_button": "Stillingar spjallrásar"
     }
 }

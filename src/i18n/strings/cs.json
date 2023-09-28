@@ -118,7 +118,6 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Tuto změnu nebudete moci vzít zpět, protože snižujete svoji vlastní hodnost, jste-li poslední privilegovaný uživatel v místnosti, bude nemožné vaši současnou hodnost získat zpět.",
     "Demote": "Degradovat",
     "Share Link to User": "Sdílet odkaz na uživatele",
-    "Share room": "Sdílet místnost",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Není možné načíst událost, na kterou se odpovídalo. Buď neexistuje, nebo nemáte oprávnění ji zobrazit.",
     "<a>In reply to</a> <pill>": "<a>V odpovědi na</a> <pill>",
     "Preparing to send logs": "Příprava na odeslání záznamů",
@@ -297,7 +296,6 @@
     "Remove recent messages": "Odstranit nedávné zprávy",
     "Failed to deactivate user": "Deaktivace uživatele se nezdařila",
     "This client does not support end-to-end encryption.": "Tento klient nepodporuje koncové šifrování.",
-    "Messages in this room are not end-to-end encrypted.": "Zprávy nejsou koncově šifrované.",
     "Show image": "Zobrazit obrázek",
     "You verified %(name)s": "Ověřili jste %(name)s",
     "You cancelled verifying %(name)s": "Zrušili jste ověření %(name)s",
@@ -314,7 +312,6 @@
     "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
     "Failed to connect to integration manager": "Nepovedlo se připojit ke správci integrací",
-    "Messages in this room are end-to-end encrypted.": "Zprávy jsou v této místnosti koncově šifrované.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tohoto uživatele ignorujete, takže jsou jeho zprávy skryté. <a>Přesto zobrazit.</a>",
     "Integrations are disabled": "Integrace jsou zakázané",
     "Integrations not allowed": "Integrace nejsou povolené",
@@ -335,14 +332,6 @@
     "This backup is trusted because it has been restored on this session": "Záloze věříme, protože už byla v této relaci načtena",
     "Encrypted by a deleted session": "Šifrované smazanou relací",
     "Direct Messages": "Přímé zprávy",
-    "Waiting for %(displayName)s to accept…": "Čekáme, než %(displayName)s výzvu přijme…",
-    "Start Verification": "Zahájit ověření",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vaše zprávy jsou zabezpečené - pouze vy a jejich příjemci máte klíče potřebné k jejich přečtení.",
-    "Verify User": "Ověřit uživatele",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Pro lepší bezpečnost, ověřte uživatele zkontrolováním jednorázového kódu na vašich zařízeních.",
-    "Your messages are not secure": "Vaše zprávy nejsou zabezpečené",
-    "One of the following may be compromised:": "Něco z následujích věcí může být kompromitováno:",
-    "Your homeserver": "Váš domovský server",
     "%(count)s sessions": {
         "other": "%(count)s relací",
         "one": "%(count)s relace"
@@ -377,8 +366,6 @@
     "Verify by scanning": "Ověřte naskenováním",
     "You declined": "Odmítli jste",
     "%(name)s declined": "%(name)s odmítl(a)",
-    "Accepting…": "Přijímání…",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "V šifrovaných místnostech jsou vaše zprávy bezpečné a pouze vy a příjemce má klíče k jejich rozšifrování.",
     "Verify all users in a room to ensure it's secure.": "Ověřit všechny uživatele v místnosti, abyste se přesvědčili o bezpečnosti.",
     "Enter a server name": "Zadejte jméno serveru",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
@@ -440,9 +427,6 @@
     "Afghanistan": "Afgánistán",
     "United States": "Spojené Státy",
     "United Kingdom": "Spojené Království",
-    "Add widgets, bridges & bots": "Přidat widgety, propojení a boty",
-    "Widgets": "Widgety",
-    "Room settings": "Nastavení místnosti",
     "Use the <a>Desktop app</a> to see all encrypted files": "Pro zobrazení všech šifrovaných souborů použijte <a>desktopovou aplikaci</a>",
     "Backup version:": "Verze zálohy:",
     "Switch theme": "Přepnout téma",
@@ -738,10 +722,6 @@
     "Your firewall or anti-virus is blocking the request.": "Váš firewall nebo antivirový program blokuje požadavek.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo příliš dlouho, než odpověděl.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovídá na některé vaše požadavky. Níže jsou některé z nejpravděpodobnějších důvodů.",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Můžete připnout až %(count)s widgetů"
-    },
-    "Edit widgets, bridges & bots": "Upravujte widgety, propojení a boty",
     "a device cross-signing signature": "zařízení používající křížový podpis",
     "This widget would like to:": "Tento widget by chtěl:",
     "Modal Widget": "Modální widget",
@@ -766,7 +746,6 @@
     "Incorrect Security Phrase": "Nesprávná bezpečnostní fráze",
     "Security Key mismatch": "Neshoda bezpečnostního klíče",
     "Wrong Security Key": "Špatný bezpečnostní klíč",
-    "Set my room layout for everyone": "Nastavit všem rozložení mé místnosti",
     "Remember this": "Zapamatujte si toto",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Widget ověří vaše uživatelské ID, ale nebude za vás moci provádět akce:",
     "Allow this widget to verify your identity": "Povolte tomuto widgetu ověřit vaši identitu",
@@ -842,9 +821,6 @@
     "Message preview": "Náhled zprávy",
     "Sent": "Odesláno",
     "You don't have permission to do this": "K tomu nemáte povolení",
-    "Pinned messages": "Připnuté zprávy",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Pokud máte oprávnění, otevřete nabídku na libovolné zprávě a výběrem možnosti <b>Připnout</b> je sem vložte.",
-    "Nothing pinned, yet": "Zatím není nic připnuto",
     "Please provide an address": "Uveďte prosím adresu",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
     "Unnamed audio": "Nepojmenovaný audio soubor",
@@ -903,7 +879,6 @@
     "Leave all rooms": "Odejít ze všech místností",
     "MB": "MB",
     "In reply to <a>this message</a>": "V odpovědi na <a>tuto zprávu</a>",
-    "Export chat": "Exportovat chat",
     "Really reset verification keys?": "Opravdu chcete resetovat ověřovací klíče?",
     "Skip verification for now": "Prozatím přeskočit ověřování",
     "They won't be able to access whatever you're not an admin of.": "Nebudou mít přístup ke všemu, čeho nejste správcem.",
@@ -925,15 +900,9 @@
     "Joining": "Připojování",
     "If you can't see who you're looking for, send them your invite link below.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku níže.",
     "In encrypted rooms, verify all users to ensure it's secure.": "V šifrovaných místnostech ověřte všechny uživatele, abyste zajistili bezpečnost komunikace.",
-    "Yours, or the other users' session": "Vaše relace nebo relace ostatních uživatelů",
-    "Yours, or the other users' internet connection": "Vaše internetové připojení nebo připojení ostatních uživatelů",
-    "The homeserver the user you're verifying is connected to": "Domovský server, ke kterému je ověřovaný uživatel připojen",
     "Thread options": "Možnosti vláken",
     "Reply in thread": "Odpovědět ve vlákně",
     "Forget": "Zapomenout",
-    "Files": "Soubory",
-    "Close this widget to view it in this panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
-    "Unpin this widget to view it in this panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
     "Based on %(count)s votes": {
         "one": "Na základě %(count)s hlasu",
         "other": "Na základě %(count)s hlasů"
@@ -954,7 +923,6 @@
     "Moderation": "Moderování",
     "Messaging": "Zprávy",
     "Spaces you know that contain this space": "Prostory, které znáte obsahující tento prostor",
-    "Chat": "Chat",
     "Recently viewed": "Nedávno zobrazené",
     "%(count)s votes cast. Vote to see the results": {
         "other": "%(count)s hlasů. Hlasujte a podívejte se na výsledky",
@@ -993,7 +961,6 @@
     "Verify other device": "Ověřit jiné zařízení",
     "You cancelled verification on your other device.": "Ověřování na jiném zařízení jste zrušili.",
     "Almost there! Is your other device showing the same shield?": "Už to skoro je! Zobrazuje vaše druhé zařízení stejný štít?",
-    "To proceed, please accept the verification request on your other device.": "Pro pokračování, přijměte žádost o ověření na svém dalším zařízení.",
     "Could not fetch location": "Nepodařilo se zjistit polohu",
     "Remove from room": "Odebrat z místnosti",
     "Failed to remove user": "Nepodařilo se odebrat uživatele",
@@ -1016,7 +983,6 @@
     "Can't edit poll": "Nelze upravit hlasování",
     "Results will be visible when the poll is ended": "Výsledky se zobrazí po ukončení hlasování",
     "Search Dialog": "Dialogové okno hledání",
-    "Pinned": "Připnuto",
     "What location type do you want to share?": "Jaký typ polohy chcete sdílet?",
     "Drop a Pin": "Zvolená poloha",
     "My live location": "Moje poloha živě",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
     "Video call ended": "Videohovor ukončen",
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
-    "Room info": "Informace o místnosti",
     "Completing set up of your new device": "Dokončování nastavení nového zařízení",
     "Waiting for device to sign in": "Čekání na přihlášení zařízení",
     "Review and approve the sign in": "Zkontrolovat a schválit přihlášení",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Příliš mnoho pokusů v krátkém čase. Zkuste to znovu po %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Příliš mnoho pokusů v krátkém čase. Před dalším pokusem nějakou dobu počkejte.",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
-    "We were unable to start a chat with the other user.": "Nepodařilo se zahájit chat s druhým uživatelem.",
-    "Error starting verification": "Chyba při zahájení ověření",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Hlasovou zprávu nelze spustit, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli začít nahrávat hlasovou zprávu.",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Server vrátil %(statusCode)s s kódem chyby %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nepodařilo se nám najít událost od data %(dateString)s. Zkuste zvolit dřívější datum.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Při pokusu o vyhledání a přechod na zadané datum došlo k chybě sítě. Váš domovský server může být nefunkční nebo došlo jen k dočasnému problému s internetovým připojením. Zkuste to prosím znovu. Pokud tento problém přetrvává, obraťte se na správce domovského serveru.",
-    "Poll history": "Historie hlasování",
     "Start DM anyway": "Zahájit přímou zprávu i přesto",
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
@@ -3278,7 +3240,13 @@
             "verification_skip_warning": "Bez ověření nebudete mít přístup ke všem svým zprávám a můžete se ostatním jevit jako nedůvěryhodní.",
             "verify_later": "Ověřím se později",
             "verify_reset_warning_1": "Resetování ověřovacích klíčů nelze vrátit zpět. Po jejich resetování nebudete mít přístup ke starým zašifrovaným zprávám a všem přátelům, kteří vás dříve ověřili, se zobrazí bezpečnostní varování, dokud se u nich znovu neověříte.",
-            "verify_reset_warning_2": "Pokračujte pouze v případě, že jste si jisti, že jste ztratili všechna ostatní zařízení a bezpečnostní klíč."
+            "verify_reset_warning_2": "Pokračujte pouze v případě, že jste si jisti, že jste ztratili všechna ostatní zařízení a bezpečnostní klíč.",
+            "self_verification_hint": "Pro pokračování, přijměte žádost o ověření na svém dalším zařízení.",
+            "waiting_for_user_accept": "Čekáme, než %(displayName)s výzvu přijme…",
+            "accepting": "Přijímání…",
+            "start_button": "Zahájit ověření",
+            "error_starting_title": "Chyba při zahájení ověření",
+            "error_starting_description": "Nepodařilo se zahájit chat s druhým uživatelem."
         },
         "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
         "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
@@ -3323,7 +3291,15 @@
         "cross_signing_room_normal": "Místnost je koncově šifrovaná",
         "cross_signing_room_verified": "V této místnosti jsou všichni ověřeni",
         "event_shield_reason_authenticity_not_guaranteed": "Pravost této šifrované zprávy nelze na tomto zařízení ověřit.",
-        "event_shield_reason_mismatched_sender_key": "Šifrované neověřenou relací"
+        "event_shield_reason_mismatched_sender_key": "Šifrované neověřenou relací",
+        "messages_not_secure": {
+            "title": "Vaše zprávy nejsou zabezpečené",
+            "heading": "Něco z následujích věcí může být kompromitováno:",
+            "cause_1": "Váš domovský server",
+            "cause_2": "Domovský server, ke kterému je ověřovaný uživatel připojen",
+            "cause_3": "Vaše internetové připojení nebo připojení ostatních uživatelů",
+            "cause_4": "Vaše relace nebo relace ostatních uživatelů"
+        }
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3679,7 +3655,10 @@
         "error_loading": "Chyba při načítání widgetu",
         "error_mixed_content": "Chyba - Smíšený obsah",
         "unmaximise": "Zrušit maximalizaci",
-        "popout": "Otevřít widget v novém okně"
+        "popout": "Otevřít widget v novém okně",
+        "unpin_to_view_right_panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
+        "close_to_view_right_panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
+        "set_room_layout": "Nastavit všem rozložení mé místnosti"
     },
     "feedback": {
         "sent": "Zpětná vazba byla odeslána",
@@ -4284,6 +4263,37 @@
         "error_revoke_3pid_invite_description": "Pozvání se nepovedlo zrušit. Mohlo dojít k dočasnému problému nebo na to nemáte dostatečná práva.",
         "admin_tools_section": "Nástroje pro správce",
         "revoke_invite": "Zrušit pozvání",
-        "invited_by": "Pozván od uživatele %(sender)s"
+        "invited_by": "Pozván od uživatele %(sender)s",
+        "room_encrypted": "Zprávy jsou v této místnosti koncově šifrované.",
+        "room_encrypted_detail": "Vaše zprávy jsou zabezpečené - pouze vy a jejich příjemci máte klíče potřebné k jejich přečtení.",
+        "room_unencrypted": "Zprávy nejsou koncově šifrované.",
+        "room_unencrypted_detail": "V šifrovaných místnostech jsou vaše zprávy bezpečné a pouze vy a příjemce má klíče k jejich rozšifrování.",
+        "verify_button": "Ověřit uživatele",
+        "verify_explainer": "Pro lepší bezpečnost, ověřte uživatele zkontrolováním jednorázového kódu na vašich zařízeních."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Připnuté zprávy",
+            "empty": "Zatím není nic připnuto",
+            "explainer": "Pokud máte oprávnění, otevřete nabídku na libovolné zprávě a výběrem možnosti <b>Připnout</b> je sem vložte.",
+            "limits": {
+                "other": "Můžete připnout až %(count)s widgetů"
+            }
+        },
+        "video_room_chat": {
+            "title": "Chat"
+        },
+        "room_summary_card": {
+            "title": "Informace o místnosti"
+        },
+        "widgets_section": "Widgety",
+        "edit_integrations": "Upravujte widgety, propojení a boty",
+        "add_integrations": "Přidat widgety, propojení a boty",
+        "files_button": "Soubory",
+        "polls_button": "Historie hlasování",
+        "pinned_messages_button": "Připnuto",
+        "export_chat_button": "Exportovat chat",
+        "share_button": "Sdílet místnost",
+        "settings_button": "Nastavení místnosti"
     }
 }

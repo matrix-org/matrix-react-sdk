@@ -112,7 +112,6 @@
     "This room is not public. You will not be able to rejoin without an invite.": "이 방은 공개되지 않았습니다. 초대 없이는 다시 들어올 수 없습니다.",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "자기 자신을 강등하는 것은 되돌릴 수 없고, 자신이 마지막으로 이 방에서 특권을 가진 사용자라면 다시 특권을 얻는 건 불가능합니다.",
     "Jump to read receipt": "읽은 기록으로 건너뛰기",
-    "Share room": "방 공유하기",
     "Filter results": "필터 결과",
     "Delete Widget": "위젯 삭제",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "응답한 이벤트를 불러오지 못했습니다, 존재하지 않거나 볼 수 있는 권한이 없습니다.",
@@ -303,7 +302,6 @@
     "Cancel search": "검색 취소",
     "Failed to deactivate user": "사용자 비활성화에 실패함",
     "This client does not support end-to-end encryption.": "이 클라이언트는 종단간 암호화를 지원하지 않습니다.",
-    "Messages in this room are not end-to-end encrypted.": "이 방의 메시지는 종단간 암호화가 되지 않았습니다.",
     "You verified %(name)s": "%(name)s님을 확인했습니다",
     "You cancelled verifying %(name)s": "%(name)s님의 확인을 취소했습니다",
     "%(name)s cancelled verifying": "%(name)s님이 확인을 취소했습니다",
@@ -313,7 +311,6 @@
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
     "%(name)s wants to verify": "%(name)s님이 확인을 요청합니다",
     "You sent a verification request": "확인 요청을 보냈습니다",
-    "Messages in this room are end-to-end encrypted.": "이 방의 메시지는 종단간 암호화되었습니다.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "이 사용자를 무시했습니다. 사용자의 메시지는 숨겨집니다. <a>무시하고 보이기.</a>",
     "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
@@ -329,13 +326,6 @@
     "Leave all rooms": "모든 방에서 떠나기",
     "Create a new space": "새로운 스페이스 만들기",
     "Create a space": "스페이스 만들기",
-    "Export chat": "대화 내보내기",
-    "Room settings": "방 설정",
-    "Widgets": "위젯",
-    "Nothing pinned, yet": "아직 고정된 것이 없습니다",
-    "Pinned messages": "고정된 메세지",
-    "Pinned": "고정됨",
-    "Files": "파일 목록",
     "Or send invite link": "또는 초대 링크 보내기",
     "Recent Conversations": "최근 대화 목록",
     "Start a conversation with someone using their name or username (like <userId/>).": "이름이나 사용자명(<userId/> 형식)을 사용하는 사람들과 대화를 시작하세요.",
@@ -365,7 +355,6 @@
     "Australia": "호주",
     "Afghanistan": "아프가니스탄",
     "United States": "미국",
-    "Room info": "방 정보",
     "common": {
         "analytics": "정보 분석",
         "error": "오류",
@@ -1628,6 +1617,23 @@
         "error_revoke_3pid_invite_description": "초대를 취소할 수 없습니다. 서버에 일시적인 문제가 발생했거나 초대를 취소할 수 있는 권한이 없습니다.",
         "admin_tools_section": "관리자 도구",
         "revoke_invite": "초대 취소",
-        "invited_by": "%(sender)s님에게 초대받음"
+        "invited_by": "%(sender)s님에게 초대받음",
+        "room_encrypted": "이 방의 메시지는 종단간 암호화되었습니다.",
+        "room_unencrypted": "이 방의 메시지는 종단간 암호화가 되지 않았습니다."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "고정된 메세지",
+            "empty": "아직 고정된 것이 없습니다"
+        },
+        "room_summary_card": {
+            "title": "방 정보"
+        },
+        "widgets_section": "위젯",
+        "files_button": "파일 목록",
+        "pinned_messages_button": "고정됨",
+        "export_chat_button": "대화 내보내기",
+        "share_button": "방 공유하기",
+        "settings_button": "방 설정"
     }
 }

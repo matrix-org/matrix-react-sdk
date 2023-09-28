@@ -506,27 +506,7 @@
         "one": "1 מושב מאומת",
         "other": "%(count)s מושבים מאומתים"
     },
-    "Room settings": "הגדרות חדר",
-    "Share room": "שתף חדר",
     "Not encrypted": "לא מוצפן",
-    "Add widgets, bridges & bots": "הוסף יישומונים, גשרים ובוטים",
-    "Edit widgets, bridges & bots": "ערוך ישומונים, גשרים ובוטים",
-    "Widgets": "ישומונים",
-    "You can only pin up to %(count)s widgets": {
-        "other": "אתה יכול להצמיד עד%(count)s ווידג'טים בלבד"
-    },
-    "Your homeserver": "שרת הבית שלכם",
-    "One of the following may be compromised:": "אחד מהדברים הבאים עלול להוות סיכון:",
-    "Your messages are not secure": "ההודעות שלך אינן מאובטחות",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "ליתר ביטחון, אמת משתמש זה על ידי בדיקת קוד חד פעמי בשני המכשירים שלך.",
-    "Verify User": "אמת משתמש",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "בחדרים מוצפנים ההודעות שלכם מאובטחות ורק לכם ולמקבל יש את המפתחות הייחודיים לפתיחתן.",
-    "Messages in this room are not end-to-end encrypted.": "הודעות בחדר זה אינן מוצפנות מקצה לקצה.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "ההודעות שלך מאובטחות ורק לך ולמקבל יש את המפתחות הייחודיים לפתיחתן.",
-    "Messages in this room are end-to-end encrypted.": "ההודעות בחדר זה מוצפנות מקצה לקצה.",
-    "Start Verification": "התחל אימות",
-    "Accepting…": "מקבל…",
-    "Waiting for %(displayName)s to accept…": "ממתין לקבלת %(displayName)s …",
     "not specified": "לא מוגדר",
     "Failed to connect to integration manager": "ההתחברות למנהל האינטגרציה נכשלה",
     "Create new room": "צור חדר חדש",
@@ -749,7 +729,6 @@
     "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "ההודעה שלך לא נשלחה מכיוון ששרת הבתים הזה הגיע למגבלת המשתמשים הפעילים החודשיים שלה. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
     "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "אינך יכול לשלוח שום הודעה עד שתבדוק ותסכים ל <consentLink> התנאים וההגבלות שלנו </consentLink>.",
     "Dial pad": "לוח חיוג",
-    "Set my room layout for everyone": "הגדר את פריסת החדר שלי עבור כולם",
     "Open dial pad": "פתח לוח חיוג",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "אם שכחת את מפתח האבטחה שלך תוכל <button> להגדיר אפשרויות שחזור חדשות</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "גש להיסטוריית ההודעות המאובטחות שלך והגדר הודעות מאובטחות על ידי הזנת מפתח האבטחה שלך.",
@@ -823,7 +802,6 @@
     "Search for rooms or people": "חפשו אנשים או חדרים",
     "Message preview": "צפו בהודעה",
     "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "אם ברצונכם לשמור על גישה להיסטוריית הצ'אט שלכם בחדרים מוצפנים, הגדירו גיבוי מפתחות או ייצאו את מפתחות ההודעות שלכם מאחד מהמכשירים האחרים שלכם לפני שתמשיך.",
-    "Export chat": "ייצוא צ'אט",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
@@ -851,11 +829,6 @@
     "Role in <RoomName/>": "תפקיד בחדר <RoomName/>",
     "Unable to copy room link": "לא ניתן להעתיק קישור לחדר",
     "Close sidebar": "סגור סרגל צד",
-    "Room info": "מידע על החדר",
-    "Pinned messages": "הודעות נעוצות",
-    "Pinned": "הודעות נעוצות",
-    "Nothing pinned, yet": "אין הודעות נעוצות, לבינתיים",
-    "Files": "קבצים",
     "common": {
         "about": "אודות",
         "analytics": "אנליטיקה",
@@ -2294,7 +2267,10 @@
             "unverified_sessions_toast_reject": "מאוחר יותר",
             "unverified_session_toast_title": "כניסה חדשה. האם זה אתם?",
             "verification_success_with_backup": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
-            "verification_success_without_backup": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן."
+            "verification_success_without_backup": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
+            "waiting_for_user_accept": "ממתין לקבלת %(displayName)s …",
+            "accepting": "מקבל…",
+            "start_button": "התחל אימות"
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2336,7 +2312,12 @@
         "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה",
         "cross_signing_room_verified": "כולם מאומתים בחדר זה",
         "event_shield_reason_authenticity_not_guaranteed": "לא ניתן להבטיח את האותנטיות של הודעה מוצפנת זו במכשיר זה.",
-        "event_shield_reason_mismatched_sender_key": "הוצפן על ידי מושב לא מאומת"
+        "event_shield_reason_mismatched_sender_key": "הוצפן על ידי מושב לא מאומת",
+        "messages_not_secure": {
+            "title": "ההודעות שלך אינן מאובטחות",
+            "heading": "אחד מהדברים הבאים עלול להוות סיכון:",
+            "cause_1": "שרת הבית שלכם"
+        }
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2615,7 +2596,8 @@
         "unencrypted_warning": "יישומונים אינם משתמשים בהצפנת הודעות.",
         "added_by": "ישומון נוסף על ידי",
         "cookie_warning": "יישומון זה עשוי להשתמש בעוגיות.",
-        "popout": "יישומון קופץ"
+        "popout": "יישומון קופץ",
+        "set_room_layout": "הגדר את פריסת החדר שלי עבור כולם"
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -3054,6 +3036,32 @@
         "error_revoke_3pid_invite_description": "לא ניתן היה לבטל את ההזמנה. ייתכן שהשרת נתקל בבעיה זמנית או שאין לך הרשאות מספיקות לבטל את ההזמנה.",
         "admin_tools_section": "כלי מנהל",
         "revoke_invite": "שלול הזמנה",
-        "invited_by": "הוזמנו על ידי %(sender)s"
+        "invited_by": "הוזמנו על ידי %(sender)s",
+        "room_encrypted": "ההודעות בחדר זה מוצפנות מקצה לקצה.",
+        "room_encrypted_detail": "ההודעות שלך מאובטחות ורק לך ולמקבל יש את המפתחות הייחודיים לפתיחתן.",
+        "room_unencrypted": "הודעות בחדר זה אינן מוצפנות מקצה לקצה.",
+        "room_unencrypted_detail": "בחדרים מוצפנים ההודעות שלכם מאובטחות ורק לכם ולמקבל יש את המפתחות הייחודיים לפתיחתן.",
+        "verify_button": "אמת משתמש",
+        "verify_explainer": "ליתר ביטחון, אמת משתמש זה על ידי בדיקת קוד חד פעמי בשני המכשירים שלך."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "הודעות נעוצות",
+            "empty": "אין הודעות נעוצות, לבינתיים",
+            "limits": {
+                "other": "אתה יכול להצמיד עד%(count)s ווידג'טים בלבד"
+            }
+        },
+        "room_summary_card": {
+            "title": "מידע על החדר"
+        },
+        "widgets_section": "ישומונים",
+        "edit_integrations": "ערוך ישומונים, גשרים ובוטים",
+        "add_integrations": "הוסף יישומונים, גשרים ובוטים",
+        "files_button": "קבצים",
+        "pinned_messages_button": "הודעות נעוצות",
+        "export_chat_button": "ייצוא צ'אט",
+        "share_button": "שתף חדר",
+        "settings_button": "הגדרות חדר"
     }
 }

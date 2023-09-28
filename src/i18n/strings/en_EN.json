@@ -795,7 +795,7 @@
         "deselect_all": "Deselect all",
         "select_all": "Select all",
         "emoji": "Emoji",
-        "unencrypted": "Unencrypted",
+        "unencrypted": "Not encrypted",
         "sticker": "Sticker",
         "view_message": "View message",
         "public_room": "Public room",
@@ -1137,6 +1137,9 @@
         "no_name": "Unknown App",
         "error_hangup_title": "Connection lost",
         "error_hangup_description": "You were disconnected from the call. (Error: %(message)s)",
+        "unpin_to_view_right_panel": "Unpin this widget to view it in this panel",
+        "close_to_view_right_panel": "Close this widget to view it in this panel",
+        "set_room_layout": "Set my room layout for everyone",
         "shared_data_name": "Your display name",
         "shared_data_avatar": "Your profile picture URL",
         "shared_data_mxid": "Your user ID",
@@ -1213,6 +1216,12 @@
             "request_toast_detail": "%(deviceId)s from %(ip)s",
             "request_toast_decline_counter": "Ignore (%(counter)s)",
             "request_toast_accept": "Verify Session",
+            "self_verification_hint": "To proceed, please accept the verification request on your other device.",
+            "waiting_for_user_accept": "Waiting for %(displayName)s to accept…",
+            "accepting": "Accepting…",
+            "start_button": "Start Verification",
+            "error_starting_title": "Error starting verification",
+            "error_starting_description": "We were unable to start a chat with the other user.",
             "no_support_qr_emoji": "The device you are trying to verify doesn't support scanning a QR code or emoji verification, which is what %(brand)s supports. Try with a different client.",
             "qr_prompt": "Scan this unique code",
             "sas_prompt": "Compare unique emoji",
@@ -1258,6 +1267,14 @@
         "event_shield_reason_unknown_device": "Encrypted by an unknown or deleted device.",
         "event_shield_reason_authenticity_not_guaranteed": "The authenticity of this encrypted message can't be guaranteed on this device.",
         "event_shield_reason_mismatched_sender_key": "Encrypted by an unverified session",
+        "messages_not_secure": {
+            "title": "Your messages are not secure",
+            "heading": "One of the following may be compromised:",
+            "cause_1": "Your homeserver",
+            "cause_2": "The homeserver the user you're verifying is connected to",
+            "cause_3": "Yours, or the other users' internet connection",
+            "cause_4": "Yours, or the other users' session"
+        },
         "old_version_detected_title": "Old cryptography data detected",
         "old_version_detected_description": "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
         "verification_requested_toast_title": "Verification requested",
@@ -2926,7 +2943,13 @@
         "error_revoke_3pid_invite_description": "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.",
         "admin_tools_section": "Admin Tools",
         "revoke_invite": "Revoke invite",
-        "invited_by": "Invited by %(sender)s"
+        "invited_by": "Invited by %(sender)s",
+        "room_encrypted": "Messages in this room are end-to-end encrypted.",
+        "room_encrypted_detail": "Your messages are secured and only you and the recipient have the unique keys to unlock them.",
+        "room_unencrypted": "Messages in this room are not end-to-end encrypted.",
+        "room_unencrypted_detail": "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
+        "verify_button": "Verify User",
+        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "%(count)s reply": {
         "other": "%(count)s replies",
@@ -2947,46 +2970,32 @@
         "empty_heading": "Keep discussions organised with threads"
     },
     "not specified": "not specified",
-    "To proceed, please accept the verification request on your other device.": "To proceed, please accept the verification request on your other device.",
-    "Waiting for %(displayName)s to accept…": "Waiting for %(displayName)s to accept…",
-    "Accepting…": "Accepting…",
-    "Start Verification": "Start Verification",
-    "Messages in this room are end-to-end encrypted.": "Messages in this room are end-to-end encrypted.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Your messages are secured and only you and the recipient have the unique keys to unlock them.",
-    "Messages in this room are not end-to-end encrypted.": "Messages in this room are not end-to-end encrypted.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
-    "Verify User": "Verify User",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "For extra security, verify this user by checking a one-time code on both of your devices.",
-    "Your messages are not secure": "Your messages are not secure",
-    "One of the following may be compromised:": "One of the following may be compromised:",
-    "Your homeserver": "Your homeserver",
-    "The homeserver the user you're verifying is connected to": "The homeserver the user you're verifying is connected to",
-    "Yours, or the other users' internet connection": "Yours, or the other users' internet connection",
-    "Yours, or the other users' session": "Yours, or the other users' session",
-    "Error starting verification": "Error starting verification",
-    "We were unable to start a chat with the other user.": "We were unable to start a chat with the other user.",
-    "Pinned messages": "Pinned messages",
-    "Chat": "Chat",
-    "Room info": "Room info",
-    "Nothing pinned, yet": "Nothing pinned, yet",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.",
-    "You can only pin up to %(count)s widgets": {
-        "other": "You can only pin up to %(count)s widgets"
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Pinned messages",
+            "empty": "Nothing pinned, yet",
+            "explainer": "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.",
+            "limits": {
+                "other": "You can only pin up to %(count)s widgets"
+            }
+        },
+        "video_room_chat": {
+            "title": "Chat"
+        },
+        "room_summary_card": {
+            "title": "Room info"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Edit widgets, bridges & bots",
+        "add_integrations": "Add widgets, bridges & bots",
+        "search_button": "Search",
+        "files_button": "Files",
+        "polls_button": "Poll history",
+        "pinned_messages_button": "Pinned",
+        "export_chat_button": "Export chat",
+        "share_button": "Share room",
+        "settings_button": "Room settings"
     },
-    "Unpin this widget to view it in this panel": "Unpin this widget to view it in this panel",
-    "Close this widget to view it in this panel": "Close this widget to view it in this panel",
-    "Set my room layout for everyone": "Set my room layout for everyone",
-    "Widgets": "Widgets",
-    "Edit widgets, bridges & bots": "Edit widgets, bridges & bots",
-    "Add widgets, bridges & bots": "Add widgets, bridges & bots",
-    "Not encrypted": "Not encrypted",
-    "Search": "Search",
-    "Files": "Files",
-    "Poll history": "Poll history",
-    "Pinned": "Pinned",
-    "Export chat": "Export chat",
-    "Share room": "Share room",
-    "Room settings": "Room settings",
     "%(count)s verified sessions": {
         "other": "%(count)s verified sessions",
         "one": "1 verified session"

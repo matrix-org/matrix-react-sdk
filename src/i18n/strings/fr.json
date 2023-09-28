@@ -126,7 +126,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossible de charger l’évènement auquel il a été répondu, soit il n’existe pas, soit vous n'avez pas l’autorisation de le voir.",
     "Share Link to User": "Partager le lien vers l’utilisateur",
-    "Share room": "Partager le salon",
     "Share Room": "Partager le salon",
     "Link to most recent message": "Lien vers le message le plus récent",
     "Share User": "Partager l’utilisateur",
@@ -304,7 +303,6 @@
     "Cancel search": "Annuler la recherche",
     "Failed to deactivate user": "Échec de la désactivation de l’utilisateur",
     "This client does not support end-to-end encryption.": "Ce client ne prend pas en charge le chiffrement de bout en bout.",
-    "Messages in this room are not end-to-end encrypted.": "Les messages dans ce salon ne sont pas chiffrés de bout en bout.",
     "You verified %(name)s": "Vous avez vérifié %(name)s",
     "You cancelled verifying %(name)s": "Vous avez annulé la vérification de %(name)s",
     "%(name)s cancelled verifying": "%(name)s a annulé la vérification",
@@ -315,7 +313,6 @@
     "%(name)s wants to verify": "%(name)s veut vérifier",
     "You sent a verification request": "Vous avez envoyé une demande de vérification",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Vous avez ignoré cet utilisateur, donc ses messages sont cachés. <a>Les montrer quand même.</a>",
-    "Messages in this room are end-to-end encrypted.": "Les messages dans ce salon sont chiffrés de bout en bout.",
     "Failed to connect to integration manager": "Échec de la connexion au gestionnaire d’intégrations",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
@@ -340,14 +337,6 @@
     "Something went wrong trying to invite the users.": "Une erreur est survenue en essayant d’inviter les utilisateurs.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Impossible d’inviter ces utilisateurs. Vérifiez quels utilisateurs que vous souhaitez inviter et réessayez.",
     "Recently Direct Messaged": "Conversations privées récentes",
-    "Verify User": "Vérifier l’utilisateur",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Pour une sécurité supplémentaire, vérifiez cet utilisateur en comparant un code à usage unique sur vos deux appareils.",
-    "Start Verification": "Commencer la vérification",
-    "Waiting for %(displayName)s to accept…": "En attente d’acceptation par %(displayName)s…",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
-    "Your messages are not secure": "Vos messages ne sont pas sécurisés",
-    "One of the following may be compromised:": "Un des éléments suivants est peut-être compromis :",
-    "Your homeserver": "Votre serveur d’accueil",
     "Verify by emoji": "Vérifier avec des émojis",
     "Verify by comparing unique emoji.": "Vérifier en comparant des émojis uniques.",
     "Ask %(displayName)s to scan your code:": "Demandez à %(displayName)s de scanner votre code :",
@@ -378,7 +367,6 @@
     "Verify by scanning": "Vérifier en scannant",
     "You declined": "Vous avez refusé",
     "%(name)s declined": "%(name)s a refusé",
-    "Accepting…": "Acceptation…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pour signaler un problème de sécurité lié à Matrix, consultez <a>la politique de divulgation de sécurité</a> de Matrix.org.",
     "Enter a server name": "Saisissez le nom d’un serveur",
     "Looks good": "Ça a l’air correct",
@@ -399,7 +387,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Confirmez en comparant ceci avec les paramètres utilisateurs de votre autre session :",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirmez la session de cet utilisateur en comparant ceci avec ses paramètres utilisateur :",
     "If they don't match, the security of your communication may be compromised.": "S’ils ne correspondent pas, la sécurité de vos communications est peut-être compromise.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Dans les salons chiffrés, vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
     "Verify all users in a room to ensure it's secure.": "Vérifiez tous les utilisateurs d’un salon pour vous assurer qu’il est sécurisé.",
     "Sign in with SSO": "Se connecter avec l’authentification unique",
     "Almost there! Is %(displayName)s showing the same shield?": "On y est presque ! Est-ce que %(displayName)s affiche le même bouclier ?",
@@ -462,14 +449,7 @@
     "Video conference started by %(senderName)s": "vidéoconférence démarrée par %(senderName)s",
     "Video conference updated by %(senderName)s": "vidéoconférence mise à jour par %(senderName)s",
     "Video conference ended by %(senderName)s": "vidéoconférence terminée par %(senderName)s",
-    "Room settings": "Paramètres du salon",
     "Not encrypted": "Non-chiffré",
-    "Add widgets, bridges & bots": "Ajouter des widgets, passerelles et robots",
-    "Edit widgets, bridges & bots": "Modifier les widgets, passerelles et robots",
-    "Widgets": "Widgets",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Vous ne pouvez épingler que jusqu’à %(count)s widgets"
-    },
     "Unable to set up keys": "Impossible de configurer les clés",
     "Recent changes that have not yet been received": "Changements récents qui n’ont pas encore été reçus",
     "The server is not configured to indicate what the problem is (CORS).": "Le serveur n’est pas configuré pour indiquer quel est le problème (CORS).",
@@ -768,7 +748,6 @@
     "Decline All": "Tout refuser",
     "This widget would like to:": "Le widget voudrait :",
     "Approve widget permissions": "Approuver les permissions du widget",
-    "Set my room layout for everyone": "Définir ma disposition de salon pour tout le monde",
     "Open dial pad": "Ouvrir le pavé de numérotation",
     "Dial pad": "Pavé de numérotation",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
@@ -842,9 +821,6 @@
     "Search for rooms or people": "Rechercher des salons ou des gens",
     "Sent": "Envoyé",
     "You don't have permission to do this": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
-    "Pinned messages": "Messages épinglés",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si vous avez les permissions, ouvrez le menu de n’importe quel message et sélectionnez <b>Épingler</b> pour les afficher ici.",
-    "Nothing pinned, yet": "Rien d’épinglé, pour l’instant",
     "Please provide an address": "Veuillez fournir une adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
@@ -903,7 +879,6 @@
     "Don't leave any rooms": "Ne quitter aucun salon",
     "MB": "Mo",
     "In reply to <a>this message</a>": "En réponse à <a>ce message</a>",
-    "Export chat": "Exporter la conversation",
     "Downloading": "Téléchargement en cours",
     "Skip verification for now": "Ignorer la vérification pour l’instant",
     "Really reset verification keys?": "Réinitialiser les clés de vérification, c’est certain ?",
@@ -925,14 +900,8 @@
     "Joining": "En train de rejoindre",
     "If you can't see who you're looking for, send them your invite link below.": "Si vous ne trouvez pas la personne que vous cherchez, envoyez-lui le lien d’invitation ci-dessous.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Dans les salons chiffrés, vérifiez tous les utilisateurs pour vous assurer qu’il est sécurisé.",
-    "Yours, or the other users' session": "Votre session ou celle de l’autre utilisateur",
-    "Yours, or the other users' internet connection": "Votre connexion internet ou celle de l’autre utilisateur",
-    "The homeserver the user you're verifying is connected to": "Le serveur d’accueil auquel l’utilisateur que vous vérifiez est connecté",
     "Thread options": "Options des fils de discussion",
     "Forget": "Oublier",
-    "Files": "Fichiers",
-    "Close this widget to view it in this panel": "Fermer ce widget pour l’afficher dans ce panneau",
-    "Unpin this widget to view it in this panel": "Désépinglez ce widget pour l’afficher dans ce panneau",
     "Reply in thread": "Répondre dans le fil de discussion",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
     "Based on %(count)s votes": {
@@ -945,7 +914,6 @@
     },
     "Sorry, your vote was not registered. Please try again.": "Désolé, votre vote n’a pas été enregistré. Veuillez réessayer.",
     "Vote not registered": "Vote non enregistré",
-    "Chat": "Conversation privée",
     "Recently viewed": "Affiché récemment",
     "Developer": "Développeur",
     "Experimental": "Expérimental",
@@ -993,7 +961,6 @@
     "toggle event": "Afficher/masquer l’évènement",
     "You cancelled verification on your other device.": "Vous avez annulé la vérification dans votre autre appareil.",
     "Almost there! Is your other device showing the same shield?": "On y est presque ! Votre autre appareil affiche-t-il le même bouclier ?",
-    "To proceed, please accept the verification request on your other device.": "Pour continuer, veuillez accepter la demande de vérification sur votre autre appareil.",
     "Could not fetch location": "Impossible de récupérer la position",
     "Message pending moderation": "Message en attente de modération",
     "Message pending moderation: %(reason)s": "Message en attente de modération : %(reason)s",
@@ -1010,7 +977,6 @@
     "Location": "Position",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s et %(space2Name)s",
-    "Pinned": "Épinglé",
     "Results will be visible when the poll is ended": "Les résultats seront visibles lorsque le sondage sera terminé",
     "Can't edit poll": "Impossible de modifier le sondage",
     "Sorry, you can't edit a poll after votes have been cast.": "Désolé, vous ne pouvez pas modifier un sondage après que les votes aient été exprimés.",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "Video call ended": "Appel vidéo terminé",
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
-    "Room info": "Information du salon",
     "Completing set up of your new device": "Fin de la configuration de votre nouvel appareil",
     "Waiting for device to sign in": "En attente de connexion de l’appareil",
     "Review and approve the sign in": "Vérifier et autoriser la connexion",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Trop de tentatives consécutives. Réessayez après %(timeout)s.",
     "Too many attempts in a short time. Wait some time before trying again.": "Trop de tentatives consécutives. Attendez un peu avant de réessayer.",
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
-    "We were unable to start a chat with the other user.": "Nous n’avons pas pu démarrer une conversation avec l’autre utilisateur.",
-    "Error starting verification": "Erreur en démarrant la vérification",
     "<w>WARNING:</w> <description/>": "<w>ATTENTION :</w> <description/>",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Le serveur a renvoyé %(statusCode)s avec le code d’erreur %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Nous n’avons pas pu trouver d’événement à partir du %(dateString)s. Essayez avec une date antérieure.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Une erreur réseau s’est produite en tentant de chercher et d’aller à la date choisie. Votre serveur d’accueil est peut-être hors-ligne, ou bien c’est un problème temporaire avec connexion Internet. Veuillez réessayer. Si cela persiste, veuillez contacter l’administrateur de votre serveur d’accueil.",
-    "Poll history": "Historique des sondages",
     "Start DM anyway": "Commencer la conversation privée quand même",
     "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
@@ -3271,7 +3233,13 @@
             "verification_skip_warning": "Sans vérification, vous n’aurez pas accès à tous vos messages et vous n’apparaîtrez pas comme de confiance aux autres.",
             "verify_later": "Je ferai la vérification plus tard",
             "verify_reset_warning_1": "La réinitialisation de vos clés de vérification ne peut pas être annulé. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages chiffrés, et tous les amis que vous aviez précédemment vérifiés verront des avertissement de sécurité jusqu'à ce vous les vérifiiez à nouveau.",
-            "verify_reset_warning_2": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Clé de Sécurité."
+            "verify_reset_warning_2": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Clé de Sécurité.",
+            "self_verification_hint": "Pour continuer, veuillez accepter la demande de vérification sur votre autre appareil.",
+            "waiting_for_user_accept": "En attente d’acceptation par %(displayName)s…",
+            "accepting": "Acceptation…",
+            "start_button": "Commencer la vérification",
+            "error_starting_title": "Erreur en démarrant la vérification",
+            "error_starting_description": "Nous n’avons pas pu démarrer une conversation avec l’autre utilisateur."
         },
         "old_version_detected_title": "Anciennes données de chiffrement détectées",
         "old_version_detected_description": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
@@ -3316,7 +3284,15 @@
         "cross_signing_room_normal": "Ce salon est chiffré de bout en bout",
         "cross_signing_room_verified": "Tout le monde dans ce salon est vérifié",
         "event_shield_reason_authenticity_not_guaranteed": "L’authenticité de ce message chiffré ne peut pas être garantie sur cet appareil.",
-        "event_shield_reason_mismatched_sender_key": "Chiffré par une session non vérifiée"
+        "event_shield_reason_mismatched_sender_key": "Chiffré par une session non vérifiée",
+        "messages_not_secure": {
+            "title": "Vos messages ne sont pas sécurisés",
+            "heading": "Un des éléments suivants est peut-être compromis :",
+            "cause_1": "Votre serveur d’accueil",
+            "cause_2": "Le serveur d’accueil auquel l’utilisateur que vous vérifiez est connecté",
+            "cause_3": "Votre connexion internet ou celle de l’autre utilisateur",
+            "cause_4": "Votre session ou celle de l’autre utilisateur"
+        }
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",
@@ -3672,7 +3648,10 @@
         "error_loading": "Erreur lors du chargement du widget",
         "error_mixed_content": "Erreur - Contenu mixte",
         "unmaximise": "Dé-maximiser",
-        "popout": "Détacher le widget"
+        "popout": "Détacher le widget",
+        "unpin_to_view_right_panel": "Désépinglez ce widget pour l’afficher dans ce panneau",
+        "close_to_view_right_panel": "Fermer ce widget pour l’afficher dans ce panneau",
+        "set_room_layout": "Définir ma disposition de salon pour tout le monde"
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -4277,6 +4256,37 @@
         "error_revoke_3pid_invite_description": "Impossible de révoquer l’invitation. Le serveur subit peut-être un problème temporaire ou vous n’avez pas la permission de révoquer l’invitation.",
         "admin_tools_section": "Outils d’administration",
         "revoke_invite": "Révoquer l’invitation",
-        "invited_by": "Invité par %(sender)s"
+        "invited_by": "Invité par %(sender)s",
+        "room_encrypted": "Les messages dans ce salon sont chiffrés de bout en bout.",
+        "room_encrypted_detail": "Vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
+        "room_unencrypted": "Les messages dans ce salon ne sont pas chiffrés de bout en bout.",
+        "room_unencrypted_detail": "Dans les salons chiffrés, vos messages sont sécurisés et seuls vous et le destinataire avez les clés uniques pour les déchiffrer.",
+        "verify_button": "Vérifier l’utilisateur",
+        "verify_explainer": "Pour une sécurité supplémentaire, vérifiez cet utilisateur en comparant un code à usage unique sur vos deux appareils."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Messages épinglés",
+            "empty": "Rien d’épinglé, pour l’instant",
+            "explainer": "Si vous avez les permissions, ouvrez le menu de n’importe quel message et sélectionnez <b>Épingler</b> pour les afficher ici.",
+            "limits": {
+                "other": "Vous ne pouvez épingler que jusqu’à %(count)s widgets"
+            }
+        },
+        "video_room_chat": {
+            "title": "Conversation privée"
+        },
+        "room_summary_card": {
+            "title": "Information du salon"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Modifier les widgets, passerelles et robots",
+        "add_integrations": "Ajouter des widgets, passerelles et robots",
+        "files_button": "Fichiers",
+        "polls_button": "Historique des sondages",
+        "pinned_messages_button": "Épinglé",
+        "export_chat_button": "Exporter la conversation",
+        "share_button": "Partager le salon",
+        "settings_button": "Paramètres du salon"
     }
 }

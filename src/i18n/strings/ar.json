@@ -160,27 +160,7 @@
         "one": "اتصال واحد محقق",
         "other": "%(count)s اتصالات محققة"
     },
-    "Room settings": "إعدادات الغرفة",
-    "Share room": "شارك الغرفة",
     "Not encrypted": "غير مشفر",
-    "Add widgets, bridges & bots": "إضافة عناصر الواجهة والجسور والروبوتات",
-    "Edit widgets, bridges & bots": "تعديل عناصر الواجهة والجسور والروبوتات",
-    "Widgets": "عناصر الواجهة",
-    "You can only pin up to %(count)s widgets": {
-        "other": "تثبيت عناصر واجهة المستخدم ممكن إلى %(count)s بحدٍ أعلى"
-    },
-    "Your homeserver": "خادمك الوسيط",
-    "One of the following may be compromised:": "قد يتم اختراق أي مما يلي:",
-    "Your messages are not secure": "رسائلك ليست آمنة",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "لمزيد من الأمان ، تحقق من هذا المستخدم عن طريق التحقق من رمز لمرة واحدة على كلا الجهازين.",
-    "Verify User": "تحقق من المستخدم",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "في الغرف المشفرة ، يتم تأمين رسائلك ولا يمتلك أحد سواك أنت والمتلقي المفاتيح الفريدة لفتحها.",
-    "Messages in this room are not end-to-end encrypted.": "الرسائل الموجودة في هذه الغرفة غير مشفرة من طرف إلى طرف.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "رسائلك مؤمنة وليس لأحد المفاتيح الفريدة لفكها إلا أنت والمتلقي.",
-    "Messages in this room are end-to-end encrypted.": "يتم تشفير الرسائل الموجودة في هذه الغرفة بين الطرفين.",
-    "Start Verification": "ابدأ التحقق",
-    "Accepting…": "جارٍ القبول …",
-    "Waiting for %(displayName)s to accept…": "بانتظار %(displayName)s ليقبل …",
     "Warning!": "إنذار!",
     "Dog": "كلب",
     "IRC display name width": "عرض الاسم الظاهر لIRC",
@@ -1101,7 +1081,10 @@
             "waiting_other_user": "بانتظار %(displayName)s للتحقق…",
             "cancelling": "جارٍ الإلغاء…",
             "unverified_sessions_toast_reject": "لاحقاً",
-            "unverified_session_toast_title": "تسجيل دخول جديد. هل كان ذاك أنت؟"
+            "unverified_session_toast_title": "تسجيل دخول جديد. هل كان ذاك أنت؟",
+            "waiting_for_user_accept": "بانتظار %(displayName)s ليقبل …",
+            "accepting": "جارٍ القبول …",
+            "start_button": "ابدأ التحقق"
         },
         "cancel_entering_passphrase_title": "هل تريد إلغاء إدخال عبارة المرور؟",
         "cancel_entering_passphrase_description": "هل أنت متأكد من أنك تريد إلغاء إدخال عبارة المرور؟",
@@ -1127,7 +1110,12 @@
         "cross_signing_room_normal": "هذه الغرفة مشفرة من طرف إلى طرف",
         "cross_signing_room_verified": "تم التحقق من جميع من في هذه الغرفة",
         "event_shield_reason_authenticity_not_guaranteed": "لا يمكن ضمان موثوقية هذه الرسالة المشفرة على هذا الجهاز.",
-        "event_shield_reason_mismatched_sender_key": "مشفرة باتصال لم يتم التحقق منه"
+        "event_shield_reason_mismatched_sender_key": "مشفرة باتصال لم يتم التحقق منه",
+        "messages_not_secure": {
+            "title": "رسائلك ليست آمنة",
+            "heading": "قد يتم اختراق أي مما يلي:",
+            "cause_1": "خادمك الوسيط"
+        }
     },
     "emoji": {
         "category_frequently_used": "كثيرة الاستعمال",
@@ -1546,6 +1534,24 @@
         "error_revoke_3pid_invite_description": "تعذر إبطال الدعوة. قد يواجه الخادم مشكلة مؤقتة أو ليس لديك صلاحيات كافية لإلغاء الدعوة.",
         "admin_tools_section": "أدوات المدير",
         "revoke_invite": "إبطال الدعوة",
-        "invited_by": "دُعيت من %(sender)s"
+        "invited_by": "دُعيت من %(sender)s",
+        "room_encrypted": "يتم تشفير الرسائل الموجودة في هذه الغرفة بين الطرفين.",
+        "room_encrypted_detail": "رسائلك مؤمنة وليس لأحد المفاتيح الفريدة لفكها إلا أنت والمتلقي.",
+        "room_unencrypted": "الرسائل الموجودة في هذه الغرفة غير مشفرة من طرف إلى طرف.",
+        "room_unencrypted_detail": "في الغرف المشفرة ، يتم تأمين رسائلك ولا يمتلك أحد سواك أنت والمتلقي المفاتيح الفريدة لفتحها.",
+        "verify_button": "تحقق من المستخدم",
+        "verify_explainer": "لمزيد من الأمان ، تحقق من هذا المستخدم عن طريق التحقق من رمز لمرة واحدة على كلا الجهازين."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "limits": {
+                "other": "تثبيت عناصر واجهة المستخدم ممكن إلى %(count)s بحدٍ أعلى"
+            }
+        },
+        "widgets_section": "عناصر الواجهة",
+        "edit_integrations": "تعديل عناصر الواجهة والجسور والروبوتات",
+        "add_integrations": "إضافة عناصر الواجهة والجسور والروبوتات",
+        "share_button": "شارك الغرفة",
+        "settings_button": "إعدادات الغرفة"
     }
 }

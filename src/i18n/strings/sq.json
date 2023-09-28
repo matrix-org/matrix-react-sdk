@@ -120,7 +120,6 @@
     "Link to most recent message": "Lidhje për te mesazhet më të freskët",
     "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
     "Failed to reject invite": "S’u arrit të hidhet tej ftesa",
-    "Share room": "Ndani dhomë me të tjerë",
     "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
@@ -302,7 +301,6 @@
     "Show image": "Shfaq figurë",
     "Failed to deactivate user": "S’u arrit të çaktivizohet përdorues",
     "This client does not support end-to-end encryption.": "Ky klient nuk mbulon fshehtëzim skaj-më-skaj.",
-    "Messages in this room are not end-to-end encrypted.": "Mesazhet në këtë dhomë nuk janë të fshehtëzuara skaj-më-skaj.",
     "You verified %(name)s": "Verifikuat %(name)s",
     "You cancelled verifying %(name)s": "Anuluat verifikimin e %(name)s",
     "%(name)s cancelled verifying": "%(name)s anuloi verifikimin",
@@ -314,7 +312,6 @@
     "You sent a verification request": "Dërguat një kërkesë verifikimi",
     "Cancel search": "Anulo kërkimin",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "E keni shpërfillur këtë përdorues, ndaj mesazhi i tij është fshehur. <a>Shfaqe, sido qoftë.</a>",
-    "Messages in this room are end-to-end encrypted.": "Mesazhet në këtë dhomë janë të fshehtëzuara skaj-më-skaj.",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
@@ -333,20 +330,12 @@
     "Recent Conversations": "Biseda Së Fundi",
     "Direct Messages": "Mesazhe të Drejtpërdrejtë",
     "Country Dropdown": "Menu Hapmbyll Vendesh",
-    "Verify User": "Verifikoni Përdoruesin",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Për siguri ekstra, verifikojeni këtë përdorues duke kontrolluar në të dyja pajisjet tuaja një kod njëpërdorimsh.",
-    "Start Verification": "Fillo Verifikimin",
     "Something went wrong trying to invite the users.": "Diç shkoi ters teksa provohej të ftoheshin përdoruesit.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "S’i ftuam dot këta përdorues. Ju lutemi, kontrolloni përdoruesit që doni të ftoni dhe riprovoni.",
     "Failed to find the following users": "S’u arrit të gjendeshin përdoruesit vijues",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Përdoruesit vijues mund të mos ekzistojnë ose janë të pavlefshëm, dhe s’mund të ftohen: %(csvNames)s",
     "This backup is trusted because it has been restored on this session": "Kjo kopjeruajtje është e besuar, ngaqë është rikthyer në këtë sesion",
     "Encrypted by a deleted session": "Fshehtëzuar nga një sesion i fshirë",
-    "Waiting for %(displayName)s to accept…": "Po pritet për %(displayName)s të pranojë…",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Mesazhet tuaj janë të sigurt dhe vetëm ju dhe marrësi kanë kyçet unikë për t’i shkyçur.",
-    "Your messages are not secure": "Mesazhet tuaj s’janë të sigurt",
-    "One of the following may be compromised:": "Një nga sa vijon mund të jetë komprometuar:",
-    "Your homeserver": "Shërbyesi juaj Home",
     "%(count)s sessions": {
         "other": "%(count)s sesione",
         "one": "%(count)s sesion"
@@ -375,7 +364,6 @@
     "Verify by scanning": "Verifikoje me skanim",
     "You declined": "Hodhët poshtë",
     "%(name)s declined": "%(name)s hodhi poshtë",
-    "Accepting…": "Po pranohet…",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
     "Enter a server name": "Jepni një emër shërbyesi",
     "Looks good": "Duket mirë",
@@ -396,7 +384,6 @@
     "Confirm by comparing the following with the User Settings in your other session:": "Ripohojeni duke krahasuar sa vijon me Rregullimet e Përdoruesit te sesioni juaj tjetër:",
     "Confirm this user's session by comparing the following with their User Settings:": "Ripohojeni këtë sesion përdoruesi duke krahasuar sa vijon me Rregullimet e tij të Përdoruesit:",
     "If they don't match, the security of your communication may be compromised.": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Në dhoma të fshehtëzuara, mesazhet tuaj sigurohen dhe vetëm ju dhe marrësi ka kyçet unikë për shkyçjen e tyre.",
     "Verify all users in a room to ensure it's secure.": "Verifiko krejt përdoruesit në dhomë, për të garantuar se është e sigurt.",
     "Almost there! Is %(displayName)s showing the same shield?": "Thuaje mbërritëm! A shfaq %(displayName)s të njëjtën mburojë?",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Keni verifikuar me sukses %(deviceName)s (%(deviceId)s)!",
@@ -461,12 +448,8 @@
     "Recent changes that have not yet been received": "Ndryshime tani së fundi që s’janë marrë ende",
     "Preparing to download logs": "Po bëhet gati për shkarkim regjistrash",
     "Not encrypted": "Jo e fshehtëzuar",
-    "Room settings": "Rregullime dhome",
     "Information": "Informacion",
     "Backup version:": "Version kopjeruajtjeje:",
-    "Widgets": "Widget-e",
-    "Edit widgets, bridges & bots": "Përpunoni widget-e, ura & robotë",
-    "Add widgets, bridges & bots": "Shtoni widget-e, ura & robotë",
     "Start a conversation with someone using their name or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij ose emrin e tij të përdoruesit (bie fjala, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
@@ -480,9 +463,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Që të kërkoni te mesazhe të fshehtëzuar, përdorni <a>aplikacionin për Desktop</a>",
     "This version of %(brand)s does not support viewing some encrypted files": "Ky version i %(brand)s nuk mbulon parjen për disa kartela të fshehtëzuara",
     "This version of %(brand)s does not support searching encrypted messages": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Mundeni të fiksoni deri në %(count)s widget-e"
-    },
     "Data on this screen is shared with %(widgetDomain)s": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s",
     "Modal Widget": "Widget Modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
@@ -768,7 +748,6 @@
     "Remember this": "Mbaje mend këtë",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
     "Allow this widget to verify your identity": "Lejojeni këtë widget të verifikojë identitetin tuaj",
-    "Set my room layout for everyone": "Ujdise skemën e dhomës time për këdo",
     "%(count)s members": {
         "one": "%(count)s anëtar",
         "other": "%(count)s anëtarë"
@@ -837,9 +816,6 @@
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
     "You don't have permission to do this": "S’keni leje ta bëni këtë",
-    "Pinned messages": "Mesazhe të fiksuar",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Nëse keni leje, hapni menunë për çfarëdo mesazhi dhe përzgjidhni <b>Fiksoje</b>, për ta ngjitur këtu.",
-    "Nothing pinned, yet": "Ende pa fiksuar gjë",
     "Please provide an address": "Ju lutemi, jepni një adresë",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Unnamed audio": "Audio pa emër",
@@ -900,7 +876,6 @@
     "Don't leave any rooms": "Mos braktis ndonjë dhomë",
     "MB": "MB",
     "In reply to <a>this message</a>": "Në përgjigje të <a>këtij mesazhi</a>",
-    "Export chat": "Eksportoni fjalosje",
     "Skip verification for now": "Anashkaloje verifikimin hëpërhë",
     "Downloading": "Shkarkim",
     "They won't be able to access whatever you're not an admin of.": "S’do të jenë në gjendje të hyjnë kudo qoftë ku s’jeni përgjegjës.",
@@ -922,18 +897,12 @@
     "Joining": "Po hyhet",
     "If you can't see who you're looking for, send them your invite link below.": "Nëse s’e shihni atë që po kërkoni, dërgojini nga më poshtë një lidhje ftese.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Në dhoma të fshehtëzuara, verifikoni krejt përdoruesit për të garantuar se është e sigurt.",
-    "Yours, or the other users' session": "Sesioni juaj, ose i përdoruesve të tjerë",
-    "Yours, or the other users' internet connection": "Lidhja internet e juaja, ose e përdoruesve të tjerë",
-    "The homeserver the user you're verifying is connected to": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
     "Thread options": "Mundësi rrjedhe",
     "Reply in thread": "Përgjigjuni te rrjedha",
     "Forget": "Harroje",
-    "Files": "Kartela",
     "Reset event store": "Riktheje te parazgjedhjet arkivin e akteve",
     "You most likely do not want to reset your event index store": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
     "Reset event store?": "Të rikthehet te parazgjedhjet arkivi i akteve?",
-    "Close this widget to view it in this panel": "Mbylleni këtë widget, që ta shihni te ky panel",
-    "Unpin this widget to view it in this panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
@@ -954,7 +923,6 @@
     "Moderation": "Moderim",
     "Messaging": "Shkëmbim mesazhes",
     "Spaces you know that contain this space": "Hapësira që e dini se përmbajnë këtë hapësirë",
-    "Chat": "Fjalosje",
     "Recently viewed": "Parë së fundi",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Jeni i sigurt se doni të përfundohet ky pyetësor? Kjo do të shfaqë rezultatet përfundimtare të pyetësorit dhe do të ndalë votimin nga njerëzit.",
     "End Poll": "Përfundoje Pyetësorin",
@@ -992,7 +960,6 @@
     "Verify other device": "Verifikoni pajisje tjetër",
     "You cancelled verification on your other device.": "E anuluat verifikimin në pajisjen tuaj tjetër.",
     "Almost there! Is your other device showing the same shield?": "Thuajse mbaruam! A po shfaq pajisja juaj të njëjtën mburojë?",
-    "To proceed, please accept the verification request on your other device.": "Që të vazhdoni më tej, ju lutemi, pranoni në pajisjen tuaj tjetër kërkesën për verifikim.",
     "Could not fetch location": "S’u pru dot vendndodhja",
     "Remove from room": "Hiqeni prej dhome",
     "Failed to remove user": "S’u arrit të hiqej përdoruesi",
@@ -1015,7 +982,6 @@
     "Join %(roomAddress)s": "Hyni te %(roomAddress)s",
     "Results will be visible when the poll is ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori",
     "Search Dialog": "Dialog Kërkimi",
-    "Pinned": "I fiksuar",
     "What location type do you want to share?": "Ç’lloj vendndodhjeje doni të jepet?",
     "My current location": "Vendndodhja ime e tanishme",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s s’dërgoi dot vendndodhjen tuaj. Ju lutemi, riprovoni.",
@@ -1130,7 +1096,6 @@
     "Interactively verify by emoji": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh",
     "Manually verify by text": "Verifikojeni dorazi përmes teksti",
     "Video call ended": "Thirrja video përfundoi",
-    "Room info": "Hollësi dhome",
     "View List": "Shihni Listën",
     "View list": "Shihni listën",
     "We're creating a room with %(names)s": "Po krijojmë një dhomë me %(names)s",
@@ -1148,8 +1113,6 @@
     "Input devices": "Pajisje input-i",
     "Error downloading image": "Gabim gjatë shkarkimit të figurës",
     "Unable to show image due to error": "S’arrihet të shihet figurë, për shkak gabimi",
-    "We were unable to start a chat with the other user.": "S’qemë në gjendje të nisim një bisedë me përdoruesin tjetër.",
-    "Error starting verification": "Gabim në nisje verifikimi",
     "<w>WARNING:</w> <description/>": "<w>KUJDES:</w> <description/>",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
@@ -1203,7 +1166,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Shërbyesi u përgjigj me %(statusCode)s, me kod gabimi %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "S’qemë në gjendje të gjenim një veprimtari duke parë tej %(dateString)s. Provoni të zgjidhni një datë më herët.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Ndodhi një gabim rrjeti, teksa provohej të gjendej dhe të kalohej te data e dhënë. Shërbyesi juaj Home mund të jetë jashtë funksionimi, ose mund të ishte një problem i përkohshëm me lidhjen tuaj në internet. Ju lutemi, riprovoni. Nëse kjo vazhdon, ju lutemi, lidhuni me përgjegjësin e shërbyesit tuaj Home.",
-    "Poll history": "Historik pyetësorësh",
     "Start DM anyway": "Nis MD sido qoftë",
     "Start DM anyway and never warn me again": "Nis MD sido qoftë dhe mos më sinjalizo kurrë më",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "S’arrihet të gjenden profile për ID-të Matrix radhitur më poshtë - doni të niset një MD sido që të jetë?",
@@ -3190,7 +3152,13 @@
             "verification_skip_warning": "Pa e verifikuar, s’do të mund të hyni te krejt mesazhet tuaja dhe mund të dukeni jo i besueshëm për të tjerët.",
             "verify_later": "Do ta verifikoj më vonë",
             "verify_reset_warning_1": "Rikthimi te parazgjedhjet i kyçeve tuaj të verifikimit s’mund të zhbëhet. Pas rikthimit te parazgjedhjet, s’do të mund të hyni dot te mesazhe të dikurshëm të fshehtëzuar dhe, cilido shok që ju ka verifikuar më parë, do të shohë një sinjalizim sigurie deri sa të ribëni verifikimin me ta.",
-            "verify_reset_warning_2": "Ju lutemi, ecni më tej vetëm nëse jeni i sigurt se keni humbur krejt pajisjet tuaja të tjera dhe Kyçin tuaj të Sigurisë."
+            "verify_reset_warning_2": "Ju lutemi, ecni më tej vetëm nëse jeni i sigurt se keni humbur krejt pajisjet tuaja të tjera dhe Kyçin tuaj të Sigurisë.",
+            "self_verification_hint": "Që të vazhdoni më tej, ju lutemi, pranoni në pajisjen tuaj tjetër kërkesën për verifikim.",
+            "waiting_for_user_accept": "Po pritet për %(displayName)s të pranojë…",
+            "accepting": "Po pranohet…",
+            "start_button": "Fillo Verifikimin",
+            "error_starting_title": "Gabim në nisje verifikimi",
+            "error_starting_description": "S’qemë në gjendje të nisim një bisedë me përdoruesin tjetër."
         },
         "old_version_detected_title": "U pikasën të dhëna kriptografie të vjetër",
         "old_version_detected_description": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
@@ -3235,7 +3203,15 @@
         "cross_signing_room_normal": "Kjo dhomë është e fshehtëzuar skaj-më-skaj",
         "cross_signing_room_verified": "Gjithkush në këtë dhomë është verifikuar",
         "event_shield_reason_authenticity_not_guaranteed": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
-        "event_shield_reason_mismatched_sender_key": "Fshehtëzuar nga një sesion i paverifikuar"
+        "event_shield_reason_mismatched_sender_key": "Fshehtëzuar nga një sesion i paverifikuar",
+        "messages_not_secure": {
+            "title": "Mesazhet tuaj s’janë të sigurt",
+            "heading": "Një nga sa vijon mund të jetë komprometuar:",
+            "cause_1": "Shërbyesi juaj Home",
+            "cause_2": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
+            "cause_3": "Lidhja internet e juaja, ose e përdoruesve të tjerë",
+            "cause_4": "Sesioni juaj, ose i përdoruesve të tjerë"
+        }
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",
@@ -3585,7 +3561,10 @@
         "error_loading": "Gabim në ngarkim Widget-i",
         "error_mixed_content": "Gabim - Lëndë e përzierë",
         "unmaximise": "Çmaksimizoje",
-        "popout": "Widget flluskë"
+        "popout": "Widget flluskë",
+        "unpin_to_view_right_panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
+        "close_to_view_right_panel": "Mbylleni këtë widget, që ta shihni te ky panel",
+        "set_room_layout": "Ujdise skemën e dhomës time për këdo"
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -4170,6 +4149,37 @@
         "error_revoke_3pid_invite_description": "S’u shfuqizua dot ftesa. Shërbyesi mund të jetë duke kaluar një problem të përkohshëm ose s’keni leje të mjaftueshme për të shfuqizuar ftesën.",
         "admin_tools_section": "Mjete Përgjegjësi",
         "revoke_invite": "Shfuqizoje ftesën",
-        "invited_by": "Ftuar nga %(sender)s"
+        "invited_by": "Ftuar nga %(sender)s",
+        "room_encrypted": "Mesazhet në këtë dhomë janë të fshehtëzuara skaj-më-skaj.",
+        "room_encrypted_detail": "Mesazhet tuaj janë të sigurt dhe vetëm ju dhe marrësi kanë kyçet unikë për t’i shkyçur.",
+        "room_unencrypted": "Mesazhet në këtë dhomë nuk janë të fshehtëzuara skaj-më-skaj.",
+        "room_unencrypted_detail": "Në dhoma të fshehtëzuara, mesazhet tuaj sigurohen dhe vetëm ju dhe marrësi ka kyçet unikë për shkyçjen e tyre.",
+        "verify_button": "Verifikoni Përdoruesin",
+        "verify_explainer": "Për siguri ekstra, verifikojeni këtë përdorues duke kontrolluar në të dyja pajisjet tuaja një kod njëpërdorimsh."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Mesazhe të fiksuar",
+            "empty": "Ende pa fiksuar gjë",
+            "explainer": "Nëse keni leje, hapni menunë për çfarëdo mesazhi dhe përzgjidhni <b>Fiksoje</b>, për ta ngjitur këtu.",
+            "limits": {
+                "other": "Mundeni të fiksoni deri në %(count)s widget-e"
+            }
+        },
+        "video_room_chat": {
+            "title": "Fjalosje"
+        },
+        "room_summary_card": {
+            "title": "Hollësi dhome"
+        },
+        "widgets_section": "Widget-e",
+        "edit_integrations": "Përpunoni widget-e, ura & robotë",
+        "add_integrations": "Shtoni widget-e, ura & robotë",
+        "files_button": "Kartela",
+        "polls_button": "Historik pyetësorësh",
+        "pinned_messages_button": "I fiksuar",
+        "export_chat_button": "Eksportoni fjalosje",
+        "share_button": "Ndani dhomë me të tjerë",
+        "settings_button": "Rregullime dhome"
     }
 }

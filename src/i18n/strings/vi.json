@@ -552,32 +552,7 @@
         "one": "1 phiên đã xác thực",
         "other": "%(count)s phiên đã xác thực"
     },
-    "Room settings": "Cài đặt phòng",
-    "Share room": "Phòng chia sẻ",
-    "Export chat": "Xuất trò chuyện",
     "Not encrypted": "Không được mã hóa",
-    "Add widgets, bridges & bots": "Thêm các widget, bridge và bot",
-    "Edit widgets, bridges & bots": "Chỉnh sửa tiện ích widget, cầu nối và bot",
-    "Widgets": "Vật dụng",
-    "Set my room layout for everyone": "Đặt bố cục phòng của tôi cho mọi người",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Bạn chỉ có thể ghim tối đa %(count)s widget"
-    },
-    "Pinned messages": "Tin nhắn đã ghim",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Nếu bạn có quyền, hãy mở menu trên bất kỳ tin nhắn nào và chọn Ghim <b>Pin</b> để dán chúng vào đây.",
-    "Nothing pinned, yet": "Chưa có gì được ghim",
-    "Your homeserver": "Chủ nhà của bạn",
-    "One of the following may be compromised:": "Một trong những điều sau đây có thể bị xâm phạm:",
-    "Your messages are not secure": "Tin nhắn của bạn không an toàn",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Để tăng cường bảo mật, hãy xác thực người dùng này bằng cách kiểm tra mã một lần trên cả hai thiết bị của bạn.",
-    "Verify User": "Xác thực người dùng",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Trong các phòng được mã hóa, tin nhắn của bạn được bảo mật và chỉ bạn và người nhận mới có chìa khóa duy nhất để mở khóa.",
-    "Messages in this room are not end-to-end encrypted.": "Tin nhắn trong phòng này không được mã hóa đầu cuối.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Tin nhắn của bạn được bảo mật và chỉ bạn và người nhận mới có chìa khóa duy nhất để mở khóa.",
-    "Messages in this room are end-to-end encrypted.": "Tin nhắn trong phòng này đang được mã hóa đầu cuối.",
-    "Start Verification": "Bắt đầu xác thực",
-    "Accepting…": "Đang chấp nhận…",
-    "Waiting for %(displayName)s to accept…": "Đang chờ %(displayName)s chấp nhận…",
     "Backup version:": "Phiên bản dự phòng:",
     "This backup is trusted because it has been restored on this session": "Bản sao lưu này đáng tin cậy vì nó đã được khôi phục trong phiên này",
     "Home": "Nhà",
@@ -943,13 +918,6 @@
     "Sorry, your vote was not registered. Please try again.": "Xin lỗi, phiếu bầu của bạn đã không được đăng ký. Vui lòng thử lại.",
     "Vote not registered": "Bỏ phiếu không đăng ký",
     "In encrypted rooms, verify all users to ensure it's secure.": "Trong các phòng mã hóa, xác thực tất cả người dùng để đảm bảo an toàn.",
-    "Files": "Files",
-    "Close this widget to view it in this panel": "Đóng widget này để xem nó trong bảng điều khiển này",
-    "Unpin this widget to view it in this panel": "Bỏ ghim widget này để xem nó trong bảng điều khiển này",
-    "Chat": "Trò chuyện",
-    "Yours, or the other users' session": "Của bạn, hoặc phiên của các người dùng khác",
-    "Yours, or the other users' internet connection": "Của bạn, hoặc kết nối internet của các người dùng khác",
-    "The homeserver the user you're verifying is connected to": "Máy chủ nhà người dùng bạn đang xác thực được kết nối đến",
     "Recently viewed": "Được xem gần đây",
     "Reply in thread": "Trả lời theo chủ đề",
     "Developer": "Nhà phát triển",
@@ -993,7 +961,6 @@
     },
     "You cancelled verification on your other device.": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
     "Almost there! Is your other device showing the same shield?": "Sắp xong rồi! Có phải thiết bị khác của bạn hiển thị cùng một lá chắn không?",
-    "To proceed, please accept the verification request on your other device.": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "unknown": "không rõ",
@@ -1018,7 +985,6 @@
     },
     "The sender has blocked you from receiving this message": "Người gửi không cho bạn nhận tin nhắn này",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
-    "Poll history": "Lịch sử bỏ phiếu",
     "Ignore %(user)s": "Tảng lờ %(user)s",
     "Remove from %(roomName)s": "Loại bỏ khỏi %(roomName)s",
     "Remove them from specific things I'm able to": "Loại bỏ khỏi các phòng xác định mà tôi có thể",
@@ -1026,14 +992,11 @@
     "Unban from room": "Bỏ cấm trong phòng",
     "Ban from room": "Cấm khỏi phòng",
     "Invites by email can only be sent one at a time": "Chỉ có thể gửi một thư điện tử mời mỗi lần",
-    "Room info": "Thông tin phòng",
     "Remove them from everything I'm able to": "Loại bỏ khỏi mọi phòng mà tôi có thể",
     "The beginning of the room": "Bắt đầu phòng",
-    "Pinned": "Đã ghim",
     "Open room": "Mở phòng",
     "Remove from room": "Loại bỏ khỏi phòng",
     "%(members)s and %(last)s": "%(members)s và %(last)s",
-    "Error starting verification": "Lỗi khi bắt đầu xác thực",
     "Remove from space": "Loại bỏ khỏi space",
     "Disinvite from space": "Hủy lời mời vào space",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Toàn bộ tin nhắn và lời mời từ người dùng này sẽ bị ẩn. Bạn có muốn tảng lờ người dùng?",
@@ -1072,7 +1035,6 @@
     "Message pending moderation: %(reason)s": "Tin nhắn chờ duyệt: %(reason)s",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "Video call ended": "Cuộc gọi truyền hình đã kết thúc",
-    "We were unable to start a chat with the other user.": "Chúng tôi không thể bắt đầu cuộc trò chuyện với người kia.",
     "View poll in timeline": "Xem cuộc bỏ phiếu trong dòng thời gian",
     "Click": "Nhấn",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
@@ -3031,7 +2993,13 @@
             "verification_skip_warning": "Nếu không xác thực, bạn sẽ không thể truy cập vào tất cả tin nhắn của bạn và có thể hiển thị là không đáng tin cậy với những người khác.",
             "verify_later": "Tôi sẽ xác thực sau",
             "verify_reset_warning_1": "Sẽ không thể hoàn tác lại việc đặt lại các khóa xác thực của bạn. Sau khi đặt lại, bạn sẽ không có quyền truy cập vào các tin nhắn đã được mã hóa cũ, và bạn bè đã được xác thực trước đó bạn sẽ thấy các cảnh báo bảo mật cho đến khi bạn xác thực lại với họ.",
-            "verify_reset_warning_2": "Chỉ tiếp tục nếu bạn chắc chắn là mình đã mất mọi thiết bị khác và khóa bảo mật."
+            "verify_reset_warning_2": "Chỉ tiếp tục nếu bạn chắc chắn là mình đã mất mọi thiết bị khác và khóa bảo mật.",
+            "self_verification_hint": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
+            "waiting_for_user_accept": "Đang chờ %(displayName)s chấp nhận…",
+            "accepting": "Đang chấp nhận…",
+            "start_button": "Bắt đầu xác thực",
+            "error_starting_title": "Lỗi khi bắt đầu xác thực",
+            "error_starting_description": "Chúng tôi không thể bắt đầu cuộc trò chuyện với người kia."
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -3076,7 +3044,15 @@
         "cross_signing_room_normal": "Phòng này được mã hóa end-to-end",
         "cross_signing_room_verified": "Mọi người trong phòng này đã được xác thực",
         "event_shield_reason_authenticity_not_guaranteed": "Tính xác thực của tin nhắn được mã hóa này không thể được đảm bảo trên thiết bị này.",
-        "event_shield_reason_mismatched_sender_key": "Được mã hóa bởi một phiên chưa được xác thực"
+        "event_shield_reason_mismatched_sender_key": "Được mã hóa bởi một phiên chưa được xác thực",
+        "messages_not_secure": {
+            "title": "Tin nhắn của bạn không an toàn",
+            "heading": "Một trong những điều sau đây có thể bị xâm phạm:",
+            "cause_1": "Chủ nhà của bạn",
+            "cause_2": "Máy chủ nhà người dùng bạn đang xác thực được kết nối đến",
+            "cause_3": "Của bạn, hoặc kết nối internet của các người dùng khác",
+            "cause_4": "Của bạn, hoặc phiên của các người dùng khác"
+        }
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3412,7 +3388,10 @@
         "error_loading": "Lỗi khi tải widget",
         "error_mixed_content": "Lỗi - Nội dung hỗn hợp",
         "unmaximise": "Hủy thu nhỏ",
-        "popout": "Tiện ích bật ra"
+        "popout": "Tiện ích bật ra",
+        "unpin_to_view_right_panel": "Bỏ ghim widget này để xem nó trong bảng điều khiển này",
+        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này",
+        "set_room_layout": "Đặt bố cục phòng của tôi cho mọi người"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3980,6 +3959,37 @@
         "error_revoke_3pid_invite_description": "Không thể thu hồi lời mời. Máy chủ có thể đang gặp sự cố tạm thời hoặc bạn không có đủ quyền để thu hồi lời mời.",
         "admin_tools_section": "Công cụ quản trị",
         "revoke_invite": "Thu hồi lời mời",
-        "invited_by": "Được %(sender)s mời"
+        "invited_by": "Được %(sender)s mời",
+        "room_encrypted": "Tin nhắn trong phòng này đang được mã hóa đầu cuối.",
+        "room_encrypted_detail": "Tin nhắn của bạn được bảo mật và chỉ bạn và người nhận mới có chìa khóa duy nhất để mở khóa.",
+        "room_unencrypted": "Tin nhắn trong phòng này không được mã hóa đầu cuối.",
+        "room_unencrypted_detail": "Trong các phòng được mã hóa, tin nhắn của bạn được bảo mật và chỉ bạn và người nhận mới có chìa khóa duy nhất để mở khóa.",
+        "verify_button": "Xác thực người dùng",
+        "verify_explainer": "Để tăng cường bảo mật, hãy xác thực người dùng này bằng cách kiểm tra mã một lần trên cả hai thiết bị của bạn."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Tin nhắn đã ghim",
+            "empty": "Chưa có gì được ghim",
+            "explainer": "Nếu bạn có quyền, hãy mở menu trên bất kỳ tin nhắn nào và chọn Ghim <b>Pin</b> để dán chúng vào đây.",
+            "limits": {
+                "other": "Bạn chỉ có thể ghim tối đa %(count)s widget"
+            }
+        },
+        "video_room_chat": {
+            "title": "Trò chuyện"
+        },
+        "room_summary_card": {
+            "title": "Thông tin phòng"
+        },
+        "widgets_section": "Vật dụng",
+        "edit_integrations": "Chỉnh sửa tiện ích widget, cầu nối và bot",
+        "add_integrations": "Thêm các widget, bridge và bot",
+        "files_button": "Files",
+        "polls_button": "Lịch sử bỏ phiếu",
+        "pinned_messages_button": "Đã ghim",
+        "export_chat_button": "Xuất trò chuyện",
+        "share_button": "Phòng chia sẻ",
+        "settings_button": "Cài đặt phòng"
     }
 }

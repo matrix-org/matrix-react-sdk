@@ -117,7 +117,6 @@
     "<a>In reply to</a> <pill>": "<a>W odpowiedzi do</a> <pill>",
     "Jump to read receipt": "Przeskocz do potwierdzenia odczytu",
     "Share Link to User": "Udostępnij link użytkownika",
-    "Share room": "Udostępnij pokój",
     "Clear Storage and Sign Out": "Wyczyść pamięć i wyloguj się",
     "Send Logs": "Wyślij dzienniki",
     "We encountered an error trying to restore your previous session.": "Napotkaliśmy błąd podczas przywracania poprzedniej sesji.",
@@ -267,12 +266,7 @@
     "Invite anyway and never warn me again": "Zaproś mimo to i nie ostrzegaj ponownie",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nie znaleziono profilów dla identyfikatorów Matrix wymienionych poniżej - czy chcesz rozpocząć wiadomość prywatną mimo to?",
     "The following users may not exist": "Wymienieni użytkownicy mogą nie istnieć",
-    "Widgets": "Widżety",
-    "Messages in this room are end-to-end encrypted.": "Wiadomości w tym pokoju są szyfrowane end-to-end.",
     "Sign in with SSO": "Zaloguj się z SSO",
-    "Add widgets, bridges & bots": "Dodaj widżety, mostki i boty",
-    "Room settings": "Ustawienia pokoju",
-    "Messages in this room are not end-to-end encrypted.": "Wiadomości w tym pokoju nie są szyfrowane end-to-end.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy lub nazwy użytkownika (np. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy, adresu e-mail lub nazwy użytkownika (np. <userId/>).",
     "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
@@ -423,7 +417,6 @@
     "Removing…": "Usuwanie…",
     "Incompatible Database": "Niekompatybilna baza danych",
     "Information": "Informacje",
-    "Accepting…": "Akceptowanie…",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Jemen",
@@ -543,10 +536,6 @@
     "Italy": "Włochy",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Użyj serwera tożsamości, aby zapraszać przez e-mail. Zarządzaj w <settings>Ustawieniach</settings>.",
     "Verify by emoji": "Weryfikuj z użyciem emoji",
-    "Your messages are not secure": "Twoje wiadomości nie są bezpieczne",
-    "Start Verification": "Rozpocznij weryfikację",
-    "Waiting for %(displayName)s to accept…": "Oczekiwanie na akceptację przez %(displayName)s…",
-    "Verify User": "Weryfikuj użytkownika",
     "Verification Request": "Żądanie weryfikacji",
     "You verified %(name)s": "Zweryfikowałeś %(name)s",
     "This client does not support end-to-end encryption.": "Ten klient nie obsługuje szyfrowania end-to-end.",
@@ -610,9 +599,6 @@
         "other": "%(count)s członkowie"
     },
     "You don't have permission": "Nie masz uprawnień",
-    "Nothing pinned, yet": "Nie przypięto tu jeszcze niczego",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Jeżeli masz uprawnienia, przejdź do menu dowolnej wiadomości i wybierz <b>Przypnij</b>, aby przyczepić ją tutaj.",
-    "Pinned messages": "Przypięte wiadomości",
     "You don't have permission to do this": "Nie masz uprawnień aby to zrobić",
     "Sent": "Wysłano",
     "Message preview": "Podgląd wiadomości",
@@ -645,10 +631,7 @@
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
-    "Unpin this widget to view it in this panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
     "Location": "Lokalizacja",
-    "Export chat": "Eksportuj czat",
-    "Files": "Pliki",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Usunięcie kluczy weryfikacji krzyżowej jest trwałe. Każdy, z kim dokonano weryfikacji, zobaczy alerty bezpieczeństwa. Prawie na pewno nie chcesz tego robić, chyba że straciłeś każde urządzenie, z którego możesz weryfikować.",
     "Destroy cross-signing keys?": "Zniszczyć klucze weryfikacji krzyżowej?",
@@ -689,26 +672,10 @@
     "%(members)s and %(last)s": "%(members)s i %(last)s",
     "%(members)s and more": "%(members)s i więcej",
     "Failed to connect to integration manager": "Nie udało się połączyć z menedżerem integracji",
-    "Your homeserver": "Twój serwer domowy",
-    "One of the following may be compromised:": "Jedno z wymienionych mogło zostać zdradzone:",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Dla dodatkowego bezpieczeństwa, zweryfikuj tego użytkownika za pomocą jednorazowego kodu na obu waszych urządzeniach.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "W pokojach szyfrowanych Twoje wiadomości są zabezpieczone i tylko Ty i Twój odbiorca posiadacie unikalne klucze, aby je odblokować.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Twoje wiadomości są zabezpieczone i tylko Ty i Twój odbiorca posiadacie unikalne klucze, aby je odblokować.",
-    "To proceed, please accept the verification request on your other device.": "Aby kontynuować, akceptuj żądanie weryfikacji na swoim drugim urządzeniu.",
     "%(count)s reply": {
         "one": "%(count)s odpowiedź",
         "other": "%(count)s odpowiedzi"
     },
-    "You can only pin up to %(count)s widgets": {
-        "other": "Możesz przypiąć do %(count)s widżetów"
-    },
-    "Room info": "Informacje pokoju",
-    "Chat": "Czat",
-    "We were unable to start a chat with the other user.": "Nie byliśmy w stanie rozpocząć czatu z innym użytkownikiem.",
-    "Error starting verification": "Wystąpił błąd w trakcie weryfikacji",
-    "Yours, or the other users' session": "Sesja Twoja lub innych użytkowników",
-    "Yours, or the other users' internet connection": "Połączenie internetowe Twoje lub innych użytkowników",
-    "The homeserver the user you're verifying is connected to": "Użytkownik, którego weryfikujesz jest połączony z serwerem domowym",
     "You cancelled": "Anulowałeś",
     "You accepted": "Zaakceptowałeś",
     "%(name)s accepted": "%(name)s zaakceptował",
@@ -834,12 +801,7 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Nie będziesz mógł cofnąć tej zmiany, ponieważ degradujesz swoje uprawnienia. Jeśli jesteś ostatnim użytkownikiem uprzywilejowanym w tej przestrzeni, nie będziesz mógł ich odzyskać.",
     "All messages and invites from this user will be hidden. Are you sure you want to ignore them?": "Wszystkie wiadomości i zaproszenia od tego użytkownika zostaną ukryte. Czy na pewno chcesz zignorować?",
     "Ignore %(user)s": "Ignoruj %(user)s",
-    "Pinned": "Przypięte",
-    "Poll history": "Historia ankiet",
     "Not encrypted": "Nie szyfrowane",
-    "Edit widgets, bridges & bots": "Edytuj widżety, mostki i boty",
-    "Set my room layout for everyone": "Ustaw mój układ pokoju dla wszystkich",
-    "Close this widget to view it in this panel": "Zamknij widżet, aby wyświetlić go w tym panelu",
     "My live location": "Moja lokalizacja na żywo",
     "My current location": "Moja aktualna lokalizacja",
     "%(displayName)s's live location": "Lokalizacja na żywo użytkownika %(displayName)s",
@@ -3266,7 +3228,13 @@
             "verification_skip_warning": "Bez weryfikacji, nie będziesz posiadać dostępu do wszystkich swoich wiadomości, a inni będą Cię widzieć jako niezaufanego.",
             "verify_later": "Zweryfikuję później",
             "verify_reset_warning_1": "Zresetowanie kluczy weryfikacyjnych nie może być cofnięte. Po zresetowaniu, nie będziesz mieć dostępu do starych wiadomości szyfrowanych, a wszyscy znajomi, którzy wcześniej Cię zweryfikowali, będą widzieć ostrzeżenia do czasu ponownej weryfikacji.",
-            "verify_reset_warning_2": "Kontynuuj tylko wtedy, gdy jesteś pewien, że straciłeś wszystkie inne urządzenia i swój klucz bezpieczeństwa."
+            "verify_reset_warning_2": "Kontynuuj tylko wtedy, gdy jesteś pewien, że straciłeś wszystkie inne urządzenia i swój klucz bezpieczeństwa.",
+            "self_verification_hint": "Aby kontynuować, akceptuj żądanie weryfikacji na swoim drugim urządzeniu.",
+            "waiting_for_user_accept": "Oczekiwanie na akceptację przez %(displayName)s…",
+            "accepting": "Akceptowanie…",
+            "start_button": "Rozpocznij weryfikację",
+            "error_starting_title": "Wystąpił błąd w trakcie weryfikacji",
+            "error_starting_description": "Nie byliśmy w stanie rozpocząć czatu z innym użytkownikiem."
         },
         "old_version_detected_title": "Wykryto stare dane kryptograficzne",
         "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
@@ -3311,7 +3279,15 @@
         "cross_signing_room_normal": "Ten pokój jest szyfrowany end-to-end",
         "cross_signing_room_verified": "Wszyscy w tym pokoju są zweryfikowani",
         "event_shield_reason_authenticity_not_guaranteed": "Autentyczność tej wiadomości szyfrowanej nie jest gwarantowana na tym urządzeniu.",
-        "event_shield_reason_mismatched_sender_key": "Zaszyfrowano przez sesję niezweryfikowaną"
+        "event_shield_reason_mismatched_sender_key": "Zaszyfrowano przez sesję niezweryfikowaną",
+        "messages_not_secure": {
+            "title": "Twoje wiadomości nie są bezpieczne",
+            "heading": "Jedno z wymienionych mogło zostać zdradzone:",
+            "cause_1": "Twój serwer domowy",
+            "cause_2": "Użytkownik, którego weryfikujesz jest połączony z serwerem domowym",
+            "cause_3": "Połączenie internetowe Twoje lub innych użytkowników",
+            "cause_4": "Sesja Twoja lub innych użytkowników"
+        }
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3666,7 +3642,10 @@
         "error_loading": "Błąd ładowania widżetu",
         "error_mixed_content": "Błąd — zawartość mieszana",
         "unmaximise": "Normalizuj",
-        "popout": "Wyskakujący widżet"
+        "popout": "Wyskakujący widżet",
+        "unpin_to_view_right_panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
+        "close_to_view_right_panel": "Zamknij widżet, aby wyświetlić go w tym panelu",
+        "set_room_layout": "Ustaw mój układ pokoju dla wszystkich"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -4259,6 +4238,37 @@
         "error_revoke_3pid_invite_description": "Nie udało się odwołać zaproszenia. Serwer może posiadać tymczasowy problem lub nie masz wystarczających uprawnień, aby odwołać zaproszenie.",
         "admin_tools_section": "Narzędzia Administracyjne",
         "revoke_invite": "Odwołaj zaproszenie",
-        "invited_by": "Zaproszony przez %(sender)s"
+        "invited_by": "Zaproszony przez %(sender)s",
+        "room_encrypted": "Wiadomości w tym pokoju są szyfrowane end-to-end.",
+        "room_encrypted_detail": "Twoje wiadomości są zabezpieczone i tylko Ty i Twój odbiorca posiadacie unikalne klucze, aby je odblokować.",
+        "room_unencrypted": "Wiadomości w tym pokoju nie są szyfrowane end-to-end.",
+        "room_unencrypted_detail": "W pokojach szyfrowanych Twoje wiadomości są zabezpieczone i tylko Ty i Twój odbiorca posiadacie unikalne klucze, aby je odblokować.",
+        "verify_button": "Weryfikuj użytkownika",
+        "verify_explainer": "Dla dodatkowego bezpieczeństwa, zweryfikuj tego użytkownika za pomocą jednorazowego kodu na obu waszych urządzeniach."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Przypięte wiadomości",
+            "empty": "Nie przypięto tu jeszcze niczego",
+            "explainer": "Jeżeli masz uprawnienia, przejdź do menu dowolnej wiadomości i wybierz <b>Przypnij</b>, aby przyczepić ją tutaj.",
+            "limits": {
+                "other": "Możesz przypiąć do %(count)s widżetów"
+            }
+        },
+        "video_room_chat": {
+            "title": "Czat"
+        },
+        "room_summary_card": {
+            "title": "Informacje pokoju"
+        },
+        "widgets_section": "Widżety",
+        "edit_integrations": "Edytuj widżety, mostki i boty",
+        "add_integrations": "Dodaj widżety, mostki i boty",
+        "files_button": "Pliki",
+        "polls_button": "Historia ankiet",
+        "pinned_messages_button": "Przypięte",
+        "export_chat_button": "Eksportuj czat",
+        "share_button": "Udostępnij pokój",
+        "settings_button": "Ustawienia pokoju"
     }
 }

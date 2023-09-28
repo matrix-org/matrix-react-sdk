@@ -126,7 +126,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим.",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
     "Share Link to User": "Подели везу са корисником",
-    "Share room": "Подели собу",
     "Share Room": "Подели собу",
     "Link to most recent message": "Веза ка најновијој поруци",
     "Share User": "Подели корисника",
@@ -138,8 +137,6 @@
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Direct Messages": "Директне поруке",
-    "Messages in this room are end-to-end encrypted.": "Поруке у овој соби су шифроване с краја на крај.",
-    "Messages in this room are not end-to-end encrypted.": "Поруке у овој соби нису шифроване с краја на крај.",
     "%(count)s verified sessions": {
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
@@ -405,19 +402,13 @@
     "Afghanistan": "Авганистан",
     "United States": "Сједињене Америчке Државе",
     "United Kingdom": "Уједињено Краљевство",
-    "Your homeserver": "Ваш домаћи сервер",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домаћи сервер је прекорачио ограничење неког ресурса.",
     "Your homeserver has exceeded its user limit.": "Ваш домаћи сервер је прекорачио ограничење корисника.",
     "Removing…": "Уклањам…",
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
     "Hide sessions": "Сакриј сесије",
-    "Room settings": "Поставке собе",
     "Not encrypted": "Није шифровано",
-    "Add widgets, bridges & bots": "Додај виџете, мостове и ботове",
-    "Edit widgets, bridges & bots": "Уреди виџете, мостове и ботове",
-    "Widgets": "Виџети",
-    "Set my room layout for everyone": "Постави мој распоред собе за сваког",
     "Power level": "Ниво снаге",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
@@ -1211,7 +1202,10 @@
             "description_2": "Ако сте то случајно учинили, безбедне поруке можете подесити у овој сесији, која ће поново шифровати историју порука сесије помоћу новог начина опоравка.",
             "warning": "Ако нисте ви уклонили начин опоравка, нападач можда покушава да приступи вашем налогу. Промените своју лозинку и поставите нови начин опоравка у поставкама, одмах."
         },
-        "event_shield_reason_mismatched_sender_key": "Шифровано од стране непотврђене сесије"
+        "event_shield_reason_mismatched_sender_key": "Шифровано од стране непотврђене сесије",
+        "messages_not_secure": {
+            "cause_1": "Ваш домаћи сервер"
+        }
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",
@@ -1394,7 +1388,8 @@
         "unencrypted_warning": "Виџети не користе шифровање порука.",
         "added_by": "Додао је виџет",
         "cookie_warning": "Овај виџет може користити колачиће.",
-        "popout": "Виџет за искакање"
+        "popout": "Виџет за искакање",
+        "set_room_layout": "Постави мој распоред собе за сваког"
     },
     "create_space": {
         "private_personal_heading": "Са ким радите?"
@@ -1538,6 +1533,15 @@
     "user_info": {
         "error_revoke_3pid_invite_title": "Неуспех при отказивању позивнице",
         "admin_tools_section": "Админ алатке",
-        "revoke_invite": "Откажи позивницу"
+        "revoke_invite": "Откажи позивницу",
+        "room_encrypted": "Поруке у овој соби су шифроване с краја на крај.",
+        "room_unencrypted": "Поруке у овој соби нису шифроване с краја на крај."
+    },
+    "right_panel": {
+        "widgets_section": "Виџети",
+        "edit_integrations": "Уреди виџете, мостове и ботове",
+        "add_integrations": "Додај виџете, мостове и ботове",
+        "share_button": "Подели собу",
+        "settings_button": "Поставке собе"
     }
 }

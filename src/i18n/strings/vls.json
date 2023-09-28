@@ -116,7 +116,6 @@
         "one": "(~%(count)s resultoat)"
     },
     "Join Room": "Gesprek toetreedn",
-    "Share room": "Gesprek deeln",
     "not specified": "nie ingegeevn",
     "Sunday": "Zundag",
     "Monday": "Moandag",
@@ -1212,5 +1211,8 @@
         "admin_tools_section": "Beheerdersgereedschap",
         "revoke_invite": "Uutnodigienge intrekkn",
         "invited_by": "Uutgenodigd deur %(sender)s"
+    },
+    "right_panel": {
+        "share_button": "Gesprek deeln"
     }
 }

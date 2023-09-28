@@ -107,7 +107,6 @@
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
     },
-    "Share room": "Compartir la sala",
     "Error decrypting image": "Error al descifrar imagen",
     "Error decrypting video": "Error al descifrar el vídeo",
     "Add an Integration": "Añadir una Integración",
@@ -331,18 +330,6 @@
     "Remove recent messages": "Eliminar mensajes recientes",
     "Direct Messages": "Mensajes directos",
     "Failed to connect to integration manager": "Error al conectarse con el administrador de integración",
-    "Waiting for %(displayName)s to accept…": "Esperando a que %(displayName)s acepte…",
-    "Accepting…": "Aceptando…",
-    "Start Verification": "Iniciar verificación",
-    "Messages in this room are end-to-end encrypted.": "Los mensajes de esta sala están cifrados de extremo a extremo.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Los mensajes son seguros y sólo tú y el destinatario tienen las claves únicas para desbloquearlos.",
-    "Messages in this room are not end-to-end encrypted.": "Los mensajes en esta sala no están cifrados de extremo a extremo.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "En las salas cifradas, tus mensajes están seguros y solo tú y el destinatario tienen las claves únicas para desbloquearlos.",
-    "Verify User": "Verificar usuario",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Para mayor seguridad, verifica a este usuario comprobando un código temporal vez dos de tus dispositivos.",
-    "Your messages are not secure": "Los mensajes no son seguros",
-    "One of the following may be compromised:": "Uno de los siguientes puede estar comprometido:",
-    "Your homeserver": "Tu servidor base",
     "%(count)s verified sessions": {
         "other": "%(count)s sesiones verificadas",
         "one": "1 sesión verificada"
@@ -431,7 +418,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "Room settings": "Configuración de la sala",
     "You've successfully verified your device!": "¡Ha verificado correctamente su dispositivo!",
     "Edited at %(date)s": "Última vez editado: %(date)s",
     "Click to view edits": "Haz clic para ver las ediciones",
@@ -470,13 +456,6 @@
     "Join the conference from the room information card on the right": "Únete a la conferencia desde el panel de información de la sala de la derecha",
     "Join the conference at the top of this room": "Únete a la conferencia en la parte de arriba de la sala",
     "Ignored attempt to disable encryption": "Se ha ignorado un intento de desactivar el cifrado",
-    "Add widgets, bridges & bots": "Añadir accesorios, puentes y bots",
-    "Edit widgets, bridges & bots": "Editar accesorios, puentes y bots",
-    "Widgets": "Accesorios",
-    "Set my room layout for everyone": "Hacer que todo el mundo use mi disposición de sala",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Solo puedes anclar hasta %(count)s accesorios"
-    },
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
     "Zimbabwe": "Zimbabue",
@@ -842,9 +821,6 @@
     "Message preview": "Vista previa del mensaje",
     "Sent": "Enviado",
     "You don't have permission to do this": "No tienes permisos para hacer eso",
-    "Pinned messages": "Mensajes fijados",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Si tienes permisos, abre el menú de cualquier mensaje y selecciona <b>Fijar</b> para colocarlo aquí.",
-    "Nothing pinned, yet": "Ningún mensaje fijado… todavía",
     "Please provide an address": "Por favor, elige una dirección",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Ha fallado el sistema de búsqueda de mensajes. Comprueba <a>tus ajustes</a> para más información",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
@@ -903,7 +879,6 @@
     "You are about to leave <spaceName/>.": "Estás a punto de salirte de <spaceName/>.",
     "MB": "MB",
     "In reply to <a>this message</a>": "En respuesta a <a>este mensaje</a>",
-    "Export chat": "Exportar conversación",
     "Skip verification for now": "Saltar la verificación por ahora",
     "Really reset verification keys?": "¿De verdad quieres restablecer las claves de verificación?",
     "They won't be able to access whatever you're not an admin of.": "No podrán acceder a donde no tengas permisos de administración.",
@@ -923,9 +898,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
     "Joining": "Uniéndote",
     "In encrypted rooms, verify all users to ensure it's secure.": "En salas cifradas, verifica a todos los usuarios para asegurarte de que es segura.",
-    "Yours, or the other users' session": "Tu sesión o la de la otra persona",
-    "Yours, or the other users' internet connection": "Tu conexión a internet o la de la otra persona",
-    "The homeserver the user you're verifying is connected to": "El servidor base del usuario al que estás invitando",
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
     "Thread options": "Ajustes del hilo",
     "Reply in thread": "Responder en hilo",
@@ -943,7 +915,6 @@
     "Experimental": "Experimentos",
     "Themes": "Temas",
     "Moderation": "Moderación",
-    "Files": "Archivos",
     "Recent searches": "Búsquedas recientes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar contenido de mensajes, usa este icono en la parte de arriba de una sala: <icon/>",
     "Other searches": "Otras búsquedas",
@@ -971,7 +942,6 @@
     },
     "Sorry, your vote was not registered. Please try again.": "Lo sentimos, no se ha podido registrar el voto. Inténtalo otra vez.",
     "Vote not registered": "Voto no emitido",
-    "Chat": "Conversación",
     "Based on %(count)s votes": {
         "other": "%(count)s votos",
         "one": "%(count)s voto"
@@ -996,9 +966,6 @@
     "Remove them from specific things I'm able to": "Sacarle de algunos sitios en concreto",
     "Remove them from everything I'm able to": "Sacarle de todos los sitios en los que pueda",
     "Remove from %(roomName)s": "Sacar de %(roomName)s",
-    "Close this widget to view it in this panel": "Cierra este accesorio para verlo en este panel",
-    "Unpin this widget to view it in this panel": "Deja de fijar este accesorio para verlo en este panel",
-    "To proceed, please accept the verification request on your other device.": "Para continuar, acepta la solicitud de verificación en tu otro dispositivo.",
     "Message pending moderation": "Mensaje esperando revisión",
     "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
     "Pick a date to jump to": "Elige la fecha a la que saltar",
@@ -1011,7 +978,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s y %(space2Name)s",
     "This address does not point at this room": "La dirección no apunta a esta sala",
     "Missing room name or separator e.g. (my-room:domain.org)": "Falta el nombre de la sala o el separador (ej.: mi-sala:dominio.org)",
-    "Pinned": "Fijado",
     "Search Dialog": "Ventana de búsqueda",
     "Join %(roomAddress)s": "Unirte a %(roomAddress)s",
     "What location type do you want to share?": "¿Qué ubicación quieres compartir?",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "Video call ended": "Videollamada terminada",
     "%(name)s started a video call": "%(name)s comenzó una videollamada",
-    "Room info": "Info. de la sala",
     "Completing set up of your new device": "Terminando de configurar tu nuevo dispositivo",
     "Waiting for device to sign in": "Esperando a que el dispositivo inicie sesión",
     "Review and approve the sign in": "Revisar y aprobar inicio de sesión",
@@ -1148,8 +1113,6 @@
     "Too many attempts in a short time. Wait some time before trying again.": "Demasiados intentos en poco tiempo. Espera un poco antes de volverlo a intentar.",
     "Thread root ID: %(threadRootId)s": "ID del hilo raíz: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>ADVERTENCIA :</w> <description/>",
-    "We were unable to start a chat with the other user.": "No se ha podido iniciar una conversación con el otro usuario.",
-    "Error starting verification": "Error al empezar la verificación",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
     "Connecting…": "Conectando…",
     "Scan QR code": "Escanear código QR",
@@ -1169,7 +1132,6 @@
     "Loading polls": "Cargando encuestas",
     "Active polls": "Encuestas activas",
     "Ignore %(user)s": "Ignorar a %(user)s",
-    "Poll history": "Historial de encuestas",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
@@ -3124,7 +3086,13 @@
             "verification_success_without_backup": "Has verificado tu nuevo dispositivo. El resto verá que es de confianza.",
             "verification_skip_warning": "Si decides no verificar, no tendrás acceso a todos tus mensajes y puede que le aparezcas a los demás como «no confiado».",
             "verify_later": "La verificaré en otro momento",
-            "verify_reset_warning_1": "Una vez restableces las claves de verificación, no lo podrás deshacer. Después de restablecerlas, no podrás acceder a los mensajes cifrados antiguos, y cualquier persona que te haya verificado verá avisos de seguridad hasta que vuelvas a hacer la verificación con ella."
+            "verify_reset_warning_1": "Una vez restableces las claves de verificación, no lo podrás deshacer. Después de restablecerlas, no podrás acceder a los mensajes cifrados antiguos, y cualquier persona que te haya verificado verá avisos de seguridad hasta que vuelvas a hacer la verificación con ella.",
+            "self_verification_hint": "Para continuar, acepta la solicitud de verificación en tu otro dispositivo.",
+            "waiting_for_user_accept": "Esperando a que %(displayName)s acepte…",
+            "accepting": "Aceptando…",
+            "start_button": "Iniciar verificación",
+            "error_starting_title": "Error al empezar la verificación",
+            "error_starting_description": "No se ha podido iniciar una conversación con el otro usuario."
         },
         "old_version_detected_title": "Se detectó información de criptografía antigua",
         "old_version_detected_description": "Se detectó una versión más antigua de %(brand)s. Esto habrá provocado que la criptografía de extremo a extremo funcione incorrectamente en la versión más antigua. Los mensajes cifrados de extremo a extremo intercambiados recientemente mientras usaba la versión más antigua puede que no sean descifrables con esta versión. Esto también puede hacer que fallen con la más reciente. Si experimenta problemas, desconecte y vuelva a ingresar. Para conservar el historial de mensajes, exporte y vuelva a importar sus claves.",
@@ -3169,7 +3137,15 @@
         "cross_signing_room_normal": "Esta sala usa cifrado de extremo a extremo",
         "cross_signing_room_verified": "Todos los participantes en esta sala están verificados",
         "event_shield_reason_authenticity_not_guaranteed": "La autenticidad de este mensaje cifrado no puede ser garantizada en este dispositivo.",
-        "event_shield_reason_mismatched_sender_key": "Cifrado por una sesión no verificada"
+        "event_shield_reason_mismatched_sender_key": "Cifrado por una sesión no verificada",
+        "messages_not_secure": {
+            "title": "Los mensajes no son seguros",
+            "heading": "Uno de los siguientes puede estar comprometido:",
+            "cause_1": "Tu servidor base",
+            "cause_2": "El servidor base del usuario al que estás invitando",
+            "cause_3": "Tu conexión a internet o la de la otra persona",
+            "cause_4": "Tu sesión o la de la otra persona"
+        }
     },
     "emoji": {
         "category_frequently_used": "Frecuente",
@@ -3506,7 +3482,10 @@
         "error_loading": "Error al cargar el accesorio",
         "error_mixed_content": "Error - Contenido mezclado",
         "unmaximise": "Dejar de maximizar",
-        "popout": "Abrir accesorio en una ventana emergente"
+        "popout": "Abrir accesorio en una ventana emergente",
+        "unpin_to_view_right_panel": "Deja de fijar este accesorio para verlo en este panel",
+        "close_to_view_right_panel": "Cierra este accesorio para verlo en este panel",
+        "set_room_layout": "Hacer que todo el mundo use mi disposición de sala"
     },
     "feedback": {
         "sent": "Comentarios enviados",
@@ -4079,6 +4058,37 @@
         "error_revoke_3pid_invite_description": "No se logró revocar la invitación. El servidor puede sufrir un problema temporal o usted no tiene los permisos suficientes para revocar la invitación.",
         "admin_tools_section": "Herramientas de administración",
         "revoke_invite": "Revocar invitación",
-        "invited_by": "Invitado por %(sender)s"
+        "invited_by": "Invitado por %(sender)s",
+        "room_encrypted": "Los mensajes de esta sala están cifrados de extremo a extremo.",
+        "room_encrypted_detail": "Los mensajes son seguros y sólo tú y el destinatario tienen las claves únicas para desbloquearlos.",
+        "room_unencrypted": "Los mensajes en esta sala no están cifrados de extremo a extremo.",
+        "room_unencrypted_detail": "En las salas cifradas, tus mensajes están seguros y solo tú y el destinatario tienen las claves únicas para desbloquearlos.",
+        "verify_button": "Verificar usuario",
+        "verify_explainer": "Para mayor seguridad, verifica a este usuario comprobando un código temporal vez dos de tus dispositivos."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Mensajes fijados",
+            "empty": "Ningún mensaje fijado… todavía",
+            "explainer": "Si tienes permisos, abre el menú de cualquier mensaje y selecciona <b>Fijar</b> para colocarlo aquí.",
+            "limits": {
+                "other": "Solo puedes anclar hasta %(count)s accesorios"
+            }
+        },
+        "video_room_chat": {
+            "title": "Conversación"
+        },
+        "room_summary_card": {
+            "title": "Info. de la sala"
+        },
+        "widgets_section": "Accesorios",
+        "edit_integrations": "Editar accesorios, puentes y bots",
+        "add_integrations": "Añadir accesorios, puentes y bots",
+        "files_button": "Archivos",
+        "polls_button": "Historial de encuestas",
+        "pinned_messages_button": "Fijado",
+        "export_chat_button": "Exportar conversación",
+        "share_button": "Compartir la sala",
+        "settings_button": "Configuración de la sala"
     }
 }

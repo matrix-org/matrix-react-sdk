@@ -17,7 +17,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
     "Direct Messages": "Isiklikud sõnumid",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Krüptitud jututubades sinu sõnumid on turvatud ning vaid sinul ja sõnumi saajal on unikaalsed võtmed nende kuvamiseks.",
     "Verification timed out.": "Verifitseerimine aegus.",
     "%(displayName)s cancelled verification.": "%(displayName)s tühistas verifitseerimise.",
     "You cancelled verification.": "Sina tühistasid verifitseerimise.",
@@ -107,7 +106,6 @@
         "one": "(~%(count)s tulemus)"
     },
     "Join Room": "Liitu jututoaga",
-    "Share room": "Jaga jututuba",
     "e.g. my-room": "näiteks minu-jututuba",
     "Can't find this server or its room list": "Ei leia seda serverit ega tema jututubade loendit",
     "Tried to load a specific point in this room's timeline, but was unable to find it.": "Üritasin laadida teatud hetke selle jututoa ajajoonelt, kuid ei suutnud seda leida.",
@@ -402,9 +400,6 @@
     "Restoring keys from backup": "Taastan võtmed varundusest",
     "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s võtit taastatud",
     "Unable to load backup status": "Varunduse oleku laadimine ei õnnestunud",
-    "Verify User": "Verifitseeri kasutaja",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Lisaturvalisus mõttes verifitseeri see kasutaja võrreldes selleks üheks korraks loodud koodi mõlemas seadmes.",
-    "Your messages are not secure": "Sinu sõnumid ei ole turvatud",
     "Return to login screen": "Mine tagasi sisselogimisvaatele",
     "Invalid homeserver discovery response": "Vigane vastus koduserveri tuvastamise päringule",
     "Failed to get autodiscovery configuration from server": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
@@ -417,14 +412,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krüptitud sõnumid kasutavad läbivat krüptimist. Ainult sinul ja saaja(te)l on võtmed selliste sõnumite lugemiseks.",
     "Deactivate account": "Deaktiveeri kasutajakonto",
     "This room is public": "See jututuba on avalik",
-    "Waiting for %(displayName)s to accept…": "Ootan, et %(displayName)s nõustuks…",
-    "Accepting…": "Nõustun …",
-    "Start Verification": "Alusta verifitseerimist",
-    "Messages in this room are end-to-end encrypted.": "See jututuba on läbivalt krüptitud.",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Sinu sõnumid on turvatud ning ainult sinul ja saaja(te)l on unikaalsed võtmed selliste sõnumite lugemiseks.",
-    "Messages in this room are not end-to-end encrypted.": "See jututuba ei ole läbivalt krüptitud.",
-    "One of the following may be compromised:": "Üks järgnevatest võib olla sattunud valedesse kätesse:",
-    "Your homeserver": "Sinu koduserver",
     "%(count)s verified sessions": {
         "other": "%(count)s verifitseeritud sessiooni",
         "one": "1 verifitseeritud sessioon"
@@ -464,13 +451,9 @@
     "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
     "Information": "Teave",
     "Not encrypted": "Krüptimata",
-    "Room settings": "Jututoa seadistused",
     "Backup version:": "Varukoopia versioon:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime või kasutajanime (näiteks <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
-    "Widgets": "Vidinad",
-    "Edit widgets, bridges & bots": "Muuda vidinaid, võrgusildu ja roboteid",
-    "Add widgets, bridges & bots": "Lisa vidinaid, võrgusildu ja roboteid",
     "Unable to set up keys": "Krüptovõtmete kasutuselevõtmine ei õnnestu",
     "Use the <a>Desktop app</a> to see all encrypted files": "Kõikide krüptitud failide vaatamiseks kasuta <a>Element Desktop</a> rakendust",
     "Use the <a>Desktop app</a> to search encrypted messages": "Otsinguks krüptitud sõnumite hulgast kasuta <a>Element Desktop</a> rakendust",
@@ -482,9 +465,6 @@
     "Video conference updated by %(senderName)s": "%(senderName)s uuendas video rühmakõne",
     "Video conference started by %(senderName)s": "%(senderName)s alustas video rühmakõnet",
     "Ignored attempt to disable encryption": "Eirasin katset lõpetada krüptimise kasutamine",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Sa saad kinnitada kuni %(count)s vidinat"
-    },
     "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
     "Modal Widget": "Modaalne vidin",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
@@ -767,7 +747,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Ei õnnestu saada ligipääsu turvahoidlale. Palun kontrolli, et sa oleksid sisestanud õige turvafraasi.",
     "Invalid Security Key": "Vigane turvavõti",
     "Wrong Security Key": "Vale turvavõti",
-    "Set my room layout for everyone": "Kasuta minu jututoa paigutust kõigi jaoks",
     "Remember this": "Jäta see meelde",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "See vidin verifitseerib sinu kasutajatunnuse, kuid ta ei saa sinu nimel toiminguid teha:",
     "Allow this widget to verify your identity": "Luba sellel vidinal sinu isikut verifitseerida",
@@ -838,9 +817,6 @@
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Add reaction": "Lisa reaktsioon",
     "Or send invite link": "Või saada kutse link",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Kui sul on vastavad õigused olemas, siis ava sõnumi juuresolev menüü ning püsisõnumi tekitamiseks vali <b>Klammerda</b>.",
-    "Pinned messages": "Klammerdatud sõnumid",
-    "Nothing pinned, yet": "Klammerdatud sõnumeid veel pole",
     "Some suggestions may be hidden for privacy.": "Mõned soovitused võivad privaatsusseadistuste tõttu olla peidetud.",
     "Search for rooms or people": "Otsi jututubasid või inimesi",
     "Sent": "Saadetud",
@@ -903,7 +879,6 @@
     "Don't leave any rooms": "Ära lahku ühestki jututoast",
     "MB": "MB",
     "In reply to <a>this message</a>": "Vastuseks <a>sellele sõnumile</a>",
-    "Export chat": "Ekspordi vestlus",
     "Skip verification for now": "Jäta verifitseerimine praegu vahele",
     "Really reset verification keys?": "Kas tõesti kustutame kõik verifitseerimisvõtmed?",
     "They won't be able to access whatever you're not an admin of.": "Kasutaja ei saa ligi kohtadele, kus sul pole peakasutaja õigusi.",
@@ -925,15 +900,9 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Taasta ligipääs oma kontole ning selles sessioonis salvestatud krüptivõtmetele. Ilma nende võtmeteta sa ei saa lugeda krüptitud sõnumeid mitte üheski oma sessioonis.",
     "If you can't see who you're looking for, send them your invite link below.": "Kui sa ei leia otsitavaid, siis saada neile kutse.",
     "In encrypted rooms, verify all users to ensure it's secure.": "Krüptitud jututubades turvalisuse tagamiseks verifitseeri kõik kasutajad.",
-    "Yours, or the other users' session": "Sinu või teise kasutaja sessioon",
-    "Yours, or the other users' internet connection": "Sinu või teise kasutaja internetiühendus",
-    "The homeserver the user you're verifying is connected to": "Sinu poolt verifitseeritava kasutaja koduserver",
     "Thread options": "Jutulõnga valikud",
     "Reply in thread": "Vasta jutulõngas",
     "Forget": "Unusta",
-    "Files": "Failid",
-    "Close this widget to view it in this panel": "Sellel paneelil kuvamiseks sulge see vidin",
-    "Unpin this widget to view it in this panel": "Sellel paneelil kuvamiseks eemalda vidin lemmikutest",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja veel %(count)s kogukond",
         "other": "%(spaceName)s ja muud %(count)s kogukonda"
@@ -960,7 +929,6 @@
         "other": "%(count)s häält antud. Tulemuste nägemiseks tee oma valik"
     },
     "No votes cast": "Hääletanuid ei ole",
-    "Chat": "Vestle",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Kas sa oled kindel, et soovid lõpetada küsitlust? Sellega on tulemused lõplikud ja rohkem osaleda ei saa.",
     "End Poll": "Lõpeta küsitlus",
     "Sorry, the poll did not end. Please try again.": "Vabandust, aga küsitlus jäi lõpetamata. Palun proovi uuesti.",
@@ -993,7 +961,6 @@
     "Verify other device": "Verifitseeri oma teine seade",
     "You cancelled verification on your other device.": "Sina tühistasid verifitseerimise oma teises seadmes.",
     "Almost there! Is your other device showing the same shield?": "Peaaegu valmis! Kas sinu teine seade kuvab sama kilpi?",
-    "To proceed, please accept the verification request on your other device.": "Jätkamaks palun võta vastu verifitseerimispalve oma teises seadmes.",
     "Could not fetch location": "Asukoha tuvastamine ei õnnestunud",
     "Remove from room": "Eemalda jututoast",
     "Failed to remove user": "Kasutaja eemaldamine ebaõnnestus",
@@ -1022,7 +989,6 @@
     "My current location": "Minu praegune asukoht",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei saanud sinu asukohta edastada. Palun proovi hiljem uuesti.",
     "We couldn't send your location": "Sinu asukoha saatmine ei õnnestunud",
-    "Pinned": "Klammerdatud",
     "Expand quotes": "Näita viidatud sisu",
     "Collapse quotes": "Peida viidatud sisu",
     "Click": "Klõpsi",
@@ -1123,7 +1089,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
     "Video call ended": "Videokõne on lõppenud",
     "%(name)s started a video call": "%(name)s algatas videokõne",
-    "Room info": "Jututoa teave",
     "Completing set up of your new device": "Lõpetame uue seadme seadistamise",
     "Waiting for device to sign in": "Ootame, et teine seade logiks võrku",
     "Review and approve the sign in": "Vaata üle ja kinnita sisselogimine Matrixi'i võrku",
@@ -1149,8 +1114,6 @@
     "Too many attempts in a short time. Retry after %(timeout)s.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota %(timeout)s sekundit.",
     "Too many attempts in a short time. Wait some time before trying again.": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota veidi.",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
-    "We were unable to start a chat with the other user.": "Meil ei õnnestunud alustada vestlust teise kasutajaga.",
-    "Error starting verification": "Viga verifitseerimise alustamisel",
     "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
@@ -1205,7 +1168,6 @@
     "Server returned %(statusCode)s with error code %(errorCode)s": "Päringu vastus koduserverilt: viga %(statusCode)s, veakood %(errorCode)s",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "Alates %(dateString)s ei leidnud me sündmusi ega teateid. Palun proovi valida varasem kuupäev.",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "Valitud kuupäeva vaate otsimisel ja avamisel tekkis võrguühenduse viga. Kas näiteks sinu koduserver hetkel ei tööta või on ajutisi katkestusi sinu internetiühenduses. Palun proovi mõne aja pärast uuesti. Kui viga kordub veel hiljemgi, siis palun suhtle oma koduserveri haldajaga.",
-    "Poll history": "Küsitluste ajalugu",
     "Start DM anyway": "Ikkagi alusta vestlust",
     "Start DM anyway and never warn me again": "Alusta siiski ja ära hoiata mind enam",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
@@ -3271,7 +3233,13 @@
             "verification_skip_warning": "Ilma verifitseerimiseta sul puudub ligipääs kõikidele oma sõnumitele ning teised ei näe sinu kasutajakontot usaldusväärsena.",
             "verify_later": "Ma verifitseerin hiljem",
             "verify_reset_warning_1": "Verifitseerimisvõtmete kustutamist ei saa hiljem tagasi võtta. Peale seda sul puudub ligipääs vanadele krüptitud sõnumitele ja kõik sinu verifitseeritud sõbrad-tuttavad näevad turvahoiatusi seni kuni sa uuesti nad verifitseerid.",
-            "verify_reset_warning_2": "Palun jätka ainult siis, kui sa oled kaotanud ligipääsu kõikidele oma seadmetele ning oma turvavõtmele."
+            "verify_reset_warning_2": "Palun jätka ainult siis, kui sa oled kaotanud ligipääsu kõikidele oma seadmetele ning oma turvavõtmele.",
+            "self_verification_hint": "Jätkamaks palun võta vastu verifitseerimispalve oma teises seadmes.",
+            "waiting_for_user_accept": "Ootan, et %(displayName)s nõustuks…",
+            "accepting": "Nõustun …",
+            "start_button": "Alusta verifitseerimist",
+            "error_starting_title": "Viga verifitseerimise alustamisel",
+            "error_starting_description": "Meil ei õnnestunud alustada vestlust teise kasutajaga."
         },
         "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
         "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
@@ -3316,7 +3284,15 @@
         "cross_signing_room_normal": "See jututuba on läbivalt krüptitud",
         "cross_signing_room_verified": "Kõik kasutajad siin nututoas on verifitseeritud",
         "event_shield_reason_authenticity_not_guaranteed": "Selle krüptitud sõnumi autentsus pole selles seadmes tagatud.",
-        "event_shield_reason_mismatched_sender_key": "Krüptitud verifitseerimata sessiooni poolt"
+        "event_shield_reason_mismatched_sender_key": "Krüptitud verifitseerimata sessiooni poolt",
+        "messages_not_secure": {
+            "title": "Sinu sõnumid ei ole turvatud",
+            "heading": "Üks järgnevatest võib olla sattunud valedesse kätesse:",
+            "cause_1": "Sinu koduserver",
+            "cause_2": "Sinu poolt verifitseeritava kasutaja koduserver",
+            "cause_3": "Sinu või teise kasutaja internetiühendus",
+            "cause_4": "Sinu või teise kasutaja sessioon"
+        }
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3672,7 +3648,10 @@
         "error_loading": "Viga vidina laadimisel",
         "error_mixed_content": "Viga - erinev sisu",
         "unmaximise": "Lõpeta täisvaate kasutamine",
-        "popout": "Ava rakendus eraldi aknas"
+        "popout": "Ava rakendus eraldi aknas",
+        "unpin_to_view_right_panel": "Sellel paneelil kuvamiseks eemalda vidin lemmikutest",
+        "close_to_view_right_panel": "Sellel paneelil kuvamiseks sulge see vidin",
+        "set_room_layout": "Kasuta minu jututoa paigutust kõigi jaoks"
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -4277,6 +4256,37 @@
         "error_revoke_3pid_invite_description": "Kutse tühistamine ei õnnestunud. Serveri töös võib olla ajutine tõrge või sul pole piisavalt õigusi kutse tühistamiseks.",
         "admin_tools_section": "Haldustoimingud",
         "revoke_invite": "Tühista kutse",
-        "invited_by": "Kutsutud %(sender)s poolt"
+        "invited_by": "Kutsutud %(sender)s poolt",
+        "room_encrypted": "See jututuba on läbivalt krüptitud.",
+        "room_encrypted_detail": "Sinu sõnumid on turvatud ning ainult sinul ja saaja(te)l on unikaalsed võtmed selliste sõnumite lugemiseks.",
+        "room_unencrypted": "See jututuba ei ole läbivalt krüptitud.",
+        "room_unencrypted_detail": "Krüptitud jututubades sinu sõnumid on turvatud ning vaid sinul ja sõnumi saajal on unikaalsed võtmed nende kuvamiseks.",
+        "verify_button": "Verifitseeri kasutaja",
+        "verify_explainer": "Lisaturvalisus mõttes verifitseeri see kasutaja võrreldes selleks üheks korraks loodud koodi mõlemas seadmes."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Klammerdatud sõnumid",
+            "empty": "Klammerdatud sõnumeid veel pole",
+            "explainer": "Kui sul on vastavad õigused olemas, siis ava sõnumi juuresolev menüü ning püsisõnumi tekitamiseks vali <b>Klammerda</b>.",
+            "limits": {
+                "other": "Sa saad kinnitada kuni %(count)s vidinat"
+            }
+        },
+        "video_room_chat": {
+            "title": "Vestle"
+        },
+        "room_summary_card": {
+            "title": "Jututoa teave"
+        },
+        "widgets_section": "Vidinad",
+        "edit_integrations": "Muuda vidinaid, võrgusildu ja roboteid",
+        "add_integrations": "Lisa vidinaid, võrgusildu ja roboteid",
+        "files_button": "Failid",
+        "polls_button": "Küsitluste ajalugu",
+        "pinned_messages_button": "Klammerdatud",
+        "export_chat_button": "Ekspordi vestlus",
+        "share_button": "Jaga jututuba",
+        "settings_button": "Jututoa seadistused"
     }
 }

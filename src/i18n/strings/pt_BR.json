@@ -118,7 +118,6 @@
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
     "Share Link to User": "Compartilhar este usuário",
-    "Share room": "Compartilhar sala",
     "Demote": "Reduzir privilégio",
     "Demote yourself?": "Reduzir seu próprio privilégio?",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Não é possível carregar o evento que foi respondido, ele não existe ou você não tem permissão para visualizá-lo.",
@@ -243,12 +242,6 @@
     "Lock": "Cadeado",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
-    "Start Verification": "Iniciar confirmação",
-    "Messages in this room are end-to-end encrypted.": "As mensagens nesta sala estão criptografadas de ponta a ponta.",
-    "Messages in this room are not end-to-end encrypted.": "As mensagens nesta sala não estão criptografadas de ponta a ponta.",
-    "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.": "Em salas criptografadas, suas mensagens estão seguras e apenas você e a pessoa que a recebe têm as chaves únicas que permitem a sua leitura.",
-    "Verify User": "Confirmar usuário",
-    "For extra security, verify this user by checking a one-time code on both of your devices.": "Para maior segurança, confirme este usuário comparando um código único em ambos os aparelhos.",
     "This client does not support end-to-end encryption.": "A sua versão do aplicativo não suporta a criptografia de ponta a ponta.",
     "Verify by scanning": "Confirmar através de QR Code",
     "If you can't scan the code above, verify by comparing unique emoji.": "Se você não consegue escanear o código acima, confirme comparando emojis únicos.",
@@ -329,11 +322,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
-    "Waiting for %(displayName)s to accept…": "Aguardando %(displayName)s aceitar…",
-    "Accepting…": "Aceitando…",
-    "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Suas mensagens são protegidas e somente você e o destinatário têm as chaves exclusivas para desbloqueá-las.",
-    "Your messages are not secure": "Suas mensagens não estão seguras",
-    "Your homeserver": "Seu servidor local",
     "%(count)s verified sessions": {
         "other": "%(count)s sessões confirmadas",
         "one": "1 sessão confirmada"
@@ -435,7 +423,6 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "O endereço do servidor local não parece indicar um servidor local válido na Matrix",
     "Identity server URL does not appear to be a valid identity server": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Quando há muitas mensagens, isso pode levar algum tempo. Por favor, não recarregue o seu cliente enquanto isso.",
-    "One of the following may be compromised:": "Um dos seguintes pode estar comprometido:",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
     "Upload completed": "Envio concluído",
     "Cancelled signature upload": "Envio cancelado da assinatura",
@@ -452,10 +439,6 @@
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
     "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Você confirmou %(deviceName)s (%(deviceId)s) com êxito!",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Tente rolar para cima na conversa para ver se há mensagens anteriores.",
-    "Widgets": "Widgets",
-    "Edit widgets, bridges & bots": "Editar widgets, integrações e bots",
-    "Add widgets, bridges & bots": "Adicionar widgets, integrações e bots",
-    "Room settings": "Configurações da sala",
     "Use the <a>Desktop app</a> to see all encrypted files": "Use o <a>app para Computador</a> para ver todos os arquivos criptografados",
     "Use the <a>Desktop app</a> to search encrypted messages": "Use o <a>app para Computador</a> para buscar mensagens criptografadas",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versão do %(brand)s não permite visualizar alguns arquivos criptografados",
@@ -481,9 +464,6 @@
     "A connection error occurred while trying to contact the server.": "Um erro ocorreu na conexão do Element com o servidor.",
     "Unable to set up keys": "Não foi possível configurar as chaves",
     "Failed to get autodiscovery configuration from server": "Houve uma falha para obter do servidor a configuração de encontrar contatos",
-    "You can only pin up to %(count)s widgets": {
-        "other": "Você pode fixar até %(count)s widgets"
-    },
     "Modal Widget": "Popup do widget",
     "Data on this screen is shared with %(widgetDomain)s": "Dados nessa tela são compartilhados com %(widgetDomain)s",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, e-mail ou nome de usuário (por exemplo: <userId/>) ou <a>compartilhe esta sala</a>.",
@@ -764,7 +744,6 @@
     "Wrong Security Key": "Chave de Segurança errada",
     "Transfer": "Transferir",
     "A call can only be transferred to a single user.": "Uma chamada só pode ser transferida para um único usuário.",
-    "Set my room layout for everyone": "Definir a minha aparência da sala para todos",
     "Open dial pad": "Abrir o teclado de discagem",
     "Dial pad": "Teclado de discagem",
     "Remember this": "Lembre-se disso",
@@ -833,12 +812,8 @@
     "Edit devices": "Editar dispositivos",
     "Role in <RoomName/>": "Cargo em <RoomName/>",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "Você não poderá desfazer esta mudança, já que está tirando seu próprio cargo, e se você for o último usuário com privilégios neste espaço será impossível ganhá-los novamente.",
-    "Pinned messages": "Mensagens fixadas",
-    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "Caso você tenha a permissão para isso, abra o menu em qualquer mensagem e selecione <b>Fixar</b> para fixá-la aqui.",
-    "Nothing pinned, yet": "Nada fixado ainda",
     "MB": "MB",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
-    "Export chat": "Exportar conversa",
     "Space selection": "Seleção de Espaços",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
@@ -880,13 +855,6 @@
     "Unban from %(roomName)s": "Desbanir de %(roomName)s",
     "They'll still be able to access whatever you're not an admin of.": "Eles ainda poderão acessar tudo o que você não for administrador.",
     "Disinvite from %(roomName)s": "Cancelar convite de %(roomName)s",
-    "Files": "Arquivos",
-    "Close this widget to view it in this panel": "Feche este widget para visualizá-lo neste painel",
-    "Unpin this widget to view it in this panel": "Solte este widget para visualizá-lo neste painel",
-    "Chat": "Bate-papo",
-    "Yours, or the other users' session": "A sua ou a sessão de outros usuários",
-    "Yours, or the other users' internet connection": "A sua ou a conexão de Internet de outros usuários",
-    "The homeserver the user you're verifying is connected to": "O servidor doméstico do usuário que você está verificando está conectado",
     "Recently viewed": "Visualizado recentemente",
     "Reply in thread": "Responder no tópico",
     "%(count)s reply": {
@@ -2437,7 +2405,10 @@
             "unverified_sessions_toast_description": "Revise para assegurar que sua conta está segura",
             "unverified_sessions_toast_reject": "Mais tarde",
             "unverified_session_toast_title": "Novo login. Foi você?",
-            "request_toast_detail": "%(deviceId)s de %(ip)s"
+            "request_toast_detail": "%(deviceId)s de %(ip)s",
+            "waiting_for_user_accept": "Aguardando %(displayName)s aceitar…",
+            "accepting": "Aceitando…",
+            "start_button": "Iniciar confirmação"
         },
         "old_version_detected_title": "Dados de criptografia antigos foram detectados",
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
@@ -2481,7 +2452,15 @@
         "cross_signing_room_normal": "Esta sala é criptografada de ponta a ponta",
         "cross_signing_room_verified": "Todos nesta sala estão confirmados",
         "event_shield_reason_authenticity_not_guaranteed": "A autenticidade desta mensagem criptografada não pode ser garantida neste aparelho.",
-        "event_shield_reason_mismatched_sender_key": "Criptografada por uma sessão não confirmada"
+        "event_shield_reason_mismatched_sender_key": "Criptografada por uma sessão não confirmada",
+        "messages_not_secure": {
+            "title": "Suas mensagens não estão seguras",
+            "heading": "Um dos seguintes pode estar comprometido:",
+            "cause_1": "Seu servidor local",
+            "cause_2": "O servidor doméstico do usuário que você está verificando está conectado",
+            "cause_3": "A sua ou a conexão de Internet de outros usuários",
+            "cause_4": "A sua ou a sessão de outros usuários"
+        }
     },
     "emoji": {
         "category_frequently_used": "Mais usados",
@@ -2765,7 +2744,10 @@
         "cookie_warning": "Este widget pode usar cookies.",
         "error_loading": "Erro ao carregar o Widget",
         "error_mixed_content": "Erro - Conteúdo misto",
-        "popout": "Widget Popout"
+        "popout": "Widget Popout",
+        "unpin_to_view_right_panel": "Solte este widget para visualizá-lo neste painel",
+        "close_to_view_right_panel": "Feche este widget para visualizá-lo neste painel",
+        "set_room_layout": "Definir a minha aparência da sala para todos"
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3189,6 +3171,32 @@
         "error_revoke_3pid_invite_description": "Não foi possível revogar o convite. O servidor pode estar com um problema temporário ou você não tem permissões suficientes para revogar o convite.",
         "admin_tools_section": "Ferramentas de administração",
         "revoke_invite": "Revogar o convite",
-        "invited_by": "Convidado por %(sender)s"
+        "invited_by": "Convidado por %(sender)s",
+        "room_encrypted": "As mensagens nesta sala estão criptografadas de ponta a ponta.",
+        "room_encrypted_detail": "Suas mensagens são protegidas e somente você e o destinatário têm as chaves exclusivas para desbloqueá-las.",
+        "room_unencrypted": "As mensagens nesta sala não estão criptografadas de ponta a ponta.",
+        "room_unencrypted_detail": "Em salas criptografadas, suas mensagens estão seguras e apenas você e a pessoa que a recebe têm as chaves únicas que permitem a sua leitura.",
+        "verify_button": "Confirmar usuário",
+        "verify_explainer": "Para maior segurança, confirme este usuário comparando um código único em ambos os aparelhos."
+    },
+    "right_panel": {
+        "pinned_messages": {
+            "title": "Mensagens fixadas",
+            "empty": "Nada fixado ainda",
+            "explainer": "Caso você tenha a permissão para isso, abra o menu em qualquer mensagem e selecione <b>Fixar</b> para fixá-la aqui.",
+            "limits": {
+                "other": "Você pode fixar até %(count)s widgets"
+            }
+        },
+        "video_room_chat": {
+            "title": "Bate-papo"
+        },
+        "widgets_section": "Widgets",
+        "edit_integrations": "Editar widgets, integrações e bots",
+        "add_integrations": "Adicionar widgets, integrações e bots",
+        "files_button": "Arquivos",
+        "export_chat_button": "Exportar conversa",
+        "share_button": "Compartilhar sala",
+        "settings_button": "Configurações da sala"
     }
 }
