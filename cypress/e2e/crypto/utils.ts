@@ -95,6 +95,10 @@ export function checkDeviceIsCrossSigned(): void {
             const myDeviceSignatures = res.body.device_keys[userId][myDeviceId].signatures[userId];
             expect(myDeviceSignatures[selfSigningKeyId]).to.exist;
         });
+
+    cy.findByRole("button", { name: "User menu" }).click();
+    cy.findByRole("menuitem", { name: "Security & Privacy" }).click();
+    cy.findByRole("button", { name: "Restore from Backup" }).should("exist");
 }
 
 /**
