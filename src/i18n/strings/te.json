@@ -1,7 +1,5 @@
 {
-    "Admin Tools": "నిర్వాహకుని ఉపకరణాలు",
     "An error has occurred.": "ఒక లోపము సంభవించినది.",
-    "Are you sure?": "మీరు చెప్పేది నిజమా?",
     "Custom level": "అనుకూల స్థాయి",
     "Sun": "ఆదివారం",
     "Mon": "సోమవారం",
@@ -34,11 +32,9 @@
     "Changelog": "మార్పు వివరణ",
     "Tuesday": "మంగళవారం",
     "Monday": "సోమవారం",
-    "All Rooms": "అన్ని గదులు",
     "Wednesday": "బుధవారం",
     "Send": "పంపండి",
     "Thursday": "గురువారం",
-    "Search…": "శోధన…",
     "Yesterday": "నిన్న",
     "Saturday": "శనివారం",
     "common": {
@@ -52,7 +48,8 @@
         "on": "వేయుము",
         "off": "ఆపు",
         "advanced": "ఆధునిక",
-        "authentication": "ప్రామాణీకరణ"
+        "authentication": "ప్రామాణీకరణ",
+        "are_you_sure": "మీరు చెప్పేది నిజమా?"
     },
     "action": {
         "continue": "కొనసాగించు",
@@ -191,10 +188,17 @@
             "low_priority": "తక్కువ ప్రాధాన్యత"
         },
         "invite_this_room": "ఈ గదికి ఆహ్వానించండి",
+        "search": {
+            "all_rooms": "అన్ని గదులు",
+            "field_placeholder": "శోధన…"
+        },
         "status_bar": {
             "server_connectivity_lost_title": "సెర్వెర్ కనెక్టివిటీని కోల్పోయారు.",
             "server_connectivity_lost_description": "మీ కనెక్షన్ తిరిగి వచ్చే వరకు పంపిన సందేశాలు నిల్వ చేయబడతాయి."
         }
+    },
+    "user_info": {
+        "admin_tools_section": "నిర్వాహకుని ఉపకరణాలు"
     },
     "reject_invitation_dialog": {
         "confirmation": "మీరు ఖచ్చితంగా ఆహ్వానాన్ని తిరస్కరించాలనుకుంటున్నారా?"

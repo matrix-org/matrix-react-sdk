@@ -1,6 +1,4 @@
 {
-    "Show more": "Taispeáin níos mó",
-    "Are you sure?": "An bhfuil tú cinnte?",
     "An error has occurred.": "D’imigh earráid éigin.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
@@ -189,12 +187,9 @@
     "Algeria": "an Ailgéir",
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
-    "Widgets": "Giuirléidí",
     "Information": "Eolas",
     "Ok": "Togha",
-    "Accepting…": "ag Glacadh leis…",
     "Lock": "Glasáil",
-    "Unencrypted": "Gan chriptiú",
     "Home": "Tús",
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
@@ -212,14 +207,12 @@
     "Tuesday": "Dé Máirt",
     "Monday": "Dé Luain",
     "Sunday": "Dé Domhnaigh",
-    "Search…": "Cuardaigh…",
     "%(duration)sd": "%(duration)sl",
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
     "%(duration)ss": "%(duration)ss",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
-    "Demote": "Bain ceadanna",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
     "Headphones": "Cluasáin",
@@ -312,12 +305,9 @@
     "Sent": "Seolta",
     "Sending": "Ag Seoladh",
     "Unnamed room": "Seomra gan ainm",
-    "Admin Tools": "Uirlisí Riaracháin",
-    "Demote yourself?": "Tabhair ísliú céime duit féin?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
-    "Share room": "Roinn seomra",
     "Join Room": "Téigh isteach an seomra",
     "(~%(count)s results)": {
         "one": "(~%(count)s toradh)",
@@ -325,8 +315,6 @@
     },
     "No answer": "Gan freagair",
     "Unknown failure: %(reason)s": "Teip anaithnid: %(reason)s",
-    "Failed to mute user": "Níor ciúnaíodh an úsáideoir",
-    "Failed to ban user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
     "Error decrypting attachment": "Earráid le ceangaltán a dhíchriptiú",
     "Email address": "Seoladh ríomhphoist",
     "Download %(text)s": "Íoslódáil %(text)s",
@@ -402,6 +390,9 @@
         "rooms": "Seomraí",
         "low_priority": "Tosaíocht íseal",
         "historical": "Stairiúil",
+        "unencrypted": "Gan chriptiú",
+        "show_more": "Taispeáin níos mó",
+        "are_you_sure": "An bhfuil tú cinnte?",
         "avatar": "Abhatár"
     },
     "action": {
@@ -753,7 +744,8 @@
             "complete_title": "Deimhnithe!",
             "complete_action": "Tuigthe",
             "cancelling": "ag Cealú…",
-            "unverified_sessions_toast_reject": "Níos deireanaí"
+            "unverified_sessions_toast_reject": "Níos deireanaí",
+            "accepting": "ag Glacadh leis…"
         },
         "cross_signing_ready_no_backup": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha."
     },
@@ -859,6 +851,9 @@
         },
         "rejoin_button": "Téigh ar ais isteach",
         "invite_reject_ignore": "Diúltaigh ⁊ Neamaird do úsáideoir",
+        "search": {
+            "field_placeholder": "Cuardaigh…"
+        },
         "failed_reject_invite": "Níorbh fhéidir an cuireadh a dhiúltú",
         "inviter_unknown": "Anaithnid"
     },
@@ -909,6 +904,17 @@
     },
     "member_list": {
         "invited_list_heading": "Le cuireadh"
+    },
+    "user_info": {
+        "admin_tools_section": "Uirlisí Riaracháin",
+        "demote_self_confirm_title": "Tabhair ísliú céime duit féin?",
+        "demote_button": "Bain ceadanna",
+        "error_ban_user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
+        "error_mute_user": "Níor ciúnaíodh an úsáideoir"
+    },
+    "right_panel": {
+        "widgets_section": "Giuirléidí",
+        "share_button": "Roinn seomra"
     },
     "reject_invitation_dialog": {
         "confirmation": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",

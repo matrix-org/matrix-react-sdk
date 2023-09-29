@@ -7,26 +7,20 @@
         "one": "and one other..."
     },
     "An error has occurred.": "An error has occurred.",
-    "Are you sure?": "Are you sure?",
     "Custom level": "Custom level",
     "Decrypt %(text)s": "Decrypt %(text)s",
     "Download %(text)s": "Download %(text)s",
     "Email address": "Email address",
     "Error decrypting attachment": "Error decrypting attachment",
-    "Failed to ban user": "Failed to ban user",
-    "Failed to mute user": "Failed to mute user",
     "Invalid file%(extra)s": "Invalid file%(extra)s",
     "Join Room": "Join Room",
-    "Jump to first unread message.": "Jump to first unread message.",
     "Moderator": "Moderator",
     "not specified": "not specified",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
     "Session ID": "Session ID",
-    "This room has no local addresses": "This room has no local addresses",
     "unknown error code": "unknown error code",
     "Verification Pending": "Verification Pending",
     "Warning!": "Warning!",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.",
     "Sun": "Sun",
     "Mon": "Mon",
     "Tue": "Tue",
@@ -56,7 +50,6 @@
     "Error decrypting video": "Error decrypting video",
     "Add an Integration": "Add an Integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
-    "Admin Tools": "Admin Tools",
     "Create new room": "Create new room",
     "Home": "Home",
     "(~%(count)s results)": {
@@ -68,14 +61,11 @@
     "Today": "Today",
     "Friday": "Friday",
     "Changelog": "Changelog",
-    "This Room": "This Room",
     "Unavailable": "Unavailable",
     "Tuesday": "Tuesday",
-    "Search…": "Search…",
     "Unnamed room": "Unnamed room",
     "Saturday": "Saturday",
     "Monday": "Monday",
-    "All Rooms": "All Rooms",
     "Wednesday": "Wednesday",
     "Send": "Send",
     "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
@@ -117,7 +107,8 @@
         "authentication": "Authentication",
         "rooms": "Rooms",
         "low_priority": "Low priority",
-        "historical": "Historical"
+        "historical": "Historical",
+        "are_you_sure": "Are you sure?"
     },
     "action": {
         "continue": "Continue",
@@ -483,6 +474,12 @@
         },
         "not_found_title_name": "%(roomName)s does not exist.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
+        "search": {
+            "this_room": "This Room",
+            "all_rooms": "All Rooms",
+            "field_placeholder": "Search…"
+        },
+        "jump_read_marker": "Jump to first unread message.",
         "status_bar": {
             "server_connectivity_lost_title": "Connectivity to the server has been lost.",
             "server_connectivity_lost_description": "Sent messages will be stored until your connection has returned."
@@ -524,7 +521,8 @@
             "user_url_previews_default_on": "You have <a>enabled</a> URL previews by default.",
             "user_url_previews_default_off": "You have <a>disabled</a> URL previews by default.",
             "url_previews_section": "URL Previews",
-            "other_section": "Other"
+            "other_section": "Other",
+            "no_aliases_room": "This room has no local addresses"
         },
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers"
@@ -598,6 +596,12 @@
         "invited_list_heading": "Invited",
         "filter_placeholder": "Filter room members",
         "power_label": "%(userName)s (power %(powerLevelNumber)s)"
+    },
+    "user_info": {
+        "admin_tools_section": "Admin Tools",
+        "error_ban_user": "Failed to ban user",
+        "error_mute_user": "Failed to mute user",
+        "promote_warning": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself."
     },
     "reject_invitation_dialog": {
         "title": "Reject invitation",
