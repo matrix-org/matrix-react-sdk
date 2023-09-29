@@ -184,8 +184,6 @@ describe("Cryptography", function () {
             }
 
             it("by recovery code", () => {
-                skipIfRustCrypto();
-
                 // Verified the device
                 if (isDeviceVerified) {
                     cy.bootstrapCrossSigning(aliceCredentials);
@@ -222,8 +220,6 @@ describe("Cryptography", function () {
             });
 
             it("by passphrase", () => {
-                skipIfRustCrypto();
-
                 // Verified the device
                 if (isDeviceVerified) {
                     cy.bootstrapCrossSigning(aliceCredentials);
