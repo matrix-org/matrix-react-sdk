@@ -474,24 +474,24 @@
         },
         "not_found_title_name": "%(roomName)s does not exist.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
-        "search": {
-            "this_room": "This Room",
-            "all_rooms": "All Rooms",
-            "field_placeholder": "Search…"
-        },
-        "jump_read_marker": "Jump to first unread message.",
-        "status_bar": {
-            "server_connectivity_lost_title": "Connectivity to the server has been lost.",
-            "server_connectivity_lost_description": "Sent messages will be stored until your connection has returned."
-        },
-        "failed_reject_invite": "Failed to reject invite",
         "upload": {
             "uploading_multiple_file": {
                 "one": "Uploading %(filename)s and %(count)s other",
                 "other": "Uploading %(filename)s and %(count)s others"
             },
             "uploading_single_file": "Uploading %(filename)s"
-        }
+        },
+        "status_bar": {
+            "server_connectivity_lost_title": "Connectivity to the server has been lost.",
+            "server_connectivity_lost_description": "Sent messages will be stored until your connection has returned."
+        },
+        "search": {
+            "this_room": "This Room",
+            "all_rooms": "All Rooms",
+            "field_placeholder": "Search…"
+        },
+        "jump_read_marker": "Jump to first unread message.",
+        "failed_reject_invite": "Failed to reject invite"
     },
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",
@@ -608,6 +608,11 @@
         "confirmation": "Are you sure you want to reject the invitation?",
         "failed": "Failed to reject invitation"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "You seem to be uploading files, are you sure you want to quit?",
+        "call_in_progress": "You seem to be in a call, are you sure you want to quit?"
+    },
+    "no_more_results": "No more results",
     "leave_room_dialog": {
         "leave_room_question": "Are you sure you want to leave the room '%(roomName)s'?"
     },
@@ -617,10 +622,5 @@
             "title": "Search failed",
             "server_unavailable": "Server may be unavailable, overloaded, or search timed out :("
         }
-    },
-    "no_more_results": "No more results",
-    "quit_warning": {
-        "file_upload_in_progress": "You seem to be uploading files, are you sure you want to quit?",
-        "call_in_progress": "You seem to be in a call, are you sure you want to quit?"
     }
 }

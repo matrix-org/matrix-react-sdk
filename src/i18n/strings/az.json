@@ -366,8 +366,8 @@
         "confirmation": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
         "failed": "Dəvəti rədd etməyi bacarmadı"
     },
+    "no_more_results": "Daha çox nəticə yoxdur",
     "error_dialog": {
         "forget_room_failed": "Otağı unutmağı bacarmadı: %(errCode)s"
-    },
-    "no_more_results": "Daha çox nəticə yoxdur"
+    }
 }

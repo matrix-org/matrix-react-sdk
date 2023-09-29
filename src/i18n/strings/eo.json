@@ -920,11 +920,11 @@
         "historical": "Estintaj",
         "go_to_settings": "Iri al agordoj",
         "setup_secure_messages": "Agordi Sekurajn mesaĝojn",
-        "unencrypted": "Neĉifrita",
         "view_message": "Montri mesaĝon",
+        "unencrypted": "Neĉifrita",
         "show_more": "Montri pli",
-        "are_you_sure": "Ĉu vi certas?",
-        "avatar": "Profilbildo"
+        "avatar": "Profilbildo",
+        "are_you_sure": "Ĉu vi certas?"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1163,9 +1163,9 @@
         "poll_button": "Balotenketo",
         "format_italics": "Kursive",
         "replying_title": "Respondante",
-        "edit_composer_label": "Redakti mesaĝon",
+        "stop_voice_message": "Malŝalti registradon",
         "send_voice_message": "Sendi voĉmesaĝon",
-        "stop_voice_message": "Malŝalti registradon"
+        "edit_composer_label": "Redakti mesaĝon"
     },
     "power_level": {
         "default": "Ordinara",
@@ -1897,7 +1897,6 @@
             },
             "close": "Fermi antaŭrigardon"
         },
-        "error_no_renderer": "Ĉi tiu okazo ne povis montriĝi",
         "send_state_sent": "Via mesaĝo sendiĝis",
         "send_state_failed": "Malsukcesis sendi",
         "mab": {
@@ -1911,7 +1910,8 @@
             "no_permission": "Provis enlegi certan parton de ĉi tiu historio, sed vi ne havas permeson vidi ĝin.",
             "unable_to_find": "Provis enlegi certan parton de ĉi tiu historio, sed malsukcesis ĝin trovi.",
             "title": "Malsukcesis enlegi lokon en historio"
-        }
+        },
+        "error_no_renderer": "Ĉi tiu okazo ne povis montriĝi"
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",
@@ -2221,31 +2221,31 @@
             "leave_space": "Forlasi aron",
             "aliases_section": "Adresoj de ĉambro",
             "other_section": "Alia",
-            "error_updating_canonical_alias_title": "Ĝisdatigo de la ĉefa adreso eraris",
-            "error_updating_canonical_alias_description": "Ĝisdatigo de la ĉefa adreso de la ĉambro eraris. Aŭ la servilo tion ne permesas, aŭ io misfunkciis.",
-            "error_updating_alias_description": "Eraris ĝisdatigo de la alternativaj adresoj de la ĉambro. Eble la servilo ne permesas tion, aŭ io dumtempe ne funkcias.",
-            "error_creating_alias_title": "Eraris kreado de adreso",
-            "error_creating_alias_description": "Eraris kreado de tiu adreso. Eble ĝi ne estas permesata de la servilo, aŭ okazis portempa fiasko.",
-            "error_deleting_alias_description_forbidden": "Vi ne rajtas forigi la adreson.",
-            "error_deleting_alias_description": "Eraris forigo de la adreso. Eble ĝi ne plu ekzistas, aŭ okazis portempa eraro.",
-            "error_deleting_alias_title": "Eraris forigo de adreso",
-            "canonical_alias_field_label": "Ĉefa adreso",
-            "no_aliases_space": "Ĉi tiu aro ne havas lokajn adresojn",
-            "no_aliases_room": "Ĉi tiu ĉambro ne havas lokajn adresojn",
-            "local_alias_field_label": "Loka adreso",
+            "topic_field_label": "Temo de ĉambro",
             "published_aliases_section": "Publikigitaj adresoj",
             "published_aliases_explainer_space": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via aro.",
             "published_aliases_explainer_room": "Publikigitajn adresojn povas uzi ajna persono sur ajna servilo por aliĝi al via ĉambro.",
             "published_aliases_description": "Por ke adreso publikiĝu, ĝi unue devas esti loka adreso.",
-            "aliases_items_label": "Aliaj publikigitaj adresoj:",
-            "aliases_no_items_label": "Ankoraŭ neniuj aliaj publikigitaj adresoj; aldonu iun sube",
+            "no_aliases_space": "Ĉi tiu aro ne havas lokajn adresojn",
+            "no_aliases_room": "Ĉi tiu ĉambro ne havas lokajn adresojn",
             "new_alias_placeholder": "Nova publikigita adreso (ekz. #kromnomo:servilo)",
+            "name_field_label": "Nomo de ĉambro",
             "local_aliases_section": "Lokaj adresoj",
             "local_aliases_explainer_space": "Agordu adresojn por ĉi tiu aro, por ke uzantoj trovu ĝin per via hejmservilo (%(localDomain)s)",
             "local_aliases_explainer_room": "Agordu adresojn por ĉi tiu ĉambro, por ke uzantoj povu ĝin trovi per via hejmservilo (%(localDomain)s)",
-            "name_field_label": "Nomo de ĉambro",
-            "topic_field_label": "Temo de ĉambro",
-            "avatar_field_label": "Profilbildo de ĉambro"
+            "local_alias_field_label": "Loka adreso",
+            "error_updating_canonical_alias_title": "Ĝisdatigo de la ĉefa adreso eraris",
+            "error_updating_canonical_alias_description": "Ĝisdatigo de la ĉefa adreso de la ĉambro eraris. Aŭ la servilo tion ne permesas, aŭ io misfunkciis.",
+            "error_updating_alias_description": "Eraris ĝisdatigo de la alternativaj adresoj de la ĉambro. Eble la servilo ne permesas tion, aŭ io dumtempe ne funkcias.",
+            "error_deleting_alias_title": "Eraris forigo de adreso",
+            "error_deleting_alias_description_forbidden": "Vi ne rajtas forigi la adreson.",
+            "error_deleting_alias_description": "Eraris forigo de la adreso. Eble ĝi ne plu ekzistas, aŭ okazis portempa eraro.",
+            "error_creating_alias_title": "Eraris kreado de adreso",
+            "error_creating_alias_description": "Eraris kreado de tiu adreso. Eble ĝi ne estas permesata de la servilo, aŭ okazis portempa fiasko.",
+            "canonical_alias_field_label": "Ĉefa adreso",
+            "avatar_field_label": "Profilbildo de ĉambro",
+            "aliases_no_items_label": "Ankoraŭ neniuj aliaj publikigitaj adresoj; aldonu iun sube",
+            "aliases_items_label": "Aliaj publikigitaj adresoj:"
         },
         "advanced": {
             "unfederated": "Ĉi tiu ĉambro ne atingeblas por foraj serviloj de Matrix",
@@ -2321,8 +2321,8 @@
             "verification_skip_warning": "Sen kontrolado, vi ne havos aliron al ĉiuj viaj mesaĝoj kaj povas aperi kiel nefidinda al aliaj.",
             "verify_later": "Kontrolu poste",
             "waiting_for_user_accept": "Atendante akcepton de %(displayName)s…",
-            "accepting": "Akceptante…",
-            "start_button": "Komenci kontrolon"
+            "start_button": "Komenci kontrolon",
+            "accepting": "Akceptante…"
         },
         "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
         "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
@@ -2360,19 +2360,19 @@
             "explainer": "Savkopiu viajn ŝlosilojn antaŭ adiaŭo, por ilin ne perdi.",
             "title": "Agordi"
         },
-        "cross_signing_user_warning": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
-        "cross_signing_user_normal": "Vi ne kontrolis tiun ĉi uzanton.",
-        "cross_signing_user_verified": "Vi kontrolis tiun ĉi uzanton. Ĝi kontrolis ĉiomon da siaj salutaĵoj.",
-        "cross_signing_room_warning": "Iu uzas nekonatan salutaĵon",
-        "cross_signing_room_normal": "Ĉi tiu ĉambro uzas tutvojan ĉifradon",
-        "cross_signing_room_verified": "Ĉiu en la ĉambro estas kontrolita",
-        "event_shield_reason_authenticity_not_guaranteed": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
-        "event_shield_reason_mismatched_sender_key": "Ĉifrita de nekontrolita salutaĵo",
         "messages_not_secure": {
             "title": "Viaj mesaĝoj ne estas sekuraj",
             "heading": "Unu el la jenaj eble estas malkonfidencigita:",
             "cause_1": "Via hejmservilo"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Ĉifrita de nekontrolita salutaĵo",
+        "event_shield_reason_authenticity_not_guaranteed": "La aŭtentikeco de ĉi tiu ĉifrita mesaĝo ne povas esti garantiita sur ĉi tiu aparato.",
+        "cross_signing_user_warning": "Ĉi tiu uzanto ne kontrolis ĉiomon da siaj salutaĵoj.",
+        "cross_signing_user_verified": "Vi kontrolis tiun ĉi uzanton. Ĝi kontrolis ĉiomon da siaj salutaĵoj.",
+        "cross_signing_user_normal": "Vi ne kontrolis tiun ĉi uzanton.",
+        "cross_signing_room_warning": "Iu uzas nekonatan salutaĵon",
+        "cross_signing_room_verified": "Ĉiu en la ĉambro estas kontrolita",
+        "cross_signing_room_normal": "Ĉi tiu ĉambro uzas tutvojan ĉifradon"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -2527,8 +2527,6 @@
         "failed_soft_logout_homeserver": "Malsukcesis reaŭtentikigi pro hejmservila problemo",
         "soft_logout_subheading": "Vakigi personajn datumojn",
         "forgot_password_send_email": "Sendu retpoŝton",
-        "captcha_description": "Ĉi tiu hejmservilo volas certigi, ke vi ne estas roboto.",
-        "country_dropdown": "Landa falmenuo",
         "reset_password": {
             "confirm_new_password": "Konfirmu novan pasvorton",
             "password_not_entered": "Vi devas enigi novan pasvorton.",
@@ -2538,6 +2536,7 @@
             "devices_logout_success": "Vi estis elsalutita el ĉiuj aparatoj kaj ne plu ricevos puŝajn sciigojn. Por reŝalti sciigojn, ensalutu denove sur ĉiu aparato.",
             "return_to_login": "Reiri al saluta paĝo"
         },
+        "country_dropdown": "Landa falmenuo",
         "common_failures": {
             "invalid_homeserver_discovery": "Nevalida eltrova respondo de hejmservilo",
             "cannot_find_autodiscovery_config": "Malsukcesis akiri agordojn de memaga eltrovado de la servilo",
@@ -2547,7 +2546,8 @@
             "invalid_identity_server_base_url": "Nevalida base_url por m.identity_server",
             "invalid_identity_server_url": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
             "general_failure": "Ĝenerala fiasko"
-        }
+        },
+        "captcha_description": "Ĉi tiu hejmservilo volas certigi, ke vi ne estas roboto."
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -2811,10 +2811,10 @@
         "invite_description": "Inviti per retpoŝtadreso aŭ uzantonomo",
         "invite_this_space": "Inviti al ĉi tiu aro",
         "user_lacks_permission": "Vi ne rajtas",
-        "no_search_result_hint": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
-        "title_when_query_available": "Rezultoj",
         "title_when_query_unavailable": "Ĉambroj kaj aroj",
-        "search_placeholder": "Serĉi nomojn kaj priskribojn"
+        "title_when_query_available": "Rezultoj",
+        "search_placeholder": "Serĉi nomojn kaj priskribojn",
+        "no_search_result_hint": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj."
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -2971,17 +2971,17 @@
         "no_peek_join_prompt": "Vi ne povas antaŭrigardi ĉambron %(roomName)s. Ĉu vi al ĝi volas aliĝi?",
         "not_found_title_name": "%(roomName)s ne ekzistas.",
         "inaccessible_name": "%(roomName)s ne estas atingebla nun.",
-        "jump_to_bottom_button": "Rulumi al plej freŝaj mesaĝoj",
-        "upgrade_warning_bar": "Gradaltigo de la ĉambro forigos la nunan ĉambron kaj kreos novan kun la sama nomo.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Alŝutante dosieron %(filename)s kaj %(count)s aliajn",
+                "one": "Alŝutante dosieron %(filename)s kaj %(count)s alian"
+            },
+            "uploading_single_file": "Alŝutante dosieron %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Ĉi tiu ĉambro jam gradaltiĝis.",
         "upgrade_warning_bar_unstable": "Ĉi tiu ĉambro uzas ĉambran version <roomVersion />, kiun la hejmservilo markis kiel <i>nestabilan</i>.",
         "upgrade_warning_bar_admins": "Nur administrantoj de ĉambro vidos ĉi tiun averton",
-        "search": {
-            "this_room": "Ĉi tiu ĉambro",
-            "all_rooms": "Ĉiuj ĉambroj",
-            "field_placeholder": "Serĉi…"
-        },
-        "jump_read_marker": "Salti al unua nelegita mesaĝo.",
+        "upgrade_warning_bar": "Gradaltigo de la ĉambro forigos la nunan ĉambron kaj kreos novan kun la sama nomo.",
         "status_bar": {
             "requires_consent_agreement": "Vi ne povas sendi mesaĝojn ĝis vi tralegos kaj konsentos <consentLink>niajn uzokondiĉojn</consentLink>.",
             "monthly_user_limit_reached": "Via mesaĝo ne sendiĝis, ĉar tiu ĉi hejmservilo atingis sian monatan limon de aktivaj uzantoj. Bonvolu <a>kontakti vian administranton de servo</a> por plue uzadi la servon.",
@@ -2993,15 +2993,15 @@
             "server_connectivity_lost_title": "Konekto al la servilo perdiĝis.",
             "server_connectivity_lost_description": "Senditaj mesaĝoj konserviĝos ĝis via konekto refunkcios."
         },
-        "failed_reject_invite": "Malsukcesis rifuzi inviton",
+        "search": {
+            "this_room": "Ĉi tiu ĉambro",
+            "all_rooms": "Ĉiuj ĉambroj",
+            "field_placeholder": "Serĉi…"
+        },
+        "jump_to_bottom_button": "Rulumi al plej freŝaj mesaĝoj",
+        "jump_read_marker": "Salti al unua nelegita mesaĝo.",
         "inviter_unknown": "Nekonata",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Alŝutante dosieron %(filename)s kaj %(count)s aliajn",
-                "one": "Alŝutante dosieron %(filename)s kaj %(count)s alian"
-            },
-            "uploading_single_file": "Alŝutante dosieron %(filename)s"
-        }
+        "failed_reject_invite": "Malsukcesis rifuzi inviton"
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3196,10 +3196,6 @@
         "filter_placeholder": "Filtri ĉambranojn",
         "power_label": "%(userName)s (povnivelo je %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Vi havas neniujn ŝaltitajn glumarkarojn",
-        "empty_add_prompt": "Iujn aldoni"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Malsukcesis senvalidigi inviton",
         "error_revoke_3pid_invite_description": "Ne povis senvalidigi inviton. Aŭ la servilo nun trairas problemon, aŭ vi ne havas sufiĉajn permesojn.",
@@ -3230,6 +3226,10 @@
         "error_deactivate": "Malsukcesis malaktivigi uzanton",
         "role_label": "Rolo en <RoomName/>"
     },
+    "stickers": {
+        "empty": "Vi havas neniujn ŝaltitajn glumarkarojn",
+        "empty_add_prompt": "Iujn aldoni"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Fiksitaj mesaĝoj",
@@ -3247,14 +3247,18 @@
         "share_button": "Kunhavigi ĉambron",
         "settings_button": "Agordoj de ĉambro"
     },
-    "cant_load_page": "Ne povis enlegi paĝon",
-    "left_panel": {
-        "open_dial_pad": "Malfermi ciferplaton"
-    },
     "reject_invitation_dialog": {
         "title": "Rifuzi inviton",
         "confirmation": "Ĉu vi certe volas rifuzi la inviton?",
         "failed": "Malsukcesis rifuzi la inviton"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Ŝajne vi alŝutas dosierojn nun; ĉu vi tamen volas foriri?",
+        "call_in_progress": "Ŝajne vi vokas nun; ĉu vi tamen volas foriri?"
+    },
+    "no_more_results": "Neniuj pliaj rezultoj",
+    "left_panel": {
+        "open_dial_pad": "Malfermi ciferplaton"
     },
     "leave_room_dialog": {
         "last_person_warning": "Vi estas la nura persono tie ĉi. Se vi foriros, neniu alia plu povos aliĝi, inkluzive vin mem.",
@@ -3275,9 +3279,5 @@
         },
         "error_loading_user_profile": "Ne povis enlegi profilon de uzanto"
     },
-    "no_more_results": "Neniuj pliaj rezultoj",
-    "quit_warning": {
-        "file_upload_in_progress": "Ŝajne vi alŝutas dosierojn nun; ĉu vi tamen volas foriri?",
-        "call_in_progress": "Ŝajne vi vokas nun; ĉu vi tamen volas foriri?"
-    }
+    "cant_load_page": "Ne povis enlegi paĝon"
 }

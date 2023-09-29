@@ -1041,12 +1041,12 @@
         "historical": "ປະຫວັດ",
         "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ",
         "setup_secure_messages": "ຕັ້ງຄ່າຂໍ້ຄວາມທີ່ປອດໄພ",
-        "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
         "view_message": "ເບິ່ງຂໍ້ຄວາມ",
-        "joined": "ເຂົ້າຮ່ວມແລ້ວ",
+        "unencrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
         "show_more": "ສະແດງເພີ່ມເຕີມ",
-        "are_you_sure": "ທ່ານແນ່ໃຈບໍ່?",
-        "avatar": "ຮູບແທນຕົວ"
+        "joined": "ເຂົ້າຮ່ວມແລ້ວ",
+        "avatar": "ຮູບແທນຕົວ",
+        "are_you_sure": "ທ່ານແນ່ໃຈບໍ່?"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1308,9 +1308,9 @@
         "format_italics": "ໂຕໜັງສືອຽງ",
         "format_insert_link": "ໃສ່ລິ້ງ",
         "replying_title": "ກຳລັງຕອບກັບ",
-        "edit_composer_label": "ແກ້ໄຂຂໍ້ຄວາມ",
+        "stop_voice_message": "ຢຸດການບັນທຶກ",
         "send_voice_message": "ສົ່ງຂໍ້ຄວາມສຽງ",
-        "stop_voice_message": "ຢຸດການບັນທຶກ"
+        "edit_composer_label": "ແກ້ໄຂຂໍ້ຄວາມ"
     },
     "power_level": {
         "default": "ຄ່າເລີ່ມຕົ້ນ",
@@ -2147,7 +2147,6 @@
         },
         "read_receipts_label": "ຢັ້ງຢືນອ່ານແລ້ວ",
         "thread_info_basic": "ຈາກກະທູ້",
-        "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
         "send_state_sent": "ຂໍ້ຄວາມຂອງທ່ານຖືກສົ່ງໄປແລ້ວ",
         "send_state_failed": "ການສົ່ງບໍ່ສຳເລັດ",
         "mab": {
@@ -2163,7 +2162,8 @@
             "no_permission": "ພະຍາຍາມໂຫຼດຈຸດສະເພາະຢູ່ໃນທາມລາຍຂອງຫ້ອງນີ້, ແຕ່ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມທີ່ເປັນຄໍາຖາມ.",
             "unable_to_find": "ພະຍາຍາມໂຫຼດຈຸດສະເພາະໃນທາມລາຍຂອງຫ້ອງນີ້, ແຕ່ບໍ່ສາມາດຊອກຫາມັນໄດ້.",
             "title": "ໂຫຼດຕໍາແໜ່ງທາມລາຍບໍ່ສຳເລັດ"
-        }
+        },
+        "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້"
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -2474,31 +2474,31 @@
             "leave_space": "ອອກຈາກພື້ນທີ່",
             "aliases_section": "ທີ່ຢູ່ຂອງຫ້ອງ",
             "other_section": "ອື່ນໆ",
-            "error_updating_canonical_alias_title": "ເກີດຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ຫຼັກ",
-            "error_updating_canonical_alias_description": "ມີຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ຫຼັກຂອງຫ້ອງ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼື ຄວາມບໍ່ສຳເລັດຊົ່ວຄາວເກີດຂຶ້ນ.",
-            "error_updating_alias_description": "ມີຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ສຳຮອງຂອງຫ້ອງ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼືບໍ່ສຳເລັດ ຊົ່ວຄາວເກີດຂຶ້ນ.",
-            "error_creating_alias_title": "ເກີດຄວາມຜິດພາດໃນການສ້າງທີ່ຢູ່",
-            "error_creating_alias_description": "ເກີດຄວາມຜິດພາດໃນການສ້າງທີ່ຢູ່ນັ້ນ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼືບໍ່ສຳເລັດ ຊົ່ວຄາວເກີດຂຶ້ນ.",
-            "error_deleting_alias_description_forbidden": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລຶບທີ່ຢູ່.",
-            "error_deleting_alias_description": "ມີຄວາມຜິດພາດໃນການລຶບທີ່ຢູ່ນັ້ນອອກ. ມັນອາດຈະບໍ່ມີແລ້ວ ຫຼືມີຄວາມຜິດພາດຊົ່ວຄາວເກີດຂຶ້ນ.",
-            "error_deleting_alias_title": "ການລຶບທີ່ຢູ່ຜິດພາດ",
-            "canonical_alias_field_label": "ທີ່ຢູ່ຫຼັກ",
-            "no_aliases_space": "ພື້ນທີ່ນີ້ບໍ່ມີທີ່ຢູ່ໃນຊ່ອງເກັບ",
-            "no_aliases_room": "ຫ້ອງນີ້ບໍ່ມີທີ່ຢູ່ຊ່ອງເກັບ",
-            "local_alias_field_label": "ທີ່ຢູ່ຊ່ອງເກັບ",
+            "topic_field_label": "ຫົວຂໍ້ຫ້ອງ",
             "published_aliases_section": "ທີ່ຢູ່ເຜີຍແຜ່",
             "published_aliases_explainer_space": "ທີ່ຢູ່ທີ່ເຜີຍແຜ່ສາມາດຖືກນໍາໃຊ້ໂດຍຜູ້ໃດຜູ້ຫນຶ່ງໃນເຊີບເວີຂອງການເຂົ້າຮ່ວມຊ່ອງຂອງທ່ານ.",
             "published_aliases_explainer_room": "ທີ່ຢູ່ທີ່ເຜີຍແຜ່ສາມາດຖືກນໍາໃຊ້ໂດຍຜູ້ໃດຜູ້ຫນຶ່ງໃນເຊີບເວີຂອງການເຂົ້າຮ່ວມຫ້ອງຂອງທ່ານ.",
             "published_aliases_description": "ເພື່ອເຜີຍແຜ່ທີ່ຢູ່, ມັນຈໍາເປັນຕ້ອງຕັ້ງເປັນທີ່ຢູ່ຊ່ອງເກັບກ່ອນ.",
-            "aliases_items_label": "ທີ່ຢູ່ອື່ນໆທີ່ເຜີຍແຜ່:",
-            "aliases_no_items_label": "ບໍ່ມີທີ່ຢູ່ທີ່ເຜີຍແຜ່ອື່ນໆເທື່ອ, ເພີ່ມທີ່ຢູ່ຫນຶ່ງຂ້າງລຸ່ມນີ້",
+            "no_aliases_space": "ພື້ນທີ່ນີ້ບໍ່ມີທີ່ຢູ່ໃນຊ່ອງເກັບ",
+            "no_aliases_room": "ຫ້ອງນີ້ບໍ່ມີທີ່ຢູ່ຊ່ອງເກັບ",
             "new_alias_placeholder": "ທີ່ຢູ່ທີ່ເຜີຍແຜ່ໃໝ່ (ເຊັ່ນ: #alias: server)",
+            "name_field_label": "ຊື່ຫ້ອງ",
             "local_aliases_section": "ທີ່ຢູ່ຊ່ອງເກັບ",
             "local_aliases_explainer_space": "ກໍານົດທີ່ຢູ່ສໍາລັບພື້ນທີ່ນີ້ເພື່ອໃຫ້ຜູ້ໃຊ້ສາມາດຊອກຫາພື້ນທີ່ນີ້ຜ່ານ homeserver ຂອງທ່ານ (%(localDomain)s)",
             "local_aliases_explainer_room": "ກໍານົດທີ່ຢູ່ສໍາລັບຫ້ອງນີ້ເພື່ອໃຫ້ຜູ້ໃຊ້ສາມາດຊອກຫາຫ້ອງນີ້ຜ່ານ homeserver ຂອງທ່ານ (%(localDomain)s)",
-            "name_field_label": "ຊື່ຫ້ອງ",
-            "topic_field_label": "ຫົວຂໍ້ຫ້ອງ",
-            "avatar_field_label": "ຮູບ avatar ຫ້ອງ"
+            "local_alias_field_label": "ທີ່ຢູ່ຊ່ອງເກັບ",
+            "error_updating_canonical_alias_title": "ເກີດຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ຫຼັກ",
+            "error_updating_canonical_alias_description": "ມີຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ຫຼັກຂອງຫ້ອງ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼື ຄວາມບໍ່ສຳເລັດຊົ່ວຄາວເກີດຂຶ້ນ.",
+            "error_updating_alias_description": "ມີຄວາມຜິດພາດໃນການອັບເດດທີ່ຢູ່ສຳຮອງຂອງຫ້ອງ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼືບໍ່ສຳເລັດ ຊົ່ວຄາວເກີດຂຶ້ນ.",
+            "error_deleting_alias_title": "ການລຶບທີ່ຢູ່ຜິດພາດ",
+            "error_deleting_alias_description_forbidden": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ລຶບທີ່ຢູ່.",
+            "error_deleting_alias_description": "ມີຄວາມຜິດພາດໃນການລຶບທີ່ຢູ່ນັ້ນອອກ. ມັນອາດຈະບໍ່ມີແລ້ວ ຫຼືມີຄວາມຜິດພາດຊົ່ວຄາວເກີດຂຶ້ນ.",
+            "error_creating_alias_title": "ເກີດຄວາມຜິດພາດໃນການສ້າງທີ່ຢູ່",
+            "error_creating_alias_description": "ເກີດຄວາມຜິດພາດໃນການສ້າງທີ່ຢູ່ນັ້ນ. ມັນອາດຈະບໍ່ໄດ້ຮັບການອະນຸຍາດຈາກເຊີບເວີ ຫຼືບໍ່ສຳເລັດ ຊົ່ວຄາວເກີດຂຶ້ນ.",
+            "canonical_alias_field_label": "ທີ່ຢູ່ຫຼັກ",
+            "avatar_field_label": "ຮູບ avatar ຫ້ອງ",
+            "aliases_no_items_label": "ບໍ່ມີທີ່ຢູ່ທີ່ເຜີຍແຜ່ອື່ນໆເທື່ອ, ເພີ່ມທີ່ຢູ່ຫນຶ່ງຂ້າງລຸ່ມນີ້",
+            "aliases_items_label": "ທີ່ຢູ່ອື່ນໆທີ່ເຜີຍແຜ່:"
         },
         "advanced": {
             "unfederated": "ຫ້ອງນີ້ບໍ່ສາມາດເຂົ້າເຖິງໄດ້ໂດຍເຊີບເວີ Matrix ໄລຍະໄກ",
@@ -2584,17 +2584,17 @@
             "verification_skip_warning": "ໂດຍບໍ່ມີການຢັ້ງຢືນ, ທ່ານຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທັງຫມົດຂອງທ່ານ ແລະ ອາດຈະປາກົດວ່າບໍ່ຫນ້າເຊື່ອຖື.",
             "verify_later": "ຂ້ອຍຈະກວດສອບພາຍຫຼັງ",
             "verify_reset_warning_1": "ການຕັ້ງຄ່າລະຫັດຢືນຢັນຂອງທ່ານບໍ່ສາມາດຍົກເລີກໄດ້. ຫຼັງຈາກການຕັ້ງຄ່າແລ້ວ, ທ່ານຈະບໍ່ສາມາດເຂົ້າເຖິງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດເກົ່າໄດ້, ແລະ ໝູ່ເພື່ອນທີ່ຢືນຢັນໄປກ່ອນໜ້ານີ້ ທ່ານຈະເຫັນຄຳເຕືອນຄວາມປອດໄພຈົນກວ່າທ່ານຈະຢືນຢັນກັບພວກມັນຄືນໃໝ່.",
-            "self_verification_hint": "ເພື່ອດຳເນີນການຕໍ່, ກະລຸນາຍອມຮັບຄຳຮ້ອງຂໍການຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ.",
             "waiting_for_user_accept": "ກຳລັງລໍຖ້າ %(displayName)s ຍອມຮັບ…",
-            "accepting": "ກຳລັງຍອມຮັບ…",
             "start_button": "ເລີ່ມການຢັ້ງຢືນ",
+            "self_verification_hint": "ເພື່ອດຳເນີນການຕໍ່, ກະລຸນາຍອມຮັບຄຳຮ້ອງຂໍການຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ.",
             "after_new_login": {
                 "unable_to_verify": "ບໍ່ສາມາດຢັ້ງຢືນອຸປະກອນນີ້ໄດ້",
                 "verify_this_device": "ຢັ້ງຢືນອຸປະກອນນີ້",
                 "device_verified": "ຢັ້ງຢືນອຸປະກອນແລ້ວ",
                 "reset_confirmation": "ຕັ້ງຄ່າຢືນຢັນກະແຈຄືນໃໝ່ບໍ?",
                 "skip_verification": "ຂ້າມການຢັ້ງຢືນດຽວນີ້"
-            }
+            },
+            "accepting": "ກຳລັງຍອມຮັບ…"
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -2632,14 +2632,6 @@
             "explainer": "ສຳຮອງຂໍ້ມູນກະແຈຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍຂໍ້ມູນ.",
             "title": "ຕັ້ງຄ່າ"
         },
-        "cross_signing_user_warning": "ຜູ້ໃຊ້ນີ້ຍັງບໍ່ໄດ້ຢຶນຢັນການເຂົ້າຮ່ວມຂອງເຂົາເຈົ້າທັງຫມົດຂອງ.",
-        "cross_signing_user_normal": "ທ່ານຍັງບໍ່ໄດ້ຢືນຢັນຜູ້ໃຊ້ນີ້.",
-        "cross_signing_user_verified": "ທ່ານໄດ້ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ແລ້ວ. ຜູ້ໃຊ້ນີ້ໄດ້ຢັ້ງຢືນທຸກເງິຶອນໄຂຂອງເຂົາເຈົ້າແລ້ວ.",
-        "cross_signing_room_warning": "ບາງຄົນກໍາລັງໃຊ້ເງື່ອນໄຂທີ່ບໍ່ຮູ້ຈັກ",
-        "cross_signing_room_normal": "ຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ເຖິງປາຍທາງ",
-        "cross_signing_room_verified": "ທຸກຄົນຢູ່ໃນຫ້ອງນີ້ໄດ້ຮັບການຢັ້ງຢືນແລ້ວ",
-        "event_shield_reason_authenticity_not_guaranteed": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
-        "event_shield_reason_mismatched_sender_key": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ",
         "messages_not_secure": {
             "title": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ປອດໄພ",
             "heading": "ຫນຶ່ງໃນຕໍ່ໄປນີ້ອາດຈະຖືກທໍາລາຍ:",
@@ -2647,7 +2639,15 @@
             "cause_2": "homeserver ຜູ້ໃຊ້ທີ່ທ່ານກໍາລັງຢືນຢັນແມ່ນເຊື່ອມຕໍ່ກັບ",
             "cause_3": "ຂອງທ່ານ, ຫຼື ການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງຜູ້ໃຊ້ອື່ນ",
             "cause_4": "ຂອງທ່ານ , ຫຼື session ຂອງຜູ້ໃຊ້ອື່ນໆ"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "ເຂົ້າລະຫັດໂດຍພາກສ່ວນທີ່ບໍ່ໄດ້ຮັບການຢືນຢັນ",
+        "event_shield_reason_authenticity_not_guaranteed": "ອຸປະກອນນີ້ບໍ່ສາມາດຮັບປະກັນຄວາມຖືກຕ້ອງຂອງຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດນີ້ໄດ້.",
+        "cross_signing_user_warning": "ຜູ້ໃຊ້ນີ້ຍັງບໍ່ໄດ້ຢຶນຢັນການເຂົ້າຮ່ວມຂອງເຂົາເຈົ້າທັງຫມົດຂອງ.",
+        "cross_signing_user_verified": "ທ່ານໄດ້ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ແລ້ວ. ຜູ້ໃຊ້ນີ້ໄດ້ຢັ້ງຢືນທຸກເງິຶອນໄຂຂອງເຂົາເຈົ້າແລ້ວ.",
+        "cross_signing_user_normal": "ທ່ານຍັງບໍ່ໄດ້ຢືນຢັນຜູ້ໃຊ້ນີ້.",
+        "cross_signing_room_warning": "ບາງຄົນກໍາລັງໃຊ້ເງື່ອນໄຂທີ່ບໍ່ຮູ້ຈັກ",
+        "cross_signing_room_verified": "ທຸກຄົນຢູ່ໃນຫ້ອງນີ້ໄດ້ຮັບການຢັ້ງຢືນແລ້ວ",
+        "cross_signing_room_normal": "ຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ເຖິງປາຍທາງ"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -2809,8 +2809,6 @@
         "create_account_title": "ສ້າງບັນຊີ",
         "failed_soft_logout_homeserver": "ການພິສູດຢືນຢັນຄືນໃໝ່ເນື່ອງຈາກບັນຫາ homeserver ບໍ່ສຳເລັດ",
         "soft_logout_subheading": "ລຶບຂໍ້ມູນສ່ວນຕົວ",
-        "captcha_description": "homeserver ນີ້ຕ້ອງການໃຫ້ແນ່ໃຈວ່າທ່ານບໍ່ແມ່ນຫຸ່ນຍົນ.",
-        "country_dropdown": "ເລືອກປະເທດຜ່ານເມນູແບບເລື່ອນລົງ",
         "reset_password": {
             "other_devices_logout_warning_1": "ການອອກຈາກລະບົບອຸປະກອນຂອງທ່ານຈະໄປລຶບອຸປະກອນເຂົ້າລະຫັດທີ່ເກັບໄວ້, ເຮັດໃຫ້ປະຫວັດການສົນທະນາທີ່ເຂົ້າລະຫັດໄວ້ບໍ່ສາມາດອ່ານໄດ້.",
             "other_devices_logout_warning_2": "ຖ້າທ່ານຕ້ອງການຮັກສາການເຂົ້າເຖິງປະຫວັດການສົນທະນາຂອງທ່ານໃນຫ້ອງທີ່ເຂົ້າລະຫັດໄວ້, ໃຫ້ຕັ້ງຄ່າການສໍາຮອງກະແຈ ຫຼື ສົ່ງອອກກະແຈຂໍ້ຄວາມຂອງທ່ານຈາກອຸປະກອນອື່ນຂອງທ່ານກ່ອນດໍາເນີນການ.",
@@ -2820,6 +2818,7 @@
             "devices_logout_success": "ທ່ານໄດ້ອອກຈາກລະບົບອຸປະກອນທັງໝົດແລ້ວ ແລະ ຈະບໍ່ຮັບການແຈ້ງເຕືອນ ອີກຕໍ່ໄປ. ເພື່ອເປີດໃຊ້ການແຈ້ງເຕືອນຄືນໃໝ່, ກະລຸນາເຂົ້າສູ່ລະບົບອີກຄັ້ງໃນແຕ່ລະອຸປະກອນ.",
             "return_to_login": "ກັບໄປທີ່ໜ້າຈໍເພື່ອເຂົ້າສູ່ລະບົບ"
         },
+        "country_dropdown": "ເລືອກປະເທດຜ່ານເມນູແບບເລື່ອນລົງ",
         "common_failures": {
             "invalid_homeserver_discovery": "ການຕອບກັບຫານຄົ້ນຫາ homeserver ບໍ່ຖືກຕ້ອງ",
             "cannot_find_autodiscovery_config": "ບໍ່ສາມາດຮັບການກຳນົດຄ່າ ການຄົ້ນຫາອັດຕະໂນມັດ ຈາກເຊີບເວີໄດ້",
@@ -2829,7 +2828,8 @@
             "invalid_identity_server_base_url": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.identity_server",
             "invalid_identity_server_url": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
             "general_failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ"
-        }
+        },
+        "captcha_description": "homeserver ນີ້ຕ້ອງການໃຫ້ແນ່ໃຈວ່າທ່ານບໍ່ແມ່ນຫຸ່ນຍົນ."
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3000,8 +3000,8 @@
         "error_mixed_content": "ຂໍ້ຜິດພາດ - ເນື້ອຫາມີການປະສົມປະສານ",
         "popout": "ວິດເຈັດ popout",
         "unpin_to_view_right_panel": "ຖອນປັກໝຸດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
-        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
-        "set_room_layout": "ກໍານົດຮູບແບບຫ້ອງຂອງຂ້ອຍສໍາລັບທຸກຄົນ"
+        "set_room_layout": "ກໍານົດຮູບແບບຫ້ອງຂອງຂ້ອຍສໍາລັບທຸກຄົນ",
+        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້"
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3095,12 +3095,12 @@
         "invite": "ເຊີນຜູ້ຄົນ",
         "invite_description": "ເຊີນດ້ວຍອີເມລ໌ ຫຼື ຊື່ຜູ້ໃຊ້",
         "invite_this_space": "ເຊີນໄປບ່ອນນີ້",
-        "joining_space": "ເຂົ້າຮ່ວມ",
         "user_lacks_permission": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດ",
-        "no_search_result_hint": "ເຈົ້າອາດຈະຕ້ອງລອງຊອກຫາແບບອື່ນ ຫຼື ກວດເບິ່ງວ່າພິມຜິດ.",
-        "title_when_query_available": "ຜົນຮັບ",
         "title_when_query_unavailable": "ຫ້ອງ ແລະ ພຶ້ນທີ່",
-        "search_placeholder": "ຄົ້ນຫາຊື່ ແລະ ຄໍາອະທິບາຍ"
+        "title_when_query_available": "ຜົນຮັບ",
+        "search_placeholder": "ຄົ້ນຫາຊື່ ແລະ ຄໍາອະທິບາຍ",
+        "no_search_result_hint": "ເຈົ້າອາດຈະຕ້ອງລອງຊອກຫາແບບອື່ນ ຫຼື ກວດເບິ່ງວ່າພິມຜິດ.",
+        "joining_space": "ເຂົ້າຮ່ວມ"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3294,18 +3294,17 @@
         "join_failed_needs_invite": "ເພື່ອເບິ່ງ %(roomName)s, ທ່ານຕ້ອງມີບັດເຊີນ",
         "view_failed_enable_video_rooms": "ເພື່ອເບິ່ງ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ",
         "join_failed_enable_video_rooms": "ເພື່ອເຂົ້າຮ່ວມ, ທ່ານຕ້ອງເປີດຫ້ອງວີດີໂອໃນສູນທົດລອງກ່ອນ",
-        "jump_to_bottom_button": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
-        "show_labs_settings": "ໂຊການຕັ້ງຄ່າສູນທົດລອງ",
-        "upgrade_warning_bar": "ການຍົກລະດັບຫ້ອງນີ້ຈະປິດຕົວຢ່າງປັດຈຸບັນຂອງຫ້ອງ ແລະ ຍົກລະດັບການສ້າງຫ້ອງທີ່ມີຊື່ດຽວກັນ.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "ກຳລັງອັບໂຫລດ %(filename)s ແລະ %(count)s ອື່ນໆ",
+                "other": "ກຳລັງອັບໂຫລດ %(filename)s ແລະ %(count)s ອື່ນໆ"
+            },
+            "uploading_single_file": "ກຳລັງອັບໂຫລດ %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "ຫ້ອງນີ້ໄດ້ຖືກປັບປຸງແລ້ວ.",
         "upgrade_warning_bar_unstable": "ຫ້ອງນີ້ກຳລັງດຳເນິນເວີຊັ້ນຫ້ອງ <roomVersion />, ເຊິ່ງ homeserver ນີ້ໄດ້ສ້າງເຄື່ອງໝາຍເປັນ <i>unstable</i>.",
         "upgrade_warning_bar_admins": "ມີແຕ່ຜູ້ຄຸ້ມຄອງຫ້ອງເທົ່ານັ້ນທີ່ເຫັນຄຳເຕືອນນີ້",
-        "search": {
-            "this_room": "ຫ້ອງນີ້",
-            "all_rooms": "ຫ້ອງທັງໝົດ",
-            "field_placeholder": "ຊອກຫາ…"
-        },
-        "jump_read_marker": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
+        "upgrade_warning_bar": "ການຍົກລະດັບຫ້ອງນີ້ຈະປິດຕົວຢ່າງປັດຈຸບັນຂອງຫ້ອງ ແລະ ຍົກລະດັບການສ້າງຫ້ອງທີ່ມີຊື່ດຽວກັນ.",
         "status_bar": {
             "requires_consent_agreement": "ທ່ານບໍ່ສາມາດສົ່ງຂໍ້ຄວາມໄດ້ຈົນກ່ວາທ່ານຈະທົບທວນຄືນ ແລະ ຕົກລົງເຫັນດີກັບ <consentLink>ຂໍ້ກໍານົດແລະເງື່ອນໄຂຂອງພວກເຮົາ</consentLink>.",
             "monthly_user_limit_reached": "ຂໍ້ຄວາມຂອງທ່ານບໍ່ຖືກສົ່ງເນື່ອງຈາກ homeserver ນີ້ຮອດຂີດຈຳກັດສູງສູດຜູ້ໃຊ້ລາຍເດືອນແລ້ວ. ກະລຸນາ <a>ຕິດຕໍ່ຜູ້ເບິ່ງຄຸ້ມຄອງການບໍລິການຂອງທ່ານ</a> ເພື່ອສືບຕໍ່ໃຊ້ບໍລິການ.",
@@ -3318,15 +3317,16 @@
             "server_connectivity_lost_title": "ການເຊື່ອມຕໍ່ກັບເຊີບເວີໄດ້ສູນຫາຍໄປ.",
             "server_connectivity_lost_description": "ຂໍ້ຄວາມທີ່ສົ່ງຈະຖືກເກັບໄວ້ຈົນກ່ວາການເຊື່ອມຕໍ່ຂອງທ່ານກັບຄືນມາ."
         },
-        "failed_reject_invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ",
+        "show_labs_settings": "ໂຊການຕັ້ງຄ່າສູນທົດລອງ",
+        "search": {
+            "this_room": "ຫ້ອງນີ້",
+            "all_rooms": "ຫ້ອງທັງໝົດ",
+            "field_placeholder": "ຊອກຫາ…"
+        },
+        "jump_to_bottom_button": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
+        "jump_read_marker": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
         "inviter_unknown": "ບໍ່ຮູ້ຈັກ",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "ກຳລັງອັບໂຫລດ %(filename)s ແລະ %(count)s ອື່ນໆ",
-                "other": "ກຳລັງອັບໂຫລດ %(filename)s ແລະ %(count)s ອື່ນໆ"
-            },
-            "uploading_single_file": "ກຳລັງອັບໂຫລດ %(filename)s"
-        }
+        "failed_reject_invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ"
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3516,10 +3516,6 @@
         "filter_placeholder": "ການກັ່ນຕອງສະມາຊິກຫ້ອງ",
         "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "ທ່ານບໍ່ໄດ້ເປີດໃຊ້ສະຕິກເກີແພັກເກັດໃນປັດຈຸບັນ",
-        "empty_add_prompt": "ເພີ່ມບາງອັນດຽວນີ້"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "ຍົກເລີກການເຊີນບໍ່ສຳເລັດ",
         "error_revoke_3pid_invite_description": "ບໍ່ສາມາດຖອນຄຳເຊີນໄດ້. ເຊີບເວີອາດຈະປະສົບບັນຫາຊົ່ວຄາວ ຫຼື ທ່ານບໍ່ມີສິດພຽງພໍໃນການຖອນຄຳເຊີນ.",
@@ -3571,6 +3567,10 @@
         "error_deactivate": "ປິດໃຊ້ງານຜູ້ໃຊ້ບໍ່ສຳເລັດ",
         "role_label": "ບົດບາດໃນ <RoomName />"
     },
+    "stickers": {
+        "empty": "ທ່ານບໍ່ໄດ້ເປີດໃຊ້ສະຕິກເກີແພັກເກັດໃນປັດຈຸບັນ",
+        "empty_add_prompt": "ເພີ່ມບາງອັນດຽວນີ້"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "ປັກໝຸດຂໍ້ຄວາມ",
@@ -3592,15 +3592,18 @@
         "share_button": "ແບ່ງປັນຫ້ອງ",
         "settings_button": "ການຕັ້ງຄ່າຫ້ອງ"
     },
-    "cant_load_page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້",
-    "left_panel": {
-        "open_dial_pad": "ເປີດແຜ່ນປັດ"
-    },
-    "console_wait": "ລໍຖ້າ!",
     "reject_invitation_dialog": {
         "title": "ປະຕິເສດຄຳເຊີນ",
         "confirmation": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປະຕິເສດຄຳເຊີນ?",
         "failed": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "ເບິ່ງຄືວ່າທ່ານກຳລັງອັບໂຫລດໄຟລ໌ຢູ່,ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກ?",
+        "call_in_progress": "ເບິ່ງຄືວ່າທ່ານຢູ່ໃນສາຍ, ທ່ານແນ່ໃຈບໍ່ວ່າທ່ານຢາກຢຸດຕິ?"
+    },
+    "no_more_results": "ບໍ່ມີຜົນອີກຕໍ່ໄປ",
+    "left_panel": {
+        "open_dial_pad": "ເປີດແຜ່ນປັດ"
     },
     "leave_room_dialog": {
         "last_person_warning": "ເຈົ້າເປັນພຽງຄົນດຽວຢູ່ທີ່ນີ້. ຖ້າທ່ານອອກໄປ, ບໍ່ມີໃຜຈະສາມາດເຂົ້າຮ່ວມໃນອະນາຄົດໄດ້, ລວມທັງທ່ານ.",
@@ -3621,9 +3624,6 @@
         },
         "error_loading_user_profile": "ບໍ່ສາມາດໂຫຼດໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້ໄດ້"
     },
-    "no_more_results": "ບໍ່ມີຜົນອີກຕໍ່ໄປ",
-    "quit_warning": {
-        "file_upload_in_progress": "ເບິ່ງຄືວ່າທ່ານກຳລັງອັບໂຫລດໄຟລ໌ຢູ່,ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກ?",
-        "call_in_progress": "ເບິ່ງຄືວ່າທ່ານຢູ່ໃນສາຍ, ທ່ານແນ່ໃຈບໍ່ວ່າທ່ານຢາກຢຸດຕິ?"
-    }
+    "console_wait": "ລໍຖ້າ!",
+    "cant_load_page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້"
 }

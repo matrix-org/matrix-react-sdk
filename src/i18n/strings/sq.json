@@ -1147,12 +1147,12 @@
         "historical": "Të dikurshme",
         "go_to_settings": "Kalo te Rregullimet",
         "setup_secure_messages": "Rregulloni Mesazhi të Sigurt",
-        "unencrypted": "Të pafshehtëzuara",
         "view_message": "Shihni mesazh",
-        "joined": "Hyri",
+        "unencrypted": "Të pafshehtëzuara",
         "show_more": "Shfaq më tepër",
-        "are_you_sure": "Jeni i sigurt?",
-        "avatar": "Avatar"
+        "joined": "Hyri",
+        "avatar": "Avatar",
+        "are_you_sure": "Jeni i sigurt?"
     },
     "action": {
         "continue": "Vazhdo",
@@ -1478,15 +1478,15 @@
         "format_italics": "Të pjerrëta",
         "format_insert_link": "Futni lidhje",
         "replying_title": "Po përgjigjet",
-        "edit_composer_label": "Përpunoni mesazhin",
-        "send_voice_message": "Dërgoni mesazh zanor",
         "stop_voice_message": "Ndale regjistrimin",
+        "send_voice_message": "Dërgoni mesazh zanor",
         "link_modal": {
             "title_edit": "Përpunoni lidhje",
             "title_create": "Krijoni një lidhje",
             "text_field_label": "Tekst",
             "link_field_label": "Lidhje"
-        }
+        },
+        "edit_composer_label": "Përpunoni mesazhin"
     },
     "power_level": {
         "default": "Parazgjedhje",
@@ -2535,13 +2535,12 @@
             "other": "Parë nga %(count)s vetë"
         },
         "read_receipts_label": "Dëftesa leximi",
-        "thread_info_basic": "Nga një rrjedhë",
-        "error_no_renderer": "Ky akt s’u shfaq dot",
         "undecryptable_tooltip": "Ky mesazh s’u shfshehtëzua dot",
-        "send_state_sending": "Po dërgohet mesazhi juaj…",
-        "send_state_encrypting": "Po fshehtëzohet meszhi juaj…",
+        "thread_info_basic": "Nga një rrjedhë",
         "send_state_sent": "Mesazhi juaj u dërgua",
+        "send_state_sending": "Po dërgohet mesazhi juaj…",
         "send_state_failed": "S’u arrit të dërgohet",
+        "send_state_encrypting": "Po fshehtëzohet meszhi juaj…",
         "mab": {
             "label": "Veprime Mesazhesh",
             "view_in_room": "Shiheni në dhomë",
@@ -2555,7 +2554,8 @@
             "no_permission": "U provua të ngarkohej një pikë e caktuar në kronologjinë e kësaj dhome, por nuk keni leje për ta parë mesazhin në fjalë.",
             "unable_to_find": "U provua të ngarkohej një pikë të dhënë prej rrjedhës kohore në këtë dhomë, por s’u arrit të gjendej.",
             "title": "S’u arrit të ngarkohej pozicion rrjedhe kohore"
-        }
+        },
+        "error_no_renderer": "Ky akt s’u shfaq dot"
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -2897,31 +2897,31 @@
             "leave_space": "Braktiseni Hapësirën",
             "aliases_section": "Adresa Dhomash",
             "other_section": "Tjetër",
-            "error_updating_canonical_alias_title": "Gabim gjatë përditësimit të adresës kryesore",
-            "error_updating_canonical_alias_description": "Pati një gabim në përditësimin e adresës kryesore të dhomës. Mund të mos lejohet nga shërbyesi ose mund të ketë ndodhur një gabim i përkohshëm.",
-            "error_updating_alias_description": "Pati një gabim gjatë përditësimit të adresave alternative të dhomës. Mund të mos lejohet nga shërbyesi pse ndodhi një gabim i përkohshëm.",
-            "error_creating_alias_title": "Gabim në krijim adrese",
-            "error_creating_alias_description": "Pati një gabim në krijimin e asaj adrese. Mund të mos lejohet nga shërbyesi, ose ndodhi një gabim i përkohshëm.",
-            "error_deleting_alias_description_forbidden": "S’keni leje të fshini adresën.",
-            "error_deleting_alias_description": "Pati një gabim në heqjen e asaj adrese. Mund të mos ekzistojë më, ose ndodhi një gabim i përkohshëm.",
-            "error_deleting_alias_title": "Gabim në heqje adrese",
-            "canonical_alias_field_label": "Adresë kryesore",
-            "no_aliases_space": "Kjo hapësirë s’ka adresa vendore",
-            "no_aliases_room": "Kjo dhomë s’ka adresë vendore",
-            "local_alias_field_label": "Adresë vendore",
+            "topic_field_label": "Temë Dhome",
             "published_aliases_section": "Adresa të Publikuara",
             "published_aliases_explainer_space": "Adresat e publikuara mund të përdoren nga cilido, në cilindo shërbyes, për të hyrë në hapësirën tuaj.",
             "published_aliases_explainer_room": "Adresat e publikuara mund të përdoren nga cilido, në cilindo shërbyes, për të hyrë në dhomën tuaj.",
             "published_aliases_description": "Që të bëni publike një adresë, lypset të ujdiset së pari si një adresë vendore.",
-            "aliases_items_label": "Adresa të tjera të publikuara:",
-            "aliases_no_items_label": "Ende pa adresa të tjera të publikuara, shtoni një më poshtë",
+            "no_aliases_space": "Kjo hapësirë s’ka adresa vendore",
+            "no_aliases_room": "Kjo dhomë s’ka adresë vendore",
             "new_alias_placeholder": "Adresë e re e publikuar (p.sh., #alias:server)",
+            "name_field_label": "Emër Dhome",
             "local_aliases_section": "Adresa Vendore",
             "local_aliases_explainer_space": "Caktoni adresa për këtë hapësirë, që kështu përdoruesit të gjejnë këtë dhomë përmes shërbyesit tuaj Home (%(localDomain)s)",
             "local_aliases_explainer_room": "Caktoni adresa për këtë dhomë, që kështu përdoruesit të gjejnë këtë dhomë përmes shërbyesit tuaj Home (%(localDomain)s)",
-            "name_field_label": "Emër Dhome",
-            "topic_field_label": "Temë Dhome",
-            "avatar_field_label": "Avatar dhome"
+            "local_alias_field_label": "Adresë vendore",
+            "error_updating_canonical_alias_title": "Gabim gjatë përditësimit të adresës kryesore",
+            "error_updating_canonical_alias_description": "Pati një gabim në përditësimin e adresës kryesore të dhomës. Mund të mos lejohet nga shërbyesi ose mund të ketë ndodhur një gabim i përkohshëm.",
+            "error_updating_alias_description": "Pati një gabim gjatë përditësimit të adresave alternative të dhomës. Mund të mos lejohet nga shërbyesi pse ndodhi një gabim i përkohshëm.",
+            "error_deleting_alias_title": "Gabim në heqje adrese",
+            "error_deleting_alias_description_forbidden": "S’keni leje të fshini adresën.",
+            "error_deleting_alias_description": "Pati një gabim në heqjen e asaj adrese. Mund të mos ekzistojë më, ose ndodhi një gabim i përkohshëm.",
+            "error_creating_alias_title": "Gabim në krijim adrese",
+            "error_creating_alias_description": "Pati një gabim në krijimin e asaj adrese. Mund të mos lejohet nga shërbyesi, ose ndodhi një gabim i përkohshëm.",
+            "canonical_alias_field_label": "Adresë kryesore",
+            "avatar_field_label": "Avatar dhome",
+            "aliases_no_items_label": "Ende pa adresa të tjera të publikuara, shtoni një më poshtë",
+            "aliases_items_label": "Adresa të tjera të publikuara:"
         },
         "advanced": {
             "unfederated": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
@@ -3021,10 +3021,9 @@
             "verify_later": "Do ta verifikoj më vonë",
             "verify_reset_warning_1": "Rikthimi te parazgjedhjet i kyçeve tuaj të verifikimit s’mund të zhbëhet. Pas rikthimit te parazgjedhjet, s’do të mund të hyni dot te mesazhe të dikurshëm të fshehtëzuar dhe, cilido shok që ju ka verifikuar më parë, do të shohë një sinjalizim sigurie deri sa të ribëni verifikimin me ta.",
             "verify_reset_warning_2": "Ju lutemi, ecni më tej vetëm nëse jeni i sigurt se keni humbur krejt pajisjet tuaja të tjera dhe Kyçin tuaj të Sigurisë.",
-            "self_verification_hint": "Që të vazhdoni më tej, ju lutemi, pranoni në pajisjen tuaj tjetër kërkesën për verifikim.",
             "waiting_for_user_accept": "Po pritet për %(displayName)s të pranojë…",
-            "accepting": "Po pranohet…",
             "start_button": "Fillo Verifikimin",
+            "self_verification_hint": "Që të vazhdoni më tej, ju lutemi, pranoni në pajisjen tuaj tjetër kërkesën për verifikim.",
             "error_starting_title": "Gabim në nisje verifikimi",
             "error_starting_description": "S’qemë në gjendje të nisim një bisedë me përdoruesin tjetër.",
             "after_new_login": {
@@ -3033,7 +3032,8 @@
                 "device_verified": "Pajisja u verifikua",
                 "reset_confirmation": "Të kthehen vërtet te parazgjedhjet kyçet e verifikimit?",
                 "skip_verification": "Anashkaloje verifikimin hëpërhë"
-            }
+            },
+            "accepting": "Po pranohet…"
         },
         "old_version_detected_title": "U pikasën të dhëna kriptografie të vjetër",
         "old_version_detected_description": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
@@ -3071,14 +3071,6 @@
             "explainer": "Kopjeruajini kyçet tuaj, përpara se të dilni, që të shmangni humbjen e tyre.",
             "title": "Rregulloje"
         },
-        "cross_signing_user_warning": "Ky përdorues s’ka verifikuar krejt sesionet e tij.",
-        "cross_signing_user_normal": "S’e keni verifikuar këtë përdorues.",
-        "cross_signing_user_verified": "E keni verifikuar këtë përdorues. Ky përdorues ka verifikuar krejt sesionet e veta.",
-        "cross_signing_room_warning": "Dikush po përdor një sesion të panjohur",
-        "cross_signing_room_normal": "Kjo dhomë është e fshehtëzuar skaj-më-skaj",
-        "cross_signing_room_verified": "Gjithkush në këtë dhomë është verifikuar",
-        "event_shield_reason_authenticity_not_guaranteed": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
-        "event_shield_reason_mismatched_sender_key": "Fshehtëzuar nga një sesion i paverifikuar",
         "messages_not_secure": {
             "title": "Mesazhet tuaj s’janë të sigurt",
             "heading": "Një nga sa vijon mund të jetë komprometuar:",
@@ -3086,7 +3078,15 @@
             "cause_2": "Shërbyesi Home te i cili është lidhur përdoruesi që po verifikoni",
             "cause_3": "Lidhja internet e juaja, ose e përdoruesve të tjerë",
             "cause_4": "Sesioni juaj, ose i përdoruesve të tjerë"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Fshehtëzuar nga një sesion i paverifikuar",
+        "event_shield_reason_authenticity_not_guaranteed": "Mirëfilltësia e këtij mesazhi të fshehtëzuar s’mund të garantohet në këtë pajisje.",
+        "cross_signing_user_warning": "Ky përdorues s’ka verifikuar krejt sesionet e tij.",
+        "cross_signing_user_verified": "E keni verifikuar këtë përdorues. Ky përdorues ka verifikuar krejt sesionet e veta.",
+        "cross_signing_user_normal": "S’e keni verifikuar këtë përdorues.",
+        "cross_signing_room_warning": "Dikush po përdor një sesion të panjohur",
+        "cross_signing_room_verified": "Gjithkush në këtë dhomë është verifikuar",
+        "cross_signing_room_normal": "Kjo dhomë është e fshehtëzuar skaj-më-skaj"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",
@@ -3271,8 +3271,19 @@
         "soft_logout_subheading": "Spastro të dhëna personale",
         "soft_logout_warning": "Kujdes: të dhënat tuaja personale (përfshi kyçe fshehtëzimi) janë ende të depozituara në këtë sesion. Spastrojini, nëse keni përfunduar së përdoruri këtë sesion, ose dëshironi të bëni hyrjen në një tjetër llogari.",
         "forgot_password_send_email": "Dërgo email",
-        "captcha_description": "Ky Shërbyes Home do të donte të sigurohej se s’jeni robot.",
-        "country_dropdown": "Menu Hapmbyll Vendesh",
+        "reset_password": {
+            "rate_limit_error": "Shumë përpjekje në një kohë të shkurtër. Prisni ca, para se të riprovoni.",
+            "rate_limit_error_with_time": "Shumë përpjekje brenda një kohe të shkurtër. Riprovoni pas %(timeout)s.",
+            "other_devices_logout_warning_1": "Dalja nga pajisjet tuaja do të fshijë kyçet e fshehtëzimit të mesazheve të ruajtur në to, duke e bërë të palexueshëm historikun e mesazheve të fshehtëzuar.",
+            "other_devices_logout_warning_2": "Nëse doni ta mbani mundësinë e përdorimit të historikut të fjalosjeve tuaja në dhoma të fshehtëzuara, ujdisni Kopjeruajtje Kyçesh, ose eksportoni kyçet tuaj të mesazheve prej një nga pajisjet tuaja të tjera, para se të ecni më tej.",
+            "confirm_new_password": "Ripohoni fjalëkalimin e ri",
+            "password_not_entered": "Duhet dhënë një fjalëkalim i ri.",
+            "passwords_mismatch": "Fjalëkalimet e rinj duhet të përputhen me njëri-tjetrin.",
+            "sign_out_other_devices": "Dilni nga llogaria në krejt pajisjet",
+            "reset_successful": "Fjalëkalimi juaj u ricaktua.",
+            "devices_logout_success": "Jeni nxjerrë jashtë prej krejt pajisjeve dhe s’do të merrni më njoftime push. Që të riaktivizoni njoftimet, bëni sërish hyrjen në çdo pajisje.",
+            "return_to_login": "Kthehuni te skena e hyrjeve"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Hyni në pajisje të re",
             "error_linking_incomplete": "Lidhja s’u plotësua brenda kohës së domosdoshme.",
@@ -3296,19 +3307,7 @@
             "waiting_for_device": "Po pritet që të bëhet hyrja te pajisja",
             "completing_setup": "Po plotësohet ujdisja e pajisjes tuaj të re"
         },
-        "reset_password": {
-            "rate_limit_error": "Shumë përpjekje në një kohë të shkurtër. Prisni ca, para se të riprovoni.",
-            "rate_limit_error_with_time": "Shumë përpjekje brenda një kohe të shkurtër. Riprovoni pas %(timeout)s.",
-            "other_devices_logout_warning_1": "Dalja nga pajisjet tuaja do të fshijë kyçet e fshehtëzimit të mesazheve të ruajtur në to, duke e bërë të palexueshëm historikun e mesazheve të fshehtëzuar.",
-            "other_devices_logout_warning_2": "Nëse doni ta mbani mundësinë e përdorimit të historikut të fjalosjeve tuaja në dhoma të fshehtëzuara, ujdisni Kopjeruajtje Kyçesh, ose eksportoni kyçet tuaj të mesazheve prej një nga pajisjet tuaja të tjera, para se të ecni më tej.",
-            "confirm_new_password": "Ripohoni fjalëkalimin e ri",
-            "password_not_entered": "Duhet dhënë një fjalëkalim i ri.",
-            "passwords_mismatch": "Fjalëkalimet e rinj duhet të përputhen me njëri-tjetrin.",
-            "sign_out_other_devices": "Dilni nga llogaria në krejt pajisjet",
-            "reset_successful": "Fjalëkalimi juaj u ricaktua.",
-            "devices_logout_success": "Jeni nxjerrë jashtë prej krejt pajisjeve dhe s’do të merrni më njoftime push. Që të riaktivizoni njoftimet, bëni sërish hyrjen në çdo pajisje.",
-            "return_to_login": "Kthehuni te skena e hyrjeve"
-        },
+        "country_dropdown": "Menu Hapmbyll Vendesh",
         "common_failures": {
             "invalid_homeserver_discovery": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
             "cannot_find_autodiscovery_config": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
@@ -3318,7 +3317,8 @@
             "invalid_identity_server_base_url": "Parametër base_url i i pavlefshëm për m.identity_server",
             "invalid_identity_server_url": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
             "general_failure": "Dështim i përgjithshëm"
-        }
+        },
+        "captcha_description": "Ky Shërbyes Home do të donte të sigurohej se s’jeni robot."
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -3487,8 +3487,8 @@
         "unmaximise": "Çmaksimizoje",
         "popout": "Widget flluskë",
         "unpin_to_view_right_panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
-        "close_to_view_right_panel": "Mbylleni këtë widget, që ta shihni te ky panel",
-        "set_room_layout": "Ujdise skemën e dhomës time për këdo"
+        "set_room_layout": "Ujdise skemën e dhomës time për këdo",
+        "close_to_view_right_panel": "Mbylleni këtë widget, që ta shihni te ky panel"
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -3581,8 +3581,8 @@
         "empty_explainer": "Rrjedhat ndihmojnë që të mbahen bisedat tuaja brenda temës dhe të ndiqen kollaj.",
         "empty_tip": "<b>Ndihmëz:</b> Përdorni “%(replyInThread)s”, teksa kaloni kursorin sipër një mesazhi.",
         "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha",
-        "open_thread": "Hape rrjedhën",
-        "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi"
+        "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi",
+        "open_thread": "Hape rrjedhën"
     },
     "theme": {
         "light_high_contrast": "Kontrast i fortë drite",
@@ -3611,12 +3611,12 @@
         "invite": "Ftoni njerëz",
         "invite_description": "Ftoni përmes email-i ose emri përdoruesi",
         "invite_this_space": "Ftoni në këtë hapësirë",
-        "joining_space": "Po hyhet",
         "user_lacks_permission": "S’keni leje",
-        "no_search_result_hint": "Mund të doni të provoni një tjetër kërkim ose të kontrolloni për gabime shkrimi.",
-        "title_when_query_available": "Përfundime",
         "title_when_query_unavailable": "Dhoma dhe hapësira",
-        "search_placeholder": "Kërko te emra dhe përshkrime"
+        "title_when_query_available": "Përfundime",
+        "search_placeholder": "Kërko te emra dhe përshkrime",
+        "no_search_result_hint": "Mund të doni të provoni një tjetër kërkim ose të kontrolloni për gabime shkrimi.",
+        "joining_space": "Po hyhet"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
@@ -3838,20 +3838,19 @@
         "join_failed_needs_invite": "Që të shihni %(roomName)s, ju duhet një ftesë",
         "view_failed_enable_video_rooms": "Për të parë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
         "join_failed_enable_video_rooms": "Për t’u bërë pjesë, ju lutemi, së pari aktivizoni te Labs dhoma me video",
-        "jump_to_bottom_button": "Rrëshqit te mesazhet më të freskët",
-        "show_labs_settings": "Shfaq rregullime për Labs",
-        "upgrade_warning_bar": "Përmirësimi i kësaj dhome do të asgjësojë instancën e tanishme të dhomës dhe do të krijojë një dhomë të përmirësuar me të njëjtin emër.",
+        "waiting_for_join_title": "Po pritet që përdorues të vijnë në %(brand)s",
+        "waiting_for_join_subtitle": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Po ngarkohet %(filename)s dhe %(count)s të tjera",
+                "one": "Po ngarkohet %(filename)s dhe %(count)s tjetër"
+            },
+            "uploading_single_file": "Po ngarkohet %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Kjo dhomë është përmirësuar tashmë.",
         "upgrade_warning_bar_unstable": "Kjo dhomë gjendet nën versionin <roomVersion /> e dhomës, të cilit shërbyesi Home i ka vënë shenjë si <i>i paqëndrueshëm</i>.",
         "upgrade_warning_bar_admins": "Këtë sinjalizim mund ta shohin vetëm përgjegjësit e dhomës",
-        "search": {
-            "this_room": "Këtë Dhomë",
-            "all_rooms": "Krejt Dhomat",
-            "field_placeholder": "Kërkoni…",
-            "this_room_button": "Kërko në këtë dhomë",
-            "all_rooms_button": "Kërko në krejt dhomat"
-        },
-        "jump_read_marker": "Hidhu te mesazhi i parë i palexuar.",
+        "upgrade_warning_bar": "Përmirësimi i kësaj dhome do të asgjësojë instancën e tanishme të dhomës dhe do të krijojë një dhomë të përmirësuar me të njëjtin emër.",
         "status_bar": {
             "requires_consent_agreement": "S’mund të dërgoni ndonjë mesazh, përpara se të shqyrtoni dhe pajtoheni me <consentLink>termat dhe kushtet tona</consentLink>.",
             "monthly_user_limit_reached": "Mesazhi juaj s’u dërgua, ngaqë ky shërbyes Home ka mbërritur në Kufirin Mujor të Përdoruesve Aktivë. Ju lutemi, që të vazhdoni ta përdorni këtë shërbim, <a>lidhuni me përgjegjësin e shërbimit tuaj</a>.",
@@ -3864,18 +3863,19 @@
             "server_connectivity_lost_title": "Humbi lidhja me shërbyesin.",
             "server_connectivity_lost_description": "Mesazhet e dërguar do të depozitohen deri sa lidhja juaj të jetë rikthyer."
         },
-        "creating_room_text": "Po krijojmë një dhomë me %(names)s",
-        "failed_reject_invite": "S’u arrit të hidhet tej ftesa",
-        "inviter_unknown": "I panjohur",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Po ngarkohet %(filename)s dhe %(count)s të tjera",
-                "one": "Po ngarkohet %(filename)s dhe %(count)s tjetër"
-            },
-            "uploading_single_file": "Po ngarkohet %(filename)s"
+        "show_labs_settings": "Shfaq rregullime për Labs",
+        "search": {
+            "this_room": "Këtë Dhomë",
+            "all_rooms": "Krejt Dhomat",
+            "field_placeholder": "Kërkoni…",
+            "this_room_button": "Kërko në këtë dhomë",
+            "all_rooms_button": "Kërko në krejt dhomat"
         },
-        "waiting_for_join_title": "Po pritet që përdorues të vijnë në %(brand)s",
-        "waiting_for_join_subtitle": "Pasi përdoruesit e ftuar të kenë ardhur në %(brand)s, do të jeni në gjendje të bisedoni dhe dhoma do të jetë e fshehtëzuar skaj-më-skaj"
+        "jump_to_bottom_button": "Rrëshqit te mesazhet më të freskët",
+        "jump_read_marker": "Hidhu te mesazhi i parë i palexuar.",
+        "inviter_unknown": "I panjohur",
+        "failed_reject_invite": "S’u arrit të hidhet tej ftesa",
+        "creating_room_text": "Po krijojmë një dhomë me %(names)s"
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",
@@ -4096,10 +4096,6 @@
         "filter_placeholder": "Filtroni anëtarë dhome",
         "power_label": "%(userName)s (pushtet %(powerLevelNumber)si)"
     },
-    "stickers": {
-        "empty": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
-        "empty_add_prompt": "Shtohen ca tani"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "S’u arrit të shfuqizohej ftesa",
         "error_revoke_3pid_invite_description": "S’u shfuqizua dot ftesa. Shërbyesi mund të jetë duke kaluar një problem të përkohshëm ose s’keni leje të mjaftueshme për të shfuqizuar ftesën.",
@@ -4153,6 +4149,10 @@
         "error_deactivate": "S’u arrit të çaktivizohet përdorues",
         "role_label": "Rol në <RoomName/>"
     },
+    "stickers": {
+        "empty": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
+        "empty_add_prompt": "Shtohen ca tani"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Mesazhe të fiksuar",
@@ -4178,15 +4178,18 @@
         "share_button": "Ndani dhomë me të tjerë",
         "settings_button": "Rregullime dhome"
     },
-    "cant_load_page": "S’u ngarkua dot faqja",
-    "left_panel": {
-        "open_dial_pad": "Hap butona numrash"
-    },
-    "console_wait": "Daleni!",
     "reject_invitation_dialog": {
         "title": "Hidheni tej ftesën",
         "confirmation": "Jeni i sigurt se doni të hidhet tej kjo ftesë?",
         "failed": "S’u arrit të hidhej poshtë ftesa"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
+        "call_in_progress": "Duket se jeni në një thirrje, jeni i sigurt se doni të dilet?"
+    },
+    "no_more_results": "Jo më tepër përfundime",
+    "left_panel": {
+        "open_dial_pad": "Hap butona numrash"
     },
     "leave_room_dialog": {
         "last_person_warning": "Jeni i vetmi person këtu. Nëse e braktisni, askush s’do të jetë në gjendje të hyjë në të ardhmen, përfshi ju.",
@@ -4207,9 +4210,6 @@
         },
         "error_loading_user_profile": "S’u ngarkua dot profili i përdoruesit"
     },
-    "no_more_results": "Jo më tepër përfundime",
-    "quit_warning": {
-        "file_upload_in_progress": "Duket se jeni duke ngarkuar kartela, jeni i sigurt se doni të dilet?",
-        "call_in_progress": "Duket se jeni në një thirrje, jeni i sigurt se doni të dilet?"
-    }
+    "console_wait": "Daleni!",
+    "cant_load_page": "S’u ngarkua dot faqja"
 }

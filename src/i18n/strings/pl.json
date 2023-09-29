@@ -1155,12 +1155,12 @@
         "historical": "Historyczne",
         "go_to_settings": "Przejdź do ustawień",
         "setup_secure_messages": "Skonfiguruj bezpieczne wiadomości",
-        "unencrypted": "Nieszyfrowane",
         "view_message": "Wyświetl wiadomość",
-        "joined": "Dołączono",
+        "unencrypted": "Nieszyfrowane",
         "show_more": "Pokaż więcej",
-        "are_you_sure": "Czy jesteś pewien?",
-        "avatar": "Awatar"
+        "joined": "Dołączono",
+        "avatar": "Awatar",
+        "are_you_sure": "Czy jesteś pewien?"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -1497,15 +1497,15 @@
         "format_italics": "Kursywa",
         "format_insert_link": "Wprowadź link",
         "replying_title": "Odpowiadanie",
-        "edit_composer_label": "Edytuj wiadomość",
-        "send_voice_message": "Wyślij wiadomość głosową",
         "stop_voice_message": "Skończ nagrywanie",
+        "send_voice_message": "Wyślij wiadomość głosową",
         "link_modal": {
             "title_edit": "Edytuj link",
             "title_create": "Utwórz link",
             "text_field_label": "Tekst",
             "link_field_label": "Link"
-        }
+        },
+        "edit_composer_label": "Edytuj wiadomość"
     },
     "power_level": {
         "default": "Zwykły",
@@ -2602,13 +2602,12 @@
             "other": "Odczytane przez %(count)s osób"
         },
         "read_receipts_label": "Czytaj potwierdzenia",
-        "thread_info_basic": "Z wątku",
-        "error_no_renderer": "Ten event nie może zostać wyświetlony",
         "undecryptable_tooltip": "Wiadomość nie mogła zostać rozszyfrowana",
-        "send_state_sending": "Wysyłanie Twojej wiadomości…",
-        "send_state_encrypting": "Szyfrowanie Twojej wiadomości…",
+        "thread_info_basic": "Z wątku",
         "send_state_sent": "Twoja wiadomość została wysłana",
+        "send_state_sending": "Wysyłanie Twojej wiadomości…",
         "send_state_failed": "Nie udało się wysłać",
+        "send_state_encrypting": "Szyfrowanie Twojej wiadomości…",
         "mab": {
             "label": "Działania na wiadomościach",
             "view_in_room": "Wyświetl w pokoju",
@@ -2622,7 +2621,8 @@
             "no_permission": "Nastąpiła próba załadowania danego punktu w historii tego pokoju, lecz nie masz uprawnień, by zobaczyć określoną wiadomość.",
             "unable_to_find": "Próbowano załadować konkretny punkt na osi czasu w tym pokoju, ale nie można go znaleźć.",
             "title": "Nie udało się wczytać pozycji osi czasu"
-        }
+        },
+        "error_no_renderer": "Ten event nie może zostać wyświetlony"
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -2973,31 +2973,31 @@
             "leave_space": "Opuść przestrzeń",
             "aliases_section": "Adresy pokoju",
             "other_section": "Inne",
-            "error_updating_canonical_alias_title": "Wystąpił błąd podczas aktualizowania adresu głównego",
-            "error_updating_canonical_alias_description": "Wystąpił błąd podczas aktualizowania adresu głównego pokoju. Serwer mógł odrzucić żądanie lub wystąpił błąd tymczasowy.",
-            "error_updating_alias_description": "Wystąpił błąd podczas aktualizowania alternatywnego adresu pokoju. Serwer mógł odrzucić żądanie lub wystąpił błąd tymczasowy.",
-            "error_creating_alias_title": "Wystąpił błąd podczas tworzenia adresu",
-            "error_creating_alias_description": "Wystąpił błąd podczas aktualizowania tego adresu. Serwer mógł odrzucić żądanie lub wystąpił błąd tymczasowy.",
-            "error_deleting_alias_description_forbidden": "Nie posiadasz uprawnień do usunięcia tego adresu.",
-            "error_deleting_alias_description": "Wystąpił błąd podczas usuwania tego adresu. Może już nie istnieć lub wystąpił tymczasowy błąd.",
-            "error_deleting_alias_title": "Wystąpił błąd podczas usuwania adresu",
-            "canonical_alias_field_label": "Główny adres",
-            "no_aliases_space": "Ta przestrzeń nie ma adresu lokalnego",
-            "no_aliases_room": "Ten pokój nie ma lokalnych adresów",
-            "local_alias_field_label": "Lokalny adres",
+            "topic_field_label": "Temat pokoju",
             "published_aliases_section": "Opublikowane adresy",
             "published_aliases_explainer_space": "Opublikowane adresy mogą być używane przez każdego, kto dołączył do Twojej przestrzeni.",
             "published_aliases_explainer_room": "Opublikowane adresy mogą być używane przez każdego, kto dołączył do Twojego pokoju.",
             "published_aliases_description": "Aby opublikować adres, musi być on najpierw ustawiony jako adres lokalny.",
-            "aliases_items_label": "Inne opublikowane adresy:",
-            "aliases_no_items_label": "Brak innych opublikowanych adresów, dodaj jakiś poniżej",
+            "no_aliases_space": "Ta przestrzeń nie ma adresu lokalnego",
+            "no_aliases_room": "Ten pokój nie ma lokalnych adresów",
             "new_alias_placeholder": "Nowo opublikowany adres (np. #alias:server)",
+            "name_field_label": "Nazwa pokoju",
             "local_aliases_section": "Lokalne adresy",
             "local_aliases_explainer_space": "Ustaw adresy dla tej przestrzeni, aby użytkownicy mogli go znaleźć za pomocą Twojego serwera domowego (%(localDomain)s)",
             "local_aliases_explainer_room": "Ustaw adresy tego pokoju, aby użytkownicy mogli go znaleźć za pośrednictwem Twojego serwera domowego (%(localDomain)s)",
-            "name_field_label": "Nazwa pokoju",
-            "topic_field_label": "Temat pokoju",
-            "avatar_field_label": "Awatar pokoju"
+            "local_alias_field_label": "Lokalny adres",
+            "error_updating_canonical_alias_title": "Wystąpił błąd podczas aktualizowania adresu głównego",
+            "error_updating_canonical_alias_description": "Wystąpił błąd podczas aktualizowania adresu głównego pokoju. Serwer mógł odrzucić żądanie lub wystąpił błąd tymczasowy.",
+            "error_updating_alias_description": "Wystąpił błąd podczas aktualizowania alternatywnego adresu pokoju. Serwer mógł odrzucić żądanie lub wystąpił błąd tymczasowy.",
+            "error_deleting_alias_title": "Wystąpił błąd podczas usuwania adresu",
+            "error_deleting_alias_description_forbidden": "Nie posiadasz uprawnień do usunięcia tego adresu.",
+            "error_deleting_alias_description": "Wystąpił błąd podczas usuwania tego adresu. Może już nie istnieć lub wystąpił tymczasowy błąd.",
+            "error_creating_alias_title": "Wystąpił błąd podczas tworzenia adresu",
+            "error_creating_alias_description": "Wystąpił błąd podczas aktualizowania tego adresu. Serwer mógł odrzucić żądanie lub wystąpił błąd tymczasowy.",
+            "canonical_alias_field_label": "Główny adres",
+            "avatar_field_label": "Awatar pokoju",
+            "aliases_no_items_label": "Brak innych opublikowanych adresów, dodaj jakiś poniżej",
+            "aliases_items_label": "Inne opublikowane adresy:"
         },
         "advanced": {
             "unfederated": "Ten pokój nie jest dostępny na zdalnych serwerach Matrix",
@@ -3097,10 +3097,9 @@
             "verify_later": "Zweryfikuję później",
             "verify_reset_warning_1": "Zresetowanie kluczy weryfikacyjnych nie może być cofnięte. Po zresetowaniu, nie będziesz mieć dostępu do starych wiadomości szyfrowanych, a wszyscy znajomi, którzy wcześniej Cię zweryfikowali, będą widzieć ostrzeżenia do czasu ponownej weryfikacji.",
             "verify_reset_warning_2": "Kontynuuj tylko wtedy, gdy jesteś pewien, że straciłeś wszystkie inne urządzenia i swój klucz bezpieczeństwa.",
-            "self_verification_hint": "Aby kontynuować, akceptuj żądanie weryfikacji na swoim drugim urządzeniu.",
             "waiting_for_user_accept": "Oczekiwanie na akceptację przez %(displayName)s…",
-            "accepting": "Akceptowanie…",
             "start_button": "Rozpocznij weryfikację",
+            "self_verification_hint": "Aby kontynuować, akceptuj żądanie weryfikacji na swoim drugim urządzeniu.",
             "error_starting_title": "Wystąpił błąd w trakcie weryfikacji",
             "error_starting_description": "Nie byliśmy w stanie rozpocząć czatu z innym użytkownikiem.",
             "after_new_login": {
@@ -3109,7 +3108,8 @@
                 "device_verified": "Urządzenie zweryfikowane",
                 "reset_confirmation": "Czy na pewno zresetować klucze weryfikacyjne?",
                 "skip_verification": "Pomiń weryfikację na razie"
-            }
+            },
+            "accepting": "Akceptowanie…"
         },
         "old_version_detected_title": "Wykryto stare dane kryptograficzne",
         "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
@@ -3147,14 +3147,6 @@
             "explainer": "Utwórz kopię zapasową kluczy przed wylogowaniem, aby ich nie utracić.",
             "title": "Konfiguruj"
         },
-        "cross_signing_user_warning": "Ten użytkownik nie zweryfikował wszystkich swoich sesji.",
-        "cross_signing_user_normal": "Nie zweryfikowałeś tego użytkownika.",
-        "cross_signing_user_verified": "Zweryfikowałeś tego użytkownika. Użytkownik zweryfikował wszystkie swoje sesje.",
-        "cross_signing_room_warning": "Ktoś używa nieznanej sesji",
-        "cross_signing_room_normal": "Ten pokój jest szyfrowany end-to-end",
-        "cross_signing_room_verified": "Wszyscy w tym pokoju są zweryfikowani",
-        "event_shield_reason_authenticity_not_guaranteed": "Autentyczność tej wiadomości szyfrowanej nie jest gwarantowana na tym urządzeniu.",
-        "event_shield_reason_mismatched_sender_key": "Zaszyfrowano przez sesję niezweryfikowaną",
         "messages_not_secure": {
             "title": "Twoje wiadomości nie są bezpieczne",
             "heading": "Jedno z wymienionych mogło zostać zdradzone:",
@@ -3162,7 +3154,15 @@
             "cause_2": "Użytkownik, którego weryfikujesz jest połączony z serwerem domowym",
             "cause_3": "Połączenie internetowe Twoje lub innych użytkowników",
             "cause_4": "Sesja Twoja lub innych użytkowników"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Zaszyfrowano przez sesję niezweryfikowaną",
+        "event_shield_reason_authenticity_not_guaranteed": "Autentyczność tej wiadomości szyfrowanej nie jest gwarantowana na tym urządzeniu.",
+        "cross_signing_user_warning": "Ten użytkownik nie zweryfikował wszystkich swoich sesji.",
+        "cross_signing_user_verified": "Zweryfikowałeś tego użytkownika. Użytkownik zweryfikował wszystkie swoje sesje.",
+        "cross_signing_user_normal": "Nie zweryfikowałeś tego użytkownika.",
+        "cross_signing_room_warning": "Ktoś używa nieznanej sesji",
+        "cross_signing_room_verified": "Wszyscy w tym pokoju są zweryfikowani",
+        "cross_signing_room_normal": "Ten pokój jest szyfrowany end-to-end"
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3349,8 +3349,19 @@
         "soft_logout_subheading": "Wyczyść dane osobiste",
         "soft_logout_warning": "Ostrzeżenie: Twoje dane osobowe (włączając w to klucze szyfrujące) są wciąż przechowywane w tej sesji. Wyczyść je, jeśli chcesz zakończyć tę sesję lub chcesz zalogować się na inne konto.",
         "forgot_password_send_email": "Wyślij e-mail",
-        "captcha_description": "Serwer domowy prosi o potwierdzenie, że nie jesteś robotem.",
-        "country_dropdown": "Rozwijana lista krajów",
+        "reset_password": {
+            "rate_limit_error": "Za dużo prób w krótkim odstępie czasu. Odczekaj trochę, zanim spróbujesz ponownie.",
+            "rate_limit_error_with_time": "Za dużo prób w krótkim odstępie czasu. Spróbuj ponownie za%(timeout)s.",
+            "other_devices_logout_warning_1": "Wylogowanie Twoich urządzeń spowoduje usunięcie wszystkich kluczy szyfrujących, które się na nich znajdują, uniemożliwiając czytanie historii wiadomości szyfrowanych.",
+            "other_devices_logout_warning_2": "Jeśli chcesz zachować dostęp do historii czatu w zaszyfrowanych pokojach, przed kontynuacją skonfiguruj kopię zapasową kluczy lub wyeksportuj klucze wiadomości z innego urządzenia.",
+            "confirm_new_password": "Potwierdź nowe hasło",
+            "password_not_entered": "Musisz wprowadzić nowe hasło.",
+            "passwords_mismatch": "Nowe hasła muszą się zgadzać.",
+            "sign_out_other_devices": "Wyloguj się z wszystkich urządzeń",
+            "reset_successful": "Twoje hasło zostało zresetowane.",
+            "devices_logout_success": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
+            "return_to_login": "Wróć do ekranu logowania"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Zaloguj nowe urządzenie",
             "error_linking_incomplete": "Wiązanie nie zostało zakończone w ustalonym czasie.",
@@ -3374,19 +3385,7 @@
             "waiting_for_device": "Oczekiwanie na logowanie urządzenia",
             "completing_setup": "Kończenie konfiguracji nowego urządzenia"
         },
-        "reset_password": {
-            "rate_limit_error": "Za dużo prób w krótkim odstępie czasu. Odczekaj trochę, zanim spróbujesz ponownie.",
-            "rate_limit_error_with_time": "Za dużo prób w krótkim odstępie czasu. Spróbuj ponownie za%(timeout)s.",
-            "other_devices_logout_warning_1": "Wylogowanie Twoich urządzeń spowoduje usunięcie wszystkich kluczy szyfrujących, które się na nich znajdują, uniemożliwiając czytanie historii wiadomości szyfrowanych.",
-            "other_devices_logout_warning_2": "Jeśli chcesz zachować dostęp do historii czatu w zaszyfrowanych pokojach, przed kontynuacją skonfiguruj kopię zapasową kluczy lub wyeksportuj klucze wiadomości z innego urządzenia.",
-            "confirm_new_password": "Potwierdź nowe hasło",
-            "password_not_entered": "Musisz wprowadzić nowe hasło.",
-            "passwords_mismatch": "Nowe hasła muszą się zgadzać.",
-            "sign_out_other_devices": "Wyloguj się z wszystkich urządzeń",
-            "reset_successful": "Twoje hasło zostało zresetowane.",
-            "devices_logout_success": "Zostałeś wylogowany z wszystkich urządzeń i przestaniesz otrzymywać powiadomienia push. Aby włączyć powiadomienia, zaloguj się ponownie na każdym urządzeniu.",
-            "return_to_login": "Wróć do ekranu logowania"
-        },
+        "country_dropdown": "Rozwijana lista krajów",
         "common_failures": {
             "invalid_homeserver_discovery": "Nieprawidłowa odpowiedź na wykrycie serwera domowego",
             "cannot_find_autodiscovery_config": "Nie udało się uzyskać konfiguracji autodiscovery z serwera",
@@ -3396,7 +3395,8 @@
             "invalid_identity_server_base_url": "Nieprawidłowy base_url dla m.identity_server",
             "invalid_identity_server_url": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
             "general_failure": "Ogólny błąd"
-        }
+        },
+        "captcha_description": "Serwer domowy prosi o potwierdzenie, że nie jesteś robotem."
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -3568,8 +3568,8 @@
         "unmaximise": "Normalizuj",
         "popout": "Wyskakujący widżet",
         "unpin_to_view_right_panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
-        "close_to_view_right_panel": "Zamknij widżet, aby wyświetlić go w tym panelu",
-        "set_room_layout": "Ustaw mój układ pokoju dla wszystkich"
+        "set_room_layout": "Ustaw mój układ pokoju dla wszystkich",
+        "close_to_view_right_panel": "Zamknij widżet, aby wyświetlić go w tym panelu"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -3664,8 +3664,8 @@
         "empty_explainer": "Dzięki wątkom Twoje rozmowy są zorganizowane i łatwe do śledzenia.",
         "empty_tip": "<b>Tip:</b> Użyj “%(replyInThread)s” najeżdżając na wiadomość.",
         "empty_heading": "Organizuj dyskusje za pomocą wątków",
-        "open_thread": "Otwórz wątek",
-        "unable_to_decrypt": "Nie można rozszyfrować wiadomości"
+        "unable_to_decrypt": "Nie można rozszyfrować wiadomości",
+        "open_thread": "Otwórz wątek"
     },
     "theme": {
         "light_high_contrast": "Jasny z wysokim kontrastem",
@@ -3694,12 +3694,12 @@
         "invite": "Zaproś ludzi",
         "invite_description": "Zaproś przy użyciu adresu email lub nazwy użytkownika",
         "invite_this_space": "Zaproś do tej przestrzeni",
-        "joining_space": "Dołączanie",
         "user_lacks_permission": "Nie masz uprawnień",
-        "no_search_result_hint": "Możesz spróbować inną frazę lub sprawdzić błędy pisowni.",
-        "title_when_query_available": "Wyniki",
         "title_when_query_unavailable": "Pokoje i przestrzenie",
-        "search_placeholder": "Przeszukuj nazwy i opisy"
+        "title_when_query_available": "Wyniki",
+        "search_placeholder": "Przeszukuj nazwy i opisy",
+        "no_search_result_hint": "Możesz spróbować inną frazę lub sprawdzić błędy pisowni.",
+        "joining_space": "Dołączanie"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -3924,20 +3924,19 @@
         "join_failed_needs_invite": "Aby wyświetlić %(roomName)s, potrzebujesz zaproszenia",
         "view_failed_enable_video_rooms": "Aby wyświetlić, włącz najpierw pokoje wideo w laboratoriach",
         "join_failed_enable_video_rooms": "Aby dołączyć, włącz najpierw pokoje wideo w laboratoriach",
-        "jump_to_bottom_button": "Przewiń do najnowszych wiadomości",
-        "show_labs_settings": "Pokaż ustawienia laboratoriów",
-        "upgrade_warning_bar": "Ulepszenie tego pokoju zamknie bieżącą instancję pokoju i utworzy ulepszony pokój z tą samą nazwą.",
+        "waiting_for_join_title": "Czekanie na użytkowników %(brand)s",
+        "waiting_for_join_subtitle": "Jak tylko zaproszeni użytkownicy dołączą do %(brand)s, będziesz mógł czatować w pokoju szyfrowanym end-to-end",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Przesyłanie %(filename)s oraz %(count)s innych",
+                "other": "Przesyłanie %(filename)s oraz %(count)s innych"
+            },
+            "uploading_single_file": "Przesyłanie %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Ten pokój został już ulepszony.",
         "upgrade_warning_bar_unstable": "Ten pokój działa na wersji <roomVersion />, którą serwer domowy oznaczył jako <i>niestabilną</i>.",
         "upgrade_warning_bar_admins": "Tylko administratorzy pokojów widzą to ostrzeżenie",
-        "search": {
-            "this_room": "Ten pokój",
-            "all_rooms": "Wszystkie pokoje",
-            "field_placeholder": "Szukaj…",
-            "this_room_button": "Wyszukaj ten pokój",
-            "all_rooms_button": "Wyszukaj wszystkie pokoje"
-        },
-        "jump_read_marker": "Przeskocz do pierwszej nieprzeczytanej wiadomości.",
+        "upgrade_warning_bar": "Ulepszenie tego pokoju zamknie bieżącą instancję pokoju i utworzy ulepszony pokój z tą samą nazwą.",
         "status_bar": {
             "requires_consent_agreement": "Nie możesz wysłać żadnej wiadomości, dopóki nie zaakceptujesz <consentLink>naszych warunków i kondycji</consentLink>.",
             "monthly_user_limit_reached": "Wiadomość nie została wysłana, ponieważ serwer domowy przekroczył miesięczny limit aktywnych użytkowników. <a>Skontaktuj się z administratorem serwisu</a>, aby kontynuować.",
@@ -3950,18 +3949,19 @@
             "server_connectivity_lost_title": "Połączenie z serwerem zostało utracone.",
             "server_connectivity_lost_description": "Wysłane wiadomości będą przechowywane aż do momentu odzyskania połączenia."
         },
-        "creating_room_text": "Tworzymy pokój z %(names)s",
-        "failed_reject_invite": "Nie udało się odrzucić zaproszenia",
-        "inviter_unknown": "Nieznany",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "Przesyłanie %(filename)s oraz %(count)s innych",
-                "other": "Przesyłanie %(filename)s oraz %(count)s innych"
-            },
-            "uploading_single_file": "Przesyłanie %(filename)s"
+        "show_labs_settings": "Pokaż ustawienia laboratoriów",
+        "search": {
+            "this_room": "Ten pokój",
+            "all_rooms": "Wszystkie pokoje",
+            "field_placeholder": "Szukaj…",
+            "this_room_button": "Wyszukaj ten pokój",
+            "all_rooms_button": "Wyszukaj wszystkie pokoje"
         },
-        "waiting_for_join_title": "Czekanie na użytkowników %(brand)s",
-        "waiting_for_join_subtitle": "Jak tylko zaproszeni użytkownicy dołączą do %(brand)s, będziesz mógł czatować w pokoju szyfrowanym end-to-end"
+        "jump_to_bottom_button": "Przewiń do najnowszych wiadomości",
+        "jump_read_marker": "Przeskocz do pierwszej nieprzeczytanej wiadomości.",
+        "inviter_unknown": "Nieznany",
+        "failed_reject_invite": "Nie udało się odrzucić zaproszenia",
+        "creating_room_text": "Tworzymy pokój z %(names)s"
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4185,10 +4185,6 @@
         "filter_placeholder": "Filtruj członków pokoju",
         "power_label": "%(userName)s (moc uprawnień administratorskich %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Nie masz obecnie włączonych żadnych pakietów naklejek",
-        "empty_add_prompt": "Dodaj teraz kilka"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Nie udało się odwołać zaproszenia",
         "error_revoke_3pid_invite_description": "Nie udało się odwołać zaproszenia. Serwer może posiadać tymczasowy problem lub nie masz wystarczających uprawnień, aby odwołać zaproszenie.",
@@ -4242,6 +4238,10 @@
         "error_deactivate": "Nie udało się zdezaktywować użytkownika",
         "role_label": "Role w <RoomName/>"
     },
+    "stickers": {
+        "empty": "Nie masz obecnie włączonych żadnych pakietów naklejek",
+        "empty_add_prompt": "Dodaj teraz kilka"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Przypięte wiadomości",
@@ -4267,15 +4267,18 @@
         "share_button": "Udostępnij pokój",
         "settings_button": "Ustawienia pokoju"
     },
-    "cant_load_page": "Nie można załadować strony",
-    "left_panel": {
-        "open_dial_pad": "Otwórz klawiaturę numeryczną"
-    },
-    "console_wait": "Czekaj!",
     "reject_invitation_dialog": {
         "title": "Odrzuć zaproszenie",
         "confirmation": "Czy na pewno chcesz odrzucić zaproszenie?",
         "failed": "Nie udało się odrzucić zaproszenia"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Wygląda na to, że jesteś w trakcie przesyłania plików; jesteś pewien, że chcesz wyjść?",
+        "call_in_progress": "Wygląda na to, że prowadzisz z kimś rozmowę; jesteś pewien że chcesz wyjść?"
+    },
+    "no_more_results": "Nie ma więcej wyników",
+    "left_panel": {
+        "open_dial_pad": "Otwórz klawiaturę numeryczną"
     },
     "leave_room_dialog": {
         "last_person_warning": "Jesteś jedyną osoba tutaj. Jeśli wyjdziesz, nikt nie będzie w stanie dołączyć w przyszłości, włączając Ciebie.",
@@ -4296,9 +4299,6 @@
         },
         "error_loading_user_profile": "Nie udało się załadować profilu"
     },
-    "no_more_results": "Nie ma więcej wyników",
-    "quit_warning": {
-        "file_upload_in_progress": "Wygląda na to, że jesteś w trakcie przesyłania plików; jesteś pewien, że chcesz wyjść?",
-        "call_in_progress": "Wygląda na to, że prowadzisz z kimś rozmowę; jesteś pewien że chcesz wyjść?"
-    }
+    "console_wait": "Czekaj!",
+    "cant_load_page": "Nie można załadować strony"
 }

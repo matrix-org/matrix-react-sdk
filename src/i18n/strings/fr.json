@@ -1156,12 +1156,12 @@
         "historical": "Historique",
         "go_to_settings": "Aller aux paramètres",
         "setup_secure_messages": "Configurer les messages sécurisés",
-        "unencrypted": "Non chiffré",
         "view_message": "Afficher le message",
-        "joined": "Rejoint",
+        "unencrypted": "Non chiffré",
         "show_more": "En voir plus",
-        "are_you_sure": "Êtes-vous sûr ?",
-        "avatar": "Avatar"
+        "joined": "Rejoint",
+        "avatar": "Avatar",
+        "are_you_sure": "Êtes-vous sûr ?"
     },
     "action": {
         "continue": "Continuer",
@@ -1498,15 +1498,15 @@
         "format_italics": "Italique",
         "format_insert_link": "Insérer un lien",
         "replying_title": "Répond",
-        "edit_composer_label": "Modifier le message",
-        "send_voice_message": "Envoyer un message vocal",
         "stop_voice_message": "Arrêter l’enregistrement",
+        "send_voice_message": "Envoyer un message vocal",
         "link_modal": {
             "title_edit": "Éditer le lien",
             "title_create": "Crée un lien",
             "text_field_label": "Texte",
             "link_field_label": "Lien"
-        }
+        },
+        "edit_composer_label": "Modifier le message"
     },
     "power_level": {
         "default": "Par défaut",
@@ -2607,13 +2607,12 @@
             "other": "Vu par %(count)s personnes"
         },
         "read_receipts_label": "Accusés de réception",
-        "thread_info_basic": "Depuis un fil de discussion",
-        "error_no_renderer": "Cet évènement n’a pas pu être affiché",
         "undecryptable_tooltip": "Ce message n’a pas pu être déchiffré",
-        "send_state_sending": "Envoi de votre message…",
-        "send_state_encrypting": "Chiffrement de votre message…",
+        "thread_info_basic": "Depuis un fil de discussion",
         "send_state_sent": "Votre message a été envoyé",
+        "send_state_sending": "Envoi de votre message…",
         "send_state_failed": "Échec de l’envoi",
+        "send_state_encrypting": "Chiffrement de votre message…",
         "mab": {
             "label": "Actions de message",
             "view_in_room": "Voir dans le salon",
@@ -2627,7 +2626,8 @@
             "no_permission": "Un instant donné du fil de discussion n’a pu être chargé car vous n’avez pas la permission de le visualiser.",
             "unable_to_find": "Un instant donné du fil de discussion n’a pu être chargé car il n’a pas pu être trouvé.",
             "title": "Échec du chargement de la position dans le fil de discussion"
-        }
+        },
+        "error_no_renderer": "Cet évènement n’a pas pu être affiché"
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -2978,31 +2978,31 @@
             "leave_space": "Quitter l’espace",
             "aliases_section": "Adresses du salon",
             "other_section": "Autre",
-            "error_updating_canonical_alias_title": "Erreur lors de la mise à jour de l’adresse principale",
-            "error_updating_canonical_alias_description": "Une erreur est survenue lors de la mise à jour de l’adresse principale de salon. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
-            "error_updating_alias_description": "Une erreur est survenue lors de la mise à jour des adresses alternatives du salon. Ce n’est peut-être pas permis par le serveur ou une défaillance temporaire est survenue.",
-            "error_creating_alias_title": "Erreur lors de la création de l’adresse",
-            "error_creating_alias_description": "Une erreur est survenue lors de la création de l’adresse. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
-            "error_deleting_alias_description_forbidden": "Vous n’avez pas la permission de supprimer cette adresse.",
-            "error_deleting_alias_description": "Une erreur est survenue lors de la suppression de cette adresse. Elle n’existe peut-être plus ou une erreur temporaire est survenue.",
-            "error_deleting_alias_title": "Erreur lors de la suppression de l’adresse",
-            "canonical_alias_field_label": "Adresse principale",
-            "no_aliases_space": "Cet espace n’a pas d’adresse locale",
-            "no_aliases_room": "Ce salon n’a pas d’adresse locale",
-            "local_alias_field_label": "Adresse locale",
+            "topic_field_label": "Sujet du salon",
             "published_aliases_section": "Adresses publiées",
             "published_aliases_explainer_space": "Les adresses publiées peuvent être utilisées par tout le monde sur tous les serveurs pour rejoindre votre espace.",
             "published_aliases_explainer_room": "Les adresses publiées peuvent être utilisées par tout le monde sur tous les serveurs pour rejoindre votre salon.",
             "published_aliases_description": "Pour publier une adresse, elle doit d’abord être définie comme adresse locale.",
-            "aliases_items_label": "Autres adresses publiées :",
-            "aliases_no_items_label": "Aucune autre adresse n’est publiée, ajoutez-en une ci-dessous",
+            "no_aliases_space": "Cet espace n’a pas d’adresse locale",
+            "no_aliases_room": "Ce salon n’a pas d’adresse locale",
             "new_alias_placeholder": "Nouvelles adresses publiées (par ex. #alias:serveur)",
+            "name_field_label": "Nom du salon",
             "local_aliases_section": "Adresses locales",
             "local_aliases_explainer_space": "Définissez les adresses de cet espace pour que les utilisateurs puissent le trouver avec votre serveur d’accueil (%(localDomain)s)",
             "local_aliases_explainer_room": "Définissez les adresses de ce salon pour que les utilisateurs puissent trouver ce salon avec votre serveur d’accueil (%(localDomain)s)",
-            "name_field_label": "Nom du salon",
-            "topic_field_label": "Sujet du salon",
-            "avatar_field_label": "Avatar du salon"
+            "local_alias_field_label": "Adresse locale",
+            "error_updating_canonical_alias_title": "Erreur lors de la mise à jour de l’adresse principale",
+            "error_updating_canonical_alias_description": "Une erreur est survenue lors de la mise à jour de l’adresse principale de salon. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
+            "error_updating_alias_description": "Une erreur est survenue lors de la mise à jour des adresses alternatives du salon. Ce n’est peut-être pas permis par le serveur ou une défaillance temporaire est survenue.",
+            "error_deleting_alias_title": "Erreur lors de la suppression de l’adresse",
+            "error_deleting_alias_description_forbidden": "Vous n’avez pas la permission de supprimer cette adresse.",
+            "error_deleting_alias_description": "Une erreur est survenue lors de la suppression de cette adresse. Elle n’existe peut-être plus ou une erreur temporaire est survenue.",
+            "error_creating_alias_title": "Erreur lors de la création de l’adresse",
+            "error_creating_alias_description": "Une erreur est survenue lors de la création de l’adresse. Ce n’est peut-être pas autorisé par le serveur ou une erreur temporaire est survenue.",
+            "canonical_alias_field_label": "Adresse principale",
+            "avatar_field_label": "Avatar du salon",
+            "aliases_no_items_label": "Aucune autre adresse n’est publiée, ajoutez-en une ci-dessous",
+            "aliases_items_label": "Autres adresses publiées :"
         },
         "advanced": {
             "unfederated": "Ce salon n’est pas accessible par les serveurs Matrix distants",
@@ -3102,10 +3102,9 @@
             "verify_later": "Je ferai la vérification plus tard",
             "verify_reset_warning_1": "La réinitialisation de vos clés de vérification ne peut pas être annulé. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages chiffrés, et tous les amis que vous aviez précédemment vérifiés verront des avertissement de sécurité jusqu'à ce vous les vérifiiez à nouveau.",
             "verify_reset_warning_2": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Clé de Sécurité.",
-            "self_verification_hint": "Pour continuer, veuillez accepter la demande de vérification sur votre autre appareil.",
             "waiting_for_user_accept": "En attente d’acceptation par %(displayName)s…",
-            "accepting": "Acceptation…",
             "start_button": "Commencer la vérification",
+            "self_verification_hint": "Pour continuer, veuillez accepter la demande de vérification sur votre autre appareil.",
             "error_starting_title": "Erreur en démarrant la vérification",
             "error_starting_description": "Nous n’avons pas pu démarrer une conversation avec l’autre utilisateur.",
             "after_new_login": {
@@ -3114,7 +3113,8 @@
                 "device_verified": "Appareil vérifié",
                 "reset_confirmation": "Réinitialiser les clés de vérification, c’est certain ?",
                 "skip_verification": "Ignorer la vérification pour l’instant"
-            }
+            },
+            "accepting": "Acceptation…"
         },
         "old_version_detected_title": "Anciennes données de chiffrement détectées",
         "old_version_detected_description": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
@@ -3152,14 +3152,6 @@
             "explainer": "Sauvegardez vos clés avant de vous déconnecter pour éviter de les perdre.",
             "title": "Configurer"
         },
-        "cross_signing_user_warning": "Cet utilisateur n’a pas vérifié toutes ses sessions.",
-        "cross_signing_user_normal": "Vous n’avez pas vérifié cet utilisateur.",
-        "cross_signing_user_verified": "Vous avez vérifié cet utilisateur. Cet utilisateur a vérifié toutes ses sessions.",
-        "cross_signing_room_warning": "Quelqu’un utilise une session inconnue",
-        "cross_signing_room_normal": "Ce salon est chiffré de bout en bout",
-        "cross_signing_room_verified": "Tout le monde dans ce salon est vérifié",
-        "event_shield_reason_authenticity_not_guaranteed": "L’authenticité de ce message chiffré ne peut pas être garantie sur cet appareil.",
-        "event_shield_reason_mismatched_sender_key": "Chiffré par une session non vérifiée",
         "messages_not_secure": {
             "title": "Vos messages ne sont pas sécurisés",
             "heading": "Un des éléments suivants est peut-être compromis :",
@@ -3167,7 +3159,15 @@
             "cause_2": "Le serveur d’accueil auquel l’utilisateur que vous vérifiez est connecté",
             "cause_3": "Votre connexion internet ou celle de l’autre utilisateur",
             "cause_4": "Votre session ou celle de l’autre utilisateur"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Chiffré par une session non vérifiée",
+        "event_shield_reason_authenticity_not_guaranteed": "L’authenticité de ce message chiffré ne peut pas être garantie sur cet appareil.",
+        "cross_signing_user_warning": "Cet utilisateur n’a pas vérifié toutes ses sessions.",
+        "cross_signing_user_verified": "Vous avez vérifié cet utilisateur. Cet utilisateur a vérifié toutes ses sessions.",
+        "cross_signing_user_normal": "Vous n’avez pas vérifié cet utilisateur.",
+        "cross_signing_room_warning": "Quelqu’un utilise une session inconnue",
+        "cross_signing_room_verified": "Tout le monde dans ce salon est vérifié",
+        "cross_signing_room_normal": "Ce salon est chiffré de bout en bout"
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",
@@ -3355,8 +3355,19 @@
         "soft_logout_subheading": "Supprimer les données personnelles",
         "soft_logout_warning": "Attention : vos données personnelles (y compris les clés de chiffrement) seront stockées dans cette session. Effacez-les si vous n’utilisez plus cette session ou si vous voulez vous connecter à un autre compte.",
         "forgot_password_send_email": "Envoyer l’e-mail",
-        "captcha_description": "Ce serveur d’accueil veut s’assurer que vous n’êtes pas un robot.",
-        "country_dropdown": "Sélection du pays",
+        "reset_password": {
+            "rate_limit_error": "Trop de tentatives consécutives. Attendez un peu avant de réessayer.",
+            "rate_limit_error_with_time": "Trop de tentatives consécutives. Réessayez après %(timeout)s.",
+            "other_devices_logout_warning_1": "La déconnexion de vos appareils va supprimer les clés de chiffrement des messages qu’ils possèdent, rendant l’historique des conversations chiffrées illisible.",
+            "other_devices_logout_warning_2": "Si vous voulez garder un accès à votre historique de conversation dans les salons chiffrés, configurez la sauvegarde de clés, ou bien exportez vos clés de messages à partir de l’un de vos autres appareils avant de continuer.",
+            "confirm_new_password": "Confirmer le nouveau mot de passe",
+            "password_not_entered": "Un nouveau mot de passe doit être saisi.",
+            "passwords_mismatch": "Les nouveaux mots de passe doivent être identiques.",
+            "sign_out_other_devices": "Déconnecter tous les appareils",
+            "reset_successful": "Votre mot de passe a été réinitialisé.",
+            "devices_logout_success": "Vous avez été déconnecté de tous vos appareils et ne recevrez plus de notification. Pour réactiver les notifications, reconnectez-vous sur chaque appareil.",
+            "return_to_login": "Retourner à l’écran de connexion"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Connecter le nouvel appareil",
             "error_linking_incomplete": "L’appairage n’a pas été effectué dans le temps imparti.",
@@ -3380,19 +3391,7 @@
             "waiting_for_device": "En attente de connexion de l’appareil",
             "completing_setup": "Fin de la configuration de votre nouvel appareil"
         },
-        "reset_password": {
-            "rate_limit_error": "Trop de tentatives consécutives. Attendez un peu avant de réessayer.",
-            "rate_limit_error_with_time": "Trop de tentatives consécutives. Réessayez après %(timeout)s.",
-            "other_devices_logout_warning_1": "La déconnexion de vos appareils va supprimer les clés de chiffrement des messages qu’ils possèdent, rendant l’historique des conversations chiffrées illisible.",
-            "other_devices_logout_warning_2": "Si vous voulez garder un accès à votre historique de conversation dans les salons chiffrés, configurez la sauvegarde de clés, ou bien exportez vos clés de messages à partir de l’un de vos autres appareils avant de continuer.",
-            "confirm_new_password": "Confirmer le nouveau mot de passe",
-            "password_not_entered": "Un nouveau mot de passe doit être saisi.",
-            "passwords_mismatch": "Les nouveaux mots de passe doivent être identiques.",
-            "sign_out_other_devices": "Déconnecter tous les appareils",
-            "reset_successful": "Votre mot de passe a été réinitialisé.",
-            "devices_logout_success": "Vous avez été déconnecté de tous vos appareils et ne recevrez plus de notification. Pour réactiver les notifications, reconnectez-vous sur chaque appareil.",
-            "return_to_login": "Retourner à l’écran de connexion"
-        },
+        "country_dropdown": "Sélection du pays",
         "common_failures": {
             "invalid_homeserver_discovery": "Réponse de découverte du serveur d’accueil non valide",
             "cannot_find_autodiscovery_config": "Échec de la découverte automatique de la configuration depuis le serveur",
@@ -3402,7 +3401,8 @@
             "invalid_identity_server_base_url": "base_url pour m.identity_server non valide",
             "invalid_identity_server_url": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
             "general_failure": "Erreur générale"
-        }
+        },
+        "captcha_description": "Ce serveur d’accueil veut s’assurer que vous n’êtes pas un robot."
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -3574,8 +3574,8 @@
         "unmaximise": "Dé-maximiser",
         "popout": "Détacher le widget",
         "unpin_to_view_right_panel": "Désépinglez ce widget pour l’afficher dans ce panneau",
-        "close_to_view_right_panel": "Fermer ce widget pour l’afficher dans ce panneau",
-        "set_room_layout": "Définir ma disposition de salon pour tout le monde"
+        "set_room_layout": "Définir ma disposition de salon pour tout le monde",
+        "close_to_view_right_panel": "Fermer ce widget pour l’afficher dans ce panneau"
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -3670,8 +3670,8 @@
         "empty_explainer": "Les fils de discussion vous permettent de recentrer vos conversations et de les rendre facile à suivre.",
         "empty_tip": "<b>Conseil :</b> Utilisez « %(replyInThread)s » en survolant un message.",
         "empty_heading": "Garde les discussions organisées à l’aide de fils de discussion",
-        "open_thread": "Ouvrir le fil de discussion",
-        "unable_to_decrypt": "Impossible de déchiffrer le message"
+        "unable_to_decrypt": "Impossible de déchiffrer le message",
+        "open_thread": "Ouvrir le fil de discussion"
     },
     "theme": {
         "light_high_contrast": "Contraste élevé clair",
@@ -3700,12 +3700,12 @@
         "invite": "Inviter des personnes",
         "invite_description": "Inviter par e-mail ou nom d’utilisateur",
         "invite_this_space": "Inviter dans cet espace",
-        "joining_space": "En train de rejoindre",
         "user_lacks_permission": "Vous n’avez pas l’autorisation",
-        "no_search_result_hint": "Essayez une requête différente, ou vérifiez que vous n’avez pas fait de faute de frappe.",
-        "title_when_query_available": "Résultats",
         "title_when_query_unavailable": "Salons et espaces",
-        "search_placeholder": "Rechercher par nom et description"
+        "title_when_query_available": "Résultats",
+        "search_placeholder": "Rechercher par nom et description",
+        "no_search_result_hint": "Essayez une requête différente, ou vérifiez que vous n’avez pas fait de faute de frappe.",
+        "joining_space": "En train de rejoindre"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -3940,20 +3940,19 @@
         "join_failed_needs_invite": "Pour afficher %(roomName)s, vous avez besoin d’une invitation",
         "view_failed_enable_video_rooms": "Pour afficher, veuillez d’abord activer les salons vision dans la section Expérimental",
         "join_failed_enable_video_rooms": "Pour rejoindre, veuillez d’abord activer les salons vision dans la section Expérimental",
-        "jump_to_bottom_button": "Sauter aux messages les plus récents",
-        "show_labs_settings": "Afficher les réglages des expérimentations",
-        "upgrade_warning_bar": "La mise à niveau du salon désactivera cette instance du salon et créera un salon mis à niveau avec le même nom.",
+        "waiting_for_join_title": "En attente de connexion des utilisateurs à %(brand)s",
+        "waiting_for_join_subtitle": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Envoi de %(filename)s et %(count)s autre",
+                "other": "Envoi de %(filename)s et %(count)s autres"
+            },
+            "uploading_single_file": "Envoi de %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Ce salon a déjà été mis à niveau.",
         "upgrade_warning_bar_unstable": "Ce salon utilise la version <roomVersion />, que ce serveur d’accueil a marqué comme <i>instable</i>.",
         "upgrade_warning_bar_admins": "Seuls les administrateurs du salon verront cet avertissement",
-        "search": {
-            "this_room": "Ce salon",
-            "all_rooms": "Tous les salons",
-            "field_placeholder": "Rechercher…",
-            "this_room_button": "Rechercher dans ce salon",
-            "all_rooms_button": "Rechercher dans tous les salons"
-        },
-        "jump_read_marker": "Aller au premier message non lu.",
+        "upgrade_warning_bar": "La mise à niveau du salon désactivera cette instance du salon et créera un salon mis à niveau avec le même nom.",
         "status_bar": {
             "requires_consent_agreement": "Vous ne pouvez voir aucun message tant que vous ne lisez et n’acceptez pas nos <consentLink>conditions générales</consentLink>.",
             "monthly_user_limit_reached": "Votre message n’a pas été envoyé car le serveur d’accueil a atteint sa limite mensuelle d’utilisateurs. Veuillez <a>contacter l’administrateur de votre service</a> pour continuer à l’utiliser.",
@@ -3966,18 +3965,19 @@
             "server_connectivity_lost_title": "La connexion au serveur a été perdue.",
             "server_connectivity_lost_description": "Les messages envoyés seront stockés jusqu’à ce que votre connexion revienne."
         },
-        "creating_room_text": "Nous créons un salon avec %(names)s",
-        "failed_reject_invite": "Échec du rejet de l’invitation",
-        "inviter_unknown": "Inconnu",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "Envoi de %(filename)s et %(count)s autre",
-                "other": "Envoi de %(filename)s et %(count)s autres"
-            },
-            "uploading_single_file": "Envoi de %(filename)s"
+        "show_labs_settings": "Afficher les réglages des expérimentations",
+        "search": {
+            "this_room": "Ce salon",
+            "all_rooms": "Tous les salons",
+            "field_placeholder": "Rechercher…",
+            "this_room_button": "Rechercher dans ce salon",
+            "all_rooms_button": "Rechercher dans tous les salons"
         },
-        "waiting_for_join_title": "En attente de connexion des utilisateurs à %(brand)s",
-        "waiting_for_join_subtitle": "Une fois que les utilisateurs invités seront connectés sur %(brand)s, vous pourrez discuter et le salon sera chiffré de bout en bout"
+        "jump_to_bottom_button": "Sauter aux messages les plus récents",
+        "jump_read_marker": "Aller au premier message non lu.",
+        "inviter_unknown": "Inconnu",
+        "failed_reject_invite": "Échec du rejet de l’invitation",
+        "creating_room_text": "Nous créons un salon avec %(names)s"
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
@@ -4203,10 +4203,6 @@
         "filter_placeholder": "Filtrer les membres du salon",
         "power_label": "%(userName)s (rang %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Vous n'avez activé aucun jeu d’autocollants pour l’instant",
-        "empty_add_prompt": "En ajouter maintenant"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Échec de la révocation de l’invitation",
         "error_revoke_3pid_invite_description": "Impossible de révoquer l’invitation. Le serveur subit peut-être un problème temporaire ou vous n’avez pas la permission de révoquer l’invitation.",
@@ -4260,6 +4256,10 @@
         "error_deactivate": "Échec de la désactivation de l’utilisateur",
         "role_label": "Rôle dans <RoomName/>"
     },
+    "stickers": {
+        "empty": "Vous n'avez activé aucun jeu d’autocollants pour l’instant",
+        "empty_add_prompt": "En ajouter maintenant"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Messages épinglés",
@@ -4285,15 +4285,18 @@
         "share_button": "Partager le salon",
         "settings_button": "Paramètres du salon"
     },
-    "cant_load_page": "Impossible de charger la page",
-    "left_panel": {
-        "open_dial_pad": "Ouvrir le pavé de numérotation"
-    },
-    "console_wait": "Attendez !",
     "reject_invitation_dialog": {
         "title": "Rejeter l’invitation",
         "confirmation": "Voulez-vous vraiment rejeter l’invitation ?",
         "failed": "Échec du rejet de l’invitation"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Vous semblez être en train d’envoyer des fichiers, voulez-vous vraiment partir ?",
+        "call_in_progress": "Vous semblez avoir un appel en cours, voulez-vous vraiment partir ?"
+    },
+    "no_more_results": "Fin des résultats",
+    "left_panel": {
+        "open_dial_pad": "Ouvrir le pavé de numérotation"
     },
     "leave_room_dialog": {
         "last_person_warning": "Vous êtes la seule personne ici. Si vous partez, plus personne ne pourra rejoindre cette conversation, y compris vous.",
@@ -4314,9 +4317,6 @@
         },
         "error_loading_user_profile": "Impossible de charger le profil de l’utilisateur"
     },
-    "no_more_results": "Fin des résultats",
-    "quit_warning": {
-        "file_upload_in_progress": "Vous semblez être en train d’envoyer des fichiers, voulez-vous vraiment partir ?",
-        "call_in_progress": "Vous semblez avoir un appel en cours, voulez-vous vraiment partir ?"
-    }
+    "console_wait": "Attendez !",
+    "cant_load_page": "Impossible de charger la page"
 }

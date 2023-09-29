@@ -488,8 +488,8 @@
         "poll_button": "투표",
         "format_italics": "기울게",
         "replying_title": "답장 중",
-        "edit_composer_label": "메시지 편집",
-        "send_voice_message": "음성 메세지 보내기"
+        "send_voice_message": "음성 메세지 보내기",
+        "edit_composer_label": "메시지 편집"
     },
     "power_level": {
         "default": "기본",
@@ -881,7 +881,6 @@
             "external_url": "출처 URL",
             "report": "보고"
         },
-        "error_no_renderer": "이 이벤트를 표시할 수 없음",
         "mab": {
             "label": "메시지 동작"
         },
@@ -889,7 +888,8 @@
             "no_permission": "이 방의 타임라인에서 특정 시점을 불러오려고 했지만, 문제의 메시지를 볼 수 있는 권한이 없습니다.",
             "unable_to_find": "이 방의 타임라인에서 특정 시점을 불러오려고 했지만, 찾을 수 없었습니다.",
             "title": "타임라인 위치 불러오기에 실패함"
-        }
+        },
+        "error_no_renderer": "이 이벤트를 표시할 수 없음"
     },
     "slash_command": {
         "spoiler": "스포일러로서 주어진 메시지를 전송",
@@ -1044,12 +1044,12 @@
             "url_previews_section": "URL 미리보기",
             "aliases_section": "방 주소",
             "other_section": "기타",
+            "topic_field_label": "방 주제",
+            "no_aliases_room": "이 방은 로컬 주소가 없음",
+            "name_field_label": "방 이름",
             "error_updating_canonical_alias_title": "기본 주소 업데이트 중 오류",
             "error_updating_canonical_alias_description": "방의 기본 주소를 업데이트하는 중 오류가 발생했습니다. 서버가 허용하지 않거나 일시적인 오류 발생일 수 있습니다.",
             "canonical_alias_field_label": "기본 주소",
-            "no_aliases_room": "이 방은 로컬 주소가 없음",
-            "name_field_label": "방 이름",
-            "topic_field_label": "방 주제",
             "avatar_field_label": "방 아바타"
         },
         "advanced": {
@@ -1203,7 +1203,6 @@
         "create_account_title": "계정 만들기",
         "failed_soft_logout_homeserver": "홈서버 문제로 다시 인증에 실패함",
         "soft_logout_subheading": "개인 정보 지우기",
-        "captcha_description": "이 홈서버는 당신이 로봇이 아닌지 확인하고 싶어합니다.",
         "reset_password": {
             "password_not_entered": "새 비밀번호를 입력해주세요.",
             "passwords_mismatch": "새 비밀번호는 서로 같아야 합니다.",
@@ -1219,7 +1218,8 @@
             "invalid_identity_server_base_url": "잘못된 m.identity_server 용 base_url",
             "invalid_identity_server_url": "ID 서버 URL이 올바른 ID 서버가 아님",
             "general_failure": "일반적인 실패"
-        }
+        },
+        "captcha_description": "이 홈서버는 당신이 로봇이 아닌지 확인하고 싶어합니다."
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1398,17 +1398,17 @@
         "no_peek_join_prompt": "%(roomName)s 방을 미리 볼 수 없습니다. 참가하겠습니까?",
         "not_found_title_name": "%(roomName)s은 없는 방이에요.",
         "inaccessible_name": "현재는 %(roomName)s에 들어갈 수 없습니다.",
-        "jump_to_bottom_button": "가장 최근 메세지로 스크롤",
-        "upgrade_warning_bar": "이 방을 업그레이드하면 현재 방의 인스턴스는 문을 닫고 같은 이름의 업그레이드된 방을 만듭니다.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "%(filename)s 외 %(count)s개를 올리는 중",
+                "other": "%(filename)s 외 %(count)s개를 올리는 중"
+            },
+            "uploading_single_file": "%(filename)s을(를) 올리는 중"
+        },
         "upgrade_warning_bar_upgraded": "이 방은 이미 업그레이드됬습니다.",
         "upgrade_warning_bar_unstable": "이 방은 방 버전 <roomVersion />에서 실행 중이고, 이 홈서버가 <i>불안정</i>으로 표시됩니다.",
         "upgrade_warning_bar_admins": "방 관리자만이 이 경고를 볼 수 있음",
-        "search": {
-            "this_room": "방",
-            "all_rooms": "모든 방",
-            "field_placeholder": "찾기…"
-        },
-        "jump_read_marker": "읽지 않은 첫 메시지로 건너뜁니다.",
+        "upgrade_warning_bar": "이 방을 업그레이드하면 현재 방의 인스턴스는 문을 닫고 같은 이름의 업그레이드된 방을 만듭니다.",
         "status_bar": {
             "requires_consent_agreement": "<consentLink>이용 약관</consentLink>을 검토하고 동의하기 전까진 메시지를 보낼 수 없습니다.",
             "monthly_user_limit_reached": "이 홈서버가 월 간 활성 사용자 한도를 초과했기 때문에 메시지를 보낼 수 없었습니다. 서비스를 계속 사용하려면 <a>서비스 관리자에게 연락</a>해주세요.",
@@ -1416,15 +1416,15 @@
             "server_connectivity_lost_title": "서버 연결이 끊어졌습니다.",
             "server_connectivity_lost_description": "보낸 메시지는 연결이 돌아올 때까지 저장됩니다."
         },
-        "failed_reject_invite": "초대 거부에 실패함",
+        "search": {
+            "this_room": "방",
+            "all_rooms": "모든 방",
+            "field_placeholder": "찾기…"
+        },
+        "jump_to_bottom_button": "가장 최근 메세지로 스크롤",
+        "jump_read_marker": "읽지 않은 첫 메시지로 건너뜁니다.",
         "inviter_unknown": "알 수 없음",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "%(filename)s 외 %(count)s개를 올리는 중",
-                "other": "%(filename)s 외 %(count)s개를 올리는 중"
-            },
-            "uploading_single_file": "%(filename)s을(를) 올리는 중"
-        }
+        "failed_reject_invite": "초대 거부에 실패함"
     },
     "file_panel": {
         "guest_note": "이 기능을 쓰려면 <a>등록</a>해야 합니다",
@@ -1590,10 +1590,6 @@
         "filter_placeholder": "방 구성원 필터",
         "power_label": "%(userName)s님 (권한 %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "현재 사용하고 있는 스티커 팩이 없음",
-        "empty_add_prompt": "몇 가지 추가"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "초대 취소에 실패함",
         "error_revoke_3pid_invite_description": "초대를 취소할 수 없습니다. 서버에 일시적인 문제가 발생했거나 초대를 취소할 수 있는 권한이 없습니다.",
@@ -1616,6 +1612,10 @@
         "deactivate_confirm_action": "사용자 비활성화",
         "error_deactivate": "사용자 비활성화에 실패함"
     },
+    "stickers": {
+        "empty": "현재 사용하고 있는 스티커 팩이 없음",
+        "empty_add_prompt": "몇 가지 추가"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "고정된 메세지",
@@ -1631,12 +1631,16 @@
         "share_button": "방 공유하기",
         "settings_button": "방 설정"
     },
-    "cant_load_page": "페이지를 불러올 수 없음",
     "reject_invitation_dialog": {
         "title": "초대 거절",
         "confirmation": "초대를 거절하시겠어요?",
         "failed": "초대 거절에 실패함"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "파일을 업로드 중인데, 그만두겠습니까?",
+        "call_in_progress": "전화 중인데, 끊겠습니까?"
+    },
+    "no_more_results": "더 이상 결과 없음",
     "leave_room_dialog": {
         "room_rejoin_warning": "이 방은 공개되지 않았습니다. 초대 없이는 다시 들어올 수 없습니다.",
         "leave_room_question": "%(roomName)s 방을 떠나겠습니까?"
@@ -1653,9 +1657,5 @@
         },
         "error_loading_user_profile": "사용자 프로필을 불러올 수 없음"
     },
-    "no_more_results": "더 이상 결과 없음",
-    "quit_warning": {
-        "file_upload_in_progress": "파일을 업로드 중인데, 그만두겠습니까?",
-        "call_in_progress": "전화 중인데, 끊겠습니까?"
-    }
+    "cant_load_page": "페이지를 불러올 수 없음"
 }

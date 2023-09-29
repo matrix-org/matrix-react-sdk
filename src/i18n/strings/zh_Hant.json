@@ -1156,12 +1156,12 @@
         "historical": "歷史",
         "go_to_settings": "前往設定",
         "setup_secure_messages": "設定安全訊息",
-        "unencrypted": "未加密",
         "view_message": "檢視訊息",
-        "joined": "已加入",
+        "unencrypted": "未加密",
         "show_more": "顯示更多",
-        "are_you_sure": "您確定嗎？",
-        "avatar": "大頭照"
+        "joined": "已加入",
+        "avatar": "大頭照",
+        "are_you_sure": "您確定嗎？"
     },
     "action": {
         "continue": "繼續",
@@ -1498,15 +1498,15 @@
         "format_italics": "斜體",
         "format_insert_link": "插入連結",
         "replying_title": "正在回覆",
-        "edit_composer_label": "編輯訊息",
-        "send_voice_message": "傳送語音訊息",
         "stop_voice_message": "停止錄製",
+        "send_voice_message": "傳送語音訊息",
         "link_modal": {
             "title_edit": "編輯連結",
             "title_create": "建立連結",
             "text_field_label": "文字",
             "link_field_label": "連結"
-        }
+        },
+        "edit_composer_label": "編輯訊息"
     },
     "power_level": {
         "default": "預設",
@@ -2607,13 +2607,12 @@
             "other": "已被 %(count)s 個人看過"
         },
         "read_receipts_label": "讀取回條",
-        "thread_info_basic": "來自討論串",
-        "error_no_renderer": "此活動無法顯示",
         "undecryptable_tooltip": "此訊息無法解密",
-        "send_state_sending": "正在傳送您的訊息…",
-        "send_state_encrypting": "正在加密您的訊息…",
+        "thread_info_basic": "來自討論串",
         "send_state_sent": "您的訊息已傳送",
+        "send_state_sending": "正在傳送您的訊息…",
         "send_state_failed": "傳送失敗",
+        "send_state_encrypting": "正在加密您的訊息…",
         "mab": {
             "label": "訊息動作",
             "view_in_room": "在聊天室中檢視",
@@ -2627,7 +2626,8 @@
             "no_permission": "嘗試載入此聊天室時間軸上的特定時間點，但您沒有權限檢視相關的訊息。",
             "unable_to_find": "嘗試載入此聊天室時間軸上的特定時間點，但是找不到。",
             "title": "無法載入時間軸位置"
-        }
+        },
+        "error_no_renderer": "此活動無法顯示"
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -2978,31 +2978,31 @@
             "leave_space": "離開聊天空間",
             "aliases_section": "聊天室位址",
             "other_section": "其他",
-            "error_updating_canonical_alias_title": "更新主要位址時發生錯誤",
-            "error_updating_canonical_alias_description": "更新聊天室的主要位址時發生錯誤。可能是不被伺服器允許或是遇到暫時性的錯誤。",
-            "error_updating_alias_description": "更新聊天室的替代位址時發生錯誤。伺服器可能不允許這麼做，或是遇到暫時性的錯誤。",
-            "error_creating_alias_title": "建立位址錯誤",
-            "error_creating_alias_description": "建立該位址時發生錯誤。伺服器可能不允許這麼做，或是有暫時性的問題。",
-            "error_deleting_alias_description_forbidden": "您沒有刪除位址的權限。",
-            "error_deleting_alias_description": "刪除位址時發生錯誤。它可能已不存在或是發生暫時性的錯誤。",
-            "error_deleting_alias_title": "刪除位址時發生錯誤",
-            "canonical_alias_field_label": "主要位址",
-            "no_aliases_space": "此聊天空間沒有本機位址",
-            "no_aliases_room": "此聊天室沒有本機位址",
-            "local_alias_field_label": "本機位址",
+            "topic_field_label": "聊天室主題",
             "published_aliases_section": "已發佈的位址",
             "published_aliases_explainer_space": "任何伺服器上的人都可以使用已發佈的位址加入您的聊天空間。",
             "published_aliases_explainer_room": "任何伺服器上的人都可以使用已發佈的位址加入您的聊天室。",
             "published_aliases_description": "要發佈位址，其必須先設定為本機位址。",
-            "aliases_items_label": "其他已發佈位址：",
-            "aliases_no_items_label": "尚無其他已發佈的位址，在下方新增一個",
+            "no_aliases_space": "此聊天空間沒有本機位址",
+            "no_aliases_room": "此聊天室沒有本機位址",
             "new_alias_placeholder": "已發佈的新位址（例如：#alias:server）",
+            "name_field_label": "聊天室名稱",
             "local_aliases_section": "本機位址",
             "local_aliases_explainer_space": "設定此聊天空間的位址，這樣使用者就能透過您的家伺服器找到此空間（%(localDomain)s）",
             "local_aliases_explainer_room": "為此聊天室設定位址，讓使用者可以透過您的家伺服器找到此聊天室 (%(localDomain)s)",
-            "name_field_label": "聊天室名稱",
-            "topic_field_label": "聊天室主題",
-            "avatar_field_label": "聊天室大頭照"
+            "local_alias_field_label": "本機位址",
+            "error_updating_canonical_alias_title": "更新主要位址時發生錯誤",
+            "error_updating_canonical_alias_description": "更新聊天室的主要位址時發生錯誤。可能是不被伺服器允許或是遇到暫時性的錯誤。",
+            "error_updating_alias_description": "更新聊天室的替代位址時發生錯誤。伺服器可能不允許這麼做，或是遇到暫時性的錯誤。",
+            "error_deleting_alias_title": "刪除位址時發生錯誤",
+            "error_deleting_alias_description_forbidden": "您沒有刪除位址的權限。",
+            "error_deleting_alias_description": "刪除位址時發生錯誤。它可能已不存在或是發生暫時性的錯誤。",
+            "error_creating_alias_title": "建立位址錯誤",
+            "error_creating_alias_description": "建立該位址時發生錯誤。伺服器可能不允許這麼做，或是有暫時性的問題。",
+            "canonical_alias_field_label": "主要位址",
+            "avatar_field_label": "聊天室大頭照",
+            "aliases_no_items_label": "尚無其他已發佈的位址，在下方新增一個",
+            "aliases_items_label": "其他已發佈位址："
         },
         "advanced": {
             "unfederated": "此聊天室無法被遠端的 Matrix 伺服器存取",
@@ -3102,10 +3102,9 @@
             "verify_later": "我稍後驗證",
             "verify_reset_warning_1": "重設您的驗證金鑰將無法復原。重設後，您將無法存取舊的加密訊息，之前任何驗證過您的朋友也會看到安全警告，直到您重新驗證。",
             "verify_reset_warning_2": "請僅在您確定遺失了您其他所有裝置與安全金鑰時才繼續。",
-            "self_verification_hint": "要繼續，請在您的其他裝置上接受驗證請求。",
             "waiting_for_user_accept": "正在等待 %(displayName)s 接受…",
-            "accepting": "正在接受…",
             "start_button": "開始驗證",
+            "self_verification_hint": "要繼續，請在您的其他裝置上接受驗證請求。",
             "error_starting_title": "開始驗證時發生錯誤",
             "error_starting_description": "我們無法與其他使用者開始聊天。",
             "after_new_login": {
@@ -3114,7 +3113,8 @@
                 "device_verified": "裝置已驗證",
                 "reset_confirmation": "真的要重設驗證金鑰？",
                 "skip_verification": "暫時略過驗證"
-            }
+            },
+            "accepting": "正在接受…"
         },
         "old_version_detected_title": "偵測到舊的加密資料",
         "old_version_detected_description": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
@@ -3152,14 +3152,6 @@
             "explainer": "請在登出前備份您的金鑰，以免遺失。",
             "title": "設定"
         },
-        "cross_signing_user_warning": "此使用者尚未驗證他們的所有工作階段。",
-        "cross_signing_user_normal": "您尚未驗證此使用者。",
-        "cross_signing_user_verified": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
-        "cross_signing_room_warning": "某人正在使用未知的工作階段",
-        "cross_signing_room_normal": "此聊天室已端對端加密",
-        "cross_signing_room_verified": "此聊天室中每個人都已驗證",
-        "event_shield_reason_authenticity_not_guaranteed": "無法在此裝置上保證加密訊息的真實性。",
-        "event_shield_reason_mismatched_sender_key": "已由未驗證的工作階段加密",
         "messages_not_secure": {
             "title": "您的訊息不安全",
             "heading": "以下其中一項可能會受到威脅：",
@@ -3167,7 +3159,15 @@
             "cause_2": "您正在驗證的使用者所連線的家伺服器",
             "cause_3": "您或其他使用者的網際網路連線",
             "cause_4": "您或其他使用者的工作階段"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "已由未驗證的工作階段加密",
+        "event_shield_reason_authenticity_not_guaranteed": "無法在此裝置上保證加密訊息的真實性。",
+        "cross_signing_user_warning": "此使用者尚未驗證他們的所有工作階段。",
+        "cross_signing_user_verified": "您已驗證此使用者。此使用者已驗證他們所有的工作階段。",
+        "cross_signing_user_normal": "您尚未驗證此使用者。",
+        "cross_signing_room_warning": "某人正在使用未知的工作階段",
+        "cross_signing_room_verified": "此聊天室中每個人都已驗證",
+        "cross_signing_room_normal": "此聊天室已端對端加密"
     },
     "emoji": {
         "category_frequently_used": "經常使用",
@@ -3355,8 +3355,19 @@
         "soft_logout_subheading": "清除個人資料",
         "soft_logout_warning": "警告：您的個人資料（包含加密金鑰）仍儲存於此工作階段。若您使用完此工作階段或想要登入其他帳號，請清除它。",
         "forgot_password_send_email": "寄信",
-        "captcha_description": "這個家伺服器想要確認您不是機器人。",
-        "country_dropdown": "國家下拉式選單",
+        "reset_password": {
+            "rate_limit_error": "短時間內嘗試太多次，請稍待一段時間後再嘗試。",
+            "rate_limit_error_with_time": "短時間內嘗試太多次，請稍等 %(timeout)s 秒後再嘗試。",
+            "other_devices_logout_warning_1": "登出您的裝置將會刪除儲存在其上的訊息加密金鑰，讓加密的聊天紀錄變為無法讀取。",
+            "other_devices_logout_warning_2": "若您想在加密聊天室中保留對聊天紀錄的存取權限，請設定金鑰備份或從您的其他裝置之一匯出您的訊息金鑰，然後再繼續。",
+            "confirm_new_password": "確認新密碼",
+            "password_not_entered": "必須輸入一個新密碼。",
+            "passwords_mismatch": "新密碼必須互相相符。",
+            "sign_out_other_devices": "登出所有裝置",
+            "reset_successful": "您的密碼已重設。",
+            "devices_logout_success": "您已登出所有裝置，並將不再收到推送通知。要重新啟用通知，請在每台裝置上重新登入。",
+            "return_to_login": "返回到登入畫面"
+        },
         "qr_code_login": {
             "sign_in_new_device": "登入新裝置",
             "error_linking_incomplete": "未在要求的時間內完成連結。",
@@ -3380,19 +3391,7 @@
             "waiting_for_device": "正在等待裝置登入",
             "completing_setup": "完成您新裝置的設定"
         },
-        "reset_password": {
-            "rate_limit_error": "短時間內嘗試太多次，請稍待一段時間後再嘗試。",
-            "rate_limit_error_with_time": "短時間內嘗試太多次，請稍等 %(timeout)s 秒後再嘗試。",
-            "other_devices_logout_warning_1": "登出您的裝置將會刪除儲存在其上的訊息加密金鑰，讓加密的聊天紀錄變為無法讀取。",
-            "other_devices_logout_warning_2": "若您想在加密聊天室中保留對聊天紀錄的存取權限，請設定金鑰備份或從您的其他裝置之一匯出您的訊息金鑰，然後再繼續。",
-            "confirm_new_password": "確認新密碼",
-            "password_not_entered": "必須輸入一個新密碼。",
-            "passwords_mismatch": "新密碼必須互相相符。",
-            "sign_out_other_devices": "登出所有裝置",
-            "reset_successful": "您的密碼已重設。",
-            "devices_logout_success": "您已登出所有裝置，並將不再收到推送通知。要重新啟用通知，請在每台裝置上重新登入。",
-            "return_to_login": "返回到登入畫面"
-        },
+        "country_dropdown": "國家下拉式選單",
         "common_failures": {
             "invalid_homeserver_discovery": "家伺服器的探索回應無效",
             "cannot_find_autodiscovery_config": "無法從伺服器取得自動探索設定",
@@ -3402,7 +3401,8 @@
             "invalid_identity_server_base_url": "無效的 m.identity_server base_url",
             "invalid_identity_server_url": "身分伺服器網址似乎不是有效的身分伺服器",
             "general_failure": "一般錯誤"
-        }
+        },
+        "captcha_description": "這個家伺服器想要確認您不是機器人。"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -3574,8 +3574,8 @@
         "unmaximise": "取消最大化",
         "popout": "彈出式小工具",
         "unpin_to_view_right_panel": "取消釘選這個小工具以在此面板中檢視",
-        "close_to_view_right_panel": "關閉此小工具以在此面板中檢視",
-        "set_room_layout": "為所有人設定我的聊天室佈局"
+        "set_room_layout": "為所有人設定我的聊天室佈局",
+        "close_to_view_right_panel": "關閉此小工具以在此面板中檢視"
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -3670,8 +3670,8 @@
         "empty_explainer": "「討論串」功能可以協助您的對話不離題且易於追蹤。",
         "empty_tip": "<b>秘訣：</b>在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
         "empty_heading": "使用「討論串」功能，讓討論保持有條不紊",
-        "open_thread": "開啟討論串",
-        "unable_to_decrypt": "無法解密訊息"
+        "unable_to_decrypt": "無法解密訊息",
+        "open_thread": "開啟討論串"
     },
     "theme": {
         "light_high_contrast": "亮色高對比",
@@ -3700,12 +3700,12 @@
         "invite": "邀請夥伴",
         "invite_description": "使用電子郵件或使用者名稱邀請",
         "invite_this_space": "邀請加入此聊天空間",
-        "joining_space": "正在加入",
         "user_lacks_permission": "您沒有權限",
-        "no_search_result_hint": "您可能要嘗試其他搜尋或檢查是否有拼字錯誤。",
-        "title_when_query_available": "結果",
         "title_when_query_unavailable": "聊天室與聊天空間",
-        "search_placeholder": "搜尋名稱與描述"
+        "title_when_query_available": "結果",
+        "search_placeholder": "搜尋名稱與描述",
+        "no_search_result_hint": "您可能要嘗試其他搜尋或檢查是否有拼字錯誤。",
+        "joining_space": "正在加入"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -3940,20 +3940,19 @@
         "join_failed_needs_invite": "要檢視 %(roomName)s，您需要邀請",
         "view_failed_enable_video_rooms": "要檢視，請先在「實驗室」中啟用視訊聊天室",
         "join_failed_enable_video_rooms": "要加入，請先在「實驗室」中啟用視訊聊天室",
-        "jump_to_bottom_button": "捲動到最新訊息",
-        "show_labs_settings": "顯示「實驗室」設定",
-        "upgrade_warning_bar": "升級此聊天室將會關閉聊天室目前的執行個體，並建立一個同名的升級版。",
+        "waiting_for_join_title": "等待使用者加入 %(brand)s",
+        "waiting_for_join_subtitle": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "正在上傳 %(filename)s 與另 %(count)s 個檔案",
+                "other": "正在上傳 %(filename)s 與另 %(count)s 個檔案"
+            },
+            "uploading_single_file": "正在上傳 %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "此聊天室已升級。",
         "upgrade_warning_bar_unstable": "此聊天室正在執行聊天室版本 <roomVersion />，此家伺服器已標記為<i>不穩定</i>。",
         "upgrade_warning_bar_admins": "僅聊天室管理員會看到此警告",
-        "search": {
-            "this_room": "這個聊天室",
-            "all_rooms": "所有聊天室",
-            "field_placeholder": "搜尋…",
-            "this_room_button": "搜尋此聊天室",
-            "all_rooms_button": "搜尋所有聊天室"
-        },
-        "jump_read_marker": "跳到第一則未讀訊息。",
+        "upgrade_warning_bar": "升級此聊天室將會關閉聊天室目前的執行個體，並建立一個同名的升級版。",
         "status_bar": {
             "requires_consent_agreement": "您在審閱並同意<consentLink>我們的條款與細則</consentLink>前無法傳送訊息。",
             "monthly_user_limit_reached": "您的訊息未被傳送，因為其家伺服器已經達到了其每月活躍使用者限制。請<a>聯絡您的服務管理員</a>以繼續使用服務。",
@@ -3966,18 +3965,19 @@
             "server_connectivity_lost_title": "對伺服器的連線已中斷。",
             "server_connectivity_lost_description": "傳送的訊息會在您的連線恢復前先儲存起來。"
         },
-        "creating_room_text": "正在建立包含 %(names)s 的聊天室",
-        "failed_reject_invite": "無法拒絕邀請",
-        "inviter_unknown": "未知",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "正在上傳 %(filename)s 與另 %(count)s 個檔案",
-                "other": "正在上傳 %(filename)s 與另 %(count)s 個檔案"
-            },
-            "uploading_single_file": "正在上傳 %(filename)s"
+        "show_labs_settings": "顯示「實驗室」設定",
+        "search": {
+            "this_room": "這個聊天室",
+            "all_rooms": "所有聊天室",
+            "field_placeholder": "搜尋…",
+            "this_room_button": "搜尋此聊天室",
+            "all_rooms_button": "搜尋所有聊天室"
         },
-        "waiting_for_join_title": "等待使用者加入 %(brand)s",
-        "waiting_for_join_subtitle": "被邀請的使用者加入 %(brand)s 後，您就可以聊天，聊天室將會進行端到端加密"
+        "jump_to_bottom_button": "捲動到最新訊息",
+        "jump_read_marker": "跳到第一則未讀訊息。",
+        "inviter_unknown": "未知",
+        "failed_reject_invite": "無法拒絕邀請",
+        "creating_room_text": "正在建立包含 %(names)s 的聊天室"
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",
@@ -4203,10 +4203,6 @@
         "filter_placeholder": "過濾聊天室成員",
         "power_label": "%(userName)s（權限等級 %(powerLevelNumber)s）"
     },
-    "stickers": {
-        "empty": "您目前沒有啟用任何貼圖包",
-        "empty_add_prompt": "現在新增一些嗎"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "無法撤銷邀請",
         "error_revoke_3pid_invite_description": "無法撤銷邀請。伺服器可能暫時發生問題，或您沒有足夠的權限來撤銷邀請。",
@@ -4260,6 +4256,10 @@
         "error_deactivate": "無法停用使用者",
         "role_label": "<RoomName/> 中的角色"
     },
+    "stickers": {
+        "empty": "您目前沒有啟用任何貼圖包",
+        "empty_add_prompt": "現在新增一些嗎"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "已釘選的訊息",
@@ -4285,15 +4285,18 @@
         "share_button": "分享聊天室",
         "settings_button": "聊天室設定"
     },
-    "cant_load_page": "無法載入頁面",
-    "left_panel": {
-        "open_dial_pad": "開啟撥號鍵盤"
-    },
-    "console_wait": "等等！",
     "reject_invitation_dialog": {
         "title": "拒絕邀請",
         "confirmation": "您確認要拒絕邀請嗎？",
         "failed": "無法拒絕邀請"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "您似乎正在上傳檔案，您確定您想要結束嗎？",
+        "call_in_progress": "您似乎尚在通話中，您確定您想要結束通話嗎？"
+    },
+    "no_more_results": "沒有更多結果",
+    "left_panel": {
+        "open_dial_pad": "開啟撥號鍵盤"
     },
     "leave_room_dialog": {
         "last_person_warning": "您是這裡唯一的人。如果您離開，包含您在內的任何人都無法加入。",
@@ -4314,9 +4317,6 @@
         },
         "error_loading_user_profile": "無法載入使用者簡介"
     },
-    "no_more_results": "沒有更多結果",
-    "quit_warning": {
-        "file_upload_in_progress": "您似乎正在上傳檔案，您確定您想要結束嗎？",
-        "call_in_progress": "您似乎尚在通話中，您確定您想要結束通話嗎？"
-    }
+    "console_wait": "等等！",
+    "cant_load_page": "無法載入頁面"
 }

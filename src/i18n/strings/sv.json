@@ -1151,12 +1151,12 @@
         "historical": "Historiska",
         "go_to_settings": "Gå till inställningarna",
         "setup_secure_messages": "Ställ in säkra meddelanden",
-        "unencrypted": "Okrypterat",
         "view_message": "Visa meddelande",
-        "joined": "Gick med",
+        "unencrypted": "Okrypterat",
         "show_more": "Visa mer",
-        "are_you_sure": "Är du säker?",
-        "avatar": "Avatar"
+        "joined": "Gick med",
+        "avatar": "Avatar",
+        "are_you_sure": "Är du säker?"
     },
     "action": {
         "continue": "Fortsätt",
@@ -1492,15 +1492,15 @@
         "format_italics": "Kursiv",
         "format_insert_link": "Infoga länk",
         "replying_title": "Svarar",
-        "edit_composer_label": "Redigera meddelande",
-        "send_voice_message": "Skicka röstmeddelande",
         "stop_voice_message": "Stoppa inspelning",
+        "send_voice_message": "Skicka röstmeddelande",
         "link_modal": {
             "title_edit": "Redigera länk",
             "title_create": "Skapa en länk",
             "text_field_label": "Text",
             "link_field_label": "Länk"
-        }
+        },
+        "edit_composer_label": "Redigera meddelande"
     },
     "power_level": {
         "default": "Standard",
@@ -2560,13 +2560,12 @@
             "other": "Sedd av %(count)s personer"
         },
         "read_receipts_label": "Läskvitton",
-        "thread_info_basic": "Från en tråd",
-        "error_no_renderer": "Den här händelsen kunde inte visas",
         "undecryptable_tooltip": "Det här meddelandet kunde inte avkrypteras",
-        "send_state_sending": "Skickar ditt meddelande …",
-        "send_state_encrypting": "Krypterar ditt meddelande …",
+        "thread_info_basic": "Från en tråd",
         "send_state_sent": "Ditt meddelande skickades",
+        "send_state_sending": "Skickar ditt meddelande …",
         "send_state_failed": "Misslyckades att skicka",
+        "send_state_encrypting": "Krypterar ditt meddelande …",
         "mab": {
             "label": "Meddelandeåtgärder",
             "view_in_room": "Visa i rum",
@@ -2580,7 +2579,8 @@
             "no_permission": "Försökte ladda en viss punkt i det här rummets tidslinje, men du är inte behörig att visa det aktuella meddelandet.",
             "unable_to_find": "Försökte ladda en specifik punkt i det här rummets tidslinje, men kunde inte hitta den.",
             "title": "Misslyckades att hämta positionen på tidslinjen"
-        }
+        },
+        "error_no_renderer": "Den här händelsen kunde inte visas"
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -2930,31 +2930,31 @@
             "leave_space": "Lämna utrymmet",
             "aliases_section": "Rumsadresser",
             "other_section": "Annat",
-            "error_updating_canonical_alias_title": "Fel vid uppdatering av huvudadress",
-            "error_updating_canonical_alias_description": "Ett fel inträffade vid uppdatering av rummets huvudadress. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
-            "error_updating_alias_description": "Ett fel inträffade vid uppdatering av rummets alternativa adresser. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
-            "error_creating_alias_title": "Fel vid skapande av adress",
-            "error_creating_alias_description": "Ett fel inträffade vid skapande av adressen. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
-            "error_deleting_alias_description_forbidden": "Du har inte behörighet att radera den där adressen.",
-            "error_deleting_alias_description": "Ett fel inträffade vid borttagning av adressen. Den kanske inte längre existerar, eller så inträffade ett tillfälligt fel.",
-            "error_deleting_alias_title": "Fel vi borttagning av adress",
-            "canonical_alias_field_label": "Huvudadress",
-            "no_aliases_space": "Det här utrymmet har inga lokala adresser",
-            "no_aliases_room": "Det här rummet har inga lokala adresser",
-            "local_alias_field_label": "Lokal adress",
+            "topic_field_label": "Rumsämne",
             "published_aliases_section": "Publicerade adresser",
             "published_aliases_explainer_space": "Publicerade adresser kan användas av vem som helst på vilken server som helst för att gå med i ditt utrymme.",
             "published_aliases_explainer_room": "Publicerade adresser kan användas av vem som helst på vilken server som helst för att gå med i ditt rum.",
             "published_aliases_description": "För att publicera en adress så måste den vara satt som en lokal adress först.",
-            "aliases_items_label": "Andra publicerade adresser:",
-            "aliases_no_items_label": "Inga andra publicerade adresser än, lägg till en nedan",
+            "no_aliases_space": "Det här utrymmet har inga lokala adresser",
+            "no_aliases_room": "Det här rummet har inga lokala adresser",
             "new_alias_placeholder": "Ny publicerad adress (t.ex. #alias:server)",
+            "name_field_label": "Rumsnamn",
             "local_aliases_section": "Lokala adresser",
             "local_aliases_explainer_space": "Sätt adresser för det här utrymmet så att användare kan hitta det genom din hemserver (%(localDomain)s)",
             "local_aliases_explainer_room": "Ange adresser för det här rummet så att användare kan hitta det här rummet via din hemserver (%(localDomain)s)",
-            "name_field_label": "Rumsnamn",
-            "topic_field_label": "Rumsämne",
-            "avatar_field_label": "Rumsavatar"
+            "local_alias_field_label": "Lokal adress",
+            "error_updating_canonical_alias_title": "Fel vid uppdatering av huvudadress",
+            "error_updating_canonical_alias_description": "Ett fel inträffade vid uppdatering av rummets huvudadress. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
+            "error_updating_alias_description": "Ett fel inträffade vid uppdatering av rummets alternativa adresser. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
+            "error_deleting_alias_title": "Fel vi borttagning av adress",
+            "error_deleting_alias_description_forbidden": "Du har inte behörighet att radera den där adressen.",
+            "error_deleting_alias_description": "Ett fel inträffade vid borttagning av adressen. Den kanske inte längre existerar, eller så inträffade ett tillfälligt fel.",
+            "error_creating_alias_title": "Fel vid skapande av adress",
+            "error_creating_alias_description": "Ett fel inträffade vid skapande av adressen. Det kanske inte tillåts av servern, eller så inträffade ett tillfälligt fel.",
+            "canonical_alias_field_label": "Huvudadress",
+            "avatar_field_label": "Rumsavatar",
+            "aliases_no_items_label": "Inga andra publicerade adresser än, lägg till en nedan",
+            "aliases_items_label": "Andra publicerade adresser:"
         },
         "advanced": {
             "unfederated": "Detta rum är inte tillgängligt för externa Matrix-servrar",
@@ -3054,10 +3054,9 @@
             "verify_later": "Jag verifierar senare",
             "verify_reset_warning_1": "Återställning av dina verifieringsnycklar kan inte ångras. Efter återställning så kommer du inte att komma åt dina krypterade meddelanden, och alla vänner som tidigare har verifierat dig kommer att se säkerhetsvarningar tills du återverifierar med dem.",
             "verify_reset_warning_2": "Fortsätt bara om du är säker på att du har förlorat alla dina övriga enheter och din säkerhetsnyckel.",
-            "self_verification_hint": "För att fortsätta, acceptera verifieringsförfrågan på din andra enhet.",
             "waiting_for_user_accept": "Väntar på att %(displayName)s ska acceptera…",
-            "accepting": "Accepterar…",
             "start_button": "Starta verifiering",
+            "self_verification_hint": "För att fortsätta, acceptera verifieringsförfrågan på din andra enhet.",
             "error_starting_title": "Fel vid start av verifiering",
             "error_starting_description": "Vi kunde inte starta en chatt med den andra användaren.",
             "after_new_login": {
@@ -3066,7 +3065,8 @@
                 "device_verified": "Enhet verifierad",
                 "reset_confirmation": "Återställ verkligen verifieringsnycklar?",
                 "skip_verification": "Hoppa över verifiering för tillfället"
-            }
+            },
+            "accepting": "Accepterar…"
         },
         "old_version_detected_title": "Gammal kryptografidata upptäckt",
         "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -3104,14 +3104,6 @@
             "explainer": "Säkerhetskopiera dina nycklar innan du loggar ut för att undvika att du blir av med dem.",
             "title": "Sätt upp"
         },
-        "cross_signing_user_warning": "Den här användaren har inte verifierat alla sina sessioner.",
-        "cross_signing_user_normal": "Du har inte verifierat den här användaren.",
-        "cross_signing_user_verified": "Du har verifierat den här användaren. Den här användaren har verifierat alla sina sessioner.",
-        "cross_signing_room_warning": "Någon använder en okänd session",
-        "cross_signing_room_normal": "Det här rummet är totalsträckskrypterat",
-        "cross_signing_room_verified": "Alla i det här rummet är verifierade",
-        "event_shield_reason_authenticity_not_guaranteed": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
-        "event_shield_reason_mismatched_sender_key": "Krypterat av en overifierad session",
         "messages_not_secure": {
             "title": "Dina meddelanden är inte säkra",
             "heading": "Någon av följande kan vara äventyrad:",
@@ -3119,7 +3111,15 @@
             "cause_2": "Hemservern användaren du verifierar är ansluten till",
             "cause_3": "Din eller den andra användarens internetuppkoppling",
             "cause_4": "Din eller den andra användarens session"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Krypterat av en overifierad session",
+        "event_shield_reason_authenticity_not_guaranteed": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
+        "cross_signing_user_warning": "Den här användaren har inte verifierat alla sina sessioner.",
+        "cross_signing_user_verified": "Du har verifierat den här användaren. Den här användaren har verifierat alla sina sessioner.",
+        "cross_signing_user_normal": "Du har inte verifierat den här användaren.",
+        "cross_signing_room_warning": "Någon använder en okänd session",
+        "cross_signing_room_verified": "Alla i det här rummet är verifierade",
+        "cross_signing_room_normal": "Det här rummet är totalsträckskrypterat"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -3306,8 +3306,19 @@
         "soft_logout_subheading": "Rensa personlig information",
         "soft_logout_warning": "Varning: din personliga data (inklusive krypteringsnycklar) lagras i den här sessionen. Rensa den om du är färdig med den här sessionen, eller vill logga in i ett annat konto.",
         "forgot_password_send_email": "Skicka e-brev",
-        "captcha_description": "Denna hemserver vill se till att du inte är en robot.",
-        "country_dropdown": "Land-dropdown",
+        "reset_password": {
+            "rate_limit_error": "För många försök under för kort tid. Vänta ett tag innan du försöker igen.",
+            "rate_limit_error_with_time": "För många försök under en kort tid. Pröva igen efter %(timeout)s.",
+            "other_devices_logout_warning_1": "Att logga ut dina enheter kommer att radera meddelandekrypteringsnycklarna lagrade på dem, vilket gör krypterad chatthistorik oläslig.",
+            "other_devices_logout_warning_2": "Om du vill behålla åtkomst till din chatthistorik i krypterade rum, ställ in nyckelsäkerhetskopiering eller exportera dina rumsnycklar från en av dina andra enheter innan du fortsätter.",
+            "confirm_new_password": "Bekräfta nytt lösenord",
+            "password_not_entered": "Ett nytt lösenord måste anges.",
+            "passwords_mismatch": "De nya lösenorden måste matcha.",
+            "sign_out_other_devices": "Logga ut ur alla enheter",
+            "reset_successful": "Ditt lösenord har återställts.",
+            "devices_logout_success": "Du har loggats ut på alla enheter och kommer inte längre ta emot pushnotiser. För att återaktivera aviserings, logga in igen på varje enhet.",
+            "return_to_login": "Tillbaka till inloggningsskärmen"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Logga in ny enhet",
             "error_linking_incomplete": "Länkningen slutfördes inte inom den krävda tiden.",
@@ -3331,19 +3342,7 @@
             "waiting_for_device": "Väntar på att enheter loggar in",
             "completing_setup": "Slutför inställning av din nya enhet"
         },
-        "reset_password": {
-            "rate_limit_error": "För många försök under för kort tid. Vänta ett tag innan du försöker igen.",
-            "rate_limit_error_with_time": "För många försök under en kort tid. Pröva igen efter %(timeout)s.",
-            "other_devices_logout_warning_1": "Att logga ut dina enheter kommer att radera meddelandekrypteringsnycklarna lagrade på dem, vilket gör krypterad chatthistorik oläslig.",
-            "other_devices_logout_warning_2": "Om du vill behålla åtkomst till din chatthistorik i krypterade rum, ställ in nyckelsäkerhetskopiering eller exportera dina rumsnycklar från en av dina andra enheter innan du fortsätter.",
-            "confirm_new_password": "Bekräfta nytt lösenord",
-            "password_not_entered": "Ett nytt lösenord måste anges.",
-            "passwords_mismatch": "De nya lösenorden måste matcha.",
-            "sign_out_other_devices": "Logga ut ur alla enheter",
-            "reset_successful": "Ditt lösenord har återställts.",
-            "devices_logout_success": "Du har loggats ut på alla enheter och kommer inte längre ta emot pushnotiser. För att återaktivera aviserings, logga in igen på varje enhet.",
-            "return_to_login": "Tillbaka till inloggningsskärmen"
-        },
+        "country_dropdown": "Land-dropdown",
         "common_failures": {
             "invalid_homeserver_discovery": "Ogiltigt hemserverupptäcktssvar",
             "cannot_find_autodiscovery_config": "Misslyckades att få konfiguration för autoupptäckt från servern",
@@ -3353,7 +3352,8 @@
             "invalid_identity_server_base_url": "Ogiltig base_url för m.identity_server",
             "invalid_identity_server_url": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
             "general_failure": "Allmänt fel"
-        }
+        },
+        "captcha_description": "Denna hemserver vill se till att du inte är en robot."
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -3524,8 +3524,8 @@
         "unmaximise": "Avmaximera",
         "popout": "Poppa ut widget",
         "unpin_to_view_right_panel": "Avfäst den här widgeten för att se den i den här panelen",
-        "close_to_view_right_panel": "Stäng den här widgeten för att se den i den här panelen",
-        "set_room_layout": "Sätt mitt rumsarrangemang för alla"
+        "set_room_layout": "Sätt mitt rumsarrangemang för alla",
+        "close_to_view_right_panel": "Stäng den här widgeten för att se den i den här panelen"
     },
     "feedback": {
         "sent": "Återkoppling skickad",
@@ -3620,8 +3620,8 @@
         "empty_explainer": "Trådar underlättar för att hålla konversationer till ämnet och gör dem lättare att följa.",
         "empty_tip": "<b>Tips:</b> Välj \"%(replyInThread)s\" när du håller över ett meddelande.",
         "empty_heading": "Håll diskussioner organiserade med trådar",
-        "open_thread": "Öppna tråd",
-        "unable_to_decrypt": "Kunde inte avkryptera meddelande"
+        "unable_to_decrypt": "Kunde inte avkryptera meddelande",
+        "open_thread": "Öppna tråd"
     },
     "theme": {
         "light_high_contrast": "Ljust högkontrast",
@@ -3650,12 +3650,12 @@
         "invite": "Bjud in folk",
         "invite_description": "Bjud in med e-postadress eller användarnamn",
         "invite_this_space": "Bjud in till det här utrymmet",
-        "joining_space": "Går med",
         "user_lacks_permission": "Du har inte behörighet",
-        "no_search_result_hint": "Du kanske vill pröva en annan söksträng eller kolla efter felstavningar.",
-        "title_when_query_available": "Resultat",
         "title_when_query_unavailable": "Rum och utrymmen",
-        "search_placeholder": "Sök namn och beskrivningar"
+        "title_when_query_available": "Resultat",
+        "search_placeholder": "Sök namn och beskrivningar",
+        "no_search_result_hint": "Du kanske vill pröva en annan söksträng eller kolla efter felstavningar.",
+        "joining_space": "Går med"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -3881,20 +3881,19 @@
         "join_failed_needs_invite": "För att se %(roomName)s så behöver du en inbjudan",
         "view_failed_enable_video_rooms": "För att se, aktivera videorum i experiment först",
         "join_failed_enable_video_rooms": "För att gå med, aktivera videorum i experiment först",
-        "jump_to_bottom_button": "Skrolla till de senaste meddelandena",
-        "show_labs_settings": "Visa experimentinställningar",
-        "upgrade_warning_bar": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
+        "waiting_for_join_title": "Väntar på att användare går med i %(brand)s",
+        "waiting_for_join_subtitle": "När inbjudna användare har gått med i %(brand)s kommer du att kunna chatta och rummet kommer att vara totalsträckskrypterat",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Laddar upp %(filename)s och %(count)s till",
+                "one": "Laddar upp %(filename)s och %(count)s till"
+            },
+            "uploading_single_file": "Laddar upp %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Det här rummet har redan uppgraderats.",
         "upgrade_warning_bar_unstable": "Det här rummet kör rumsversion <roomVersion />, vilket den här hemservern har markerat som <i>instabil</i>.",
         "upgrade_warning_bar_admins": "Endast rumsadministratörer kommer att se denna varning",
-        "search": {
-            "this_room": "Det här rummet",
-            "all_rooms": "Alla rum",
-            "field_placeholder": "Sök…",
-            "this_room_button": "Sök i det här rummet",
-            "all_rooms_button": "Sök i alla rum"
-        },
-        "jump_read_marker": "Hoppa till första olästa meddelandet.",
+        "upgrade_warning_bar": "Att uppgradera det här rummet kommer att stänga den nuvarande instansen av rummet och skapa ett uppgraderat rum med samma namn.",
         "status_bar": {
             "requires_consent_agreement": "Du kan inte skicka några meddelanden innan du granskar och godkänner <consentLink>våra villkor</consentLink>.",
             "monthly_user_limit_reached": "Ditt meddelande skickades inte eftersom hemservern har nått sin månatliga gräns för användaraktivitet. Vänligen <a>kontakta din serviceadministratör</a> för att fortsätta använda tjänsten.",
@@ -3907,18 +3906,19 @@
             "server_connectivity_lost_title": "Anslutning till servern har brutits.",
             "server_connectivity_lost_description": "Skickade meddelanden kommer att lagras tills anslutningen är tillbaka."
         },
-        "creating_room_text": "Vi skapar ett rum med %(names)s",
-        "failed_reject_invite": "Misslyckades att avböja inbjudan",
-        "inviter_unknown": "Okänt",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Laddar upp %(filename)s och %(count)s till",
-                "one": "Laddar upp %(filename)s och %(count)s till"
-            },
-            "uploading_single_file": "Laddar upp %(filename)s"
+        "show_labs_settings": "Visa experimentinställningar",
+        "search": {
+            "this_room": "Det här rummet",
+            "all_rooms": "Alla rum",
+            "field_placeholder": "Sök…",
+            "this_room_button": "Sök i det här rummet",
+            "all_rooms_button": "Sök i alla rum"
         },
-        "waiting_for_join_title": "Väntar på att användare går med i %(brand)s",
-        "waiting_for_join_subtitle": "När inbjudna användare har gått med i %(brand)s kommer du att kunna chatta och rummet kommer att vara totalsträckskrypterat"
+        "jump_to_bottom_button": "Skrolla till de senaste meddelandena",
+        "jump_read_marker": "Hoppa till första olästa meddelandet.",
+        "inviter_unknown": "Okänt",
+        "failed_reject_invite": "Misslyckades att avböja inbjudan",
+        "creating_room_text": "Vi skapar ett rum med %(names)s"
     },
     "file_panel": {
         "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
@@ -4143,10 +4143,6 @@
         "filter_placeholder": "Filtrera rumsmedlemmar",
         "power_label": "%(userName)s (behörighet %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Du har för närvarande inga dekalpaket aktiverade",
-        "empty_add_prompt": "Lägg till några nu"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Misslyckades att återkalla inbjudan",
         "error_revoke_3pid_invite_description": "Kunde inte återkalla inbjudan. Servern kan ha ett tillfälligt problem eller så har du inte tillräckliga behörigheter för att återkalla inbjudan.",
@@ -4200,6 +4196,10 @@
         "error_deactivate": "Misslyckades att inaktivera användaren",
         "role_label": "Roll i <RoomName/>"
     },
+    "stickers": {
+        "empty": "Du har för närvarande inga dekalpaket aktiverade",
+        "empty_add_prompt": "Lägg till några nu"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Fästa meddelanden",
@@ -4225,15 +4225,18 @@
         "share_button": "Dela rum",
         "settings_button": "Rumsinställningar"
     },
-    "cant_load_page": "Kunde inte ladda sidan",
-    "left_panel": {
-        "open_dial_pad": "Öppna knappsats"
-    },
-    "console_wait": "Vänta!",
     "reject_invitation_dialog": {
         "title": "Avböj inbjudan",
         "confirmation": "Är du säker på att du vill avböja inbjudan?",
         "failed": "Misslyckades att avböja inbjudan"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Du verkar ladda upp filer, är du säker på att du vill avsluta?",
+        "call_in_progress": "Du verkar vara i ett samtal, är du säker på att du vill avsluta?"
+    },
+    "no_more_results": "Inga fler resultat",
+    "left_panel": {
+        "open_dial_pad": "Öppna knappsats"
     },
     "leave_room_dialog": {
         "last_person_warning": "Du är den enda personen här. Om du lämnar så kommer ingen kunna gå med igen, inklusive du.",
@@ -4254,9 +4257,6 @@
         },
         "error_loading_user_profile": "Kunde inte ladda användarprofil"
     },
-    "no_more_results": "Inga fler resultat",
-    "quit_warning": {
-        "file_upload_in_progress": "Du verkar ladda upp filer, är du säker på att du vill avsluta?",
-        "call_in_progress": "Du verkar vara i ett samtal, är du säker på att du vill avsluta?"
-    }
+    "console_wait": "Vänta!",
+    "cant_load_page": "Kunde inte ladda sidan"
 }

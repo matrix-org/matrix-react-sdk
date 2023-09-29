@@ -672,10 +672,10 @@
         "low_priority": "Žemo prioriteto",
         "historical": "Istoriniai",
         "go_to_settings": "Eiti į Nustatymus",
-        "unencrypted": "Neužšifruota",
         "view_message": "Žiūrėti žinutę",
-        "joined": "Prisijungta",
+        "unencrypted": "Neužšifruota",
         "show_more": "Rodyti daugiau",
+        "joined": "Prisijungta",
         "are_you_sure": "Ar tikrai?"
     },
     "action": {
@@ -883,9 +883,9 @@
         "format_italics": "Kursyvas",
         "format_insert_link": "Įterpti nuorodą",
         "replying_title": "Atsakoma",
-        "edit_composer_label": "Redaguoti žinutę",
+        "stop_voice_message": "Sustabdyti įrašymą",
         "send_voice_message": "Siųsti balso žinutę",
-        "stop_voice_message": "Sustabdyti įrašymą"
+        "edit_composer_label": "Redaguoti žinutę"
     },
     "power_level": {
         "default": "Numatytas",
@@ -1630,7 +1630,6 @@
         },
         "read_receipts_label": "Skaitymo kvitai",
         "thread_info_basic": "Iš temos",
-        "error_no_renderer": "Nepavyko parodyti šio įvykio",
         "send_state_sent": "Jūsų žinutė išsiųsta",
         "send_state_failed": "Nepavyko išsiųsti",
         "mab": {
@@ -1642,7 +1641,8 @@
             "no_permission": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet jūs neturite leidimo peržiūrėti tos žinutės.",
             "unable_to_find": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet nepavyko jos rasti.",
             "title": "Nepavyko įkelti laiko juostos pozicijos"
-        }
+        },
+        "error_no_renderer": "Nepavyko parodyti šio įvykio"
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -1928,31 +1928,31 @@
             "leave_space": "Palikti erdvę",
             "aliases_section": "Kambario Adresai",
             "other_section": "Kitas",
-            "error_updating_canonical_alias_title": "Atnaujinant pagrindinį adresą įvyko klaida",
-            "error_updating_canonical_alias_description": "Atnaujinant pagrindinį kambario adresą įvyko klaida. Gali būti, kad serveris to neleidžia arba įvyko laikina klaida.",
-            "error_updating_alias_description": "Atnaujinant kambario alternatyvius adresus įvyko klaida. Gali būti, kad serveris to neleidžia arba įvyko laikina klaida.",
-            "error_creating_alias_title": "Klaida kuriant adresą",
-            "error_creating_alias_description": "Kuriant šį adresą įvyko klaida. Gali būti, kad serveris jo neleidžia arba įvyko laikina klaida.",
-            "error_deleting_alias_description_forbidden": "Neturite leidimo ištrinti adresą.",
-            "error_deleting_alias_description": "Pašalinant šį adresą įvyko klaida. Gali būti, kad jo nebėra arba įvyko laikina klaida.",
-            "error_deleting_alias_title": "Klaida šalinant adresą",
-            "canonical_alias_field_label": "Pagrindinis adresas",
-            "no_aliases_space": "Ši erdvė neturi vietinių adresų",
-            "no_aliases_room": "Šis kambarys neturi jokių vietinių adresų",
-            "local_alias_field_label": "Vietinis adresas",
+            "topic_field_label": "Kambario Tema",
             "published_aliases_section": "Paskelbti Adresai",
             "published_aliases_explainer_space": "Paskelbtus adresus gali naudoti bet kas bet kuriame serveryje, prisijungimui prie jūsų erdvės.",
             "published_aliases_explainer_room": "Paskelbtus adresus gali naudoti bet kas bet kuriame serveryje, prisijungimui prie jūsų kambario.",
             "published_aliases_description": "Norint paskelbti adresą, pirmiausia jį reikia nustatyti kaip vietinį adresą.",
-            "aliases_items_label": "Kiti paskelbti adresai:",
-            "aliases_no_items_label": "Kol kas nėra kitų paskelbtų adresų, pridėkite vieną žemiau",
+            "no_aliases_space": "Ši erdvė neturi vietinių adresų",
+            "no_aliases_room": "Šis kambarys neturi jokių vietinių adresų",
             "new_alias_placeholder": "Naujas paskelbtas adresas (pvz.: #pavadinimas:server)",
+            "name_field_label": "Kambario Pavadinimas",
             "local_aliases_section": "Vietiniai Adresai",
             "local_aliases_explainer_space": "Nustatykite adresus šiai erdvei, kad naudotojai galėtų rasti šią erdvę per jūsų namų serverį (%(localDomain)s)",
             "local_aliases_explainer_room": "Nustatykite adresus šiam kambariui, kad vartotojai galėtų surasti šį kambarį per jūsų serverį (%(localDomain)s)",
-            "name_field_label": "Kambario Pavadinimas",
-            "topic_field_label": "Kambario Tema",
-            "avatar_field_label": "Kambario pseudoportretas"
+            "local_alias_field_label": "Vietinis adresas",
+            "error_updating_canonical_alias_title": "Atnaujinant pagrindinį adresą įvyko klaida",
+            "error_updating_canonical_alias_description": "Atnaujinant pagrindinį kambario adresą įvyko klaida. Gali būti, kad serveris to neleidžia arba įvyko laikina klaida.",
+            "error_updating_alias_description": "Atnaujinant kambario alternatyvius adresus įvyko klaida. Gali būti, kad serveris to neleidžia arba įvyko laikina klaida.",
+            "error_deleting_alias_title": "Klaida šalinant adresą",
+            "error_deleting_alias_description_forbidden": "Neturite leidimo ištrinti adresą.",
+            "error_deleting_alias_description": "Pašalinant šį adresą įvyko klaida. Gali būti, kad jo nebėra arba įvyko laikina klaida.",
+            "error_creating_alias_title": "Klaida kuriant adresą",
+            "error_creating_alias_description": "Kuriant šį adresą įvyko klaida. Gali būti, kad serveris jo neleidžia arba įvyko laikina klaida.",
+            "canonical_alias_field_label": "Pagrindinis adresas",
+            "avatar_field_label": "Kambario pseudoportretas",
+            "aliases_no_items_label": "Kol kas nėra kitų paskelbtų adresų, pridėkite vieną žemiau",
+            "aliases_items_label": "Kiti paskelbti adresai:"
         },
         "advanced": {
             "unfederated": "Šis kambarys nėra pasiekiamas nuotoliniams Matrix serveriams",
@@ -2028,10 +2028,10 @@
             "unverified_sessions_toast_reject": "Vėliau",
             "unverified_session_toast_title": "Naujas prisijungimas. Ar tai jūs?",
             "request_toast_detail": "%(deviceId)s iš %(ip)s",
-            "self_verification_hint": "Jei norite tęsti, priimkite patvirtinimo prašymą kitame savo įrenginyje.",
             "waiting_for_user_accept": "Laukiama kol %(displayName)s sutiks…",
-            "accepting": "Priimama…",
-            "start_button": "Pradėti patvirtinimą"
+            "start_button": "Pradėti patvirtinimą",
+            "self_verification_hint": "Jei norite tęsti, priimkite patvirtinimo prašymą kitame savo įrenginyje.",
+            "accepting": "Priimama…"
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2065,14 +2065,6 @@
             "explainer": "Prieš atsijungdami sukurkite atsarginę savo raktų kopiją, kad išvengtumėte jų praradimo.",
             "title": "Nustatyti"
         },
-        "cross_signing_user_warning": "Šis vartotojas nepatvirtino visų savo seansų.",
-        "cross_signing_user_normal": "Jūs nepatvirtinote šio vartotojo.",
-        "cross_signing_user_verified": "Jūs patvirtinote šį vartotoją. Šis vartotojas patvirtino visus savo seansus.",
-        "cross_signing_room_warning": "Kažkas naudoja nežinomą seansą",
-        "cross_signing_room_normal": "Šis kambarys visapusiškai užšifruotas",
-        "cross_signing_room_verified": "Visi šiame kambaryje yra patvirtinti",
-        "event_shield_reason_authenticity_not_guaranteed": "Šiame įrenginyje negalima užtikrinti šios užšifruotos žinutės autentiškumo.",
-        "event_shield_reason_mismatched_sender_key": "Užšifruota nepatvirtinto seanso",
         "messages_not_secure": {
             "title": "Jūsų žinutės nėra saugios",
             "heading": "Gali būti pažeistas vienas iš šių:",
@@ -2080,7 +2072,15 @@
             "cause_2": "Namų serveris, prie kurio yra prisijungęs patvirtinamas naudotojas",
             "cause_3": "Jūsų arba kitų naudotojų interneto ryšys",
             "cause_4": "Jūsų arba kitų naudotojų sesija"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Užšifruota nepatvirtinto seanso",
+        "event_shield_reason_authenticity_not_guaranteed": "Šiame įrenginyje negalima užtikrinti šios užšifruotos žinutės autentiškumo.",
+        "cross_signing_user_warning": "Šis vartotojas nepatvirtino visų savo seansų.",
+        "cross_signing_user_verified": "Jūs patvirtinote šį vartotoją. Šis vartotojas patvirtino visus savo seansus.",
+        "cross_signing_user_normal": "Jūs nepatvirtinote šio vartotojo.",
+        "cross_signing_room_warning": "Kažkas naudoja nežinomą seansą",
+        "cross_signing_room_verified": "Visi šiame kambaryje yra patvirtinti",
+        "cross_signing_room_normal": "Šis kambarys visapusiškai užšifruotas"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2197,7 +2197,6 @@
         "autodiscovery_unexpected_error_is": "Netikėta klaida nusistatant tapatybės serverio konfigūraciją",
         "incorrect_credentials_detail": "Atkreipkite dėmesį, kad jūs jungiatės prie %(hs)s serverio, o ne matrix.org.",
         "create_account_title": "Sukurti paskyrą",
-        "captcha_description": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
         "reset_password": {
             "password_not_entered": "Privalo būti įvestas naujas slaptažodis.",
             "passwords_mismatch": "Nauji slaptažodžiai privalo sutapti.",
@@ -2210,7 +2209,8 @@
             "invalid_identity_server_discovery": "Klaidingas tapatybės serverio radimo atsakas",
             "invalid_identity_server_url": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
             "general_failure": "Bendras triktis"
-        }
+        },
+        "captcha_description": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas."
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2324,8 +2324,8 @@
         "error_mixed_content": "Klaida - Maišytas turinys",
         "popout": "Iššokti valdiklį",
         "unpin_to_view_right_panel": "Atsekite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
-        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
-        "set_room_layout": "Nustatyti savo kambario išdėstymą visiems"
+        "set_room_layout": "Nustatyti savo kambario išdėstymą visiems",
+        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje"
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2529,31 +2529,31 @@
         "join_failed_needs_invite": "Norint peržiūrėti %(roomName)s, turite gauti kvietimą",
         "view_failed_enable_video_rooms": "Norint peržiūrėti, pirmiausia įjunkite vaizdo kambarius laboratorijose",
         "join_failed_enable_video_rooms": "Norint prisijungti, pirmiausia įjunkite vaizdo kambarius laboratorijose",
-        "jump_to_bottom_button": "Slinkite prie naujausių žinučių",
-        "show_labs_settings": "Rodyti laboratorijų nustatymus",
-        "upgrade_warning_bar": "Atnaujinimas išjungs dabartinę kambario instanciją ir sukurs atnaujintą kambarį tuo pačiu pavadinimu.",
-        "upgrade_warning_bar_upgraded": "Šis kambarys jau yra atnaujintas.",
-        "upgrade_warning_bar_unstable": "Šiame kambaryje naudojama kambario versija <roomVersion />, kurią šis namų serveris pažymėjo kaip <i>nestabilią</i>.",
-        "upgrade_warning_bar_admins": "Šį įspėjimą matys tik kambario administratoriai",
-        "search": {
-            "this_room": "Šis pokalbių kambarys",
-            "all_rooms": "Visi pokalbių kambariai",
-            "field_placeholder": "Paieška…"
-        },
-        "jump_read_marker": "Pereiti prie pirmos neperskaitytos žinutės.",
-        "status_bar": {
-            "server_connectivity_lost_title": "Jungiamumas su šiuo serveriu buvo prarastas.",
-            "server_connectivity_lost_description": "Išsiųstos žinutės bus saugomos tol, kol atsiras ryšys."
-        },
-        "failed_reject_invite": "Nepavyko atmesti pakvietimo",
-        "inviter_unknown": "Nežinoma",
         "upload": {
             "uploading_multiple_file": {
                 "other": "Įkeliamas %(filename)s ir dar %(count)s failai",
                 "one": "Įkeliamas %(filename)s ir dar %(count)s failas"
             },
             "uploading_single_file": "Įkeliamas %(filename)s"
-        }
+        },
+        "upgrade_warning_bar_upgraded": "Šis kambarys jau yra atnaujintas.",
+        "upgrade_warning_bar_unstable": "Šiame kambaryje naudojama kambario versija <roomVersion />, kurią šis namų serveris pažymėjo kaip <i>nestabilią</i>.",
+        "upgrade_warning_bar_admins": "Šį įspėjimą matys tik kambario administratoriai",
+        "upgrade_warning_bar": "Atnaujinimas išjungs dabartinę kambario instanciją ir sukurs atnaujintą kambarį tuo pačiu pavadinimu.",
+        "status_bar": {
+            "server_connectivity_lost_title": "Jungiamumas su šiuo serveriu buvo prarastas.",
+            "server_connectivity_lost_description": "Išsiųstos žinutės bus saugomos tol, kol atsiras ryšys."
+        },
+        "show_labs_settings": "Rodyti laboratorijų nustatymus",
+        "search": {
+            "this_room": "Šis pokalbių kambarys",
+            "all_rooms": "Visi pokalbių kambariai",
+            "field_placeholder": "Paieška…"
+        },
+        "jump_to_bottom_button": "Slinkite prie naujausių žinučių",
+        "jump_read_marker": "Pereiti prie pirmos neperskaitytos žinutės.",
+        "inviter_unknown": "Nežinoma",
+        "failed_reject_invite": "Nepavyko atmesti pakvietimo"
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"
@@ -2728,10 +2728,6 @@
         "filter_placeholder": "Filtruoti kambario dalyvius",
         "power_label": "%(userName)s (galia %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Jūs šiuo metu neturite jokių įjungtų lipdukų paketų",
-        "empty_add_prompt": "Pridėkite keletą dabar"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Nepavyko atšaukti kvietimo",
         "error_revoke_3pid_invite_description": "Kvietimo atšaukti nepavyko. Gali būti, kad serveryje kilo laikina problema arba neturite pakankamų leidimų atšaukti kvietimą.",
@@ -2786,6 +2782,10 @@
     "threads": {
         "open_thread": "Atidaryti temą"
     },
+    "stickers": {
+        "empty": "Jūs šiuo metu neturite jokių įjungtų lipdukų paketų",
+        "empty_add_prompt": "Pridėkite keletą dabar"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Prisegtos žinutės",
@@ -2812,6 +2812,11 @@
         "confirmation": "Ar tikrai norite atmesti pakvietimą?",
         "failed": "Nepavyko atmesti pakvietimo"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Panašu, kad jūs įkeliate failus, ar tikrai norite išeiti?",
+        "call_in_progress": "Panašu, kad jūs dalyvaujate skambutyje, ar tikrai norite išeiti?"
+    },
+    "no_more_results": "Daugiau nėra jokių rezultatų",
     "leave_room_dialog": {
         "room_rejoin_warning": "Šis kambarys nėra viešas. Jūs negalėsite prisijungti iš naujo be pakvietimo.",
         "leave_room_question": "Ar tikrai norite išeiti iš kambario %(roomName)s?"
@@ -2826,10 +2831,5 @@
             "title": "Paieška nepavyko",
             "server_unavailable": "Gali būti, kad serveris neprieinamas, perkrautas arba pasibaigė paieškai skirtas laikas :("
         }
-    },
-    "no_more_results": "Daugiau nėra jokių rezultatų",
-    "quit_warning": {
-        "file_upload_in_progress": "Panašu, kad jūs įkeliate failus, ar tikrai norite išeiti?",
-        "call_in_progress": "Panašu, kad jūs dalyvaujate skambutyje, ar tikrai norite išeiti?"
     }
 }

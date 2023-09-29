@@ -1074,12 +1074,12 @@
         "historical": "Vanhat",
         "go_to_settings": "Siirry asetuksiin",
         "setup_secure_messages": "Ota käyttöön salatut viestit",
-        "unencrypted": "Suojaamaton",
         "view_message": "Näytä viesti",
-        "joined": "Liitytty",
+        "unencrypted": "Suojaamaton",
         "show_more": "Näytä lisää",
-        "are_you_sure": "Oletko varma?",
-        "avatar": "Avatar"
+        "joined": "Liitytty",
+        "avatar": "Avatar",
+        "are_you_sure": "Oletko varma?"
     },
     "action": {
         "continue": "Jatka",
@@ -1387,15 +1387,15 @@
         "format_italics": "Kursivoitu",
         "format_insert_link": "Lisää linkki",
         "replying_title": "Vastataan",
-        "edit_composer_label": "Muokkaa viestiä",
-        "send_voice_message": "Lähetä ääniviesti",
         "stop_voice_message": "Pysäytä nauhoittaminen",
+        "send_voice_message": "Lähetä ääniviesti",
         "link_modal": {
             "title_edit": "Muokkaa linkkiä",
             "title_create": "Luo linkki",
             "text_field_label": "Teksti",
             "link_field_label": "Linkki"
-        }
+        },
+        "edit_composer_label": "Muokkaa viestiä"
     },
     "power_level": {
         "default": "Oletus",
@@ -2360,13 +2360,12 @@
             "other": "Nähnyt %(count)s ihmistä"
         },
         "read_receipts_label": "Lukukuittaukset",
-        "thread_info_basic": "Ketjusta",
-        "error_no_renderer": "Tätä tapahtumaa ei voitu näyttää",
         "undecryptable_tooltip": "Tämän viestin salausta ei voitu purkaa",
-        "send_state_sending": "Lähetetään viestiäsi…",
-        "send_state_encrypting": "Salataan viestiäsi…",
+        "thread_info_basic": "Ketjusta",
         "send_state_sent": "Viestisi lähetettiin",
+        "send_state_sending": "Lähetetään viestiäsi…",
         "send_state_failed": "Lähettäminen epäonnistui",
+        "send_state_encrypting": "Salataan viestiäsi…",
         "mab": {
             "label": "Viestitoiminnot",
             "view_in_room": "Näytä huoneessa",
@@ -2380,7 +2379,8 @@
             "no_permission": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
             "unable_to_find": "Huoneen aikajanan tietty hetki yritettiin ladata, mutta sitä ei löytynyt.",
             "title": "Aikajanapaikan lataaminen epäonnistui"
-        }
+        },
+        "error_no_renderer": "Tätä tapahtumaa ei voitu näyttää"
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -2712,30 +2712,30 @@
             "leave_space": "Poistu avaruudesta",
             "aliases_section": "Huoneen osoitteet",
             "other_section": "Muut",
-            "error_updating_canonical_alias_title": "Pääosoitteen päivityksessä tapahtui virhe",
-            "error_updating_canonical_alias_description": "Huoneen pääosoitteen päivityksessä tapahtui virhe. Se ei välttämättä ole sallittua tällä palvelimella tai kyseessä on väliaikainen virhe.",
-            "error_updating_alias_description": "Huoneen vaihtoehtoisten osoitteiden päivittämisessä tapahtui virhe. Palvelin ei ehkä salli sitä tai kyseessä oli tilapäinen virhe.",
-            "error_creating_alias_title": "Virhe osoitetta luotaessa",
-            "error_creating_alias_description": "Osoitetta luotaessa tapahtui virhe. Voi olla, että palvelin ei salli sitä tai kyseessä oli tilapäinen virhe.",
-            "error_deleting_alias_description_forbidden": "Sinulla ei ole oikeutta poistaa osoitetta.",
-            "error_deleting_alias_description": "Osoitetta poistaessa tapahtui virhe. Osoitetta ei ehkä ole enää olemassa tai kyseessä oli tilapäinen virhe.",
-            "error_deleting_alias_title": "Virhe osoitetta poistettaessa",
-            "canonical_alias_field_label": "Pääosoite",
-            "no_aliases_space": "Tällä avaruudella ei ole paikallista osoitetta",
-            "no_aliases_room": "Tällä huoneella ei ole paikallista osoitetta",
-            "local_alias_field_label": "Paikallinen osoite",
+            "topic_field_label": "Huoneen aihe",
             "published_aliases_section": "Julkaistut osoitteet",
             "published_aliases_explainer_room": "Julkaistujen osoitteiden avulla kuka tahansa millä tahansa palvelimella voi liittyä huoneeseesi.",
             "published_aliases_description": "Osoitteen julkaisemiseksi se täytyy ensin asettaa paikalliseksi osoitteeksi.",
-            "aliases_items_label": "Muut julkaistut osoitteet:",
-            "aliases_no_items_label": "Toistaiseksi ei muita julkaistuja osoitteita, lisää alle",
+            "no_aliases_space": "Tällä avaruudella ei ole paikallista osoitetta",
+            "no_aliases_room": "Tällä huoneella ei ole paikallista osoitetta",
             "new_alias_placeholder": "Uusi julkaistu osoite (esim. #alias:palvelin)",
+            "name_field_label": "Huoneen nimi",
             "local_aliases_section": "Paikalliset osoitteet",
             "local_aliases_explainer_space": "Aseta osoitteita tälle avaruudelle, jotta käyttäjät löytävät tämän avaruuden kotipalvelimeltasi (%(localDomain)s)",
             "local_aliases_explainer_room": "Aseta osoitteita tälle huoneelle, jotta käyttäjät löytävät tämän huoneen kotipalvelimeltasi (%(localDomain)s)",
-            "name_field_label": "Huoneen nimi",
-            "topic_field_label": "Huoneen aihe",
-            "avatar_field_label": "Huoneen kuva"
+            "local_alias_field_label": "Paikallinen osoite",
+            "error_updating_canonical_alias_title": "Pääosoitteen päivityksessä tapahtui virhe",
+            "error_updating_canonical_alias_description": "Huoneen pääosoitteen päivityksessä tapahtui virhe. Se ei välttämättä ole sallittua tällä palvelimella tai kyseessä on väliaikainen virhe.",
+            "error_updating_alias_description": "Huoneen vaihtoehtoisten osoitteiden päivittämisessä tapahtui virhe. Palvelin ei ehkä salli sitä tai kyseessä oli tilapäinen virhe.",
+            "error_deleting_alias_title": "Virhe osoitetta poistettaessa",
+            "error_deleting_alias_description_forbidden": "Sinulla ei ole oikeutta poistaa osoitetta.",
+            "error_deleting_alias_description": "Osoitetta poistaessa tapahtui virhe. Osoitetta ei ehkä ole enää olemassa tai kyseessä oli tilapäinen virhe.",
+            "error_creating_alias_title": "Virhe osoitetta luotaessa",
+            "error_creating_alias_description": "Osoitetta luotaessa tapahtui virhe. Voi olla, että palvelin ei salli sitä tai kyseessä oli tilapäinen virhe.",
+            "canonical_alias_field_label": "Pääosoite",
+            "avatar_field_label": "Huoneen kuva",
+            "aliases_no_items_label": "Toistaiseksi ei muita julkaistuja osoitteita, lisää alle",
+            "aliases_items_label": "Muut julkaistut osoitteet:"
         },
         "advanced": {
             "unfederated": "Tähän huoneeseen ei pääse ulkopuolisilta Matrix-palvelimilta",
@@ -2826,16 +2826,16 @@
             "verification_success_with_backup": "Uusi laitteesi on nyt vahvistettu. Laitteella on pääsy salattuihin viesteihisi, ja muut käyttäjät näkevät sen luotettuna.",
             "verification_success_without_backup": "Uusi laitteesi on nyt vahvistettu. Muut käyttäjät näkevät sen luotettuna.",
             "verify_later": "Vahvistan myöhemmin",
-            "self_verification_hint": "Jatka hyväksymällä vahvistuspyyntö toisella laitteella.",
             "waiting_for_user_accept": "Odotetaan, että %(displayName)s hyväksyy…",
-            "accepting": "Hyväksytään…",
             "start_button": "Aloita varmennus",
+            "self_verification_hint": "Jatka hyväksymällä vahvistuspyyntö toisella laitteella.",
             "after_new_login": {
                 "unable_to_verify": "Tätä laitetta ei voitu vahvistaa",
                 "verify_this_device": "Vahvista tämä laite",
                 "device_verified": "Laite vahvistettu",
                 "skip_verification": "Ohita vahvistus toistaiseksi"
-            }
+            },
+            "accepting": "Hyväksytään…"
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -2870,21 +2870,21 @@
             "explainer": "Varmuuskopioi avaimesi ennen kuin kirjaudut ulos välttääksesi avainten menetyksen.",
             "title": "Ota käyttöön"
         },
-        "cross_signing_user_warning": "Tämä käyttäjä ei ole varmentanut kaikkia istuntojaan.",
-        "cross_signing_user_normal": "Et ole varmentanut tätä käyttäjää.",
-        "cross_signing_user_verified": "Olet varmentanut tämän käyttäjän. Tämä käyttäjä on varmentanut kaikki istuntonsa.",
-        "cross_signing_room_warning": "Joku käyttää tuntematonta istuntoa",
-        "cross_signing_room_normal": "Tämä huone käyttää päästä päähän -salausta",
-        "cross_signing_room_verified": "Kaikki tämän huoneen käyttäjät on varmennettu",
-        "event_shield_reason_authenticity_not_guaranteed": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
-        "event_shield_reason_mismatched_sender_key": "Salattu varmentamattoman istunnon toimesta",
         "messages_not_secure": {
             "title": "Viestisi eivät ole turvassa",
             "heading": "Jokin seuraavista saattaa olla vaarantunut:",
             "cause_1": "Kotipalvelimesi",
             "cause_3": "Sinun tai toisen osapuolen internet-yhteys",
             "cause_4": "Sinun tai toisen osapuolen istunto"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Salattu varmentamattoman istunnon toimesta",
+        "event_shield_reason_authenticity_not_guaranteed": "Tämän salatun viestin aitoutta ei voida taata tällä laitteella.",
+        "cross_signing_user_warning": "Tämä käyttäjä ei ole varmentanut kaikkia istuntojaan.",
+        "cross_signing_user_verified": "Olet varmentanut tämän käyttäjän. Tämä käyttäjä on varmentanut kaikki istuntonsa.",
+        "cross_signing_user_normal": "Et ole varmentanut tätä käyttäjää.",
+        "cross_signing_room_warning": "Joku käyttää tuntematonta istuntoa",
+        "cross_signing_room_verified": "Kaikki tämän huoneen käyttäjät on varmennettu",
+        "cross_signing_room_normal": "Tämä huone käyttää päästä päähän -salausta"
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",
@@ -3061,8 +3061,17 @@
         "failed_soft_logout_homeserver": "Uudelleenautentikointi epäonnistui kotipalvelinongelmasta johtuen",
         "soft_logout_subheading": "Poista henkilökohtaiset tiedot",
         "forgot_password_send_email": "Lähetä sähköpostia",
-        "captcha_description": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
-        "country_dropdown": "Maapudotusvalikko",
+        "reset_password": {
+            "rate_limit_error": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
+            "rate_limit_error_with_time": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
+            "confirm_new_password": "Vahvista uusi salasana",
+            "password_not_entered": "Sinun täytyy syöttää uusi salasana.",
+            "passwords_mismatch": "Uusien salasanojen on vastattava toisiaan.",
+            "sign_out_other_devices": "Kirjaudu ulos kaikista laitteista",
+            "reset_successful": "Salasanasi on nollattu.",
+            "devices_logout_success": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
+            "return_to_login": "Palaa kirjautumissivulle"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Kirjaa sisään uusi laite",
             "error_linking_incomplete": "Linkitystä ei suoritettu vaaditussa ajassa.",
@@ -3078,17 +3087,7 @@
             "connecting": "Yhdistetään…",
             "waiting_for_device": "Odotetaan laitteen sisäänkirjautumista"
         },
-        "reset_password": {
-            "rate_limit_error": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
-            "rate_limit_error_with_time": "Liikaa yrityksiä lyhyessä ajassa. Yritä uudelleen, kun %(timeout)s on kulunut.",
-            "confirm_new_password": "Vahvista uusi salasana",
-            "password_not_entered": "Sinun täytyy syöttää uusi salasana.",
-            "passwords_mismatch": "Uusien salasanojen on vastattava toisiaan.",
-            "sign_out_other_devices": "Kirjaudu ulos kaikista laitteista",
-            "reset_successful": "Salasanasi on nollattu.",
-            "devices_logout_success": "Sinut on kirjattu ulos kaikilta laitteilta, etkä enää vastaanota push-ilmoituksia. Ota ilmoitukset uudelleen käyttöön kirjautumalla jokaiselle haluamallesi laitteelle.",
-            "return_to_login": "Palaa kirjautumissivulle"
-        },
+        "country_dropdown": "Maapudotusvalikko",
         "common_failures": {
             "invalid_homeserver_discovery": "Epäkelpo kotipalvelimen etsinnän vastaus",
             "cannot_find_autodiscovery_config": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
@@ -3098,7 +3097,8 @@
             "invalid_identity_server_base_url": "Epäkelpo base_url palvelimelle m.identity_server",
             "invalid_identity_server_url": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
             "general_failure": "Yleinen virhe"
-        }
+        },
+        "captcha_description": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti."
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3237,8 +3237,8 @@
         "error_mixed_content": "Virhe – sekasisältö",
         "popout": "Avaa sovelma omassa ikkunassaan",
         "unpin_to_view_right_panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
-        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa",
-        "set_room_layout": "Aseta minun huoneen asettelu kaikille"
+        "set_room_layout": "Aseta minun huoneen asettelu kaikille",
+        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa"
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3320,8 +3320,8 @@
         "show_all_threads": "Näytä kaikki ketjut",
         "empty_explainer": "Ketjut auttavat pitämään keskustelut asiayhteyteen sopivina ja helposti seurattavina.",
         "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa",
-        "open_thread": "Avaa ketju",
-        "unable_to_decrypt": "Viestin salauksen purkaminen ei onnistu"
+        "unable_to_decrypt": "Viestin salauksen purkaminen ei onnistu",
+        "open_thread": "Avaa ketju"
     },
     "theme": {
         "light_high_contrast": "Vaalea, suuri kontrasti"
@@ -3349,12 +3349,12 @@
         "invite": "Kutsu ihmisiä",
         "invite_description": "Kutsu sähköpostiosoitteella tai käyttäjänimellä",
         "invite_this_space": "Kutsu tähän avaruuteen",
-        "joining_space": "Liitytään",
         "user_lacks_permission": "Sinulla ei ole lupaa",
-        "no_search_result_hint": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
-        "title_when_query_available": "Tulokset",
         "title_when_query_unavailable": "Huoneet ja avaruudet",
-        "search_placeholder": "Etsi nimistä ja kuvauksista"
+        "title_when_query_available": "Tulokset",
+        "search_placeholder": "Etsi nimistä ja kuvauksista",
+        "no_search_result_hint": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
+        "joining_space": "Liitytään"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3562,18 +3562,17 @@
         "inaccessible": "Tämä huone tai avaruus ei ole käytettävissä juuri tällä hetkellä.",
         "join_failed_needs_invite": "Huoneen %(roomName)s katseluun tarvitaan kutsu",
         "join_failed_enable_video_rooms": "Liittyäksesi ota videohuoneet käyttöön laboratorion kautta",
-        "jump_to_bottom_button": "Vieritä tuoreimpiin viesteihin",
-        "show_labs_settings": "Näytä laboratorion asetukset",
-        "upgrade_warning_bar": "Huoneen päivittäminen sulkee huoneen nykyisen instanssin ja luo päivitetyn huoneen samalla nimellä.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Lähetetään %(filename)s ja %(count)s muuta",
+                "other": "Lähetetään %(filename)s ja %(count)s muuta"
+            },
+            "uploading_single_file": "Lähetetään %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Tämä huone on jo päivitetty.",
         "upgrade_warning_bar_unstable": "Tämä huone pyörii versiolla <roomVersion />, jonka tämä kotipalvelin on merkannut <i>epävakaaksi</i>.",
         "upgrade_warning_bar_admins": "Vain huoneen ylläpitäjät näkevät tämän varoituksen",
-        "search": {
-            "this_room": "Tämä huone",
-            "all_rooms": "Kaikki huoneet",
-            "field_placeholder": "Haku…"
-        },
-        "jump_read_marker": "Hyppää ensimmäiseen lukemattomaan viestiin.",
+        "upgrade_warning_bar": "Huoneen päivittäminen sulkee huoneen nykyisen instanssin ja luo päivitetyn huoneen samalla nimellä.",
         "status_bar": {
             "requires_consent_agreement": "Et voi lähettää viestejä ennen kuin luet ja hyväksyt <consentLink>käyttöehtomme</consentLink>.",
             "monthly_user_limit_reached": "Viestiäsi ei lähetetty, koska tämä kotipalvelin on saavuttanut kuukausittaisten aktiivisten käyttäjien rajan. <a>Ota yhteyttä palvelun ylläpitäjään</a> jatkaaksesi palvelun käyttämistä.",
@@ -3585,15 +3584,16 @@
             "server_connectivity_lost_title": "Yhteys palvelimeen menetettiin.",
             "server_connectivity_lost_description": "Lähetetyt viestit tallennetaan kunnes yhteys on taas muodostettu."
         },
-        "failed_reject_invite": "Kutsun hylkääminen epäonnistui",
+        "show_labs_settings": "Näytä laboratorion asetukset",
+        "search": {
+            "this_room": "Tämä huone",
+            "all_rooms": "Kaikki huoneet",
+            "field_placeholder": "Haku…"
+        },
+        "jump_to_bottom_button": "Vieritä tuoreimpiin viesteihin",
+        "jump_read_marker": "Hyppää ensimmäiseen lukemattomaan viestiin.",
         "inviter_unknown": "Tuntematon",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "Lähetetään %(filename)s ja %(count)s muuta",
-                "other": "Lähetetään %(filename)s ja %(count)s muuta"
-            },
-            "uploading_single_file": "Lähetetään %(filename)s"
-        }
+        "failed_reject_invite": "Kutsun hylkääminen epäonnistui"
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3810,10 +3810,6 @@
         "filter_placeholder": "Suodata huoneen jäseniä",
         "power_label": "%(userName)s (oikeustaso %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Sinulla ei ole tarrapaketteja käytössä",
-        "empty_add_prompt": "Lisää muutamia"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Kutsun kumoaminen epäonnistui",
         "error_revoke_3pid_invite_description": "Kutsun kumoaminen epäonnistui. Kyseessä saattaa olla väliaikainen ongelma tai sinulla ei ole tarvittavia oikeuksia kutsun kumoamiseen.",
@@ -3857,6 +3853,10 @@
         "error_deactivate": "Käyttäjän poistaminen epäonnistui",
         "role_label": "Rooli huoneessa <RoomName/>"
     },
+    "stickers": {
+        "empty": "Sinulla ei ole tarrapaketteja käytössä",
+        "empty_add_prompt": "Lisää muutamia"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Kiinnitetyt viestit",
@@ -3881,15 +3881,18 @@
         "share_button": "Jaa huone",
         "settings_button": "Huoneen asetukset"
     },
-    "cant_load_page": "Sivun lataaminen ei onnistunut",
-    "left_panel": {
-        "open_dial_pad": "Avaa näppäimistö"
-    },
-    "console_wait": "Odota!",
     "reject_invitation_dialog": {
         "title": "Hylkää kutsu",
         "confirmation": "Oletko varma että haluat hylätä kutsun?",
         "failed": "Kutsun hylkääminen epäonnistui"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Näytät lähettävän tiedostoja. Oletko varma että haluat lopettaa?",
+        "call_in_progress": "Sinulla näyttää olevan puhelu kesken. Haluatko varmasti lopettaa?"
+    },
+    "no_more_results": "Ei enempää tuloksia",
+    "left_panel": {
+        "open_dial_pad": "Avaa näppäimistö"
     },
     "leave_room_dialog": {
         "last_person_warning": "Olet ainoa henkilö täällä. Jos lähdet, kukaan ei voi liittyä tulevaisuudessa, et myöskään sinä.",
@@ -3910,9 +3913,6 @@
         },
         "error_loading_user_profile": "Käyttäjäprofiilia ei voitu ladata"
     },
-    "no_more_results": "Ei enempää tuloksia",
-    "quit_warning": {
-        "file_upload_in_progress": "Näytät lähettävän tiedostoja. Oletko varma että haluat lopettaa?",
-        "call_in_progress": "Sinulla näyttää olevan puhelu kesken. Haluatko varmasti lopettaa?"
-    }
+    "console_wait": "Odota!",
+    "cant_load_page": "Sivun lataaminen ei onnistunut"
 }

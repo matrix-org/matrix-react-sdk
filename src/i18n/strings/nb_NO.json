@@ -623,8 +623,8 @@
         "setup_secure_messages": "Sett opp sikre meldinger",
         "unencrypted": "Ukryptert",
         "show_more": "Vis mer",
-        "are_you_sure": "Er du sikker?",
-        "avatar": "Profilbilde"
+        "avatar": "Profilbilde",
+        "are_you_sure": "Er du sikker?"
     },
     "action": {
         "continue": "Fortsett",
@@ -1349,18 +1349,18 @@
             "leave_space": "Forlat området",
             "aliases_section": "Rom-adresser",
             "other_section": "Andre",
-            "canonical_alias_field_label": "Hovedadresse",
-            "no_aliases_room": "Dette rommet har ikke noen lokale adresser",
-            "local_alias_field_label": "Lokal adresse",
+            "topic_field_label": "Rommets tema",
             "published_aliases_section": "Publiserte adresser",
-            "aliases_items_label": "Andre publiserte adresser:",
-            "aliases_no_items_label": "Det er ingen publiserte adresser enda, legg til en nedenfor",
+            "no_aliases_room": "Dette rommet har ikke noen lokale adresser",
             "new_alias_placeholder": "Ny publisert adresse (f.eks. #alias:tjener)",
+            "name_field_label": "Rommets navn",
             "local_aliases_section": "Lokale adresser",
             "local_aliases_explainer_room": "Velg adresser for dette rommet slik at brukere kan finne dette rommet gjennom hjemmetjeneren din (%(localDomain)s)",
-            "name_field_label": "Rommets navn",
-            "topic_field_label": "Rommets tema",
-            "avatar_field_label": "Rommets avatar"
+            "local_alias_field_label": "Lokal adresse",
+            "canonical_alias_field_label": "Hovedadresse",
+            "avatar_field_label": "Rommets avatar",
+            "aliases_no_items_label": "Det er ingen publiserte adresser enda, legg til en nedenfor",
+            "aliases_items_label": "Andre publiserte adresser:"
         },
         "advanced": {
             "room_version_section": "Romversjon",
@@ -1397,8 +1397,8 @@
             "unverified_session_toast_title": "En ny pålogging. Var det deg?",
             "request_toast_detail": "%(deviceId)s fra %(ip)s",
             "waiting_for_user_accept": "Venter på at %(displayName)s skal akseptere …",
-            "accepting": "Aksepterer …",
-            "start_button": "Begynn verifisering"
+            "start_button": "Begynn verifisering",
+            "accepting": "Aksepterer …"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
@@ -1414,11 +1414,11 @@
             "explainer": "Ta sikkerhetskopi av nøklene dine før du logger av for å unngå å miste dem.",
             "title": "Sett opp"
         },
-        "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten.",
         "messages_not_secure": {
             "title": "Dine meldinger er ikke sikre",
             "cause_1": "Hjemmetjeneren din"
-        }
+        },
+        "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten."
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1497,13 +1497,13 @@
         "misconfigured_title": "Ditt %(brand)s-oppsett er feiloppsatt",
         "create_account_title": "Opprett konto",
         "soft_logout_subheading": "Tøm personlige data",
-        "country_dropdown": "Nedfallsmeny over land",
         "reset_password": {
             "password_not_entered": "Et nytt passord må bli skrevet inn.",
             "passwords_mismatch": "De nye passordene må samsvare med hverandre.",
             "reset_successful": "Passordet ditt har blitt tilbakestilt.",
             "return_to_login": "Gå tilbake til påloggingsskjermen"
-        }
+        },
+        "country_dropdown": "Nedfallsmeny over land"
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1682,21 +1682,21 @@
         "no_peek_join_prompt": "%(roomName)s kan ikke forhåndsvises. Vil du bli med i den?",
         "not_found_title_name": "%(roomName)s eksisterer ikke.",
         "inaccessible_name": "%(roomName)s er ikke tilgjengelig for øyeblikket.",
-        "jump_to_bottom_button": "Hopp bort til de nyeste meldingene",
+        "upload": {
+            "uploading_single_file": "Laster opp %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Dette rommet har allerede blitt oppgradert.",
+        "status_bar": {
+            "retry_all": "Prøv alle igjen",
+            "server_connectivity_lost_title": "Tilkoblingen til tjeneren er nede."
+        },
         "search": {
             "this_room": "Dette rommet",
             "all_rooms": "Alle rom",
             "field_placeholder": "Søk …"
         },
-        "status_bar": {
-            "retry_all": "Prøv alle igjen",
-            "server_connectivity_lost_title": "Tilkoblingen til tjeneren er nede."
-        },
-        "inviter_unknown": "Ukjent",
-        "upload": {
-            "uploading_single_file": "Laster opp %(filename)s"
-        }
+        "jump_to_bottom_button": "Hopp bort til de nyeste meldingene",
+        "inviter_unknown": "Ukjent"
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"
@@ -1801,10 +1801,6 @@
         "filter_placeholder": "Filtrer rommets medlemmer",
         "power_label": "%(userName)s (styrkenivå %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
-        "empty_add_prompt": "Legg til noen nå"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Klarte ikke å trekke tilbake invitasjon",
         "error_revoke_3pid_invite_description": "Klarte ikke å trekke tilbake invitasjonen. Tjener kan ha et forbigående problem, eller det kan hende at du ikke har tilstrekkelige rettigheter for å trekke tilbake invitasjonen.",
@@ -1825,17 +1821,24 @@
         "deactivate_confirm_action": "Deaktiver brukeren",
         "error_deactivate": "Mislyktes i å deaktivere brukeren"
     },
+    "stickers": {
+        "empty": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
+        "empty_add_prompt": "Legg til noen nå"
+    },
     "right_panel": {
         "widgets_section": "Komponenter",
         "share_button": "Del rommet",
         "settings_button": "Rominnstillinger"
     },
-    "cant_load_page": "Klarte ikke å laste inn siden",
-    "left_panel": {
-        "open_dial_pad": "Åpne nummerpanelet"
-    },
     "reject_invitation_dialog": {
         "title": "Avslå invitasjonen"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?"
+    },
+    "no_more_results": "Ingen flere resultater",
+    "left_panel": {
+        "open_dial_pad": "Åpne nummerpanelet"
     },
     "error_dialog": {
         "forget_room_failed": "Kunne ikke glemme rommet %(errCode)s",
@@ -1844,8 +1847,5 @@
         },
         "error_loading_user_profile": "Klarte ikke å laste inn brukerprofilen"
     },
-    "no_more_results": "Ingen flere resultater",
-    "quit_warning": {
-        "file_upload_in_progress": "Du ser til å laste opp filer, er du sikker på at du vil avslutte?"
-    }
+    "cant_load_page": "Klarte ikke å laste inn siden"
 }

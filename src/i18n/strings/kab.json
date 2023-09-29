@@ -1415,7 +1415,6 @@
         "url_preview": {
             "close": "Mdel taskant"
         },
-        "error_no_renderer": "Tadyant-a ur tezmir ad d-tettwaskan",
         "mab": {
             "label": "Tigawin n yizen"
         },
@@ -1423,7 +1422,8 @@
             "no_permission": "Tɛerḍeḍ ad d-tsaliḍ tazmilt tufrint deg tesnakudt n teamt, maca ur tesɛiḍ ara tisirag ad d-tsekneḍ izen i d-teɛniḍ.",
             "unable_to_find": "Ɛerḍeɣ ad d-saliɣ tazmilt tufrint tesnakudt n texxamt-a, maca ur ssawḍeɣ ara ad t-naf.",
             "title": "Asali n yideg n tesnakudt ur yeddi ara"
-        }
+        },
+        "error_no_renderer": "Tadyant-a ur tezmir ad d-tettwaskan"
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",
@@ -1610,26 +1610,26 @@
             "url_previews_section": "Tiskanin n URL",
             "aliases_section": "Tansiwin n texxamt",
             "other_section": "Nniḍen",
+            "topic_field_label": "Asentel n texxamt",
+            "published_aliases_section": "Tansiwin tizuyaz",
+            "no_aliases_room": "Taxxamt-a ur tesɛi ara tansiwin tidiganin",
+            "new_alias_placeholder": "Tansa tamynut i d-yettusuffɣen (am. #alias:server)",
+            "name_field_label": "Isem n texxamt",
+            "local_aliases_section": "Tansiwin tidiganin",
+            "local_aliases_explainer_room": "Sbadu tansiwin i texxamt-a i wakken iseqdacen ad ttafen s uqeddac-ik·im agejdan (%(localDomain)s)",
+            "local_alias_field_label": "Tansa tadigant",
             "error_updating_canonical_alias_title": "Tuccḍa deg usali n tensa tagejdant",
             "error_updating_canonical_alias_description": "Tellad-d tuccḍa deg uleqqem n tansa tagejdant n texxamt. Ur ittusireg ara ula sɣur aqeddac neɣ d tuccḍa kan meẓẓiyen i d-yeḍran.",
             "error_updating_alias_description": "Tella-d tuccḍa deg uleqqem n tansiwin-nniḍen n texxamt. Ur yettusireg ara waya sɣur aqeddac neɣ d tuccḍa kan meẓẓiyen i d-yeḍran.",
-            "error_creating_alias_title": "Tuccḍa deg tmerna n tensa",
-            "error_creating_alias_description": "Tella-d tuccḍa deg tmerna n tansa-a. Ur yettusireg ara waya sɣur aqeddac neɣ d tuccḍa kan meẓẓiyen i d-yeḍran.",
+            "error_deleting_alias_title": "Tuccḍa deg tukksa n tensa",
             "error_deleting_alias_description_forbidden": "Ur tesɛiḍ ara tisirag i wakken ad tekkseḍ tansa.",
             "error_deleting_alias_description": "Tella-d tuccḍa deg tukksa n tansa-a. Ahat dayen ur telli ara neɣ d tuccḍa meẓẓiyen i d-yeḍran.",
-            "error_deleting_alias_title": "Tuccḍa deg tukksa n tensa",
+            "error_creating_alias_title": "Tuccḍa deg tmerna n tensa",
+            "error_creating_alias_description": "Tella-d tuccḍa deg tmerna n tansa-a. Ur yettusireg ara waya sɣur aqeddac neɣ d tuccḍa kan meẓẓiyen i d-yeḍran.",
             "canonical_alias_field_label": "Tansa tagejdant",
-            "no_aliases_room": "Taxxamt-a ur tesɛi ara tansiwin tidiganin",
-            "local_alias_field_label": "Tansa tadigant",
-            "published_aliases_section": "Tansiwin tizuyaz",
-            "aliases_items_label": "Tansiwin-nniḍen i d-yeffɣen:",
+            "avatar_field_label": "Avaṭar n texxamt",
             "aliases_no_items_label": "Ulac tansiwin i d-yeffɣen akka tura, rnu yiwet ddaw",
-            "new_alias_placeholder": "Tansa tamynut i d-yettusuffɣen (am. #alias:server)",
-            "local_aliases_section": "Tansiwin tidiganin",
-            "local_aliases_explainer_room": "Sbadu tansiwin i texxamt-a i wakken iseqdacen ad ttafen s uqeddac-ik·im agejdan (%(localDomain)s)",
-            "name_field_label": "Isem n texxamt",
-            "topic_field_label": "Asentel n texxamt",
-            "avatar_field_label": "Avaṭar n texxamt"
+            "aliases_items_label": "Tansiwin-nniḍen i d-yeffɣen:"
         },
         "advanced": {
             "unfederated": "Anekcum er texxamt-a ulamek s yiqeddacen n Matrix inmeggagen",
@@ -1673,8 +1673,8 @@
             "unverified_sessions_toast_reject": "Ticki",
             "unverified_session_toast_title": "Anekcam amaynut. D kečč/kemm?",
             "waiting_for_user_accept": "Aṛaǧu n %(displayName)s i uqbal…",
-            "accepting": "Aqbal…",
-            "start_button": "Bdu asenqed"
+            "start_button": "Bdu asenqed",
+            "accepting": "Aqbal…"
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
@@ -1708,19 +1708,19 @@
             "explainer": "Ḥrez tisura-ik·im send tuffɣa i wakken ur ttruḥunt ara.",
             "title": "Sbadu"
         },
-        "cross_signing_user_warning": "Aseqdac-a ur issenqed ara akk tiɣimiyin-ines.",
-        "cross_signing_user_normal": "Ur tesneqdeḍ aea aseqdac-a.",
-        "cross_signing_user_verified": "Tesneqdeḍ aseqdac-a. Aseqdac-a issenqed akk tiɣimiyin-ines.",
-        "cross_signing_room_warning": "Yella win yesseqdacen tiɣimit tarussint",
-        "cross_signing_room_normal": "Taxxamt-a tettwawgelhen seg yixef ɣer yixef",
-        "cross_signing_room_verified": "Yal yiwen deg taxxamt-a yettwasenqed",
-        "event_shield_reason_authenticity_not_guaranteed": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
-        "event_shield_reason_mismatched_sender_key": "Yettuwgelhen s tɣimit ur nettwasenqed ara",
         "messages_not_secure": {
             "title": "Iznan-inek·inem d ariɣelsanen",
             "heading": "Yiwen seg wayen i d-iteddun yezmer ad yettwaker:",
             "cause_1": "Aqeddac-ik·im agejdan"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Yettuwgelhen s tɣimit ur nettwasenqed ara",
+        "event_shield_reason_authenticity_not_guaranteed": "Asesteb n yizen-a awgelhen ur yettwaḍman ara deg yibenk-a.",
+        "cross_signing_user_warning": "Aseqdac-a ur issenqed ara akk tiɣimiyin-ines.",
+        "cross_signing_user_verified": "Tesneqdeḍ aseqdac-a. Aseqdac-a issenqed akk tiɣimiyin-ines.",
+        "cross_signing_user_normal": "Ur tesneqdeḍ aea aseqdac-a.",
+        "cross_signing_room_warning": "Yella win yesseqdacen tiɣimit tarussint",
+        "cross_signing_room_verified": "Yal yiwen deg taxxamt-a yettwasenqed",
+        "cross_signing_room_normal": "Taxxamt-a tettwawgelhen seg yixef ɣer yixef"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -1822,14 +1822,13 @@
         "create_account_title": "Rnu amiḍan",
         "failed_soft_logout_homeserver": "Allus n usesteb ur yeddi ara ssebbba n wugur deg uqeddac agejdan",
         "soft_logout_subheading": "Sfeḍ isefka udmawanen",
-        "captcha_description": "Aqeddac-a aqejdan yesra ad iẓer ma mačči d aṛubut i telliḍ.",
-        "country_dropdown": "Tabdart n udrurem n tmura",
         "reset_password": {
             "password_not_entered": "Awal uffir amaynut ilaq ad yettusekcem.",
             "passwords_mismatch": "Awalen uffiren imaynuten ilaq ad mṣadan.",
             "reset_successful": "Awal uffir-inek/inem yettuwennez.",
             "return_to_login": "Uɣal ɣer ugdil n tuqqna"
         },
+        "country_dropdown": "Tabdart n udrurem n tmura",
         "common_failures": {
             "invalid_homeserver_discovery": "Tiririt n usnirem n uqeddac agejdan d tarameɣtut",
             "cannot_find_autodiscovery_config": "Awway n uswel n usnirem awurman seg uqeddac ur yeddi ara",
@@ -1839,7 +1838,8 @@
             "invalid_identity_server_base_url": "D arameɣtu base_url i m.identity_server",
             "invalid_identity_server_url": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
             "general_failure": "Tuccḍa tamatut"
-        }
+        },
+        "captcha_description": "Aqeddac-a aqejdan yesra ad iẓer ma mačči d aṛubut i telliḍ."
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2046,17 +2046,17 @@
         "no_peek_join_prompt": "%(roomName)s ur tezmir ara ad tettwasenqed. Tebɣiḍ ad ternuḍ ɣer-s?",
         "not_found_title_name": "%(roomName)s ulac-it.",
         "inaccessible_name": "%(roomName)s ulac anekcum ɣer-s akka tura.",
-        "jump_to_bottom_button": "Drurem ɣer yiznan akk n melmi kan",
-        "upgrade_warning_bar": "Aleqqem n texxamt-a ad tsens tummant tamirant n texxamt yerna ad ternu taxxamt yettuleqqmen s yisem-nni kan.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Asali n %(filename)s d %(count)s wiyaḍ-nniḍen",
+                "one": "Asali n %(filename)s d %(count)s wayeḍ-nniḍen"
+            },
+            "uploading_single_file": "Asali n %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Taxxamt-a tettuleqqam yakan.",
         "upgrade_warning_bar_unstable": "Taxxamt-a tesedday lqem n texxamt <roomVersion />, i yecreḍ uqeddac-a agejdan <i>ur yerkid ara</i>.",
         "upgrade_warning_bar_admins": "Ala inedbalen kan n texxamt ara iwalin tuccḍa-a",
-        "search": {
-            "this_room": "Taxxamt-a",
-            "all_rooms": "Akk tixxamin",
-            "field_placeholder": "Nadi…"
-        },
-        "jump_read_marker": "Ɛeddi ɣer yizen amezwaru ur nettwaɣra ara.",
+        "upgrade_warning_bar": "Aleqqem n texxamt-a ad tsens tummant tamirant n texxamt yerna ad ternu taxxamt yettuleqqmen s yisem-nni kan.",
         "status_bar": {
             "requires_consent_agreement": "Ur tezmireḍ ara ad tazneḍ iznan alamma tesneqdeḍ syen ad tqebleḍ <consentLink>tiwtilin-nneɣ</consentLink>.",
             "monthly_user_limit_reached": "Izen-ik·im ur yettwazen ara acku aqeddac-a agejdan iɛedda talast n useqdac urmid n wayyur. Ttxil-k·m <a>nermes anedbal-ik·im n umeẓlu</a> i wakken ad tkemmleḍ aseqdec ameẓlu.",
@@ -2064,15 +2064,15 @@
             "server_connectivity_lost_title": "Tṛuḥ tuqqna ɣer uqeddac.",
             "server_connectivity_lost_description": "Iznan yettwaznen ad ttwakelsen alamma tuɣal-d tuqqna."
         },
-        "failed_reject_invite": "Tigtin n tinnubga ur yeddi ara",
+        "search": {
+            "this_room": "Taxxamt-a",
+            "all_rooms": "Akk tixxamin",
+            "field_placeholder": "Nadi…"
+        },
+        "jump_to_bottom_button": "Drurem ɣer yiznan akk n melmi kan",
+        "jump_read_marker": "Ɛeddi ɣer yizen amezwaru ur nettwaɣra ara.",
         "inviter_unknown": "Arussin",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Asali n %(filename)s d %(count)s wiyaḍ-nniḍen",
-                "one": "Asali n %(filename)s d %(count)s wayeḍ-nniḍen"
-            },
-            "uploading_single_file": "Asali n %(filename)s"
-        }
+        "failed_reject_invite": "Tigtin n tinnubga ur yeddi ara"
     },
     "file_panel": {
         "guest_note": "Ilaq-ak·am <a>ad teskelseḍ</a> i wakken ad tesxedmeḍ tamahilt-a",
@@ -2212,10 +2212,6 @@
         "filter_placeholder": "Sizdeg iɛeggalen n texxamt",
         "power_label": "%(userName)s (i iǧehden %(powerLevelNumber)s"
     },
-    "stickers": {
-        "empty": "Ulac ɣer-k·m akka tura ikemmusen n yimyintaḍ yettwaremden",
-        "empty_add_prompt": "Rnu kra tura"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Asefsex n tinnubga ur yeddi ara",
         "error_revoke_3pid_invite_description": "Tigtin n tinubga d awezɣi. Aqeddac yettmagar-d ahat ugur akka tura neɣ ur tesɛiḍ tisirag i iwulmen i wakken ad tagiḍ tinubga-a.",
@@ -2244,17 +2240,25 @@
         "deactivate_confirm_action": "Kkes aseqdac",
         "error_deactivate": "Asensi n useqdac ur yeddi ara"
     },
+    "stickers": {
+        "empty": "Ulac ɣer-k·m akka tura ikemmusen n yimyintaḍ yettwaremden",
+        "empty_add_prompt": "Rnu kra tura"
+    },
     "right_panel": {
         "widgets_section": "Iwiǧiten",
         "share_button": "Bḍu taxxamt",
         "settings_button": "Iɣewwaṛen n texxamt"
     },
-    "cant_load_page": "Asali n usebter ur yeddi ara",
     "reject_invitation_dialog": {
         "title": "Agi tinnubga",
         "confirmation": "S tidet tebɣiḍ ad tesfesxeḍ tinubga?",
         "failed": "Tigtin n tinnubga ur yeddi ara"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Aql-ak·akem tessalayeḍ-d ifuyla, tebɣiḍ stidet ad teffɣeḍ?",
+        "call_in_progress": "Tettbaneḍ aql-ak·akem deg useiwel, tebɣiḍ s tidet ad teffɣeḍ?"
+    },
+    "no_more_results": "Ulac ugar n yigmaḍ",
     "leave_room_dialog": {
         "room_rejoin_warning": "Taxxamt-a mačči d tazayezt. Ur tezmireḍ ara ad ternuḍ ɣer-s war tinubga.",
         "leave_room_question": "S tidet tebɣiḍ ad teǧǧeḍ taxxamt '%(roomName)s'?"
@@ -2267,9 +2271,5 @@
         },
         "error_loading_user_profile": "Yegguma ad d-yali umaɣnu n useqdac"
     },
-    "no_more_results": "Ulac ugar n yigmaḍ",
-    "quit_warning": {
-        "file_upload_in_progress": "Aql-ak·akem tessalayeḍ-d ifuyla, tebɣiḍ stidet ad teffɣeḍ?",
-        "call_in_progress": "Tettbaneḍ aql-ak·akem deg useiwel, tebɣiḍ s tidet ad teffɣeḍ?"
-    }
+    "cant_load_page": "Asali n usebter ur yeddi ara"
 }

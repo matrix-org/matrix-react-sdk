@@ -847,11 +847,11 @@
         "historical": "تاریخی",
         "go_to_settings": "برو به تنظیمات",
         "setup_secure_messages": "پیام‌رسانی امن را تنظیم کنید",
-        "unencrypted": "رمزگذاری نشده",
         "view_message": "مشاهده پیام",
+        "unencrypted": "رمزگذاری نشده",
         "show_more": "نمایش بیشتر",
-        "are_you_sure": "مطمئنی؟",
-        "avatar": "نمایه"
+        "avatar": "نمایه",
+        "are_you_sure": "مطمئنی؟"
     },
     "action": {
         "continue": "ادامه",
@@ -1723,7 +1723,6 @@
         "url_preview": {
             "close": "بستن پیش نمایش"
         },
-        "error_no_renderer": "امکان نمایش این رخداد وجود ندارد",
         "send_state_sent": "پیام شما ارسال شد",
         "send_state_failed": "ارسال با خطا مواجه شد",
         "mab": {
@@ -1733,7 +1732,8 @@
             "no_permission": "سعی شد یک نقطه‌ی زمانی خاص در پیام‌های این اتاق بارگیری و نمایش داده شود، اما شما دسترسی لازم برای مشاهده‌ی پیام را ندارید.",
             "unable_to_find": "سعی شد یک نقطه‌ی زمانی خاص در پیام‌های این اتاق بارگیری و نمایش داده شود، اما پیداکردن آن میسر نیست.",
             "title": "بارگیری و نمایش پیام‌ها با مشکل مواجه شد"
-        }
+        },
+        "error_no_renderer": "امکان نمایش این رخداد وجود ندارد"
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",
@@ -1979,26 +1979,26 @@
             "leave_space": "ترک فضای کاری",
             "aliases_section": "آدرس‌های اتاق",
             "other_section": "دیگر",
+            "topic_field_label": "موضوع اتاق",
+            "published_aliases_section": "آدرس‌های منتشر شده",
+            "no_aliases_room": "این اتاق آدرس محلی ندارد",
+            "new_alias_placeholder": "آدرس جدید منتشر شده (به عنوان مثال #alias:server)",
+            "name_field_label": "نام اتاق",
+            "local_aliases_section": "آدرس‌های محلی",
+            "local_aliases_explainer_room": "آدرس‌های این اتاق را تنظیم کنید تا کاربران بتوانند این اتاق را از طریق سرور شما پیدا کنند (%(localDomain)s)",
+            "local_alias_field_label": "آدرس محلی",
             "error_updating_canonical_alias_title": "خطا در به روزرسانی آدرس اصلی",
             "error_updating_canonical_alias_description": "در به روزرسانی آدرس اصلی اتاق خطایی روی داد. ممکن است سرور مجاز نباشد و یا خطای موقتی رخ داده باشد.",
             "error_updating_alias_description": "در به روزرسانی آدرس های جایگزین اتاق خطایی روی داد. ممکن است سرور مجاز نباشد و یا اینکه خطایی موقت رخ داده باشد.",
-            "error_creating_alias_title": "خطا در ایجاد آدرس",
-            "error_creating_alias_description": "هنگام ایجاد آدرس خطایی روی داد. ممکن است سرور مجاز نباشد و یا اینکه خطایی موقت رخ داده باشد.",
+            "error_deleting_alias_title": "خطا در حذف آدرس",
             "error_deleting_alias_description_forbidden": "شما اجازه حذف آدرس را ندارید.",
             "error_deleting_alias_description": "هنگام حذف آدرس خطایی روی داد. ممکن است دیگر وجود نداشته باشد یا خطایی موقت روی داده باشد.",
-            "error_deleting_alias_title": "خطا در حذف آدرس",
+            "error_creating_alias_title": "خطا در ایجاد آدرس",
+            "error_creating_alias_description": "هنگام ایجاد آدرس خطایی روی داد. ممکن است سرور مجاز نباشد و یا اینکه خطایی موقت رخ داده باشد.",
             "canonical_alias_field_label": "آدرس اصلی",
-            "no_aliases_room": "این اتاق آدرس محلی ندارد",
-            "local_alias_field_label": "آدرس محلی",
-            "published_aliases_section": "آدرس‌های منتشر شده",
-            "aliases_items_label": "دیگر آدرس‌های منتشر شده:",
+            "avatar_field_label": "آواتار اتاق",
             "aliases_no_items_label": "آدرس دیگری منتشر نشده است، در زیر اضافه کنید",
-            "new_alias_placeholder": "آدرس جدید منتشر شده (به عنوان مثال #alias:server)",
-            "local_aliases_section": "آدرس‌های محلی",
-            "local_aliases_explainer_room": "آدرس‌های این اتاق را تنظیم کنید تا کاربران بتوانند این اتاق را از طریق سرور شما پیدا کنند (%(localDomain)s)",
-            "name_field_label": "نام اتاق",
-            "topic_field_label": "موضوع اتاق",
-            "avatar_field_label": "آواتار اتاق"
+            "aliases_items_label": "دیگر آدرس‌های منتشر شده:"
         },
         "advanced": {
             "unfederated": "این اتاق توسط سرورهای ماتریکس در دسترس نیست",
@@ -2045,8 +2045,8 @@
             "request_toast_detail": "%(deviceId)s از %(ip)s",
             "verification_description": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید.",
             "waiting_for_user_accept": "منتظر قبول کردن توسط %(displayName)s…",
-            "accepting": "پذیرش…",
-            "start_button": "شروع تایید هویت"
+            "start_button": "شروع تایید هویت",
+            "accepting": "پذیرش…"
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2083,19 +2083,19 @@
             "explainer": "پیش از خروج از حساب کاربری، از کلید‌های خود پشتیبان بگیرید تا آن‌ها را از دست ندهید.",
             "title": "برپایی"
         },
-        "cross_signing_user_warning": "این کاربر هیچ‌کدام از نشست‌های خود را تائید نکرده است.",
-        "cross_signing_user_normal": "شما این کاربر را تائید نکرده‌اید.",
-        "cross_signing_user_verified": "شما این کاربر را تائید کرده‌اید. این کاربر تمام نشست‌های خود را تائيد کرده‌است.",
-        "cross_signing_room_warning": "فردی از یک نشست ناشناس استفاده می‌کند",
-        "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است",
-        "cross_signing_room_verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
-        "event_shield_reason_authenticity_not_guaranteed": "صحت این پیام رمزگذاری شده در این دستگاه تضمین نمی شود.",
-        "event_shield_reason_mismatched_sender_key": "توسط یک نشست تأیید نشده رمزگذاری شده است",
         "messages_not_secure": {
             "title": "پیام های شما ایمن نیستند",
             "heading": "ممکن است یکی از موارد زیر به در معرض خطر باشد:",
             "cause_1": "سرور شما"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "توسط یک نشست تأیید نشده رمزگذاری شده است",
+        "event_shield_reason_authenticity_not_guaranteed": "صحت این پیام رمزگذاری شده در این دستگاه تضمین نمی شود.",
+        "cross_signing_user_warning": "این کاربر هیچ‌کدام از نشست‌های خود را تائید نکرده است.",
+        "cross_signing_user_verified": "شما این کاربر را تائید کرده‌اید. این کاربر تمام نشست‌های خود را تائيد کرده‌است.",
+        "cross_signing_user_normal": "شما این کاربر را تائید نکرده‌اید.",
+        "cross_signing_room_warning": "فردی از یک نشست ناشناس استفاده می‌کند",
+        "cross_signing_room_verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
+        "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است"
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2238,14 +2238,13 @@
         "create_account_title": "ساختن حساب کاربری",
         "failed_soft_logout_homeserver": "به دلیل مشکلی که در سرور وجود دارد ، احراز هویت مجدد انجام نشد",
         "soft_logout_subheading": "پاک‌کردن داده‌های شخصی",
-        "captcha_description": "این سرور می خواهد مطمئن شود که شما یک ربات نیستید.",
-        "country_dropdown": "لیست کشور",
         "reset_password": {
             "password_not_entered": "گذواژه جدید باید وارد شود.",
             "passwords_mismatch": "گذرواژه‌ی جدید باید مطابقت داشته باشند.",
             "reset_successful": "گذرواژه‌ی شما با موفقیت تغییر کرد.",
             "return_to_login": "بازگشت به صفحه‌ی ورود"
         },
+        "country_dropdown": "لیست کشور",
         "common_failures": {
             "invalid_homeserver_discovery": "پاسخ جستجوی سرور معتبر نیست",
             "cannot_find_autodiscovery_config": "دریافت پیکربندیِ جستجوی خودکار از سرور موفقیت‌آمیز نبود",
@@ -2255,7 +2254,8 @@
             "invalid_identity_server_base_url": "base_url نامعتبر برای سرور m.identity_server",
             "invalid_identity_server_url": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
             "general_failure": "خطای عمومی"
-        }
+        },
+        "captcha_description": "این سرور می خواهد مطمئن شود که شما یک ربات نیستید."
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2491,8 +2491,8 @@
         "invite_description": "دعوت با ایمیل یا نام‌کاربری",
         "invite_this_space": "به این فضای کاری دعوت کنید",
         "user_lacks_permission": "شما دسترسی ندارید",
-        "no_search_result_hint": "ممکن است بخواهید یک جستجوی دیگر انجام دهید یا غلط‌های املایی را بررسی کنید.",
-        "search_placeholder": "جستجوی نام‌ها و توضیحات"
+        "search_placeholder": "جستجوی نام‌ها و توضیحات",
+        "no_search_result_hint": "ممکن است بخواهید یک جستجوی دیگر انجام دهید یا غلط‌های املایی را بررسی کنید."
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",
@@ -2644,17 +2644,17 @@
         "no_peek_join_prompt": "پیش بینی %(roomName)s امکان پذیر نیست. آیا می خواهید به آن بپیوندید؟",
         "not_found_title_name": "%(roomName)s وجود ندارد.",
         "inaccessible_name": "در حال حاضر %(roomName)s قابل دسترسی نیست.",
-        "jump_to_bottom_button": "به جدیدترین پیام‌ها بروید",
-        "upgrade_warning_bar": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "در حال بارگذاری %(filename)s و %(count)s مورد دیگر",
+                "one": "در حال بارگذاری %(filename)s و %(count)s مورد دیگر"
+            },
+            "uploading_single_file": "در حال بارگذاری %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "این اتاق قبلاً ارتقا یافته است.",
         "upgrade_warning_bar_unstable": "این اتاق از نسخه اتاق <roomVersion /> استفاده می کند، که این سرور آن را به عنوان <i> ناپایدار</i> علامت گذاری کرده است.",
         "upgrade_warning_bar_admins": "فقط مدیران اتاق این هشدار را مشاهده خواهند کرد",
-        "search": {
-            "this_room": "این گپ",
-            "all_rooms": "همه‌ی گپ‌ها",
-            "field_placeholder": "جستجو…"
-        },
-        "jump_read_marker": "رفتن به اولین پیام خوانده نشده.",
+        "upgrade_warning_bar": "با ارتقا این اتاق نسخه فعلی اتاق خاموش شده و یک اتاق ارتقا یافته به همین نام ایجاد می شود.",
         "status_bar": {
             "requires_consent_agreement": "تا زمانی که <consentLink>شرایط و ضوابط سرویس ما</consentLink> را مطالعه و با آن موافقت نکنید، نمی توانید هیچ پیامی ارسال کنید.",
             "monthly_user_limit_reached": "پیام شما ارسال نشد زیرا این سرور به محدودیت تعداد کاربر فعال ماهانه‌ی خود رسیده است. لطفاً برای ادامه استفاده از سرویس <a> با مدیر سرور خود تماس بگیرید </a>.",
@@ -2666,15 +2666,15 @@
             "server_connectivity_lost_title": "اتصال به سرور از دست رفت.",
             "server_connectivity_lost_description": "پیام‌های ارسالی تا زمان بازگشت اتصال شما ذخیره خواهند ماند."
         },
-        "failed_reject_invite": "رد دعوتنامه با شکست همراه شد",
+        "search": {
+            "this_room": "این گپ",
+            "all_rooms": "همه‌ی گپ‌ها",
+            "field_placeholder": "جستجو…"
+        },
+        "jump_to_bottom_button": "به جدیدترین پیام‌ها بروید",
+        "jump_read_marker": "رفتن به اولین پیام خوانده نشده.",
         "inviter_unknown": "ناشناخته",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "در حال بارگذاری %(filename)s و %(count)s مورد دیگر",
-                "one": "در حال بارگذاری %(filename)s و %(count)s مورد دیگر"
-            },
-            "uploading_single_file": "در حال بارگذاری %(filename)s"
-        }
+        "failed_reject_invite": "رد دعوتنامه با شکست همراه شد"
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2862,10 +2862,6 @@
         "filter_placeholder": "فیلتر کردن اعضای اتاق",
         "power_label": "%(userName)s (سطح قدرت %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "شما در حال حاضر هیچ بسته برچسب فعالی ندارید",
-        "empty_add_prompt": "اکنون چندتایی اضافه کنید"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "دعوت لغو نشد",
         "error_revoke_3pid_invite_description": "دعوت لغو نشد. ممکن است سرور با یک مشکل موقتی روبرو شده باشد و یا اینکه شما مجوز کافی برای لغو دعوت را نداشته باشید.",
@@ -2895,6 +2891,10 @@
         "deactivate_confirm_action": "غیرفعال کردن کاربر",
         "error_deactivate": "غیرفعال کردن کاربر انجام نشد"
     },
+    "stickers": {
+        "empty": "شما در حال حاضر هیچ بسته برچسب فعالی ندارید",
+        "empty_add_prompt": "اکنون چندتایی اضافه کنید"
+    },
     "right_panel": {
         "pinned_messages": {
             "limits": {
@@ -2907,14 +2907,18 @@
         "share_button": "به اشتراک گذاری اتاق",
         "settings_button": "تنظیمات اتاق"
     },
-    "cant_load_page": "نمایش صفحه امکان‌پذیر نبود",
-    "left_panel": {
-        "open_dial_pad": "باز کردن صفحه شماره‌گیری"
-    },
     "reject_invitation_dialog": {
         "title": "ردکردن دعوت",
         "confirmation": "آیا مطمئن هستید که می خواهید دعوت را رد کنید؟",
         "failed": "رد دعوتنامه موفقیت‌آمیز نبود"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "به نظر می‌رسد شما در حال باگذاری فایل هستید، آیا از خروج اطمینان دارید؟",
+        "call_in_progress": "به نظر می‌رسد شما در میانه‌ی یک تماس هستید، آیا از خروج اطمینان دارید؟"
+    },
+    "no_more_results": "نتایج بیشتری یافن نشد",
+    "left_panel": {
+        "open_dial_pad": "باز کردن صفحه شماره‌گیری"
     },
     "leave_room_dialog": {
         "last_person_warning": "شما در این‌جا تنها هستید. اگر اینجا را ترک کنید، دیگر هیچ‌کس حتی خودتان امکان پیوستن مجدد را نخواهید داشت.",
@@ -2931,9 +2935,5 @@
         },
         "error_loading_user_profile": "امکان نمایش پروفایل کاربر میسر نیست"
     },
-    "no_more_results": "نتایج بیشتری یافن نشد",
-    "quit_warning": {
-        "file_upload_in_progress": "به نظر می‌رسد شما در حال باگذاری فایل هستید، آیا از خروج اطمینان دارید؟",
-        "call_in_progress": "به نظر می‌رسد شما در میانه‌ی یک تماس هستید، آیا از خروج اطمینان دارید؟"
-    }
+    "cant_load_page": "نمایش صفحه امکان‌پذیر نبود"
 }

@@ -990,12 +990,12 @@
         "historical": "Ferilskráning",
         "go_to_settings": "Fara í stillingar",
         "setup_secure_messages": "Setja upp örugg skilaboð",
-        "unencrypted": "Ódulritað",
         "view_message": "Sjá skilaboð",
-        "joined": "Gekk í hópinn",
+        "unencrypted": "Ódulritað",
         "show_more": "Sýna meira",
-        "are_you_sure": "Ertu viss?",
-        "avatar": "Auðkennismynd"
+        "joined": "Gekk í hópinn",
+        "avatar": "Auðkennismynd",
+        "are_you_sure": "Ertu viss?"
     },
     "action": {
         "continue": "Halda áfram",
@@ -1293,15 +1293,15 @@
         "format_italics": "Skáletrað",
         "format_insert_link": "Setja inn tengil",
         "replying_title": "Svara",
-        "edit_composer_label": "Breyta skilaboðum",
-        "send_voice_message": "Senda talskilaboð",
         "stop_voice_message": "Stöðva upptöku",
+        "send_voice_message": "Senda talskilaboð",
         "link_modal": {
             "title_edit": "Breyta tengli",
             "title_create": "Búa til tengil",
             "text_field_label": "Texti",
             "link_field_label": "Tengill"
-        }
+        },
+        "edit_composer_label": "Breyta skilaboðum"
     },
     "power_level": {
         "default": "Sjálfgefið",
@@ -2229,9 +2229,8 @@
             "other": "Séð af %(count)s aðilum"
         },
         "read_receipts_label": "Leskvittanir",
-        "thread_info_basic": "Úr spjallþræði",
-        "error_no_renderer": "Ekki tókst að birta þennan atburð",
         "undecryptable_tooltip": "Þessi skilaboð er ekki hægt að afkóða",
+        "thread_info_basic": "Úr spjallþræði",
         "send_state_sent": "Skilaboðin þín voru send",
         "send_state_failed": "Mistókst að senda",
         "mab": {
@@ -2247,7 +2246,8 @@
             "no_permission": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en þú ert ekki með heimild til að skoða tilteknu skilaboðin.",
             "unable_to_find": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
             "title": "Mistókst að hlaða inn staðsetningu á tímalínu"
-        }
+        },
+        "error_no_renderer": "Ekki tókst að birta þennan atburð"
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
@@ -2567,24 +2567,24 @@
             "leave_space": "Yfirgefa svæði",
             "aliases_section": "Vistföng spjallrása",
             "other_section": "Annað",
-            "error_updating_canonical_alias_title": "Villa við uppfærslu á aðalvistfangi",
-            "error_creating_alias_title": "Villa við að búa til vistfang",
-            "error_deleting_alias_description_forbidden": "Þú hefur ekki heimild til að eyða vistfanginu.",
-            "error_deleting_alias_title": "Villa við að fjarlægja vistfang",
-            "canonical_alias_field_label": "Aðalvistfang",
+            "topic_field_label": "Umfjöllunarefni spjallrásar",
+            "published_aliases_section": "Birt vistföng",
             "no_aliases_space": "Þetta svæði er ekki með nein staðvær vistföng",
             "no_aliases_room": "Þessi spjallrás er ekki með nein staðvær vistföng",
-            "local_alias_field_label": "Staðvært vistfang",
-            "published_aliases_section": "Birt vistföng",
-            "aliases_items_label": "Önnur birt vistföng:",
-            "aliases_no_items_label": "Engin önnur birt vistföng ennþá, bættu einu við hér fyrir neðan",
             "new_alias_placeholder": "Nýtt birt vistfangs (t.d. #samnefni:netþjónn)",
+            "name_field_label": "Heiti spjallrásar",
             "local_aliases_section": "Staðvær vistföng",
             "local_aliases_explainer_space": "Stilltu vistföng fyrir þetta svæði svo notendur geti fundið það í gegnum heimaþjóninn þinn (%(localDomain)s)",
             "local_aliases_explainer_room": "Stilltu vistföng fyrir þessa spjallrás svo notendur geti fundið hana í gegnum heimaþjóninn þinn (%(localDomain)s)",
-            "name_field_label": "Heiti spjallrásar",
-            "topic_field_label": "Umfjöllunarefni spjallrásar",
-            "avatar_field_label": "Auðkennismynd spjallrásar"
+            "local_alias_field_label": "Staðvært vistfang",
+            "error_updating_canonical_alias_title": "Villa við uppfærslu á aðalvistfangi",
+            "error_deleting_alias_title": "Villa við að fjarlægja vistfang",
+            "error_deleting_alias_description_forbidden": "Þú hefur ekki heimild til að eyða vistfanginu.",
+            "error_creating_alias_title": "Villa við að búa til vistfang",
+            "canonical_alias_field_label": "Aðalvistfang",
+            "avatar_field_label": "Auðkennismynd spjallrásar",
+            "aliases_no_items_label": "Engin önnur birt vistföng ennþá, bættu einu við hér fyrir neðan",
+            "aliases_items_label": "Önnur birt vistföng:"
         },
         "advanced": {
             "unfederated": "Þessi spjallrás er ekki aðgengileg fjartengdum Matrix-netþjónum",
@@ -2666,7 +2666,6 @@
             "verify_using_device": "Sannreyna með öðru tæki",
             "verify_later": "Ég mun sannreyna síðar",
             "waiting_for_user_accept": "Bíð eftir að %(displayName)s samþykki…",
-            "accepting": "Samþykki…",
             "start_button": "Hefja sannvottun",
             "after_new_login": {
                 "unable_to_verify": "Tókst ekki að sannreyna þetta tæki",
@@ -2674,7 +2673,8 @@
                 "device_verified": "Tæki er sannreynt",
                 "reset_confirmation": "Viltu í alvörunni endurstilla sannvottunarlyklana?",
                 "skip_verification": "Sleppa sannvottun í bili"
-            }
+            },
+            "accepting": "Samþykki…"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -2705,18 +2705,18 @@
             "explainer": "Taktu öryggisafrit af dulritunarlyklunum áður en þú skráir þig út svo þeir tapist ekki.",
             "title": "Setja upp"
         },
-        "cross_signing_user_warning": "Þessi notandi hefur ekki sannreynt öll tæki þeirra.",
-        "cross_signing_user_normal": "Þér hefur ekki sannreynt þennan notanda.",
-        "cross_signing_user_verified": "Þú hefur sannreynt þennan notanda. Þessi notandi hefur sannreynt öll tæki þeirra.",
-        "cross_signing_room_warning": "Einhver er að nota óþekkta setu",
-        "cross_signing_room_normal": "Þessi spjallrás er enda-í-enda dulrituð",
-        "cross_signing_room_verified": "Allir á þessari spjallrás eru staðfestir",
-        "event_shield_reason_mismatched_sender_key": "Dulritað meðf ósannreyndu tæki",
         "messages_not_secure": {
             "title": "Skilaboðin þín eru ekki örugg",
             "heading": "Eitt af eftirfarandi gæti verið berskjaldað:",
             "cause_1": "Heimaþjónninn þinn"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Dulritað meðf ósannreyndu tæki",
+        "cross_signing_user_warning": "Þessi notandi hefur ekki sannreynt öll tæki þeirra.",
+        "cross_signing_user_verified": "Þú hefur sannreynt þennan notanda. Þessi notandi hefur sannreynt öll tæki þeirra.",
+        "cross_signing_user_normal": "Þér hefur ekki sannreynt þennan notanda.",
+        "cross_signing_room_warning": "Einhver er að nota óþekkta setu",
+        "cross_signing_room_verified": "Allir á þessari spjallrás eru staðfestir",
+        "cross_signing_room_normal": "Þessi spjallrás er enda-í-enda dulrituð"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -2880,14 +2880,6 @@
         "failed_soft_logout_homeserver": "Tókst ekki að endurauðkenna vegna vandamála með heimaþjón",
         "soft_logout_subheading": "Hreinsa persónuleg gögn",
         "forgot_password_send_email": "Senda tölvupóst",
-        "captcha_description": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
-        "country_dropdown": "Fellilisti með löndum",
-        "qr_code_login": {
-            "sign_in_new_device": "Skrá inn nýtt tæki",
-            "error_invalid_scanned_code": "Skannaði kóðinn er ógildur.",
-            "review_and_approve": "Yfirfarðu og samþykktu innskráninguna",
-            "waiting_for_device": "Bíð eftir að tækið skráist inn"
-        },
         "reset_password": {
             "confirm_new_password": "Staðfestu nýja lykilorðið",
             "password_not_entered": "Það verður að setja inn nýtt lykilorð.",
@@ -2897,13 +2889,21 @@
             "devices_logout_success": "Þú hefur verið skráður út úr öllum tækjum og munt ekki lengur fá ýti-tilkynningar. Til að endurvirkja tilkynningar, þarf að skrá sig aftur inn á hverju tæki fyrir sig.",
             "return_to_login": "Fara aftur í innskráningargluggann"
         },
+        "qr_code_login": {
+            "sign_in_new_device": "Skrá inn nýtt tæki",
+            "error_invalid_scanned_code": "Skannaði kóðinn er ógildur.",
+            "review_and_approve": "Yfirfarðu og samþykktu innskráninguna",
+            "waiting_for_device": "Bíð eftir að tækið skráist inn"
+        },
+        "country_dropdown": "Fellilisti með löndum",
         "common_failures": {
             "invalid_homeserver_base_url": "Ógilt base_url fyrir m.homeserver",
             "homeserver_url_invalid": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
             "invalid_identity_server_base_url": "Ógilt base_url fyrir m.identity_server",
             "invalid_identity_server_url": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
             "general_failure": "Almenn bilun"
-        }
+        },
+        "captcha_description": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni."
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3146,8 +3146,8 @@
         "show_all_threads": "Birta alla spjallþræði",
         "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
         "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum",
-        "open_thread": "Opna spjallþráð",
-        "unable_to_decrypt": "Tókst ekki að afkóða skilaboð"
+        "unable_to_decrypt": "Tókst ekki að afkóða skilaboð",
+        "open_thread": "Opna spjallþráð"
     },
     "theme": {
         "light_high_contrast": "Ljóst með mikil birtuskil",
@@ -3174,11 +3174,11 @@
         "invite": "Bjóða fólki",
         "invite_description": "Bjóða með tölvupóstfangi eða notandanafni",
         "invite_this_space": "Bjóða inn á þetta svæði",
-        "joining_space": "Geng í hópinn",
         "user_lacks_permission": "Þú hefur ekki heimild",
-        "title_when_query_available": "Niðurstöður",
         "title_when_query_unavailable": "Spjallrásir og svæði",
-        "search_placeholder": "Leita í nöfnum og lýsingum"
+        "title_when_query_available": "Niðurstöður",
+        "search_placeholder": "Leita í nöfnum og lýsingum",
+        "joining_space": "Geng í hópinn"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3364,16 +3364,15 @@
         "inaccessible": "Þessi spjallrás eða svæði er ekki aðgengilegt í augnablikinu.",
         "inaccessible_subtitle_1": "Prófaðu aftur síðar, eða spurðu einhvern stjórnanda spjallrásar eða svæðis hvort þú hafir aðgang.",
         "join_failed_needs_invite": "Til að skoða %(roomName)s þarftu boð",
-        "jump_to_bottom_button": "Skruna að nýjustu skilaboðunum",
-        "show_labs_settings": "Sýna tilraunastillingar",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Sendi inn %(filename)s og %(count)s til viðbótar",
+                "one": "Sendi inn %(filename)s og %(count)s til viðbótar"
+            },
+            "uploading_single_file": "Sendi inn %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Þessi spjallrás hefur þegar verið uppfærð.",
         "upgrade_warning_bar_admins": "Aðeins stjórnendur spjallrásar munu sjá þessa aðvörun",
-        "search": {
-            "this_room": "Þessi spjallrás",
-            "all_rooms": "Allar spjallrásir",
-            "field_placeholder": "Leita…"
-        },
-        "jump_read_marker": "Fara í fyrstu ólesnu skilaboðin.",
         "status_bar": {
             "requires_consent_agreement": "Þú getur ekki sent nein skilaboð fyrr en þú hefur farið yfir og samþykkir <consentLink>skilmála okkar</consentLink>.",
             "monthly_user_limit_reached": "Skilaboðin þín voru ekki send vegna þess að þessi heimaþjónn er kominn fram yfir takmörk á mánaðarlega virkum notendum. Hafðu <a>samband við kerfisstjóra þjónustunnar þinnar</a> til að halda áfram að nota þjónustuna.",
@@ -3383,15 +3382,16 @@
             "retry_all": "Prófa aftur allt",
             "server_connectivity_lost_title": "Tenging við vefþjón hefur rofnað."
         },
-        "failed_reject_invite": "Mistókst að hafna boði",
+        "show_labs_settings": "Sýna tilraunastillingar",
+        "search": {
+            "this_room": "Þessi spjallrás",
+            "all_rooms": "Allar spjallrásir",
+            "field_placeholder": "Leita…"
+        },
+        "jump_to_bottom_button": "Skruna að nýjustu skilaboðunum",
+        "jump_read_marker": "Fara í fyrstu ólesnu skilaboðin.",
         "inviter_unknown": "Óþekkt",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Sendi inn %(filename)s og %(count)s til viðbótar",
-                "one": "Sendi inn %(filename)s og %(count)s til viðbótar"
-            },
-            "uploading_single_file": "Sendi inn %(filename)s"
-        }
+        "failed_reject_invite": "Mistókst að hafna boði"
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3597,10 +3597,6 @@
         "filter_placeholder": "Sía meðlimi spjallrásar",
         "power_label": "%(userName)s (með völd sem %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Í augnablikinu ertu ekki með neina límmerkjapakka virkjaða",
-        "empty_add_prompt": "Bæta við núna"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Mistókst að afturkalla boð",
         "admin_tools_section": "Kerfisstjóratól",
@@ -3649,6 +3645,10 @@
         "error_deactivate": "Mistókst að gera þennan notanda óvirkan",
         "role_label": "Hlutverk í <RoomName/>"
     },
+    "stickers": {
+        "empty": "Í augnablikinu ertu ekki með neina límmerkjapakka virkjaða",
+        "empty_add_prompt": "Bæta við núna"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Föst skilaboð",
@@ -3672,15 +3672,18 @@
         "share_button": "Deila spjallrás",
         "settings_button": "Stillingar spjallrásar"
     },
-    "cant_load_page": "Gat ekki hlaðið inn síðu",
-    "left_panel": {
-        "open_dial_pad": "Opna talnaborð"
-    },
-    "console_wait": "Bíddu!",
     "reject_invitation_dialog": {
         "title": "Hafna boði",
         "confirmation": "Ertu viss um að þú viljir hafna þessu boði?",
         "failed": "Mistókst að hafna boði"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Það lítur út eins og þú sért að senda inn skrár, ertu viss um að þú viljir hætta?",
+        "call_in_progress": "Það lítur út eins og þú sért í símtali, ertu viss um að þú viljir hætta?"
+    },
+    "no_more_results": "Ekki fleiri niðurstöður",
+    "left_panel": {
+        "open_dial_pad": "Opna talnaborð"
     },
     "leave_room_dialog": {
         "last_person_warning": "Þú ert eini eintaklingurinn hérna. Ef þú ferð út, mun enginn framar geta tekið þátt, að þér meðtöldum.",
@@ -3700,9 +3703,6 @@
         },
         "error_loading_user_profile": "Gat ekki hlaðið inn notandasniði"
     },
-    "no_more_results": "Ekki fleiri niðurstöður",
-    "quit_warning": {
-        "file_upload_in_progress": "Það lítur út eins og þú sért að senda inn skrár, ertu viss um að þú viljir hætta?",
-        "call_in_progress": "Það lítur út eins og þú sért í símtali, ertu viss um að þú viljir hætta?"
-    }
+    "console_wait": "Bíddu!",
+    "cant_load_page": "Gat ekki hlaðið inn síðu"
 }

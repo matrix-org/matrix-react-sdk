@@ -1156,12 +1156,12 @@
         "historical": "Cronologia",
         "go_to_settings": "Vai alle impostazioni",
         "setup_secure_messages": "Imposta i messaggi sicuri",
-        "unencrypted": "Non criptato",
         "view_message": "Vedi messaggio",
-        "joined": "Entrato/a",
+        "unencrypted": "Non criptato",
         "show_more": "Mostra altro",
-        "are_you_sure": "Sei sicuro?",
-        "avatar": "Avatar"
+        "joined": "Entrato/a",
+        "avatar": "Avatar",
+        "are_you_sure": "Sei sicuro?"
     },
     "action": {
         "continue": "Continua",
@@ -1499,15 +1499,15 @@
         "format_italics": "Corsivo",
         "format_insert_link": "Inserisci collegamento",
         "replying_title": "Rispondere",
-        "edit_composer_label": "Modifica messaggio",
-        "send_voice_message": "Invia messaggio vocale",
         "stop_voice_message": "Ferma la registrazione",
+        "send_voice_message": "Invia messaggio vocale",
         "link_modal": {
             "title_edit": "Modifica collegamento",
             "title_create": "Crea un collegamento",
             "text_field_label": "Testo",
             "link_field_label": "Collegamento"
-        }
+        },
+        "edit_composer_label": "Modifica messaggio"
     },
     "power_level": {
         "default": "Predefinito",
@@ -2608,13 +2608,12 @@
             "other": "Visto da %(count)s persone"
         },
         "read_receipts_label": "Ricevuta di lettura",
-        "thread_info_basic": "Da una conversazione",
-        "error_no_renderer": "Questo evento non può essere mostrato",
         "undecryptable_tooltip": "Non è stato possibile decifrare questo messaggio",
-        "send_state_sending": "Invio del tuo messaggio…",
-        "send_state_encrypting": "Crittazione del tuo messaggio…",
+        "thread_info_basic": "Da una conversazione",
         "send_state_sent": "Il tuo messaggio è stato inviato",
+        "send_state_sending": "Invio del tuo messaggio…",
         "send_state_failed": "Invio fallito",
+        "send_state_encrypting": "Crittazione del tuo messaggio…",
         "mab": {
             "label": "Azioni messaggio",
             "view_in_room": "Vedi nella stanza",
@@ -2628,7 +2627,8 @@
             "no_permission": "Si è tentato di caricare un punto specifico nella cronologia della stanza, ma non hai l'autorizzazione per vedere il messaggio in questione.",
             "unable_to_find": "Si è tentato di caricare un punto specifico nella cronologia della stanza, ma non è stato trovato.",
             "title": "Caricamento posizione cronologica fallito"
-        }
+        },
+        "error_no_renderer": "Questo evento non può essere mostrato"
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -2979,31 +2979,31 @@
             "leave_space": "Esci dallo spazio",
             "aliases_section": "Indirizzi stanza",
             "other_section": "Altro",
-            "error_updating_canonical_alias_title": "Errore di aggiornamento indirizzo principale",
-            "error_updating_canonical_alias_description": "Si è verificato un errore aggiornando l'indirizzo principale della stanza. Potrebbe non essere permesso dal server o un problema temporaneo.",
-            "error_updating_alias_description": "Si è verificato un errore aggiornando gli indirizzi alternativi della stanza. Potrebbe non essere consentito dal server o essere un errore temporaneo.",
-            "error_creating_alias_title": "Errore creazione indirizzo",
-            "error_creating_alias_description": "Si è verificato un errore creando l'indirizzo. Potrebbe non essere permesso dal server o un problema temporaneo.",
-            "error_deleting_alias_description_forbidden": "Non hai l'autorizzazione per eliminare l'indirizzo.",
-            "error_deleting_alias_description": "Si è verificato un errore rimuovendo l'indirizzo. Potrebbe non esistere più o essere un problema temporaneo.",
-            "error_deleting_alias_title": "Errore rimozione indirizzo",
-            "canonical_alias_field_label": "Indirizzo principale",
-            "no_aliases_space": "Questo spazio non ha indirizzi locali",
-            "no_aliases_room": "Questa stanza non ha indirizzi locali",
-            "local_alias_field_label": "Indirizzo locale",
+            "topic_field_label": "Argomento stanza",
             "published_aliases_section": "Indirizzi pubblicati",
             "published_aliases_explainer_space": "Gli indirizzi pubblicati possono essere usati da chiunque su tutti i server per entrare nel tuo spazio.",
             "published_aliases_explainer_room": "Gli indirizzi pubblicati possono essere usati da chiunque su tutti i server per entrare nella tua stanza.",
             "published_aliases_description": "Per pubblicare un indirizzo, deve prima essere impostato come indirizzo locale.",
-            "aliases_items_label": "Altri indirizzi pubblicati:",
-            "aliases_no_items_label": "Nessun altro indirizzo ancora pubblicato, aggiungine uno sotto",
+            "no_aliases_space": "Questo spazio non ha indirizzi locali",
+            "no_aliases_room": "Questa stanza non ha indirizzi locali",
             "new_alias_placeholder": "Nuovo indirizzo pubblicato (es. #alias:server)",
+            "name_field_label": "Nome stanza",
             "local_aliases_section": "Indirizzi locali",
             "local_aliases_explainer_space": "Imposta gli indirizzi per questo spazio affinché gli utenti lo trovino attraverso il tuo homeserver (%(localDomain)s)",
             "local_aliases_explainer_room": "Imposta gli indirizzi per la stanza affinché gli utenti la trovino attraverso il tuo homeserver (%(localDomain)s)",
-            "name_field_label": "Nome stanza",
-            "topic_field_label": "Argomento stanza",
-            "avatar_field_label": "Avatar della stanza"
+            "local_alias_field_label": "Indirizzo locale",
+            "error_updating_canonical_alias_title": "Errore di aggiornamento indirizzo principale",
+            "error_updating_canonical_alias_description": "Si è verificato un errore aggiornando l'indirizzo principale della stanza. Potrebbe non essere permesso dal server o un problema temporaneo.",
+            "error_updating_alias_description": "Si è verificato un errore aggiornando gli indirizzi alternativi della stanza. Potrebbe non essere consentito dal server o essere un errore temporaneo.",
+            "error_deleting_alias_title": "Errore rimozione indirizzo",
+            "error_deleting_alias_description_forbidden": "Non hai l'autorizzazione per eliminare l'indirizzo.",
+            "error_deleting_alias_description": "Si è verificato un errore rimuovendo l'indirizzo. Potrebbe non esistere più o essere un problema temporaneo.",
+            "error_creating_alias_title": "Errore creazione indirizzo",
+            "error_creating_alias_description": "Si è verificato un errore creando l'indirizzo. Potrebbe non essere permesso dal server o un problema temporaneo.",
+            "canonical_alias_field_label": "Indirizzo principale",
+            "avatar_field_label": "Avatar della stanza",
+            "aliases_no_items_label": "Nessun altro indirizzo ancora pubblicato, aggiungine uno sotto",
+            "aliases_items_label": "Altri indirizzi pubblicati:"
         },
         "advanced": {
             "unfederated": "Questa stanza non è accessibile da server di Matrix remoti",
@@ -3109,10 +3109,9 @@
             "verify_later": "Verificherò dopo",
             "verify_reset_warning_1": "La reimpostazione delle chiavi di verifica non può essere annullata. Dopo averlo fatto, non avrai accesso ai vecchi messaggi cifrati, e gli amici che ti avevano verificato in precedenza vedranno avvisi di sicurezza fino a quando non ti ri-verifichi con loro.",
             "verify_reset_warning_2": "Procedi solo se sei sicuro di avere perso tutti gli altri tuoi dispositivi e la chiave di sicurezza.",
-            "self_verification_hint": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
             "waiting_for_user_accept": "In attesa che %(displayName)s accetti…",
-            "accepting": "Accettazione…",
             "start_button": "Inizia la verifica",
+            "self_verification_hint": "Per continuare, accetta la richiesta di verifica nell'altro tuo dispositivo.",
             "error_starting_title": "Errore di avvio della verifica",
             "error_starting_description": "Non siamo riusciti ad avviare la conversazione con l'altro utente.",
             "after_new_login": {
@@ -3121,7 +3120,8 @@
                 "device_verified": "Dispositivo verificato",
                 "reset_confirmation": "Reimpostare le chiavi di verifica?",
                 "skip_verification": "Salta la verifica per adesso"
-            }
+            },
+            "accepting": "Accettazione…"
         },
         "old_version_detected_title": "Rilevati dati di crittografia obsoleti",
         "old_version_detected_description": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
@@ -3159,14 +3159,6 @@
             "explainer": "Fai una copia delle tue chiavi prima di disconnetterti per evitare di perderle.",
             "title": "Imposta"
         },
-        "cross_signing_user_warning": "Questo utente non ha verificato tutte le sue sessioni.",
-        "cross_signing_user_normal": "Non hai verificato questo utente.",
-        "cross_signing_user_verified": "Hai verificato questo utente. Questo utente ha verificato tutte le sue sessioni.",
-        "cross_signing_room_warning": "Qualcuno sta usando una sessione sconosciuta",
-        "cross_signing_room_normal": "Questa stanza è cifrata end-to-end",
-        "cross_signing_room_verified": "Tutti in questa stanza sono verificati",
-        "event_shield_reason_authenticity_not_guaranteed": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
-        "event_shield_reason_mismatched_sender_key": "Cifrato da una sessione non verificata",
         "messages_not_secure": {
             "title": "I tuoi messaggi non sono sicuri",
             "heading": "Uno dei seguenti potrebbe essere compromesso:",
@@ -3174,7 +3166,15 @@
             "cause_2": "L'homeserver al quale è connesso l'utente che stai verificando",
             "cause_3": "La tua connessione internet o quella degli altri utenti",
             "cause_4": "La tua sessione o quella degli altri utenti"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Cifrato da una sessione non verificata",
+        "event_shield_reason_authenticity_not_guaranteed": "L'autenticità di questo messaggio cifrato non può essere garantita su questo dispositivo.",
+        "cross_signing_user_warning": "Questo utente non ha verificato tutte le sue sessioni.",
+        "cross_signing_user_verified": "Hai verificato questo utente. Questo utente ha verificato tutte le sue sessioni.",
+        "cross_signing_user_normal": "Non hai verificato questo utente.",
+        "cross_signing_room_warning": "Qualcuno sta usando una sessione sconosciuta",
+        "cross_signing_room_verified": "Tutti in questa stanza sono verificati",
+        "cross_signing_room_normal": "Questa stanza è cifrata end-to-end"
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",
@@ -3362,8 +3362,19 @@
         "soft_logout_subheading": "Elimina dati personali",
         "soft_logout_warning": "Attenzione: i tuoi dati personali (incluse le chiavi di crittografia) sono ancora memorizzati in questa sessione. Cancellali se hai finito di usare questa sessione o se vuoi accedere ad un altro account.",
         "forgot_password_send_email": "Invia email",
-        "captcha_description": "Questo homeserver vorrebbe assicurarsi che non sei un robot.",
-        "country_dropdown": "Nazione a tendina",
+        "reset_password": {
+            "rate_limit_error": "Troppi tentativi in poco tempo. Attendi un po' prima di riprovare.",
+            "rate_limit_error_with_time": "Troppi tentativi in poco tempo. Riprova dopo %(timeout)s.",
+            "other_devices_logout_warning_1": "La disconnessione dai tuoi dispositivi eliminerà le chiavi di crittografia dei messaggi salvate in essi, rendendo illeggibile la cronologia delle chat cifrate.",
+            "other_devices_logout_warning_2": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, imposta il backup delle chiavi o esporta le tue chiavi dei messaggi da un altro dispositivo prima di procedere.",
+            "confirm_new_password": "Conferma nuova password",
+            "password_not_entered": "Deve essere inserita una nuova password.",
+            "passwords_mismatch": "Le nuove password devono coincidere.",
+            "sign_out_other_devices": "Disconnetti tutti i dispositivi",
+            "reset_successful": "La tua password è stata reimpostata.",
+            "devices_logout_success": "Hai eseguito la disconnessione da tutti i dispositivi e non riceverai più notifiche push. Per riattivare le notifiche, riaccedi su ogni dispositivo.",
+            "return_to_login": "Torna alla schermata di accesso"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Accedi nel nuovo dispositivo",
             "error_linking_incomplete": "Il collegamento non è stato completato nel tempo previsto.",
@@ -3387,19 +3398,7 @@
             "waiting_for_device": "In attesa che il dispositivo acceda",
             "completing_setup": "Completamento configurazione nuovo dispositivo"
         },
-        "reset_password": {
-            "rate_limit_error": "Troppi tentativi in poco tempo. Attendi un po' prima di riprovare.",
-            "rate_limit_error_with_time": "Troppi tentativi in poco tempo. Riprova dopo %(timeout)s.",
-            "other_devices_logout_warning_1": "La disconnessione dai tuoi dispositivi eliminerà le chiavi di crittografia dei messaggi salvate in essi, rendendo illeggibile la cronologia delle chat cifrate.",
-            "other_devices_logout_warning_2": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, imposta il backup delle chiavi o esporta le tue chiavi dei messaggi da un altro dispositivo prima di procedere.",
-            "confirm_new_password": "Conferma nuova password",
-            "password_not_entered": "Deve essere inserita una nuova password.",
-            "passwords_mismatch": "Le nuove password devono coincidere.",
-            "sign_out_other_devices": "Disconnetti tutti i dispositivi",
-            "reset_successful": "La tua password è stata reimpostata.",
-            "devices_logout_success": "Hai eseguito la disconnessione da tutti i dispositivi e non riceverai più notifiche push. Per riattivare le notifiche, riaccedi su ogni dispositivo.",
-            "return_to_login": "Torna alla schermata di accesso"
-        },
+        "country_dropdown": "Nazione a tendina",
         "common_failures": {
             "invalid_homeserver_discovery": "Risposta della ricerca homeserver non valida",
             "cannot_find_autodiscovery_config": "Ottenimento automatico configurazione dal server fallito",
@@ -3409,7 +3408,8 @@
             "invalid_identity_server_base_url": "Base_url per m.identity_server non valido",
             "invalid_identity_server_url": "L'URL del server di identità non sembra essere un server di identità valido",
             "general_failure": "Guasto generale"
-        }
+        },
+        "captcha_description": "Questo homeserver vorrebbe assicurarsi che non sei un robot."
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -3581,8 +3581,8 @@
         "unmaximise": "Demassimizza",
         "popout": "Oggetto a comparsa",
         "unpin_to_view_right_panel": "Sblocca questo widget per vederlo in questo pannello",
-        "close_to_view_right_panel": "Chiudi questo widget per vederlo in questo pannello",
-        "set_room_layout": "Imposta la disposizione della stanza per tutti"
+        "set_room_layout": "Imposta la disposizione della stanza per tutti",
+        "close_to_view_right_panel": "Chiudi questo widget per vederlo in questo pannello"
     },
     "feedback": {
         "sent": "Feedback inviato",
@@ -3677,8 +3677,8 @@
         "empty_explainer": "Le conversazioni ti aiutano a tenere le tue discussioni in tema e rintracciabili.",
         "empty_tip": "<b>Consiglio:</b> usa \"%(replyInThread)s\" passando sopra un messaggio.",
         "empty_heading": "Tieni le discussioni organizzate in conversazioni",
-        "open_thread": "Apri conversazione",
-        "unable_to_decrypt": "Impossibile decifrare il messaggio"
+        "unable_to_decrypt": "Impossibile decifrare il messaggio",
+        "open_thread": "Apri conversazione"
     },
     "theme": {
         "light_high_contrast": "Alto contrasto chiaro",
@@ -3707,12 +3707,12 @@
         "invite": "Invita persone",
         "invite_description": "Invita con email o nome utente",
         "invite_this_space": "Invita in questo spazio",
-        "joining_space": "Entrata in corso",
         "user_lacks_permission": "Non hai il permesso",
-        "no_search_result_hint": "Prova a fare una ricerca diversa o controllare errori di battitura.",
-        "title_when_query_available": "Risultati",
         "title_when_query_unavailable": "Stanze e spazi",
-        "search_placeholder": "Cerca nomi e descrizioni"
+        "title_when_query_available": "Risultati",
+        "search_placeholder": "Cerca nomi e descrizioni",
+        "no_search_result_hint": "Prova a fare una ricerca diversa o controllare errori di battitura.",
+        "joining_space": "Entrata in corso"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -3947,20 +3947,19 @@
         "join_failed_needs_invite": "Per vedere %(roomName)s ti serve un invito",
         "view_failed_enable_video_rooms": "Per vederla, prima attiva le stanze video in Laboratori",
         "join_failed_enable_video_rooms": "Per entrare, prima attiva le stanze video in Laboratori",
-        "jump_to_bottom_button": "Scorri ai messaggi più recenti",
-        "show_labs_settings": "Mostra impostazioni Laboratori",
-        "upgrade_warning_bar": "Aggiornare questa stanza spegnerà l'istanza attuale della stanza e ne creerà una aggiornata con lo stesso nome.",
+        "waiting_for_join_title": "In attesa che gli utenti si uniscano a %(brand)s",
+        "waiting_for_join_subtitle": "Una volta che gli utenti si saranno uniti a %(brand)s, potrete scrivervi e la stanza sarà crittografata end-to-end",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Invio di %(filename)s e altri %(count)s",
+                "one": "Invio di %(filename)s e altri %(count)s"
+            },
+            "uploading_single_file": "Invio di %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Questa stanza è già stata aggiornata.",
         "upgrade_warning_bar_unstable": "La versione di questa stanza è <roomVersion />, che questo homeserver ha segnalato come <i>non stabile</i>.",
         "upgrade_warning_bar_admins": "Solo gli amministratori della stanza vedranno questo avviso",
-        "search": {
-            "this_room": "Questa stanza",
-            "all_rooms": "Tutte le stanze",
-            "field_placeholder": "Cerca…",
-            "this_room_button": "Cerca in questa stanza",
-            "all_rooms_button": "Cerca in tutte le stanze"
-        },
-        "jump_read_marker": "Salta al primo messaggio non letto.",
+        "upgrade_warning_bar": "Aggiornare questa stanza spegnerà l'istanza attuale della stanza e ne creerà una aggiornata con lo stesso nome.",
         "status_bar": {
             "requires_consent_agreement": "Non puoi inviare alcun messaggio fino a quando non leggi ed accetti <consentLink>i nostri termini e condizioni</consentLink>.",
             "monthly_user_limit_reached": "Il tuo messaggio non è stato inviato perché questo homeserver ha raggiunto il suo limite di utenti attivi mensili. <a>Contatta l'amministratore del servizio</a> per continuare ad usarlo.",
@@ -3973,18 +3972,19 @@
             "server_connectivity_lost_title": "Connessione al server persa.",
             "server_connectivity_lost_description": "I messaggi inviati saranno salvati fino al ritorno della connessione."
         },
-        "creating_room_text": "Stiamo creando una stanza con %(names)s",
-        "failed_reject_invite": "Rifiuto dell'invito fallito",
-        "inviter_unknown": "Sconosciuto",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Invio di %(filename)s e altri %(count)s",
-                "one": "Invio di %(filename)s e altri %(count)s"
-            },
-            "uploading_single_file": "Invio di %(filename)s"
+        "show_labs_settings": "Mostra impostazioni Laboratori",
+        "search": {
+            "this_room": "Questa stanza",
+            "all_rooms": "Tutte le stanze",
+            "field_placeholder": "Cerca…",
+            "this_room_button": "Cerca in questa stanza",
+            "all_rooms_button": "Cerca in tutte le stanze"
         },
-        "waiting_for_join_title": "In attesa che gli utenti si uniscano a %(brand)s",
-        "waiting_for_join_subtitle": "Una volta che gli utenti si saranno uniti a %(brand)s, potrete scrivervi e la stanza sarà crittografata end-to-end"
+        "jump_to_bottom_button": "Scorri ai messaggi più recenti",
+        "jump_read_marker": "Salta al primo messaggio non letto.",
+        "inviter_unknown": "Sconosciuto",
+        "failed_reject_invite": "Rifiuto dell'invito fallito",
+        "creating_room_text": "Stiamo creando una stanza con %(names)s"
     },
     "file_panel": {
         "guest_note": "Devi <a>registrarti</a> per usare questa funzionalità",
@@ -4210,10 +4210,6 @@
         "filter_placeholder": "Filtra membri della stanza",
         "power_label": "%(userName)s (poteri %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Non hai ancora alcun pacchetto di adesivi attivato",
-        "empty_add_prompt": "Aggiungine ora"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Revoca dell'invito fallita",
         "error_revoke_3pid_invite_description": "Impossibile revocare l'invito. Il server potrebbe avere un problema temporaneo o non si dispone di autorizzazioni sufficienti per revocare l'invito.",
@@ -4267,6 +4263,10 @@
         "error_deactivate": "Disattivazione utente fallita",
         "role_label": "Ruolo in <RoomName/>"
     },
+    "stickers": {
+        "empty": "Non hai ancora alcun pacchetto di adesivi attivato",
+        "empty_add_prompt": "Aggiungine ora"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Messaggi ancorati",
@@ -4292,15 +4292,18 @@
         "share_button": "Condividi stanza",
         "settings_button": "Impostazioni stanza"
     },
-    "cant_load_page": "Caricamento pagina fallito",
-    "left_panel": {
-        "open_dial_pad": "Apri tastierino"
-    },
-    "console_wait": "Aspetta!",
     "reject_invitation_dialog": {
         "title": "Rifiuta l'invito",
         "confirmation": "Sei sicuro di volere rifiutare l'invito?",
         "failed": "Rifiuto dell'invito fallito"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Sembra che tu stia inviando file, sei sicuro di volere uscire?",
+        "call_in_progress": "Sembra che tu sia in una chiamata, sei sicuro di volere uscire?"
+    },
+    "no_more_results": "Nessun altro risultato",
+    "left_panel": {
+        "open_dial_pad": "Apri tastierino"
     },
     "leave_room_dialog": {
         "last_person_warning": "Sei l'unica persona qui. Se esci, nessuno potrà entrare in futuro, incluso te.",
@@ -4321,9 +4324,6 @@
         },
         "error_loading_user_profile": "Impossibile caricare il profilo utente"
     },
-    "no_more_results": "Nessun altro risultato",
-    "quit_warning": {
-        "file_upload_in_progress": "Sembra che tu stia inviando file, sei sicuro di volere uscire?",
-        "call_in_progress": "Sembra che tu sia in una chiamata, sei sicuro di volere uscire?"
-    }
+    "console_wait": "Aspetta!",
+    "cant_load_page": "Caricamento pagina fallito"
 }

@@ -1156,12 +1156,12 @@
         "historical": "Riwayat",
         "go_to_settings": "Pergi ke Pengaturan",
         "setup_secure_messages": "Siapkan Pesan Aman",
-        "unencrypted": "Tidak Dienkripsi",
         "view_message": "Tampilkan pesan",
-        "joined": "Tergabung",
+        "unencrypted": "Tidak Dienkripsi",
         "show_more": "Tampilkan lebih banyak",
-        "are_you_sure": "Apakah Anda yakin?",
-        "avatar": "Avatar"
+        "joined": "Tergabung",
+        "avatar": "Avatar",
+        "are_you_sure": "Apakah Anda yakin?"
     },
     "action": {
         "continue": "Lanjut",
@@ -1499,15 +1499,15 @@
         "format_italics": "Miring",
         "format_insert_link": "Tambahkan tautan",
         "replying_title": "Membalas",
-        "edit_composer_label": "Edit pesan",
-        "send_voice_message": "Kirim sebuah pesan suara",
         "stop_voice_message": "Hentikan merekam",
+        "send_voice_message": "Kirim sebuah pesan suara",
         "link_modal": {
             "title_edit": "Sunting tautan",
             "title_create": "Buat sebuah tautan",
             "text_field_label": "Teks",
             "link_field_label": "Tautan"
-        }
+        },
+        "edit_composer_label": "Edit pesan"
     },
     "power_level": {
         "default": "Bawaan",
@@ -2608,13 +2608,12 @@
             "other": "Dilihat oleh %(count)s orang"
         },
         "read_receipts_label": "Laporan dibaca",
-        "thread_info_basic": "Dari sebuah utasan",
-        "error_no_renderer": "Peristiwa ini tidak dapat ditampilkan",
         "undecryptable_tooltip": "Pesan ini tidak dapat didekripsi",
-        "send_state_sending": "Mengirim pesan Anda…",
-        "send_state_encrypting": "Mengenkripsi pesan Anda…",
+        "thread_info_basic": "Dari sebuah utasan",
         "send_state_sent": "Pesan Anda telah terkirim",
+        "send_state_sending": "Mengirim pesan Anda…",
         "send_state_failed": "Gagal untuk dikirim",
+        "send_state_encrypting": "Mengenkripsi pesan Anda…",
         "mab": {
             "label": "Aksi Pesan",
             "view_in_room": "Tampilkan di ruangan",
@@ -2628,7 +2627,8 @@
             "no_permission": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi Anda tidak memiliki izin untuk menampilkan pesannya.",
             "unable_to_find": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi tidak dapat menemukannya.",
             "title": "Gagal untuk memuat posisi lini masa"
-        }
+        },
+        "error_no_renderer": "Peristiwa ini tidak dapat ditampilkan"
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -2979,31 +2979,31 @@
             "leave_space": "Tinggalkan Space",
             "aliases_section": "Alamat Ruangan",
             "other_section": "Lainnya",
-            "error_updating_canonical_alias_title": "Terjadi kesalahan memperbarui alamat utama",
-            "error_updating_canonical_alias_description": "Terjadi sebuah kesalahan memperbarui alamat utama ruangan. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
-            "error_updating_alias_description": "Terjadi sebuah kesalahan memperbarui alamat alternatif ruangan. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
-            "error_creating_alias_title": "Terjadi kesalahan membuat alamat",
-            "error_creating_alias_description": "Terjadi sebuah kesalahan membuat alamat. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
-            "error_deleting_alias_description_forbidden": "Anda tidak memiliki izin untuk menghapus alamatnya.",
-            "error_deleting_alias_description": "Terjadi sebuah kesalahan menghapus alamat. Itu mungkin sudah tidak ada atau ada kesalahan sementara.",
-            "error_deleting_alias_title": "Terjadi kesalahan menghapus alamat",
-            "canonical_alias_field_label": "Alamat utama",
-            "no_aliases_space": "Space ini tidak memiliki alamat lokal",
-            "no_aliases_room": "Ruangan ini tidak memiliki alamat lokal",
-            "local_alias_field_label": "Alamat lokal",
+            "topic_field_label": "Topik Ruangan",
             "published_aliases_section": "Alamat yang Dipublikasikan",
             "published_aliases_explainer_space": "Alamat yang dipublikasikan dapat digunakan oleh siapa saja di server apa saja untuk bergabung dengan space Anda.",
             "published_aliases_explainer_room": "Alamat yang dipublikasikan dapat digunakan oleh siapa saja di server apa saja untuk bergabung dengan ruangan Anda.",
             "published_aliases_description": "Untuk mempublikasikan sebuah alamat, itu harus diatur sebagai alamat lokal dahulu.",
-            "aliases_items_label": "Alamat lainnya yang dipublikasikan:",
-            "aliases_no_items_label": "Tidak ada alamat yang dipublikasikan, tambahkan satu di bawah",
+            "no_aliases_space": "Space ini tidak memiliki alamat lokal",
+            "no_aliases_room": "Ruangan ini tidak memiliki alamat lokal",
             "new_alias_placeholder": "Alamat baru yang akan dipublikasikan (mis. #alias:server)",
+            "name_field_label": "Nama Ruangan",
             "local_aliases_section": "Alamat Lokal",
             "local_aliases_explainer_space": "Tetapkan alamat untuk space ini supaya pengguna dapat menemukan space ini melalui homeserver Anda (%(localDomain)s)",
             "local_aliases_explainer_room": "Tetapkan alamat untuk ruangan ini supaya pengguna dapat menemukan space ini melalui homeserver Anda (%(localDomain)s)",
-            "name_field_label": "Nama Ruangan",
-            "topic_field_label": "Topik Ruangan",
-            "avatar_field_label": "Avatar ruangan"
+            "local_alias_field_label": "Alamat lokal",
+            "error_updating_canonical_alias_title": "Terjadi kesalahan memperbarui alamat utama",
+            "error_updating_canonical_alias_description": "Terjadi sebuah kesalahan memperbarui alamat utama ruangan. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
+            "error_updating_alias_description": "Terjadi sebuah kesalahan memperbarui alamat alternatif ruangan. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
+            "error_deleting_alias_title": "Terjadi kesalahan menghapus alamat",
+            "error_deleting_alias_description_forbidden": "Anda tidak memiliki izin untuk menghapus alamatnya.",
+            "error_deleting_alias_description": "Terjadi sebuah kesalahan menghapus alamat. Itu mungkin sudah tidak ada atau ada kesalahan sementara.",
+            "error_creating_alias_title": "Terjadi kesalahan membuat alamat",
+            "error_creating_alias_description": "Terjadi sebuah kesalahan membuat alamat. Ini mungkin tidak diperbolehkan oleh servernya atau ada kegagalan sementara.",
+            "canonical_alias_field_label": "Alamat utama",
+            "avatar_field_label": "Avatar ruangan",
+            "aliases_no_items_label": "Tidak ada alamat yang dipublikasikan, tambahkan satu di bawah",
+            "aliases_items_label": "Alamat lainnya yang dipublikasikan:"
         },
         "advanced": {
             "unfederated": "Ruangan ini tidak dapat diakses oleh pengguna Matrix jarak jauh",
@@ -3109,10 +3109,9 @@
             "verify_later": "Saya verifikasi nanti",
             "verify_reset_warning_1": "Mengatur ulang kunci verifikasi Anda tidak dapat dibatalkan. Setelah mengatur ulang, Anda tidak akan memiliki akses ke pesan terenkripsi lama, dan semua orang yang sebelumnya telah memverifikasi Anda akan melihat peringatan keamanan sampai Anda memverifikasi ulang dengan mereka.",
             "verify_reset_warning_2": "Hanya lanjutkan jika Anda yakin Anda telah kehilangan semua perangkat lainnya dan kunci keamanan Anda.",
-            "self_verification_hint": "Untuk melanjutkan, mohon terima permintaan verifikasi di perangkat Anda yang lain.",
             "waiting_for_user_accept": "Menunggu untuk %(displayName)s untuk menerima…",
-            "accepting": "Menerima…",
             "start_button": "Mulai Verifikasi",
+            "self_verification_hint": "Untuk melanjutkan, mohon terima permintaan verifikasi di perangkat Anda yang lain.",
             "error_starting_title": "Terjadi kesalahan memulai verifikasi",
             "error_starting_description": "Kami tidak dapat memulai sebuah obrolan dengan pengguna lain.",
             "after_new_login": {
@@ -3121,7 +3120,8 @@
                 "device_verified": "Perangkat telah diverifikasi",
                 "reset_confirmation": "Benar-benar ingin mengatur ulang kunci-kunci verifikasi?",
                 "skip_verification": "Lewatkan verifikasi untuk sementara"
-            }
+            },
+            "accepting": "Menerima…"
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3159,14 +3159,6 @@
             "explainer": "Cadangkan kunci Anda sebelum keluar untuk menghindari kehilangannya.",
             "title": "Siapkan"
         },
-        "cross_signing_user_warning": "Pengguna ini belum memverifikasi semua sesinya.",
-        "cross_signing_user_normal": "Anda belum memverifikasi pengguna ini.",
-        "cross_signing_user_verified": "Anda telah memverifikasi pengguna ini. Pengguna ini telah memverifikasi semua sesinya.",
-        "cross_signing_room_warning": "Seseorang menggunakan sesi yang tidak dikenal",
-        "cross_signing_room_normal": "Ruangan ini dienkripsi secara ujung ke ujung",
-        "cross_signing_room_verified": "Semuanya di ruangan ini telah terverifikasi",
-        "event_shield_reason_authenticity_not_guaranteed": "Keaslian pesan terenkripsi ini tidak dapat dijamin pada perangkat ini.",
-        "event_shield_reason_mismatched_sender_key": "Terenkripsi oleh sesi yang belum diverifikasi",
         "messages_not_secure": {
             "title": "Pesan-pesan Anda tidak aman",
             "heading": "Salah satu dari berikut ini dapat dikompromikan:",
@@ -3174,7 +3166,15 @@
             "cause_2": "Homeserver pengguna yang Anda memverifikasi",
             "cause_3": "Koneksi internet Anda, atau pengguna yang lain",
             "cause_4": "Sesi Anda, atau pengguna yang lain"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Terenkripsi oleh sesi yang belum diverifikasi",
+        "event_shield_reason_authenticity_not_guaranteed": "Keaslian pesan terenkripsi ini tidak dapat dijamin pada perangkat ini.",
+        "cross_signing_user_warning": "Pengguna ini belum memverifikasi semua sesinya.",
+        "cross_signing_user_verified": "Anda telah memverifikasi pengguna ini. Pengguna ini telah memverifikasi semua sesinya.",
+        "cross_signing_user_normal": "Anda belum memverifikasi pengguna ini.",
+        "cross_signing_room_warning": "Seseorang menggunakan sesi yang tidak dikenal",
+        "cross_signing_room_verified": "Semuanya di ruangan ini telah terverifikasi",
+        "cross_signing_room_normal": "Ruangan ini dienkripsi secara ujung ke ujung"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3362,8 +3362,19 @@
         "soft_logout_subheading": "Hapus data personal",
         "soft_logout_warning": "Peringatan: Data personal Anda (termasuk kunci enkripsi) masih disimpan di sesi ini. Hapus jika Anda selesai menggunakan sesi ini, atau jika ingin masuk ke akun yang lain.",
         "forgot_password_send_email": "Kirim email",
-        "captcha_description": "Homeserver ini memastikan Anda bahwa Anda bukan sebuah robot.",
-        "country_dropdown": "Dropdown Negara",
+        "reset_password": {
+            "rate_limit_error": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi.",
+            "rate_limit_error_with_time": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
+            "other_devices_logout_warning_1": "Mengeluarkan perangkat Anda akan menghapus kunci enkripsi pesan pada perangkat, dan membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
+            "other_devices_logout_warning_2": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda, siapkan Cadangan Kunci atau ekspor kunci-kunci pesan Anda dari salah satu perangkat Anda yang lain sebelum melanjutkan.",
+            "confirm_new_password": "Konfirmasi kata sandi baru",
+            "password_not_entered": "Kata sandi baru harus dimasukkan.",
+            "passwords_mismatch": "Kata sandi baru harus cocok.",
+            "sign_out_other_devices": "Keluarkan semua perangkat",
+            "reset_successful": "Kata sandi Anda telah diatur ulang.",
+            "devices_logout_success": "Anda telah dikeluarkan dari semua perangkat Anda dan tidak akan dapat notifikasi. Untuk mengaktifkan ulang notifikasi, masuk ulang pada setiap perangkat.",
+            "return_to_login": "Kembali ke halaman masuk"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Masuk perangkat baru",
             "error_linking_incomplete": "Penautan tidak selesai dalam waktu yang dibutuhkan.",
@@ -3387,19 +3398,7 @@
             "waiting_for_device": "Menunggu perangkat untuk masuk",
             "completing_setup": "Menyelesaikan penyiapan perangkat baru Anda"
         },
-        "reset_password": {
-            "rate_limit_error": "Terlalu banyak upaya. Tunggu beberapa waktu sebelum mencoba lagi.",
-            "rate_limit_error_with_time": "Terlalu banyak upaya dalam waktu yang singkat. Coba lagi setelah %(timeout)s.",
-            "other_devices_logout_warning_1": "Mengeluarkan perangkat Anda akan menghapus kunci enkripsi pesan pada perangkat, dan membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
-            "other_devices_logout_warning_2": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda, siapkan Cadangan Kunci atau ekspor kunci-kunci pesan Anda dari salah satu perangkat Anda yang lain sebelum melanjutkan.",
-            "confirm_new_password": "Konfirmasi kata sandi baru",
-            "password_not_entered": "Kata sandi baru harus dimasukkan.",
-            "passwords_mismatch": "Kata sandi baru harus cocok.",
-            "sign_out_other_devices": "Keluarkan semua perangkat",
-            "reset_successful": "Kata sandi Anda telah diatur ulang.",
-            "devices_logout_success": "Anda telah dikeluarkan dari semua perangkat Anda dan tidak akan dapat notifikasi. Untuk mengaktifkan ulang notifikasi, masuk ulang pada setiap perangkat.",
-            "return_to_login": "Kembali ke halaman masuk"
-        },
+        "country_dropdown": "Dropdown Negara",
         "common_failures": {
             "invalid_homeserver_discovery": "Respons penemuan homeserver tidak absah",
             "cannot_find_autodiscovery_config": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
@@ -3409,7 +3408,8 @@
             "invalid_identity_server_base_url": "base_url tidak absah untuk m.identity_server",
             "invalid_identity_server_url": "URL server identitas terlihat bukan sebagai server identitas yang absah",
             "general_failure": "Kesalahan umum"
-        }
+        },
+        "captcha_description": "Homeserver ini memastikan Anda bahwa Anda bukan sebuah robot."
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -3581,8 +3581,8 @@
         "unmaximise": "Minimalkan",
         "popout": "Widget popout",
         "unpin_to_view_right_panel": "Lepaskan pin widget ini untuk menampilkanya di panel ini",
-        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini",
-        "set_room_layout": "Tetapkan tata letak ruangan saya untuk semuanya"
+        "set_room_layout": "Tetapkan tata letak ruangan saya untuk semuanya",
+        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -3677,8 +3677,8 @@
         "empty_explainer": "Utasan membantu membuat obrolan sesuai topik dan mudah untuk dilacak.",
         "empty_tip": "<b>Tip:</b> Gunakan “%(replyInThread)s” ketika kursor di atas pesan.",
         "empty_heading": "Buat diskusi tetap teratur dengan utasan",
-        "open_thread": "Buka utasan",
-        "unable_to_decrypt": "Tidak dapat mendekripsi pesan"
+        "unable_to_decrypt": "Tidak dapat mendekripsi pesan",
+        "open_thread": "Buka utasan"
     },
     "theme": {
         "light_high_contrast": "Kontras tinggi terang",
@@ -3707,12 +3707,12 @@
         "invite": "Undang pengguna",
         "invite_description": "Undang dengan email atau nama pengguna",
         "invite_this_space": "Undang ke space ini",
-        "joining_space": "Bergabung",
         "user_lacks_permission": "Anda tidak memiliki izin",
-        "no_search_result_hint": "Anda mungkin ingin mencoba pencarian yang berbeda atau periksa untuk typo.",
-        "title_when_query_available": "Hasil",
         "title_when_query_unavailable": "Ruangan dan space",
-        "search_placeholder": "Cari nama dan deskripsi"
+        "title_when_query_available": "Hasil",
+        "search_placeholder": "Cari nama dan deskripsi",
+        "no_search_result_hint": "Anda mungkin ingin mencoba pencarian yang berbeda atau periksa untuk typo.",
+        "joining_space": "Bergabung"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -3947,20 +3947,19 @@
         "join_failed_needs_invite": "Untuk menampilkan %(roomName)s, Anda perlu sebuah undangan",
         "view_failed_enable_video_rooms": "Untuk menampilkan, mohon aktifkan ruangan video dalam Uji Coba terlebih dahulu",
         "join_failed_enable_video_rooms": "Untuk bergabung, mohon aktifkan ruangan video di Uji Coba terlebih dahulu",
-        "jump_to_bottom_button": "Gulir ke pesan yang terbaru",
-        "show_labs_settings": "Tampilkan pengaturan Uji Coba",
-        "upgrade_warning_bar": "Meningkatkan ruangan ini akan mematikan instansi ruangan saat ini dan membuat ruangan yang ditingkatkan dengan nama yang sama.",
+        "waiting_for_join_title": "Menunggu pengguna untuk bergabung ke %(brand)s",
+        "waiting_for_join_subtitle": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Mengunggah %(filename)s dan %(count)s lainnya",
+                "other": "Mengunggah %(filename)s dan %(count)s lainnya"
+            },
+            "uploading_single_file": "Mengunggah %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Ruangan ini telah ditingkatkan.",
         "upgrade_warning_bar_unstable": "Ruangan ini berjalan dengan versi ruangan <roomVersion />, yang homeserver ini menandainya sebagai <i>tidak stabil</i>.",
         "upgrade_warning_bar_admins": "Hanya administrator ruangan yang akan melihat peringatan ini",
-        "search": {
-            "this_room": "Ruangan ini",
-            "all_rooms": "Semua Ruangan",
-            "field_placeholder": "Cari…",
-            "this_room_button": "Cari ruangan ini",
-            "all_rooms_button": "Cari semua ruangan"
-        },
-        "jump_read_marker": "Pergi ke pesan pertama yang belum dibaca.",
+        "upgrade_warning_bar": "Meningkatkan ruangan ini akan mematikan instansi ruangan saat ini dan membuat ruangan yang ditingkatkan dengan nama yang sama.",
         "status_bar": {
             "requires_consent_agreement": "Anda tidak dapat mengirimkan pesan apa saja sampai Anda lihat dan terima <consentLink>syarat dan ketentuan kami</consentLink>.",
             "monthly_user_limit_reached": "Pesan Anda tidak terkirim karena homesever ini telah mencapat batas Pengguna Aktif Bulanan. Mohon <a>hubungi administrator layanan Anda</a> untuk melanjutkan menggunakan layanannya.",
@@ -3973,18 +3972,19 @@
             "server_connectivity_lost_title": "Koneksi ke server telah hilang.",
             "server_connectivity_lost_description": "Pesan yang akan dikirim akan disimpan sampai koneksi Anda telah kembali."
         },
-        "creating_room_text": "Kami sedang membuat sebuah ruangan dengan %(names)s",
-        "failed_reject_invite": "Gagal untuk menolak undangan",
-        "inviter_unknown": "Tidak Dikenal",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "Mengunggah %(filename)s dan %(count)s lainnya",
-                "other": "Mengunggah %(filename)s dan %(count)s lainnya"
-            },
-            "uploading_single_file": "Mengunggah %(filename)s"
+        "show_labs_settings": "Tampilkan pengaturan Uji Coba",
+        "search": {
+            "this_room": "Ruangan ini",
+            "all_rooms": "Semua Ruangan",
+            "field_placeholder": "Cari…",
+            "this_room_button": "Cari ruangan ini",
+            "all_rooms_button": "Cari semua ruangan"
         },
-        "waiting_for_join_title": "Menunggu pengguna untuk bergabung ke %(brand)s",
-        "waiting_for_join_subtitle": "Setelah pengguna yang diundang telah bergabung ke %(brand)s, Anda akan dapat bercakapan dan ruangan akan terenkripsi secara ujung ke ujung"
+        "jump_to_bottom_button": "Gulir ke pesan yang terbaru",
+        "jump_read_marker": "Pergi ke pesan pertama yang belum dibaca.",
+        "inviter_unknown": "Tidak Dikenal",
+        "failed_reject_invite": "Gagal untuk menolak undangan",
+        "creating_room_text": "Kami sedang membuat sebuah ruangan dengan %(names)s"
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -4210,10 +4210,6 @@
         "filter_placeholder": "Saring anggota ruangan",
         "power_label": "%(userName)s (tingkat daya %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Anda saat ini tidak memiliki paket stiker apa pun yang diaktifkan",
-        "empty_add_prompt": "Tambahkan beberapa stiker sekarang"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Gagal untuk menghapus undangan",
         "error_revoke_3pid_invite_description": "Tidak dapat menghapus undangan. Server ini mungkin mengalami masalah sementara atau Anda tidak memiliki izin yang dibutuhkan untuk menghapus undangannya.",
@@ -4267,6 +4263,10 @@
         "error_deactivate": "Gagal untuk menonaktifkan pengguna",
         "role_label": "Peran di <RoomName/>"
     },
+    "stickers": {
+        "empty": "Anda saat ini tidak memiliki paket stiker apa pun yang diaktifkan",
+        "empty_add_prompt": "Tambahkan beberapa stiker sekarang"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Pesan yang dipasangi pin",
@@ -4292,15 +4292,18 @@
         "share_button": "Bagikan ruangan",
         "settings_button": "Pengaturan ruangan"
     },
-    "cant_load_page": "Tidak dapat memuat halaman",
-    "left_panel": {
-        "open_dial_pad": "Buka tombol penyetel"
-    },
-    "console_wait": "Tunggu!",
     "reject_invitation_dialog": {
         "title": "Tolak undangan",
         "confirmation": "Anda yakin menolak undangannya?",
         "failed": "Gagal menolak undangan"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Anda sepertinya masih menunggah beberapa file, apakah Anda yakin untuk keluar?",
+        "call_in_progress": "Anda sepertinya masih berada di panggilan, apakah Anda yakin untuk keluar?"
+    },
+    "no_more_results": "Tidak ada hasil lagi",
+    "left_panel": {
+        "open_dial_pad": "Buka tombol penyetel"
     },
     "leave_room_dialog": {
         "last_person_warning": "Anda adalah satu-satunya di sini. Jika Anda keluar, tidak ada siapa saja dapat bergabung di masa mendatang, termasuk Anda.",
@@ -4321,9 +4324,6 @@
         },
         "error_loading_user_profile": "Tidak dapat memuat profil pengguna"
     },
-    "no_more_results": "Tidak ada hasil lagi",
-    "quit_warning": {
-        "file_upload_in_progress": "Anda sepertinya masih menunggah beberapa file, apakah Anda yakin untuk keluar?",
-        "call_in_progress": "Anda sepertinya masih berada di panggilan, apakah Anda yakin untuk keluar?"
-    }
+    "console_wait": "Tunggu!",
+    "cant_load_page": "Tidak dapat memuat halaman"
 }

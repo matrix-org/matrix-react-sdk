@@ -755,25 +755,25 @@
         "invite_subtitle": "<userName/> convidou-o",
         "not_found_title_name": "%(roomName)s não existe.",
         "inaccessible_name": "%(roomName)s não está acessível neste momento.",
-        "search": {
-            "this_room": "Esta sala",
-            "all_rooms": "Todas as salas",
-            "field_placeholder": "Pesquisar…"
-        },
-        "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas.",
-        "status_bar": {
-            "server_connectivity_lost_title": "A conexão com o servidor foi perdida. Verifique sua conexão de internet.",
-            "server_connectivity_lost_description": "Imagens enviadas ficarão armazenadas até que sua conexão seja reestabelecida."
-        },
-        "failed_reject_invite": "Não foi possível rejeitar o convite",
-        "inviter_unknown": "Desconhecido",
         "upload": {
             "uploading_multiple_file": {
                 "one": "Enviando o arquivo %(filename)s e %(count)s outros arquivos",
                 "other": "Enviando o arquivo %(filename)s e %(count)s outros arquivos"
             },
             "uploading_single_file": "Enviando o arquivo %(filename)s"
-        }
+        },
+        "status_bar": {
+            "server_connectivity_lost_title": "A conexão com o servidor foi perdida. Verifique sua conexão de internet.",
+            "server_connectivity_lost_description": "Imagens enviadas ficarão armazenadas até que sua conexão seja reestabelecida."
+        },
+        "search": {
+            "this_room": "Esta sala",
+            "all_rooms": "Todas as salas",
+            "field_placeholder": "Pesquisar…"
+        },
+        "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas.",
+        "inviter_unknown": "Desconhecido",
+        "failed_reject_invite": "Não foi possível rejeitar o convite"
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para poder usar esta funcionalidade",
@@ -922,6 +922,11 @@
         "confirmation": "Você tem certeza que deseja rejeitar este convite?",
         "failed": "Falha ao tentar rejeitar convite"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Parece que você está enviando arquivos. Tem certeza que quer sair?",
+        "call_in_progress": "Parece que você está em uma chamada. Tem certeza que quer sair?"
+    },
+    "no_more_results": "Não há mais resultados",
     "leave_room_dialog": {
         "leave_room_question": "Você tem certeza que deseja sair da sala '%(roomName)s'?"
     },
@@ -931,10 +936,5 @@
             "title": "Busca falhou",
             "server_unavailable": "O servidor pode estar indisponível, sobrecarregado, ou a busca ultrapassou o tempo limite :("
         }
-    },
-    "no_more_results": "Não há mais resultados",
-    "quit_warning": {
-        "file_upload_in_progress": "Parece que você está enviando arquivos. Tem certeza que quer sair?",
-        "call_in_progress": "Parece que você está em uma chamada. Tem certeza que quer sair?"
     }
 }

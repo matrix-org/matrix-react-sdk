@@ -1086,12 +1086,12 @@
         "historical": "Historial",
         "go_to_settings": "Ir a Axustes",
         "setup_secure_messages": "Configurar Mensaxes Seguras",
-        "unencrypted": "Non cifrada",
         "view_message": "Ver mensaxe",
-        "joined": "Unícheste",
+        "unencrypted": "Non cifrada",
         "show_more": "Mostrar máis",
-        "are_you_sure": "Está segura?",
-        "avatar": "Avatar"
+        "joined": "Unícheste",
+        "avatar": "Avatar",
+        "are_you_sure": "Está segura?"
     },
     "action": {
         "continue": "Continuar",
@@ -1378,9 +1378,9 @@
         "format_italics": "Cursiva",
         "format_insert_link": "Escribir ligazón",
         "replying_title": "Respondendo",
-        "edit_composer_label": "Editar mensaxe",
+        "stop_voice_message": "Deter a gravación",
         "send_voice_message": "Enviar mensaxe de voz",
-        "stop_voice_message": "Deter a gravación"
+        "edit_composer_label": "Editar mensaxe"
     },
     "power_level": {
         "default": "Por defecto",
@@ -2317,7 +2317,6 @@
         },
         "read_receipts_label": "Resgados de lectura",
         "thread_info_basic": "Desde un fío",
-        "error_no_renderer": "Non se puido amosar este evento",
         "send_state_sent": "Enviouse a túa mensaxe",
         "send_state_failed": "Fallou o envío",
         "mab": {
@@ -2333,7 +2332,8 @@
             "no_permission": "Intentouse cargar un punto concreto do historial desta sala, pero non tes permiso para ver a mensaxe en cuestión.",
             "unable_to_find": "Intentouse cargar un punto específico do historial desta sala, pero non se puido atopar.",
             "title": "Fallo ao cargar posición da liña temporal"
-        }
+        },
+        "error_no_renderer": "Non se puido amosar este evento"
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -2647,31 +2647,31 @@
             "leave_space": "Deixar o Espazo",
             "aliases_section": "Enderezos da sala",
             "other_section": "Outro",
-            "error_updating_canonical_alias_title": "Fallo ao actualizar o enderezo principal",
-            "error_updating_canonical_alias_description": "Algo fallou ao actualizar o enderezo principal da sala. Podería non estar autorizado polo servidor ou ser un fallo temporal.",
-            "error_updating_alias_description": "Algo fallou ao actualizar os enderezos alternativos da sala. É posible que o servidor non o permita ou acontecese un fallo temporal.",
-            "error_creating_alias_title": "Fallo ao crear o enderezo",
-            "error_creating_alias_description": "Algo fallou ao crear ese enderezo. Podería non estar autorizado polo servidor ou ser un fallo temporal.",
-            "error_deleting_alias_description_forbidden": "Non tes permiso para eliminar o enderezo.",
-            "error_deleting_alias_description": "Houbo un erro ao eliminar o enderezo. Podería non existir ou ser un fallo temporal.",
-            "error_deleting_alias_title": "Erro ao eliminar o enderezo",
-            "canonical_alias_field_label": "Enderezo principal",
-            "no_aliases_space": "Este espazo non ten enderezos locais",
-            "no_aliases_room": "Esta sala non ten enderezos locais",
-            "local_alias_field_label": "Enderezo local",
+            "topic_field_label": "Asunto da sala",
             "published_aliases_section": "Enderezos publicados",
             "published_aliases_explainer_space": "Os enderezos publicados podense usar por calquera en calquera servidor para unirse ao teu espazo.",
             "published_aliases_explainer_room": "Os enderezos publicados poden ser utilizados por calquera en calquera servidor para unirse á túa sala.",
             "published_aliases_description": "Para publicar un enderezo, primeiro debe establecerse como enderezo local.",
-            "aliases_items_label": "Outros enderezos publicados:",
-            "aliases_no_items_label": "Aínda non hai outros enderezos publicados, engade un embaixo",
+            "no_aliases_space": "Este espazo non ten enderezos locais",
+            "no_aliases_room": "Esta sala non ten enderezos locais",
             "new_alias_placeholder": "Novo enderezo publicado (ex. #alias:servidor)",
+            "name_field_label": "Nome da sala",
             "local_aliases_section": "Enderezos locais",
             "local_aliases_explainer_space": "Establecer enderezos para este espazo para que as usuarias poidan atopar o espazo no servidor (%(localDomain)s)",
             "local_aliases_explainer_room": "Establecer enderezos para a sala para que poida ser atopada no teu servidor local (%(localDomain)s)",
-            "name_field_label": "Nome da sala",
-            "topic_field_label": "Asunto da sala",
-            "avatar_field_label": "Avatar da sala"
+            "local_alias_field_label": "Enderezo local",
+            "error_updating_canonical_alias_title": "Fallo ao actualizar o enderezo principal",
+            "error_updating_canonical_alias_description": "Algo fallou ao actualizar o enderezo principal da sala. Podería non estar autorizado polo servidor ou ser un fallo temporal.",
+            "error_updating_alias_description": "Algo fallou ao actualizar os enderezos alternativos da sala. É posible que o servidor non o permita ou acontecese un fallo temporal.",
+            "error_deleting_alias_title": "Erro ao eliminar o enderezo",
+            "error_deleting_alias_description_forbidden": "Non tes permiso para eliminar o enderezo.",
+            "error_deleting_alias_description": "Houbo un erro ao eliminar o enderezo. Podería non existir ou ser un fallo temporal.",
+            "error_creating_alias_title": "Fallo ao crear o enderezo",
+            "error_creating_alias_description": "Algo fallou ao crear ese enderezo. Podería non estar autorizado polo servidor ou ser un fallo temporal.",
+            "canonical_alias_field_label": "Enderezo principal",
+            "avatar_field_label": "Avatar da sala",
+            "aliases_no_items_label": "Aínda non hai outros enderezos publicados, engade un embaixo",
+            "aliases_items_label": "Outros enderezos publicados:"
         },
         "advanced": {
             "unfederated": "Esta sala non é accesible por servidores Matrix remotos",
@@ -2758,17 +2758,17 @@
             "verification_skip_warning": "Sen verificación non poderás acceder a tódalas túas mensaxes e poderían aparecer como non confiables ante outras persoas.",
             "verify_later": "Verificarei máis tarde",
             "verify_reset_warning_1": "O restablecemento das chaves de seguridade non se pode desfacer. Tras o restablecemento, non terás acceso ás antigas mensaxes cifradas, e calquera amizade que verificaras con anterioridade vai ver un aviso de seguridade ata que volvades a verificarvos mutuamente.",
-            "self_verification_hint": "Para seguir, acepta a solicitude de verificación no teu outro dispositivo.",
             "waiting_for_user_accept": "Agardando a que %(displayName)s acepte…",
-            "accepting": "Aceptando…",
             "start_button": "Comezar a Verificación",
+            "self_verification_hint": "Para seguir, acepta a solicitude de verificación no teu outro dispositivo.",
             "after_new_login": {
                 "unable_to_verify": "Non se puido verificar este dispositivo",
                 "verify_this_device": "Verifica este dispositivo",
                 "device_verified": "Dispositivo verificado",
                 "reset_confirmation": "Queres restablecer as chaves de verificación?",
                 "skip_verification": "Omitir a verificación por agora"
-            }
+            },
+            "accepting": "Aceptando…"
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -2806,14 +2806,6 @@
             "explainer": "Fai unha copia de apoio das chaves antes de saír para evitar perdelas.",
             "title": "Configurar"
         },
-        "cross_signing_user_warning": "Esta usuaria non verificou ningunha das súas sesións.",
-        "cross_signing_user_normal": "Non verificaches esta usuaria.",
-        "cross_signing_user_verified": "Verificaches esta usuaria. A usuaria verificou todas as súas sesións.",
-        "cross_signing_room_warning": "Alguén está a usar unha sesión descoñecida",
-        "cross_signing_room_normal": "Esta sala está cifrada extremo-a-extremo",
-        "cross_signing_room_verified": "Todas nesta sala están verificadas",
-        "event_shield_reason_authenticity_not_guaranteed": "A autenticidade desta mensaxe cifrada non está garantida neste dispositivo.",
-        "event_shield_reason_mismatched_sender_key": "Cifrada por unha sesión non verificada",
         "messages_not_secure": {
             "title": "As túas mensaxes non están aseguradas",
             "heading": "Un dos seguintes podería estar comprometido:",
@@ -2821,7 +2813,15 @@
             "cause_2": "O servidor ao que está conectado a persoa que estás verificando",
             "cause_3": "Da túa, ou da conexión a internet doutras persoas",
             "cause_4": "Túas, ou da sesión doutras persoas"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Cifrada por unha sesión non verificada",
+        "event_shield_reason_authenticity_not_guaranteed": "A autenticidade desta mensaxe cifrada non está garantida neste dispositivo.",
+        "cross_signing_user_warning": "Esta usuaria non verificou ningunha das súas sesións.",
+        "cross_signing_user_verified": "Verificaches esta usuaria. A usuaria verificou todas as súas sesións.",
+        "cross_signing_user_normal": "Non verificaches esta usuaria.",
+        "cross_signing_room_warning": "Alguén está a usar unha sesión descoñecida",
+        "cross_signing_room_verified": "Todas nesta sala están verificadas",
+        "cross_signing_room_normal": "Esta sala está cifrada extremo-a-extremo"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -2983,8 +2983,6 @@
         "create_account_title": "Crea unha conta",
         "failed_soft_logout_homeserver": "Fallo ó reautenticar debido a un problema no servidor",
         "soft_logout_subheading": "Baleirar datos personais",
-        "captcha_description": "Este servidor quere asegurarse de que non es un robot.",
-        "country_dropdown": "Despregable de países",
         "reset_password": {
             "other_devices_logout_warning_1": "Ao pechar sesión nos teus dispositivos eliminarás as chaves de cifrado de mensaxes gardadas neles, facendo ilexible o historial de conversas cifrado.",
             "other_devices_logout_warning_2": "Se queres manter o acceso ao historial de conversas en salas cifradas, configura a Copia de Apoio das Chaves ou exporta as chaves das mensaxes desde un dos teus dispositivos antes de continuar.",
@@ -2994,6 +2992,7 @@
             "devices_logout_success": "Pechaches a sesión en tódolos dispositivos e non recibirás notificacións push. Para reactivalas notificacións volve a acceder en cada dispositivo.",
             "return_to_login": "Volver a pantalla de acceso"
         },
+        "country_dropdown": "Despregable de países",
         "common_failures": {
             "invalid_homeserver_discovery": "Resposta de descubrimento do servidor non válida",
             "cannot_find_autodiscovery_config": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
@@ -3003,7 +3002,8 @@
             "invalid_identity_server_base_url": "base_url para m.identity_server non válida",
             "invalid_identity_server_url": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
             "general_failure": "Fallo xeral"
-        }
+        },
+        "captcha_description": "Este servidor quere asegurarse de que non es un robot."
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3167,8 +3167,8 @@
         "unmaximise": "Restablecer",
         "popout": "trebello emerxente",
         "unpin_to_view_right_panel": "Desafixar este widget para velo neste panel",
-        "close_to_view_right_panel": "Pecha este widget para velo neste panel",
-        "set_room_layout": "Establecer a miña disposición da sala para todas"
+        "set_room_layout": "Establecer a miña disposición da sala para todas",
+        "close_to_view_right_panel": "Pecha este widget para velo neste panel"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3262,12 +3262,12 @@
         "invite": "Convidar persoas",
         "invite_description": "Convida con email ou nome de usuaria",
         "invite_this_space": "Convidar a este espazo",
-        "joining_space": "Uníndote",
         "user_lacks_permission": "Non tes permiso",
-        "no_search_result_hint": "Podes intentar unha busca diferente ou comprobar o escrito.",
-        "title_when_query_available": "Resultados",
         "title_when_query_unavailable": "Salas e espazos",
-        "search_placeholder": "Buscar nome e descricións"
+        "title_when_query_available": "Resultados",
+        "search_placeholder": "Buscar nome e descricións",
+        "no_search_result_hint": "Podes intentar unha busca diferente ou comprobar o escrito.",
+        "joining_space": "Uníndote"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3470,18 +3470,17 @@
         "join_failed_needs_invite": "Para ver %(roomName)s, precisas un convite",
         "view_failed_enable_video_rooms": "Para ver, primeiro activa as salas de vídeo en Labs",
         "join_failed_enable_video_rooms": "Para unirte, primeiro activa as salas de vídeo en Labs",
-        "jump_to_bottom_button": "Ir ás mensaxes máis recentes",
-        "show_labs_settings": "Mostrar axustes en Labs",
-        "upgrade_warning_bar": "Ao actualizar a sala pecharás a instancia actual da sala e crearás unha versión mellorada co mesmo nome.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Subindo %(filename)s e %(count)s máis",
+                "one": "Subindo %(filename)s e %(count)s máis"
+            },
+            "uploading_single_file": "Subindo %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Esta sala xa foi actualizada.",
         "upgrade_warning_bar_unstable": "A sala está usando a versión <roomVersion />, que este servidor considera como <i>non estable</i>.",
         "upgrade_warning_bar_admins": "Só a administración da sala pode ver este aviso",
-        "search": {
-            "this_room": "Esta sala",
-            "all_rooms": "Todas as Salas",
-            "field_placeholder": "Buscar…"
-        },
-        "jump_read_marker": "Ir a primeira mensaxe non lida.",
+        "upgrade_warning_bar": "Ao actualizar a sala pecharás a instancia actual da sala e crearás unha versión mellorada co mesmo nome.",
         "status_bar": {
             "requires_consent_agreement": "Non vas poder enviar mensaxes ata que revises e aceptes <consentLink>os nosos termos e condicións</consentLink>.",
             "monthly_user_limit_reached": "A súa mensaxe non foi enviada porque este servidor acadou o Límite Mensual de Usuaria Activa. Por favor <a>contacte coa administración do servizo</a> para continuar utilizando o servizo.",
@@ -3494,16 +3493,17 @@
             "server_connectivity_lost_title": "Perdeuse a conexión ao servidor.",
             "server_connectivity_lost_description": "As mensaxes enviadas gardaranse ate que retome a conexión."
         },
-        "creating_room_text": "Estamos creando unha sala con %(names)s",
-        "failed_reject_invite": "Fallo ao rexeitar o convite",
+        "show_labs_settings": "Mostrar axustes en Labs",
+        "search": {
+            "this_room": "Esta sala",
+            "all_rooms": "Todas as Salas",
+            "field_placeholder": "Buscar…"
+        },
+        "jump_to_bottom_button": "Ir ás mensaxes máis recentes",
+        "jump_read_marker": "Ir a primeira mensaxe non lida.",
         "inviter_unknown": "Descoñecido",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Subindo %(filename)s e %(count)s máis",
-                "one": "Subindo %(filename)s e %(count)s máis"
-            },
-            "uploading_single_file": "Subindo %(filename)s"
-        }
+        "failed_reject_invite": "Fallo ao rexeitar o convite",
+        "creating_room_text": "Estamos creando unha sala con %(names)s"
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3715,10 +3715,6 @@
         "filter_placeholder": "Filtrar os participantes da conversa",
         "power_label": "%(userName)s (permiso %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Non ten paquetes de iconas activados",
-        "empty_add_prompt": "Engade algún agora"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Fallo ao revogar o convite",
         "error_revoke_3pid_invite_description": "Non se revogou o convite. O servidor podería estar experimentando un problema temporal ou non tes permisos suficientes para revogar o convite.",
@@ -3770,6 +3766,10 @@
         "error_deactivate": "Fallo ao desactivar a usuaria",
         "role_label": "Rol en <RoomName/>"
     },
+    "stickers": {
+        "empty": "Non ten paquetes de iconas activados",
+        "empty_add_prompt": "Engade algún agora"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Mensaxes fixadas",
@@ -3791,15 +3791,18 @@
         "share_button": "Compartir sala",
         "settings_button": "Axustes da sala"
     },
-    "cant_load_page": "Non se puido cargar a páxina",
-    "left_panel": {
-        "open_dial_pad": "Abrir marcador"
-    },
-    "console_wait": "Agarda!",
     "reject_invitation_dialog": {
         "title": "Rexeitar convite",
         "confirmation": "Seguro que desexa rexeitar o convite?",
         "failed": "Fallo ao rexeitar o convite"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Semella estar a subir ficheiros, seguro que desexa deixalo?",
+        "call_in_progress": "Semella estar en unha chamada, seguro que quere saír?"
+    },
+    "no_more_results": "Sen máis resultados",
+    "left_panel": {
+        "open_dial_pad": "Abrir marcador"
     },
     "leave_room_dialog": {
         "last_person_warning": "Es a única persoa aquí. Se saes, ninguén poderá unirse no futuro, incluíndote a ti.",
@@ -3820,9 +3823,6 @@
         },
         "error_loading_user_profile": "Non se cargou o perfil da usuaria"
     },
-    "no_more_results": "Sen máis resultados",
-    "quit_warning": {
-        "file_upload_in_progress": "Semella estar a subir ficheiros, seguro que desexa deixalo?",
-        "call_in_progress": "Semella estar en unha chamada, seguro que quere saír?"
-    }
+    "console_wait": "Agarda!",
+    "cant_load_page": "Non se puido cargar a páxina"
 }

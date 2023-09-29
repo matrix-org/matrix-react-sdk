@@ -652,8 +652,8 @@
         "historical": "Tarihi",
         "go_to_settings": "Ayarlara Git",
         "setup_secure_messages": "Güvenli Mesajları Ayarla",
-        "unencrypted": "Şifrelenmemiş",
         "view_message": "Mesajı görüntüle",
+        "unencrypted": "Şifrelenmemiş",
         "show_more": "Daha fazla göster",
         "are_you_sure": "Emin misiniz ?"
     },
@@ -1375,7 +1375,6 @@
         "url_preview": {
             "close": "Önizlemeyi kapat"
         },
-        "error_no_renderer": "Bu olay görüntülenemedi",
         "send_state_sent": "Mesajınız gönderildi",
         "mab": {
             "label": "Mesaj Eylemleri"
@@ -1384,7 +1383,8 @@
             "no_permission": "Bu odanın zaman çizelgesinde belirli bir nokta yüklemeye çalışıldı , ama geçerli mesajı görüntülemeye izniniz yok.",
             "unable_to_find": "Bu odanın akışında belirli bir noktaya yüklemeye çalışıldı , ancak bulunamadı.",
             "title": "Zaman çizelgesi konumu yüklenemedi"
-        }
+        },
+        "error_no_renderer": "Bu olay görüntülenemedi"
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",
@@ -1589,25 +1589,25 @@
             "save": "Değişiklikleri Kaydet",
             "aliases_section": "Oda Adresleri",
             "other_section": "Diğer",
+            "topic_field_label": "Oda Başlığı",
+            "published_aliases_section": "Yayınlanmış adresler",
+            "no_aliases_room": "Bu oda hiçbir yerel adrese sahip değil",
+            "new_alias_placeholder": "Yeni yayınlanmış adresler (e.g. #alias:server)",
+            "name_field_label": "Oda Adı",
+            "local_aliases_section": "Yerel Adresler",
+            "local_alias_field_label": "Yerel adres",
             "error_updating_canonical_alias_title": "Ana adresi güncellemede hata",
             "error_updating_canonical_alias_description": "Odanın ana adresini güncellerken bir sorun oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
             "error_updating_alias_description": "Adanın alternatif adresini güncellerken bir hata oluştu. Bu eylem, sunucu tarafından izin verilmemiş olabilir ya da geçici bir sorun oluşmuş olabilir.",
-            "error_creating_alias_title": "Adres oluşturulurken hata",
-            "error_creating_alias_description": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
+            "error_deleting_alias_title": "Adres kaldırılırken hata",
             "error_deleting_alias_description_forbidden": "Bu adresi silmeye yetkiniz yok.",
             "error_deleting_alias_description": "Adres kaldırılırken bir hata ile karşılaşıldı. Artık mevcut olmayabilir yada geçici bir oluştu.",
-            "error_deleting_alias_title": "Adres kaldırılırken hata",
+            "error_creating_alias_title": "Adres oluşturulurken hata",
+            "error_creating_alias_description": "Adres oluşturulurken hata ile karşılaşıldı. Sunucu tarafından izin verilmemiş yada geçici bir hata olabilir.",
             "canonical_alias_field_label": "Ana adres",
-            "no_aliases_room": "Bu oda hiçbir yerel adrese sahip değil",
-            "local_alias_field_label": "Yerel adres",
-            "published_aliases_section": "Yayınlanmış adresler",
-            "aliases_items_label": "Diğer yayınlanmış adresler:",
+            "avatar_field_label": "Oda avatarı",
             "aliases_no_items_label": "Henüz yayınlanmış başka adres yok, aşağıdan bir tane ekle",
-            "new_alias_placeholder": "Yeni yayınlanmış adresler (e.g. #alias:server)",
-            "local_aliases_section": "Yerel Adresler",
-            "name_field_label": "Oda Adı",
-            "topic_field_label": "Oda Başlığı",
-            "avatar_field_label": "Oda avatarı"
+            "aliases_items_label": "Diğer yayınlanmış adresler:"
         },
         "advanced": {
             "unfederated": "Bu oda uzak Matrix Sunucuları tarafından erişilebilir değil",
@@ -1654,8 +1654,8 @@
             "unverified_sessions_toast_reject": "Sonra",
             "unverified_session_toast_title": "Yeni giriş. Bu siz miydiniz?",
             "waiting_for_user_accept": "%(displayName)s kullanıcısın onaylaması için bekleniliyor…",
-            "accepting": "Kabul ediliyor…",
-            "start_button": "Doğrulamayı Başlat"
+            "start_button": "Doğrulamayı Başlat",
+            "accepting": "Kabul ediliyor…"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1684,18 +1684,18 @@
             "explainer": "Anahtarlarını kaybetmemek için, çıkış yapmadan önce önleri yedekle.",
             "title": "Ayarla"
         },
-        "cross_signing_user_warning": "Bu kullanıcı bütün oturumlarında doğrulanmamış.",
-        "cross_signing_user_normal": "Bu kullanıcıyı doğrulamadınız.",
-        "cross_signing_user_verified": "Bu kullanıcıyı doğruladınız. Bu kullanıcı tüm oturumlarını doğruladı.",
-        "cross_signing_room_warning": "Birisi bilinmeyen bir oturum kullanıyor",
-        "cross_signing_room_normal": "Bu oda uçtan uça şifreli",
-        "cross_signing_room_verified": "Bu odadaki herkes doğrulanmış",
-        "event_shield_reason_authenticity_not_guaranteed": "Bu şifrelenmiş mesajın güvenilirliği bu cihazda garanti edilemez.",
-        "event_shield_reason_mismatched_sender_key": "Doğrulanmamış bir oturum tarafından şifrelenmiş",
         "messages_not_secure": {
             "title": "Mesajlarınız korunmuyor",
             "cause_1": "Ana sunucunuz"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Doğrulanmamış bir oturum tarafından şifrelenmiş",
+        "event_shield_reason_authenticity_not_guaranteed": "Bu şifrelenmiş mesajın güvenilirliği bu cihazda garanti edilemez.",
+        "cross_signing_user_warning": "Bu kullanıcı bütün oturumlarında doğrulanmamış.",
+        "cross_signing_user_verified": "Bu kullanıcıyı doğruladınız. Bu kullanıcı tüm oturumlarını doğruladı.",
+        "cross_signing_user_normal": "Bu kullanıcıyı doğrulamadınız.",
+        "cross_signing_room_warning": "Birisi bilinmeyen bir oturum kullanıyor",
+        "cross_signing_room_verified": "Bu odadaki herkes doğrulanmış",
+        "cross_signing_room_normal": "Bu oda uçtan uça şifreli"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -1795,14 +1795,13 @@
         "create_account_title": "Yeni hesap",
         "failed_soft_logout_homeserver": "Anasunucu problemi yüzünden yeniden kimlik doğrulama başarısız",
         "soft_logout_subheading": "Kişisel veri temizle",
-        "captcha_description": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor.",
-        "country_dropdown": "Ülke Listesi",
         "reset_password": {
             "password_not_entered": "Yeni bir şifre girilmelidir.",
             "passwords_mismatch": "Yeni şifreler birbirleriyle eşleşmelidir.",
             "reset_successful": "Parolanız sıfırlandı.",
             "return_to_login": "Giriş ekranına dön"
         },
+        "country_dropdown": "Ülke Listesi",
         "common_failures": {
             "invalid_homeserver_discovery": "Geçersiz anasunucu keşif yanıtı",
             "cannot_find_autodiscovery_config": "Sunucudan otokeşif yapılandırması alınması başarısız",
@@ -1812,7 +1811,8 @@
             "invalid_identity_server_base_url": "m.kimlik_sunucu için geçersiz base_url",
             "invalid_identity_server_url": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
             "general_failure": "Genel başarısızlık"
-        }
+        },
+        "captcha_description": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor."
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2072,30 +2072,30 @@
         "no_peek_join_prompt": "%(roomName)s odasında önizleme yapılamaz. Katılmak ister misin?",
         "not_found_title_name": "%(roomName)s mevcut değil.",
         "inaccessible_name": "%(roomName)s şu anda erişilebilir değil.",
-        "jump_to_bottom_button": "En son mesajlara git",
-        "upgrade_warning_bar": "Bu odayı güncellerseniz bu oda kapanacak ve yerine aynı adlı, güncellenmiş bir oda geçecek.",
-        "upgrade_warning_bar_upgraded": "Bu ıda zaten güncellenmiş.",
-        "upgrade_warning_bar_unstable": "Bu oda, <roomVersion /> oda sürümünü kullanmaktadır ve ana sunucunuz tarafından <i>tutarsız</i> olarak işaretlenmiştir.",
-        "upgrade_warning_bar_admins": "Bu uyarıyı sadece oda yöneticileri görür",
-        "search": {
-            "this_room": "Bu Oda",
-            "all_rooms": "Tüm Odalar",
-            "field_placeholder": "Arama…"
-        },
-        "jump_read_marker": "İlk okunmamış iletiye atla.",
-        "status_bar": {
-            "server_connectivity_lost_title": "Sunucuyla olan bağlantı kesildi.",
-            "server_connectivity_lost_description": "Gönderilen iletiler bağlantınız geri gelene kadar saklanacak."
-        },
-        "failed_reject_invite": "Daveti reddetme başarısız oldu",
-        "inviter_unknown": "Bilinmeyen",
         "upload": {
             "uploading_multiple_file": {
                 "one": "%(filename)s ve %(count)s kadarı yükleniyor",
                 "other": "%(filename)s ve %(count)s kadarları yükleniyor"
             },
             "uploading_single_file": "%(filename)s yükleniyor"
-        }
+        },
+        "upgrade_warning_bar_upgraded": "Bu ıda zaten güncellenmiş.",
+        "upgrade_warning_bar_unstable": "Bu oda, <roomVersion /> oda sürümünü kullanmaktadır ve ana sunucunuz tarafından <i>tutarsız</i> olarak işaretlenmiştir.",
+        "upgrade_warning_bar_admins": "Bu uyarıyı sadece oda yöneticileri görür",
+        "upgrade_warning_bar": "Bu odayı güncellerseniz bu oda kapanacak ve yerine aynı adlı, güncellenmiş bir oda geçecek.",
+        "status_bar": {
+            "server_connectivity_lost_title": "Sunucuyla olan bağlantı kesildi.",
+            "server_connectivity_lost_description": "Gönderilen iletiler bağlantınız geri gelene kadar saklanacak."
+        },
+        "search": {
+            "this_room": "Bu Oda",
+            "all_rooms": "Tüm Odalar",
+            "field_placeholder": "Arama…"
+        },
+        "jump_to_bottom_button": "En son mesajlara git",
+        "jump_read_marker": "İlk okunmamış iletiye atla.",
+        "inviter_unknown": "Bilinmeyen",
+        "failed_reject_invite": "Daveti reddetme başarısız oldu"
     },
     "file_panel": {
         "guest_note": "Bu işlevi kullanmak için <a> Kayıt Olun </a>",
@@ -2247,10 +2247,6 @@
         "filter_placeholder": "Oda üyelerini Filtrele",
         "power_label": "%(userName)s (güç %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
-        "empty_add_prompt": "Şimdi biraz ekle"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Davetin geri çekilmesi başarısız",
         "error_revoke_3pid_invite_description": "Davet geri çekilemiyor. Sunucu geçici bir problem yaşıyor olabilir yada daveti geri çekmek için gerekli izinlere sahip değilsin.",
@@ -2277,19 +2273,27 @@
         "deactivate_confirm_action": "Kullanıcıyı pasifleştir",
         "error_deactivate": "Kullanıcı pasifleştirme başarısız"
     },
+    "stickers": {
+        "empty": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
+        "empty_add_prompt": "Şimdi biraz ekle"
+    },
     "right_panel": {
         "widgets_section": "Widgetlar",
         "share_button": "Oda paylaş",
         "settings_button": "Oda ayarları"
     },
-    "cant_load_page": "Sayfa yüklenemiyor",
-    "left_panel": {
-        "open_dial_pad": "Arama tuşlarını aç"
-    },
     "reject_invitation_dialog": {
         "title": "Daveti Reddet",
         "confirmation": "Daveti reddetmek istediğinizden emin misiniz ?",
         "failed": "Davetiyeyi reddetme başarısız oldu"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Dosya yüklüyorsunuz gibi görünüyor , çıkmak istediğinizden emin misiniz ?",
+        "call_in_progress": "Bir çağrıda gözüküyorsunuz , çıkmak istediğinizden emin misiniz ?"
+    },
+    "no_more_results": "Başka sonuç yok",
+    "left_panel": {
+        "open_dial_pad": "Arama tuşlarını aç"
     },
     "leave_room_dialog": {
         "room_rejoin_warning": "Bu oda açık bir oda değil. Davet almadan tekrar katılamayacaksınız.",
@@ -2303,9 +2307,5 @@
         },
         "error_loading_user_profile": "Kullanıcı profili yüklenemedi"
     },
-    "no_more_results": "Başka sonuç yok",
-    "quit_warning": {
-        "file_upload_in_progress": "Dosya yüklüyorsunuz gibi görünüyor , çıkmak istediğinizden emin misiniz ?",
-        "call_in_progress": "Bir çağrıda gözüküyorsunuz , çıkmak istediğinizden emin misiniz ?"
-    }
+    "cant_load_page": "Sayfa yüklenemiyor"
 }

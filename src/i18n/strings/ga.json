@@ -392,8 +392,8 @@
         "historical": "Stairiúil",
         "unencrypted": "Gan chriptiú",
         "show_more": "Taispeáin níos mó",
-        "are_you_sure": "An bhfuil tú cinnte?",
-        "avatar": "Abhatár"
+        "avatar": "Abhatár",
+        "are_you_sure": "An bhfuil tú cinnte?"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -830,8 +830,8 @@
             "explore": "Breathnaigh thart ar na seomraí"
         },
         "share_public": "Roinn do spás poiblí",
-        "title_when_query_available": "Torthaí",
-        "title_when_query_unavailable": "Seomraí agus spásanna"
+        "title_when_query_unavailable": "Seomraí agus spásanna",
+        "title_when_query_available": "Torthaí"
     },
     "terms": {
         "column_service": "Seirbhís",
@@ -854,8 +854,8 @@
         "search": {
             "field_placeholder": "Cuardaigh…"
         },
-        "failed_reject_invite": "Níorbh fhéidir an cuireadh a dhiúltú",
-        "inviter_unknown": "Anaithnid"
+        "inviter_unknown": "Anaithnid",
+        "failed_reject_invite": "Níorbh fhéidir an cuireadh a dhiúltú"
     },
     "labs_mjolnir": {
         "ban_reason": "Neamhairde/Tachta",

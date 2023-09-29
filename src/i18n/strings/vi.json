@@ -1064,12 +1064,12 @@
         "historical": "Lịch sử",
         "go_to_settings": "Đi tới Cài đặt",
         "setup_secure_messages": "Cài đặt Tin nhắn được bảo toàn",
-        "unencrypted": "Không được mã hóa",
         "view_message": "Xem tin nhăn",
-        "joined": "Đã tham gia",
+        "unencrypted": "Không được mã hóa",
         "show_more": "Cho xem nhiều hơn",
-        "are_you_sure": "Bạn có chắc không?",
-        "avatar": "Avatar"
+        "joined": "Đã tham gia",
+        "avatar": "Avatar",
+        "are_you_sure": "Bạn có chắc không?"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1379,15 +1379,15 @@
         "format_italics": "In nghiêng",
         "format_insert_link": "Chèn liên kết",
         "replying_title": "Đang trả lời",
-        "edit_composer_label": "Chỉnh sửa tin nhắn",
-        "send_voice_message": "Gửi tin nhắn thoại",
         "stop_voice_message": "Dừng ghi",
+        "send_voice_message": "Gửi tin nhắn thoại",
         "link_modal": {
             "title_edit": "Sửa liên kết",
             "title_create": "Tạo liên kết",
             "text_field_label": "Chữ",
             "link_field_label": "Liên kết"
-        }
+        },
+        "edit_composer_label": "Chỉnh sửa tin nhắn"
     },
     "power_level": {
         "default": "Mặc định",
@@ -2399,12 +2399,11 @@
             "other": "Gửi bởi %(count)s người"
         },
         "read_receipts_label": "Thông báo đã đọc",
-        "error_no_renderer": "Sự kiện này không thể được hiển thị",
         "undecryptable_tooltip": "Không giải mã được tin nhắn",
-        "send_state_sending": "Đang gửi tin nhắn…",
-        "send_state_encrypting": "Đang mã hóa tin nhắn…",
         "send_state_sent": "Tin nhắn của bạn đã được gửi đi",
+        "send_state_sending": "Đang gửi tin nhắn…",
         "send_state_failed": "Gửi thất bại",
+        "send_state_encrypting": "Đang mã hóa tin nhắn…",
         "mab": {
             "label": "Hành động tin nhắn",
             "view_in_room": "Xem phòng này",
@@ -2418,7 +2417,8 @@
             "no_permission": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng bạn không có quyền xem tin nhắn được đề cập.",
             "unable_to_find": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng không thể tìm thấy nó.",
             "title": "Không tải được vị trí dòng thời gian"
-        }
+        },
+        "error_no_renderer": "Sự kiện này không thể được hiển thị"
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -2769,31 +2769,31 @@
             "leave_space": "Rời khỏi Space",
             "aliases_section": "Các địa chỉ Phòng",
             "other_section": "Khác",
-            "error_updating_canonical_alias_title": "Lỗi khi cập nhật địa chỉ chính",
-            "error_updating_canonical_alias_description": "Đã xảy ra lỗi khi cập nhật địa chỉ chính của phòng. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
-            "error_updating_alias_description": "Đã xảy ra lỗi khi cập nhật địa chỉ thay thế của phòng. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
-            "error_creating_alias_title": "Lỗi khi tạo địa chỉ",
-            "error_creating_alias_description": "Đã xảy ra lỗi khi tạo địa chỉ đó. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
-            "error_deleting_alias_description_forbidden": "Bạn không có quyền xóa địa chỉ.",
-            "error_deleting_alias_description": "Đã xảy ra lỗi khi xóa địa chỉ đó. Nó có thể không còn tồn tại hoặc một lỗi tạm thời xảy ra.",
-            "error_deleting_alias_title": "Lỗi khi xóa địa chỉ",
-            "canonical_alias_field_label": "Địa chỉ chính",
-            "no_aliases_space": "space này không có địa chỉ cục bộ",
-            "no_aliases_room": "Phòng này không có địa chỉ địa phương",
-            "local_alias_field_label": "Địa chỉ địa phương",
+            "topic_field_label": "Chủ đề phòng",
             "published_aliases_section": "Các địa chỉ công khai",
             "published_aliases_explainer_space": "Địa chỉ đã xuất bản có thể được sử dụng bởi bất kỳ ai trên bất kỳ máy chủ nào để tham gia space của bạn.",
             "published_aliases_explainer_room": "Bất kỳ ai trên bất kỳ máy chủ nào cũng có thể sử dụng các địa chỉ đã xuất bản để tham gia vào phòng của bạn.",
             "published_aliases_description": "Để xuất bản một địa chỉ, trước tiên nó cần được đặt làm địa chỉ cục bộ.",
-            "aliases_items_label": "Các địa chỉ công khai khác:",
-            "aliases_no_items_label": "Chưa có địa chỉ đã xuất bản nào khác, hãy thêm một địa chỉ bên dưới",
+            "no_aliases_space": "space này không có địa chỉ cục bộ",
+            "no_aliases_room": "Phòng này không có địa chỉ địa phương",
             "new_alias_placeholder": "Địa chỉ không khai mới",
+            "name_field_label": "Tên phòng",
             "local_aliases_section": "Các địa chỉ địa phương",
             "local_aliases_explainer_space": "Đặt địa chỉ cho space này để người dùng có thể tìm thấy space này thông qua máy chủ của bạn (%(localDomain)s)",
             "local_aliases_explainer_room": "Đặt địa chỉ cho phòng này để người dùng có thể tìm thấy phòng này thông qua máy chủ của bạn (%(localDomain)s)",
-            "name_field_label": "Tên phòng",
-            "topic_field_label": "Chủ đề phòng",
-            "avatar_field_label": "Hình đại diện phòng"
+            "local_alias_field_label": "Địa chỉ địa phương",
+            "error_updating_canonical_alias_title": "Lỗi khi cập nhật địa chỉ chính",
+            "error_updating_canonical_alias_description": "Đã xảy ra lỗi khi cập nhật địa chỉ chính của phòng. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
+            "error_updating_alias_description": "Đã xảy ra lỗi khi cập nhật địa chỉ thay thế của phòng. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
+            "error_deleting_alias_title": "Lỗi khi xóa địa chỉ",
+            "error_deleting_alias_description_forbidden": "Bạn không có quyền xóa địa chỉ.",
+            "error_deleting_alias_description": "Đã xảy ra lỗi khi xóa địa chỉ đó. Nó có thể không còn tồn tại hoặc một lỗi tạm thời xảy ra.",
+            "error_creating_alias_title": "Lỗi khi tạo địa chỉ",
+            "error_creating_alias_description": "Đã xảy ra lỗi khi tạo địa chỉ đó. Nó có thể không được máy chủ cho phép hoặc xảy ra lỗi tạm thời.",
+            "canonical_alias_field_label": "Địa chỉ chính",
+            "avatar_field_label": "Hình đại diện phòng",
+            "aliases_no_items_label": "Chưa có địa chỉ đã xuất bản nào khác, hãy thêm một địa chỉ bên dưới",
+            "aliases_items_label": "Các địa chỉ công khai khác:"
         },
         "advanced": {
             "unfederated": "Phòng này không thể truy cập từ xa bằng máy chủ Matrix",
@@ -2893,10 +2893,9 @@
             "verify_later": "Tôi sẽ xác thực sau",
             "verify_reset_warning_1": "Sẽ không thể hoàn tác lại việc đặt lại các khóa xác thực của bạn. Sau khi đặt lại, bạn sẽ không có quyền truy cập vào các tin nhắn đã được mã hóa cũ, và bạn bè đã được xác thực trước đó bạn sẽ thấy các cảnh báo bảo mật cho đến khi bạn xác thực lại với họ.",
             "verify_reset_warning_2": "Chỉ tiếp tục nếu bạn chắc chắn là mình đã mất mọi thiết bị khác và khóa bảo mật.",
-            "self_verification_hint": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
             "waiting_for_user_accept": "Đang chờ %(displayName)s chấp nhận…",
-            "accepting": "Đang chấp nhận…",
             "start_button": "Bắt đầu xác thực",
+            "self_verification_hint": "Để tiến hành, vui lòng chấp nhận yêu cầu xác thực trên thiết bị khác của bạn.",
             "error_starting_title": "Lỗi khi bắt đầu xác thực",
             "error_starting_description": "Chúng tôi không thể bắt đầu cuộc trò chuyện với người kia.",
             "after_new_login": {
@@ -2905,7 +2904,8 @@
                 "device_verified": "Thiết bị được xác thực",
                 "reset_confirmation": "Thực sự đặt lại các khóa xác minh?",
                 "skip_verification": "Bỏ qua xác thực ngay bây giờ"
-            }
+            },
+            "accepting": "Đang chấp nhận…"
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -2943,14 +2943,6 @@
             "explainer": "Sao lưu chìa khóa của bạn trước khi đăng xuất để tránh mất chúng.",
             "title": "Cài đặt"
         },
-        "cross_signing_user_warning": "Người dùng này chưa xác thực tất cả các phiên của họ.",
-        "cross_signing_user_normal": "Bạn chưa xác thực người dùng này.",
-        "cross_signing_user_verified": "Bạn đã xác thực người dùng này. Người dùng này đã xác thực tất cả các phiên của họ.",
-        "cross_signing_room_warning": "Ai đó đang sử dụng một phiên không xác định",
-        "cross_signing_room_normal": "Phòng này được mã hóa end-to-end",
-        "cross_signing_room_verified": "Mọi người trong phòng này đã được xác thực",
-        "event_shield_reason_authenticity_not_guaranteed": "Tính xác thực của tin nhắn được mã hóa này không thể được đảm bảo trên thiết bị này.",
-        "event_shield_reason_mismatched_sender_key": "Được mã hóa bởi một phiên chưa được xác thực",
         "messages_not_secure": {
             "title": "Tin nhắn của bạn không an toàn",
             "heading": "Một trong những điều sau đây có thể bị xâm phạm:",
@@ -2958,7 +2950,15 @@
             "cause_2": "Máy chủ nhà người dùng bạn đang xác thực được kết nối đến",
             "cause_3": "Của bạn, hoặc kết nối internet của các người dùng khác",
             "cause_4": "Của bạn, hoặc phiên của các người dùng khác"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Được mã hóa bởi một phiên chưa được xác thực",
+        "event_shield_reason_authenticity_not_guaranteed": "Tính xác thực của tin nhắn được mã hóa này không thể được đảm bảo trên thiết bị này.",
+        "cross_signing_user_warning": "Người dùng này chưa xác thực tất cả các phiên của họ.",
+        "cross_signing_user_verified": "Bạn đã xác thực người dùng này. Người dùng này đã xác thực tất cả các phiên của họ.",
+        "cross_signing_user_normal": "Bạn chưa xác thực người dùng này.",
+        "cross_signing_room_warning": "Ai đó đang sử dụng một phiên không xác định",
+        "cross_signing_room_verified": "Mọi người trong phòng này đã được xác thực",
+        "cross_signing_room_normal": "Phòng này được mã hóa end-to-end"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3131,11 +3131,6 @@
         "failed_soft_logout_homeserver": "Không xác thực lại được do sự cố máy chủ",
         "soft_logout_subheading": "Xóa dữ liệu cá nhân",
         "forgot_password_send_email": "Gửi thư",
-        "captcha_description": "Người bảo vệ gia đình này muốn đảm bảo rằng bạn không phải là người máy.",
-        "country_dropdown": "Quốc gia thả xuống",
-        "qr_code_login": {
-            "error_invalid_scanned_code": "Mã vừa quét là không hợp lệ."
-        },
         "reset_password": {
             "confirm_new_password": "Xác nhận mật khẩu mới",
             "password_not_entered": "Mật khẩu mới phải được nhập.",
@@ -3144,6 +3139,10 @@
             "reset_successful": "Mật khẩu của bạn đã được đặt lại.",
             "return_to_login": "Quay về màn hình đăng nhập"
         },
+        "qr_code_login": {
+            "error_invalid_scanned_code": "Mã vừa quét là không hợp lệ."
+        },
+        "country_dropdown": "Quốc gia thả xuống",
         "common_failures": {
             "invalid_homeserver_discovery": "Phản hồi khám phá homeserver không hợp lệ",
             "cannot_find_autodiscovery_config": "Không lấy được cấu hình tự động phát hiện từ máy chủ",
@@ -3153,7 +3152,8 @@
             "invalid_identity_server_base_url": "Base_url không hợp lệ cho m.identity_server",
             "invalid_identity_server_url": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
             "general_failure": "Thất bại chung"
-        }
+        },
+        "captcha_description": "Người bảo vệ gia đình này muốn đảm bảo rằng bạn không phải là người máy."
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -3320,8 +3320,8 @@
         "unmaximise": "Hủy thu nhỏ",
         "popout": "Tiện ích bật ra",
         "unpin_to_view_right_panel": "Bỏ ghim widget này để xem nó trong bảng điều khiển này",
-        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này",
-        "set_room_layout": "Đặt bố cục phòng của tôi cho mọi người"
+        "set_room_layout": "Đặt bố cục phòng của tôi cho mọi người",
+        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3441,12 +3441,12 @@
         "invite": "Mời mọi người",
         "invite_description": "Mời bằng thư điện tử hoặc tên người dùng",
         "invite_this_space": "Mời vào space này",
-        "joining_space": "Đang tham gia",
         "user_lacks_permission": "Bạn không có quyền",
-        "no_search_result_hint": "Bạn có thể muốn thử một tìm kiếm khác hoặc kiểm tra lỗi chính tả.",
-        "title_when_query_available": "Kết quả",
         "title_when_query_unavailable": "Các phòng và space",
-        "search_placeholder": "Tìm kiếm tên và mô tả"
+        "title_when_query_available": "Kết quả",
+        "search_placeholder": "Tìm kiếm tên và mô tả",
+        "no_search_result_hint": "Bạn có thể muốn thử một tìm kiếm khác hoặc kiểm tra lỗi chính tả.",
+        "joining_space": "Đang tham gia"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -3653,20 +3653,17 @@
         "inaccessible_name": "Không thể truy cập %(roomName)s vào lúc này.",
         "inaccessible": "Phòng hoặc space này không thể truy cập được bây giờ.",
         "join_failed_needs_invite": "Để xem %(roomName)s, bạn cần một lời mời",
-        "jump_to_bottom_button": "Di chuyển đến các tin nhắn gần đây nhất",
-        "show_labs_settings": "Hiện các cài đặt thử nghiệm",
-        "upgrade_warning_bar": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Đang tải lên %(filename)s và %(count)s tập tin khác",
+                "other": "Đang tải lên %(filename)s và %(count)s tập tin khác"
+            },
+            "uploading_single_file": "Đang tải lên %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Phòng này đã được nâng cấp.",
         "upgrade_warning_bar_unstable": "Phòng này đang chạy phiên bản phòng <roomVersion /> mà máy chủ này đã đánh dấu là không ổn định <i>unstable</i>.",
         "upgrade_warning_bar_admins": "Chỉ quản trị viên phòng mới thấy cảnh báo này",
-        "search": {
-            "this_room": "phòng này",
-            "all_rooms": "Tất cả các phòng",
-            "field_placeholder": "Tìm kiếm…",
-            "this_room_button": "Tìm trong phòng này",
-            "all_rooms_button": "Tìm tất cả phòng"
-        },
-        "jump_read_marker": "Chuyển đến tin nhắn chưa đọc đầu tiên.",
+        "upgrade_warning_bar": "Việc nâng cấp phòng này sẽ đóng phiên bản hiện tại của phòng và tạo một phòng được nâng cấp có cùng tên.",
         "status_bar": {
             "requires_consent_agreement": "Bạn không thể gửi bất kỳ tin nhắn nào cho đến khi bạn xem xét và đồng ý với các <consentLink>điều khoản và điều kiện của chúng tôi</consentLink>.",
             "monthly_user_limit_reached": "Tin nhắn của bạn không được gửi vì máy chủ này đã đạt đến Giới hạn Người dùng Hoạt động Hàng tháng. Vui lòng <a>liên hệ với quản trị viên dịch vụ của bạn</a> để tiếp tục sử dụng dịch vụ.",
@@ -3678,15 +3675,18 @@
             "server_connectivity_lost_title": "Kết nối đến máy chủ đã bị mất.",
             "server_connectivity_lost_description": "Các tin nhắn đã gửi sẽ được lưu trữ cho đến khi kết nối của bạn trở lại."
         },
-        "failed_reject_invite": "Không thể từ chối lời mời",
+        "show_labs_settings": "Hiện các cài đặt thử nghiệm",
+        "search": {
+            "this_room": "phòng này",
+            "all_rooms": "Tất cả các phòng",
+            "field_placeholder": "Tìm kiếm…",
+            "this_room_button": "Tìm trong phòng này",
+            "all_rooms_button": "Tìm tất cả phòng"
+        },
+        "jump_to_bottom_button": "Di chuyển đến các tin nhắn gần đây nhất",
+        "jump_read_marker": "Chuyển đến tin nhắn chưa đọc đầu tiên.",
         "inviter_unknown": "Không xác định",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "Đang tải lên %(filename)s và %(count)s tập tin khác",
-                "other": "Đang tải lên %(filename)s và %(count)s tập tin khác"
-            },
-            "uploading_single_file": "Đang tải lên %(filename)s"
-        }
+        "failed_reject_invite": "Không thể từ chối lời mời"
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3907,10 +3907,6 @@
         "filter_placeholder": "Lọc thành viên phòng",
         "power_label": "%(userName)s (chỉ số %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Bạn hiện chưa bật bất kỳ gói nhãn dán nào",
-        "empty_add_prompt": "Thêm một số ngay bây giờ"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Không thể thu hồi lời mời",
         "error_revoke_3pid_invite_description": "Không thể thu hồi lời mời. Máy chủ có thể đang gặp sự cố tạm thời hoặc bạn không có đủ quyền để thu hồi lời mời.",
@@ -3964,6 +3960,10 @@
         "error_deactivate": "Không thể hủy kích hoạt người dùng",
         "role_label": "Vai trò trong <RoomName/>"
     },
+    "stickers": {
+        "empty": "Bạn hiện chưa bật bất kỳ gói nhãn dán nào",
+        "empty_add_prompt": "Thêm một số ngay bây giờ"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Tin nhắn đã ghim",
@@ -3989,14 +3989,18 @@
         "share_button": "Phòng chia sẻ",
         "settings_button": "Cài đặt phòng"
     },
-    "cant_load_page": "Không thể tải trang",
-    "left_panel": {
-        "open_dial_pad": "Mở bàn phím quay số"
-    },
     "reject_invitation_dialog": {
         "title": "Từ chối lời mời",
         "confirmation": "Bạn có chắc chắn muốn từ chối lời mời không?",
         "failed": "Không thể từ chối lời mời"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Có vẻ như bạn đang tải tệp lên, bạn có chắc chắn muốn thoát không?",
+        "call_in_progress": "Có vẻ như bạn đang tham gia một cuộc gọi, bạn có chắc chắn muốn thoát không?"
+    },
+    "no_more_results": "Không còn kết quả nào nữa",
+    "left_panel": {
+        "open_dial_pad": "Mở bàn phím quay số"
     },
     "leave_room_dialog": {
         "last_person_warning": "Bạn là người duy nhất ở đây. Nếu bạn rời, không ai có thể tham gia trong tương lai, kể cả bạn.",
@@ -4017,9 +4021,5 @@
         },
         "error_loading_user_profile": "Không thể tải hồ sơ người dùng"
     },
-    "no_more_results": "Không còn kết quả nào nữa",
-    "quit_warning": {
-        "file_upload_in_progress": "Có vẻ như bạn đang tải tệp lên, bạn có chắc chắn muốn thoát không?",
-        "call_in_progress": "Có vẻ như bạn đang tham gia một cuộc gọi, bạn có chắc chắn muốn thoát không?"
-    }
+    "cant_load_page": "Không thể tải trang"
 }

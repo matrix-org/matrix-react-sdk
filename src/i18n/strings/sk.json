@@ -1156,12 +1156,12 @@
         "historical": "Historické",
         "go_to_settings": "Otvoriť nastavenia",
         "setup_secure_messages": "Nastavenie zabezpečených správ",
-        "unencrypted": "Nešifrované",
         "view_message": "Zobraziť správu",
-        "joined": "Ste pripojený",
+        "unencrypted": "Nešifrované",
         "show_more": "Zobraziť viac",
-        "are_you_sure": "Ste si istí?",
-        "avatar": "Obrázok"
+        "joined": "Ste pripojený",
+        "avatar": "Obrázok",
+        "are_you_sure": "Ste si istí?"
     },
     "action": {
         "continue": "Pokračovať",
@@ -1498,15 +1498,15 @@
         "format_italics": "Kurzíva",
         "format_insert_link": "Vložiť odkaz",
         "replying_title": "Odpoveď",
-        "edit_composer_label": "Upraviť správu",
-        "send_voice_message": "Odoslať hlasovú správu",
         "stop_voice_message": "Zastaviť nahrávanie",
+        "send_voice_message": "Odoslať hlasovú správu",
         "link_modal": {
             "title_edit": "Upraviť odkaz",
             "title_create": "Vytvoriť odkaz",
             "text_field_label": "Text",
             "link_field_label": "Odkaz"
-        }
+        },
+        "edit_composer_label": "Upraviť správu"
     },
     "power_level": {
         "default": "Predvolené",
@@ -2607,13 +2607,12 @@
             "other": "Videlo %(count)s ľudí"
         },
         "read_receipts_label": "Potvrdenia o prečítaní",
-        "thread_info_basic": "Z vlákna",
-        "error_no_renderer": "Nie je možné zobraziť túto udalosť",
         "undecryptable_tooltip": "Túto správu sa nepodarilo dešifrovať",
-        "send_state_sending": "Odosielanie vašej správy…",
-        "send_state_encrypting": "Šifrovanie vašej správy…",
+        "thread_info_basic": "Z vlákna",
         "send_state_sent": "Vaša správa bola odoslaná",
+        "send_state_sending": "Odosielanie vašej správy…",
         "send_state_failed": "Nepodarilo sa odoslať",
+        "send_state_encrypting": "Šifrovanie vašej správy…",
         "mab": {
             "label": "Akcie správy",
             "view_in_room": "Zobraziť v miestnosti",
@@ -2627,7 +2626,8 @@
             "no_permission": "Pri pokuse načítať konkrétny bod v histórii tejto miestnosti sa vyskytla chyba, nemáte povolenie na zobrazenie zodpovedajúcej správy.",
             "unable_to_find": "Pokus o načítanie konkrétneho bodu na časovej osi tejto miestnosti, ale nepodarilo sa ho nájsť.",
             "title": "Nepodarilo sa načítať pozíciu na časovej osi"
-        }
+        },
+        "error_no_renderer": "Nie je možné zobraziť túto udalosť"
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -2978,31 +2978,31 @@
             "leave_space": "Opustiť priestor",
             "aliases_section": "Adresy miestnosti",
             "other_section": "Ďalšie",
-            "error_updating_canonical_alias_title": "Chyba pri aktualizácii hlavnej adresy",
-            "error_updating_canonical_alias_description": "Pri aktualizácii hlavnej adresy miestnosti došlo k chybe. Server to nemusí povoliť alebo došlo k dočasnému zlyhaniu.",
-            "error_updating_alias_description": "Pri aktualizácii alternatívnych adries miestnosti došlo k chybe. Nemusí to byť povolené serverom alebo došlo k dočasnému zlyhaniu.",
-            "error_creating_alias_title": "Chyba pri vytváraní adresy",
-            "error_creating_alias_description": "Pri vytváraní tejto adresy došlo k chybe. Je možné, že ju server nepovoľuje alebo došlo k dočasnému zlyhaniu.",
-            "error_deleting_alias_description_forbidden": "Na vymazanie adresy nemáte povolenie.",
-            "error_deleting_alias_description": "Pri odstraňovaní tejto adresy došlo k chybe. Možno už neexistuje alebo došlo k dočasnej chybe.",
-            "error_deleting_alias_title": "Chyba pri odstraňovaní adresy",
-            "canonical_alias_field_label": "Hlavná adresa",
-            "no_aliases_space": "Tento priestor nemá žiadne lokálne adresy",
-            "no_aliases_room": "Pre túto miestnosť nie sú žiadne lokálne adresy",
-            "local_alias_field_label": "Lokálna adresa",
+            "topic_field_label": "Téma miestnosti",
             "published_aliases_section": "Zverejnené adresy",
             "published_aliases_explainer_space": "Zverejnené adresy môže použiť ktokoľvek na akomkoľvek serveri, aby sa pripojil k vášmu priestoru.",
             "published_aliases_explainer_room": "Zverejnené adresy môže použiť ktokoľvek na akomkoľvek serveri, aby sa pripojil k vašej miestnosti.",
             "published_aliases_description": "Ak chcete zverejniť adresu, je potrebné ju najprv nastaviť ako lokálnu adresu.",
-            "aliases_items_label": "Iné zverejnené adresy:",
-            "aliases_no_items_label": "Zatiaľ neboli zverejnené žiadne ďalšie adresy, pridajte ich nižšie",
+            "no_aliases_space": "Tento priestor nemá žiadne lokálne adresy",
+            "no_aliases_room": "Pre túto miestnosť nie sú žiadne lokálne adresy",
             "new_alias_placeholder": "Nová zverejnená adresa (napr. #alias:server)",
+            "name_field_label": "Názov miestnosti",
             "local_aliases_section": "Lokálne adresy",
             "local_aliases_explainer_space": "Nastavte adresy pre tento priestor, aby ho používatelia mohli nájsť prostredníctvom vášho domovského servera (%(localDomain)s)",
             "local_aliases_explainer_room": "Nastavte adresy pre túto miestnosť, aby ju používatelia mohli nájsť prostredníctvom vášho domovského servera (%(localDomain)s)",
-            "name_field_label": "Názov miestnosti",
-            "topic_field_label": "Téma miestnosti",
-            "avatar_field_label": "Obrázok miestnosti"
+            "local_alias_field_label": "Lokálna adresa",
+            "error_updating_canonical_alias_title": "Chyba pri aktualizácii hlavnej adresy",
+            "error_updating_canonical_alias_description": "Pri aktualizácii hlavnej adresy miestnosti došlo k chybe. Server to nemusí povoliť alebo došlo k dočasnému zlyhaniu.",
+            "error_updating_alias_description": "Pri aktualizácii alternatívnych adries miestnosti došlo k chybe. Nemusí to byť povolené serverom alebo došlo k dočasnému zlyhaniu.",
+            "error_deleting_alias_title": "Chyba pri odstraňovaní adresy",
+            "error_deleting_alias_description_forbidden": "Na vymazanie adresy nemáte povolenie.",
+            "error_deleting_alias_description": "Pri odstraňovaní tejto adresy došlo k chybe. Možno už neexistuje alebo došlo k dočasnej chybe.",
+            "error_creating_alias_title": "Chyba pri vytváraní adresy",
+            "error_creating_alias_description": "Pri vytváraní tejto adresy došlo k chybe. Je možné, že ju server nepovoľuje alebo došlo k dočasnému zlyhaniu.",
+            "canonical_alias_field_label": "Hlavná adresa",
+            "avatar_field_label": "Obrázok miestnosti",
+            "aliases_no_items_label": "Zatiaľ neboli zverejnené žiadne ďalšie adresy, pridajte ich nižšie",
+            "aliases_items_label": "Iné zverejnené adresy:"
         },
         "advanced": {
             "unfederated": "Táto miestnosť nie je prístupná zo vzdialených Matrix serverov",
@@ -3102,10 +3102,9 @@
             "verify_later": "Overím to neskôr",
             "verify_reset_warning_1": "Vynulovanie overovacích kľúčov sa nedá vrátiť späť. Po vynulovaní nebudete mať prístup k starým zašifrovaným správam a všetci priatelia, ktorí vás predtým overili, uvidia bezpečnostné upozornenia, kým sa u nich znovu neoveríte.",
             "verify_reset_warning_2": "Pokračujte prosím iba vtedy, ak ste si istí, že ste stratili všetky ostatné zariadenia a váš bezpečnostný kľúč.",
-            "self_verification_hint": "Ak chcete pokračovať, prijmite žiadosť o overenie na vašom druhom zariadení.",
             "waiting_for_user_accept": "Čaká sa, kým to %(displayName)s prijme…",
-            "accepting": "Akceptovanie…",
             "start_button": "Spustiť overovanie",
+            "self_verification_hint": "Ak chcete pokračovať, prijmite žiadosť o overenie na vašom druhom zariadení.",
             "error_starting_title": "Chyba pri spustení overovania",
             "error_starting_description": "Nepodarilo sa nám spustiť konverzáciu s druhým používateľom.",
             "after_new_login": {
@@ -3114,7 +3113,8 @@
                 "device_verified": "Zariadenie overené",
                 "reset_confirmation": "Skutočne vynulovať overovacie kľúče?",
                 "skip_verification": "Vynechať zatiaľ overovanie"
-            }
+            },
+            "accepting": "Akceptovanie…"
         },
         "old_version_detected_title": "Nájdené zastaralé kryptografické údaje",
         "old_version_detected_description": "Boli zistené údaje zo staršej verzie %(brand)s. To spôsobilo nefunkčnosť end-to-end kryptografie v staršej verzii. End-to-end šifrované správy, ktoré boli nedávno vymenené pri používaní staršej verzie, sa v tejto verzii nemusia dať dešifrovať. To môže spôsobiť aj zlyhanie správ vymenených pomocou tejto verzie. Ak sa vyskytnú problémy, odhláste sa a znova sa prihláste. Ak chcete zachovať históriu správ, exportujte a znovu importujte svoje kľúče.",
@@ -3152,14 +3152,6 @@
             "explainer": "Zálohujte si šifrovacie kľúče pred odhlásením, aby ste zabránili ich strate.",
             "title": "Nastaviť"
         },
-        "cross_signing_user_warning": "Tento používateľ si neoveril všetky svoje relácie.",
-        "cross_signing_user_normal": "Tohto používateľa ste neoverili.",
-        "cross_signing_user_verified": "Tohto používateľa ste overili. Tento používateľ si overil všetky svoje relácie.",
-        "cross_signing_room_warning": "Niekto používa neznámu reláciu",
-        "cross_signing_room_normal": "Táto miestnosť je end-to-end šifrovaná",
-        "cross_signing_room_verified": "Všetci v tejto miestnosti sú overení",
-        "event_shield_reason_authenticity_not_guaranteed": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
-        "event_shield_reason_mismatched_sender_key": "Šifrované neoverenou reláciou",
         "messages_not_secure": {
             "title": "Vaše správy nie sú zabezpečené",
             "heading": "Jedna z nasledujúcich vecí môže byť narušená:",
@@ -3167,7 +3159,15 @@
             "cause_2": "Domovský server, ku ktorému je pripojený používateľ, ktorého overujete",
             "cause_3": "Vaše internetové pripojenie alebo internetové pripojenie ostatných používateľov",
             "cause_4": "Vaša relácia alebo relácia ostatných používateľov"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Šifrované neoverenou reláciou",
+        "event_shield_reason_authenticity_not_guaranteed": "Vierohodnosť tejto zašifrovanej správy nie je možné na tomto zariadení zaručiť.",
+        "cross_signing_user_warning": "Tento používateľ si neoveril všetky svoje relácie.",
+        "cross_signing_user_verified": "Tohto používateľa ste overili. Tento používateľ si overil všetky svoje relácie.",
+        "cross_signing_user_normal": "Tohto používateľa ste neoverili.",
+        "cross_signing_room_warning": "Niekto používa neznámu reláciu",
+        "cross_signing_room_verified": "Všetci v tejto miestnosti sú overení",
+        "cross_signing_room_normal": "Táto miestnosť je end-to-end šifrovaná"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3355,8 +3355,19 @@
         "soft_logout_subheading": "Zmazať osobné dáta",
         "soft_logout_warning": "Varovanie: Vaše osobné údaje (vrátane šifrovacích kľúčov) sú stále uložené v tejto relácií. Vymažte ich, ak ste ukončili používanie tejto relácie alebo sa chcete prihlásiť do iného konta.",
         "forgot_password_send_email": "Poslať e-mail",
-        "captcha_description": "Tento domovský server by sa rád uistil, že nie ste robot.",
-        "country_dropdown": "Rozbaľovacie okno krajiny",
+        "reset_password": {
+            "rate_limit_error": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu.",
+            "rate_limit_error_with_time": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
+            "other_devices_logout_warning_1": "Odhlásenie zariadení vymaže kľúče na šifrovanie správ, ktoré sú v nich uložené, čím sa história zašifrovaných konverzácií stane nečitateľnou.",
+            "other_devices_logout_warning_2": "Ak si chcete zachovať prístup k histórii konverzácie v zašifrovaných miestnostiach, pred pokračovaním nastavte zálohovanie kľúčov alebo exportujte kľúče správ z niektorého z vašich ďalších zariadení.",
+            "confirm_new_password": "Potvrdiť nové heslo",
+            "password_not_entered": "Musíte zadať nové heslo.",
+            "passwords_mismatch": "Obe nové heslá musia byť zhodné.",
+            "sign_out_other_devices": "Odhlásiť sa zo všetkých zariadení",
+            "reset_successful": "Vaše heslo bolo obnovené.",
+            "devices_logout_success": "Boli ste odhlásení zo všetkých zariadení a už nebudete dostávať okamžité oznámenia. Ak chcete oznámenia znovu povoliť, prihláste sa znova na každom zariadení.",
+            "return_to_login": "Vrátiť sa na prihlasovaciu obrazovku"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Prihlásiť nové zariadenie",
             "error_linking_incomplete": "Prepojenie nebolo dokončené v požadovanom čase.",
@@ -3380,19 +3391,7 @@
             "waiting_for_device": "Čaká sa na prihlásenie zariadenia",
             "completing_setup": "Dokončenie nastavenia nového zariadenia"
         },
-        "reset_password": {
-            "rate_limit_error": "Príliš veľa pokusov v krátkom čase. Pred ďalším pokusom počkajte nejakú dobu.",
-            "rate_limit_error_with_time": "Príliš veľa pokusov v krátkom čase. Opakujte pokus po %(timeout)s.",
-            "other_devices_logout_warning_1": "Odhlásenie zariadení vymaže kľúče na šifrovanie správ, ktoré sú v nich uložené, čím sa história zašifrovaných konverzácií stane nečitateľnou.",
-            "other_devices_logout_warning_2": "Ak si chcete zachovať prístup k histórii konverzácie v zašifrovaných miestnostiach, pred pokračovaním nastavte zálohovanie kľúčov alebo exportujte kľúče správ z niektorého z vašich ďalších zariadení.",
-            "confirm_new_password": "Potvrdiť nové heslo",
-            "password_not_entered": "Musíte zadať nové heslo.",
-            "passwords_mismatch": "Obe nové heslá musia byť zhodné.",
-            "sign_out_other_devices": "Odhlásiť sa zo všetkých zariadení",
-            "reset_successful": "Vaše heslo bolo obnovené.",
-            "devices_logout_success": "Boli ste odhlásení zo všetkých zariadení a už nebudete dostávať okamžité oznámenia. Ak chcete oznámenia znovu povoliť, prihláste sa znova na každom zariadení.",
-            "return_to_login": "Vrátiť sa na prihlasovaciu obrazovku"
-        },
+        "country_dropdown": "Rozbaľovacie okno krajiny",
         "common_failures": {
             "invalid_homeserver_discovery": "Neplatná odpoveď pri zisťovaní domovského servera",
             "cannot_find_autodiscovery_config": "Nepodarilo sa získať nastavenie automatického zisťovania zo servera",
@@ -3402,7 +3401,8 @@
             "invalid_identity_server_base_url": "Neplatná base_url pre m.identity_server",
             "invalid_identity_server_url": "URL adresa servera totožností sa nezdá byť platným serverom totožností",
             "general_failure": "Všeobecná chyba"
-        }
+        },
+        "captcha_description": "Tento domovský server by sa rád uistil, že nie ste robot."
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -3574,8 +3574,8 @@
         "unmaximise": "Zrušiť maximalizáciu",
         "popout": "Otvoriť widget v novom okne",
         "unpin_to_view_right_panel": "Ak chcete tento widget zobraziť na tomto paneli, zrušte jeho pripnutie",
-        "close_to_view_right_panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli",
-        "set_room_layout": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých"
+        "set_room_layout": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých",
+        "close_to_view_right_panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli"
     },
     "feedback": {
         "sent": "Spätná väzba odoslaná",
@@ -3670,8 +3670,8 @@
         "empty_explainer": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie.",
         "empty_tip": "<b>Tip:</b> Použite položku “%(replyInThread)s”, keď prejdete ponad správu.",
         "empty_heading": "Udržujte diskusie organizované pomocou vlákien",
-        "open_thread": "Otvoriť vlákno",
-        "unable_to_decrypt": "Nie je možné dešifrovať správu"
+        "unable_to_decrypt": "Nie je možné dešifrovať správu",
+        "open_thread": "Otvoriť vlákno"
     },
     "theme": {
         "light_high_contrast": "Ľahký vysoký kontrast",
@@ -3700,12 +3700,12 @@
         "invite": "Pozvať ľudí",
         "invite_description": "Pozvať pomocou e-mailu alebo používateľského mena",
         "invite_this_space": "Pozvať do tohto priestoru",
-        "joining_space": "Pripájanie sa",
         "user_lacks_permission": "Nemáte povolenie",
-        "no_search_result_hint": "Možno by ste mali vyskúšať iné vyhľadávanie alebo skontrolovať preklepy.",
-        "title_when_query_available": "Výsledky",
         "title_when_query_unavailable": "Miestnosti a priestory",
-        "search_placeholder": "Vyhľadávanie názvov a popisov"
+        "title_when_query_available": "Výsledky",
+        "search_placeholder": "Vyhľadávanie názvov a popisov",
+        "no_search_result_hint": "Možno by ste mali vyskúšať iné vyhľadávanie alebo skontrolovať preklepy.",
+        "joining_space": "Pripájanie sa"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -3940,20 +3940,19 @@
         "join_failed_needs_invite": "Na zobrazenie %(roomName)s potrebujete pozvánku",
         "view_failed_enable_video_rooms": "Ak ich chcete zobraziť, povoľte najprv video miestnosti v laboratóriách",
         "join_failed_enable_video_rooms": "Ak sa chcete pripojiť, povoľte najprv video miestnosti v laboratóriách",
-        "jump_to_bottom_button": "Prejsť na najnovšie správy",
-        "show_labs_settings": "Zobraziť nastavenia laboratórií",
-        "upgrade_warning_bar": "Aktualizáciou tejto miestnosti sa vypne aktuálna inštancia miestnosti a vytvorí sa aktualizovaná miestnosť s rovnakým názvom.",
+        "waiting_for_join_title": "Čaká sa na používateľov, kým sa pripoja k aplikácii %(brand)s",
+        "waiting_for_join_subtitle": "Keď sa pozvaní používatelia pripoja k aplikácii %(brand)s, budete môcť konverzovať a miestnosť bude end-to-end šifrovaná",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Nahrávanie %(filename)s a %(count)s ďalších súborov",
+                "one": "Nahrávanie %(filename)s a %(count)s ďalší súbor"
+            },
+            "uploading_single_file": "Nahrávanie %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Táto miestnosť už bola aktualizovaná.",
         "upgrade_warning_bar_unstable": "Táto miestnosť používa verziu miestnosti <roomVersion />, ktorú tento domovský server označil ako <i>nestabilnú</i>.",
         "upgrade_warning_bar_admins": "Toto upozornenie sa zobrazuje len správcom miestnosti",
-        "search": {
-            "this_room": "V tejto miestnosti",
-            "all_rooms": "Vo všetkých miestnostiach",
-            "field_placeholder": "Hľadať…",
-            "this_room_button": "Vyhľadávať v tejto miestnosti",
-            "all_rooms_button": "Vyhľadávať vo všetkých miestnostiach"
-        },
-        "jump_read_marker": "Preskočiť na prvú neprečítanú správu.",
+        "upgrade_warning_bar": "Aktualizáciou tejto miestnosti sa vypne aktuálna inštancia miestnosti a vytvorí sa aktualizovaná miestnosť s rovnakým názvom.",
         "status_bar": {
             "requires_consent_agreement": "Nemôžete posielať žiadne správy, kým si neprečítate a neodsúhlasíte <consentLink>naše zmluvné podmienky</consentLink>.",
             "monthly_user_limit_reached": "Vaša správa nebola odoslaná, pretože bol dosiahnutý mesačný limit počtu aktívnych používateľov tohoto domovského servera. Prosím, <a>kontaktujte správcu služieb</a> aby ste službu mohli naďalej používať.",
@@ -3966,18 +3965,19 @@
             "server_connectivity_lost_title": "Spojenie so serverom bolo prerušené.",
             "server_connectivity_lost_description": "Odoslané správy ostanú uložené, kým sa spojenie nenadviaže znovu."
         },
-        "creating_room_text": "Vytvárame miestnosť s %(names)s",
-        "failed_reject_invite": "Nepodarilo sa odmietnuť pozvanie",
-        "inviter_unknown": "Neznámy",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Nahrávanie %(filename)s a %(count)s ďalších súborov",
-                "one": "Nahrávanie %(filename)s a %(count)s ďalší súbor"
-            },
-            "uploading_single_file": "Nahrávanie %(filename)s"
+        "show_labs_settings": "Zobraziť nastavenia laboratórií",
+        "search": {
+            "this_room": "V tejto miestnosti",
+            "all_rooms": "Vo všetkých miestnostiach",
+            "field_placeholder": "Hľadať…",
+            "this_room_button": "Vyhľadávať v tejto miestnosti",
+            "all_rooms_button": "Vyhľadávať vo všetkých miestnostiach"
         },
-        "waiting_for_join_title": "Čaká sa na používateľov, kým sa pripoja k aplikácii %(brand)s",
-        "waiting_for_join_subtitle": "Keď sa pozvaní používatelia pripoja k aplikácii %(brand)s, budete môcť konverzovať a miestnosť bude end-to-end šifrovaná"
+        "jump_to_bottom_button": "Prejsť na najnovšie správy",
+        "jump_read_marker": "Preskočiť na prvú neprečítanú správu.",
+        "inviter_unknown": "Neznámy",
+        "failed_reject_invite": "Nepodarilo sa odmietnuť pozvanie",
+        "creating_room_text": "Vytvárame miestnosť s %(names)s"
     },
     "file_panel": {
         "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",
@@ -4203,10 +4203,6 @@
         "filter_placeholder": "Filtrovať členov v miestnosti",
         "power_label": "%(userName)s (oprávnenie %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Momentálne nemáte aktívne žiadne balíčky s nálepkami",
-        "empty_add_prompt": "Pridajte si nejaké teraz"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Nepodarilo sa odvolať pozvánku",
         "error_revoke_3pid_invite_description": "Pozvánku nebolo možné odvolať. Na serveri môže byť dočasný problém alebo nemáte dostatočné oprávnenia na odvolanie pozvánky.",
@@ -4260,6 +4256,10 @@
         "error_deactivate": "Nepodarilo sa deaktivovať používateľa",
         "role_label": "Rola v <RoomName/>"
     },
+    "stickers": {
+        "empty": "Momentálne nemáte aktívne žiadne balíčky s nálepkami",
+        "empty_add_prompt": "Pridajte si nejaké teraz"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Pripnuté správy",
@@ -4285,15 +4285,18 @@
         "share_button": "Zdieľať miestnosť",
         "settings_button": "Nastavenia miestnosti"
     },
-    "cant_load_page": "Nie je možné načítať stránku",
-    "left_panel": {
-        "open_dial_pad": "Otvoriť číselník"
-    },
-    "console_wait": "Počkajte!",
     "reject_invitation_dialog": {
         "title": "Odmietnuť pozvanie",
         "confirmation": "Ste si istí, že chcete odmietnuť toto pozvanie?",
         "failed": "Nepodarilo sa odmietnuť pozvanie"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Zdá sa, že práve nahrávate súbory, ste si istí, že chcete skončiť?",
+        "call_in_progress": "Zdá sa, že máte prebiehajúci hovor, ste si istí, že chcete skončiť?"
+    },
+    "no_more_results": "Žiadne ďalšie výsledky",
+    "left_panel": {
+        "open_dial_pad": "Otvoriť číselník"
     },
     "leave_room_dialog": {
         "last_person_warning": "Ste tu jediný človek. Ak odídete, nikto sa už v budúcnosti nebude môcť pripojiť do tejto miestnosti, vrátane vás.",
@@ -4314,9 +4317,6 @@
         },
         "error_loading_user_profile": "Nie je možné načítať profil používateľa"
     },
-    "no_more_results": "Žiadne ďalšie výsledky",
-    "quit_warning": {
-        "file_upload_in_progress": "Zdá sa, že práve nahrávate súbory, ste si istí, že chcete skončiť?",
-        "call_in_progress": "Zdá sa, že máte prebiehajúci hovor, ste si istí, že chcete skončiť?"
-    }
+    "console_wait": "Počkajte!",
+    "cant_load_page": "Nie je možné načítať stránku"
 }

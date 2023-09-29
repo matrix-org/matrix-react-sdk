@@ -426,8 +426,8 @@
         "import_invalid_passphrase": ".i pu fliba lo nu birti lo du'u curmi lo nu do jonse .i na'e drani xu japyvla",
         "verify_toast_title": "nu co'a lacri le se samtcise'u",
         "verify_toast_description": ".i la'a na pa na du be do cu lacri",
-        "cross_signing_room_normal": ".i ro zilbe'i be fo le cei'i cu mifra",
-        "cross_signing_room_verified": ".i do lacri ro pagbu be le se zilbe'i"
+        "cross_signing_room_verified": ".i do lacri ro pagbu be le se zilbe'i",
+        "cross_signing_room_normal": ".i ro zilbe'i be fo le cei'i cu mifra"
     },
     "export_chat": {
         "messages": "notci"

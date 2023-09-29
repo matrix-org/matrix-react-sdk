@@ -1094,7 +1094,6 @@
         "url_preview": {
             "close": "Itxi aurrebista"
         },
-        "error_no_renderer": "Ezin izan da gertakari hau bistaratu",
         "mab": {
             "label": "Mezu-ekintzak"
         },
@@ -1102,7 +1101,8 @@
             "no_permission": "Gela honen denbora-lerroko puntu zehatz bat kargatzen saiatu zara, baina ez duzu mezu zehatz hori ikusteko baimenik.",
             "unable_to_find": "Gela honen denbora-lerroko puntu zehatz bat kargatzen saiatu da, baina ezin izan da aurkitu.",
             "title": "Huts egin du denbora-lerroko puntua kargatzean"
-        }
+        },
+        "error_no_renderer": "Ezin izan da gertakari hau bistaratu"
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",
@@ -1264,26 +1264,26 @@
             "url_previews_section": "URL-en aurrebistak",
             "aliases_section": "Gelaren helbideak",
             "other_section": "Beste bat",
+            "topic_field_label": "Gelaren mintzagaia",
+            "published_aliases_section": "Argitaratutako helbideak",
+            "no_aliases_room": "Gela honek ez du tokiko helbiderik",
+            "new_alias_placeholder": "Argitaratutako helbide berria (adib. #ezizena:zerbitzaria)",
+            "name_field_label": "Gelaren izena",
+            "local_aliases_section": "Helbide lokalak",
+            "local_aliases_explainer_room": "Ezarri gela honen helbideak erabiltzaileek gela aurki dezaten zure hasiera-zerbitzariaren bidez (%(localDomain)s)",
+            "local_alias_field_label": "Helbide lokala",
             "error_updating_canonical_alias_title": "Errorea helbide nagusia eguneratzean",
             "error_updating_canonical_alias_description": "Errore bat gertatu da gelaren helbide nagusia eguneratzean. Agian zerbitzariak ez du hau baimentzen, edo une bateko hutsegitea izan da.",
             "error_updating_alias_description": "Errore bat gertatu da gelaren ordezko helbideak eguneratzean. Agian zerbitzariak ez du onartzen edo une bateko akatsa izan da.",
-            "error_creating_alias_title": "Errorea helbidea sortzean",
-            "error_creating_alias_description": "Errorea gertatu da helbidea sortzean. Agian ez du zerbitzariak onartzen edo behin behineko arazo bat egon da.",
+            "error_deleting_alias_title": "Errorea helbidea kentzean",
             "error_deleting_alias_description_forbidden": "Ez duzu helbidea ezabatzeko baimenik.",
             "error_deleting_alias_description": "Errorea gertatu da helbidea kentzean. Agian ez dago jada edo behin behineko arazo bat egon da.",
-            "error_deleting_alias_title": "Errorea helbidea kentzean",
+            "error_creating_alias_title": "Errorea helbidea sortzean",
+            "error_creating_alias_description": "Errorea gertatu da helbidea sortzean. Agian ez du zerbitzariak onartzen edo behin behineko arazo bat egon da.",
             "canonical_alias_field_label": "Helbide nagusia",
-            "no_aliases_room": "Gela honek ez du tokiko helbiderik",
-            "local_alias_field_label": "Helbide lokala",
-            "published_aliases_section": "Argitaratutako helbideak",
-            "aliases_items_label": "Argitaratutako beste helbideak:",
+            "avatar_field_label": "Gelaren abatarra",
             "aliases_no_items_label": "Ez dago argitaratutako beste helbiderik, gehitu bat azpian",
-            "new_alias_placeholder": "Argitaratutako helbide berria (adib. #ezizena:zerbitzaria)",
-            "local_aliases_section": "Helbide lokalak",
-            "local_aliases_explainer_room": "Ezarri gela honen helbideak erabiltzaileek gela aurki dezaten zure hasiera-zerbitzariaren bidez (%(localDomain)s)",
-            "name_field_label": "Gelaren izena",
-            "topic_field_label": "Gelaren mintzagaia",
-            "avatar_field_label": "Gelaren abatarra"
+            "aliases_items_label": "Argitaratutako beste helbideak:"
         },
         "advanced": {
             "unfederated": "Gela hau ez dago eskuragarri urruneko zerbitzarietan",
@@ -1327,8 +1327,8 @@
             "unverified_sessions_toast_reject": "Geroago",
             "unverified_session_toast_title": "Saio berria. Zu izan zara?",
             "waiting_for_user_accept": "%(displayName)s(e)k onartu bitartean zain…",
-            "accepting": "Onartzen…",
-            "start_button": "Hasi egiaztaketa"
+            "start_button": "Hasi egiaztaketa",
+            "accepting": "Onartzen…"
         },
         "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
         "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
@@ -1357,18 +1357,18 @@
             "explainer": "Egin gakoen babes-kopia bat saioa amaitu aurretik, galdu nahi ez badituzu.",
             "title": "Ezarri"
         },
-        "cross_signing_user_warning": "Erabiltzaile honek ez ditu bere saio guztiak egiaztatu.",
-        "cross_signing_user_normal": "Ez duzu erabiltzaile hau egiaztatu.",
-        "cross_signing_user_verified": "Erabiltzaile hau egiaztatu duzu. Erabiltzaile honek bere saio guztiak egiaztatu ditu.",
-        "cross_signing_room_warning": "Baten batek saio ezezagun bat erabiltzen du",
-        "cross_signing_room_normal": "Gela hau muturretik muturrera zifratuta dago",
-        "cross_signing_room_verified": "Gelako guztiak egiaztatuta daude",
-        "event_shield_reason_mismatched_sender_key": "Egiaztatu gabeko saio batek zifratua",
         "messages_not_secure": {
             "title": "Zure mezuak ez daude babestuta",
             "heading": "Hauetakoren bat konprometituta egon daiteke:",
             "cause_1": "Zure hasiera-zerbitzaria"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Egiaztatu gabeko saio batek zifratua",
+        "cross_signing_user_warning": "Erabiltzaile honek ez ditu bere saio guztiak egiaztatu.",
+        "cross_signing_user_verified": "Erabiltzaile hau egiaztatu duzu. Erabiltzaile honek bere saio guztiak egiaztatu ditu.",
+        "cross_signing_user_normal": "Ez duzu erabiltzaile hau egiaztatu.",
+        "cross_signing_room_warning": "Baten batek saio ezezagun bat erabiltzen du",
+        "cross_signing_room_verified": "Gelako guztiak egiaztatuta daude",
+        "cross_signing_room_normal": "Gela hau muturretik muturrera zifratuta dago"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1461,14 +1461,13 @@
         "create_account_title": "Sortu kontua",
         "failed_soft_logout_homeserver": "Berriro autentifikatzean huts egin du hasiera-zerbitzariaren arazo bat dela eta",
         "soft_logout_subheading": "Garbitu datu pertsonalak",
-        "captcha_description": "Hasiera-zerbitzari honek robota ez zarela egiaztatu nahi du.",
-        "country_dropdown": "Herrialde menua",
         "reset_password": {
             "password_not_entered": "Pasahitz berri bat sartu behar da.",
             "passwords_mismatch": "Pasahitz berriak berdinak izan behar dira.",
             "reset_successful": "Zure pasahitza berrezarri da.",
             "return_to_login": "Itzuli saio hasierarako pantailara"
         },
+        "country_dropdown": "Herrialde menua",
         "common_failures": {
             "invalid_homeserver_discovery": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
             "cannot_find_autodiscovery_config": "Huts egin du aurkikuntza automatikoaren konfigurazioa zerbitzaritik eskuratzean",
@@ -1478,7 +1477,8 @@
             "invalid_identity_server_base_url": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
             "invalid_identity_server_url": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
             "general_failure": "Hutsegite orokorra"
-        }
+        },
+        "captcha_description": "Hasiera-zerbitzari honek robota ez zarela egiaztatu nahi du."
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1646,17 +1646,17 @@
         "no_peek_join_prompt": "%(roomName)s ezin da aurreikusi. Elkartu nahi duzu?",
         "not_found_title_name": "Ez dago %(roomName)s izeneko gela.",
         "inaccessible_name": "%(roomName)s ez dago eskuragarri orain.",
-        "jump_to_bottom_button": "Korritu azken mezuetara",
-        "upgrade_warning_bar": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "%(filename)s eta beste %(count)s igotzen",
+                "other": "%(filename)s eta beste %(count)s igotzen"
+            },
+            "uploading_single_file": "%(filename)s igotzen"
+        },
         "upgrade_warning_bar_upgraded": "Gela hau dagoeneko eguneratu da.",
         "upgrade_warning_bar_unstable": "Gela honek <roomVersion /> bertsioa du, eta hasiera-zerbitzariak<i>ez egonkor</i> gisa markatu du.",
         "upgrade_warning_bar_admins": "Gelaren administratzaileek besterik ez dute abisu hau ikusiko",
-        "search": {
-            "this_room": "Gela hau",
-            "all_rooms": "Gela guztiak",
-            "field_placeholder": "Bilatu…"
-        },
-        "jump_read_marker": "Jauzi irakurri gabeko lehen mezura.",
+        "upgrade_warning_bar": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du.",
         "status_bar": {
             "requires_consent_agreement": "Ezin duzu mezurik bidali <consentLink>gure termino eta baldintzak</consentLink> irakurri eta onartu arte.",
             "monthly_user_limit_reached": "Zure mezua ez da bidali zure hasiera zerbitzariak hilabeteko erabiltzaile aktiboen muga jo duelako. <a>Jarri kontaktuan zerbitzuaren administratzailearekin</a> zerbitzua erabiltzen jarraitzeko.",
@@ -1664,15 +1664,15 @@
             "server_connectivity_lost_title": "Zerbitzariarekin konexioa galdu da.",
             "server_connectivity_lost_description": "Bidalitako mezuak zure konexioa berreskuratu arte gordeko dira."
         },
-        "failed_reject_invite": "Huts egin du gonbidapena baztertzean",
+        "search": {
+            "this_room": "Gela hau",
+            "all_rooms": "Gela guztiak",
+            "field_placeholder": "Bilatu…"
+        },
+        "jump_to_bottom_button": "Korritu azken mezuetara",
+        "jump_read_marker": "Jauzi irakurri gabeko lehen mezura.",
         "inviter_unknown": "Ezezaguna",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "%(filename)s eta beste %(count)s igotzen",
-                "other": "%(filename)s eta beste %(count)s igotzen"
-            },
-            "uploading_single_file": "%(filename)s igotzen"
-        }
+        "failed_reject_invite": "Huts egin du gonbidapena baztertzean"
     },
     "file_panel": {
         "guest_note": "Funtzionaltasun hau erabiltzeko <a>erregistratu</a>",
@@ -1830,10 +1830,6 @@
         "filter_placeholder": "Iragazi gelako kideak",
         "power_label": "%(userName)s (power %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Ez duzu eranskailu multzorik aktibatuta",
-        "empty_add_prompt": "Gehitu batzuk orain"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Gonbidapena indargabetzeak huts egin du",
         "error_revoke_3pid_invite_description": "Ezin izan da gonbidapena baliogabetu. Zerbitzariak une bateko arazoren bat izan lezake edo agian ez duzu gonbidapena baliogabetzeko baimen nahiko.",
@@ -1862,15 +1858,23 @@
         "deactivate_confirm_action": "Desaktibatu erabiltzailea",
         "error_deactivate": "Huts egin du erabiltzailea desaktibatzeak"
     },
+    "stickers": {
+        "empty": "Ez duzu eranskailu multzorik aktibatuta",
+        "empty_add_prompt": "Gehitu batzuk orain"
+    },
     "right_panel": {
         "share_button": "Partekatu gela"
     },
-    "cant_load_page": "Ezin izan da orria kargatu",
     "reject_invitation_dialog": {
         "title": "Baztertu gonbidapena",
         "confirmation": "Ziur gonbidapena baztertu nahi duzula?",
         "failed": "Huts egin du gonbidapena baztertzean"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Badirudi fitxategiak iotzen zaudela, ziur irten nahi duzula?",
+        "call_in_progress": "Badirudi dei batean zaudela, ziur irten nahi duzula?"
+    },
+    "no_more_results": "Emaitza gehiagorik ez",
     "leave_room_dialog": {
         "room_rejoin_warning": "Gela hau ez da publikoa. Ezin izango zara berriro elkartu gonbidapenik gabe.",
         "leave_room_question": "Ziur '%(roomName)s' gelatik atera nahi duzula?"
@@ -1883,9 +1887,5 @@
         },
         "error_loading_user_profile": "Ezin izan da erabiltzaile-profila kargatu"
     },
-    "no_more_results": "Emaitza gehiagorik ez",
-    "quit_warning": {
-        "file_upload_in_progress": "Badirudi fitxategiak iotzen zaudela, ziur irten nahi duzula?",
-        "call_in_progress": "Badirudi dei batean zaudela, ziur irten nahi duzula?"
-    }
+    "cant_load_page": "Ezin izan da orria kargatu"
 }

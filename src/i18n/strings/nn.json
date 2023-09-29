@@ -722,12 +722,12 @@
         "url_preview": {
             "close": "Lukk førehandsvisninga"
         },
-        "error_no_renderer": "Denne hendingen kunne ikkje visast",
         "load_error": {
             "no_permission": "Prøvde å laste eit bestemt punkt i rommet sin historikk, men du har ikkje lov til å sjå den spesifike meldingen.",
             "unable_to_find": "Prøvde å lasta eit bestemt punkt i rommet sin historikk, men klarde ikkje å finna det.",
             "title": "Innlasting av punkt i historikken feila."
-        }
+        },
+        "error_no_renderer": "Denne hendingen kunne ikkje visast"
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",
@@ -896,21 +896,21 @@
             "url_previews_section": "URL-førehandsvisingar",
             "aliases_section": "Romadresser",
             "other_section": "Anna",
+            "topic_field_label": "Romemne",
+            "published_aliases_section": "Publisert adresse",
+            "no_aliases_room": "Dette rommet har ingen lokale adresser",
+            "new_alias_placeholder": "Ny publisert adresse  (t.d. #alias:tenar)",
+            "name_field_label": "Romnamn",
+            "local_aliases_section": "Lokale adresser",
+            "local_aliases_explainer_room": "Sett adresse for dette rommet, slik at brukarar kan finne rommet på din heimetenar (%(localDomain)s)",
+            "local_alias_field_label": "Lokal adresse",
             "error_updating_canonical_alias_title": "Feil under oppdatering av hovedadresse",
             "error_updating_canonical_alias_description": "Det skjedde ein feil under oppdatering av hovudadressa for rommet. Det kan hende at dette er ein mellombels feil, eller at det ikkje er tillate på tenaren.",
             "error_updating_alias_description": "Feil under oppdatering av alternativ adresse. Det kan hende at dette er mellombels, eller at det ikkje er tillate på tenaren.",
             "canonical_alias_field_label": "Hovudadresse",
-            "no_aliases_room": "Dette rommet har ingen lokale adresser",
-            "local_alias_field_label": "Lokal adresse",
-            "published_aliases_section": "Publisert adresse",
-            "aliases_items_label": "Andre publiserte adresser:",
+            "avatar_field_label": "Rom-avatar",
             "aliases_no_items_label": "Ingen publiserte adresser til no, legg til ei under",
-            "new_alias_placeholder": "Ny publisert adresse  (t.d. #alias:tenar)",
-            "local_aliases_section": "Lokale adresser",
-            "local_aliases_explainer_room": "Sett adresse for dette rommet, slik at brukarar kan finne rommet på din heimetenar (%(localDomain)s)",
-            "name_field_label": "Romnamn",
-            "topic_field_label": "Romemne",
-            "avatar_field_label": "Rom-avatar"
+            "aliases_items_label": "Andre publiserte adresser:"
         },
         "advanced": {
             "unfederated": "Rommet er ikkje tilgjengeleg for andre Matrix-heimtenarar",
@@ -1101,14 +1101,14 @@
         "no_peek_join_prompt": "%(roomName)s kan ikkje førehandsvisast. Ynskjer du å bli med ?",
         "not_found_title_name": "%(roomName)s eksisterar ikkje.",
         "inaccessible_name": "%(roomName)s er ikkje tilgjengeleg no.",
-        "jump_to_bottom_button": "Gå til dei nyaste meldingane",
-        "upgrade_warning_bar_admins": "Berre rom-administratorar vil sjå denne åtvaringa",
-        "search": {
-            "this_room": "Dette rommet",
-            "all_rooms": "Alle rom",
-            "field_placeholder": "Søk…"
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Lastar opp %(filename)s og %(count)s andre",
+                "one": "Lastar opp %(filename)s og %(count)s andre"
+            },
+            "uploading_single_file": "Lastar opp %(filename)s"
         },
-        "jump_read_marker": "Hopp til den fyrste uleste meldinga.",
+        "upgrade_warning_bar_admins": "Berre rom-administratorar vil sjå denne åtvaringa",
         "status_bar": {
             "requires_consent_agreement": "Du kan ikkje senda meldingar før du les over og godkjenner våre <consentLink>bruksvilkår</consentLink>.",
             "monthly_user_limit_reached": "Meldinga di vart ikkje send, for denne heimetenaren har nådd grensa for maksimalt aktive brukarar pr. månad. Kontakt <a>systemadministratoren</a> for å vidare nytte denne tenesta.",
@@ -1116,15 +1116,15 @@
             "server_connectivity_lost_title": "Tilkoplinga til tenaren vart tapt.",
             "server_connectivity_lost_description": "Sende meldingar vil lagrast lokalt fram til nettverket er oppe att."
         },
-        "failed_reject_invite": "Fekk ikkje til å avstå invitasjonen",
+        "search": {
+            "this_room": "Dette rommet",
+            "all_rooms": "Alle rom",
+            "field_placeholder": "Søk…"
+        },
+        "jump_to_bottom_button": "Gå til dei nyaste meldingane",
+        "jump_read_marker": "Hopp til den fyrste uleste meldinga.",
         "inviter_unknown": "Ukjend",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Lastar opp %(filename)s og %(count)s andre",
-                "one": "Lastar opp %(filename)s og %(count)s andre"
-            },
-            "uploading_single_file": "Lastar opp %(filename)s"
-        }
+        "failed_reject_invite": "Fekk ikkje til å avstå invitasjonen"
     },
     "file_panel": {
         "guest_note": "Du må <a>melda deg inn</a> for å bruka denne funksjonen",
@@ -1172,8 +1172,8 @@
         "setup_secure_backup": {
             "title": "Sett opp"
         },
-        "cross_signing_room_normal": "Dette rommet er ende-til-ende kryptert",
-        "event_shield_reason_mismatched_sender_key": "Kryptert av ein ikkje-verifisert sesjon"
+        "event_shield_reason_mismatched_sender_key": "Kryptert av ein ikkje-verifisert sesjon",
+        "cross_signing_room_normal": "Dette rommet er ende-til-ende kryptert"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",
@@ -1279,9 +1279,6 @@
         "filter_placeholder": "Filtrer rommedlemmar",
         "power_label": "%(userName)s (tilgangsnivå %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Du har for tida ikkje skrudd nokre klistremerkepakkar på"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Fekk ikkje til å trekke invitasjonen",
         "error_revoke_3pid_invite_description": "Fekk ikkje til å ta attende invitasjonen. Det kan ha oppstått ein mellombels feil på tenaren, eller så har ikkje du tilstrekkelege rettar for å ta attende invitasjonen.",
@@ -1304,6 +1301,9 @@
         "deactivate_confirm_action": "Deaktiver brukar",
         "error_deactivate": "Fekk ikkje til å deaktivere brukaren"
     },
+    "stickers": {
+        "empty": "Du har for tida ikkje skrudd nokre klistremerkepakkar på"
+    },
     "right_panel": {
         "share_button": "Del rom",
         "settings_button": "Rominnstillingar"
@@ -1313,6 +1313,11 @@
         "confirmation": "Er du sikker på at du vil seia nei til innbydinga?",
         "failed": "Fekk ikkje til å seia nei til innbyding"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Det ser ut til at du lastar opp filer, er du sikker på at du vil avslutte?",
+        "call_in_progress": "Det ser ut til at du er i ein samtale, er du sikker på at du vil avslutte?"
+    },
+    "no_more_results": "Ingen fleire resultat",
     "leave_room_dialog": {
         "room_rejoin_warning": "Dette rommet er ikkje offentleg. Du kjem ikkje til å kunna koma inn att utan ei innbyding.",
         "leave_room_question": "Er du sikker på at du vil forlate rommet '%(roomName)s'?"
@@ -1324,10 +1329,5 @@
             "server_unavailable": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :("
         },
         "error_loading_user_profile": "Klarde ikkje å laste brukarprofilen"
-    },
-    "no_more_results": "Ingen fleire resultat",
-    "quit_warning": {
-        "file_upload_in_progress": "Det ser ut til at du lastar opp filer, er du sikker på at du vil avslutte?",
-        "call_in_progress": "Det ser ut til at du er i ein samtale, er du sikker på at du vil avslutte?"
     }
 }

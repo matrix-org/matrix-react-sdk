@@ -564,15 +564,15 @@
             "default_url_previews_off": "Les previsualitzacions dels URL estan inhabilitades per defecte per als membres d'aquesta sala.",
             "url_previews_section": "Previsualitzacions dels URL",
             "other_section": "Altres",
+            "no_aliases_room": "Aquesta sala no té adreces locals",
+            "new_alias_placeholder": "Nova adreça publicada (p.e. #alias:server)",
             "error_updating_canonical_alias_title": "Error actualitzant adreça principal",
             "error_updating_canonical_alias_description": "S'ha produït un error en actualitzar l'adreça principal de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
             "error_updating_alias_description": "S'ha produït un error en actualitzar l'adreça alternativa de la sala. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
-            "error_creating_alias_title": "Error creant adreça",
-            "error_creating_alias_description": "S'ha produït un error en crear l'adreça. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
-            "error_deleting_alias_description": "S'ha produït un error en eliminar l'adreça. Pot ser que ja no existeixi o que s'hagi produït un error temporal.",
             "error_deleting_alias_title": "Error eliminant adreça",
-            "no_aliases_room": "Aquesta sala no té adreces locals",
-            "new_alias_placeholder": "Nova adreça publicada (p.e. #alias:server)"
+            "error_deleting_alias_description": "S'ha produït un error en eliminar l'adreça. Pot ser que ja no existeixi o que s'hagi produït un error temporal.",
+            "error_creating_alias_title": "Error creant adreça",
+            "error_creating_alias_description": "S'ha produït un error en crear l'adreça. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal."
         },
         "advanced": {
             "unfederated": "Aquesta sala no és accessible per a servidors de Matrix remots"
@@ -683,24 +683,24 @@
         "invite_email_mismatch_suggestion": "Per rebre invitacions directament a %(brand)s, comparteix aquest correu electrònic a Configuració.",
         "not_found_title_name": "La sala %(roomName)s no existeix.",
         "inaccessible_name": "La sala %(roomName)s no és accessible en aquest moment.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Pujant %(filename)s i %(count)s més"
+            },
+            "uploading_single_file": "Pujant %(filename)s"
+        },
+        "status_bar": {
+            "server_connectivity_lost_title": "S'ha perdut la connectivitat amb el servidor.",
+            "server_connectivity_lost_description": "Els missatges enviats s'emmagatzemaran fins que la vostra connexió hagi tornat."
+        },
         "search": {
             "this_room": "Aquesta sala",
             "all_rooms": "Totes les sales",
             "field_placeholder": "Cerca…"
         },
         "jump_read_marker": "Salta al primer missatge no llegit.",
-        "status_bar": {
-            "server_connectivity_lost_title": "S'ha perdut la connectivitat amb el servidor.",
-            "server_connectivity_lost_description": "Els missatges enviats s'emmagatzemaran fins que la vostra connexió hagi tornat."
-        },
-        "failed_reject_invite": "No s'ha pogut rebutjar la invitació",
         "inviter_unknown": "Desconegut",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Pujant %(filename)s i %(count)s més"
-            },
-            "uploading_single_file": "Pujant %(filename)s"
-        }
+        "failed_reject_invite": "No s'ha pogut rebutjar la invitació"
     },
     "file_panel": {
         "guest_note": "Per poder utilitzar aquesta funcionalitat has de <a>registrar-te</a>",
@@ -831,6 +831,11 @@
         "confirmation": "Esteu segur que voleu rebutjar la invitació?",
         "failed": "No s'ha pogut rebutjar la invitació"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Sembla que s'està pujant fitxers, esteu segur que voleu sortir?",
+        "call_in_progress": "Sembla que està en una trucada, estàs segur que vols sortir?"
+    },
+    "no_more_results": "No hi ha més resultats",
     "leave_room_dialog": {
         "room_rejoin_warning": "Aquesta sala no és pública. No podreu tronar a entrar sense invitació.",
         "leave_room_question": "Esteu segur que voleu sortir de la sala '%(roomName)s'?"
@@ -841,10 +846,5 @@
             "title": "No s'ha pogut cercar",
             "server_unavailable": "Pot ser que el servidor no estigui disponible, que estigui sobrecarregat o que s'ha esgotat el temps de cerca :("
         }
-    },
-    "no_more_results": "No hi ha més resultats",
-    "quit_warning": {
-        "file_upload_in_progress": "Sembla que s'està pujant fitxers, esteu segur que voleu sortir?",
-        "call_in_progress": "Sembla que està en una trucada, estàs segur que vols sortir?"
     }
 }

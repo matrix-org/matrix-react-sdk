@@ -1156,12 +1156,12 @@
         "historical": "Archiv",
         "go_to_settings": "Gehe zu Einstellungen",
         "setup_secure_messages": "Richte sichere Nachrichten ein",
-        "unencrypted": "Unverschlüsselt",
         "view_message": "Nachricht anzeigen",
-        "joined": "Beigetreten",
+        "unencrypted": "Unverschlüsselt",
         "show_more": "Mehr zeigen",
-        "are_you_sure": "Bist du sicher?",
-        "avatar": "Avatar"
+        "joined": "Beigetreten",
+        "avatar": "Avatar",
+        "are_you_sure": "Bist du sicher?"
     },
     "action": {
         "continue": "Fortfahren",
@@ -1499,15 +1499,15 @@
         "format_italics": "Kursiv",
         "format_insert_link": "Link einfügen",
         "replying_title": "Antwortet",
-        "edit_composer_label": "Nachricht bearbeiten",
-        "send_voice_message": "Sprachnachricht senden",
         "stop_voice_message": "Aufnahme beenden",
+        "send_voice_message": "Sprachnachricht senden",
         "link_modal": {
             "title_edit": "Link bearbeiten",
             "title_create": "Link erstellen",
             "text_field_label": "Text",
             "link_field_label": "Link"
-        }
+        },
+        "edit_composer_label": "Nachricht bearbeiten"
     },
     "power_level": {
         "default": "Standard",
@@ -2608,13 +2608,12 @@
             "other": "Von %(count)s Personen gesehen"
         },
         "read_receipts_label": "Lesebestätigungen",
-        "thread_info_basic": "Aus einem Thread",
-        "error_no_renderer": "Dieses Ereignis konnte nicht angezeigt werden",
         "undecryptable_tooltip": "Diese Nachricht konnte nicht enschlüsselt werden",
-        "send_state_sending": "Sende deine Nachricht …",
-        "send_state_encrypting": "Verschlüssele deine Nachricht …",
+        "thread_info_basic": "Aus einem Thread",
         "send_state_sent": "Die Nachricht wurde gesendet",
+        "send_state_sending": "Sende deine Nachricht …",
         "send_state_failed": "Fehler beim Senden",
+        "send_state_encrypting": "Verschlüssele deine Nachricht …",
         "mab": {
             "label": "Nachrichtenaktionen",
             "view_in_room": "Im Raum anzeigen",
@@ -2628,7 +2627,8 @@
             "no_permission": "Dir fehlt die Berechtigung, diese alten Nachrichten zu lesen.",
             "unable_to_find": "Das Laden einer bestimmten Stelle im Verlauf des Raumes zu laden ist gescheitert, da sie nicht gefunden wurde.",
             "title": "Laden der Verlaufsposition fehlgeschlagen"
-        }
+        },
+        "error_no_renderer": "Dieses Ereignis konnte nicht angezeigt werden"
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -2979,31 +2979,31 @@
             "leave_space": "Space verlassen",
             "aliases_section": "Raumadressen",
             "other_section": "Sonstiges",
-            "error_updating_canonical_alias_title": "Fehler beim Aktualisieren der Hauptadresse",
-            "error_updating_canonical_alias_description": "Es gab ein Problem beim Aktualisieren der Raum-Hauptadresse. Es kann sein, dass der Server dies verbietet oder ein temporäres Problem aufgetreten ist.",
-            "error_updating_alias_description": "Es gab einen Fehler beim Ändern des Raumalias. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
-            "error_creating_alias_title": "Fehler beim Anlegen der Adresse",
-            "error_creating_alias_description": "Es gab einen Fehler beim Anlegen der Adresse. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
-            "error_deleting_alias_description_forbidden": "Du hast nicht die Berechtigung, die Adresse zu löschen.",
-            "error_deleting_alias_description": "Beim Entfernen dieser Adresse ist ein Fehler aufgetreten. Vielleicht existiert sie nicht mehr oder es kam zu einem temporären Fehler.",
-            "error_deleting_alias_title": "Fehler beim Löschen der Adresse",
-            "canonical_alias_field_label": "Primäre Adresse",
-            "no_aliases_space": "Dieser Space hat keine lokale Adresse",
-            "no_aliases_room": "Dieser Raum hat keine lokale Adresse",
-            "local_alias_field_label": "Lokale Adresse",
+            "topic_field_label": "Raumthema",
             "published_aliases_section": "Öffentliche Adresse",
             "published_aliases_explainer_space": "Veröffentlichte Adressen erlauben jedem, den Space zu betreten.",
             "published_aliases_explainer_room": "Veröffentlichte Adressen erlauben jedem, den Raum zu betreten.",
             "published_aliases_description": "Damit du die Adresse veröffentlichen kannst, musst du sie zuerst als lokale Adresse hinzufügen.",
-            "aliases_items_label": "Andere öffentliche Adressen:",
-            "aliases_no_items_label": "Keine anderen öffentlichen Adressen vorhanden. Du kannst weiter unten eine hinzufügen",
+            "no_aliases_space": "Dieser Space hat keine lokale Adresse",
+            "no_aliases_room": "Dieser Raum hat keine lokale Adresse",
             "new_alias_placeholder": "Neue öffentliche Adresse (z. B. #alias:server)",
+            "name_field_label": "Raumname",
             "local_aliases_section": "Lokale Adressen",
             "local_aliases_explainer_space": "Füge Adressen für diesen Space hinzu, damit andere Leute ihn über deinen Heim-Server (%(localDomain)s) finden können",
             "local_aliases_explainer_room": "Erstelle Adressen für diesen Raum, damit andere Benutzer den Raum auf deinem Heim-Server (%(localDomain)s) finden können",
-            "name_field_label": "Raumname",
-            "topic_field_label": "Raumthema",
-            "avatar_field_label": "Raumbild"
+            "local_alias_field_label": "Lokale Adresse",
+            "error_updating_canonical_alias_title": "Fehler beim Aktualisieren der Hauptadresse",
+            "error_updating_canonical_alias_description": "Es gab ein Problem beim Aktualisieren der Raum-Hauptadresse. Es kann sein, dass der Server dies verbietet oder ein temporäres Problem aufgetreten ist.",
+            "error_updating_alias_description": "Es gab einen Fehler beim Ändern des Raumalias. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
+            "error_deleting_alias_title": "Fehler beim Löschen der Adresse",
+            "error_deleting_alias_description_forbidden": "Du hast nicht die Berechtigung, die Adresse zu löschen.",
+            "error_deleting_alias_description": "Beim Entfernen dieser Adresse ist ein Fehler aufgetreten. Vielleicht existiert sie nicht mehr oder es kam zu einem temporären Fehler.",
+            "error_creating_alias_title": "Fehler beim Anlegen der Adresse",
+            "error_creating_alias_description": "Es gab einen Fehler beim Anlegen der Adresse. Entweder erlaubt es der Server nicht oder es gab ein temporäres Problem.",
+            "canonical_alias_field_label": "Primäre Adresse",
+            "avatar_field_label": "Raumbild",
+            "aliases_no_items_label": "Keine anderen öffentlichen Adressen vorhanden. Du kannst weiter unten eine hinzufügen",
+            "aliases_items_label": "Andere öffentliche Adressen:"
         },
         "advanced": {
             "unfederated": "Dieser Raum ist von Personen auf anderen Matrix-Servern nicht betretbar",
@@ -3109,10 +3109,9 @@
             "verify_later": "Später verifizieren",
             "verify_reset_warning_1": "Das Zurücksetzen deiner Sicherheitsschlüssel kann nicht rückgängig gemacht werden. Nach dem Zurücksetzen wirst du alte Nachrichten nicht mehr lesen können un Freunde, die dich vorher verifiziert haben werden Sicherheitswarnungen bekommen, bis du dich erneut mit ihnen verifizierst.",
             "verify_reset_warning_2": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
-            "self_verification_hint": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
             "waiting_for_user_accept": "Warte auf die Annahme von %(displayName)s …",
-            "accepting": "Annehmen…",
             "start_button": "Verifizierung starten",
+            "self_verification_hint": "Akzeptiere die Verifizierungsanfrage am anderen Gerät, um fortzufahren.",
             "error_starting_title": "Verifizierungbeginn fehlgeschlagen",
             "error_starting_description": "Der Unterhaltungsbeginn mit dem anderen Benutzer war uns nicht möglich.",
             "after_new_login": {
@@ -3121,7 +3120,8 @@
                 "device_verified": "Gerät verifiziert",
                 "reset_confirmation": "Willst du deine Verifizierungsschlüssel wirklich zurücksetzen?",
                 "skip_verification": "Verifizierung vorläufig überspringen"
-            }
+            },
+            "accepting": "Annehmen…"
         },
         "old_version_detected_title": "Alte Kryptografiedaten erkannt",
         "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
@@ -3159,14 +3159,6 @@
             "explainer": "Um deine Schlüssel nicht zu verlieren, musst du sie vor der Abmeldung sichern.",
             "title": "Einrichten"
         },
-        "cross_signing_user_warning": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
-        "cross_signing_user_normal": "Du hast diesen Nutzer nicht verifiziert.",
-        "cross_signing_user_verified": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
-        "cross_signing_room_warning": "Jemand verwendet eine unbekannte Sitzung",
-        "cross_signing_room_normal": "Dieser Raum ist Ende-zu-Ende verschlüsselt",
-        "cross_signing_room_verified": "Alle in diesem Raum sind verifiziert",
-        "event_shield_reason_authenticity_not_guaranteed": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
-        "event_shield_reason_mismatched_sender_key": "Von einer nicht verifizierten Sitzung verschlüsselt",
         "messages_not_secure": {
             "title": "Deine Nachrichten sind nicht sicher",
             "heading": "Eines der folgenden könnte kompromittiert sein:",
@@ -3174,7 +3166,15 @@
             "cause_2": "Der Heim-Server der Person, die du verifizierst",
             "cause_3": "Die Internetverbindung von dir oder dem anderen Nutzer",
             "cause_4": "Die Sitzung von dir oder dem anderen Nutzer"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Von einer nicht verifizierten Sitzung verschlüsselt",
+        "event_shield_reason_authenticity_not_guaranteed": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
+        "cross_signing_user_warning": "Dieser Benutzer hat nicht alle seine Sitzungen verifiziert.",
+        "cross_signing_user_verified": "Du hast diesen Nutzer verifiziert. Der Nutzer hat alle seine Sitzungen verifiziert.",
+        "cross_signing_user_normal": "Du hast diesen Nutzer nicht verifiziert.",
+        "cross_signing_room_warning": "Jemand verwendet eine unbekannte Sitzung",
+        "cross_signing_room_verified": "Alle in diesem Raum sind verifiziert",
+        "cross_signing_room_normal": "Dieser Raum ist Ende-zu-Ende verschlüsselt"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3362,8 +3362,19 @@
         "soft_logout_subheading": "Persönliche Daten löschen",
         "soft_logout_warning": "Achtung: Deine persönlichen Daten (einschließlich Verschlüsselungs-Schlüssel) sind noch in dieser Sitzung gespeichert. Lösche diese Daten, wenn du diese Sitzung nicht mehr benötigst, oder dich mit einem anderen Konto anmelden möchtest.",
         "forgot_password_send_email": "E-Mail senden",
-        "captcha_description": "Dieser Heim-Server möchte sicherstellen, dass du kein Roboter bist.",
-        "country_dropdown": "Landauswahl",
+        "reset_password": {
+            "rate_limit_error": "Zu viele Versuche in zu kurzer Zeit. Warte ein wenig, bevor du es erneut versuchst.",
+            "rate_limit_error_with_time": "Zu viele Versuche in zu kurzer Zeit. Versuche es erneut nach %(timeout)s.",
+            "other_devices_logout_warning_1": "Das Abmelden deines Geräts wird die Verschlüsselungsschlüssel löschen, woraufhin verschlüsselte Nachrichtenverläufe nicht mehr lesbar sein werden.",
+            "other_devices_logout_warning_2": "Falls du den Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Verschlüsselungsschlüssel von einem deiner Geräte bevor du weiter machst.",
+            "confirm_new_password": "Neues Passwort bestätigen",
+            "password_not_entered": "Es muss ein neues Passwort eingegeben werden.",
+            "passwords_mismatch": "Die neuen Passwörter müssen identisch sein.",
+            "sign_out_other_devices": "Auf allen Geräten abmelden",
+            "reset_successful": "Dein Passwort wurde zurückgesetzt.",
+            "devices_logout_success": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
+            "return_to_login": "Zur Anmeldemaske zurückkehren"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Neues Gerät anmelden",
             "error_linking_incomplete": "Die Verbindung konnte nicht in der erforderlichen Zeit hergestellt werden.",
@@ -3387,19 +3398,7 @@
             "waiting_for_device": "Warte auf Anmeldung des Gerätes",
             "completing_setup": "Schließe Anmeldung deines neuen Gerätes ab"
         },
-        "reset_password": {
-            "rate_limit_error": "Zu viele Versuche in zu kurzer Zeit. Warte ein wenig, bevor du es erneut versuchst.",
-            "rate_limit_error_with_time": "Zu viele Versuche in zu kurzer Zeit. Versuche es erneut nach %(timeout)s.",
-            "other_devices_logout_warning_1": "Das Abmelden deines Geräts wird die Verschlüsselungsschlüssel löschen, woraufhin verschlüsselte Nachrichtenverläufe nicht mehr lesbar sein werden.",
-            "other_devices_logout_warning_2": "Falls du den Zugriff auf deinen Nachrichtenverlauf behalten willst, richte die Schlüsselsicherung ein oder exportiere deine Verschlüsselungsschlüssel von einem deiner Geräte bevor du weiter machst.",
-            "confirm_new_password": "Neues Passwort bestätigen",
-            "password_not_entered": "Es muss ein neues Passwort eingegeben werden.",
-            "passwords_mismatch": "Die neuen Passwörter müssen identisch sein.",
-            "sign_out_other_devices": "Auf allen Geräten abmelden",
-            "reset_successful": "Dein Passwort wurde zurückgesetzt.",
-            "devices_logout_success": "Du wurdest von allen Geräten abgemeldet und erhältst keine Push-Benachrichtigungen mehr. Um Benachrichtigungen wieder zu aktivieren, melde dich auf jedem Gerät erneut an.",
-            "return_to_login": "Zur Anmeldemaske zurückkehren"
-        },
+        "country_dropdown": "Landauswahl",
         "common_failures": {
             "invalid_homeserver_discovery": "Ungültige Antwort beim Aufspüren des Heim-Servers",
             "cannot_find_autodiscovery_config": "Abrufen der Autodiscovery-Konfiguration vom Server fehlgeschlagen",
@@ -3409,7 +3408,8 @@
             "invalid_identity_server_base_url": "Ungültige base_url für m.identity_server",
             "invalid_identity_server_url": "Die Identitäts-Server-URL scheint kein gültiger Identitäts-Server zu sein",
             "general_failure": "Allgemeiner Fehler"
-        }
+        },
+        "captcha_description": "Dieser Heim-Server möchte sicherstellen, dass du kein Roboter bist."
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -3581,8 +3581,8 @@
         "unmaximise": "Maximieren rückgängig machen",
         "popout": "Widget in eigenem Fenster öffnen",
         "unpin_to_view_right_panel": "Widget nicht mehr anheften und in diesem Panel anzeigen",
-        "close_to_view_right_panel": "Widget schließen und in diesem Panel anzeigen",
-        "set_room_layout": "Dein Raumlayout für alle setzen"
+        "set_room_layout": "Dein Raumlayout für alle setzen",
+        "close_to_view_right_panel": "Widget schließen und in diesem Panel anzeigen"
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -3677,8 +3677,8 @@
         "empty_explainer": "Threads helfen dabei, dass deine Konversationen beim Thema und leicht nachverfolgbar bleiben.",
         "empty_tip": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht.",
         "empty_heading": "Organisiere Diskussionen mit Threads",
-        "open_thread": "Thread anzeigen",
-        "unable_to_decrypt": "Nachrichten-Entschlüsselung nicht möglich"
+        "unable_to_decrypt": "Nachrichten-Entschlüsselung nicht möglich",
+        "open_thread": "Thread anzeigen"
     },
     "theme": {
         "light_high_contrast": "Hell kontrastreich",
@@ -3707,12 +3707,12 @@
         "invite": "Personen einladen",
         "invite_description": "Personen mit E-Mail oder Benutzernamen einladen",
         "invite_this_space": "In diesen Space einladen",
-        "joining_space": "Trete bei",
         "user_lacks_permission": "Du hast dazu keine Berechtigung",
-        "no_search_result_hint": "Versuche es mit etwas anderem oder prüfe auf Tippfehler.",
-        "title_when_query_available": "Ergebnisse",
         "title_when_query_unavailable": "Räume und Spaces",
-        "search_placeholder": "Nach Name und Beschreibung filtern"
+        "title_when_query_available": "Ergebnisse",
+        "search_placeholder": "Nach Name und Beschreibung filtern",
+        "no_search_result_hint": "Versuche es mit etwas anderem oder prüfe auf Tippfehler.",
+        "joining_space": "Trete bei"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -3947,20 +3947,19 @@
         "join_failed_needs_invite": "Um %(roomName)s zu betrachten, benötigst du eine Einladung",
         "view_failed_enable_video_rooms": "Zum Anzeigen, aktiviere bitte Videoräume in den Laboreinstellungen",
         "join_failed_enable_video_rooms": "Zum Betreten, aktiviere bitte Videoräume in den Laboreinstellungen",
-        "jump_to_bottom_button": "Zur neusten Nachricht springen",
-        "show_labs_settings": "Zeige die \"Labor\" Einstellungen",
-        "upgrade_warning_bar": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
+        "waiting_for_join_title": "Warte darauf, dass Benutzer %(brand)s beitreten",
+        "waiting_for_join_subtitle": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "%(filename)s und %(count)s weitere Dateien werden hochgeladen",
+                "other": "%(filename)s und %(count)s weitere Dateien werden hochgeladen"
+            },
+            "uploading_single_file": "%(filename)s wird hochgeladen"
+        },
         "upgrade_warning_bar_upgraded": "Dieser Raum wurde bereits aktualisiert.",
         "upgrade_warning_bar_unstable": "Dieser Raum läuft mit der Raumversion <roomVersion />, welche dieser Heim-Server als <i>instabil</i> markiert hat.",
         "upgrade_warning_bar_admins": "Nur Raumadministratoren werden diese Nachricht sehen",
-        "search": {
-            "this_room": "In diesem Raum",
-            "all_rooms": "In allen Räumen",
-            "field_placeholder": "Suchen…",
-            "this_room_button": "Diesen Raum durchsuchen",
-            "all_rooms_button": "Alle Räume durchsuchen"
-        },
-        "jump_read_marker": "Zur ersten ungelesenen Nachricht springen.",
+        "upgrade_warning_bar": "Die Aktualisierung dieses Raums deaktiviert die aktuelle Instanz des Raums und erstellt einen aktualisierten Raum mit demselben Namen.",
         "status_bar": {
             "requires_consent_agreement": "Du kannst keine Nachrichten senden bis du <consentLink>unsere Geschäftsbedingungen</consentLink> gelesen und akzeptiert hast.",
             "monthly_user_limit_reached": "Deine Nachricht wurde nicht gesendet, weil dieser Heim-Server sein Limit an monatlich aktiven Benutzern erreicht hat. Bitte <a>kontaktiere deine Systemadministration</a>, um diesen Dienst weiterzunutzen.",
@@ -3973,18 +3972,19 @@
             "server_connectivity_lost_title": "Verbindung zum Server wurde unterbrochen.",
             "server_connectivity_lost_description": "Nachrichten werden gespeichert und gesendet, wenn die Internetverbindung wiederhergestellt ist."
         },
-        "creating_room_text": "Wir erstellen einen Raum mit %(names)s",
-        "failed_reject_invite": "Ablehnen der Einladung ist fehlgeschlagen",
-        "inviter_unknown": "Unbekannt",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "%(filename)s und %(count)s weitere Dateien werden hochgeladen",
-                "other": "%(filename)s und %(count)s weitere Dateien werden hochgeladen"
-            },
-            "uploading_single_file": "%(filename)s wird hochgeladen"
+        "show_labs_settings": "Zeige die \"Labor\" Einstellungen",
+        "search": {
+            "this_room": "In diesem Raum",
+            "all_rooms": "In allen Räumen",
+            "field_placeholder": "Suchen…",
+            "this_room_button": "Diesen Raum durchsuchen",
+            "all_rooms_button": "Alle Räume durchsuchen"
         },
-        "waiting_for_join_title": "Warte darauf, dass Benutzer %(brand)s beitreten",
-        "waiting_for_join_subtitle": "Sobald eingeladene Benutzer %(brand)s beigetreten sind, werdet ihr euch unterhalten können und der Raum wird Ende-zu-Ende-verschlüsselt sein"
+        "jump_to_bottom_button": "Zur neusten Nachricht springen",
+        "jump_read_marker": "Zur ersten ungelesenen Nachricht springen.",
+        "inviter_unknown": "Unbekannt",
+        "failed_reject_invite": "Ablehnen der Einladung ist fehlgeschlagen",
+        "creating_room_text": "Wir erstellen einen Raum mit %(names)s"
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
@@ -4210,10 +4210,6 @@
         "filter_placeholder": "Raummitglieder filtern",
         "power_label": "%(userName)s (Berechtigungslevel %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Keine Sticker-Pakete aktiviert",
-        "empty_add_prompt": "Jetzt hinzufügen"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Einladung konnte nicht zurückgezogen werden",
         "error_revoke_3pid_invite_description": "Die Einladung konnte nicht zurückgezogen werden. Der Server hat möglicherweise ein vorübergehendes Problem oder du hast nicht ausreichende Berechtigungen, um die Einladung zurückzuziehen.",
@@ -4267,6 +4263,10 @@
         "error_deactivate": "Benutzer konnte nicht deaktiviert werden",
         "role_label": "Rolle in <RoomName/>"
     },
+    "stickers": {
+        "empty": "Keine Sticker-Pakete aktiviert",
+        "empty_add_prompt": "Jetzt hinzufügen"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Angeheftete Nachrichten",
@@ -4292,15 +4292,18 @@
         "share_button": "Raum teilen",
         "settings_button": "Raumeinstellungen"
     },
-    "cant_load_page": "Konnte Seite nicht laden",
-    "left_panel": {
-        "open_dial_pad": "Wähltastatur öffnen"
-    },
-    "console_wait": "Warte!",
     "reject_invitation_dialog": {
         "title": "Einladung ablehnen",
         "confirmation": "Bist du sicher, dass du die Einladung ablehnen willst?",
         "failed": "Einladung konnte nicht abgelehnt werden"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Du scheinst Dateien hochzuladen. Bist du sicher schließen zu wollen?",
+        "call_in_progress": "Du scheinst in einem Gespräch zu sein, bist du sicher, dass du aufhören willst?"
+    },
+    "no_more_results": "Keine weiteren Ergebnisse",
+    "left_panel": {
+        "open_dial_pad": "Wähltastatur öffnen"
     },
     "leave_room_dialog": {
         "last_person_warning": "Du bist die einzige Person im Raum. Sobald du ihn verlässt, wird niemand mehr hineingelangen, auch du nicht.",
@@ -4321,9 +4324,6 @@
         },
         "error_loading_user_profile": "Konnte Nutzerprofil nicht laden"
     },
-    "no_more_results": "Keine weiteren Ergebnisse",
-    "quit_warning": {
-        "file_upload_in_progress": "Du scheinst Dateien hochzuladen. Bist du sicher schließen zu wollen?",
-        "call_in_progress": "Du scheinst in einem Gespräch zu sein, bist du sicher, dass du aufhören willst?"
-    }
+    "console_wait": "Warte!",
+    "cant_load_page": "Konnte Seite nicht laden"
 }

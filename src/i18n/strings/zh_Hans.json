@@ -1072,12 +1072,12 @@
         "historical": "历史",
         "go_to_settings": "打开设置",
         "setup_secure_messages": "设置安全消息",
-        "unencrypted": "未加密",
         "view_message": "查看消息",
-        "joined": "已加入",
+        "unencrypted": "未加密",
         "show_more": "显示更多",
-        "are_you_sure": "你确定吗？",
-        "avatar": "头像"
+        "joined": "已加入",
+        "avatar": "头像",
+        "are_you_sure": "你确定吗？"
     },
     "action": {
         "continue": "继续",
@@ -1381,9 +1381,9 @@
         "format_italics": "斜体",
         "format_insert_link": "插入链接",
         "replying_title": "正在回复",
-        "edit_composer_label": "编辑消息",
+        "stop_voice_message": "停止录制",
         "send_voice_message": "发送语音消息",
-        "stop_voice_message": "停止录制"
+        "edit_composer_label": "编辑消息"
     },
     "power_level": {
         "default": "默认",
@@ -2337,7 +2337,6 @@
         },
         "read_receipts_label": "已读回执",
         "thread_info_basic": "来自消息列",
-        "error_no_renderer": "无法显示此事件",
         "send_state_sent": "消息已发送",
         "send_state_failed": "发送失败",
         "mab": {
@@ -2353,7 +2352,8 @@
             "no_permission": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
             "unable_to_find": "尝试加载此房间的时间线的特定时间点，但是无法找到。",
             "title": "加载时间线位置失败"
-        }
+        },
+        "error_no_renderer": "无法显示此事件"
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -2687,31 +2687,31 @@
             "leave_space": "离开空间",
             "aliases_section": "房间地址",
             "other_section": "其他",
-            "error_updating_canonical_alias_title": "更新主要地址时发生错误",
-            "error_updating_canonical_alias_description": "更新房间的主要地址时发生错误。可能是此服务器不允许，也可能是出现了一个临时错误。",
-            "error_updating_alias_description": "更新此房间的备用地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
-            "error_creating_alias_title": "创建地址时出现错误",
-            "error_creating_alias_description": "创建地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
-            "error_deleting_alias_description_forbidden": "你没有权限删除此地址。",
-            "error_deleting_alias_description": "删除那个地址时出现错误。可能它已不存在，也可能出现了一个暂时的错误。",
-            "error_deleting_alias_title": "删除地址时出现错误",
-            "canonical_alias_field_label": "主要地址",
-            "no_aliases_space": "此空间没有本地地址",
-            "no_aliases_room": "此房间没有本地地址",
-            "local_alias_field_label": "本地地址",
+            "topic_field_label": "房间话题",
             "published_aliases_section": "公布的地址",
             "published_aliases_explainer_space": "任何服务器上的人均可通过公布的地址加入你的空间。",
             "published_aliases_explainer_room": "任何服务器上的人均可通过公布的地址加入你的房间。",
             "published_aliases_description": "要公布地址，首先需要将其设为本地地址。",
-            "aliases_items_label": "其他公布的地址：",
-            "aliases_no_items_label": "还没有其他公布的地址，在下方添加一个",
+            "no_aliases_space": "此空间没有本地地址",
+            "no_aliases_room": "此房间没有本地地址",
             "new_alias_placeholder": "新的公布的地址（例如 #alias:server）",
+            "name_field_label": "房间名称",
             "local_aliases_section": "本地地址",
             "local_aliases_explainer_space": "设置此空间的地址，这样用户就能通过你的家服务器找到此空间（%(localDomain)s）",
             "local_aliases_explainer_room": "为此房间设置地址以便用户通过你的家服务器（%(localDomain)s）找到此房间",
-            "name_field_label": "房间名称",
-            "topic_field_label": "房间话题",
-            "avatar_field_label": "房间头像"
+            "local_alias_field_label": "本地地址",
+            "error_updating_canonical_alias_title": "更新主要地址时发生错误",
+            "error_updating_canonical_alias_description": "更新房间的主要地址时发生错误。可能是此服务器不允许，也可能是出现了一个临时错误。",
+            "error_updating_alias_description": "更新此房间的备用地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
+            "error_deleting_alias_title": "删除地址时出现错误",
+            "error_deleting_alias_description_forbidden": "你没有权限删除此地址。",
+            "error_deleting_alias_description": "删除那个地址时出现错误。可能它已不存在，也可能出现了一个暂时的错误。",
+            "error_creating_alias_title": "创建地址时出现错误",
+            "error_creating_alias_description": "创建地址时出现错误。可能是服务器不允许，也可能是出现了一个暂时的错误。",
+            "canonical_alias_field_label": "主要地址",
+            "avatar_field_label": "房间头像",
+            "aliases_no_items_label": "还没有其他公布的地址，在下方添加一个",
+            "aliases_items_label": "其他公布的地址："
         },
         "advanced": {
             "unfederated": "此房间无法被远程 Matrix 服务器访问",
@@ -2805,17 +2805,17 @@
             "verification_skip_warning": "如果不进行验证，您将无法访问您的所有消息，并且在其他人看来可能不受信任。",
             "verify_later": "我稍后进行验证",
             "verify_reset_warning_1": "无法撤消重置验证密钥的操作。重置后，你将无法访问旧的加密消息，任何之前验证过你的朋友将看到安全警告，直到你再次和他们进行验证。",
-            "self_verification_hint": "要继续进行，请接受你另一设备上的验证请求。",
             "waiting_for_user_accept": "正在等待%(displayName)s接受……",
-            "accepting": "正在接受……",
             "start_button": "开始验证",
+            "self_verification_hint": "要继续进行，请接受你另一设备上的验证请求。",
             "after_new_login": {
                 "unable_to_verify": "无法验证此设备",
                 "verify_this_device": "验证此设备",
                 "device_verified": "设备已验证",
                 "reset_confirmation": "确实要重置验证密钥？",
                 "skip_verification": "暂时跳过验证"
-            }
+            },
+            "accepting": "正在接受……"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -2853,14 +2853,6 @@
             "explainer": "在登出之前请备份密钥以免丢失。",
             "title": "设置"
         },
-        "cross_signing_user_warning": "此用户没有验证其全部会话。",
-        "cross_signing_user_normal": "你没有验证此用户。",
-        "cross_signing_user_verified": "你验证了此用户。此用户已验证了其全部会话。",
-        "cross_signing_room_warning": "有人在使用未知会话",
-        "cross_signing_room_normal": "此房间是端到端加密的",
-        "cross_signing_room_verified": "房间中所有人都已被验证",
-        "event_shield_reason_authenticity_not_guaranteed": "此加密消息的真实性无法在此设备上保证。",
-        "event_shield_reason_mismatched_sender_key": "由未验证的会话加密",
         "messages_not_secure": {
             "title": "你的消息不安全",
             "heading": "以下之一可能被损害：",
@@ -2868,7 +2860,15 @@
             "cause_2": "你正在验证的用户所连接的家服务器",
             "cause_3": "你或其他用户的互联网连接",
             "cause_4": "你或其他用户的会话"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "由未验证的会话加密",
+        "event_shield_reason_authenticity_not_guaranteed": "此加密消息的真实性无法在此设备上保证。",
+        "cross_signing_user_warning": "此用户没有验证其全部会话。",
+        "cross_signing_user_verified": "你验证了此用户。此用户已验证了其全部会话。",
+        "cross_signing_user_normal": "你没有验证此用户。",
+        "cross_signing_room_warning": "有人在使用未知会话",
+        "cross_signing_room_verified": "房间中所有人都已被验证",
+        "cross_signing_room_normal": "此房间是端到端加密的"
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3031,8 +3031,6 @@
         "create_account_title": "创建账户",
         "failed_soft_logout_homeserver": "由于家服务器的问题，重新认证失败",
         "soft_logout_subheading": "清除个人数据",
-        "captcha_description": "此家服务器想要确认你不是机器人。",
-        "country_dropdown": "国家下拉菜单",
         "reset_password": {
             "other_devices_logout_warning_1": "登出你的设备会删除存储在其上的消息加密密钥，使加密的聊天历史不可读。",
             "other_devices_logout_warning_2": "若想保留对加密房间的聊天历史的访问权，请设置密钥备份或从其他设备导出消息密钥，然后再继续。",
@@ -3042,6 +3040,7 @@
             "devices_logout_success": "你已登出全部设备，并将不再收到推送通知。要重新启用通知，请在每台设备上再次登入。",
             "return_to_login": "返回登录页面"
         },
+        "country_dropdown": "国家下拉菜单",
         "common_failures": {
             "invalid_homeserver_discovery": "无效的家服务器搜索响应",
             "cannot_find_autodiscovery_config": "从服务器获取自动发现配置时失败",
@@ -3051,7 +3050,8 @@
             "invalid_identity_server_base_url": "m.identity_server 的 base_url 无效",
             "invalid_identity_server_url": "身份服务器链接不像是有效的身份服务器",
             "general_failure": "一般错误"
-        }
+        },
+        "captcha_description": "此家服务器想要确认你不是机器人。"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3215,8 +3215,8 @@
         "unmaximise": "取消最大化",
         "popout": "在弹出式窗口中打开挂件",
         "unpin_to_view_right_panel": "取消固定此小部件以在此面板中查看",
-        "close_to_view_right_panel": "关闭此小部件以在此面板中查看",
-        "set_room_layout": "将我的房间布局设置给所有人"
+        "set_room_layout": "将我的房间布局设置给所有人",
+        "close_to_view_right_panel": "关闭此小部件以在此面板中查看"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3331,12 +3331,12 @@
         "invite": "邀请人们",
         "invite_description": "使用邮箱或者用户名邀请",
         "invite_this_space": "邀请至此空间",
-        "joining_space": "加入中",
         "user_lacks_permission": "你没有权限",
-        "no_search_result_hint": "你可能要尝试其他搜索或检查是否有错别字。",
-        "title_when_query_available": "结果",
         "title_when_query_unavailable": "房间与空间",
-        "search_placeholder": "搜索名称和描述"
+        "title_when_query_available": "结果",
+        "search_placeholder": "搜索名称和描述",
+        "no_search_result_hint": "你可能要尝试其他搜索或检查是否有错别字。",
+        "joining_space": "加入中"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3540,18 +3540,17 @@
         "join_failed_needs_invite": "你需要一个邀请来查看 %(roomName)s",
         "view_failed_enable_video_rooms": "查看前请在实验室允许虚拟房间",
         "join_failed_enable_video_rooms": "加入前请在实验室允许虚拟房间",
-        "jump_to_bottom_button": "滚动到最近的消息",
-        "show_labs_settings": "显示实验室设置",
-        "upgrade_warning_bar": "升级此房间将会关闭房间的当前实例并创建一个具有相同名称的升级版房间。",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "正在上传 %(filename)s 与其他 %(count)s 个文件",
+                "one": "正在上传 %(filename)s 与其他 %(count)s 个文件"
+            },
+            "uploading_single_file": "正在上传 %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "此房间已经被升级。",
         "upgrade_warning_bar_unstable": "此房间运行的房间版本是 <roomVersion /> ，此版本已被家服务器标记为 <i>不稳定</i> 。",
         "upgrade_warning_bar_admins": "此警告仅房间管理员可见",
-        "search": {
-            "this_room": "此房间",
-            "all_rooms": "全部房间",
-            "field_placeholder": "搜索…"
-        },
-        "jump_read_marker": "跳到第一条未读消息。",
+        "upgrade_warning_bar": "升级此房间将会关闭房间的当前实例并创建一个具有相同名称的升级版房间。",
         "status_bar": {
             "requires_consent_agreement": "在你查看并同意 <consentLink>我们的条款与要求</consentLink> 之前，你不能发送任何消息。",
             "monthly_user_limit_reached": "你的消息未被发送，因为本家服务器已达到其每月活跃用户限制。请 <a>联系你的服务管理员</a> 以继续使用本服务。",
@@ -3564,16 +3563,17 @@
             "server_connectivity_lost_title": "到服务器的连接已经丢失。",
             "server_connectivity_lost_description": "已发送的消息会被保存直到你的连接回来。"
         },
-        "creating_room_text": "正在创建房间%(names)s",
-        "failed_reject_invite": "拒绝邀请失败",
+        "show_labs_settings": "显示实验室设置",
+        "search": {
+            "this_room": "此房间",
+            "all_rooms": "全部房间",
+            "field_placeholder": "搜索…"
+        },
+        "jump_to_bottom_button": "滚动到最近的消息",
+        "jump_read_marker": "跳到第一条未读消息。",
         "inviter_unknown": "未知的",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "正在上传 %(filename)s 与其他 %(count)s 个文件",
-                "one": "正在上传 %(filename)s 与其他 %(count)s 个文件"
-            },
-            "uploading_single_file": "正在上传 %(filename)s"
-        }
+        "failed_reject_invite": "拒绝邀请失败",
+        "creating_room_text": "正在创建房间%(names)s"
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3787,10 +3787,6 @@
         "filter_placeholder": "过滤房间成员",
         "power_label": "%(userName)s（权力 %(powerLevelNumber)s）"
     },
-    "stickers": {
-        "empty": "你目前未启用任何贴纸包",
-        "empty_add_prompt": "立即添加"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "撤销邀请失败",
         "error_revoke_3pid_invite_description": "无法撤销邀请。此服务器可能出现了临时错误，或者你没有足够的权限来撤销邀请。",
@@ -3840,6 +3836,10 @@
         "error_deactivate": "停用用户失败",
         "role_label": "<RoomName/> 中的角色"
     },
+    "stickers": {
+        "empty": "你目前未启用任何贴纸包",
+        "empty_add_prompt": "立即添加"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "已固定的消息",
@@ -3864,15 +3864,18 @@
         "share_button": "分享房间",
         "settings_button": "房间设置"
     },
-    "cant_load_page": "无法加载页面",
-    "left_panel": {
-        "open_dial_pad": "打开拨号键盘"
-    },
-    "console_wait": "等等！",
     "reject_invitation_dialog": {
         "title": "拒绝邀请",
         "confirmation": "你确定要拒绝邀请吗？",
         "failed": "拒绝邀请失败"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "你似乎正在上传文件，确定要退出吗？",
+        "call_in_progress": "你似乎正在通话，确定要退出吗？"
+    },
+    "no_more_results": "没有更多结果",
+    "left_panel": {
+        "open_dial_pad": "打开拨号键盘"
     },
     "leave_room_dialog": {
         "last_person_warning": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
@@ -3893,9 +3896,6 @@
         },
         "error_loading_user_profile": "无法加载用户资料"
     },
-    "no_more_results": "没有更多结果",
-    "quit_warning": {
-        "file_upload_in_progress": "你似乎正在上传文件，确定要退出吗？",
-        "call_in_progress": "你似乎正在通话，确定要退出吗？"
-    }
+    "console_wait": "等等！",
+    "cant_load_page": "无法加载页面"
 }

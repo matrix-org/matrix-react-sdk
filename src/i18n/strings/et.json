@@ -1156,12 +1156,12 @@
         "historical": "Ammune",
         "go_to_settings": "Ava seadistused",
         "setup_secure_messages": "Võta kasutusele krüptitud sõnumid",
-        "unencrypted": "Krüptimata",
         "view_message": "Vaata sõnumit",
-        "joined": "Liitunud",
+        "unencrypted": "Krüptimata",
         "show_more": "Näita rohkem",
-        "are_you_sure": "Kas sa oled kindel?",
-        "avatar": "Tunnuspilt"
+        "joined": "Liitunud",
+        "avatar": "Tunnuspilt",
+        "are_you_sure": "Kas sa oled kindel?"
     },
     "action": {
         "continue": "Jätka",
@@ -1498,15 +1498,15 @@
         "format_italics": "Kaldkiri",
         "format_insert_link": "Lisa link",
         "replying_title": "Vastan",
-        "edit_composer_label": "Muuda sõnumit",
-        "send_voice_message": "Saada häälsõnum",
         "stop_voice_message": "Lõpeta salvestamine",
+        "send_voice_message": "Saada häälsõnum",
         "link_modal": {
             "title_edit": "Muuda linki",
             "title_create": "Tee link",
             "text_field_label": "Tekst",
             "link_field_label": "Link"
-        }
+        },
+        "edit_composer_label": "Muuda sõnumit"
     },
     "power_level": {
         "default": "Tavaline",
@@ -2607,13 +2607,12 @@
             "other": "Seda nägid %(count)s lugejat"
         },
         "read_receipts_label": "Lugemisteatised",
-        "thread_info_basic": "Jutulõngast",
-        "error_no_renderer": "Seda sündmust ei õnnestunud kuvada",
         "undecryptable_tooltip": "Seda sõnumit ei õnnestunud dekrüptida",
-        "send_state_sending": "Saadan sinu sõnumit…",
-        "send_state_encrypting": "Krüptin sinu sõnumit…",
+        "thread_info_basic": "Jutulõngast",
         "send_state_sent": "Sinu sõnum sai saadetud",
+        "send_state_sending": "Saadan sinu sõnumit…",
         "send_state_failed": "Saatmine ei õnnestunud",
+        "send_state_encrypting": "Krüptin sinu sõnumit…",
         "mab": {
             "label": "Tegevused sõnumitega",
             "view_in_room": "Vaata jututoas",
@@ -2627,7 +2626,8 @@
             "no_permission": "Üritasin laadida teatud hetke selle jututoa ajajoonelt, kuid sul ei ole õigusi selle sõnumi nägemiseks.",
             "unable_to_find": "Üritasin laadida teatud hetke selle jututoa ajajoonelt, kuid ei suutnud seda leida.",
             "title": "Asukoha laadimine ajajoonel ei õnnestunud"
-        }
+        },
+        "error_no_renderer": "Seda sündmust ei õnnestunud kuvada"
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -2978,31 +2978,31 @@
             "leave_space": "Lahku kogukonnakeskusest",
             "aliases_section": "Jututubade aadressid",
             "other_section": "Muud",
-            "error_updating_canonical_alias_title": "Viga põhiaadressi uuendamisel",
-            "error_updating_canonical_alias_description": "Jututoa põhiaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
-            "error_updating_alias_description": "Jututoa lisaaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
-            "error_creating_alias_title": "Viga aadressi loomisel",
-            "error_creating_alias_description": "Aadressi loomisel tekkis viga. See kas on serveri poolt keelatud või tekkis ajutine tõrge.",
-            "error_deleting_alias_description_forbidden": "Sinul pole õigusi selle aadressi kustutamiseks.",
-            "error_deleting_alias_description": "Selle aadressi kustutamisel tekkis viga. See kas juba on kustutatud või tekkis ajutine tõrge.",
-            "error_deleting_alias_title": "Viga aadresi kustutamisel",
-            "canonical_alias_field_label": "Põhiaadress",
-            "no_aliases_space": "Sellel kogukonnakeskusel puuduvad kohalikud aadressid",
-            "no_aliases_room": "Sellel jututoal puuduvad kohalikud aadressid",
-            "local_alias_field_label": "Kohalik aadress",
+            "topic_field_label": "Jututoa teema",
             "published_aliases_section": "Avaldatud aadressid",
             "published_aliases_explainer_space": "Avaldatud aadresse saab igaüks igast serverist kasutada liitumiseks sinu kogukonnakeskusega.",
             "published_aliases_explainer_room": "Avaldatud aadresse saab igaüks igast serverist kasutada liitumiseks sinu jututoaga.",
             "published_aliases_description": "Aadressi avaldamiseks peab ta esmalt olema määratud kohalikuks aadressiks.",
-            "aliases_items_label": "Muud avaldatud aadressid:",
-            "aliases_no_items_label": "Ühtegi muud aadressi pole veel avaldatud, lisa üks alljärgnevalt",
+            "no_aliases_space": "Sellel kogukonnakeskusel puuduvad kohalikud aadressid",
+            "no_aliases_room": "Sellel jututoal puuduvad kohalikud aadressid",
             "new_alias_placeholder": "Uus avaldatud aadess (näiteks #alias:server)",
+            "name_field_label": "Jututoa nimi",
             "local_aliases_section": "Kohalikud aadressid",
             "local_aliases_explainer_space": "Selleks et teised kasutajad saaks seda kogukonda leida oma koduserveri kaudu (%(localDomain)s) seadista talle aadressid",
             "local_aliases_explainer_room": "Et muud kasutajad saaks seda jututuba leida sinu koduserveri (%(localDomain)s) kaudu, lisa sellele jututoale aadresse",
-            "name_field_label": "Jututoa nimi",
-            "topic_field_label": "Jututoa teema",
-            "avatar_field_label": "Jututoa tunnuspilt ehk avatar"
+            "local_alias_field_label": "Kohalik aadress",
+            "error_updating_canonical_alias_title": "Viga põhiaadressi uuendamisel",
+            "error_updating_canonical_alias_description": "Jututoa põhiaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
+            "error_updating_alias_description": "Jututoa lisaaadressi uuendamisel tekkis viga. See kas pole serveris lubatud või tekkis mingi ajutine viga.",
+            "error_deleting_alias_title": "Viga aadresi kustutamisel",
+            "error_deleting_alias_description_forbidden": "Sinul pole õigusi selle aadressi kustutamiseks.",
+            "error_deleting_alias_description": "Selle aadressi kustutamisel tekkis viga. See kas juba on kustutatud või tekkis ajutine tõrge.",
+            "error_creating_alias_title": "Viga aadressi loomisel",
+            "error_creating_alias_description": "Aadressi loomisel tekkis viga. See kas on serveri poolt keelatud või tekkis ajutine tõrge.",
+            "canonical_alias_field_label": "Põhiaadress",
+            "avatar_field_label": "Jututoa tunnuspilt ehk avatar",
+            "aliases_no_items_label": "Ühtegi muud aadressi pole veel avaldatud, lisa üks alljärgnevalt",
+            "aliases_items_label": "Muud avaldatud aadressid:"
         },
         "advanced": {
             "unfederated": "See jututuba ei ole leitav teiste Matrix'i serverite jaoks",
@@ -3102,10 +3102,9 @@
             "verify_later": "Ma verifitseerin hiljem",
             "verify_reset_warning_1": "Verifitseerimisvõtmete kustutamist ei saa hiljem tagasi võtta. Peale seda sul puudub ligipääs vanadele krüptitud sõnumitele ja kõik sinu verifitseeritud sõbrad-tuttavad näevad turvahoiatusi seni kuni sa uuesti nad verifitseerid.",
             "verify_reset_warning_2": "Palun jätka ainult siis, kui sa oled kaotanud ligipääsu kõikidele oma seadmetele ning oma turvavõtmele.",
-            "self_verification_hint": "Jätkamaks palun võta vastu verifitseerimispalve oma teises seadmes.",
             "waiting_for_user_accept": "Ootan, et %(displayName)s nõustuks…",
-            "accepting": "Nõustun …",
             "start_button": "Alusta verifitseerimist",
+            "self_verification_hint": "Jätkamaks palun võta vastu verifitseerimispalve oma teises seadmes.",
             "error_starting_title": "Viga verifitseerimise alustamisel",
             "error_starting_description": "Meil ei õnnestunud alustada vestlust teise kasutajaga.",
             "after_new_login": {
@@ -3114,7 +3113,8 @@
                 "device_verified": "Seade on verifitseeritud",
                 "reset_confirmation": "Kas tõesti kustutame kõik verifitseerimisvõtmed?",
                 "skip_verification": "Jäta verifitseerimine praegu vahele"
-            }
+            },
+            "accepting": "Nõustun …"
         },
         "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
         "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
@@ -3152,14 +3152,6 @@
             "explainer": "Vältimaks nende kaotamist, varunda krüptovõtmed enne väljalogimist.",
             "title": "Võta kasutusele"
         },
-        "cross_signing_user_warning": "See kasutaja ei ole verifitseerinud kõiki oma sessioone.",
-        "cross_signing_user_normal": "Sa ei ole seda kasutajat verifitseerinud.",
-        "cross_signing_user_verified": "Sa oled selle kasutaja verifitseerinud. See kasutaja on verifitseerinud kõik nende sessioonid.",
-        "cross_signing_room_warning": "Keegi kasutab tundmatut sessiooni",
-        "cross_signing_room_normal": "See jututuba on läbivalt krüptitud",
-        "cross_signing_room_verified": "Kõik kasutajad siin nututoas on verifitseeritud",
-        "event_shield_reason_authenticity_not_guaranteed": "Selle krüptitud sõnumi autentsus pole selles seadmes tagatud.",
-        "event_shield_reason_mismatched_sender_key": "Krüptitud verifitseerimata sessiooni poolt",
         "messages_not_secure": {
             "title": "Sinu sõnumid ei ole turvatud",
             "heading": "Üks järgnevatest võib olla sattunud valedesse kätesse:",
@@ -3167,7 +3159,15 @@
             "cause_2": "Sinu poolt verifitseeritava kasutaja koduserver",
             "cause_3": "Sinu või teise kasutaja internetiühendus",
             "cause_4": "Sinu või teise kasutaja sessioon"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Krüptitud verifitseerimata sessiooni poolt",
+        "event_shield_reason_authenticity_not_guaranteed": "Selle krüptitud sõnumi autentsus pole selles seadmes tagatud.",
+        "cross_signing_user_warning": "See kasutaja ei ole verifitseerinud kõiki oma sessioone.",
+        "cross_signing_user_verified": "Sa oled selle kasutaja verifitseerinud. See kasutaja on verifitseerinud kõik nende sessioonid.",
+        "cross_signing_user_normal": "Sa ei ole seda kasutajat verifitseerinud.",
+        "cross_signing_room_warning": "Keegi kasutab tundmatut sessiooni",
+        "cross_signing_room_verified": "Kõik kasutajad siin nututoas on verifitseeritud",
+        "cross_signing_room_normal": "See jututuba on läbivalt krüptitud"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3355,8 +3355,19 @@
         "soft_logout_subheading": "Kustuta privaatsed andmed",
         "soft_logout_warning": "Hoiatus: Sinu privaatsed andmed (sealhulgas krüptimisvõtmed) on jätkuvalt salvestatud selles sessioonis. Eemalda nad, kui oled lõpetanud selle sessiooni kasutamise või soovid sisse logida muu kasutajakontoga.",
         "forgot_password_send_email": "Saada e-kiri",
-        "captcha_description": "See server soovib kindlaks teha, et sa ei ole robot.",
-        "country_dropdown": "Riikide valik",
+        "reset_password": {
+            "rate_limit_error": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota veidi.",
+            "rate_limit_error_with_time": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota %(timeout)s sekundit.",
+            "other_devices_logout_warning_1": "Kõikide sinu seadmete võrgust välja logimine kustutab ka nendes salvestatud krüptovõtmed ja sellega muutuvad ka krüptitud vestlused loetamatuteks.",
+            "other_devices_logout_warning_2": "Kui sa soovid ligipääsu varasematele krüptitud vestlustele, palun seadista võtmete varundus või enne jätkamist ekspordi mõnest seadmest krüptovõtmed.",
+            "confirm_new_password": "Kinnita oma uus salasõna",
+            "password_not_entered": "Palun sisesta uus salasõna.",
+            "passwords_mismatch": "Uued salasõnad peavad omavahel klappima.",
+            "sign_out_other_devices": "Logi kõik oma seadmed võrgust välja",
+            "reset_successful": "Sinu salasõna on muudetud.",
+            "devices_logout_success": "Sa oled kõikidest seadmetest välja logitud ning enam ei saa tõuketeavitusi. Nende taaskuvamiseks logi sisse igas oma soovitud seadmetes.",
+            "return_to_login": "Mine tagasi sisselogimisvaatele"
+        },
         "qr_code_login": {
             "sign_in_new_device": "Logi sisse uus seade",
             "error_linking_incomplete": "Sidumine ei lõppenud etteantud aja jooksul.",
@@ -3380,19 +3391,7 @@
             "waiting_for_device": "Ootame, et teine seade logiks võrku",
             "completing_setup": "Lõpetame uue seadme seadistamise"
         },
-        "reset_password": {
-            "rate_limit_error": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota veidi.",
-            "rate_limit_error_with_time": "Liiga palju päringuid napis ajavahemikus. Enne uuesti proovimist palun oota %(timeout)s sekundit.",
-            "other_devices_logout_warning_1": "Kõikide sinu seadmete võrgust välja logimine kustutab ka nendes salvestatud krüptovõtmed ja sellega muutuvad ka krüptitud vestlused loetamatuteks.",
-            "other_devices_logout_warning_2": "Kui sa soovid ligipääsu varasematele krüptitud vestlustele, palun seadista võtmete varundus või enne jätkamist ekspordi mõnest seadmest krüptovõtmed.",
-            "confirm_new_password": "Kinnita oma uus salasõna",
-            "password_not_entered": "Palun sisesta uus salasõna.",
-            "passwords_mismatch": "Uued salasõnad peavad omavahel klappima.",
-            "sign_out_other_devices": "Logi kõik oma seadmed võrgust välja",
-            "reset_successful": "Sinu salasõna on muudetud.",
-            "devices_logout_success": "Sa oled kõikidest seadmetest välja logitud ning enam ei saa tõuketeavitusi. Nende taaskuvamiseks logi sisse igas oma soovitud seadmetes.",
-            "return_to_login": "Mine tagasi sisselogimisvaatele"
-        },
+        "country_dropdown": "Riikide valik",
         "common_failures": {
             "invalid_homeserver_discovery": "Vigane vastus koduserveri tuvastamise päringule",
             "cannot_find_autodiscovery_config": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
@@ -3402,7 +3401,8 @@
             "invalid_identity_server_base_url": "m.identity_server'i kehtetu base_url",
             "invalid_identity_server_url": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
             "general_failure": "Üldine viga"
-        }
+        },
+        "captcha_description": "See server soovib kindlaks teha, et sa ei ole robot."
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",
@@ -3574,8 +3574,8 @@
         "unmaximise": "Lõpeta täisvaate kasutamine",
         "popout": "Ava rakendus eraldi aknas",
         "unpin_to_view_right_panel": "Sellel paneelil kuvamiseks eemalda vidin lemmikutest",
-        "close_to_view_right_panel": "Sellel paneelil kuvamiseks sulge see vidin",
-        "set_room_layout": "Kasuta minu jututoa paigutust kõigi jaoks"
+        "set_room_layout": "Kasuta minu jututoa paigutust kõigi jaoks",
+        "close_to_view_right_panel": "Sellel paneelil kuvamiseks sulge see vidin"
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -3670,8 +3670,8 @@
         "empty_explainer": "Jutulõngad aitavad hoida vestlused teemakohastena ning mugavalt loetavatena.",
         "empty_tip": "<b>Soovitus:</b> Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
         "empty_heading": "Halda vestlusi jutulõngadena",
-        "open_thread": "Ava jutulõng",
-        "unable_to_decrypt": "Sõnumi dekrüptimine ei õnnestunud"
+        "unable_to_decrypt": "Sõnumi dekrüptimine ei õnnestunud",
+        "open_thread": "Ava jutulõng"
     },
     "theme": {
         "light_high_contrast": "Hele ja väga kontrastne",
@@ -3700,12 +3700,12 @@
         "invite": "Kutsu teisi kasutajaid",
         "invite_description": "Kutsu e-posti aadressi või kasutajanime alusel",
         "invite_this_space": "Kutsu siia kogukonnakeskusesse",
-        "joining_space": "Liitun",
         "user_lacks_permission": "Sul puuduvad selleks õigused",
-        "no_search_result_hint": "Aga proovi muuta otsingusõna või kontrolli ega neis trükivigu polnud.",
-        "title_when_query_available": "Tulemused",
         "title_when_query_unavailable": "Jututoad ja kogukonnad",
-        "search_placeholder": "Otsi nimede ja kirjelduste seast"
+        "title_when_query_available": "Tulemused",
+        "search_placeholder": "Otsi nimede ja kirjelduste seast",
+        "no_search_result_hint": "Aga proovi muuta otsingusõna või kontrolli ega neis trükivigu polnud.",
+        "joining_space": "Liitun"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -3940,20 +3940,19 @@
         "join_failed_needs_invite": "%(roomName)s jututoaga tutvumiseks vajad sa kutset",
         "view_failed_enable_video_rooms": "Jututoa nägemiseks võta seadistustest katsete lehelt videotoad kasutusele",
         "join_failed_enable_video_rooms": "Liitumiseks võta seadistustest katsete lehelt videotoad kasutusele",
-        "jump_to_bottom_button": "Mine viimaste sõnumite juurde",
-        "show_labs_settings": "Näita seadistusi",
-        "upgrade_warning_bar": "Selle jututoa versiooni uuendamine sulgeb tema praeguse instantsi ja loob sama nimega uuendatud jututoa.",
+        "waiting_for_join_title": "Kasutajate liitumise ootel %(brand)s'ga",
+        "waiting_for_join_subtitle": "Kui kutse saanud kasutajad on liitunud %(brand)s'ga, siis saad sa nendega suhelda ja jututuba on läbivalt krüptitud",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Laadin üles %(filename)s ning %(count)s muud faili",
+                "one": "Laadin üles %(filename)s ning veel %(count)s faili"
+            },
+            "uploading_single_file": "Laadin üles %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "See jututuba on juba uuendatud.",
         "upgrade_warning_bar_unstable": "Selle jututoa versioon on <roomVersion /> ning see koduserver on tema märkinud <i>ebastabiilseks</i>.",
         "upgrade_warning_bar_admins": "Vaid administraatorid näevad seda hoiatust",
-        "search": {
-            "this_room": "See jututuba",
-            "all_rooms": "Kõik jututoad",
-            "field_placeholder": "Otsi…",
-            "this_room_button": "Otsi sellest jututoast",
-            "all_rooms_button": "Otsi kõikidest jututubadest"
-        },
-        "jump_read_marker": "Mine esimese lugemata sõnumi juurde.",
+        "upgrade_warning_bar": "Selle jututoa versiooni uuendamine sulgeb tema praeguse instantsi ja loob sama nimega uuendatud jututoa.",
         "status_bar": {
             "requires_consent_agreement": "Sa ei saa saata ühtego sõnumit enne, kui oled läbi lugenud ja nõustunud <consentLink>meie kasutustingimustega</consentLink>.",
             "monthly_user_limit_reached": "Sinu sõnumit ei saadetud, kuna see koduserver on saavutanud igakuise aktiivsete kasutajate piiri. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
@@ -3966,18 +3965,19 @@
             "server_connectivity_lost_title": "Ühendus sinu serveriga on katkenud.",
             "server_connectivity_lost_description": "Saadetud sõnumid salvestatakse seniks, kuni võrguühendus on taastunud."
         },
-        "creating_room_text": "Me loome jututoa järgnevaist: %(names)s",
-        "failed_reject_invite": "Kutse tagasilükkamine ei õnnestunud",
-        "inviter_unknown": "Teadmata olek",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Laadin üles %(filename)s ning %(count)s muud faili",
-                "one": "Laadin üles %(filename)s ning veel %(count)s faili"
-            },
-            "uploading_single_file": "Laadin üles %(filename)s"
+        "show_labs_settings": "Näita seadistusi",
+        "search": {
+            "this_room": "See jututuba",
+            "all_rooms": "Kõik jututoad",
+            "field_placeholder": "Otsi…",
+            "this_room_button": "Otsi sellest jututoast",
+            "all_rooms_button": "Otsi kõikidest jututubadest"
         },
-        "waiting_for_join_title": "Kasutajate liitumise ootel %(brand)s'ga",
-        "waiting_for_join_subtitle": "Kui kutse saanud kasutajad on liitunud %(brand)s'ga, siis saad sa nendega suhelda ja jututuba on läbivalt krüptitud"
+        "jump_to_bottom_button": "Mine viimaste sõnumite juurde",
+        "jump_read_marker": "Mine esimese lugemata sõnumi juurde.",
+        "inviter_unknown": "Teadmata olek",
+        "failed_reject_invite": "Kutse tagasilükkamine ei õnnestunud",
+        "creating_room_text": "Me loome jututoa järgnevaist: %(names)s"
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",
@@ -4203,10 +4203,6 @@
         "filter_placeholder": "Filtreeri jututoa liikmeid",
         "power_label": "%(userName)s (õigused %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "Sul pole ühtegi kleepsupakki kasutusel",
-        "empty_add_prompt": "Lisa nüüd mõned"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Kutse tühistamine ei õnnestunud",
         "error_revoke_3pid_invite_description": "Kutse tühistamine ei õnnestunud. Serveri töös võib olla ajutine tõrge või sul pole piisavalt õigusi kutse tühistamiseks.",
@@ -4260,6 +4256,10 @@
         "error_deactivate": "Kasutaja deaktiveerimine ei õnnestunud",
         "role_label": "Roll jututoas <RoomName/>"
     },
+    "stickers": {
+        "empty": "Sul pole ühtegi kleepsupakki kasutusel",
+        "empty_add_prompt": "Lisa nüüd mõned"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "Klammerdatud sõnumid",
@@ -4285,15 +4285,18 @@
         "share_button": "Jaga jututuba",
         "settings_button": "Jututoa seadistused"
     },
-    "cant_load_page": "Lehe laadimine ei õnnestunud",
-    "left_panel": {
-        "open_dial_pad": "Ava numbriklahvistik"
-    },
-    "console_wait": "Palun oota!",
     "reject_invitation_dialog": {
         "title": "Lükka kutse tagasi",
         "confirmation": "Kas sa oled kindel, et soovid lükata kutse tagasi?",
         "failed": "Kutse tagasi lükkamine ei õnnestunud"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Tundub, et sa parasjagu laadid faile üles. Kas sa kindlasti soovid väljuda?",
+        "call_in_progress": "Tundub, et sul parasjagu on kõne pooleli. Kas sa kindlasti soovid väljuda?"
+    },
+    "no_more_results": "Rohkem otsingutulemusi pole",
+    "left_panel": {
+        "open_dial_pad": "Ava numbriklahvistik"
     },
     "leave_room_dialog": {
         "last_person_warning": "Sa oled siin viimane osaleja. Kui sa nüüd lahkud, siis mitte keegi, kaasa arvatud sa ise, ei saa hiljem enam liituda.",
@@ -4314,9 +4317,6 @@
         },
         "error_loading_user_profile": "Kasutajaprofiili laadimine ei õnnestunud"
     },
-    "no_more_results": "Rohkem otsingutulemusi pole",
-    "quit_warning": {
-        "file_upload_in_progress": "Tundub, et sa parasjagu laadid faile üles. Kas sa kindlasti soovid väljuda?",
-        "call_in_progress": "Tundub, et sul parasjagu on kõne pooleli. Kas sa kindlasti soovid väljuda?"
-    }
+    "console_wait": "Palun oota!",
+    "cant_load_page": "Lehe laadimine ei õnnestunud"
 }

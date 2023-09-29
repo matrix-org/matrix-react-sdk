@@ -693,12 +693,12 @@
         "context_menu": {
             "external_url": "Bron-URL"
         },
-        "error_no_renderer": "Deze gebeurtenisse kostege nie weergegeevn wordn",
         "load_error": {
             "no_permission": "J’è geprobeerd van e gegeven punt in de tydslyn van dit gesprek te loadn, moa j’è geen toeloatienge vo ’t desbetreffend bericht te zien.",
             "unable_to_find": "Geprobeerd voor e gegeven punt in de tydslyn van dit gesprek te loadn, moar kostege dit nie viendn.",
             "title": "Loadn van tydslynpositie is mislukt"
-        }
+        },
+        "error_no_renderer": "Deze gebeurtenisse kostege nie weergegeevn wordn"
     },
     "slash_command": {
         "shrug": "Plakt ¯\\_(ツ)_/¯ vóór e bericht zounder ipmoak",
@@ -815,12 +815,12 @@
             "url_previews_section": "URL-voorvertoniengn",
             "aliases_section": "Gespreksadressn",
             "other_section": "Overige",
+            "topic_field_label": "Gespreksounderwerp",
+            "no_aliases_room": "Dit gesprek è geen lokoale adressn",
+            "name_field_label": "Gespreksnoame",
             "error_updating_canonical_alias_title": "Foute by ’t bywerkn van ’t hoofdadresse",
             "error_updating_canonical_alias_description": "’t Es e foute ipgetreedn by ’t bywerkn van ’t hoofdadresse van ’t gesprek. Dit wor meugliks nie toegeloatn deur de server, of der es een tydelik probleem ipgetreedn.",
             "canonical_alias_field_label": "Hoofdadresse",
-            "no_aliases_room": "Dit gesprek è geen lokoale adressn",
-            "name_field_label": "Gespreksnoame",
-            "topic_field_label": "Gespreksounderwerp",
             "avatar_field_label": "Gespreksavatar"
         },
         "advanced": {
@@ -941,7 +941,6 @@
         "create_account_title": "Account anmoakn",
         "failed_soft_logout_homeserver": "’t Heranmeldn is mislukt omwille van e probleem me de thuusserver",
         "soft_logout_subheading": "Persoonlike gegeevns wissn",
-        "captcha_description": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
         "reset_password": {
             "password_not_entered": "’t Moet e nieuw paswoord ingegeevn wordn.",
             "passwords_mismatch": "Nieuwe paswoordn moetn overeenkommn.",
@@ -957,7 +956,8 @@
             "invalid_identity_server_base_url": "Oungeldige base_url vo m.identity_server",
             "invalid_identity_server_url": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
             "general_failure": "Algemene foute"
-        }
+        },
+        "captcha_description": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt."
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1051,16 +1051,17 @@
         "no_peek_join_prompt": "%(roomName)s ku nie bekeekn wordn. Wil je deran deelneemn?",
         "not_found_title_name": "%(roomName)s bestoa nie.",
         "inaccessible_name": "%(roomName)s es vo de moment nie toegankelik.",
-        "upgrade_warning_bar": "Dit gesprek actualiseern goat de huudige instantie van ’t gesprek sluutn, en e geactualiseerde versie ounder dezelfste noame anmoakn.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "%(filename)s en %(count)s andere wordn ipgeloadn",
+                "one": "%(filename)s en %(count)s ander wordn ipgeloadn"
+            },
+            "uploading_single_file": "%(filename)s wordt ipgeloadn"
+        },
         "upgrade_warning_bar_upgraded": "Dit gesprek es al ipgewoardeerd gewist.",
         "upgrade_warning_bar_unstable": "Dit gesprek droait ip groepsgespreksversie <roomVersion />, da deur deze thuusserver als <i>ounstabiel</i> gemarkeerd gewist es.",
         "upgrade_warning_bar_admins": "Alleene de gespreksbeheerders goan deze woarschuwienge zien",
-        "search": {
-            "this_room": "Dit gesprek",
-            "all_rooms": "Alle gesprekkn",
-            "field_placeholder": "Zoekn…"
-        },
-        "jump_read_marker": "Spriengt noa ’t eeste oungeleezn bericht.",
+        "upgrade_warning_bar": "Dit gesprek actualiseern goat de huudige instantie van ’t gesprek sluutn, en e geactualiseerde versie ounder dezelfste noame anmoakn.",
         "status_bar": {
             "requires_consent_agreement": "Je ku geen berichtn stuurn toutda je <consentLink>uzze algemene voorwoardn</consentLink> geleezn en anveird ghed èt.",
             "monthly_user_limit_reached": "Je bericht is nie verstuurd gewist omda deze thuusserver z’n limiet vo moandeliks actieve gebruukers bereikt ghed èt. Gelieve <a>contact ip te neemn me jen dienstbeheerder</a> vo de dienst te bluuvn gebruukn.",
@@ -1068,15 +1069,14 @@
             "server_connectivity_lost_title": "De verbindienge me de server is verbrookn.",
             "server_connectivity_lost_description": "Verstuurde berichtn goan ipgesloagn wordn toutda je verbindienge hersteld is."
         },
-        "failed_reject_invite": "Weigern van d’uutnodigienge is mislukt",
+        "search": {
+            "this_room": "Dit gesprek",
+            "all_rooms": "Alle gesprekkn",
+            "field_placeholder": "Zoekn…"
+        },
+        "jump_read_marker": "Spriengt noa ’t eeste oungeleezn bericht.",
         "inviter_unknown": "Ounbekend",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "%(filename)s en %(count)s andere wordn ipgeloadn",
-                "one": "%(filename)s en %(count)s ander wordn ipgeloadn"
-            },
-            "uploading_single_file": "%(filename)s wordt ipgeloadn"
-        }
+        "failed_reject_invite": "Weigern van d’uutnodigienge is mislukt"
     },
     "file_panel": {
         "guest_note": "Je moe je <a>registreern</a> vo deze functie te gebruukn",
@@ -1190,10 +1190,6 @@
         "filter_placeholder": "Gespreksleedn filtern",
         "power_label": "%(userName)s (macht %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "J’è vo de moment geen stickerpakkettn ingeschoakeld",
-        "empty_add_prompt": "Voegt der nu e poar toe"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Intrekkn van d’uutnodigienge is mislukt",
         "error_revoke_3pid_invite_description": "Kostege d’uutnodigienge nie intrekkn. De server oundervindt meuglik e tydelik probleem, of j’èt ounvoldoende rechtn vo d’uutnodigienge in te trekkn.",
@@ -1209,15 +1205,23 @@
         "error_mute_user": "Dempn van gebruuker es mislukt",
         "promote_warning": "Je kut deze veranderiengn nie oungedoan moakn angezien da je de gebruuker tout ’tzelfste niveau als jen eigen promoveert."
     },
+    "stickers": {
+        "empty": "J’è vo de moment geen stickerpakkettn ingeschoakeld",
+        "empty_add_prompt": "Voegt der nu e poar toe"
+    },
     "right_panel": {
         "share_button": "Gesprek deeln"
     },
-    "cant_load_page": "Kostege ’t blad nie loadn",
     "reject_invitation_dialog": {
         "title": "Uutnodigienge weigern",
         "confirmation": "Zy je zeker da je d’uutnodigienge wil weigern?",
         "failed": "Weigern van d’uutnodigienge is mislukt"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "’t Ziet er noar uut da je bestandn an ’t iploadn zyt, zy je zeker da je wilt afsluutn?",
+        "call_in_progress": "’t Ziet er noar uut da je nog in gesprek zyt, zy je zeker da je wilt afsluutn?"
+    },
+    "no_more_results": "Geen resultoatn nie mi",
     "leave_room_dialog": {
         "room_rejoin_warning": "Dit gesprek is nie openboar. Zounder uutnodigienge goa je nie were kunn toetreedn.",
         "leave_room_question": "Zy je zeker da je wilt deuregoan uut ’t gesprek ‘%(roomName)s’?"
@@ -1230,9 +1234,5 @@
         },
         "error_loading_user_profile": "Kostege ’t gebruukersprofiel nie loadn"
     },
-    "no_more_results": "Geen resultoatn nie mi",
-    "quit_warning": {
-        "file_upload_in_progress": "’t Ziet er noar uut da je bestandn an ’t iploadn zyt, zy je zeker da je wilt afsluutn?",
-        "call_in_progress": "’t Ziet er noar uut da je nog in gesprek zyt, zy je zeker da je wilt afsluutn?"
-    }
+    "cant_load_page": "Kostege ’t blad nie loadn"
 }

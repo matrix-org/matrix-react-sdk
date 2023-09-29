@@ -496,11 +496,11 @@
             "error_updating_canonical_alias_title": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลัก",
             "error_updating_canonical_alias_description": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลักของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
             "error_updating_alias_description": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่สำรองของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-            "error_creating_alias_title": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
-            "error_creating_alias_description": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "error_deleting_alias_title": "เกิดข้อผิดพลาดในการนำที่อยู่ออก",
             "error_deleting_alias_description_forbidden": "คุณไม่ได้รับอนุญาตให้ลบที่อยู่.",
             "error_deleting_alias_description": "เกิดข้อผิดพลาดในการลบที่อยู่นั้น อาจไม่มีอยู่อีกต่อไปหรือเกิดข้อผิดพลาดชั่วคราว.",
-            "error_deleting_alias_title": "เกิดข้อผิดพลาดในการนำที่อยู่ออก",
+            "error_creating_alias_title": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
+            "error_creating_alias_description": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
             "canonical_alias_field_label": "ที่อยู่หลัก"
         }
     },
@@ -517,20 +517,20 @@
             "forget_room_button": "ลืมห้อง"
         },
         "not_found_title_name": "ไม่มีห้อง %(roomName)s อยู่จริง",
-        "search": {
-            "this_room": "ห้องนี้",
-            "all_rooms": "ทุกห้อง",
-            "field_placeholder": "ค้นหา…"
-        },
-        "jump_read_marker": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
-        "failed_reject_invite": "การปฏิเสธคำเชิญล้มเหลว",
         "upload": {
             "uploading_multiple_file": {
                 "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
                 "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
             },
             "uploading_single_file": "กำลังอัปโหลด %(filename)s"
-        }
+        },
+        "search": {
+            "this_room": "ห้องนี้",
+            "all_rooms": "ทุกห้อง",
+            "field_placeholder": "ค้นหา…"
+        },
+        "jump_read_marker": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
+        "failed_reject_invite": "การปฏิเสธคำเชิญล้มเหลว"
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
@@ -588,10 +588,6 @@
         "filter_placeholder": "กรองสมาชิกห้อง",
         "power_label": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
-        "empty_add_prompt": "เพิ่มบางส่วนในขณะนี้"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "ยกเลิกคำเชิญไม่สำเร็จ",
         "error_revoke_3pid_invite_description": "ไม่สามารถยกเลิกคำเชิญได้ เซิร์ฟเวอร์อาจประสบปัญหาชั่วคราวหรือคุณไม่มีสิทธิ์เพียงพอที่จะยกเลิกคำเชิญ",
@@ -613,11 +609,16 @@
     "threads": {
         "open_thread": "เปิดกระทู้"
     },
+    "stickers": {
+        "empty": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
+        "empty_add_prompt": "เพิ่มบางส่วนในขณะนี้"
+    },
     "reject_invitation_dialog": {
         "title": "ปฏิเสธคำเชิญ",
         "confirmation": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
         "failed": "การปฏิเสธคำเชิญล้มเหลว"
     },
+    "no_more_results": "ไม่มีผลลัพธ์อื่น",
     "leave_room_dialog": {
         "leave_room_question": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?"
     },
@@ -627,6 +628,5 @@
             "title": "การค้นหาล้มเหลว",
             "server_unavailable": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :("
         }
-    },
-    "no_more_results": "ไม่มีผลลัพธ์อื่น"
+    }
 }

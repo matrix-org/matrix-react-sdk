@@ -1086,8 +1086,8 @@
         "poll_button": "סקר",
         "format_italics": "נטוי",
         "replying_title": "משיבים",
-        "edit_composer_label": "ערוך הודעה",
-        "send_voice_message": "שלח הודעה קולית"
+        "send_voice_message": "שלח הודעה קולית",
+        "edit_composer_label": "ערוך הודעה"
     },
     "power_level": {
         "default": "ברירת מחדל",
@@ -1808,7 +1808,6 @@
             "close": "סגור תצוגה מקדימה"
         },
         "thread_info_basic": "משרשור",
-        "error_no_renderer": "לא ניתן להציג את הארוע הזה",
         "send_state_sent": "ההודעה שלך נשלחה",
         "send_state_failed": "השליחה נכשלה",
         "mab": {
@@ -1819,7 +1818,8 @@
             "no_permission": "ניסיתי לטעון נקודה ספציפית בציר הזמן של החדר הזה, אך אין לך הרשאה להציג את ההודעה המדוברת.",
             "unable_to_find": "ניסה לטעון נקודה מסוימת בציר הזמן של החדר הזה, אך לא הצליח למצוא אותה.",
             "title": "טעינת מיקום ציר הזמן נכשלה"
-        }
+        },
+        "error_no_renderer": "לא ניתן להציג את הארוע הזה"
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2102,31 +2102,31 @@
             "leave_space": "עזוב את מרחב העבודה",
             "aliases_section": "כתובות חדרים",
             "other_section": "אחר",
-            "error_updating_canonical_alias_title": "שגיאה בעדכון כתובת ראשית",
-            "error_updating_canonical_alias_description": "אירעה שגיאה בעדכון הכתובת הראשית של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
-            "error_updating_alias_description": "אירעה שגיאה בעדכון הכתובות החלופיות של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
-            "error_creating_alias_title": "שגיאה ביצירת כתובת",
-            "error_creating_alias_description": "אירעה שגיאה ביצירת כתובת זו. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
-            "error_deleting_alias_description_forbidden": "אין לך הרשאה למחוק את הכתובת.",
-            "error_deleting_alias_description": "אירעה שגיאה בהסרת כתובת זו. יתכן שהוא כבר לא קיים או שהתרחשה שגיאה זמנית.",
-            "error_deleting_alias_title": "שגיאה בהסרת כתובת",
-            "canonical_alias_field_label": "כתובת ראשית",
-            "no_aliases_space": "למרחב עבודה זה לא מוגדרת כתובת מקומית בשרת",
-            "no_aliases_room": "לחדר זה אין כתובות מקומיות",
-            "local_alias_field_label": "כתובות מקומיות",
+            "topic_field_label": "נושא החדר",
             "published_aliases_section": "כתובות מפורסמות",
             "published_aliases_explainer_space": "כל אחד בכל שרת יכול להשתמש בכתובות שפורסמו כדי להצטרף למרחב העבודה שלכם.",
             "published_aliases_explainer_room": "כל אחד בכל שרת יכול להשתמש בכתובות שפורסמו כדי להצטרף לחלל העבודה שלכם.",
             "published_aliases_description": "כדי לפרסם כתובת, יש להגדיר אותה ככתובת מקומית תחילה.",
-            "aliases_items_label": "כתובות מפורסמות אחרות:",
-            "aliases_no_items_label": "עדיין אין כתובות שפורסמו, הוסף כתובת למטה",
+            "no_aliases_space": "למרחב עבודה זה לא מוגדרת כתובת מקומית בשרת",
+            "no_aliases_room": "לחדר זה אין כתובות מקומיות",
             "new_alias_placeholder": "כתובת חדשה שפורסמה (למשל #alias:server)",
+            "name_field_label": "שם חדר",
             "local_aliases_section": "כתובות מקומיות",
             "local_aliases_explainer_space": "הגדר כתובות עבור מרחב העבודה הזה כדי שמשתמשים יוכלו למצוא את מרחב העבודה הזה דרך השרת שלך (%(localDomain)s)",
             "local_aliases_explainer_room": "הגדר כתובות לחדר זה כדי שמשתמשים יוכלו למצוא את החדר הזה דרך שרת הבית שלך (%(localDomain)s)",
-            "name_field_label": "שם חדר",
-            "topic_field_label": "נושא החדר",
-            "avatar_field_label": "אוואטר של החדר"
+            "local_alias_field_label": "כתובות מקומיות",
+            "error_updating_canonical_alias_title": "שגיאה בעדכון כתובת ראשית",
+            "error_updating_canonical_alias_description": "אירעה שגיאה בעדכון הכתובת הראשית של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
+            "error_updating_alias_description": "אירעה שגיאה בעדכון הכתובות החלופיות של החדר. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
+            "error_deleting_alias_title": "שגיאה בהסרת כתובת",
+            "error_deleting_alias_description_forbidden": "אין לך הרשאה למחוק את הכתובת.",
+            "error_deleting_alias_description": "אירעה שגיאה בהסרת כתובת זו. יתכן שהוא כבר לא קיים או שהתרחשה שגיאה זמנית.",
+            "error_creating_alias_title": "שגיאה ביצירת כתובת",
+            "error_creating_alias_description": "אירעה שגיאה ביצירת כתובת זו. ייתכן שהשרת אינו מאפשר זאת או שהתרחש כשל זמני.",
+            "canonical_alias_field_label": "כתובת ראשית",
+            "avatar_field_label": "אוואטר של החדר",
+            "aliases_no_items_label": "עדיין אין כתובות שפורסמו, הוסף כתובת למטה",
+            "aliases_items_label": "כתובות מפורסמות אחרות:"
         },
         "advanced": {
             "unfederated": "לא ניתן לגשת לחדר זה באמצעות שרתי מטריקס מרוחקים",
@@ -2197,13 +2197,13 @@
             "verification_success_with_backup": "המכשיר שלך מוגדר כעת כמאומת. יש לו גישה להודעות המוצפנות שלך ומשתמשים אחרים יראו אותו כמכשיר מהימן.",
             "verification_success_without_backup": "המכשיר שלך מוגדר כעת כמאומת. משתמשים אחרים יראו אותו כמכשיר מהימן.",
             "waiting_for_user_accept": "ממתין לקבלת %(displayName)s …",
-            "accepting": "מקבל…",
             "start_button": "התחל אימות",
             "after_new_login": {
                 "unable_to_verify": "לא ניתן לאמת את מכשיר זה",
                 "verify_this_device": "אמתו את מכשיר זה",
                 "device_verified": "המכשיר אומת"
-            }
+            },
+            "accepting": "מקבל…"
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2238,19 +2238,19 @@
             "explainer": "גבה את המפתחות שלך לפני היציאה כדי להימנע מלאבד אותם.",
             "title": "הגדר"
         },
-        "cross_signing_user_warning": "משתמש זה לא אימת את כל ההפעלות שלו.",
-        "cross_signing_user_normal": "לא אימתת משתמש זה.",
-        "cross_signing_user_verified": "אימתת משתמש זה. משתמש זה אימת את כל ההפעלות שלו.",
-        "cross_signing_room_warning": "מישהו משתמש בהפעלה לא ידועה",
-        "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה",
-        "cross_signing_room_verified": "כולם מאומתים בחדר זה",
-        "event_shield_reason_authenticity_not_guaranteed": "לא ניתן להבטיח את האותנטיות של הודעה מוצפנת זו במכשיר זה.",
-        "event_shield_reason_mismatched_sender_key": "הוצפן על ידי מושב לא מאומת",
         "messages_not_secure": {
             "title": "ההודעות שלך אינן מאובטחות",
             "heading": "אחד מהדברים הבאים עלול להוות סיכון:",
             "cause_1": "שרת הבית שלכם"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "הוצפן על ידי מושב לא מאומת",
+        "event_shield_reason_authenticity_not_guaranteed": "לא ניתן להבטיח את האותנטיות של הודעה מוצפנת זו במכשיר זה.",
+        "cross_signing_user_warning": "משתמש זה לא אימת את כל ההפעלות שלו.",
+        "cross_signing_user_verified": "אימתת משתמש זה. משתמש זה אימת את כל ההפעלות שלו.",
+        "cross_signing_user_normal": "לא אימתת משתמש זה.",
+        "cross_signing_room_warning": "מישהו משתמש בהפעלה לא ידועה",
+        "cross_signing_room_verified": "כולם מאומתים בחדר זה",
+        "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2399,8 +2399,6 @@
         "failed_soft_logout_homeserver": "האימות מחדש נכשל עקב בעיית שרת בית",
         "soft_logout_subheading": "נקה מידע אישי",
         "forgot_password_send_email": "שלח אימייל",
-        "captcha_description": "שרת בית זה רוצה לוודא שאתה לא רובוט.",
-        "country_dropdown": "נפתח במדינה",
         "reset_password": {
             "other_devices_logout_warning_2": "אם ברצונכם לשמור על גישה להיסטוריית הצ'אט שלכם בחדרים מוצפנים, הגדירו גיבוי מפתחות או ייצאו את מפתחות ההודעות שלכם מאחד מהמכשירים האחרים שלכם לפני שתמשיך.",
             "password_not_entered": "יש להזין סיסמה חדשה.",
@@ -2408,6 +2406,7 @@
             "reset_successful": "הסיסמה שלך אופסה.",
             "return_to_login": "חזור למסך הכניסה"
         },
+        "country_dropdown": "נפתח במדינה",
         "common_failures": {
             "invalid_homeserver_discovery": "תגובת גילוי שרת בית לא חוקית",
             "cannot_find_autodiscovery_config": "קבלת תצורת הגילוי האוטומטי מהשרת נכשלה",
@@ -2417,7 +2416,8 @@
             "invalid_identity_server_base_url": "Base_url לא חוקי עבור m.identity_server",
             "invalid_identity_server_url": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
             "general_failure": "שגיאה כללית"
-        }
+        },
+        "captcha_description": "שרת בית זה רוצה לוודא שאתה לא רובוט."
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2628,10 +2628,10 @@
         "invite_link": "שתף קישור להזמנה",
         "invite": "הזמן אנשים",
         "invite_this_space": "הזמינו למרחב עבודה זה",
-        "no_search_result_hint": "אולי תרצו לנסות חיפוש אחר או לבדוק אם יש שגיאות הקלדה.",
-        "title_when_query_available": "תוצאות",
         "title_when_query_unavailable": "חדרים וחללי עבודה",
-        "search_placeholder": "חיפוש שמות ותיאורים"
+        "title_when_query_available": "תוצאות",
+        "search_placeholder": "חיפוש שמות ותיאורים",
+        "no_search_result_hint": "אולי תרצו לנסות חיפוש אחר או לבדוק אם יש שגיאות הקלדה."
     },
     "location_sharing": {
         "MapStyleUrlNotReachable": "שרת בית זה אינו מוגדר כהלכה להצגת מפות, או ששרת המפות המוגדר אינו ניתן לגישה.",
@@ -2791,18 +2791,17 @@
         "inaccessible_subtitle_2": "%(errcode)s הוחזר בעת ניסיון לגשת לחדר או למרחב העבודה. אם אתם חושבים שאתם רואים הודעה זו בטעות, אנא <issueLink>שילחו דוח באג</issueLink>.",
         "view_failed_enable_video_rooms": "כדי לצפות, אנא הפעל תחילה חדרי וידאו במעבדת הפיתוח",
         "join_failed_enable_video_rooms": "כדי להצטרף, נא אפשר תחילה וידאו במעבדת הפיתוח",
-        "jump_to_bottom_button": "גלול להודעות האחרונות",
-        "show_labs_settings": "הצג את אופציית מעבדת הפיתוח",
-        "upgrade_warning_bar": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "מעלה %(filename)s ו-%(count)s אחרים",
+                "other": "מעלה %(filename)s ו-%(count)s אחרים"
+            },
+            "uploading_single_file": "מעלה %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "החדר הזה כבר שודרג.",
         "upgrade_warning_bar_unstable": "חדר זה מריץ את גרסת החדר <roomVersion/>, ששרת הבית הזה סימן כ- <i> לא יציב </i>.",
         "upgrade_warning_bar_admins": "רק מנהלי חדרים יראו את האזהרה הזו",
-        "search": {
-            "this_room": "החדר הזה",
-            "all_rooms": "כל החדרים",
-            "field_placeholder": "חפש…"
-        },
-        "jump_read_marker": "קפצו להודעה הראשונה שלא נקראה.",
+        "upgrade_warning_bar": "שדרוג חדר זה יסגור את המופע הנוכחי של החדר וייצור חדר משודרג עם אותו שם.",
         "status_bar": {
             "requires_consent_agreement": "אינך יכול לשלוח שום הודעה עד שתבדוק ותסכים ל <consentLink> התנאים וההגבלות שלנו </consentLink>.",
             "monthly_user_limit_reached": "ההודעה שלך לא נשלחה מכיוון ששרת הבתים הזה הגיע למגבלת המשתמשים הפעילים החודשיים שלה. אנא <a> פנה למנהל השירות שלך </a> כדי להמשיך להשתמש בשירות.",
@@ -2810,16 +2809,17 @@
             "server_connectivity_lost_title": "הקישוריות לשרת אבדה.",
             "server_connectivity_lost_description": "הודעות שנשלחו יאוחסנו עד שהחיבור שלך יחזור."
         },
-        "creating_room_text": "יצרנו חדר עם %(names)s",
-        "failed_reject_invite": "דחיית הזמנה נכשלה",
+        "show_labs_settings": "הצג את אופציית מעבדת הפיתוח",
+        "search": {
+            "this_room": "החדר הזה",
+            "all_rooms": "כל החדרים",
+            "field_placeholder": "חפש…"
+        },
+        "jump_to_bottom_button": "גלול להודעות האחרונות",
+        "jump_read_marker": "קפצו להודעה הראשונה שלא נקראה.",
         "inviter_unknown": "לא ידוע",
-        "upload": {
-            "uploading_multiple_file": {
-                "one": "מעלה %(filename)s ו-%(count)s אחרים",
-                "other": "מעלה %(filename)s ו-%(count)s אחרים"
-            },
-            "uploading_single_file": "מעלה %(filename)s"
-        }
+        "failed_reject_invite": "דחיית הזמנה נכשלה",
+        "creating_room_text": "יצרנו חדר עם %(names)s"
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",
@@ -3002,10 +3002,6 @@
         "filter_placeholder": "סינון חברי חדר",
         "power_label": "%(userName)s (רמת הרשאה %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "כרגע אין לך חבילות מדבקה מופעלות",
-        "empty_add_prompt": "הוסף אותם כעת"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "ביטול ההזמנה נכשל",
         "error_revoke_3pid_invite_description": "לא ניתן היה לבטל את ההזמנה. ייתכן שהשרת נתקל בבעיה זמנית או שאין לך הרשאות מספיקות לבטל את ההזמנה.",
@@ -3041,6 +3037,10 @@
         "error_deactivate": "השבתת משתמש נכשלה",
         "role_label": "תפקיד בחדר <RoomName/>"
     },
+    "stickers": {
+        "empty": "כרגע אין לך חבילות מדבקה מופעלות",
+        "empty_add_prompt": "הוסף אותם כעת"
+    },
     "right_panel": {
         "pinned_messages": {
             "title": "הודעות נעוצות",
@@ -3061,14 +3061,18 @@
         "share_button": "שתף חדר",
         "settings_button": "הגדרות חדר"
     },
-    "cant_load_page": "לא ניתן לטעון את הדף",
-    "left_panel": {
-        "open_dial_pad": "פתח לוח חיוג"
-    },
     "reject_invitation_dialog": {
         "title": "דחה הזמנה",
         "confirmation": "האם אתם בטוחים שברצונכם לדחות את ההזמנה?",
         "failed": "דחיית ההזמנה נכשלה"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "נראה שאתה מעלה קבצים, האם אתה בטוח שברצונך להפסיק?",
+        "call_in_progress": "נראה שאתה בשיחה, האם אתה בטוח שאתה רוצה להפסיק?"
+    },
+    "no_more_results": "אין יותר תוצאות",
+    "left_panel": {
+        "open_dial_pad": "פתח לוח חיוג"
     },
     "leave_room_dialog": {
         "room_rejoin_warning": "חדר זה אינו ציבורי. לא תוכל להצטרף שוב ללא הזמנה.",
@@ -3085,9 +3089,5 @@
         },
         "error_loading_user_profile": "לא ניתן לטעון את פרופיל המשתמש"
     },
-    "no_more_results": "אין יותר תוצאות",
-    "quit_warning": {
-        "file_upload_in_progress": "נראה שאתה מעלה קבצים, האם אתה בטוח שברצונך להפסיק?",
-        "call_in_progress": "נראה שאתה בשיחה, האם אתה בטוח שאתה רוצה להפסיק?"
-    }
+    "cant_load_page": "לא ניתן לטעון את הדף"
 }

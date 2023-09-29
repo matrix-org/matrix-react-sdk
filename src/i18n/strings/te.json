@@ -188,13 +188,13 @@
             "low_priority": "తక్కువ ప్రాధాన్యత"
         },
         "invite_this_room": "ఈ గదికి ఆహ్వానించండి",
-        "search": {
-            "all_rooms": "అన్ని గదులు",
-            "field_placeholder": "శోధన…"
-        },
         "status_bar": {
             "server_connectivity_lost_title": "సెర్వెర్ కనెక్టివిటీని కోల్పోయారు.",
             "server_connectivity_lost_description": "మీ కనెక్షన్ తిరిగి వచ్చే వరకు పంపిన సందేశాలు నిల్వ చేయబడతాయి."
+        },
+        "search": {
+            "all_rooms": "అన్ని గదులు",
+            "field_placeholder": "శోధన…"
         }
     },
     "user_info": {

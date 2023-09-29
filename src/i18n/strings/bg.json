@@ -1455,7 +1455,6 @@
         "url_preview": {
             "close": "Затвори прегледа"
         },
-        "error_no_renderer": "Това събитие не може да бъде показано",
         "mab": {
             "label": "Действия със съобщението"
         },
@@ -1463,7 +1462,8 @@
             "no_permission": "Беше направен опит да се зареди конкретна точка в хронологията на тази стая, но нямате разрешение да разгледате въпросното съобщение.",
             "unable_to_find": "Беше направен опит да се зареди конкретна точка в хронологията на тази стая, но не я намери.",
             "title": "Неуспешно зареждане на позицията в хронологията"
-        }
+        },
+        "error_no_renderer": "Това събитие не може да бъде показано"
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",
@@ -1668,26 +1668,26 @@
             "url_previews_section": "URL прегледи",
             "aliases_section": "Адреси на стаята",
             "other_section": "Други",
+            "topic_field_label": "Тема на стаята",
+            "published_aliases_section": "Публикувани адреси",
+            "no_aliases_room": "Тази стая няма локални адреси",
+            "new_alias_placeholder": "Нов публикуван адрес (напр. #alias:server)",
+            "name_field_label": "Име на стаята",
+            "local_aliases_section": "Локални адреси",
+            "local_aliases_explainer_room": "Настройте адреси за тази стая, така че потребителите да могат да намерят стаята през вашия сървър (%(localDomain)s)",
+            "local_alias_field_label": "Локален адрес",
             "error_updating_canonical_alias_title": "Грешка при обновяване на основния адрес",
             "error_updating_canonical_alias_description": "Случи се грешка при обновяването на основния адрес за стаята. Може да не е позволено от сървъра, или да се е случила друга временна грешка.",
             "error_updating_alias_description": "Възникна грешка при обновяване на алтернативните адреси на стаята. Или не е позволено от сървъра или се е случила временна грешка.",
-            "error_creating_alias_title": "Неуспешно създаване на адрес",
-            "error_creating_alias_description": "Възникна грешка при създаването на този адрес. Или не е позволен от сървъра или е временен проблем.",
+            "error_deleting_alias_title": "Грешка при премахването на адреса",
             "error_deleting_alias_description_forbidden": "Нямате права да изтриете адреса.",
             "error_deleting_alias_description": "Възникна грешка при премахването на този адрес. Или не съществува вече или е временен проблем.",
-            "error_deleting_alias_title": "Грешка при премахването на адреса",
+            "error_creating_alias_title": "Неуспешно създаване на адрес",
+            "error_creating_alias_description": "Възникна грешка при създаването на този адрес. Или не е позволен от сървъра или е временен проблем.",
             "canonical_alias_field_label": "Основен адрес",
-            "no_aliases_room": "Тази стая няма локални адреси",
-            "local_alias_field_label": "Локален адрес",
-            "published_aliases_section": "Публикувани адреси",
-            "aliases_items_label": "Други публикувани адреси:",
+            "avatar_field_label": "Снимка на стаята",
             "aliases_no_items_label": "Все още няма други публикувани адреси, добавете такъв по-долу",
-            "new_alias_placeholder": "Нов публикуван адрес (напр. #alias:server)",
-            "local_aliases_section": "Локални адреси",
-            "local_aliases_explainer_room": "Настройте адреси за тази стая, така че потребителите да могат да намерят стаята през вашия сървър (%(localDomain)s)",
-            "name_field_label": "Име на стаята",
-            "topic_field_label": "Тема на стаята",
-            "avatar_field_label": "Снимка на стаята"
+            "aliases_items_label": "Други публикувани адреси:"
         },
         "advanced": {
             "unfederated": "Тази стая не е достъпна за отдалечени Matrix сървъри",
@@ -1733,8 +1733,8 @@
             "unverified_session_toast_title": "Нов вход. Вие ли бяхте това?",
             "request_toast_detail": "%(deviceId)s от %(ip)s",
             "waiting_for_user_accept": "Изчаква се %(displayName)s да приеме…",
-            "accepting": "Приемане…",
-            "start_button": "Започни верификация"
+            "start_button": "Започни верификация",
+            "accepting": "Приемане…"
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
@@ -1770,19 +1770,19 @@
             "explainer": "Направете резервно копие на ключовете преди изход от профила, за да не ги загубите.",
             "title": "Настрой"
         },
-        "cross_signing_user_warning": "Този потребител не е верифицирал всичките си сесии.",
-        "cross_signing_user_normal": "Не сте верифицирали този потребител.",
-        "cross_signing_user_verified": "Верифицирали сте този потребител. Този потребител е верифицирал всичките си сесии.",
-        "cross_signing_room_warning": "Някой използва непозната сесия",
-        "cross_signing_room_normal": "Тази стая е шифрована от-край-до-край",
-        "cross_signing_room_verified": "Всички в тази стая са верифицирани",
-        "event_shield_reason_authenticity_not_guaranteed": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
-        "event_shield_reason_mismatched_sender_key": "Шифровано от неверифицирана сесия",
         "messages_not_secure": {
             "title": "Съобщенията ви не са защитени",
             "heading": "Едно от следните неща може да е било компрометирано:",
             "cause_1": "Сървърът ви"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Шифровано от неверифицирана сесия",
+        "event_shield_reason_authenticity_not_guaranteed": "Автентичността на това шифровано съобщение не може да бъде гарантирана на това устройство.",
+        "cross_signing_user_warning": "Този потребител не е верифицирал всичките си сесии.",
+        "cross_signing_user_verified": "Верифицирали сте този потребител. Този потребител е верифицирал всичките си сесии.",
+        "cross_signing_user_normal": "Не сте верифицирали този потребител.",
+        "cross_signing_room_warning": "Някой използва непозната сесия",
+        "cross_signing_room_verified": "Всички в тази стая са верифицирани",
+        "cross_signing_room_normal": "Тази стая е шифрована от-край-до-край"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -1893,14 +1893,13 @@
         "create_account_title": "Създай акаунт",
         "failed_soft_logout_homeserver": "Неуспешна повторна автентикация поради проблем със сървъра",
         "soft_logout_subheading": "Изчисти личните данни",
-        "captcha_description": "Сървърът иска да потвърди, че не сте робот.",
-        "country_dropdown": "Падащо меню за избор на държава",
         "reset_password": {
             "password_not_entered": "Трябва да бъде въведена нова парола.",
             "passwords_mismatch": "Новите пароли трябва да съвпадат една с друга.",
             "reset_successful": "Паролата беше анулирана.",
             "return_to_login": "Връщане към страницата за влизане в профила"
         },
+        "country_dropdown": "Падащо меню за избор на държава",
         "common_failures": {
             "invalid_homeserver_discovery": "Невалиден отговор по време на откриването на конфигурацията за сървъра",
             "cannot_find_autodiscovery_config": "Неуспешно автоматично откриване на конфигурацията за сървъра",
@@ -1910,7 +1909,8 @@
             "invalid_identity_server_base_url": "Невалиден base_url в m.identity_server",
             "invalid_identity_server_url": "Адресът на сървърът за самоличност не изглежда да е валиден сървър за самоличност",
             "general_failure": "Обща грешка"
-        }
+        },
+        "captcha_description": "Сървърът иска да потвърди, че не сте робот."
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2112,17 +2112,17 @@
         "no_peek_join_prompt": "%(roomName)s не може да бъде прегледана предварително. Желаете ли да се влезете?",
         "not_found_title_name": "%(roomName)s не съществува.",
         "inaccessible_name": "%(roomName)s не е достъпна към този момент.",
-        "jump_to_bottom_button": "Отиди до най-скорошните съобщения",
-        "upgrade_warning_bar": "Обновяването на тази стая ще изключи текущата стая и ще създаде обновена стая със същото име.",
+        "upload": {
+            "uploading_multiple_file": {
+                "other": "Качване на %(filename)s и %(count)s други",
+                "one": "Качване на %(filename)s и %(count)s друг"
+            },
+            "uploading_single_file": "Качване на %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Тази стая вече е била обновена.",
         "upgrade_warning_bar_unstable": "Тази стая използва версия на стая <roomVersion />, която сървърът счита за <i>нестабилна</i>.",
         "upgrade_warning_bar_admins": "Само администратори на стаята виждат това предупреждение",
-        "search": {
-            "this_room": "В тази стая",
-            "all_rooms": "Във всички стаи",
-            "field_placeholder": "Търсене…"
-        },
-        "jump_read_marker": "Отиди до първото непрочетено съобщение.",
+        "upgrade_warning_bar": "Обновяването на тази стая ще изключи текущата стая и ще създаде обновена стая със същото име.",
         "status_bar": {
             "requires_consent_agreement": "Не можете да изпращате съобщения докато не прегледате и се съгласите с <consentLink>нашите правила и условия</consentLink>.",
             "monthly_user_limit_reached": "Съобщението Ви не бе изпратено, защото този сървър е достигнал лимита си за потребители на месец. Моля, <a>свържете се с администратора на услугата</a> за да продължите да я използвате.",
@@ -2130,15 +2130,15 @@
             "server_connectivity_lost_title": "Връзката със сървъра е изгубена.",
             "server_connectivity_lost_description": "Изпратените съобщения ще бъдат запаметени докато връзката Ви се възвърне."
         },
-        "failed_reject_invite": "Неуспешно отхвърляне на поканата",
+        "search": {
+            "this_room": "В тази стая",
+            "all_rooms": "Във всички стаи",
+            "field_placeholder": "Търсене…"
+        },
+        "jump_to_bottom_button": "Отиди до най-скорошните съобщения",
+        "jump_read_marker": "Отиди до първото непрочетено съобщение.",
         "inviter_unknown": "Неизвестен",
-        "upload": {
-            "uploading_multiple_file": {
-                "other": "Качване на %(filename)s и %(count)s други",
-                "one": "Качване на %(filename)s и %(count)s друг"
-            },
-            "uploading_single_file": "Качване на %(filename)s"
-        }
+        "failed_reject_invite": "Неуспешно отхвърляне на поканата"
     },
     "file_panel": {
         "guest_note": "Трябва да се <a>регистрирате</a>, за да използвате тази функционалност",
@@ -2333,10 +2333,6 @@
         "filter_placeholder": "Филтриране на членовете",
         "power_label": "%(userName)s (ниво на достъп %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "В момента нямате включени пакети със стикери",
-        "empty_add_prompt": "Добави сега"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Неуспешно оттегляне на поканата",
         "error_revoke_3pid_invite_description": "Поканата не можа да бъде оттеглена. Или има временен проблем със сървъра, или нямате достатъчно права за да оттеглите поканата.",
@@ -2365,6 +2361,10 @@
         "deactivate_confirm_action": "Деактивирай потребителя",
         "error_deactivate": "Неуспешно деактивиране на потребител"
     },
+    "stickers": {
+        "empty": "В момента нямате включени пакети със стикери",
+        "empty_add_prompt": "Добави сега"
+    },
     "right_panel": {
         "pinned_messages": {
             "limits": {
@@ -2377,12 +2377,16 @@
         "share_button": "Сподели стаята",
         "settings_button": "Настройки на стаята"
     },
-    "cant_load_page": "Страницата не можа да бъде заредена",
     "reject_invitation_dialog": {
         "title": "Отхвърли поканата",
         "confirmation": "Сигурни ли сте, че искате да отхвърлите поканата?",
         "failed": "Неуспешно отхвърляне на поканата"
     },
+    "quit_warning": {
+        "file_upload_in_progress": "Изглежда, че качвате файлове. Сигурни ли сте, че искате да затворите програмата?",
+        "call_in_progress": "Изглежда, че сте в разговор. Сигурни ли сте, че искате да излезете от програмата?"
+    },
+    "no_more_results": "Няма повече резултати",
     "leave_room_dialog": {
         "room_rejoin_warning": "Тази стая не е публична. Няма да можете да се присъедините отново без покана.",
         "leave_room_question": "Сигурни ли сте, че искате да напуснете стаята '%(roomName)s'?"
@@ -2395,9 +2399,5 @@
         },
         "error_loading_user_profile": "Неуспешно зареждане на потребителския профил"
     },
-    "no_more_results": "Няма повече резултати",
-    "quit_warning": {
-        "file_upload_in_progress": "Изглежда, че качвате файлове. Сигурни ли сте, че искате да затворите програмата?",
-        "call_in_progress": "Изглежда, че сте в разговор. Сигурни ли сте, че искате да излезете от програмата?"
-    }
+    "cant_load_page": "Страницата не можа да бъде заредена"
 }
