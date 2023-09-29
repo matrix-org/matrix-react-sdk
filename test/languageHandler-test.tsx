@@ -31,10 +31,10 @@ import {
     TranslatedString,
     UserFriendlyError,
     TranslationKey,
+    Translation,
 } from "../src/languageHandler";
 import { stubClient } from "./test-utils";
 import { setupLanguageMock } from "./setup/setupLanguage";
-import { Translation } from "../../matrix-web-i18n";
 
 async function setupTranslationOverridesForTests(overrides: TranslationStringsObject) {
     const lookupUrl = "/translations.json";
