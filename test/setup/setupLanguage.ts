@@ -22,9 +22,13 @@ import de from "../../src/i18n/strings/de_DE.json";
 
 const lv = {
     "Save": "Saglabāt",
-    "room|upload|uploading_multiple_file": {
-        one: "Качване на %(filename)s и %(count)s друг",
-    },
+    "room": {
+        "upload": {
+            "uploading_multiple_file": {
+                one: "Качване на %(filename)s и %(count)s друг",
+            }
+        }
+    }
 };
 
 // Fake languages.json containing references to en_EN, de_DE and lv
