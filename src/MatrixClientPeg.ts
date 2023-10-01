@@ -50,6 +50,7 @@ import { SettingLevel } from "./settings/SettingLevel";
 import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import PlatformPeg from "./PlatformPeg";
+import { formatList } from "./utils/FormattingUtils";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -366,15 +367,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (name) return name;
 
         if (names.length === 2 && count === 2) {
-            return _t("user1_and_user2", {
-                user1: names[0],
-                user2: names[1],
-            });
+            return formatList(names);
         }
-        return _t("user_and_n_others", {
-            user: names[0],
-            count: count - 1,
-        });
+        return formatList(names, 1);
     }
 
     private inviteeNamesToRoomName(names: string[], count: number): string {

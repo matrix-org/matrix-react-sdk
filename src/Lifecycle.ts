@@ -608,6 +608,8 @@ const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): tok
 };
 /**
  * Try to decrypt a token retrieved from storage
+ * Where token is not encrypted (plain text) returns the plain text token
+ * Where token is encrypted, attempts decryption. Returns successfully decrypted token, else undefined.
  * @param pickleKey pickle key used during encryption of token, or undefined
  * @param token
  * @param tokenIv initialization vector used during encryption of token eg ACCESS_TOKEN_IV
@@ -661,7 +663,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             return false;
         }
 
-        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) || undefined;
+        const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
         if (pickleKey) {
             logger.log("Got pickle key");
         } else {
