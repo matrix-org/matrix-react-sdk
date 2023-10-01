@@ -65,8 +65,9 @@ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPaylo
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
-import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
+import { getStoredOidcClientId, getStoredOidcTokenIssuer, persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
 import GenericToast from "./components/views/toasts/GenericToast";
+import { OidcTokenRefresher } from "matrix-js-sdk/src/oidc/tokenRefresher";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -675,8 +676,8 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
 
-        const oidcClientSettingsRaw = sessionStorage.getItem("oidcClientSettings");
-        const oidcClientSettings = oidcClientSettingsRaw ? JSON.parse(oidcClientSettingsRaw) : undefined;
+        // const oidcClientSettingsRaw = sessionStorage.getItem("oidcClientSettings");
+        // const oidcClientSettings = oidcClientSettingsRaw ? JSON.parse(oidcClientSettingsRaw) : undefined;
 
         logger.log(`Restoring session for ${userId}`);
         await doSetLoggedIn(
@@ -690,7 +691,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
                 guest: isGuest,
                 pickleKey: pickleKey ?? undefined,
                 freshLogin: freshLogin,
-                oidcClientSettings,
+                // oidcClientSettings,
             },
             false,
         );
@@ -813,6 +814,30 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
     return doSetLoggedIn(credentials, overwrite);
 }
 
+async function checkForOidcTODOName(credentials: IMatrixClientCreds): Promise<OidcTokenRefresher | undefined> {
+    if (!credentials.refreshToken) {
+        return;
+    }
+    const tokenIssuer = getStoredOidcTokenIssuer();
+    if (!tokenIssuer) {
+        return;
+    }
+    try {
+        const clientId = getStoredOidcClientId();
+        // @TODO(kerrya) this should probably come from somewhere
+        const redirectUri = window.location.origin;
+        const deviceId = credentials.deviceId;
+        if (!deviceId) {
+            throw new Error("Expected deviceId in user credentials.")
+        }
+        const tokenRefresher = new OidcTokenRefresher(credentials.refreshToken,
+            { issuer: tokenIssuer }, clientId, redirectUri, deviceId);
+            return tokenRefresher;
+    } catch (error) {
+        logger.error("Failed to initialise OIDC token refresher", error);
+    }
+}
+
 /**
  * optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
@@ -854,9 +879,11 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
+    const tokenRefresher = await checkForOidcTODOName(credentials);
+
     // check the session lock just before creating the new client
     checkSessionLock();
-    MatrixClientPeg.replaceUsingCreds(credentials, credentials.oidcClientSettings);
+    MatrixClientPeg.replaceUsingCreds({ ...credentials, tokenRefresher });
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);

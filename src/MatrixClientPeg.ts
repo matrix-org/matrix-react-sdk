@@ -51,6 +51,7 @@ import MatrixClientBackedController from "./settings/controllers/MatrixClientBac
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import PlatformPeg from "./PlatformPeg";
 import { formatList } from "./utils/FormattingUtils";
+import { OidcClientStore } from "./stores/oidc/OidcClientStore";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -197,17 +198,19 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public replaceUsingCreds(creds: IMatrixClientCreds, oidcClientSettings): void {
-        console.log('hhhh replaceUsingcreds', creds, oidcClientSettings);
-        const tokenRefresher = new OidcTokenRefresher(
-            creds.refreshToken,
-            oidcClientSettings,
-            oidcClientSettings.clientId,
-            window.location.origin,
-            creds.deviceId,
-        )
+    public replaceUsingCreds(creds: IMatrixClientCreds): void {
+        console.log('hhhh replaceUsingcreds', creds);
         this.createClient(creds);
-        this.matrixClient!.http.opts.tokenRefresher = tokenRefresher;
+        // const oidcClientStore = new OidcClientStore(this.matrixClient!);
+        // debugger;
+        // const tokenRefresher = new OidcTokenRefresher(
+        //     creds.refreshToken,
+        //     oidcClientSettings,
+        //     oidcClientSettings?.clientId,
+        //     window.location.origin,
+        //     creds.deviceId,
+        // )
+        this.matrixClient!.http.opts.tokenRefresher = creds.tokenRefresher;
     }
 
     private onUnexpectedStoreClose = async (): Promise<void> => {
