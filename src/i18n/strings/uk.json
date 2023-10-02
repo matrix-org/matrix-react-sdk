@@ -555,7 +555,6 @@
     "MB": "МБ",
     "In reply to <a>this message</a>": "У відповідь на <a>це повідомлення</a>",
     "Decrypt %(text)s": "Розшифрувати %(text)s",
-    "Missed call": "Пропущений виклик",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
         "other": "Сеансів: %(count)s"
@@ -628,11 +627,6 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Точно завершити опитування? Буде показано підсумки опитування, і більше ніхто не зможе голосувати.",
     "Link to room": "Посилання на кімнату",
     "Command Help": "Допомога команди",
-    "Could not connect media": "Не вдалося під'єднати медіа",
-    "Connection failed": "Не вдалося зʼєднатися",
-    "Their device couldn't start the camera or microphone": "Їхній пристрій не зміг запустити камеру чи мікрофон",
-    "An unknown error occurred": "Трапилась невідома помилка",
-    "Call back": "Перетелефонувати",
     "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Усі наявні повідомлення залишаться в цій архівованій кімнаті.",
     "Anyone in <SpaceName/> will be able to find and join.": "Будь-хто в <SpaceName/> зможе знайти й приєднатись.",
@@ -641,7 +635,6 @@
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ви єдиний адміністратор цього простору. Вихід із нього залишить його без керівництва.",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ви єдиний адміністратор кімнат чи просторів, з яких ви бажаєте вийти. Вихід із них залишить їх без адміністраторів.",
     "Leave %(spaceName)s": "Вийти з %(spaceName)s",
-    "Call declined": "Виклик відхилено",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
     "You are about to leave <spaceName/>.": "Ви збираєтеся вийти з <spaceName/>.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
@@ -730,9 +723,6 @@
     "Invalid file%(extra)s": "Пошкоджений файл%(extra)s",
     "Error decrypting attachment": "Помилка розшифрування вкладення",
     "Error processing audio message": "Помилка обробки аудіоповідомлення",
-    "The call is in an unknown state!": "Стан виклику невідомий!",
-    "Unknown failure: %(reason)s": "Невідомий збій: %(reason)s",
-    "No answer": "Без відповіді",
     "Remove %(count)s messages": {
         "one": "Видалити 1 повідомлення",
         "other": "Видалити %(count)s повідомлень"
@@ -958,7 +948,6 @@
     "Starting export process…": "Початок процесу експорту…",
     "Ended a poll": "Завершує опитування",
     "Due to decryption errors, some votes may not be counted": "Через помилки розшифрування деякі голоси можуть бути не враховані",
-    "Answered elsewhere": "Відповіли деінде",
     "Invites by email can only be sent one at a time": "Запрошення електронною поштою можна надсилати лише одне за раз",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
@@ -2219,7 +2208,18 @@
             "voice_call": "%(senderName)s розпочинає голосовий виклик.",
             "voice_call_unsupported": "%(senderName)s розпочинає голосовий виклик. (не підтримується цим браузером)",
             "video_call": "%(senderName)s розпочинає відеовиклик.",
-            "video_call_unsupported": "%(senderName)s розпочинає відеовиклик. (не підтримується цим браузером)"
+            "video_call_unsupported": "%(senderName)s розпочинає відеовиклик. (не підтримується цим браузером)",
+            "declined": "Виклик відхилено",
+            "call_back_prompt": "Перетелефонувати",
+            "answered_elsewhere": "Відповіли деінде",
+            "missed_call": "Пропущений виклик",
+            "no_answer": "Без відповіді",
+            "failed_connect_media": "Не вдалося під'єднати медіа",
+            "failed_connection": "Не вдалося зʼєднатися",
+            "failed_opponent_media": "Їхній пристрій не зміг запустити камеру чи мікрофон",
+            "unknown_error": "Трапилась невідома помилка",
+            "unknown_failure": "Невідомий збій: %(reason)s",
+            "unknown_state": "Стан виклику невідомий!"
         },
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)s приймає запрошення до %(displayName)s",

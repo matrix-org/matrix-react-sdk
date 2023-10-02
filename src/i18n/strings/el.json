@@ -629,15 +629,6 @@
     "Results will be visible when the poll is ended": "Τα αποτελέσματα θα είναι ορατά όταν τελειώσει η δημοσκόπηση",
     "Sorry, your vote was not registered. Please try again.": "Λυπούμαστε, η ψήφος σας δεν καταχωρήθηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Vote not registered": "Η ψήφος δεν έχει καταχωρηθεί",
-    "The call is in an unknown state!": "Η κλήση βρίσκεται σε άγνωστη κατάσταση!",
-    "Missed call": "Αναπάντητη κλήση",
-    "Unknown failure: %(reason)s": "Άγνωστο σφάλμα: %(reason)s",
-    "An unknown error occurred": "Συνέβη ένα άγνωστο σφάλμα",
-    "Their device couldn't start the camera or microphone": "Η συσκευή τους δεν μπόρεσε να ξεκινήσει την κάμερα ή το μικρόφωνο",
-    "Connection failed": "Αποτυχία σύνδεσης",
-    "No answer": "Καμία απάντηση",
-    "Call back": "Καλέστε πίσω",
-    "Call declined": "Η κλήση απορρίφθηκε",
     "%(count)s sessions": {
         "one": "%(count)s συνεδρία",
         "other": "%(count)s συνεδρίες"
@@ -751,7 +742,6 @@
     "Enter a server name": "Εισαγάγετε ένα όνομα διακομιστή",
     "Join millions for free on the largest public server": "Συμμετέχετε δωρεάν στον μεγαλύτερο δημόσιο διακομιστή",
     "toggle event": "μεταβολή συμβάντος",
-    "Could not connect media": "Δεν ήταν δυνατή η σύνδεση πολυμέσων",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Δεν είναι δυνατή η εύρεση προφίλ για τα αναγνωριστικά Matrix που αναφέρονται παρακάτω - θα θέλατε να τα προσκαλέσετε ούτως ή άλλως;",
     "Adding spaces has moved.": "Η προσθήκη χώρων μετακινήθηκε.",
     "And %(count)s more...": {
@@ -1809,7 +1799,17 @@
             "voice_call": "Ο %(senderName)s έκανε μία ηχητική κλήση.",
             "voice_call_unsupported": "Ο %(senderName)s έκανε μια ηχητική κλήση. (δεν υποστηρίζεται από το πρόγραμμα περιήγησης)",
             "video_call": "Ο %(senderName)s έκανε μία κλήση βίντεο.",
-            "video_call_unsupported": "Ο %(senderName)s έκανε μια κλήση βίντεο. (δεν υποστηρίζεται από το πρόγραμμα περιήγησης)"
+            "video_call_unsupported": "Ο %(senderName)s έκανε μια κλήση βίντεο. (δεν υποστηρίζεται από το πρόγραμμα περιήγησης)",
+            "declined": "Η κλήση απορρίφθηκε",
+            "call_back_prompt": "Καλέστε πίσω",
+            "missed_call": "Αναπάντητη κλήση",
+            "no_answer": "Καμία απάντηση",
+            "failed_connect_media": "Δεν ήταν δυνατή η σύνδεση πολυμέσων",
+            "failed_connection": "Αποτυχία σύνδεσης",
+            "failed_opponent_media": "Η συσκευή τους δεν μπόρεσε να ξεκινήσει την κάμερα ή το μικρόφωνο",
+            "unknown_error": "Συνέβη ένα άγνωστο σφάλμα",
+            "unknown_failure": "Άγνωστο σφάλμα: %(reason)s",
+            "unknown_state": "Η κλήση βρίσκεται σε άγνωστη κατάσταση!"
         },
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)s αποδέχθηκε την πρόσκληση για %(displayName)s",

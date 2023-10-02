@@ -424,9 +424,6 @@
         "other": "%(count)s atkvæði"
     },
     "Show image": "Birta mynd",
-    "Missed call": "Ósvarað símtal",
-    "An unknown error occurred": "Óþekkt villa kom upp",
-    "Connection failed": "Tenging mistókst",
     "Recently viewed": "Nýlega skoðað",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
@@ -474,8 +471,6 @@
     "Your server": "Netþjónninn þinn",
     "Can't find this server or its room list": "Fann ekki þennan netþjón eða spjallrásalista hans",
     "This address is already in use": "Þetta vistfang er nú þegar í notkun",
-    "No answer": "Ekkert svar",
-    "Call back": "Hringja til baka",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -588,8 +583,6 @@
     "Collapse quotes": "Fella saman tilvitnanir",
     "Reply in thread": "Svara í spjallþræði",
     "Error processing audio message": "Villa við meðhöndlun hljóðskilaboða",
-    "The call is in an unknown state!": "Símtalið er í óþekktu ástandi!",
-    "Unknown failure: %(reason)s": "Óþekkt bilun: %(reason)s",
     "Remove %(count)s messages": {
         "one": "Fjarlægja 1 skilaboð",
         "other": "Fjarlægja %(count)s skilaboð"
@@ -649,7 +642,6 @@
     },
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
-    "Call declined": "Símtali hafnað",
     "You cancelled": "Þú hættir við",
     "You accepted": "Þú samþykktir",
     "<inviter/> invites you": "<inviter/> býður þér",
@@ -752,8 +744,6 @@
     "The server (%(serverName)s) took too long to respond.": "Þjónninn (%(serverName)s) var of lengi að svara.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Netþjónninn þinn er ekki að svara sumum beiðnum frá þér. Hér fyrir neðan eru sumar líklegustu ástæðurnar.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Þú munt uppfæra þessa spjallrás úr <oldVersion /> upp í <newVersion />.",
-    "Their device couldn't start the camera or microphone": "Hitt tækið gat ekki ræst myndavélina eða hljóðnemann",
-    "Could not connect media": "Gat ekki tengt gagnamiðil",
     "Your area is experiencing difficulties connecting to the internet.": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
     "Upgrade Room Version": "Uppfæra útgáfu spjallrásar",
     "Upgrade this room to version %(version)s": "Uppfæra þessa spjallrás í útgáfu %(version)s",
@@ -1899,7 +1889,17 @@
             "voice_call": "%(senderName)s hringdi raddsímtal.",
             "voice_call_unsupported": "%(senderName)s hringdi raddsímtal. (Ekki stutt af þessum vafra)",
             "video_call": "%(senderName)s hringdi myndsímtal.",
-            "video_call_unsupported": "%(senderName)s hringdi myndsímtal. (Ekki stutt af þessum vafra)"
+            "video_call_unsupported": "%(senderName)s hringdi myndsímtal. (Ekki stutt af þessum vafra)",
+            "declined": "Símtali hafnað",
+            "call_back_prompt": "Hringja til baka",
+            "missed_call": "Ósvarað símtal",
+            "no_answer": "Ekkert svar",
+            "failed_connect_media": "Gat ekki tengt gagnamiðil",
+            "failed_connection": "Tenging mistókst",
+            "failed_opponent_media": "Hitt tækið gat ekki ræst myndavélina eða hljóðnemann",
+            "unknown_error": "Óþekkt villa kom upp",
+            "unknown_failure": "Óþekkt bilun: %(reason)s",
+            "unknown_state": "Símtalið er í óþekktu ástandi!"
         },
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)s samþykkti boð um að taka þátt í %(displayName)s",

@@ -501,12 +501,6 @@
     "Myanmar": "Mianmaras",
     "Mozambique": "Mozambikas",
     "Bahamas": "Bahamų salos",
-    "Their device couldn't start the camera or microphone": "Jų įrenginys negalėjo įjungti kameros arba mikrofono",
-    "Connection failed": "Nepavyko prisijungti",
-    "Could not connect media": "Nepavyko prijungti medijos",
-    "No answer": "Jokio atsakymo",
-    "Call back": "Perskambinti",
-    "Call declined": "Skambutis atmestas",
     "%(count)s reply": {
         "one": "%(count)s atsakymas",
         "other": "%(count)s atsakymai"
@@ -1340,7 +1334,13 @@
             "voice_call": "%(senderName)s pradėjo balso skambutį.",
             "voice_call_unsupported": "%(senderName)s pradėjo vaizdo skambutį. (nepalaikoma šios naršyklės)",
             "video_call": "%(senderName)s pradėjo vaizdo skambutį.",
-            "video_call_unsupported": "%(senderName)s pradėjo vaizdo skambutį. (nepalaikoma šios naršyklės)"
+            "video_call_unsupported": "%(senderName)s pradėjo vaizdo skambutį. (nepalaikoma šios naršyklės)",
+            "declined": "Skambutis atmestas",
+            "call_back_prompt": "Perskambinti",
+            "no_answer": "Jokio atsakymo",
+            "failed_connect_media": "Nepavyko prijungti medijos",
+            "failed_connection": "Nepavyko prisijungti",
+            "failed_opponent_media": "Jų įrenginys negalėjo įjungti kameros arba mikrofono"
         },
         "m.room.member": {
             "ban": "%(senderName)s užblokavo %(targetName)s",

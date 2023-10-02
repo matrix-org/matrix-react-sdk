@@ -465,8 +465,6 @@
     "Server name": "Servera nosaukums",
     "Enter the name of a new server you want to explore.": "Ievadiet nosaukumu jaunam serverim, kuru vēlaties pārlūkot.",
     "Show image": "Rādīt attēlu",
-    "Call back": "Atzvanīt",
-    "Call declined": "Zvans noraidīts",
     "Corn": "Kukurūza",
     "Based on %(count)s votes": {
         "one": "Pamatojoties uz %(count)s balss",
@@ -1005,7 +1003,9 @@
             "voice_call": "%(senderName)s uzsāka balss zvanu.",
             "voice_call_unsupported": "%(senderName)s uzsāka balss zvanu. (Netiek atbalstīts šajā pārlūkā)",
             "video_call": "%(senderName)s uzsāka video zvanu.",
-            "video_call_unsupported": "%(senderName)s uzsāka video zvanu. (Netiek atbalstīts šajā pārlūkā)"
+            "video_call_unsupported": "%(senderName)s uzsāka video zvanu. (Netiek atbalstīts šajā pārlūkā)",
+            "declined": "Zvans noraidīts",
+            "call_back_prompt": "Atzvanīt"
         },
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)s pieņēma uzaicinājumu uz %(displayName)s",

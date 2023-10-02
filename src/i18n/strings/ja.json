@@ -560,7 +560,6 @@
         "other": "%(count)s個の投票"
     },
     "Reply in thread": "スレッドで返信",
-    "An unknown error occurred": "不明なエラーが発生しました",
     "In reply to <a>this message</a>": "<a>このメッセージ</a>への返信",
     "Location": "位置情報",
     "Submit logs": "ログを提出",
@@ -612,8 +611,6 @@
     "Invite by email": "電子メールで招待",
     "Start a conversation with someone using their name or username (like <userId/>).": "名前かユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "名前、メールアドレス、ユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
-    "Missed call": "不在着信",
-    "Call back": "かけ直す",
     "Search for rooms or people": "ルームと連絡先を検索",
     "Invite anyway": "招待",
     "Invite anyway and never warn me again": "招待し、再び警告しない",
@@ -646,7 +643,6 @@
     "You don't have permission to do this": "これを行う権限がありません",
     "Verification Request": "認証の要求",
     "The server is offline.": "サーバーはオフラインです。",
-    "No answer": "応答がありません",
     "%(count)s rooms": {
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
@@ -730,7 +726,6 @@
         "other": "%(count)s件の返信",
         "one": "%(count)s件の返信"
     },
-    "Call declined": "拒否しました",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
     "Drop a Pin": "場所を選択",
     "No votes cast": "投票がありません",
@@ -761,9 +756,6 @@
     "Continuing without email": "メールアドレスを使用せずに続行",
     "Data on this screen is shared with %(widgetDomain)s": "このスクリーンのデータは%(widgetDomain)sと共有されます",
     "If they don't match, the security of your communication may be compromised.": "一致していない場合は、コミュニケーションのセキュリティーが損なわれている可能性があります。",
-    "Unknown failure: %(reason)s": "不明なエラー：%(reason)s",
-    "Connection failed": "接続に失敗しました",
-    "Could not connect media": "メディアに接続できませんでした",
     "Error processing voice message": "音声メッセージを処理する際にエラーが発生しました",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "Signature upload failed": "署名のアップロードに失敗しました",
@@ -797,7 +789,6 @@
         "one": "合計%(count)s票。投票すると結果を確認できます",
         "other": "合計%(count)s票。投票すると結果を確認できます"
     },
-    "The call is in an unknown state!": "通話の状態が不明です！",
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
         "other": "%(count)s人の知人が既に参加しています"
@@ -816,7 +807,6 @@
     "You are not allowed to view this server's rooms list": "このサーバーのルームの一覧を閲覧する許可がありません",
     "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
     "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
-    "Their device couldn't start the camera or microphone": "相手の端末はカメラ、もしくはマイクを使用できませんでした",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
     "Adding spaces has moved.": "スペースの追加機能は移動しました。",
@@ -2124,7 +2114,17 @@
             "voice_call": "%(senderName)sが音声通話を行いました。",
             "voice_call_unsupported": "%(senderName)sが音声通話を行いました。（このブラウザーではサポートされていません）",
             "video_call": "%(senderName)sがビデオ通話を行いました。",
-            "video_call_unsupported": "%(senderName)sがビデオ通話を行いました。（このブラウザーではサポートされていません）"
+            "video_call_unsupported": "%(senderName)sがビデオ通話を行いました。（このブラウザーではサポートされていません）",
+            "declined": "拒否しました",
+            "call_back_prompt": "かけ直す",
+            "missed_call": "不在着信",
+            "no_answer": "応答がありません",
+            "failed_connect_media": "メディアに接続できませんでした",
+            "failed_connection": "接続に失敗しました",
+            "failed_opponent_media": "相手の端末はカメラ、もしくはマイクを使用できませんでした",
+            "unknown_error": "不明なエラーが発生しました",
+            "unknown_failure": "不明なエラー：%(reason)s",
+            "unknown_state": "通話の状態が不明です！"
         },
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)sが%(displayName)sの招待を受け入れました",

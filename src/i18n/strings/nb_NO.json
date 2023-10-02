@@ -517,7 +517,6 @@
     "Sending": "Sender",
     "MB": "MB",
     "Add reaction": "Legg til reaksjon",
-    "Connection failed": "Tilkobling mislyktes",
     "Corn": "Mais",
     "Cloud": "Sky",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
@@ -1185,6 +1184,9 @@
         "download_action_downloading": "Laster ned",
         "m.room.encryption": {
             "disabled": "Kryptering er ikke skrudd på"
+        },
+        "m.call.invite": {
+            "failed_connection": "Tilkobling mislyktes"
         }
     },
     "slash_command": {

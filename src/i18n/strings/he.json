@@ -668,7 +668,6 @@
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "לא ניתן לפענח גיבוי עם ביטוי אבטחה זה: אנא ודא שהזנת את ביטוי האבטחה הנכון.",
     "Incorrect Security Phrase": "ביטוי אבטחה שגוי",
     "Message search initialisation failed, check <a>your settings</a> for more information": "אתחול חיפוש ההודעות נכשל. בדוק את <a>ההגדרות שלך</a> למידע נוסף",
-    "Connection failed": "החיבור נכשל",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
@@ -1529,7 +1528,8 @@
             "voice_call": "%(senderName)s התחיל שיחה קולית.",
             "voice_call_unsupported": "%(senderName)s התחיל שיחה קולית. (אינו נתמך בדפדפן זה)",
             "video_call": "%(senderName)s התחיל שיחת וידאו.",
-            "video_call_unsupported": "%(senderName)s התחיל שיחת וידאו. (אינו נתמך בדפדפן זה)"
+            "video_call_unsupported": "%(senderName)s התחיל שיחת וידאו. (אינו נתמך בדפדפן זה)",
+            "failed_connection": "החיבור נכשל"
         },
         "m.room.member": {
             "invite": "%(senderName)s הזמין/ה את %(targetName)s",
