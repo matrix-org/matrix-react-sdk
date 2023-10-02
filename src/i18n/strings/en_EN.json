@@ -58,7 +58,8 @@
             "email_address_label": "Email Address",
             "remove_msisdn_prompt": "Remove %(phone)s?",
             "add_msisdn_instructions": "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.",
-            "msisdn_label": "Phone Number"
+            "msisdn_label": "Phone Number",
+            "spell_check_locale_placeholder": "Choose a locale"
         },
         "notifications": {
             "error_permissions_denied": "%(brand)s does not have permission to send you notifications - please check your browser settings",
@@ -416,6 +417,7 @@
             "security_recommendations_description": "Improve your account security by following these recommendations.",
             "error_pusher_state": "Failed to set pusher state"
         },
+        "warning": "<w>WARNING:</w> <description/>",
         "key_backup": {
             "backup_in_progress": "Your keys are being backed up (the first backup could take a few minutes).",
             "backup_starting": "Starting backup…",
@@ -534,6 +536,9 @@
         "change_password_current_label": "Current password",
         "change_password_new_label": "New Password",
         "change_password_action": "Change Password",
+        "server_picker_title_default": "Server Options",
+        "server_picker_description": "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.",
+        "server_picker_description_matrix.org": "Join millions for free on the largest public server",
         "continue_with_idp": "Continue with %(provider)s",
         "sign_in_with_sso": "Sign in with single sign-on",
         "server_picker_failed_validate_homeserver": "Unable to validate homeserver",
@@ -3462,18 +3467,14 @@
         "other": "%(count)s people you know have already joined",
         "one": "%(count)s person you know has already joined"
     },
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Message search initialisation failed, check <a>your settings</a> for more information",
-    "Desktop app logo": "Desktop app logo",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Use the <a>Desktop app</a> to see all encrypted files",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Use the <a>Desktop app</a> to search encrypted messages",
-    "This version of %(brand)s does not support viewing some encrypted files": "This version of %(brand)s does not support viewing some encrypted files",
-    "This version of %(brand)s does not support searching encrypted messages": "This version of %(brand)s does not support searching encrypted messages",
-    "Server Options": "Server Options",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.",
-    "Join millions for free on the largest public server": "Join millions for free on the largest public server",
-    "<w>WARNING:</w> <description/>": "<w>WARNING:</w> <description/>",
-    "Choose a locale": "Choose a locale",
-    "And %(count)s more...": {
+    "seshat": {
+        "error_initialising": "Message search initialisation failed, check <a>your settings</a> for more information",
+        "warning_kind_files_app": "Use the <a>Desktop app</a> to see all encrypted files",
+        "warning_kind_search_app": "Use the <a>Desktop app</a> to search encrypted messages",
+        "warning_kind_files": "This version of %(brand)s does not support viewing some encrypted files",
+        "warning_kind_search": "This version of %(brand)s does not support searching encrypted messages"
+    },
+    "truncated_list_n_more": {
         "other": "And %(count)s more..."
     },
     "You're in": "You're in",

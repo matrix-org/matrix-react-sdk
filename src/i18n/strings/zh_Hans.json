@@ -76,9 +76,6 @@
     "Logs sent": "日志已发送",
     "Yesterday": "昨天",
     "Thank you!": "谢谢！",
-    "And %(count)s more...": {
-        "other": "和 %(count)s 个其他…"
-    },
     "Clear Storage and Sign Out": "清除存储并登出",
     "Send Logs": "发送日志",
     "Share Room Message": "分享房间消息",
@@ -187,7 +184,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s 个会话解密失败！",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：你应此只在受信任的电脑上设置密钥备份。",
     "Email (optional)": "电子邮箱（可选）",
-    "Join millions for free on the largest public server": "免费加入最大的公共服务器，成为数百万用户中的一员",
     "Remember my selection for this widget": "记住我对此挂件的选择",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
@@ -410,12 +406,9 @@
     "Transfer": "传输",
     "Reason (optional)": "理由（可选）",
     "Create a new room": "创建新房间",
-    "Server Options": "服务器选项",
     "Not encrypted": "未加密",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
-    "This version of %(brand)s does not support searching encrypted messages": "当前版本的 %(brand)s 不支持搜索加密消息",
-    "This version of %(brand)s does not support viewing some encrypted files": "当前版本的 %(brand)s 不支持查看某些加密文件",
     "Pakistan": "巴基斯坦",
     "United Arab Emirates": "阿拉伯联合酋长国",
     "Yemen": "也门",
@@ -666,8 +659,6 @@
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
     },
-    "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面端英语</a>来搜索加密消息",
-    "Use the <a>Desktop app</a> to see all encrypted files": "使用<a>桌面端应用</a>来查看所有加密文件",
     "Failed to start livestream": "开始流直播失败",
     "Unable to start audio streaming.": "无法开始音频流媒体。",
     "Hold": "挂起",
@@ -686,7 +677,6 @@
     "Message preview": "消息预览",
     "Sent": "已发送",
     "You don't have permission to do this": "你无权执行此操作",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
     "Automatically invite members from this room to the new one": "自动邀请该房间的成员加入新房间",
@@ -803,7 +793,6 @@
     "Preserve system messages": "保留系统消息",
     "Remove them from everything I'm able to": "",
     "Remove server “%(roomServer)s”": "移除服务器“%(roomServer)s”",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "你可以使用自定义服务器选项来指定不同的家服务器URL以登录其他Matrix服务器。这让你能把%(brand)s和不同家服务器上的已有Matrix账户搭配使用。",
     "Unsent": "未发送",
     "Search Dialog": "搜索对话",
     "Join %(roomAddress)s": "加入%(roomAddress)s",
@@ -830,10 +819,8 @@
     "Interactively verify by emoji": "用表情符号交互式验证",
     "Show: %(instance)s rooms (%(server)s)": "显示：%(instance)s房间（%(server)s）",
     "Show: Matrix rooms": "显示：Matrix房间",
-    "Choose a locale": "选择区域设置",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
-    "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "common": {
         "about": "关于",
         "analytics": "统计分析服务",
@@ -1686,7 +1673,8 @@
             "email_address_label": "电子邮箱地址",
             "remove_msisdn_prompt": "删除 %(phone)s 吗？",
             "add_msisdn_instructions": "一封短信已发送至 +%(msisdn)s。请输入其中包含的验证码。",
-            "msisdn_label": "电话号码"
+            "msisdn_label": "电话号码",
+            "spell_check_locale_placeholder": "选择区域设置"
         },
         "sidebar": {
             "title": "侧边栏",
@@ -1745,7 +1733,8 @@
             "import_description_1": "此操作允许你导入之前从另一个 Matrix 客户端中导出的加密密钥文件。导入完成后，你将能够解密那个客户端可以解密的加密消息。",
             "import_description_2": "导出文件受口令词组保护。你应该在此输入口令词组以解密此文件。",
             "file_to_import": "要导入的文件"
-        }
+        },
+        "warning": "<w>警告：</w><description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "发送自定义账户数据事件",
@@ -3029,7 +3018,10 @@
         "autodiscovery_invalid_hs": "家服务器链接不像是有效的 Matrix 家服务器",
         "autodiscovery_invalid_is_base_url": "m.identity_server 的 base_url 无效",
         "autodiscovery_invalid_is": "身份服务器链接不像是有效的身份服务器",
-        "autodiscovery_invalid_is_response": "无效的身份服务器搜索响应"
+        "autodiscovery_invalid_is_response": "无效的身份服务器搜索响应",
+        "server_picker_description": "你可以使用自定义服务器选项来指定不同的家服务器URL以登录其他Matrix服务器。这让你能把%(brand)s和不同家服务器上的已有Matrix账户搭配使用。",
+        "server_picker_description_matrix.org": "免费加入最大的公共服务器，成为数百万用户中的一员",
+        "server_picker_title_default": "服务器选项"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3922,5 +3914,15 @@
         "cancel_search_label": "取消搜索"
     },
     "info_tooltip_title": "信息",
-    "language_dropdown_label": "语言下拉菜单"
+    "language_dropdown_label": "语言下拉菜单",
+    "seshat": {
+        "error_initialising": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
+        "warning_kind_files_app": "使用<a>桌面端应用</a>来查看所有加密文件",
+        "warning_kind_search_app": "使用<a>桌面端英语</a>来搜索加密消息",
+        "warning_kind_files": "当前版本的 %(brand)s 不支持查看某些加密文件",
+        "warning_kind_search": "当前版本的 %(brand)s 不支持搜索加密消息"
+    },
+    "truncated_list_n_more": {
+        "other": "和 %(count)s 个其他…"
+    }
 }

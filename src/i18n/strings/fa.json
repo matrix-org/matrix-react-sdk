@@ -445,11 +445,6 @@
     "You are not allowed to view this server's rooms list": "شما مجاز به مشاهده لیست اتاق‌های این سرور نمی‌باشید",
     "Looks good": "به نظر خوب میاد",
     "Enter a server name": "نام سرور را وارد کنید",
-    "And %(count)s more...": {
-        "other": "و %(count)s مورد بیشتر ..."
-    },
-    "Join millions for free on the largest public server": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
-    "Server Options": "گزینه های سرور",
     "e.g. my-room": "به عنوان مثال، my-room",
     "Filter results": "پالایش نتایج",
     "Server did not return valid authentication information.": "سرور اطلاعات احراز هویت معتبری را باز نگرداند.",
@@ -508,10 +503,6 @@
     },
     "expand": "گشودن",
     "collapse": "بستن",
-    "This version of %(brand)s does not support searching encrypted messages": "این نسخه از %(brand)s از جستجوی پیام های رمزگذاری شده پشتیبانی نمی کند",
-    "This version of %(brand)s does not support viewing some encrypted files": "این نسخه از %(brand)s از مشاهده برخی از پرونده های رمزگذاری شده پشتیبانی نمی کند",
-    "Use the <a>Desktop app</a> to search encrypted messages": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
-    "Use the <a>Desktop app</a> to see all encrypted files": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Submit logs": "ارسال لاگ‌ها",
     "edited": "ویرایش شده",
     "%(name)s wants to verify": "%(name)s می‌خواهد تأیید هویت کند",
@@ -2266,7 +2257,9 @@
         "autodiscovery_invalid_hs": "به نظر می‌رسد که آدرس سرور، متعلق به یک سرور معتبر نباشد",
         "autodiscovery_invalid_is_base_url": "base_url نامعتبر برای سرور m.identity_server",
         "autodiscovery_invalid_is": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
-        "autodiscovery_invalid_is_response": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی"
+        "autodiscovery_invalid_is_response": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی",
+        "server_picker_description_matrix.org": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
+        "server_picker_title_default": "گزینه های سرور"
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2958,5 +2951,14 @@
         "cancel_search_label": "لغو جستجو"
     },
     "info_tooltip_title": "اطلاعات",
-    "language_dropdown_label": "منو زبان"
+    "language_dropdown_label": "منو زبان",
+    "seshat": {
+        "warning_kind_files_app": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
+        "warning_kind_search_app": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
+        "warning_kind_files": "این نسخه از %(brand)s از مشاهده برخی از پرونده های رمزگذاری شده پشتیبانی نمی کند",
+        "warning_kind_search": "این نسخه از %(brand)s از جستجوی پیام های رمزگذاری شده پشتیبانی نمی کند"
+    },
+    "truncated_list_n_more": {
+        "other": "و %(count)s مورد بیشتر ..."
+    }
 }

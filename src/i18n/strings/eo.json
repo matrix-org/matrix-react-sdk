@@ -50,9 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
-    "And %(count)s more...": {
-        "other": "Kaj %(count)s pliaj…"
-    },
     "Confirm Removal": "Konfirmi forigon",
     "An error has occurred.": "Okazis eraro.",
     "Unable to restore session": "Salutaĵo ne rehaveblas",
@@ -181,7 +178,6 @@
     "Upload Error": "Alŝuto eraris",
     "Remember my selection for this widget": "Memoru mian elekton por tiu ĉi fenestraĵo",
     "Unable to load backup status": "Ne povas legi staton de savkopio",
-    "Join millions for free on the largest public server": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
     "The following users may not exist": "La jenaj uzantoj eble ne ekzistas",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ne povas trovi profilojn de la ĉi-subaj Matrix-identigilojn – ĉu vi tamen volas inviti ilin?",
@@ -345,10 +341,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu la ĉambron</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Komencu interparolon kun iu per ĝia nomo aŭ uzantonomo (kiel <userId/>).",
     "Preparing to download logs": "Preparante elŝuton de protokolo",
-    "This version of %(brand)s does not support searching encrypted messages": "Ĉi tiu versio de %(brand)s ne subtenas serĉadon de ĉifritaj mesaĝoj",
-    "This version of %(brand)s does not support viewing some encrypted files": "Ĉi tiu versio de %(brand)s ne subtenas montradon de iuj ĉifritaj dosieroj",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Uzu la <a>labortablan aplikaĵon</a> por serĉi ĉifritajn mesaĝojn",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Uzu la <a>labortablan aplikaĵon</a> por vidi ĉiujn ĉifritajn dosierojn",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
@@ -603,7 +595,6 @@
     "Cayman Islands": "Kajmaninsuloj",
     "Invite by email": "Inviti per retpoŝto",
     "Reason (optional)": "Kialo (malnepra)",
-    "Server Options": "Elektebloj de servilo",
     "Hold": "Paŭzigi",
     "Resume": "Daŭrigi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>",
@@ -713,7 +704,6 @@
     "Create a new space": "Krei novan aron",
     "Want to add a new space instead?": "Ĉu vi volas aldoni novan aron anstataŭe?",
     "Add existing space": "Aldoni jaman aron",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Malsukcesis komencigo de serĉado de mesaĝoj, kontrolu <a>viajn agordojn</a> por pliaj informoj",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Would you like to leave the rooms in this space?": "Ĉu vi volus foriri de la ĉambroj en ĉi tiu aro?",
     "You are about to leave <spaceName/>.": "Vi foriros de <spaceName/>.",
@@ -2547,7 +2537,9 @@
         "autodiscovery_invalid_hs": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
         "autodiscovery_invalid_is_base_url": "Nevalida base_url por m.identity_server",
         "autodiscovery_invalid_is": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
-        "autodiscovery_invalid_is_response": "Nevalida eltrova respondo de identiga servilo"
+        "autodiscovery_invalid_is_response": "Nevalida eltrova respondo de identiga servilo",
+        "server_picker_description_matrix.org": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
+        "server_picker_title_default": "Elektebloj de servilo"
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3300,5 +3292,15 @@
         "cancel_search_label": "Nuligi serĉon"
     },
     "info_tooltip_title": "Informoj",
-    "language_dropdown_label": "Lingva falmenuo"
+    "language_dropdown_label": "Lingva falmenuo",
+    "seshat": {
+        "error_initialising": "Malsukcesis komencigo de serĉado de mesaĝoj, kontrolu <a>viajn agordojn</a> por pliaj informoj",
+        "warning_kind_files_app": "Uzu la <a>labortablan aplikaĵon</a> por vidi ĉiujn ĉifritajn dosierojn",
+        "warning_kind_search_app": "Uzu la <a>labortablan aplikaĵon</a> por serĉi ĉifritajn mesaĝojn",
+        "warning_kind_files": "Ĉi tiu versio de %(brand)s ne subtenas montradon de iuj ĉifritaj dosieroj",
+        "warning_kind_search": "Ĉi tiu versio de %(brand)s ne subtenas serĉadon de ĉifritaj mesaĝoj"
+    },
+    "truncated_list_n_more": {
+        "other": "Kaj %(count)s pliaj…"
+    }
 }

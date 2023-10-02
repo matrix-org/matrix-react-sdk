@@ -51,9 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "свий",
     "expand": "разшири",
-    "And %(count)s more...": {
-        "other": "И %(count)s други..."
-    },
     "Confirm Removal": "Потвърдете премахването",
     "Verification Pending": "Очакване на потвърждение",
     "An error has occurred.": "Възникна грешка.",
@@ -118,7 +115,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Потвърди потребителя и го маркирай като доверен. Доверяването на потребители Ви дава допълнително спокойствие при използване на съобщения шифровани от край-до-край.",
     "Incoming Verification Request": "Входяща заявка за потвърждение",
     "Email (optional)": "Имейл (незадължително)",
-    "Join millions for free on the largest public server": "Присъединете се безплатно към милиони други на най-големия публичен сървър",
     "Dog": "Куче",
     "Cat": "Котка",
     "Lion": "Лъв",
@@ -350,10 +346,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Започнете разговор с някой използвайки тяхното име, имейл адрес или потребителско име (като <userId/>).",
     "Invite by email": "Покани по имейл",
     "Preparing to download logs": "Подготвяне за изтегляне на логове",
-    "This version of %(brand)s does not support searching encrypted messages": "Тази версия на %(brand)s не поддържа търсенето в шифровани съобщения",
-    "This version of %(brand)s does not support viewing some encrypted files": "Тази версия на %(brand)s не поддържа преглеждането на някои шифровани файлове",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Използвайте <a>Desktop приложението</a> за да търсите в шифровани съобщения",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Използвайте <a>Desktop приложението</a> за да видите всички шифровани файлове",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -1923,7 +1915,8 @@
         "autodiscovery_invalid_hs": "Homeserver адресът не изглежда да е валиден Matrix сървър",
         "autodiscovery_invalid_is_base_url": "Невалиден base_url в m.identity_server",
         "autodiscovery_invalid_is": "Адресът на сървърът за самоличност не изглежда да е валиден сървър за самоличност",
-        "autodiscovery_invalid_is_response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност"
+        "autodiscovery_invalid_is_response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
+        "server_picker_description_matrix.org": "Присъединете се безплатно към милиони други на най-големия публичен сървър"
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2418,5 +2411,14 @@
         "cancel_search_label": "Отмени търсенето"
     },
     "info_tooltip_title": "Информация",
-    "language_dropdown_label": "Падащо меню за избор на език"
+    "language_dropdown_label": "Падащо меню за избор на език",
+    "seshat": {
+        "warning_kind_files_app": "Използвайте <a>Desktop приложението</a> за да видите всички шифровани файлове",
+        "warning_kind_search_app": "Използвайте <a>Desktop приложението</a> за да търсите в шифровани съобщения",
+        "warning_kind_files": "Тази версия на %(brand)s не поддържа преглеждането на някои шифровани файлове",
+        "warning_kind_search": "Тази версия на %(brand)s не поддържа търсенето в шифровани съобщения"
+    },
+    "truncated_list_n_more": {
+        "other": "И %(count)s други..."
+    }
 }

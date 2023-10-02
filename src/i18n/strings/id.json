@@ -497,21 +497,11 @@
     "You are not allowed to view this server's rooms list": "Anda tidak diizinkan untuk menampilkan daftar ruangan server ini",
     "Looks good": "Kelihatannya bagus",
     "Enter a server name": "Masukkan sebuah nama server",
-    "And %(count)s more...": {
-        "other": "Dan %(count)s lagi..."
-    },
-    "Join millions for free on the largest public server": "Bergabung dengan jutaan orang lainnya secara gratis di server publik terbesar",
-    "Server Options": "Opsi Server",
     "e.g. my-room": "mis. ruangan-saya",
     "%(count)s people you know have already joined": {
         "one": "%(count)s orang yang Anda tahu telah bergabung",
         "other": "%(count)s orang yang Anda tahu telah bergabung"
     },
-    "This version of %(brand)s does not support searching encrypted messages": "Versi %(brand)s ini tidak mendukung pencarian pesan terenkripsi",
-    "This version of %(brand)s does not support viewing some encrypted files": "Versi %(brand)s ini tidak mendukung penampilan beberapa file terenkripsi",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Gunakan <a>aplikasi desktop</a> untuk mencari pesan-pesan terenkripsi",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Gunakan <a>aplikasi desktop</a> untuk melihat semua file terenkripsi",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisasi pencarian pesan gagal, periksa <a>pengaturan Anda</a> untuk informasi lanjut",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Anda akan meningkatkan ruangan ini dari <oldVersion /> ke <newVersion />.",
     "Recent changes that have not yet been received": "Perubahan terbaru yang belum diterima",
     "The server is not configured to indicate what the problem is (CORS).": "Server tidak diatur untuk menandakan apa masalahnya (CORS).",
@@ -777,7 +767,6 @@
         "one": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?",
         "other": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?"
     },
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
     "Unsent": "Belum dikirim",
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "%(count)s participants": {
@@ -842,13 +831,11 @@
     "Who will you chat to the most?": "Siapa saja yang sering Anda obrol?",
     "You're in": "Anda telah masuk",
     "Saved Items": "Item yang Tersimpan",
-    "Choose a locale": "Pilih locale",
     "Interactively verify by emoji": "Verifikasi secara interaktif sengan emoji",
     "Manually verify by text": "Verifikasi secara manual dengan teks",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
     "Can't start voice message": "Tidak dapat memulai pesan suara",
@@ -1858,7 +1845,8 @@
             "email_address_label": "Alamat Email",
             "remove_msisdn_prompt": "Hapus %(phone)s?",
             "add_msisdn_instructions": "Sebuah teks pesan telah dikirim ke +%(msisdn)s. Silakan masukkan kode verifikasinya.",
-            "msisdn_label": "Nomor Telepon"
+            "msisdn_label": "Nomor Telepon",
+            "spell_check_locale_placeholder": "Pilih locale"
         },
         "sidebar": {
             "title": "Bilah Samping",
@@ -1923,7 +1911,8 @@
             "import_description_1": "Proses ini memungkinkan Anda untuk mengimpor kunci enkripsi yang sebelumnya telah Anda ekspor dari klien Matrix lain. Anda kemudian akan dapat mendekripsi pesan apa saja yang dapat didekripsi oleh klien lain.",
             "import_description_2": "File yang diekspor akan dilindungi dengan sebuah frasa sandi. Anda harus memasukkan frasa sandinya di sini untuk mendekripsi filenya.",
             "file_to_import": "File untuk diimpor"
-        }
+        },
+        "warning": "<w>PERINGATAN:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Kirim peristiwa data akun kustom",
@@ -3360,7 +3349,10 @@
         "autodiscovery_invalid_hs": "URL homeserver sepertinya bukan sebagai homeserver Matrix yang absah",
         "autodiscovery_invalid_is_base_url": "base_url tidak absah untuk m.identity_server",
         "autodiscovery_invalid_is": "URL server identitas terlihat bukan sebagai server identitas yang absah",
-        "autodiscovery_invalid_is_response": "Respons penemuan server identitas tidak absah"
+        "autodiscovery_invalid_is_response": "Respons penemuan server identitas tidak absah",
+        "server_picker_description": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
+        "server_picker_description_matrix.org": "Bergabung dengan jutaan orang lainnya secara gratis di server publik terbesar",
+        "server_picker_title_default": "Opsi Server"
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -4352,5 +4344,15 @@
     "pill": {
         "permalink_other_room": "Pesan dalam %(room)s",
         "permalink_this_room": "Pesan dari %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Initialisasi pencarian pesan gagal, periksa <a>pengaturan Anda</a> untuk informasi lanjut",
+        "warning_kind_files_app": "Gunakan <a>aplikasi desktop</a> untuk melihat semua file terenkripsi",
+        "warning_kind_search_app": "Gunakan <a>aplikasi desktop</a> untuk mencari pesan-pesan terenkripsi",
+        "warning_kind_files": "Versi %(brand)s ini tidak mendukung penampilan beberapa file terenkripsi",
+        "warning_kind_search": "Versi %(brand)s ini tidak mendukung pencarian pesan terenkripsi"
+    },
+    "truncated_list_n_more": {
+        "other": "Dan %(count)s lagi..."
     }
 }

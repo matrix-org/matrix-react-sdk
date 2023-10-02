@@ -137,9 +137,6 @@
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
-    "And %(count)s more...": {
-        "other": "D %(count)s ugar..."
-    },
     "Enter a server name": "Sekcem isem n uqeddac",
     "The following users may not exist": "Iseqdacen i d-iteddun yezmer ad ilin ulac-iten",
     "Invite anyway": "Ɣas akken nced-d",
@@ -285,7 +282,6 @@
     "Wrong file type": "Anaw n yifuyla d arameɣtu",
     "Looks good!": "Yettban igerrez!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
-    "Join millions for free on the largest public server": "Rnu ɣer yimelyan n yimdanen baṭel ɣef uqeddac azayez ameqqran akk",
     "Unable to load commit detail: %(msg)s": "D awezɣi ad d-tali telqayt n usentem: %(msg)s",
     "You cannot delete this message. (%(code)s)": "Ur tezmireḍ ara ad tekkseḍ izen-a. (%(code)s)",
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
@@ -1852,7 +1848,8 @@
         "autodiscovery_invalid_hs": "URL n uqeddac agejdan ur yettban ara d aqeddac agejdan n Matrix ameɣtu",
         "autodiscovery_invalid_is_base_url": "D arameɣtu base_url i m.identity_server",
         "autodiscovery_invalid_is": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
-        "autodiscovery_invalid_is_response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut"
+        "autodiscovery_invalid_is_response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
+        "server_picker_description_matrix.org": "Rnu ɣer yimelyan n yimdanen baṭel ɣef uqeddac azayez ameqqran akk"
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2290,5 +2287,8 @@
         "cancel_search_label": "Sefsex anadi"
     },
     "info_tooltip_title": "Talɣut",
-    "language_dropdown_label": "Tabdart n udrurem n tutlayin"
+    "language_dropdown_label": "Tabdart n udrurem n tutlayin",
+    "truncated_list_n_more": {
+        "other": "D %(count)s ugar..."
+    }
 }

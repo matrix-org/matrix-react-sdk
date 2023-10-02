@@ -69,9 +69,6 @@
     },
     "not specified": "nenurodyta",
     "Home": "Pradžia",
-    "And %(count)s more...": {
-        "other": "Ir dar %(count)s..."
-    },
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
     "Preparing to send logs": "Ruošiamasi išsiųsti žurnalus",
@@ -234,7 +231,6 @@
     "Share Room Message": "Bendrinti Kambario Žinutę",
     "Share Room": "Bendrinti Kambarį",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
-    "Join millions for free on the largest public server": "Prisijunkite prie milijonų didžiausiame viešame serveryje nemokamai",
     "Join Room": "Prisijungti prie kambario",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
     "Update any local room aliases to point to the new room": "Atnaujinkite vietinių kambarių slapyvardžius, kad nurodytumėte į naująjį kambarį",
@@ -289,7 +285,6 @@
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "Reason (optional)": "Priežastis (nebūtina)",
     "Preparing to download logs": "Ruošiamasi parsiųsti žurnalus",
-    "Server Options": "Serverio Parinktys",
     "edited": "pakeista",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dideliam žinučių kiekiui tai gali užtrukti kurį laiką. Prašome neperkrauti savo kliento.",
     "No recent messages by %(user)s found": "Nerasta jokių naujesnių %(user)s žinučių",
@@ -442,9 +437,6 @@
     "You may contact me if you have any follow up questions": "Jei turite papildomų klausimų, galite susisiekti su manimi",
     "To leave the beta, visit your settings.": "Norėdami išeiti iš beta versijos, apsilankykite savo nustatymuose.",
     "Close dialog": "Uždaryti dialogą",
-    "This version of %(brand)s does not support viewing some encrypted files": "Ši %(brand)s versija nepalaiko kai kurių užšifruotų failų peržiūros",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Naudokite <a>Kompiuterio programą</a> kad ieškoti užšifruotų žinučių",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Naudokite <a>Kompiuterio programą</a> kad matytumėte visus užšifruotus failus",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
     "South Korea": "Pietų Korėja",
@@ -2223,7 +2215,9 @@
         "autodiscovery_invalid": "Klaidingas serverio radimo atsakas",
         "autodiscovery_invalid_hs": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
         "autodiscovery_invalid_is": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
-        "autodiscovery_invalid_is_response": "Klaidingas tapatybės serverio radimo atsakas"
+        "autodiscovery_invalid_is_response": "Klaidingas tapatybės serverio radimo atsakas",
+        "server_picker_description_matrix.org": "Prisijunkite prie milijonų didžiausiame viešame serveryje nemokamai",
+        "server_picker_title_default": "Serverio Parinktys"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2852,5 +2846,13 @@
     "General failure": "Bendras triktis",
     "emoji_picker": {
         "cancel_search_label": "Atšaukti paiešką"
+    },
+    "seshat": {
+        "warning_kind_files_app": "Naudokite <a>Kompiuterio programą</a> kad matytumėte visus užšifruotus failus",
+        "warning_kind_search_app": "Naudokite <a>Kompiuterio programą</a> kad ieškoti užšifruotų žinučių",
+        "warning_kind_files": "Ši %(brand)s versija nepalaiko kai kurių užšifruotų failų peržiūros"
+    },
+    "truncated_list_n_more": {
+        "other": "Ir dar %(count)s..."
     }
 }

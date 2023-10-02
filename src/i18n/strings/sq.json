@@ -74,9 +74,6 @@
         "one": "(~%(count)s përfundim)"
     },
     "Delete Widget": "Fshije Widget-in",
-    "And %(count)s more...": {
-        "other": "Dhe %(count)s të tjerë…"
-    },
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
     "Incompatible local cache": "Fshehtinë vendore e papërputhshme",
@@ -117,7 +114,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifikojeni këtë përdorues që t’i vihet shenjë si i besuar. Përdoruesit e besuar ju më tepër siguri kur përdorni mesazhe të fshehtëzuar skaj-më-skaj.",
     "Incoming Verification Request": "Kërkesë Verifikimi e Ardhur",
     "Email (optional)": "Email (në daçi)",
-    "Join millions for free on the largest public server": "Bashkojuni milionave, falas, në shërbyesin më të madh publik",
     "Dog": "Qen",
     "Cat": "Mace",
     "Lion": "Luan",
@@ -345,10 +341,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij ose emrin e tij të përdoruesit (bie fjala, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Që të shihni krejt kartelat e fshehtëzuara, përdorni <a>aplikacionin për Desktop</a>",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Që të kërkoni te mesazhe të fshehtëzuar, përdorni <a>aplikacionin për Desktop</a>",
-    "This version of %(brand)s does not support viewing some encrypted files": "Ky version i %(brand)s nuk mbulon parjen për disa kartela të fshehtëzuara",
-    "This version of %(brand)s does not support searching encrypted messages": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar",
     "Data on this screen is shared with %(widgetDomain)s": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s",
     "Modal Widget": "Widget Modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
@@ -608,7 +600,6 @@
     "Approve widget permissions": "Miratoni leje widget-i",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Që mos thoni nuk e dinim, nëse s’shtoni një email dhe harroni fjalëkalimin tuaj, mund <b>të humbi përgjithmonë hyrjen në llogarinë tuaj</b>.",
     "Continuing without email": "Vazhdim pa email",
-    "Server Options": "Mundësi Shërbyesi",
     "Hold": "Mbaje",
     "Resume": "Rimerre",
     "Reason (optional)": "Arsye (opsionale)",
@@ -681,7 +672,6 @@
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
     "You don't have permission to do this": "S’keni leje ta bëni këtë",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Sent": "U dërgua",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
     "User Directory": "Drejtori Përdoruesi",
@@ -777,7 +767,6 @@
         "one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?"
     },
     "Unsent": "Të padërguar",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
     "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
     "%(count)s participants": {
         "one": "1 pjesëmarrës",
@@ -835,7 +824,6 @@
     "Friends and family": "Shokë dhe familje",
     "We'll help you get connected.": "Do t’ju ndihmojmë të lidheni.",
     "Who will you chat to the most?": "Me kë do të bisedoni më të shumtën?",
-    "Choose a locale": "Zgjidhni vendore",
     "Saved Items": "Zëra të Ruajtur",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "Interactively verify by emoji": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh",
@@ -847,7 +835,6 @@
     "toggle event": "shfaqe/fshihe aktin",
     "Output devices": "Pajisje output-i",
     "Input devices": "Pajisje input-i",
-    "<w>WARNING:</w> <description/>": "<w>KUJDES:</w> <description/>",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
     "Can't start voice message": "S’niset dot mesazh zanor",
@@ -1810,7 +1797,8 @@
             "email_address_label": "Adresë Email",
             "remove_msisdn_prompt": "Të hiqet %(phone)s?",
             "add_msisdn_instructions": "Te +%(msisdn)s u dërgua një mesazh tekst. Ju lutemi, jepni kodin e verifikimit që përmban.",
-            "msisdn_label": "Numër Telefoni"
+            "msisdn_label": "Numër Telefoni",
+            "spell_check_locale_placeholder": "Zgjidhni vendore"
         },
         "sidebar": {
             "title": "Anështyllë",
@@ -1873,7 +1861,8 @@
             "import_description_1": "Ky proces ju lejon të importoni kyçe fshehtëzimi që keni eksportuar më parë nga një tjetër klient Matrix. Mandej do të jeni në gjendje të shfshehtëzoni çfarëdo mesazhesh që mund të shfshehtëzojë ai klient tjetër.",
             "import_description_2": "Kartela e eksportit është e mbrojtur me një frazëkalim. Që të shfshehtëzoni kartelën, duhet ta jepni frazëkalimin këtu.",
             "file_to_import": "Kartelë për importim"
-        }
+        },
+        "warning": "<w>KUJDES:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Dërgoni akt vetjak të dhënash llogarie",
@@ -3269,7 +3258,10 @@
         "autodiscovery_invalid_hs": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
         "autodiscovery_invalid_is_base_url": "Parametër base_url i i pavlefshëm për m.identity_server",
         "autodiscovery_invalid_is": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
-        "autodiscovery_invalid_is_response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi"
+        "autodiscovery_invalid_is_response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
+        "server_picker_description": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
+        "server_picker_description_matrix.org": "Bashkojuni milionave, falas, në shërbyesin më të madh publik",
+        "server_picker_title_default": "Mundësi Shërbyesi"
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -4238,5 +4230,15 @@
     "pill": {
         "permalink_other_room": "Mesazh në %(room)s",
         "permalink_this_room": "Mesazh nga %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
+        "warning_kind_files_app": "Që të shihni krejt kartelat e fshehtëzuara, përdorni <a>aplikacionin për Desktop</a>",
+        "warning_kind_search_app": "Që të kërkoni te mesazhe të fshehtëzuar, përdorni <a>aplikacionin për Desktop</a>",
+        "warning_kind_files": "Ky version i %(brand)s nuk mbulon parjen për disa kartela të fshehtëzuara",
+        "warning_kind_search": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar"
+    },
+    "truncated_list_n_more": {
+        "other": "Dhe %(count)s të tjerë…"
     }
 }

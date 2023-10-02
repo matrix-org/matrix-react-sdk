@@ -42,9 +42,6 @@
     "Create new room": "Vytvoriť novú miestnosť",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
-    "And %(count)s more...": {
-        "other": "A %(count)s ďalších…"
-    },
     "Confirm Removal": "Potvrdiť odstránenie",
     "An error has occurred.": "Vyskytla sa chyba.",
     "Unable to restore session": "Nie je možné obnoviť reláciu",
@@ -187,7 +184,6 @@
     "Room Settings - %(roomName)s": "Nastavenia miestnosti - %(roomName)s",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varovanie</b>: zálohovanie šifrovacích kľúčov by ste mali nastavovať na dôveryhodnom počítači.",
     "Email (optional)": "Email (nepovinné)",
-    "Join millions for free on the largest public server": "Pripojte sa k mnohým používateľom najväčšieho verejného domovského servera zdarma",
     "Deactivate account": "Deaktivovať účet",
     "You signed in to a new session without verifying it:": "Prihlásili ste sa do novej relácie bez jej overenia:",
     "Verify your other session using one of the options below.": "Overte svoje ostatné relácie pomocou jednej z nižšie uvedených možností.",
@@ -502,8 +498,6 @@
     "Notes": "Poznámky",
     "Enter the name of a new server you want to explore.": "Zadajte názov nového servera, ktorý chcete preskúmať.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />.",
-    "This version of %(brand)s does not support searching encrypted messages": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ",
-    "This version of %(brand)s does not support viewing some encrypted files": "Táto verzia aplikácie %(brand)s nepodporuje zobrazovanie niektorých zašifrovaných súborov",
     "Backup version:": "Verzia zálohy:",
     "Upgrade private room": "Aktualizovať súkromnú miestnosť",
     "Public rooms": "Verejné miestnosti",
@@ -532,7 +526,6 @@
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Tieto súbory sú <b>príliš veľké</b> na nahratie. Limit veľkosti súboru je %(limit)s.",
     "Upload files (%(current)s of %(total)s)": "Nahrať súbory (%(current)s z %(total)s)",
     "Upload files": "Nahrať súbory",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
     "Invite to %(roomName)s": "Pozvať do miestnosti %(roomName)s",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "Server isn't responding": "Server neodpovedá",
@@ -554,9 +547,7 @@
     "Use \"%(query)s\" to search": "Na vyhľadávanie použite \"%(query)s\"",
     "Search for rooms or people": "Hľadať miestnosti alebo ľudí",
     "Search for rooms": "Hľadať miestnosti",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializácia vyhľadávania správ zlyhala, pre viac informácií skontrolujte <a>svoje nastavenia</a>",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Použite <a>Desktop aplikáciu</a> na vyhľadávanie zašifrovaných správ",
     "Not encrypted": "Nie je zašifrované",
     "Close dialog": "Zavrieť dialógové okno",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
@@ -667,7 +658,6 @@
         "other": "%(count)s hlasov"
     },
     "Thread options": "Možnosti vlákna",
-    "Server Options": "Možnosti servera",
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
@@ -778,7 +768,6 @@
         "other": "Chystáte sa odstrániť %(count)s správ od používateľa %(user)s. Týmto ich natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?"
     },
     "Unsent": "Neodoslané",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Môžete použiť nastavenia vlastného servera na prihlásenie sa na iné servery Matrix-u zadaním inej adresy URL domovského servera. To vám umožní používať %(brand)s s existujúcim účtom Matrix na inom domovskom serveri.",
     "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova",
     "%(count)s participants": {
         "one": "1 účastník",
@@ -842,13 +831,11 @@
     "Who will you chat to the most?": "S kým budete komunikovať najčastejšie?",
     "You're in": "Ste v",
     "Saved Items": "Uložené položky",
-    "Choose a locale": "Vyberte si jazyk",
     "Interactively verify by emoji": "Interaktívne overte pomocou emotikonov",
     "Manually verify by text": "Manuálne overte pomocou textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>UPOZORNENIE:</w> <description/>",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
     "Can't start voice message": "Nemožno spustiť hlasovú správu",
@@ -1857,7 +1844,8 @@
             "email_address_label": "Emailová adresa",
             "remove_msisdn_prompt": "Odstrániť číslo %(phone)s?",
             "add_msisdn_instructions": "SMSka vám bola zaslaná na +%(msisdn)s. Zadajte prosím overovací kód, ktorý obsahuje.",
-            "msisdn_label": "Telefónne číslo"
+            "msisdn_label": "Telefónne číslo",
+            "spell_check_locale_placeholder": "Vyberte si jazyk"
         },
         "sidebar": {
             "title": "Bočný panel",
@@ -1922,7 +1910,8 @@
             "import_description_1": "Tento proces vás prevedie importom šifrovacích kľúčov, ktoré ste si v minulosti exportovali v inom Matrix klientovi. Po úspešnom importe budete v tomto klientovi môcť dešifrovať všetky správy, ktoré ste mohli dešifrovať v spomínanom klientovi.",
             "import_description_2": "Exportovaný súbor bude chránený prístupovou frázou. Tu by ste mali zadať prístupovú frázu, aby ste súbor dešifrovali.",
             "file_to_import": "Importovať zo súboru"
-        }
+        },
+        "warning": "<w>UPOZORNENIE:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Odoslať vlastnú udalosť s údajmi o účte",
@@ -3353,7 +3342,10 @@
         "autodiscovery_invalid_hs": "Adresa URL domovského servera sa nezdá byť platným domovským serverom Matrixu",
         "autodiscovery_invalid_is_base_url": "Neplatná base_url pre m.identity_server",
         "autodiscovery_invalid_is": "URL adresa servera totožností sa nezdá byť platným serverom totožností",
-        "autodiscovery_invalid_is_response": "Neplatná odpoveď pri zisťovaní servera totožností"
+        "autodiscovery_invalid_is_response": "Neplatná odpoveď pri zisťovaní servera totožností",
+        "server_picker_description": "Môžete použiť nastavenia vlastného servera na prihlásenie sa na iné servery Matrix-u zadaním inej adresy URL domovského servera. To vám umožní používať %(brand)s s existujúcim účtom Matrix na inom domovskom serveri.",
+        "server_picker_description_matrix.org": "Pripojte sa k mnohým používateľom najväčšieho verejného domovského servera zdarma",
+        "server_picker_title_default": "Možnosti servera"
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -4345,5 +4337,15 @@
     "pill": {
         "permalink_other_room": "Správa v %(room)s",
         "permalink_this_room": "Správa od %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Inicializácia vyhľadávania správ zlyhala, pre viac informácií skontrolujte <a>svoje nastavenia</a>",
+        "warning_kind_files_app": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
+        "warning_kind_search_app": "Použite <a>Desktop aplikáciu</a> na vyhľadávanie zašifrovaných správ",
+        "warning_kind_files": "Táto verzia aplikácie %(brand)s nepodporuje zobrazovanie niektorých zašifrovaných súborov",
+        "warning_kind_search": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ"
+    },
+    "truncated_list_n_more": {
+        "other": "A %(count)s ďalších…"
     }
 }

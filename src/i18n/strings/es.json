@@ -74,9 +74,6 @@
     "Delete Widget": "Eliminar accesorio",
     "collapse": "encoger",
     "expand": "desplegar",
-    "And %(count)s more...": {
-        "other": "Y %(count)s más…"
-    },
     "Confirm Removal": "Confirmar eliminación",
     "Clear Storage and Sign Out": "Borrar almacenamiento y cerrar sesión",
     "Send Logs": "Enviar Registros",
@@ -310,7 +307,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Advertencia</b>: deberías configurar la copia de seguridad de claves solamente usando un ordenador de confianza.",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reacción(es)",
     "Email (optional)": "Correo electrónico (opcional)",
-    "Join millions for free on the largest public server": "Únete de forma gratuita a millones de personas en el servidor público más grande",
     "Sign in with SSO": "Ingrese con SSO",
     "Ok": "Ok",
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
@@ -343,7 +339,6 @@
     "Switch theme": "Cambiar tema",
     "Confirm encryption setup": "Confirmar la configuración de cifrado",
     "Click the button below to confirm setting up encryption.": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
-    "This version of %(brand)s does not support searching encrypted messages": "Esta versión de %(brand)s no puede buscar mensajes cifrados",
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
     "Zimbabwe": "Zimbabue",
@@ -526,11 +521,7 @@
     "Transfer": "Transferir",
     "A call can only be transferred to a single user.": "Una llamada solo puede transferirse a un usuario.",
     "Invite by email": "Invitar a través de correo electrónico",
-    "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s no permite ver algunos archivos cifrados",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Usa la <a>aplicación de escritorio</a> para buscar en los mensajes cifrados",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Usa la <a>aplicación de escritorio</a> para ver todos los archivos cifrados",
     "Reason (optional)": "Motivo (opcional)",
-    "Server Options": "Opciones del servidor",
     "Dial pad": "Teclado numérico",
     "Sint Maarten": "San Martín",
     "Singapore": "Singapur",
@@ -686,7 +677,6 @@
     "Message preview": "Vista previa del mensaje",
     "Sent": "Enviado",
     "You don't have permission to do this": "No tienes permisos para hacer eso",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Ha fallado el sistema de búsqueda de mensajes. Comprueba <a>tus ajustes</a> para más información",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "User Directory": "Lista de usuarios",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en cuenta que actualizar crea una nueva versión de la sala</b>. Todos los mensajes hasta ahora quedarán archivados aquí, en esta sala.",
@@ -778,7 +768,6 @@
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "No marques esta casilla si quieres borrar también los mensajes del sistema sobre el usuario (ej.: entradas y salidas, cambios en su perfil…)",
     "Preserve system messages": "Mantener mensajes del sistema",
     "Unsent": "No enviado",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puedes usar la opción de servidor personalizado para iniciar sesión a otro servidor de Matrix, escribiendo una dirección URL de servidor base diferente. Esto te permite usar %(brand)s con una cuenta de Matrix que ya exista en otro servidor base.",
     "%(featureName)s Beta feedback": "Danos tu opinión sobre la beta de %(featureName)s",
     "%(count)s participants": {
         "one": "1 participante",
@@ -842,13 +831,11 @@
     "Who will you chat to the most?": "¿Con quién hablarás más?",
     "You're in": "Estás en",
     "Saved Items": "Elementos guardados",
-    "Choose a locale": "Elige un idioma",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s comenzó una videollamada",
     "Thread root ID: %(threadRootId)s": "ID del hilo raíz: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>ADVERTENCIA :</w> <description/>",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
     "Loading live location…": "Cargando ubicación en tiempo real…",
     "Fetching keys from server…": "Obteniendo claves del servidor…",
@@ -1792,7 +1779,8 @@
             "email_address_label": "Dirección de correo",
             "remove_msisdn_prompt": "¿Eliminar %(phone)s?",
             "add_msisdn_instructions": "Se ha enviado un mensaje de texto a +%(msisdn)s. Por favor, escribe el código de verificación que contiene.",
-            "msisdn_label": "Número de teléfono"
+            "msisdn_label": "Número de teléfono",
+            "spell_check_locale_placeholder": "Elige un idioma"
         },
         "sidebar": {
             "title": "Barra lateral",
@@ -1851,7 +1839,8 @@
             "import_description_1": "Este proceso te permite importar claves de cifrado que hayas exportado previamente desde otro cliente de Matrix. Así, podrás descifrar cualquier mensaje que el otro cliente pudiera descifrar.",
             "import_description_2": "El archivo exportado estará protegido con una contraseña. Deberías ingresar la contraseña aquí para descifrar el archivo.",
             "file_to_import": "Fichero a importar"
-        }
+        },
+        "warning": "<w>ADVERTENCIA :</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Enviar evento personalizado de cuenta de sala",
@@ -3211,7 +3200,10 @@
         "autodiscovery_invalid_hs": "La URL del servidor base no parece ser un servidor válido de Matrix",
         "autodiscovery_invalid_is_base_url": "URL_base no válida para m.identity_server",
         "autodiscovery_invalid_is": "La URL del servidor de identidad no parece ser un servidor de identidad válido",
-        "autodiscovery_invalid_is_response": "Respuesta inválida de descubrimiento de servidor de identidad"
+        "autodiscovery_invalid_is_response": "Respuesta inválida de descubrimiento de servidor de identidad",
+        "server_picker_description": "Puedes usar la opción de servidor personalizado para iniciar sesión a otro servidor de Matrix, escribiendo una dirección URL de servidor base diferente. Esto te permite usar %(brand)s con una cuenta de Matrix que ya exista en otro servidor base.",
+        "server_picker_description_matrix.org": "Únete de forma gratuita a millones de personas en el servidor público más grande",
+        "server_picker_title_default": "Opciones del servidor"
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -4147,5 +4139,15 @@
     "pill": {
         "permalink_other_room": "Mensaje en %(room)s",
         "permalink_this_room": "Mensaje de %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Ha fallado el sistema de búsqueda de mensajes. Comprueba <a>tus ajustes</a> para más información",
+        "warning_kind_files_app": "Usa la <a>aplicación de escritorio</a> para ver todos los archivos cifrados",
+        "warning_kind_search_app": "Usa la <a>aplicación de escritorio</a> para buscar en los mensajes cifrados",
+        "warning_kind_files": "Esta versión de %(brand)s no permite ver algunos archivos cifrados",
+        "warning_kind_search": "Esta versión de %(brand)s no puede buscar mensajes cifrados"
+    },
+    "truncated_list_n_more": {
+        "other": "Y %(count)s más…"
     }
 }

@@ -122,9 +122,6 @@
     "Create new room": "E nieuw gesprek anmoakn",
     "collapse": "toeklappn",
     "expand": "uutklappn",
-    "And %(count)s more...": {
-        "other": "En %(count)s meer…"
-    },
     "The following users may not exist": "De volgende gebruukers bestoan meugliks nie",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kostege geen profieln vo de Matrix-ID’s hieroundern viendn - wil je ze algelyk uutnodign?",
     "Invite anyway and never warn me again": "Algelyk uutnodign en myn nooit nie mi woarschuwn",
@@ -206,7 +203,6 @@
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
     "Email (optional)": "E-mailadresse (optioneel)",
-    "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
     "Session ID": "Sessie-ID",
     "Message edits": "Berichtbewerkiengn",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
@@ -967,7 +963,8 @@
         "autodiscovery_invalid_hs": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
         "autodiscovery_invalid_is_base_url": "Oungeldige base_url vo m.identity_server",
         "autodiscovery_invalid_is": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
-        "autodiscovery_invalid_is_response": "Oungeldig identiteitsserverountdekkiengsantwoord"
+        "autodiscovery_invalid_is_response": "Oungeldig identiteitsserverountdekkiengsantwoord",
+        "server_picker_description_matrix.org": "Doe mee me miljoenen anderen ip de grotste publieke server"
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1245,5 +1242,8 @@
         "error_loading_user_profile": "Kostege ’t gebruukersprofiel nie loadn"
     },
     "cant_load_page": "Kostege ’t blad nie loadn",
-    "General failure": "Algemene foute"
+    "General failure": "Algemene foute",
+    "truncated_list_n_more": {
+        "other": "En %(count)s meer…"
+    }
 }

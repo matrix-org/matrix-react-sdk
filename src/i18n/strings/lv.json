@@ -59,9 +59,6 @@
     "Delete Widget": "Dzēst vidžetu",
     "collapse": "sakļaut",
     "expand": "izvērst",
-    "And %(count)s more...": {
-        "other": "Un par %(count)s vairāk..."
-    },
     "Sunday": "Svētdiena",
     "Today": "Šodien",
     "Friday": "Piektdiena",
@@ -91,7 +88,6 @@
         "one": "%(count)s sesija",
         "other": "%(count)s sesijas"
     },
-    "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
@@ -105,8 +101,6 @@
     "Confirm account deactivation": "Apstipriniet konta deaktivizēšanu",
     "Incorrect Security Phrase": "Nepareiza slepenā frāze",
     "Security Phrase": "Slepenā frāze",
-    "Join millions for free on the largest public server": "Pievienojieties bez maksas miljoniem lietotāju lielākajā publiskajā serverī",
-    "Server Options": "Servera parametri",
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
@@ -175,7 +169,6 @@
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
     "Removing…": "Dzēš…",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Lietojiet <a>Desktop lietotni</a>, lai apskatītu visus šifrētos failus",
     "edited": "rediģēts",
     "Remove %(count)s messages": {
         "one": "Dzēst 1 ziņu",
@@ -462,7 +455,6 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
-    "This version of %(brand)s does not support viewing some encrypted files": "Šī %(brand)s versija neatbalsta atsevišķu šifrētu failu skatīšanu",
     "Upload %(count)s other files": {
         "one": "Augšupielādēt %(count)s citu failu",
         "other": "Augšupielādēt %(count)s citus failus"
@@ -1670,7 +1662,9 @@
             "reset_successful": "Jūsu parole ir atiestatīta.",
             "return_to_login": "Atgriezties uz pierakstīšanās lapu"
         },
-        "common_failures": {}
+        "common_failures": {},
+        "server_picker_description_matrix.org": "Pievienojieties bez maksas miljoniem lietotāju lielākajā publiskajā serverī",
+        "server_picker_title_default": "Servera parametri"
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -2130,5 +2124,13 @@
     "emoji_picker": {
         "cancel_search_label": "Atcelt meklējumu"
     },
-    "info_tooltip_title": "Informācija"
+    "info_tooltip_title": "Informācija",
+    "seshat": {
+        "warning_kind_files_app": "Lietojiet <a>Desktop lietotni</a>, lai apskatītu visus šifrētos failus",
+        "warning_kind_search_app": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
+        "warning_kind_files": "Šī %(brand)s versija neatbalsta atsevišķu šifrētu failu skatīšanu"
+    },
+    "truncated_list_n_more": {
+        "other": "Un par %(count)s vairāk..."
+    }
 }

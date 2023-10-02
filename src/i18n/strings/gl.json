@@ -51,9 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
-    "And %(count)s more...": {
-        "other": "E %(count)s máis..."
-    },
     "Confirm Removal": "Confirma a retirada",
     "An error has occurred.": "Algo fallou.",
     "Unable to restore session": "Non se puido restaurar a sesión",
@@ -108,7 +105,6 @@
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
     "Your homeserver has exceeded one of its resource limits.": "O teu servidor superou un dous seus límites de recursos.",
     "Ok": "Ok",
-    "Join millions for free on the largest public server": "Únete a millóns de persoas gratuitamente no maior servidor público",
     "IRC display name width": "Ancho do nome mostrado de IRC",
     "Dog": "Can",
     "Cat": "Gato",
@@ -347,10 +343,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
     "Unable to set up keys": "Non se puideron configurar as chaves",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Usa a <a>app de Escritorio</a> para ver todos os ficheiros cifrados",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Usa a <a>app de Escritorio</a> para buscar mensaxes cifradas",
-    "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s non soporta o visionado dalgúns ficheiros cifrados",
-    "This version of %(brand)s does not support searching encrypted messages": "Esta versión de %(brand)s non soporta a busca de mensaxes cifradas",
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -610,7 +602,6 @@
     "Approve widget permissions": "Aprovar permisos do widget",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
     "Continuing without email": "Continuando sen email",
-    "Server Options": "Opcións do servidor",
     "Reason (optional)": "Razón (optativa)",
     "Hold": "Colgar",
     "Resume": "Retomar",
@@ -688,7 +679,6 @@
     "You don't have permission to do this": "Non tes permiso para facer isto",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
     "User Directory": "Directorio de Usuarias",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Fallou a inicialización da busca de mensaxes, comproba <a>os axustes</a> para máis información",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
     "Automatically invite members from this room to the new one": "Convidar automáticamente membros desta sala á nova sala",
     "These are likely ones other room admins are a part of.": "Probablemente estas son salas das que forman parte outras administradoras da sala.",
@@ -778,7 +768,6 @@
         "other": "Vas a eliminar %(count)s mensaxes de %(user)s. Así eliminaralos de xeito permanente para todas na conversa. Tes a certeza de facelo?"
     },
     "Unsent": "Sen enviar",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
     "%(featureName)s Beta feedback": "Informe sobre %(featureName)s Beta",
     "%(count)s participants": {
@@ -842,7 +831,6 @@
     "Who will you chat to the most?": "Con quen vas falar máis a miúdo?",
     "You're in": "Estás dentro",
     "Saved Items": "Elementos gardados",
-    "Choose a locale": "Elixe o idioma",
     "Interactively verify by emoji": "Verificar interactivamente usando emoji",
     "Manually verify by text": "Verificar manualmente con texto",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
@@ -1663,7 +1651,8 @@
             "email_address_label": "Enderezo de Email",
             "remove_msisdn_prompt": "Eliminar %(phone)s?",
             "add_msisdn_instructions": "Enviamosche un SMS ao +%(msisdn)s. Escribe o código de verificación que contén.",
-            "msisdn_label": "Número de teléfono"
+            "msisdn_label": "Número de teléfono",
+            "spell_check_locale_placeholder": "Elixe o idioma"
         },
         "sidebar": {
             "title": "Barra lateral",
@@ -2981,7 +2970,10 @@
         "autodiscovery_invalid_hs": "O URL do servidor non semella ser un servidor Matrix válido",
         "autodiscovery_invalid_is_base_url": "base_url para m.identity_server non válida",
         "autodiscovery_invalid_is": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
-        "autodiscovery_invalid_is_response": "Resposta de descubrimento de identidade do servidor non válida"
+        "autodiscovery_invalid_is_response": "Resposta de descubrimento de identidade do servidor non válida",
+        "server_picker_description": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
+        "server_picker_description_matrix.org": "Únete a millóns de persoas gratuitamente no maior servidor público",
+        "server_picker_title_default": "Opcións do servidor"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3849,5 +3841,15 @@
         "cancel_search_label": "Cancelar busca"
     },
     "info_tooltip_title": "Información",
-    "language_dropdown_label": "Selector de idioma"
+    "language_dropdown_label": "Selector de idioma",
+    "seshat": {
+        "error_initialising": "Fallou a inicialización da busca de mensaxes, comproba <a>os axustes</a> para máis información",
+        "warning_kind_files_app": "Usa a <a>app de Escritorio</a> para ver todos os ficheiros cifrados",
+        "warning_kind_search_app": "Usa a <a>app de Escritorio</a> para buscar mensaxes cifradas",
+        "warning_kind_files": "Esta versión de %(brand)s non soporta o visionado dalgúns ficheiros cifrados",
+        "warning_kind_search": "Esta versión de %(brand)s non soporta a busca de mensaxes cifradas"
+    },
+    "truncated_list_n_more": {
+        "other": "E %(count)s máis..."
+    }
 }

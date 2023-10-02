@@ -61,9 +61,6 @@
         "other": "(~%(count)s resultat)",
         "one": "(~%(count)s resultat)"
     },
-    "And %(count)s more...": {
-        "other": "Och %(count)s till…"
-    },
     "Preparing to send logs": "Förbereder sändning av loggar",
     "Logs sent": "Loggar skickade",
     "Failed to send logs: ": "Misslyckades att skicka loggar: ",
@@ -161,7 +158,6 @@
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
     "Email (optional)": "E-post (valfritt)",
-    "Join millions for free on the largest public server": "Gå med miljontals användare gratis på den största publika servern",
     "The following users may not exist": "Följande användare kanske inte existerar",
     "Invite anyway and never warn me again": "Bjud in ändå och varna mig aldrig igen",
     "Invite anyway": "Bjud in ändå",
@@ -346,10 +342,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Starta en konversation med någon med deras namn eller användarnamn (som <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
     "Unable to set up keys": "Kunde inte ställa in nycklar",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Använd <a>skrivbordsappen</a> för att se alla krypterade filer",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Använd <a>skrivbordsappen</a> söka bland krypterade meddelanden",
-    "This version of %(brand)s does not support viewing some encrypted files": "Den här versionen av %(brand)s stöder inte visning av vissa krypterade filer",
-    "This version of %(brand)s does not support searching encrypted messages": "Den här versionen av %(brand)s stöder inte sökning bland krypterade meddelanden",
     "Data on this screen is shared with %(widgetDomain)s": "Data på den här skärmen delas med %(widgetDomain)s",
     "Modal Widget": "Dialogruta",
     "Canada": "Kanada",
@@ -605,7 +597,6 @@
     "Caribbean Netherlands": "Karibiska Nederländerna",
     "Cape Verde": "Kap Verde",
     "Reason (optional)": "Orsak (valfritt)",
-    "Server Options": "Serveralternativ",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
     "Continuing without email": "Fortsätter utan e-post",
     "Hold": "Parkera",
@@ -687,7 +678,6 @@
     "Sent": "Skickat",
     "You don't have permission to do this": "Du har inte behörighet att göra detta",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisering av meddelandesök misslyckades, kolla <a>dina inställningar</a> för mer information",
     "Adding spaces has moved.": "Tilläggning av utrymmen har flyttats.",
     "Search for rooms": "Sök efter rum",
     "Search for spaces": "Sök efter utrymmen",
@@ -793,7 +783,6 @@
         "other": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?"
     },
     "%(featureName)s Beta feedback": "%(featureName)s Betaåterkoppling",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kan använda egna serverinställningar för att logga in på andra Matrix-servrar genom att ange en URL för en annan hemserver. Då kan du använda %(brand)s med ett existerande Matrix-konto på en annan hemserver.",
     "Hide my messages from new joiners": "Dölj mina meddelanden för nya som går med",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Kommer dina meddelanden fortfarande vara synliga för folk som har tagit emot dem, precis som e-post du har skickat tidigare. Vill du dölja dina skickade meddelanden från personer som går med i rum i framtiden?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Kommer du tas bort från din identitetsserver: dina vänner kommer inte längre kunna hitta dig med din e-postadress eller ditt telefonnummer",
@@ -845,8 +834,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "Interactively verify by emoji": "Verifiera interaktivt med emoji",
     "Manually verify by text": "Verifiera manuellt med text",
-    "Choose a locale": "Välj en lokalisering",
-    "<w>WARNING:</w> <description/>": "<w>VARNING:</w> <description/>",
     "%(name)s started a video call": "%(name)s startade ett videosamtal",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kan inte starta ett röstmeddelande eftersom du spelar in en direktsändning. Vänligen avsluta din direktsändning för att starta inspelning av ett röstmeddelande.",
@@ -1828,7 +1815,8 @@
             "email_address_label": "E-postadress",
             "remove_msisdn_prompt": "Ta bort %(phone)s?",
             "add_msisdn_instructions": "Ett SMS har skickats till +%(msisdn)s. Ange verifieringskoden som det innehåller.",
-            "msisdn_label": "Telefonnummer"
+            "msisdn_label": "Telefonnummer",
+            "spell_check_locale_placeholder": "Välj en lokalisering"
         },
         "sidebar": {
             "title": "Sidofält",
@@ -1891,7 +1879,8 @@
             "import_description_1": "Denna process möjliggör import av krypteringsnycklar som tidigare exporterats från en annan Matrix-klient. Du kommer då kunna avkryptera alla meddelanden som den andra klienten kunde avkryptera.",
             "import_description_2": "Den exporterade filen kommer vara skyddad med en lösenfras. Du måste ange lösenfrasen här, för att avkryptera filen.",
             "file_to_import": "Fil att importera"
-        }
+        },
+        "warning": "<w>VARNING:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Skicka event med anpassad kontodata",
@@ -3304,7 +3293,10 @@
         "autodiscovery_invalid_hs": "Hemserver-URL:en verkar inte vara en giltig Matrix-hemserver",
         "autodiscovery_invalid_is_base_url": "Ogiltig base_url för m.identity_server",
         "autodiscovery_invalid_is": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
-        "autodiscovery_invalid_is_response": "Ogiltigt identitetsserverupptäcktssvar"
+        "autodiscovery_invalid_is_response": "Ogiltigt identitetsserverupptäcktssvar",
+        "server_picker_description": "Du kan använda egna serverinställningar för att logga in på andra Matrix-servrar genom att ange en URL för en annan hemserver. Då kan du använda %(brand)s med ett existerande Matrix-konto på en annan hemserver.",
+        "server_picker_description_matrix.org": "Gå med miljontals användare gratis på den största publika servern",
+        "server_picker_title_default": "Serveralternativ"
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -4285,5 +4277,15 @@
     "pill": {
         "permalink_other_room": "Meddelande i rum %(room)s",
         "permalink_this_room": "Meddelande från %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Initialisering av meddelandesök misslyckades, kolla <a>dina inställningar</a> för mer information",
+        "warning_kind_files_app": "Använd <a>skrivbordsappen</a> för att se alla krypterade filer",
+        "warning_kind_search_app": "Använd <a>skrivbordsappen</a> söka bland krypterade meddelanden",
+        "warning_kind_files": "Den här versionen av %(brand)s stöder inte visning av vissa krypterade filer",
+        "warning_kind_search": "Den här versionen av %(brand)s stöder inte sökning bland krypterade meddelanden"
+    },
+    "truncated_list_n_more": {
+        "other": "Och %(count)s till…"
     }
 }

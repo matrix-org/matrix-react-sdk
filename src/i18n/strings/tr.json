@@ -191,9 +191,6 @@
     "%(name)s wants to verify": "%(name)s doğrulamak istiyor",
     "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
-    "And %(count)s more...": {
-        "other": "ve %(count)s kez daha..."
-    },
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
     "The following users may not exist": "Belirtilen kullanıcılar mevcut olmayabilir",
@@ -231,7 +228,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>.",
     "Upload files (%(current)s of %(total)s)": "Dosyaları yükle (%(current)s / %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s adet oturum çözümlenemedi!",
-    "Join millions for free on the largest public server": "En büyük açık sunucu üzerindeki milyonlara ücretsiz ulaşmak için katılın",
     "Something went wrong trying to invite the users.": "Kullanıcıların davet edilmesinde bir şeyler yanlış gitti.",
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
@@ -1822,7 +1818,8 @@
         "autodiscovery_invalid_hs": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
         "autodiscovery_invalid_is_base_url": "m.kimlik_sunucu için geçersiz base_url",
         "autodiscovery_invalid_is": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
-        "autodiscovery_invalid_is_response": "Geçersiz kimlik sunucu keşfi yanıtı"
+        "autodiscovery_invalid_is_response": "Geçersiz kimlik sunucu keşfi yanıtı",
+        "server_picker_description_matrix.org": "En büyük açık sunucu üzerindeki milyonlara ücretsiz ulaşmak için katılın"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2324,5 +2321,8 @@
         "cancel_search_label": "Aramayı iptal et"
     },
     "info_tooltip_title": "Bilgi",
-    "language_dropdown_label": "Dil Listesi"
+    "language_dropdown_label": "Dil Listesi",
+    "truncated_list_n_more": {
+        "other": "ve %(count)s kez daha..."
+    }
 }

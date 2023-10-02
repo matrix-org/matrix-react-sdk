@@ -141,9 +141,6 @@
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Create new room": "Opprett et nytt rom",
-    "And %(count)s more...": {
-        "other": "Og %(count)s til..."
-    },
     "Logs sent": "Loggbøkene ble sendt",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
@@ -1869,5 +1866,8 @@
         "cancel_search_label": "Avbryt søket"
     },
     "info_tooltip_title": "Informasjon",
-    "language_dropdown_label": "Språk-nedfallsmeny"
+    "language_dropdown_label": "Språk-nedfallsmeny",
+    "truncated_list_n_more": {
+        "other": "Og %(count)s til..."
+    }
 }

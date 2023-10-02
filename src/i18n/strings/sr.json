@@ -51,9 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
-    "And %(count)s more...": {
-        "other": "И %(count)s других..."
-    },
     "Confirm Removal": "Потврди уклањање",
     "An error has occurred.": "Догодила се грешка.",
     "Unable to restore session": "Не могу да повратим сесију",
@@ -88,7 +85,6 @@
     "Share User": "Подели корисника",
     "Share Room Message": "Подели поруку у соби",
     "Link to selected message": "Веза ка изабраној поруци",
-    "Join millions for free on the largest public server": "Придружите се милионима других бесплатно на највећем јавном серверу",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "Direct Messages": "Директне поруке",
@@ -420,7 +416,6 @@
     "Lion": "лав",
     "Cat": "мачка",
     "Dog": "Пас",
-    "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
     "Clear all data": "Очисти све податке",
@@ -432,7 +427,6 @@
     "Enter the name of a new server you want to explore.": "Унесите име новог сервера који желите да истражите.",
     "Add a new server": "Додајте нови сервер",
     "Your server": "Ваш сервер",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
     "Not Trusted": "Није поуздано",
     "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
@@ -1255,7 +1249,8 @@
         },
         "country_dropdown": "Падајући списак земаља",
         "common_failures": {},
-        "captcha_description": "Овај кућни сервер жели да се увери да нисте робот."
+        "captcha_description": "Овај кућни сервер жели да се увери да нисте робот.",
+        "server_picker_description_matrix.org": "Придружите се милионима других бесплатно на највећем јавном серверу"
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1576,5 +1571,12 @@
     "General failure": "Општа грешка",
     "emoji_picker": {
         "cancel_search_label": "Откажи претрагу"
+    },
+    "seshat": {
+        "warning_kind_files_app": "Користи <a> десктоп апликација </a> да видиш све шифроване датотеке",
+        "warning_kind_search": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука"
+    },
+    "truncated_list_n_more": {
+        "other": "И %(count)s других..."
     }
 }

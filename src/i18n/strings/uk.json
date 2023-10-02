@@ -447,7 +447,6 @@
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
     "Remove recent messages by %(user)s": "Вилучити останні повідомлення від %(user)s",
     "Home": "Домівка",
-    "Server Options": "Опції сервера",
     "Allow this widget to verify your identity": "Дозволити цьому віджету перевіряти вашу особу",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
@@ -489,10 +488,6 @@
     "You are not allowed to view this server's rooms list": "Вам не дозволено переглядати список кімнат цього сервера",
     "Looks good": "Все добре",
     "Enter a server name": "Введіть назву сервера",
-    "And %(count)s more...": {
-        "other": "І ще %(count)s..."
-    },
-    "Join millions for free on the largest public server": "Приєднуйтесь безплатно до мільйонів інших на найбільшому загальнодоступному сервері",
     "e.g. my-room": "наприклад, моя-кімната",
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
     "Switch theme": "Змінити тему",
@@ -558,7 +553,6 @@
         "one": "%(count)s осіб, яких ви знаєте, уже приєдналися",
         "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
     },
-    "This version of %(brand)s does not support searching encrypted messages": "Ця версія %(brand)s не підтримує пошук зашифрованих повідомлень",
     "Keys restored": "Ключ відновлено",
     "Successfully restored %(sessionCount)s keys": "Успішно відновлено %(sessionCount)s ключів",
     "Failed to decrypt %(failedCount)s sessions!": "Не вдалося розшифрувати %(failedCount)s сеансів!",
@@ -651,10 +645,6 @@
     "Other searches": "Інші пошуки",
     "To search messages, look for this icon at the top of a room <icon/>": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
     "Recent searches": "Недавні пошуки",
-    "This version of %(brand)s does not support viewing some encrypted files": "Ця версія %(brand)s не підтримує перегляд деяких зашифрованих файлів",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Скористайтеся <a>стільничним застосунком</a>, щоб пошукати серед зашифрованих повідомлень",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Скористайтеся <a>стільничним застосунком</a>, щоб переглянути всі зашифровані файли",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Не вдалося почати пошук, перевірте <a>налаштування</a>, щоб дізнатися більше",
     "Submit logs": "Надіслати журнали",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -777,7 +767,6 @@
         "one": "Ви збираєтеся видалити %(count)s повідомлення від %(user)s. Це видалить його назавжди для всіх у розмові. Точно продовжити?",
         "other": "Ви збираєтеся видалити %(count)s повідомлень від %(user)s. Це видалить їх назавжди для всіх у розмові. Точно продовжити?"
     },
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
     "Unsent": "Не надіслано",
     "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
     "%(count)s participants": {
@@ -842,13 +831,11 @@
     "Who will you chat to the most?": "З ким ви спілкуватиметеся найбільше?",
     "You're in": "Ви увійшли",
     "Saved Items": "Збережені елементи",
-    "Choose a locale": "Вибрати локаль",
     "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
     "Manually verify by text": "Звірити вручну за допомогою тексту",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
     "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
@@ -1857,7 +1844,8 @@
             "email_address_label": "Адреса е-пошти",
             "remove_msisdn_prompt": "Вилучити %(phone)s?",
             "add_msisdn_instructions": "Текстове повідомлення надіслано на номер +%(msisdn)s. Введіть код перевірки з нього.",
-            "msisdn_label": "Телефонний номер"
+            "msisdn_label": "Телефонний номер",
+            "spell_check_locale_placeholder": "Вибрати локаль"
         },
         "sidebar": {
             "title": "Бічна панель",
@@ -1922,7 +1910,8 @@
             "import_description_1": "Це дає змогу імпортувати ключі шифрування, які ви раніше експортували з іншого клієнта Matrix. Тоді ви зможете розшифрувати будь-які повідомлення, які міг розшифровувати той клієнт.",
             "import_description_2": "Введіть пароль для захисту експортованого файлу. Щоб розшифрувати файл потрібно буде ввести цей пароль.",
             "file_to_import": "Файл для імпорту"
-        }
+        },
+        "warning": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Надіслати нетипову подію даних облікового запису",
@@ -3353,7 +3342,10 @@
         "autodiscovery_invalid_hs": "Сервер за URL-адресою не виглядає дійсним домашнім сервером Matrix",
         "autodiscovery_invalid_is_base_url": "Хибний base_url у m.identity_server",
         "autodiscovery_invalid_is": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
-        "autodiscovery_invalid_is_response": "Хибна відповідь самоналаштування сервера ідентифікації"
+        "autodiscovery_invalid_is_response": "Хибна відповідь самоналаштування сервера ідентифікації",
+        "server_picker_description": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
+        "server_picker_description_matrix.org": "Приєднуйтесь безплатно до мільйонів інших на найбільшому загальнодоступному сервері",
+        "server_picker_title_default": "Опції сервера"
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -4345,5 +4337,15 @@
     "pill": {
         "permalink_other_room": "Повідомлення в %(room)s",
         "permalink_this_room": "Повідомлення від %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Не вдалося почати пошук, перевірте <a>налаштування</a>, щоб дізнатися більше",
+        "warning_kind_files_app": "Скористайтеся <a>стільничним застосунком</a>, щоб переглянути всі зашифровані файли",
+        "warning_kind_search_app": "Скористайтеся <a>стільничним застосунком</a>, щоб пошукати серед зашифрованих повідомлень",
+        "warning_kind_files": "Ця версія %(brand)s не підтримує перегляд деяких зашифрованих файлів",
+        "warning_kind_search": "Ця версія %(brand)s не підтримує пошук зашифрованих повідомлень"
+    },
+    "truncated_list_n_more": {
+        "other": "І ще %(count)s..."
     }
 }

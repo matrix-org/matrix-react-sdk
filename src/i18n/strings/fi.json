@@ -46,9 +46,6 @@
     "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
     "Restricted": "Rajoitettu",
     "Unnamed room": "Nimetön huone",
-    "And %(count)s more...": {
-        "other": "Ja %(count)s muuta..."
-    },
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s %(time)s",
@@ -188,7 +185,6 @@
     "Unable to load backup status": "Varmuuskopioinnin tilan lataaminen epäonnistui",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s istunnon purkaminen epäonnistui!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
-    "Join millions for free on the largest public server": "Liity ilmaiseksi miljoonien joukkoon suurimmalla julkisella palvelimella",
     "Remember my selection for this widget": "Muista valintani tälle sovelmalle",
     "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
     "Missing session data": "Istunnon dataa puuttuu",
@@ -469,7 +465,6 @@
     "a device cross-signing signature": "laitteen ristiinvarmennuksen allekirjoitus",
     "a new cross-signing key signature": "Uusi ristiinvarmennuksen allekirjoitus",
     "Backup version:": "Varmuuskopiointiversio:",
-    "Server Options": "Palvelinasetukset",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Sambia",
     "Yemen": "Jemen",
@@ -574,10 +569,6 @@
     "Monaco": "Monaco",
     "Not encrypted": "Ei salattu",
     "You're all caught up.": "Olet ajan tasalla.",
-    "This version of %(brand)s does not support searching encrypted messages": "Tämä %(brand)s-versio ei tue salattujen viestien hakua",
-    "This version of %(brand)s does not support viewing some encrypted files": "Tämä %(brand)s-versio ei tue joidenkin salattujen tiedostojen katselua",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Voit tarkastella kaikkia salattuja tiedostoja <a>työpöytäsovelluksella</a>",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Käytä salattuja viestejä <a>työpöytäsovelluksella</a>",
     "This widget would like to:": "Tämä sovelma haluaa:",
     "The server has denied your request.": "Palvelin eväsi pyyntösi.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
@@ -665,7 +656,6 @@
     "Leave all rooms": "Poistu kaikista huoneista",
     "Don't leave any rooms": "Älä poistu mistään huoneesta",
     "Or send invite link": "Tai lähetä kutsulinkki",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Viestihaun alustus epäonnistui. Lisätietoa <a>asetuksissa</a>.",
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
@@ -786,7 +776,6 @@
     "Friends and family": "Kaverit ja perhe",
     "We'll help you get connected.": "Autamme sinua yhteyden muodostamisen kanssa.",
     "Who will you chat to the most?": "Kenen kanssa keskustelet eniten?",
-    "Choose a locale": "Valitse maa-asetusto",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Search for": "Etsittävät kohteet",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -794,7 +783,6 @@
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
     "Saved Items": "Tallennetut kohteet",
-    "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
     "View List": "Näytä luettelo",
     "View list": "Näytä luettelo",
@@ -1709,7 +1697,8 @@
             "email_address_label": "Sähköpostiosoite",
             "remove_msisdn_prompt": "Poista %(phone)s?",
             "add_msisdn_instructions": "Tekstiviesti on lähetetty numeroon +%(msisdn)s. Syötä siinä oleva varmistuskoodi.",
-            "msisdn_label": "Puhelinnumero"
+            "msisdn_label": "Puhelinnumero",
+            "spell_check_locale_placeholder": "Valitse maa-asetusto"
         },
         "sidebar": {
             "title": "Sivupalkki",
@@ -1764,7 +1753,8 @@
             "import_description_1": "Tämä prosessi mahdollistaa aiemmin tallennettujen salausavainten tuominen toiseen Matrix-asiakasohjelmaan. Tämän jälkeen voit purkaa kaikki salatut viestit jotka toinen asiakasohjelma pystyisi purkamaan.",
             "import_description_2": "Viety tiedosto suojataan salasanalla. Syötä salasana tähän purkaaksesi tiedoston salauksen.",
             "file_to_import": "Tuotava tiedosto"
-        }
+        },
+        "warning": "<w>VAROITUS:</w> <description/>"
     },
     "devtools": {
         "event_type": "Tapahtuman tyyppi",
@@ -3056,7 +3046,9 @@
         "autodiscovery_invalid_hs": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
         "autodiscovery_invalid_is_base_url": "Epäkelpo base_url palvelimelle m.identity_server",
         "autodiscovery_invalid_is": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
-        "autodiscovery_invalid_is_response": "Epäkelpo identiteettipalvelimen etsinnän vastaus"
+        "autodiscovery_invalid_is_response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
+        "server_picker_description_matrix.org": "Liity ilmaiseksi miljoonien joukkoon suurimmalla julkisella palvelimella",
+        "server_picker_title_default": "Palvelinasetukset"
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3939,5 +3931,15 @@
     "pill": {
         "permalink_other_room": "Viesti huoneessa %(room)s",
         "permalink_this_room": "Viesti käyttäjältä %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Viestihaun alustus epäonnistui. Lisätietoa <a>asetuksissa</a>.",
+        "warning_kind_files_app": "Voit tarkastella kaikkia salattuja tiedostoja <a>työpöytäsovelluksella</a>",
+        "warning_kind_search_app": "Käytä salattuja viestejä <a>työpöytäsovelluksella</a>",
+        "warning_kind_files": "Tämä %(brand)s-versio ei tue joidenkin salattujen tiedostojen katselua",
+        "warning_kind_search": "Tämä %(brand)s-versio ei tue salattujen viestien hakua"
+    },
+    "truncated_list_n_more": {
+        "other": "Ja %(count)s muuta..."
     }
 }

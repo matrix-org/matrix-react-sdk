@@ -49,9 +49,6 @@
     "AM": "ДП",
     "PM": "ПП",
     "Unnamed room": "Комната без названия",
-    "And %(count)s more...": {
-        "other": "Еще %(count)s…"
-    },
     "Delete Widget": "Удалить виджет",
     "Restricted": "Ограниченный пользователь",
     "%(duration)ss": "%(duration)s сек",
@@ -207,7 +204,6 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Join millions for free on the largest public server": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
     "Clear all data": "Очистить все данные",
@@ -346,10 +342,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя или имя пользователя (например, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Unable to set up keys": "Невозможно настроить ключи",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Используйте <a>настольное приложение</a>, чтобы просмотреть все зашифрованные файлы",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Используйте <a>настольное приложение</a> для поиска зашифрованных сообщений",
-    "This version of %(brand)s does not support viewing some encrypted files": "Эта версия %(brand)s не поддерживает просмотр некоторых зашифрованных файлов",
-    "This version of %(brand)s does not support searching encrypted messages": "Эта версия %(brand)s не поддерживает поиск зашифрованных сообщений",
     "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
     "Modal Widget": "Модальный виджет",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
@@ -357,7 +349,6 @@
     "Invite by email": "Пригласить по электронной почте",
     "Continuing without email": "Продолжить без электронной почты",
     "Reason (optional)": "Причина (необязательно)",
-    "Server Options": "Параметры сервера",
     "Decline All": "Отклонить все",
     "Approve widget permissions": "Одобрить разрешения виджета",
     "Zimbabwe": "Зимбабве",
@@ -714,7 +705,6 @@
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
     },
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -827,7 +817,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Показать: %(instance)s комнат (%(server)s)",
     "Add new server…": "Добавить новый сервер…",
     "Remove server “%(roomServer)s”": "Удалить сервер «%(roomServer)s»",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Вы можете использовать пользовательские опции сервера для входа на другие серверы Matrix, указав URL-адрес другого домашнего сервера. Это позволяет использовать %(brand)s с существующей учётной записью Matrix на другом домашнем сервере.",
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -842,11 +831,9 @@
     "We'll help you get connected.": "Мы поможем вам подключиться.",
     "Online community members": "Участники сообщества в сети",
     "You're in": "Вы в",
-    "Choose a locale": "Выберите регион",
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
-    "<w>WARNING:</w> <description/>": "<w>ВНИМАНИЕ:</w> <description/>",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "common": {
@@ -1753,7 +1740,8 @@
             "email_address_label": "Адрес электронной почты",
             "remove_msisdn_prompt": "Удалить %(phone)s?",
             "add_msisdn_instructions": "Текстовое сообщение было отправлено +%(msisdn)s. Пожалуйста, введите проверочный код, который он содержит.",
-            "msisdn_label": "Номер телефона"
+            "msisdn_label": "Номер телефона",
+            "spell_check_locale_placeholder": "Выберите регион"
         },
         "sidebar": {
             "title": "Боковая панель",
@@ -1812,7 +1800,8 @@
             "import_description_1": "Этот процесс позволит вам импортировать ключи шифрования, которые вы экспортировали ранее из клиента Matrix. Это позволит вам расшифровать историю чата.",
             "import_description_2": "Файл экспорта будет защищен кодовой фразой. Для расшифровки файла необходимо будет её ввести.",
             "file_to_import": "Файл для импорта"
-        }
+        },
+        "warning": "<w>ВНИМАНИЕ:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Отправить пользовательское событие данных учётной записи",
@@ -3121,7 +3110,10 @@
         "autodiscovery_invalid_hs": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
         "autodiscovery_invalid_is_base_url": "Неверный base_url для m.identity_server",
         "autodiscovery_invalid_is": "URL-адрес сервера идентификации не является действительным сервером идентификации",
-        "autodiscovery_invalid_is_response": "Неверный ответ на запрос идентификации сервера"
+        "autodiscovery_invalid_is_response": "Неверный ответ на запрос идентификации сервера",
+        "server_picker_description": "Вы можете использовать пользовательские опции сервера для входа на другие серверы Matrix, указав URL-адрес другого домашнего сервера. Это позволяет использовать %(brand)s с существующей учётной записью Matrix на другом домашнем сервере.",
+        "server_picker_description_matrix.org": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
+        "server_picker_title_default": "Параметры сервера"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -4032,5 +4024,15 @@
     "pill": {
         "permalink_other_room": "Сообщение в %(room)s",
         "permalink_this_room": "Сообщение от %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
+        "warning_kind_files_app": "Используйте <a>настольное приложение</a>, чтобы просмотреть все зашифрованные файлы",
+        "warning_kind_search_app": "Используйте <a>настольное приложение</a> для поиска зашифрованных сообщений",
+        "warning_kind_files": "Эта версия %(brand)s не поддерживает просмотр некоторых зашифрованных файлов",
+        "warning_kind_search": "Эта версия %(brand)s не поддерживает поиск зашифрованных сообщений"
+    },
+    "truncated_list_n_more": {
+        "other": "Еще %(count)s…"
     }
 }

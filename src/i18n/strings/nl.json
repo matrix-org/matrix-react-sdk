@@ -59,9 +59,6 @@
     "Unnamed room": "Naamloze kamer",
     "collapse": "dichtvouwen",
     "expand": "uitvouwen",
-    "And %(count)s more...": {
-        "other": "En %(count)s meer…"
-    },
     "Sunday": "Zondag",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
@@ -188,7 +185,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Ontsleutelen van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
     "Email (optional)": "E-mailadres (optioneel)",
-    "Join millions for free on the largest public server": "Neem deel aan de grootste publieke server samen met miljoenen anderen",
     "Remember my selection for this widget": "Onthoud mijn keuze voor deze widget",
     "Notes": "Opmerkingen",
     "Sign out and remove encryption keys?": "Uitloggen en versleutelingssleutels verwijderen?",
@@ -534,10 +530,6 @@
     "Can't find this server or its room list": "Kan de server of haar kamergids niet vinden",
     "Looks good": "Ziet er goed uit",
     "Enter a server name": "Geef een servernaam",
-    "Server Options": "Server opties",
-    "This version of %(brand)s does not support searching encrypted messages": "Deze versie van %(brand)s ondersteunt niet het doorzoeken van versleutelde berichten",
-    "This version of %(brand)s does not support viewing some encrypted files": "Deze versie van %(brand)s ondersteunt niet de mogelijkheid sommige versleutelde bestanden te weergeven",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Gebruik de <a>Desktop-toepassing</a> om alle versleutelde berichten te zien",
     "Not encrypted": "Niet versleuteld",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
@@ -567,7 +559,6 @@
     "St. Lucia": "Sint Lucia",
     "South Sudan": "Zuid-Soedan",
     "Oman": "Oman",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Gebruik de <a>Desktop-app</a> om alle versleutelde bestanden te zien",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Herinnering: Jouw browser wordt niet ondersteund. Dit kan een negatieve impact hebben op je ervaring.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
@@ -686,7 +677,6 @@
     "Message preview": "Voorbeeld van bericht",
     "Sent": "Verstuurd",
     "You don't have permission to do this": "Je hebt geen rechten om dit te doen",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "User Directory": "Personengids",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
@@ -778,7 +768,6 @@
         "other": "Je staat op het punt %(count)s berichten te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?"
     },
     "%(featureName)s Beta feedback": "%(featureName)s Bèta-feedback",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Je kan de aangepaste serveropties gebruiken om je aan te melden bij andere Matrix-servers door een andere server-URL op te geven. Hierdoor kan je %(brand)s gebruiken met een bestaand Matrix-account op een andere thuisserver.",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -842,7 +831,6 @@
     "Who will you chat to the most?": "Met wie ga je het meest chatten?",
     "You're in": "Je bent binnen",
     "Saved Items": "Opgeslagen items",
-    "Choose a locale": "Kies een landinstelling",
     "Interactively verify by emoji": "Interactief verifiëren door emoji",
     "Manually verify by text": "Handmatig verifiëren via tekst",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s of %(recoveryFile)s",
@@ -1697,7 +1685,8 @@
             "email_address_label": "E-mailadres",
             "remove_msisdn_prompt": "%(phone)s verwijderen?",
             "add_msisdn_instructions": "Er is een sms verstuurd naar +%(msisdn)s. Voor de verificatiecode in die in het bericht staat.",
-            "msisdn_label": "Telefoonnummer"
+            "msisdn_label": "Telefoonnummer",
+            "spell_check_locale_placeholder": "Kies een landinstelling"
         },
         "sidebar": {
             "title": "Zijbalk",
@@ -3053,7 +3042,10 @@
         "autodiscovery_invalid_hs": "De homeserver-URL lijkt geen geldige Matrix-homeserver",
         "autodiscovery_invalid_is_base_url": "Ongeldige base_url voor m.identity_server",
         "autodiscovery_invalid_is": "De identiteitsserver-URL lijkt geen geldige identiteitsserver",
-        "autodiscovery_invalid_is_response": "Ongeldig identiteitsserver-vindbaarheidsantwoord"
+        "autodiscovery_invalid_is_response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
+        "server_picker_description": "Je kan de aangepaste serveropties gebruiken om je aan te melden bij andere Matrix-servers door een andere server-URL op te geven. Hierdoor kan je %(brand)s gebruiken met een bestaand Matrix-account op een andere thuisserver.",
+        "server_picker_description_matrix.org": "Neem deel aan de grootste publieke server samen met miljoenen anderen",
+        "server_picker_title_default": "Server opties"
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3940,5 +3932,15 @@
         "cancel_search_label": "Zoeken annuleren"
     },
     "info_tooltip_title": "Informatie",
-    "language_dropdown_label": "Taalselectie"
+    "language_dropdown_label": "Taalselectie",
+    "seshat": {
+        "error_initialising": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
+        "warning_kind_files_app": "Gebruik de <a>Desktop-app</a> om alle versleutelde bestanden te zien",
+        "warning_kind_search_app": "Gebruik de <a>Desktop-toepassing</a> om alle versleutelde berichten te zien",
+        "warning_kind_files": "Deze versie van %(brand)s ondersteunt niet de mogelijkheid sommige versleutelde bestanden te weergeven",
+        "warning_kind_search": "Deze versie van %(brand)s ondersteunt niet het doorzoeken van versleutelde berichten"
+    },
+    "truncated_list_n_more": {
+        "other": "En %(count)s meer…"
+    }
 }

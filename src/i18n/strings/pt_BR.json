@@ -59,9 +59,6 @@
     "Delete Widget": "Apagar widget",
     "collapse": "recolher",
     "expand": "expandir",
-    "And %(count)s more...": {
-        "other": "E %(count)s mais..."
-    },
     "Sunday": "Domingo",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
@@ -311,7 +308,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restauradas",
     "Keys restored": "Chaves restauradas",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s chaves foram restauradas com sucesso",
-    "Join millions for free on the largest public server": "Junte-se a milhões de pessoas gratuitamente no maior servidor público",
     "Switch theme": "Escolha um tema",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirme a sessão deste usuário comparando o seguinte com as configurações deste usuário:",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Apagar chaves de autoverificação é permanente. Qualquer pessoa com quem você se confirmou receberá alertas de segurança. Não é aconselhável fazer isso, a menos que você tenha perdido todos os aparelhos nos quais fez a autoverificação.",
@@ -333,10 +329,6 @@
     "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Tente rolar para cima na conversa para ver se há mensagens anteriores.",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Use o <a>app para Computador</a> para ver todos os arquivos criptografados",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Use o <a>app para Computador</a> para buscar mensagens criptografadas",
-    "This version of %(brand)s does not support viewing some encrypted files": "Esta versão do %(brand)s não permite visualizar alguns arquivos criptografados",
-    "This version of %(brand)s does not support searching encrypted messages": "Esta versão do %(brand)s não permite buscar mensagens criptografadas",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
     "Preparing to download logs": "Preparando os relatórios para download",
@@ -609,7 +601,6 @@
     "Approve widget permissions": "Autorizar as permissões do widget",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
-    "Server Options": "Opções do servidor",
     "Reason (optional)": "Motivo (opcional)",
     "Hold": "Pausar",
     "Resume": "Retomar",
@@ -670,7 +661,6 @@
         "one": "%(count)s pessoa que você conhece já entrou",
         "other": "%(count)s pessoas que você conhece já entraram"
     },
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Falha na inicialização da pesquisa por mensagem, confire <a>suas configurações</a> para mais informações",
     "MB": "MB",
     "Space selection": "Seleção de Espaços",
     "%(spaceName)s and %(count)s others": {
@@ -2545,7 +2535,9 @@
         "autodiscovery_invalid_hs": "O endereço do servidor local não parece indicar um servidor local válido na Matrix",
         "autodiscovery_invalid_is_base_url": "base_url inválido para m.identity_server",
         "autodiscovery_invalid_is": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
-        "autodiscovery_invalid_is_response": "Resposta de descoberta do servidor de identidade inválida"
+        "autodiscovery_invalid_is_response": "Resposta de descoberta do servidor de identidade inválida",
+        "server_picker_description_matrix.org": "Junte-se a milhões de pessoas gratuitamente no maior servidor público",
+        "server_picker_title_default": "Opções do servidor"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -3247,5 +3239,15 @@
         "cancel_search_label": "Cancelar busca"
     },
     "info_tooltip_title": "Informação",
-    "language_dropdown_label": "Menu suspenso de idiomas"
+    "language_dropdown_label": "Menu suspenso de idiomas",
+    "seshat": {
+        "error_initialising": "Falha na inicialização da pesquisa por mensagem, confire <a>suas configurações</a> para mais informações",
+        "warning_kind_files_app": "Use o <a>app para Computador</a> para ver todos os arquivos criptografados",
+        "warning_kind_search_app": "Use o <a>app para Computador</a> para buscar mensagens criptografadas",
+        "warning_kind_files": "Esta versão do %(brand)s não permite visualizar alguns arquivos criptografados",
+        "warning_kind_search": "Esta versão do %(brand)s não permite buscar mensagens criptografadas"
+    },
+    "truncated_list_n_more": {
+        "other": "E %(count)s mais..."
+    }
 }

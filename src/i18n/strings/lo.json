@@ -324,9 +324,6 @@
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
-    "Join millions for free on the largest public server": "ເຂົ້າຮ່ວມຫຼາຍລ້ານຄົນໄດ້ໂດຍບໍ່ເສຍຄ່າໃນເຊີບເວີສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດ",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "ທ່ານສາມາດໃຊ້ຕົວເລືອກເຊີບເວີແບບກຳນົດເອງເພື່ອເຂົ້າສູ່ລະບົບເຊີບເວີ Matrix ອື່ນໂດຍການລະບຸ URL ເຊີບເວີອື່ນ. ນີ້ແມ່ນອະນຸຍາດໃຫ້ທ່ານໃຊ້ %(brand)s ກັບບັນຊີ Matrix ທີ່ມີຢູ່ແລ້ວໃນ homeserver ອື່ນ.",
-    "Server Options": "ຕົວເລືອກເຊີບເວີ",
     "Your server": "ເຊີບເວີຂອງທ່ານ",
     "Can't find this server or its room list": "ບໍ່ສາມາດຊອກຫາເຊີບເວີນີ້ ຫຼື ລາຍຊື່ຫ້ອງຂອງມັນໄດ້",
     "You are not allowed to view this server's rooms list": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງລາຍຊື່ຫ້ອງຂອງເຊີບເວີນີ້",
@@ -533,11 +530,6 @@
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
     "expand": "ຂະຫຍາຍ",
     "collapse": "ບໍ່ສຳເລັດ",
-    "This version of %(brand)s does not support searching encrypted messages": "ເວີຊັ້ນຂອງ %(brand)s ບໍ່ຮອງຮັບການຊອກຫາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ",
-    "This version of %(brand)s does not support viewing some encrypted files": "%(brand)s ລຸ້ນນີ້ບໍ່ຮອງຮັບການເບິ່ງບາງໄຟລ໌ທີ່ເຂົ້າລະຫັດໄວ້",
-    "Use the <a>Desktop app</a> to search encrypted messages": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອຊອກຫາຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້",
-    "Use the <a>Desktop app</a> to see all encrypted files": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອເບິ່ງໄຟລ໌ທີ່ຖືກເຂົ້າລະຫັດທັງໝົດ",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "ເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບ່ສຳເລັດ, ໃຫ້ກວດເບິ່ງ <a>ການຕັ້ງຄ່າຂອງທ່ານ</a> ສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ",
     "MB": "ເມກາໄບ",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການສິ້ນສຸດການສຳຫຼວດນີ້? ນີ້ຈະສະແດງຜົນສຸດທ້າຍຂອງການລົງຄະແນນສຽງ ແລະ ຢຸດບໍ່ໃຫ້ປະຊາຊົນສາມາດລົງຄະແນນສຽງໄດ້.",
     "End Poll": "ສິ້ນສຸດການສຳຫຼວດ",
@@ -784,9 +776,6 @@
     "Close dialog": "ປິດກ່ອງໂຕ້ຕອບ",
     "Not all selected were added": "ບໍ່ໄດ້ເລືອກທັງໝົດທີ່ຖືກເພີ່ມ",
     "Looks good": "ດີ",
-    "And %(count)s more...": {
-        "other": "ແລະ %(count)sອີກ..."
-    },
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -2809,7 +2798,10 @@
         "autodiscovery_invalid_hs": "Homeserver URL ບໍ່ສະເເດງເປັນ Matrix homeserver ທີ່ຖືກຕ້ອງ",
         "autodiscovery_invalid_is_base_url": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.identity_server",
         "autodiscovery_invalid_is": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
-        "autodiscovery_invalid_is_response": "ການຕອບສະໜອງ ການຄົ້ນພົບຕົວຕົນຂອງເຊີບເວີບໍ່ຖືກຕ້ອງ"
+        "autodiscovery_invalid_is_response": "ການຕອບສະໜອງ ການຄົ້ນພົບຕົວຕົນຂອງເຊີບເວີບໍ່ຖືກຕ້ອງ",
+        "server_picker_description": "ທ່ານສາມາດໃຊ້ຕົວເລືອກເຊີບເວີແບບກຳນົດເອງເພື່ອເຂົ້າສູ່ລະບົບເຊີບເວີ Matrix ອື່ນໂດຍການລະບຸ URL ເຊີບເວີອື່ນ. ນີ້ແມ່ນອະນຸຍາດໃຫ້ທ່ານໃຊ້ %(brand)s ກັບບັນຊີ Matrix ທີ່ມີຢູ່ແລ້ວໃນ homeserver ອື່ນ.",
+        "server_picker_description_matrix.org": "ເຂົ້າຮ່ວມຫຼາຍລ້ານຄົນໄດ້ໂດຍບໍ່ເສຍຄ່າໃນເຊີບເວີສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດ",
+        "server_picker_title_default": "ຕົວເລືອກເຊີບເວີ"
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -3650,5 +3642,15 @@
         "cancel_search_label": "ຍົກເລີກການຄົ້ນຫາ"
     },
     "info_tooltip_title": "ຂໍ້ມູນ",
-    "language_dropdown_label": "ເລື່ອນພາສາລົງ"
+    "language_dropdown_label": "ເລື່ອນພາສາລົງ",
+    "seshat": {
+        "error_initialising": "ເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບ່ສຳເລັດ, ໃຫ້ກວດເບິ່ງ <a>ການຕັ້ງຄ່າຂອງທ່ານ</a> ສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ",
+        "warning_kind_files_app": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອເບິ່ງໄຟລ໌ທີ່ຖືກເຂົ້າລະຫັດທັງໝົດ",
+        "warning_kind_search_app": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອຊອກຫາຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້",
+        "warning_kind_files": "%(brand)s ລຸ້ນນີ້ບໍ່ຮອງຮັບການເບິ່ງບາງໄຟລ໌ທີ່ເຂົ້າລະຫັດໄວ້",
+        "warning_kind_search": "ເວີຊັ້ນຂອງ %(brand)s ບໍ່ຮອງຮັບການຊອກຫາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ"
+    },
+    "truncated_list_n_more": {
+        "other": "ແລະ %(count)sອີກ..."
+    }
 }

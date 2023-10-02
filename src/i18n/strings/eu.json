@@ -57,9 +57,6 @@
     "Unnamed room": "Izen gabeko gela",
     "collapse": "tolestu",
     "expand": "hedatu",
-    "And %(count)s more...": {
-        "other": "Eta %(count)s gehiago…"
-    },
     "Delete Widget": "Ezabatu trepeta",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s(e)ko %(monthName)sk %(day)sa",
     "Sunday": "Igandea",
@@ -160,7 +157,6 @@
     "Hammer": "Mailua",
     "Telephone": "Telefonoa",
     "Email (optional)": "E-mail (aukerakoa)",
-    "Join millions for free on the largest public server": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean",
     "Start using Key Backup": "Hasi gakoen babes-kopia egiten",
     "Headphones": "Aurikularrak",
     "Folder": "Karpeta",
@@ -1492,7 +1488,8 @@
         "autodiscovery_invalid_hs": "Hasiera-zerbitzariaren URL-a ez dirudi baliozko hasiera-zerbitzari batena",
         "autodiscovery_invalid_is_base_url": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
         "autodiscovery_invalid_is": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
-        "autodiscovery_invalid_is_response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan"
+        "autodiscovery_invalid_is_response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
+        "server_picker_description_matrix.org": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean"
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1906,5 +1903,8 @@
     "emoji_picker": {
         "cancel_search_label": "Ezeztatu bilaketa"
     },
-    "language_dropdown_label": "Hizkuntza menua"
+    "language_dropdown_label": "Hizkuntza menua",
+    "truncated_list_n_more": {
+        "other": "Eta %(count)s gehiago…"
+    }
 }

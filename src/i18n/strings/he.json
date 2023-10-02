@@ -408,18 +408,9 @@
     "Looks good": "נראה טוב",
     "Enter a server name": "הכנס שם שרת",
     "Home": "הבית",
-    "And %(count)s more...": {
-        "other": "ו%(count)s עוד..."
-    },
-    "Join millions for free on the largest public server": "הצטרפו למיליונים בחינם בשרת הציבורי הגדול ביותר",
-    "Server Options": "אפשרויות שרת",
     "e.g. my-room": "כגון החדר-שלי",
     "collapse": "אחד",
     "expand": "הרחב",
-    "This version of %(brand)s does not support searching encrypted messages": "גרסה זו של %(brand)s אינה תומכת בחיפוש הודעות מוצפנות",
-    "This version of %(brand)s does not support viewing some encrypted files": "גרסה זו של %(brand)s אינה תומכת בצפייה בקבצים מוצפנים מסוימים",
-    "Use the <a>Desktop app</a> to search encrypted messages": "השתמשו ב <a> אפליקציית שולחן העבודה </a> לחיפוש הודעות מוצפנות",
-    "Use the <a>Desktop app</a> to see all encrypted files": "השתמשו ב <a> אפליקציית שולחן העבודה </a> כדי לראות את כל הקבצים המוצפנים",
     "%(name)s wants to verify": "%(name)s רוצה לאמת",
     "%(name)s cancelled": "%(name)s ביטל",
     "%(name)s declined": "%(name)s סרב",
@@ -630,7 +621,6 @@
     "Enter Security Phrase": "הזן ביטוי אבטחה",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "לא ניתן לפענח גיבוי עם ביטוי אבטחה זה: אנא ודא שהזנת את ביטוי האבטחה הנכון.",
     "Incorrect Security Phrase": "ביטוי אבטחה שגוי",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "אתחול חיפוש ההודעות נכשל. בדוק את <a>ההגדרות שלך</a> למידע נוסף",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
@@ -2419,7 +2409,9 @@
         "autodiscovery_invalid_hs": "נראה שכתובת האתר של שרת הבית אינה שרת ביתי של מטריקס",
         "autodiscovery_invalid_is_base_url": "Base_url לא חוקי עבור m.identity_server",
         "autodiscovery_invalid_is": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
-        "autodiscovery_invalid_is_response": "תגובת גילוי שרת זהות לא חוקית"
+        "autodiscovery_invalid_is_response": "תגובת גילוי שרת זהות לא חוקית",
+        "server_picker_description_matrix.org": "הצטרפו למיליונים בחינם בשרת הציבורי הגדול ביותר",
+        "server_picker_title_default": "אפשרויות שרת"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -3110,5 +3102,15 @@
         "cancel_search_label": "בטל חיפוש"
     },
     "info_tooltip_title": "מידע",
-    "language_dropdown_label": "תפריט שפות"
+    "language_dropdown_label": "תפריט שפות",
+    "seshat": {
+        "error_initialising": "אתחול חיפוש ההודעות נכשל. בדוק את <a>ההגדרות שלך</a> למידע נוסף",
+        "warning_kind_files_app": "השתמשו ב <a> אפליקציית שולחן העבודה </a> כדי לראות את כל הקבצים המוצפנים",
+        "warning_kind_search_app": "השתמשו ב <a> אפליקציית שולחן העבודה </a> לחיפוש הודעות מוצפנות",
+        "warning_kind_files": "גרסה זו של %(brand)s אינה תומכת בצפייה בקבצים מוצפנים מסוימים",
+        "warning_kind_search": "גרסה זו של %(brand)s אינה תומכת בחיפוש הודעות מוצפנות"
+    },
+    "truncated_list_n_more": {
+        "other": "ו%(count)s עוד..."
+    }
 }

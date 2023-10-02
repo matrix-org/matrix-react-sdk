@@ -589,7 +589,6 @@
     },
     "Not encrypted": "Μη κρυπτογραφημένο",
     "Sending": "Αποστολή",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Μπορείτε να χρησιμοποιήσετε τις προσαρμοσμένες επιλογές διακομιστή για να συνδεθείτε σε άλλους διακομιστές Matrix, καθορίζοντας μια διαφορετική διεύθυνση URL του κεντρικού διακομιστή. Αυτό σας επιτρέπει να χρησιμοποιείτε το %(brand)s με έναν υπάρχοντα λογαριασμό Matrix σε διαφορετικό τοπικό διακομιστή.",
     "Message preview": "Προεπισκόπηση μηνύματος",
     "You don't have permission to do this": "Δεν έχετε άδεια να το κάνετε αυτό",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Είστε βέβαιοι ότι θέλετε να τερματίσετε αυτήν τη δημοσκόπηση; Αυτό θα εμφανίσει τα τελικά αποτελέσματα της δημοσκόπησης και θα εμποδίσει νέους ψήφους.",
@@ -635,13 +634,7 @@
     "Create a new space": "Δημιουργήστε ένα νέο χώρο",
     "Add existing space": "Προσθήκη υπάρχοντος χώρου",
     "Server name": "Ονομα διακομιστή",
-    "Server Options": "Επιλογές Διακομιστή",
     "e.g. my-room": "π.χ. my-room",
-    "This version of %(brand)s does not support searching encrypted messages": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την αναζήτηση κρυπτογραφημένων μηνυμάτων",
-    "This version of %(brand)s does not support viewing some encrypted files": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την προβολή ορισμένων κρυπτογραφημένων αρχείων",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα μηνύματα",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα αρχεία",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Η προετοιμασία της αναζήτησης μηνυμάτων απέτυχε, ελέγξτε τις <a>ρυθμίσεις σας</a> για περισσότερες πληροφορίες",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
@@ -665,13 +658,9 @@
     "You are not allowed to view this server's rooms list": "Δεν επιτρέπεται να δείτε τη λίστα δωματίων αυτού του διακομιστή",
     "Looks good": "Φαίνεται καλό",
     "Enter a server name": "Εισαγάγετε ένα όνομα διακομιστή",
-    "Join millions for free on the largest public server": "Συμμετέχετε δωρεάν στον μεγαλύτερο δημόσιο διακομιστή",
     "toggle event": "μεταβολή συμβάντος",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Δεν είναι δυνατή η εύρεση προφίλ για τα αναγνωριστικά Matrix που αναφέρονται παρακάτω - θα θέλατε να τα προσκαλέσετε ούτως ή άλλως;",
     "Adding spaces has moved.": "Η προσθήκη χώρων μετακινήθηκε.",
-    "And %(count)s more...": {
-        "other": "Και %(count)s ακόμα..."
-    },
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
@@ -2799,7 +2788,10 @@
         "autodiscovery_invalid_hs": "Η διεύθυνση URL του κεντρικού διακομιστή δε φαίνεται να αντιστοιχεί σε έγκυρο διακομιστή Matrix",
         "autodiscovery_invalid_is_base_url": "Μη έγκυρο base_url για m.identity_server",
         "autodiscovery_invalid_is": "Η διεύθυνση URL διακομιστή ταυτοποίησης δε φαίνεται να είναι έγκυρη",
-        "autodiscovery_invalid_is_response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας"
+        "autodiscovery_invalid_is_response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
+        "server_picker_description": "Μπορείτε να χρησιμοποιήσετε τις προσαρμοσμένες επιλογές διακομιστή για να συνδεθείτε σε άλλους διακομιστές Matrix, καθορίζοντας μια διαφορετική διεύθυνση URL του κεντρικού διακομιστή. Αυτό σας επιτρέπει να χρησιμοποιείτε το %(brand)s με έναν υπάρχοντα λογαριασμό Matrix σε διαφορετικό τοπικό διακομιστή.",
+        "server_picker_description_matrix.org": "Συμμετέχετε δωρεάν στον μεγαλύτερο δημόσιο διακομιστή",
+        "server_picker_title_default": "Επιλογές Διακομιστή"
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -3632,5 +3624,15 @@
         "cancel_search_label": "Ακύρωση αναζήτησης"
     },
     "info_tooltip_title": "Πληροφορίες",
-    "language_dropdown_label": "Επιλογή Γλώσσας"
+    "language_dropdown_label": "Επιλογή Γλώσσας",
+    "seshat": {
+        "error_initialising": "Η προετοιμασία της αναζήτησης μηνυμάτων απέτυχε, ελέγξτε τις <a>ρυθμίσεις σας</a> για περισσότερες πληροφορίες",
+        "warning_kind_files_app": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα αρχεία",
+        "warning_kind_search_app": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα μηνύματα",
+        "warning_kind_files": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την προβολή ορισμένων κρυπτογραφημένων αρχείων",
+        "warning_kind_search": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την αναζήτηση κρυπτογραφημένων μηνυμάτων"
+    },
+    "truncated_list_n_more": {
+        "other": "Και %(count)s ακόμα..."
+    }
 }

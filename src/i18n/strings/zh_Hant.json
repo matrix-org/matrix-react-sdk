@@ -58,9 +58,6 @@
     "Delete Widget": "刪除小工具",
     "collapse": "收折",
     "expand": "展開",
-    "And %(count)s more...": {
-        "other": "與更多 %(count)s 個…"
-    },
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s，%(monthName)s %(day)s %(fullYear)s",
     "Sunday": "星期日",
     "Today": "今天",
@@ -117,7 +114,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "驗證此工作階段，並標記為可受信任。由您將工作階段標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
     "Incoming Verification Request": "收到的驗證請求",
     "Email (optional)": "電子郵件（選擇性）",
-    "Join millions for free on the largest public server": "在最大的公開伺服器上，免費與數百萬人一起交流",
     "Dog": "狗",
     "Cat": "貓",
     "Lion": "獅",
@@ -347,10 +343,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "使用某人的名字或使用者名稱（如 <userId/>）以與他們開始對話。",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Unable to set up keys": "無法設定金鑰",
-    "Use the <a>Desktop app</a> to see all encrypted files": "使用<a>桌面應用程式</a>以檢視所有加密的檔案",
-    "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面應用程式</a>搜尋加密訊息",
-    "This version of %(brand)s does not support viewing some encrypted files": "此版本的 %(brand)s 不支援檢視某些加密檔案",
-    "This version of %(brand)s does not support searching encrypted messages": "此版本的 %(brand)s 不支援搜尋加密訊息",
     "Data on this screen is shared with %(widgetDomain)s": "在此畫面上的資料會與 %(widgetDomain)s 分享",
     "Modal Widget": "程式小工具",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
@@ -610,7 +602,6 @@
     "Approve widget permissions": "批准小工具權限",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "請注意，如果您不新增電子郵件且忘記密碼，您將<b>永遠失去對您帳號的存取權</b>。",
     "Continuing without email": "不使用電子郵件來繼續",
-    "Server Options": "伺服器選項",
     "Reason (optional)": "理由（選擇性）",
     "Hold": "保留",
     "Resume": "繼續",
@@ -686,7 +677,6 @@
     "Search for rooms or people": "搜尋聊天室或夥伴",
     "Sent": "已傳送",
     "You don't have permission to do this": "您沒有權限執行此動作",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。",
     "User Directory": "使用者目錄",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
@@ -778,7 +768,6 @@
         "other": "您將要移除 %(user)s 的 %(count)s 則訊息。將會為對話中的所有人永久移除它們。確定要繼續嗎？"
     },
     "Unsent": "未傳送",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
     "%(featureName)s Beta feedback": "%(featureName)s Beta 測試回饋",
     "%(count)s participants": {
@@ -842,13 +831,11 @@
     "Who will you chat to the most?": "您最常與誰聊天？",
     "You're in": "加入成功！",
     "Saved Items": "已儲存的項目",
-    "Choose a locale": "選擇語系",
     "Interactively verify by emoji": "透過表情符號互動來驗證",
     "Manually verify by text": "透過文字手動驗證",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s 開始了視訊通話",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>警告：</w> <description/>",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播以開始錄製語音訊息。",
     "Can't start voice message": "無法開始語音訊息",
@@ -1857,7 +1844,8 @@
             "email_address_label": "電子郵件地址",
             "remove_msisdn_prompt": "移除 %(phone)s？",
             "add_msisdn_instructions": "文字訊息將會被傳送到 +%(msisdn)s。請輸入其中包含的驗證碼。",
-            "msisdn_label": "電話號碼"
+            "msisdn_label": "電話號碼",
+            "spell_check_locale_placeholder": "選擇語系"
         },
         "sidebar": {
             "title": "側邊欄",
@@ -1922,7 +1910,8 @@
             "import_description_1": "這個過程讓您可以匯入您先前從其他 Matrix 客戶端匯出的加密金鑰。您將可以解密在其他客戶端可以解密的訊息。",
             "import_description_2": "匯出檔案被安全密語所保護。您應該在這裡輸入安全密語來解密檔案。",
             "file_to_import": "要匯入的檔案"
-        }
+        },
+        "warning": "<w>警告：</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "傳送自訂帳號資料事件",
@@ -3353,7 +3342,10 @@
         "autodiscovery_invalid_hs": "家伺服器網址似乎不是有效的 Matrix 家伺服器",
         "autodiscovery_invalid_is_base_url": "無效的 m.identity_server base_url",
         "autodiscovery_invalid_is": "身分伺服器網址似乎不是有效的身分伺服器",
-        "autodiscovery_invalid_is_response": "身份伺服器探索回應無效"
+        "autodiscovery_invalid_is_response": "身份伺服器探索回應無效",
+        "server_picker_description": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
+        "server_picker_description_matrix.org": "在最大的公開伺服器上，免費與數百萬人一起交流",
+        "server_picker_title_default": "伺服器選項"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -4345,5 +4337,15 @@
     "pill": {
         "permalink_other_room": "%(room)s 中的訊息",
         "permalink_this_room": "來自 %(user)s 的訊息"
+    },
+    "seshat": {
+        "error_initialising": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
+        "warning_kind_files_app": "使用<a>桌面應用程式</a>以檢視所有加密的檔案",
+        "warning_kind_search_app": "使用<a>桌面應用程式</a>搜尋加密訊息",
+        "warning_kind_files": "此版本的 %(brand)s 不支援檢視某些加密檔案",
+        "warning_kind_search": "此版本的 %(brand)s 不支援搜尋加密訊息"
+    },
+    "truncated_list_n_more": {
+        "other": "與更多 %(count)s 個…"
     }
 }

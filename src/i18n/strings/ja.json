@@ -68,9 +68,6 @@
     "%(items)s and %(lastItem)s": "%(items)s, %(lastItem)s",
     "collapse": "折りたたむ",
     "expand": "展開",
-    "And %(count)s more...": {
-        "other": "他%(count)s人以上…"
-    },
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
     "Confirm Removal": "削除の確認",
     "An error has occurred.": "エラーが発生しました。",
@@ -145,7 +142,6 @@
     "Upload files (%(current)s of %(total)s)": "ファイルのアップロード（%(current)s/%(total)s）",
     "Upload files": "ファイルのアップロード",
     "Upload all": "全てアップロード",
-    "Use the <a>Desktop app</a> to search encrypted messages": "<a>デスクトップアプリ</a>を使用すると暗号化されたメッセージを検索できます",
     "%(name)s wants to verify": "%(name)sが認証を要求しています",
     "Recently Direct Messaged": "最近ダイレクトメッセージで会話したユーザー",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、またはユーザー名（<userId/>の形式）を指定するか、<a>このルームを共有</a>してください。",
@@ -509,7 +505,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sと%(space2Name)s",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>アップグレードすると、このルームの新しいバージョンが作成されます。</b>今ある全てのメッセージは、アーカイブしたルームに残ります。",
-    "Use the <a>Desktop app</a> to see all encrypted files": "全ての暗号化されたファイルを表示するには<a>デスクトップ用のアプリ</a>を使用してください",
     "User Directory": "ユーザーディレクトリー",
     "Or send invite link": "もしくはリンクを送信",
     "If you can't see who you're looking for, send them your invite link below.": "探している相手が見つからなければ、以下のリンクを送信してください。",
@@ -534,7 +529,6 @@
     "Want to add a new room instead?": "代わりに新しいルームを追加しますか？",
     "Add existing rooms": "既存のルームを追加",
     "Want to add a new space instead?": "代わりに新しいスペースを追加しますか？",
-    "Server Options": "サーバーのオプション",
     "Spaces you know that contain this space": "このスペースを含む参加済のスペース",
     "Spaces you know that contain this room": "このルームを含む参加済のスペース",
     "%(count)s members": {
@@ -561,7 +555,6 @@
     "Wrong Security Key": "正しくないセキュリティーキー",
     "a key signature": "鍵の署名",
     "Sign in with SSO": "シングルサインオンでサインイン",
-    "Join millions for free on the largest public server": "最大の公開サーバーで、数百万人に無料で参加",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "復元方法を全て失ってしまいましたか？<a>リセットできます</a>",
     "Enter the name of a new server you want to explore.": "探したい新しいサーバーの名前を入力してください。",
     "Upgrade public room": "公開ルームをアップグレード",
@@ -719,7 +712,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーフレーズを入力してください。",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "セキュリティーフレーズを紛失した場合は、<button1>セキュリティーキーを使用</button1>するか、<button2>新しい復旧用の手段</button2>を設定することができます",
     "Remember this": "これを記憶",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "メッセージの検索の初期化に失敗しました。<a>設定</a>から詳細を確認してください",
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
         "other": "%(count)s人の知人が既に参加しています"
@@ -729,8 +721,6 @@
     "There was a problem communicating with the server. Please try again.": "サーバーとの通信時に問題が発生しました。もう一度やり直してください。",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "You are not allowed to view this server's rooms list": "このサーバーのルームの一覧を閲覧する許可がありません",
-    "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
-    "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
     "Adding spaces has moved.": "スペースの追加機能は移動しました。",
@@ -747,7 +737,6 @@
     },
     "Confirm this user's session by comparing the following with their User Settings:": "ユーザー設定画面で以下を比較し、このユーザーのセッションを承認してください：",
     "Confirm by comparing the following with the User Settings in your other session:": "他のセッションのユーザー設定で、以下を比較して承認してください：",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
     "Live location ended": "位置情報（ライブ）が終了しました",
     "No live locations": "位置情報（ライブ）がありません",
     "View list": "一覧を表示",
@@ -789,7 +778,6 @@
     "Add new server…": "新しいサーバーを追加…",
     "Remove server “%(roomServer)s”": "サーバー“%(roomServer)s”を削除",
     "Coworkers and teams": "同僚とチーム",
-    "Choose a locale": "ロケールを選択",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
@@ -799,7 +787,6 @@
     "An error occurred while stopping your live location": "位置情報（ライブ）を停止する際にエラーが発生しました",
     "Online community members": "オンラインコミュニティーのメンバー",
     "Preserve system messages": "システムメッセージを保存",
-    "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
     "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
@@ -1785,7 +1772,8 @@
             "email_address_label": "メールアドレス",
             "remove_msisdn_prompt": "%(phone)sを削除しますか？",
             "add_msisdn_instructions": "+%(msisdn)sにテキストメッセージを送りました。メッセージ内の確認コードを入力してください。",
-            "msisdn_label": "電話番号"
+            "msisdn_label": "電話番号",
+            "spell_check_locale_placeholder": "ロケールを選択"
         },
         "sidebar": {
             "title": "サイドバー",
@@ -1848,7 +1836,8 @@
             "import_description_1": "このプロセスでは、以前に別のMatrixクライアントからエクスポートした暗号鍵をインポートできます。これにより、他のクライアントが解読できる全てのメッセージを解読することができます。",
             "import_description_2": "エクスポートされたファイルはパスフレーズで保護されています。ファイルを復号化するには、パスフレーズを以下に入力してください。",
             "file_to_import": "インポートするファイル"
-        }
+        },
+        "warning": "<w>警告：</w><description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "アカウントのユーザー定義のデータイベントを送信",
@@ -3218,7 +3207,10 @@
         "autodiscovery_invalid_hs": "これは正しいMatrixのホームサーバーのURLではありません",
         "autodiscovery_invalid_is_base_url": "m.identity_serverの不正なbase_url",
         "autodiscovery_invalid_is": "これは正しいIDサーバーのURLではありません",
-        "autodiscovery_invalid_is_response": "IDサーバーのディスカバリー（発見）に関する不正な応答です"
+        "autodiscovery_invalid_is_response": "IDサーバーのディスカバリー（発見）に関する不正な応答です",
+        "server_picker_description": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
+        "server_picker_description_matrix.org": "最大の公開サーバーで、数百万人に無料で参加",
+        "server_picker_title_default": "サーバーのオプション"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -4141,5 +4133,15 @@
         "cancel_search_label": "検索をキャンセル"
     },
     "info_tooltip_title": "情報",
-    "language_dropdown_label": "言語一覧"
+    "language_dropdown_label": "言語一覧",
+    "seshat": {
+        "error_initialising": "メッセージの検索の初期化に失敗しました。<a>設定</a>から詳細を確認してください",
+        "warning_kind_files_app": "全ての暗号化されたファイルを表示するには<a>デスクトップ用のアプリ</a>を使用してください",
+        "warning_kind_search_app": "<a>デスクトップアプリ</a>を使用すると暗号化されたメッセージを検索できます",
+        "warning_kind_files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
+        "warning_kind_search": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません"
+    },
+    "truncated_list_n_more": {
+        "other": "他%(count)s人以上…"
+    }
 }

@@ -50,9 +50,6 @@
     "PM": "PM",
     "Unnamed room": "Salon sans nom",
     "Delete Widget": "Supprimer le widget",
-    "And %(count)s more...": {
-        "other": "Et %(count)s autres…"
-    },
     "Restricted": "Restreint",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -118,7 +115,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Vérifier cet utilisateur pour le marquer comme fiable. Faire confiance aux utilisateurs vous permet d’être tranquille lorsque vous utilisez des messages chiffrés de bout en bout.",
     "Incoming Verification Request": "Demande de vérification entrante",
     "Email (optional)": "E-mail (facultatif)",
-    "Join millions for free on the largest public server": "Rejoignez des millions d’utilisateurs gratuitement sur le plus grand serveur public",
     "Dog": "Chien",
     "Cat": "Chat",
     "Lion": "Lion",
@@ -330,10 +326,6 @@
     "Security Key": "Clé de sécurité",
     "Use your Security Key to continue.": "Utilisez votre clé de sécurité pour continuer.",
     "Backup version:": "Version de la sauvegarde :",
-    "This version of %(brand)s does not support searching encrypted messages": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés",
-    "This version of %(brand)s does not support viewing some encrypted files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Utilisez une <a>Application de bureau</a> pour rechercher dans tous les messages chiffrés",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Utilisez une <a>Application de bureau</a> pour voir tous les fichiers chiffrés",
     "Preparing to download logs": "Préparation du téléchargement des journaux",
     "Not encrypted": "Non-chiffré",
     "Unable to set up keys": "Impossible de configurer les clés",
@@ -610,7 +602,6 @@
     "A call can only be transferred to a single user.": "Un appel ne peut être transféré qu’à un seul utilisateur.",
     "Invite by email": "Inviter par e-mail",
     "Reason (optional)": "Raison (optionnelle)",
-    "Server Options": "Options serveur",
     "Hold": "Mettre en pause",
     "Resume": "Reprendre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Si vous avez oublié votre clé de sécurité, vous pouvez <button>définir de nouvelles options de récupération</button>",
@@ -686,7 +677,6 @@
     "Search for rooms or people": "Rechercher des salons ou des gens",
     "Sent": "Envoyé",
     "You don't have permission to do this": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
     "Adding spaces has moved.": "L’ajout d’espaces a été déplacé.",
@@ -778,7 +768,6 @@
         "other": "Vous êtes sur le point de supprimer %(count)s messages de %(user)s. Ils seront supprimés définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?",
         "one": "Vous êtes sur le point de supprimer %(count)s message de %(user)s. Il sera supprimé définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?"
     },
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Vous pouvez utiliser l’option de serveur personnalisé pour vous connecter à d'autres serveurs Matrix en spécifiant une URL de serveur d'accueil différente. Cela vous permet d’utiliser %(brand)s avec un compte Matrix existant sur un serveur d’accueil différent.",
     "An error occurred while stopping your live location, please try again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer",
     "%(featureName)s Beta feedback": "Commentaires sur la bêta de %(featureName)s",
     "%(count)s participants": {
@@ -842,13 +831,11 @@
     "Who will you chat to the most?": "À qui allez-vous le plus parler ?",
     "You're in": "Vous y êtes",
     "Saved Items": "Éléments sauvegardés",
-    "Choose a locale": "Choisir une langue",
     "Interactively verify by emoji": "Vérifier de façon interactive avec des émojis",
     "Manually verify by text": "Vérifier manuellement avec un texte",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>ATTENTION :</w> <description/>",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
     "Can't start voice message": "Impossible de commencer un message vocal",
@@ -1857,7 +1844,8 @@
             "email_address_label": "Adresse e-mail",
             "remove_msisdn_prompt": "Supprimer %(phone)s ?",
             "add_msisdn_instructions": "Un SMS a été envoyé à +%(msisdn)s. Saisissez le code de vérification qu’il contient.",
-            "msisdn_label": "Numéro de téléphone"
+            "msisdn_label": "Numéro de téléphone",
+            "spell_check_locale_placeholder": "Choisir une langue"
         },
         "sidebar": {
             "title": "Barre latérale",
@@ -1922,7 +1910,8 @@
             "import_description_1": "Ce processus vous permet d’importer les clés de chiffrement que vous avez précédemment exportées depuis un autre client Matrix. Vous serez alors capable de déchiffrer n’importe quel message que l’autre client pouvait déchiffrer.",
             "import_description_2": "Le fichier exporté sera protégé par un mot de passe. Vous devez saisir ce mot de passe ici, pour déchiffrer le fichier.",
             "file_to_import": "Fichier à importer"
-        }
+        },
+        "warning": "<w>ATTENTION :</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Envoyer des événements personnalisés de données du compte",
@@ -3353,7 +3342,10 @@
         "autodiscovery_invalid_hs": "L’URL du serveur d’accueil ne semble pas être un serveur d’accueil Matrix valide",
         "autodiscovery_invalid_is_base_url": "base_url pour m.identity_server non valide",
         "autodiscovery_invalid_is": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
-        "autodiscovery_invalid_is_response": "Réponse non valide lors de la découverte du serveur d'identité"
+        "autodiscovery_invalid_is_response": "Réponse non valide lors de la découverte du serveur d'identité",
+        "server_picker_description": "Vous pouvez utiliser l’option de serveur personnalisé pour vous connecter à d'autres serveurs Matrix en spécifiant une URL de serveur d'accueil différente. Cela vous permet d’utiliser %(brand)s avec un compte Matrix existant sur un serveur d’accueil différent.",
+        "server_picker_description_matrix.org": "Rejoignez des millions d’utilisateurs gratuitement sur le plus grand serveur public",
+        "server_picker_title_default": "Options serveur"
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -4345,5 +4337,15 @@
     "pill": {
         "permalink_other_room": "Message dans %(room)s",
         "permalink_this_room": "Message de %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
+        "warning_kind_files_app": "Utilisez une <a>Application de bureau</a> pour voir tous les fichiers chiffrés",
+        "warning_kind_search_app": "Utilisez une <a>Application de bureau</a> pour rechercher dans tous les messages chiffrés",
+        "warning_kind_files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
+        "warning_kind_search": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés"
+    },
+    "truncated_list_n_more": {
+        "other": "Et %(count)s autres…"
     }
 }

@@ -51,9 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
     "expand": "espandi",
-    "And %(count)s more...": {
-        "other": "E altri %(count)s ..."
-    },
     "Confirm Removal": "Conferma la rimozione",
     "An error has occurred.": "Si è verificato un errore.",
     "Unable to restore session": "Impossibile ripristinare la sessione",
@@ -188,7 +185,6 @@
     "Room Settings - %(roomName)s": "Impostazioni stanza - %(roomName)s",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
     "Email (optional)": "Email (facoltativa)",
-    "Join millions for free on the largest public server": "Unisciti gratis a milioni nel più grande server pubblico",
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
     "edited": "modificato",
     "Notes": "Note",
@@ -347,10 +343,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome o il nome utente (come <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questa stanza</a>.",
     "Unable to set up keys": "Impossibile impostare le chiavi",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Usa <a>l'app desktop</a> per vedere tutti i file cifrati",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Usa <a>l'app desktop</a> per cercare i messaggi cifrati",
-    "This version of %(brand)s does not support viewing some encrypted files": "Questa versione di %(brand)s non supporta la visualizzazione di alcuni file cifrati",
-    "This version of %(brand)s does not support searching encrypted messages": "Questa versione di %(brand)s non supporta la ricerca di messaggi cifrati",
     "Data on this screen is shared with %(widgetDomain)s": "I dati in questa schermata vengono condivisi con %(widgetDomain)s",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questa stanza</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome, indirizzo email o nome utente (come <userId/>).",
@@ -611,7 +603,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Solo un avviso, se non aggiungi un'email e dimentichi la password, potresti <b>perdere permanentemente l'accesso al tuo account</b>.",
     "Continuing without email": "Continuando senza email",
     "Reason (optional)": "Motivo (facoltativo)",
-    "Server Options": "Opzioni server",
     "Hold": "Sospendi",
     "Resume": "Riprendi",
     "Transfer": "Trasferisci",
@@ -686,7 +677,6 @@
     "Search for rooms or people": "Cerca stanze o persone",
     "Sent": "Inviato",
     "You don't have permission to do this": "Non hai il permesso per farlo",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
     "Automatically invite members from this room to the new one": "Invita automaticamente i membri da questa stanza a quella nuova",
@@ -778,7 +768,6 @@
         "other": "Stai per rimuovere %(count)s messaggi di %(user)s. Verranno rimossi permanentemente per chiunque nella conversazione. Vuoi continuare?"
     },
     "Unsent": "Non inviato",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Puoi usare le opzioni server personalizzate per accedere ad altri server Matrix specificando un URL homeserver diverso. Ciò ti permette di usare %(brand)s con un account Matrix esistente su un homeserver differente.",
     "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
     "%(count)s participants": {
         "one": "1 partecipante",
@@ -842,13 +831,11 @@
     "We'll help you get connected.": "Vi aiuteremo a connettervi.",
     "Who will you chat to the most?": "Con chi parlerai di più?",
     "Saved Items": "Elementi salvati",
-    "Choose a locale": "Scegli una lingua",
     "Interactively verify by emoji": "Verifica interattivamente con emoji",
     "Manually verify by text": "Verifica manualmente con testo",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s ha iniziato una videochiamata",
     "Thread root ID: %(threadRootId)s": "ID root del thread: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>ATTENZIONE:</w> <description/>",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Non puoi iniziare un messaggio vocale perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare un messaggio vocale.",
     "Can't start voice message": "Impossibile iniziare il messaggio vocale",
@@ -1858,7 +1845,8 @@
             "email_address_label": "Indirizzo email",
             "remove_msisdn_prompt": "Rimuovere %(phone)s?",
             "add_msisdn_instructions": "È stato inviato un SMS a +%(msisdn)s. Inserisci il codice di verifica contenuto.",
-            "msisdn_label": "Numero di telefono"
+            "msisdn_label": "Numero di telefono",
+            "spell_check_locale_placeholder": "Scegli una lingua"
         },
         "sidebar": {
             "title": "Barra laterale",
@@ -1923,7 +1911,8 @@
             "import_description_1": "Questa procedura ti permette di importare le chiavi di crittografia precedentemente esportate da un altro client Matrix. Potrai poi decifrare tutti i messaggi che quel client poteva decifrare.",
             "import_description_2": "Il file esportato sarà protetto da una password. Dovresti inserire la password qui, per decifrarlo.",
             "file_to_import": "File da importare"
-        }
+        },
+        "warning": "<w>ATTENZIONE:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Invia evento dati di account personalizzato",
@@ -3360,7 +3349,10 @@
         "autodiscovery_invalid_hs": "L'URL dell'homeserver non sembra essere un homeserver Matrix valido",
         "autodiscovery_invalid_is_base_url": "Base_url per m.identity_server non valido",
         "autodiscovery_invalid_is": "L'URL del server di identità non sembra essere un server di identità valido",
-        "autodiscovery_invalid_is_response": "Risposta non valida cercando server di identità"
+        "autodiscovery_invalid_is_response": "Risposta non valida cercando server di identità",
+        "server_picker_description": "Puoi usare le opzioni server personalizzate per accedere ad altri server Matrix specificando un URL homeserver diverso. Ciò ti permette di usare %(brand)s con un account Matrix esistente su un homeserver differente.",
+        "server_picker_description_matrix.org": "Unisciti gratis a milioni nel più grande server pubblico",
+        "server_picker_title_default": "Opzioni server"
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -4352,5 +4344,15 @@
     "pill": {
         "permalink_other_room": "Messaggio in %(room)s",
         "permalink_this_room": "Messaggio da %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
+        "warning_kind_files_app": "Usa <a>l'app desktop</a> per vedere tutti i file cifrati",
+        "warning_kind_search_app": "Usa <a>l'app desktop</a> per cercare i messaggi cifrati",
+        "warning_kind_files": "Questa versione di %(brand)s non supporta la visualizzazione di alcuni file cifrati",
+        "warning_kind_search": "Questa versione di %(brand)s non supporta la ricerca di messaggi cifrati"
+    },
+    "truncated_list_n_more": {
+        "other": "E altri %(count)s ..."
     }
 }

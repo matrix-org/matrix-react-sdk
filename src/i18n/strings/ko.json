@@ -80,9 +80,6 @@
     "Share User": "사용자 공유",
     "Share Room Message": "방 메시지 공유",
     "Link to selected message": "선택한 메시지로 연결",
-    "And %(count)s more...": {
-        "other": "%(count)s개 더..."
-    },
     "Clear Storage and Sign Out": "저장소를 지우고 로그아웃",
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
@@ -220,7 +217,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>경고</b>: 신뢰할 수 있는 컴퓨터에서만 키 백업을 설정해야 합니다.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s개의 리액션 다시 보내기",
     "Email (optional)": "이메일 (선택)",
-    "Join millions for free on the largest public server": "가장 넓은 공개 서버에 수 백 만명이 무료로 등록함",
     "No recent messages by %(user)s found": "%(user)s님의 최근 메시지 없음",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "이전 타임라인이 있는지 위로 스크롤하세요.",
     "Remove recent messages by %(user)s": "%(user)s님의 최근 메시지 삭제",
@@ -1234,7 +1230,8 @@
         "autodiscovery_invalid_hs": "홈서버 URL이 올바른 Matrix 홈서버가 아님",
         "autodiscovery_invalid_is_base_url": "잘못된 m.identity_server 용 base_url",
         "autodiscovery_invalid_is": "ID 서버 URL이 올바른 ID 서버가 아님",
-        "autodiscovery_invalid_is_response": "잘못된 ID 서버 검색 응답"
+        "autodiscovery_invalid_is_response": "잘못된 ID 서버 검색 응답",
+        "server_picker_description_matrix.org": "가장 넓은 공개 서버에 수 백 만명이 무료로 등록함"
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1676,5 +1673,8 @@
     "General failure": "일반적인 실패",
     "emoji_picker": {
         "cancel_search_label": "검색 취소"
+    },
+    "truncated_list_n_more": {
+        "other": "%(count)s개 더..."
     }
 }

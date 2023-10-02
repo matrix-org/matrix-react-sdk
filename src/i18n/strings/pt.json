@@ -319,7 +319,6 @@
     "Macedonia": "Macedónia",
     "Luxembourg": "Luxemburgo",
     "St. Pierre & Miquelon": "São Pedro e Miquelon",
-    "Join millions for free on the largest public server": "Junte-se a milhões gratuitamente no maior servidor público",
     "common": {
         "analytics": "Análise",
         "error": "Erro",
@@ -713,7 +712,8 @@
             "password_not_entered": "Deve ser introduzida uma nova palavra-passe.",
             "passwords_mismatch": "Novas palavras-passe devem coincidir.",
             "return_to_login": "Retornar à tela de login"
-        }
+        },
+        "server_picker_description_matrix.org": "Junte-se a milhões gratuitamente no maior servidor público"
     },
     "export_chat": {
         "messages": "Mensagens"

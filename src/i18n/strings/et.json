@@ -201,7 +201,6 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s sessiooni võtme taastamine õnnestus",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Hoiatus</b>: sa peaksid võtmete varunduse seadistama vaid usaldusväärsest arvutist.",
     "Email (optional)": "E-posti aadress (kui soovid)",
-    "Join millions for free on the largest public server": "Liitu tasuta nende miljonitega, kas kasutavad suurimat avalikku Matrix'i serverit",
     "Enter a server name": "Sisesta serveri nimi",
     "Looks good": "Tundub õige",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posti teel kutse saatmiseks kasuta isikutuvastusserverit. Võid kasutada <default>vaikimisi serverit (%(defaultIdentityServerName)s)</default> või määrata muud serverid <settings>seadistustes</settings>.",
@@ -269,9 +268,6 @@
     "and %(count)s others...": {
         "other": "ja %(count)s muud...",
         "one": "ja üks muu..."
-    },
-    "And %(count)s more...": {
-        "other": "Ja %(count)s muud..."
     },
     "Unable to load commit detail: %(msg)s": "Ei õnnestu laadida sõnumi lisateavet: %(msg)s",
     "Unavailable": "Ei ole saadaval",
@@ -347,10 +343,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime või kasutajanime (näiteks <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
     "Unable to set up keys": "Krüptovõtmete kasutuselevõtmine ei õnnestu",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Kõikide krüptitud failide vaatamiseks kasuta <a>Element Desktop</a> rakendust",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Otsinguks krüptitud sõnumite hulgast kasuta <a>Element Desktop</a> rakendust",
-    "This version of %(brand)s does not support viewing some encrypted files": "See %(brand)s versioon ei toeta mõnede krüptitud failide vaatatamist",
-    "This version of %(brand)s does not support searching encrypted messages": "See %(brand)s versioon ei toeta otsingut krüptitud sõnumite seast",
     "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
     "Modal Widget": "Modaalne vidin",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
@@ -609,7 +601,6 @@
     "Approve widget permissions": "Anna vidinale õigused",
     "Decline All": "Keeldu kõigist",
     "Continuing without email": "Jätka ilma e-posti aadressi seadistamiseta",
-    "Server Options": "Serveri seadistused",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lihtsalt hoiatame, et kui sa ei lisa e-posti aadressi ning unustad oma konto salasõna, siis sa võid <b>püsivalt kaotada ligipääsu oma kontole</b>.",
     "Reason (optional)": "Põhjus (kui soovid lisada)",
     "Hold": "Pane ootele",
@@ -686,7 +677,6 @@
     "Search for rooms or people": "Otsi jututubasid või inimesi",
     "Sent": "Saadetud",
     "You don't have permission to do this": "Sul puuduvad selleks toiminguks õigused",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt.",
     "User Directory": "Kasutajate kataloog",
     "You're removing all spaces. Access will default to invite only": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
@@ -778,7 +768,6 @@
     "Preserve system messages": "Näita süsteemseid teateid",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Kui sa samuti soovid mitte kuvada selle kasutajaga seotud süsteemseid teateid (näiteks liikmelisuse muutused, profiili muutused, jne), siis eemalda see valik",
     "Unsent": "Saatmata",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Kohandatud serveriseadistusi saad kasutada selleks, et logida sisse sinu valitud koduserverisse. See võimaldab sinul kasutada %(brand)s'i mõnes teises koduserveri hallatava kasutajakontoga.",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "%(count)s participants": {
         "one": "1 osaleja",
@@ -840,7 +829,6 @@
     "Friends and family": "Perekond ja sõbrad",
     "We'll help you get connected.": "Me aitame sind Matrix'i võrgu kasutamisel.",
     "Who will you chat to the most?": "Kellega sa kõige rohkem vestled?",
-    "Choose a locale": "Vali lokaat",
     "Saved Items": "Salvestatud failid",
     "You're in": "Kõik on tehtud",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
@@ -848,7 +836,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s algatas videokõne",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
     "Can't start voice message": "Häälsõnumi salvestamine või esitamine ei õnnestu",
@@ -1857,7 +1844,8 @@
             "email_address_label": "E-posti aadress",
             "remove_msisdn_prompt": "Eemalda %(phone)s?",
             "add_msisdn_instructions": "Saatsime tekstisõnumi numbrile +%(msisdn)s. Palun sisesta seal kuvatud kontrollkood.",
-            "msisdn_label": "Telefoninumber"
+            "msisdn_label": "Telefoninumber",
+            "spell_check_locale_placeholder": "Vali lokaat"
         },
         "sidebar": {
             "title": "Külgpaan",
@@ -1922,7 +1910,8 @@
             "import_description_1": "Selle toiminguga saad importida krüptimisvõtmed, mis sa viimati olid teisest Matrix'i kliendist eksportinud. Seejärel on võimalik dekrüptida ka siin kõik need samad sõnumid, mida see teine klient suutis dekrüptida.",
             "import_description_2": "Ekspordifail on turvatud paroolifraasiga ning alljärgnevalt peaksid dekrüptimiseks sisestama selle paroolifraasi.",
             "file_to_import": "Imporditav fail"
-        }
+        },
+        "warning": "<w>HOIATUS:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Saada kohandatud kontoandmete päring",
@@ -3353,7 +3342,10 @@
         "autodiscovery_invalid_hs": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
         "autodiscovery_invalid_is_base_url": "m.identity_server'i kehtetu base_url",
         "autodiscovery_invalid_is": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
-        "autodiscovery_invalid_is_response": "Vigane vastus isikutuvastusserveri tuvastamise päringule"
+        "autodiscovery_invalid_is_response": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
+        "server_picker_description": "Kohandatud serveriseadistusi saad kasutada selleks, et logida sisse sinu valitud koduserverisse. See võimaldab sinul kasutada %(brand)s'i mõnes teises koduserveri hallatava kasutajakontoga.",
+        "server_picker_description_matrix.org": "Liitu tasuta nende miljonitega, kas kasutavad suurimat avalikku Matrix'i serverit",
+        "server_picker_title_default": "Serveri seadistused"
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",
@@ -4345,5 +4337,15 @@
     "pill": {
         "permalink_other_room": "Sõnum jututoas %(room)s",
         "permalink_this_room": "Sõnum kasutajalt %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
+        "warning_kind_files_app": "Kõikide krüptitud failide vaatamiseks kasuta <a>Element Desktop</a> rakendust",
+        "warning_kind_search_app": "Otsinguks krüptitud sõnumite hulgast kasuta <a>Element Desktop</a> rakendust",
+        "warning_kind_files": "See %(brand)s versioon ei toeta mõnede krüptitud failide vaatatamist",
+        "warning_kind_search": "See %(brand)s versioon ei toeta otsingut krüptitud sõnumite seast"
+    },
+    "truncated_list_n_more": {
+        "other": "Ja %(count)s muud..."
     }
 }

@@ -51,9 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
-    "And %(count)s more...": {
-        "other": "I %(count)s més..."
-    },
     "Confirm Removal": "Confirmeu l'eliminació",
     "An error has occurred.": "S'ha produït un error.",
     "Unable to restore session": "No s'ha pogut restaurar la sessió",
@@ -856,5 +853,8 @@
             "title": "No s'ha pogut cercar",
             "server_unavailable": "Pot ser que el servidor no estigui disponible, que estigui sobrecarregat o que s'ha esgotat el temps de cerca :("
         }
+    },
+    "truncated_list_n_more": {
+        "other": "I %(count)s més..."
     }
 }

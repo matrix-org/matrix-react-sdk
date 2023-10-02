@@ -39,10 +39,6 @@
     "Not Trusted": "غير موثوقة",
     "expand": "توسيع",
     "collapse": "تضييق",
-    "This version of %(brand)s does not support searching encrypted messages": "لا يدعم هذا الإصدار من %(brand)s البحث في الرسائل المشفرة",
-    "This version of %(brand)s does not support viewing some encrypted files": "لا يدعم هذا الإصدار من %(brand)s s عرض بعض الملفات المشفرة",
-    "Use the <a>Desktop app</a> to search encrypted messages": "استخدم <a> تطبيق سطح المكتب </a> للبحث في الرسائل المشفرة",
-    "Use the <a>Desktop app</a> to see all encrypted files": "استخدم <a> تطبيق سطح المكتب </a> لمشاهدة جميع الملفات المشفرة",
     "Submit logs": "إرسال السجلات",
     "edited": "عُدل",
     "%(name)s wants to verify": "%(name)s يريد التحقق",
@@ -1571,5 +1567,11 @@
         "cancel_search_label": "إلغاء البحث"
     },
     "info_tooltip_title": "المعلومات",
-    "language_dropdown_label": "قائمة اللغة المنسدلة"
+    "language_dropdown_label": "قائمة اللغة المنسدلة",
+    "seshat": {
+        "warning_kind_files_app": "استخدم <a> تطبيق سطح المكتب </a> لمشاهدة جميع الملفات المشفرة",
+        "warning_kind_search_app": "استخدم <a> تطبيق سطح المكتب </a> للبحث في الرسائل المشفرة",
+        "warning_kind_files": "لا يدعم هذا الإصدار من %(brand)s s عرض بعض الملفات المشفرة",
+        "warning_kind_search": "لا يدعم هذا الإصدار من %(brand)s البحث في الرسائل المشفرة"
+    }
 }

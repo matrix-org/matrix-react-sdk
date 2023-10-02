@@ -49,9 +49,6 @@
     "AM": "a. m.",
     "PM": "p. m.",
     "Unnamed room": "Unbenannter Raum",
-    "And %(count)s more...": {
-        "other": "Und %(count)s weitere …"
-    },
     "Delete Widget": "Widget löschen",
     "Restricted": "Eingeschränkt",
     "%(duration)ss": "%(duration)ss",
@@ -186,7 +183,6 @@
     "You'll lose access to your encrypted messages": "Du wirst den Zugang zu deinen verschlüsselten Nachrichten verlieren",
     "Email (optional)": "E-Mail-Adresse (optional)",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
-    "Join millions for free on the largest public server": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
     "Scissors": "Schere",
     "Room Settings - %(roomName)s": "Raumeinstellungen - %(roomName)s",
     "edited": "bearbeitet",
@@ -347,10 +343,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Starte ein Gespräch unter Verwendung des Namen oder Benutzernamens des Gegenübers (z. B. <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Lade jemanden mittels Name oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Raum</a>.",
     "Unable to set up keys": "Schlüssel können nicht eingerichtet werden",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Nutze die <a>Desktop-App</a> um alle verschlüsselten Dateien zu sehen",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Nutze die <a>Desktop-App</a> um verschlüsselte Nachrichten zu durchsuchen",
-    "This version of %(brand)s does not support viewing some encrypted files": "Diese Version von %(brand)s kann nicht alle verschlüsselten Dateien anzuzeigen",
-    "This version of %(brand)s does not support searching encrypted messages": "Diese Version von %(brand)s kann verschlüsselte Nachrichten nicht durchsuchen",
     "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
     "Modal Widget": "Modales Widget",
     "Uzbekistan": "Usbekistan",
@@ -611,7 +603,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
     "Continuing without email": "Ohne E-Mail fortfahren",
     "Reason (optional)": "Grund (optional)",
-    "Server Options": "Server-Einstellungen",
     "Hold": "Halten",
     "Resume": "Fortsetzen",
     "Transfer": "Übertragen",
@@ -686,7 +677,6 @@
     "Search for rooms or people": "Räume oder Leute suchen",
     "Sent": "Gesendet",
     "You don't have permission to do this": "Du bist dazu nicht berechtigt",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
     "Adding spaces has moved.": "Das Hinzufügen von Spaces ist umgezogen.",
@@ -799,7 +789,6 @@
     "Confirm that you would like to deactivate your account. If you proceed:": "Bestätige, dass du dein Konto deaktivieren möchtest. Wenn du fortfährst, tritt folgendes ein:",
     "To continue, please enter your account password:": "Um fortzufahren, gib bitte das Passwort deines Kontos ein:",
     "%(featureName)s Beta feedback": "Rückmeldung zur %(featureName)s-Beta",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
     "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
     "Add new server…": "Neuen Server hinzufügen …",
@@ -843,12 +832,10 @@
     "Remove search filter for %(filter)s": "Entferne Suchfilter für %(filter)s",
     "We'll help you get connected.": "Wir helfen dir, dich zu vernetzen.",
     "You're in": "Los gehts",
-    "Choose a locale": "Wähle ein Gebietsschema",
     "Saved Items": "Gespeicherte Elemente",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
@@ -1858,7 +1845,8 @@
             "email_address_label": "E-Mail-Adresse",
             "remove_msisdn_prompt": "%(phone)s entfernen?",
             "add_msisdn_instructions": "Gib den per SMS an +%(msisdn)s gesendeten Bestätigungscode ein.",
-            "msisdn_label": "Telefonnummer"
+            "msisdn_label": "Telefonnummer",
+            "spell_check_locale_placeholder": "Wähle ein Gebietsschema"
         },
         "sidebar": {
             "title": "Seitenleiste",
@@ -1923,7 +1911,8 @@
             "import_description_1": "Dieser Prozess erlaubt es dir, die zuvor von einer anderen Matrix-Anwendung exportierten Verschlüsselungs-Schlüssel zu importieren. Danach kannst du alle Nachrichten entschlüsseln, die auch bereits auf der anderen Anwendung entschlüsselt werden konnten.",
             "import_description_2": "Die exportierte Datei ist mit einer Passphrase geschützt. Du kannst die Passphrase hier eingeben, um die Datei zu entschlüsseln.",
             "file_to_import": "Zu importierende Datei"
-        }
+        },
+        "warning": "<w>WARNUNG:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Sende benutzerdefiniertes Kontodatenereignis",
@@ -3360,7 +3349,10 @@
         "autodiscovery_invalid_hs": "Die Heim-Server-URL scheint kein gültiger Matrix-Heim-Server zu sein",
         "autodiscovery_invalid_is_base_url": "Ungültige base_url für m.identity_server",
         "autodiscovery_invalid_is": "Die Identitäts-Server-URL scheint kein gültiger Identitäts-Server zu sein",
-        "autodiscovery_invalid_is_response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers"
+        "autodiscovery_invalid_is_response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers",
+        "server_picker_description": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
+        "server_picker_description_matrix.org": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
+        "server_picker_title_default": "Server-Einstellungen"
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -4352,5 +4344,15 @@
     "pill": {
         "permalink_other_room": "Nachricht in %(room)s",
         "permalink_this_room": "Nachricht von %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
+        "warning_kind_files_app": "Nutze die <a>Desktop-App</a> um alle verschlüsselten Dateien zu sehen",
+        "warning_kind_search_app": "Nutze die <a>Desktop-App</a> um verschlüsselte Nachrichten zu durchsuchen",
+        "warning_kind_files": "Diese Version von %(brand)s kann nicht alle verschlüsselten Dateien anzuzeigen",
+        "warning_kind_search": "Diese Version von %(brand)s kann verschlüsselte Nachrichten nicht durchsuchen"
+    },
+    "truncated_list_n_more": {
+        "other": "Und %(count)s weitere …"
     }
 }

@@ -89,9 +89,6 @@
     "Clear cache and resync": "Wyczyść pamięć podręczną i zsynchronizuj ponownie",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s używa teraz 3-5x mniej pamięci, ładując informacje o innych użytkownikach tylko wtedy, gdy jest to konieczne. Poczekaj, aż ponownie zsynchronizujemy się z serwerem!",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jeśli inna wersja %(brand)s jest nadal otwarta w innej zakładce, proszę zamknij ją, ponieważ używanie %(brand)s na tym samym komputerze z włączonym i wyłączonym jednocześnie leniwym ładowaniem będzie powodować problemy.",
-    "And %(count)s more...": {
-        "other": "I %(count)s więcej…"
-    },
     "Continue With Encryption Disabled": "Kontynuuj Z Wyłączonym Szyfrowaniem",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
@@ -202,7 +199,6 @@
         "one": "Usuń 1 wiadomość"
     },
     "Switch theme": "Przełącz motyw",
-    "Join millions for free on the largest public server": "Dołącz do milionów za darmo na największym publicznym serwerze",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Ci użytkownicy mogą nie istnieć lub są nieprawidłowi, i nie mogą zostać zaproszeni: %(csvNames)s",
     "Failed to find the following users": "Nie udało się znaleźć tych użytkowników",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Nie udało się zaprosić tych użytkowników. Proszę sprawdzić zaproszonych użytkowników i spróbować ponownie.",
@@ -214,8 +210,6 @@
     "Sign in with SSO": "Zaloguj się z SSO",
     "Start a conversation with someone using their name or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy lub nazwy użytkownika (np. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy, adresu e-mail lub nazwy użytkownika (np. <userId/>).",
-    "This version of %(brand)s does not support searching encrypted messages": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
     "Ok": "OK",
     "Israel": "Izrael",
     "Isle of Man": "Man",
@@ -503,7 +497,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
-    "Server Options": "Opcje serwera",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ostrzeżenie</b>: kopia zapasowa klucza powinna być konfigurowana tylko z zaufanego komputera.",
     "Signature upload failed": "Wysłanie podpisu nie powiodło się",
     "Signature upload success": "Wysłanie podpisu udało się",
@@ -516,7 +509,6 @@
     "Integrations not allowed": "Integracje nie są dozwolone",
     "Incoming Verification Request": "Oczekująca prośba o weryfikację",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj tego użytkownika, aby oznaczyć go jako zaufanego. Użytkownicy zaufani dodają większej pewności, gdy korzystasz z wiadomości szyfrowanych end-to-end.",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Użyj <a>aplikacji desktopowej</a>, aby zobaczyć wszystkie szyfrowane pliki",
     "No results found": "Nie znaleziono wyników",
     "Sending": "Wysyłanie",
     "%(count)s rooms": {
@@ -715,7 +707,6 @@
     "Preparing to download logs": "Przygotowuję do pobrania dzienników",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Powiedz nam, co poszło nie tak, lub nawet lepiej - utwórz zgłoszenie na platformie GitHub, które opisuje problem.",
     "You're in": "Wszedłeś",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Możesz użyć niestandardowych opcji serwera, aby zalogować się na inny serwer Matrix, wprowadzając inny adres URL serwera. Umożliwi Ci to na korzystanie z %(brand)s z istniejącym już kontem Matrix na innym serwerze domowym.",
     "To leave the beta, visit your settings.": "Aby wyjść z bety, odwiedź swoje ustawienia.",
     "Adding spaces has moved.": "Dodawanie przestrzeni zostało przeniesione.",
     "Search for rooms": "Szukaj pokoi",
@@ -737,11 +728,7 @@
     "Coworkers and teams": "Współpracownicy i drużyny",
     "Friends and family": "Przyjaciele i rodzina",
     "Who will you chat to the most?": "Z kim będziesz najczęściej rozmawiał?",
-    "Choose a locale": "Wybierz język",
-    "<w>WARNING:</w> <description/>": "<w>OSTRZEŻENIE:</w> <description/>",
-    "This version of %(brand)s does not support viewing some encrypted files": "Ta wersja %(brand)s nie wspiera wyświetlania niektórych plików szyfrowanych",
     "Desktop app logo": "Logo aplikacji Desktop",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Wystąpił błąd inicjalizacji wyszukiwania wiadomości, sprawdź <a>swoje ustawienia</a> po więcej informacji",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
         "other": "%(count)s osób, które znasz, już dołączyło"
@@ -1854,7 +1841,8 @@
             "email_address_label": "Adres e-mail",
             "remove_msisdn_prompt": "Usunąć %(phone)s?",
             "add_msisdn_instructions": "Wiadomość tekstowa wysłana do %(msisdn)s. Wprowadź kod weryfikacyjny w niej zawarty.",
-            "msisdn_label": "Numer telefonu"
+            "msisdn_label": "Numer telefonu",
+            "spell_check_locale_placeholder": "Wybierz język"
         },
         "sidebar": {
             "title": "Pasek boczny",
@@ -1919,7 +1907,8 @@
             "import_description_1": "Ten proces pozwala na import zaszyfrowanych kluczy, które wcześniej zostały eksportowane z innego klienta Matrix. Będzie można odszyfrować każdą wiadomość, którą ów inny klient mógł odszyfrować.",
             "import_description_2": "Eksportowany plik będzie chroniony hasłem szyfrującym. Aby odszyfrować plik, wpisz hasło szyfrujące tutaj.",
             "file_to_import": "Plik do importu"
-        }
+        },
+        "warning": "<w>OSTRZEŻENIE:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Wyślij własne wydarzenie danych konta",
@@ -3347,7 +3336,10 @@
         "autodiscovery_invalid_hs": "URL serwera domowego nie wygląda na prawidłowy serwer domowy Matrix",
         "autodiscovery_invalid_is_base_url": "Nieprawidłowy base_url dla m.identity_server",
         "autodiscovery_invalid_is": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
-        "autodiscovery_invalid_is_response": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości"
+        "autodiscovery_invalid_is_response": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości",
+        "server_picker_description": "Możesz użyć niestandardowych opcji serwera, aby zalogować się na inny serwer Matrix, wprowadzając inny adres URL serwera. Umożliwi Ci to na korzystanie z %(brand)s z istniejącym już kontem Matrix na innym serwerze domowym.",
+        "server_picker_description_matrix.org": "Dołącz do milionów za darmo na największym publicznym serwerze",
+        "server_picker_title_default": "Opcje serwera"
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -4327,5 +4319,15 @@
     "pill": {
         "permalink_other_room": "Wiadomość w %(room)s",
         "permalink_this_room": "Wiadomość od %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Wystąpił błąd inicjalizacji wyszukiwania wiadomości, sprawdź <a>swoje ustawienia</a> po więcej informacji",
+        "warning_kind_files_app": "Użyj <a>aplikacji desktopowej</a>, aby zobaczyć wszystkie szyfrowane pliki",
+        "warning_kind_search_app": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
+        "warning_kind_files": "Ta wersja %(brand)s nie wspiera wyświetlania niektórych plików szyfrowanych",
+        "warning_kind_search": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości"
+    },
+    "truncated_list_n_more": {
+        "other": "I %(count)s więcej…"
     }
 }

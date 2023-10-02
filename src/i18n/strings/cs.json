@@ -50,9 +50,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
-    "And %(count)s more...": {
-        "other": "A %(count)s dalších..."
-    },
     "Confirm Removal": "Potvrdit odstranění",
     "Unable to restore session": "Nelze obnovit relaci",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
@@ -184,7 +181,6 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Na adrese %(host)s už jste použili %(brand)s se zapnutou volbou načítání členů místností až při prvním zobrazení. V této verzi je načítání členů až při prvním zobrazení vypnuté. Protože je s tímto nastavením lokální vyrovnávací paměť nekompatibilní, %(brand)s potřebuje znovu synchronizovat údaje z vašeho účtu.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teď používá 3-5× méně paměti, protože si informace o ostatních uživatelích načítá až když je potřebuje. Prosím počkejte na dokončení synchronizace se serverem!",
     "Email (optional)": "E-mail (nepovinné)",
-    "Join millions for free on the largest public server": "Přidejte k miliónům registrovaným na největším veřejném serveru",
     "Scissors": "Nůžky",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Abyste po odhlášení nepřišli o přístup k historii šifrovaných konverzací, měli byste si před odhlášením exportovat šifrovací klíče místností. Prosím vraťte se k novější verzi %(brand)su a exportujte si klíče",
     "Room Settings - %(roomName)s": "Nastavení místnosti - %(roomName)s",
@@ -320,7 +316,6 @@
     "Afghanistan": "Afgánistán",
     "United States": "Spojené Státy",
     "United Kingdom": "Spojené Království",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Pro zobrazení všech šifrovaných souborů použijte <a>desktopovou aplikaci</a>",
     "Backup version:": "Verze zálohy:",
     "Switch theme": "Přepnout téma",
     "Looks good!": "To vypadá dobře!",
@@ -328,7 +323,6 @@
     "The server has denied your request.": "Server odmítl váš požadavek.",
     "The server is offline.": "Server je offline.",
     "Decline All": "Odmítnout vše",
-    "Use the <a>Desktop app</a> to search encrypted messages": "K prohledávání šifrovaných zpráv použijte <a>aplikaci pro stolní počítače</a>",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pozvěte někoho pomocí jeho jména, e-mailové adresy, uživatelského jména (například <userId/>) nebo <a>sdílejte tuto místnost</a>.",
     "Invite by email": "Pozvat emailem",
     "Reason (optional)": "Důvod (volitelné)",
@@ -339,9 +333,6 @@
     "Keys restored": "Klíče byly obnoveny",
     "You're all caught up.": "Vše vyřízeno.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "V této relaci jste již dříve používali novější verzi %(brand)s. Chcete-li tuto verzi znovu použít s šifrováním, budete se muset odhlásit a znovu přihlásit.",
-    "Server Options": "Možnosti serveru",
-    "This version of %(brand)s does not support viewing some encrypted files": "Tato verze %(brand)s nepodporuje zobrazení některých šifrovaných souborů",
-    "This version of %(brand)s does not support searching encrypted messages": "Tato verze %(brand)s nepodporuje hledání v šifrovaných zprávách",
     "Madagascar": "Madagaskar",
     "Macedonia": "Makedonie",
     "Macau": "Macao",
@@ -686,7 +677,6 @@
     "Message preview": "Náhled zprávy",
     "Sent": "Odesláno",
     "You don't have permission to do this": "K tomu nemáte povolení",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
     "Automatically invite members from this room to the new one": "Automaticky pozvat členy této místnosti do nové místnosti",
@@ -778,7 +768,6 @@
         "other": "Chystáte se odstranit %(count)s zpráv od %(user)s. Tím je trvale odstraníte pro všechny účastníky konverzace. Přejete si pokračovat?"
     },
     "Unsent": "Neodeslané",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
     "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "%(count)s participants": {
         "one": "1 účastník",
@@ -842,13 +831,11 @@
     "Friends and family": "Přátelé a rodina",
     "We'll help you get connected.": "Pomůžeme vám připojit se.",
     "Saved Items": "Uložené položky",
-    "Choose a locale": "Zvolte jazyk",
     "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
     "Manually verify by text": "Ruční ověření pomocí textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
-    "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Hlasovou zprávu nelze spustit, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli začít nahrávat hlasovou zprávu.",
     "Can't start voice message": "Nelze spustit hlasovou zprávu",
@@ -1858,7 +1845,8 @@
             "email_address_label": "E-mailová adresa",
             "remove_msisdn_prompt": "Odstranit %(phone)s?",
             "add_msisdn_instructions": "SMS zpráva byla odeslána na +%(msisdn)s. Zadejte prosím ověřovací kód, který obsahuje.",
-            "msisdn_label": "Telefonní číslo"
+            "msisdn_label": "Telefonní číslo",
+            "spell_check_locale_placeholder": "Zvolte jazyk"
         },
         "sidebar": {
             "title": "Postranní panel",
@@ -1923,7 +1911,8 @@
             "import_description_1": "Tento proces vás provede importem šifrovacích klíčů, které jste si stáhli z jiného Matrix klienta. Po úspěšném naimportování budete v tomto klientovi moci dešifrovat všechny zprávy, které jste mohli dešifrovat v původním klientovi.",
             "import_description_2": "Stažený soubor je chráněn přístupovou frází. Soubor můžete naimportovat pouze pokud zadáte odpovídající přístupovou frázi.",
             "file_to_import": "Soubor k importu"
-        }
+        },
+        "warning": "<w>UPOZORNĚNÍ:</w> <description/>"
     },
     "devtools": {
         "send_custom_account_data_event": "Odeslat vlastní událost s údaji o účtu",
@@ -3360,7 +3349,10 @@
         "autodiscovery_invalid_hs": "Na URL domovského serveru asi není funkční Matrix server",
         "autodiscovery_invalid_is_base_url": "Neplatná base_url pro m.identity_server",
         "autodiscovery_invalid_is": "Na URL serveru identit asi není funkční Matrix server",
-        "autodiscovery_invalid_is_response": "Neplatná odpověď při hledání serveru identity"
+        "autodiscovery_invalid_is_response": "Neplatná odpověď při hledání serveru identity",
+        "server_picker_description": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
+        "server_picker_description_matrix.org": "Přidejte k miliónům registrovaným na největším veřejném serveru",
+        "server_picker_title_default": "Možnosti serveru"
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
@@ -4352,5 +4344,15 @@
     "pill": {
         "permalink_other_room": "Zpráva v %(room)s",
         "permalink_this_room": "Zpráva od %(user)s"
+    },
+    "seshat": {
+        "error_initialising": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
+        "warning_kind_files_app": "Pro zobrazení všech šifrovaných souborů použijte <a>desktopovou aplikaci</a>",
+        "warning_kind_search_app": "K prohledávání šifrovaných zpráv použijte <a>aplikaci pro stolní počítače</a>",
+        "warning_kind_files": "Tato verze %(brand)s nepodporuje zobrazení některých šifrovaných souborů",
+        "warning_kind_search": "Tato verze %(brand)s nepodporuje hledání v šifrovaných zprávách"
+    },
+    "truncated_list_n_more": {
+        "other": "A %(count)s dalších..."
     }
 }

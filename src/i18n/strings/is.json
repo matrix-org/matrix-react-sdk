@@ -61,17 +61,12 @@
     "Session ID": "Auðkenni setu",
     "Delete Widget": "Eyða viðmótshluta",
     "Create new room": "Búa til nýja spjallrás",
-    "And %(count)s more...": {
-        "other": "Og %(count)s til viðbótar..."
-    },
     "Clear Storage and Sign Out": "Hreinsa gagnageymslu og skrá út",
     "Unable to restore session": "Tókst ekki að endurheimta setu",
     "Finland": "Finnland",
     "Norway": "Noreg",
     "Denmark": "Danmörk",
     "Iceland": "Ísland",
-    "Use the <a>Desktop app</a> to search encrypted messages": "Notaðu <a>tölvuforritið</a> til að sía dulrituð skilaboð",
-    "Use the <a>Desktop app</a> to see all encrypted files": "Notaðu <a>tölvuforritið</a> til að sjá öll dulrituð gögn",
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
@@ -568,8 +563,6 @@
     "Search for spaces": "Leita að svæðum",
     "Want to add a new space instead?": "Viltu frekar bæta við nýju svæði?",
     "Add existing space": "Bæta við fyrirliggjandi svæði",
-    "Join millions for free on the largest public server": "Taktu þátt ókeypis ásamt milljónum annarra á stærsta almenningsþjóninum",
-    "Server Options": "Valkostir vefþjóns",
     "Enter a server name": "Settu inn nafn á þjóni",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
@@ -637,7 +630,6 @@
     "Incompatible Database": "Ósamhæfður gagnagrunnur",
     "No recent messages by %(user)s found": "Engin nýleg skilaboð frá %(user)s fundust",
     "Not all selected were added": "Ekki var öllu völdu bætt við",
-    "Message search initialisation failed, check <a>your settings</a> for more information": "Frumstilling leitar í skilaboðum mistókst, skoðaðu <a>stillingarnar þínar</a> til að fá nánari upplýsingar",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
@@ -719,7 +711,6 @@
     "Coworkers and teams": "Samstarfsmenn og teymi",
     "Friends and family": "Vinir og fjölskylda",
     "We'll help you get connected.": "Við munum hjálpa þér að tengjast.",
-    "Choose a locale": "Veldu staðfærslu",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
     "Live location error": "Villa í rauntímastaðsetningu",
@@ -745,7 +736,6 @@
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Þú ert eini stjórnandi þessa svæðis. Ef þú yfirgefur það verður enginn annar sem er með stjórn yfir því.",
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
-    "<w>WARNING:</w> <description/>": "<w>AÐVÖRUN:</w> <description/>",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -1609,7 +1599,8 @@
             "error_add_email": "Get ekki bætt við tölvupóstfangi",
             "email_address_label": "Tölvupóstfang",
             "remove_msisdn_prompt": "Fjarlægja %(phone)s?",
-            "msisdn_label": "Símanúmer"
+            "msisdn_label": "Símanúmer",
+            "spell_check_locale_placeholder": "Veldu staðfærslu"
         },
         "sidebar": {
             "title": "Hliðarspjald",
@@ -1663,7 +1654,8 @@
             "import_title": "Flytja inn dulritunarlykla spjallrásar",
             "import_description_2": "Útflutta skráin verður varin með lykilfrasa. Settu inn lykilfrasann hér til að afkóða skrána.",
             "file_to_import": "Skrá til að flytja inn"
-        }
+        },
+        "warning": "<w>AÐVÖRUN:</w> <description/>"
     },
     "devtools": {
         "event_type": "Tegund atburðar",
@@ -2883,7 +2875,9 @@
         "autodiscovery_invalid_hs_base_url": "Ógilt base_url fyrir m.homeserver",
         "autodiscovery_invalid_hs": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
         "autodiscovery_invalid_is_base_url": "Ógilt base_url fyrir m.identity_server",
-        "autodiscovery_invalid_is": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón"
+        "autodiscovery_invalid_is": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
+        "server_picker_description_matrix.org": "Taktu þátt ókeypis ásamt milljónum annarra á stærsta almenningsþjóninum",
+        "server_picker_title_default": "Valkostir vefþjóns"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3729,5 +3723,13 @@
         "cancel_search_label": "Hætta við leitina"
     },
     "info_tooltip_title": "Upplýsingar",
-    "language_dropdown_label": "Fellilisti tungumála"
+    "language_dropdown_label": "Fellilisti tungumála",
+    "seshat": {
+        "error_initialising": "Frumstilling leitar í skilaboðum mistókst, skoðaðu <a>stillingarnar þínar</a> til að fá nánari upplýsingar",
+        "warning_kind_files_app": "Notaðu <a>tölvuforritið</a> til að sjá öll dulrituð gögn",
+        "warning_kind_search_app": "Notaðu <a>tölvuforritið</a> til að sía dulrituð skilaboð"
+    },
+    "truncated_list_n_more": {
+        "other": "Og %(count)s til viðbótar..."
+    }
 }
