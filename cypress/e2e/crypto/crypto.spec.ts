@@ -442,7 +442,9 @@ describe("Cryptography", function () {
                             });
                     })
                     .then(() => {
-                        if (sessionCountText != "1 session") {
+                        cy.log(`At ${new Date().toISOString()}: Bob has '${sessionCountText}'`);
+                        // cf https://github.com/vector-im/element-web/issues/26279: Element-R uses the wrong text here
+                        if (sessionCountText != "1 session" && sessionCountText != "1 verified session") {
                             if (iterations >= 10) {
                                 throw new Error(`Bob still has ${sessionCountText} after 10 iterations`);
                             }
