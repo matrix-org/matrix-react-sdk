@@ -28,8 +28,6 @@
         "other": "и %(count)s других...",
         "one": "и ещё кто-то..."
     },
-    "Decrypt %(text)s": "Расшифровать %(text)s",
-    "Download %(text)s": "Скачать %(text)s",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "An error has occurred.": "Произошла ошибка.",
     "Join Room": "Войти в комнату",
@@ -38,13 +36,10 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Custom level": "Специальные права",
     "Email address": "Электронная почта",
-    "Error decrypting attachment": "Ошибка расшифровки вложения",
-    "Invalid file%(extra)s": "Недопустимый файл%(extra)s",
     "Session ID": "ID сеанса",
     "Confirm Removal": "Подтвердите удаление",
     "Unable to restore session": "Восстановление сеанса не удалось",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
-    "Error decrypting image": "Ошибка расшифровки изображения",
     "Error decrypting video": "Ошибка расшифровки видео",
     "Add an Integration": "Добавить интеграцию",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?",
@@ -241,7 +236,6 @@
         "other": "Удалить %(count)s сообщения(-й)",
         "one": "Удалить 1 сообщение"
     },
-    "Show image": "Показать изображение",
     "e.g. my-room": "например, моя-комната",
     "Close dialog": "Закрыть диалог",
     "Command Help": "Помощь команды",
@@ -760,7 +754,6 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
     "Add reaction": "Отреагировать",
     "Error processing voice message": "Ошибка при обработке голосового сообщения",
-    "Error processing audio message": "Ошибка обработки звукового сообщения",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -820,7 +813,6 @@
     "No votes cast": "Голосов нет",
     "Sorry, your vote was not registered. Please try again.": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
     "Vote not registered": "Голос не засчитан",
-    "Reply in thread": "Обсудить",
     "Recently viewed": "Недавно просмотренные",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
@@ -844,10 +836,6 @@
     "Results will be visible when the poll is ended": "Результаты будут видны после завершения опроса",
     "Sorry, you can't edit a poll after votes have been cast.": "Вы не можете редактировать опрос после завершения голосования.",
     "Can't edit poll": "Невозможно редактировать опрос",
-    "Click": "Нажать",
-    "Expand quotes": "Развернуть цитаты",
-    "Collapse quotes": "Свернуть цитаты",
-    "Can't create a thread from an event with an existing relation": "Невозможно создать обсуждение из события с существующей связью",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "%(members)s and %(last)s": "%(members)s и %(last)s",
@@ -913,7 +901,6 @@
         "other": "%(count)s участников"
     },
     "Live location ended": "Трансляция местоположения завершена",
-    "View live location": "Посмотреть трансляцию местоположения",
     "Live location enabled": "Трансляция местоположения включена",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
     "Coworkers and teams": "Коллеги и команды",
@@ -930,7 +917,6 @@
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
     "<w>WARNING:</w> <description/>": "<w>ВНИМАНИЕ:</w> <description/>",
-    "Error downloading image": "Ошибка при скачивании изображения",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "Message in %(room)s": "Сообщение в %(room)s",
@@ -1168,7 +1154,9 @@
         "new_room": "Новая комната",
         "new_video_room": "Новая видеокомната",
         "add_existing_room": "Добавить существующую комнату",
-        "explore_public_rooms": "Просмотреть публичные комнаты"
+        "explore_public_rooms": "Просмотреть публичные комнаты",
+        "reply_in_thread": "Обсудить",
+        "click": "Нажать"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -2121,7 +2109,6 @@
             "forbidden": "%(senderDisplayName)s запретил(а) гостям входить в комнату.",
             "unknown": "%(senderDisplayName)s изменил(а) гостевой доступ на \"%(rule)s\""
         },
-        "m.image": "%(senderDisplayName)s отправил(а) изображение.",
         "m.sticker": "%(senderDisplayName)s отправил(а) наклейку.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s устанавливает серверные разрешения для этой комнаты.",
@@ -2390,11 +2377,14 @@
         "mab": {
             "label": "Сообщение действий",
             "view_in_room": "Просмотреть в комнате",
-            "copy_link_thread": "Копировать ссылку на обсуждение"
+            "copy_link_thread": "Копировать ссылку на обсуждение",
+            "collapse_reply_chain": "Свернуть цитаты",
+            "expand_reply_chain": "Развернуть цитаты"
         },
         "m.audio": {
             "unnamed_audio": "Безымянное аудио",
-            "error_downloading_audio": "Ошибка загрузки аудио"
+            "error_downloading_audio": "Ошибка загрузки аудио",
+            "error_processing_audio": "Ошибка обработки звукового сообщения"
         },
         "load_error": {
             "no_permission": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как у вас нет разрешений на просмотр.",
@@ -2412,7 +2402,22 @@
             "unsupported": "Шифрование этой комнаты не поддерживается."
         },
         "pending_moderation_reason": "Сообщение ожидает модерации: %(reason)s",
-        "pending_moderation": "Сообщение ожидает модерации"
+        "pending_moderation": "Сообщение ожидает модерации",
+        "m.beacon_info": {
+            "view_live_location": "Посмотреть трансляцию местоположения"
+        },
+        "m.file": {
+            "download_label": "Скачать %(text)s",
+            "error_decrypting": "Ошибка расшифровки вложения",
+            "decrypt_label": "Расшифровать %(text)s",
+            "error_invalid": "Недопустимый файл%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s отправил(а) изображение.",
+            "error_decrypting": "Ошибка расшифровки изображения",
+            "error_downloading": "Ошибка при скачивании изображения",
+            "show_image": "Показать изображение"
+        }
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",
@@ -3383,7 +3388,8 @@
         "empty_tip": "<b>Совет:</b> Используйте “%(replyInThread)s” при наведении курсора на сообщение.",
         "empty_heading": "Организуйте обсуждения с помощью обсуждений",
         "unable_to_decrypt": "Невозможно расшифровать сообщение",
-        "open_thread": "Открыть ветку"
+        "open_thread": "Открыть ветку",
+        "error_start_thread_existing_relation": "Невозможно создать обсуждение из события с существующей связью"
     },
     "theme": {
         "light_high_contrast": "Контрастная светлая",

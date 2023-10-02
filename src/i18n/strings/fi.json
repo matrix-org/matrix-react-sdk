@@ -8,9 +8,7 @@
         "one": "ja yksi muu..."
     },
     "Custom level": "Mukautettu taso",
-    "Download %(text)s": "Lataa %(text)s",
     "Email address": "Sähköpostiosoite",
-    "Error decrypting attachment": "Virhe purettaessa liitteen salausta",
     "Join Room": "Liity huoneeseen",
     "Moderator": "Valvoja",
     "not specified": "ei määritetty",
@@ -18,7 +16,6 @@
     "PM": "ip.",
     "Session ID": "Istuntotunniste",
     "Home": "Etusivu",
-    "Invalid file%(extra)s": "Virheellinen tiedosto%(extra)s",
     "Warning!": "Varoitus!",
     "Sun": "su",
     "Mon": "ma",
@@ -33,7 +30,6 @@
     },
     "Confirm Removal": "Varmista poistaminen",
     "Unable to restore session": "Istunnon palautus epäonnistui",
-    "Decrypt %(text)s": "Pura %(text)s",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
     "Verification Pending": "Varmennus odottaa",
     "Jan": "tammi",
@@ -48,7 +44,6 @@
     "Oct": "loka",
     "Nov": "marras",
     "Dec": "joulu",
-    "Error decrypting image": "Virhe purettaessa kuvan salausta",
     "Error decrypting video": "Virhe purettaessa videon salausta",
     "Add an Integration": "Lisää integraatio",
     "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
@@ -243,7 +238,6 @@
     },
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "e.g. my-room": "esim. oma-huone",
-    "Show image": "Näytä kuva",
     "Close dialog": "Sulje dialogi",
     "Cancel search": "Peruuta haku",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
@@ -681,7 +675,6 @@
     "Server did not require any authentication": "Palvelin ei vaatinut mitään tunnistautumista",
     "Only people invited will be able to find and join this space.": "Vain kutsutut ihmiset voivat löytää tämän avaruuden ja liittyä siihen.",
     "Including %(commaSeparatedMembers)s": "Mukaan lukien %(commaSeparatedMembers)s",
-    "Error processing audio message": "Virhe ääniviestiä käsiteltäessä",
     "Space visibility": "Avaruuden näkyvyys",
     "Leave space": "Poistu avaruudesta",
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
@@ -816,8 +809,6 @@
     "Open room": "Avaa huone",
     "You will not be able to reactivate your account": "Et voi ottaa tiliäsi uudelleen käyttöön",
     "Confirm that you would like to deactivate your account. If you proceed:": "Vahvista, että haluat deaktivoida eli poistaa tilisi. Jos jatkat:",
-    "Expand quotes": "Laajenna lainaukset",
-    "Collapse quotes": "Supista lainaukset",
     "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Messaging": "Viestintä",
@@ -866,10 +857,7 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
-    "Error downloading image": "Virhe kuvaa ladatessa",
-    "Unable to show image due to error": "Kuvan näyttäminen epäonnistui virheen vuoksi",
     "Saved Items": "Tallennetut kohteet",
-    "Reply in thread": "Vastaa ketjuun",
     "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
     "Drop a Pin": "Sijoita karttaneula",
     "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
@@ -1126,7 +1114,8 @@
         "new_room": "Uusi huone",
         "new_video_room": "Uusi videohuone",
         "add_existing_room": "Lisää olemassa oleva huone",
-        "explore_public_rooms": "Selaa julkisia huoneita"
+        "explore_public_rooms": "Selaa julkisia huoneita",
+        "reply_in_thread": "Vastaa ketjuun"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -2053,7 +2042,6 @@
             "forbidden": "%(senderDisplayName)s on estänyt vieraiden liittymisen huoneeseen.",
             "unknown": "%(senderDisplayName)s vaihtoi vieraiden pääsyn tilaan %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s lähetti kuvan.",
         "m.sticker": "%(senderDisplayName)s lähetti tarran.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s loi tämän huoneen palvelinten pääsynvalvontalistan.",
@@ -2314,11 +2302,14 @@
         "mab": {
             "label": "Viestitoiminnot",
             "view_in_room": "Näytä huoneessa",
-            "copy_link_thread": "Kopioi linkki ketjuun"
+            "copy_link_thread": "Kopioi linkki ketjuun",
+            "collapse_reply_chain": "Supista lainaukset",
+            "expand_reply_chain": "Laajenna lainaukset"
         },
         "m.audio": {
             "unnamed_audio": "Nimetön ääni",
-            "error_downloading_audio": "Virhe ääntä ladattaessa"
+            "error_downloading_audio": "Virhe ääntä ladattaessa",
+            "error_processing_audio": "Virhe ääniviestiä käsiteltäessä"
         },
         "load_error": {
             "no_permission": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
@@ -2337,7 +2328,20 @@
             "unsupported": "Tämän huoneen käyttämää salausta ei tueta."
         },
         "pending_moderation_reason": "Viesti odottaa moderointia: %(reason)s",
-        "pending_moderation": "Viesti odottaa moderointia"
+        "pending_moderation": "Viesti odottaa moderointia",
+        "m.file": {
+            "download_label": "Lataa %(text)s",
+            "error_decrypting": "Virhe purettaessa liitteen salausta",
+            "decrypt_label": "Pura %(text)s",
+            "error_invalid": "Virheellinen tiedosto%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s lähetti kuvan.",
+            "error": "Kuvan näyttäminen epäonnistui virheen vuoksi",
+            "error_decrypting": "Virhe purettaessa kuvan salausta",
+            "error_downloading": "Virhe kuvaa ladatessa",
+            "show_image": "Näytä kuva"
+        }
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",

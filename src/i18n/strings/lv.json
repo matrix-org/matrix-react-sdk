@@ -2,12 +2,8 @@
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "An error has occurred.": "Notikusi kļūda.",
     "Custom level": "Pielāgots līmenis",
-    "Decrypt %(text)s": "Atšifrēt %(text)s",
-    "Download %(text)s": "Lejupielādēt: %(text)s",
     "Email address": "Epasta adrese",
-    "Error decrypting attachment": "Kļūda atšifrējot pielikumu",
     "Home": "Mājup",
-    "Invalid file%(extra)s": "Nederīgs fails %(extra)s",
     "Join Room": "Pievienoties istabai",
     "Moderator": "Moderators",
     "not specified": "nav noteikts",
@@ -48,7 +44,6 @@
     "Confirm Removal": "Apstipriniet dzēšanu",
     "Unable to restore session": "Neizdevās atjaunot sesiju",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
-    "Error decrypting image": "Kļūda atšifrējot attēlu",
     "Error decrypting video": "Kļūda atšifrējot video",
     "Add an Integration": "Pievienot integrāciju",
     "and %(count)s others...": {
@@ -464,7 +459,6 @@
     "Search for rooms": "Meklēt istabas",
     "Server name": "Servera nosaukums",
     "Enter the name of a new server you want to explore.": "Ievadiet nosaukumu jaunam serverim, kuru vēlaties pārlūkot.",
-    "Show image": "Rādīt attēlu",
     "Corn": "Kukurūza",
     "Based on %(count)s votes": {
         "one": "Pamatojoties uz %(count)s balss",
@@ -498,7 +492,6 @@
     "Live location enabled": "Reāllaika atrašanās vietas kopīgošana iespējota",
     "Live location error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
     "Live location ended": "Reāllaika atrašanās vietas kopīgošana pārtraukta",
-    "View live location": "Skatīties reāllaika atrašanās vietu",
     "%(displayName)s's live location": "%(displayName)s reāllaika atrašanās vieta",
     "My live location": "Mana reāllaika atrašanās vieta",
     "My current location": "Mana atrašanās vieta",
@@ -1045,7 +1038,6 @@
             "forbidden": "%(senderDisplayName)s aizliedza viesiem pievienoties istabai.",
             "unknown": "%(senderDisplayName)s nomainīja viesu piekļuvi uz %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s nosūtīja attēlu.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s iestatīja servera ACL piekļuves šai istabai.",
             "changed": "%(senderDisplayName)s nomainīja servera ACL piekļuves šai istabai.",
@@ -1265,6 +1257,20 @@
         "m.room.encryption": {
             "enabled_local": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
             "disabled": "Šifrēšana nav iespējota"
+        },
+        "m.beacon_info": {
+            "view_live_location": "Skatīties reāllaika atrašanās vietu"
+        },
+        "m.file": {
+            "download_label": "Lejupielādēt: %(text)s",
+            "error_decrypting": "Kļūda atšifrējot pielikumu",
+            "decrypt_label": "Atšifrēt %(text)s",
+            "error_invalid": "Nederīgs fails %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s nosūtīja attēlu.",
+            "error_decrypting": "Kļūda atšifrējot attēlu",
+            "show_image": "Rādīt attēlu"
         }
     },
     "slash_command": {

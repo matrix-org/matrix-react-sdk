@@ -120,8 +120,6 @@
     "Share Room": "nu jungau fi le du'u ve zilbe'i",
     "Share User": "nu jungau fi le du'u pilno",
     "Share Room Message": "nu jungau fi le du'u notci",
-    "Decrypt %(text)s": "nu facki le du'u mifra la'o zoi. %(text)s .zoi",
-    "Download %(text)s": "nu kibycpa la'o zoi. %(text)s .zoi",
     "common": {
         "analytics": "lanli datni",
         "error": "nabmi",
@@ -266,7 +264,6 @@
             "can_join": ".i la'o zoi. %(senderDisplayName)s .zoi curmi lo nu ro na te friti cu ka'e ziljmina le se zilbe'i",
             "forbidden": ".i la'o zoi. %(senderDisplayName)s .zoi na curmi lo nu ro na te friti cu ka'e ziljmina le se zilbe'i"
         },
-        "m.image": ".i pa pixra cu zilbe'i fi la'o zoi. %(senderDisplayName)s .zoi",
         "m.room.canonical_alias": {
             "set": ".i gau la'o zoi. %(senderName)s .zoi zoi zoi. %(address)s .zoi co'a ralju le'i judri be le ve zilbe'i",
             "removed": ".i gau la'o zoi. %(senderName)s .zoi da co'u ralju le'i judri be le ve zilbe'i",
@@ -315,6 +312,13 @@
         "m.room.power_levels": {
             "changed": ".i la'o ly. %(senderName)s .ly. gafygau %(powerLevelDiffText)s",
             "user_from_to": "lo ni la'o ny. %(userId)s .ny. vlipa noi pu du %(fromPowerLevel)s ku %(toPowerLevel)s"
+        },
+        "m.file": {
+            "download_label": "nu kibycpa la'o zoi. %(text)s .zoi",
+            "decrypt_label": "nu facki le du'u mifra la'o zoi. %(text)s .zoi"
+        },
+        "m.image": {
+            "sent": ".i pa pixra cu zilbe'i fi la'o zoi. %(senderDisplayName)s .zoi"
         }
     },
     "slash_command": {

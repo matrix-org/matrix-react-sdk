@@ -1,19 +1,15 @@
 {
-    "Download %(text)s": "Télécharger %(text)s",
     "%(items)s and %(lastItem)s": "%(items)s et %(lastItem)s",
     "and %(count)s others...": {
         "other": "et %(count)s autres…",
         "one": "et un autre…"
     },
-    "Decrypt %(text)s": "Déchiffrer %(text)s",
     "An error has occurred.": "Une erreur est survenue.",
     "Join Room": "Rejoindre le salon",
     "Moderator": "Modérateur",
     "not specified": "non spécifié",
     "unknown error code": "code d’erreur inconnu",
     "Email address": "Adresse e-mail",
-    "Error decrypting attachment": "Erreur lors du déchiffrement de la pièce jointe",
-    "Invalid file%(extra)s": "Fichier %(extra)s non valide",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Veuillez consulter vos e-mails et cliquer sur le lien que vous avez reçu. Puis cliquez sur continuer.",
     "Session ID": "Identifiant de session",
     "Verification Pending": "Vérification en attente",
@@ -43,7 +39,6 @@
     "Confirm Removal": "Confirmer la suppression",
     "Unable to restore session": "Impossible de restaurer la session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
-    "Error decrypting image": "Erreur lors du déchiffrement de l’image",
     "Error decrypting video": "Erreur lors du déchiffrement de la vidéo",
     "Add an Integration": "Ajouter une intégration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
@@ -246,7 +241,6 @@
     },
     "e.g. my-room": "par ex. mon-salon",
     "Close dialog": "Fermer la boîte de dialogue",
-    "Show image": "Afficher l’image",
     "Cancel search": "Annuler la recherche",
     "You verified %(name)s": "Vous avez vérifié %(name)s",
     "You cancelled verifying %(name)s": "Vous avez annulé la vérification de %(name)s",
@@ -734,7 +728,6 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
-    "Error processing audio message": "Erreur lors du traitement du message audio",
     "Adding spaces has moved.": "L’ajout d’espaces a été déplacé.",
     "Search for rooms": "Rechercher des salons",
     "Search for spaces": "Rechercher des espaces",
@@ -778,7 +771,6 @@
     "If you can't see who you're looking for, send them your invite link below.": "Si vous ne trouvez pas la personne que vous cherchez, envoyez-lui le lien d’invitation ci-dessous.",
     "Thread options": "Options des fils de discussion",
     "Forget": "Oublier",
-    "Reply in thread": "Répondre dans le fil de discussion",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
     "Based on %(count)s votes": {
         "one": "Sur la base de %(count)s vote",
@@ -845,10 +837,6 @@
     "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s n'a pas pu envoyer votre position. Veuillez réessayer plus tard.",
     "We couldn't send your location": "Nous n'avons pas pu envoyer votre position",
-    "Click": "Clic",
-    "Expand quotes": "Étendre les citations",
-    "Collapse quotes": "Réduire les citations",
-    "Can't create a thread from an event with an existing relation": "Impossible de créer un fil de discussion à partir d’un événement avec une relation existante",
     "You are sharing your live location": "Vous partagez votre position en direct",
     "Unsent": "Non envoyé",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Décocher si vous voulez également retirer les messages systèmes de cet utilisateur (par exemple changement de statut ou de profil…)",
@@ -865,7 +853,6 @@
         "one": "1 participant",
         "other": "%(count)s participants"
     },
-    "View live location": "Voir la position en direct",
     "Live location enabled": "Position en temps réel activée",
     "Live location error": "Erreur de positionnement en temps réel",
     "Live location ended": "Position en temps réel terminée",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Vérifier manuellement avec un texte",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
-    "Error downloading image": "Erreur lors du téléchargement de l’image",
-    "Unable to show image due to error": "Impossible d’afficher l’image à cause d’une erreur",
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>ATTENTION :</w> <description/>",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
@@ -1200,7 +1185,9 @@
         "new_room": "Nouveau salon",
         "new_video_room": "Nouveau salon visio",
         "add_existing_room": "Ajouter un salon existant",
-        "explore_public_rooms": "Parcourir les salons publics"
+        "explore_public_rooms": "Parcourir les salons publics",
+        "reply_in_thread": "Répondre dans le fil de discussion",
+        "click": "Clic"
     },
     "a11y": {
         "user_menu": "Menu utilisateur",
@@ -2271,7 +2258,6 @@
             "forbidden": "%(senderDisplayName)s a empêché les visiteurs de rejoindre le salon.",
             "unknown": "%(senderDisplayName)s a changé l’accès des visiteurs en %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s a envoyé une image.",
         "m.sticker": "%(senderDisplayName)s a envoyé un autocollant.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s a défini les paramètres d’accès du serveur pour ce salon.",
@@ -2552,11 +2538,14 @@
         "mab": {
             "label": "Actions de message",
             "view_in_room": "Voir dans le salon",
-            "copy_link_thread": "Copier le lien du fil de discussion"
+            "copy_link_thread": "Copier le lien du fil de discussion",
+            "collapse_reply_chain": "Réduire les citations",
+            "expand_reply_chain": "Étendre les citations"
         },
         "m.audio": {
             "unnamed_audio": "Audio sans nom",
-            "error_downloading_audio": "Erreur lors du téléchargement de l’audio"
+            "error_downloading_audio": "Erreur lors du téléchargement de l’audio",
+            "error_processing_audio": "Erreur lors du traitement du message audio"
         },
         "load_error": {
             "no_permission": "Un instant donné du fil de discussion n’a pu être chargé car vous n’avez pas la permission de le visualiser.",
@@ -2578,7 +2567,23 @@
             "unsupported": "Le chiffrement utilisé par ce salon n’est pas pris en charge."
         },
         "pending_moderation_reason": "Message en attente de modération : %(reason)s",
-        "pending_moderation": "Message en attente de modération"
+        "pending_moderation": "Message en attente de modération",
+        "m.beacon_info": {
+            "view_live_location": "Voir la position en direct"
+        },
+        "m.file": {
+            "download_label": "Télécharger %(text)s",
+            "error_decrypting": "Erreur lors du déchiffrement de la pièce jointe",
+            "decrypt_label": "Déchiffrer %(text)s",
+            "error_invalid": "Fichier %(extra)s non valide"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s a envoyé une image.",
+            "error": "Impossible d’afficher l’image à cause d’une erreur",
+            "error_decrypting": "Erreur lors du déchiffrement de l’image",
+            "error_downloading": "Erreur lors du téléchargement de l’image",
+            "show_image": "Afficher l’image"
+        }
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -3632,7 +3637,8 @@
         "empty_tip": "<b>Conseil :</b> Utilisez « %(replyInThread)s » en survolant un message.",
         "empty_heading": "Garde les discussions organisées à l’aide de fils de discussion",
         "unable_to_decrypt": "Impossible de déchiffrer le message",
-        "open_thread": "Ouvrir le fil de discussion"
+        "open_thread": "Ouvrir le fil de discussion",
+        "error_start_thread_existing_relation": "Impossible de créer un fil de discussion à partir d’un événement avec une relation existante"
     },
     "theme": {
         "light_high_contrast": "Contraste élevé clair",

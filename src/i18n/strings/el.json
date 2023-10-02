@@ -7,10 +7,7 @@
         "other": "και %(count)s άλλοι..."
     },
     "Custom level": "Προσαρμοσμένο επίπεδο",
-    "Decrypt %(text)s": "Αποκρυπτογράφηση %(text)s",
-    "Download %(text)s": "Λήψη %(text)s",
     "Email address": "Ηλεκτρονική διεύθυνση",
-    "Error decrypting attachment": "Σφάλμα κατά την αποκρυπτογράφηση της επισύναψης",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
     "Create new room": "Δημιουργία νέου δωματίου",
@@ -44,10 +41,8 @@
     },
     "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
     "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
-    "Error decrypting image": "Σφάλμα κατά την αποκρυπτογράφηση της εικόνας",
     "Error decrypting video": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο",
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
-    "Invalid file%(extra)s": "Μη έγκυρο αρχείο %(extra)s",
     "not specified": "μη καθορισμένο",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
     "Verification Pending": "Εκκρεμεί επιβεβαίωση",
@@ -577,13 +572,6 @@
     "Video conference ended by %(senderName)s": "Η τηλεδιάσκεψη τερματίστηκε από %(senderName)s",
     "Join the conference at the top of this room": "Συμμετάσχετε στην τηλεδιάσκεψη από την κορυφή του δωματίου αυτού",
     "Join the conference from the room information card on the right": "Συμμετάσχετε στην τηλεδιάσκεψη από την κάρτα πληροφοριών στα δεξιά",
-    "Show image": "Εμφάνιση εικόνας",
-    "Click": "Κλικ",
-    "Expand quotes": "Ανάπτυξη εισαγωγικών",
-    "Collapse quotes": "Σύμπτυξη εισαγωγικών",
-    "Can't create a thread from an event with an existing relation": "Δεν είναι δυνατή η δημιουργία νήματος από ένα συμβάν με μια υπάρχουσα σχέση",
-    "Reply in thread": "Απάντηση στο νήμα",
-    "Error processing audio message": "Σφάλμα επεξεργασίας του ηχητικού μηνύματος",
     "%(count)s reply": {
         "one": "%(count)s απάντηση",
         "other": "%(count)s απαντήσεις"
@@ -1105,7 +1093,9 @@
         "new_room": "Νέο δωμάτιο",
         "new_video_room": "Νέο δωμάτιο βίντεο",
         "add_existing_room": "Προσθήκη υπάρχοντος δωματίου",
-        "explore_public_rooms": "Εξερευνήστε δημόσια δωμάτια"
+        "explore_public_rooms": "Εξερευνήστε δημόσια δωμάτια",
+        "reply_in_thread": "Απάντηση στο νήμα",
+        "click": "Κλικ"
     },
     "a11y": {
         "user_menu": "Μενού χρήστη",
@@ -1859,7 +1849,6 @@
             "forbidden": "Ο %(senderDisplayName)s απέτρεψε τους επισκέπτες από το να μπαίνουν στο δωμάτιο.",
             "unknown": "Ο %(senderDisplayName)s άλλαξε την πρόσβαση επισκεπτών σε %(rule)s"
         },
-        "m.image": "Ο %(senderDisplayName)s έστειλε μια φωτογραφία.",
         "m.sticker": "Ο %(senderDisplayName)s έστειλε ένα αυτοκόλλητο.",
         "m.room.server_acl": {
             "set": "Ο %(senderDisplayName)s όρισε τα ACLs του διακομιστή για αυτό το δωμάτιο.",
@@ -2121,11 +2110,14 @@
         "mab": {
             "label": "Ενέργειες μηνυμάτων",
             "view_in_room": "Δείτε στο δωμάτιο",
-            "copy_link_thread": "Αντιγραφή συνδέσμου στο νήμα εκτέλεσης"
+            "copy_link_thread": "Αντιγραφή συνδέσμου στο νήμα εκτέλεσης",
+            "collapse_reply_chain": "Σύμπτυξη εισαγωγικών",
+            "expand_reply_chain": "Ανάπτυξη εισαγωγικών"
         },
         "m.audio": {
             "unnamed_audio": "Ήχος χωρίς όνομα",
-            "error_downloading_audio": "Σφάλμα λήψης ήχου"
+            "error_downloading_audio": "Σφάλμα λήψης ήχου",
+            "error_processing_audio": "Σφάλμα επεξεργασίας του ηχητικού μηνύματος"
         },
         "load_error": {
             "no_permission": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν έχετε δικαίωμα να δείτε το εν λόγω μήνυμα.",
@@ -2142,7 +2134,18 @@
             "unsupported": "Η κρυπτογράφηση που χρησιμοποιείται από αυτό το δωμάτιο δεν υποστηρίζεται."
         },
         "pending_moderation_reason": "Μήνυμα σε εκκρεμότητα συντονισμού: %(reason)s",
-        "pending_moderation": "Μήνυμα σε εκκρεμότητα συντονισμού"
+        "pending_moderation": "Μήνυμα σε εκκρεμότητα συντονισμού",
+        "m.file": {
+            "download_label": "Λήψη %(text)s",
+            "error_decrypting": "Σφάλμα κατά την αποκρυπτογράφηση της επισύναψης",
+            "decrypt_label": "Αποκρυπτογράφηση %(text)s",
+            "error_invalid": "Μη έγκυρο αρχείο %(extra)s"
+        },
+        "m.image": {
+            "sent": "Ο %(senderDisplayName)s έστειλε μια φωτογραφία.",
+            "error_decrypting": "Σφάλμα κατά την αποκρυπτογράφηση της εικόνας",
+            "show_image": "Εμφάνιση εικόνας"
+        }
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -3042,7 +3045,8 @@
         "show_all_threads": "Εμφάνιση όλων των νημάτων",
         "empty_explainer": "Τα νήματα σας βοηθούν να οργανώνετε και να παρακολουθείτε καλύτερα τις συνομιλίες σας.",
         "empty_heading": "Διατηρήστε τις συζητήσεις οργανωμένες με νήματα",
-        "open_thread": "Άνοιγμα νήματος"
+        "open_thread": "Άνοιγμα νήματος",
+        "error_start_thread_existing_relation": "Δεν είναι δυνατή η δημιουργία νήματος από ένα συμβάν με μια υπάρχουσα σχέση"
     },
     "theme": {
         "light_high_contrast": "Ελαφριά υψηλή αντίθεση",

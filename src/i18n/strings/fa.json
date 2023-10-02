@@ -15,10 +15,7 @@
     "Thursday": "پنج‌شنبه",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
-    "Error decrypting attachment": "خطا در رمزگشایی پیوست",
     "Email address": "آدرس ایمیل",
-    "Download %(text)s": "دانلود 2%(text)s",
-    "Decrypt %(text)s": "رمزگشایی %(text)s",
     "An error has occurred.": "خطایی رخ داده است.",
     "Home": "خانه",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
@@ -490,9 +487,6 @@
     "Video conference ended by %(senderName)s": "کنفرانس ویدیویی توسط %(senderName)s به پایان رسید",
     "Join the conference from the room information card on the right": "از طریق کارت اطلاعات اتاق در سمت راست، به کنفرانس بپیوندید",
     "Join the conference at the top of this room": "از بالای این اتاق به کنفرانس بپوندید",
-    "Show image": "نمایش تصویر",
-    "Error decrypting image": "خطا در رمزگشایی تصویر",
-    "Invalid file%(extra)s": "پرونده نامعتبر%(extra)s",
     "Remove %(count)s messages": {
         "one": "حذف ۱ پیام",
         "other": "حذف %(count)s پیام"
@@ -1508,7 +1502,6 @@
             "forbidden": "%(senderDisplayName)s از پیوستن مهمان به اتاق جلوگیری کرد.",
             "unknown": "%(senderDisplayName)s دسترسی مهمانان را به %(rule)s تغییر داد"
         },
-        "m.image": "%(senderDisplayName)s تصویری ارسال کرد.",
         "m.sticker": "%(senderDisplayName)s یک برچسب فرستاد.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s ACL های سرور را برای این اتاق تنظیم کرده است.",
@@ -1718,6 +1711,17 @@
             "disable_attempt": "تلاش برای غیرفعال کردن رمزگذاری نادیده گرفته شد",
             "disabled": "رمزگذاری فعال نیست",
             "unsupported": "رمزگذاری استفاده شده توسط این اتاق پشتیبانی نمی شود."
+        },
+        "m.file": {
+            "download_label": "دانلود 2%(text)s",
+            "error_decrypting": "خطا در رمزگشایی پیوست",
+            "decrypt_label": "رمزگشایی %(text)s",
+            "error_invalid": "پرونده نامعتبر%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s تصویری ارسال کرد.",
+            "error_decrypting": "خطا در رمزگشایی تصویر",
+            "show_image": "نمایش تصویر"
         }
     },
     "slash_command": {

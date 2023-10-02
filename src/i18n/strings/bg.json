@@ -44,11 +44,6 @@
     },
     "Join Room": "Присъединяване към стаята",
     "not specified": "неопределен",
-    "Error decrypting attachment": "Грешка при разшифроване на прикачен файл",
-    "Decrypt %(text)s": "Разшифровай %(text)s",
-    "Download %(text)s": "Изтегли %(text)s",
-    "Invalid file%(extra)s": "Невалиден файл%(extra)s",
-    "Error decrypting image": "Грешка при разшифроване на снимка",
     "Error decrypting video": "Грешка при разшифроване на видео",
     "Add an Integration": "Добавяне на интеграция",
     "Email address": "Имейл адрес",
@@ -246,7 +241,6 @@
     },
     "e.g. my-room": "например my-room",
     "Close dialog": "Затвори прозореца",
-    "Show image": "Покажи снимката",
     "Cancel search": "Отмени търсенето",
     "You verified %(name)s": "Потвърдихте %(name)s",
     "You cancelled verifying %(name)s": "Отказахте потвърждаването за %(name)s",
@@ -1246,7 +1240,6 @@
             "forbidden": "%(senderDisplayName)s спря достъпа на гости за влизане в стаята.",
             "unknown": "%(senderDisplayName)s промени правилото за достъп на гости на %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s изпрати снимка.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s зададе ACLs на сървър за тази стая.",
             "changed": "%(senderDisplayName)s промени сървърните разрешения за контрол на достъпа до тази стая.",
@@ -1449,6 +1442,17 @@
             "disable_attempt": "Опитът за изключване на шифроването беше игнориран",
             "disabled": "Шифроването не е включено",
             "unsupported": "Шифроването използвано от тази стая не се поддържа."
+        },
+        "m.file": {
+            "download_label": "Изтегли %(text)s",
+            "error_decrypting": "Грешка при разшифроване на прикачен файл",
+            "decrypt_label": "Разшифровай %(text)s",
+            "error_invalid": "Невалиден файл%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s изпрати снимка.",
+            "error_decrypting": "Грешка при разшифроване на снимка",
+            "show_image": "Покажи снимката"
         }
     },
     "slash_command": {

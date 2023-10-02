@@ -392,13 +392,6 @@
     "Video conference ended by %(senderName)s": "Hội nghị truyền hình đã kết thúc trước%(senderName)s",
     "Join the conference from the room information card on the right": "Tham gia hội nghị từ thẻ thông tin phòng bên phải",
     "Join the conference at the top of this room": "Tham gia hội nghị ở đầu phòng này",
-    "Show image": "Hiển thị hình ảnh",
-    "Error decrypting image": "Lỗi khi giải mã hình ảnh",
-    "Invalid file%(extra)s": "Tệp%(extra)s không hợp lệ",
-    "Decrypt %(text)s": "Giải mã %(text)s",
-    "Error decrypting attachment": "Lỗi khi giải mã tệp đính kèm",
-    "Download %(text)s": "Tải xuống %(text)s",
-    "Error processing audio message": "Lỗi khi xử lý tin nhắn âm thanh",
     "Yesterday": "Hôm qua",
     "Today": "Hôm nay",
     "Saturday": "Thứ bảy",
@@ -795,7 +788,6 @@
     "Sorry, your vote was not registered. Please try again.": "Xin lỗi, phiếu bầu của bạn đã không được đăng ký. Vui lòng thử lại.",
     "Vote not registered": "Bỏ phiếu không đăng ký",
     "Recently viewed": "Được xem gần đây",
-    "Reply in thread": "Trả lời theo chủ đề",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
     "Themes": "Chủ đề",
@@ -874,7 +866,6 @@
     "Cameras": "Máy quay",
     "unavailable": "không có sẵn",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
-    "Click": "Nhấn",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
     "Location": "Vị trí",
@@ -893,8 +884,6 @@
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Không ai có thể dùng lại tên người dùng của bạn (MXID), kể cả bạn: tên người dùng này sẽ trở thành không có sẵn",
     "<w>WARNING:</w> <description/>": "",
     "Shared their location: ": "",
-    "Error downloading image": "Lỗi khi tải hình ảnh",
-    "Unable to show image due to error": "Không thể hiển thị hình ảnh do lỗi",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
     "Declining…": "Đang từ chối…",
     "common": {
@@ -1131,7 +1120,9 @@
         "new_room": "Tạo phòng",
         "new_video_room": "Tạo phòng truyền hình",
         "add_existing_room": "Thêm phòng hiện có",
-        "explore_public_rooms": "Khám phá các phòng chung"
+        "explore_public_rooms": "Khám phá các phòng chung",
+        "reply_in_thread": "Trả lời theo chủ đề",
+        "click": "Nhấn"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -2102,7 +2093,6 @@
             "forbidden": "%(senderDisplayName)s vừa cấm khách có thể tham gia phòng.",
             "unknown": "%(senderDisplayName)s vừa đổi chính sách tham gia của khách thành %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s đã gửi một hình.",
         "m.sticker": "%(senderDisplayName)s đã gửi một sticker.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s đặt danh sách truy cập máy chủ cho phòng này.",
@@ -2370,7 +2360,8 @@
         },
         "m.audio": {
             "unnamed_audio": "Âm thanh không tên",
-            "error_downloading_audio": "Lỗi khi tải xuống âm thanh"
+            "error_downloading_audio": "Lỗi khi tải xuống âm thanh",
+            "error_processing_audio": "Lỗi khi xử lý tin nhắn âm thanh"
         },
         "load_error": {
             "no_permission": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng bạn không có quyền xem tin nhắn được đề cập.",
@@ -2390,7 +2381,20 @@
             "unsupported": "Mã hóa mà phòng này sử dụng không được hỗ trợ."
         },
         "pending_moderation_reason": "Tin nhắn chờ duyệt: %(reason)s",
-        "pending_moderation": "Tin nhắn chờ duyệt"
+        "pending_moderation": "Tin nhắn chờ duyệt",
+        "m.file": {
+            "download_label": "Tải xuống %(text)s",
+            "error_decrypting": "Lỗi khi giải mã tệp đính kèm",
+            "decrypt_label": "Giải mã %(text)s",
+            "error_invalid": "Tệp%(extra)s không hợp lệ"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s đã gửi một hình.",
+            "error": "Không thể hiển thị hình ảnh do lỗi",
+            "error_decrypting": "Lỗi khi giải mã hình ảnh",
+            "error_downloading": "Lỗi khi tải hình ảnh",
+            "show_image": "Hiển thị hình ảnh"
+        }
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",

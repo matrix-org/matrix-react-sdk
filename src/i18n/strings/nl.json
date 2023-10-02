@@ -31,13 +31,9 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s, %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s, %(time)s",
-    "Decrypt %(text)s": "%(text)s ontsleutelen",
-    "Download %(text)s": "%(text)s downloaden",
     "Email address": "E-mailadres",
     "Custom level": "Aangepast niveau",
-    "Error decrypting attachment": "Fout bij het ontsleutelen van de bijlage",
     "Home": "Home",
-    "Invalid file%(extra)s": "Ongeldig bestand %(extra)s",
     "Join Room": "Kamer toetreden",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
     "Session ID": "Sessie-ID",
@@ -50,7 +46,6 @@
     "Confirm Removal": "Verwijdering bevestigen",
     "Unable to restore session": "Herstellen van sessie mislukt",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
-    "Error decrypting image": "Fout bij het ontsleutelen van de afbeelding",
     "Error decrypting video": "Fout bij het ontsleutelen van de video",
     "Add an Integration": "Voeg een integratie toe",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
@@ -244,7 +239,6 @@
     },
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om uit te nodigen op e-mailadres. <default>Gebruik de standaardserver (%(defaultIdentityServerName)s)</default> of beheer de server in de <settings>Instellingen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om anderen uit te nodigen via e-mail. Beheer de server in de <settings>Instellingen</settings>.",
-    "Show image": "Afbeelding tonen",
     "e.g. my-room": "bv. mijn-kamer",
     "Close dialog": "Dialoog sluiten",
     "Lock": "Hangslot",
@@ -732,7 +726,6 @@
     "You don't have permission to do this": "Je hebt geen rechten om dit te doen",
     "Please provide an address": "Geef een adres op",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
-    "Error processing audio message": "Fout bij verwerking audiobericht",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "User Directory": "Personengids",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
@@ -785,7 +778,6 @@
         "one": "%(count)s stem",
         "other": "%(count)s stemmen"
     },
-    "Reply in thread": "Reageer in draad",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
         "other": "%(spaceName)s en %(count)s andere"
@@ -855,10 +847,6 @@
     "Results will be visible when the poll is ended": "Resultaten zijn zichtbaar wanneer de poll is afgelopen",
     "Sorry, you can't edit a poll after votes have been cast.": "Sorry, je kan een poll niet bewerken nadat er gestemd is.",
     "Can't edit poll": "Kan poll niet bewerken",
-    "Click": "Klik",
-    "Expand quotes": "Citaten uitvouwen",
-    "Collapse quotes": "Citaten invouwen",
-    "Can't create a thread from an event with an existing relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -869,7 +857,6 @@
     "Live location error": "Live locatie error",
     "Live location ended": "Live locatie beëindigd",
     "Live until %(expiryTime)s": "Live tot %(expiryTime)s",
-    "View live location": "Bekijk live locatie",
     "Close sidebar": "Zijbalk sluiten",
     "View List": "Toon Lijst",
     "View list": "Toon lijst",
@@ -1161,7 +1148,9 @@
         "new_room": "Nieuwe kamer",
         "new_video_room": "Nieuwe video kamer",
         "add_existing_room": "Bestaande kamers toevoegen",
-        "explore_public_rooms": "Publieke kamers ontdekken"
+        "explore_public_rooms": "Publieke kamers ontdekken",
+        "reply_in_thread": "Reageer in draad",
+        "click": "Klik"
     },
     "a11y": {
         "user_menu": "Persoonsmenu",
@@ -2057,7 +2046,6 @@
             "forbidden": "%(senderDisplayName)s heeft gasten de toegang tot de kamer ontzegd.",
             "unknown": "%(senderDisplayName)s heeft de toegangsregel voor gasten op ‘%(rule)s’ ingesteld"
         },
-        "m.image": "%(senderDisplayName)s heeft een afbeelding gestuurd.",
         "m.sticker": "%(senderDisplayName)s Verstuurde een sticker.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s stelde de server ACL's voor deze kamer in.",
@@ -2321,11 +2309,14 @@
         "mab": {
             "label": "Berichtacties",
             "view_in_room": "In kamer bekijken",
-            "copy_link_thread": "Kopieer link naar draad"
+            "copy_link_thread": "Kopieer link naar draad",
+            "collapse_reply_chain": "Citaten invouwen",
+            "expand_reply_chain": "Citaten uitvouwen"
         },
         "m.audio": {
             "unnamed_audio": "Naamloze audio",
-            "error_downloading_audio": "Fout bij downloaden van audio"
+            "error_downloading_audio": "Fout bij downloaden van audio",
+            "error_processing_audio": "Fout bij verwerking audiobericht"
         },
         "load_error": {
             "no_permission": "Je probeert een punt in de tijdlijn van deze kamer te laden, maar je hebt niet voldoende rechten om het bericht te lezen.",
@@ -2343,7 +2334,21 @@
             "unsupported": "De versleuteling gebruikt in deze kamer wordt niet ondersteund."
         },
         "pending_moderation_reason": "Bericht in afwachting van moderatie: %(reason)s",
-        "pending_moderation": "Bericht in afwachting van moderatie"
+        "pending_moderation": "Bericht in afwachting van moderatie",
+        "m.beacon_info": {
+            "view_live_location": "Bekijk live locatie"
+        },
+        "m.file": {
+            "download_label": "%(text)s downloaden",
+            "error_decrypting": "Fout bij het ontsleutelen van de bijlage",
+            "decrypt_label": "%(text)s ontsleutelen",
+            "error_invalid": "Ongeldig bestand %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s heeft een afbeelding gestuurd.",
+            "error_decrypting": "Fout bij het ontsleutelen van de afbeelding",
+            "show_image": "Afbeelding tonen"
+        }
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3305,7 +3310,8 @@
         "empty_explainer": "Threads helpen jou gesprekken on-topic te houden en gemakkelijk bij te houden.",
         "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
         "empty_heading": "Houd threads georganiseerd",
-        "open_thread": "Open discussie"
+        "open_thread": "Open discussie",
+        "error_start_thread_existing_relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie"
     },
     "theme": {
         "light_high_contrast": "Lichte hoog contrast",

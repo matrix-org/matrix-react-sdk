@@ -6,12 +6,8 @@
     },
     "An error has occurred.": "Ett fel har inträffat.",
     "Custom level": "Anpassad nivå",
-    "Decrypt %(text)s": "Avkryptera %(text)s",
-    "Download %(text)s": "Ladda ner %(text)s",
     "Email address": "E-postadress",
-    "Error decrypting attachment": "Fel vid avkryptering av bilagan",
     "Home": "Hem",
-    "Invalid file%(extra)s": "Felaktig fil%(extra)s",
     "Join Room": "Gå med i rum",
     "Moderator": "Moderator",
     "not specified": "inte specificerad",
@@ -90,7 +86,6 @@
     "collapse": "fäll ihop",
     "expand": "fäll ut",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
-    "Error decrypting image": "Fel vid avkryptering av bild",
     "Error decrypting video": "Fel vid avkryptering av video",
     "Add an Integration": "Lägg till integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
@@ -221,7 +216,6 @@
     "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
     "edited": "redigerat",
     "Failed to connect to integration manager": "Kunde inte ansluta till integrationshanterare",
-    "Show image": "Visa bild",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Du har ignorerat den här användaren, så dess meddelande är dolt. <a>Visa ändå.</a>",
     "You verified %(name)s": "Du verifierade %(name)s",
     "You cancelled verifying %(name)s": "Du avbröt verifiering av %(name)s",
@@ -731,7 +725,6 @@
     "Sent": "Skickat",
     "You don't have permission to do this": "Du har inte behörighet att göra detta",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
-    "Error processing audio message": "Fel vid hantering av ljudmeddelande",
     "Please provide an address": "Ange en adress, tack",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisering av meddelandesök misslyckades, kolla <a>dina inställningar</a> för mer information",
     "Adding spaces has moved.": "Tilläggning av utrymmen har flyttats.",
@@ -787,7 +780,6 @@
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
     "Vote not registered": "Röst registrerades inte",
-    "Reply in thread": "Svara i tråd",
     "Recently viewed": "Nyligen sedda",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Could not fetch location": "Kunde inte hämta plats",
@@ -843,10 +835,6 @@
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
     },
-    "Click": "Klicka",
-    "Expand quotes": "Expandera citat",
-    "Collapse quotes": "Kollapsa citat",
-    "Can't create a thread from an event with an existing relation": "Kan inte skapa tråd från en händelse med en existerande relation",
     "An error occurred while stopping your live location, please try again": "Ett fel inträffade medans din platsdelning avslutades, försök igen",
     "Live location enabled": "Realtidsposition aktiverad",
     "You are sharing your live location": "Du delar din position i realtid",
@@ -874,7 +862,6 @@
     "%(displayName)s's live location": "Realtidsposition för %(displayName)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s kunde inte skicka din position. Försök igen senare.",
     "We couldn't send your location": "Vi kunde inte skicka din positoin",
-    "View live location": "Se realtidsposition",
     "Hide my messages from new joiners": "Dölj mina meddelanden för nya som går med",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Kommer dina meddelanden fortfarande vara synliga för folk som har tagit emot dem, precis som e-post du har skickat tidigare. Vill du dölja dina skickade meddelanden från personer som går med i rum i framtiden?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Kommer du tas bort från din identitetsserver: dina vänner kommer inte längre kunna hitta dig med din e-postadress eller ditt telefonnummer",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Verifiera manuellt med text",
     "Choose a locale": "Välj en lokalisering",
     "<w>WARNING:</w> <description/>": "<w>VARNING:</w> <description/>",
-    "Error downloading image": "Fel vid nedladdning av bild",
-    "Unable to show image due to error": "Kunde inte visa bild på grund av fel",
     "%(name)s started a video call": "%(name)s startade ett videosamtal",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kan inte starta ett röstmeddelande eftersom du spelar in en direktsändning. Vänligen avsluta din direktsändning för att starta inspelning av ett röstmeddelande.",
@@ -1196,7 +1181,9 @@
         "new_room": "Nytt rum",
         "new_video_room": "Nytt videorum",
         "add_existing_room": "Lägg till existerande rum",
-        "explore_public_rooms": "Utforska offentliga rum"
+        "explore_public_rooms": "Utforska offentliga rum",
+        "reply_in_thread": "Svara i tråd",
+        "click": "Klicka"
     },
     "a11y": {
         "user_menu": "Användarmeny",
@@ -2234,7 +2221,6 @@
             "forbidden": "%(senderDisplayName)s har nekat gäster att gå med i rummet.",
             "unknown": "%(senderDisplayName)s ändrade gäståtkomst till %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s skickade en bild.",
         "m.sticker": "%(senderDisplayName)s skickade en dekal.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s ställde in server-ACL:er för det här rummet.",
@@ -2507,11 +2493,14 @@
         "mab": {
             "label": "Meddelandeåtgärder",
             "view_in_room": "Visa i rum",
-            "copy_link_thread": "Kopiera länk till tråd"
+            "copy_link_thread": "Kopiera länk till tråd",
+            "collapse_reply_chain": "Kollapsa citat",
+            "expand_reply_chain": "Expandera citat"
         },
         "m.audio": {
             "unnamed_audio": "Namnlöst ljud",
-            "error_downloading_audio": "Fel vid nedladdning av ljud"
+            "error_downloading_audio": "Fel vid nedladdning av ljud",
+            "error_processing_audio": "Fel vid hantering av ljudmeddelande"
         },
         "load_error": {
             "no_permission": "Försökte ladda en viss punkt i det här rummets tidslinje, men du är inte behörig att visa det aktuella meddelandet.",
@@ -2531,7 +2520,23 @@
             "unsupported": "Krypteringen som används i det här rummet stöds inte."
         },
         "pending_moderation_reason": "Meddelandet inväntar moderering: %(reason)s",
-        "pending_moderation": "Meddelandet inväntar moderering"
+        "pending_moderation": "Meddelandet inväntar moderering",
+        "m.beacon_info": {
+            "view_live_location": "Se realtidsposition"
+        },
+        "m.file": {
+            "download_label": "Ladda ner %(text)s",
+            "error_decrypting": "Fel vid avkryptering av bilagan",
+            "decrypt_label": "Avkryptera %(text)s",
+            "error_invalid": "Felaktig fil%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s skickade en bild.",
+            "error": "Kunde inte visa bild på grund av fel",
+            "error_decrypting": "Fel vid avkryptering av bild",
+            "error_downloading": "Fel vid nedladdning av bild",
+            "show_image": "Visa bild"
+        }
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -3582,7 +3587,8 @@
         "empty_tip": "<b>Tips:</b> Välj \"%(replyInThread)s\" när du håller över ett meddelande.",
         "empty_heading": "Håll diskussioner organiserade med trådar",
         "unable_to_decrypt": "Kunde inte avkryptera meddelande",
-        "open_thread": "Öppna tråd"
+        "open_thread": "Öppna tråd",
+        "error_start_thread_existing_relation": "Kan inte skapa tråd från en händelse med en existerande relation"
     },
     "theme": {
         "light_high_contrast": "Ljust högkontrast",

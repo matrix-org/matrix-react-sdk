@@ -46,10 +46,6 @@
         "other": "(~%(count)s rezultatų(-ai))",
         "one": "(~%(count)s rezultatas)"
     },
-    "Error decrypting attachment": "Klaida iššifruojant priedą",
-    "Decrypt %(text)s": "Iššifruoti %(text)s",
-    "Download %(text)s": "Atsisiųsti %(text)s",
-    "Error decrypting image": "Klaida iššifruojant vaizdą",
     "Error decrypting video": "Klaida iššifruojant vaizdo įrašą",
     "Email address": "El. pašto adresas",
     "Delete Widget": "Ištrinti valdiklį",
@@ -58,7 +54,6 @@
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
     "%(duration)sd": "%(duration)s d",
-    "Invalid file%(extra)s": "Neteisingas failas %(extra)s",
     "Create new room": "Sukurti naują kambarį",
     "collapse": "suskleisti",
     "expand": "išskleisti",
@@ -216,7 +211,6 @@
     "a new cross-signing key signature": "naujas kryžminio pasirašymo rakto parašas",
     "a device cross-signing signature": "įrenginio kryžminio pasirašymo parašas",
     "IRC display name width": "IRC rodomo vardo plotis",
-    "Show image": "Rodyti vaizdą",
     "Create a new room with the same name, description and avatar": "Sukurti naują kambarį su tuo pačiu pavadinimu, aprašymu ir pseudoportretu",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
@@ -511,7 +505,6 @@
     },
     "<inviter/> invites you": "<inviter/> kviečia jus",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
-    "Reply in thread": "Atsakyti temoje",
     "Developer": "Kūrėjas",
     "Experimental": "Eksperimentinis",
     "Themes": "Temos",
@@ -740,7 +733,8 @@
         "new_room": "Naujas kambarys",
         "new_video_room": "Naujas vaizdo kambarys",
         "add_existing_room": "Pridėti esamą kambarį",
-        "explore_public_rooms": "Tyrinėti viešuosius kambarius"
+        "explore_public_rooms": "Tyrinėti viešuosius kambarius",
+        "reply_in_thread": "Atsakyti temoje"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -1386,7 +1380,6 @@
             "forbidden": "%(senderDisplayName)s uždraudė svečiams prisijungti prie kambario.",
             "unknown": "%(senderDisplayName)s pakeitė svečių prieigą prie %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s išsiuntė vaizdą.",
         "m.sticker": "%(senderDisplayName)s nusiuntė lipduką.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s nustatė serverio prieigos kontrolės sąrašus šiam kambariui.",
@@ -1621,7 +1614,18 @@
             "unsupported": "Šiame kambaryje naudojamas šifravimas nėra palaikomas."
         },
         "pending_moderation_reason": "Žinutė laukia moderavimo: %(reason)s",
-        "pending_moderation": "Žinutė laukia moderavimo"
+        "pending_moderation": "Žinutė laukia moderavimo",
+        "m.file": {
+            "download_label": "Atsisiųsti %(text)s",
+            "error_decrypting": "Klaida iššifruojant priedą",
+            "decrypt_label": "Iššifruoti %(text)s",
+            "error_invalid": "Neteisingas failas %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s išsiuntė vaizdą.",
+            "error_decrypting": "Klaida iššifruojant vaizdą",
+            "show_image": "Rodyti vaizdą"
+        }
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",

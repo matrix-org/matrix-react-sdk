@@ -5,11 +5,7 @@
         "one": "y otro más…"
     },
     "An error has occurred.": "Un error ha ocurrido.",
-    "Decrypt %(text)s": "Descifrar %(text)s",
-    "Download %(text)s": "Descargar %(text)s",
     "Email address": "Dirección de correo electrónico",
-    "Error decrypting attachment": "Error al descifrar adjunto",
-    "Invalid file%(extra)s": "Archivo inválido %(extra)s",
     "Join Room": "Unirme a la sala",
     "Custom level": "Nivel personalizado",
     "Home": "Inicio",
@@ -76,7 +72,6 @@
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
     },
-    "Error decrypting image": "Error al descifrar imagen",
     "Error decrypting video": "Error al descifrar el vídeo",
     "Add an Integration": "Añadir una Integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Estás a punto de ir a un sitio externo para que puedas iniciar sesión con tu cuenta y usarla en %(integrationsUrl)s. ¿Quieres seguir?",
@@ -296,7 +291,6 @@
         "other": "%(count)s sesiones",
         "one": "%(count)s sesión"
     },
-    "Show image": "Ver imagen",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ha ignorado a esta cuenta, así que su mensaje está oculto. <a>Ver de todos modos.</a>",
     "You verified %(name)s": "Has verificado a %(name)s",
     "You cancelled verifying %(name)s": "Has cancelado la verificación de %(name)s",
@@ -734,7 +728,6 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "Ha fallado el sistema de búsqueda de mensajes. Comprueba <a>tus ajustes</a> para más información",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "User Directory": "Lista de usuarios",
-    "Error processing audio message": "Error al procesar el mensaje de audio",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en cuenta que actualizar crea una nueva versión de la sala</b>. Todos los mensajes hasta ahora quedarán archivados aquí, en esta sala.",
     "Automatically invite members from this room to the new one": "Invitar a la nueva sala automáticamente a los miembros que tiene ahora",
     "These are likely ones other room admins are a part of.": "Otros administradores de la sala estarán dentro.",
@@ -776,7 +769,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
     "Thread options": "Ajustes del hilo",
-    "Reply in thread": "Responder en hilo",
     "Forget": "Olvidar",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -845,11 +837,7 @@
     "Results will be visible when the poll is ended": "Los resultados podrán verse cuando la encuesta termine",
     "Sorry, you can't edit a poll after votes have been cast.": "Lo siento, no puedes editar una encuesta después de que alguien haya votado en ella.",
     "Can't edit poll": "Encuesta no editable",
-    "Can't create a thread from an event with an existing relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
-    "Click": "Clic",
-    "Expand quotes": "Expandir citas",
-    "Collapse quotes": "Plegar citas",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
         "other": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?",
         "one": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?"
@@ -868,7 +856,6 @@
     "Live location error": "Error en la ubicación en tiempo real",
     "Live location ended": "La ubicación en tiempo real ha terminado",
     "Live until %(expiryTime)s": "En directo hasta %(expiryTime)s",
-    "View live location": "Ver ubicación en tiempo real",
     "An error occurred while stopping your live location, please try again": "Ha ocurrido un error al dejar de compartir tu ubicación en tiempo real. Por favor, inténtalo de nuevo",
     "An error occurred while stopping your live location": "Ha ocurrido un error al dejar de compartir tu ubicación en tiempo real",
     "Close sidebar": "Cerrar barra lateral",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Verificar manualmente usando un texto",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s comenzó una videollamada",
-    "Unable to show image due to error": "No es posible mostrar la imagen debido a un error",
-    "Error downloading image": "Error al descargar la imagen",
     "Thread root ID: %(threadRootId)s": "ID del hilo raíz: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>ADVERTENCIA :</w> <description/>",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
@@ -1190,7 +1175,9 @@
         "new_room": "Nueva sala",
         "new_video_room": "Nueva sala de vídeo",
         "add_existing_room": "Añadir sala ya existente",
-        "explore_public_rooms": "Buscar salas públicas"
+        "explore_public_rooms": "Buscar salas públicas",
+        "reply_in_thread": "Responder en hilo",
+        "click": "Clic"
     },
     "a11y": {
         "user_menu": "Menú del Usuario",
@@ -2174,7 +2161,6 @@
             "forbidden": "%(senderDisplayName)s ha prohibido que los invitados se unan a la sala.",
             "unknown": "%(senderDisplayName)s ha cambiado el acceso de invitados a %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s envió una imagen.",
         "m.sticker": "%(senderDisplayName)s envió una pegatina.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s ha establecido los permisos de la sala.",
@@ -2441,11 +2427,14 @@
         "mab": {
             "label": "Acciones de mensaje",
             "view_in_room": "Ver en la sala",
-            "copy_link_thread": "Copiar enlace al hilo"
+            "copy_link_thread": "Copiar enlace al hilo",
+            "collapse_reply_chain": "Plegar citas",
+            "expand_reply_chain": "Expandir citas"
         },
         "m.audio": {
             "unnamed_audio": "Audio sin título",
-            "error_downloading_audio": "Error al descargar el audio"
+            "error_downloading_audio": "Error al descargar el audio",
+            "error_processing_audio": "Error al procesar el mensaje de audio"
         },
         "load_error": {
             "no_permission": "Se ha intentado cargar cierto punto en la cronología de esta sala, pero no tiene permiso para ver el mensaje solicitado.",
@@ -2465,7 +2454,23 @@
             "unsupported": "El cifrado usado por esta sala no es compatible."
         },
         "pending_moderation_reason": "Mensaje esperando revisión: %(reason)s",
-        "pending_moderation": "Mensaje esperando revisión"
+        "pending_moderation": "Mensaje esperando revisión",
+        "m.beacon_info": {
+            "view_live_location": "Ver ubicación en tiempo real"
+        },
+        "m.file": {
+            "download_label": "Descargar %(text)s",
+            "error_decrypting": "Error al descifrar adjunto",
+            "decrypt_label": "Descifrar %(text)s",
+            "error_invalid": "Archivo inválido %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s envió una imagen.",
+            "error": "No es posible mostrar la imagen debido a un error",
+            "error_decrypting": "Error al descifrar imagen",
+            "error_downloading": "Error al descargar la imagen",
+            "show_image": "Ver imagen"
+        }
     },
     "slash_command": {
         "spoiler": "Envía el mensaje como un spoiler",
@@ -3476,7 +3481,8 @@
         "empty_tip": "<b>Consejo:</b> Usa «%(replyInThread)s» mientras pasas el ratón sobre un mensaje.",
         "empty_heading": "Organiza los temas de conversación en hilos",
         "unable_to_decrypt": "No se ha podido descifrar el mensaje",
-        "open_thread": "Abrir hilo"
+        "open_thread": "Abrir hilo",
+        "error_start_thread_existing_relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente"
     },
     "theme": {
         "light_high_contrast": "Claro con contraste alto",

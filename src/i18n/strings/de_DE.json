@@ -30,19 +30,14 @@
         "other": "und %(count)s weitere …",
         "one": "und ein weiterer …"
     },
-    "Decrypt %(text)s": "%(text)s entschlüsseln",
-    "Download %(text)s": "%(text)s herunterladen",
     "Join Room": "Raum betreten",
     "not specified": "nicht angegeben",
     "%(items)s and %(lastItem)s": "%(items)s und %(lastItem)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
     "An error has occurred.": "Ein Fehler ist aufgetreten.",
     "Email address": "E-Mail-Adresse",
-    "Error decrypting attachment": "Fehler beim Entschlüsseln des Anhangs",
-    "Invalid file%(extra)s": "Ungültige Datei%(extra)s",
     "Confirm Removal": "Entfernen bestätigen",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
-    "Error decrypting image": "Entschlüsselung des Bilds fehlgeschlagen",
     "Error decrypting video": "Videoentschlüsselung fehlgeschlagen",
     "Add an Integration": "Eine Integration hinzufügen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
@@ -254,7 +249,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
-    "Show image": "Bild anzeigen",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Du blockierst diesen Benutzer, deshalb werden seine Nachrichten nicht angezeigt. <a>Trotzdem anzeigen.</a>",
     "You accepted": "Du hast angenommen",
     "You declined": "Du hast abgelehnt",
@@ -734,7 +728,6 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
-    "Error processing audio message": "Fehler beim Verarbeiten der Audionachricht",
     "Adding spaces has moved.": "Das Hinzufügen von Spaces ist umgezogen.",
     "Search for rooms": "Räume suchen",
     "Search for spaces": "Spaces suchen",
@@ -777,7 +770,6 @@
     "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
     "If you can't see who you're looking for, send them your invite link below.": "Wenn du die gesuchte Person nicht findest, sende ihr den Einladungslink zu.",
     "Add a space to a space you manage.": "Einen Space zu einem Space den du verwaltest hinzufügen.",
-    "Reply in thread": "In Thread antworten",
     "Forget": "Vergessen",
     "%(count)s votes": {
         "one": "%(count)s Stimme",
@@ -839,10 +831,6 @@
     "Results will be visible when the poll is ended": "Ergebnisse werden nach Abschluss der Umfrage sichtbar",
     "Sorry, you can't edit a poll after votes have been cast.": "Du kannst Umfragen nicht bearbeiten, sobald Stimmen abgegeben wurden.",
     "Can't edit poll": "Umfrage kann nicht bearbeitet werden",
-    "Click": "Klick",
-    "Expand quotes": "Zitate ausklappen",
-    "Collapse quotes": "Zitate einklappen",
-    "Can't create a thread from an event with an existing relation": "Du kannst keinen Thread in einem Thread starten",
     "What location type do you want to share?": "Wie willst du deinen Standort teilen?",
     "Drop a Pin": "Standort setzen",
     "My live location": "Mein Echtzeit-Standort",
@@ -857,7 +845,6 @@
         "other": "Du bist gerade dabei, %(count)s Nachrichten von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?"
     },
     "%(displayName)s's live location": "Echtzeit-Standort von %(displayName)s",
-    "View live location": "Echtzeit-Standort anzeigen",
     "%(count)s participants": {
         "one": "1 Teilnehmer",
         "other": "%(count)s Teilnehmer"
@@ -930,8 +917,6 @@
     "Saved Items": "Gespeicherte Elemente",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
-    "Error downloading image": "Fehler beim Herunterladen des Bildes",
-    "Unable to show image due to error": "Kann Bild aufgrund eines Fehlers nicht anzeigen",
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>WARNUNG:</w> <description/>",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
@@ -1201,7 +1186,9 @@
         "new_room": "Neuer Raum",
         "new_video_room": "Neuer Videoraum",
         "add_existing_room": "Existierenden Raum hinzufügen",
-        "explore_public_rooms": "Öffentliche Räume erkunden"
+        "explore_public_rooms": "Öffentliche Räume erkunden",
+        "reply_in_thread": "In Thread antworten",
+        "click": "Klick"
     },
     "a11y": {
         "user_menu": "Benutzermenü",
@@ -2272,7 +2259,6 @@
             "forbidden": "%(senderDisplayName)s hat Gästen verboten, diesem Raum beizutreten.",
             "unknown": "%(senderDisplayName)s änderte den Gastzutritt auf „%(rule)s“"
         },
-        "m.image": "%(senderDisplayName)s hat ein Bild gesendet.",
         "m.sticker": "%(senderDisplayName)s hat einen Sticker gesendet.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s hat die Server-ACLs für diesen Raum gesetzt.",
@@ -2553,11 +2539,14 @@
         "mab": {
             "label": "Nachrichtenaktionen",
             "view_in_room": "Im Raum anzeigen",
-            "copy_link_thread": "Link zu Thread kopieren"
+            "copy_link_thread": "Link zu Thread kopieren",
+            "collapse_reply_chain": "Zitate einklappen",
+            "expand_reply_chain": "Zitate ausklappen"
         },
         "m.audio": {
             "unnamed_audio": "Unbenannte Audiodatei",
-            "error_downloading_audio": "Fehler beim Herunterladen der Audiodatei"
+            "error_downloading_audio": "Fehler beim Herunterladen der Audiodatei",
+            "error_processing_audio": "Fehler beim Verarbeiten der Audionachricht"
         },
         "load_error": {
             "no_permission": "Dir fehlt die Berechtigung, diese alten Nachrichten zu lesen.",
@@ -2579,7 +2568,23 @@
             "unsupported": "Die von diesem Raum verwendete Verschlüsselung wird nicht unterstützt."
         },
         "pending_moderation_reason": "Nachricht erwartet Moderation: %(reason)s",
-        "pending_moderation": "Nachricht erwartet Moderation"
+        "pending_moderation": "Nachricht erwartet Moderation",
+        "m.beacon_info": {
+            "view_live_location": "Echtzeit-Standort anzeigen"
+        },
+        "m.file": {
+            "download_label": "%(text)s herunterladen",
+            "error_decrypting": "Fehler beim Entschlüsseln des Anhangs",
+            "decrypt_label": "%(text)s entschlüsseln",
+            "error_invalid": "Ungültige Datei%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s hat ein Bild gesendet.",
+            "error": "Kann Bild aufgrund eines Fehlers nicht anzeigen",
+            "error_decrypting": "Entschlüsselung des Bilds fehlgeschlagen",
+            "error_downloading": "Fehler beim Herunterladen des Bildes",
+            "show_image": "Bild anzeigen"
+        }
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -3639,7 +3644,8 @@
         "empty_tip": "<b>Tipp:</b> Nutze “%(replyInThread)s” beim Schweben über eine Nachricht.",
         "empty_heading": "Organisiere Diskussionen mit Threads",
         "unable_to_decrypt": "Nachrichten-Entschlüsselung nicht möglich",
-        "open_thread": "Thread anzeigen"
+        "open_thread": "Thread anzeigen",
+        "error_start_thread_existing_relation": "Du kannst keinen Thread in einem Thread starten"
     },
     "theme": {
         "light_high_contrast": "Hell kontrastreich",

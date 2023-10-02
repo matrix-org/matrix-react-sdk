@@ -6,12 +6,8 @@
     },
     "An error has occurred.": "Bir hata oluştu.",
     "Custom level": "Özel seviye",
-    "Decrypt %(text)s": "%(text)s metninin şifresini çöz",
-    "Download %(text)s": "%(text)s metnini indir",
     "Email address": "E-posta Adresi",
-    "Error decrypting attachment": "Ek şifresini çözme hatası",
     "Home": "Ev",
-    "Invalid file%(extra)s": "Geçersiz dosya %(extra)s'ı",
     "Join Room": "Odaya Katıl",
     "Moderator": "Moderatör",
     "not specified": "Belirtilmemiş",
@@ -50,7 +46,6 @@
     "Confirm Removal": "Kaldırma İşlemini Onayla",
     "Unable to restore session": "Oturum geri yüklenemiyor",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
-    "Error decrypting image": "Resim şifre çözme hatası",
     "Error decrypting video": "Video şifre çözme hatası",
     "Add an Integration": "Entegrasyon ekleyin",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
@@ -197,7 +192,6 @@
         "other": "%(count)s doğrulanmış oturum",
         "one": "1 doğrulanmış oturum"
     },
-    "Show image": "Resim göster",
     "You verified %(name)s": "%(name)s yı doğruladınız",
     "You cancelled verifying %(name)s": "%(name)s doğrulaması iptal edildi",
     "You accepted": "Kabul ettiniz",
@@ -1175,7 +1169,6 @@
             "forbidden": "Odaya misafirlerin girişini engelleyen %(senderDisplayName)s.",
             "unknown": "%(senderDisplayName)s misafir erişim kuralını %(rule)s şeklinde değiştirdi"
         },
-        "m.image": "%(senderDisplayName)s bir resim gönderdi.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s bu oda için sunucu ACL'lerini ayarladı.",
             "changed": "%(senderDisplayName)s bu oda için sunucu ACL'lerini değiştirdi.",
@@ -1374,6 +1367,17 @@
             "disable_attempt": "Şifrelemeyi devre dışı bırakma denemesi yok sayıldı",
             "disabled": "Şifreleme etkin değil",
             "unsupported": "Bu odada kullanılan şifreleme desteklenmiyor."
+        },
+        "m.file": {
+            "download_label": "%(text)s metnini indir",
+            "error_decrypting": "Ek şifresini çözme hatası",
+            "decrypt_label": "%(text)s metninin şifresini çöz",
+            "error_invalid": "Geçersiz dosya %(extra)s'ı"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s bir resim gönderdi.",
+            "error_decrypting": "Resim şifre çözme hatası",
+            "show_image": "Resim göster"
         }
     },
     "slash_command": {

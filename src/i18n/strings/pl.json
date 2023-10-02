@@ -29,12 +29,8 @@
         "one": "i jeden inny..."
     },
     "Custom level": "Własny poziom",
-    "Decrypt %(text)s": "Odszyfruj %(text)s",
-    "Download %(text)s": "Pobierz %(text)s",
     "Email address": "Adres e-mail",
-    "Error decrypting attachment": "Błąd odszyfrowywania załącznika",
     "Home": "Strona główna",
-    "Invalid file%(extra)s": "Nieprawidłowy plik %(extra)s",
     "Join Room": "Dołącz do pokoju",
     "Moderator": "Moderator",
     "not specified": "nieokreślony",
@@ -54,7 +50,6 @@
     "Confirm Removal": "Potwierdź usunięcie",
     "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
-    "Error decrypting image": "Błąd deszyfrowania obrazu",
     "Error decrypting video": "Błąd deszyfrowania wideo",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Za chwilę zostaniesz przekierowany/a na zewnętrzną stronę w celu powiązania Twojego konta z %(integrationsUrl)s. Czy chcesz kontynuować?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -206,7 +201,6 @@
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
-    "Show image": "Pokaż obraz",
     "Upload completed": "Przesyłanie zakończone",
     "Message edits": "Edycje wiadomości",
     "Upload %(count)s other files": {
@@ -572,7 +566,6 @@
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
     "Space selection": "Wybór przestrzeni",
-    "Reply in thread": "Odpowiedz w wątku",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
@@ -631,14 +624,6 @@
     "Video conference ended by %(senderName)s": "Konferencja wideo została zakończona przez %(senderName)s",
     "Join the conference from the room information card on the right": "Dołącz do konferencji z karty informacyjnej pokoju po prawej",
     "Join the conference at the top of this room": "Dołącz do konferencji na górze tego pokoju",
-    "Error downloading image": "Wystąpił błąd w trakcie pobierania zdjęcia",
-    "Unable to show image due to error": "Nie można pokazać zdjęcia z powodu błędu",
-    "Click": "Kliknij",
-    "Expand quotes": "Rozwiń cytaty",
-    "Collapse quotes": "Zwiń cytaty",
-    "Can't create a thread from an event with an existing relation": "Nie można utworzyć wątku z wydarzenia z istniejącą relacją",
-    "View live location": "Pokaż lokalizację na żywo",
-    "Error processing audio message": "Wystąpił błąd procesowania wiadomości audio",
     "unavailable": "niedostępne",
     "unknown status code": "nieznany kod statusu",
     "%(name)s started a video call": "%(name)s rozpoczął rozmowę wideo",
@@ -1199,7 +1184,9 @@
         "new_room": "Nowy pokój",
         "new_video_room": "Nowy pokój wideo",
         "add_existing_room": "Dodaj istniejący pokój",
-        "explore_public_rooms": "Przeglądaj pokoje publiczne"
+        "explore_public_rooms": "Przeglądaj pokoje publiczne",
+        "reply_in_thread": "Odpowiedz w wątku",
+        "click": "Kliknij"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -2268,7 +2255,6 @@
             "forbidden": "%(senderDisplayName)s zabronił gościom dołączać do pokoju.",
             "unknown": "%(senderDisplayName)s zmienił dostęp dla gości dla %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s wysłał obraz.",
         "m.sticker": "%(senderDisplayName)s wysłał naklejkę.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s ustawił ACLe serwera dla pokoju.",
@@ -2547,11 +2533,14 @@
         "mab": {
             "label": "Działania na wiadomościach",
             "view_in_room": "Wyświetl w pokoju",
-            "copy_link_thread": "Kopiuj link do wątku"
+            "copy_link_thread": "Kopiuj link do wątku",
+            "collapse_reply_chain": "Zwiń cytaty",
+            "expand_reply_chain": "Rozwiń cytaty"
         },
         "m.audio": {
             "unnamed_audio": "Audio bez nazwy",
-            "error_downloading_audio": "Wystąpił błąd w trakcie pobierania audio"
+            "error_downloading_audio": "Wystąpił błąd w trakcie pobierania audio",
+            "error_processing_audio": "Wystąpił błąd procesowania wiadomości audio"
         },
         "load_error": {
             "no_permission": "Nastąpiła próba załadowania danego punktu w historii tego pokoju, lecz nie masz uprawnień, by zobaczyć określoną wiadomość.",
@@ -2573,7 +2562,23 @@
             "unsupported": "Szyfrowanie wykorzystywane przez ten pokój nie jest obsługiwane."
         },
         "pending_moderation_reason": "Wiadomość oczekuję na moderację: %(reason)s",
-        "pending_moderation": "Wiadomość oczekuję na moderację"
+        "pending_moderation": "Wiadomość oczekuję na moderację",
+        "m.beacon_info": {
+            "view_live_location": "Pokaż lokalizację na żywo"
+        },
+        "m.file": {
+            "download_label": "Pobierz %(text)s",
+            "error_decrypting": "Błąd odszyfrowywania załącznika",
+            "decrypt_label": "Odszyfruj %(text)s",
+            "error_invalid": "Nieprawidłowy plik %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s wysłał obraz.",
+            "error": "Nie można pokazać zdjęcia z powodu błędu",
+            "error_decrypting": "Błąd deszyfrowania obrazu",
+            "error_downloading": "Wystąpił błąd w trakcie pobierania zdjęcia",
+            "show_image": "Pokaż obraz"
+        }
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -3626,7 +3631,8 @@
         "empty_tip": "<b>Tip:</b> Użyj “%(replyInThread)s” najeżdżając na wiadomość.",
         "empty_heading": "Organizuj dyskusje za pomocą wątków",
         "unable_to_decrypt": "Nie można rozszyfrować wiadomości",
-        "open_thread": "Otwórz wątek"
+        "open_thread": "Otwórz wątek",
+        "error_start_thread_existing_relation": "Nie można utworzyć wątku z wydarzenia z istniejącą relacją"
     },
     "theme": {
         "light_high_contrast": "Jasny z wysokim kontrastem",

@@ -448,12 +448,6 @@
     "Video conference ended by %(senderName)s": "ועידת הווידיאו הסתיימה ב- %(senderName)s",
     "Join the conference from the room information card on the right": "הצטרפו לכנס מכרטיס המידע על החדר בצד ימין",
     "Join the conference at the top of this room": "הצטרף לכנס בחלק העליון של החדר הזה",
-    "Show image": "הצג תמונה",
-    "Error decrypting image": "שגיאה בפענוח הודעה",
-    "Invalid file%(extra)s": "קובץ לא תקין %(extra)s",
-    "Download %(text)s": "הורד %(text)s",
-    "Decrypt %(text)s": "פענח %(text)s",
-    "Error decrypting attachment": "שגיאה בפענוח קבצים מצורפים",
     "Remove %(count)s messages": {
         "one": "הסר הודעה 1",
         "other": "הסר %(count)s הודעות"
@@ -702,8 +696,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "הסקר הסתיים. תשובה הכי נפוצה: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "הסקר הסתיים. לא היו הצבעות.",
     "Thread options": "אפשרויות שרשור",
-    "Can't create a thread from an event with an existing relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים",
-    "Reply in thread": "מענה בשרשור",
     "You may contact me if you have any follow up questions": "אתם יכולים לתקשר איתי אם יש לכם שאלות המשך",
     "Feedback sent! Thanks, we appreciate it!": "משוב נשלח! תודה, אנחנו מודים לכם",
     "Search for rooms or people": "חפשו אנשים או חדרים",
@@ -925,7 +917,8 @@
         "invite_to_space": "הזמינו אל מרחב העבודה",
         "explore_rooms": "גלה חדרים",
         "new_room": "חדר חדש",
-        "explore_public_rooms": "שוטט בחדרים ציבוריים"
+        "explore_public_rooms": "שוטט בחדרים ציבוריים",
+        "reply_in_thread": "מענה בשרשור"
     },
     "a11y": {
         "user_menu": "תפריט משתמש",
@@ -1570,7 +1563,6 @@
             "forbidden": "%(senderDisplayName)s מנע אפשרות מאורחים להכנס אל החדר.",
             "unknown": "%(senderDisplayName)s שינה את כללי הכניסה לאורחים ל- %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s שלח תמונה.",
         "m.sticker": "%(senderDisplayName)s שלח מדבקה",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s הגדיר את רשימת הכניסה של השרת עבור חדר זה.",
@@ -1803,6 +1795,17 @@
             "disable_attempt": "התעלם מהניסיון להשבית את ההצפנה",
             "disabled": "ההצפנה לא מופעלת",
             "unsupported": "ההצפנה בה משתמשים בחדר זה אינה נתמכת."
+        },
+        "m.file": {
+            "download_label": "הורד %(text)s",
+            "error_decrypting": "שגיאה בפענוח קבצים מצורפים",
+            "decrypt_label": "פענח %(text)s",
+            "error_invalid": "קובץ לא תקין %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s שלח תמונה.",
+            "error_decrypting": "שגיאה בפענוח הודעה",
+            "show_image": "הצג תמונה"
         }
     },
     "slash_command": {
@@ -2604,7 +2607,8 @@
         "empty_explainer": "שרשורים עוזרים לשמור על השיחות שלכם בנושא וקל למעקב.",
         "empty_tip": "<b>טיפ:</b> השתמש ב-\"%(replyInThread)s\" כשאתם מרחפים מעל הודעה.",
         "empty_heading": "שימרו על דיונים מאורגנים בשרשורים",
-        "open_thread": "פתיחת שרשור"
+        "open_thread": "פתיחת שרשור",
+        "error_start_thread_existing_relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים"
     },
     "space": {
         "landing_welcome": "ברוכים הבאים אל <name/>",

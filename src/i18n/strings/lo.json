@@ -561,17 +561,6 @@
     "Video conference ended by %(senderName)s": "ກອງປະຊຸມວິດີໂອໄດ້ສິ້ນສຸດລົງໂດຍ %(senderName)s",
     "Join the conference from the room information card on the right": "ເຂົ້າຮ່ວມກອງປະຊຸມຈາກບັດຂໍ້ມູນຫ້ອງຢູ່ເບື້ອງຂວາ",
     "Join the conference at the top of this room": "ເຂົ້າຮ່ວມກອງປະຊຸມຢູ່ເທິງສຸດຂອງຫ້ອງນີ້",
-    "Show image": "ສະແດງຮູບພາບ",
-    "Error decrypting image": "ການຖອດລະຫັດຮູບພາບຜິດພາດ",
-    "Invalid file%(extra)s": "ໄຟລ໌ບໍ່ຖືກຕ້ອງ%(extra)s",
-    "Decrypt %(text)s": "ຖອດລະຫັດ %(text)s",
-    "Error decrypting attachment": "ເກີດຄວາມຜິດພາດໃນການຖອດລະຫັດໄຟລ໌ຄັດຕິດ",
-    "Download %(text)s": "ດາວໂຫລດ %(text)s",
-    "Click": "ກົດ",
-    "Expand quotes": "ຂະຫຍາຍວົງຢືມ",
-    "Collapse quotes": "ຫຍໍ້ວົງຢືມ",
-    "Can't create a thread from an event with an existing relation": "ບໍ່ສາມາດສ້າງກະທູ້ຈາກເຫດການທີ່ມີຄວາມສໍາພັນທີ່ມີຢູ່ແລ້ວ",
-    "View live location": "ເບິ່ງສະຖານທີ່ປັດຈຸບັນ",
     "Language Dropdown": "ເລື່ອນພາສາລົງ",
     "Information": "ຂໍ້ມູນ",
     "expand": "ຂະຫຍາຍ",
@@ -618,7 +607,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ຄຳຕອບສູງສຸດ: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ບໍ່ມີການລົງຄະແນນສຽງ.",
     "IRC display name width": "ຄວາມກວ້າງຂອງຊື່ສະແດງ IRC",
-    "Reply in thread": "ຕອບໃນກະທູ້",
     "Developer": "ນັກພັດທະນາ",
     "Experimental": "ທົດລອງ",
     "Themes": "ຫົວຂໍ້",
@@ -759,7 +747,6 @@
     "Lion": "ຊ້າງ",
     "Cat": "ແມວ",
     "Dog": "ໝາ",
-    "Error processing audio message": "ການປະມວນຜົນຂໍ້ຄວາມສຽງຜິດພາດ",
     "Yesterday": "ມື້ວານນີ້",
     "Today": "ມື້ນີ້",
     "Saturday": "ວັນເສົາ",
@@ -1108,7 +1095,9 @@
         "new_room": "ຫ້ອງໃຫມ່",
         "new_video_room": "ຫ້ອງວິດີໂອໃຫມ່",
         "add_existing_room": "ເພີ່ມຫ້ອງທີ່ມີຢູ່",
-        "explore_public_rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ"
+        "explore_public_rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ",
+        "reply_in_thread": "ຕອບໃນກະທູ້",
+        "click": "ກົດ"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -1853,7 +1842,6 @@
             "forbidden": "%(senderDisplayName)s ໄດ້ປ້ອງກັນບໍ່ໃຫ້ແຂກເຂົ້າຮ່ວມຫ້ອງ.",
             "unknown": "%(senderDisplayName)s ໄດ້ປ່ຽນການເຂົ້າເຖິງຂອງແຂກເປັນ %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s ສົ່ງຮູບ.",
         "m.sticker": "%(senderDisplayName)s ສົ່ງສະຕິກເກີ.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s ຕັ້ງ ACL ຂອງເຊີບເວີສໍາລັບຫ້ອງນີ້.",
@@ -2117,11 +2105,14 @@
         "mab": {
             "label": "ການດຳເນີນການທາງຂໍ້ຄວາມ",
             "view_in_room": "ເບິ່ງຢູ່ໃນຫ້ອງ",
-            "copy_link_thread": "ສຳເນົາລິ້ງໃສ່ກະທູ້"
+            "copy_link_thread": "ສຳເນົາລິ້ງໃສ່ກະທູ້",
+            "collapse_reply_chain": "ຫຍໍ້ວົງຢືມ",
+            "expand_reply_chain": "ຂະຫຍາຍວົງຢືມ"
         },
         "m.audio": {
             "unnamed_audio": "ສຽງບໍ່ມີຊື່",
-            "error_downloading_audio": "ເກີດຄວາມຜິດພາດໃນການດາວໂຫຼດສຽງ"
+            "error_downloading_audio": "ເກີດຄວາມຜິດພາດໃນການດາວໂຫຼດສຽງ",
+            "error_processing_audio": "ການປະມວນຜົນຂໍ້ຄວາມສຽງຜິດພາດ"
         },
         "load_error": {
             "no_permission": "ພະຍາຍາມໂຫຼດຈຸດສະເພາະຢູ່ໃນທາມລາຍຂອງຫ້ອງນີ້, ແຕ່ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງຂໍ້ຄວາມທີ່ເປັນຄໍາຖາມ.",
@@ -2138,7 +2129,21 @@
             "unsupported": "ບໍ່ຮອງຮັບການເຂົ້າລະຫັດທີ່ໃຊ້ໂດຍຫ້ອງນີ້."
         },
         "pending_moderation_reason": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ: %(reason)s",
-        "pending_moderation": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ"
+        "pending_moderation": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ",
+        "m.beacon_info": {
+            "view_live_location": "ເບິ່ງສະຖານທີ່ປັດຈຸບັນ"
+        },
+        "m.file": {
+            "download_label": "ດາວໂຫລດ %(text)s",
+            "error_decrypting": "ເກີດຄວາມຜິດພາດໃນການຖອດລະຫັດໄຟລ໌ຄັດຕິດ",
+            "decrypt_label": "ຖອດລະຫັດ %(text)s",
+            "error_invalid": "ໄຟລ໌ບໍ່ຖືກຕ້ອງ%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s ສົ່ງຮູບ.",
+            "error_decrypting": "ການຖອດລະຫັດຮູບພາບຜິດພາດ",
+            "show_image": "ສະແດງຮູບພາບ"
+        }
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3051,7 +3056,8 @@
         "empty_explainer": "ກະທູ້ຊ່ວຍໃຫ້ການສົນທະນາຂອງທ່ານຢູ່ໃນຫົວຂໍ້ ແລະ ງ່າຍຕໍ່ການຕິດຕາມ.",
         "empty_tip": "<b>ເຄັດລັບ:</b> ໃຊ້ “%(replyInThread)s” ເມື່ອເລື່ອນໃສ່ຂໍ້ຄວາມ.",
         "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ",
-        "open_thread": "ເປີດກະທູ້"
+        "open_thread": "ເປີດກະທູ້",
+        "error_start_thread_existing_relation": "ບໍ່ສາມາດສ້າງກະທູ້ຈາກເຫດການທີ່ມີຄວາມສໍາພັນທີ່ມີຢູ່ແລ້ວ"
     },
     "theme": {
         "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",

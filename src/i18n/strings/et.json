@@ -60,12 +60,6 @@
     "Your browser likely removed this data when running low on disk space.": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu.",
     "Find others by phone or email": "Leia teisi kasutajaid telefoninumbri või e-posti aadressi alusel",
     "Be found by phone or email": "Ole leitav telefoninumbri või e-posti aadressi alusel",
-    "Error decrypting attachment": "Viga manuse dekrüptimisel",
-    "Decrypt %(text)s": "Dekrüpti %(text)s",
-    "Download %(text)s": "Laadi alla %(text)s",
-    "Invalid file%(extra)s": "Vigane fail %(extra)s",
-    "Error decrypting image": "Viga pildi dekrüptimisel",
-    "Show image": "Näita pilti",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Sa oled seda kasutajat eiranud ja seega tema sõnum on peidetud. <a>Näita seda ikkagi.</a>",
     "You verified %(name)s": "Sa verifitseerisid %(name)s",
     "You cancelled verifying %(name)s": "Sa tühistasid %(name)s verifitseerimise",
@@ -732,7 +726,6 @@
     "You don't have permission to do this": "Sul puuduvad selleks toiminguks õigused",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
     "Please provide an address": "Palun sisesta aadress",
-    "Error processing audio message": "Viga häälsõnumi töötlemisel",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt.",
     "User Directory": "Kasutajate kataloog",
     "You're removing all spaces. Access will default to invite only": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
@@ -777,7 +770,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Taasta ligipääs oma kontole ning selles sessioonis salvestatud krüptivõtmetele. Ilma nende võtmeteta sa ei saa lugeda krüptitud sõnumeid mitte üheski oma sessioonis.",
     "If you can't see who you're looking for, send them your invite link below.": "Kui sa ei leia otsitavaid, siis saada neile kutse.",
     "Thread options": "Jutulõnga valikud",
-    "Reply in thread": "Vasta jutulõngas",
     "Forget": "Unusta",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja veel %(count)s kogukond",
@@ -845,10 +837,6 @@
     "My current location": "Minu praegune asukoht",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei saanud sinu asukohta edastada. Palun proovi hiljem uuesti.",
     "We couldn't send your location": "Sinu asukoha saatmine ei õnnestunud",
-    "Expand quotes": "Näita viidatud sisu",
-    "Collapse quotes": "Peida viidatud sisu",
-    "Click": "Klõpsi",
-    "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
     "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
     "%(displayName)s's live location": "%(displayName)s asukoht reaalajas",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -866,7 +854,6 @@
     },
     "%(featureName)s Beta feedback": "%(featureName)s beetaversiooni tagasiside",
     "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
-    "View live location": "Vaata asukohta reaalajas",
     "Live location enabled": "Reaalajas asukoha jagamine on kasutusel",
     "Live location error": "Viga asukoha jagamisel reaalajas",
     "Live until %(expiryTime)s": "Kuvamine toimib kuni %(expiryTime)s",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s algatas videokõne",
-    "Error downloading image": "Pildifaili allalaadimine ei õnnestunud",
-    "Unable to show image due to error": "Vea tõttu ei ole võimalik pilti kuvada",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>HOIATUS:</w> <description/>",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
@@ -1200,7 +1185,9 @@
         "new_room": "Uus jututuba",
         "new_video_room": "Uus videotuba",
         "add_existing_room": "Lisa olemasolev jututuba",
-        "explore_public_rooms": "Sirvi avalikke jututubasid"
+        "explore_public_rooms": "Sirvi avalikke jututubasid",
+        "reply_in_thread": "Vasta jutulõngas",
+        "click": "Klõpsi"
     },
     "a11y": {
         "user_menu": "Kasutajamenüü",
@@ -2271,7 +2258,6 @@
             "forbidden": "%(senderDisplayName)s on määranud et külalised ei saa jututoaga liituda.",
             "unknown": "%(senderDisplayName)s muutis külaliste ligipääsureeglid alljärgnevaks - %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s saatis pildi.",
         "m.sticker": "%(senderDisplayName)s saatis kleepsu.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s seadistas seda jututuba teenindavate koduserverite loendi.",
@@ -2552,11 +2538,14 @@
         "mab": {
             "label": "Tegevused sõnumitega",
             "view_in_room": "Vaata jututoas",
-            "copy_link_thread": "Kopeeri jutulõnga link"
+            "copy_link_thread": "Kopeeri jutulõnga link",
+            "collapse_reply_chain": "Peida viidatud sisu",
+            "expand_reply_chain": "Näita viidatud sisu"
         },
         "m.audio": {
             "unnamed_audio": "Nimetu helifail",
-            "error_downloading_audio": "Helifaili allalaadimine ei õnnestunud"
+            "error_downloading_audio": "Helifaili allalaadimine ei õnnestunud",
+            "error_processing_audio": "Viga häälsõnumi töötlemisel"
         },
         "load_error": {
             "no_permission": "Üritasin laadida teatud hetke selle jututoa ajajoonelt, kuid sul ei ole õigusi selle sõnumi nägemiseks.",
@@ -2578,7 +2567,23 @@
             "unsupported": "Selles jututoas kasutatud krüptimine ei ole toetatud."
         },
         "pending_moderation_reason": "Sõnum on modereerimise ootel: %(reason)s",
-        "pending_moderation": "Sõnum on modereerimise ootel"
+        "pending_moderation": "Sõnum on modereerimise ootel",
+        "m.beacon_info": {
+            "view_live_location": "Vaata asukohta reaalajas"
+        },
+        "m.file": {
+            "download_label": "Laadi alla %(text)s",
+            "error_decrypting": "Viga manuse dekrüptimisel",
+            "decrypt_label": "Dekrüpti %(text)s",
+            "error_invalid": "Vigane fail %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s saatis pildi.",
+            "error": "Vea tõttu ei ole võimalik pilti kuvada",
+            "error_decrypting": "Viga pildi dekrüptimisel",
+            "error_downloading": "Pildifaili allalaadimine ei õnnestunud",
+            "show_image": "Näita pilti"
+        }
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -3632,7 +3637,8 @@
         "empty_tip": "<b>Soovitus:</b> Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
         "empty_heading": "Halda vestlusi jutulõngadena",
         "unable_to_decrypt": "Sõnumi dekrüptimine ei õnnestunud",
-        "open_thread": "Ava jutulõng"
+        "open_thread": "Ava jutulõng",
+        "error_start_thread_existing_relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa"
     },
     "theme": {
         "light_high_contrast": "Hele ja väga kontrastne",

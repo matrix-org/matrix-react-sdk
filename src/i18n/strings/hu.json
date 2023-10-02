@@ -8,12 +8,8 @@
     },
     "An error has occurred.": "Hiba történt.",
     "Custom level": "Egyedi szint",
-    "Decrypt %(text)s": "%(text)s visszafejtése",
-    "Download %(text)s": "%(text)s letöltése",
     "Email address": "E-mail-cím",
-    "Error decrypting attachment": "Csatolmány visszafejtése sikertelen",
     "Home": "Kezdőlap",
-    "Invalid file%(extra)s": "Hibás fájl%(extra)s",
     "Join Room": "Belépés a szobába",
     "Moderator": "Moderátor",
     "not specified": "nincs meghatározva",
@@ -49,7 +45,6 @@
     },
     "Confirm Removal": "Törlés megerősítése",
     "Unable to restore session": "A munkamenetet nem lehet helyreállítani",
-    "Error decrypting image": "Hiba a kép visszafejtésénél",
     "Error decrypting video": "Hiba a videó visszafejtésénél",
     "Add an Integration": "Integráció hozzáadása",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
@@ -246,7 +241,6 @@
     },
     "e.g. my-room": "pl.: szobam",
     "Close dialog": "Ablak bezárása",
-    "Show image": "Kép megjelenítése",
     "Cancel search": "Keresés megszakítása",
     "You verified %(name)s": "Ellenőrizte: %(name)s",
     "You cancelled verifying %(name)s": "Az ellenőrzést megszakítottad ehhez: %(name)s",
@@ -732,7 +726,6 @@
     "You don't have permission to do this": "Nincs jogosultsága ehhez",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Üzenek keresés kezdő beállítása sikertelen, ellenőrizze a <a>beállításait</a> további információkért",
     "Please provide an address": "Kérem adja meg a címet",
-    "Error processing audio message": "Hiba a hangüzenet feldolgozásánál",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
     "Automatically invite members from this room to the new one": "Tagok automatikus meghívása ebből a szobából az újba",
@@ -777,7 +770,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
     "Thread options": "Üzenetszál beállításai",
     "If you can't see who you're looking for, send them your invite link below.": "Ha nem található a keresett személy, küldje el az alábbi hivatkozást neki.",
-    "Reply in thread": "Válasz üzenetszálban",
     "Forget": "Elfelejtés",
     "Based on %(count)s votes": {
         "one": "%(count)s szavazat alapján",
@@ -845,10 +837,6 @@
     "My current location": "Jelenlegi saját földrajzi helyzet",
     "%(brand)s could not send your location. Please try again later.": "Az %(brand)s nem tudja elküldeni a földrajzi helyzetét. Próbálja újra később.",
     "We couldn't send your location": "A földrajzi helyzetet nem sikerült elküldeni",
-    "Click": "Kattintson",
-    "Expand quotes": "Idézetek megjelenítése",
-    "Collapse quotes": "Idézetek összecsukása",
-    "Can't create a thread from an event with an existing relation": "Nem lehet üzenetszálat indítani olyan eseményről ami már rendelkezik kapcsolattal",
     "You are sharing your live location": "Ön folyamatosan megosztja az aktuális földrajzi pozícióját",
     "%(displayName)s's live location": "%(displayName)s élő földrajzi helyzete",
     "Preserve system messages": "Rendszerüzenetek megtartása",
@@ -870,7 +858,6 @@
     "Live until %(expiryTime)s": "Élő eddig: %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "Frissítve %(humanizedUpdateTime)s",
     "%(featureName)s Beta feedback": "%(featureName)s béta visszajelzés",
-    "View live location": "Élő földrajzi helyzet megtekintése",
     "%(count)s participants": {
         "one": "1 résztvevő",
         "other": "%(count)s résztvevő"
@@ -930,8 +917,6 @@
     "Manually verify by text": "Kézi szöveges ellenőrzés",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s vagy %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s videóhívást indított",
-    "Error downloading image": "Kép letöltési hiba",
-    "Unable to show image due to error": "Kép megjelenítése egy hiba miatt nem lehetséges",
     "Thread root ID: %(threadRootId)s": "Üzenetszál gyökerének azonosítója: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>FIGYELEM:</w> <description/>",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
@@ -1194,7 +1179,9 @@
         "new_room": "Új szoba",
         "new_video_room": "Új videó szoba",
         "add_existing_room": "Létező szoba hozzáadása",
-        "explore_public_rooms": "Nyilvános szobák felfedezése"
+        "explore_public_rooms": "Nyilvános szobák felfedezése",
+        "reply_in_thread": "Válasz üzenetszálban",
+        "click": "Kattintson"
     },
     "a11y": {
         "user_menu": "Felhasználói menü",
@@ -2218,7 +2205,6 @@
             "forbidden": "%(senderDisplayName)s megtiltotta a vendégeknek, hogy belépjenek a szobába.",
             "unknown": "%(senderDisplayName)s a vendégek hozzáférését erre állította be: %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s képet küldött.",
         "m.sticker": "%(senderDisplayName)s matricát küldött.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s beállította a kiszolgálójogosultságokat a szobában.",
@@ -2491,11 +2477,14 @@
         "mab": {
             "label": "Üzenet Műveletek",
             "view_in_room": "Megjelenítés szobában",
-            "copy_link_thread": "Hivatkozás másolása az üzenetszálba"
+            "copy_link_thread": "Hivatkozás másolása az üzenetszálba",
+            "collapse_reply_chain": "Idézetek összecsukása",
+            "expand_reply_chain": "Idézetek megjelenítése"
         },
         "m.audio": {
             "unnamed_audio": "Névtelen hang",
-            "error_downloading_audio": "Hiba a hang letöltésekor"
+            "error_downloading_audio": "Hiba a hang letöltésekor",
+            "error_processing_audio": "Hiba a hangüzenet feldolgozásánál"
         },
         "load_error": {
             "no_permission": "Megpróbálta betölteni a szoba megadott időpontjának megfelelő adatait, de nincs joga a kérdéses üzenetek megjelenítéséhez.",
@@ -2515,7 +2504,23 @@
             "unsupported": "A szobában használt titkosítás nem támogatott."
         },
         "pending_moderation_reason": "Az üzenet moderálásra vár, ok: %(reason)s",
-        "pending_moderation": "Üzenet moderálásra vár"
+        "pending_moderation": "Üzenet moderálásra vár",
+        "m.beacon_info": {
+            "view_live_location": "Élő földrajzi helyzet megtekintése"
+        },
+        "m.file": {
+            "download_label": "%(text)s letöltése",
+            "error_decrypting": "Csatolmány visszafejtése sikertelen",
+            "decrypt_label": "%(text)s visszafejtése",
+            "error_invalid": "Hibás fájl%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s képet küldött.",
+            "error": "Kép megjelenítése egy hiba miatt nem lehetséges",
+            "error_decrypting": "Hiba a kép visszafejtésénél",
+            "error_downloading": "Kép letöltési hiba",
+            "show_image": "Kép megjelenítése"
+        }
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",
@@ -3555,7 +3560,8 @@
         "empty_tip": "<b>Tipp:</b> Használja a „%(replyInThread)s” lehetőséget a szöveg fölé navigálva.",
         "empty_heading": "Beszélgetések üzenetszálakba rendezése",
         "unable_to_decrypt": "Üzenet visszafejtése sikertelen",
-        "open_thread": "Üzenetszál megnyitása"
+        "open_thread": "Üzenetszál megnyitása",
+        "error_start_thread_existing_relation": "Nem lehet üzenetszálat indítani olyan eseményről ami már rendelkezik kapcsolattal"
     },
     "theme": {
         "light_high_contrast": "Világos, nagy kontrasztú",

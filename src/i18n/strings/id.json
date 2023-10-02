@@ -1,7 +1,6 @@
 {
     "An error has occurred.": "Telah terjadi kesalahan.",
     "Email address": "Alamat email",
-    "Download %(text)s": "Unduh %(text)s",
     "Session ID": "ID Sesi",
     "unknown error code": "kode kesalahan tidak diketahui",
     "Verification Pending": "Verifikasi Menunggu",
@@ -26,7 +25,6 @@
     "Nov": "Nov",
     "Dec": "Des",
     "%(items)s and %(lastItem)s": "%(items)s dan %(lastItem)s",
-    "Decrypt %(text)s": "Dekripsi %(text)s",
     "Sunday": "Minggu",
     "Today": "Hari Ini",
     "Changelog": "Changelog",
@@ -395,7 +393,6 @@
         "other": "(~%(count)s hasil)"
     },
     "Confirm Removal": "Konfirmasi Penghapusan",
-    "Invalid file%(extra)s": "File tidak absah%(extra)s",
     "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
     "Sent": "Terkirim",
@@ -419,7 +416,6 @@
         "other": "dan %(count)s lainnya..."
     },
     "Encrypted by a deleted session": "Terenkripsi oleh sesi yang terhapus",
-    "Reply in thread": "Balas di utasan",
     "%(count)s reply": {
         "one": "%(count)s balasan",
         "other": "%(count)s balasan"
@@ -451,10 +447,6 @@
     "Video conference ended by %(senderName)s": "Konferensi video diakhiri oleh %(senderName)s",
     "Join the conference from the room information card on the right": "Bergabung dengan konferensinya di kartu informasi ruangan di sebelah kanan",
     "Join the conference at the top of this room": "Bergabung dengan konferensi di atas ruangan ini",
-    "Show image": "Tampilkan gambar",
-    "Error decrypting image": "Terjadi kesalahan mendekripsi gambar",
-    "Error decrypting attachment": "Terjadi kesalahan mendekripsi lampiran",
-    "Error processing audio message": "Terjadi kesalahan mengolah pesan suara",
     "Remove %(count)s messages": {
         "one": "Hapus 1 pesan",
         "other": "Hapus %(count)s pesan"
@@ -845,10 +837,6 @@
     "My current location": "Lokasi saya saat ini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s tidak dapat mengirimkan lokasi Anda. Silakan coba lagi nanti.",
     "We couldn't send your location": "Kami tidak dapat mengirimkan lokasi Anda",
-    "Click": "Klik",
-    "Expand quotes": "Buka kutip",
-    "Collapse quotes": "Tutup kutip",
-    "Can't create a thread from an event with an existing relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada",
     "You are sharing your live location": "Anda membagikan lokasi langsung Anda",
     "%(displayName)s's live location": "Lokasi langsung %(displayName)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Jangan centang jika Anda juga ingin menghapus pesan-pesan sistem pada pengguna ini (mis. perubahan keanggotaan, perubahan profil…)",
@@ -866,7 +854,6 @@
     },
     "%(featureName)s Beta feedback": "Masukan %(featureName)s Beta",
     "Live location ended": "Lokasi langsung berakhir",
-    "View live location": "Tampilkan lokasi langsung",
     "Live location enabled": "Lokasi langsung diaktifkan",
     "Live location error": "Kesalahan lokasi langsung",
     "Live until %(expiryTime)s": "Langsung sampai %(expiryTime)s",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Verifikasi secara manual dengan teks",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
-    "Error downloading image": "Kesalahan mengunduh gambar",
-    "Unable to show image due to error": "Tidak dapat menampilkan gambar karena kesalahan",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>PERINGATAN:</w> <description/>",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
@@ -1201,7 +1186,9 @@
         "new_room": "Ruangan baru",
         "new_video_room": "Ruangan video baru",
         "add_existing_room": "Tambahkan ruangan yang sudah ada",
-        "explore_public_rooms": "Jelajahi ruangan publik"
+        "explore_public_rooms": "Jelajahi ruangan publik",
+        "reply_in_thread": "Balas di utasan",
+        "click": "Klik"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -2272,7 +2259,6 @@
             "forbidden": "%(senderDisplayName)s telah mencegah tamu untuk bergabung dengan ruangan ini.",
             "unknown": "%(senderDisplayName)s mengubah akses tamu ke %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s mengirim sebuah gambar.",
         "m.sticker": "%(senderDisplayName)s mengirim sebuah stiker.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s mengatur ACL server untuk ruangan ini.",
@@ -2553,11 +2539,14 @@
         "mab": {
             "label": "Aksi Pesan",
             "view_in_room": "Tampilkan di ruangan",
-            "copy_link_thread": "Salin tautan ke utasan"
+            "copy_link_thread": "Salin tautan ke utasan",
+            "collapse_reply_chain": "Tutup kutip",
+            "expand_reply_chain": "Buka kutip"
         },
         "m.audio": {
             "unnamed_audio": "Audio tidak dinamai",
-            "error_downloading_audio": "Terjadi kesalahan mengunduh audio"
+            "error_downloading_audio": "Terjadi kesalahan mengunduh audio",
+            "error_processing_audio": "Terjadi kesalahan mengolah pesan suara"
         },
         "load_error": {
             "no_permission": "Mencoba memuat titik spesifik di lini masa ruangan ini, tetapi Anda tidak memiliki izin untuk menampilkan pesannya.",
@@ -2579,7 +2568,23 @@
             "unsupported": "Enkripsi yang digunakan di ruangan ini tidak didukung."
         },
         "pending_moderation_reason": "Pesan akan dimoderasikan: %(reason)s",
-        "pending_moderation": "Pesan akan dimoderasikan"
+        "pending_moderation": "Pesan akan dimoderasikan",
+        "m.beacon_info": {
+            "view_live_location": "Tampilkan lokasi langsung"
+        },
+        "m.file": {
+            "download_label": "Unduh %(text)s",
+            "error_decrypting": "Terjadi kesalahan mendekripsi lampiran",
+            "decrypt_label": "Dekripsi %(text)s",
+            "error_invalid": "File tidak absah%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s mengirim sebuah gambar.",
+            "error": "Tidak dapat menampilkan gambar karena kesalahan",
+            "error_decrypting": "Terjadi kesalahan mendekripsi gambar",
+            "error_downloading": "Kesalahan mengunduh gambar",
+            "show_image": "Tampilkan gambar"
+        }
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -3639,7 +3644,8 @@
         "empty_tip": "<b>Tip:</b> Gunakan “%(replyInThread)s” ketika kursor di atas pesan.",
         "empty_heading": "Buat diskusi tetap teratur dengan utasan",
         "unable_to_decrypt": "Tidak dapat mendekripsi pesan",
-        "open_thread": "Buka utasan"
+        "open_thread": "Buka utasan",
+        "error_start_thread_existing_relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada"
     },
     "theme": {
         "light_high_contrast": "Kontras tinggi terang",

@@ -1,18 +1,13 @@
 {
     "An error has occurred.": "出現一個錯誤。",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
-    "Decrypt %(text)s": "解密 %(text)s",
-    "Download %(text)s": "下載 %(text)s",
     "Email address": "電子郵件地址",
-    "Error decrypting attachment": "解密附件時出錯",
-    "Invalid file%(extra)s": "不存在的文件 %(extra)s",
     "Join Room": "加入聊天室",
     "Session ID": "工作階段 ID",
     "Sun": "週日",
     "Mon": "週一",
     "Tue": "週二",
     "unknown error code": "未知的錯誤代碼",
-    "Error decrypting image": "解密圖片出錯",
     "Error decrypting video": "解密影片出錯",
     "Add an Integration": "新增整合器",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "您即將被帶到第三方網站，以便您可以驗證帳戶來使用 %(integrationsUrl)s。請問您要繼續嗎？",
@@ -245,7 +240,6 @@
     },
     "e.g. my-room": "例如：my-room",
     "Close dialog": "關閉對話框",
-    "Show image": "顯示圖片",
     "Cancel search": "取消搜尋",
     "You verified %(name)s": "您驗證了 %(name)s",
     "You cancelled verifying %(name)s": "您已取消驗證 %(name)s",
@@ -732,7 +726,6 @@
     "You don't have permission to do this": "您沒有權限執行此動作",
     "Please provide an address": "請提供位址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
-    "Error processing audio message": "處理音訊訊息時出現問題",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。",
     "User Directory": "使用者目錄",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
@@ -777,7 +770,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新存取您的帳號並復原儲存在此工作階段中的加密金鑰。沒有它們，您將無法在任何工作階段中閱讀所有安全訊息。",
     "If you can't see who you're looking for, send them your invite link below.": "如果您看不到您要找的人，請將您的邀請連結傳送給他們。",
     "Thread options": "討論串選項",
-    "Reply in thread": "在討論串中回覆",
     "Forget": "忘記",
     "Based on %(count)s votes": {
         "one": "總票數 %(count)s 票",
@@ -845,10 +837,6 @@
     "My current location": "我目前的位置",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s 無法傳送您的位置。請稍後再試。",
     "We couldn't send your location": "我們無法傳送您的位置",
-    "Click": "點擊",
-    "Expand quotes": "展開引號",
-    "Collapse quotes": "收折引號",
-    "Can't create a thread from an event with an existing relation": "無法從討論串既有的關係建立活動",
     "You are sharing your live location": "您正在分享您的即時位置",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若您也想移除此使用者的系統訊息（例如成員資格變更、個人資料變更…），請取消勾選",
     "Preserve system messages": "保留系統訊息",
@@ -866,7 +854,6 @@
         "other": "%(count)s 個參與者"
     },
     "Live location ended": "即時位置已結束",
-    "View live location": "檢視即時位置",
     "Live location enabled": "即時位置已啟用",
     "Live location error": "即時位置錯誤",
     "Live until %(expiryTime)s": "即時分享直到 %(expiryTime)s",
@@ -930,8 +917,6 @@
     "Manually verify by text": "透過文字手動驗證",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s 開始了視訊通話",
-    "Error downloading image": "下載圖片時發生錯誤",
-    "Unable to show image due to error": "因為錯誤而無法顯示圖片",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>警告：</w> <description/>",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
@@ -1200,7 +1185,9 @@
         "new_room": "新聊天室",
         "new_video_room": "新視訊聊天室",
         "add_existing_room": "新增既有的聊天室",
-        "explore_public_rooms": "探索公開聊天室"
+        "explore_public_rooms": "探索公開聊天室",
+        "reply_in_thread": "在討論串中回覆",
+        "click": "點擊"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -2271,7 +2258,6 @@
             "forbidden": "%(senderDisplayName)s 已拒絕訪客加入聊天室。",
             "unknown": "%(senderDisplayName)s 將訪客存取權限更改為 %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s 傳了一張圖片。",
         "m.sticker": "%(senderDisplayName)s 傳送了貼圖。",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s 已為此聊天室設置伺服器的存取控制列表。",
@@ -2552,11 +2538,14 @@
         "mab": {
             "label": "訊息動作",
             "view_in_room": "在聊天室中檢視",
-            "copy_link_thread": "複製討論串連結"
+            "copy_link_thread": "複製討論串連結",
+            "collapse_reply_chain": "收折引號",
+            "expand_reply_chain": "展開引號"
         },
         "m.audio": {
             "unnamed_audio": "未命名的音訊",
-            "error_downloading_audio": "下載音訊時發生錯誤"
+            "error_downloading_audio": "下載音訊時發生錯誤",
+            "error_processing_audio": "處理音訊訊息時出現問題"
         },
         "load_error": {
             "no_permission": "嘗試載入此聊天室時間軸上的特定時間點，但您沒有權限檢視相關的訊息。",
@@ -2578,7 +2567,23 @@
             "unsupported": "不支援此聊天室使用的加密。"
         },
         "pending_moderation_reason": "待審核的訊息：%(reason)s",
-        "pending_moderation": "待審核的訊息"
+        "pending_moderation": "待審核的訊息",
+        "m.beacon_info": {
+            "view_live_location": "檢視即時位置"
+        },
+        "m.file": {
+            "download_label": "下載 %(text)s",
+            "error_decrypting": "解密附件時出錯",
+            "decrypt_label": "解密 %(text)s",
+            "error_invalid": "不存在的文件 %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s 傳了一張圖片。",
+            "error": "因為錯誤而無法顯示圖片",
+            "error_decrypting": "解密圖片出錯",
+            "error_downloading": "下載圖片時發生錯誤",
+            "show_image": "顯示圖片"
+        }
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -3632,7 +3637,8 @@
         "empty_tip": "<b>秘訣：</b>在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
         "empty_heading": "使用「討論串」功能，讓討論保持有條不紊",
         "unable_to_decrypt": "無法解密訊息",
-        "open_thread": "開啟討論串"
+        "open_thread": "開啟討論串",
+        "error_start_thread_existing_relation": "無法從討論串既有的關係建立活動"
     },
     "theme": {
         "light_high_contrast": "亮色高對比",

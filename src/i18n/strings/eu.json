@@ -11,11 +11,7 @@
     "Moderator": "Moderatzailea",
     "An error has occurred.": "Errore bat gertatu da.",
     "Custom level": "Maila pertsonalizatua",
-    "Decrypt %(text)s": "Deszifratu %(text)s",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
-    "Download %(text)s": "Deskargatu %(text)s",
-    "Error decrypting attachment": "Errorea eranskina deszifratzean",
-    "Invalid file%(extra)s": "Fitxategi %(extra)s baliogabea",
     "not specified": "zehaztu gabe",
     "Sun": "Ig",
     "Mon": "Al",
@@ -46,7 +42,6 @@
     "Confirm Removal": "Berretsi kentzea",
     "Unable to restore session": "Ezin izan da saioa berreskuratu",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
-    "Error decrypting image": "Errorea audioa deszifratzean",
     "Error decrypting video": "Errorea bideoa deszifratzean",
     "Add an Integration": "Gehitu integrazioa",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
@@ -241,7 +236,6 @@
         "other": "Kendu %(count)s mezu",
         "one": "Kendu mezu 1"
     },
-    "Show image": "Erakutsi irudia",
     "e.g. my-room": "adib. nire-gela",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. <default>Erabili lehenetsitakoa (%(defaultIdentityServerName)s)</default> edo gehitu bat <settings>Ezarpenak</settings> atalean.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
@@ -895,7 +889,6 @@
             "forbidden": "%(senderDisplayName)s bisitariak gelara elkartzea eragotzi du.",
             "unknown": "%(senderDisplayName)s erabiltzaileak bisitarien araua aldatu du: %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s erabiltzaileak irudi bat bidali du.",
         "m.room.canonical_alias": {
             "set": "%(senderName)s erabiltzileak %(address)s ezarri du gela honetako helbide nagusi gisa.",
             "removed": "%(senderName)s erabiltzaileak gela honen helbide nagusia kendu du.",
@@ -1088,6 +1081,17 @@
         "m.room.encryption": {
             "disabled": "Zifratzea gaitu gabe",
             "unsupported": "Gela honetan erabilitako zifratzea ez da onartzen."
+        },
+        "m.file": {
+            "download_label": "Deskargatu %(text)s",
+            "error_decrypting": "Errorea eranskina deszifratzean",
+            "decrypt_label": "Deszifratu %(text)s",
+            "error_invalid": "Fitxategi %(extra)s baliogabea"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s erabiltzaileak irudi bat bidali du.",
+            "error_decrypting": "Errorea audioa deszifratzean",
+            "show_image": "Erakutsi irudia"
         }
     },
     "slash_command": {

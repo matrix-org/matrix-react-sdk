@@ -741,8 +741,10 @@
         "go": "Go",
         "retry": "Retry",
         "react": "React",
+        "reply_in_thread": "Reply in thread",
         "edit": "Edit",
         "reply": "Reply",
+        "click": "Click",
         "minimise": "Minimise",
         "copy": "Copy",
         "done": "Done",
@@ -1528,7 +1530,13 @@
             "changed": "%(senderDisplayName)s changed the server ACLs for this room.",
             "all_servers_banned": "🎉 All servers are banned from participating! This room can no longer be used."
         },
-        "m.image": "%(senderDisplayName)s sent an image.",
+        "m.image": {
+            "sent": "%(senderDisplayName)s sent an image.",
+            "error": "Unable to show image due to error",
+            "error_decrypting": "Error decrypting image",
+            "error_downloading": "Error downloading image",
+            "show_image": "Show image"
+        },
         "m.sticker": "%(senderDisplayName)s sent a sticker.",
         "m.room.canonical_alias": {
             "set": "%(senderName)s set the main address for this room to %(address)s.",
@@ -1643,7 +1651,9 @@
         "mab": {
             "label": "Message Actions",
             "view_in_room": "View in room",
-            "copy_link_thread": "Copy link to thread"
+            "copy_link_thread": "Copy link to thread",
+            "collapse_reply_chain": "Collapse quotes",
+            "expand_reply_chain": "Expand quotes"
         },
         "decryption_failure_blocked": "The sender has blocked you from receiving this message",
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
@@ -1660,6 +1670,20 @@
         },
         "pending_moderation_reason": "Message pending moderation: %(reason)s",
         "pending_moderation": "Message pending moderation",
+        "m.audio": {
+            "error_processing_audio": "Error processing audio message",
+            "unnamed_audio": "Unnamed audio",
+            "error_downloading_audio": "Error downloading audio"
+        },
+        "m.beacon_info": {
+            "view_live_location": "View live location"
+        },
+        "m.file": {
+            "download_label": "Download %(text)s",
+            "error_decrypting": "Error decrypting attachment",
+            "decrypt_label": "Decrypt %(text)s",
+            "error_invalid": "Invalid file%(extra)s"
+        },
         "reactions": {
             "label": "%(reactors)s reacted with %(content)s",
             "tooltip": "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>"
@@ -1819,10 +1843,6 @@
             "collapse_reply_thread": "Collapse reply thread",
             "view_related_event": "View related event",
             "report": "Report"
-        },
-        "m.audio": {
-            "unnamed_audio": "Unnamed audio",
-            "error_downloading_audio": "Error downloading audio"
         },
         "creation_summary_dm": "%(creator)s created this DM.",
         "creation_summary_room": "%(creator)s created and configured the room.",
@@ -3143,6 +3163,7 @@
     "threads": {
         "open_thread": "Open thread",
         "unable_to_decrypt": "Unable to decrypt message",
+        "error_start_thread_existing_relation": "Can't create a thread from an event with an existing relation",
         "all_threads": "All threads",
         "all_threads_description": "Shows all threads from current room",
         "my_threads": "My threads",
@@ -3220,21 +3241,6 @@
     "%(name)s started a video call": "%(name)s started a video call",
     "unknown status code": "unknown status code",
     "unavailable": "unavailable",
-    "Error processing audio message": "Error processing audio message",
-    "View live location": "View live location",
-    "Reply in thread": "Reply in thread",
-    "Can't create a thread from an event with an existing relation": "Can't create a thread from an event with an existing relation",
-    "Collapse quotes": "Collapse quotes",
-    "Expand quotes": "Expand quotes",
-    "Click": "Click",
-    "Download %(text)s": "Download %(text)s",
-    "Error decrypting attachment": "Error decrypting attachment",
-    "Decrypt %(text)s": "Decrypt %(text)s",
-    "Invalid file%(extra)s": "Invalid file%(extra)s",
-    "Unable to show image due to error": "Unable to show image due to error",
-    "Error decrypting image": "Error decrypting image",
-    "Error downloading image": "Error downloading image",
-    "Show image": "Show image",
     "Join the conference at the top of this room": "Join the conference at the top of this room",
     "Join the conference from the room information card on the right": "Join the conference from the room information card on the right",
     "Video conference ended by %(senderName)s": "Video conference ended by %(senderName)s",

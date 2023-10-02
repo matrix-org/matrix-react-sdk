@@ -57,7 +57,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Hyni në dhomë",
-    "Decrypt %(text)s": "Shfshehtëzoje %(text)s",
     "Add an Integration": "Shtoni një Integrim",
     "Email address": "Adresë email",
     "Create new room": "Krijoni dhomë të re",
@@ -77,15 +76,11 @@
         "other": "(~%(count)s përfundime)",
         "one": "(~%(count)s përfundim)"
     },
-    "Download %(text)s": "Shkarko %(text)s",
-    "Error decrypting image": "Gabim në shfshehtëzim figure",
     "Error decrypting video": "Gabim në shfshehtëzim videoje",
     "Delete Widget": "Fshije Widget-in",
     "And %(count)s more...": {
         "other": "Dhe %(count)s të tjerë…"
     },
-    "Error decrypting attachment": "Gabim në shfshehtëzim bashkëngjitjeje",
-    "Invalid file%(extra)s": "Kartelë e pavlefshme%(extra)s",
     "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
     "Incompatible local cache": "Fshehtinë vendore e papërputhshme",
@@ -245,7 +240,6 @@
     },
     "e.g. my-room": "p.sh., dhoma-ime",
     "Close dialog": "Mbylle dialogun",
-    "Show image": "Shfaq figurë",
     "You verified %(name)s": "Verifikuat %(name)s",
     "You cancelled verifying %(name)s": "Anuluat verifikimin e %(name)s",
     "%(name)s cancelled verifying": "%(name)s anuloi verifikimin",
@@ -728,7 +722,6 @@
     "Please provide an address": "Ju lutemi, jepni një adresë",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Sent": "U dërgua",
-    "Error processing audio message": "Gabim në përpunim mesazhi audio",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
     "User Directory": "Drejtori Përdoruesi",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ju lutemi, kini parasysh se përmirësimi do të prodhojë një version të ri të dhomës</b>. Krejt mesazhet e tanishëm do të mbeten në këtë dhomë të arkivuar.",
@@ -774,7 +767,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
     "If you can't see who you're looking for, send them your invite link below.": "Nëse s’e shihni atë që po kërkoni, dërgojini nga më poshtë një lidhje ftese.",
     "Thread options": "Mundësi rrjedhe",
-    "Reply in thread": "Përgjigjuni te rrjedha",
     "Forget": "Harroje",
     "Reset event store": "Riktheje te parazgjedhjet arkivin e akteve",
     "You most likely do not want to reset your event index store": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
@@ -843,11 +835,7 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s s’dërgoi dot vendndodhjen tuaj. Ju lutemi, riprovoni.",
     "We couldn't send your location": "S’e dërguam dot vendndodhjen tuaj",
     "My live location": "Vendndodhja ime drejtpërsëdrejti",
-    "Expand quotes": "Zgjeroji thonjëzat",
-    "Collapse quotes": "Tkurri thonjëzat",
     "Drop a Pin": "Lini një Piketë",
-    "Click": "Klikim",
-    "Can't create a thread from an event with an existing relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese",
     "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
     "%(displayName)s's live location": "Vendndodhje aty për aty e %(displayName)s",
     "Preserve system messages": "Ruaji mesazhet e sistemit",
@@ -902,7 +890,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Shfaq: Dhoma %(instance)s (%(server)s)",
     "Add new server…": "Shtoni shërbyes të ri…",
     "Remove server “%(roomServer)s”": "Hiqe shërbyesin “%(roomServer)s”",
-    "View live location": "Shihni vendndodhje aty për aty",
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
@@ -930,8 +917,6 @@
     "toggle event": "shfaqe/fshihe aktin",
     "Output devices": "Pajisje output-i",
     "Input devices": "Pajisje input-i",
-    "Error downloading image": "Gabim gjatë shkarkimit të figurës",
-    "Unable to show image due to error": "S’arrihet të shihet figurë, për shkak gabimi",
     "<w>WARNING:</w> <description/>": "<w>KUJDES:</w> <description/>",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
@@ -1192,7 +1177,9 @@
         "new_room": "Dhomë e re",
         "new_video_room": "Dhomë e re me video",
         "add_existing_room": "Shtoni dhomë ekzistuese",
-        "explore_public_rooms": "Eksploroni dhoma publike"
+        "explore_public_rooms": "Eksploroni dhoma publike",
+        "reply_in_thread": "Përgjigjuni te rrjedha",
+        "click": "Klikim"
     },
     "a11y": {
         "user_menu": "Menu përdoruesi",
@@ -2209,7 +2196,6 @@
             "forbidden": "%(senderDisplayName)s ka penguar vizitorë të marrin pjesë në dhomë.",
             "unknown": "%(senderDisplayName)s ndryshoi hyrjen për vizitorë në %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s dërgoi një figurë.",
         "m.sticker": "%(senderDisplayName)s dërgoi një ngjitës.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s caktoi ACL-ra shërbyesi për këtë dhomë.",
@@ -2482,11 +2468,14 @@
         "mab": {
             "label": "Veprime Mesazhesh",
             "view_in_room": "Shiheni në dhomë",
-            "copy_link_thread": "Kopjoje lidhjen te rrjedha"
+            "copy_link_thread": "Kopjoje lidhjen te rrjedha",
+            "collapse_reply_chain": "Tkurri thonjëzat",
+            "expand_reply_chain": "Zgjeroji thonjëzat"
         },
         "m.audio": {
             "unnamed_audio": "Audio pa emër",
-            "error_downloading_audio": "Gabim në shkarkim audioje"
+            "error_downloading_audio": "Gabim në shkarkim audioje",
+            "error_processing_audio": "Gabim në përpunim mesazhi audio"
         },
         "load_error": {
             "no_permission": "U provua të ngarkohej një pikë e caktuar në kronologjinë e kësaj dhome, por nuk keni leje për ta parë mesazhin në fjalë.",
@@ -2506,7 +2495,23 @@
             "unsupported": "Fshehtëzimi i përdorur nga kjo dhomë nuk mbulohet."
         },
         "pending_moderation_reason": "Mesazh në pritje të moderimit: %(reason)s",
-        "pending_moderation": "Mesazh në pritje të moderimit"
+        "pending_moderation": "Mesazh në pritje të moderimit",
+        "m.beacon_info": {
+            "view_live_location": "Shihni vendndodhje aty për aty"
+        },
+        "m.file": {
+            "download_label": "Shkarko %(text)s",
+            "error_decrypting": "Gabim në shfshehtëzim bashkëngjitjeje",
+            "decrypt_label": "Shfshehtëzoje %(text)s",
+            "error_invalid": "Kartelë e pavlefshme%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s dërgoi një figurë.",
+            "error": "S’arrihet të shihet figurë, për shkak gabimi",
+            "error_decrypting": "Gabim në shfshehtëzim figure",
+            "error_downloading": "Gabim gjatë shkarkimit të figurës",
+            "show_image": "Shfaq figurë"
+        }
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -3543,7 +3548,8 @@
         "empty_tip": "<b>Ndihmëz:</b> Përdorni “%(replyInThread)s”, teksa kaloni kursorin sipër një mesazhi.",
         "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha",
         "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi",
-        "open_thread": "Hape rrjedhën"
+        "open_thread": "Hape rrjedhën",
+        "error_start_thread_existing_relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese"
     },
     "theme": {
         "light_high_contrast": "Kontrast i fortë drite",

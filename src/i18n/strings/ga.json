@@ -312,10 +312,7 @@
         "one": "(~%(count)s toradh)",
         "other": "(~%(count)s torthaí)"
     },
-    "Error decrypting attachment": "Earráid le ceangaltán a dhíchriptiú",
     "Email address": "Seoladh ríomhphoist",
-    "Download %(text)s": "Íoslódáil %(text)s",
-    "Decrypt %(text)s": "Díchriptigh %(text)s",
     "Custom level": "Leibhéal saincheaptha",
     "common": {
         "about": "Faoi",
@@ -618,6 +615,11 @@
         "m.call.invite": {
             "no_answer": "Gan freagair",
             "unknown_failure": "Teip anaithnid: %(reason)s"
+        },
+        "m.file": {
+            "download_label": "Íoslódáil %(text)s",
+            "error_decrypting": "Earráid le ceangaltán a dhíchriptiú",
+            "decrypt_label": "Díchriptigh %(text)s"
         }
     },
     "slash_command": {

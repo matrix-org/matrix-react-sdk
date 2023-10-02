@@ -62,11 +62,6 @@
     },
     "Join Room": "ルームに参加",
     "not specified": "指定なし",
-    "Error decrypting attachment": "添付ファイルを復号化する際にエラーが発生しました",
-    "Decrypt %(text)s": "%(text)sを復号化",
-    "Download %(text)s": "%(text)sをダウンロード",
-    "Invalid file%(extra)s": "無効なファイル %(extra)s",
-    "Error decrypting image": "画像を復号化する際にエラーが発生しました",
     "Error decrypting video": "動画を復号化する際にエラーが発生しました",
     "Add an Integration": "統合を追加",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)sで使用するアカウントを認証するため、外部サイトに移動します。続行してよろしいですか？",
@@ -156,7 +151,6 @@
     "Your server": "あなたのサーバー",
     "Add a new server": "新しいサーバーを追加",
     "Server name": "サーバー名",
-    "Show image": "画像を表示",
     "Upload files (%(current)s of %(total)s)": "ファイルのアップロード（%(current)s/%(total)s）",
     "Upload files": "ファイルのアップロード",
     "Upload all": "全てアップロード",
@@ -559,7 +553,6 @@
         "one": "%(count)s個の投票",
         "other": "%(count)s個の投票"
     },
-    "Reply in thread": "スレッドで返信",
     "In reply to <a>this message</a>": "<a>このメッセージ</a>への返信",
     "Location": "位置情報",
     "Submit logs": "ログを提出",
@@ -743,7 +736,6 @@
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、アカウントの無効化を承認してください。",
     "The poll has ended. Top answer: %(topAnswer)s": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
     "The poll has ended. No votes were cast.": "アンケートが終了しました。投票はありませんでした。",
-    "Error processing audio message": "音声メッセージを処理する際にエラーが発生しました",
     "Incoming Verification Request": "認証のリクエストが届いています",
     "Failed to start livestream": "ライブストリームの開始に失敗しました",
     "Unable to start audio streaming.": "音声ストリーミングを開始できません。",
@@ -801,9 +793,6 @@
     "There was a problem communicating with the server. Please try again.": "サーバーとの通信時に問題が発生しました。もう一度やり直してください。",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "Some characters not allowed": "使用できない文字が含まれています",
-    "Collapse quotes": "引用を折りたたむ",
-    "Expand quotes": "引用を展開",
-    "Click": "クリック",
     "You are not allowed to view this server's rooms list": "このサーバーのルームの一覧を閲覧する許可がありません",
     "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
     "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
@@ -813,12 +802,10 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
     "Including you, %(commaSeparatedMembers)s": "あなたと%(commaSeparatedMembers)sを含む",
-    "Can't create a thread from an event with an existing relation": "既存の関係のあるイベントからスレッドを作成することはできません",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
     "Including %(commaSeparatedMembers)s": "%(commaSeparatedMembers)sを含む",
     "Live location error": "位置情報（ライブ）のエラー",
-    "View live location": "位置情報（ライブ）を表示",
     "Live location enabled": "位置情報（ライブ）が有効です",
     "%(featureName)s Beta feedback": "%(featureName)sのベータ版のフィードバック",
     "%(count)s participants": {
@@ -856,8 +843,6 @@
     "Cameras": "カメラ",
     "Unread email icon": "未読メールアイコン",
     "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
-    "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
-    "Unable to show image due to error": "エラーにより画像を表示できません",
     "Reset event store?": "イベントストアをリセットしますか？",
     "Your firewall or anti-virus is blocking the request.": "ファイアーウォールまたはアンチウイルスソフトがリクエストをブロックしています。",
     "Close sidebar": "サイドバーを閉じる",
@@ -1180,7 +1165,9 @@
         "new_room": "新しいルーム",
         "new_video_room": "新しいビデオ通話ルーム",
         "add_existing_room": "既存のルームを追加",
-        "explore_public_rooms": "公開ルームを探す"
+        "explore_public_rooms": "公開ルームを探す",
+        "reply_in_thread": "スレッドで返信",
+        "click": "クリック"
     },
     "a11y": {
         "user_menu": "ユーザーメニュー",
@@ -2174,7 +2161,6 @@
             "forbidden": "%(senderDisplayName)sがこのルームへのゲストによる参加を拒否しました。",
             "unknown": "%(senderDisplayName)sがゲストによるアクセスを「%(rule)s」に変更しました。"
         },
-        "m.image": "%(senderDisplayName)sが画像を送信しました。",
         "m.sticker": "%(senderDisplayName)sがステッカーを送信しました。",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)sがこのルームのサーバーアクセス制御リストを設定しました。",
@@ -2445,11 +2431,14 @@
         "mab": {
             "label": "メッセージのアクション",
             "view_in_room": "ルーム内で表示",
-            "copy_link_thread": "スレッドへのリンクをコピー"
+            "copy_link_thread": "スレッドへのリンクをコピー",
+            "collapse_reply_chain": "引用を折りたたむ",
+            "expand_reply_chain": "引用を展開"
         },
         "m.audio": {
             "unnamed_audio": "名前のない音声",
-            "error_downloading_audio": "音声をダウンロードする際にエラーが発生しました"
+            "error_downloading_audio": "音声をダウンロードする際にエラーが発生しました",
+            "error_processing_audio": "音声メッセージを処理する際にエラーが発生しました"
         },
         "load_error": {
             "no_permission": "このルームのタイムラインの特定の地点を読み込もうとしましたが、問題のメッセージを閲覧する権限がありません。",
@@ -2468,7 +2457,23 @@
             "unsupported": "このルームで使用されている暗号化はサポートされていません。"
         },
         "pending_moderation_reason": "メッセージはモデレートの保留中です：%(reason)s",
-        "pending_moderation": "保留中のメッセージのモデレート"
+        "pending_moderation": "保留中のメッセージのモデレート",
+        "m.beacon_info": {
+            "view_live_location": "位置情報（ライブ）を表示"
+        },
+        "m.file": {
+            "download_label": "%(text)sをダウンロード",
+            "error_decrypting": "添付ファイルを復号化する際にエラーが発生しました",
+            "decrypt_label": "%(text)sを復号化",
+            "error_invalid": "無効なファイル %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)sが画像を送信しました。",
+            "error": "エラーにより画像を表示できません",
+            "error_decrypting": "画像を復号化する際にエラーが発生しました",
+            "error_downloading": "画像をダウンロードする際にエラーが発生しました",
+            "show_image": "画像を表示"
+        }
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3485,7 +3490,8 @@
         "empty_tip": "<b>ヒント：</b>メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
         "empty_heading": "スレッド機能を使って、会話をまとめましょう",
         "unable_to_decrypt": "メッセージを復号化できません",
-        "open_thread": "スレッドを開く"
+        "open_thread": "スレッドを開く",
+        "error_start_thread_existing_relation": "既存の関係のあるイベントからスレッドを作成することはできません"
     },
     "theme": {
         "light_high_contrast": "ライト（高コントラスト）",

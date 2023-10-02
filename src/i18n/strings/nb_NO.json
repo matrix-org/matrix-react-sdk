@@ -71,7 +71,6 @@
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
     "Direct Messages": "Direktemeldinger",
-    "Download %(text)s": "Last ned %(text)s",
     "Cancel search": "Avbryt søket",
     "collapse": "skjul",
     "expand": "utvid",
@@ -116,7 +115,6 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
     "not specified": "ikke spesifisert",
-    "Show image": "Vis bilde",
     "You accepted": "Du aksepterte",
     "You declined": "Du avslo",
     "You cancelled": "Du avbrøt",
@@ -177,7 +175,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "Decrypt %(text)s": "Dekrypter %(text)s",
     "You verified %(name)s": "Du verifiserte %(name)s",
     "Some characters not allowed": "Noen tegn er ikke tillatt",
     "Invite anyway": "Inviter likevel",
@@ -311,7 +308,6 @@
     "Information": "Informasjon",
     "%(name)s cancelled verifying": "%(name)s avbrøt verifiseringen",
     "You cancelled verifying %(name)s": "Du avbrøt verifiseringen av %(name)s",
-    "Invalid file%(extra)s": "Ugyldig fil%(extra)s",
     "Not encrypted": "Ikke kryptert",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
@@ -1055,7 +1051,6 @@
             "forbidden": "%(senderDisplayName)s har hindret gjester fra å bli med i rommet.",
             "unknown": "%(senderDisplayName)s endret gjestetilgangen til %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s sendte et bilde.",
         "m.room.canonical_alias": {
             "removed": "%(senderName)s fjernet hovedadressen til dette rommet.",
             "changed": "%(senderName)s endret adressene til dette rommet."
@@ -1187,6 +1182,15 @@
         },
         "m.call.invite": {
             "failed_connection": "Tilkobling mislyktes"
+        },
+        "m.file": {
+            "download_label": "Last ned %(text)s",
+            "decrypt_label": "Dekrypter %(text)s",
+            "error_invalid": "Ugyldig fil%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s sendte et bilde.",
+            "show_image": "Vis bilde"
         }
     },
     "slash_command": {

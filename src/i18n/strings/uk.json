@@ -181,7 +181,6 @@
     "You'll lose access to your encrypted messages": "Ви втратите доступ до ваших зашифрованих повідомлень",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
-    "Show image": "Показати зображення",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
     "Add an Integration": "Додати інтеграцію",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
@@ -454,7 +453,6 @@
     "Recently Direct Messaged": "Недавно надіслані особисті повідомлення",
     "User Directory": "Каталог користувачів",
     "Preparing to download logs": "Приготування до завантаження журналів",
-    "Download %(text)s": "Завантажити %(text)s",
     "Share User": "Поділитися користувачем",
     "Some suggestions may be hidden for privacy.": "Деякі пропозиції можуть бути сховані для приватності.",
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
@@ -554,7 +552,6 @@
     "Sending": "Надсилання",
     "MB": "МБ",
     "In reply to <a>this message</a>": "У відповідь на <a>це повідомлення</a>",
-    "Decrypt %(text)s": "Розшифрувати %(text)s",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
         "other": "Сеансів: %(count)s"
@@ -609,7 +606,6 @@
         "other": "%(spaceName)s і %(count)s інших"
     },
     "Thread options": "Параметри гілки",
-    "Reply in thread": "Відповісти у гілці",
     "Developer": "Розробка",
     "Moderation": "Модерування",
     "Experimental": "Експериментально",
@@ -719,10 +715,6 @@
     "Video conference updated by %(senderName)s": "%(senderName)s оновлює груповий відеовиклик",
     "Video conference ended by %(senderName)s": "%(senderName)s завершує груповий відеовиклик",
     "Join the conference at the top of this room": "Приєднуйтеся до групового виклику вгорі цієї кімнати",
-    "Error decrypting image": "Помилка розшифрування зображення",
-    "Invalid file%(extra)s": "Пошкоджений файл%(extra)s",
-    "Error decrypting attachment": "Помилка розшифрування вкладення",
-    "Error processing audio message": "Помилка обробки аудіоповідомлення",
     "Remove %(count)s messages": {
         "one": "Видалити 1 повідомлення",
         "other": "Видалити %(count)s повідомлень"
@@ -845,10 +837,6 @@
     "My current location": "Лише поточне місцеперебування",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s не вдалося надіслати ваше місцеперебування. Повторіть спробу пізніше.",
     "We couldn't send your location": "Не вдалося надіслати ваше місцеперебування",
-    "Click": "Клацнути",
-    "Expand quotes": "Розгорнути цитати",
-    "Collapse quotes": "Згорнути цитати",
-    "Can't create a thread from an event with an existing relation": "Неможливо створити гілку з події з наявним відношенням",
     "You are sharing your live location": "Ви ділитеся місцеперебуванням",
     "%(displayName)s's live location": "Місцеперебування %(displayName)s наживо",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Вимкніть, щоб також видалити системні повідомлення про користувача (зміни членства, редагування профілю…)",
@@ -866,7 +854,6 @@
     },
     "%(featureName)s Beta feedback": "%(featureName)s — відгук про бетаверсію",
     "Live location ended": "Показ місцеперебування наживо завершено",
-    "View live location": "Показувати місцеперебування наживо",
     "Live location enabled": "Показ місцеперебування наживо ввімкнено",
     "Live location error": "Помилка показу місцеперебування наживо",
     "Live until %(expiryTime)s": "Наживо до %(expiryTime)s",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Звірити вручну за допомогою тексту",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
-    "Error downloading image": "Помилка завантаження зображення",
-    "Unable to show image due to error": "Не вдалося показати зображення через помилку",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>ПОПЕРЕДЖЕННЯ:</w> <description/>",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
@@ -1200,7 +1185,9 @@
         "new_room": "Нова кімната",
         "new_video_room": "Нова відеокімната",
         "add_existing_room": "Додати наявну кімнату",
-        "explore_public_rooms": "Переглянути загальнодоступні кімнати"
+        "explore_public_rooms": "Переглянути загальнодоступні кімнати",
+        "reply_in_thread": "Відповісти у гілці",
+        "click": "Клацнути"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -2271,7 +2258,6 @@
             "forbidden": "%(senderDisplayName)s забороняє гостям приєднуватися до кімнати.",
             "unknown": "%(senderDisplayName)s змінює гостьовий доступ на \"%(rule)s\""
         },
-        "m.image": "%(senderDisplayName)s надсилає зображення.",
         "m.sticker": "%(senderDisplayName)s надсилає наліпку.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s встановлює серверні права доступу для цієї кімнати.",
@@ -2552,11 +2538,14 @@
         "mab": {
             "label": "Дії з повідомленням",
             "view_in_room": "Дивитися в кімнаті",
-            "copy_link_thread": "Копіювати посилання на гілку"
+            "copy_link_thread": "Копіювати посилання на гілку",
+            "collapse_reply_chain": "Згорнути цитати",
+            "expand_reply_chain": "Розгорнути цитати"
         },
         "m.audio": {
             "unnamed_audio": "Аудіо без назви",
-            "error_downloading_audio": "Помилка завантаження аудіо"
+            "error_downloading_audio": "Помилка завантаження аудіо",
+            "error_processing_audio": "Помилка обробки аудіоповідомлення"
         },
         "load_error": {
             "no_permission": "У вас нема дозволу на перегляд повідомлення за вказаною позицією в стрічці цієї кімнати.",
@@ -2578,7 +2567,23 @@
             "unsupported": "Шифрування, використане цією кімнатою не підтримується."
         },
         "pending_moderation_reason": "Повідомлення очікує модерування: %(reason)s",
-        "pending_moderation": "Повідомлення очікує модерування"
+        "pending_moderation": "Повідомлення очікує модерування",
+        "m.beacon_info": {
+            "view_live_location": "Показувати місцеперебування наживо"
+        },
+        "m.file": {
+            "download_label": "Завантажити %(text)s",
+            "error_decrypting": "Помилка розшифрування вкладення",
+            "decrypt_label": "Розшифрувати %(text)s",
+            "error_invalid": "Пошкоджений файл%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s надсилає зображення.",
+            "error": "Не вдалося показати зображення через помилку",
+            "error_decrypting": "Помилка розшифрування зображення",
+            "error_downloading": "Помилка завантаження зображення",
+            "show_image": "Показати зображення"
+        }
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",
@@ -3632,7 +3637,8 @@
         "empty_tip": "<b>Порада:</b> Використовуйте «%(replyInThread)s» навівши вказівник на повідомлення.",
         "empty_heading": "Упорядкуйте обговорення за допомогою гілок",
         "unable_to_decrypt": "Не вдалося розшифрувати повідомлення",
-        "open_thread": "Відкрити гілку"
+        "open_thread": "Відкрити гілку",
+        "error_start_thread_existing_relation": "Неможливо створити гілку з події з наявним відношенням"
     },
     "theme": {
         "light_high_contrast": "Контрастна світла",

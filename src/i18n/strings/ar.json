@@ -72,12 +72,6 @@
     "Video conference ended by %(senderName)s": "أنهى مؤتمر الفيديو %(senderName)s",
     "Join the conference from the room information card on the right": "انضم إلى المؤتمر من بطاقة معلومات الغرفة على اليمين",
     "Join the conference at the top of this room": "انضم إلى المؤتمر في الجزء العلوي من هذه الغرفة",
-    "Show image": "إظهار الصورة",
-    "Error decrypting image": "تعذر فك تشفير صورة",
-    "Invalid file%(extra)s": "ملف غير صحيح %(extra)s",
-    "Download %(text)s": "تحميل %(text)s",
-    "Decrypt %(text)s": "فك تشفير %(text)s",
-    "Error decrypting attachment": "تعذر فك تشفير المرفق",
     "Yesterday": "أمس",
     "Today": "اليوم",
     "Saturday": "السبت",
@@ -694,7 +688,6 @@
             "forbidden": "%(senderDisplayName)s قام بإيقاف امكانية انضمام الضيوف الى الغرفة.",
             "unknown": "%(senderDisplayName)s غير طريقة دخول الضيوف الى %(rule)s"
         },
-        "m.image": "قام %(senderDisplayName)s بإرسال صورة.",
         "m.room.server_acl": {
             "all_servers_banned": "🎉 جميع الخوادم ممنوعة من المشاركة! لم يعد من الممكن استخدام هذه الغرفة."
         },
@@ -794,6 +787,17 @@
             "disable_attempt": "تم تجاهل محاولة تعطيل التشفير",
             "disabled": "التشفير غير مفعل",
             "unsupported": "التشفير الذي تستخدمه هذه الغرفة غير مدعوم."
+        },
+        "m.file": {
+            "download_label": "تحميل %(text)s",
+            "error_decrypting": "تعذر فك تشفير المرفق",
+            "decrypt_label": "فك تشفير %(text)s",
+            "error_invalid": "ملف غير صحيح %(extra)s"
+        },
+        "m.image": {
+            "sent": "قام %(senderDisplayName)s بإرسال صورة.",
+            "error_decrypting": "تعذر فك تشفير صورة",
+            "show_image": "إظهار الصورة"
         }
     },
     "slash_command": {

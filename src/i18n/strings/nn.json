@@ -52,11 +52,6 @@
     "Saturday": "laurdag",
     "Today": "i dag",
     "Yesterday": "i går",
-    "Error decrypting attachment": "Noko gjekk gale med vedleggsdekrypteringa",
-    "Decrypt %(text)s": "Dekrypter %(text)s",
-    "Download %(text)s": "Last %(text)s ned",
-    "Invalid file%(extra)s": "Ugangbar fil%(extra)s",
-    "Error decrypting image": "Noko gjekk gale med biletedekrypteringa",
     "Error decrypting video": "Noko gjekk gale med videodekrypteringa",
     "Email address": "Epostadresse",
     "Delete Widget": "Slett Widgeten",
@@ -159,7 +154,6 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert.",
     "Results will be visible when the poll is ended": "Resultata vil bli synlege når røystinga er ferdig",
     "Close sidebar": "Lat att sidestolpen",
-    "Expand quotes": "Utvid sitat",
     "Deactivate account": "Avliv brukarkontoen",
     "Join the conference from the room information card on the right": "Bli med i konferanse frå rominfo-kortet til høgre",
     "common": {
@@ -573,7 +567,6 @@
             "forbidden": "%(senderDisplayName)s har hindra gjestetilgang i rommet.",
             "unknown": "%(senderDisplayName)s endra gjestetilgang til %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s sende eit bilete.",
         "m.room.canonical_alias": {
             "set": "%(senderName)s satte standardadressa for dette rommet til %(address)s.",
             "removed": "%(senderName)s fjerna standardadressa for dette rommet.",
@@ -722,7 +715,20 @@
             "unable_to_find": "Prøvde å lasta eit bestemt punkt i rommet sin historikk, men klarde ikkje å finna det.",
             "title": "Innlasting av punkt i historikken feila."
         },
-        "error_no_renderer": "Denne hendingen kunne ikkje visast"
+        "error_no_renderer": "Denne hendingen kunne ikkje visast",
+        "mab": {
+            "expand_reply_chain": "Utvid sitat"
+        },
+        "m.file": {
+            "download_label": "Last %(text)s ned",
+            "error_decrypting": "Noko gjekk gale med vedleggsdekrypteringa",
+            "decrypt_label": "Dekrypter %(text)s",
+            "error_invalid": "Ugangbar fil%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s sende eit bilete.",
+            "error_decrypting": "Noko gjekk gale med biletedekrypteringa"
+        }
     },
     "slash_command": {
         "shrug": "Sett inn ¯\\_(ツ)_/¯ i ein rein-tekst melding",

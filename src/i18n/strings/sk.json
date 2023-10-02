@@ -37,11 +37,6 @@
     "Join Room": "Vstúpiť do miestnosti",
     "unknown error code": "neznámy kód chyby",
     "not specified": "nezadané",
-    "Error decrypting attachment": "Chyba pri dešifrovaní prílohy",
-    "Decrypt %(text)s": "Dešifrovať %(text)s",
-    "Download %(text)s": "Stiahnuť %(text)s",
-    "Invalid file%(extra)s": "Neplatný súbor%(extra)s",
-    "Error decrypting image": "Chyba pri dešifrovaní obrázka",
     "Error decrypting video": "Chyba pri dešifrovaní videa",
     "Add an Integration": "Pridať integráciu",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete presmerovaní na stránku tretej strany, aby ste mohli overiť svoj účet na použitie s %(integrationsUrl)s. Chcete pokračovať?",
@@ -508,7 +503,6 @@
     "Session key": "Kľúč relácie",
     "Session name": "Názov relácie",
     "Verification Request": "Žiadosť o overenie",
-    "Show image": "Zobraziť obrázok",
     "e.g. my-room": "napr. moja-miestnost",
     "Upload all": "Nahrať všetko",
     "Cancel All": "Zrušiť všetky",
@@ -774,7 +768,6 @@
     "You most likely do not want to reset your event index store": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
     "Reset event store?": "Obnoviť úložisko udalostí?",
     "Can't load this message": "Nemožno načítať túto správu",
-    "Error processing audio message": "Chyba pri spracovaní hlasovej správy",
     "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
     "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
     "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
@@ -819,7 +812,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "Anketa sa skončila. Najčastejšia odpoveď: %(topAnswer)s",
     "Failed to end poll": "Nepodarilo sa ukončiť anketu",
     "Sorry, the poll did not end. Please try again.": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
-    "Reply in thread": "Odpovedať vo vlákne",
     "Transfer": "Presmerovať",
     "A call can only be transferred to a single user.": "Hovor je možné presmerovať len na jedného používateľa.",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
@@ -843,10 +835,6 @@
     "What location type do you want to share?": "Aký typ polohy chcete zdieľať?",
     "We couldn't send your location": "Nepodarilo sa nám odoslať vašu polohu",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohol odoslať vašu polohu. Skúste to prosím neskôr.",
-    "Collapse quotes": "Zbaliť citácie",
-    "Expand quotes": "Rozbaliť citácie",
-    "Click": "Kliknúť",
-    "Can't create a thread from an event with an existing relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom",
     "Resend %(unsentCount)s reaction(s)": "Opätovné odoslanie %(unsentCount)s reakcií",
     "Consult first": "Najprv konzultovať",
     "You are sharing your live location": "Zdieľate svoju polohu v reálnom čase",
@@ -866,7 +854,6 @@
     },
     "%(featureName)s Beta feedback": "%(featureName)s Beta spätná väzba",
     "Live location ended": "Ukončenie polohy v reálnom čase",
-    "View live location": "Zobraziť polohu v reálnom čase",
     "Live until %(expiryTime)s": "Poloha v reálnom čase do %(expiryTime)s",
     "Live location enabled": "Poloha v reálnom čase zapnutá",
     "Live location error": "Chyba polohy v reálnom čase",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Manuálne overte pomocou textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
-    "Error downloading image": "Chyba pri sťahovaní obrázku",
-    "Unable to show image due to error": "Nie je možné zobraziť obrázok kvôli chybe",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNENIE:</w> <description/>",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
@@ -1200,7 +1185,9 @@
         "new_room": "Nová miestnosť",
         "new_video_room": "Nová video miestnosť",
         "add_existing_room": "Pridať existujúcu miestnosť",
-        "explore_public_rooms": "Preskúmajte verejné miestnosti"
+        "explore_public_rooms": "Preskúmajte verejné miestnosti",
+        "reply_in_thread": "Odpovedať vo vlákne",
+        "click": "Kliknúť"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -2271,7 +2258,6 @@
             "forbidden": "%(senderDisplayName)s zamedzil hosťom vstúpiť do miestnosti.",
             "unknown": "%(senderDisplayName)s zmenil prístup hostí na %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s poslal obrázok.",
         "m.sticker": "%(senderDisplayName)s poslal nálepku.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s nastavil ACL servera pre túto miestnosť.",
@@ -2552,11 +2538,14 @@
         "mab": {
             "label": "Akcie správy",
             "view_in_room": "Zobraziť v miestnosti",
-            "copy_link_thread": "Kopírovať odkaz na vlákno"
+            "copy_link_thread": "Kopírovať odkaz na vlákno",
+            "collapse_reply_chain": "Zbaliť citácie",
+            "expand_reply_chain": "Rozbaliť citácie"
         },
         "m.audio": {
             "unnamed_audio": "Nepomenovaný zvukový záznam",
-            "error_downloading_audio": "Chyba pri sťahovaní zvuku"
+            "error_downloading_audio": "Chyba pri sťahovaní zvuku",
+            "error_processing_audio": "Chyba pri spracovaní hlasovej správy"
         },
         "load_error": {
             "no_permission": "Pri pokuse načítať konkrétny bod v histórii tejto miestnosti sa vyskytla chyba, nemáte povolenie na zobrazenie zodpovedajúcej správy.",
@@ -2578,7 +2567,23 @@
             "unsupported": "Šifrovanie používané v tejto miestnosti nie je podporované."
         },
         "pending_moderation_reason": "Správa čaká na moderáciu: %(reason)s",
-        "pending_moderation": "Správa čaká na moderovanie"
+        "pending_moderation": "Správa čaká na moderovanie",
+        "m.beacon_info": {
+            "view_live_location": "Zobraziť polohu v reálnom čase"
+        },
+        "m.file": {
+            "download_label": "Stiahnuť %(text)s",
+            "error_decrypting": "Chyba pri dešifrovaní prílohy",
+            "decrypt_label": "Dešifrovať %(text)s",
+            "error_invalid": "Neplatný súbor%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s poslal obrázok.",
+            "error": "Nie je možné zobraziť obrázok kvôli chybe",
+            "error_decrypting": "Chyba pri dešifrovaní obrázka",
+            "error_downloading": "Chyba pri sťahovaní obrázku",
+            "show_image": "Zobraziť obrázok"
+        }
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -3632,7 +3637,8 @@
         "empty_tip": "<b>Tip:</b> Použite položku “%(replyInThread)s”, keď prejdete ponad správu.",
         "empty_heading": "Udržujte diskusie organizované pomocou vlákien",
         "unable_to_decrypt": "Nie je možné dešifrovať správu",
-        "open_thread": "Otvoriť vlákno"
+        "open_thread": "Otvoriť vlákno",
+        "error_start_thread_existing_relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom"
     },
     "theme": {
         "light_high_contrast": "Ľahký vysoký kontrast",

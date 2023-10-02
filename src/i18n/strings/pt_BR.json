@@ -31,19 +31,14 @@
         "other": "e %(count)s outros..."
     },
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
-    "Decrypt %(text)s": "Descriptografar %(text)s",
-    "Download %(text)s": "Baixar %(text)s",
     "Join Room": "Ingressar na sala",
     "not specified": "não especificado",
     "An error has occurred.": "Ocorreu um erro.",
     "Email address": "Endereço de e-mail",
-    "Error decrypting attachment": "Erro ao descriptografar o anexo",
-    "Invalid file%(extra)s": "Arquivo inválido %(extra)s",
     "Warning!": "Atenção!",
     "Confirm Removal": "Confirmar a remoção",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
-    "Error decrypting image": "Erro ao descriptografar a imagem",
     "Error decrypting video": "Erro ao descriptografar o vídeo",
     "Add an Integration": "Adicionar uma integração",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
@@ -285,7 +280,6 @@
         "other": "Apagar %(count)s mensagens para todos",
         "one": "Remover 1 mensagem"
     },
-    "Show image": "Mostrar imagem",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Você bloqueou este usuário, portanto, a mensagem dele foi escondida. <a>Mostrar mesmo assim.</a>",
     "You verified %(name)s": "Você confirmou %(name)s",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Use um servidor de identidade para convidar por e-mail. <default>Use o padrão (%(defaultIdentityServerName)s)</default> ou um servidor personalizado em <settings>Configurações</settings>.",
@@ -716,7 +710,6 @@
     "Message search initialisation failed, check <a>your settings</a> for more information": "Falha na inicialização da pesquisa por mensagem, confire <a>suas configurações</a> para mais informações",
     "Add reaction": "Adicionar reação",
     "Error processing voice message": "Erro ao processar a mensagem de voz",
-    "Error processing audio message": "Erro ao processar a mensagem de áudio",
     "MB": "MB",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Space selection": "Seleção de Espaços",
@@ -746,7 +739,6 @@
     "Sorry, your vote was not registered. Please try again.": "Desculpe, seu voto não foi registrado. Por favor, tente novamente.",
     "Vote not registered": "Voto não registrado",
     "Recently viewed": "Visualizado recentemente",
-    "Reply in thread": "Responder no tópico",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -975,7 +967,8 @@
         "new_room": "Nova sala",
         "new_video_room": "Nova sala de vídeo",
         "add_existing_room": "Adicionar sala existente",
-        "explore_public_rooms": "Explorar salas públicas"
+        "explore_public_rooms": "Explorar salas públicas",
+        "reply_in_thread": "Responder no tópico"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -1668,7 +1661,6 @@
             "forbidden": "%(senderDisplayName)s impediu que convidados entrassem na sala.",
             "unknown": "%(senderDisplayName)s alterou a permissão de acesso de convidados para %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s enviou uma imagem.",
         "m.sticker": "%(senderDisplayName)s enviou uma figurinha.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s definiu a lista de controle de acesso do servidor para esta sala.",
@@ -1908,6 +1900,20 @@
             "disable_attempt": "A tentativa de desativar a criptografia foi ignorada",
             "disabled": "Criptografia desativada",
             "unsupported": "A criptografia usada nesta sala não é suportada."
+        },
+        "m.audio": {
+            "error_processing_audio": "Erro ao processar a mensagem de áudio"
+        },
+        "m.file": {
+            "download_label": "Baixar %(text)s",
+            "error_decrypting": "Erro ao descriptografar o anexo",
+            "decrypt_label": "Descriptografar %(text)s",
+            "error_invalid": "Arquivo inválido %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s enviou uma imagem.",
+            "error_decrypting": "Erro ao descriptografar a imagem",
+            "show_image": "Mostrar imagem"
         }
     },
     "slash_command": {

@@ -23,10 +23,7 @@
     "unknown error code": "neznámý kód chyby",
     "An error has occurred.": "Nastala chyba.",
     "Custom level": "Vlastní úroveň",
-    "Decrypt %(text)s": "Dešifrovat %(text)s",
-    "Download %(text)s": "Stáhnout %(text)s",
     "Email address": "E-mailová adresa",
-    "Error decrypting attachment": "Chyba při dešifrování přílohy",
     "and %(count)s others...": {
         "other": "a %(count)s další...",
         "one": "a někdo další..."
@@ -43,7 +40,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Delete Widget": "Smazat widget",
-    "Error decrypting image": "Chyba při dešifrování obrázku",
     "Error decrypting video": "Chyba při dešifrování videa",
     "Unnamed room": "Nepojmenovaná místnost",
     "(~%(count)s results)": {
@@ -56,7 +52,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "Invalid file%(extra)s": "Neplatný soubor%(extra)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete přesměrováni na stránku třetí strany k ověření svého účtu pro používání s %(integrationsUrl)s. Chcete pokračovat?",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
     "And %(count)s more...": {
@@ -241,7 +236,6 @@
         "other": "Odstranit %(count)s zpráv",
         "one": "Odstranit zprávu"
     },
-    "Show image": "Zobrazit obrázek",
     "You verified %(name)s": "Ověřili jste %(name)s",
     "You cancelled verifying %(name)s": "Zrušili jste ověření %(name)s",
     "%(name)s cancelled verifying": "%(name)s zrušil(a) ověření",
@@ -732,7 +726,6 @@
     "You don't have permission to do this": "K tomu nemáte povolení",
     "Please provide an address": "Uveďte prosím adresu",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
-    "Error processing audio message": "Došlo k chybě při zpracovávání hlasové zprávy",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
     "Automatically invite members from this room to the new one": "Automaticky pozvat členy této místnosti do nové místnosti",
@@ -777,7 +770,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte přístup ke svému účtu a šifrovací klíče uložené v této relaci. Bez nich nebudete moci číst všechny své zabezpečené zprávy v žádné relaci.",
     "If you can't see who you're looking for, send them your invite link below.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku níže.",
     "Thread options": "Možnosti vláken",
-    "Reply in thread": "Odpovědět ve vlákně",
     "Forget": "Zapomenout",
     "Based on %(count)s votes": {
         "one": "Na základě %(count)s hlasu",
@@ -845,10 +837,6 @@
     "My current location": "Moje současná poloha",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohl odeslat vaši polohu. Zkuste to prosím později.",
     "We couldn't send your location": "Vaši polohu se nepodařilo odeslat",
-    "Click": "Kliknutí",
-    "Expand quotes": "Rozbalit citace",
-    "Collapse quotes": "Sbalit citace",
-    "Can't create a thread from an event with an existing relation": "Nelze založit vlákno ve vlákně",
     "You are sharing your live location": "Sdílíte svoji polohu živě",
     "%(displayName)s's live location": "Poloha %(displayName)s živě",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Zrušte zaškrtnutí, pokud chcete odstranit i systémové zprávy tohoto uživatele (např. změna členství, změna profilu...)",
@@ -866,7 +854,6 @@
     },
     "%(featureName)s Beta feedback": "Zpětná vazba beta funkce %(featureName)s",
     "Live location ended": "Sdílení polohy živě skončilo",
-    "View live location": "Zobrazit polohu živě",
     "Live location enabled": "Poloha živě povolena",
     "Live location error": "Chyba polohy živě",
     "Live until %(expiryTime)s": "Živě do %(expiryTime)s",
@@ -930,8 +917,6 @@
     "Manually verify by text": "Ruční ověření pomocí textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
-    "Error downloading image": "Chyba při stahování obrázku",
-    "Unable to show image due to error": "Obrázek nelze zobrazit kvůli chybě",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
     "<w>WARNING:</w> <description/>": "<w>UPOZORNĚNÍ:</w> <description/>",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
@@ -1201,7 +1186,9 @@
         "new_room": "Nová místnost",
         "new_video_room": "Nová video místnost",
         "add_existing_room": "Přidat existující místnost",
-        "explore_public_rooms": "Prozkoumat veřejné místnosti"
+        "explore_public_rooms": "Prozkoumat veřejné místnosti",
+        "reply_in_thread": "Odpovědět ve vlákně",
+        "click": "Kliknutí"
     },
     "a11y": {
         "user_menu": "Uživatelská nabídka",
@@ -2272,7 +2259,6 @@
             "forbidden": "%(senderDisplayName)s zakázal(a) přístup hostům.",
             "unknown": "%(senderDisplayName)s změnil(a) pravidlo pro přístup hostů na %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s poslal(a) obrázek.",
         "m.sticker": "%(senderDisplayName)s poslal(a) nálepku.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s nastavil seznam přístupů serveru pro tuto místnost.",
@@ -2553,11 +2539,14 @@
         "mab": {
             "label": "Akce zprávy",
             "view_in_room": "Zobrazit v místnosti",
-            "copy_link_thread": "Kopírovat odkaz na vlákno"
+            "copy_link_thread": "Kopírovat odkaz na vlákno",
+            "collapse_reply_chain": "Sbalit citace",
+            "expand_reply_chain": "Rozbalit citace"
         },
         "m.audio": {
             "unnamed_audio": "Nepojmenovaný audio soubor",
-            "error_downloading_audio": "Chyba při stahování audia"
+            "error_downloading_audio": "Chyba při stahování audia",
+            "error_processing_audio": "Došlo k chybě při zpracovávání hlasové zprávy"
         },
         "load_error": {
             "no_permission": "Pokusili jste se načíst bod v časové ose místnosti, ale pro zobrazení zpráv z daného časového úseku nemáte oprávnění.",
@@ -2579,7 +2568,23 @@
             "unsupported": "Šifrování používané v této místnosti není podporované."
         },
         "pending_moderation_reason": "Zpráva čeká na moderaci: %(reason)s",
-        "pending_moderation": "Zpráva čeká na moderaci"
+        "pending_moderation": "Zpráva čeká na moderaci",
+        "m.beacon_info": {
+            "view_live_location": "Zobrazit polohu živě"
+        },
+        "m.file": {
+            "download_label": "Stáhnout %(text)s",
+            "error_decrypting": "Chyba při dešifrování přílohy",
+            "decrypt_label": "Dešifrovat %(text)s",
+            "error_invalid": "Neplatný soubor%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s poslal(a) obrázek.",
+            "error": "Obrázek nelze zobrazit kvůli chybě",
+            "error_decrypting": "Chyba při dešifrování obrázku",
+            "error_downloading": "Chyba při stahování obrázku",
+            "show_image": "Zobrazit obrázek"
+        }
     },
     "slash_command": {
         "spoiler": "Odešle danou zprávu jako spoiler",
@@ -3639,7 +3644,8 @@
         "empty_tip": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
         "empty_heading": "Udržujte diskuse organizované pomocí vláken",
         "unable_to_decrypt": "Nepodařilo se dešifrovat zprávu",
-        "open_thread": "Otevřít vlákno"
+        "open_thread": "Otevřít vlákno",
+        "error_start_thread_existing_relation": "Nelze založit vlákno ve vlákně"
     },
     "theme": {
         "light_high_contrast": "Světlý vysoký kontrast",

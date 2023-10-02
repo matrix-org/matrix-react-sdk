@@ -387,7 +387,7 @@ function textForMessageEvent(ev: MatrixEvent, client: MatrixClient): (() => stri
         if (ev.getContent().msgtype === MsgType.Emote) {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === MsgType.Image) {
-            message = _t("timeline|m.image", { senderDisplayName });
+            message = _t("timeline|m.image|sent", { senderDisplayName });
         } else if (ev.getType() == EventType.Sticker) {
             message = _t("timeline|m.sticker", { senderDisplayName });
         } else {

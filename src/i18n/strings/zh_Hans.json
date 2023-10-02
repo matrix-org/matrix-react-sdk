@@ -1,9 +1,5 @@
 {
-    "Decrypt %(text)s": "解密 %(text)s",
-    "Download %(text)s": "下载 %(text)s",
     "Email address": "邮箱地址",
-    "Error decrypting attachment": "解密附件时出错",
-    "Invalid file%(extra)s": "无效文件 %(extra)s",
     "Session ID": "会话 ID",
     "An error has occurred.": "发生了一个错误。",
     "Join Room": "加入房间",
@@ -23,7 +19,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
-    "Error decrypting image": "解密图像时出错",
     "Error decrypting video": "解密视频时出错",
     "Verification Pending": "验证等待中",
     "(~%(count)s results)": {
@@ -231,7 +226,6 @@
         "other": "删除 %(count)s 条消息",
         "one": "删除 1 条消息"
     },
-    "Show image": "显示图像",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "你已忽略此用户，所以其消息已被隐藏。<a>仍然显示。</a>",
     "You verified %(name)s": "你验证了 %(name)s",
     "You cancelled verifying %(name)s": "你取消了 %(name)s 的验证",
@@ -760,7 +754,6 @@
     "Create a new space": "创建新空间",
     "Want to add a new space instead?": "想要添加一个新空间？",
     "Add existing space": "增加现有的空间",
-    "Error processing audio message": "处理音频消息时出错",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "Would you like to leave the rooms in this space?": "你想俩开此空间内的房间吗？",
     "You are about to leave <spaceName/>.": "你即将离开 <spaceName/>。",
@@ -777,7 +770,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
     "If you can't see who you're looking for, send them your invite link below.": "如果您看不到您要找的人，请将您的邀请链接发送给他们。",
     "Thread options": "消息列选项",
-    "Reply in thread": "在消息列中回复",
     "Forget": "忘记",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s 和其他 %(count)s 个空间",
@@ -835,7 +827,6 @@
     "%(members)s and more": "%(members)s和更多",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "若你找不到要找的房间，请请求邀请或创建新房间。",
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
-    "Can't create a thread from an event with an existing relation": "无法从既有关系的事件创建消息列",
     "%(featureName)s Beta feedback": "%(featureName)sBeta反馈",
     "Use <arrows/> to scroll": "用<arrows/>来滚动",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
@@ -849,10 +840,6 @@
     "Results will be visible when the poll is ended": "结果将在投票结束时可见",
     "Sorry, you can't edit a poll after votes have been cast.": "抱歉，你无法在有人投票后编辑投票。",
     "Can't edit poll": "无法编辑投票",
-    "Click": "点击",
-    "Expand quotes": "展开引号",
-    "Collapse quotes": "折叠引号",
-    "View live location": "查看实时位置",
     "What location type do you want to share?": "你想分享什么位置类型？",
     "Drop a Pin": "放置图钉",
     "My live location": "我的实时位置",
@@ -1145,7 +1132,9 @@
         "new_room": "新房间",
         "new_video_room": "新视频房间",
         "add_existing_room": "添加现有的房间",
-        "explore_public_rooms": "探索公共房间"
+        "explore_public_rooms": "探索公共房间",
+        "reply_in_thread": "在消息列中回复",
+        "click": "点击"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -2042,7 +2031,6 @@
             "forbidden": "%(senderDisplayName)s 将此房间改为游客禁入。",
             "unknown": "%(senderDisplayName)s 将此房间的游客加入规则改为 %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s 发送了一张图片。",
         "m.sticker": "%(senderDisplayName)s 发送了一张贴纸。",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s 为此房间设置了服务器 ACL。",
@@ -2306,11 +2294,14 @@
         "mab": {
             "label": "消息操作",
             "view_in_room": "在房间内查看",
-            "copy_link_thread": "复制到消息列的链接"
+            "copy_link_thread": "复制到消息列的链接",
+            "collapse_reply_chain": "折叠引号",
+            "expand_reply_chain": "展开引号"
         },
         "m.audio": {
             "unnamed_audio": "未命名的音频",
-            "error_downloading_audio": "下载音频时出错"
+            "error_downloading_audio": "下载音频时出错",
+            "error_processing_audio": "处理音频消息时出错"
         },
         "load_error": {
             "no_permission": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
@@ -2328,7 +2319,21 @@
             "unsupported": "不支持此房间使用的加密方式。"
         },
         "pending_moderation_reason": "消息待审核：%(reason)s",
-        "pending_moderation": "待审核的消息"
+        "pending_moderation": "待审核的消息",
+        "m.beacon_info": {
+            "view_live_location": "查看实时位置"
+        },
+        "m.file": {
+            "download_label": "下载 %(text)s",
+            "error_decrypting": "解密附件时出错",
+            "decrypt_label": "解密 %(text)s",
+            "error_invalid": "无效文件 %(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s 发送了一张图片。",
+            "error_decrypting": "解密图像时出错",
+            "show_image": "显示图像"
+        }
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -3287,7 +3292,8 @@
         "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
         "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
         "empty_heading": "用消息列使讨论井然有序",
-        "open_thread": "打开消息列"
+        "open_thread": "打开消息列",
+        "error_start_thread_existing_relation": "无法从既有关系的事件创建消息列"
     },
     "theme": {
         "light_high_contrast": "浅色高对比",

@@ -41,7 +41,6 @@
     "Saturday": "Laugardagur",
     "Today": "Í dag",
     "Yesterday": "Í gær",
-    "Error decrypting attachment": "Villa við afkóðun viðhengis",
     "Email address": "Tölvupóstfang",
     "Home": "Forsíða",
     "collapse": "fella saman",
@@ -81,7 +80,6 @@
     "Recently Direct Messaged": "Nýsend bein skilaboð",
     "Direct Messages": "Bein skilaboð",
     "Preparing to download logs": "Undirbý niðurhal atvikaskráa",
-    "Download %(text)s": "Niðurhala %(text)s",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
@@ -423,7 +421,6 @@
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
     },
-    "Show image": "Birta mynd",
     "Recently viewed": "Nýlega skoðað",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Space selection": "Val svæðis",
@@ -575,14 +572,6 @@
     "Vote not registered": "Atkvæði ekki skráð",
     "Sorry, you can't edit a poll after votes have been cast.": "Því miður, þú getur ekki breytt könnun eftir að atkvæði hafa verið greidd.",
     "Can't edit poll": "Get ekki breytt könnun",
-    "Error decrypting image": "Villa við afkóðun myndar",
-    "Invalid file%(extra)s": "Ógild skrá%(extra)s",
-    "Decrypt %(text)s": "Afkóða %(text)s",
-    "Click": "Smelltu",
-    "Expand quotes": "Fletta út tilvitnunum",
-    "Collapse quotes": "Fella saman tilvitnanir",
-    "Reply in thread": "Svara í spjallþræði",
-    "Error processing audio message": "Villa við meðhöndlun hljóðskilaboða",
     "Remove %(count)s messages": {
         "one": "Fjarlægja 1 skilaboð",
         "other": "Fjarlægja %(count)s skilaboð"
@@ -808,7 +797,6 @@
     "Show: %(instance)s rooms (%(server)s)": "Sýna: %(instance)s spjallrásir (%(server)s)",
     "Who will you chat to the most?": "Við hverja muntu helst spjalla?",
     "You're in": "Þú ert inni",
-    "View live location": "Skoða staðsetningu í rauntíma",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Start a conversation with someone using their name or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi eða notandanafn (eins og <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
@@ -826,8 +814,6 @@
     "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
     "<w>WARNING:</w> <description/>": "<w>AÐVÖRUN:</w> <description/>",
-    "Error downloading image": "Villa kom upp við að sækja mynd",
-    "Unable to show image due to error": "Get ekki birt mynd vegna villu",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -1061,7 +1047,9 @@
         "new_room": "Ný spjallrás",
         "new_video_room": "Ný myndspjallrás",
         "add_existing_room": "Bæta við fyrirliggjandi spjallrás",
-        "explore_public_rooms": "Kanna almenningsspjallrásir"
+        "explore_public_rooms": "Kanna almenningsspjallrásir",
+        "reply_in_thread": "Svara í spjallþræði",
+        "click": "Smelltu"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -1949,7 +1937,6 @@
             "forbidden": "%(senderDisplayName)s hefur bannað gestum að koma inn á spjallrásina.",
             "unknown": "%(senderDisplayName)s breytti gestaaðgangi í %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s sendi mynd.",
         "m.sticker": "%(senderDisplayName)s sendi límmerki.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s stillti ACL á netþjóni fyrir þessa spjallrás.",
@@ -2200,11 +2187,14 @@
         "mab": {
             "label": "Aðgerðir skilaboða",
             "view_in_room": "Skoða á spjallrás",
-            "copy_link_thread": "Afrita tengil á spjallþráð"
+            "copy_link_thread": "Afrita tengil á spjallþráð",
+            "collapse_reply_chain": "Fella saman tilvitnanir",
+            "expand_reply_chain": "Fletta út tilvitnunum"
         },
         "m.audio": {
             "unnamed_audio": "Nafnlaust hljóð",
-            "error_downloading_audio": "Villa við að sækja hljóð"
+            "error_downloading_audio": "Villa við að sækja hljóð",
+            "error_processing_audio": "Villa við meðhöndlun hljóðskilaboða"
         },
         "load_error": {
             "no_permission": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en þú ert ekki með heimild til að skoða tilteknu skilaboðin.",
@@ -2222,7 +2212,23 @@
             "unsupported": "Dulritunin sem notuð er í þessari spjallrás er ekki studd."
         },
         "pending_moderation_reason": "Efni sem bíður yfirferðar: %(reason)s",
-        "pending_moderation": "Efni sem bíður yfirferðar"
+        "pending_moderation": "Efni sem bíður yfirferðar",
+        "m.beacon_info": {
+            "view_live_location": "Skoða staðsetningu í rauntíma"
+        },
+        "m.file": {
+            "download_label": "Niðurhala %(text)s",
+            "error_decrypting": "Villa við afkóðun viðhengis",
+            "decrypt_label": "Afkóða %(text)s",
+            "error_invalid": "Ógild skrá%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s sendi mynd.",
+            "error": "Get ekki birt mynd vegna villu",
+            "error_decrypting": "Villa við afkóðun myndar",
+            "error_downloading": "Villa kom upp við að sækja mynd",
+            "show_image": "Birta mynd"
+        }
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
