@@ -23,7 +23,6 @@
     "Warning!": "Uwaga!",
     "unknown error code": "nieznany kod błędu",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
-    "An error has occurred.": "Wystąpił błąd.",
     "and %(count)s others...": {
         "other": "i %(count)s innych...",
         "one": "i jeden inny..."
@@ -49,7 +48,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Restricted": "Ograniczony",
-    "Send": "Wyślij",
     "Unnamed room": "Pokój bez nazwy",
     "Sunday": "Niedziela",
     "Today": "Dzisiaj",
@@ -479,7 +477,6 @@
     "Incoming Verification Request": "Oczekująca prośba o weryfikację",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj tego użytkownika, aby oznaczyć go jako zaufanego. Użytkownicy zaufani dodają większej pewności, gdy korzystasz z wiadomości szyfrowanych end-to-end.",
     "No results found": "Nie znaleziono wyników",
-    "Sending": "Wysyłanie",
     "%(count)s rooms": {
         "one": "%(count)s pokój",
         "other": "%(count)s pokojów"
@@ -488,10 +485,6 @@
         "one": "%(count)s członek",
         "other": "%(count)s członkowie"
     },
-    "You don't have permission to do this": "Nie masz uprawnień aby to zrobić",
-    "Sent": "Wysłano",
-    "Message preview": "Podgląd wiadomości",
-    "Search for rooms or people": "Szukaj pokojów i ludzi",
     "Some suggestions may be hidden for privacy.": "Niektóre propozycje mogą być ukryte z uwagi na prywatność.",
     "Or send invite link": "Lub wyślij link z zaproszeniem",
     "%(spaceName)s and %(count)s others": {
@@ -617,15 +610,6 @@
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Weryfikacja tego urządzenia oznaczy je jako zaufane, a użytkownicy, którzy Cię zweryfikowali, będą ufać temu urządzeniu.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj to urządzenie, aby oznaczyć je jako zaufane. Urządzenia zaufane dają Tobie i innym użytkownikom dodatkową ochronę podczas wysyłania wiadomości szyfrowanych end-to-end.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Weryfikacja tego użytkownika oznaczy Twoją i jego sesję jako zaufaną.",
-    "You may contact me if you have any follow up questions": "Możesz się ze mną skontaktować, jeśli masz jakiekolwiek pytania",
-    "Open room": "Otwórz pokój",
-    "MB": "MB",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Czy na pewno chcesz zakończyć ankietę? Zostaną wyświetlone ostateczne wyniki, a osoby nie będą mogły głosować.",
-    "End Poll": "Zakończ ankietę",
-    "Sorry, the poll did not end. Please try again.": "Przepraszamy, ankieta nie została zakończona. Spróbuj ponownie.",
-    "Failed to end poll": "Nie udało się zakończyć ankiety",
-    "The poll has ended. Top answer: %(topAnswer)s": "Ankieta została zakończona. Najlepsza odpowiedź: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Ankieta została zakończona. Nie został oddany żaden głos.",
     "Desktop app logo": "Logo aplikacji Desktop",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
@@ -1995,7 +1979,8 @@
         "format": "Format",
         "messages": "Wiadomości",
         "size_limit": "Limit rozmiaru",
-        "include_attachments": "Dodaj załączniki"
+        "include_attachments": "Dodaj załączniki",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Utwórz pokój wideo",
@@ -3456,7 +3441,8 @@
         "may_contact_label": "Możesz się ze mną skontaktować, jeśli chcesz mnie śledzić lub pomóc wypróbować nadchodzące pomysły",
         "pro_type": "PRO TIP: Jeżeli zgłaszasz błąd, wyślij <debugLogsLink>dzienniki debugowania</debugLogsLink>, aby pomóc nam znaleźć problem.",
         "existing_issue_link": "Najpierw zobacz <existingIssuesLink>istniejące zgłoszenia na GitHubie</existingIssuesLink>. Nic nie znalazłeś? <newIssueLink>Utwórz nowe</newIssueLink>.",
-        "send_feedback_action": "Wyślij opinię użytkownika"
+        "send_feedback_action": "Wyślij opinię użytkownika",
+        "can_contact_label": "Możesz się ze mną skontaktować, jeśli masz jakiekolwiek pytania"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3955,7 +3941,13 @@
         "total_n_votes_voted": {
             "one": "Oparte na %(count)s głosie",
             "other": "Oparte na %(count)s głosach"
-        }
+        },
+        "end_message_no_votes": "Ankieta została zakończona. Nie został oddany żaden głos.",
+        "end_message": "Ankieta została zakończona. Najlepsza odpowiedź: %(topAnswer)s",
+        "error_ending_title": "Nie udało się zakończyć ankiety",
+        "error_ending_description": "Przepraszamy, ankieta nie została zakończona. Spróbuj ponownie.",
+        "end_title": "Zakończ ankietę",
+        "end_description": "Czy na pewno chcesz zakończyć ankietę? Zostaną wyświetlone ostateczne wyniki, a osoby nie będą mogły głosować."
     },
     "failed_load_async_component": "Nie można załadować! Sprawdź połączenie sieciowe i spróbuj ponownie.",
     "upload_failed_generic": "Nie udało się przesłać pliku '%(fileName)s'.",
@@ -4038,7 +4030,8 @@
         "something_went_wrong": "Coś poszło nie tak!",
         "download_media": "Nie udało się pobrać media źródłowego, nie znaleziono źródłowego adresu URL",
         "update_power_level": "Nie udało się zmienić poziomu mocy",
-        "unknown": "Nieznany błąd"
+        "unknown": "Nieznany błąd",
+        "dialog_description_default": "Wystąpił błąd."
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4345,5 +4338,14 @@
         "confirm_description_state": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
         "confirm_button": "Potwierdź usunięcie",
         "reason_label": "Powód (opcjonalne)"
+    },
+    "forward": {
+        "no_perms_title": "Nie masz uprawnień aby to zrobić",
+        "sending": "Wysyłanie",
+        "sent": "Wysłano",
+        "open_room": "Otwórz pokój",
+        "send_label": "Wyślij",
+        "message_preview_heading": "Podgląd wiadomości",
+        "filter_placeholder": "Szukaj pokojów i ludzi"
     }
 }

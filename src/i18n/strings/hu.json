@@ -6,7 +6,6 @@
         "other": "és még: %(count)s ...",
         "one": "és még egy..."
     },
-    "An error has occurred.": "Hiba történt.",
     "Email address": "E-mail-cím",
     "Home": "Kezdőlap",
     "Join Room": "Belépés a szobába",
@@ -56,7 +55,6 @@
     "%(duration)sd": "%(duration)s nap",
     "collapse": "becsukás",
     "expand": "kinyitás",
-    "Send": "Elküldés",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s. %(monthName)s %(day)s., %(weekDayName)s",
     "Sunday": "Vasárnap",
     "Today": "Ma",
@@ -271,7 +269,6 @@
     "Your homeserver has exceeded its user limit.": "A Matrix-kiszolgálója túllépte a felhasználói szám korlátját.",
     "Your homeserver has exceeded one of its resource limits.": "A Matrix-kiszolgálója túllépte valamelyik erőforráskorlátját.",
     "Ok": "Rendben",
-    "Message preview": "Üzenet előnézet",
     "Switch theme": "Kinézet váltása",
     "Looks good!": "Jónak tűnik!",
     "Wrong file type": "A fájltípus hibás",
@@ -609,13 +606,8 @@
     "Reset everything": "Minden alaphelyzetbe állítása",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
-    "Sending": "Küldés",
-    "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
     "Or send invite link": "Vagy meghívó link küldése",
-    "Search for rooms or people": "Szobák vagy emberek keresése",
-    "Sent": "Elküldve",
-    "You don't have permission to do this": "Nincs jogosultsága ehhez",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
     "Automatically invite members from this room to the new one": "Tagok automatikus meghívása ebből a szobából az újba",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Kilépés néhány szobából",
     "Leave all rooms": "Kilépés minden szobából",
     "Don't leave any rooms": "Ne lépjen ki egy szobából sem",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s válasz",
         "other": "%(count)s válasz"
@@ -662,12 +653,6 @@
     "Messaging": "Üzenetküldés",
     "Spaces you know that contain this space": "Terek melyről tudja, hogy ezt a teret tartalmazzák",
     "Recently viewed": "Nemrég megtekintett",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Biztosan lezárod ezt a szavazást? Ez megszünteti az új szavazatok leadásának lehetőségét, és kijelzi a végeredményt.",
-    "End Poll": "Szavazás lezárása",
-    "Sorry, the poll did not end. Please try again.": "Sajnáljuk, a szavazás nem lett lezárva. Kérjük, próbáld újra.",
-    "Failed to end poll": "Nem sikerült a szavazás lezárása",
-    "The poll has ended. Top answer: %(topAnswer)s": "A szavazás le lett zárva. Nyertes válasz: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "A szavazás le lett zárva. Nem lettek leadva szavazatok.",
     "Open in OpenStreetMap": "Megnyitás az OpenStreetMapen",
     "Recent searches": "Keresési előzmények",
     "To search messages, look for this icon at the top of a room <icon/>": "Az üzenetek kereséséhez keresse ezt az ikont a szoba tetején: <icon/>",
@@ -711,7 +696,6 @@
     "Cameras": "Kamerák",
     "Output devices": "Kimeneti eszközök",
     "Input devices": "Beviteli eszközök",
-    "Open room": "Szoba megnyitása",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
     "Remove search filter for %(filter)s": "Keresési szűrő eltávolítása innen: %(filter)s",
     "Start a group chat": "Csoportos csevegés indítása",
@@ -1949,7 +1933,8 @@
         "format": "Formátum",
         "messages": "Üzenetek",
         "size_limit": "Méret korlát",
-        "include_attachments": "Csatolmányokkal együtt"
+        "include_attachments": "Csatolmányokkal együtt",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Videó szoba készítése",
@@ -3387,7 +3372,8 @@
         "may_contact_label": "Keressenek ha további információkra lenne szükségük vagy szeretnék, ha készülő ötleteket tesztelnék",
         "pro_type": "Tipp: Ha hibajegyet készítesz, légyszíves segíts a probléma feltárásában azzal, hogy elküldöd a <debugLogsLink>részletes naplót</debugLogsLink>.",
         "existing_issue_link": "Először nézd meg, hogy <existingIssuesLink>van-e már jegy róla a Github-on</existingIssuesLink>. Nincs? <newIssueLink>Adj fel egy új jegyet</newIssueLink>.",
-        "send_feedback_action": "Visszajelzés küldése"
+        "send_feedback_action": "Visszajelzés küldése",
+        "can_contact_label": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3883,7 +3869,13 @@
         "total_n_votes_voted": {
             "one": "%(count)s szavazat alapján",
             "other": "%(count)s szavazat alapján"
-        }
+        },
+        "end_message_no_votes": "A szavazás le lett zárva. Nem lettek leadva szavazatok.",
+        "end_message": "A szavazás le lett zárva. Nyertes válasz: %(topAnswer)s",
+        "error_ending_title": "Nem sikerült a szavazás lezárása",
+        "error_ending_description": "Sajnáljuk, a szavazás nem lett lezárva. Kérjük, próbáld újra.",
+        "end_title": "Szavazás lezárása",
+        "end_description": "Biztosan lezárod ezt a szavazást? Ez megszünteti az új szavazatok leadásának lehetőségét, és kijelzi a végeredményt."
     },
     "failed_load_async_component": "A betöltés sikertelen. Ellenőrizze a hálózati kapcsolatot, és próbálja újra.",
     "upload_failed_generic": "A(z) „%(fileName)s” fájl feltöltése sikertelen.",
@@ -3964,7 +3956,8 @@
         "something_went_wrong": "Valami rosszul sikerült.",
         "download_media": "A forrásmédia letöltése sikertelen, nem található forráswebcím",
         "update_power_level": "A hozzáférési szint megváltoztatása sikertelen",
-        "unknown": "Ismeretlen hiba"
+        "unknown": "Ismeretlen hiba",
+        "dialog_description_default": "Hiba történt."
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4267,5 +4260,14 @@
         "ongoing": "Eltávolítás…",
         "confirm_button": "Törlés megerősítése",
         "reason_label": "Ok (opcionális)"
+    },
+    "forward": {
+        "no_perms_title": "Nincs jogosultsága ehhez",
+        "sending": "Küldés",
+        "sent": "Elküldve",
+        "open_room": "Szoba megnyitása",
+        "send_label": "Elküldés",
+        "message_preview_heading": "Üzenet előnézet",
+        "filter_placeholder": "Szobák vagy emberek keresése"
     }
 }

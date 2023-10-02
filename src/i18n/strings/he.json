@@ -21,7 +21,6 @@
     "Dec": "דצמבר",
     "PM": "PM",
     "AM": "AM",
-    "Send": "שלח",
     "unknown error code": "קוד שגיאה לא מוכר",
     "Unnamed room": "חדר ללא שם",
     "Sunday": "ראשון",
@@ -552,7 +551,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "אמתו את המכשיר הזה כדי לסמן אותו כאמין. אמון במכשיר זה מעניק לכם ולמשתמשים אחרים שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "אימות משתמש זה יסמן את ההפעלה שלו כאמינה, וגם יסמן את ההפעלה שלכם כאמינה להם.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "אמתו את המשתמש הזה כדי לסמן אותו כאמין. אמון במשתמשים מעניק לכם שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
-    "An error has occurred.": "קרתה שגיאה.",
     "Transfer": "לְהַעֲבִיר",
     "A call can only be transferred to a single user.": "ניתן להעביר שיחה רק למשתמש יחיד.",
     "Switch theme": "שנה ערכת נושא",
@@ -577,7 +575,6 @@
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
-    "Failed to end poll": "תקלה בסגירת הסקר",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "%(count)s Members": {
         "one": "%(count)s חברים"
@@ -586,17 +583,8 @@
         "other": "%(count)s חדרים"
     },
     "User Directory": "ספריית משתמשים",
-    "MB": "MB",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "האם אתם בטוחים שברצונכם לסיים את הסקר הזה? זה יציג את התוצאות הסופיות של הסקר וימנע מאנשים את האפשרות להצביע.",
-    "End Poll": "סיים סקר",
-    "Sorry, the poll did not end. Please try again.": "סליחה, הסקר לא הסתיים. נא נסו שוב.",
-    "The poll has ended. Top answer: %(topAnswer)s": "הסקר הסתיים. תשובה הכי נפוצה: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "הסקר הסתיים. לא היו הצבעות.",
     "Thread options": "אפשרויות שרשור",
-    "You may contact me if you have any follow up questions": "אתם יכולים לתקשר איתי אם יש לכם שאלות המשך",
     "Feedback sent! Thanks, we appreciate it!": "משוב נשלח! תודה, אנחנו מודים לכם",
-    "Search for rooms or people": "חפשו אנשים או חדרים",
-    "Message preview": "צפו בהודעה",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -1400,7 +1388,8 @@
         "format": "פורמט",
         "messages": "הודעות",
         "size_limit": "הגבלת גודל",
-        "include_attachments": "כלול קבצים מצורפים"
+        "include_attachments": "כלול קבצים מצורפים",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "צרו חדר וידאו",
@@ -2515,7 +2504,8 @@
         "comment_label": "תגובה",
         "pro_type": "טיפ למקצוענים: אם אתה מפעיל באג, שלח <debugLogsLink> יומני איתור באגים </debugLogsLink> כדי לעזור לנו לאתר את הבעיה.",
         "existing_issue_link": "אנא צפה תחילה ב <existingIssuesLink> באגים קיימים ב- Github </existingIssuesLink>. אין התאמה? <newIssueLink> התחל חדש </newIssueLink>.",
-        "send_feedback_action": "שלח משוב"
+        "send_feedback_action": "שלח משוב",
+        "can_contact_label": "אתם יכולים לתקשר איתי אם יש לכם שאלות המשך"
     },
     "zxcvbn": {
         "suggestions": {
@@ -2839,7 +2829,13 @@
         "total_n_votes_voted": {
             "one": "מתבסס על %(count)s הצבעות",
             "other": "מתבסס על %(count)s הצבעות"
-        }
+        },
+        "end_message_no_votes": "הסקר הסתיים. לא היו הצבעות.",
+        "end_message": "הסקר הסתיים. תשובה הכי נפוצה: %(topAnswer)s",
+        "error_ending_title": "תקלה בסגירת הסקר",
+        "error_ending_description": "סליחה, הסקר לא הסתיים. נא נסו שוב.",
+        "end_title": "סיים סקר",
+        "end_description": "האם אתם בטוחים שברצונכם לסיים את הסקר הזה? זה יציג את התוצאות הסופיות של הסקר וימנע מאנשים את האפשרות להצביע."
     },
     "failed_load_async_component": "טעינת הדף נכשלה. אנא בדקו את החיבור שלכם לאינטרנט ונסו שנית.",
     "upload_failed_generic": "נכשלה העלאת הקובץ %(fileName)s.",
@@ -2897,7 +2893,8 @@
         "failed_copy": "שגיאה בהעתקה",
         "something_went_wrong": "משהו השתבש!",
         "update_power_level": "שינוי דרגת מנהל נכשל",
-        "unknown": "שגיאה לא ידועה"
+        "unknown": "שגיאה לא ידועה",
+        "dialog_description_default": "קרתה שגיאה."
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3126,5 +3123,10 @@
         "ongoing": "מסיר…",
         "confirm_button": "אשר הסרה",
         "reason_label": "סיבה (לא חובה)"
+    },
+    "forward": {
+        "send_label": "שלח",
+        "message_preview_heading": "צפו בהודעה",
+        "filter_placeholder": "חפשו אנשים או חדרים"
     }
 }

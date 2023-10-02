@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
-    "Send": "Send",
     "Warning!": "Åtvaring!",
     "and %(count)s others...": {
         "other": "og %(count)s andre...",
@@ -60,7 +59,6 @@
     "collapse": "Slå saman",
     "expand": "Utvid",
     "not specified": "Ikkje spesifisert",
-    "An error has occurred.": "Noko gjekk gale.",
     "Clear Storage and Sign Out": "Tøm Lager og Logg Ut",
     "Send Logs": "Send Loggar",
     "Unable to restore session": "Kunne ikkje henta øykta fram att",
@@ -109,12 +107,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Sambandsstatane (USA)",
     "United Kingdom": "Storbritannia",
-    "End Poll": "Avslutt røysting",
-    "Sorry, the poll did not end. Please try again.": "Røystinga vart ikkje avslutta. Prøv på nytt.",
-    "Failed to end poll": "Avslutning av røysting gjekk gale",
-    "The poll has ended. Top answer: %(topAnswer)s": "Røystinga er ferdig. Flest stemmer: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Røystinga er ferdig. Ingen røyster vart mottekne.",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert.",
     "Close sidebar": "Lat att sidestolpen",
     "Deactivate account": "Avliv brukarkontoen",
     "common": {
@@ -1178,7 +1170,13 @@
         "notes": "Resultatet blir synleg når du avsluttar røystinga",
         "unable_edit_title": "Røystinga kan ikkje endrast",
         "unable_edit_description": "Beklagar, du kan ikkje endra ei røysting som er i gang.",
-        "total_not_ended": "Resultata vil bli synlege når røystinga er ferdig"
+        "total_not_ended": "Resultata vil bli synlege når røystinga er ferdig",
+        "end_message_no_votes": "Røystinga er ferdig. Ingen røyster vart mottekne.",
+        "end_message": "Røystinga er ferdig. Flest stemmer: %(topAnswer)s",
+        "error_ending_title": "Avslutning av røysting gjekk gale",
+        "error_ending_description": "Røystinga vart ikkje avslutta. Prøv på nytt.",
+        "end_title": "Avslutt røysting",
+        "end_description": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert."
     },
     "failed_load_async_component": "Klarte ikkje lasta! Sjå på nettilkoplinga di og prøv igjen.",
     "upload_failed_generic": "Fila '%(fileName)s' vart ikkje lasta opp.",
@@ -1225,7 +1223,8 @@
         "failed_copy": "Noko gjekk gale med kopieringa",
         "something_went_wrong": "Noko gjekk gale!",
         "update_power_level": "Fekk ikkje til å endra tilgangsnivået",
-        "unknown": "Noko ukjend gjekk galt"
+        "unknown": "Noko ukjend gjekk galt",
+        "dialog_description_default": "Noko gjekk gale."
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s til",
@@ -1356,5 +1355,8 @@
     "redact": {
         "error": "Du kan ikkje sletta meldinga. (%(code)s)",
         "confirm_button": "Godkjenn Fjerning"
+    },
+    "forward": {
+        "send_label": "Send"
     }
 }

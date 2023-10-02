@@ -1,6 +1,5 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
-    "An error has occurred.": "Notikusi kļūda.",
     "Email address": "Epasta adrese",
     "Home": "Mājup",
     "Join Room": "Pievienoties istabai",
@@ -47,7 +46,6 @@
     },
     "AM": "AM",
     "PM": "PM",
-    "Send": "Sūtīt",
     "Unnamed room": "Nenosaukta istaba",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Ierobežots",
@@ -397,7 +395,6 @@
     "Andorra": "Andora",
     "Åland Islands": "Ālandu salas",
     "Cancel All": "Atcelt visu",
-    "Sending": "Sūta",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Link to most recent message": "Saite uz jaunāko ziņu",
     "Share Room": "Dalīties ar istabu",
@@ -405,16 +402,7 @@
     "Invited people will be able to read old messages.": "Uzaicinātie cilvēki varēs lasīt vecās ziņas.",
     "Or send invite link": "Vai nosūtiet uzaicinājuma saiti",
     "Some suggestions may be hidden for privacy.": "Daži ieteikumi var būt slēpti dēļ privātuma.",
-    "Search for rooms or people": "Meklēt istabas vai cilvēkus",
-    "Message preview": "Ziņas priekšskatījums",
     "Corn": "Kukurūza",
-    "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot.",
-    "Sorry, the poll did not end. Please try again.": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
-    "The poll has ended. No votes were cast.": "Aptauja ir beigusies. Balsis netika nodotas.",
-    "The poll has ended. Top answer: %(topAnswer)s": "Aptauja ir beigusies. Populārākā atbilde: %(topAnswer)s",
-    "Failed to end poll": "Neizdevās pārtraukt aptauju",
-    "End Poll": "Pārtraukt aptauju",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
     "An error occurred whilst sharing your live location, please try again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
     "An error occurred while stopping your live location, please try again": "Notika kļūda, pārtraucot reāllaika atrašanās vietas kopīgošanu, lūdzu, mēģiniet vēlreiz",
@@ -1750,7 +1738,8 @@
     },
     "feedback": {
         "sent": "Atsauksme nosūtīta",
-        "send_feedback_action": "Nosūtīt atsauksmi"
+        "send_feedback_action": "Nosūtīt atsauksmi",
+        "can_contact_label": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani"
     },
     "zxcvbn": {
         "suggestions": {
@@ -1943,7 +1932,13 @@
         "total_n_votes_voted": {
             "one": "Pamatojoties uz %(count)s balss",
             "other": "Pamatojoties uz %(count)s balsīm"
-        }
+        },
+        "end_message_no_votes": "Aptauja ir beigusies. Balsis netika nodotas.",
+        "end_message": "Aptauja ir beigusies. Populārākā atbilde: %(topAnswer)s",
+        "error_ending_title": "Neizdevās pārtraukt aptauju",
+        "error_ending_description": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
+        "end_title": "Pārtraukt aptauju",
+        "end_description": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot."
     },
     "failed_load_async_component": "Ielāde neizdevās! Pārbaudiet interneta savienojumu un mēģiniet vēlreiz.",
     "upload_failed_generic": "'%(fileName)s' augšupielāde neizdevās.",
@@ -1993,7 +1988,8 @@
         "failed_copy": "Nokopēt neizdevās",
         "something_went_wrong": "Kaut kas nogāja greizi!",
         "update_power_level": "Neizdevās nomainīt statusa līmeni",
-        "unknown": "Nezināma kļūda"
+        "unknown": "Nezināma kļūda",
+        "dialog_description_default": "Notikusi kļūda."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2146,5 +2142,11 @@
         "ongoing": "Dzēš…",
         "confirm_button": "Apstipriniet dzēšanu",
         "reason_label": "Iemesls (izvēles)"
+    },
+    "forward": {
+        "sending": "Sūta",
+        "send_label": "Sūtīt",
+        "message_preview_heading": "Ziņas priekšskatījums",
+        "filter_placeholder": "Meklēt istabas vai cilvēkus"
     }
 }

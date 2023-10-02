@@ -21,7 +21,6 @@
     "Dec": "Pro",
     "Create new room": "Vytvořit novou místnost",
     "unknown error code": "neznámý kód chyby",
-    "An error has occurred.": "Nastala chyba.",
     "Email address": "E-mailová adresa",
     "and %(count)s others...": {
         "other": "a %(count)s další...",
@@ -54,7 +53,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
     "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnovit si heslo a přijímat oznámení e-mailem.",
-    "Send": "Odeslat",
     "collapse": "sbalit",
     "expand": "rozbalit",
     "Sunday": "Neděle",
@@ -608,14 +606,8 @@
     "Reset everything": "Resetovat vše",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
-    "Sending": "Odesílání",
-    "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "Or send invite link": "Nebo pošlete pozvánku",
     "Some suggestions may be hidden for privacy.": "Některé návrhy mohou být z důvodu ochrany soukromí skryty.",
-    "Search for rooms or people": "Hledat místnosti nebo osoby",
-    "Message preview": "Náhled zprávy",
-    "Sent": "Odesláno",
-    "You don't have permission to do this": "K tomu nemáte povolení",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
     "Automatically invite members from this room to the new one": "Automaticky pozvat členy této místnosti do nové místnosti",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Odejít z některých místností",
     "Don't leave any rooms": "Neodcházet z žádné místnosti",
     "Leave all rooms": "Odejít ze všech místností",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
         "other": "%(count)s odpovědí"
@@ -662,12 +653,6 @@
     "Messaging": "Zprávy",
     "Spaces you know that contain this space": "Prostory, které znáte obsahující tento prostor",
     "Recently viewed": "Nedávno zobrazené",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Chcete ukončit toto hlasování? Zobrazí se konečné výsledky hlasování a lidé nebudou moci dále hlasovat.",
-    "End Poll": "Ukončit hlasování",
-    "Sorry, the poll did not end. Please try again.": "Omlouváme se, ale hlasování neskončilo. Zkuste to prosím znovu.",
-    "Failed to end poll": "Nepodařilo se ukončit hlasování",
-    "The poll has ended. Top answer: %(topAnswer)s": "Hlasování skončilo. Nejčastější odpověď: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Hlasování skončilo. Nikdo nehlasoval.",
     "Link to room": "Odkaz na místnost",
     "Recent searches": "Nedávná vyhledávání",
     "To search messages, look for this icon at the top of a room <icon/>": "Pro vyhledávání zpráv hledejte tuto ikonu v horní části místnosti <icon/>",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "Při ukončování sdílení polohy živě došlo k chybě",
     "%(members)s and %(last)s": "%(members)s a %(last)s",
     "%(members)s and more": "%(members)s a více",
-    "Open room": "Otevřít místnost",
     "Cameras": "Kamery",
     "Output devices": "Výstupní zařízení",
     "Input devices": "Vstupní zařízení",
@@ -1999,7 +1983,8 @@
         "format": "Formát",
         "messages": "Zprávy",
         "size_limit": "Omezení velikosti",
-        "include_attachments": "Zahrnout přílohy"
+        "include_attachments": "Zahrnout přílohy",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Vytvořit video místnost",
@@ -3469,7 +3454,8 @@
         "may_contact_label": "Můžete mě kontaktovat, pokud budete chtít doplnit informace nebo mě nechat vyzkoušet připravované návrhy",
         "pro_type": "TIP pro profíky: Pokud nahlásíte chybu, odešlete prosím <debugLogsLink>ladicí protokoly</debugLogsLink>, které nám pomohou problém vypátrat.",
         "existing_issue_link": "Nejříve si prosím prohlédněte <existingIssuesLink>existující chyby na Githubu</existingIssuesLink>. Žádná shoda? <newIssueLink>Nahlašte novou chybu</newIssueLink>.",
-        "send_feedback_action": "Odeslat zpětnou vazbu"
+        "send_feedback_action": "Odeslat zpětnou vazbu",
+        "can_contact_label": "V případě dalších dotazů se na mě můžete obrátit"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3978,7 +3964,13 @@
         "total_n_votes_voted": {
             "one": "Na základě %(count)s hlasu",
             "other": "Na základě %(count)s hlasů"
-        }
+        },
+        "end_message_no_votes": "Hlasování skončilo. Nikdo nehlasoval.",
+        "end_message": "Hlasování skončilo. Nejčastější odpověď: %(topAnswer)s",
+        "error_ending_title": "Nepodařilo se ukončit hlasování",
+        "error_ending_description": "Omlouváme se, ale hlasování neskončilo. Zkuste to prosím znovu.",
+        "end_title": "Ukončit hlasování",
+        "end_description": "Chcete ukončit toto hlasování? Zobrazí se konečné výsledky hlasování a lidé nebudou moci dále hlasovat."
     },
     "failed_load_async_component": "Stránku se nepovedlo načíst! Zkontrolujte prosím své připojení k internetu a zkuste to znovu.",
     "upload_failed_generic": "Soubor '%(fileName)s' se nepodařilo nahrát.",
@@ -4063,7 +4055,8 @@
         "something_went_wrong": "Něco se nepodařilo!",
         "download_media": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
         "update_power_level": "Nepodařilo se změnit úroveň oprávnění",
-        "unknown": "Neznámá chyba"
+        "unknown": "Neznámá chyba",
+        "dialog_description_default": "Nastala chyba."
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4370,5 +4363,14 @@
         "confirm_description_state": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
         "confirm_button": "Potvrdit odstranění",
         "reason_label": "Důvod (volitelné)"
+    },
+    "forward": {
+        "no_perms_title": "K tomu nemáte povolení",
+        "sending": "Odesílání",
+        "sent": "Odesláno",
+        "open_room": "Otevřít místnost",
+        "send_label": "Odeslat",
+        "message_preview_heading": "Náhled zprávy",
+        "filter_placeholder": "Hledat místnosti nebo osoby"
     }
 }

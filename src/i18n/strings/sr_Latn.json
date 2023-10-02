@@ -1,5 +1,4 @@
 {
-    "Send": "Pošalji",
     "Sun": "Ned",
     "Mon": "Pon",
     "Tue": "Uto",
@@ -149,5 +148,8 @@
     },
     "notifications": {
         "default": "Podrazumevano"
+    },
+    "forward": {
+        "send_label": "Pošalji"
     }
 }

@@ -2016,7 +2016,8 @@
         "failed_copy": "Failed to copy",
         "update_power_level": "Failed to change power level",
         "unknown": "Unknown error",
-        "something_went_wrong": "Something went wrong!"
+        "something_went_wrong": "Something went wrong!",
+        "dialog_description_default": "An error has occurred."
     },
     "items_and_n_others": {
         "other": "<Items/> and %(count)s others",
@@ -2378,6 +2379,7 @@
         "size_limit_min_max": "Size can only be a number between %(min)s MB and %(max)s MB",
         "num_messages_min_max": "Number of messages can only be a number between %(min)s and %(max)s",
         "num_messages": "Number of messages",
+        "size_limit_postfix": "MB",
         "cancelled": "Export Cancelled",
         "cancelled_detail": "The export was cancelled successfully",
         "successful": "Export Successful",
@@ -3453,7 +3455,13 @@
         "options_placeholder": "Write an option",
         "options_add_button": "Add option",
         "disclosed_notes": "Voters see results as soon as they have voted",
-        "notes": "Results are only revealed when you end the poll"
+        "notes": "Results are only revealed when you end the poll",
+        "end_message_no_votes": "The poll has ended. No votes were cast.",
+        "end_message": "The poll has ended. Top answer: %(topAnswer)s",
+        "error_ending_title": "Failed to end poll",
+        "error_ending_description": "Sorry, the poll did not end. Please try again.",
+        "end_title": "End Poll",
+        "end_description": "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote."
     },
     "edited": "edited",
     "toggle event": "toggle event",
@@ -3598,32 +3606,25 @@
         "confirm_button": "Confirm Removal",
         "reason_label": "Reason (optional)"
     },
-    "The poll has ended. No votes were cast.": "The poll has ended. No votes were cast.",
-    "The poll has ended. Top answer: %(topAnswer)s": "The poll has ended. Top answer: %(topAnswer)s",
-    "Failed to end poll": "Failed to end poll",
-    "Sorry, the poll did not end. Please try again.": "Sorry, the poll did not end. Please try again.",
-    "End Poll": "End Poll",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.",
-    "An error has occurred.": "An error has occurred.",
-    "MB": "MB",
     "feedback": {
-        "sent": "Feedback sent",
+        "sent": "Feedback sent! Thanks, we appreciate it!",
         "comment_label": "Comment",
         "platform_username": "Your platform and username will be noted to help us use your feedback as much as we can.",
         "may_contact_label": "You may contact me if you want to follow up or to let me test out upcoming ideas",
         "pro_type": "PRO TIP: If you start a bug, please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
         "existing_issue_link": "Please view <existingIssuesLink>existing bugs on Github</existingIssuesLink> first. No match? <newIssueLink>Start a new one</newIssueLink>.",
-        "send_feedback_action": "Send feedback"
+        "send_feedback_action": "Send feedback",
+        "can_contact_label": "You may contact me if you have any follow up questions"
     },
-    "You don't have permission to do this": "You don't have permission to do this",
-    "Sending": "Sending",
-    "Sent": "Sent",
-    "Open room": "Open room",
-    "Send": "Send",
-    "Message preview": "Message preview",
-    "Search for rooms or people": "Search for rooms or people",
-    "Feedback sent! Thanks, we appreciate it!": "Feedback sent! Thanks, we appreciate it!",
-    "You may contact me if you have any follow up questions": "You may contact me if you have any follow up questions",
+    "forward": {
+        "no_perms_title": "You don't have permission to do this",
+        "sending": "Sending",
+        "sent": "Sent",
+        "open_room": "Open room",
+        "send_label": "Send",
+        "message_preview_heading": "Message preview",
+        "filter_placeholder": "Search for rooms or people"
+    },
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.",

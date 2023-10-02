@@ -50,7 +50,6 @@
     "Yesterday": "Iḍelli",
     "edited": "yettwaẓreg",
     "collapse": "fneẓ",
-    "Send": "Azen",
     "Session name": "Isem n tɣimit",
     "Email address": "Tansa n yimayl",
     "Upload files": "Sali-d ifuyla",
@@ -206,7 +205,6 @@
     "Find others by phone or email": "Af-d wiyaḍ s tiliɣri neɣ s yimayl",
     "Be found by phone or email": "Ad d-yettwaf s tiliɣri neɣ s yimayl",
     "Upload files (%(current)s of %(total)s)": "Sali-d ifuyla (%(current)s ɣef %(total)s)",
-    "An error has occurred.": "Tella-d tuccḍa.",
     "Integrations are disabled": "Imsidaf ttwasensen",
     "Integrations not allowed": "Imsidaf ur ttusirgen ara",
     "a new master key signature": "tasarut tusligt tagejdant tamaynut",
@@ -2136,7 +2134,8 @@
         "failed_copy": "Anɣal ur yeddi ara",
         "something_went_wrong": "Yella wayen ur nteddu ara akken iwata!",
         "update_power_level": "Asnifel n uswir afellay ur yeddi ara",
-        "unknown": "Tuccḍa tarussint"
+        "unknown": "Tuccḍa tarussint",
+        "dialog_description_default": "Tella-d tuccḍa."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2302,5 +2301,8 @@
         "error": "Ur tezmireḍ ara ad tekkseḍ izen-a. (%(code)s)",
         "ongoing": "Tukksa…",
         "confirm_button": "Sentem tukksa"
+    },
+    "forward": {
+        "send_label": "Azen"
     }
 }

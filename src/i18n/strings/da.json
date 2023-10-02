@@ -36,7 +36,6 @@
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
-    "Send": "Send",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Wednesday": "Onsdag",
@@ -887,5 +886,8 @@
     },
     "redact": {
         "error": "Du kan ikke slette denne besked. (%(code)s)"
+    },
+    "forward": {
+        "send_label": "Send"
     }
 }

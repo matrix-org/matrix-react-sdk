@@ -4,7 +4,6 @@
         "other": "en %(count)s anderen…",
         "one": "en één andere…"
     },
-    "An error has occurred.": "Er is een fout opgetreden.",
     "Create new room": "Nieuwe kamer aanmaken",
     "unknown error code": "onbekende foutcode",
     "Moderator": "Moderator",
@@ -49,7 +48,6 @@
     "PM": "PM",
     "Delete Widget": "Widget verwijderen",
     "Restricted": "Beperkte toegang",
-    "Send": "Versturen",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -608,14 +606,8 @@
     "Reset everything": "Alles opnieuw instellen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
-    "Sending": "Wordt verstuurd",
-    "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "Or send invite link": "Of verstuur je uitnodigingslink",
     "Some suggestions may be hidden for privacy.": "Sommige suggesties kunnen om privacyredenen verborgen zijn.",
-    "Search for rooms or people": "Zoek naar kamers of personen",
-    "Message preview": "Voorbeeld van bericht",
-    "Sent": "Verstuurd",
-    "You don't have permission to do this": "Je hebt geen rechten om dit te doen",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "User Directory": "Personengids",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Sommige kamers verlaten",
     "Leave all rooms": "Alle kamers verlaten",
     "Don't leave any rooms": "Geen kamers verlaten",
-    "MB": "MB",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
         "one": "%(count)s reactie",
@@ -662,12 +653,6 @@
     "Messaging": "Messaging",
     "Spaces you know that contain this space": "Spaces die je kent met deze Space",
     "Recently viewed": "Recent bekeken",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Weet je zeker dat je de poll wil sluiten? Dit zal zichtbaar zijn in de einduitslag van de poll en personen kunnen dan niet langer stemmen.",
-    "End Poll": "Poll sluiten",
-    "Sorry, the poll did not end. Please try again.": "Helaas, de poll is niet gesloten. Probeer het opnieuw.",
-    "Failed to end poll": "Poll sluiten is mislukt",
-    "The poll has ended. Top answer: %(topAnswer)s": "De poll is gesloten. Meest gestemd: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "De poll is gesloten. Er kan niet meer worden gestemd.",
     "Open in OpenStreetMap": "In OpenStreetMap openen",
     "Recent searches": "Recente zoekopdrachten",
     "To search messages, look for this icon at the top of a room <icon/>": "Om berichten te zoeken, zoek naar dit icoon bovenaan een kamer <icon/>",
@@ -706,7 +691,6 @@
     "Cameras": "Camera's",
     "Output devices": "Uitvoerapparaten",
     "Input devices": "Invoer apparaten",
-    "Open room": "Open kamer",
     "%(members)s and %(last)s": "%(members)s en %(last)s",
     "%(members)s and more": "%(members)s en meer",
     "Unread email icon": "Ongelezen e-mailpictogram",
@@ -1800,7 +1784,8 @@
         "format": "Formaat",
         "messages": "Berichten",
         "size_limit": "Bestandsgrootte",
-        "include_attachments": "Bijlages toevoegen"
+        "include_attachments": "Bijlages toevoegen",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Creëer een videokamer",
@@ -3159,7 +3144,8 @@
         "may_contact_label": "Je kan contact met mij opnemen als je updates wil van of wilt deelnemen aan nieuwe ideeën",
         "pro_type": "PRO TIP: Als je een nieuwe bug maakt, stuur ons dan je <debugLogsLink>foutenlogboek</debugLogsLink> om ons te helpen het probleem op te sporen.",
         "existing_issue_link": "Bekijk eerst de <existingIssuesLink>bestaande bugs op GitHub</existingIssuesLink>. <newIssueLink>Maak een nieuwe aan</newIssueLink> wanneer je jouw bugs niet hebt gevonden.",
-        "send_feedback_action": "Feedback versturen"
+        "send_feedback_action": "Feedback versturen",
+        "can_contact_label": "Je mag contact met mij opnemen als je nog vervolg vragen heeft"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3613,7 +3599,13 @@
         "total_n_votes_voted": {
             "one": "Gebaseerd op %(count)s stem",
             "other": "Gebaseerd op %(count)s stemmen"
-        }
+        },
+        "end_message_no_votes": "De poll is gesloten. Er kan niet meer worden gestemd.",
+        "end_message": "De poll is gesloten. Meest gestemd: %(topAnswer)s",
+        "error_ending_title": "Poll sluiten is mislukt",
+        "error_ending_description": "Helaas, de poll is niet gesloten. Probeer het opnieuw.",
+        "end_title": "Poll sluiten",
+        "end_description": "Weet je zeker dat je de poll wil sluiten? Dit zal zichtbaar zijn in de einduitslag van de poll en personen kunnen dan niet langer stemmen."
     },
     "failed_load_async_component": "Laden mislukt! Controleer je netwerktoegang en probeer het nogmaals.",
     "upload_failed_generic": "Het bestand ‘%(fileName)s’ kon niet geüpload worden.",
@@ -3686,7 +3678,8 @@
         "failed_copy": "Kopiëren mislukt",
         "something_went_wrong": "Er is iets misgegaan!",
         "update_power_level": "Wijzigen van machtsniveau is mislukt",
-        "unknown": "Onbekende fout"
+        "unknown": "Onbekende fout",
+        "dialog_description_default": "Er is een fout opgetreden."
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3956,5 +3949,14 @@
         "ongoing": "Bezig met verwijderen…",
         "confirm_button": "Verwijdering bevestigen",
         "reason_label": "Reden (niet vereist)"
+    },
+    "forward": {
+        "no_perms_title": "Je hebt geen rechten om dit te doen",
+        "sending": "Wordt verstuurd",
+        "sent": "Verstuurd",
+        "open_room": "Open kamer",
+        "send_label": "Versturen",
+        "message_preview_heading": "Voorbeeld van bericht",
+        "filter_placeholder": "Zoek naar kamers of personen"
     }
 }

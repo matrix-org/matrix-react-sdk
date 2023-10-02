@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
-    "Send": "Sendi",
     "and %(count)s others...": {
         "other": "kaj %(count)s aliaj…",
         "one": "kaj unu alia…"
@@ -50,7 +49,6 @@
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
-    "An error has occurred.": "Okazis eraro.",
     "Unable to restore session": "Salutaĵo ne rehaveblas",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se vi antaŭe uzis pli novan version de %(brand)s, via salutaĵo eble ne akordos kun ĉi tiu versio. Fermu ĉi tiun fenestron kaj revenu al la pli nova versio.",
     "Verification Pending": "Atendante kontrolon",
@@ -271,7 +269,6 @@
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
     "Ok": "Bone",
-    "Message preview": "Antaŭrigardo al mesaĝo",
     "Wrong file type": "Neĝusta dosiertipo",
     "Looks good!": "Ŝajnas bona!",
     "Security Phrase": "Sekureca frazo",
@@ -599,10 +596,8 @@
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
     },
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
-    "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
-    "Sending": "Sendante",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se vi restarigos ĉion, vi rekomencos sen fidataj salutaĵoj, uzantoj, kaj eble ne povos vidi antaŭajn mesaĝojn.",
     "Only do this if you have no other device to complete verification with.": "Faru tion ĉi nur se vi ne havas alian aparaton, per kiu vi kontrolus ceterajn.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Ĉu vi forgesis aŭ perdis ĉiujn manierojn de rehavo? <a>Restarigu ĉion</a>",
@@ -627,21 +622,12 @@
     "User Directory": "Katologo de uzantoj",
     "Or send invite link": "Aŭ sendu invitan ligilon",
     "Some suggestions may be hidden for privacy.": "Iuj proponoj povas esti kaŝitaj pro privateco.",
-    "Search for rooms or people": "Serĉi ĉambrojn aŭ personojn",
-    "Sent": "Sendite",
-    "You don't have permission to do this": "Vi ne rajtas fari tion",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Would you like to leave the rooms in this space?": "Ĉu vi volus foriri de la ĉambroj en ĉi tiu aro?",
     "You are about to leave <spaceName/>.": "Vi foriros de <spaceName/>.",
     "Leave some rooms": "Foriri de iuj ĉambroj",
     "Leave all rooms": "Foriri de ĉiuj ĉambroj",
     "Don't leave any rooms": "Foriru de neniuj ĉambroj",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ĉu vi certas, ke vi volas fini ĉi tiun balotenketon? Ĉi tio montros la finajn rezultojn de la balotenketo kaj malhelpos personojn povi voĉdoni.",
-    "End Poll": "Finu Balotenketon",
-    "Sorry, the poll did not end. Please try again.": "Pardonu, la balotenketo ne finiĝis. Bonvolu reprovi.",
-    "Failed to end poll": "Malsukcesis fini balotenketon",
-    "The poll has ended. Top answer: %(topAnswer)s": "La balotado finiĝis. Plej alta respondo: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "La balotenketo finiĝis. Neniuj voĉoj estis ĵetitaj.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
         "other": "%(spaceName)s kaj %(count)s aliaj"
@@ -2658,7 +2644,8 @@
         "platform_username": "Via platformo kaj uzantonomo helpos al ni pli bone uzi viajn prikomentojn.",
         "pro_type": "KONSILO: Kiam vi raportas eraron, bonvolu kunsendi <debugLogsLink>erarserĉan protokolon</debugLogsLink>, por ke ni povu pli facile trovi la problemon.",
         "existing_issue_link": "Bonvolu unue vidi <existingIssuesLink>jamajn erarojn en GitHub</existingIssuesLink>. Ĉu neniu akordas la vian? <newIssueLink>Raportu novan</newIssueLink>.",
-        "send_feedback_action": "Prikomenti"
+        "send_feedback_action": "Prikomenti",
+        "can_contact_label": "Vi povas min kontakti okaze de pliaj demandoj"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3022,7 +3009,13 @@
         "notes": "Rezultoj estas malkaŝitaj nur kiam vi finas la balotenketo",
         "unable_edit_title": "Ne povas redakti balotenketon",
         "unable_edit_description": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
-        "total_not_ended": "Rezultoj estos videblaj kiam la balotenketo finiĝos"
+        "total_not_ended": "Rezultoj estos videblaj kiam la balotenketo finiĝos",
+        "end_message_no_votes": "La balotenketo finiĝis. Neniuj voĉoj estis ĵetitaj.",
+        "end_message": "La balotado finiĝis. Plej alta respondo: %(topAnswer)s",
+        "error_ending_title": "Malsukcesis fini balotenketon",
+        "error_ending_description": "Pardonu, la balotenketo ne finiĝis. Bonvolu reprovi.",
+        "end_title": "Finu Balotenketon",
+        "end_description": "Ĉu vi certas, ke vi volas fini ĉi tiun balotenketon? Ĉi tio montros la finajn rezultojn de la balotenketo kaj malhelpos personojn povi voĉdoni."
     },
     "failed_load_async_component": "Ne eblas enlegi! Kontrolu vian retan konekton kaj reprovu.",
     "upload_failed_generic": "Malsukcesis alŝuti dosieron « %(fileName)s ».",
@@ -3099,7 +3092,8 @@
         "failed_copy": "Malsukcesis kopii",
         "something_went_wrong": "Io misokazis!",
         "update_power_level": "Malsukcesis ŝanĝi povnivelon",
-        "unknown": "Nekonata eraro"
+        "unknown": "Nekonata eraro",
+        "dialog_description_default": "Okazis eraro."
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3316,5 +3310,13 @@
         "ongoing": "Forigante…",
         "confirm_button": "Konfirmi forigon",
         "reason_label": "Kialo (malnepra)"
+    },
+    "forward": {
+        "no_perms_title": "Vi ne rajtas fari tion",
+        "sending": "Sendante",
+        "sent": "Sendite",
+        "send_label": "Sendi",
+        "message_preview_heading": "Antaŭrigardo al mesaĝo",
+        "filter_placeholder": "Serĉi ĉambrojn aŭ personojn"
     }
 }

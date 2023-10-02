@@ -6,7 +6,6 @@
         "other": "and %(count)s others...",
         "one": "and one other..."
     },
-    "An error has occurred.": "An error has occurred.",
     "Email address": "Email address",
     "Join Room": "Join Room",
     "Moderator": "Moderator",
@@ -55,7 +54,6 @@
     "Saturday": "Saturday",
     "Monday": "Monday",
     "Wednesday": "Wednesday",
-    "Send": "Send",
     "Thursday": "Thursday",
     "Yesterday": "Yesterday",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -590,7 +588,8 @@
         "tls": "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.",
         "something_went_wrong": "Something went wrong!",
         "update_power_level": "Failed to change power level",
-        "unknown": "Unknown error"
+        "unknown": "Unknown error",
+        "dialog_description_default": "An error has occurred."
     },
     "notifications": {
         "enable_prompt_toast_title": "Notifications",
@@ -632,5 +631,8 @@
     "redact": {
         "error": "You cannot delete this message. (%(code)s)",
         "confirm_button": "Confirm Removal"
+    },
+    "forward": {
+        "send_label": "Send"
     }
 }

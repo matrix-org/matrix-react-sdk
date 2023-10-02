@@ -30,7 +30,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Restricted": "Limitato",
     "Moderator": "Moderatore",
-    "Send": "Invia",
     "and %(count)s others...": {
         "other": "e altri %(count)s ...",
         "one": "e un altro..."
@@ -51,7 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
     "expand": "espandi",
-    "An error has occurred.": "Si è verificato un errore.",
     "Unable to restore session": "Impossibile ripristinare la sessione",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se hai usato precedentemente una versione più recente di %(brand)s, la tua sessione potrebbe essere incompatibile con questa versione. Chiudi questa finestra e torna alla versione più recente.",
     "Verification Pending": "In attesa di verifica",
@@ -272,7 +270,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Il tuo homeserver ha superato uno dei suoi limiti di risorse.",
     "Ok": "Ok",
     "Switch theme": "Cambia tema",
-    "Message preview": "Anteprima messaggio",
     "Looks good!": "Sembra giusta!",
     "Wrong file type": "Tipo di file errato",
     "Security Phrase": "Frase di sicurezza",
@@ -609,13 +606,8 @@
     "Reset everything": "Reimposta tutto",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hai dimenticato o perso tutti i metodi di recupero? <a>Reimposta tutto</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
-    "Sending": "Invio in corso",
-    "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "Or send invite link": "O manda un collegamento di invito",
     "Some suggestions may be hidden for privacy.": "Alcuni suggerimenti potrebbero essere nascosti per privacy.",
-    "Search for rooms or people": "Cerca stanze o persone",
-    "Sent": "Inviato",
-    "You don't have permission to do this": "Non hai il permesso per farlo",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
     "Automatically invite members from this room to the new one": "Invita automaticamente i membri da questa stanza a quella nuova",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Esci da alcune stanze",
     "Leave all rooms": "Esci da tutte le stanze",
     "Don't leave any rooms": "Non uscire da alcuna stanza",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s risposta",
         "other": "%(count)s risposte"
@@ -662,12 +653,6 @@
     "Moderation": "Moderazione",
     "Spaces you know that contain this space": "Spazi di cui sai che contengono questo spazio",
     "Recently viewed": "Visti di recente",
-    "End Poll": "Termina sondaggio",
-    "Sorry, the poll did not end. Please try again.": "Spiacenti, il sondaggio non è terminato. Riprova.",
-    "Failed to end poll": "Chiusura del sondaggio fallita",
-    "The poll has ended. Top answer: %(topAnswer)s": "Il sondaggio è terminato. Risposta più scelta: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Il sondaggio è terminato. Nessun voto inviato.",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vuoi davvero terminare questo sondaggio? Verranno mostrati i risultati finali e le persone non potranno più votare.",
     "Recent searches": "Ricerche recenti",
     "To search messages, look for this icon at the top of a room <icon/>": "Per cercare messaggi, trova questa icona in cima ad una stanza <icon/>",
     "Other searches": "Altre ricerche",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "Si è verificato un errore fermando la tua posizione in tempo reale",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e altri",
-    "Open room": "Apri stanza",
     "Cameras": "Fotocamere",
     "Input devices": "Dispositivi di input",
     "Output devices": "Dispositivi di output",
@@ -1999,7 +1983,8 @@
         "format": "Formato",
         "messages": "Messaggi",
         "size_limit": "Limite dimensione",
-        "include_attachments": "Includi allegati"
+        "include_attachments": "Includi allegati",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Crea una stanza video",
@@ -3469,7 +3454,8 @@
         "may_contact_label": "Potete contattarmi se volete rispondermi o per farmi provare nuove idee in arrivo",
         "pro_type": "CONSIGLIO: se segnali un errore, invia <debugLogsLink>i log di debug</debugLogsLink> per aiutarci ad individuare il problema.",
         "existing_issue_link": "Prima controlla <existingIssuesLink>gli errori esistenti su Github</existingIssuesLink>. Non l'hai trovato? <newIssueLink>Apri una segnalazione</newIssueLink>.",
-        "send_feedback_action": "Invia feedback"
+        "send_feedback_action": "Invia feedback",
+        "can_contact_label": "Potete contattarmi se avete altre domande"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3978,7 +3964,13 @@
         "total_n_votes_voted": {
             "one": "Basato su %(count)s voto",
             "other": "Basato su %(count)s voti"
-        }
+        },
+        "end_message_no_votes": "Il sondaggio è terminato. Nessun voto inviato.",
+        "end_message": "Il sondaggio è terminato. Risposta più scelta: %(topAnswer)s",
+        "error_ending_title": "Chiusura del sondaggio fallita",
+        "error_ending_description": "Spiacenti, il sondaggio non è terminato. Riprova.",
+        "end_title": "Termina sondaggio",
+        "end_description": "Vuoi davvero terminare questo sondaggio? Verranno mostrati i risultati finali e le persone non potranno più votare."
     },
     "failed_load_async_component": "Impossibile caricare! Controlla la tua connessione di rete e riprova.",
     "upload_failed_generic": "Invio del file '%(fileName)s' fallito.",
@@ -4063,7 +4055,8 @@
         "something_went_wrong": "Qualcosa è andato storto!",
         "download_media": "Scaricamento della fonte fallito, nessun url trovato",
         "update_power_level": "Cambio di livello poteri fallito",
-        "unknown": "Errore sconosciuto"
+        "unknown": "Errore sconosciuto",
+        "dialog_description_default": "Si è verificato un errore."
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4370,5 +4363,14 @@
         "confirm_description_state": "Nota che la rimozione delle modifiche della stanza come questa può annullare la modifica.",
         "confirm_button": "Conferma la rimozione",
         "reason_label": "Motivo (facoltativo)"
+    },
+    "forward": {
+        "no_perms_title": "Non hai il permesso per farlo",
+        "sending": "Invio in corso",
+        "sent": "Inviato",
+        "open_room": "Apri stanza",
+        "send_label": "Invia",
+        "message_preview_heading": "Anteprima messaggio",
+        "filter_placeholder": "Cerca stanze o persone"
     }
 }

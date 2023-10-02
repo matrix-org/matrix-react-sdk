@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "वर्जित",
     "Moderator": "मध्यस्थ",
-    "Send": "भेजें",
     "Warning!": "चेतावनी!",
     "and %(count)s others...": {
         "other": "और %(count)s अन्य ...",
@@ -769,5 +768,8 @@
         "error_ban_user": "उपयोगकर्ता को प्रतिबंधित करने में विफल",
         "error_mute_user": "उपयोगकर्ता को म्यूट करने में विफल",
         "promote_warning": "आप इस परिवर्तन को पूर्ववत नहीं कर पाएंगे क्योंकि आप उपयोगकर्ता को अपने आप से समान शक्ति स्तर रखने के लिए प्रोत्साहित कर रहे हैं।"
+    },
+    "forward": {
+        "send_label": "भेजें"
     }
 }

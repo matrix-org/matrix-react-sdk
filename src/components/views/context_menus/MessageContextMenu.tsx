@@ -518,7 +518,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             endPollButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconEndPoll"
-                    label={_t("End Poll")}
+                    label={_t("poll|end_title")}
                     onClick={this.onEndPollClick}
                 />
             );

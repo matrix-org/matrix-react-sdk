@@ -27,7 +27,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Takmarkað",
     "Moderator": "Umsjónarmaður",
-    "Send": "Senda",
     "Unnamed room": "Nafnlaus spjallrás",
     "Join Room": "Taka þátt í spjallrás",
     "unknown error code": "óþekktur villukóði",
@@ -46,7 +45,6 @@
     "collapse": "fella saman",
     "expand": "fletta út",
     "Filter results": "Sía niðurstöður",
-    "An error has occurred.": "Villa kom upp.",
     "Send Logs": "Senda atvikaskrár",
     "Verification Pending": "Sannvottun í bið",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
@@ -381,10 +379,6 @@
     "Upload completed": "Innsendingu er lokið",
     "User Directory": "Mappa notanda",
     "Transfer": "Flutningur",
-    "Message preview": "Forskoðun skilaboða",
-    "Sent": "Sent",
-    "Sending": "Sendi",
-    "MB": "MB",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -474,7 +468,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Veldu hvaða svæði hafa aðgang að þessari spjallrás. Ef svæði er valið geta meðlimir þess fundið og tekið þátt í spjallrásinni<RoomName/>.",
     "Failed to find the following users": "Mistókst að finna eftirfarandi notendur",
     "We couldn't create your DM.": "Það tókst ekki að útbúa beinu skilaboðin þin.",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ertu viss um að þú viljir ljúka þessari könnun? Þetta mun birta lokaniðurstöður könnunarinnar og koma í veg fyrir að fólk geti kosið.",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
@@ -507,12 +500,6 @@
     "Invite to %(roomName)s": "Bjóða í %(roomName)s",
     "Recent Conversations": "Nýleg samtöl",
     "Invite by email": "Bjóða með tölvupósti",
-    "Search for rooms or people": "Leita að spjallrásum eða fólki",
-    "You don't have permission to do this": "Þú hefur ekki heimildir til að gera þetta",
-    "End Poll": "Ljúka könnun",
-    "Sorry, the poll did not end. Please try again.": "Því miður, könnuninni lauk ekki. Prófaðu aftur.",
-    "Failed to end poll": "Mistókst að ljúka könnun",
-    "The poll has ended. No votes were cast.": "Könnuninni er lokið. Engin atkvæði voru greidd.",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
@@ -640,7 +627,6 @@
     "Show spaces": "Sýna svæði",
     "Show rooms": "Sýna spjallrásir",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. <default>Notaðu sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s(</default> eða sýslaðu með þetta í <settings>stillingunum</settings>.",
-    "Open room": "Opin spjallrás",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
     "Live location error": "Villa í rauntímastaðsetningu",
@@ -652,7 +638,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í <settings>stillingunum</settings>.",
     "Something went wrong trying to invite the users.": "Eitthvað fór úrskeiðis við að bjóða notendunum.",
-    "The poll has ended. Top answer: %(topAnswer)s": "Könnuninni er lokið. Efsta svarið: %(topAnswer)s",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
     "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
     "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
@@ -1714,7 +1699,8 @@
         "format": "Snið",
         "messages": "Skilaboð",
         "size_limit": "Stærðarmörk",
-        "include_attachments": "Hafa með viðhengi"
+        "include_attachments": "Hafa með viðhengi",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Búa til myndspjallrás",
@@ -3417,7 +3403,13 @@
         "total_n_votes_voted": {
             "one": "Byggt á %(count)s atkvæði",
             "other": "Byggt á %(count)s atkvæðum"
-        }
+        },
+        "end_message_no_votes": "Könnuninni er lokið. Engin atkvæði voru greidd.",
+        "end_message": "Könnuninni er lokið. Efsta svarið: %(topAnswer)s",
+        "error_ending_title": "Mistókst að ljúka könnun",
+        "error_ending_description": "Því miður, könnuninni lauk ekki. Prófaðu aftur.",
+        "end_title": "Ljúka könnun",
+        "end_description": "Ertu viss um að þú viljir ljúka þessari könnun? Þetta mun birta lokaniðurstöður könnunarinnar og koma í veg fyrir að fólk geti kosið."
     },
     "failed_load_async_component": "Mistókst að hlaða inn. Athugaðu nettenginguna þína og reyndu aftur.",
     "upload_failed_generic": "Skrána '%(fileName)s' mistókst að senda inn.",
@@ -3490,7 +3482,8 @@
         "failed_copy": "Mistókst að afrita",
         "something_went_wrong": "Eitthvað fór úrskeiðis!",
         "update_power_level": "Mistókst að breyta valdastigi",
-        "unknown": "Óþekkt villa"
+        "unknown": "Óþekkt villa",
+        "dialog_description_default": "Villa kom upp."
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3745,5 +3738,14 @@
         "ongoing": "Er að fjarlægja…",
         "confirm_button": "Staðfesta fjarlægingu",
         "reason_label": "Ástæða (valkvætt)"
+    },
+    "forward": {
+        "no_perms_title": "Þú hefur ekki heimildir til að gera þetta",
+        "sending": "Sendi",
+        "sent": "Sent",
+        "open_room": "Opin spjallrás",
+        "send_label": "Senda",
+        "message_preview_heading": "Forskoðun skilaboða",
+        "filter_placeholder": "Leita að spjallrásum eða fólki"
     }
 }

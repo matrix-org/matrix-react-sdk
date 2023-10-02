@@ -4,7 +4,6 @@
         "other": "och %(count)s andra…",
         "one": "och en annan…"
     },
-    "An error has occurred.": "Ett fel har inträffat.",
     "Email address": "E-postadress",
     "Home": "Hem",
     "Join Room": "Gå med i rum",
@@ -45,7 +44,6 @@
     "Saturday": "lördag",
     "Monday": "måndag",
     "Wednesday": "onsdag",
-    "Send": "Skicka",
     "Thursday": "torsdag",
     "Yesterday": "igår",
     "Restricted": "Begränsad",
@@ -608,14 +606,8 @@
     "Reset everything": "Återställ allt",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
-    "Sending": "Skickar",
-    "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
-    "Search for rooms or people": "Sök efter rum eller personer",
-    "Message preview": "Meddelandeförhandsgranskning",
-    "Sent": "Skickat",
-    "You don't have permission to do this": "Du har inte behörighet att göra detta",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
     "Automatically invite members from this room to the new one": "Bjud automatiskt in medlemmar från det här rummet till det nya",
@@ -642,7 +634,6 @@
         "other": "%(count)s svar"
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Ange din säkerhetsfras eller <button>använd din säkerhetsnyckel</button> för att fortsätta.",
-    "MB": "MB",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
     "Thread options": "Trådalternativ",
     "If you can't see who you're looking for, send them your invite link below.": "Om du inte ser den du letar efter, skicka din inbjudningslänk nedan till denne.",
@@ -665,12 +656,6 @@
     "Sections to show": "Sektioner att visa",
     "Link to room": "Länk till rum",
     "Spaces you know that contain this space": "Utrymmen du känner till som innehåller det här utrymmet",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Är du säker på att du vill avsluta den hör omröstningen? Detta kommer att visa det slutgiltiga resultatet och stoppa folk från att rösta.",
-    "End Poll": "Avsluta omröstning",
-    "Sorry, the poll did not end. Please try again.": "Tyvärr avslutades inte omröstningen. Vänligen pröva igen.",
-    "Failed to end poll": "Misslyckades att avsluta omröstning",
-    "The poll has ended. Top answer: %(topAnswer)s": "Omröstningen har avslutats. Toppsvar: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Omröstningen har avslutats. Inga röster avgavs.",
     "Forget": "Glöm",
     "Open in OpenStreetMap": "Öppna i OpenStreetMap",
     "Verify other device": "Verifiera annan enhet",
@@ -708,7 +693,6 @@
     "Cameras": "Kameror",
     "Output devices": "Utgångsenheter",
     "Input devices": "Ingångsenheter",
-    "Open room": "Öppna rum",
     "Unread email icon": "Oläst e-post-ikon",
     "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
     "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
@@ -1962,7 +1946,8 @@
         "format": "Format",
         "messages": "Meddelanden",
         "size_limit": "Storleksgräns",
-        "include_attachments": "Inkludera bilagor"
+        "include_attachments": "Inkludera bilagor",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Skapa ett videorum",
@@ -3412,7 +3397,8 @@
         "may_contact_label": "Ni kan kontakta mig om ni vill följa upp eller låta mig testa kommande idéer",
         "pro_type": "TIPS: Om du startar en bugg, vänligen inkludera <debugLogsLink>avbuggninsloggar</debugLogsLink> för att hjälpa oss att hitta problemet.",
         "existing_issue_link": "Vänligen se <existingIssuesLink> existerade buggar på GitHub</existingIssuesLink> först. Finns det ingen som matchar? <newIssueLink>Starta en ny</newIssueLink>.",
-        "send_feedback_action": "Skicka återkoppling"
+        "send_feedback_action": "Skicka återkoppling",
+        "can_contact_label": "Ni kan kontakta mig om ni har vidare frågor"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3912,7 +3898,13 @@
         "total_n_votes_voted": {
             "one": "Baserat på %(count)s röst",
             "other": "Baserat på %(count)s röster"
-        }
+        },
+        "end_message_no_votes": "Omröstningen har avslutats. Inga röster avgavs.",
+        "end_message": "Omröstningen har avslutats. Toppsvar: %(topAnswer)s",
+        "error_ending_title": "Misslyckades att avsluta omröstning",
+        "error_ending_description": "Tyvärr avslutades inte omröstningen. Vänligen pröva igen.",
+        "end_title": "Avsluta omröstning",
+        "end_description": "Är du säker på att du vill avsluta den hör omröstningen? Detta kommer att visa det slutgiltiga resultatet och stoppa folk från att rösta."
     },
     "failed_load_async_component": "Kan inte ladda! Kolla din nätverksuppkoppling och försök igen.",
     "upload_failed_generic": "Filen '%(fileName)s' kunde inte laddas upp.",
@@ -3997,7 +3989,8 @@
         "something_went_wrong": "Något gick fel!",
         "download_media": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
         "update_power_level": "Misslyckades att ändra behörighetsnivå",
-        "unknown": "Okänt fel"
+        "unknown": "Okänt fel",
+        "dialog_description_default": "Ett fel har inträffat."
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4303,5 +4296,14 @@
         "confirm_description_state": "Observera att om du tar bort rumsändringar som den här kanske det ångrar ändringen.",
         "confirm_button": "Bekräfta borttagning",
         "reason_label": "Orsak (valfritt)"
+    },
+    "forward": {
+        "no_perms_title": "Du har inte behörighet att göra detta",
+        "sending": "Skickar",
+        "sent": "Skickat",
+        "open_room": "Öppna rum",
+        "send_label": "Skicka",
+        "message_preview_heading": "Meddelandeförhandsgranskning",
+        "filter_placeholder": "Sök efter rum eller personer"
     }
 }

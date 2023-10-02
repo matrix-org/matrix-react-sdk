@@ -3,7 +3,6 @@
     "unknown error code": "不明なエラーコード",
     "Unnamed room": "名前のないルーム",
     "Thursday": "木曜日",
-    "Send": "送信",
     "Sunday": "日曜日",
     "Today": "今日",
     "Monday": "月曜日",
@@ -62,7 +61,6 @@
     "collapse": "折りたたむ",
     "expand": "展開",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
-    "An error has occurred.": "エラーが発生しました。",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "以前%(host)sにて、メンバーの遅延ロードを有効にした%(brand)sが使用されていました。このバージョンでは、遅延ロードは無効です。ローカルのキャッシュにはこれらの2つの設定の間での互換性がないため、%(brand)sはアカウントを再同期する必要があります。",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "他のバージョンの%(brand)sが別のタブで開いている場合は、それを閉じてください。同じホスト上で遅延ロードを有効と無効の両方に設定して%(brand)sを使用すると、問題が発生します。",
     "Incompatible local cache": "互換性のないローカルキャッシュ",
@@ -519,7 +517,6 @@
     "Invite by email": "電子メールで招待",
     "Start a conversation with someone using their name or username (like <userId/>).": "名前かユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "名前、メールアドレス、ユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
-    "Search for rooms or people": "ルームと連絡先を検索",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
     "Search Dialog": "検索ダイアログ",
     "Upload %(count)s other files": {
@@ -533,9 +530,6 @@
     "Signature upload success": "署名のアップロードに成功しました",
     "Cancelled signature upload": "署名のアップロードをキャンセルしました",
     "Open in OpenStreetMap": "OpenStreetMapで開く",
-    "Message preview": "メッセージのプレビュー",
-    "Sent": "送信済",
-    "You don't have permission to do this": "これを行う権限がありません",
     "Verification Request": "認証の要求",
     "The server is offline.": "サーバーはオフラインです。",
     "%(count)s rooms": {
@@ -557,10 +551,6 @@
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Messaging": "メッセージ",
     "No results found": "検索結果がありません",
-    "Sending": "送信しています",
-    "MB": "MB",
-    "Failed to end poll": "アンケートの終了に失敗しました",
-    "End Poll": "アンケートを終了",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "このユーザーを認証すると、信頼済として表示します。ユーザーを信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s個のセッションの復号化に失敗しました！",
@@ -588,7 +578,6 @@
     "We couldn't create your DM.": "ダイレクトメッセージを作成できませんでした。",
     "Confirm to continue": "確認して続行",
     "Failed to find the following users": "次のユーザーの発見に失敗しました",
-    "Sorry, the poll did not end. Please try again.": "アンケートを終了できませんでした。もう一度やり直してください。",
     "Hold": "保留",
     "Resume": "再開",
     "Moderation": "モデレート",
@@ -600,17 +589,13 @@
     "A connection error occurred while trying to contact the server.": "サーバーに接続する際にエラーが発生しました。",
     "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。",
     "Only do this if you have no other device to complete verification with.": "認証を行える端末がない場合のみ行ってください。",
-    "You may contact me if you have any follow up questions": "追加で確認が必要な事項がある場合は、連絡可",
     "%(count)s reply": {
         "other": "%(count)s件の返信",
         "one": "%(count)s件の返信"
     },
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。",
     "Missing session data": "セッションのデータがありません",
     "Something went wrong trying to invite the users.": "ユーザーを招待する際に、問題が発生しました。",
-    "The poll has ended. Top answer: %(topAnswer)s": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
-    "The poll has ended. No votes were cast.": "アンケートが終了しました。投票はありませんでした。",
     "Incoming Verification Request": "認証のリクエストが届いています",
     "Failed to start livestream": "ライブストリームの開始に失敗しました",
     "Unable to start audio streaming.": "音声ストリーミングを開始できません。",
@@ -712,7 +697,6 @@
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "以下のユーザーは存在しないか不正であるため、招待できません：%(csvNames)s",
     "A call can only be transferred to a single user.": "通話は1人のユーザーにしか転送できません。",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "ユーザーを招待できませんでした。招待したいユーザーを確認して、もう一度試してください。",
-    "Open room": "ルームを開く",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
@@ -1911,7 +1895,8 @@
         "format": "形式",
         "messages": "メッセージ",
         "size_limit": "サイズ制限",
-        "include_attachments": "添付ファイルを含める"
+        "include_attachments": "添付ファイルを含める",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "ビデオ通話ルームを作成",
@@ -3320,7 +3305,8 @@
         "may_contact_label": "追加で確認が必要な事項や、テストすべき新しいアイデアがある場合は、連絡可",
         "pro_type": "ヒント：バグレポートを報告する場合は、問題の分析のために<debugLogsLink>デバッグログ</debugLogsLink>を送信してください。",
         "existing_issue_link": "まず、<existingIssuesLink>Githubで既知の不具合</existingIssuesLink>を確認してください。また掲載されていない新しい不具合を発見した場合は<newIssueLink>報告してください</newIssueLink>。",
-        "send_feedback_action": "フィードバックを送信"
+        "send_feedback_action": "フィードバックを送信",
+        "can_contact_label": "追加で確認が必要な事項がある場合は、連絡可"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3801,7 +3787,13 @@
         "total_n_votes_voted": {
             "one": "%(count)s個の投票に基づく",
             "other": "%(count)s個の投票に基づく"
-        }
+        },
+        "end_message_no_votes": "アンケートが終了しました。投票はありませんでした。",
+        "end_message": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
+        "error_ending_title": "アンケートの終了に失敗しました",
+        "error_ending_description": "アンケートを終了できませんでした。もう一度やり直してください。",
+        "end_title": "アンケートを終了",
+        "end_description": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。"
     },
     "failed_load_async_component": "読み込めません！ネットワークの通信状態を確認して、もう一度やり直してください。",
     "upload_failed_generic": "ファイル '%(fileName)s' のアップロードに失敗しました。",
@@ -3878,7 +3870,8 @@
         "failed_copy": "コピーに失敗しました",
         "something_went_wrong": "問題が発生しました！",
         "update_power_level": "権限レベルの変更に失敗しました",
-        "unknown": "不明なエラー"
+        "unknown": "不明なエラー",
+        "dialog_description_default": "エラーが発生しました。"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -4159,5 +4152,14 @@
         "ongoing": "削除しています…",
         "confirm_button": "削除の確認",
         "reason_label": "理由（任意）"
+    },
+    "forward": {
+        "no_perms_title": "これを行う権限がありません",
+        "sending": "送信しています",
+        "sent": "送信済",
+        "open_room": "ルームを開く",
+        "send_label": "送信",
+        "message_preview_heading": "メッセージのプレビュー",
+        "filter_placeholder": "ルームと連絡先を検索"
     }
 }

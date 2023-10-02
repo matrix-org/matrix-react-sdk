@@ -10,7 +10,6 @@
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Saturday": "Lørdag",
-    "Send": "Send",
     "Sun": "Søn",
     "Mon": "Man",
     "Tue": "Tir",
@@ -73,7 +72,6 @@
     "expand": "utvid",
     "Session name": "Øktens navn",
     "Filter results": "Filtrerresultater",
-    "An error has occurred.": "En feil har oppstått.",
     "Email address": "E-postadresse",
     "Share Room Message": "Del rommelding",
     "Cancel All": "Avbryt alt",
@@ -155,7 +153,6 @@
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "Message preview": "Meldingsforhåndsvisning",
     "Integrations are disabled": "Integreringer er skrudd av",
     "Integrations not allowed": "Integreringer er ikke tillatt",
     "Confirm to continue": "Bekreft for å fortsette",
@@ -456,9 +453,6 @@
     "Croatia": "Kroatia",
     "Costa Rica": "Costa Rica",
     "Cook Islands": "Cook-øyene",
-    "Sent": "Sendt",
-    "Sending": "Sender",
-    "MB": "MB",
     "Corn": "Mais",
     "Cloud": "Sky",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
@@ -951,7 +945,8 @@
         "json": "JSON",
         "text": "Ren tekst",
         "format": "Format",
-        "messages": "Meldinger"
+        "messages": "Meldinger",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_public_room": "Opprett et offentlig rom",
@@ -1773,7 +1768,8 @@
     "error": {
         "failed_copy": "Mislyktes i å kopiere",
         "something_went_wrong": "Noe gikk galt!",
-        "unknown": "Ukjent feil"
+        "unknown": "Ukjent feil",
+        "dialog_description_default": "En feil har oppstått."
     },
     "lightbox": {
         "rotate_left": "Roter til venstre",
@@ -1881,5 +1877,11 @@
         "ongoing": "Fjerner …",
         "confirm_button": "Bekreft fjerning",
         "reason_label": "Årsak (valgfritt)"
+    },
+    "forward": {
+        "sending": "Sender",
+        "sent": "Sendt",
+        "send_label": "Send",
+        "message_preview_heading": "Meldingsforhåndsvisning"
     }
 }

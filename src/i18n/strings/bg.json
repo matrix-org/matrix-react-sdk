@@ -1,5 +1,4 @@
 {
-    "Send": "Изпрати",
     "Sun": "нд.",
     "Mon": "пн.",
     "Tue": "вт.",
@@ -52,7 +51,6 @@
     "collapse": "свий",
     "expand": "разшири",
     "Verification Pending": "Очакване на потвърждение",
-    "An error has occurred.": "Възникна грешка.",
     "Unable to restore session": "Неуспешно възстановяване на сесията",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Моля, проверете своя имейл адрес и натиснете връзката, която той съдържа. След като направите това, натиснете продължи.",
     "This will allow you to reset your password and receive notifications.": "Това ще Ви позволи да възстановите Вашата парола и да получавате известия.",
@@ -272,7 +270,6 @@
     "Switch theme": "Смени темата",
     "Confirm encryption setup": "Потвърждение на настройки за шифроване",
     "Click the button below to confirm setting up encryption.": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
-    "Message preview": "Преглед на съобщението",
     "Unable to set up keys": "Неуспешна настройка на ключовете",
     "Use your Security Key to continue.": "Използвайте ключа си за сигурност за да продължите.",
     "Security Key": "Ключ за сигурност",
@@ -2247,7 +2244,8 @@
         "failed_copy": "Неуспешно копиране",
         "something_went_wrong": "Нещо се обърка!",
         "update_power_level": "Неуспешна промяна на нивото на достъп",
-        "unknown": "Неизвестна грешка"
+        "unknown": "Неизвестна грешка",
+        "dialog_description_default": "Възникна грешка."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2432,5 +2430,9 @@
         "error": "Това съобщение не може да бъде изтрито. (%(code)s)",
         "ongoing": "Премахване…",
         "confirm_button": "Потвърдете премахването"
+    },
+    "forward": {
+        "send_label": "Изпрати",
+        "message_preview_heading": "Преглед на съобщението"
     }
 }

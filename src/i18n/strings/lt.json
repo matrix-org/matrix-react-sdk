@@ -8,7 +8,6 @@
     "Saturday": "Šeštadienis",
     "Monday": "Pirmadienis",
     "Wednesday": "Trečiadienis",
-    "Send": "Siųsti",
     "unknown error code": "nežinomas klaidos kodas",
     "Thursday": "Ketvirtadienis",
     "Yesterday": "Vakar",
@@ -52,7 +51,6 @@
     "Create new room": "Sukurti naują kambarį",
     "collapse": "suskleisti",
     "expand": "išskleisti",
-    "An error has occurred.": "Įvyko klaida.",
     "Failed to upgrade room": "Nepavyko atnaujinti kambario",
     "The room upgrade could not be completed": "Nepavyko užbaigti kambario atnaujinimo",
     "Send Logs": "Siųsti žurnalus",
@@ -390,12 +388,6 @@
     "Click the button below to confirm your identity.": "Spustelėkite toliau esantį mygtuką, kad patvirtintumėte savo tapatybę.",
     "Confirm to continue": "Patvirtinkite, kad tęstumėte",
     "Incoming Verification Request": "Įeinantis Patikrinimo Prašymas",
-    "Search for rooms or people": "Ieškoti kambarių ar žmonių",
-    "Message preview": "Žinutės peržiūra",
-    "Sent": "Išsiųsta",
-    "Sending": "Siunčiama",
-    "You don't have permission to do this": "Jūs neturite leidimo tai daryti",
-    "You may contact me if you have any follow up questions": "Jei turite papildomų klausimų, galite susisiekti su manimi",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
     "South Korea": "Pietų Korėja",
@@ -2319,7 +2311,8 @@
         "comment_label": "Komentaras",
         "pro_type": "PRO PATARIMAS: Jei pradėjote klaidos pranešimą, pateikite <debugLogsLink>derinimo žurnalus</debugLogsLink>, kad padėtumėte mums išsiaiškinti problemą.",
         "existing_issue_link": "Pirmiausia peržiūrėkite <existingIssuesLink>Github'e esančius pranešimus apie klaidas</existingIssuesLink>. Jokio atitikmens? <newIssueLink>Pradėkite naują pranešimą</newIssueLink>.",
-        "send_feedback_action": "Siųsti atsiliepimą"
+        "send_feedback_action": "Siųsti atsiliepimą",
+        "can_contact_label": "Jei turite papildomų klausimų, galite susisiekti su manimi"
     },
     "zxcvbn": {
         "suggestions": {
@@ -2634,7 +2627,8 @@
         "failed_copy": "Nepavyko nukopijuoti",
         "something_went_wrong": "Kažkas nutiko!",
         "update_power_level": "Nepavyko pakeisti galios lygio",
-        "unknown": "Nežinoma klaida"
+        "unknown": "Nežinoma klaida",
+        "dialog_description_default": "Įvyko klaida."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2866,5 +2860,13 @@
         "ongoing": "Pašalinama…",
         "confirm_button": "Patvirtinkite pašalinimą",
         "reason_label": "Priežastis (nebūtina)"
+    },
+    "forward": {
+        "no_perms_title": "Jūs neturite leidimo tai daryti",
+        "sending": "Siunčiama",
+        "sent": "Išsiųsta",
+        "send_label": "Siųsti",
+        "message_preview_heading": "Žinutės peržiūra",
+        "filter_placeholder": "Ieškoti kambarių ar žmonių"
     }
 }

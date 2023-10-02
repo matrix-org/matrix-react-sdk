@@ -491,26 +491,11 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "ຢັ້ງຢືນອຸປະກອນນີ້ເພື່ອເປັນເຄື່ອງໝາຍ ໜ້າເຊື່ອຖືໄດ້. ການໄວ້ໃຈໃນອຸປະກອນນີ້ເຮັດໃຫ້ທ່ານ ແລະ ຜູ້ໃຊ້ອື່ນໆມີຄວາມອູ່ນໃນຈິດໃຈຫຼາຍຂຶ້ນເມື່ອເຂົ້າລະຫັດຂໍ້ຄວາມເເຕ່ຕົ້ນທາງຫາປາຍທາງ.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "ການຢືນຢັນຜູ້ໃຊ້ນີ້ຈະເປັນເຄື່ອງໝາຍໃນລະບົບຂອງເຂົາເຈົ້າໜ້າເຊື່ອຖືໄດ້ ແລະ ເປັນເຄື່ອງໝາຍເຖິງລະບົບຂອງທ່ານ ເປັນທີ່ເຊື່ອຖືໄດ້ຕໍ່ກັບເຂົາເຈົ້າ.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ເພື່ອສ້າງເຄື່ອງທີ່ເຊື່ອຖືໄດ້. ຜູ້ໃຊ້ທີ່ເຊື່ອຖືໄດ້ ເຮັດໃຫ້ທ່ານອຸ່ນໃຈຂື້ນເມື່ຶຶອເຂົ້າລະຫັດຂໍ້ຄວາມແຕ່ຕົ້ນທາງເຖິງປາຍທາງ.",
-    "You may contact me if you have any follow up questions": "ທ່ານສາມາດຕິດຕໍ່ຂ້ອຍໄດ້ ຖ້າທ່ານມີຄໍາຖາມເພີ່ມເຕີມ",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
-    "Search for rooms or people": "ຊອກຫາຫ້ອງ ຫຼື ຄົນ",
-    "Message preview": "ສະເເດງຕົວຢ່າງຂໍ້ຄວາມ",
-    "Send": "ສົ່ງ",
-    "Sent": "ສົ່ງແລ້ວ",
-    "Sending": "ກຳລັງສົ່ງ",
-    "You don't have permission to do this": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນີ້",
     "An error occurred while stopping your live location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
     "expand": "ຂະຫຍາຍ",
     "collapse": "ບໍ່ສຳເລັດ",
-    "MB": "ເມກາໄບ",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການສິ້ນສຸດການສຳຫຼວດນີ້? ນີ້ຈະສະແດງຜົນສຸດທ້າຍຂອງການລົງຄະແນນສຽງ ແລະ ຢຸດບໍ່ໃຫ້ປະຊາຊົນສາມາດລົງຄະແນນສຽງໄດ້.",
-    "End Poll": "ສິ້ນສຸດການສຳຫຼວດ",
-    "An error has occurred.": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
-    "Sorry, the poll did not end. Please try again.": "ຂໍອະໄພ,ບໍ່ສາມາດສິ້ນສຸດການສຳຫຼວດ. ກະລຸນາລອງອີກຄັ້ງ.",
-    "Failed to end poll": "ບໍ່ສາມາດສີ່ນສູດການສຳຫຼວດ",
-    "The poll has ended. Top answer: %(topAnswer)s": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ຄຳຕອບສູງສຸດ: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ບໍ່ມີການລົງຄະແນນສຽງ.",
     "IRC display name width": "ຄວາມກວ້າງຂອງຊື່ສະແດງ IRC",
     "Developer": "ນັກພັດທະນາ",
     "Experimental": "ທົດລອງ",
@@ -704,7 +689,6 @@
     },
     "%(members)s and %(last)s": "%(members)s ແລະ %(last)s",
     "%(members)s and more": "%(members)s ແລະອື່ນໆ",
-    "Open room": "ເປີດຫ້ອງ",
     "Cameras": "ກ້ອງ",
     "Output devices": "ອຸປະກອນຂາອອກ",
     "Input devices": "ອຸປະກອນຂາເຂົ້າ",
@@ -1608,7 +1592,8 @@
         "format": "ຮູບແບບ",
         "messages": "ຂໍ້ຄວາມ",
         "size_limit": "ຂະໜາດຈຳກັດ",
-        "include_attachments": "ລວມເອົາໄຟລ໌ຄັດຕິດ"
+        "include_attachments": "ລວມເອົາໄຟລ໌ຄັດຕິດ",
+        "size_limit_postfix": "ເມກາໄບ"
     },
     "create_room": {
         "title_video_room": "ສ້າງຫ້ອງວິດີໂອ",
@@ -2926,7 +2911,8 @@
         "may_contact_label": "ທ່ານສາມາດຕິດຕໍ່ຫາຂ້ອຍໄດ້ ຖ້າທ່ານຕ້ອງການຕິດຕາມ ຫຼືໃຫ້ຂ້ອຍທົດສອບແນວຄວາມຄິດທີ່ເກີດຂື້ນ",
         "pro_type": "PRO TIP: ຖ້າທ່ານເລີ່ມມີຂໍ້ຜິດພາດ, ກະລຸນາສົ່ງ <debugLogsLink>ບັນທຶກການແກ້ບັນຫາ</debugLogsLink> ເພື່ອຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາ.",
         "existing_issue_link": "ກະລຸນາເບິ່ງ <existingIssuesLink>ຂໍ້ບົກຜ່ອງທີ່ມີຢູ່ແລ້ວໃນ Github</existingIssuesLink> ກ່ອນ. ບໍ່ກົງກັນບໍ? <newIssueLink>ເລີ່ມອັນໃໝ່</newIssueLink>.",
-        "send_feedback_action": "ສົ່ງຄໍາຄິດເຫັນ"
+        "send_feedback_action": "ສົ່ງຄໍາຄິດເຫັນ",
+        "can_contact_label": "ທ່ານສາມາດຕິດຕໍ່ຂ້ອຍໄດ້ ຖ້າທ່ານມີຄໍາຖາມເພີ່ມເຕີມ"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3347,7 +3333,13 @@
         "total_n_votes_voted": {
             "one": "ອີງຕາມການລົງຄະແນນສຽງ %(count)s",
             "other": "ອີງຕາມ %(count)s ການລົງຄະເເນນສຽງ"
-        }
+        },
+        "end_message_no_votes": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ບໍ່ມີການລົງຄະແນນສຽງ.",
+        "end_message": "ການສໍາຫຼວດໄດ້ສິ້ນສຸດລົງ. ຄຳຕອບສູງສຸດ: %(topAnswer)s",
+        "error_ending_title": "ບໍ່ສາມາດສີ່ນສູດການສຳຫຼວດ",
+        "error_ending_description": "ຂໍອະໄພ,ບໍ່ສາມາດສິ້ນສຸດການສຳຫຼວດ. ກະລຸນາລອງອີກຄັ້ງ.",
+        "end_title": "ສິ້ນສຸດການສຳຫຼວດ",
+        "end_description": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການສິ້ນສຸດການສຳຫຼວດນີ້? ນີ້ຈະສະແດງຜົນສຸດທ້າຍຂອງການລົງຄະແນນສຽງ ແລະ ຢຸດບໍ່ໃຫ້ປະຊາຊົນສາມາດລົງຄະແນນສຽງໄດ້."
     },
     "failed_load_async_component": "ບໍ່ສາມາດໂຫຼດໄດ້! ກະລຸນາກວດເບິ່ງການເຊື່ອມຕໍ່ເຄືອຂ່າຍຂອງທ່ານ ແລະ ລອງໃໝ່ອີກຄັ້ງ.",
     "upload_failed_generic": "ໄຟລ໌ '%(fileName)s' ບໍ່ສາມາດອັບໂຫລດໄດ້.",
@@ -3409,7 +3401,8 @@
         "failed_copy": "ສຳເນົາບໍ່ສຳເລັດ",
         "something_went_wrong": "ມີບາງຢ່າງຜິດພາດ!",
         "update_power_level": "ການປ່ຽນແປງລະດັບພະລັງງານບໍ່ສຳເລັດ",
-        "unknown": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ"
+        "unknown": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
+        "dialog_description_default": "ໄດ້ເກີດຂໍ້ຜິດພາດ."
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3666,5 +3659,14 @@
         "ongoing": "ກຳລັງລຶບ…",
         "confirm_button": "ຢືນຢັນການລຶບອອກ",
         "reason_label": "ເຫດຜົນ (ທາງເລືອກ)"
+    },
+    "forward": {
+        "no_perms_title": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນີ້",
+        "sending": "ກຳລັງສົ່ງ",
+        "sent": "ສົ່ງແລ້ວ",
+        "open_room": "ເປີດຫ້ອງ",
+        "send_label": "ສົ່ງ",
+        "message_preview_heading": "ສະເເດງຕົວຢ່າງຂໍ້ຄວາມ",
+        "filter_placeholder": "ຊອກຫາຫ້ອງ ຫຼື ຄົນ"
     }
 }

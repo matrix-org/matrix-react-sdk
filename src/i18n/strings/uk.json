@@ -6,7 +6,6 @@
         "one": "і інше...",
         "other": "та %(count)s інші..."
     },
-    "An error has occurred.": "Сталася помилка.",
     "Email address": "Адреса е-пошти",
     "Sunday": "Неділя",
     "Today": "Сьогодні",
@@ -17,7 +16,6 @@
     "Saturday": "Субота",
     "Monday": "Понеділок",
     "Wednesday": "Середа",
-    "Send": "Надіслати",
     "Thursday": "Четвер",
     "Yesterday": "Вчора",
     "Warning!": "Увага!",
@@ -427,7 +425,6 @@
     "User Directory": "Каталог користувачів",
     "Share User": "Поділитися користувачем",
     "Some suggestions may be hidden for privacy.": "Деякі пропозиції можуть бути сховані для приватності.",
-    "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
     "Home": "Домівка",
     "Allow this widget to verify your identity": "Дозволити цьому віджету перевіряти вашу особу",
     "Sign in with SSO": "Увійти за допомогою SSO",
@@ -467,9 +464,6 @@
     "Leave all rooms": "Вийти з кімнати",
     "Verification Request": "Запит підтвердження",
     "Leave space": "Вийти з простору",
-    "Sent": "Надіслано",
-    "Sending": "Надсилання",
-    "MB": "МБ",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
         "other": "Сеансів: %(count)s"
@@ -523,12 +517,6 @@
     "Themes": "Теми",
     "Messaging": "Спілкування",
     "Spaces you know that contain this space": "Відомі вам простори, до яких входить цей",
-    "Failed to end poll": "Не вдалося завершити опитування",
-    "The poll has ended. No votes were cast.": "Опитування завершене. Жодного голосу не було.",
-    "The poll has ended. Top answer: %(topAnswer)s": "Опитування завершене. Перемогла відповідь: %(topAnswer)s",
-    "Sorry, the poll did not end. Please try again.": "Не вдалося завершити опитування. Спробуйте ще.",
-    "End Poll": "Завершити опитування",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Точно завершити опитування? Буде показано підсумки опитування, і більше ніхто не зможе голосувати.",
     "Link to room": "Посилання на кімнату",
     "Command Help": "Допомога команди",
     "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
@@ -653,8 +641,6 @@
     "Integrations not allowed": "Інтеграції не дозволені",
     "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
     "Failed to start livestream": "Не вдалося почати живу трансляцію",
-    "You don't have permission to do this": "У вас немає на це дозволу",
-    "Message preview": "Попередній перегляд повідомлення",
     "We couldn't create your DM.": "Не вдалося створити особисте повідомлення.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Звірка цього користувача позначить його сеанс довіреним вам, а ваш йому.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
@@ -676,7 +662,6 @@
     "Transfer": "Переадресація",
     "Recent Conversations": "Недавні бесіди",
     "A call can only be transferred to a single user.": "Виклик можна переадресувати лише на одного користувача.",
-    "Search for rooms or people": "Пошук кімнат або людей",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
     "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "Під час припинення поширення поточного місцеперебування сталася помилка",
     "%(members)s and %(last)s": "%(members)s і %(last)s",
     "%(members)s and more": "%(members)s та інші",
-    "Open room": "Відкрити кімнату",
     "Cameras": "Камери",
     "Output devices": "Пристрої виводу",
     "Input devices": "Пристрої вводу",
@@ -1998,7 +1982,8 @@
         "format": "Формат",
         "messages": "Повідомлення",
         "size_limit": "Обмеження розміру",
-        "include_attachments": "Включити вкладення"
+        "include_attachments": "Включити вкладення",
+        "size_limit_postfix": "МБ"
     },
     "create_room": {
         "title_video_room": "Створити відеокімнату",
@@ -3462,7 +3447,8 @@
         "may_contact_label": "Можете звернутись до мене за подальшими діями чи допомогою з випробуванням ідей",
         "pro_type": "ПОРАДА: Звітуючи про ваду, додайте <debugLogsLink>журнали зневадження</debugLogsLink>, щоб допомогти нам визначити проблему.",
         "existing_issue_link": "Спершу гляньте <existingIssuesLink>відомі вади на Github</existingIssuesLink>. Ця ще невідома? <newIssueLink>Звітувати про нову ваду</newIssueLink>.",
-        "send_feedback_action": "Надіслати відгук"
+        "send_feedback_action": "Надіслати відгук",
+        "can_contact_label": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3971,7 +3957,13 @@
         "total_n_votes_voted": {
             "one": "На підставі %(count)s голосу",
             "other": "На підставі %(count)s голосів"
-        }
+        },
+        "end_message_no_votes": "Опитування завершене. Жодного голосу не було.",
+        "end_message": "Опитування завершене. Перемогла відповідь: %(topAnswer)s",
+        "error_ending_title": "Не вдалося завершити опитування",
+        "error_ending_description": "Не вдалося завершити опитування. Спробуйте ще.",
+        "end_title": "Завершити опитування",
+        "end_description": "Точно завершити опитування? Буде показано підсумки опитування, і більше ніхто не зможе голосувати."
     },
     "failed_load_async_component": "Завантаження неможливе! Перевірте інтернет-зʼєднання та спробуйте ще.",
     "upload_failed_generic": "Не вдалося вивантажити файл '%(fileName)s'.",
@@ -4056,7 +4048,8 @@
         "something_went_wrong": "Щось пішло не так!",
         "download_media": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
         "update_power_level": "Не вдалося змінити рівень повноважень",
-        "unknown": "Невідома помилка"
+        "unknown": "Невідома помилка",
+        "dialog_description_default": "Сталася помилка."
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4363,5 +4356,14 @@
         "confirm_description_state": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
         "confirm_button": "Підтвердити вилучення",
         "reason_label": "Причина (не обов'язково)"
+    },
+    "forward": {
+        "no_perms_title": "У вас немає на це дозволу",
+        "sending": "Надсилання",
+        "sent": "Надіслано",
+        "open_room": "Відкрити кімнату",
+        "send_label": "Надіслати",
+        "message_preview_heading": "Попередній перегляд повідомлення",
+        "filter_placeholder": "Пошук кімнат або людей"
     }
 }

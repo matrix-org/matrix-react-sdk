@@ -34,7 +34,6 @@
     "not specified": "nicht angegeben",
     "%(items)s and %(lastItem)s": "%(items)s und %(lastItem)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
-    "An error has occurred.": "Ein Fehler ist aufgetreten.",
     "Email address": "E-Mail-Adresse",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
@@ -54,7 +53,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sT",
-    "Send": "Senden",
     "collapse": "Verbergen",
     "expand": "Erweitern",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
@@ -271,7 +269,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Dein Heim-Server hat einen seiner Ressourcengrenzwerte erreicht.",
     "Ok": "Ok",
     "Switch theme": "Design wechseln",
-    "Message preview": "Nachrichtenvorschau",
     "Looks good!": "Sieht gut aus!",
     "Wrong file type": "Falscher Dateityp",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
@@ -608,14 +605,9 @@
     "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
-    "Sending": "Senden",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
-    "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "Some suggestions may be hidden for privacy.": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein.",
     "Or send invite link": "Oder versende einen Einladungslink",
-    "Search for rooms or people": "Räume oder Leute suchen",
-    "Sent": "Gesendet",
-    "You don't have permission to do this": "Du bist dazu nicht berechtigt",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
@@ -641,7 +633,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
     "Would you like to leave the rooms in this space?": "Willst du die Räume in diesem Space verlassen?",
-    "MB": "MB",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
     "Thread options": "Thread-Optionen",
     "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
@@ -671,12 +662,6 @@
     "Spaces you're in": "Spaces, in denen du Mitglied bist",
     "Sections to show": "Anzuzeigende Bereiche",
     "Link to room": "Link zum Raum",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Willst du die Umfrage wirklich beenden? Die finalen Ergebnisse werden angezeigt und können nicht mehr geändert werden.",
-    "End Poll": "Umfrage beenden",
-    "Sorry, the poll did not end. Please try again.": "Die Umfrage konnte nicht beendet werden. Bitte versuche es erneut.",
-    "Failed to end poll": "Beenden der Umfrage fehlgeschlagen",
-    "The poll has ended. Top answer: %(topAnswer)s": "Umfrage beendet. Beliebteste Antwort: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Umfrage beendet. Es wurden keine Stimmen abgegeben.",
     "Messaging": "Kommunikation",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Verify other device": "Anderes Gerät verifizieren",
@@ -700,7 +685,6 @@
     "Input devices": "Eingabegeräte",
     "Unsent": "Nicht gesendet",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
-    "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
     "Show rooms": "Räume zeigen",
     "Search for": "Suche nach",
@@ -1999,7 +1983,8 @@
         "format": "Format",
         "messages": "Nachrichten",
         "size_limit": "Größenlimit",
-        "include_attachments": "Anhänge einbeziehen"
+        "include_attachments": "Anhänge einbeziehen",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Videoraum erstellen",
@@ -3469,7 +3454,8 @@
         "may_contact_label": "Ich möchte kontaktiert werden, wenn ihr mehr wissen oder mich neue Funktionen testen lassen wollt",
         "pro_type": "PRO TIPP: Wenn du einen Programmfehler meldest, füge bitte <debugLogsLink>Debug-Protokolle</debugLogsLink> hinzu, um uns beim Finden des Problems zu helfen.",
         "existing_issue_link": "Bitte wirf einen Blick auf <existingIssuesLink>existierende Programmfehler auf Github</existingIssuesLink>. Keinen passenden gefunden? <newIssueLink>Erstelle einen neuen</newIssueLink>.",
-        "send_feedback_action": "Rückmeldung senden"
+        "send_feedback_action": "Rückmeldung senden",
+        "can_contact_label": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3978,7 +3964,13 @@
         "total_n_votes_voted": {
             "one": "%(count)s Stimme abgegeben",
             "other": "%(count)s Stimmen abgegeben"
-        }
+        },
+        "end_message_no_votes": "Umfrage beendet. Es wurden keine Stimmen abgegeben.",
+        "end_message": "Umfrage beendet. Beliebteste Antwort: %(topAnswer)s",
+        "error_ending_title": "Beenden der Umfrage fehlgeschlagen",
+        "error_ending_description": "Die Umfrage konnte nicht beendet werden. Bitte versuche es erneut.",
+        "end_title": "Umfrage beenden",
+        "end_description": "Willst du die Umfrage wirklich beenden? Die finalen Ergebnisse werden angezeigt und können nicht mehr geändert werden."
     },
     "failed_load_async_component": "Konnte nicht geladen werden! Überprüfe die Netzwerkverbindung und versuche es erneut.",
     "upload_failed_generic": "Die Datei „%(fileName)s“ konnte nicht hochgeladen werden.",
@@ -4063,7 +4055,8 @@
         "something_went_wrong": "Etwas ist schiefgelaufen!",
         "download_media": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
         "update_power_level": "Ändern der Berechtigungsstufe fehlgeschlagen",
-        "unknown": "Unbekannter Fehler"
+        "unknown": "Unbekannter Fehler",
+        "dialog_description_default": "Ein Fehler ist aufgetreten."
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4370,5 +4363,14 @@
         "confirm_description_state": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
         "confirm_button": "Entfernen bestätigen",
         "reason_label": "Grund (optional)"
+    },
+    "forward": {
+        "no_perms_title": "Du bist dazu nicht berechtigt",
+        "sending": "Senden",
+        "sent": "Gesendet",
+        "open_room": "Raum öffnen",
+        "send_label": "Senden",
+        "message_preview_heading": "Nachrichtenvorschau",
+        "filter_placeholder": "Räume oder Leute suchen"
     }
 }

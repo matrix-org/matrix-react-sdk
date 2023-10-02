@@ -7,13 +7,11 @@
     "Saturday": "شنبه",
     "Monday": "دوشنبه",
     "Wednesday": "چهارشنبه",
-    "Send": "ارسال",
     "unknown error code": "کد خطای ناشناخته",
     "Thursday": "پنج‌شنبه",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
     "Email address": "آدرس ایمیل",
-    "An error has occurred.": "خطایی رخ داده است.",
     "Home": "خانه",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s",
@@ -399,7 +397,6 @@
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "با تأیید این کاربر ، نشست وی به عنوان مورد اعتماد علامت‌گذاری شده و همچنین نشست شما به عنوان مورد اعتماد برای وی علامت‌گذاری خواهد شد.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "این کاربر را تأیید کنید تا به عنوان کاربر مورد اعتماد علامت‌گذاری شود. اعتماد به کاربران آرامش و اطمینان بیشتری به شما در استفاده از رمزنگاری سرتاسر می‌دهد.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
-    "You may contact me if you have any follow up questions": "در صورت داشتن هرگونه سوال پیگیری ممکن است با من تماس بگیرید",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. اینکار را می‌توانید از طریق بخش <settings>تنظیمات</settings> انجام دهید.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. <default>از پیش فرض (%(defaultIdentityServerName)s) استفاده کنید</default> یا آن را در بخش <settings>تنظیمات</settings> مدیریت کنید.",
     "Wrong file type": "نوع فایل اشتباه است",
@@ -522,7 +519,6 @@
     "Switch theme": "تعویض پوسته",
     "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
     "No results found": "نتیجه‌ای یافت نشد",
-    "Sending": "در حال ارسال",
     "Warning!": "هشدار!",
     "Create new room": "ایجاد اتاق جدید",
     "Leave space": "ترک محیط",
@@ -2374,7 +2370,8 @@
         "platform_username": "سیستم‌عامل و نام کاربری شما ثبت خواهد شد تا به ما کمک کند تا جایی که می توانیم از نظرات شما استفاده کنیم.",
         "pro_type": "نکته‌ای برای کاربران حرفه‌ای: اگر به مشکل نرم‌افزاری در برنامه برخورد کردید، لطفاً <debugLogsLink>لاگ‌های مشکل</debugLogsLink> را ارسال کنید تا به ما در ردیابی و رفع آن کمک کند.",
         "existing_issue_link": "لطفاً ابتدا اشکالات موجود را در <existingIssuesLink>گیتهاب برنامه</existingIssuesLink> را مشاهده کنید. با اشکال شما مطابقتی وجود ندارد؟<newIssueLink> مورد جدیدی را ثبت کنید</newIssueLink>.",
-        "send_feedback_action": "ارسال بازخورد"
+        "send_feedback_action": "ارسال بازخورد",
+        "can_contact_label": "در صورت داشتن هرگونه سوال پیگیری ممکن است با من تماس بگیرید"
     },
     "zxcvbn": {
         "suggestions": {
@@ -2768,7 +2765,8 @@
         "failed_copy": "خطا در گرفتن رونوشت",
         "something_went_wrong": "مشکلی پیش آمد!",
         "update_power_level": "تغییر سطح قدرت انجام نشد",
-        "unknown": "خطای ناشناخته"
+        "unknown": "خطای ناشناخته",
+        "dialog_description_default": "خطایی رخ داده است."
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2972,5 +2970,9 @@
         "ongoing": "در حال حذف…",
         "confirm_button": "تأیید حذف",
         "reason_label": "دلیل (اختیاری)"
+    },
+    "forward": {
+        "sending": "در حال ارسال",
+        "send_label": "ارسال"
     }
 }

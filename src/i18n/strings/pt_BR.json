@@ -33,7 +33,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Join Room": "Ingressar na sala",
     "not specified": "não especificado",
-    "An error has occurred.": "Ocorreu um erro.",
     "Email address": "Endereço de e-mail",
     "Warning!": "Atenção!",
     "Unable to restore session": "Não foi possível restaurar a sessão",
@@ -49,7 +48,6 @@
     "PM": "PM",
     "AM": "AM",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s",
-    "Send": "Enviar",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -585,16 +583,10 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de e-mail, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
-    "You may contact me if you have any follow up questions": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes",
-    "Search for rooms or people": "Procurar por salas ou pessoas",
-    "Sent": "Enviado",
-    "Sending": "Enviando",
-    "You don't have permission to do this": "Você não tem permissão para fazer isso",
     "%(count)s people you know have already joined": {
         "one": "%(count)s pessoa que você conhece já entrou",
         "other": "%(count)s pessoas que você conhece já entraram"
     },
-    "MB": "MB",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e %(count)s outros"
@@ -1451,7 +1443,8 @@
         "num_messages": "Número de mensagens",
         "messages": "Mensagens",
         "size_limit": "Limite de Tamanho",
-        "include_attachments": "Incluir Anexos"
+        "include_attachments": "Incluir Anexos",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Criar uma sala de vídeo",
@@ -2644,7 +2637,8 @@
         "comment_label": "Comentário",
         "pro_type": "DICA: se você nos informar um erro, envie <debugLogsLink> relatórios de erro </debugLogsLink> para nos ajudar a rastrear o problema.",
         "existing_issue_link": "Por favor, consulte os <existingIssuesLink> erros conhecidos no Github </existingIssuesLink> antes de enviar o seu. Se ninguém tiver mencionado o seu erro, <newIssueLink> informe-nos sobre um erro novo </newIssueLink>.",
-        "send_feedback_action": "Enviar comentário"
+        "send_feedback_action": "Enviar comentário",
+        "can_contact_label": "Vocês podem me contactar se tiverem quaisquer perguntas subsequentes"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3023,7 +3017,8 @@
         "failed_copy": "Não foi possível copiar",
         "something_went_wrong": "Não foi possível carregar!",
         "update_power_level": "Não foi possível alterar o nível de permissão",
-        "unknown": "Erro desconhecido"
+        "unknown": "Erro desconhecido",
+        "dialog_description_default": "Ocorreu um erro."
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3263,5 +3258,12 @@
         "ongoing": "Removendo…",
         "confirm_button": "Confirmar a remoção",
         "reason_label": "Motivo (opcional)"
+    },
+    "forward": {
+        "no_perms_title": "Você não tem permissão para fazer isso",
+        "sending": "Enviando",
+        "sent": "Enviado",
+        "send_label": "Enviar",
+        "filter_placeholder": "Procurar por salas ou pessoas"
     }
 }

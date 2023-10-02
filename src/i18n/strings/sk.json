@@ -42,14 +42,12 @@
     "Create new room": "Vytvoriť novú miestnosť",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
-    "An error has occurred.": "Vyskytla sa chyba.",
     "Unable to restore session": "Nie je možné obnoviť reláciu",
     "Verification Pending": "Nedokončené overenie",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Prosím, skontrolujte si email a kliknite na odkaz v správe, ktorú sme vám poslali. Keď budete mať toto za sebou, kliknite na tlačidlo Pokračovať.",
     "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnoviť si heslo a prijímať oznámenia emailom.",
     "Session ID": "ID relácie",
     "Restricted": "Obmedzené",
-    "Send": "Odoslať",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -462,9 +460,6 @@
     "Cancel All": "Zrušiť všetky",
     "Developer": "Vývojárske",
     "Experimental": "Experimentálne",
-    "MB": "MB",
-    "Sent": "Odoslané",
-    "Sending": "Odosielanie",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />.",
     "Backup version:": "Verzia zálohy:",
     "Upgrade private room": "Aktualizovať súkromnú miestnosť",
@@ -506,12 +501,10 @@
     "edited": "upravené",
     "Message edits": "Úpravy správy",
     "Switch theme": "Prepnúť motív",
-    "You may contact me if you have any follow up questions": "V prípade ďalších otázok ma môžete kontaktovať",
     "Recent searches": "Nedávne vyhľadávania",
     "To search messages, look for this icon at the top of a room <icon/>": "Ak chcete vyhľadávať správy, nájdite túto ikonu v hornej časti miestnosti <icon/>",
     "Other searches": "Iné vyhľadávania",
     "Use \"%(query)s\" to search": "Na vyhľadávanie použite \"%(query)s\"",
-    "Search for rooms or people": "Hľadať miestnosti alebo ľudí",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
     "Not encrypted": "Nie je zašifrované",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
@@ -522,7 +515,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s %(brand)s, nahláste prosím chybu.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vezmite prosím na vedomie, že aktualizácia vytvorí novú verziu miestnosti</b>. Všetky aktuálne správy zostanú v tejto archivovanej miestnosti.",
     "%(name)s cancelled": "%(name)s zrušil/a",
-    "The poll has ended. No votes were cast.": "Anketa sa skončila. Nebol odovzdaný žiadny hlas.",
     "Leave space": "Opustiť priestor",
     "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
@@ -539,7 +531,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Aby ste nám pomohli tomuto v budúcnosti zabrániť, pošlite nám prosím <a>záznamy o chybe</a>.",
     "Remember my selection for this widget": "Zapamätať si môj výber pre tento widget",
     "Open in OpenStreetMap": "Otvoriť v OpenStreetMap",
-    "Message preview": "Náhľad správy",
     "Enter Security Key": "Zadajte bezpečnostný kľúč",
     "Enter Security Phrase": "Zadať bezpečnostnú frázu",
     "Incorrect Security Phrase": "Nesprávna bezpečnostná fráza",
@@ -548,7 +539,6 @@
     "Wrong Security Key": "Nesprávny bezpečnostný kľúč",
     "Continuing without email": "Pokračovanie bez e-mailu",
     "Wrong file type": "Nesprávny typ súboru",
-    "End Poll": "Ukončiť anketu",
     "%(count)s reply": {
         "one": "%(count)s odpoveď",
         "other": "%(count)s odpovedí"
@@ -610,7 +600,6 @@
         "other": "%(spaceName)s a %(count)s ďalší"
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ste si istí, že chcete ukončiť túto anketu? Zobrazia sa konečné výsledky ankety a ľudia nebudú môcť už hlasovať.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Overením tohto zariadenia ho označíte ako dôveryhodné a používatelia, ktorí vás overili, budú tomuto zariadeniu dôverovať.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Overenie tohto používateľa označí jeho reláciu ako dôveryhodnú a zároveň označí vašu reláciu ako dôveryhodnú pre neho.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Týchto používateľov sme nemohli pozvať. Skontrolujte prosím používateľov, ktorých chcete pozvať, a skúste to znova.",
@@ -657,7 +646,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
     "Invite by email": "Pozvať e-mailom",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Vaša aplikácia %(brand)s vám na to neumožňuje použiť správcu integrácie. Obráťte sa na administrátora.",
-    "You don't have permission to do this": "Na toto nemáte oprávnenie",
     "This widget would like to:": "Tento widget by chcel:",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ak ste predtým používali novšiu verziu %(brand)s, vaša relácia môže byť s touto verziou nekompatibilná. Zatvorte toto okno a vráťte sa k novšej verzii.",
     "Recent changes that have not yet been received": "Nedávne zmeny, ktoré ešte neboli prijaté",
@@ -669,9 +657,6 @@
     "A browser extension is preventing the request.": "Požiadavke bráni rozšírenie prehliadača.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo príliš dlho, kým odpovedal.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
-    "The poll has ended. Top answer: %(topAnswer)s": "Anketa sa skončila. Najčastejšia odpoveď: %(topAnswer)s",
-    "Failed to end poll": "Nepodarilo sa ukončiť anketu",
-    "Sorry, the poll did not end. Please try again.": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
     "Transfer": "Presmerovať",
     "A call can only be transferred to a single user.": "Hovor je možné presmerovať len na jedného používateľa.",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "Pri zastavovaní zdieľania polohy v reálnom čase došlo k chybe",
     "%(members)s and %(last)s": "%(members)s a %(last)s",
     "%(members)s and more": "%(members)s a ďalší",
-    "Open room": "Otvoriť miestnosť",
     "Cameras": "Kamery",
     "Output devices": "Výstupné zariadenia",
     "Input devices": "Vstupné zariadenia",
@@ -1998,7 +1982,8 @@
         "format": "Formát",
         "messages": "Správy",
         "size_limit": "Limit veľkosti",
-        "include_attachments": "Zahrnúť prílohy"
+        "include_attachments": "Zahrnúť prílohy",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Vytvoriť video miestnosť",
@@ -3462,7 +3447,8 @@
         "may_contact_label": "Môžete ma kontaktovať, ak budete potrebovať nejaké ďalšie podrobnosti alebo otestovať chystané nápady",
         "pro_type": "PRO TIP: Ak napíšete príspevok o chybe, odošlite prosím <debugLogsLink>ladiace záznamy</debugLogsLink>, aby ste nám pomohli vystopovať problém.",
         "existing_issue_link": "Najprv si prosím pozrite <existingIssuesLink>existujúce chyby na Githube</existingIssuesLink>. Žiadna zhoda? <newIssueLink>Založte novú</newIssueLink>.",
-        "send_feedback_action": "Odoslať spätnú väzbu"
+        "send_feedback_action": "Odoslať spätnú väzbu",
+        "can_contact_label": "V prípade ďalších otázok ma môžete kontaktovať"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3971,7 +3957,13 @@
         "total_n_votes_voted": {
             "one": "Na základe %(count)s hlasu",
             "other": "Na základe %(count)s hlasov"
-        }
+        },
+        "end_message_no_votes": "Anketa sa skončila. Nebol odovzdaný žiadny hlas.",
+        "end_message": "Anketa sa skončila. Najčastejšia odpoveď: %(topAnswer)s",
+        "error_ending_title": "Nepodarilo sa ukončiť anketu",
+        "error_ending_description": "Ospravedlňujeme sa, ale anketa sa neskončila. Skúste to prosím znova.",
+        "end_title": "Ukončiť anketu",
+        "end_description": "Ste si istí, že chcete ukončiť túto anketu? Zobrazia sa konečné výsledky ankety a ľudia nebudú môcť už hlasovať."
     },
     "failed_load_async_component": "Nie je možné načítať! Skontrolujte prístup na internet a skúste neskôr.",
     "upload_failed_generic": "Nepodarilo sa nahrať súbor „%(fileName)s“.",
@@ -4056,7 +4048,8 @@
         "something_went_wrong": "Niečo sa pokazilo!",
         "download_media": "Nepodarilo sa stiahnuť zdrojové médium, nebola nájdená žiadna zdrojová url adresa",
         "update_power_level": "Nepodarilo sa zmeniť úroveň oprávnenia",
-        "unknown": "Neznáma chyba"
+        "unknown": "Neznáma chyba",
+        "dialog_description_default": "Vyskytla sa chyba."
     },
     "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4363,5 +4356,14 @@
         "confirm_description_state": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť.",
         "confirm_button": "Potvrdiť odstránenie",
         "reason_label": "Dôvod (voliteľný)"
+    },
+    "forward": {
+        "no_perms_title": "Na toto nemáte oprávnenie",
+        "sending": "Odosielanie",
+        "sent": "Odoslané",
+        "open_room": "Otvoriť miestnosť",
+        "send_label": "Odoslať",
+        "message_preview_heading": "Náhľad správy",
+        "filter_placeholder": "Hľadať miestnosti alebo ľudí"
     }
 }

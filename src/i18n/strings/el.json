@@ -1,6 +1,5 @@
 {
     "unknown error code": "άγνωστος κωδικός σφάλματος",
-    "An error has occurred.": "Παρουσιάστηκε ένα σφάλμα.",
     "%(items)s and %(lastItem)s": "%(items)s και %(lastItem)s",
     "and %(count)s others...": {
         "one": "και ένας ακόμα...",
@@ -48,7 +47,6 @@
     "Sunday": "Κυριακή",
     "Today": "Σήμερα",
     "Friday": "Παρασκευή",
-    "Send": "Αποστολή",
     "Tuesday": "Τρίτη",
     "Unnamed room": "Ανώνυμο δωμάτιο",
     "Saturday": "Σάββατο",
@@ -544,8 +542,6 @@
         "one": "%(count)s απάντηση",
         "other": "%(count)s απαντήσεις"
     },
-    "MB": "MB",
-    "End Poll": "Τερματισμός δημοσκόπησης",
     "Submit logs": "Υποβολή αρχείων καταγραφής",
     "%(count)s votes": {
         "one": "%(count)s ψήφος",
@@ -561,12 +557,6 @@
         "other": "%(count)s επαληθευμένες συνεδρίες"
     },
     "Not encrypted": "Μη κρυπτογραφημένο",
-    "Sending": "Αποστολή",
-    "Message preview": "Προεπισκόπηση μηνύματος",
-    "You don't have permission to do this": "Δεν έχετε άδεια να το κάνετε αυτό",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Είστε βέβαιοι ότι θέλετε να τερματίσετε αυτήν τη δημοσκόπηση; Αυτό θα εμφανίσει τα τελικά αποτελέσματα της δημοσκόπησης και θα εμποδίσει νέους ψήφους.",
-    "Sorry, the poll did not end. Please try again.": "Συγνώμη, η δημοσκόπηση δεν τερματίστηκε. Παρακαλώ προσπαθήστε ξανά.",
-    "Failed to end poll": "Αποτυχία τερματισμού της δημοσκόπησης",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Προτού υποβάλετε αρχεία καταγραφής, πρέπει να <a>δημιουργήσετε ένα ζήτημα GitHub</a> για να περιγράψετε το πρόβλημά σας.",
     "e.g. my-room": "π.χ. my-room",
     "Spanner": "Γερμανικό κλειδί",
@@ -597,7 +587,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Αποφασίστε ποιοι χώροι μπορούν να έχουν πρόσβαση σε αυτό το δωμάτιο. Εάν επιλεγεί ένας χώρος, τα μέλη του μπορούν να βρουν και να εγγραφούν στο <RoomName/>.",
     "Dial pad": "Πληκτρολόγιο κλήσης",
     "Transfer": "Μεταφορά",
-    "Sent": "Απεσταλμένα",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
     "Failed to start livestream": "Η έναρξη της ζωντανής ροής απέτυχε",
     "Unsent": "Μη απεσταλμένα",
@@ -640,11 +629,7 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Επαληθεύστε αυτήν τη συσκευή για να την επισημάνετε ως αξιόπιστη. Η εμπιστοσύνη αυτής της συσκευής προσφέρει σε εσάς και σε άλλους χρήστες επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Η επαλήθευση αυτού του χρήστη θα επισημάνει τη συνεδρία του ως αξιόπιστη και θα επισημάνει επίσης τη συνεδρία σας ως αξιόπιστη σε αυτόν.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Επαληθεύστε αυτόν τον χρήστη για να τον επισημάνετε ως αξιόπιστο. Η εμπιστοσύνη των χρηστών σάς προσφέρει επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
-    "You may contact me if you have any follow up questions": "Μπορείτε να επικοινωνήσετε μαζί μου εάν έχετε περαιτέρω ερωτήσεις",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
-    "Search for rooms or people": "Αναζήτηση δωματίων ή ατόμων",
-    "The poll has ended. Top answer: %(topAnswer)s": "Η δημοσκόπηση έληξε. Κορυφαία απάντηση: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Η δημοσκόπηση έληξε. Δεν υπάρχουν ψήφοι.",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
     "Allow this widget to verify your identity": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
@@ -1614,7 +1599,8 @@
         "format": "Μορφή",
         "messages": "Μηνύματα",
         "size_limit": "Όριο Μεγέθους",
-        "include_attachments": "Συμπεριλάβετε Συνημμένα"
+        "include_attachments": "Συμπεριλάβετε Συνημμένα",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Δημιουργήστε ένα δωμάτιο βίντεο",
@@ -2915,7 +2901,8 @@
         "may_contact_label": "Μπορείτε να επικοινωνήσετε μαζί μου εάν θέλετε να έρθετε σε επαφή ή να με αφήσετε να δοκιμάσω επερχόμενες ιδέες",
         "pro_type": "ΣΥΜΒΟΥΛΗ: Εάν αναφέρετε ένα σφάλμα, υποβάλετε <debugLogsLink>αρχεία καταγραφής εντοπισμού σφαλμάτων</debugLogsLink> για να μας βοηθήσετε να εντοπίσουμε το πρόβλημα.",
         "existing_issue_link": "Δείτε πρώτα τα <existingIssuesLink>υπάρχοντα ζητήματα (issues) στο Github</existingIssuesLink>. Δε βρήκατε κάτι; <newIssueLink>Ξεκινήστε ένα νέο</newIssueLink>.",
-        "send_feedback_action": "Στείλετε τα σχόλιά σας"
+        "send_feedback_action": "Στείλετε τα σχόλιά σας",
+        "can_contact_label": "Μπορείτε να επικοινωνήσετε μαζί μου εάν έχετε περαιτέρω ερωτήσεις"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3330,7 +3317,13 @@
         "total_n_votes_voted": {
             "one": "Με βάση %(count)s ψήφο",
             "other": "Με βάση %(count)s ψήφους"
-        }
+        },
+        "end_message_no_votes": "Η δημοσκόπηση έληξε. Δεν υπάρχουν ψήφοι.",
+        "end_message": "Η δημοσκόπηση έληξε. Κορυφαία απάντηση: %(topAnswer)s",
+        "error_ending_title": "Αποτυχία τερματισμού της δημοσκόπησης",
+        "error_ending_description": "Συγνώμη, η δημοσκόπηση δεν τερματίστηκε. Παρακαλώ προσπαθήστε ξανά.",
+        "end_title": "Τερματισμός δημοσκόπησης",
+        "end_description": "Είστε βέβαιοι ότι θέλετε να τερματίσετε αυτήν τη δημοσκόπηση; Αυτό θα εμφανίσει τα τελικά αποτελέσματα της δημοσκόπησης και θα εμποδίσει νέους ψήφους."
     },
     "failed_load_async_component": "Αδυναμία φόρτωσης! Ελέγξτε την σύνδεση του δικτύου και προσπαθήστε ξανά.",
     "upload_failed_generic": "Απέτυχε το ανέβασμα του αρχείου '%(fileName)s'.",
@@ -3392,7 +3385,8 @@
         "failed_copy": "Αποτυχία αντιγραφής",
         "something_went_wrong": "Κάτι πήγε στραβά!",
         "update_power_level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
-        "unknown": "Άγνωστο σφάλμα"
+        "unknown": "Άγνωστο σφάλμα",
+        "dialog_description_default": "Παρουσιάστηκε ένα σφάλμα."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -3648,5 +3642,13 @@
         "ongoing": "Αφαίρεση…",
         "confirm_button": "Επιβεβαίωση αφαίρεσης",
         "reason_label": "Αιτία (προαιρετικό)"
+    },
+    "forward": {
+        "no_perms_title": "Δεν έχετε άδεια να το κάνετε αυτό",
+        "sending": "Αποστολή",
+        "sent": "Απεσταλμένα",
+        "send_label": "Αποστολή",
+        "message_preview_heading": "Προεπισκόπηση μηνύματος",
+        "filter_placeholder": "Αναζήτηση δωματίων ή ατόμων"
     }
 }

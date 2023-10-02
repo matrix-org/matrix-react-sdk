@@ -4,7 +4,6 @@
         "other": "y %(count)s más…",
         "one": "y otro más…"
     },
-    "An error has occurred.": "Un error ha ocurrido.",
     "Email address": "Dirección de correo electrónico",
     "Join Room": "Unirme a la sala",
     "Home": "Inicio",
@@ -47,7 +46,6 @@
     "Unnamed room": "Sala sin nombre",
     "Saturday": "Sábado",
     "Monday": "Lunes",
-    "Send": "Enviar",
     "Thursday": "Jueves",
     "Yesterday": "Ayer",
     "Wednesday": "Miércoles",
@@ -603,19 +601,13 @@
     "Reset event store?": "¿Restablecer almacenamiento de eventos?",
     "You most likely do not want to reset your event index store": "Lo más probable es que no quieras restablecer tu almacenamiento de índice de ecentos",
     "Reset event store": "Restablecer el almacenamiento de eventos",
-    "Sending": "Enviando",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "¿Has olvidado o perdido todos los métodos de recuperación? <a>Restablecer todo</a>",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Si restableces todo, volverás a empezar sin sesiones ni usuarios de confianza, y puede que no puedas ver mensajes anteriores.",
     "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
     "Reset everything": "Restablecer todo",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
-    "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "Or send invite link": "O envía un enlace de invitación",
     "Some suggestions may be hidden for privacy.": "Puede que algunas sugerencias no se muestren por motivos de privacidad.",
-    "Search for rooms or people": "Busca salas o gente",
-    "Message preview": "Vista previa del mensaje",
-    "Sent": "Enviado",
-    "You don't have permission to do this": "No tienes permisos para hacer eso",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "User Directory": "Lista de usuarios",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en cuenta que actualizar crea una nueva versión de la sala</b>. Todos los mensajes hasta ahora quedarán archivados aquí, en esta sala.",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Salir de algunas salas",
     "Would you like to leave the rooms in this space?": "¿Quieres salir también de las salas del espacio?",
     "You are about to leave <spaceName/>.": "Estás a punto de salirte de <spaceName/>.",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
@@ -668,12 +659,6 @@
     "Spaces you're in": "Tus espacios",
     "Link to room": "Enlace a la sala",
     "Spaces you know that contain this space": "Espacios que conoces que contienen este espacio",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "¿Seguro que quieres terminar la encuesta? Publicarás los resultados finales y no se podrá votar más.",
-    "End Poll": "Terminar encuesta",
-    "Sorry, the poll did not end. Please try again.": "Lo sentimos, la encuesta no ha terminado. Por favor, inténtalo otra vez.",
-    "Failed to end poll": "No se ha podido terminar la encuesta",
-    "The poll has ended. Top answer: %(topAnswer)s": "La encuesta ha terminado. Opción ganadora: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "La encuesta ha terminado. Nadie ha votado.",
     "Recently viewed": "Visto recientemente",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar otro dispositivo",
@@ -706,7 +691,6 @@
     "%(members)s and %(last)s": "%(members)s y %(last)s",
     "%(members)s and more": "%(members)s y más",
     "Cameras": "Cámaras",
-    "Open room": "Abrir sala",
     "Unread email icon": "Icono de email sin leer",
     "An error occurred whilst sharing your live location, please try again": "Ha ocurrido un error al compartir tu ubicación en tiempo real. Por favor, inténtalo de nuevo",
     "An error occurred whilst sharing your live location": "Ocurrió un error mientras se compartía tu ubicación en tiempo real",
@@ -1907,7 +1891,8 @@
         "format": "Formato",
         "messages": "Mensajes",
         "size_limit": "Límite de tamaño",
-        "include_attachments": "Incluir archivos adjuntos"
+        "include_attachments": "Incluir archivos adjuntos",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Crear una sala de vídeo",
@@ -3318,7 +3303,8 @@
         "may_contact_label": "Podéis poneros en contacto conmigo para responderme o informarme sobre nuevas ideas",
         "pro_type": "CONSEJO: Si creas una incidencia, adjunta <debugLogsLink>tus registros de depuración</debugLogsLink> para ayudarnos a localizar el problema.",
         "existing_issue_link": "Por favor, echa un vistazo primero a <existingIssuesLink>las incidencias de Github</existingIssuesLink>. Si no encuentras nada relacionado, <newIssueLink>crea una nueva incidencia</newIssueLink>.",
-        "send_feedback_action": "Enviar comentarios"
+        "send_feedback_action": "Enviar comentarios",
+        "can_contact_label": "Os podéis poner en contacto conmigo si tenéis alguna pregunta"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3798,7 +3784,13 @@
         "total_n_votes_voted": {
             "other": "%(count)s votos",
             "one": "%(count)s voto"
-        }
+        },
+        "end_message_no_votes": "La encuesta ha terminado. Nadie ha votado.",
+        "end_message": "La encuesta ha terminado. Opción ganadora: %(topAnswer)s",
+        "error_ending_title": "No se ha podido terminar la encuesta",
+        "error_ending_description": "Lo sentimos, la encuesta no ha terminado. Por favor, inténtalo otra vez.",
+        "end_title": "Terminar encuesta",
+        "end_description": "¿Seguro que quieres terminar la encuesta? Publicarás los resultados finales y no se podrá votar más."
     },
     "failed_load_async_component": "No se ha podido cargar. Comprueba tu conexión de red e inténtalo de nuevo.",
     "upload_failed_generic": "La subida del archivo «%(fileName)s ha fallado.",
@@ -3875,7 +3867,8 @@
         "failed_copy": "Falló la copia",
         "something_went_wrong": "¡Algo ha fallado!",
         "update_power_level": "Fallo al cambiar de nivel de acceso",
-        "unknown": "Error desconocido"
+        "unknown": "Error desconocido",
+        "dialog_description_default": "Un error ha ocurrido."
     },
     "in_space1_and_space2": "En los espacios %(space1Name)s y %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4165,5 +4158,14 @@
         "ongoing": "Quitando…",
         "confirm_button": "Confirmar eliminación",
         "reason_label": "Motivo (opcional)"
+    },
+    "forward": {
+        "no_perms_title": "No tienes permisos para hacer eso",
+        "sending": "Enviando",
+        "sent": "Enviado",
+        "open_room": "Abrir sala",
+        "send_label": "Enviar",
+        "message_preview_heading": "Vista previa del mensaje",
+        "filter_placeholder": "Busca salas o gente"
     }
 }

@@ -2,7 +2,6 @@
     "Create new room": "Luo uusi huone",
     "unknown error code": "tuntematon virhekoodi",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
-    "An error has occurred.": "Tapahtui virhe.",
     "and %(count)s others...": {
         "other": "ja %(count)s muuta...",
         "one": "ja yksi muu..."
@@ -48,7 +47,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s %(time)s",
-    "Send": "Lähetä",
     "%(duration)ss": "%(duration)s s",
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
@@ -558,7 +556,6 @@
     },
     "Remember this": "Muista tämä",
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
-    "Sending": "Lähetetään",
     "The server is not configured to indicate what the problem is (CORS).": "Palvelinta ei ole säädetty ilmoittamaan, mikä ongelma on kyseessä (CORS).",
     "Invited people will be able to read old messages.": "Kutsutut ihmiset voivat lukea vanhoja viestejä.",
     "We couldn't create your DM.": "Yksityisviestiä ei voitu luoda.",
@@ -568,10 +565,6 @@
     },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Search spaces": "Etsi avaruuksia",
-    "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
-    "Search for rooms or people": "Etsi huoneita tai ihmisiä",
-    "Message preview": "Viestin esikatselu",
-    "Sent": "Lähetetty",
     "Leave space": "Poistu avaruudesta",
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
     "You are about to leave <spaceName/>.": "Olet aikeissa poistua avaruudesta <spaceName/>.",
@@ -580,7 +573,6 @@
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
     "User Directory": "Käyttäjähakemisto",
-    "MB": "Mt",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
     "Leave all rooms": "Poistu kaikista huoneista",
@@ -612,9 +604,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Aloita keskustelu jonkun kanssa käyttäen heidän sähköpostia tai käyttäjänimeä (kuten <userId/>).",
     "If you can't see who you're looking for, send them your invite link below.": "Jos et näe henkilöä jota etsit, lähetä hänelle linkki alhaalta.",
     "a new master key signature": "uusi pääsalasanan avaintunnus",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Haluatko varmasti päättää tämän kyselyn? Päättäminen näyttää lopulliset tulokset ja estää äänestämisen.",
-    "End Poll": "Päätä kysely",
-    "Sorry, the poll did not end. Please try again.": "Valitettavasti kysely ei päättynyt. Yritä uudelleen.",
     "Forget": "Unohda",
     "%(count)s votes": {
         "one": "%(count)s ääni",
@@ -623,8 +612,6 @@
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
-    "The poll has ended. Top answer: %(topAnswer)s": "Kysely on päättynyt. Suosituin vastaus: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Kysely on päättynyt. Ääniä ei annettu.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
@@ -638,8 +625,6 @@
         "one": "1 osallistuja",
         "other": "%(count)s osallistujaa"
     },
-    "You don't have permission to do this": "Sinulla ei ole lupaa tehdä tätä",
-    "Failed to end poll": "Kyselyn päättäminen epäonnistui",
     "%(members)s and %(last)s": "%(members)s ja %(last)s",
     "Developer": "Kehittäjä",
     "Close sidebar": "Sulje sivupalkki",
@@ -649,7 +634,6 @@
     "Input devices": "Sisääntulolaitteet",
     "Click the button below to confirm setting up encryption.": "Napsauta alla olevaa painiketta vahvistaaksesi salauksen asettamisen.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unohtanut tai kadottanut kaikki palautustavat? <a>Nollaa kaikki</a>",
-    "Open room": "Avaa huone",
     "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Messaging": "Viestintä",
@@ -1798,7 +1782,8 @@
         "title": "Vie keskustelu",
         "messages": "Viestit",
         "size_limit": "Kokoraja",
-        "include_attachments": "Sisällytä liitteet"
+        "include_attachments": "Sisällytä liitteet",
+        "size_limit_postfix": "Mt"
     },
     "create_room": {
         "title_video_room": "Luo videohuone",
@@ -3137,7 +3122,8 @@
         "may_contact_label": "Voitte olla yhteydessä minuun, jos haluatte keskustella palautteesta tai antaa minun testata tulevia ideoita",
         "pro_type": "Vinkki: Jos teet virheilmoituksen, lähetä <debugLogsLink>vianjäljityslokit</debugLogsLink> jotta ongelman ratkaiseminen helpottuu.",
         "existing_issue_link": "Katso ensin <existingIssuesLink>aiemmin raportoidut virheet Githubissa</existingIssuesLink>. Eikö samanlaista virhettä löydy? <newIssueLink>Tee uusi ilmoitus virheestä</newIssueLink>.",
-        "send_feedback_action": "Lähetä palautetta"
+        "send_feedback_action": "Lähetä palautetta",
+        "can_contact_label": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3590,7 +3576,13 @@
         "total_n_votes_voted": {
             "one": "Perustuu %(count)s ääneen",
             "other": "Perustuu %(count)s ääneen"
-        }
+        },
+        "end_message_no_votes": "Kysely on päättynyt. Ääniä ei annettu.",
+        "end_message": "Kysely on päättynyt. Suosituin vastaus: %(topAnswer)s",
+        "error_ending_title": "Kyselyn päättäminen epäonnistui",
+        "error_ending_description": "Valitettavasti kysely ei päättynyt. Yritä uudelleen.",
+        "end_title": "Päätä kysely",
+        "end_description": "Haluatko varmasti päättää tämän kyselyn? Päättäminen näyttää lopulliset tulokset ja estää äänestämisen."
     },
     "failed_load_async_component": "Lataaminen epäonnistui! Tarkista verkkoyhteytesi ja yritä uudelleen.",
     "upload_failed_generic": "Tiedoston '%(fileName)s' lähettäminen ei onnistunut.",
@@ -3670,7 +3662,8 @@
         "failed_copy": "Kopiointi epäonnistui",
         "something_went_wrong": "Jokin meni vikaan!",
         "update_power_level": "Oikeustason muuttaminen epäonnistui",
-        "unknown": "Tuntematon virhe"
+        "unknown": "Tuntematon virhe",
+        "dialog_description_default": "Tapahtui virhe."
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3955,5 +3948,14 @@
         "ongoing": "Poistetaan…",
         "confirm_button": "Varmista poistaminen",
         "reason_label": "Syy (valinnainen)"
+    },
+    "forward": {
+        "no_perms_title": "Sinulla ei ole lupaa tehdä tätä",
+        "sending": "Lähetetään",
+        "sent": "Lähetetty",
+        "open_room": "Avaa huone",
+        "send_label": "Lähetä",
+        "message_preview_heading": "Viestin esikatselu",
+        "filter_placeholder": "Etsi huoneita tai ihmisiä"
     }
 }

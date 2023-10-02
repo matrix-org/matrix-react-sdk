@@ -1,7 +1,6 @@
 {
     "Email address": "邮箱地址",
     "Session ID": "会话 ID",
-    "An error has occurred.": "发生了一个错误。",
     "Join Room": "加入房间",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "and %(count)s others...": {
@@ -43,7 +42,6 @@
     "Nov": "十一月",
     "Dec": "十二月",
     "This will allow you to reset your password and receive notifications.": "这将允许你重置你的密码和接收通知。",
-    "Send": "发送",
     "Unnamed room": "未命名的房间",
     "Delete Widget": "删除挂件",
     "collapse": "折叠",
@@ -566,7 +564,6 @@
     "Guernsey": "根西岛",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "无法访问秘密存储。请确认你输入了正确的安全短语。",
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "无法使用此安全密钥解密备份：请检查你输入的安全密钥是否正确。",
-    "Sending": "正在发送",
     "Security Key mismatch": "安全密钥不符",
     "Unable to set up keys": "无法设置密钥",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "如果你全部重置，你将会在没有受信任的会话重新开始、没有受信任的用户，且可能会看不到过去的消息。",
@@ -593,7 +590,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "使用某人的名称、电子邮箱地址或用户名来与其开始对话（如 <userId/>）。",
     "A call can only be transferred to a single user.": "通话只能转移到单个用户。",
     "We couldn't create your DM.": "我们无法创建你的私聊。",
-    "You may contact me if you have any follow up questions": "如果你有任何后续问题，可以联系我",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -612,10 +608,6 @@
     "Incorrect Security Phrase": "安全短语错误",
     "Or send invite link": "或发送邀请链接",
     "Some suggestions may be hidden for privacy.": "出于隐私考虑，部分建议可能会被隐藏。",
-    "Search for rooms or people": "搜索房间或用户",
-    "Message preview": "消息预览",
-    "Sent": "已发送",
-    "You don't have permission to do this": "你无权执行此操作",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
     "Automatically invite members from this room to the new one": "自动邀请该房间的成员加入新房间",
@@ -637,7 +629,6 @@
     "Leave some rooms": "离开一些房间",
     "Leave all rooms": "离开所有房间",
     "Don't leave any rooms": "不离开任何房间",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s 条回复",
         "other": "%(count)s 条回复"
@@ -662,12 +653,6 @@
     "Messaging": "消息传递",
     "Spaces you know that contain this space": "你知道的包含这个空间的空间",
     "Recently viewed": "最近查看",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您确定要结束此投票吗？ 这将显示投票的最终结果并阻止人们投票。",
-    "End Poll": "结束投票",
-    "Sorry, the poll did not end. Please try again.": "抱歉，投票没有结束。 请再试一次。",
-    "Failed to end poll": "结束投票失败",
-    "The poll has ended. Top answer: %(topAnswer)s": "投票已经结束。 得票最多答案：%(topAnswer)s",
-    "The poll has ended. No votes were cast.": "投票已经结束。 没有投票。",
     "Link to room": "房间链接",
     "Recent searches": "最近的搜索",
     "To search messages, look for this icon at the top of a room <icon/>": "要搜索消息，请在房间顶部查找此图标<icon/>",
@@ -714,7 +699,6 @@
     "Search Dialog": "搜索对话",
     "Join %(roomAddress)s": "加入%(roomAddress)s",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "当你登出时，这些密钥会从此设备删除。这意味着你将无法查阅已加密消息，除非你在其他设备上有那些消息的密钥，或者已将其备份到服务器。",
-    "Open room": "打开房间",
     "Output devices": "输出设备",
     "Input devices": "输入设备",
     "View List": "查看列表",
@@ -1789,7 +1773,8 @@
         "format": "格式",
         "messages": "消息",
         "size_limit": "大小限制",
-        "include_attachments": "包括附件"
+        "include_attachments": "包括附件",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "创建视频房间",
@@ -3139,7 +3124,8 @@
         "may_contact_label": "如果您想跟进或让我测试即将到来的想法，您可以与我联系",
         "pro_type": "专业建议：如果你要发起新问题，请一并提交<debugLogsLink>调试日志</debugLogsLink>，以便我们找出问题根源。",
         "existing_issue_link": "请先查找一下 <existingIssuesLink>Github 上已有的问题</existingIssuesLink>，以免重复。找不到重复问题？<newIssueLink>发起一个吧</newIssueLink>。",
-        "send_feedback_action": "发送反馈"
+        "send_feedback_action": "发送反馈",
+        "can_contact_label": "如果你有任何后续问题，可以联系我"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3594,7 +3580,13 @@
         "total_n_votes_voted": {
             "one": "基于 %(count)s 票",
             "other": "基于 %(count)s 票"
-        }
+        },
+        "end_message_no_votes": "投票已经结束。 没有投票。",
+        "end_message": "投票已经结束。 得票最多答案：%(topAnswer)s",
+        "error_ending_title": "结束投票失败",
+        "error_ending_description": "抱歉，投票没有结束。 请再试一次。",
+        "end_title": "结束投票",
+        "end_description": "您确定要结束此投票吗？ 这将显示投票的最终结果并阻止人们投票。"
     },
     "failed_load_async_component": "无法加载！请检查你的网络连接并重试。",
     "upload_failed_generic": "文件《%(fileName)s》上传失败。",
@@ -3674,7 +3666,8 @@
         "failed_copy": "复制失败",
         "something_went_wrong": "出了点问题！",
         "update_power_level": "权力级别修改失败",
-        "unknown": "未知错误"
+        "unknown": "未知错误",
+        "dialog_description_default": "发生了一个错误。"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3938,5 +3931,14 @@
         "ongoing": "正在移除…",
         "confirm_button": "确认移除",
         "reason_label": "理由（可选）"
+    },
+    "forward": {
+        "no_perms_title": "你无权执行此操作",
+        "sending": "正在发送",
+        "sent": "已发送",
+        "open_room": "打开房间",
+        "send_label": "发送",
+        "message_preview_heading": "消息预览",
+        "filter_placeholder": "搜索房间或用户"
     }
 }

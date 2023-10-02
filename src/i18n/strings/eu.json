@@ -9,7 +9,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
     "Session ID": "Saioaren IDa",
     "Moderator": "Moderatzailea",
-    "An error has occurred.": "Errore bat gertatu da.",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
     "not specified": "zehaztu gabe",
     "Sun": "Ig",
@@ -48,7 +47,6 @@
     "AM": "AM",
     "PM": "PM",
     "Restricted": "Mugatua",
-    "Send": "Bidali",
     "%(duration)ss": "%(duration)s s",
     "%(duration)sm": "%(duration)s m",
     "%(duration)sh": "%(duration)s h",
@@ -269,7 +267,6 @@
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
-    "Message preview": "Mezu-aurrebista",
     "Switch theme": "Aldatu azala",
     "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
     "The server has denied your request.": "Zerbitzariak zure eskariari uko egin dio.",
@@ -1755,7 +1752,8 @@
         "failed_copy": "Kopiak huts egin du",
         "something_went_wrong": "Zerk edo zerk huts egin du!",
         "update_power_level": "Huts egin du botere maila aldatzean",
-        "unknown": "Errore ezezaguna"
+        "unknown": "Errore ezezaguna",
+        "dialog_description_default": "Errore bat gertatu da."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1918,5 +1916,9 @@
         "error": "Ezin duzu mezu hau ezabatu. (%(code)s)",
         "ongoing": "Kentzen…",
         "confirm_button": "Berretsi kentzea"
+    },
+    "forward": {
+        "send_label": "Bidali",
+        "message_preview_heading": "Mezu-aurrebista"
     }
 }

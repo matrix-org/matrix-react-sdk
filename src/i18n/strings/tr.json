@@ -4,7 +4,6 @@
         "one": "ve bir diğeri...",
         "other": "ve %(count)s diğerleri..."
     },
-    "An error has occurred.": "Bir hata oluştu.",
     "Email address": "E-posta Adresi",
     "Home": "Ev",
     "Join Room": "Odaya Katıl",
@@ -53,7 +52,6 @@
     "Saturday": "Cumartesi",
     "Monday": "Pazartesi",
     "Wednesday": "Çarşamba",
-    "Send": "Gönder",
     "Thursday": "Perşembe",
     "Yesterday": "Dün",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
@@ -2161,7 +2159,8 @@
         "failed_copy": "Kopyalama başarısız",
         "something_went_wrong": "Bir şeyler yanlış gitti!",
         "update_power_level": "Güç seviyesini değiştirme başarısız oldu",
-        "unknown": "Bilinmeyen Hata"
+        "unknown": "Bilinmeyen Hata",
+        "dialog_description_default": "Bir hata oluştu."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2336,5 +2335,8 @@
         "error": "Bu mesajı silemezsiniz (%(code)s)",
         "ongoing": "Siliniyor…",
         "confirm_button": "Kaldırma İşlemini Onayla"
+    },
+    "forward": {
+        "send_label": "Gönder"
     }
 }

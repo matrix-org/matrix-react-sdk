@@ -1,5 +1,4 @@
 {
-    "An error has occurred.": "Telah terjadi kesalahan.",
     "Email address": "Alamat email",
     "Session ID": "ID Sesi",
     "unknown error code": "kode kesalahan tidak diketahui",
@@ -33,7 +32,6 @@
     "Saturday": "Sabtu",
     "Monday": "Senin",
     "Wednesday": "Rabu",
-    "Send": "Kirim",
     "Thursday": "Kamis",
     "Yesterday": "Kemarin",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -383,11 +381,8 @@
     },
     "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
-    "Sent": "Terkirim",
-    "MB": "MB",
     "Hold": "Jeda",
     "Transfer": "Pindah",
-    "Sending": "Mengirim",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
@@ -459,10 +454,6 @@
     "Failed to upgrade room": "Gagal untuk meningkatkan ruangan",
     "Room Settings - %(roomName)s": "Pengaturan Ruangan — %(roomName)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
-    "You may contact me if you have any follow up questions": "Anda mungkin menghubungi saya jika Anda mempunyai pertanyaan lanjutan",
-    "Search for rooms or people": "Cari ruangan atau orang",
-    "Message preview": "Tampilan pesan",
-    "You don't have permission to do this": "Anda tidak memiliki izin untuk melakukannya",
     "Switch theme": "Ubah tema",
     "<inviter/> invites you": "<inviter/> mengundang Anda",
     "No results found": "Tidak ada hasil yang ditemukan",
@@ -662,12 +653,6 @@
     "Messaging": "Perpesanan",
     "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
     "Recently viewed": "Baru saja dilihat",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Apakah Anda yakin untuk mengakhiri poll ini? Ini akan menampilkan hasil akhir dari poll dan orang-orang tidak dapat memberikan suara lagi.",
-    "End Poll": "Akhiri Poll",
-    "Sorry, the poll did not end. Please try again.": "Maaf, poll tidak berakhir. Silakan coba lagi.",
-    "Failed to end poll": "Gagal untuk mengakhiri poll",
-    "The poll has ended. Top answer: %(topAnswer)s": "Poll telah berakhir. Jawaban teratas: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Poll telah berakhir. Tidak ada yang memberi suara.",
     "Link to room": "Tautan ke ruangan",
     "Recent searches": "Pencarian terkini",
     "To search messages, look for this icon at the top of a room <icon/>": "Untuk mencari pesan-pesan, lihat ikon ini di atas ruangan <icon/>",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda",
     "%(members)s and %(last)s": "%(members)s dan %(last)s",
     "%(members)s and more": "%(members)s dan lainnya",
-    "Open room": "Buka ruangan",
     "Cameras": "Kamera",
     "Output devices": "Perangkat keluaran",
     "Input devices": "Perangkat masukan",
@@ -1999,7 +1983,8 @@
         "format": "Format",
         "messages": "Pesan",
         "size_limit": "Batas Ukuran",
-        "include_attachments": "Tambahkan Lampiran"
+        "include_attachments": "Tambahkan Lampiran",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Buat sebuah ruangan video",
@@ -3469,7 +3454,8 @@
         "may_contact_label": "Anda mungkin hubungi saya jika Anda ingin menindaklanjuti atau memberi tahu saya untuk menguji ide baru",
         "pro_type": "Jika Anda membuat issue, silakan kirimkan <debugLogsLink>log pengawakutu</debugLogsLink> untuk membantu kami menemukan masalahnya.",
         "existing_issue_link": "Mohon lihat <existingIssuesLink>bug yang sudah ada di GitHub</existingIssuesLink> dahulu. Tidak ada? <newIssueLink>Buat yang baru</newIssueLink>.",
-        "send_feedback_action": "Kirimkan masukan"
+        "send_feedback_action": "Kirimkan masukan",
+        "can_contact_label": "Anda mungkin menghubungi saya jika Anda mempunyai pertanyaan lanjutan"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3978,7 +3964,13 @@
         "total_n_votes_voted": {
             "one": "Berdasarkan oleh %(count)s suara",
             "other": "Berdasarkan oleh %(count)s suara"
-        }
+        },
+        "end_message_no_votes": "Poll telah berakhir. Tidak ada yang memberi suara.",
+        "end_message": "Poll telah berakhir. Jawaban teratas: %(topAnswer)s",
+        "error_ending_title": "Gagal untuk mengakhiri poll",
+        "error_ending_description": "Maaf, poll tidak berakhir. Silakan coba lagi.",
+        "end_title": "Akhiri Poll",
+        "end_description": "Apakah Anda yakin untuk mengakhiri poll ini? Ini akan menampilkan hasil akhir dari poll dan orang-orang tidak dapat memberikan suara lagi."
     },
     "failed_load_async_component": "Tidak dapat memuat! Periksa koneksi jaringan Anda dan coba lagi.",
     "upload_failed_generic": "File '%(fileName)s' gagal untuk diunggah.",
@@ -4063,7 +4055,8 @@
         "something_went_wrong": "Ada sesuatu yang salah!",
         "download_media": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
         "update_power_level": "Gagal untuk mengubah tingkat daya",
-        "unknown": "Kesalahan tidak diketahui"
+        "unknown": "Kesalahan tidak diketahui",
+        "dialog_description_default": "Telah terjadi kesalahan."
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4370,5 +4363,14 @@
         "confirm_description_state": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
         "confirm_button": "Konfirmasi Penghapusan",
         "reason_label": "Alasan (opsional)"
+    },
+    "forward": {
+        "no_perms_title": "Anda tidak memiliki izin untuk melakukannya",
+        "sending": "Mengirim",
+        "sent": "Terkirim",
+        "open_room": "Buka ruangan",
+        "send_label": "Kirim",
+        "message_preview_heading": "Tampilan pesan",
+        "filter_placeholder": "Cari ruangan atau orang"
     }
 }

@@ -33,7 +33,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Join Room": "Ingressar na sala",
     "not specified": "não especificado",
-    "An error has occurred.": "Ocorreu um erro.",
     "Email address": "Endereço de email",
     "Warning!": "Atenção!",
     "Unable to restore session": "Não foi possível restaurar a sessão",
@@ -55,7 +54,6 @@
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
-    "Send": "Enviar",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
@@ -896,7 +894,8 @@
         "failed_copy": "Falha ao copiar",
         "something_went_wrong": "Algo deu errado!",
         "update_power_level": "Não foi possível mudar o nível de permissões",
-        "unknown": "Erro desconhecido"
+        "unknown": "Erro desconhecido",
+        "dialog_description_default": "Ocorreu um erro."
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificações",
@@ -946,5 +945,8 @@
     "redact": {
         "error": "Não pode apagar esta mensagem. (%(code)s)",
         "confirm_button": "Confirmar Remoção"
+    },
+    "forward": {
+        "send_label": "Enviar"
     }
 }

@@ -1,5 +1,4 @@
 {
-    "Send": "Gửi",
     "Sun": "Chủ Nhật",
     "Mon": "Thứ Hai",
     "Tue": "Thứ Ba",
@@ -188,16 +187,8 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Xác thực thiết bị này để đánh dấu thiết bị là đáng tin cậy. Tin tưởng vào thiết bị này giúp bạn và những người dùng khác yên tâm hơn khi sử dụng các tin nhắn được mã hóa đầu cuối.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Việc xác thực người dùng này sẽ đánh dấu phiên của họ là đáng tin cậy và cũng đánh dấu phiên của bạn là đáng tin cậy đối với họ.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Xác thực người dùng này để đánh dấu họ là đáng tin cậy. Người dùng đáng tin cậy giúp bạn yên tâm hơn khi sử dụng các tin nhắn được mã hóa end-to-end.",
-    "You may contact me if you have any follow up questions": "Bạn có thể liên hệ với tôi nếu bạn có bất kỳ câu hỏi tiếp theo nào",
-    "Search for rooms or people": "Tìm kiếm phòng hoặc người",
-    "Message preview": "Xem trước tin nhắn",
-    "Sent": "Đã gửi",
-    "Sending": "Đang gửi",
-    "You don't have permission to do this": "Bạn không có quyền làm điều này",
     "<inviter/> invites you": "<inviter /> mời bạn",
     "No results found": "không tim được kêt quả",
-    "MB": "MB",
-    "An error has occurred.": "Một lỗi đã xảy ra.",
     "Email address": "Địa chỉ thư điện tử",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Sử dụng máy chủ định danh để mời qua địa chỉ thư điện tử. Quản lý trong mục Cài đặt <settings>Settings</settings>.",
@@ -674,12 +665,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Điều này nhóm các cuộc trò chuyện của bạn với các thành viên trong Space này. Tắt tính năng này sẽ ẩn các cuộc trò chuyện đó khỏi %(spaceName)s.",
     "Sections to show": "Các phần để hiển thị",
     "Link to room": "Liên kết đến phòng",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Bạn có chắc muốn kết thúc cuộc thăm dò ý kiến? Điều này sẽ hiển thị kết quả cuối cùng của cuộc thăm dò ý kiến và ngăn mọi người bỏ phiếu.",
-    "End Poll": "Kết thúc cuộc thăm dò ý kiến",
-    "Sorry, the poll did not end. Please try again.": "Xin lỗi, cuộc thăm dò ý kiến chưa kết thúc. Vui lòng thử lại.",
-    "Failed to end poll": "Kết thúc cuộc thăm dò ý kiến thất bại",
-    "The poll has ended. Top answer: %(topAnswer)s": "Cuộc thăm dò ý kiến đã kết thúc. Câu trả lời đứng đầu: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Cuộc thăm dò ý kiến đã kết thúc. Không có phiếu bầu được bỏ.",
     "toggle event": "chuyển đổi sự kiện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
@@ -697,7 +682,6 @@
         "other": "%(count)s người tham gia"
     },
     "Invites by email can only be sent one at a time": "Chỉ có thể gửi một thư điện tử mời mỗi lần",
-    "Open room": "Mở phòng",
     "%(members)s and %(last)s": "%(members)s và %(last)s",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
     "Join %(roomAddress)s": "Tham gia %(roomAddress)s",
@@ -1864,7 +1848,8 @@
         "format": "Định dạng",
         "messages": "Tin nhắn",
         "size_limit": "Giới hạn kích thước",
-        "include_attachments": "Bao gồm các đính kèm"
+        "include_attachments": "Bao gồm các đính kèm",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Tạo một phòng truyền hình",
@@ -3255,7 +3240,8 @@
         "may_contact_label": "Chúng tôi có thể liên hệ với bạn để cho phép bạn theo dõi hoặc thử nghiệm những tính năng sắp tới",
         "pro_type": "MẸO NHỎ: Nếu bạn là người đầu tiên gặp lỗi, vui lòng gửi <debugLogsLink>nhật ký gỡ lỗi</debugLogsLink> để giúp chúng tôi xử lý vấn đề.",
         "existing_issue_link": "Hãy xem các <existingIssuesLink>lỗi đã được phát hiện trên GitHub</existingIssuesLink> trước. Chưa ai từng gặp lỗi này? <newIssueLink>Báo lỗi mới</newIssueLink>.",
-        "send_feedback_action": "Gửi phản hồi"
+        "send_feedback_action": "Gửi phản hồi",
+        "can_contact_label": "Bạn có thể liên hệ với tôi nếu bạn có bất kỳ câu hỏi tiếp theo nào"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3703,7 +3689,13 @@
         "total_n_votes_voted": {
             "one": "Dựa theo %(count)s phiếu bầu",
             "other": "Dựa theo %(count)s phiếu bầu"
-        }
+        },
+        "end_message_no_votes": "Cuộc thăm dò ý kiến đã kết thúc. Không có phiếu bầu được bỏ.",
+        "end_message": "Cuộc thăm dò ý kiến đã kết thúc. Câu trả lời đứng đầu: %(topAnswer)s",
+        "error_ending_title": "Kết thúc cuộc thăm dò ý kiến thất bại",
+        "error_ending_description": "Xin lỗi, cuộc thăm dò ý kiến chưa kết thúc. Vui lòng thử lại.",
+        "end_title": "Kết thúc cuộc thăm dò ý kiến",
+        "end_description": "Bạn có chắc muốn kết thúc cuộc thăm dò ý kiến? Điều này sẽ hiển thị kết quả cuối cùng của cuộc thăm dò ý kiến và ngăn mọi người bỏ phiếu."
     },
     "failed_load_async_component": "Không thể tải dữ liệu! Kiểm tra kết nối mạng và thử lại.",
     "upload_failed_generic": "Không tải lên được tập tin '%(fileName)s' .",
@@ -3786,7 +3778,8 @@
         "something_went_wrong": "Đã xảy ra lỗi!",
         "download_media": "Tải xuống phương tiện nguồn thất bại, không tìm thấy nguồn url",
         "update_power_level": "Không thay đổi được mức công suất",
-        "unknown": "Lỗi không thể nhận biết"
+        "unknown": "Lỗi không thể nhận biết",
+        "dialog_description_default": "Một lỗi đã xảy ra."
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4062,5 +4055,14 @@
         "ongoing": "Đang xóa…",
         "confirm_button": "Xác nhận Loại bỏ",
         "reason_label": "Lý do (không bắt buộc)"
+    },
+    "forward": {
+        "no_perms_title": "Bạn không có quyền làm điều này",
+        "sending": "Đang gửi",
+        "sent": "Đã gửi",
+        "open_room": "Mở phòng",
+        "send_label": "Gửi",
+        "message_preview_heading": "Xem trước tin nhắn",
+        "filter_placeholder": "Tìm kiếm phòng hoặc người"
     }
 }

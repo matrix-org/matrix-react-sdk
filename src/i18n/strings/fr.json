@@ -4,7 +4,6 @@
         "other": "et %(count)s autres…",
         "one": "et un autre…"
     },
-    "An error has occurred.": "Une erreur est survenue.",
     "Join Room": "Rejoindre le salon",
     "Moderator": "Modérateur",
     "not specified": "non spécifié",
@@ -56,7 +55,6 @@
     "%(duration)sd": "%(duration)sj",
     "expand": "développer",
     "collapse": "réduire",
-    "Send": "Envoyer",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
     "Sunday": "Dimanche",
     "Today": "Aujourd’hui",
@@ -272,7 +270,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Votre serveur d’accueil a dépassé une de ses limites de ressources.",
     "Ok": "OK",
     "Switch theme": "Changer le thème",
-    "Message preview": "Aperçu de message",
     "Looks good!": "Ça a l’air correct !",
     "Wrong file type": "Mauvais type de fichier",
     "Security Phrase": "Phrase de sécurité",
@@ -609,13 +606,8 @@
     "Reset everything": "Tout réinitialiser",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Vous avez perdu ou oublié tous vos moyens de récupération ? <a>Tout réinitialiser</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
-    "Sending": "Envoi",
-    "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "Or send invite link": "Ou envoyer le lien d’invitation",
     "Some suggestions may be hidden for privacy.": "Certaines suggestions pourraient être masquées pour votre confidentialité.",
-    "Search for rooms or people": "Rechercher des salons ou des gens",
-    "Sent": "Envoyé",
-    "You don't have permission to do this": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Veuillez notez que la mise-à-jour va créer une nouvelle version de ce salon</b>. Tous les messages actuels resteront dans ce salon archivé.",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Quitter certains salons",
     "Leave all rooms": "Quitter tous les salons",
     "Don't leave any rooms": "Ne quitter aucun salon",
-    "MB": "Mo",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
         "one": "%(count)s réponse",
@@ -663,12 +654,6 @@
         "other": "%(spaceName)s et %(count)s autres"
     },
     "Link to room": "Lien vers le salon",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Êtes-vous sûr de vouloir terminer ce sondage ? Les résultats définitifs du sondage seront affichés et les gens ne pourront plus voter.",
-    "End Poll": "Terminer le sondage",
-    "Sorry, the poll did not end. Please try again.": "Désolé, le sondage n’a pas pu se terminer. Veuillez réessayer.",
-    "Failed to end poll": "Impossible de terminer le sondage",
-    "The poll has ended. Top answer: %(topAnswer)s": "Le sondage est terminé. Meilleure réponse : %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Le sondage est terminé. Aucun vote n’a été exprimé.",
     "Recent searches": "Recherches récentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
     "Other searches": "Autres recherches",
@@ -707,7 +692,6 @@
     "Cameras": "Caméras",
     "Output devices": "Périphériques de sortie",
     "Input devices": "Périphériques d’entrée",
-    "Open room": "Ouvrir le salon",
     "%(members)s and %(last)s": "%(members)s et %(last)s",
     "Unread email icon": "Icone d’e-mail non lu",
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
@@ -1998,7 +1982,8 @@
         "format": "Format",
         "messages": "Messages",
         "size_limit": "Taille maximale",
-        "include_attachments": "Inclure les fichiers attachés"
+        "include_attachments": "Inclure les fichiers attachés",
+        "size_limit_postfix": "Mo"
     },
     "create_room": {
         "title_video_room": "Créer un salon visio",
@@ -3462,7 +3447,8 @@
         "may_contact_label": "Vous pouvez me contacter si vous voulez un suivi ou me laisser tester de nouvelles idées",
         "pro_type": "CONSEIL : si vous rapportez un bug, merci d’envoyer <debugLogsLink>les journaux de débogage</debugLogsLink> pour nous aider à identifier le problème.",
         "existing_issue_link": "Merci de regarder d’abord les <existingIssuesLink>bugs déjà répertoriés sur Github</existingIssuesLink>. Pas de résultat ? <newIssueLink>Rapportez un nouveau bug</newIssueLink>.",
-        "send_feedback_action": "Envoyer un commentaire"
+        "send_feedback_action": "Envoyer un commentaire",
+        "can_contact_label": "Vous pouvez me contacter si vous avez des questions par la suite"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3971,7 +3957,13 @@
         "total_n_votes_voted": {
             "one": "Sur la base de %(count)s vote",
             "other": "Sur la base de %(count)s votes"
-        }
+        },
+        "end_message_no_votes": "Le sondage est terminé. Aucun vote n’a été exprimé.",
+        "end_message": "Le sondage est terminé. Meilleure réponse : %(topAnswer)s",
+        "error_ending_title": "Impossible de terminer le sondage",
+        "error_ending_description": "Désolé, le sondage n’a pas pu se terminer. Veuillez réessayer.",
+        "end_title": "Terminer le sondage",
+        "end_description": "Êtes-vous sûr de vouloir terminer ce sondage ? Les résultats définitifs du sondage seront affichés et les gens ne pourront plus voter."
     },
     "failed_load_async_component": "Chargement impossible ! Vérifiez votre connexion au réseau et réessayez.",
     "upload_failed_generic": "Le fichier « %(fileName)s » n’a pas pu être envoyé.",
@@ -4056,7 +4048,8 @@
         "something_went_wrong": "Quelque chose s’est mal déroulé !",
         "download_media": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée",
         "update_power_level": "Échec du changement de rang",
-        "unknown": "Erreur inconnue"
+        "unknown": "Erreur inconnue",
+        "dialog_description_default": "Une erreur est survenue."
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4363,5 +4356,14 @@
         "confirm_description_state": "Notez bien que la suppression de modification du salon comme celui-ci peut annuler ce changement.",
         "confirm_button": "Confirmer la suppression",
         "reason_label": "Raison (optionnelle)"
+    },
+    "forward": {
+        "no_perms_title": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
+        "sending": "Envoi",
+        "sent": "Envoyé",
+        "open_room": "Ouvrir le salon",
+        "send_label": "Envoyer",
+        "message_preview_heading": "Aperçu de message",
+        "filter_placeholder": "Rechercher des salons ou des gens"
     }
 }

@@ -29,7 +29,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s de %(fullYear)s %(time)s",
     "Restricted": "Restringit",
     "Moderator": "Moderador",
-    "Send": "Envia",
     "and %(count)s others...": {
         "other": "i %(count)s altres...",
         "one": "i un altre..."
@@ -51,7 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
-    "An error has occurred.": "S'ha produït un error.",
     "Unable to restore session": "No s'ha pogut restaurar la sessió",
     "Verification Pending": "Verificació pendent",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Reviseu el vostre correu electrònic i feu clic a l'enllaç que conté. Un cop fet això, feu clic a Continua.",
@@ -789,7 +787,8 @@
         "failed_copy": "No s'ha pogut copiar",
         "something_went_wrong": "Alguna cosa ha anat malament!",
         "update_power_level": "No s'ha pogut canviar el nivell d'autoritat",
-        "unknown": "Error desconegut"
+        "unknown": "Error desconegut",
+        "dialog_description_default": "S'ha produït un error."
     },
     "items_and_n_others": {
         "other": "<Items/> i %(count)s altres",
@@ -858,5 +857,8 @@
     "redact": {
         "error": "No podeu eliminar aquest missatge. (%(code)s)",
         "confirm_button": "Confirmeu l'eliminació"
+    },
+    "forward": {
+        "send_label": "Envia"
     }
 }

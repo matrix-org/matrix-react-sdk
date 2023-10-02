@@ -1,5 +1,4 @@
 {
-    "Send": "Saada",
     "Jan": "jaan",
     "Feb": "veeb",
     "Mar": "mär",
@@ -182,7 +181,6 @@
     "Not Trusted": "Ei ole usaldusväärne",
     "Looks good!": "Tundub õige!",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
-    "Message preview": "Sõnumi eelvaade",
     "Upgrade this room to version %(version)s": "Uuenda jututuba versioonini %(version)s",
     "Upgrade Room Version": "Uuenda jututoa versioon",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Selle jututoa uuendamine eeldab tema praeguse ilmingu tegevuse lõpetamist ja uue jututoa loomist selle asemele. Selleks, et kõik kulgeks jututoas osalejate jaoks ladusalt, toimime nüüd nii:",
@@ -202,7 +200,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Kui sa varem oled kasutanud uuemat %(brand)s'i versiooni, siis sinu pragune sessioon ei pruugi olla sellega ühilduv. Sulge see aken ja jätka selle uuema versiooni kasutamist.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Brauseri andmeruumi tühjendamine võib selle vea lahendada, kui samas logid sa ka välja ning kogu krüptitud vestlusajalugu muutub loetamatuks.",
     "Verification Pending": "Verifikatsioon on ootel",
-    "An error has occurred.": "Tekkis viga.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Selle kasutaja usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis kasutajate verifitseerimine tagab sulle täiendava meelerahu.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Selle kasutaja verifitseerimisel märgitakse tema sessioon usaldusväärseks ning samuti märgitakse sinu sessioon tema jaoks usaldusväärseks.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Selle seadme usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis selle seadme usaldamine tagab sulle ja teistele kasutajatele täiendava meelerahu.",
@@ -609,13 +606,8 @@
     "Reset everything": "Alusta kõigega algusest",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unustasid või oled kaotanud kõik võimalused ligipääsu taastamiseks? <a>Lähtesta kõik ühe korraga</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
-    "Sending": "Saadan",
-    "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "Or send invite link": "Või saada kutse link",
     "Some suggestions may be hidden for privacy.": "Mõned soovitused võivad privaatsusseadistuste tõttu olla peidetud.",
-    "Search for rooms or people": "Otsi jututubasid või inimesi",
-    "Sent": "Saadetud",
-    "You don't have permission to do this": "Sul puuduvad selleks toiminguks õigused",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt.",
     "User Directory": "Kasutajate kataloog",
     "You're removing all spaces. Access will default to invite only": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Lahku mõnedest jututubadest",
     "Leave all rooms": "Lahku kõikidest jututubadest",
     "Don't leave any rooms": "Ära lahku ühestki jututoast",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s vastus",
         "other": "%(count)s vastust"
@@ -662,12 +653,6 @@
     "Moderation": "Modereerimine",
     "Spaces you know that contain this space": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see kogukond",
     "Recently viewed": "Hiljuti vaadatud",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Kas sa oled kindel, et soovid lõpetada küsitlust? Sellega on tulemused lõplikud ja rohkem osaleda ei saa.",
-    "End Poll": "Lõpeta küsitlus",
-    "Sorry, the poll did not end. Please try again.": "Vabandust, aga küsitlus jäi lõpetamata. Palun proovi uuesti.",
-    "Failed to end poll": "Küsitluse lõpetamine ei õnnestunud",
-    "The poll has ended. Top answer: %(topAnswer)s": "Küsitlus on läbi. Populaarseim vastus: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Küsitlus on läbi. Ühtegi osalejate ei ole.",
     "Recent searches": "Hiljutised otsingud",
     "To search messages, look for this icon at the top of a room <icon/>": "Sõnumite otsimiseks klõpsi <icon/> ikooni jututoa ülaosas",
     "Other searches": "Muud otsingud",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "Sinu asukoha reaalajas jagamise lõpetamisel tekkis viga",
     "%(members)s and more": "%(members)s ja veel",
     "%(members)s and %(last)s": "%(members)s ja veel %(last)s",
-    "Open room": "Ava jututuba",
     "Cameras": "Kaamerad",
     "Output devices": "Väljundseadmed",
     "Input devices": "Sisendseadmed",
@@ -1998,7 +1982,8 @@
         "format": "Vorming",
         "messages": "Sõnumid",
         "size_limit": "Andmemahu piir",
-        "include_attachments": "Kaasa manused"
+        "include_attachments": "Kaasa manused",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Loo uus videotuba",
@@ -3462,7 +3447,8 @@
         "may_contact_label": "Võid minuga ühendust võtta, kui soovid jätkata mõttevahetust või lasta mul tulevasi ideid katsetada",
         "pro_type": "SOOVITUS: Kui sa koostad uut veateadet, siis meil on lihtsam vea põhjuseni leida, kui sa lisad juurde ka <debugLogsLink>silumislogid</debugLogsLink>.",
         "existing_issue_link": "Palun esmalt vaata, kas <existingIssuesLink>Githubis on selline viga juba kirjeldatud</existingIssuesLink>. Sa ei leidnud midagi? <newIssueLink>Siis saada uus veateade</newIssueLink>.",
-        "send_feedback_action": "Saada tagasiside"
+        "send_feedback_action": "Saada tagasiside",
+        "can_contact_label": "Kui sul on lisaküsimusi, siis vastan neile hea meelega"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3971,7 +3957,13 @@
         "total_n_votes_voted": {
             "one": "Aluseks on %(count)s hääl",
             "other": "Aluseks on %(count)s häält"
-        }
+        },
+        "end_message_no_votes": "Küsitlus on läbi. Ühtegi osalejate ei ole.",
+        "end_message": "Küsitlus on läbi. Populaarseim vastus: %(topAnswer)s",
+        "error_ending_title": "Küsitluse lõpetamine ei õnnestunud",
+        "error_ending_description": "Vabandust, aga küsitlus jäi lõpetamata. Palun proovi uuesti.",
+        "end_title": "Lõpeta küsitlus",
+        "end_description": "Kas sa oled kindel, et soovid lõpetada küsitlust? Sellega on tulemused lõplikud ja rohkem osaleda ei saa."
     },
     "failed_load_async_component": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
     "upload_failed_generic": "Faili '%(fileName)s' üleslaadimine ei õnnestunud.",
@@ -4056,7 +4048,8 @@
         "something_went_wrong": "Midagi läks nüüd valesti!",
         "download_media": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu",
         "update_power_level": "Õiguste muutmine ei õnnestunud",
-        "unknown": "Teadmata viga"
+        "unknown": "Teadmata viga",
+        "dialog_description_default": "Tekkis viga."
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4363,5 +4356,14 @@
         "confirm_description_state": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
         "confirm_button": "Kinnita eemaldamine",
         "reason_label": "Põhjus (kui soovid lisada)"
+    },
+    "forward": {
+        "no_perms_title": "Sul puuduvad selleks toiminguks õigused",
+        "sending": "Saadan",
+        "sent": "Saadetud",
+        "open_room": "Ava jututuba",
+        "send_label": "Saada",
+        "message_preview_heading": "Sõnumi eelvaade",
+        "filter_placeholder": "Otsi jututubasid või inimesi"
     }
 }

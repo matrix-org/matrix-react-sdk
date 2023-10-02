@@ -27,7 +27,6 @@
     "Restricted": "Ограничено",
     "Moderator": "Модератор",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Send": "Пошаљи",
     "and %(count)s others...": {
         "other": "и %(count)s других...",
         "one": "и још један други..."
@@ -51,7 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
-    "An error has occurred.": "Догодила се грешка.",
     "Unable to restore session": "Не могу да повратим сесију",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако сте претходно користили новије издање апликације %(brand)s, ваша сесија може бити некомпатибилна са овим издањем. Затворите овај прозор и вратите се на новије издање.",
     "Verification Pending": "Чека се на проверу",
@@ -1486,7 +1484,8 @@
         "failed_copy": "Нисам успео да ископирам",
         "something_went_wrong": "Нешто је пошло наопако!",
         "update_power_level": "Не могу да изменим ниво снаге",
-        "unknown": "Непозната грешка"
+        "unknown": "Непозната грешка",
+        "dialog_description_default": "Догодила се грешка."
     },
     "items_and_n_others": {
         "other": "<Items/> и %(count)s других",
@@ -1590,5 +1589,8 @@
         "ongoing": "Уклањам…",
         "confirm_button": "Потврди уклањање",
         "reason_label": "Разлог (опционо)"
+    },
+    "forward": {
+        "send_label": "Пошаљи"
     }
 }

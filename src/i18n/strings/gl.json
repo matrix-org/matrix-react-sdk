@@ -26,7 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Restrinxido",
     "Moderator": "Moderador",
-    "Send": "Enviar",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "and %(count)s others...": {
         "other": "e %(count)s outras...",
@@ -51,7 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
-    "An error has occurred.": "Algo fallou.",
     "Unable to restore session": "Non se puido restaurar a sesión",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se anteriormente utilizaches unha versión máis recente de %(brand)s, a túa sesión podería non ser compatible con esta versión. Pecha esta ventá e volve á versión máis recente.",
     "Verification Pending": "Verificación pendente",
@@ -163,7 +161,6 @@
     "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
-    "Message preview": "Vista previa da mensaxe",
     "Failed to connect to integration manager": "Fallou a conexión co xestor de integracións",
     "%(count)s verified sessions": {
         "other": "%(count)s sesións verificadas",
@@ -609,13 +606,8 @@
     "Reset everything": "Restablecer todo",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
-    "Sending": "Enviando",
-    "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "Or send invite link": "Ou envía ligazón de convite",
     "Some suggestions may be hidden for privacy.": "Algunhas suxestións poderían estar agochadas por privacidade.",
-    "Search for rooms or people": "Busca salas ou persoas",
-    "Sent": "Enviado",
-    "You don't have permission to do this": "Non tes permiso para facer isto",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
     "User Directory": "Directorio de Usuarias",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
@@ -637,7 +629,6 @@
     "Leave some rooms": "Saír de algunhas salas",
     "Leave all rooms": "Saír de tódalas salas",
     "Don't leave any rooms": "Non saír de ningunha sala",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -670,12 +661,6 @@
     "Other rooms in %(spaceName)s": "Outras salas en %(spaceName)s",
     "Spaces you're in": "Espazos nos que estás",
     "Link to room": "Ligazón á sala",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Tes a certeza de querer rematar esta enquisa? Esto mostrará o resultado final da enquisa e evitará que máis persoas poidan votar.",
-    "End Poll": "Rematar enquisa",
-    "Sorry, the poll did not end. Please try again.": "A enquisa non rematou. Inténtao outra vez.",
-    "Failed to end poll": "Non rematou a enquisa por un fallo",
-    "The poll has ended. Top answer: %(topAnswer)s": "Rematou a enquisa. O máis votado: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Rematou a enquisa. Non houbo votos.",
     "toggle event": "activar evento",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
@@ -708,7 +693,6 @@
     "Cameras": "Cámaras",
     "Output devices": "Dispositivos de saída",
     "Input devices": "Dispositivos de entrada",
-    "Open room": "Abrir sala",
     "Unread email icon": "Icona de email non lido",
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
@@ -1766,7 +1750,8 @@
         "format": "Formato",
         "messages": "Mensaxes",
         "size_limit": "Límite do tamaño",
-        "include_attachments": "Incluír anexos"
+        "include_attachments": "Incluír anexos",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Crear sala de vídeo",
@@ -3087,7 +3072,8 @@
         "may_contact_label": "Podes contactar conmigo se queres estar ao día ou comentarme algunha suxestión",
         "pro_type": "PRO TIP: se inicias un novo informe, envía <debugLogsLink>rexistros de depuración</debugLogsLink> para axudarnos a investigar o problema.",
         "existing_issue_link": "Primeiro revisa <existingIssuesLink>a lista existente de fallo en Github</existingIssuesLink>. Non hai nada? <newIssueLink>Abre un novo</newIssueLink>.",
-        "send_feedback_action": "Enviar comentario"
+        "send_feedback_action": "Enviar comentario",
+        "can_contact_label": "Podes contactar conmigo se tes algunha outra suxestión"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3520,7 +3506,13 @@
         "total_n_votes_voted": {
             "one": "Baseado en %(count)s voto",
             "other": "Baseado en %(count)s votos"
-        }
+        },
+        "end_message_no_votes": "Rematou a enquisa. Non houbo votos.",
+        "end_message": "Rematou a enquisa. O máis votado: %(topAnswer)s",
+        "error_ending_title": "Non rematou a enquisa por un fallo",
+        "error_ending_description": "A enquisa non rematou. Inténtao outra vez.",
+        "end_title": "Rematar enquisa",
+        "end_description": "Tes a certeza de querer rematar esta enquisa? Esto mostrará o resultado final da enquisa e evitará que máis persoas poidan votar."
     },
     "failed_load_async_component": "Non cargou! Comproba a conexión á rede e volta a intentalo.",
     "upload_failed_generic": "Fallou a subida do ficheiro '%(fileName)s'.",
@@ -3598,7 +3590,8 @@
         "failed_copy": "Fallo ao copiar",
         "something_went_wrong": "Algo fallou!",
         "update_power_level": "Fallo ao cambiar o nivel de permisos",
-        "unknown": "Fallo descoñecido"
+        "unknown": "Fallo descoñecido",
+        "dialog_description_default": "Algo fallou."
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3865,5 +3858,14 @@
         "ongoing": "Eliminando…",
         "confirm_button": "Confirma a retirada",
         "reason_label": "Razón (optativa)"
+    },
+    "forward": {
+        "no_perms_title": "Non tes permiso para facer isto",
+        "sending": "Enviando",
+        "sent": "Enviado",
+        "open_room": "Abrir sala",
+        "send_label": "Enviar",
+        "message_preview_heading": "Vista previa da mensaxe",
+        "filter_placeholder": "Busca salas ou persoas"
     }
 }

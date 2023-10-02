@@ -1,5 +1,4 @@
 {
-    "An error has occurred.": "出現一個錯誤。",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "Email address": "電子郵件地址",
     "Join Room": "加入聊天室",
@@ -48,7 +47,6 @@
     "AM": "上午",
     "PM": "下午",
     "Restricted": "已限制",
-    "Send": "傳送",
     "%(duration)ss": "%(duration)s 秒",
     "%(duration)sm": "%(duration)s 分鐘",
     "%(duration)sh": "%(duration)s 小時",
@@ -271,7 +269,6 @@
     "Your homeserver has exceeded one of its resource limits.": "您的家伺服器已超過其中一種資源限制。",
     "Ok": "確定",
     "Switch theme": "切換佈景主題",
-    "Message preview": "訊息預覽",
     "Looks good!": "看起來真棒！",
     "Wrong file type": "錯誤的檔案類型",
     "Security Phrase": "安全密語",
@@ -609,13 +606,8 @@
     "Reset everything": "重設所有東西",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘記或遺失了所有復原方法？<a>重設全部</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
-    "Sending": "傳送中",
-    "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
     "Or send invite link": "或傳送邀請連結",
     "Some suggestions may be hidden for privacy.": "出於隱私考量，可能會隱藏一些建議。",
-    "Search for rooms or people": "搜尋聊天室或夥伴",
-    "Sent": "已傳送",
-    "You don't have permission to do this": "您沒有權限執行此動作",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。",
     "User Directory": "使用者目錄",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
@@ -637,7 +629,6 @@
     "Leave some rooms": "離開部份聊天室",
     "Leave all rooms": "離開所有聊天室",
     "Don't leave any rooms": "不要離開任何聊天室",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
         "other": "%(count)s 回覆"
@@ -662,12 +653,6 @@
     "Messaging": "訊息傳遞",
     "Spaces you know that contain this space": "您知道的包含此聊天空間的聊天空間",
     "Recently viewed": "最近檢視過",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您確定您想要結束此投票？這將會顯示最終投票結果並阻止人們投票。",
-    "End Poll": "結束投票",
-    "Sorry, the poll did not end. Please try again.": "抱歉，投票沒有結束。請再試一次。",
-    "Failed to end poll": "無法結束投票",
-    "The poll has ended. Top answer: %(topAnswer)s": "投票已結束。最佳答案：%(topAnswer)s",
-    "The poll has ended. No votes were cast.": "投票已結束。沒有投票。",
     "Link to room": "連結到聊天室",
     "Recent searches": "近期搜尋",
     "To search messages, look for this icon at the top of a room <icon/>": "要搜尋訊息，請在聊天室頂部尋找此圖示 <icon/>",
@@ -705,7 +690,6 @@
     "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
     "%(members)s and %(last)s": "%(members)s 與 %(last)s",
     "%(members)s and more": "%(members)s 與更多",
-    "Open room": "開啟聊天室",
     "Cameras": "相機",
     "Output devices": "輸出裝置",
     "Input devices": "輸入裝置",
@@ -1998,7 +1982,8 @@
         "format": "格式",
         "messages": "訊息",
         "size_limit": "大小限制",
-        "include_attachments": "包含附件"
+        "include_attachments": "包含附件",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "建立視訊聊天室",
@@ -3462,7 +3447,8 @@
         "may_contact_label": "若您想跟進或讓我測試即將到來的想法，可以聯絡我",
         "pro_type": "專業建議：如果您開始了一個錯誤，請遞交<debugLogsLink>除錯紀錄檔</debugLogsLink>以協助我們尋找問題。",
         "existing_issue_link": "請先檢視 <existingIssuesLink>GitHub 上既有的錯誤</existingIssuesLink>。沒有相符的嗎？<newIssueLink>回報新的問題</newIssueLink>。",
-        "send_feedback_action": "傳送回饋"
+        "send_feedback_action": "傳送回饋",
+        "can_contact_label": "如果後續有任何問題，可以聯絡我"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3971,7 +3957,13 @@
         "total_n_votes_voted": {
             "one": "總票數 %(count)s 票",
             "other": "總票數 %(count)s 票"
-        }
+        },
+        "end_message_no_votes": "投票已結束。沒有投票。",
+        "end_message": "投票已結束。最佳答案：%(topAnswer)s",
+        "error_ending_title": "無法結束投票",
+        "error_ending_description": "抱歉，投票沒有結束。請再試一次。",
+        "end_title": "結束投票",
+        "end_description": "您確定您想要結束此投票？這將會顯示最終投票結果並阻止人們投票。"
     },
     "failed_load_async_component": "無法載入！請檢查您的網路連線狀態並再試一次。",
     "upload_failed_generic": "無法上傳檔案「%(fileName)s」。",
@@ -4056,7 +4048,8 @@
         "something_went_wrong": "出了點問題！",
         "download_media": "下載來源媒體失敗，找不到來源 URL",
         "update_power_level": "無法變更權限等級",
-        "unknown": "未知的錯誤"
+        "unknown": "未知的錯誤",
+        "dialog_description_default": "出現一個錯誤。"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4363,5 +4356,14 @@
         "confirm_description_state": "請注意，像這樣移除聊天是變更可能會還原變更。",
         "confirm_button": "確認刪除",
         "reason_label": "理由（選擇性）"
+    },
+    "forward": {
+        "no_perms_title": "您沒有權限執行此動作",
+        "sending": "傳送中",
+        "sent": "已傳送",
+        "open_room": "開啟聊天室",
+        "send_label": "傳送",
+        "message_preview_heading": "訊息預覽",
+        "filter_placeholder": "搜尋聊天室或夥伴"
     }
 }

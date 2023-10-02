@@ -1,5 +1,4 @@
 {
-    "An error has occurred.": "D’imigh earráid éigin.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
     "Transfer": "Aistrigh",
@@ -292,12 +291,9 @@
     "Tue": "Mái",
     "Mon": "Lua",
     "Sun": "Doṁ",
-    "Send": "Seol",
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Sent": "Seolta",
-    "Sending": "Ag Seoladh",
     "Unnamed room": "Seomra gan ainm",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -884,7 +880,8 @@
     "error": {
         "mixed_content": "Ní féidir ceangal leis an bhfreastalaí baile trí HTTP nuair a bhíonn URL HTTPS i mbarra do bhrabhsálaí. Bain úsáid as HTTPS nó <a> scripteanna neamhshábháilte a chumasú </a>.",
         "tls": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais.",
-        "update_power_level": "Níor éiríodh leis an leibhéal cumhachta a hathrú"
+        "update_power_level": "Níor éiríodh leis an leibhéal cumhachta a hathrú",
+        "dialog_description_default": "D’imigh earráid éigin."
     },
     "notifications": {
         "enable_prompt_toast_title": "Fógraí",
@@ -931,5 +928,10 @@
     "info_tooltip_title": "Eolas",
     "redact": {
         "ongoing": "ag Baint…"
+    },
+    "forward": {
+        "sending": "Ag Seoladh",
+        "sent": "Seolta",
+        "send_label": "Seol"
     }
 }

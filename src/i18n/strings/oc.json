@@ -49,8 +49,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Send": "Mandar",
-    "An error has occurred.": "Una error s'es producha.",
     "Session name": "Nom de session",
     "Email address": "Adreça de corrièl",
     "Upload files": "Mandar de fichièrs",
@@ -371,7 +369,8 @@
     },
     "error": {
         "failed_copy": "Impossible de copiar",
-        "unknown": "Error desconeguda"
+        "unknown": "Error desconeguda",
+        "dialog_description_default": "Una error s'es producha."
     },
     "room": {
         "context_menu": {
@@ -438,5 +437,8 @@
     },
     "redact": {
         "ongoing": "Supression en cors…"
+    },
+    "forward": {
+        "send_label": "Mandar"
     }
 }

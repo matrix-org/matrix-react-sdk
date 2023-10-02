@@ -29,7 +29,6 @@
         "one": "и ещё кто-то..."
     },
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
-    "An error has occurred.": "Произошла ошибка.",
     "Join Room": "Войти в комнату",
     "not specified": "не задан",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
@@ -54,7 +53,6 @@
     "%(duration)sm": "%(duration)s мин",
     "%(duration)sh": "%(duration)s ч",
     "%(duration)sd": "%(duration)s дн",
-    "Send": "Отправить",
     "collapse": "свернуть",
     "expand": "развернуть",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -621,12 +619,6 @@
     "Or send invite link": "Или отправьте ссылку на приглашение",
     "Some suggestions may be hidden for privacy.": "Некоторые предложения могут быть скрыты в целях конфиденциальности.",
     "We couldn't create your DM.": "Мы не смогли создать ваш диалог.",
-    "You may contact me if you have any follow up questions": "Вы можете связаться со мной, если у вас возникнут какие-либо последующие вопросы",
-    "Search for rooms or people": "Поиск комнат или людей",
-    "Message preview": "Просмотр сообщения",
-    "Sent": "Отправлено",
-    "Sending": "Отправка",
-    "You don't have permission to do this": "У вас нет на это разрешения",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -637,7 +629,6 @@
     "Would you like to leave the rooms in this space?": "Хотите ли вы покинуть комнаты в этом пространстве?",
     "You are about to leave <spaceName/>.": "Вы собираетесь покинуть <spaceName/>.",
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
-    "MB": "Мб",
     "%(count)s reply": {
         "one": "%(count)s ответ",
         "other": "%(count)s ответов"
@@ -660,12 +651,6 @@
     "Link to room": "Ссылка на комнату",
     "Spaces you know that contain this space": "Пространства, которые вы знаете, уже содержат эту комнату",
     "If you can't see who you're looking for, send them your invite link below.": "Если вы не видите того, кого ищете, отправьте ему свое приглашение по ссылке ниже.",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Вы уверены, что хотите завершить этот опрос? Это покажет окончательные результаты опроса и лишит людей возможности голосовать.",
-    "End Poll": "Завершить опрос",
-    "Sorry, the poll did not end. Please try again.": "Извините, опрос не завершился. Пожалуйста, попробуйте еще раз.",
-    "Failed to end poll": "Не удалось завершить опрос",
-    "The poll has ended. Top answer: %(topAnswer)s": "Опрос завершен. Победил ответ: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Опрос завершен. Ни одного голоса не было.",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -722,7 +707,6 @@
         "other": "%(count)s участников"
     },
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "При выходе эти ключи будут удалены с данного устройства и вы больше не сможете прочитать зашифрованные сообщения, если у вас нет ключей для них на других устройствах или резервной копии на сервере.",
-    "Open room": "Открыть комнату",
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -1860,7 +1844,8 @@
         "format": "Формат",
         "messages": "Сообщения",
         "size_limit": "Ограничение по размеру",
-        "include_attachments": "Включить вложения"
+        "include_attachments": "Включить вложения",
+        "size_limit_postfix": "Мб"
     },
     "create_room": {
         "title_video_room": "Создайте видеокомнату",
@@ -3228,7 +3213,8 @@
         "may_contact_label": "Вы можете связаться со мной, за дальнейшими действиями или помощью с испытанием идей",
         "pro_type": "СОВЕТ ДЛЯ ПРОФЕССИОНАЛОВ: если вы запустите ошибку, отправьте <debugLogsLink>журналы отладки</debugLogsLink>, чтобы помочь нам отследить проблему.",
         "existing_issue_link": "Пожалуйста, сначала просмотрите <existingIssuesLink>существующие ошибки на Github</existingIssuesLink>. Нет совпадений? <newIssueLink>Сообщите о новой</newIssueLink>.",
-        "send_feedback_action": "Отправить отзыв"
+        "send_feedback_action": "Отправить отзыв",
+        "can_contact_label": "Вы можете связаться со мной, если у вас возникнут какие-либо последующие вопросы"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3692,7 +3678,13 @@
         "total_n_votes_voted": {
             "one": "На основании %(count)s голоса",
             "other": "На основании %(count)s голосов"
-        }
+        },
+        "end_message_no_votes": "Опрос завершен. Ни одного голоса не было.",
+        "end_message": "Опрос завершен. Победил ответ: %(topAnswer)s",
+        "error_ending_title": "Не удалось завершить опрос",
+        "error_ending_description": "Извините, опрос не завершился. Пожалуйста, попробуйте еще раз.",
+        "end_title": "Завершить опрос",
+        "end_description": "Вы уверены, что хотите завершить этот опрос? Это покажет окончательные результаты опроса и лишит людей возможности голосовать."
     },
     "failed_load_async_component": "Не удалось загрузить! Проверьте подключение к сети и попробуйте снова.",
     "upload_failed_generic": "Файл '%(fileName)s' не был загружен.",
@@ -3768,7 +3760,8 @@
         "failed_copy": "Не удалось скопировать",
         "something_went_wrong": "Что-то пошло не так!",
         "update_power_level": "Не удалось изменить уровень прав",
-        "unknown": "Неизвестная ошибка"
+        "unknown": "Неизвестная ошибка",
+        "dialog_description_default": "Произошла ошибка."
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4048,5 +4041,14 @@
         "ongoing": "Удаление…",
         "confirm_button": "Подтвердите удаление",
         "reason_label": "Причина (необязательно)"
+    },
+    "forward": {
+        "no_perms_title": "У вас нет на это разрешения",
+        "sending": "Отправка",
+        "sent": "Отправлено",
+        "open_room": "Открыть комнату",
+        "send_label": "Отправить",
+        "message_preview_heading": "Просмотр сообщения",
+        "filter_placeholder": "Поиск комнат или людей"
     }
 }

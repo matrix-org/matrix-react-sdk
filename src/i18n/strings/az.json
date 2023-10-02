@@ -32,10 +32,8 @@
     "Create new room": "Otağı yaratmaq",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
-    "An error has occurred.": "Səhv oldu.",
     "Verification Pending": "Gözləmə təsdiq etmələr",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öz elektron poçtunu yoxlayın və olan istinadı basın. Bundan sonra düyməni Davam etməyə basın.",
-    "Send": "Göndər",
     "PM": "24:00",
     "AM": "12:00",
     "Restricted": "Məhduddur",
@@ -353,7 +351,8 @@
         "not_supported": "<dəstəklənmir>"
     },
     "error": {
-        "update_power_level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı"
+        "update_power_level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı",
+        "dialog_description_default": "Səhv oldu."
     },
     "member_list": {
         "invited_list_heading": "Dəvət edilmişdir",
@@ -371,5 +370,8 @@
     "no_more_results": "Daha çox nəticə yoxdur",
     "error_dialog": {
         "forget_room_failed": "Otağı unutmağı bacarmadı: %(errCode)s"
+    },
+    "forward": {
+        "send_label": "Göndər"
     }
 }

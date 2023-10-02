@@ -1,6 +1,5 @@
 {
     "Warning!": "Sinjalizim!",
-    "Send": "Dërgoje",
     "Sun": "Die",
     "Mon": "Hën",
     "Tue": "Mar",
@@ -56,7 +55,6 @@
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
     "collapse": "tkurre",
     "expand": "zgjeroje",
-    "An error has occurred.": "Ndodhi një gabim.",
     "Verification Pending": "Verifikim Në Pritje të Miratimit",
     "Session ID": "ID sesioni",
     "Unable to restore session": "S’arrihet të rikthehet sesioni",
@@ -271,7 +269,6 @@
     "Ok": "OK",
     "Recently Direct Messaged": "Me Mesazhe të Drejtpërdrejtë Së Fundi",
     "Switch theme": "Ndërroni temën",
-    "Message preview": "Paraparje mesazhi",
     "Looks good!": "Mirë duket!",
     "Wrong file type": "Lloj i gabuar kartele",
     "Security Phrase": "Frazë Sigurie",
@@ -605,13 +602,8 @@
     "Reset everything": "Kthe gjithçka te parazgjedhjet",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
-    "Sending": "Po dërgohet",
-    "You may contact me if you have any follow up questions": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
-    "Search for rooms or people": "Kërkoni për dhoma ose persona",
-    "You don't have permission to do this": "S’keni leje ta bëni këtë",
-    "Sent": "U dërgua",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
     "User Directory": "Drejtori Përdoruesi",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ju lutemi, kini parasysh se përmirësimi do të prodhojë një version të ri të dhomës</b>. Krejt mesazhet e tanishëm do të mbeten në këtë dhomë të arkivuar.",
@@ -634,7 +626,6 @@
     "Leave some rooms": "Braktis disa dhoma",
     "Leave all rooms": "Braktisi krejt dhomat",
     "Don't leave any rooms": "Mos braktis ndonjë dhomë",
-    "MB": "MB",
     "%(count)s reply": {
         "one": "%(count)s përgjigje",
         "other": "%(count)s përgjigje"
@@ -662,12 +653,6 @@
     "Messaging": "Shkëmbim mesazhes",
     "Spaces you know that contain this space": "Hapësira që e dini se përmbajnë këtë hapësirë",
     "Recently viewed": "Parë së fundi",
-    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Jeni i sigurt se doni të përfundohet ky pyetësor? Kjo do të shfaqë rezultatet përfundimtare të pyetësorit dhe do të ndalë votimin nga njerëzit.",
-    "End Poll": "Përfundoje Pyetësorin",
-    "Sorry, the poll did not end. Please try again.": "Na ndjeni, pyetësori nuk u përfundua. Ju lutemi, riprovoni.",
-    "Failed to end poll": "S’u arrit të përfundohej pyetësori",
-    "The poll has ended. Top answer: %(topAnswer)s": "Pyetësori përfundoi. Përgjigja kryesuese: %(topAnswer)s",
-    "The poll has ended. No votes were cast.": "Pyetësori përfundoi. S’pati vota.",
     "Recent searches": "Kërkime së fundi",
     "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
     "Other searches": "Kërkime të tjera",
@@ -718,7 +703,6 @@
         "one": "%(count)s Anëtar",
         "other": "%(count)s Anëtarë"
     },
-    "Open room": "Dhomë e hapët",
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
@@ -1940,7 +1924,8 @@
         "format": "Format",
         "messages": "Mesazhe",
         "size_limit": "Kufi Madhësie",
-        "include_attachments": "Përfshi Bashkëngjitje"
+        "include_attachments": "Përfshi Bashkëngjitje",
+        "size_limit_postfix": "MB"
     },
     "create_room": {
         "title_video_room": "Krijoni një dhomë me video",
@@ -3377,7 +3362,8 @@
         "may_contact_label": "Mund të lidheni me mua për vazhdimin, ose për të më lejuar të testoj ide të ardhshme",
         "pro_type": "NDIHMËZ PROFESIONISTËSH: Nëse nisni një njoftim të mete, ju lutemi, parashtroni <debugLogsLink>regjistra diagnostikimi</debugLogsLink>, që të na ndihmoni të gjejmë problemin.",
         "existing_issue_link": "Ju lutemi, shihni <existingIssuesLink>të meta ekzistuese në Github</existingIssuesLink> së pari. S’ka përputhje? <newIssueLink>Nisni një të re</newIssueLink>.",
-        "send_feedback_action": "Dërgoni përshtypjet"
+        "send_feedback_action": "Dërgoni përshtypjet",
+        "can_contact_label": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme"
     },
     "zxcvbn": {
         "suggestions": {
@@ -3871,7 +3857,13 @@
         "total_n_votes_voted": {
             "one": "Bazuar në %(count)s votë",
             "other": "Bazua në %(count)s vota"
-        }
+        },
+        "end_message_no_votes": "Pyetësori përfundoi. S’pati vota.",
+        "end_message": "Pyetësori përfundoi. Përgjigja kryesuese: %(topAnswer)s",
+        "error_ending_title": "S’u arrit të përfundohej pyetësori",
+        "error_ending_description": "Na ndjeni, pyetësori nuk u përfundua. Ju lutemi, riprovoni.",
+        "end_title": "Përfundoje Pyetësorin",
+        "end_description": "Jeni i sigurt se doni të përfundohet ky pyetësor? Kjo do të shfaqë rezultatet përfundimtare të pyetësorit dhe do të ndalë votimin nga njerëzit."
     },
     "failed_load_async_component": "S’arrihet të ngarkohet! Kontrolloni lidhjen tuaj në rrjet dhe riprovoni.",
     "upload_failed_generic": "Dështoi ngarkimi i kartelës '%(fileName)s'.",
@@ -3952,7 +3944,8 @@
         "something_went_wrong": "Diçka shkoi ters!",
         "download_media": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
         "update_power_level": "S’u arrit të ndryshohej shkalla e pushtetit",
-        "unknown": "Gabim i panjohur"
+        "unknown": "Gabim i panjohur",
+        "dialog_description_default": "Ndodhi një gabim."
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4256,5 +4249,14 @@
         "ongoing": "Po hiqet…",
         "confirm_button": "Ripohoni Heqjen",
         "reason_label": "Arsye (opsionale)"
+    },
+    "forward": {
+        "no_perms_title": "S’keni leje ta bëni këtë",
+        "sending": "Po dërgohet",
+        "sent": "U dërgua",
+        "open_room": "Dhomë e hapët",
+        "send_label": "Dërgoje",
+        "message_preview_heading": "Paraparje mesazhi",
+        "filter_placeholder": "Kërkoni për dhoma ose persona"
     }
 }

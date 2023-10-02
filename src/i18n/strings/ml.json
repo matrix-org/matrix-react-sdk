@@ -9,7 +9,6 @@
     "Saturday": "ശനി",
     "Monday": "തിങ്കള്‍",
     "Wednesday": "ബുധന്‍",
-    "Send": "അയയ്ക്കുക",
     "Thursday": "വ്യാഴം",
     "Yesterday": "ഇന്നലെ",
     "common": {
@@ -114,5 +113,8 @@
     },
     "redact": {
         "error": "നിങ്ങള്‍ക്ക് ഈ സന്ദേശം നീക്കം ചെയ്യാനാകില്ല. (%(code)s)"
+    },
+    "forward": {
+        "send_label": "അയയ്ക്കുക"
     }
 }

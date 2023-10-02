@@ -40,7 +40,6 @@
     "Algeria": "Dzayer",
     "Albania": "Albanya",
     "Afghanistan": "Afɣanistan",
-    "Send": "Azen",
     "edited": "infel",
     "Home": "Asnubeg",
     "%(duration)sd": "%(duration)sas",
@@ -193,5 +192,8 @@
         "search": {
             "field_placeholder": "Arezzu…"
         }
+    },
+    "forward": {
+        "send_label": "Azen"
     }
 }

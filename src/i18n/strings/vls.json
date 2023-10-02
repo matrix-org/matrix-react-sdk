@@ -1,5 +1,4 @@
 {
-    "Send": "Verstuurn",
     "Sun": "Zun",
     "Mon": "Moa",
     "Tue": "Die",
@@ -124,7 +123,6 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
-    "An error has occurred.": "’t Is e foute ipgetreedn.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
     "Incoming Verification Request": "Inkomend verificoasjeverzoek",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "J’èt al e ki %(brand)s ip %(host)s gebruukt me lui loadn van leedn ingeschoakeld. In deze versie is lui laden uutgeschoakeld. Me da de lokoale cache nie compatibel is tusschn deze twi instelliengn, moe %(brand)s jen account hersynchroniseern.",
@@ -1157,7 +1155,8 @@
         "failed_copy": "Kopieern mislukt",
         "something_went_wrong": "’t Es etwa misgegoan!",
         "update_power_level": "Wyzign van ’t machtsniveau es mislukt",
-        "unknown": "Ounbekende foute"
+        "unknown": "Ounbekende foute",
+        "dialog_description_default": "’t Is e foute ipgetreedn."
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",
@@ -1249,5 +1248,8 @@
         "error": "Je kut dit bericht nie verwydern. (%(code)s)",
         "ongoing": "Bezig me te verwydern…",
         "confirm_button": "Verwyderienge bevestign"
+    },
+    "forward": {
+        "send_label": "Verstuurn"
     }
 }

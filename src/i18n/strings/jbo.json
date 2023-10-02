@@ -1,5 +1,4 @@
 {
-    "Send": "nu zilbe'i",
     "Sun": "jy. dy. ze",
     "Mon": "jy. dy. pa",
     "Tue": "jy. dy. re",
@@ -545,5 +544,8 @@
     },
     "emoji_picker": {
         "cancel_search_label": "nu co'u sisku"
+    },
+    "forward": {
+        "send_label": "nu zilbe'i"
     }
 }
