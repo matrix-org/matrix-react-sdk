@@ -958,7 +958,14 @@
             "return_to_login": "Were noa ’t anmeldiengsscherm"
         },
         "common_failures": {},
-        "captcha_description": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt."
+        "captcha_description": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt.",
+        "autodiscovery_invalid": "Oungeldig thuusserverountdekkiengsantwoord",
+        "autodiscovery_generic_failure": "Iphoaln van auto-ountdekkiengsconfiguroasje van server is mislukt",
+        "autodiscovery_invalid_hs_base_url": "Oungeldige base_url vo m.homeserver",
+        "autodiscovery_invalid_hs": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
+        "autodiscovery_invalid_is_base_url": "Oungeldige base_url vo m.identity_server",
+        "autodiscovery_invalid_is": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
+        "autodiscovery_invalid_is_response": "Oungeldig identiteitsserverountdekkiengsantwoord"
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1236,12 +1243,5 @@
         "error_loading_user_profile": "Kostege ’t gebruukersprofiel nie loadn"
     },
     "cant_load_page": "Kostege ’t blad nie loadn",
-    "Invalid homeserver discovery response": "Oungeldig thuusserverountdekkiengsantwoord",
-    "Failed to get autodiscovery configuration from server": "Iphoaln van auto-ountdekkiengsconfiguroasje van server is mislukt",
-    "Invalid base_url for m.homeserver": "Oungeldige base_url vo m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
-    "Invalid identity server discovery response": "Oungeldig identiteitsserverountdekkiengsantwoord",
-    "Invalid base_url for m.identity_server": "Oungeldige base_url vo m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
     "General failure": "Algemene foute"
 }

@@ -2545,7 +2545,14 @@
         },
         "country_dropdown": "Selecione o país",
         "common_failures": {},
-        "captcha_description": "Este servidor local quer se certificar de que você não é um robô."
+        "captcha_description": "Este servidor local quer se certificar de que você não é um robô.",
+        "autodiscovery_invalid": "Resposta de descoberta de homeserver inválida",
+        "autodiscovery_generic_failure": "Houve uma falha para obter do servidor a configuração de encontrar contatos",
+        "autodiscovery_invalid_hs_base_url": "base_url inválido para m.homeserver",
+        "autodiscovery_invalid_hs": "O endereço do servidor local não parece indicar um servidor local válido na Matrix",
+        "autodiscovery_invalid_is_base_url": "base_url inválido para m.identity_server",
+        "autodiscovery_invalid_is": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
+        "autodiscovery_invalid_is_response": "Resposta de descoberta do servidor de identidade inválida"
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -3236,12 +3243,5 @@
         "error_loading_user_profile": "Não foi possível carregar o perfil do usuário"
     },
     "cant_load_page": "Não foi possível carregar a página",
-    "Invalid homeserver discovery response": "Resposta de descoberta de homeserver inválida",
-    "Failed to get autodiscovery configuration from server": "Houve uma falha para obter do servidor a configuração de encontrar contatos",
-    "Invalid base_url for m.homeserver": "base_url inválido para m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "O endereço do servidor local não parece indicar um servidor local válido na Matrix",
-    "Invalid identity server discovery response": "Resposta de descoberta do servidor de identidade inválida",
-    "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
     "General failure": "Falha geral"
 }

@@ -1846,7 +1846,14 @@
         },
         "country_dropdown": "Tabdart n udrurem n tmura",
         "common_failures": {},
-        "captcha_description": "Aqeddac-a aqejdan yesra ad iẓer ma mačči d aṛubut i telliḍ."
+        "captcha_description": "Aqeddac-a aqejdan yesra ad iẓer ma mačči d aṛubut i telliḍ.",
+        "autodiscovery_invalid": "Tiririt n usnirem n uqeddac agejdan d tarameɣtut",
+        "autodiscovery_generic_failure": "Awway n uswel n usnirem awurman seg uqeddac ur yeddi ara",
+        "autodiscovery_invalid_hs_base_url": "D arameɣtu base_url i m.homeserver",
+        "autodiscovery_invalid_hs": "URL n uqeddac agejdan ur yettban ara d aqeddac agejdan n Matrix ameɣtu",
+        "autodiscovery_invalid_is_base_url": "D arameɣtu base_url i m.identity_server",
+        "autodiscovery_invalid_is": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
+        "autodiscovery_invalid_is_response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut"
     },
     "export_chat": {
         "messages": "Iznan"
@@ -2279,12 +2286,5 @@
         "error_loading_user_profile": "Yegguma ad d-yali umaɣnu n useqdac"
     },
     "cant_load_page": "Asali n usebter ur yeddi ara",
-    "Invalid homeserver discovery response": "Tiririt n usnirem n uqeddac agejdan d tarameɣtut",
-    "Failed to get autodiscovery configuration from server": "Awway n uswel n usnirem awurman seg uqeddac ur yeddi ara",
-    "Invalid base_url for m.homeserver": "D arameɣtu base_url i m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL n uqeddac agejdan ur yettban ara d aqeddac agejdan n Matrix ameɣtu",
-    "Invalid identity server discovery response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
-    "Invalid base_url for m.identity_server": "D arameɣtu base_url i m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
     "General failure": "Tuccḍa tamatut"
 }

@@ -3372,7 +3372,14 @@
         },
         "country_dropdown": "Menu států",
         "common_failures": {},
-        "captcha_description": "Domovský server se potřebuje přesvědčit, že nejste robot."
+        "captcha_description": "Domovský server se potřebuje přesvědčit, že nejste robot.",
+        "autodiscovery_invalid": "Neplatná odpověd při hledání domovského serveru",
+        "autodiscovery_generic_failure": "Nepovedlo se načíst nastavení automatického objevování ze serveru",
+        "autodiscovery_invalid_hs_base_url": "Neplatná base_url pro m.homeserver",
+        "autodiscovery_invalid_hs": "Na URL domovského serveru asi není funkční Matrix server",
+        "autodiscovery_invalid_is_base_url": "Neplatná base_url pro m.identity_server",
+        "autodiscovery_invalid_is": "Na URL serveru identit asi není funkční Matrix server",
+        "autodiscovery_invalid_is_response": "Neplatná odpověď při hledání serveru identity"
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
@@ -4339,12 +4346,5 @@
     },
     "console_wait": "Pozor!",
     "cant_load_page": "Nepovedlo se načíst stránku",
-    "Invalid homeserver discovery response": "Neplatná odpověd při hledání domovského serveru",
-    "Failed to get autodiscovery configuration from server": "Nepovedlo se načíst nastavení automatického objevování ze serveru",
-    "Invalid base_url for m.homeserver": "Neplatná base_url pro m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Na URL domovského serveru asi není funkční Matrix server",
-    "Invalid identity server discovery response": "Neplatná odpověď při hledání serveru identity",
-    "Invalid base_url for m.identity_server": "Neplatná base_url pro m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Na URL serveru identit asi není funkční Matrix server",
     "General failure": "Nějaká chyba"
 }

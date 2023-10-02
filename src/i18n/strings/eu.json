@@ -1485,7 +1485,14 @@
         },
         "country_dropdown": "Herrialde menua",
         "common_failures": {},
-        "captcha_description": "Hasiera-zerbitzari honek robota ez zarela egiaztatu nahi du."
+        "captcha_description": "Hasiera-zerbitzari honek robota ez zarela egiaztatu nahi du.",
+        "autodiscovery_invalid": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
+        "autodiscovery_generic_failure": "Huts egin du aurkikuntza automatikoaren konfigurazioa zerbitzaritik eskuratzean",
+        "autodiscovery_invalid_hs_base_url": "Baliogabeko base_url  m.homeserver zerbitzariarentzat",
+        "autodiscovery_invalid_hs": "Hasiera-zerbitzariaren URL-a ez dirudi baliozko hasiera-zerbitzari batena",
+        "autodiscovery_invalid_is_base_url": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
+        "autodiscovery_invalid_is": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
+        "autodiscovery_invalid_is_response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan"
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1895,12 +1902,5 @@
         "error_loading_user_profile": "Ezin izan da erabiltzaile-profila kargatu"
     },
     "cant_load_page": "Ezin izan da orria kargatu",
-    "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
-    "Failed to get autodiscovery configuration from server": "Huts egin du aurkikuntza automatikoaren konfigurazioa zerbitzaritik eskuratzean",
-    "Invalid base_url for m.homeserver": "Baliogabeko base_url  m.homeserver zerbitzariarentzat",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Hasiera-zerbitzariaren URL-a ez dirudi baliozko hasiera-zerbitzari batena",
-    "Invalid identity server discovery response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
-    "Invalid base_url for m.identity_server": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
-    "Identity server URL does not appear to be a valid identity server": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
     "General failure": "Hutsegite orokorra"
 }

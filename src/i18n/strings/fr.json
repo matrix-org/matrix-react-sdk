@@ -3365,7 +3365,14 @@
         },
         "country_dropdown": "Sélection du pays",
         "common_failures": {},
-        "captcha_description": "Ce serveur d’accueil veut s’assurer que vous n’êtes pas un robot."
+        "captcha_description": "Ce serveur d’accueil veut s’assurer que vous n’êtes pas un robot.",
+        "autodiscovery_invalid": "Réponse de découverte du serveur d’accueil non valide",
+        "autodiscovery_generic_failure": "Échec de la découverte automatique de la configuration depuis le serveur",
+        "autodiscovery_invalid_hs_base_url": "base_url pour m.homeserver non valide",
+        "autodiscovery_invalid_hs": "L’URL du serveur d’accueil ne semble pas être un serveur d’accueil Matrix valide",
+        "autodiscovery_invalid_is_base_url": "base_url pour m.identity_server non valide",
+        "autodiscovery_invalid_is": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
+        "autodiscovery_invalid_is_response": "Réponse non valide lors de la découverte du serveur d'identité"
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -4332,12 +4339,5 @@
     },
     "console_wait": "Attendez !",
     "cant_load_page": "Impossible de charger la page",
-    "Invalid homeserver discovery response": "Réponse de découverte du serveur d’accueil non valide",
-    "Failed to get autodiscovery configuration from server": "Échec de la découverte automatique de la configuration depuis le serveur",
-    "Invalid base_url for m.homeserver": "base_url pour m.homeserver non valide",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "L’URL du serveur d’accueil ne semble pas être un serveur d’accueil Matrix valide",
-    "Invalid identity server discovery response": "Réponse non valide lors de la découverte du serveur d'identité",
-    "Invalid base_url for m.identity_server": "base_url pour m.identity_server non valide",
-    "Identity server URL does not appear to be a valid identity server": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
     "General failure": "Erreur générale"
 }

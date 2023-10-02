@@ -3228,7 +3228,14 @@
         },
         "country_dropdown": "国一覧",
         "common_failures": {},
-        "captcha_description": "このホームサーバーは、あなたがロボットではないことの確認を求めています。"
+        "captcha_description": "このホームサーバーは、あなたがロボットではないことの確認を求めています。",
+        "autodiscovery_invalid": "ホームサーバーのディスカバリー（発見）に関する不正な応答です",
+        "autodiscovery_generic_failure": "自動発見の設定をサーバーから取得できませんでした",
+        "autodiscovery_invalid_hs_base_url": "m.homeserverの不正なbase_url",
+        "autodiscovery_invalid_hs": "これは正しいMatrixのホームサーバーのURLではありません",
+        "autodiscovery_invalid_is_base_url": "m.identity_serverの不正なbase_url",
+        "autodiscovery_invalid_is": "これは正しいIDサーバーのURLではありません",
+        "autodiscovery_invalid_is_response": "IDサーバーのディスカバリー（発見）に関する不正な応答です"
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -4130,12 +4137,5 @@
     },
     "console_wait": "お待ちください！",
     "cant_load_page": "ページを読み込めませんでした",
-    "Invalid homeserver discovery response": "ホームサーバーのディスカバリー（発見）に関する不正な応答です",
-    "Failed to get autodiscovery configuration from server": "自動発見の設定をサーバーから取得できませんでした",
-    "Invalid base_url for m.homeserver": "m.homeserverの不正なbase_url",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "これは正しいMatrixのホームサーバーのURLではありません",
-    "Invalid identity server discovery response": "IDサーバーのディスカバリー（発見）に関する不正な応答です",
-    "Invalid base_url for m.identity_server": "m.identity_serverの不正なbase_url",
-    "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
     "General failure": "一般エラー"
 }

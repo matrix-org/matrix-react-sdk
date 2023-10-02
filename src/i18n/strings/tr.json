@@ -1818,7 +1818,14 @@
         },
         "country_dropdown": "Ülke Listesi",
         "common_failures": {},
-        "captcha_description": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor."
+        "captcha_description": "Bu ana sunucu sizin bir robot olup olmadığınızdan emin olmak istiyor.",
+        "autodiscovery_invalid": "Geçersiz anasunucu keşif yanıtı",
+        "autodiscovery_generic_failure": "Sunucudan otokeşif yapılandırması alınması başarısız",
+        "autodiscovery_invalid_hs_base_url": "m.anasunucu için geçersiz base_url",
+        "autodiscovery_invalid_hs": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
+        "autodiscovery_invalid_is_base_url": "m.kimlik_sunucu için geçersiz base_url",
+        "autodiscovery_invalid_is": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
+        "autodiscovery_invalid_is_response": "Geçersiz kimlik sunucu keşfi yanıtı"
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -2315,12 +2322,5 @@
         "error_loading_user_profile": "Kullanıcı profili yüklenemedi"
     },
     "cant_load_page": "Sayfa yüklenemiyor",
-    "Invalid homeserver discovery response": "Geçersiz anasunucu keşif yanıtı",
-    "Failed to get autodiscovery configuration from server": "Sunucudan otokeşif yapılandırması alınması başarısız",
-    "Invalid base_url for m.homeserver": "m.anasunucu için geçersiz base_url",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Anasunucu URL i geçerli bir Matrix anasunucusu olarak gözükmüyor",
-    "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
-    "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
-    "Identity server URL does not appear to be a valid identity server": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
     "General failure": "Genel başarısızlık"
 }

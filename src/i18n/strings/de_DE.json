@@ -3372,7 +3372,14 @@
         },
         "country_dropdown": "Landauswahl",
         "common_failures": {},
-        "captcha_description": "Dieser Heim-Server möchte sicherstellen, dass du kein Roboter bist."
+        "captcha_description": "Dieser Heim-Server möchte sicherstellen, dass du kein Roboter bist.",
+        "autodiscovery_invalid": "Ungültige Antwort beim Aufspüren des Heim-Servers",
+        "autodiscovery_generic_failure": "Abrufen der Autodiscovery-Konfiguration vom Server fehlgeschlagen",
+        "autodiscovery_invalid_hs_base_url": "Ungültige base_url für m.homeserver",
+        "autodiscovery_invalid_hs": "Die Heim-Server-URL scheint kein gültiger Matrix-Heim-Server zu sein",
+        "autodiscovery_invalid_is_base_url": "Ungültige base_url für m.identity_server",
+        "autodiscovery_invalid_is": "Die Identitäts-Server-URL scheint kein gültiger Identitäts-Server zu sein",
+        "autodiscovery_invalid_is_response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers"
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -4339,12 +4346,5 @@
     },
     "console_wait": "Warte!",
     "cant_load_page": "Konnte Seite nicht laden",
-    "Invalid homeserver discovery response": "Ungültige Antwort beim Aufspüren des Heim-Servers",
-    "Failed to get autodiscovery configuration from server": "Abrufen der Autodiscovery-Konfiguration vom Server fehlgeschlagen",
-    "Invalid base_url for m.homeserver": "Ungültige base_url für m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Die Heim-Server-URL scheint kein gültiger Matrix-Heim-Server zu sein",
-    "Invalid identity server discovery response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers",
-    "Invalid base_url for m.identity_server": "Ungültige base_url für m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Die Identitäts-Server-URL scheint kein gültiger Identitäts-Server zu sein",
     "General failure": "Allgemeiner Fehler"
 }

@@ -3365,7 +3365,14 @@
         },
         "country_dropdown": "Спадний список країн",
         "common_failures": {},
-        "captcha_description": "Домашній сервер бажає впевнитися, що ви не робот."
+        "captcha_description": "Домашній сервер бажає впевнитися, що ви не робот.",
+        "autodiscovery_invalid": "Хибна відповідь самоналаштування домашнього сервера",
+        "autodiscovery_generic_failure": "Не вдалося отримати параметри самоналаштування від сервера",
+        "autodiscovery_invalid_hs_base_url": "Хибний base_url у m.homeserver",
+        "autodiscovery_invalid_hs": "Сервер за URL-адресою не виглядає дійсним домашнім сервером Matrix",
+        "autodiscovery_invalid_is_base_url": "Хибний base_url у m.identity_server",
+        "autodiscovery_invalid_is": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
+        "autodiscovery_invalid_is_response": "Хибна відповідь самоналаштування сервера ідентифікації"
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -4332,12 +4339,5 @@
     },
     "console_wait": "Заждіть!",
     "cant_load_page": "Не вдалося завантажити сторінку",
-    "Invalid homeserver discovery response": "Хибна відповідь самоналаштування домашнього сервера",
-    "Failed to get autodiscovery configuration from server": "Не вдалося отримати параметри самоналаштування від сервера",
-    "Invalid base_url for m.homeserver": "Хибний base_url у m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Сервер за URL-адресою не виглядає дійсним домашнім сервером Matrix",
-    "Invalid identity server discovery response": "Хибна відповідь самоналаштування сервера ідентифікації",
-    "Invalid base_url for m.identity_server": "Хибний base_url у m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
     "General failure": "Загальний збій"
 }

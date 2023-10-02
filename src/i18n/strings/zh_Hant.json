@@ -3365,7 +3365,14 @@
         },
         "country_dropdown": "國家下拉式選單",
         "common_failures": {},
-        "captcha_description": "這個家伺服器想要確認您不是機器人。"
+        "captcha_description": "這個家伺服器想要確認您不是機器人。",
+        "autodiscovery_invalid": "家伺服器的探索回應無效",
+        "autodiscovery_generic_failure": "無法從伺服器取得自動探索設定",
+        "autodiscovery_invalid_hs_base_url": "無效的 m.homeserver base_url",
+        "autodiscovery_invalid_hs": "家伺服器網址似乎不是有效的 Matrix 家伺服器",
+        "autodiscovery_invalid_is_base_url": "無效的 m.identity_server base_url",
+        "autodiscovery_invalid_is": "身分伺服器網址似乎不是有效的身分伺服器",
+        "autodiscovery_invalid_is_response": "身份伺服器探索回應無效"
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -4332,12 +4339,5 @@
     },
     "console_wait": "等等！",
     "cant_load_page": "無法載入頁面",
-    "Invalid homeserver discovery response": "家伺服器的探索回應無效",
-    "Failed to get autodiscovery configuration from server": "無法從伺服器取得自動探索設定",
-    "Invalid base_url for m.homeserver": "無效的 m.homeserver base_url",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "家伺服器網址似乎不是有效的 Matrix 家伺服器",
-    "Invalid identity server discovery response": "身份伺服器探索回應無效",
-    "Invalid base_url for m.identity_server": "無效的 m.identity_server base_url",
-    "Identity server URL does not appear to be a valid identity server": "身分伺服器網址似乎不是有效的身分伺服器",
     "General failure": "一般錯誤"
 }

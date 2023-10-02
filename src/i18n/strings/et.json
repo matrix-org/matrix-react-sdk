@@ -3365,7 +3365,14 @@
         },
         "country_dropdown": "Riikide valik",
         "common_failures": {},
-        "captcha_description": "See server soovib kindlaks teha, et sa ei ole robot."
+        "captcha_description": "See server soovib kindlaks teha, et sa ei ole robot.",
+        "autodiscovery_invalid": "Vigane vastus koduserveri tuvastamise päringule",
+        "autodiscovery_generic_failure": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
+        "autodiscovery_invalid_hs_base_url": "m.homeserver'i kehtetu base_url",
+        "autodiscovery_invalid_hs": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
+        "autodiscovery_invalid_is_base_url": "m.identity_server'i kehtetu base_url",
+        "autodiscovery_invalid_is": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
+        "autodiscovery_invalid_is_response": "Vigane vastus isikutuvastusserveri tuvastamise päringule"
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",
@@ -4332,12 +4339,5 @@
     },
     "console_wait": "Palun oota!",
     "cant_load_page": "Lehe laadimine ei õnnestunud",
-    "Invalid homeserver discovery response": "Vigane vastus koduserveri tuvastamise päringule",
-    "Failed to get autodiscovery configuration from server": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
-    "Invalid base_url for m.homeserver": "m.homeserver'i kehtetu base_url",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
-    "Invalid identity server discovery response": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
-    "Invalid base_url for m.identity_server": "m.identity_server'i kehtetu base_url",
-    "Identity server URL does not appear to be a valid identity server": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
     "General failure": "Üldine viga"
 }

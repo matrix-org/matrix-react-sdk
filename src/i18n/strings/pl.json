@@ -3359,7 +3359,14 @@
         },
         "country_dropdown": "Rozwijana lista krajów",
         "common_failures": {},
-        "captcha_description": "Serwer domowy prosi o potwierdzenie, że nie jesteś robotem."
+        "captcha_description": "Serwer domowy prosi o potwierdzenie, że nie jesteś robotem.",
+        "autodiscovery_invalid": "Nieprawidłowa odpowiedź na wykrycie serwera domowego",
+        "autodiscovery_generic_failure": "Nie udało się uzyskać konfiguracji autodiscovery z serwera",
+        "autodiscovery_invalid_hs_base_url": "Nieprawidłowy base_url dla m.homeserver",
+        "autodiscovery_invalid_hs": "URL serwera domowego nie wygląda na prawidłowy serwer domowy Matrix",
+        "autodiscovery_invalid_is_base_url": "Nieprawidłowy base_url dla m.identity_server",
+        "autodiscovery_invalid_is": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
+        "autodiscovery_invalid_is_response": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości"
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -4314,12 +4321,5 @@
     },
     "console_wait": "Czekaj!",
     "cant_load_page": "Nie można załadować strony",
-    "Invalid homeserver discovery response": "Nieprawidłowa odpowiedź na wykrycie serwera domowego",
-    "Failed to get autodiscovery configuration from server": "Nie udało się uzyskać konfiguracji autodiscovery z serwera",
-    "Invalid base_url for m.homeserver": "Nieprawidłowy base_url dla m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL serwera domowego nie wygląda na prawidłowy serwer domowy Matrix",
-    "Invalid identity server discovery response": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości",
-    "Invalid base_url for m.identity_server": "Nieprawidłowy base_url dla m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
     "General failure": "Ogólny błąd"
 }

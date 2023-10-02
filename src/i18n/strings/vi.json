@@ -3140,7 +3140,14 @@
         },
         "country_dropdown": "Quốc gia thả xuống",
         "common_failures": {},
-        "captcha_description": "Người bảo vệ gia đình này muốn đảm bảo rằng bạn không phải là người máy."
+        "captcha_description": "Người bảo vệ gia đình này muốn đảm bảo rằng bạn không phải là người máy.",
+        "autodiscovery_invalid": "Phản hồi khám phá homeserver không hợp lệ",
+        "autodiscovery_generic_failure": "Không lấy được cấu hình tự động phát hiện từ máy chủ",
+        "autodiscovery_invalid_hs_base_url": "Base_url không hợp lệ cho m.homeserver",
+        "autodiscovery_invalid_hs": "URL máy chủ dường như không phải là máy chủ Matrix hợp lệ",
+        "autodiscovery_invalid_is_base_url": "Base_url không hợp lệ cho m.identity_server",
+        "autodiscovery_invalid_is": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
+        "autodiscovery_invalid_is_response": "Phản hồi phát hiện máy chủ nhận dạng không hợp lệ"
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -4033,12 +4040,5 @@
         "error_loading_user_profile": "Không thể tải hồ sơ người dùng"
     },
     "cant_load_page": "Không thể tải trang",
-    "Invalid homeserver discovery response": "Phản hồi khám phá homeserver không hợp lệ",
-    "Failed to get autodiscovery configuration from server": "Không lấy được cấu hình tự động phát hiện từ máy chủ",
-    "Invalid base_url for m.homeserver": "Base_url không hợp lệ cho m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL máy chủ dường như không phải là máy chủ Matrix hợp lệ",
-    "Invalid identity server discovery response": "Phản hồi phát hiện máy chủ nhận dạng không hợp lệ",
-    "Invalid base_url for m.identity_server": "Base_url không hợp lệ cho m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
     "General failure": "Thất bại chung"
 }

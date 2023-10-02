@@ -3223,7 +3223,14 @@
         },
         "country_dropdown": "Seleccione país",
         "common_failures": {},
-        "captcha_description": "A este servidor le gustaría asegurarse de que no eres un robot."
+        "captcha_description": "A este servidor le gustaría asegurarse de que no eres un robot.",
+        "autodiscovery_invalid": "Respuesta inválida de descubrimiento de servidor base",
+        "autodiscovery_generic_failure": "No se pudo obtener la configuración de autodescubrimiento del servidor",
+        "autodiscovery_invalid_hs_base_url": "URL-base inválida para m.homeserver",
+        "autodiscovery_invalid_hs": "La URL del servidor base no parece ser un servidor válido de Matrix",
+        "autodiscovery_invalid_is_base_url": "URL_base no válida para m.identity_server",
+        "autodiscovery_invalid_is": "La URL del servidor de identidad no parece ser un servidor de identidad válido",
+        "autodiscovery_invalid_is_response": "Respuesta inválida de descubrimiento de servidor de identidad"
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -4134,12 +4141,5 @@
     },
     "console_wait": "¡Espera!",
     "cant_load_page": "No se ha podido cargar la página",
-    "Invalid homeserver discovery response": "Respuesta inválida de descubrimiento de servidor base",
-    "Failed to get autodiscovery configuration from server": "No se pudo obtener la configuración de autodescubrimiento del servidor",
-    "Invalid base_url for m.homeserver": "URL-base inválida para m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "La URL del servidor base no parece ser un servidor válido de Matrix",
-    "Invalid identity server discovery response": "Respuesta inválida de descubrimiento de servidor de identidad",
-    "Invalid base_url for m.identity_server": "URL_base no válida para m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "La URL del servidor de identidad no parece ser un servidor de identidad válido",
     "General failure": "Error no especificado"
 }

@@ -3133,7 +3133,14 @@
         },
         "country_dropdown": "Выпадающий список стран",
         "common_failures": {},
-        "captcha_description": "Этот сервер хотел бы убедиться, что вы не робот."
+        "captcha_description": "Этот сервер хотел бы убедиться, что вы не робот.",
+        "autodiscovery_invalid": "Неверный ответ при попытке обнаружения домашнего сервера",
+        "autodiscovery_generic_failure": "Не удалось получить конфигурацию автообнаружения с сервера",
+        "autodiscovery_invalid_hs_base_url": "Неверный base_url для m.homeserver",
+        "autodiscovery_invalid_hs": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
+        "autodiscovery_invalid_is_base_url": "Неверный base_url для m.identity_server",
+        "autodiscovery_invalid_is": "URL-адрес сервера идентификации не является действительным сервером идентификации",
+        "autodiscovery_invalid_is_response": "Неверный ответ на запрос идентификации сервера"
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -4019,12 +4026,5 @@
     },
     "console_wait": "Подождите!",
     "cant_load_page": "Невозможно загрузить страницу",
-    "Invalid homeserver discovery response": "Неверный ответ при попытке обнаружения домашнего сервера",
-    "Failed to get autodiscovery configuration from server": "Не удалось получить конфигурацию автообнаружения с сервера",
-    "Invalid base_url for m.homeserver": "Неверный base_url для m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
-    "Invalid identity server discovery response": "Неверный ответ на запрос идентификации сервера",
-    "Invalid base_url for m.identity_server": "Неверный base_url для m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL-адрес сервера идентификации не является действительным сервером идентификации",
     "General failure": "Общая ошибка"
 }

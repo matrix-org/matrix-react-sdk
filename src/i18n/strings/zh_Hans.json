@@ -3039,7 +3039,14 @@
         },
         "country_dropdown": "国家下拉菜单",
         "common_failures": {},
-        "captcha_description": "此家服务器想要确认你不是机器人。"
+        "captcha_description": "此家服务器想要确认你不是机器人。",
+        "autodiscovery_invalid": "无效的家服务器搜索响应",
+        "autodiscovery_generic_failure": "从服务器获取自动发现配置时失败",
+        "autodiscovery_invalid_hs_base_url": "m.homeserver 的 base_url 无效",
+        "autodiscovery_invalid_hs": "家服务器链接不像是有效的 Matrix 家服务器",
+        "autodiscovery_invalid_is_base_url": "m.identity_server 的 base_url 无效",
+        "autodiscovery_invalid_is": "身份服务器链接不像是有效的身份服务器",
+        "autodiscovery_invalid_is_response": "无效的身份服务器搜索响应"
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3911,12 +3918,5 @@
     },
     "console_wait": "等等！",
     "cant_load_page": "无法加载页面",
-    "Invalid homeserver discovery response": "无效的家服务器搜索响应",
-    "Failed to get autodiscovery configuration from server": "从服务器获取自动发现配置时失败",
-    "Invalid base_url for m.homeserver": "m.homeserver 的 base_url 无效",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "家服务器链接不像是有效的 Matrix 家服务器",
-    "Invalid identity server discovery response": "无效的身份服务器搜索响应",
-    "Invalid base_url for m.identity_server": "m.identity_server 的 base_url 无效",
-    "Identity server URL does not appear to be a valid identity server": "身份服务器链接不像是有效的身份服务器",
     "General failure": "一般错误"
 }

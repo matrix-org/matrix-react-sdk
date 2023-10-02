@@ -3372,7 +3372,14 @@
         },
         "country_dropdown": "Dropdown Negara",
         "common_failures": {},
-        "captcha_description": "Homeserver ini memastikan Anda bahwa Anda bukan sebuah robot."
+        "captcha_description": "Homeserver ini memastikan Anda bahwa Anda bukan sebuah robot.",
+        "autodiscovery_invalid": "Respons penemuan homeserver tidak absah",
+        "autodiscovery_generic_failure": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
+        "autodiscovery_invalid_hs_base_url": "base_url tidak absah untuk m.homeserver",
+        "autodiscovery_invalid_hs": "URL homeserver sepertinya bukan sebagai homeserver Matrix yang absah",
+        "autodiscovery_invalid_is_base_url": "base_url tidak absah untuk m.identity_server",
+        "autodiscovery_invalid_is": "URL server identitas terlihat bukan sebagai server identitas yang absah",
+        "autodiscovery_invalid_is_response": "Respons penemuan server identitas tidak absah"
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -4339,12 +4346,5 @@
     },
     "console_wait": "Tunggu!",
     "cant_load_page": "Tidak dapat memuat halaman",
-    "Invalid homeserver discovery response": "Respons penemuan homeserver tidak absah",
-    "Failed to get autodiscovery configuration from server": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
-    "Invalid base_url for m.homeserver": "base_url tidak absah untuk m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL homeserver sepertinya bukan sebagai homeserver Matrix yang absah",
-    "Invalid identity server discovery response": "Respons penemuan server identitas tidak absah",
-    "Invalid base_url for m.identity_server": "base_url tidak absah untuk m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL server identitas terlihat bukan sebagai server identitas yang absah",
     "General failure": "Kesalahan umum"
 }

@@ -3372,7 +3372,14 @@
         },
         "country_dropdown": "Nazione a tendina",
         "common_failures": {},
-        "captcha_description": "Questo homeserver vorrebbe assicurarsi che non sei un robot."
+        "captcha_description": "Questo homeserver vorrebbe assicurarsi che non sei un robot.",
+        "autodiscovery_invalid": "Risposta della ricerca homeserver non valida",
+        "autodiscovery_generic_failure": "Ottenimento automatico configurazione dal server fallito",
+        "autodiscovery_invalid_hs_base_url": "Base_url per m.homeserver non valido",
+        "autodiscovery_invalid_hs": "L'URL dell'homeserver non sembra essere un homeserver Matrix valido",
+        "autodiscovery_invalid_is_base_url": "Base_url per m.identity_server non valido",
+        "autodiscovery_invalid_is": "L'URL del server di identità non sembra essere un server di identità valido",
+        "autodiscovery_invalid_is_response": "Risposta non valida cercando server di identità"
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -4339,12 +4346,5 @@
     },
     "console_wait": "Aspetta!",
     "cant_load_page": "Caricamento pagina fallito",
-    "Invalid homeserver discovery response": "Risposta della ricerca homeserver non valida",
-    "Failed to get autodiscovery configuration from server": "Ottenimento automatico configurazione dal server fallito",
-    "Invalid base_url for m.homeserver": "Base_url per m.homeserver non valido",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "L'URL dell'homeserver non sembra essere un homeserver Matrix valido",
-    "Invalid identity server discovery response": "Risposta non valida cercando server di identità",
-    "Invalid base_url for m.identity_server": "Base_url per m.identity_server non valido",
-    "Identity server URL does not appear to be a valid identity server": "L'URL del server di identità non sembra essere un server di identità valido",
     "General failure": "Guasto generale"
 }

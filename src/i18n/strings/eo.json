@@ -2552,7 +2552,14 @@
         },
         "country_dropdown": "Landa falmenuo",
         "common_failures": {},
-        "captcha_description": "Ĉi tiu hejmservilo volas certigi, ke vi ne estas roboto."
+        "captcha_description": "Ĉi tiu hejmservilo volas certigi, ke vi ne estas roboto.",
+        "autodiscovery_invalid": "Nevalida eltrova respondo de hejmservilo",
+        "autodiscovery_generic_failure": "Malsukcesis akiri agordojn de memaga eltrovado de la servilo",
+        "autodiscovery_invalid_hs_base_url": "Nevalida base_url por m.homeserver",
+        "autodiscovery_invalid_hs": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
+        "autodiscovery_invalid_is_base_url": "Nevalida base_url por m.identity_server",
+        "autodiscovery_invalid_is": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
+        "autodiscovery_invalid_is_response": "Nevalida eltrova respondo de identiga servilo"
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -3289,12 +3296,5 @@
         "error_loading_user_profile": "Ne povis enlegi profilon de uzanto"
     },
     "cant_load_page": "Ne povis enlegi paĝon",
-    "Invalid homeserver discovery response": "Nevalida eltrova respondo de hejmservilo",
-    "Failed to get autodiscovery configuration from server": "Malsukcesis akiri agordojn de memaga eltrovado de la servilo",
-    "Invalid base_url for m.homeserver": "Nevalida base_url por m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
-    "Invalid identity server discovery response": "Nevalida eltrova respondo de identiga servilo",
-    "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
     "General failure": "Ĝenerala fiasko"
 }

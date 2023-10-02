@@ -3316,7 +3316,14 @@
         },
         "country_dropdown": "Land-dropdown",
         "common_failures": {},
-        "captcha_description": "Denna hemserver vill se till att du inte är en robot."
+        "captcha_description": "Denna hemserver vill se till att du inte är en robot.",
+        "autodiscovery_invalid": "Ogiltigt hemserverupptäcktssvar",
+        "autodiscovery_generic_failure": "Misslyckades att få konfiguration för autoupptäckt från servern",
+        "autodiscovery_invalid_hs_base_url": "Ogiltig base_url för m.homeserver",
+        "autodiscovery_invalid_hs": "Hemserver-URL:en verkar inte vara en giltig Matrix-hemserver",
+        "autodiscovery_invalid_is_base_url": "Ogiltig base_url för m.identity_server",
+        "autodiscovery_invalid_is": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
+        "autodiscovery_invalid_is_response": "Ogiltigt identitetsserverupptäcktssvar"
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -4272,12 +4279,5 @@
     },
     "console_wait": "Vänta!",
     "cant_load_page": "Kunde inte ladda sidan",
-    "Invalid homeserver discovery response": "Ogiltigt hemserverupptäcktssvar",
-    "Failed to get autodiscovery configuration from server": "Misslyckades att få konfiguration för autoupptäckt från servern",
-    "Invalid base_url for m.homeserver": "Ogiltig base_url för m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Hemserver-URL:en verkar inte vara en giltig Matrix-hemserver",
-    "Invalid identity server discovery response": "Ogiltigt identitetsserverupptäcktssvar",
-    "Invalid base_url for m.identity_server": "Ogiltig base_url för m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
     "General failure": "Allmänt fel"
 }

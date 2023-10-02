@@ -2265,7 +2265,14 @@
         },
         "country_dropdown": "لیست کشور",
         "common_failures": {},
-        "captcha_description": "این سرور می خواهد مطمئن شود که شما یک ربات نیستید."
+        "captcha_description": "این سرور می خواهد مطمئن شود که شما یک ربات نیستید.",
+        "autodiscovery_invalid": "پاسخ جستجوی سرور معتبر نیست",
+        "autodiscovery_generic_failure": "دریافت پیکربندیِ جستجوی خودکار از سرور موفقیت‌آمیز نبود",
+        "autodiscovery_invalid_hs_base_url": "base_url نامعتبر برای m.homeserver",
+        "autodiscovery_invalid_hs": "به نظر می‌رسد که آدرس سرور، متعلق به یک سرور معتبر نباشد",
+        "autodiscovery_invalid_is_base_url": "base_url نامعتبر برای سرور m.identity_server",
+        "autodiscovery_invalid_is": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
+        "autodiscovery_invalid_is_response": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی"
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2947,12 +2954,5 @@
         "error_loading_user_profile": "امکان نمایش پروفایل کاربر میسر نیست"
     },
     "cant_load_page": "نمایش صفحه امکان‌پذیر نبود",
-    "Invalid homeserver discovery response": "پاسخ جستجوی سرور معتبر نیست",
-    "Failed to get autodiscovery configuration from server": "دریافت پیکربندیِ جستجوی خودکار از سرور موفقیت‌آمیز نبود",
-    "Invalid base_url for m.homeserver": "base_url نامعتبر برای m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "به نظر می‌رسد که آدرس سرور، متعلق به یک سرور معتبر نباشد",
-    "Invalid identity server discovery response": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی",
-    "Invalid base_url for m.identity_server": "base_url نامعتبر برای سرور m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
     "General failure": "خطای عمومی"
 }

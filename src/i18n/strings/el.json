@@ -2807,7 +2807,14 @@
         },
         "country_dropdown": "Αναπτυσσόμενο μενού Χώρας",
         "common_failures": {},
-        "captcha_description": "Αυτός ο κεντρικός διακομιστής θα ήθελε να βεβαιωθεί ότι δεν είστε ρομπότ."
+        "captcha_description": "Αυτός ο κεντρικός διακομιστής θα ήθελε να βεβαιωθεί ότι δεν είστε ρομπότ.",
+        "autodiscovery_invalid": "Μη έγκυρη απόκριση εντοπισμού κεντρικού διακομιστή",
+        "autodiscovery_generic_failure": "Απέτυχε η λήψη της διαμόρφωσης αυτόματης ανακάλυψης από τον διακομιστή",
+        "autodiscovery_invalid_hs_base_url": "Μη έγκυρο base_url για m.homeserver",
+        "autodiscovery_invalid_hs": "Η διεύθυνση URL του κεντρικού διακομιστή δε φαίνεται να αντιστοιχεί σε έγκυρο διακομιστή Matrix",
+        "autodiscovery_invalid_is_base_url": "Μη έγκυρο base_url για m.identity_server",
+        "autodiscovery_invalid_is": "Η διεύθυνση URL διακομιστή ταυτοποίησης δε φαίνεται να είναι έγκυρη",
+        "autodiscovery_invalid_is_response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας"
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -3621,12 +3628,5 @@
     },
     "console_wait": "Μια στιγμή!",
     "cant_load_page": "Δεν ήταν δυνατή η φόρτωση της σελίδας",
-    "Invalid homeserver discovery response": "Μη έγκυρη απόκριση εντοπισμού κεντρικού διακομιστή",
-    "Failed to get autodiscovery configuration from server": "Απέτυχε η λήψη της διαμόρφωσης αυτόματης ανακάλυψης από τον διακομιστή",
-    "Invalid base_url for m.homeserver": "Μη έγκυρο base_url για m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Η διεύθυνση URL του κεντρικού διακομιστή δε φαίνεται να αντιστοιχεί σε έγκυρο διακομιστή Matrix",
-    "Invalid identity server discovery response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
-    "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Η διεύθυνση URL διακομιστή ταυτοποίησης δε φαίνεται να είναι έγκυρη",
     "General failure": "Γενική αποτυχία"
 }

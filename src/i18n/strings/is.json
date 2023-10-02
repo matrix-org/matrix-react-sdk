@@ -2895,7 +2895,11 @@
         },
         "country_dropdown": "Fellilisti með löndum",
         "common_failures": {},
-        "captcha_description": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni."
+        "captcha_description": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni.",
+        "autodiscovery_invalid_hs_base_url": "Ógilt base_url fyrir m.homeserver",
+        "autodiscovery_invalid_hs": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
+        "autodiscovery_invalid_is_base_url": "Ógilt base_url fyrir m.identity_server",
+        "autodiscovery_invalid_is": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón"
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3721,9 +3725,5 @@
     },
     "console_wait": "Bíddu!",
     "cant_load_page": "Gat ekki hlaðið inn síðu",
-    "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
-    "Invalid base_url for m.identity_server": "Ógilt base_url fyrir m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
     "General failure": "Almenn bilun"
 }

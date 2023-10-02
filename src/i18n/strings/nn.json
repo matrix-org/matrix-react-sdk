@@ -991,7 +991,14 @@
             "reset_successful": "Passodet ditt vart nullstilt.",
             "return_to_login": "Gå attende til innlogging"
         },
-        "common_failures": {}
+        "common_failures": {},
+        "autodiscovery_invalid": "Feil svar frå heimetenaren (discovery response)",
+        "autodiscovery_generic_failure": "Klarde ikkje å hente automatisk oppsett frå tenaren",
+        "autodiscovery_invalid_hs_base_url": "Feil base_url for m.homeserver",
+        "autodiscovery_invalid_hs": "URL-adressa virkar ikkje til å vere ein gyldig Matrix-heimetenar",
+        "autodiscovery_invalid_is_base_url": "Feil base_url for m.identity_server",
+        "autodiscovery_invalid_is": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
+        "autodiscovery_invalid_is_response": "Feil svar frå identitetstenaren (discovery response)"
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1335,12 +1342,5 @@
         },
         "error_loading_user_profile": "Klarde ikkje å laste brukarprofilen"
     },
-    "Invalid homeserver discovery response": "Feil svar frå heimetenaren (discovery response)",
-    "Failed to get autodiscovery configuration from server": "Klarde ikkje å hente automatisk oppsett frå tenaren",
-    "Invalid base_url for m.homeserver": "Feil base_url for m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-adressa virkar ikkje til å vere ein gyldig Matrix-heimetenar",
-    "Invalid identity server discovery response": "Feil svar frå identitetstenaren (discovery response)",
-    "Invalid base_url for m.identity_server": "Feil base_url for m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
     "General failure": "Generell feil"
 }

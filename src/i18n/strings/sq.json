@@ -3281,7 +3281,14 @@
         },
         "country_dropdown": "Menu Hapmbyll Vendesh",
         "common_failures": {},
-        "captcha_description": "Ky Shërbyes Home do të donte të sigurohej se s’jeni robot."
+        "captcha_description": "Ky Shërbyes Home do të donte të sigurohej se s’jeni robot.",
+        "autodiscovery_invalid": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
+        "autodiscovery_generic_failure": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
+        "autodiscovery_invalid_hs_base_url": "Parametër base_url i pavlefshëm për m.homeserver",
+        "autodiscovery_invalid_hs": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
+        "autodiscovery_invalid_is_base_url": "Parametër base_url i i pavlefshëm për m.identity_server",
+        "autodiscovery_invalid_is": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
+        "autodiscovery_invalid_is_response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi"
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -4225,12 +4232,5 @@
     },
     "console_wait": "Daleni!",
     "cant_load_page": "S’u ngarkua dot faqja",
-    "Invalid homeserver discovery response": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
-    "Failed to get autodiscovery configuration from server": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
-    "Invalid base_url for m.homeserver": "Parametër base_url i pavlefshëm për m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
-    "Invalid identity server discovery response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
-    "Invalid base_url for m.identity_server": "Parametër base_url i i pavlefshëm për m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
     "General failure": "Dështim i përgjithshëm"
 }

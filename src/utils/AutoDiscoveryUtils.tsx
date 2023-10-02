@@ -47,23 +47,23 @@ const isAutoDiscoveryError = (err: unknown): err is AutoDiscoveryError => {
 const mapAutoDiscoveryErrorTranslation = (err: AutoDiscoveryError): TranslationKey => {
     switch (err) {
         case AutoDiscoveryError.GenericFailure:
-            return _td("Invalid homeserver discovery response");
+            return _td("auth|autodiscovery_invalid");
         case AutoDiscoveryError.Invalid:
-            return _td("Failed to get autodiscovery configuration from server");
+            return _td("auth|autodiscovery_generic_failure");
         case AutoDiscoveryError.InvalidHsBaseUrl:
-            return _td("Invalid base_url for m.homeserver");
+            return _td("auth|autodiscovery_invalid_hs_base_url");
         case AutoDiscoveryError.InvalidHomeserver:
-            return _td("Homeserver URL does not appear to be a valid Matrix homeserver");
+            return _td("auth|autodiscovery_invalid_hs");
         case AutoDiscoveryError.InvalidIsBaseUrl:
-            return _td("Invalid base_url for m.identity_server");
+            return _td("auth|autodiscovery_invalid_is_base_url");
         case AutoDiscoveryError.InvalidIdentityServer:
-            return _td("Identity server URL does not appear to be a valid identity server");
+            return _td("auth|autodiscovery_invalid_is");
         case AutoDiscoveryError.InvalidIs:
-            return _td("Invalid identity server discovery response");
+            return _td("auth|autodiscovery_invalid_is_response");
         case AutoDiscoveryError.MissingWellknown:
-            return _td("No .well-known JSON file found");
+            return _td("auth|autodiscovery_no_well_known");
         case AutoDiscoveryError.InvalidJson:
-            return _td("Invalid JSON");
+            return _td("auth|autodiscovery_invalid_json");
         case AutoDiscoveryError.HomeserverTooOld:
             return _td("auth|autodiscovery_hs_incompatible");
     }

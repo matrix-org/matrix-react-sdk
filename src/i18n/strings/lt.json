@@ -2220,7 +2220,11 @@
             "return_to_login": "Grįžti į prisijungimą"
         },
         "common_failures": {},
-        "captcha_description": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas."
+        "captcha_description": "Šis serveris norėtų įsitikinti, kad jūs nesate robotas.",
+        "autodiscovery_invalid": "Klaidingas serverio radimo atsakas",
+        "autodiscovery_invalid_hs": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
+        "autodiscovery_invalid_is": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
+        "autodiscovery_invalid_is_response": "Klaidingas tapatybės serverio radimo atsakas"
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2846,9 +2850,5 @@
             "server_unavailable": "Gali būti, kad serveris neprieinamas, perkrautas arba pasibaigė paieškai skirtas laikas :("
         }
     },
-    "Invalid homeserver discovery response": "Klaidingas serverio radimo atsakas",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
-    "Invalid identity server discovery response": "Klaidingas tapatybės serverio radimo atsakas",
-    "Identity server URL does not appear to be a valid identity server": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
     "General failure": "Bendras triktis"
 }

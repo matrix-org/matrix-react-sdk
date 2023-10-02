@@ -2413,7 +2413,14 @@
         },
         "country_dropdown": "נפתח במדינה",
         "common_failures": {},
-        "captcha_description": "שרת בית זה רוצה לוודא שאתה לא רובוט."
+        "captcha_description": "שרת בית זה רוצה לוודא שאתה לא רובוט.",
+        "autodiscovery_invalid": "תגובת גילוי שרת בית לא חוקית",
+        "autodiscovery_generic_failure": "קבלת תצורת הגילוי האוטומטי מהשרת נכשלה",
+        "autodiscovery_invalid_hs_base_url": "Base_url לא חוקי עבור m.homeserver",
+        "autodiscovery_invalid_hs": "נראה שכתובת האתר של שרת הבית אינה שרת ביתי של מטריקס",
+        "autodiscovery_invalid_is_base_url": "Base_url לא חוקי עבור m.identity_server",
+        "autodiscovery_invalid_is": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
+        "autodiscovery_invalid_is_response": "תגובת גילוי שרת זהות לא חוקית"
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -3099,12 +3106,5 @@
         "error_loading_user_profile": "לא ניתן לטעון את פרופיל המשתמש"
     },
     "cant_load_page": "לא ניתן לטעון את הדף",
-    "Invalid homeserver discovery response": "תגובת גילוי שרת בית לא חוקית",
-    "Failed to get autodiscovery configuration from server": "קבלת תצורת הגילוי האוטומטי מהשרת נכשלה",
-    "Invalid base_url for m.homeserver": "Base_url לא חוקי עבור m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "נראה שכתובת האתר של שרת הבית אינה שרת ביתי של מטריקס",
-    "Invalid identity server discovery response": "תגובת גילוי שרת זהות לא חוקית",
-    "Invalid base_url for m.identity_server": "Base_url לא חוקי עבור m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
     "General failure": "שגיאה כללית"
 }

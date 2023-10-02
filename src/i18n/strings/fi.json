@@ -3065,7 +3065,14 @@
         },
         "country_dropdown": "Maapudotusvalikko",
         "common_failures": {},
-        "captcha_description": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti."
+        "captcha_description": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti.",
+        "autodiscovery_invalid": "Epäkelpo kotipalvelimen etsinnän vastaus",
+        "autodiscovery_generic_failure": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
+        "autodiscovery_invalid_hs_base_url": "Epäkelpo base_url palvelimelle m.homeserver",
+        "autodiscovery_invalid_hs": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
+        "autodiscovery_invalid_is_base_url": "Epäkelpo base_url palvelimelle m.identity_server",
+        "autodiscovery_invalid_is": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
+        "autodiscovery_invalid_is_response": "Epäkelpo identiteettipalvelimen etsinnän vastaus"
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3926,12 +3933,5 @@
     },
     "console_wait": "Odota!",
     "cant_load_page": "Sivun lataaminen ei onnistunut",
-    "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
-    "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
-    "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
-    "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
-    "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
     "General failure": "Yleinen virhe"
 }

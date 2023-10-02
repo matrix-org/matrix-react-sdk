@@ -2991,7 +2991,14 @@
         },
         "country_dropdown": "Despregable de países",
         "common_failures": {},
-        "captcha_description": "Este servidor quere asegurarse de que non es un robot."
+        "captcha_description": "Este servidor quere asegurarse de que non es un robot.",
+        "autodiscovery_invalid": "Resposta de descubrimento do servidor non válida",
+        "autodiscovery_generic_failure": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
+        "autodiscovery_invalid_hs_base_url": "base_url non válido para m.homeserver",
+        "autodiscovery_invalid_hs": "O URL do servidor non semella ser un servidor Matrix válido",
+        "autodiscovery_invalid_is_base_url": "base_url para m.identity_server non válida",
+        "autodiscovery_invalid_is": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
+        "autodiscovery_invalid_is_response": "Resposta de descubrimento de identidade do servidor non válida"
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3838,12 +3845,5 @@
     },
     "console_wait": "Agarda!",
     "cant_load_page": "Non se puido cargar a páxina",
-    "Invalid homeserver discovery response": "Resposta de descubrimento do servidor non válida",
-    "Failed to get autodiscovery configuration from server": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
-    "Invalid base_url for m.homeserver": "base_url non válido para m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "O URL do servidor non semella ser un servidor Matrix válido",
-    "Invalid identity server discovery response": "Resposta de descubrimento de identidade do servidor non válida",
-    "Invalid base_url for m.identity_server": "base_url para m.identity_server non válida",
-    "Identity server URL does not appear to be a valid identity server": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
     "General failure": "Fallo xeral"
 }
