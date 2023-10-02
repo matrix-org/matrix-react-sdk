@@ -29,7 +29,7 @@ import { _t, _td, TranslationKey, UserFriendlyError } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
-const LIVELINESS_DISCOVERY_ERRORS: string[] = [
+const LIVELINESS_DISCOVERY_ERRORS: AutoDiscoveryError[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
     AutoDiscovery.ERROR_INVALID_IDENTITY_SERVER,
 ];
@@ -81,7 +81,13 @@ export default class AutoDiscoveryUtils {
      */
     public static isLivelinessError(error: unknown): boolean {
         if (!error) return false;
-        return !!LIVELINESS_DISCOVERY_ERRORS.find((e) => (error instanceof Error ? e === error.message : e === error));
+        let msg: unknown = error;
+        if (error instanceof UserFriendlyError) {
+            msg = error.cause;
+        } else if (error instanceof Error) {
+            msg = error.message;
+        }
+        return LIVELINESS_DISCOVERY_ERRORS.includes(msg as AutoDiscoveryError);
     }
 
     /**
@@ -243,7 +249,9 @@ export default class AutoDiscoveryUtils {
             logger.error("Error determining preferred identity server URL:", isResult);
             if (isResult.state === AutoDiscovery.FAIL_ERROR) {
                 if (isAutoDiscoveryError(isResult.error)) {
-                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(isResult.error));
+                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(isResult.error), {
+                        cause: hsResult.error,
+                    });
                 }
                 throw new UserFriendlyError("auth|autodiscovery_unexpected_error_is");
             } // else the error is not related to syntax - continue anyways.
@@ -259,7 +267,9 @@ export default class AutoDiscoveryUtils {
             logger.error("Error processing homeserver config:", hsResult);
             if (!syntaxOnly || !AutoDiscoveryUtils.isLivelinessError(hsResult.error)) {
                 if (isAutoDiscoveryError(hsResult.error)) {
-                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(hsResult.error));
+                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(hsResult.error), {
+                        cause: hsResult.error,
+                    });
                 }
                 throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
             } // else the error is not related to syntax - continue anyways.
