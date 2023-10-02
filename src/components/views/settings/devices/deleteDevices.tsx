@@ -52,7 +52,7 @@ export const deleteDevicesWithInteractiveAuth = async (
         const numDevices = deviceIds.length;
         const dialogAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
-                title: _t("Use Single Sign On to continue"),
+                title: _t("auth|uia|sso_title"),
                 body: _t("settings|sessions|confirm_sign_out_sso", {
                     count: numDevices,
                 }),
@@ -71,7 +71,7 @@ export const deleteDevicesWithInteractiveAuth = async (
             },
         };
         Modal.createDialog(InteractiveAuthDialog, {
-            title: _t("Authentication"),
+            title: _t("common|authentication"),
             matrixClient: matrixClient,
             authData: error.data as IAuthData,
             onFinished,

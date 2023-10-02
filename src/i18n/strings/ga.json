@@ -1,38 +1,7 @@
 {
-    "Sign in with": "Sínigh isteach le",
-    "Show more": "Taispeáin níos mó",
-    "All settings": "Gach Socrú",
-    "Are you sure you want to reject the invitation?": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
-    "Are you sure you want to leave the room '%(roomName)s'?": "An bhfuil tú cinnte gur mian leat an seomra '%(roomName)s' a fhágáil?",
-    "Are you sure?": "An bhfuil tú cinnte?",
     "An error has occurred.": "D’imigh earráid éigin.",
-    "A new password must be entered.": "Caithfear focal faire nua a iontráil.",
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
-    "Default Device": "Gléas Réamhshocraithe",
-    "No media permissions": "Gan cheadanna meáin",
-    "No Webcams detected": "Níor braitheadh aon ceamara gréasáin",
-    "No Microphones detected": "Níor braitheadh aon micreafón",
-    "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.": "Iarr ar an riarthóir do fhreastalaí baile (<code>%(homeserverDomain)s</code>) freastalaí TURN a chumrú go bhfeidhmeoidh glaonna go hiontaofa.",
-    "Call failed due to misconfigured server": "Theip an glaoch de bharr freastalaí mícumraithe",
-    "Answered Elsewhere": "Tógtha in áit eile",
-    "The call could not be established": "Níor féidir an glaoch a bhunú",
-    "Unable to load! Check your network connectivity and try again.": "Ní féidir a lódáil! Seiceáil do nascacht líonra agus bain triail eile as.",
-    "The call was answered on another device.": "Do ghníomhaire úsáideora.",
-    "Failed to verify email address: make sure you clicked the link in the email": "Níor cinntíodh an seoladh ríomhphoist: déan cinnte gur chliceáil tú an nasc sa ríomhphost",
-    "Reject & Ignore user": "Diúltaigh ⁊ Neamaird do úsáideoir",
-    "Ignored users": "Úsáideoirí neamhairde",
-    "Ignored/Blocked": "Neamhairde/Tachta",
-    "Unrecognised address": "Seoladh nár aithníodh",
-    "Verified key": "Eochair deimhnithe",
-    "Unignored user": "Úsáideoir leis aird",
-    "Ignored user": "Úsáideoir neamhairde",
-    "Unignore": "Stop ag tabhairt neamhaird air",
-    "Missing roomId.": "Comhartha aitheantais seomra ar iarraidh.",
-    "Operation failed": "Chlis an oibríocht",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
-    "Upload Failed": "Chlis an uaslódáil",
-    "Permission Required": "Is Teastáil Cead",
-    "Spaces": "Spásanna",
     "Transfer": "Aistrigh",
     "Hold": "Fan",
     "Resume": "Tosaigh arís",
@@ -218,27 +187,10 @@
     "Algeria": "an Ailgéir",
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
-    "Widgets": "Giuirléidí",
-    "ready": "réidh",
-    "Algorithm:": "Algartam:",
     "Information": "Eolas",
-    "Favourited": "Roghnaithe",
     "Ok": "Togha",
-    "Accepting…": "ag Glacadh leis…",
-    "Cancelling…": "ag Cealú…",
-    "exists": "a bheith ann",
-    "Bridges": "Droichid",
-    "Later": "Níos deireanaí",
     "Lock": "Glasáil",
-    "Unencrypted": "Gan chriptiú",
-    "None": "Níl aon cheann",
-    "Italics": "Iodálach",
-    "Discovery": "Aimsiú",
-    "Success!": "Rath!",
-    "Phone": "Guthán",
-    "Email": "Ríomhphost",
     "Home": "Tús",
-    "Favourite": "Cuir mar ceanán",
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
     "Unavailable": "Níl sé ar fáil",
@@ -246,7 +198,6 @@
     "expand": "méadaigh",
     "collapse": "cumaisc",
     "edited": "curtha in eagar",
-    "Copied!": "Cóipeáilte!",
     "Yesterday": "Inné",
     "Today": "Inniu",
     "Saturday": "Dé Sathairn",
@@ -256,36 +207,12 @@
     "Tuesday": "Dé Máirt",
     "Monday": "Dé Luain",
     "Sunday": "Dé Domhnaigh",
-    "Search…": "Cuardaigh…",
-    "Re-join": "Téigh ar ais isteach",
-    "Historical": "Stairiúil",
-    "Rooms": "Seomraí",
-    "Replying": "Ag freagairt",
     "%(duration)sd": "%(duration)sl",
     "%(duration)sh": "%(duration)su",
     "%(duration)sm": "%(duration)sn",
     "%(duration)ss": "%(duration)ss",
-    "Delete Backup": "Scrios cúltaca",
-    "Email Address": "Seoladh Ríomhphoist",
-    "Change Password": "Athraigh focal faire",
-    "Confirm password": "Deimhnigh focal faire",
-    "New Password": "Focal Faire Nua",
-    "Current password": "Focal faire reatha",
     "Light bulb": "Bolgán solais",
     "Thumbs up": "Ordógí suas",
-    "Got It": "Tuigthe",
-    "Invited": "Le cuireadh",
-    "Demote": "Bain ceadanna",
-    "Encryption": "Criptiúchán",
-    "Unban": "Bain an cosc",
-    "Browse": "Brabhsáil",
-    "Sounds": "Fuaimeanna",
-    "Cryptography": "Cripteagrafaíocht",
-    "Notifications": "Fógraí",
-    "General": "Ginearálta",
-    "Account": "Cuntas",
-    "Profile": "Próifíl",
-    "Authentication": "Fíordheimhniú",
     "Warning!": "Aire!",
     "Folder": "Fillteán",
     "Headphones": "Cluasáin",
@@ -347,10 +274,8 @@
     "Lion": "Leon",
     "Cat": "Cat",
     "Dog": "Madra",
-    "Reason": "Cúis",
     "Moderator": "Modhnóir",
     "Restricted": "Teoranta",
-    "Default": "Réamhshocrú",
     "AM": "RN",
     "PM": "IN",
     "Dec": "Nol",
@@ -373,98 +298,22 @@
     "Mon": "Lua",
     "Sun": "Doṁ",
     "Send": "Seol",
-    "Add Phone Number": "Cuir uimhir ghutháin",
-    "Click the button below to confirm adding this phone number.": "Cliceáil an cnaipe thíos chun an uimhir ghutháin nua a dheimhniú.",
-    "Confirm adding phone number": "Deimhnigh an uimhir ghutháin nua",
-    "Confirm adding this phone number by using Single Sign On to prove your identity.": "Deimhnigh an uimhir ghutháin seo le SSO mar cruthúnas céannachta.",
-    "Add Email Address": "Cuir seoladh ríomhphoist",
-    "Click the button below to confirm adding this email address.": "Cliceáil an cnaipe thíos chun an seoladh ríomhphoist nua a dheimhniú.",
-    "Confirm adding email": "Deimhnigh an seoladh ríomhphoist nua",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Deimhnigh an seoladh ríomhphoist seo le SSO mar cruthúnas céannachta.",
-    "Explore rooms": "Breathnaigh thart ar na seomraí",
-    "Use Single Sign On to continue": "Lean ar aghaidh le SSO",
-    "This phone number is already in use": "Úsáidtear an uimhir ghutháin seo chean féin",
-    "This email address is already in use": "Úsáidtear an seoladh ríomhphoist seo chean féin",
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Signed Out": "Sínithe Amach",
-    "Create account": "Déan cuntas a chruthú",
-    "Deactivate Account": "Cuir cuntas as feidhm",
-    "Account management": "Bainistíocht cuntais",
-    "Phone numbers": "Uimhreacha guthán",
-    "Email addresses": "Seoltaí r-phost",
-    "Display Name": "Ainm Taispeána",
-    "Profile picture": "Pictiúr próifíle",
-    "Phone Number": "Uimhir Fóin",
-    "Verification code": "Cód fíoraithe",
-    "Notification targets": "Spriocanna fógraí",
-    "Results": "Torthaí",
-    "More": "Níos mó",
-    "Decrypting": "Ag Díchriptiú",
-    "Access": "Rochtain",
-    "Global": "Uilíoch",
-    "Keyword": "Eochairfhocal",
-    "Report": "Tuairiscigh",
-    "Visibility": "Léargas",
-    "Address": "Seoladh",
     "Sent": "Seolta",
-    "Connecting": "Ag Ceangal",
     "Sending": "Ag Seoladh",
-    "Avatar": "Abhatár",
-    "The file '%(fileName)s' failed to upload.": "Níor éirigh leis an gcomhad '%(fileName)s' a uaslódáil.",
-    "You do not have permission to start a conference call in this room": "Níl cead agat glao comhdhála a thosú sa seomra seo",
-    "You cannot place a call with yourself.": "Ní féidir leat glaoch ort féin.",
-    "The user you called is busy.": "Tá an t-úsáideoir ar a ghlaoigh tú gnóthach.",
-    "User Busy": "Úsáideoir Gnóthach",
-    "Share your public space": "Roinn do spás poiblí",
-    "Invite to %(spaceName)s": "Tabhair cuireadh chun %(spaceName)s",
     "Unnamed room": "Seomra gan ainm",
-    "Admin Tools": "Uirlisí Riaracháin",
-    "Demote yourself?": "Tabhair ísliú céime duit féin?",
-    "Notification sound": "Fuaim fógra",
-    "Uploaded sound": "Fuaim uaslódáilte",
-    "Room Addresses": "Seoltaí Seomra",
-    "Room version:": "Leagan seomra:",
-    "Room version": "Leagan seomra",
-    "Too Many Calls": "Barraíocht Glaonna",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
-    "Failure to create room": "Níorbh fhéidir an seomra a chruthú",
-    "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Sáraíonn an comhad '%(fileName)s' teorainn méide an freastalaí baile seo le haghaidh uaslódálacha",
-    "The server does not support the room version specified.": "Ní thacaíonn an freastalaí leis an leagan seomra a shonraítear.",
-    "Server may be unavailable, overloaded, or you hit a bug.": "D’fhéadfadh nach mbeadh an freastalaí ar fáil, ró-ualaithe, nó fuair tú fabht.",
-    "Rooms and spaces": "Seomraí agus spásanna",
-    "Collapse reply thread": "Cuir na freagraí i bhfolach",
-    "Low priority": "Tosaíocht íseal",
-    "Share room": "Roinn seomra",
-    "Forget room": "Déan dearmad ar an seomra",
     "Join Room": "Téigh isteach an seomra",
     "(~%(count)s results)": {
         "one": "(~%(count)s toradh)",
         "other": "(~%(count)s torthaí)"
     },
-    "No answer": "Gan freagair",
-    "Unknown failure: %(reason)s": "Teip anaithnid: %(reason)s",
-    "Cross-signing is ready but keys are not backed up.": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha.",
-    "Failed to reject invitation": "Níorbh fhéidir an cuireadh a dhiúltú",
-    "Failed to reject invite": "Níorbh fhéidir an cuireadh a dhiúltú",
-    "Failed to mute user": "Níor ciúnaíodh an úsáideoir",
-    "Failed to load timeline position": "Níor lódáladh áit amlíne",
-    "Failed to forget room %(errCode)s": "Níor dhearnadh dearmad ar an seomra %(errCode)s",
-    "Failed to change power level": "Níor éiríodh leis an leibhéal cumhachta a hathrú",
-    "Failed to change password. Is your password correct?": "Níor éiríodh leis do phasfhocal a hathrú. An bhfuil do phasfhocal ceart?",
-    "Failed to ban user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
-    "Export E2E room keys": "Easpórtáil eochracha an tseomra le criptiú ó dheireadh go deireadh",
-    "Error decrypting attachment": "Earráid le ceangaltán a dhíchriptiú",
-    "Enter passphrase": "Iontráil pasfrása",
     "Email address": "Seoladh ríomhphoist",
-    "Download %(text)s": "Íoslódáil %(text)s",
-    "Decrypt %(text)s": "Díchriptigh %(text)s",
     "Custom level": "Leibhéal saincheaptha",
-    "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.": "Ní féidir ceangal leis an bhfreastalaí baile trí HTTP nuair a bhíonn URL HTTPS i mbarra do bhrabhsálaí. Bain úsáid as HTTPS nó <a> scripteanna neamhshábháilte a chumasú </a>.",
-    "Can't connect to homeserver - please check your connectivity, ensure your <a>homeserver's SSL certificate</a> is trusted, and that a browser extension is not blocking requests.": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais.",
     "common": {
         "about": "Faoi",
         "analytics": "Anailísiú sonraí",
@@ -523,7 +372,22 @@
         "cross_signing": "Cros-síniú",
         "feedback": "Aiseolas",
         "on": "Ar siúl",
-        "off": "Múchta"
+        "off": "Múchta",
+        "copied": "Cóipeáilte!",
+        "advanced": "Forbartha",
+        "spaces": "Spásanna",
+        "general": "Ginearálta",
+        "profile": "Próifíl",
+        "display_name": "Ainm Taispeána",
+        "user_avatar": "Pictiúr próifíle",
+        "authentication": "Fíordheimhniú",
+        "rooms": "Seomraí",
+        "low_priority": "Tosaíocht íseal",
+        "historical": "Stairiúil",
+        "unencrypted": "Gan chriptiú",
+        "show_more": "Taispeáin níos mó",
+        "avatar": "Abhatár",
+        "are_you_sure": "An bhfuil tú cinnte?"
     },
     "action": {
         "continue": "Lean ar aghaidh",
@@ -600,7 +464,10 @@
         "export": "Easpórtáil",
         "refresh": "Athnuaigh",
         "mention": "Luaigh",
-        "submit": "Cuir isteach"
+        "submit": "Cuir isteach",
+        "unban": "Bain an cosc",
+        "unignore": "Stop ag tabhairt neamhaird air",
+        "explore_rooms": "Breathnaigh thart ar na seomraí"
     },
     "labs": {
         "pinning": "Ceangal teachtaireachta",
@@ -631,10 +498,11 @@
         "autocomplete": {
             "command_description": "Ordú",
             "user_description": "Úsáideoirí"
-        }
+        },
+        "poll_button_no_perms_title": "Is Teastáil Cead",
+        "format_italics": "Iodálach",
+        "replying_title": "Ag freagairt"
     },
-    "Bold": "Trom",
-    "Code": "Cód",
     "power_level": {
         "default": "Réamhshocrú",
         "restricted": "Teoranta",
@@ -646,7 +514,8 @@
         "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí",
         "notifications": {
             "rule_call": "Nuair a fhaighim cuireadh glaoigh",
-            "noisy": "Callánach"
+            "noisy": "Callánach",
+            "push_targets": "Spriocanna fógraí"
         },
         "appearance": {
             "timeline_image_size_default": "Réamhshocrú",
@@ -654,6 +523,49 @@
         },
         "preferences": {
             "composer_heading": "Eagarthóir"
+        },
+        "security": {
+            "cross_signing_homeserver_support_exists": "a bheith ann",
+            "export_megolm_keys": "Easpórtáil eochracha an tseomra le criptiú ó dheireadh go deireadh",
+            "cryptography_section": "Cripteagrafaíocht",
+            "encryption_section": "Criptiúchán",
+            "secret_storage_ready": "réidh",
+            "delete_backup": "Scrios cúltaca",
+            "key_backup_algorithm": "Algartam:",
+            "key_backup_active_version_none": "Níl aon cheann",
+            "ignore_users_section": "Úsáideoirí neamhairde"
+        },
+        "general": {
+            "account_section": "Cuntas",
+            "email_address_in_use": "Úsáidtear an seoladh ríomhphoist seo chean féin",
+            "msisdn_in_use": "Úsáidtear an uimhir ghutháin seo chean féin",
+            "confirm_adding_email_title": "Deimhnigh an seoladh ríomhphoist nua",
+            "confirm_adding_email_body": "Cliceáil an cnaipe thíos chun an seoladh ríomhphoist nua a dheimhniú.",
+            "add_email_dialog_title": "Cuir seoladh ríomhphoist",
+            "add_email_failed_verification": "Níor cinntíodh an seoladh ríomhphoist: déan cinnte gur chliceáil tú an nasc sa ríomhphost",
+            "add_msisdn_confirm_sso_button": "Deimhnigh an uimhir ghutháin seo le SSO mar cruthúnas céannachta.",
+            "add_msisdn_confirm_button": "Deimhnigh an uimhir ghutháin nua",
+            "add_msisdn_confirm_body": "Cliceáil an cnaipe thíos chun an uimhir ghutháin nua a dheimhniú.",
+            "add_msisdn_dialog_title": "Cuir uimhir ghutháin",
+            "error_password_change_403": "Níor éiríodh leis do phasfhocal a hathrú. An bhfuil do phasfhocal ceart?",
+            "emails_heading": "Seoltaí r-phost",
+            "msisdns_heading": "Uimhreacha guthán",
+            "deactivate_section": "Cuir cuntas as feidhm",
+            "account_management_section": "Bainistíocht cuntais",
+            "discovery_section": "Aimsiú",
+            "msisdn_verification_field_label": "Cód fíoraithe",
+            "email_address_label": "Seoladh Ríomhphoist",
+            "msisdn_label": "Uimhir Fóin"
+        },
+        "voip": {
+            "audio_input_empty": "Níor braitheadh aon micreafón",
+            "video_input_empty": "Níor braitheadh aon ceamara gréasáin"
+        },
+        "key_backup": {
+            "backup_success": "Rath!"
+        },
+        "key_export_import": {
+            "enter_passphrase": "Iontráil pasfrása"
         }
     },
     "devtools": {
@@ -691,6 +603,23 @@
         },
         "m.room.power_levels": {
             "changed": "D'athraigh %(senderName)s an leibhéal cumhachta %(powerLevelDiffText)s."
+        },
+        "context_menu": {
+            "collapse_reply_thread": "Cuir na freagraí i bhfolach",
+            "report": "Tuairiscigh"
+        },
+        "load_error": {
+            "title": "Níor lódáladh áit amlíne"
+        },
+        "download_action_decrypting": "Ag Díchriptiú",
+        "m.call.invite": {
+            "no_answer": "Gan freagair",
+            "unknown_failure": "Teip anaithnid: %(reason)s"
+        },
+        "m.file": {
+            "download_label": "Íoslódáil %(text)s",
+            "error_decrypting": "Earráid le ceangaltán a dhíchriptiú",
+            "decrypt_label": "Díchriptigh %(text)s"
         }
     },
     "slash_command": {
@@ -706,7 +635,10 @@
         "me": "Taispeáin gníomh",
         "deop": "Bain an cumhacht oibritheora ó úsáideoir leis an ID áirithe",
         "server_error": "Earráid freastalaí",
-        "command_error": "Earráid ordaithe"
+        "command_error": "Earráid ordaithe",
+        "ignore_dialog_title": "Úsáideoir neamhairde",
+        "unignore_dialog_title": "Úsáideoir leis aird",
+        "verify_success_title": "Eochair deimhnithe"
     },
     "presence": {
         "online": "Ar Líne",
@@ -715,7 +647,6 @@
         "offline": "As líne",
         "away": "Imithe"
     },
-    "Unknown": "Anaithnid",
     "event_preview": {
         "m.call.answer": {
             "dm": "Glaoch ar siúl"
@@ -745,10 +676,25 @@
         "call_failed_media": "Níor glaodh toisc nach raibh rochtain ar ceamara gréasáin nó mhicreafón. Seiceáil go:",
         "call_failed_media_connected": "Tá micreafón agus ceamara gréasáin plugáilte isteach agus curtha ar bun i gceart",
         "call_failed_media_permissions": "Tugtar cead an ceamara gréasáin a úsáid",
-        "call_failed_media_applications": "Níl aon fheidhmchlár eile ag úsáid an cheamara gréasáin"
+        "call_failed_media_applications": "Níl aon fheidhmchlár eile ag úsáid an cheamara gréasáin",
+        "user_busy": "Úsáideoir Gnóthach",
+        "user_busy_description": "Tá an t-úsáideoir ar a ghlaoigh tú gnóthach.",
+        "call_failed_description": "Níor féidir an glaoch a bhunú",
+        "answered_elsewhere": "Tógtha in áit eile",
+        "answered_elsewhere_description": "Do ghníomhaire úsáideora.",
+        "misconfigured_server": "Theip an glaoch de bharr freastalaí mícumraithe",
+        "misconfigured_server_description": "Iarr ar an riarthóir do fhreastalaí baile (<code>%(homeserverDomain)s</code>) freastalaí TURN a chumrú go bhfeidhmeoidh glaonna go hiontaofa.",
+        "too_many_calls": "Barraíocht Glaonna",
+        "cannot_call_yourself_description": "Ní féidir leat glaoch ort féin.",
+        "no_permission_conference": "Is Teastáil Cead",
+        "no_permission_conference_description": "Níl cead agat glao comhdhála a thosú sa seomra seo",
+        "default_device": "Gléas Réamhshocraithe",
+        "no_media_perms_title": "Gan cheadanna meáin",
+        "join_button_tooltip_connecting": "Ag Ceangal",
+        "more_button": "Níos mó",
+        "connecting": "Ag Ceangal"
     },
     "Other": "Eile",
-    "Advanced": "Forbartha",
     "room_settings": {
         "permissions": {
             "m.room.power_levels": "Athraigh ceadanna",
@@ -763,7 +709,8 @@
             "privileged_users_section": "Úsáideoirí Pribhléideacha",
             "muted_users_section": "Úsáideoirí Fuaim",
             "banned_users_section": "Úsáideoirí toirmiscthe",
-            "permissions_section": "Ceadanna"
+            "permissions_section": "Ceadanna",
+            "ban_reason": "Cúis"
         },
         "security": {
             "enable_encryption_confirm_title": "Cumasaigh criptiú?",
@@ -771,13 +718,40 @@
             "history_visibility_world_readable": "Aon duine"
         },
         "general": {
-            "url_previews_section": "Réamhamhairc URL"
+            "url_previews_section": "Réamhamhairc URL",
+            "aliases_section": "Seoltaí Seomra",
+            "other_section": "Eile"
+        },
+        "advanced": {
+            "room_version_section": "Leagan seomra",
+            "room_version": "Leagan seomra:"
+        },
+        "visibility": {
+            "title": "Léargas",
+            "alias_section": "Seoladh"
+        },
+        "access": {
+            "title": "Rochtain"
+        },
+        "bridges": {
+            "title": "Droichid"
+        },
+        "notifications": {
+            "uploaded_sound": "Fuaim uaslódáilte",
+            "sounds_section": "Fuaimeanna",
+            "notification_sound": "Fuaim fógra",
+            "browse_button": "Brabhsáil"
         }
     },
     "encryption": {
         "verification": {
-            "complete_title": "Deimhnithe!"
-        }
+            "complete_title": "Deimhnithe!",
+            "complete_action": "Tuigthe",
+            "cancelling": "ag Cealú…",
+            "unverified_sessions_toast_reject": "Níos deireanaí",
+            "accepting": "ag Glacadh leis…"
+        },
+        "cross_signing_ready_no_backup": "Tá tras-sínigh réidh ach ní dhéantar cóip chúltaca d'eochracha."
     },
     "emoji": {
         "category_activities": "Gníomhaíochtaí",
@@ -799,7 +773,24 @@
         "create_account_prompt": "Céaduaire? <a>Cruthaigh cuntas</a>",
         "sign_in_or_register": "Sínigh Isteach nó Déan cuntas a chruthú",
         "register_action": "Déan cuntas a chruthú",
-        "phone_label": "Guthán"
+        "phone_label": "Guthán",
+        "session_logged_out_title": "Sínithe Amach",
+        "change_password_confirm_label": "Deimhnigh focal faire",
+        "change_password_current_label": "Focal faire reatha",
+        "change_password_new_label": "Focal Faire Nua",
+        "change_password_action": "Athraigh focal faire",
+        "email_field_label": "Ríomhphost",
+        "msisdn_field_label": "Guthán",
+        "identifier_label": "Sínigh isteach le",
+        "uia": {
+            "sso_title": "Lean ar aghaidh le SSO",
+            "sso_body": "Deimhnigh an seoladh ríomhphoist seo le SSO mar cruthúnas céannachta.",
+            "code": "Cód"
+        },
+        "create_account_title": "Déan cuntas a chruthú",
+        "reset_password": {
+            "password_not_entered": "Caithfear focal faire nua a iontráil."
+        }
     },
     "export_chat": {
         "messages": "Teachtaireachtaí"
@@ -834,13 +825,17 @@
     },
     "user_menu": {
         "switch_theme_light": "Athraigh go mód geal",
-        "switch_theme_dark": "Athraigh go mód dorcha"
+        "switch_theme_dark": "Athraigh go mód dorcha",
+        "settings": "Gach Socrú"
     },
     "space": {
         "suggested": "Moltaí",
         "context_menu": {
             "explore": "Breathnaigh thart ar na seomraí"
-        }
+        },
+        "share_public": "Roinn do spás poiblí",
+        "title_when_query_unavailable": "Seomraí agus spásanna",
+        "title_when_query_available": "Torthaí"
     },
     "terms": {
         "column_service": "Seirbhís",
@@ -850,6 +845,89 @@
     "room": {
         "intro": {
             "enable_encryption_prompt": "Tosaigh criptiú sna socruithe."
-        }
+        },
+        "context_menu": {
+            "unfavourite": "Roghnaithe",
+            "favourite": "Cuir mar ceanán"
+        },
+        "header": {
+            "forget_room_button": "Déan dearmad ar an seomra"
+        },
+        "rejoin_button": "Téigh ar ais isteach",
+        "invite_reject_ignore": "Diúltaigh ⁊ Neamaird do úsáideoir",
+        "search": {
+            "field_placeholder": "Cuardaigh…"
+        },
+        "inviter_unknown": "Anaithnid",
+        "failed_reject_invite": "Níorbh fhéidir an cuireadh a dhiúltú"
+    },
+    "labs_mjolnir": {
+        "ban_reason": "Neamhairde/Tachta",
+        "title": "Úsáideoirí neamhairde",
+        "rules_empty": "Níl aon cheann"
+    },
+    "failed_load_async_component": "Ní féidir a lódáil! Seiceáil do nascacht líonra agus bain triail eile as.",
+    "upload_failed_generic": "Níor éirigh leis an gcomhad '%(fileName)s' a uaslódáil.",
+    "upload_failed_size": "Sáraíonn an comhad '%(fileName)s' teorainn méide an freastalaí baile seo le haghaidh uaslódálacha",
+    "upload_failed_title": "Chlis an uaslódáil",
+    "create_room": {
+        "generic_error": "D’fhéadfadh nach mbeadh an freastalaí ar fáil, ró-ualaithe, nó fuair tú fabht.",
+        "unsupported_version": "Ní thacaíonn an freastalaí leis an leagan seomra a shonraítear.",
+        "error_title": "Níorbh fhéidir an seomra a chruthú"
+    },
+    "invite": {
+        "failed_generic": "Chlis an oibríocht",
+        "invalid_address": "Seoladh nár aithníodh",
+        "to_space": "Tabhair cuireadh chun %(spaceName)s"
+    },
+    "scalar": {
+        "error_missing_room_id": "Comhartha aitheantais seomra ar iarraidh."
+    },
+    "error": {
+        "mixed_content": "Ní féidir ceangal leis an bhfreastalaí baile trí HTTP nuair a bhíonn URL HTTPS i mbarra do bhrabhsálaí. Bain úsáid as HTTPS nó <a> scripteanna neamhshábháilte a chumasú </a>.",
+        "tls": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais.",
+        "update_power_level": "Níor éiríodh leis an leibhéal cumhachta a hathrú"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Fógraí",
+        "colour_none": "Níl aon cheann",
+        "colour_bold": "Trom",
+        "keyword": "Eochairfhocal",
+        "class_global": "Uilíoch",
+        "class_other": "Eile",
+        "default": "Réamhshocrú"
+    },
+    "onboarding": {
+        "create_account": "Déan cuntas a chruthú"
+    },
+    "quick_settings": {
+        "all_settings": "Gach Socrú"
+    },
+    "create_space": {
+        "address_label": "Seoladh"
+    },
+    "member_list": {
+        "invited_list_heading": "Le cuireadh"
+    },
+    "user_info": {
+        "admin_tools_section": "Uirlisí Riaracháin",
+        "demote_self_confirm_title": "Tabhair ísliú céime duit féin?",
+        "demote_button": "Bain ceadanna",
+        "error_ban_user": "Níor éiríodh leis an úsáideoir a thoirmeasc",
+        "error_mute_user": "Níor ciúnaíodh an úsáideoir"
+    },
+    "right_panel": {
+        "widgets_section": "Giuirléidí",
+        "share_button": "Roinn seomra"
+    },
+    "reject_invitation_dialog": {
+        "confirmation": "An bhfuil tú cinnte gur mian leat an cuireadh a dhiúltú?",
+        "failed": "Níorbh fhéidir an cuireadh a dhiúltú"
+    },
+    "leave_room_dialog": {
+        "leave_room_question": "An bhfuil tú cinnte gur mian leat an seomra '%(roomName)s' a fhágáil?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Níor dhearnadh dearmad ar an seomra %(errCode)s"
     }
 }

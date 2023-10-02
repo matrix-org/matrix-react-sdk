@@ -132,7 +132,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                 <AccessibleTooltipButton
                     className={moreOptionsClasses}
                     onClick={props.toggleButtonMenu}
-                    title={_t("More options")}
+                    title={_t("quick_settings|sidebar_settings")}
                 />
             )}
             {props.isMenuOpen && (
@@ -259,7 +259,7 @@ function showStickersButton(props: IProps): ReactElement | null {
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_stickers"
             onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
-            title={props.isStickerPickerOpen ? _t("Hide stickers") : _t("common|sticker")}
+            title={props.isStickerPickerOpen ? _t("composer|close_sticker_picker") : _t("common|sticker")}
         />
     ) : null;
 }
@@ -271,7 +271,7 @@ const startVoiceBroadcastButton: React.FC<IProps> = (props: IProps): ReactElemen
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_voiceBroadcast"
             onClick={props.onStartVoiceBroadcastClick}
-            title={_t("Voice broadcast")}
+            title={_t("voice_broadcast|action")}
         />
     ) : null;
 };
@@ -284,7 +284,7 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement | nu
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_voiceMessage"
             onClick={props.onRecordStartEndClick}
-            title={_t("Voice Message")}
+            title={_t("composer|voice_message_button")}
         />
     );
 }
@@ -310,8 +310,8 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         );
         if (!canSend) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Permission Required"),
-                description: _t("You do not have permission to start polls in this room."),
+                title: _t("composer|poll_button_no_perms_title"),
+                description: _t("composer|poll_button_no_perms_description"),
             });
         } else {
             const threadId =
@@ -339,7 +339,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 className="mx_MessageComposer_button"
                 iconClassName="mx_MessageComposer_poll"
                 onClick={this.onCreateClick}
-                title={_t("Poll")}
+                title={_t("composer|poll_button")}
             />
         );
     }
@@ -365,7 +365,7 @@ interface WysiwygToggleButtonProps {
 }
 
 function ComposerModeButton({ isRichTextEnabled, onClick }: WysiwygToggleButtonProps): JSX.Element {
-    const title = isRichTextEnabled ? _t("Hide formatting") : _t("Show formatting");
+    const title = isRichTextEnabled ? _t("composer|mode_plain") : _t("composer|mode_rich_text");
 
     return (
         <CollapsibleButton

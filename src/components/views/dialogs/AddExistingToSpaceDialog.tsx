@@ -387,8 +387,8 @@ const defaultRendererFactory =
             </div>
         );
 
-export const defaultRoomsRenderer = defaultRendererFactory(_td("Rooms"));
-export const defaultSpacesRenderer = defaultRendererFactory(_td("Spaces"));
+export const defaultRoomsRenderer = defaultRendererFactory(_td("common|rooms"));
+export const defaultSpacesRenderer = defaultRendererFactory(_td("common|spaces"));
 export const defaultDmsRenderer = defaultRendererFactory(_td("Direct Messages"));
 
 interface ISubspaceSelectorProps {
@@ -494,7 +494,7 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
                     roomsRenderer={defaultRoomsRenderer}
                     spacesRenderer={() => (
                         <div className="mx_AddExistingToSpace_section">
-                            <h3>{_t("Spaces")}</h3>
+                            <h3>{_t("common|spaces")}</h3>
                             <AccessibleButton
                                 kind="link"
                                 onClick={() => {

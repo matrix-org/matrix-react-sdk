@@ -97,7 +97,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
     private getDefaultDialogAesthetics(): DialogAesthetics {
         const ssoAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
-                title: _t("Use Single Sign On to continue"),
+                title: _t("auth|uia|sso_title"),
                 body: _t("To continue, use Single Sign On to prove your identity."),
                 continueText: _t("auth|sso"),
                 continueKind: "primary",
@@ -143,7 +143,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         // Let's pick a title, body, and other params text that we'll show to the user. The order
         // is most specific first, so stagePhase > our props > defaults.
 
-        let title = this.state.authError ? "Error" : this.props.title || _t("Authentication");
+        let title = this.state.authError ? "Error" : this.props.title || _t("common|authentication");
         let body = this.state.authError ? null : this.props.body;
         let continueText: string | undefined;
         let continueKind: string | undefined;

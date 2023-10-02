@@ -101,9 +101,10 @@ export const HomeButtonContextMenu: React.FC<ComponentProps<typeof SpaceContextM
             <IconizedContextMenuOptionList first>
                 <IconizedContextMenuCheckbox
                     iconClassName="mx_SpacePanel_noIcon"
-                    label={_t("Show all rooms")}
+                    label={_t("settings|sidebar|metaspaces_home_all_rooms")}
                     active={allRoomsInHome}
                     onClick={() => {
+                        onFinished();
                         SettingsStore.setValue("Spaces.allRoomsInHome", null, SettingLevel.ACCOUNT, !allRoomsInHome);
                     }}
                 />
@@ -244,7 +245,7 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
                 className={classNames("mx_SpaceButton_new", {
                     mx_SpaceButton_newCancel: menuDisplayed,
                 })}
-                label={menuDisplayed ? _t("action|cancel") : _t("Create a space")}
+                label={menuDisplayed ? _t("action|cancel") : _t("create_space|label")}
                 onClick={onNewClick}
                 isNarrow={isPanelCollapsed}
                 innerRef={handle}
@@ -296,7 +297,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                 }
                 element="ul"
                 role="tree"
-                aria-label={_t("Spaces")}
+                aria-label={_t("common|spaces")}
             >
                 {metaSpacesSection}
                 {invites.map((s) => (

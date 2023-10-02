@@ -71,14 +71,10 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
         let doUpgradeWarnings = (
             <div>
                 <div className="mx_RoomUpgradeWarningBar_body">
+                    <p>{_t("room|upgrade_warning_bar")}</p>
                     <p>
                         {_t(
-                            "Upgrading this room will shut down the current instance of the room and create an upgraded room with the same name.",
-                        )}
-                    </p>
-                    <p>
-                        {_t(
-                            "<b>Warning</b>: upgrading a room will <i>not automatically migrate room members to the new version of the room.</i> We'll post a link to the new room in the old version of the room - room members will have to click this link to join the new room.",
+                            "room_settings|advanced|room_upgrade_warning",
                             {},
                             {
                                 b: (sub) => <b>{sub}</b>,
@@ -89,7 +85,7 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
                 </div>
                 <p className="mx_RoomUpgradeWarningBar_upgradelink">
                     <AccessibleButton onClick={this.onUpgradeClick}>
-                        {_t("Upgrade this room to the recommended room version")}
+                        {_t("room_settings|advanced|room_upgrade_button")}
                     </AccessibleButton>
                 </p>
             </div>
@@ -98,7 +94,7 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
         if (this.state.upgraded) {
             doUpgradeWarnings = (
                 <div className="mx_RoomUpgradeWarningBar_body">
-                    <p>{_t("This room has already been upgraded.")}</p>
+                    <p>{_t("room|upgrade_warning_bar_upgraded")}</p>
                 </div>
             );
         }
@@ -108,7 +104,7 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
                 <div className="mx_RoomUpgradeWarningBar_wrapped">
                     <div className="mx_RoomUpgradeWarningBar_header">
                         {_t(
-                            "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.",
+                            "room|upgrade_warning_bar_unstable",
                             {},
                             {
                                 roomVersion: () => <code>{this.props.room.getVersion()}</code>,
@@ -117,9 +113,7 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
                         )}
                     </div>
                     {doUpgradeWarnings}
-                    <div className="mx_RoomUpgradeWarningBar_small">
-                        {_t("Only room administrators will see this warning")}
-                    </div>
+                    <div className="mx_RoomUpgradeWarningBar_small">{_t("room|upgrade_warning_bar_admins")}</div>
                 </div>
             </div>
         );

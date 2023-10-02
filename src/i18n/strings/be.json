@@ -1,13 +1,4 @@
 {
-    "Failed to forget room %(errCode)s": "Не атрымалася забыць пакой %(errCode)s",
-    "All messages": "Усе паведамленні",
-    "Notification targets": "Мэты апавяшчэння",
-    "Favourite": "Улюбёнае",
-    "Notifications": "Апавяшчэнні",
-    "Low Priority": "Нізкі прыярытэт",
-    "Invite to this room": "Запрасіць у гэты пакой",
-    "Operation failed": "Не атрымалася выканаць аперацыю",
-    "Source URL": "URL-адрас крыніцы",
     "common": {
         "error": "Памылка",
         "mute": "Без гуку",
@@ -32,7 +23,30 @@
     },
     "settings": {
         "notifications": {
-            "noisy": "Шумна"
+            "noisy": "Шумна",
+            "push_targets": "Мэты апавяшчэння"
         }
+    },
+    "invite": {
+        "failed_generic": "Не атрымалася выканаць аперацыю"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Апавяшчэнні",
+        "all_messages": "Усе паведамленні"
+    },
+    "timeline": {
+        "context_menu": {
+            "external_url": "URL-адрас крыніцы"
+        }
+    },
+    "room": {
+        "context_menu": {
+            "favourite": "Улюбёнае",
+            "low_priority": "Нізкі прыярытэт"
+        },
+        "invite_this_room": "Запрасіць у гэты пакой"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Не атрымалася забыць пакой %(errCode)s"
     }
 }

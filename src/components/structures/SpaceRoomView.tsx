@@ -124,7 +124,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
                     {canCreateRoom && (
                         <>
                             <IconizedContextMenuOption
-                                label={_t("New room")}
+                                label={_t("action|new_room")}
                                 iconClassName="mx_RoomList_iconNewRoom"
                                 onClick={async (e): Promise<void> => {
                                     e.preventDefault();
@@ -139,7 +139,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
                             />
                             {videoRoomsEnabled && (
                                 <IconizedContextMenuOption
-                                    label={_t("New video room")}
+                                    label={_t("action|new_video_room")}
                                     iconClassName="mx_RoomList_iconNewVideoRoom"
                                     onClick={async (e): Promise<void> => {
                                         e.preventDefault();
@@ -164,7 +164,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
                         </>
                     )}
                     <IconizedContextMenuOption
-                        label={_t("Add existing room")}
+                        label={_t("action|add_existing_room")}
                         iconClassName="mx_RoomList_iconAddExistingRoom"
                         onClick={(e) => {
                             e.preventDefault();
@@ -175,7 +175,7 @@ const SpaceLandingAddButton: React.FC<{ space: Room }> = ({ space }) => {
                     />
                     {canCreateSpace && (
                         <IconizedContextMenuOption
-                            label={_t("Add space")}
+                            label={_t("room_list|add_space_label")}
                             iconClassName="mx_RoomList_iconPlus"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -303,8 +303,8 @@ const SpaceSetupFirstRooms: React.FC<{
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const numFields = 3;
-    const placeholders = [_t("General"), _t("common|random"), _t("common|support")];
-    const [roomNames, setRoomName] = useStateArray(numFields, [_t("General"), _t("common|random"), ""]);
+    const placeholders = [_t("common|general"), _t("common|random"), _t("common|support")];
+    const [roomNames, setRoomName] = useStateArray(numFields, [_t("common|general"), _t("common|random"), ""]);
     const fields = new Array(numFields).fill(0).map((x, i) => {
         const name = "roomName" + i;
         return (
@@ -487,7 +487,7 @@ const validateEmailRules = withValidation({
         {
             key: "email",
             test: ({ value }) => !value || Email.looksValid(value),
-            invalid: () => _t("Doesn't look like a valid email address"),
+            invalid: () => _t("auth|email_field_label_invalid"),
         },
     ],
 });
@@ -509,7 +509,7 @@ const SpaceSetupPrivateInvite: React.FC<{
                 name={name}
                 type="text"
                 label={_t("Email address")}
-                placeholder={_t("Email")}
+                placeholder={_t("auth|email_field_label")}
                 value={emailAddresses[i]}
                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setEmailAddress(i, ev.target.value)}
                 ref={fieldRefs[i]}

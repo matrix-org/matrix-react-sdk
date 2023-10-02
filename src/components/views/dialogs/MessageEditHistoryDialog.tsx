@@ -161,13 +161,13 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
                 );
             } else if (error.errcode) {
                 // some kind of error from the homeserver
-                content = <p className="mx_MessageEditHistoryDialog_error">{_t("Something went wrong!")}</p>;
+                content = <p className="mx_MessageEditHistoryDialog_error">{_t("error|something_went_wrong")}</p>;
             } else {
                 content = (
                     <p className="mx_MessageEditHistoryDialog_error">
-                        {_t("Cannot reach homeserver")}
+                        {_t("cannot_reach_homeserver")}
                         <br />
-                        {_t("Ensure you have a stable internet connection, or get in touch with the server admin")}
+                        {_t("cannot_reach_homeserver_detail")}
                     </p>
                 );
             }
