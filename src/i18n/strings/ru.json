@@ -773,7 +773,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Отсутствует имя комнаты или разделитель (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Отсутствует разделитель домена (:domain.org)",
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
-    "Could not fetch location": "Не удалось получить местоположение",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -793,12 +792,6 @@
     "Use <arrows/> to scroll": "Используйте <arrows/> для прокрутки",
     "Join %(roomAddress)s": "Присоединиться к %(roomAddress)s",
     "Feedback sent! Thanks, we appreciate it!": "Отзыв отправлен! Спасибо, мы ценим это!",
-    "What location type do you want to share?": "Каким типом местоположения вы хотите поделиться?",
-    "Drop a Pin": "Маркер на карте",
-    "My live location": "Моё местоположение в реальном времени",
-    "My current location": "Моё текущее местоположение",
-    "%(brand)s could not send your location. Please try again later.": "%(brand)s не удаётся отправить ваше местоположение. Пожалуйста, повторите попытку позже.",
-    "We couldn't send your location": "Мы не смогли отправить ваше местоположение",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "%(members)s and %(last)s": "%(members)s и %(last)s",
@@ -858,7 +851,6 @@
     "Add new server…": "Добавить новый сервер…",
     "Remove server “%(roomServer)s”": "Удалить сервер «%(roomServer)s»",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Вы можете использовать пользовательские опции сервера для входа на другие серверы Matrix, указав URL-адрес другого домашнего сервера. Это позволяет использовать %(brand)s с существующей учётной записью Matrix на другом домашнем сервере.",
-    "%(displayName)s's live location": "Местонахождение %(displayName)s в реальном времени",
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -874,8 +866,6 @@
     "Online community members": "Участники сообщества в сети",
     "You're in": "Вы в",
     "Choose a locale": "Выберите регион",
-    "You need to have the right permissions in order to share locations in this room.": "У вас должны быть определённые разрешения, чтобы делиться местоположениями в этой комнате.",
-    "You don't have permission to share locations": "У вас недостаточно прав для публикации местоположений",
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
@@ -3452,7 +3442,17 @@
         "click_move_pin": "Нажмите, чтобы переместить маркер",
         "click_drop_pin": "Нажмите, чтобы закрепить маркер",
         "share_button": "Поделиться местоположением",
-        "stop_and_close": "Остановить и закрыть"
+        "stop_and_close": "Остановить и закрыть",
+        "error_fetch_location": "Не удалось получить местоположение",
+        "error_no_perms_title": "У вас недостаточно прав для публикации местоположений",
+        "error_no_perms_description": "У вас должны быть определённые разрешения, чтобы делиться местоположениями в этой комнате.",
+        "error_send_title": "Мы не смогли отправить ваше местоположение",
+        "error_send_description": "%(brand)s не удаётся отправить ваше местоположение. Пожалуйста, повторите попытку позже.",
+        "live_description": "Местонахождение %(displayName)s в реальном времени",
+        "share_type_own": "Моё текущее местоположение",
+        "share_type_live": "Моё местоположение в реальном времени",
+        "share_type_pin": "Маркер на карте",
+        "share_type_prompt": "Каким типом местоположения вы хотите поделиться?"
     },
     "labs_mjolnir": {
         "room_name": "Мой список блокировки",

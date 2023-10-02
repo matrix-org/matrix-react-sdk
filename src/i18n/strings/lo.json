@@ -602,14 +602,6 @@
     "Themes": "ຫົວຂໍ້",
     "Moderation": "ປານກາງ",
     "Recently viewed": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
-    "What location type do you want to share?": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?",
-    "Drop a Pin": "ປັກໝຸດ",
-    "My live location": "ສະຖານທີ່ຂອງຂ້ອຍ",
-    "My current location": "ສະຖານທີ່ປະຈຸບັນຂອງຂ້ອຍ",
-    "%(displayName)s's live location": "ສະຖານທີ່ປັດຈຸບັນຂອງ %(displayName)s",
-    "%(brand)s could not send your location. Please try again later.": "%(brand)s ບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
-    "We couldn't send your location": "ພວກເຮົາບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້",
-    "Could not fetch location": "ບໍ່ສາມາດດຶງຂໍ້ມູນສະຖານທີ່ໄດ້",
     "toggle event": "ສະຫຼັບກິດຈະກຳ",
     "Submit logs": "ສົ່ງບັນທຶກ",
     "%(count)s votes": {
@@ -3113,7 +3105,15 @@
         "live_share_button": "ແບ່ງປັນເປັນ %(duration)s",
         "click_move_pin": "ກົດເພື່ອຍ້າຍ PIN",
         "click_drop_pin": "ກົດເພື່ອວາງປັກໝຸດ",
-        "share_button": "ແບ່ງປັນສະຖານທີ່"
+        "share_button": "ແບ່ງປັນສະຖານທີ່",
+        "error_fetch_location": "ບໍ່ສາມາດດຶງຂໍ້ມູນສະຖານທີ່ໄດ້",
+        "error_send_title": "ພວກເຮົາບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້",
+        "error_send_description": "%(brand)s ບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
+        "live_description": "ສະຖານທີ່ປັດຈຸບັນຂອງ %(displayName)s",
+        "share_type_own": "ສະຖານທີ່ປະຈຸບັນຂອງຂ້ອຍ",
+        "share_type_live": "ສະຖານທີ່ຂອງຂ້ອຍ",
+        "share_type_pin": "ປັກໝຸດ",
+        "share_type_prompt": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?"
     },
     "labs_mjolnir": {
         "room_name": "ບັນຊີລາຍຊື່ການຫ້າມຂອງຂ້ອຍ",

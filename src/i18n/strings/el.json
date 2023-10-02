@@ -574,7 +574,6 @@
     "Space visibility": "Ορατότητα χώρου",
     "Only people invited will be able to find and join this space.": "Μόνο τα άτομα που έχουν προσκληθεί θα μπορούν να βρουν και να εγγραφούν σε αυτόν τον χώρο.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Οποιοσδήποτε θα μπορεί να βρει και να εγγραφεί σε αυτόν τον χώρο, όχι μόνο μέλη του <SpaceName/>.",
-    "Could not fetch location": "Δεν ήταν δυνατή η ανάκτηση της τοποθεσίας",
     "Submit logs": "Υποβολή αρχείων καταγραφής",
     "%(count)s votes": {
         "one": "%(count)s ψήφος",
@@ -661,13 +660,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα αρχεία",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Η προετοιμασία της αναζήτησης μηνυμάτων απέτυχε, ελέγξτε τις <a>ρυθμίσεις σας</a> για περισσότερες πληροφορίες",
     "Cancel search": "Ακύρωση αναζήτησης",
-    "What location type do you want to share?": "Τι τύπο τοποθεσίας θέλετε να μοιραστείτε;",
-    "Drop a Pin": "Εισάγετε μια Καρφίτσα",
-    "My live location": "Η ζωντανή τοποθεσία μου",
-    "My current location": "Η τρέχουσα τοποθεσία μου",
-    "%(displayName)s's live location": "Η τρέχουσα τοποθεσία του/της %(displayName)s",
-    "%(brand)s could not send your location. Please try again later.": "Το %(brand)s δεν μπόρεσε να στείλει την τοποθεσία σας. Παρακαλώ δοκιμάστε ξανά αργότερα.",
-    "We couldn't send your location": "Αδυναμία αποστολής της τοποθεσίας σας",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
@@ -3099,7 +3091,15 @@
         "live_share_button": "Κοινή χρήση για %(duration)s",
         "click_move_pin": "Κλικ για να μετακινήσετε την καρφίτσα",
         "click_drop_pin": "Κλικ για να εισάγετε μια καρφίτσα",
-        "share_button": "Κοινή χρήση τοποθεσίας"
+        "share_button": "Κοινή χρήση τοποθεσίας",
+        "error_fetch_location": "Δεν ήταν δυνατή η ανάκτηση της τοποθεσίας",
+        "error_send_title": "Αδυναμία αποστολής της τοποθεσίας σας",
+        "error_send_description": "Το %(brand)s δεν μπόρεσε να στείλει την τοποθεσία σας. Παρακαλώ δοκιμάστε ξανά αργότερα.",
+        "live_description": "Η τρέχουσα τοποθεσία του/της %(displayName)s",
+        "share_type_own": "Η τρέχουσα τοποθεσία μου",
+        "share_type_live": "Η ζωντανή τοποθεσία μου",
+        "share_type_pin": "Εισάγετε μια Καρφίτσα",
+        "share_type_prompt": "Τι τύπο τοποθεσίας θέλετε να μοιραστείτε;"
     },
     "labs_mjolnir": {
         "room_name": "Η λίστα απαγορεύσεων μου",

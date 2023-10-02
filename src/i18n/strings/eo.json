@@ -748,12 +748,6 @@
         "other": "%(spaceName)s kaj %(count)s aliaj"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kaj %(space2Name)s",
-    "What location type do you want to share?": "Kiel vi volas kunhavigi vian lokon?",
-    "My live location": "Mia realtempa loko",
-    "My current location": "Mia nuna loko",
-    "%(brand)s could not send your location. Please try again later.": "%(brand)s ne povis sendi vian lokon. Bonvolu reprovi poste.",
-    "We couldn't send your location": "Ni ne povis sendi vian lokon",
-    "Could not fetch location": "Loko ne eblis akiri",
     "Close sidebar": "Fermu la flanka kolumno",
     "Public rooms": "Publikajn ĉambrojn",
     "Developer": "Programisto",
@@ -2838,7 +2832,13 @@
         "reset_bearing": "Restarigu la lagron norden",
         "failed_generic": "Via loko ne eblis akiri. Bonvolu reprovi poste.",
         "failed_timeout": "Tempo elĉerpita akiri vian lokon. Bonvolu reprovi poste.",
-        "share_button": "Kunhavigi lokon"
+        "share_button": "Kunhavigi lokon",
+        "error_fetch_location": "Loko ne eblis akiri",
+        "error_send_title": "Ni ne povis sendi vian lokon",
+        "error_send_description": "%(brand)s ne povis sendi vian lokon. Bonvolu reprovi poste.",
+        "share_type_own": "Mia nuna loko",
+        "share_type_live": "Mia realtempa loko",
+        "share_type_prompt": "Kiel vi volas kunhavigi vian lokon?"
     },
     "labs_mjolnir": {
         "room_name": "Mia listo de forbaroj",

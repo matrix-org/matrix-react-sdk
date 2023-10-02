@@ -782,7 +782,6 @@
     "Messaging": "Kommunikation",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
-    "Could not fetch location": "Standort konnte nicht abgerufen werden",
     "Verify other device": "Anderes Gerät verifizieren",
     "Missing room name or separator e.g. (my-room:domain.org)": "Fehlender Raumname oder Doppelpunkt (z. B. dein-raum:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Fehlender Doppelpunkt vor Server (z. B. :domain.org)",
@@ -794,12 +793,6 @@
     "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
-    "What location type do you want to share?": "Wie willst du deinen Standort teilen?",
-    "Drop a Pin": "Standort setzen",
-    "My live location": "Mein Echtzeit-Standort",
-    "My current location": "Mein Standort",
-    "%(brand)s could not send your location. Please try again later.": "%(brand)s konnte deinen Standort nicht senden. Bitte versuche es später erneut.",
-    "We couldn't send your location": "Wir konnten deinen Standort nicht senden",
     "You are sharing your live location": "Du teilst deinen Echtzeit-Standort",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Deaktivieren, wenn du auch Systemnachrichten bzgl. des Nutzers löschen willst (z. B. Mitglieds- und Profiländerungen …)",
     "Preserve system messages": "Systemnachrichten behalten",
@@ -807,7 +800,6 @@
         "one": "Du bist gerade dabei, %(count)s Nachricht von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?",
         "other": "Du bist gerade dabei, %(count)s Nachrichten von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?"
     },
-    "%(displayName)s's live location": "Echtzeit-Standort von %(displayName)s",
     "%(count)s participants": {
         "one": "1 Teilnehmer",
         "other": "%(count)s Teilnehmer"
@@ -865,10 +857,8 @@
     "Unread email icon": "Ungelesene E-Mail Symbol",
     "Coworkers and teams": "Kollegen und Gruppen",
     "Friends and family": "Freunde und Familie",
-    "You need to have the right permissions in order to share locations in this room.": "Du benötigst die entsprechenden Berechtigungen, um deinen Echtzeit-Standort in diesem Raum freizugeben.",
     "Who will you chat to the most?": "Mit wem wirst du am meisten schreiben?",
     "Online community members": "Online Community-Mitglieder",
-    "You don't have permission to share locations": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
     "Start a group chat": "Gruppenunterhaltung beginnen",
     "If you can't see who you're looking for, send them your invite link.": "Falls du nicht findest wen du suchst, send ihnen deinen Einladungslink.",
     "Interactively verify by emoji": "Interaktiv per Emoji verifizieren",
@@ -3708,7 +3698,17 @@
         "click_move_pin": "Klicke, um den Standort zu bewegen",
         "click_drop_pin": "Klicke, um den Standort zu setzen",
         "share_button": "Standort teilen",
-        "stop_and_close": "Beenden und schließen"
+        "stop_and_close": "Beenden und schließen",
+        "error_fetch_location": "Standort konnte nicht abgerufen werden",
+        "error_no_perms_title": "Dir fehlt die Berechtigung, Echtzeit-Standorte freigeben zu dürfen",
+        "error_no_perms_description": "Du benötigst die entsprechenden Berechtigungen, um deinen Echtzeit-Standort in diesem Raum freizugeben.",
+        "error_send_title": "Wir konnten deinen Standort nicht senden",
+        "error_send_description": "%(brand)s konnte deinen Standort nicht senden. Bitte versuche es später erneut.",
+        "live_description": "Echtzeit-Standort von %(displayName)s",
+        "share_type_own": "Mein Standort",
+        "share_type_live": "Mein Echtzeit-Standort",
+        "share_type_pin": "Standort setzen",
+        "share_type_prompt": "Wie willst du deinen Standort teilen?"
     },
     "labs_mjolnir": {
         "room_name": "Meine Bannliste",
