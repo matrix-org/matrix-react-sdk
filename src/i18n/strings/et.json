@@ -17,9 +17,6 @@
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
     "Direct Messages": "Isiklikud sõnumid",
-    "Verification timed out.": "Verifitseerimine aegus.",
-    "%(displayName)s cancelled verification.": "%(displayName)s tühistas verifitseerimise.",
-    "You cancelled verification.": "Sina tühistasid verifitseerimise.",
     "Sunday": "Pühapäev",
     "Monday": "Esmaspäev",
     "Tuesday": "Teisipäev",
@@ -123,7 +120,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Vaata kas ajajoonel ülespool leidub varasemaid sõnumeid.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Kui sõnumeid on väga palju, siis võib nüüd aega kuluda. Oodates palun ära tee ühtegi päringut ega andmevärskendust.",
     "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
-    "Start verification again from their profile.": "Alusta verifitseerimist uuesti nende profiilist.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid neile kutse saata?",
     "Dog": "Koer",
     "Cat": "Kass",
@@ -285,7 +281,6 @@
     "Switch theme": "Vaheta teemat",
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
-    "This client does not support end-to-end encryption.": "See klient ei toeta läbivat krüptimist.",
     "Delete Widget": "Kustuta vidin",
     "Language Dropdown": "Keelevalik",
     "Your homeserver has exceeded its user limit.": "Sinu koduserver on ületanud kasutajate arvu ülempiiri.",
@@ -296,12 +291,6 @@
         "other": "ja %(count)s muud...",
         "one": "ja üks muu..."
     },
-    "Almost there! Is %(displayName)s showing the same shield?": "Peaaegu valmis! Kas %(displayName)s kuvab sama kilpi?",
-    "Verify all users in a room to ensure it's secure.": "Tagamaks, et jututuba on turvaline, verifitseeri kõik selle kasutajad.",
-    "You've successfully verified your device!": "Sinu seadme verifitseerimine oli edukas!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Sa oled edukalt verifitseerinud seadme %(deviceName)s (%(deviceId)s)!",
-    "You've successfully verified %(displayName)s!": "Sa oled edukalt verifitseerinud kasutaja %(displayName)s!",
-    "Start verification again from the notification.": "Alusta verifitseerimist uuesti teavitusest.",
     "Add an Integration": "Lisa lõiming",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sind juhatatakse kolmanda osapoole veebisaiti, kus sa saad autentida oma kontoga %(integrationsUrl)s kasutamiseks. Kas sa soovid jätkata?",
     "Power level": "Õiguste tase",
@@ -364,11 +353,6 @@
         "other": "%(count)s sessiooni",
         "one": "%(count)s sessioon"
     },
-    "Verify by scanning": "Verifitseeri skaneerides",
-    "Ask %(displayName)s to scan your code:": "Palu, et %(displayName)s skaneeriks sinu koodi:",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Kui sa ei saa skaneerida eespool kuvatud koodi, siis verifitseeri unikaalsete emoji'de võrdlemise teel.",
-    "Verify by comparing unique emoji.": "Verifitseeri unikaalsete emoji'de võrdlemise teel.",
-    "Verify by emoji": "Verifitseeri emoji'de abil",
     "Edited at %(date)s": "Muutmise kuupäev %(date)s",
     "Click to view edits": "Muudatuste nägemiseks klõpsi",
     "<a>In reply to</a> <pill>": "<a>Vastuseks kasutajale</a> <pill>",
@@ -703,7 +687,6 @@
         "other": "%(count)s liiget",
         "one": "%(count)s liige"
     },
-    "Edit devices": "Muuda seadmeid",
     "Invite to %(roomName)s": "Kutsu jututuppa %(roomName)s",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "See tavaliselt mõjutab vaid viisi, kuidas server jututuba teenindab. Kui sul tekib %(brand)s kasutamisel vigu, siis palun anna sellest meile teada.",
     "%(count)s rooms": {
@@ -809,7 +792,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Jätkamiseks sisesta oma turvafraas või <button>kasuta oma turvavõtit</button>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Taasta ligipääs oma kontole ning selles sessioonis salvestatud krüptivõtmetele. Ilma nende võtmeteta sa ei saa lugeda krüptitud sõnumeid mitte üheski oma sessioonis.",
     "If you can't see who you're looking for, send them your invite link below.": "Kui sa ei leia otsitavaid, siis saada neile kutse.",
-    "In encrypted rooms, verify all users to ensure it's secure.": "Krüptitud jututubades turvalisuse tagamiseks verifitseeri kõik kasutajad.",
     "Thread options": "Jutulõnga valikud",
     "Reply in thread": "Vasta jutulõngas",
     "Forget": "Unusta",
@@ -866,8 +848,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Jututoa nimi või eraldaja on puudu (näiteks jututuba:domeen.ee)",
     "Missing domain separator e.g. (:domain.org)": "Domeeni eraldaja on puudu (näiteks :domeen.ee)",
     "Verify other device": "Verifitseeri oma teine seade",
-    "You cancelled verification on your other device.": "Sina tühistasid verifitseerimise oma teises seadmes.",
-    "Almost there! Is your other device showing the same shield?": "Peaaegu valmis! Kas sinu teine seade kuvab sama kilpi?",
     "Could not fetch location": "Asukoha tuvastamine ei õnnestunud",
     "Message pending moderation": "Sõnum on modereerimise ootel",
     "Message pending moderation: %(reason)s": "Sõnum on modereerimise ootel: %(reason)s",
@@ -3114,7 +3094,25 @@
                 "reset_confirmation": "Kas tõesti kustutame kõik verifitseerimisvõtmed?",
                 "skip_verification": "Jäta verifitseerimine praegu vahele"
             },
-            "accepting": "Nõustun …"
+            "accepting": "Nõustun …",
+            "scan_qr": "Verifitseeri skaneerides",
+            "scan_qr_explainer": "Palu, et %(displayName)s skaneeriks sinu koodi:",
+            "verify_emoji_prompt_qr": "Kui sa ei saa skaneerida eespool kuvatud koodi, siis verifitseeri unikaalsete emoji'de võrdlemise teel.",
+            "verify_emoji_prompt": "Verifitseeri unikaalsete emoji'de võrdlemise teel.",
+            "verify_emoji": "Verifitseeri emoji'de abil",
+            "qr_reciprocate_same_shield_device": "Peaaegu valmis! Kas sinu teine seade kuvab sama kilpi?",
+            "qr_reciprocate_same_shield_user": "Peaaegu valmis! Kas %(displayName)s kuvab sama kilpi?",
+            "prompt_encrypted": "Tagamaks, et jututuba on turvaline, verifitseeri kõik selle kasutajad.",
+            "prompt_unencrypted": "Krüptitud jututubades turvalisuse tagamiseks verifitseeri kõik kasutajad.",
+            "successful_own_device": "Sinu seadme verifitseerimine oli edukas!",
+            "successful_device": "Sa oled edukalt verifitseerinud seadme %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "Sa oled edukalt verifitseerinud kasutaja %(displayName)s!",
+            "prompt_self": "Alusta verifitseerimist uuesti teavitusest.",
+            "prompt_user": "Alusta verifitseerimist uuesti nende profiilist.",
+            "timed_out": "Verifitseerimine aegus.",
+            "cancelled_self": "Sina tühistasid verifitseerimise oma teises seadmes.",
+            "cancelled_user": "%(displayName)s tühistas verifitseerimise.",
+            "cancelled": "Sina tühistasid verifitseerimise."
         },
         "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
         "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
@@ -3167,7 +3165,8 @@
         "cross_signing_user_normal": "Sa ei ole seda kasutajat verifitseerinud.",
         "cross_signing_room_warning": "Keegi kasutab tundmatut sessiooni",
         "cross_signing_room_verified": "Kõik kasutajad siin nututoas on verifitseeritud",
-        "cross_signing_room_normal": "See jututuba on läbivalt krüptitud"
+        "cross_signing_room_normal": "See jututuba on läbivalt krüptitud",
+        "unsupported": "See klient ei toeta läbivat krüptimist."
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -4245,7 +4244,8 @@
         "deactivate_confirm_description": "Kasutaja deaktiveerimisel logitakse ta automaatselt välja ning ei lubata enam sisse logida. Lisaks lahkub ta kõikidest jututubadest, mille liige ta parasjagu on. Seda tegevust ei saa tagasi pöörata. Kas sa oled ikka kindel, et soovid selle kasutaja kõijkalt eemaldada?",
         "deactivate_confirm_action": "Deaktiveeri kasutaja",
         "error_deactivate": "Kasutaja deaktiveerimine ei õnnestunud",
-        "role_label": "Roll jututoas <RoomName/>"
+        "role_label": "Roll jututoas <RoomName/>",
+        "edit_own_devices": "Muuda seadmeid"
     },
     "stickers": {
         "empty": "Sul pole ühtegi kleepsupakki kasutusel",

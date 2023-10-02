@@ -653,26 +653,6 @@
     "No answer": "Καμία απάντηση",
     "Call back": "Καλέστε πίσω",
     "Call declined": "Η κλήση απορρίφθηκε",
-    "You cancelled verification.": "Ακυρώσατε την επαλήθευση.",
-    "%(displayName)s cancelled verification.": "%(displayName)s ακύρωσε την επαλύθευση.",
-    "You cancelled verification on your other device.": "Ακυρώσατε την επαλήθευση στην άλλη συσκευή σας.",
-    "Verification timed out.": "Η επαλήθευση έληξε.",
-    "Start verification again from their profile.": "Ξεκινήστε ξανά την επαλήθευση από το προφίλ τους.",
-    "Start verification again from the notification.": "Ξεκινήστε ξανά την επαλήθευση από την ειδοποίηση.",
-    "You've successfully verified %(displayName)s!": "Επαληθεύσατε με επιτυχία τον χρήστη %(displayName)s!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Επαληθεύσατε με επιτυχία το %(deviceName)s %(deviceId)s!",
-    "You've successfully verified your device!": "Επαληθεύσατε με επιτυχία τη συσκευή σας!",
-    "In encrypted rooms, verify all users to ensure it's secure.": "Σε κρυπτογραφημένα δωμάτια, επαληθεύστε όλους τους χρήστες για να βεβαιωθείτε ότι είναι ασφαλές.",
-    "Verify all users in a room to ensure it's secure.": "Επαληθεύστε όλους τους χρήστες σε ένα δωμάτιο για να βεβαιωθείτε ότι είναι ασφαλές.",
-    "Almost there! Is %(displayName)s showing the same shield?": "Σχεδόν έτοιμοι! Εμφανίζεται η ίδια ασπίδα και στον χρήστη %(displayName)s;",
-    "Almost there! Is your other device showing the same shield?": "Σχεδόν έτοιμοι! Εμφανίζεται η ίδια ασπίδα και στην άλλη συσκευή σας;",
-    "Verify by emoji": "Επαλήθευση με emoji",
-    "Verify by comparing unique emoji.": "Επαληθεύστε συγκρίνοντας μοναδικά emoji.",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Εάν δεν μπορείτε να σαρώσετε τον παραπάνω κώδικα, επαληθεύστε το συγκρίνοντας μοναδικά emoji.",
-    "Ask %(displayName)s to scan your code:": "Ζητήστε από τον χρήστη %(displayName)s να σαρώσει τον κωδικό σας:",
-    "Verify by scanning": "Επαλήθευση με σάρωση",
-    "Edit devices": "Επεξεργασία συσκευών",
-    "This client does not support end-to-end encryption.": "Αυτό το πρόγραμμα-πελάτης δεν υποστηρίζει κρυπτογράφηση από άκρο σε άκρο.",
     "%(count)s sessions": {
         "one": "%(count)s συνεδρία",
         "other": "%(count)s συνεδρίες"
@@ -2594,7 +2574,25 @@
                 "reset_confirmation": "Είστε σίγουρος ότι θέλετε να επαναφέρετε τα κλειδιά επαλήθευσης;",
                 "skip_verification": "Παράβλεψη επαλήθευσης προς το παρόν"
             },
-            "accepting": "Αποδοχή …"
+            "accepting": "Αποδοχή …",
+            "scan_qr": "Επαλήθευση με σάρωση",
+            "scan_qr_explainer": "Ζητήστε από τον χρήστη %(displayName)s να σαρώσει τον κωδικό σας:",
+            "verify_emoji_prompt_qr": "Εάν δεν μπορείτε να σαρώσετε τον παραπάνω κώδικα, επαληθεύστε το συγκρίνοντας μοναδικά emoji.",
+            "verify_emoji_prompt": "Επαληθεύστε συγκρίνοντας μοναδικά emoji.",
+            "verify_emoji": "Επαλήθευση με emoji",
+            "qr_reciprocate_same_shield_device": "Σχεδόν έτοιμοι! Εμφανίζεται η ίδια ασπίδα και στην άλλη συσκευή σας;",
+            "qr_reciprocate_same_shield_user": "Σχεδόν έτοιμοι! Εμφανίζεται η ίδια ασπίδα και στον χρήστη %(displayName)s;",
+            "prompt_encrypted": "Επαληθεύστε όλους τους χρήστες σε ένα δωμάτιο για να βεβαιωθείτε ότι είναι ασφαλές.",
+            "prompt_unencrypted": "Σε κρυπτογραφημένα δωμάτια, επαληθεύστε όλους τους χρήστες για να βεβαιωθείτε ότι είναι ασφαλές.",
+            "successful_own_device": "Επαληθεύσατε με επιτυχία τη συσκευή σας!",
+            "successful_device": "Επαληθεύσατε με επιτυχία το %(deviceName)s %(deviceId)s!",
+            "successful_user": "Επαληθεύσατε με επιτυχία τον χρήστη %(displayName)s!",
+            "prompt_self": "Ξεκινήστε ξανά την επαλήθευση από την ειδοποίηση.",
+            "prompt_user": "Ξεκινήστε ξανά την επαλήθευση από το προφίλ τους.",
+            "timed_out": "Η επαλήθευση έληξε.",
+            "cancelled_self": "Ακυρώσατε την επαλήθευση στην άλλη συσκευή σας.",
+            "cancelled_user": "%(displayName)s ακύρωσε την επαλύθευση.",
+            "cancelled": "Ακυρώσατε την επαλήθευση."
         },
         "old_version_detected_title": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
         "old_version_detected_description": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
@@ -2647,7 +2645,8 @@
         "cross_signing_user_normal": "Δεν έχετε επαληθεύσει αυτόν τον χρήστη.",
         "cross_signing_room_warning": "Κάποιος χρησιμοποιεί μια άγνωστη συνεδρία",
         "cross_signing_room_verified": "Όλοι σε αυτό το δωμάτιο έχουν επαληθευτεί",
-        "cross_signing_room_normal": "Αυτό το δωμάτιο έχει κρυπτογράφηση από άκρο σε άκρο"
+        "cross_signing_room_normal": "Αυτό το δωμάτιο έχει κρυπτογράφηση από άκρο σε άκρο",
+        "unsupported": "Αυτό το πρόγραμμα-πελάτης δεν υποστηρίζει κρυπτογράφηση από άκρο σε άκρο."
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -3540,7 +3539,8 @@
         "deactivate_confirm_description": "Η απενεργοποίηση αυτού του χρήστη θα τον αποσυνδεθεί και θα αποτραπεί η επανασύνδεσή του. Επιπλέον, θα αποχωρήσει από όλα τα δωμάτια στα οποία συμμετέχει. Αυτή η ενέργεια δεν μπορεί να αντιστραφεί. Είστε βέβαιοι ότι θέλετε να απενεργοποιήσετε αυτόν τον χρήστη;",
         "deactivate_confirm_action": "Απενεργοποίηση χρήστη",
         "error_deactivate": "Η απενεργοποίηση χρήστη απέτυχε",
-        "role_label": "Ρόλος στο <RoomName/>"
+        "role_label": "Ρόλος στο <RoomName/>",
+        "edit_own_devices": "Επεξεργασία συσκευών"
     },
     "stickers": {
         "empty": "Προς το παρόν δεν έχετε ενεργοποιημένο κάποιο πακέτο αυτοκόλλητων",

@@ -152,11 +152,8 @@
     "Deactivate account": "アカウントを無効化",
     "Cancel search": "検索をキャンセル",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
-    "%(displayName)s cancelled verification.": "%(displayName)sが認証をキャンセルしました。",
-    "You cancelled verification.": "認証をキャンセルしました。",
     "Switch theme": "テーマを切り替える",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
-    "Start verification again from their profile.": "プロフィールから再度認証を開始してください。",
     "Encrypted by a deleted session": "削除済のセッションによる暗号化",
     "Your server": "あなたのサーバー",
     "Add a new server": "新しいサーバーを追加",
@@ -165,10 +162,6 @@
     "Upload files (%(current)s of %(total)s)": "ファイルのアップロード（%(current)s/%(total)s）",
     "Upload files": "ファイルのアップロード",
     "Upload all": "全てアップロード",
-    "Verify all users in a room to ensure it's secure.": "ルームの全てのユーザーを認証すると、ルームが安全であることを確認できます。",
-    "You've successfully verified %(displayName)s!": "%(displayName)sは正常に認証されました！",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s（%(deviceId)s）は正常に認証されました！",
-    "You've successfully verified your device!": "この端末は正常に認証されました！",
     "Use the <a>Desktop app</a> to search encrypted messages": "<a>デスクトップアプリ</a>を使用すると暗号化されたメッセージを検索できます",
     "%(name)s wants to verify": "%(name)sが認証を要求しています",
     "You sent a verification request": "認証リクエストを送信しました",
@@ -517,15 +510,6 @@
     "Join the conference from the room information card on the right": "右側のルーム情報カードから会議に参加",
     "Join the conference at the top of this room": "このルームの上部で会議に参加",
     "Ignored attempt to disable encryption": "暗号化を無効にする試みを無視しました",
-    "Verification timed out.": "認証がタイムアウトしました。",
-    "Start verification again from the notification.": "通知から再度認証を開始してください。",
-    "Almost there! Is %(displayName)s showing the same shield?": "あと少しです！%(displayName)sは同じ盾マークを表示していますか？",
-    "Verify by emoji": "絵文字で認証",
-    "Verify by comparing unique emoji.": "絵文字の並びを比較して認証。",
-    "If you can't scan the code above, verify by comparing unique emoji.": "上記のコードをスキャンできない場合は、絵文字による確認を行ってください。",
-    "Ask %(displayName)s to scan your code:": "%(displayName)sにQRコードをスキャンするよう問い合わせてください：",
-    "Verify by scanning": "QRコードスキャンで認証",
-    "This client does not support end-to-end encryption.": "このクライアントはエンドツーエンド暗号化に対応していません。",
     "Remove %(count)s messages": {
         "one": "1件のメッセージを削除",
         "other": "%(count)s件のメッセージを削除"
@@ -537,7 +521,6 @@
     "Not encrypted": "暗号化されていません",
     "Leave space": "スペースから退出",
     "Create a space": "スペースを作成",
-    "Edit devices": "端末を編集",
     "Invite to %(roomName)s": "%(roomName)sに招待",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "ルームを追加しています…",
@@ -669,7 +652,6 @@
     "Verification Request": "認証の要求",
     "The server is offline.": "サーバーはオフラインです。",
     "No answer": "応答がありません",
-    "Almost there! Is your other device showing the same shield?": "あと少しです！ あなたの他の端末は同じ盾マークを表示していますか？",
     "%(count)s rooms": {
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
@@ -736,7 +718,6 @@
     "Cancel All": "全てキャンセル",
     "Looks good": "問題ありません",
     "Language Dropdown": "言語一覧",
-    "You cancelled verification on your other device.": "他の端末で認証がキャンセルされました。",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
     "a new cross-signing key signature": "新しいクロス署名鍵の署名",
     "a device cross-signing signature": "端末のクロス署名",
@@ -854,7 +835,6 @@
     "Adding spaces has moved.": "スペースの追加機能は移動しました。",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
-    "In encrypted rooms, verify all users to ensure it's secure.": "暗号化されたルームでは、安全確認のために全てのユーザーを認証しましょう。",
     "Including you, %(commaSeparatedMembers)s": "あなたと%(commaSeparatedMembers)sを含む",
     "Can't create a thread from an event with an existing relation": "既存の関係のあるイベントからスレッドを作成することはできません",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
@@ -2959,7 +2939,25 @@
                 "reset_confirmation": "本当に認証鍵をリセットしますか？",
                 "skip_verification": "認証をスキップ"
             },
-            "accepting": "承認しています…"
+            "accepting": "承認しています…",
+            "scan_qr": "QRコードスキャンで認証",
+            "scan_qr_explainer": "%(displayName)sにQRコードをスキャンするよう問い合わせてください：",
+            "verify_emoji_prompt_qr": "上記のコードをスキャンできない場合は、絵文字による確認を行ってください。",
+            "verify_emoji_prompt": "絵文字の並びを比較して認証。",
+            "verify_emoji": "絵文字で認証",
+            "qr_reciprocate_same_shield_device": "あと少しです！ あなたの他の端末は同じ盾マークを表示していますか？",
+            "qr_reciprocate_same_shield_user": "あと少しです！%(displayName)sは同じ盾マークを表示していますか？",
+            "prompt_encrypted": "ルームの全てのユーザーを認証すると、ルームが安全であることを確認できます。",
+            "prompt_unencrypted": "暗号化されたルームでは、安全確認のために全てのユーザーを認証しましょう。",
+            "successful_own_device": "この端末は正常に認証されました！",
+            "successful_device": "%(deviceName)s（%(deviceId)s）は正常に認証されました！",
+            "successful_user": "%(displayName)sは正常に認証されました！",
+            "prompt_self": "通知から再度認証を開始してください。",
+            "prompt_user": "プロフィールから再度認証を開始してください。",
+            "timed_out": "認証がタイムアウトしました。",
+            "cancelled_self": "他の端末で認証がキャンセルされました。",
+            "cancelled_user": "%(displayName)sが認証をキャンセルしました。",
+            "cancelled": "認証をキャンセルしました。"
         },
         "old_version_detected_title": "古い暗号化データが検出されました",
         "old_version_detected_description": "%(brand)sの古いバージョンのデータを検出しました。これにより、古いバージョンではエンドツーエンドの暗号化が機能しなくなります。古いバージョンを使用している間に最近交換されたエンドツーエンドの暗号化されたメッセージは、このバージョンでは復号化できません。また、このバージョンで交換されたメッセージが失敗することもあります。問題が発生した場合は、ログアウトして再度ログインしてください。メッセージ履歴を保持するには、鍵をエクスポートして再インポートしてください。",
@@ -3012,7 +3010,8 @@
         "cross_signing_user_normal": "あなたはこのユーザーを認証していません。",
         "cross_signing_room_warning": "誰かが不明なセッションを使用しています",
         "cross_signing_room_verified": "このルーム内の全員を認証済",
-        "cross_signing_room_normal": "このルームはエンドツーエンドで暗号化されています"
+        "cross_signing_room_normal": "このルームはエンドツーエンドで暗号化されています",
+        "unsupported": "このクライアントはエンドツーエンド暗号化に対応していません。"
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",
@@ -4044,7 +4043,8 @@
         "deactivate_confirm_description": "このユーザーを無効化すると、このユーザーはログアウトし、再度ログインすることはできなくなります。また、現在参加している全てのルームから退出します。このアクションを元に戻すことはできません。このユーザーを無効化してもよろしいですか？",
         "deactivate_confirm_action": "ユーザーを無効化",
         "error_deactivate": "ユーザーの無効化に失敗しました",
-        "role_label": "<RoomName/>での役割"
+        "role_label": "<RoomName/>での役割",
+        "edit_own_devices": "端末を編集"
     },
     "stickers": {
         "empty": "現在、ステッカーパックが有効になっていません",

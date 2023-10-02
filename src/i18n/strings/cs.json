@@ -241,7 +241,6 @@
         "other": "Odstranit %(count)s zpráv",
         "one": "Odstranit zprávu"
     },
-    "This client does not support end-to-end encryption.": "Tento klient nepodporuje koncové šifrování.",
     "Show image": "Zobrazit obrázek",
     "You verified %(name)s": "Ověřili jste %(name)s",
     "You cancelled verifying %(name)s": "Zrušili jste ověření %(name)s",
@@ -280,11 +279,6 @@
         "other": "%(count)s relací",
         "one": "%(count)s relace"
     },
-    "Verify by emoji": "Ověřit pomocí emoji",
-    "Verify by comparing unique emoji.": "Ověření porovnáním několika emoji.",
-    "Ask %(displayName)s to scan your code:": "Požádejte uživatele %(displayName)s o naskenování tohoto kódu pro vaše ověření:",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Pokud vám skenování kódů nefunguje, ověřte se porovnáním emoji.",
-    "You've successfully verified %(displayName)s!": "Úspěšně jste ověřili uživatele %(displayName)s!",
     "Encryption not enabled": "Šifrování je vypnuté",
     "The encryption used by this room isn't supported.": "Šifrování používané v této místnosti není podporované.",
     "Clear all data in this session?": "Smazat všechna data v této relaci?",
@@ -306,22 +300,12 @@
     "Not Trusted": "Nedůvěryhodné",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) se přihlásil(a) do nové relace bez ověření:",
     "Ask this user to verify their session, or manually verify it below.": "Požádejte tohoto uživatele, aby ověřil svou relaci, nebo jí níže můžete ověřit manuálně.",
-    "Verify by scanning": "Ověřte naskenováním",
     "You declined": "Odmítli jste",
     "%(name)s declined": "%(name)s odmítl(a)",
-    "Verify all users in a room to ensure it's secure.": "Ověřit všechny uživatele v místnosti, abyste se přesvědčili o bezpečnosti.",
     "Enter a server name": "Zadejte jméno serveru",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
-    "Almost there! Is %(displayName)s showing the same shield?": "Téměř hotovo! Je relace %(displayName)s také ověřená?",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Ověřili jste %(deviceName)s (%(deviceId)s)!",
     "You signed in to a new session without verifying it:": "Přihlásili jste se do nové relace, aniž byste ji ověřili:",
     "Verify your other session using one of the options below.": "Ověřte další relaci jedním z následujících způsobů.",
-    "You've successfully verified your device!": "Úspěšně jste ověřili vaše zařízení!",
-    "Start verification again from the notification.": "Začít proces ověření znovu pomocí notifikace.",
-    "Start verification again from their profile.": "Proces ověření začněte znovu z profilu kontaktu.",
-    "Verification timed out.": "Ověření vypršelo.",
-    "%(displayName)s cancelled verification.": "%(displayName)s zrušil(a) proces ověření.",
-    "You cancelled verification.": "Zrušili jste proces ověření.",
     "Can't load this message": "Tuto zprávu nelze načíst",
     "Submit logs": "Odeslat záznamy o chybě",
     "Looks good": "To vypadá dobře",
@@ -710,7 +694,6 @@
         "other": "%(count)s místností"
     },
     "Invite to %(roomName)s": "Pozvat do %(roomName)s",
-    "Edit devices": "Upravit zařízení",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, kterou znáte, se již připojila",
         "other": "%(count)s lidí, které znáte, se již připojili"
@@ -809,7 +792,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadejte bezpečnostní frázi nebo <button>použijte bezpečnostní klíč</button> pro pokračování.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte přístup ke svému účtu a šifrovací klíče uložené v této relaci. Bez nich nebudete moci číst všechny své zabezpečené zprávy v žádné relaci.",
     "If you can't see who you're looking for, send them your invite link below.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku níže.",
-    "In encrypted rooms, verify all users to ensure it's secure.": "V šifrovaných místnostech ověřte všechny uživatele, abyste zajistili bezpečnost komunikace.",
     "Thread options": "Možnosti vláken",
     "Reply in thread": "Odpovědět ve vlákně",
     "Forget": "Zapomenout",
@@ -866,8 +848,6 @@
     "Missing domain separator e.g. (:domain.org)": "Chybí oddělovač domény, např. (:domain.org)",
     "Missing room name or separator e.g. (my-room:domain.org)": "Chybí název místnosti nebo oddělovač, např. (my-room:domain.org)",
     "Verify other device": "Ověřit jiné zařízení",
-    "You cancelled verification on your other device.": "Ověřování na jiném zařízení jste zrušili.",
-    "Almost there! Is your other device showing the same shield?": "Už to skoro je! Zobrazuje vaše druhé zařízení stejný štít?",
     "Could not fetch location": "Nepodařilo se zjistit polohu",
     "Message pending moderation": "Zpráva čeká na moderaci",
     "Message pending moderation: %(reason)s": "Zpráva čeká na moderaci: %(reason)s",
@@ -3121,7 +3101,25 @@
                 "reset_confirmation": "Opravdu chcete resetovat ověřovací klíče?",
                 "skip_verification": "Prozatím přeskočit ověřování"
             },
-            "accepting": "Přijímání…"
+            "accepting": "Přijímání…",
+            "scan_qr": "Ověřte naskenováním",
+            "scan_qr_explainer": "Požádejte uživatele %(displayName)s o naskenování tohoto kódu pro vaše ověření:",
+            "verify_emoji_prompt_qr": "Pokud vám skenování kódů nefunguje, ověřte se porovnáním emoji.",
+            "verify_emoji_prompt": "Ověření porovnáním několika emoji.",
+            "verify_emoji": "Ověřit pomocí emoji",
+            "qr_reciprocate_same_shield_device": "Už to skoro je! Zobrazuje vaše druhé zařízení stejný štít?",
+            "qr_reciprocate_same_shield_user": "Téměř hotovo! Je relace %(displayName)s také ověřená?",
+            "prompt_encrypted": "Ověřit všechny uživatele v místnosti, abyste se přesvědčili o bezpečnosti.",
+            "prompt_unencrypted": "V šifrovaných místnostech ověřte všechny uživatele, abyste zajistili bezpečnost komunikace.",
+            "successful_own_device": "Úspěšně jste ověřili vaše zařízení!",
+            "successful_device": "Ověřili jste %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "Úspěšně jste ověřili uživatele %(displayName)s!",
+            "prompt_self": "Začít proces ověření znovu pomocí notifikace.",
+            "prompt_user": "Proces ověření začněte znovu z profilu kontaktu.",
+            "timed_out": "Ověření vypršelo.",
+            "cancelled_self": "Ověřování na jiném zařízení jste zrušili.",
+            "cancelled_user": "%(displayName)s zrušil(a) proces ověření.",
+            "cancelled": "Zrušili jste proces ověření."
         },
         "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
         "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
@@ -3174,7 +3172,8 @@
         "cross_signing_user_normal": "Tohoto uživatele jste neověřili.",
         "cross_signing_room_warning": "Někdo používá neznámou relaci",
         "cross_signing_room_verified": "V této místnosti jsou všichni ověřeni",
-        "cross_signing_room_normal": "Místnost je koncově šifrovaná"
+        "cross_signing_room_normal": "Místnost je koncově šifrovaná",
+        "unsupported": "Tento klient nepodporuje koncové šifrování."
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -4252,7 +4251,8 @@
         "deactivate_confirm_description": "Deaktivování uživatele ho odhlásí a zabrání mu v opětovném přihlášení. Navíc bude odstraněn ze všech místností. Akci nelze vzít zpět. Opravdu chcete uživatele deaktivovat?",
         "deactivate_confirm_action": "Deaktivovat uživatele",
         "error_deactivate": "Deaktivace uživatele se nezdařila",
-        "role_label": "Role v <RoomName/>"
+        "role_label": "Role v <RoomName/>",
+        "edit_own_devices": "Upravit zařízení"
     },
     "stickers": {
         "empty": "Momentálně nemáte aktivní žádné balíčky s nálepkami",

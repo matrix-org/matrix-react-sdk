@@ -471,24 +471,6 @@
     "No answer": "Tidak ada jawaban",
     "Call back": "Panggil ulang",
     "Call declined": "Panggilan ditolak",
-    "You cancelled verification.": "Anda membatalkan verifikasi.",
-    "%(displayName)s cancelled verification.": "%(displayName)s membatalkan verifikasi.",
-    "Verification timed out.": "Waktu habis untuk memverifikasi.",
-    "Start verification again from their profile.": "Mulai memverifikasi lagi dari profilnya.",
-    "Start verification again from the notification.": "Mulai memverifikasi lagi dari notifikasinya.",
-    "You've successfully verified %(displayName)s!": "Anda berhasil memverifikasi %(displayName)s!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Anda berhasil memverifikasi %(deviceName)s (%(deviceId)s)!",
-    "You've successfully verified your device!": "Anda berhasil memverifikasi perangkat Anda!",
-    "In encrypted rooms, verify all users to ensure it's secure.": "Di ruangan terenkripsi, verifikasi semua pengguna untuk memastikan keamanannya.",
-    "Verify all users in a room to ensure it's secure.": "Verifikasi semua pengguna di sebuah ruangan untuk memastikan keamanannya.",
-    "Almost there! Is %(displayName)s showing the same shield?": "Hampir selesai! Apakah %(displayName)s menampilkan perisai yang sama?",
-    "Verify by emoji": "Verifikasi dengan emoji",
-    "Verify by comparing unique emoji.": "Verifikasi dengan membandingkan emoji unik.",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Jika Anda tidak dapat memindai kode di atas, verifikasi dengan membandingkan emoji yang unik.",
-    "Ask %(displayName)s to scan your code:": "Tanyakan %(displayName)s untuk memindai kode Anda:",
-    "Verify by scanning": "Verifikasi dengan memindai",
-    "Edit devices": "Edit perangkat",
-    "This client does not support end-to-end encryption.": "Klien ini tidak mendukung enkripsi ujung ke ujung.",
     "Remove %(count)s messages": {
         "one": "Hapus 1 pesan",
         "other": "Hapus %(count)s pesan"
@@ -866,8 +848,6 @@
     "Missing domain separator e.g. (:domain.org)": "Kurang pemisah domain mis. (:domain.org)",
     "This address had invalid server or is already in use": "Alamat ini memiliki server yang tidak absah atau telah digunakan",
     "Verify other device": "Verifikasi perangkat lain",
-    "You cancelled verification on your other device.": "Anda membatalkan verifikasi di perangkat Anda yang lain.",
-    "Almost there! Is your other device showing the same shield?": "Hampir selesai! Apakah perangkat lain Anda menampilkan perisai yang sama?",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "Message pending moderation: %(reason)s": "Pesan akan dimoderasikan: %(reason)s",
     "Message pending moderation": "Pesan akan dimoderasikan",
@@ -3121,7 +3101,25 @@
                 "reset_confirmation": "Benar-benar ingin mengatur ulang kunci-kunci verifikasi?",
                 "skip_verification": "Lewatkan verifikasi untuk sementara"
             },
-            "accepting": "Menerima…"
+            "accepting": "Menerima…",
+            "scan_qr": "Verifikasi dengan memindai",
+            "scan_qr_explainer": "Tanyakan %(displayName)s untuk memindai kode Anda:",
+            "verify_emoji_prompt_qr": "Jika Anda tidak dapat memindai kode di atas, verifikasi dengan membandingkan emoji yang unik.",
+            "verify_emoji_prompt": "Verifikasi dengan membandingkan emoji unik.",
+            "verify_emoji": "Verifikasi dengan emoji",
+            "qr_reciprocate_same_shield_device": "Hampir selesai! Apakah perangkat lain Anda menampilkan perisai yang sama?",
+            "qr_reciprocate_same_shield_user": "Hampir selesai! Apakah %(displayName)s menampilkan perisai yang sama?",
+            "prompt_encrypted": "Verifikasi semua pengguna di sebuah ruangan untuk memastikan keamanannya.",
+            "prompt_unencrypted": "Di ruangan terenkripsi, verifikasi semua pengguna untuk memastikan keamanannya.",
+            "successful_own_device": "Anda berhasil memverifikasi perangkat Anda!",
+            "successful_device": "Anda berhasil memverifikasi %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "Anda berhasil memverifikasi %(displayName)s!",
+            "prompt_self": "Mulai memverifikasi lagi dari notifikasinya.",
+            "prompt_user": "Mulai memverifikasi lagi dari profilnya.",
+            "timed_out": "Waktu habis untuk memverifikasi.",
+            "cancelled_self": "Anda membatalkan verifikasi di perangkat Anda yang lain.",
+            "cancelled_user": "%(displayName)s membatalkan verifikasi.",
+            "cancelled": "Anda membatalkan verifikasi."
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3174,7 +3172,8 @@
         "cross_signing_user_normal": "Anda belum memverifikasi pengguna ini.",
         "cross_signing_room_warning": "Seseorang menggunakan sesi yang tidak dikenal",
         "cross_signing_room_verified": "Semuanya di ruangan ini telah terverifikasi",
-        "cross_signing_room_normal": "Ruangan ini dienkripsi secara ujung ke ujung"
+        "cross_signing_room_normal": "Ruangan ini dienkripsi secara ujung ke ujung",
+        "unsupported": "Klien ini tidak mendukung enkripsi ujung ke ujung."
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -4252,7 +4251,8 @@
         "deactivate_confirm_description": "Menonaktifkan pengguna ini akan mengeluarkan dan mencegahnya masuk ke akun lagi. Pengguna itu juga akan meninggalkan semua ruangan yang pengguna itu berada. Aksi ini tidak dapat dibatalkan. Apakah Anda yakin Anda ingin menonaktifkan pengguna ini?",
         "deactivate_confirm_action": "Nonaktifkan pengguna",
         "error_deactivate": "Gagal untuk menonaktifkan pengguna",
-        "role_label": "Peran di <RoomName/>"
+        "role_label": "Peran di <RoomName/>",
+        "edit_own_devices": "Edit perangkat"
     },
     "stickers": {
         "empty": "Anda saat ini tidak memiliki paket stiker apa pun yang diaktifkan",

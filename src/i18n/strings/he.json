@@ -457,22 +457,6 @@
     "The encryption used by this room isn't supported.": "ההצפנה בה משתמשים בחדר זה אינה נתמכת.",
     "Encryption not enabled": "ההצפנה לא מופעלת",
     "Ignored attempt to disable encryption": "התעלם מהניסיון להשבית את ההצפנה",
-    "You cancelled verification.": "בטלתם את האימות.",
-    "%(displayName)s cancelled verification.": "הצג אימותים מבוטלים %(displayName)s.",
-    "Verification timed out.": "תם הזמן הקצוב לאימות.",
-    "Start verification again from their profile.": "התחל לאמת שוב מהפרופיל שלהם.",
-    "Start verification again from the notification.": "התחל אימות שוב מההודעה.",
-    "You've successfully verified %(displayName)s!": "אמתתם בהצלחה את %(displayName)s!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "אימתת בהצלחה את %(deviceName)s (%(deviceId)s)!",
-    "You've successfully verified your device!": "אימתת בהצלחה את המכשיר שלך!",
-    "Verify all users in a room to ensure it's secure.": "אמת את כל המשתמשים בחדר כדי לוודא שהוא מאובטח.",
-    "Almost there! Is %(displayName)s showing the same shield?": "כמעט שם! האם %(displayName)s מציג את אותו מגן?",
-    "Verify by emoji": "אמת על ידי אמוג'י",
-    "Verify by comparing unique emoji.": "אמת את זה על ידי השוואת אמוג'י ייחודי.",
-    "If you can't scan the code above, verify by comparing unique emoji.": "אם אינך יכול לסרוק את הקוד לעיל, ודא על ידי השוואת אמוג'י ייחודי.",
-    "Ask %(displayName)s to scan your code:": "בקש מ- %(displayName)s לסרוק את הקוד שלכם:",
-    "Verify by scanning": "אמת על ידי סריקה",
-    "This client does not support end-to-end encryption.": "לקוח זה אינו תומך בהצפנה מקצה לקצה.",
     "Remove %(count)s messages": {
         "one": "הסר הודעה 1",
         "other": "הסר %(count)s הודעות"
@@ -751,7 +735,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
     "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
     "Location": "מיקום",
-    "Edit devices": "הגדרת מכשירים",
     "Close sidebar": "סגור סרגל צד",
     "common": {
         "about": "אודות",
@@ -2203,7 +2186,22 @@
                 "verify_this_device": "אמתו את מכשיר זה",
                 "device_verified": "המכשיר אומת"
             },
-            "accepting": "מקבל…"
+            "accepting": "מקבל…",
+            "scan_qr": "אמת על ידי סריקה",
+            "scan_qr_explainer": "בקש מ- %(displayName)s לסרוק את הקוד שלכם:",
+            "verify_emoji_prompt_qr": "אם אינך יכול לסרוק את הקוד לעיל, ודא על ידי השוואת אמוג'י ייחודי.",
+            "verify_emoji_prompt": "אמת את זה על ידי השוואת אמוג'י ייחודי.",
+            "verify_emoji": "אמת על ידי אמוג'י",
+            "qr_reciprocate_same_shield_user": "כמעט שם! האם %(displayName)s מציג את אותו מגן?",
+            "prompt_encrypted": "אמת את כל המשתמשים בחדר כדי לוודא שהוא מאובטח.",
+            "successful_own_device": "אימתת בהצלחה את המכשיר שלך!",
+            "successful_device": "אימתת בהצלחה את %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "אמתתם בהצלחה את %(displayName)s!",
+            "prompt_self": "התחל אימות שוב מההודעה.",
+            "prompt_user": "התחל לאמת שוב מהפרופיל שלהם.",
+            "timed_out": "תם הזמן הקצוב לאימות.",
+            "cancelled_user": "הצג אימותים מבוטלים %(displayName)s.",
+            "cancelled": "בטלתם את האימות."
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2250,7 +2248,8 @@
         "cross_signing_user_normal": "לא אימתת משתמש זה.",
         "cross_signing_room_warning": "מישהו משתמש בהפעלה לא ידועה",
         "cross_signing_room_verified": "כולם מאומתים בחדר זה",
-        "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה"
+        "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה",
+        "unsupported": "לקוח זה אינו תומך בהצפנה מקצה לקצה."
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -3026,7 +3025,8 @@
         "deactivate_confirm_description": "השבתת משתמש זה תנתק אותו וימנע ממנו להתחבר חזרה. בנוסף, הם יעזבו את כל החדרים בהם הם נמצאים. לא ניתן לבטל פעולה זו. האם אתה בטוח שברצונך להשבית משתמש זה?",
         "deactivate_confirm_action": "השבת משתמש",
         "error_deactivate": "השבתת משתמש נכשלה",
-        "role_label": "תפקיד בחדר <RoomName/>"
+        "role_label": "תפקיד בחדר <RoomName/>",
+        "edit_own_devices": "הגדרת מכשירים"
     },
     "stickers": {
         "empty": "כרגע אין לך חבילות מדבקה מופעלות",

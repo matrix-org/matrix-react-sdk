@@ -266,9 +266,6 @@
     "AM": "12:00",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeni oturuma doğrulamadan giriş yaptı:",
     "Ask this user to verify their session, or manually verify it below.": "Kullanıcıya oturumunu doğrulamasını söyle, ya da aşağıdan doğrula.",
-    "Verify by scanning": "Taramayla doğrula",
-    "Verify by emoji": "Emojiyle doğrula",
-    "Verify by comparing unique emoji.": "Eşsiz emoji eşleştirme ile doğrulama.",
     "Edited at %(date)s. Click to view edits.": "%(date)s tarihinde düzenlendi. Düzenlemeleri görmek için tıkla.",
     "You signed in to a new session without verifying it:": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
     "Verify your other session using one of the options below.": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
@@ -519,9 +516,6 @@
     "The encryption used by this room isn't supported.": "Bu odada kullanılan şifreleme desteklenmiyor.",
     "Encryption not enabled": "Şifreleme etkin değil",
     "Ignored attempt to disable encryption": "Şifrelemeyi devre dışı bırakma denemesi yok sayıldı",
-    "You cancelled verification.": "Doğrulamayı iptal ettiniz.",
-    "%(displayName)s cancelled verification.": "%(displayName)s doğrulamayı iptal etti.",
-    "Verification timed out.": "Doğrulama zaman aşımına uğradı.",
     "IRC display name width": "IRC görünen ad genişliği",
     "Australia": "Avustralya",
     "Aruba": "Aruba",
@@ -544,7 +538,6 @@
     "Spanner": "Anahtar",
     "Smiley": "Gülen yüz",
     "Dial pad": "Arama tuşları",
-    "Verify all users in a room to ensure it's secure.": "Güvenli olduğuna emin olmak için odadaki tüm kullanıcıları onaylayın.",
     "No recent messages by %(user)s found": "%(user)s kullanıcısın hiç yeni ileti yok",
     "Not encrypted": "Şifrelenmemiş",
     "Backup version:": "Yedekleme sürümü:",
@@ -566,14 +559,9 @@
     "Enter the name of a new server you want to explore.": "Keşfetmek istediğiniz sunucunun adını girin.",
     "Preparing to download logs": "Loglar indirilmeye hazırlanıyor",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Hatırlatma:Tarayıcınız desteklenmiyor, deneyiminiz öngörülemiyor.",
-    "This client does not support end-to-end encryption.": "Bu istemci uçtan uca şifrelemeyi desteklemiyor.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
     "Remove recent messages by %(user)s": "%(user)s kullanıcısından en son iletileri kaldır",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Daha önceden kalma iletilerin var olup olmadığını kontrol etmek için zaman çizelgesinde yukarı doğru kaydırın.",
-    "You've successfully verified %(displayName)s!": "%(displayName)s başarıyla doğruladınız!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
-    "You've successfully verified your device!": "Cihazınızı başarıyla doğruladınız!",
-    "Edit devices": "Cihazları düzenle",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -1655,7 +1643,17 @@
             "unverified_session_toast_title": "Yeni giriş. Bu siz miydiniz?",
             "waiting_for_user_accept": "%(displayName)s kullanıcısın onaylaması için bekleniliyor…",
             "start_button": "Doğrulamayı Başlat",
-            "accepting": "Kabul ediliyor…"
+            "accepting": "Kabul ediliyor…",
+            "scan_qr": "Taramayla doğrula",
+            "verify_emoji_prompt": "Eşsiz emoji eşleştirme ile doğrulama.",
+            "verify_emoji": "Emojiyle doğrula",
+            "prompt_encrypted": "Güvenli olduğuna emin olmak için odadaki tüm kullanıcıları onaylayın.",
+            "successful_own_device": "Cihazınızı başarıyla doğruladınız!",
+            "successful_device": "%(deviceName)s (%(deviceId)s) başarıyla doğruladınız!",
+            "successful_user": "%(displayName)s başarıyla doğruladınız!",
+            "timed_out": "Doğrulama zaman aşımına uğradı.",
+            "cancelled_user": "%(displayName)s doğrulamayı iptal etti.",
+            "cancelled": "Doğrulamayı iptal ettiniz."
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1695,7 +1693,8 @@
         "cross_signing_user_normal": "Bu kullanıcıyı doğrulamadınız.",
         "cross_signing_room_warning": "Birisi bilinmeyen bir oturum kullanıyor",
         "cross_signing_room_verified": "Bu odadaki herkes doğrulanmış",
-        "cross_signing_room_normal": "Bu oda uçtan uça şifreli"
+        "cross_signing_room_normal": "Bu oda uçtan uça şifreli",
+        "unsupported": "Bu istemci uçtan uca şifrelemeyi desteklemiyor."
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -2262,7 +2261,8 @@
         "deactivate_confirm_title": "Kullanıcıyı pasifleştir?",
         "deactivate_confirm_description": "Bu kullanıcı etkisizleştirmek onu bir daha oturum açmasını engeller.Ek olarak da bulundukları bütün odalardan atılırlar. Bu eylem geri dönüştürülebilir. Bu kullanıcıyı etkisizleştirmek istediğinize emin misiniz?",
         "deactivate_confirm_action": "Kullanıcıyı pasifleştir",
-        "error_deactivate": "Kullanıcı pasifleştirme başarısız"
+        "error_deactivate": "Kullanıcı pasifleştirme başarısız",
+        "edit_own_devices": "Cihazları düzenle"
     },
     "stickers": {
         "empty": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",

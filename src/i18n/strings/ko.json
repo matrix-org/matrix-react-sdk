@@ -247,7 +247,6 @@
     "Close dialog": "대화 상자 닫기",
     "Show image": "이미지 보이기",
     "Cancel search": "검색 취소",
-    "This client does not support end-to-end encryption.": "이 클라이언트는 종단간 암호화를 지원하지 않습니다.",
     "You verified %(name)s": "%(name)s님을 확인했습니다",
     "You cancelled verifying %(name)s": "%(name)s님의 확인을 취소했습니다",
     "%(name)s cancelled verifying": "%(name)s님이 확인을 취소했습니다",
@@ -1113,7 +1112,8 @@
         "setup_secure_backup": {
             "explainer": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
             "title": "설정"
-        }
+        },
+        "unsupported": "이 클라이언트는 종단간 암호화를 지원하지 않습니다."
     },
     "emoji": {
         "category_frequently_used": "자주 사용함",

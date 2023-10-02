@@ -165,8 +165,6 @@
         "other": "%(count)s økter",
         "one": "%(count)s økt"
     },
-    "Verify by scanning": "Verifiser med skanning",
-    "Verify by emoji": "Verifiser med emoji",
     "%(name)s accepted": "%(name)s aksepterte",
     "%(name)s declined": "%(name)s avslo",
     "%(name)s cancelled": "%(name)s avbrøt",
@@ -196,9 +194,6 @@
         "other": "Slett %(count)s meldinger",
         "one": "Slett 1 melding"
     },
-    "You've successfully verified your device!": "Du har vellykket verifisert enheten din!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Du har vellykket verifisert %(deviceName)s (%(deviceId)s)!",
-    "You've successfully verified %(displayName)s!": "Du har vellykket verifisert %(displayName)s!",
     "You sent a verification request": "Du sendte en verifiseringsforespørsel",
     "Error decrypting video": "Feil under dekryptering av video",
     "Add an Integration": "Legg til en integrering",
@@ -281,7 +276,6 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "Edit devices": "Rediger enheter",
     "Invite to %(roomName)s": "Inviter til %(roomName)s",
     "Resume": "Fortsett",
     "%(count)s members": {
@@ -326,8 +320,6 @@
     "Invite by email": "Inviter gjennom E-post",
     "Reason (optional)": "Årsak (valgfritt)",
     "Upgrade Room Version": "Oppgrader romversjon",
-    "You cancelled verification.": "Du avbrøt verifiseringen.",
-    "Ask %(displayName)s to scan your code:": "Be %(displayName)s om å skanne koden:",
     "Dial pad": "Nummerpanel",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
@@ -1398,7 +1390,14 @@
             "request_toast_detail": "%(deviceId)s fra %(ip)s",
             "waiting_for_user_accept": "Venter på at %(displayName)s skal akseptere …",
             "start_button": "Begynn verifisering",
-            "accepting": "Aksepterer …"
+            "accepting": "Aksepterer …",
+            "scan_qr": "Verifiser med skanning",
+            "scan_qr_explainer": "Be %(displayName)s om å skanne koden:",
+            "verify_emoji": "Verifiser med emoji",
+            "successful_own_device": "Du har vellykket verifisert enheten din!",
+            "successful_device": "Du har vellykket verifisert %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "Du har vellykket verifisert %(displayName)s!",
+            "cancelled": "Du avbrøt verifiseringen."
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
@@ -1819,7 +1818,8 @@
         "error_ban_user": "Mislyktes i å bannlyse brukeren",
         "deactivate_confirm_title": "Vil du deaktivere brukeren?",
         "deactivate_confirm_action": "Deaktiver brukeren",
-        "error_deactivate": "Mislyktes i å deaktivere brukeren"
+        "error_deactivate": "Mislyktes i å deaktivere brukeren",
+        "edit_own_devices": "Rediger enheter"
     },
     "stickers": {
         "empty": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",

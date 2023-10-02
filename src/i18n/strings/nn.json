@@ -121,7 +121,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
-    "This client does not support end-to-end encryption.": "Denne klienten støttar ikkje ende-til-ende kryptering.",
     "Add a new server": "Legg til ein ny tenar",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte.",
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
@@ -1164,7 +1163,8 @@
             "title": "Sett opp"
         },
         "event_shield_reason_mismatched_sender_key": "Kryptert av ein ikkje-verifisert sesjon",
-        "cross_signing_room_normal": "Dette rommet er ende-til-ende kryptert"
+        "cross_signing_room_normal": "Dette rommet er ende-til-ende kryptert",
+        "unsupported": "Denne klienten støttar ikkje ende-til-ende kryptering."
     },
     "poll": {
         "create_poll_title": "Opprett røysting",

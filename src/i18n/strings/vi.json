@@ -424,23 +424,6 @@
     "No answer": "Không trả lời",
     "Call back": "Gọi lại",
     "Call declined": "Cuộc gọi bị từ chối",
-    "You cancelled verification.": "Bạn đã hủy xác thực.",
-    "%(displayName)s cancelled verification.": "%(displayName)s đã hủy xác thực.",
-    "Verification timed out.": "Đã hết thời gian xác thực.",
-    "Start verification again from their profile.": "Bắt đầu xác thực lại từ hồ sơ của họ.",
-    "Start verification again from the notification.": "Bắt đầu xác thực lại từ thông báo.",
-    "You've successfully verified %(displayName)s!": "Bạn đã xác thực thành công %(displayName)s!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Bạn đã xác minh thành công %(deviceName)s (%(deviceId)s)!",
-    "You've successfully verified your device!": "Bạn đã xác minh thành công thiết bị của mình!",
-    "Verify all users in a room to ensure it's secure.": "Xác thực tất cả người dùng trong một phòng để đảm bảo phòng đó an toàn.",
-    "Almost there! Is %(displayName)s showing the same shield?": "Sắp xong rồi! %(displayName)s có hiển thị cùng một lá chắn không?",
-    "Verify by emoji": "Xác thực bằng biểu tượng cảm xúc",
-    "Verify by comparing unique emoji.": "Xác thực bằng cách so sánh biểu tượng cảm xúc độc đáo.",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Nếu bạn không thể quét mã ở trên, hãy xác thực bằng cách so sánh biểu tượng cảm xúc duy nhất.",
-    "Ask %(displayName)s to scan your code:": "Yêu cầu %(displayName)s quét mã của bạn:",
-    "Verify by scanning": "Xác thực bằng cách quét",
-    "Edit devices": "Chỉnh sửa thiết bị",
-    "This client does not support end-to-end encryption.": "Ứng dụng khách này không hỗ trợ mã hóa đầu cuối.",
     "Filter results": "Lọc kết quả",
     "Remove %(count)s messages": {
         "one": "Bỏ một tin nhắn",
@@ -827,7 +810,6 @@
     "No votes cast": "Không có phiếu",
     "Sorry, your vote was not registered. Please try again.": "Xin lỗi, phiếu bầu của bạn đã không được đăng ký. Vui lòng thử lại.",
     "Vote not registered": "Bỏ phiếu không đăng ký",
-    "In encrypted rooms, verify all users to ensure it's secure.": "Trong các phòng mã hóa, xác thực tất cả người dùng để đảm bảo an toàn.",
     "Recently viewed": "Được xem gần đây",
     "Reply in thread": "Trả lời theo chủ đề",
     "Developer": "Nhà phát triển",
@@ -866,8 +848,6 @@
         "one": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu",
         "other": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu"
     },
-    "You cancelled verification on your other device.": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
-    "Almost there! Is your other device showing the same shield?": "Sắp xong rồi! Có phải thiết bị khác của bạn hiển thị cùng một lá chắn không?",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "unknown": "không rõ",
@@ -2905,7 +2885,25 @@
                 "reset_confirmation": "Thực sự đặt lại các khóa xác minh?",
                 "skip_verification": "Bỏ qua xác thực ngay bây giờ"
             },
-            "accepting": "Đang chấp nhận…"
+            "accepting": "Đang chấp nhận…",
+            "scan_qr": "Xác thực bằng cách quét",
+            "scan_qr_explainer": "Yêu cầu %(displayName)s quét mã của bạn:",
+            "verify_emoji_prompt_qr": "Nếu bạn không thể quét mã ở trên, hãy xác thực bằng cách so sánh biểu tượng cảm xúc duy nhất.",
+            "verify_emoji_prompt": "Xác thực bằng cách so sánh biểu tượng cảm xúc độc đáo.",
+            "verify_emoji": "Xác thực bằng biểu tượng cảm xúc",
+            "qr_reciprocate_same_shield_device": "Sắp xong rồi! Có phải thiết bị khác của bạn hiển thị cùng một lá chắn không?",
+            "qr_reciprocate_same_shield_user": "Sắp xong rồi! %(displayName)s có hiển thị cùng một lá chắn không?",
+            "prompt_encrypted": "Xác thực tất cả người dùng trong một phòng để đảm bảo phòng đó an toàn.",
+            "prompt_unencrypted": "Trong các phòng mã hóa, xác thực tất cả người dùng để đảm bảo an toàn.",
+            "successful_own_device": "Bạn đã xác minh thành công thiết bị của mình!",
+            "successful_device": "Bạn đã xác minh thành công %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "Bạn đã xác thực thành công %(displayName)s!",
+            "prompt_self": "Bắt đầu xác thực lại từ thông báo.",
+            "prompt_user": "Bắt đầu xác thực lại từ hồ sơ của họ.",
+            "timed_out": "Đã hết thời gian xác thực.",
+            "cancelled_self": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
+            "cancelled_user": "%(displayName)s đã hủy xác thực.",
+            "cancelled": "Bạn đã hủy xác thực."
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -2958,7 +2956,8 @@
         "cross_signing_user_normal": "Bạn chưa xác thực người dùng này.",
         "cross_signing_room_warning": "Ai đó đang sử dụng một phiên không xác định",
         "cross_signing_room_verified": "Mọi người trong phòng này đã được xác thực",
-        "cross_signing_room_normal": "Phòng này được mã hóa end-to-end"
+        "cross_signing_room_normal": "Phòng này được mã hóa end-to-end",
+        "unsupported": "Ứng dụng khách này không hỗ trợ mã hóa đầu cuối."
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3949,7 +3948,8 @@
         "deactivate_confirm_description": "Việc hủy kích hoạt người dùng này sẽ đăng xuất họ và ngăn họ đăng nhập lại. Ngoài ra, họ sẽ rời khỏi tất cả các phòng mà họ đang ở. Không thể hoàn tác hành động này. Bạn có chắc chắn muốn hủy kích hoạt người dùng này không?",
         "deactivate_confirm_action": "Hủy kích hoạt người dùng",
         "error_deactivate": "Không thể hủy kích hoạt người dùng",
-        "role_label": "Vai trò trong <RoomName/>"
+        "role_label": "Vai trò trong <RoomName/>",
+        "edit_own_devices": "Chỉnh sửa thiết bị"
     },
     "stickers": {
         "empty": "Bạn hiện chưa bật bất kỳ gói nhãn dán nào",

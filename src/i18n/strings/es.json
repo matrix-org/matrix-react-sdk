@@ -296,21 +296,6 @@
         "other": "%(count)s sesiones",
         "one": "%(count)s sesión"
     },
-    "This client does not support end-to-end encryption.": "Este cliente no es compatible con el cifrado de extremo a extremo.",
-    "Verify by scanning": "Verificar mediante escaneo",
-    "Ask %(displayName)s to scan your code:": "Pídele a %(displayName)s que escanee tu código:",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Si no puedes escanear el código de arriba, verifica comparando emoji únicos.",
-    "Verify by comparing unique emoji.": "Verifica comparando emoji únicos.",
-    "Verify by emoji": "Verificar con emoji",
-    "Almost there! Is %(displayName)s showing the same shield?": "¡Ya casi está! ¿Está %(displayName)s mostrando el mismo escudo?",
-    "Verify all users in a room to ensure it's secure.": "Verifica a todos los usuarios de una sala para asegurar que es segura.",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Has verificado con éxito %(deviceName)s (%(deviceId)s)",
-    "You've successfully verified %(displayName)s!": "¡Has verificado con éxito a %(displayName)s!",
-    "Start verification again from the notification.": "Inicie la verificación nuevamente a partir de la notificación.",
-    "Start verification again from their profile.": "Empieza la verificación de nuevo desde su perfil.",
-    "Verification timed out.": "El tiempo máximo para la verificación se ha agotado.",
-    "%(displayName)s cancelled verification.": "%(displayName)s canceló la verificación.",
-    "You cancelled verification.": "Has cancelado la verificación.",
     "Encryption not enabled": "El cifrado no está activado",
     "The encryption used by this room isn't supported.": "El cifrado usado por esta sala no es compatible.",
     "Show image": "Ver imagen",
@@ -361,7 +346,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "You've successfully verified your device!": "¡Ha verificado correctamente su dispositivo!",
     "Edited at %(date)s": "Última vez editado: %(date)s",
     "Click to view edits": "Haz clic para ver las ediciones",
     "Information": "Información",
@@ -710,7 +694,6 @@
         "other": "%(count)s salas"
     },
     "Invite to %(roomName)s": "Invitar a %(roomName)s",
-    "Edit devices": "Gestionar dispositivos",
     "Consult first": "Consultar primero",
     "Invited people will be able to read old messages.": "Las personas que invites podrán leer los mensajes antiguos.",
     "We couldn't create your DM.": "No hemos podido crear tu mensaje directo.",
@@ -807,7 +790,6 @@
         "other": "%(count)s respuestas"
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
-    "In encrypted rooms, verify all users to ensure it's secure.": "En salas cifradas, verifica a todos los usuarios para asegurarte de que es segura.",
     "If you can't see who you're looking for, send them your invite link below.": "Si no encuentras a quien buscas, envíale tu enlace de invitación que encontrarás abajo.",
     "Thread options": "Ajustes del hilo",
     "Reply in thread": "Responder en hilo",
@@ -866,8 +848,6 @@
     "Sections to show": "Secciones que mostrar",
     "Could not fetch location": "No se ha podido conseguir la ubicación",
     "toggle event": "activar o desactivar el evento",
-    "You cancelled verification on your other device.": "Has cancelado la verificación en tu otro dispositivo.",
-    "Almost there! Is your other device showing the same shield?": "¡Ya casi estás! ¿Ves el mismo escudo en el otro dispositivo?",
     "Message pending moderation": "Mensaje esperando revisión",
     "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
     "Pick a date to jump to": "Elige la fecha a la que saltar",
@@ -2972,7 +2952,25 @@
                 "reset_confirmation": "¿De verdad quieres restablecer las claves de verificación?",
                 "skip_verification": "Saltar la verificación por ahora"
             },
-            "accepting": "Aceptando…"
+            "accepting": "Aceptando…",
+            "scan_qr": "Verificar mediante escaneo",
+            "scan_qr_explainer": "Pídele a %(displayName)s que escanee tu código:",
+            "verify_emoji_prompt_qr": "Si no puedes escanear el código de arriba, verifica comparando emoji únicos.",
+            "verify_emoji_prompt": "Verifica comparando emoji únicos.",
+            "verify_emoji": "Verificar con emoji",
+            "qr_reciprocate_same_shield_device": "¡Ya casi estás! ¿Ves el mismo escudo en el otro dispositivo?",
+            "qr_reciprocate_same_shield_user": "¡Ya casi está! ¿Está %(displayName)s mostrando el mismo escudo?",
+            "prompt_encrypted": "Verifica a todos los usuarios de una sala para asegurar que es segura.",
+            "prompt_unencrypted": "En salas cifradas, verifica a todos los usuarios para asegurarte de que es segura.",
+            "successful_own_device": "¡Ha verificado correctamente su dispositivo!",
+            "successful_device": "Has verificado con éxito %(deviceName)s (%(deviceId)s)",
+            "successful_user": "¡Has verificado con éxito a %(displayName)s!",
+            "prompt_self": "Inicie la verificación nuevamente a partir de la notificación.",
+            "prompt_user": "Empieza la verificación de nuevo desde su perfil.",
+            "timed_out": "El tiempo máximo para la verificación se ha agotado.",
+            "cancelled_self": "Has cancelado la verificación en tu otro dispositivo.",
+            "cancelled_user": "%(displayName)s canceló la verificación.",
+            "cancelled": "Has cancelado la verificación."
         },
         "old_version_detected_title": "Se detectó información de criptografía antigua",
         "old_version_detected_description": "Se detectó una versión más antigua de %(brand)s. Esto habrá provocado que la criptografía de extremo a extremo funcione incorrectamente en la versión más antigua. Los mensajes cifrados de extremo a extremo intercambiados recientemente mientras usaba la versión más antigua puede que no sean descifrables con esta versión. Esto también puede hacer que fallen con la más reciente. Si experimenta problemas, desconecte y vuelva a ingresar. Para conservar el historial de mensajes, exporte y vuelva a importar sus claves.",
@@ -3025,7 +3023,8 @@
         "cross_signing_user_normal": "No has verificado a este usuario.",
         "cross_signing_room_warning": "Alguien está usando una sesión desconocida",
         "cross_signing_room_verified": "Todos los participantes en esta sala están verificados",
-        "cross_signing_room_normal": "Esta sala usa cifrado de extremo a extremo"
+        "cross_signing_room_normal": "Esta sala usa cifrado de extremo a extremo",
+        "unsupported": "Este cliente no es compatible con el cifrado de extremo a extremo."
     },
     "emoji": {
         "category_frequently_used": "Frecuente",
@@ -4047,7 +4046,8 @@
         "deactivate_confirm_description": "Desactivar este usuario le cerrará la sesión y desconectará. No podrá volver a iniciar sesión. Además, saldrá de todas las salas a que se había unido. Esta acción no puede deshacerse. ¿Desactivar este usuario?",
         "deactivate_confirm_action": "Desactivar usuario",
         "error_deactivate": "Error en desactivar usuario",
-        "role_label": "Rol en <RoomName/>"
+        "role_label": "Rol en <RoomName/>",
+        "edit_own_devices": "Gestionar dispositivos"
     },
     "stickers": {
         "empty": "Actualmente no tienes ningún paquete de pegatinas activado",

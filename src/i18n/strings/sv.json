@@ -278,22 +278,6 @@
         "other": "%(count)s sessioner",
         "one": "%(count)s session"
     },
-    "This client does not support end-to-end encryption.": "Den här klienten stöder inte totalsträckskryptering.",
-    "Verify by scanning": "Verifiera med skanning",
-    "Ask %(displayName)s to scan your code:": "Be %(displayName)s att skanna din kod:",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Om du inte kan skanna koden ovan, verifiera genom att jämföra unika emojier.",
-    "Verify by comparing unique emoji.": "Verifiera genom att jämföra unika emojier.",
-    "Verify by emoji": "Verifiera med emoji",
-    "Almost there! Is %(displayName)s showing the same shield?": "Nästan klar! Visar %(displayName)s samma sköld?",
-    "Verify all users in a room to ensure it's secure.": "Verifiera alla användare i ett rum för att försäkra att det är säkert.",
-    "You've successfully verified your device!": "Du har verifierat din enhet framgångsrikt!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Du har verifierat %(deviceName)s (%(deviceId)s) framgångsrikt!",
-    "You've successfully verified %(displayName)s!": "Du har verifierat %(displayName)s framgångsrikt!",
-    "Start verification again from the notification.": "Starta verifiering igen från aviseringen.",
-    "Start verification again from their profile.": "Starta verifiering igen från deras profil.",
-    "Verification timed out.": "Verifieringen löpte ut.",
-    "%(displayName)s cancelled verification.": "%(displayName)s avbröt verifiering.",
-    "You cancelled verification.": "Du avbröt verifiering.",
     "Encryption not enabled": "Kryptering är inte aktiverad",
     "The encryption used by this room isn't supported.": "Krypteringen som används i det här rummet stöds inte.",
     "You declined": "Du avslog",
@@ -710,7 +694,6 @@
     },
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Detta påverkar normalt bara hur rummet hanteras på serven. Om du upplever problem med din %(brand)s, vänligen rapportera en bugg.",
     "Invite to %(roomName)s": "Bjud in till %(roomName)s",
-    "Edit devices": "Redigera enheter",
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
@@ -810,7 +793,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
     "Thread options": "Trådalternativ",
     "If you can't see who you're looking for, send them your invite link below.": "Om du inte ser den du letar efter, skicka din inbjudningslänk nedan till denne.",
-    "In encrypted rooms, verify all users to ensure it's secure.": "I krypterade rum, verifiera alla användare för att försäkra att det är säkert.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -827,8 +809,6 @@
     "Message pending moderation: %(reason)s": "Meddelandet inväntar moderering: %(reason)s",
     "Jump to date": "Hoppa till datum",
     "The beginning of the room": "Början av rummet",
-    "You cancelled verification on your other device.": "Du avbröt verifiering på din andra enhet.",
-    "Almost there! Is your other device showing the same shield?": "Nästan klar! Visar din andra enhet samma sköld?",
     "Recently viewed": "Nyligen sedda",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Could not fetch location": "Kunde inte hämta plats",
@@ -3066,7 +3046,25 @@
                 "reset_confirmation": "Återställ verkligen verifieringsnycklar?",
                 "skip_verification": "Hoppa över verifiering för tillfället"
             },
-            "accepting": "Accepterar…"
+            "accepting": "Accepterar…",
+            "scan_qr": "Verifiera med skanning",
+            "scan_qr_explainer": "Be %(displayName)s att skanna din kod:",
+            "verify_emoji_prompt_qr": "Om du inte kan skanna koden ovan, verifiera genom att jämföra unika emojier.",
+            "verify_emoji_prompt": "Verifiera genom att jämföra unika emojier.",
+            "verify_emoji": "Verifiera med emoji",
+            "qr_reciprocate_same_shield_device": "Nästan klar! Visar din andra enhet samma sköld?",
+            "qr_reciprocate_same_shield_user": "Nästan klar! Visar %(displayName)s samma sköld?",
+            "prompt_encrypted": "Verifiera alla användare i ett rum för att försäkra att det är säkert.",
+            "prompt_unencrypted": "I krypterade rum, verifiera alla användare för att försäkra att det är säkert.",
+            "successful_own_device": "Du har verifierat din enhet framgångsrikt!",
+            "successful_device": "Du har verifierat %(deviceName)s (%(deviceId)s) framgångsrikt!",
+            "successful_user": "Du har verifierat %(displayName)s framgångsrikt!",
+            "prompt_self": "Starta verifiering igen från aviseringen.",
+            "prompt_user": "Starta verifiering igen från deras profil.",
+            "timed_out": "Verifieringen löpte ut.",
+            "cancelled_self": "Du avbröt verifiering på din andra enhet.",
+            "cancelled_user": "%(displayName)s avbröt verifiering.",
+            "cancelled": "Du avbröt verifiering."
         },
         "old_version_detected_title": "Gammal kryptografidata upptäckt",
         "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -3119,7 +3117,8 @@
         "cross_signing_user_normal": "Du har inte verifierat den här användaren.",
         "cross_signing_room_warning": "Någon använder en okänd session",
         "cross_signing_room_verified": "Alla i det här rummet är verifierade",
-        "cross_signing_room_normal": "Det här rummet är totalsträckskrypterat"
+        "cross_signing_room_normal": "Det här rummet är totalsträckskrypterat",
+        "unsupported": "Den här klienten stöder inte totalsträckskryptering."
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -4185,7 +4184,8 @@
         "deactivate_confirm_description": "Vid inaktivering av användare loggas den ut och förhindras från att logga in igen. Den kommer dessutom att lämna alla rum den befinner sig i. Den här åtgärden kan inte ångras. Är du säker på att du vill inaktivera den här användaren?",
         "deactivate_confirm_action": "Inaktivera användaren",
         "error_deactivate": "Misslyckades att inaktivera användaren",
-        "role_label": "Roll i <RoomName/>"
+        "role_label": "Roll i <RoomName/>",
+        "edit_own_devices": "Redigera enheter"
     },
     "stickers": {
         "empty": "Du har för närvarande inga dekalpaket aktiverade",

@@ -496,23 +496,6 @@
     "The encryption used by this room isn't supported.": "رمزگذاری استفاده شده توسط این اتاق پشتیبانی نمی شود.",
     "Encryption not enabled": "رمزگذاری فعال نیست",
     "Ignored attempt to disable encryption": "تلاش برای غیرفعال کردن رمزگذاری نادیده گرفته شد",
-    "You cancelled verification.": "شما تأیید هویت را لغو کردید.",
-    "%(displayName)s cancelled verification.": "%(displayName)s تایید هویت را لغو کرد.",
-    "Verification timed out.": "مهلت تأیید تمام شد.",
-    "Start verification again from their profile.": "دوباره تأیید را از نمایه آنها شروع کنید.",
-    "Start verification again from the notification.": "از اعلان دوباره تأیید را شروع کنید.",
-    "You've successfully verified %(displayName)s!": "شما%(displayName)s را با موفقیت تأیید کردید!",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "شما با موفقیت %(deviceName)s (%(deviceId)s) را تأیید کردید!",
-    "You've successfully verified your device!": "شما با موفقیت دستگاه خود را تأیید کردید!",
-    "Verify all users in a room to ensure it's secure.": "برای اطمینان از امنیت اتاق، هویت همه‌ی کاربران حاضر در اتاق را تأیید کنید.",
-    "Almost there! Is %(displayName)s showing the same shield?": "تقریباً تمام شد! آیا %(displayName)s نیز سپر مشابهی را نشان می‌دهد؟",
-    "Verify by emoji": "تأیید توسط شکلک",
-    "Verify by comparing unique emoji.": "با مقایسه شکلک تأیید کنید.",
-    "If you can't scan the code above, verify by comparing unique emoji.": "اگر نمی توانید کد بالا را اسکن کنید ، با مقایسه شکلک منحصر به فرد، او را تأیید کنید.",
-    "Ask %(displayName)s to scan your code:": "از %(displayName)s بخواهید که کد شما را اسکن کند:",
-    "Verify by scanning": "با اسکن تأیید کنید",
-    "Edit devices": "ویرایش دستگاه‌ها",
-    "This client does not support end-to-end encryption.": "این کلاینت از رمزگذاری سرتاسر پشتیبانی نمی کند.",
     "Remove %(count)s messages": {
         "one": "حذف ۱ پیام",
         "other": "حذف %(count)s پیام"
@@ -2046,7 +2029,22 @@
             "verification_description": "با تائید هویت خود به پیام‌های رمزشده دسترسی یافته و هویت خود را به دیگران ثابت می‌کنید.",
             "waiting_for_user_accept": "منتظر قبول کردن توسط %(displayName)s…",
             "start_button": "شروع تایید هویت",
-            "accepting": "پذیرش…"
+            "accepting": "پذیرش…",
+            "scan_qr": "با اسکن تأیید کنید",
+            "scan_qr_explainer": "از %(displayName)s بخواهید که کد شما را اسکن کند:",
+            "verify_emoji_prompt_qr": "اگر نمی توانید کد بالا را اسکن کنید ، با مقایسه شکلک منحصر به فرد، او را تأیید کنید.",
+            "verify_emoji_prompt": "با مقایسه شکلک تأیید کنید.",
+            "verify_emoji": "تأیید توسط شکلک",
+            "qr_reciprocate_same_shield_user": "تقریباً تمام شد! آیا %(displayName)s نیز سپر مشابهی را نشان می‌دهد؟",
+            "prompt_encrypted": "برای اطمینان از امنیت اتاق، هویت همه‌ی کاربران حاضر در اتاق را تأیید کنید.",
+            "successful_own_device": "شما با موفقیت دستگاه خود را تأیید کردید!",
+            "successful_device": "شما با موفقیت %(deviceName)s (%(deviceId)s) را تأیید کردید!",
+            "successful_user": "شما%(displayName)s را با موفقیت تأیید کردید!",
+            "prompt_self": "از اعلان دوباره تأیید را شروع کنید.",
+            "prompt_user": "دوباره تأیید را از نمایه آنها شروع کنید.",
+            "timed_out": "مهلت تأیید تمام شد.",
+            "cancelled_user": "%(displayName)s تایید هویت را لغو کرد.",
+            "cancelled": "شما تأیید هویت را لغو کردید."
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2095,7 +2093,8 @@
         "cross_signing_user_normal": "شما این کاربر را تائید نکرده‌اید.",
         "cross_signing_room_warning": "فردی از یک نشست ناشناس استفاده می‌کند",
         "cross_signing_room_verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
-        "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است"
+        "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است",
+        "unsupported": "این کلاینت از رمزگذاری سرتاسر پشتیبانی نمی کند."
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2880,7 +2879,8 @@
         "deactivate_confirm_title": "کاربر غیرفعال شود؟",
         "deactivate_confirm_description": "با غیرفعال کردن این کاربر، او از سیستم خارج شده و از ورود مجدد وی جلوگیری می‌شود. علاوه بر این، او تمام اتاق هایی را که در آن هست ترک می کند. این عمل قابل برگشت نیست. آیا مطمئن هستید که می خواهید این کاربر را غیرفعال کنید؟",
         "deactivate_confirm_action": "غیرفعال کردن کاربر",
-        "error_deactivate": "غیرفعال کردن کاربر انجام نشد"
+        "error_deactivate": "غیرفعال کردن کاربر انجام نشد",
+        "edit_own_devices": "ویرایش دستگاه‌ها"
     },
     "stickers": {
         "empty": "شما در حال حاضر هیچ بسته برچسب فعالی ندارید",
