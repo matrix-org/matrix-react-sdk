@@ -171,7 +171,7 @@ describe("languageHandler", () => {
 
 describe("languageHandler JSX", function () {
     // See setupLanguage.ts for how we are stubbing out translations to provide fixture data for these tests
-    const basicString = "Rooms";
+    const basicString = "common|rooms";
     const selfClosingTagSub = "Accept <policyLink /> to continue:" as TranslationKey;
     const textInTagSub = "<a>Upgrade</a> to your own domain" as TranslationKey;
     const plurals = "and %(count)s others...";
@@ -291,7 +291,7 @@ describe("languageHandler JSX", function () {
         });
 
         // mocked lv has only `"Uploading %(filename)s and %(count)s others|one"`
-        const lvExistingPlural = "Uploading %(filename)s and %(count)s others";
+        const lvExistingPlural = "room|upload|uploading_multiple_file";
         const lvNonExistingPlural = "%(spaceName)s and %(count)s others";
 
         describe("pluralization", () => {

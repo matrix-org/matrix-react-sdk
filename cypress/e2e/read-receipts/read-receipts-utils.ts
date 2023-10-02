@@ -262,6 +262,14 @@ export function sendMessageAsClient(cli: MatrixClient, room: string, messages: M
                 await message.performAction(cli, room);
             }
         });
+        // TODO: without this wait, some tests that send lots of messages flake
+        // from time to time. I (andyb) have done some investigation, but it
+        // needs more work to figure out. The messages do arrive over sync, but
+        // they never appear in the timeline, and they never fire a
+        // Room.timeline event. I think this only happens with events that refer
+        // to other events (e.g. replies), so it might be caused by the
+        // referring event arriving before the referred-to event.
+        cy.wait(200);
     }
 }
 
@@ -285,7 +293,9 @@ function findRoomByName(room: string): Chainable<Room> {
 export function openThread(rootMessage: string) {
     cy.log("Open thread", rootMessage);
     cy.get(".mx_RoomView_body", { log: false }).within(() => {
-        cy.contains(".mx_EventTile[data-scroll-tokens]", rootMessage, { log: false })
+        cy.findAllByText(rootMessage)
+            .filter(".mx_EventTile_body")
+            .parents(".mx_EventTile[data-scroll-tokens]")
             .realHover()
             .findByRole("button", { name: "Reply in thread", log: false })
             .click();
@@ -362,7 +372,7 @@ export function pageUp() {
  * @param howMany the number of strings to generate
  */
 export function many(prefix: string, howMany: number): Array<string> {
-    return Array.from(Array(howMany).keys()).map((i) => prefix + i.toFixed());
+    return Array.from(Array(howMany).keys()).map((i) => prefix + i.toString().padStart(4, "0"));
 }
 
 /**

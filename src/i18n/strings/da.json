@@ -1,22 +1,7 @@
 {
-    "Filter room members": "Filter medlemmer",
-    "Rooms": "Rum",
-    "Low priority": "Lav prioritet",
-    "Historical": "Historisk",
-    "New passwords must match each other.": "Nye adgangskoder skal matche hinanden.",
-    "A new password must be entered.": "Der skal indtastes en ny adgangskode.",
     "Session ID": "Sessions ID",
     "Warning!": "Advarsel!",
-    "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
-    "Deactivate Account": "Deaktiver brugerkonto",
-    "Default": "Standard",
-    "Failed to change password. Is your password correct?": "Kunne ikke ændre adgangskoden. Er din adgangskode rigtig?",
-    "Failed to reject invitation": "Kunne ikke afvise invitationen",
-    "Failed to unban": "Var ikke i stand til at ophæve forbuddet",
-    "Favourite": "Favorit",
-    "Notifications": "Notifikationer",
     "unknown error code": "Ukendt fejlkode",
-    "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
     "Sun": "Søn",
     "Mon": "Man",
@@ -44,56 +29,28 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Begrænset",
     "Moderator": "Moderator",
-    "Reason": "Årsag",
     "Sunday": "Søndag",
-    "Notification targets": "Meddelelsesmål",
     "Today": "I dag",
     "Friday": "Fredag",
     "Changelog": "Ændringslog",
-    "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
-    "Source URL": "Kilde URL",
     "Filter results": "Filtrér resultater",
-    "Search…": "Søg…",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
-    "Invite to this room": "Inviter til dette rum",
     "Send": "Send",
-    "All messages": "Alle beskeder",
-    "All Rooms": "Alle rum",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
-    "Low Priority": "Lav prioritet",
     "Wednesday": "Onsdag",
     "Thank you!": "Tak!",
     "Logs sent": "Logfiler sendt",
     "Failed to send logs: ": "Kunne ikke sende logfiler: ",
     "Preparing to send logs": "Forbereder afsendelse af logfiler",
-    "Permission Required": "Tilladelse påkrævet",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
-    "%(items)s and %(count)s others": {
-        "other": "%(items)s og %(count)s andre",
-        "one": "%(items)s og en anden"
-    },
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
-    "Please contact your homeserver administrator.": "Kontakt venligst din homeserver administrator.",
-    "Enter passphrase": "Indtast kodeord",
-    "Verify this session": "Verificér denne session",
-    "Encryption upgrade available": "Opgradering af kryptering tilgængelig",
-    "Explore rooms": "Udforsk rum",
-    "Verification code": "Verifikationskode",
     "Headphones": "Hovedtelefoner",
-    "Show more": "Vis mere",
     "Add a new server": "Tilføj en ny server",
-    "Change notification settings": "Skift notifikations indstillinger",
-    "Profile picture": "Profil billede",
-    "Checking server": "Tjekker server",
-    "Profile": "Profil",
-    "Local address": "Lokal adresse",
-    "This room has no local addresses": "Dette rum har ingen lokal adresse",
-    "The conversation continues here.": "Samtalen fortsætter her.",
     "France": "Frankrig",
     "Finland": "Finland",
     "Egypt": "Egypten",
@@ -348,9 +305,6 @@
     "American Samoa": "Amerikansk Samoa",
     "Algeria": "Algeriet",
     "Åland Islands": "Ålandsøerne",
-    "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
-    "Your password was successfully changed.": "Din adgangskode blev ændret.",
-    "Set a new custom sound": "Sæt en ny brugerdefineret lyd",
     "common": {
         "analytics": "Analyse data",
         "error": "Fejl",
@@ -370,7 +324,14 @@
         "matrix": "Matrix",
         "unnamed_room": "Unavngivet rum",
         "on": "Tændt",
-        "off": "Slukket"
+        "off": "Slukket",
+        "advanced": "Avanceret",
+        "profile": "Profil",
+        "user_avatar": "Profil billede",
+        "rooms": "Rum",
+        "low_priority": "Lav prioritet",
+        "historical": "Historisk",
+        "show_more": "Vis mere"
     },
     "action": {
         "continue": "Fortsæt",
@@ -403,7 +364,8 @@
         "cancel": "Afbryd",
         "back": "Tilbage",
         "accept": "Accepter",
-        "register": "Registrér"
+        "register": "Registrér",
+        "explore_rooms": "Udforsk rum"
     },
     "labs": {
         "pinning": "Fastgørelse af beskeder",
@@ -442,7 +404,8 @@
             "noisy": "Støjende",
             "error_permissions_denied": "%(brand)s har ikke tilladelse til at sende dig notifikationer - tjek venligst dine browserindstillinger",
             "error_permissions_missing": "%(brand)s fik ikke tilladelse til at sende notifikationer - Vær sød at prøve igen",
-            "error_title": "Kunne ikke slå Notifikationer til"
+            "error_title": "Kunne ikke slå Notifikationer til",
+            "push_targets": "Meddelelsesmål"
         },
         "appearance": {
             "custom_theme_success": "Tema tilføjet!",
@@ -467,7 +430,14 @@
             "add_msisdn_confirm_sso_button": "Bekræft tilføjelsen af dette telefonnummer ved at bruge Single Sign On til at bevise din identitet.",
             "add_msisdn_confirm_button": "Bekræft tilføjelse af telefonnummer",
             "add_msisdn_confirm_body": "Klik på knappen herunder for at bekræfte tilføjelsen af dette telefonnummer.",
-            "add_msisdn_dialog_title": "Tilføj telefonnummer"
+            "add_msisdn_dialog_title": "Tilføj telefonnummer",
+            "error_password_change_403": "Kunne ikke ændre adgangskoden. Er din adgangskode rigtig?",
+            "password_change_success": "Din adgangskode blev ændret.",
+            "deactivate_section": "Deaktiver brugerkonto",
+            "msisdn_verification_field_label": "Verifikationskode"
+        },
+        "key_export_import": {
+            "enter_passphrase": "Indtast kodeord"
         }
     },
     "devtools": {
@@ -565,6 +535,9 @@
         },
         "redacted": {
             "tooltip": "Besked slettet d. %(date)s"
+        },
+        "context_menu": {
+            "external_url": "Kilde URL"
         }
     },
     "slash_command": {
@@ -635,14 +608,15 @@
         "m.sticker": "%(senderName)s: %(stickerName)s"
     },
     "Other": "Andre",
-    "Advanced": "Avanceret",
     "composer": {
         "placeholder_reply": "Besvar…",
         "placeholder_encrypted": "Send en krypteret besked…",
         "placeholder": "Send en besked…",
         "autocomplete": {
             "command_description": "Kommandoer"
-        }
+        },
+        "room_upgraded_link": "Samtalen fortsætter her.",
+        "poll_button_no_perms_title": "Tilladelse påkrævet"
     },
     "voip": {
         "call_failed": "Opkald mislykkedes",
@@ -686,7 +660,9 @@
         "bootstrap_title": "Sætter nøgler op",
         "export_unsupported": "Din browser understøtter ikke de påkrævede kryptografiske udvidelser",
         "import_invalid_keyfile": "Ikke en gyldig %(brand)s nøglefil",
-        "import_invalid_passphrase": "Godkendelse mislykkedes: forkert adgangskode?"
+        "import_invalid_passphrase": "Godkendelse mislykkedes: forkert adgangskode?",
+        "upgrade_toast_title": "Opgradering af kryptering tilgængelig",
+        "verify_toast_title": "Verificér denne session"
     },
     "emoji": {
         "categories": "Kategorier"
@@ -724,7 +700,12 @@
         "failed_connect_identity_server_other": "Du kan logge på, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
         "no_hs_url_provided": "Ingen homeserver URL oplyst",
         "autodiscovery_unexpected_error_hs": "Uventet fejl ved indlæsning af homeserver-konfigurationen",
-        "autodiscovery_unexpected_error_is": "Uventet fejl ved indlæsning af identitetsserver-konfigurationen"
+        "autodiscovery_unexpected_error_is": "Uventet fejl ved indlæsning af identitetsserver-konfigurationen",
+        "reset_password": {
+            "password_not_entered": "Der skal indtastes en ny adgangskode.",
+            "passwords_mismatch": "Nye adgangskoder skal matche hinanden.",
+            "reset_successful": "Din adgangskode er blevet nulstillet."
+        }
     },
     "export_chat": {
         "messages": "Beskeder"
@@ -795,13 +776,23 @@
     "room_settings": {
         "permissions": {
             "banned_users_section": "Bortviste brugere",
-            "permissions_section": "Tilladelser"
+            "permissions_section": "Tilladelser",
+            "error_unbanning": "Var ikke i stand til at ophæve forbuddet",
+            "ban_reason": "Årsag"
         },
         "security": {
             "enable_encryption_confirm_title": "Aktiver kryptering?",
             "history_visibility_legend": "Hvem kan læse historikken?",
             "title": "Sikkerhed & Privatliv",
             "encryption_permanent": "Efter aktivering er det ikke muligt at slå kryptering fra."
+        },
+        "general": {
+            "other_section": "Andre",
+            "no_aliases_room": "Dette rum har ingen lokal adresse",
+            "local_alias_field_label": "Lokal adresse"
+        },
+        "notifications": {
+            "custom_sound_prompt": "Sæt en ny brugerdefineret lyd"
         }
     },
     "failed_load_async_component": "Kunne ikke hente! Tjek din netværksforbindelse og prøv igen.",
@@ -852,6 +843,41 @@
     },
     "room": {
         "upgrade_error_title": "Fejl under opgradering af rum",
-        "upgrade_error_description": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen."
+        "upgrade_error_description": "Dobbelt-tjek at din server understøtter den valgte rum-version og forsøg igen.",
+        "error_join_incompatible_version_2": "Kontakt venligst din homeserver administrator.",
+        "context_menu": {
+            "favourite": "Favorit",
+            "low_priority": "Lav prioritet"
+        },
+        "invite_this_room": "Inviter til dette rum",
+        "search": {
+            "this_room": "Dette rum",
+            "all_rooms": "Alle rum",
+            "field_placeholder": "Søg…"
+        }
+    },
+    "items_and_n_others": {
+        "other": "<Items/> og %(count)s andre",
+        "one": "<Items/> og en anden"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Notifikationer",
+        "error_change_title": "Skift notifikations indstillinger",
+        "class_other": "Andre",
+        "default": "Standard",
+        "all_messages": "Alle beskeder"
+    },
+    "identity_server": {
+        "checking": "Tjekker server"
+    },
+    "member_list": {
+        "filter_placeholder": "Filter medlemmer"
+    },
+    "reject_invitation_dialog": {
+        "confirmation": "Er du sikker på du vil afvise invitationen?",
+        "failed": "Kunne ikke afvise invitationen"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Kunne ikke glemme rummet %(errCode)s"
     }
 }
