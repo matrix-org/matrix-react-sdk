@@ -7677,10 +7677,10 @@ matrix-mock-request@^2.5.0:
   dependencies:
     expect "^28.1.0"
 
-matrix-web-i18n@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/matrix-web-i18n/-/matrix-web-i18n-3.1.2.tgz#c5a51516dc5379688875f377ee03e34f91b91624"
-  integrity sha512-HBqpjkR9jMPEVq4WuAwDNTkgME85EDstVCyaeaEDmFYpo1FclMDSeXnZgj3FM3RKNXDRLVHdSo+FA1626JuF6Q==
+matrix-web-i18n@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/matrix-web-i18n/-/matrix-web-i18n-3.1.3.tgz#b462015b138ebdd288ed945507abea42c896f52d"
+  integrity sha512-9JUUTifqS/Xe6YQr5uDbX04xvr5Pxg8aU7tRKx49/ZLqm4dZoJKo4SKpyLEwCQeNjAvjcKuXibWO+2hkZ2/Ojw==
   dependencies:
     "@babel/parser" "^7.18.5"
     "@babel/traverse" "^7.18.5"
