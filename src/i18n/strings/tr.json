@@ -205,7 +205,6 @@
         "one": "%(count)s dosyayı sağla"
     },
     "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
-    "Direct Messages": "Doğrudan Mesajlar",
     "Not Trusted": "Güvenilmiyor",
     "%(count)s sessions": {
         "other": "%(count)s oturum",
@@ -2107,7 +2106,10 @@
         },
         "invite_link": "Davet bağlantısını paylaş",
         "invite": "İnsanları davet et",
-        "invite_description": "E-posta veya kullanıcı adı ile davet et"
+        "invite_description": "E-posta veya kullanıcı adı ile davet et",
+        "add_existing_room_space": {
+            "dm_heading": "Doğrudan Mesajlar"
+        }
     },
     "terms": {
         "integration_manager": "Botları, köprüleri, görsel bileşenleri ve çıkartma paketlerini kullan",

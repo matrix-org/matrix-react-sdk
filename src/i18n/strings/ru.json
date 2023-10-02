@@ -228,7 +228,6 @@
     "Command Help": "Помощь команды",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
-    "Direct Messages": "Личные сообщения",
     "%(count)s sessions": {
         "other": "Сеансов: %(count)s",
         "one": "%(count)s сеанс"
@@ -632,8 +631,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Пригласите кого-нибудь, используя их имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этим пространством</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Пригласите кого-нибудь, используя их имя, учётную запись (как <userId/>) или <a>поделитесь этим пространством</a>.",
     "Invite to %(roomName)s": "Пригласить в %(roomName)s",
-    "Create a new room": "Создать новую комнату",
-    "Space selection": "Выбор пространства",
     "Leave space": "Покинуть пространство",
     "Create a space": "Создать пространство",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
@@ -680,19 +677,6 @@
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Любой сможет найти и присоединиться к этому пространству, а не только члены <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Любой человек в <SpaceName/> сможет найти и присоединиться.",
     "To leave the beta, visit your settings.": "Чтобы выйти из бета-версии, зайдите в настройки.",
-    "Adding spaces has moved.": "Добавление пространств перемещено.",
-    "Search for rooms": "Поиск комнат",
-    "Want to add a new room instead?": "Хотите добавить новую комнату?",
-    "Add existing rooms": "Добавить существующие комнаты",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Добавление комнаты…",
-        "other": "Добавление комнат… (%(progress)s из %(count)s)"
-    },
-    "Not all selected were added": "Не все выбранные добавлены",
-    "Search for spaces": "Поиск пространств",
-    "Create a new space": "Создать новое пространство",
-    "Want to add a new space instead?": "Хотите добавить новое пространство?",
-    "Add existing space": "Добавить существующее пространство",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -3389,7 +3373,27 @@
         "title_when_query_available": "Результаты",
         "search_placeholder": "Искать имена и описания",
         "no_search_result_hint": "Вы можете попробовать другой поиск или проверить опечатки.",
-        "joining_space": "Присоединение"
+        "joining_space": "Присоединение",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Добавить существующее пространство",
+            "create_prompt": "Хотите добавить новое пространство?",
+            "create_button": "Создать новое пространство",
+            "filter_placeholder": "Поиск пространств"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Не все выбранные добавлены",
+            "progress_text": {
+                "one": "Добавление комнаты…",
+                "other": "Добавление комнат… (%(progress)s из %(count)s)"
+            },
+            "dm_heading": "Личные сообщения",
+            "space_dropdown_label": "Выбор пространства",
+            "space_dropdown_title": "Добавить существующие комнаты",
+            "create": "Хотите добавить новую комнату?",
+            "create_prompt": "Создать новую комнату",
+            "subspace_moved_note": "Добавление пространств перемещено."
+        },
+        "room_filter_placeholder": "Поиск комнат"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",

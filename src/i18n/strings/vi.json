@@ -245,22 +245,6 @@
     "The following users may not exist": "Những người dùng sau có thể không tồn tại",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Sử dụng máy chủ định danh để mời qua địa chỉ thư điện tử. Quản lý trong mục Cài đặt <settings>Settings</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Sử dụng máy chủ nhận dạng để mời qua thư điện tử. <default>Sử dụng mặc định (%(defaultIdentityServerName)s)</default> hoặc quản lý trong mục Cài đặt <settings>Settings</settings>.",
-    "Adding spaces has moved.": "Thêm dấu cách đã di chuyển.",
-    "Search for rooms": "Tìm kiếm phòng",
-    "Create a new room": "Tạo phòng chat mới",
-    "Want to add a new room instead?": "Hay là thêm một phòng mới?",
-    "Add existing rooms": "Thêm các phòng hiện có",
-    "Space selection": "Lựa chọn space",
-    "Direct Messages": "Tin nhắn trực tiếp",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Đang thêm phòng…",
-        "other": "Đang thêm các phòng... (%(progress)s trong %(count)s)"
-    },
-    "Not all selected were added": "Không phải tất cả các mục đã chọn đều được thêm vào",
-    "Search for spaces": "Tìm kiếm space",
-    "Create a new space": "Tạo space mới",
-    "Want to add a new space instead?": "Bạn muốn thêm một space mới thay thế?",
-    "Add existing space": "Thêm space hiện có",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
     "Use your Security Key to continue.": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
     "Security Key": "Chìa khóa bảo mật",
@@ -3414,7 +3398,27 @@
         "title_when_query_available": "Kết quả",
         "search_placeholder": "Tìm kiếm tên và mô tả",
         "no_search_result_hint": "Bạn có thể muốn thử một tìm kiếm khác hoặc kiểm tra lỗi chính tả.",
-        "joining_space": "Đang tham gia"
+        "joining_space": "Đang tham gia",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Thêm space hiện có",
+            "create_prompt": "Bạn muốn thêm một space mới thay thế?",
+            "create_button": "Tạo space mới",
+            "filter_placeholder": "Tìm kiếm space"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Không phải tất cả các mục đã chọn đều được thêm vào",
+            "progress_text": {
+                "one": "Đang thêm phòng…",
+                "other": "Đang thêm các phòng... (%(progress)s trong %(count)s)"
+            },
+            "dm_heading": "Tin nhắn trực tiếp",
+            "space_dropdown_label": "Lựa chọn space",
+            "space_dropdown_title": "Thêm các phòng hiện có",
+            "create": "Hay là thêm một phòng mới?",
+            "create_prompt": "Tạo phòng chat mới",
+            "subspace_moved_note": "Thêm dấu cách đã di chuyển."
+        },
+        "room_filter_placeholder": "Tìm kiếm phòng"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",

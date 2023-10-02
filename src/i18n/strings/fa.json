@@ -428,15 +428,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. <default>از پیش فرض (%(defaultIdentityServerName)s) استفاده کنید</default> یا آن را در بخش <settings>تنظیمات</settings> مدیریت کنید.",
     "Wrong file type": "نوع فایل اشتباه است",
     "Confirm encryption setup": "راه‌اندازی رمزگذاری را تأیید کنید",
-    "Create a new room": "ایجاد اتاق جدید",
-    "Want to add a new room instead?": "آیا می‌خواهید یک اتاق جدید را بیفزایید؟",
-    "Add existing rooms": "افزودن اتاق‌های موجود",
-    "Space selection": "انتخاب فضای کاری",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "در حال افزودن اتاق‌ها...",
-        "other": "در حال افزودن اتاق‌ها... (%(progress)s از %(count)s)"
-    },
-    "Not all selected were added": "همه‌ی موارد انتخاب شده، اضافه نشدند",
     "e.g. my-room": "به عنوان مثال، my-room",
     "Filter results": "پالایش نتایج",
     "Server did not return valid authentication information.": "سرور اطلاعات احراز هویت معتبری را باز نگرداند.",
@@ -474,7 +465,6 @@
         "other": "%(count)s نشست تایید شده"
     },
     "Not encrypted": "رمزگذاری نشده",
-    "Direct Messages": "پیام مستقیم",
     "Join Room": "به اتاق بپیوندید",
     "(~%(count)s results)": {
         "one": "(~%(count)s نتیجه)",
@@ -2488,7 +2478,19 @@
         "invite_this_space": "به این فضای کاری دعوت کنید",
         "user_lacks_permission": "شما دسترسی ندارید",
         "search_placeholder": "جستجوی نام‌ها و توضیحات",
-        "no_search_result_hint": "ممکن است بخواهید یک جستجوی دیگر انجام دهید یا غلط‌های املایی را بررسی کنید."
+        "no_search_result_hint": "ممکن است بخواهید یک جستجوی دیگر انجام دهید یا غلط‌های املایی را بررسی کنید.",
+        "add_existing_room_space": {
+            "error_heading": "همه‌ی موارد انتخاب شده، اضافه نشدند",
+            "progress_text": {
+                "one": "در حال افزودن اتاق‌ها...",
+                "other": "در حال افزودن اتاق‌ها... (%(progress)s از %(count)s)"
+            },
+            "dm_heading": "پیام مستقیم",
+            "space_dropdown_label": "انتخاب فضای کاری",
+            "space_dropdown_title": "افزودن اتاق‌های موجود",
+            "create": "آیا می‌خواهید یک اتاق جدید را بیفزایید؟",
+            "create_prompt": "ایجاد اتاق جدید"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "این سرور خانگی برای نمایش نقشه تنظیم نشده است.",

@@ -576,7 +576,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "הזמינו מישהו המשתמש בשמו, כתובת הדוא\"ל, שם המשתמש (כמו <userId/>) או <a> שתפו את החדר הזה </a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "התחל שיחה עם מישהו המשתמש בשמו או בשם המשתמש שלו (כמו <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "התחל שיחה עם מישהו המשתמש בשמו, כתובת הדוא\"ל או שם המשתמש שלו (כמו <userId/>).",
-    "Direct Messages": "הודעות ישירות",
     "Recently Direct Messaged": "הודעות ישירות לאחרונה",
     "Recent Conversations": "שיחות אחרונות",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "המשתמשים הבאים עשויים שלא להתקיים או שאינם תקפים, ולא ניתן להזמין אותם: %(csvNames)s",
@@ -644,13 +643,7 @@
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
-    "Adding spaces has moved.": "הוספת מרחבי עבודה הוזז.",
-    "Search for spaces": "חיפוש מרחבי עבודה",
-    "Create a new space": "הגדרת מרחב עבודה חדש",
-    "Want to add a new space instead?": "רוצים להוסיף מרחב עבודה חדש במקום?",
-    "Add existing space": "הוסף מרחב עבודה קיים",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
-    "Space selection": "בחירת מרחב עבודה",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sו%(count)sאחרים",
@@ -2619,7 +2612,18 @@
         "title_when_query_unavailable": "חדרים וחללי עבודה",
         "title_when_query_available": "תוצאות",
         "search_placeholder": "חיפוש שמות ותיאורים",
-        "no_search_result_hint": "אולי תרצו לנסות חיפוש אחר או לבדוק אם יש שגיאות הקלדה."
+        "no_search_result_hint": "אולי תרצו לנסות חיפוש אחר או לבדוק אם יש שגיאות הקלדה.",
+        "add_existing_subspace": {
+            "space_dropdown_title": "הוסף מרחב עבודה קיים",
+            "create_prompt": "רוצים להוסיף מרחב עבודה חדש במקום?",
+            "create_button": "הגדרת מרחב עבודה חדש",
+            "filter_placeholder": "חיפוש מרחבי עבודה"
+        },
+        "add_existing_room_space": {
+            "dm_heading": "הודעות ישירות",
+            "space_dropdown_label": "בחירת מרחב עבודה",
+            "subspace_moved_note": "הוספת מרחבי עבודה הוזז."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotReachable": "שרת בית זה אינו מוגדר כהלכה להצגת מפות, או ששרת המפות המוגדר אינו ניתן לגישה.",

@@ -232,7 +232,6 @@
     "Close dialog": "Fermi interagujon",
     "Command Help": "Helpo pri komando",
     "Lock": "Seruro",
-    "Direct Messages": "Individuaj ĉambroj",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
     "Integrations are disabled": "Kunigoj estas malŝaltitaj",
     "Integrations not allowed": "Kunigoj ne estas permesitaj",
@@ -634,12 +633,9 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitu iun per ĝia nomo, retpoŝtadreso, uzantonomo (kiel <userId/>), aŭ <a>diskonigu ĉi tiun aron</a>.",
     "Invite to %(roomName)s": "Inviti al %(roomName)s",
-    "Create a new room": "Krei novan ĉambron",
-    "Space selection": "Elekto de aro",
     "Leave space": "Forlasi aron",
     "Create a space": "Krei aron",
     "Invited people will be able to read old messages.": "Invititoj povos legi malnovajn mesaĝojn.",
-    "Add existing rooms": "Aldoni jamajn ĉambrojn",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
@@ -647,12 +643,6 @@
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
-    "Want to add a new room instead?": "Ĉu vi volas anstataŭe aldoni novan ĉambron?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Aldonante ĉambron…",
-        "other": "Aldonante ĉambrojn… (%(progress)s el %(count)s)"
-    },
-    "Not all selected were added": "Ne ĉiuj elektitoj aldoniĝis",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Sending": "Sendante",
@@ -690,12 +680,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Ĉiu en <SpaceName/> povos ĝin trovi kaj aliĝi.",
     "Private space (invite only)": "Privata aro (nur por invititoj)",
     "Space visibility": "Videbleco de aro",
-    "Adding spaces has moved.": "Aldonejo de aroj moviĝis.",
-    "Search for rooms": "Serĉi ĉambrojn",
-    "Search for spaces": "Serĉi arojn",
-    "Create a new space": "Krei novan aron",
-    "Want to add a new space instead?": "Ĉu vi volas aldoni novan aron anstataŭe?",
-    "Add existing space": "Aldoni jaman aron",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Would you like to leave the rooms in this space?": "Ĉu vi volus foriri de la ĉambroj en ĉi tiu aro?",
     "You are about to leave <spaceName/>.": "Vi foriros de <spaceName/>.",
@@ -2798,7 +2782,27 @@
         "title_when_query_unavailable": "Ĉambroj kaj aroj",
         "title_when_query_available": "Rezultoj",
         "search_placeholder": "Serĉi nomojn kaj priskribojn",
-        "no_search_result_hint": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj."
+        "no_search_result_hint": "Eble vi provu serĉi alion, aŭ kontroli je mistajpoj.",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Aldoni jaman aron",
+            "create_prompt": "Ĉu vi volas aldoni novan aron anstataŭe?",
+            "create_button": "Krei novan aron",
+            "filter_placeholder": "Serĉi arojn"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Ne ĉiuj elektitoj aldoniĝis",
+            "progress_text": {
+                "one": "Aldonante ĉambron…",
+                "other": "Aldonante ĉambrojn… (%(progress)s el %(count)s)"
+            },
+            "dm_heading": "Individuaj ĉambroj",
+            "space_dropdown_label": "Elekto de aro",
+            "space_dropdown_title": "Aldoni jamajn ĉambrojn",
+            "create": "Ĉu vi volas anstataŭe aldoni novan ĉambron?",
+            "create_prompt": "Krei novan ĉambron",
+            "subspace_moved_note": "Aldonejo de aroj moviĝis."
+        },
+        "room_filter_placeholder": "Serĉi ĉambrojn"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",

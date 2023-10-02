@@ -256,7 +256,6 @@
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "下列用户可能不存在或无效，因此不能被邀请：%(csvNames)s",
     "Recent Conversations": "最近对话",
     "Recently Direct Messaged": "最近私聊",
-    "Direct Messages": "私聊",
     "a new master key signature": "一个新的主密钥签名",
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
@@ -398,7 +397,6 @@
     "Wrong Security Key": "安全密钥错误",
     "Transfer": "传输",
     "Reason (optional)": "理由（可选）",
-    "Create a new room": "创建新房间",
     "Not encrypted": "未加密",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
@@ -493,7 +491,6 @@
     "This widget would like to:": "此挂件想要：",
     "Approve widget permissions": "批准挂件权限",
     "Modal Widget": "模态框挂件（Modal Widget）",
-    "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
     "Invite by email": "通过邮箱邀请",
     "Zimbabwe": "津巴布韦",
@@ -640,13 +637,6 @@
     "We couldn't create your DM.": "我们无法创建你的私聊。",
     "You may contact me if you have any follow up questions": "如果你有任何后续问题，可以联系我",
     "To leave the beta, visit your settings.": "要离开beta，请访问你的设置。",
-    "Want to add a new room instead?": "想要添加一个新的房间吗？",
-    "Add existing rooms": "添加现有房间",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "正在新增房间……",
-        "other": "正在新增房间……（%(count)s 中的第 %(progress)s 个）"
-    },
-    "Not all selected were added": "并非所有选中的都被添加",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -691,12 +681,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "<SpaceName/> 中的任何人都可以找到并加入。",
     "Private space (invite only)": "私有空间（仅邀请）",
     "Space visibility": "空间可见度",
-    "Adding spaces has moved.": "新增空间已移动。",
-    "Search for rooms": "搜索房间",
-    "Search for spaces": "搜索空间",
-    "Create a new space": "创建新空间",
-    "Want to add a new space instead?": "想要添加一个新空间？",
-    "Add existing space": "增加现有的空间",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "Would you like to leave the rooms in this space?": "你想俩开此空间内的房间吗？",
     "You are about to leave <spaceName/>.": "你即将离开 <spaceName/>。",
@@ -3295,7 +3279,27 @@
         "title_when_query_available": "结果",
         "search_placeholder": "搜索名称和描述",
         "no_search_result_hint": "你可能要尝试其他搜索或检查是否有错别字。",
-        "joining_space": "加入中"
+        "joining_space": "加入中",
+        "add_existing_subspace": {
+            "space_dropdown_title": "增加现有的空间",
+            "create_prompt": "想要添加一个新空间？",
+            "create_button": "创建新空间",
+            "filter_placeholder": "搜索空间"
+        },
+        "add_existing_room_space": {
+            "error_heading": "并非所有选中的都被添加",
+            "progress_text": {
+                "one": "正在新增房间……",
+                "other": "正在新增房间……（%(count)s 中的第 %(progress)s 个）"
+            },
+            "dm_heading": "私聊",
+            "space_dropdown_label": "空间选择",
+            "space_dropdown_title": "添加现有房间",
+            "create": "想要添加一个新的房间吗？",
+            "create_prompt": "创建新房间",
+            "subspace_moved_note": "新增空间已移动。"
+        },
+        "room_filter_placeholder": "搜索房间"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",

@@ -245,7 +245,6 @@
         "one": "1 ellenőrzött munkamenet"
     },
     "Recent Conversations": "Legújabb Beszélgetések",
-    "Direct Messages": "Közvetlen Beszélgetések",
     "Failed to find the following users": "Az alábbi felhasználók nem találhatók",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Az alábbi felhasználók nem léteznek vagy hibásan vannak megadva, és nem lehet őket meghívni: %(csvNames)s",
     "Lock": "Lakat",
@@ -627,8 +626,6 @@
     "Unable to start audio streaming.": "A hang folyam indítása sikertelen.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevével, felhasználói nevével (pl. <userId/>) vagy <a>oszd meg ezt a teret</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Hívjon meg valakit a nevét, e-mail címét, vagy felhasználónevét (például <userId/>) megadva, vagy <a>oszd meg ezt a teret</a>.",
-    "Create a new room": "Új szoba készítése",
-    "Space selection": "Tér kiválasztása",
     "Leave space": "Tér elhagyása",
     "Create a space": "Tér létrehozása",
     "<inviter/> invites you": "<inviter/> meghívta",
@@ -645,7 +642,6 @@
     "Consult first": "Kérjen először véleményt",
     "Invited people will be able to read old messages.": "A meghívott személyek el tudják olvasni a régi üzeneteket.",
     "We couldn't create your DM.": "Nem tudjuk elkészíteni a közvetlen üzenetét.",
-    "Add existing rooms": "Létező szobák hozzáadása",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ismerős már csatlakozott",
         "other": "%(count)s ismerős már csatlakozott"
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
     "Sending": "Küldés",
-    "Want to add a new room instead?": "Inkább új szobát adna hozzá?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Szobák hozzáadása…",
-        "other": "Szobák hozzáadása… (%(progress)s ennyiből: %(count)s)"
-    },
-    "Not all selected were added": "Nem az összes kijelölt lett hozzáadva",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
     "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
@@ -686,12 +676,6 @@
     "Only people invited will be able to find and join this space.": "Csak a meghívott emberek fogják megtalálni és tudnak belépni erre a térre.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Bárki megtalálhatja és beléphet a térbe, nem csak <SpaceName/> tér tagsága.",
     "Anyone in <SpaceName/> will be able to find and join.": "<SpaceName/> téren bárki megtalálhatja és beléphet.",
-    "Adding spaces has moved.": "Terek hozzáadása elköltözött.",
-    "Search for rooms": "Szobák keresése",
-    "Search for spaces": "Terek keresése",
-    "Create a new space": "Új tér készítése",
-    "Want to add a new space instead?": "Inkább új teret adna hozzá?",
-    "Add existing space": "Meglévő tér hozzáadása",
     "These are likely ones other room admins are a part of.": "Ezek valószínűleg olyanok, amelyeknek más szoba adminok is tagjai.",
     "Leave %(spaceName)s": "Kilép innen: %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ön az adminisztrátora néhány szobának vagy térnek amiből ki szeretne lépni. Ha kilép belőlük akkor azok adminisztrátor nélkül maradnak.",
@@ -3560,7 +3544,27 @@
         "title_when_query_available": "Eredmények",
         "search_placeholder": "Nevek és leírások keresése",
         "no_search_result_hint": "Esetleg próbáljon ki egy másik keresést vagy nézze át elgépelések után.",
-        "joining_space": "Belépés"
+        "joining_space": "Belépés",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Meglévő tér hozzáadása",
+            "create_prompt": "Inkább új teret adna hozzá?",
+            "create_button": "Új tér készítése",
+            "filter_placeholder": "Terek keresése"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Nem az összes kijelölt lett hozzáadva",
+            "progress_text": {
+                "one": "Szobák hozzáadása…",
+                "other": "Szobák hozzáadása… (%(progress)s ennyiből: %(count)s)"
+            },
+            "dm_heading": "Közvetlen Beszélgetések",
+            "space_dropdown_label": "Tér kiválasztása",
+            "space_dropdown_title": "Létező szobák hozzáadása",
+            "create": "Inkább új szobát adna hozzá?",
+            "create_prompt": "Új szoba készítése",
+            "subspace_moved_note": "Terek hozzáadása elköltözött."
+        },
+        "room_filter_placeholder": "Szobák keresése"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",

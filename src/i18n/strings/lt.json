@@ -96,7 +96,6 @@
     "Cancel All": "Atšaukti visus",
     "Upload Error": "Įkėlimo klaida",
     "Email (optional)": "El. paštas (neprivaloma)",
-    "Direct Messages": "Privačios žinutės",
     "Recently Direct Messaged": "Neseniai tiesiogiai susirašyta",
     "Command Help": "Komandų pagalba",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
@@ -475,7 +474,6 @@
     "Messaging": "Žinučių siuntimas",
     "To join a space you'll need an invite.": "Norėdami prisijungti prie erdvės, turėsite gauti kvietimą.",
     "Create a space": "Sukurti erdvę",
-    "Space selection": "Erdvės pasirinkimas",
     "Vietnam": "Vietnamas",
     "United Arab Emirates": "Jungtiniai Arabų Emiratai",
     "Ukraine": "Ukraina",
@@ -2574,7 +2572,11 @@
         "invite_link": "Bendrinti pakvietimo nuorodą",
         "invite": "Pakviesti žmonių",
         "invite_description": "Pakviesti su el. paštu arba naudotojo vardu",
-        "invite_this_space": "Pakviesti į šią erdvę"
+        "invite_this_space": "Pakviesti į šią erdvę",
+        "add_existing_room_space": {
+            "dm_heading": "Privačios žinutės",
+            "space_dropdown_label": "Erdvės pasirinkimas"
+        }
     },
     "terms": {
         "integration_manager": "Naudoti botus, tiltus, valdiklius ir lipdukų pakuotes",

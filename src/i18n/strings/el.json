@@ -390,7 +390,6 @@
     "Smiley": "Χαμογελαστό πρόσωπο",
     "To join a space you'll need an invite.": "Για να συμμετάσχετε σε ένα χώρο θα χρειαστείτε μια πρόσκληση.",
     "Create a space": "Δημιουργήστε ένα χώρο",
-    "Space selection": "Επιλογή χώρου",
     "Folder": "Φάκελος",
     "Headphones": "Ακουστικά",
     "Anchor": "Άγκυρα",
@@ -619,20 +618,6 @@
     "Invite anyway": "Πρόσκληση ούτως ή άλλως",
     "Invite anyway and never warn me again": "Προσκαλέστε ούτως ή άλλως και μην με προειδοποιήσετε ποτέ ξανά",
     "The following users may not exist": "Οι παρακάτω χρήστες ενδέχεται να μην υπάρχουν",
-    "Search for rooms": "Αναζητήστε δωμάτια",
-    "Create a new room": "Δημιουργήστε νέο δωμάτιο",
-    "Want to add a new space instead?": "Θέλετε να προσθέσετε ένα νέο χώρο αντί αυτού;",
-    "Want to add a new room instead?": "Θέλετε να προσθέσετε ένα νέο δωμάτιο αντί αυτού;",
-    "Add existing rooms": "Προσθέστε υπάρχοντα δωμάτια",
-    "Direct Messages": "Άμεσα Μηνύματα",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Προσθήκη δωματίου...",
-        "other": "Προσθήκη δωματίων... (%(progress)s από %(count)s)"
-    },
-    "Not all selected were added": "Δεν προστέθηκαν όλοι οι επιλεγμένοι",
-    "Search for spaces": "Αναζητήστε χώρους",
-    "Create a new space": "Δημιουργήστε ένα νέο χώρο",
-    "Add existing space": "Προσθήκη υπάρχοντος χώρου",
     "e.g. my-room": "π.χ. my-room",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
@@ -652,7 +637,6 @@
     "To continue, use Single Sign On to prove your identity.": "Για να συνεχίσετε, χρησιμοποιήστε σύνδεση Single Sign On για να αποδείξετε την ταυτότητά σας.",
     "toggle event": "μεταβολή συμβάντος",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Δεν είναι δυνατή η εύρεση προφίλ για τα αναγνωριστικά Matrix που αναφέρονται παρακάτω - θα θέλατε να τα προσκαλέσετε ούτως ή άλλως;",
-    "Adding spaces has moved.": "Η προσθήκη χώρων μετακινήθηκε.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
@@ -3053,7 +3037,27 @@
         "title_when_query_available": "Αποτελέσματα",
         "search_placeholder": "Αναζήτηση ονομάτων και περιγραφών",
         "no_search_result_hint": "Μπορεί να θέλετε να δοκιμάσετε μια διαφορετική αναζήτηση ή να ελέγξετε για ορθογραφικά λάθη.",
-        "joining_space": "Συνδέετε"
+        "joining_space": "Συνδέετε",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Προσθήκη υπάρχοντος χώρου",
+            "create_prompt": "Θέλετε να προσθέσετε ένα νέο χώρο αντί αυτού;",
+            "create_button": "Δημιουργήστε ένα νέο χώρο",
+            "filter_placeholder": "Αναζητήστε χώρους"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Δεν προστέθηκαν όλοι οι επιλεγμένοι",
+            "progress_text": {
+                "one": "Προσθήκη δωματίου...",
+                "other": "Προσθήκη δωματίων... (%(progress)s από %(count)s)"
+            },
+            "dm_heading": "Άμεσα Μηνύματα",
+            "space_dropdown_label": "Επιλογή χώρου",
+            "space_dropdown_title": "Προσθέστε υπάρχοντα δωμάτια",
+            "create": "Θέλετε να προσθέσετε ένα νέο δωμάτιο αντί αυτού;",
+            "create_prompt": "Δημιουργήστε νέο δωμάτιο",
+            "subspace_moved_note": "Η προσθήκη χώρων μετακινήθηκε."
+        },
+        "room_filter_placeholder": "Αναζητήστε δωμάτια"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",

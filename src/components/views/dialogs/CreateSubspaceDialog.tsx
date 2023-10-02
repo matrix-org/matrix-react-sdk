@@ -183,7 +183,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                                 onFinished();
                             }}
                         >
-                            {_t("Add existing space")}
+                            {_t("space|add_existing_subspace|space_dropdown_title")}
                         </AccessibleButton>
                     </div>
 

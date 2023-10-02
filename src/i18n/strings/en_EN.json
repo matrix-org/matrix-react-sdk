@@ -2233,6 +2233,26 @@
             "explore": "Explore rooms"
         },
         "invite_this_space": "Invite to this space",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Add existing space",
+            "create_prompt": "Want to add a new space instead?",
+            "create_button": "Create a new space",
+            "filter_placeholder": "Search for spaces"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Not all selected were added",
+            "progress_text": {
+                "other": "Adding rooms... (%(progress)s out of %(count)s)",
+                "one": "Adding room..."
+            },
+            "dm_heading": "Direct Messages",
+            "space_dropdown_label": "Space selection",
+            "space_dropdown_title": "Add existing rooms",
+            "create": "Want to add a new room instead?",
+            "create_prompt": "Create a new room",
+            "subspace_moved_note": "Adding spaces has moved."
+        },
+        "room_filter_placeholder": "Search for rooms",
         "joining_space": "Joining",
         "user_lacks_permission": "You don't have permission",
         "suggested_tooltip": "This room is suggested as a good one to join",
@@ -3499,22 +3519,6 @@
             "network_dropdown_selected_label": "Show: Matrix rooms"
         }
     },
-    "Add existing space": "Add existing space",
-    "Want to add a new space instead?": "Want to add a new space instead?",
-    "Create a new space": "Create a new space",
-    "Search for spaces": "Search for spaces",
-    "Not all selected were added": "Not all selected were added",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "other": "Adding rooms... (%(progress)s out of %(count)s)",
-        "one": "Adding room..."
-    },
-    "Direct Messages": "Direct Messages",
-    "Space selection": "Space selection",
-    "Add existing rooms": "Add existing rooms",
-    "Want to add a new room instead?": "Want to add a new room instead?",
-    "Create a new room": "Create a new room",
-    "Search for rooms": "Search for rooms",
-    "Adding spaces has moved.": "Adding spaces has moved.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?",
     "The following users may not exist": "The following users may not exist",
     "Invite anyway and never warn me again": "Invite anyway and never warn me again",

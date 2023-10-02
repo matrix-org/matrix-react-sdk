@@ -163,7 +163,6 @@
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
     "Deactivate account": "Dezaktywuj konto",
     "e.g. my-room": "np. mój-pokój",
-    "Direct Messages": "Wiadomości prywatne",
     "Recent Conversations": "Najnowsze rozmowy",
     "Upload files (%(current)s of %(total)s)": "Prześlij pliki (%(current)s z %(total)s)",
     "Upload files": "Prześlij pliki",
@@ -531,16 +530,10 @@
     "Messaging": "Wiadomości",
     "Lock": "Zamek",
     "Hold": "Wstrzymaj",
-    "Create a new room": "Utwórz nowy pokój",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "other": "Dodawanie pokojów... (%(progress)s z %(count)s)",
-        "one": "Dodawanie pokoju..."
-    },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s i %(space2Name)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Create a space": "Utwórz przestrzeń",
-    "Space selection": "Wybór przestrzeni",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
@@ -701,15 +694,6 @@
     "Preparing to download logs": "Przygotowuję do pobrania dzienników",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Powiedz nam, co poszło nie tak, lub nawet lepiej - utwórz zgłoszenie na platformie GitHub, które opisuje problem.",
     "To leave the beta, visit your settings.": "Aby wyjść z bety, odwiedź swoje ustawienia.",
-    "Adding spaces has moved.": "Dodawanie przestrzeni zostało przeniesione.",
-    "Search for rooms": "Szukaj pokoi",
-    "Want to add a new room instead?": "Chcesz zamiast tego dodać nowy pokój?",
-    "Add existing rooms": "Dodaj istniejące pokoje",
-    "Not all selected were added": "Nie dodano wszystkiego, co było zaznaczone",
-    "Search for spaces": "Szukaj przestrzeni",
-    "Create a new space": "Utwórz nową przestrzeń",
-    "Want to add a new space instead?": "Chcesz zamiast tego dodać nową przestrzeń?",
-    "Add existing space": "Dodaj istniejącą przestrzeń",
     "Desktop app logo": "Logo aplikacji Desktop",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
@@ -3631,7 +3615,27 @@
         "title_when_query_available": "Wyniki",
         "search_placeholder": "Przeszukuj nazwy i opisy",
         "no_search_result_hint": "Możesz spróbować inną frazę lub sprawdzić błędy pisowni.",
-        "joining_space": "Dołączanie"
+        "joining_space": "Dołączanie",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Dodaj istniejącą przestrzeń",
+            "create_prompt": "Chcesz zamiast tego dodać nową przestrzeń?",
+            "create_button": "Utwórz nową przestrzeń",
+            "filter_placeholder": "Szukaj przestrzeni"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Nie dodano wszystkiego, co było zaznaczone",
+            "progress_text": {
+                "other": "Dodawanie pokojów... (%(progress)s z %(count)s)",
+                "one": "Dodawanie pokoju..."
+            },
+            "dm_heading": "Wiadomości prywatne",
+            "space_dropdown_label": "Wybór przestrzeni",
+            "space_dropdown_title": "Dodaj istniejące pokoje",
+            "create": "Chcesz zamiast tego dodać nowy pokój?",
+            "create_prompt": "Utwórz nowy pokój",
+            "subspace_moved_note": "Dodawanie przestrzeni zostało przeniesione."
+        },
+        "room_filter_placeholder": "Szukaj pokoi"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",

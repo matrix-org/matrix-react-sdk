@@ -262,7 +262,6 @@
         "other": "Eliminar %(count)s mensajes",
         "one": "Eliminar 1 mensaje"
     },
-    "Direct Messages": "Mensajes directos",
     "Failed to connect to integration manager": "Error al conectarse con el administrador de integración",
     "%(count)s verified sessions": {
         "other": "%(count)s sesiones verificadas",
@@ -626,8 +625,6 @@
     "Unable to start audio streaming.": "No se ha podido empezar la retransmisión del audio.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, correo electrónico, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita a más gente usando su nombre, nombre de usuario (ej.: <userId/>) o <a>compartiendo el enlace a este espacio</a>.",
-    "Create a new room": "Crear una sala nueva",
-    "Space selection": "Selección de espacio",
     "Leave space": "Salir del espacio",
     "Create a space": "Crear un espacio",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
@@ -641,7 +638,6 @@
     "Consult first": "Consultar primero",
     "Invited people will be able to read old messages.": "Las personas que invites podrán leer los mensajes antiguos.",
     "We couldn't create your DM.": "No hemos podido crear tu mensaje directo.",
-    "Add existing rooms": "Añadir salas que ya existan",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persona que ya conoces se ha unido",
         "other": "%(count)s personas que ya conoces se han unido"
@@ -655,12 +651,6 @@
     "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
     "Reset everything": "Restablecer todo",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
-    "Want to add a new room instead?": "¿Quieres añadir una sala nueva en su lugar?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "other": "Añadiendo salas… (%(progress)s de %(count)s)",
-        "one": "Añadiendo sala…"
-    },
-    "Not all selected were added": "No se han añadido todas las seleccionadas",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
     "Or send invite link": "O envía un enlace de invitación",
@@ -691,12 +681,6 @@
     "Private space (invite only)": "Espacio privado (solo por invitación)",
     "Space visibility": "Visibilidad del espacio",
     "Add a space to a space you manage.": "Añade un espacio a dentro de otros espacio que gestiones.",
-    "Adding spaces has moved.": "Hemos cambiado de sitio la creación de espacios.",
-    "Search for rooms": "Buscar salas",
-    "Search for spaces": "Buscar espacios",
-    "Create a new space": "Crear un nuevo espacio",
-    "Want to add a new space instead?": "¿Quieres añadir un espacio nuevo en su lugar?",
-    "Add existing space": "Añadir un espacio ya existente",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "Don't leave any rooms": "No salir de ninguna sala",
     "Leave all rooms": "Salir de todas las salas",
@@ -3482,7 +3466,27 @@
         "title_when_query_available": "Resultados",
         "search_placeholder": "Buscar por nombre y descripción",
         "no_search_result_hint": "Prueba con otro término de búsqueda o comprueba que no haya erratas.",
-        "joining_space": "Uniéndote"
+        "joining_space": "Uniéndote",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Añadir un espacio ya existente",
+            "create_prompt": "¿Quieres añadir un espacio nuevo en su lugar?",
+            "create_button": "Crear un nuevo espacio",
+            "filter_placeholder": "Buscar espacios"
+        },
+        "add_existing_room_space": {
+            "error_heading": "No se han añadido todas las seleccionadas",
+            "progress_text": {
+                "other": "Añadiendo salas… (%(progress)s de %(count)s)",
+                "one": "Añadiendo sala…"
+            },
+            "dm_heading": "Mensajes directos",
+            "space_dropdown_label": "Selección de espacio",
+            "space_dropdown_title": "Añadir salas que ya existan",
+            "create": "¿Quieres añadir una sala nueva en su lugar?",
+            "create_prompt": "Crear una sala nueva",
+            "subspace_moved_note": "Hemos cambiado de sitio la creación de espacios."
+        },
+        "room_filter_placeholder": "Buscar salas"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor base no está configurado para mostrar mapas.",

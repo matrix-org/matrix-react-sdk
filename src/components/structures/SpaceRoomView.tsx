@@ -407,7 +407,7 @@ const SpaceAddExistingRooms: React.FC<{
                         {_t("create_space|skip_action")}
                     </AccessibleButton>
                 }
-                filterPlaceholder={_t("Search for rooms")}
+                filterPlaceholder={_t("space|room_filter_placeholder")}
                 onFinished={onFinished}
                 roomsRenderer={defaultRoomsRenderer}
                 dmsRenderer={defaultDmsRenderer}

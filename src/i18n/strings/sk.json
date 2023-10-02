@@ -455,12 +455,10 @@
     "Encrypted by a deleted session": "Šifrované odstránenou reláciou",
     "%(name)s wants to verify": "%(name)s chce overiť",
     "Search spaces": "Hľadať priestory",
-    "Search for spaces": "Hľadať priestory",
     "Remove %(count)s messages": {
         "other": "Odstrániť %(count)s správ",
         "one": "Odstrániť 1 správu"
     },
-    "Create a new space": "Vytvoriť nový priestor",
     "Create a space": "Vytvoriť priestor",
     "%(count)s verified sessions": {
         "one": "1 overená relácia",
@@ -474,7 +472,6 @@
     "Recent Conversations": "Nedávne konverzácie",
     "Start a conversation with someone using their name or username (like <userId/>).": "Začnite s niekým konverzáciu pomocou jeho mena alebo používateľského mena (ako napr. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Začnite s niekým konverzáciu pomocou jeho mena, e-mailovej adresy alebo používateľského mena (ako napr. <userId/>).",
-    "Direct Messages": "Priame správy",
     "Private space (invite only)": "Súkromný priestor (len pre pozvaných)",
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
     "You're all caught up.": "Všetko ste už stihli.",
@@ -542,7 +539,6 @@
     "Other searches": "Iné vyhľadávania",
     "Use \"%(query)s\" to search": "Na vyhľadávanie použite \"%(query)s\"",
     "Search for rooms or people": "Hľadať miestnosti alebo ľudí",
-    "Search for rooms": "Hľadať miestnosti",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
     "Not encrypted": "Nie je zašifrované",
     "Close dialog": "Zavrieť dialógové okno",
@@ -574,13 +570,6 @@
     "You won't be able to rejoin unless you are re-invited.": "Nebudete sa môcť znova pripojiť, kým nebudete opätovne pozvaní.",
     "Approve widget permissions": "Schváliť oprávnenia widgetu",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Ktokoľvek bude môcť nájsť tento priestor a pripojiť sa k nemu, nielen členovia <SpaceName/>.",
-    "Adding spaces has moved.": "Pridávanie priestorov bolo presunuté.",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "other": "Pridávanie miestností... (%(progress)s z %(count)s)",
-        "one": "Pridávanie miestnosti..."
-    },
-    "Add existing space": "Pridať existujúci priestor",
-    "Add existing rooms": "Pridať existujúce miestnosti",
     "Add a space to a space you manage.": "Pridať priestor do priestoru, ktorý spravujete.",
     "Upload Error": "Chyba pri nahrávaní",
     "Your browser likely removed this data when running low on disk space.": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
@@ -610,7 +599,6 @@
     "Submit logs": "Odoslať záznamy",
     "%(name)s accepted": "%(name)s prijal",
     "Forget": "Zabudnúť",
-    "Want to add a new room instead?": "Chcete namiesto toho pridať novú miestnosť?",
     "%(count)s people you know have already joined": {
         "one": "%(count)s človek, ktorého poznáte, sa už pripojil",
         "other": "%(count)s ľudí, ktorých poznáte, sa už pripojilo"
@@ -629,8 +617,6 @@
     },
     "Failed to start livestream": "Nepodarilo sa spustiť livestream",
     "Unable to start audio streaming.": "Nie je možné spustiť streamovanie zvuku.",
-    "Create a new room": "Vytvoriť novú miestnosť",
-    "Space selection": "Výber priestoru",
     "Other rooms in %(spaceName)s": "Ostatné miestnosti v %(spaceName)s",
     "Click the button below to confirm setting up encryption.": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
     "Confirm encryption setup": "Potvrdiť nastavenie šifrovania",
@@ -713,8 +699,6 @@
     "User Directory": "Adresár používateľov",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Pripomíname: Váš prehliadač nie je podporovaný, takže vaše skúsenosti môžu byť nepredvídateľné.",
     "To leave the beta, visit your settings.": "Ak chcete opustiť beta verziu, navštívte svoje nastavenia.",
-    "Not all selected were added": "Neboli pridané všetky vybrané",
-    "Want to add a new space instead?": "Chcete namiesto toho pridať nový priestor?",
     "Sections to show": "Sekcie na zobrazenie",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
@@ -3637,7 +3621,27 @@
         "title_when_query_available": "Výsledky",
         "search_placeholder": "Vyhľadávanie názvov a popisov",
         "no_search_result_hint": "Možno by ste mali vyskúšať iné vyhľadávanie alebo skontrolovať preklepy.",
-        "joining_space": "Pripájanie sa"
+        "joining_space": "Pripájanie sa",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Pridať existujúci priestor",
+            "create_prompt": "Chcete namiesto toho pridať nový priestor?",
+            "create_button": "Vytvoriť nový priestor",
+            "filter_placeholder": "Hľadať priestory"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Neboli pridané všetky vybrané",
+            "progress_text": {
+                "other": "Pridávanie miestností... (%(progress)s z %(count)s)",
+                "one": "Pridávanie miestnosti..."
+            },
+            "dm_heading": "Priame správy",
+            "space_dropdown_label": "Výber priestoru",
+            "space_dropdown_title": "Pridať existujúce miestnosti",
+            "create": "Chcete namiesto toho pridať novú miestnosť?",
+            "create_prompt": "Vytvoriť novú miestnosť",
+            "subspace_moved_note": "Pridávanie priestorov bolo presunuté."
+        },
+        "room_filter_placeholder": "Hľadať miestnosti"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",

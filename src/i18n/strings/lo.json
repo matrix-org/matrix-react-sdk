@@ -277,7 +277,6 @@
     "Warning!": "ແຈ້ງເຕືອນ!",
     "To join a space you'll need an invite.": "ເພື່ອເຂົ້າຮ່ວມພື້ນທີ່, ທ່ານຈະຕ້ອງການເຊີນ.",
     "Create a space": "ສ້າງພື້ນທີ່",
-    "Space selection": "ການເລືອກພື້ນທີ່",
     "Folder": "ໂຟນເດີ",
     "Headphones": "ຫູຟັງ",
     "Anchor": "ສະມໍ",
@@ -324,20 +323,6 @@
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
-    "Add existing space": "ເພີ່ມພື້ນທີ່ທີ່ມີຢູ່",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "ກຳລັງເພີ່ມຫ້ອງ...",
-        "other": "ກຳລັງເພີ່ມຫ້ອງ... (%(progress)s ຈາກທັງໝົດ %(count)s)"
-    },
-    "Search for spaces": "ຊອກຫາພື້ນທີ່",
-    "Create a new space": "ສ້າງພື້ນທີ່ໃຫມ່",
-    "Want to add a new space instead?": "ຕ້ອງການເພີ່ມພື້ນທີ່ໃໝ່ແທນບໍ?",
-    "Adding spaces has moved.": "ຍ້າຍພຶ້ນທີ່ເພິ່ມແລ້ວ.",
-    "Search for rooms": "ຄົ້ນຫາຫ້ອງ",
-    "Create a new room": "ສ້າງຫ້ອງໃຫມ່",
-    "Want to add a new room instead?": "ຕ້ອງການເພີ່ມຫ້ອງໃຫມ່ແທນບໍ?",
-    "Add existing rooms": "ເພີ່ມຫ້ອງທີ່ມີຢູ່",
-    "Direct Messages": "ຂໍ້ຄວາມໂດຍກົງ",
     "Invite anyway": "ເຊີນເລີຍ",
     "Invite anyway and never warn me again": "ເຊີນເລີຍ ແລະ ບໍ່ເຄີຍເຕືອນຂ້ອຍອີກ",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "ບໍ່ສາມາດຊອກຫາໂປຣໄຟລ໌ສຳລັບ Matrix IDs ທີ່ລະບຸໄວ້ຂ້າງລຸ່ມນີ້ - ທ່ານຕ້ອງການເຊີນເຂົາເຈົ້າບໍ່?",
@@ -767,7 +752,6 @@
     "To leave the beta, visit your settings.": "ເພື່ອອອກຈາກເບຕ້າ, ໃຫ້ເຂົ້າໄປທີ່ການຕັ້ງຄ່າຂອງທ່ານ.",
     "%(featureName)s Beta feedback": "%(featureName)s ຄຳຕິຊົມເບຕ້າ",
     "Close dialog": "ປິດກ່ອງໂຕ້ຕອບ",
-    "Not all selected were added": "ບໍ່ໄດ້ເລືອກທັງໝົດທີ່ຖືກເພີ່ມ",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -3065,7 +3049,27 @@
         "title_when_query_available": "ຜົນຮັບ",
         "search_placeholder": "ຄົ້ນຫາຊື່ ແລະ ຄໍາອະທິບາຍ",
         "no_search_result_hint": "ເຈົ້າອາດຈະຕ້ອງລອງຊອກຫາແບບອື່ນ ຫຼື ກວດເບິ່ງວ່າພິມຜິດ.",
-        "joining_space": "ເຂົ້າຮ່ວມ"
+        "joining_space": "ເຂົ້າຮ່ວມ",
+        "add_existing_subspace": {
+            "space_dropdown_title": "ເພີ່ມພື້ນທີ່ທີ່ມີຢູ່",
+            "create_prompt": "ຕ້ອງການເພີ່ມພື້ນທີ່ໃໝ່ແທນບໍ?",
+            "create_button": "ສ້າງພື້ນທີ່ໃຫມ່",
+            "filter_placeholder": "ຊອກຫາພື້ນທີ່"
+        },
+        "add_existing_room_space": {
+            "error_heading": "ບໍ່ໄດ້ເລືອກທັງໝົດທີ່ຖືກເພີ່ມ",
+            "progress_text": {
+                "one": "ກຳລັງເພີ່ມຫ້ອງ...",
+                "other": "ກຳລັງເພີ່ມຫ້ອງ... (%(progress)s ຈາກທັງໝົດ %(count)s)"
+            },
+            "dm_heading": "ຂໍ້ຄວາມໂດຍກົງ",
+            "space_dropdown_label": "ການເລືອກພື້ນທີ່",
+            "space_dropdown_title": "ເພີ່ມຫ້ອງທີ່ມີຢູ່",
+            "create": "ຕ້ອງການເພີ່ມຫ້ອງໃຫມ່ແທນບໍ?",
+            "create_prompt": "ສ້າງຫ້ອງໃຫມ່",
+            "subspace_moved_note": "ຍ້າຍພຶ້ນທີ່ເພິ່ມແລ້ວ."
+        },
+        "room_filter_placeholder": "ຄົ້ນຫາຫ້ອງ"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",

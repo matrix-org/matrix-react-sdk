@@ -70,7 +70,6 @@
     "Anchor": "Anker",
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
-    "Direct Messages": "Direktemeldinger",
     "collapse": "skjul",
     "expand": "utvid",
     "Close dialog": "Lukk dialog",
@@ -262,8 +261,6 @@
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du kjenner har allerede blitt med"
     },
-    "Add existing rooms": "Legg til eksisterende rom",
-    "Create a new room": "Opprett et nytt rom",
     "Upgrade private room": "Oppgrader privat rom",
     "Upgrade public room": "Oppgrader offentlig rom",
     "Decline All": "Avslå alle",
@@ -1651,7 +1648,12 @@
         "invite": "Inviter personer",
         "invite_this_space": "Inviter til dette området",
         "user_lacks_permission": "Du har ikke tillatelse",
-        "title_when_query_available": "Resultat"
+        "title_when_query_available": "Resultat",
+        "add_existing_room_space": {
+            "dm_heading": "Direktemeldinger",
+            "space_dropdown_title": "Legg til eksisterende rom",
+            "create_prompt": "Opprett et nytt rom"
+        }
     },
     "room": {
         "drop_file_prompt": "Slipp ned en fil her for å laste opp",

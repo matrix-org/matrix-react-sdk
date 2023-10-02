@@ -244,7 +244,6 @@
         "one": "1 個已驗證的工作階段"
     },
     "Recent Conversations": "最近的對話",
-    "Direct Messages": "私人訊息",
     "Failed to find the following users": "找不到以下使用者",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "以下使用者可能不存在或無效，且無法被邀請：%(csvNames)s",
     "Lock": "鎖定",
@@ -627,8 +626,6 @@
     "Unable to start audio streaming.": "無法開始音訊串流。",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
-    "Create a new room": "建立新聊天室",
-    "Space selection": "選取聊天空間",
     "Leave space": "離開聊天空間",
     "Create a space": "建立聊天空間",
     "<inviter/> invites you": "<inviter/> 邀請您",
@@ -643,7 +640,6 @@
         "other": "%(count)s 個您認識的人已加入",
         "one": "%(count)s 個您認識的人已加入"
     },
-    "Add existing rooms": "新增既有聊天室",
     "We couldn't create your DM.": "我們無法建立您的私人訊息。",
     "Invited people will be able to read old messages.": "被邀請的人將能閱讀舊訊息。",
     "Consult first": "先諮詢",
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘記或遺失了所有復原方法？<a>重設全部</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
     "Sending": "傳送中",
-    "Want to add a new room instead?": "想要新增新聊天室嗎？",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "正在新增聊天室…",
-        "other": "正在新增聊天室…（%(count)s 中的第 %(progress)s 個）"
-    },
-    "Not all selected were added": "並非所有選定的都被新增了",
     "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
     "To leave the beta, visit your settings.": "請到設定頁面離開 Beta 測試版。",
     "Or send invite link": "或傳送邀請連結",
@@ -687,12 +677,6 @@
     "Only people invited will be able to find and join this space.": "僅有被邀請的人才能找到並加入此聊天空間。",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "不只是 <SpaceName/> 的成員，任何人都可以找到並加入此聊天空間。",
     "Anyone in <SpaceName/> will be able to find and join.": "<SpaceName/> 中的任何人都可以找到並加入。",
-    "Adding spaces has moved.": "新增的聊天空間已被移動。",
-    "Search for rooms": "搜尋聊天室",
-    "Search for spaces": "搜尋聊天空間",
-    "Create a new space": "建立新聊天空間",
-    "Want to add a new space instead?": "想要新增聊天空間？",
-    "Add existing space": "新增既有的聊天空間",
     "Leave %(spaceName)s": "離開 %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "您是將要離開的聊天室與聊天空間唯一的管理員。您離開之後會讓它們沒有任何管理員。",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
@@ -3637,7 +3621,27 @@
         "title_when_query_available": "結果",
         "search_placeholder": "搜尋名稱與描述",
         "no_search_result_hint": "您可能要嘗試其他搜尋或檢查是否有拼字錯誤。",
-        "joining_space": "正在加入"
+        "joining_space": "正在加入",
+        "add_existing_subspace": {
+            "space_dropdown_title": "新增既有的聊天空間",
+            "create_prompt": "想要新增聊天空間？",
+            "create_button": "建立新聊天空間",
+            "filter_placeholder": "搜尋聊天空間"
+        },
+        "add_existing_room_space": {
+            "error_heading": "並非所有選定的都被新增了",
+            "progress_text": {
+                "one": "正在新增聊天室…",
+                "other": "正在新增聊天室…（%(count)s 中的第 %(progress)s 個）"
+            },
+            "dm_heading": "私人訊息",
+            "space_dropdown_label": "選取聊天空間",
+            "space_dropdown_title": "新增既有聊天室",
+            "create": "想要新增新聊天室嗎？",
+            "create_prompt": "建立新聊天室",
+            "subspace_moved_note": "新增的聊天空間已被移動。"
+        },
+        "room_filter_placeholder": "搜尋聊天室"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",

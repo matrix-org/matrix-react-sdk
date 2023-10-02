@@ -245,7 +245,6 @@
         "one": "1 session vérifiée"
     },
     "Recent Conversations": "Conversations récentes",
-    "Direct Messages": "Conversations privées",
     "Failed to find the following users": "Impossible de trouver les utilisateurs suivants",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Les utilisateurs suivant n’existent peut-être pas ou ne sont pas valides, et ne peuvent pas être invités : %(csvNames)s",
     "Lock": "Cadenas",
@@ -627,10 +626,8 @@
     },
     "Failed to start livestream": "Échec lors du démarrage de la diffusion en direct",
     "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
-    "Create a new room": "Créer un nouveau salon",
     "Leave space": "Quitter l’espace",
     "Create a space": "Créer un espace",
-    "Space selection": "Sélection d’un espace",
     "<inviter/> invites you": "<inviter/> vous a invité",
     "No results found": "Aucun résultat",
     "%(count)s rooms": {
@@ -645,7 +642,6 @@
     "Consult first": "Consulter d’abord",
     "Invited people will be able to read old messages.": "Les personnes invitées pourront lire les anciens messages.",
     "We couldn't create your DM.": "Nous n’avons pas pu créer votre message direct.",
-    "Add existing rooms": "Ajouter des salons existants",
     "%(count)s people you know have already joined": {
         "one": "%(count)s personne que vous connaissez en fait déjà partie",
         "other": "%(count)s personnes que vous connaissez en font déjà partie"
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Vous avez perdu ou oublié tous vos moyens de récupération ? <a>Tout réinitialiser</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
     "Sending": "Envoi",
-    "Want to add a new room instead?": "Voulez-vous plutôt ajouter un nouveau salon ?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Ajout du salon…",
-        "other": "Ajout des salons… (%(progress)s sur %(count)s)"
-    },
-    "Not all selected were added": "Toute la sélection n’a pas été ajoutée",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
     "Or send invite link": "Ou envoyer le lien d’invitation",
@@ -671,12 +661,6 @@
     "You don't have permission to do this": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
-    "Adding spaces has moved.": "L’ajout d’espaces a été déplacé.",
-    "Search for rooms": "Rechercher des salons",
-    "Search for spaces": "Rechercher des espaces",
-    "Create a new space": "Créer un nouvel espace",
-    "Want to add a new space instead?": "Vous voulez plutôt ajouter un nouvel espace ?",
-    "Add existing space": "Ajouter un espace existant",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Veuillez notez que la mise-à-jour va créer une nouvelle version de ce salon</b>. Tous les messages actuels resteront dans ce salon archivé.",
     "Automatically invite members from this room to the new one": "Inviter automatiquement les membres de ce salon dans le nouveau",
     "These are likely ones other room admins are a part of.": "Ces autres administrateurs du salon en font probablement partie.",
@@ -3637,7 +3621,27 @@
         "title_when_query_available": "Résultats",
         "search_placeholder": "Rechercher par nom et description",
         "no_search_result_hint": "Essayez une requête différente, ou vérifiez que vous n’avez pas fait de faute de frappe.",
-        "joining_space": "En train de rejoindre"
+        "joining_space": "En train de rejoindre",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Ajouter un espace existant",
+            "create_prompt": "Vous voulez plutôt ajouter un nouvel espace ?",
+            "create_button": "Créer un nouvel espace",
+            "filter_placeholder": "Rechercher des espaces"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Toute la sélection n’a pas été ajoutée",
+            "progress_text": {
+                "one": "Ajout du salon…",
+                "other": "Ajout des salons… (%(progress)s sur %(count)s)"
+            },
+            "dm_heading": "Conversations privées",
+            "space_dropdown_label": "Sélection d’un espace",
+            "space_dropdown_title": "Ajouter des salons existants",
+            "create": "Voulez-vous plutôt ajouter un nouveau salon ?",
+            "create_prompt": "Créer un nouveau salon",
+            "subspace_moved_note": "L’ajout d’espaces a été déplacé."
+        },
+        "room_filter_placeholder": "Rechercher des salons"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",

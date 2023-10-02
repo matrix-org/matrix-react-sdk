@@ -92,7 +92,6 @@
     "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Deactivate account": "Desactivar conta",
-    "Direct Messages": "Mensaxes Directas",
     "Command Help": "Comando Axuda",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
     "Room Settings - %(roomName)s": "Axustes da sala - %(roomName)s",
@@ -627,8 +626,6 @@
     "Unable to start audio streaming.": "Non se puido iniciar a retransmisión de audio.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
-    "Create a new room": "Crear unha nova sala",
-    "Space selection": "Selección de Espazos",
     "Leave space": "Saír do espazo",
     "Create a space": "Crear un espazo",
     "<inviter/> invites you": "<inviter/> convídate",
@@ -647,7 +644,6 @@
         "other": "%(count)s persoas que coñeces xa se uniron",
         "one": "%(count)s persoa que coñeces xa se uniu"
     },
-    "Add existing rooms": "Engadir salas existentes",
     "Consult first": "Preguntar primeiro",
     "Reset event store": "Restablecer almacenaxe de eventos",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se restableces todo, volverás a comezar sen sesións verificadas, usuarias de confianza, e poderías non poder ver as mensaxes anteriores.",
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "Sending": "Enviando",
-    "Want to add a new room instead?": "Queres engadir unha nova sala?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Engadindo sala...",
-        "other": "Engadindo salas... (%(progress)s de %(count)s)"
-    },
-    "Not all selected were added": "Non se engadiron tódolos seleccionados",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
     "Or send invite link": "Ou envía ligazón de convite",
@@ -687,12 +677,6 @@
     "Only people invited will be able to find and join this space.": "Só as persoas convidadas poderán atopar e unirse a este espazo.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Calquera poderá atopar e unirse a este espazo, non só os membros de <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Calquera en <SpaceName/> poderá atopar e unirse.",
-    "Adding spaces has moved.": "Engadir espazos moveuse.",
-    "Search for rooms": "Buscar salas",
-    "Search for spaces": "Buscar espazos",
-    "Create a new space": "Crear un novo espazo",
-    "Want to add a new space instead?": "Queres engadir un espazo no seu lugar?",
-    "Add existing space": "Engadir un espazo existente",
     "Leave %(spaceName)s": "Saír de %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Es a única administradora dalgunhas salas ou espazos dos que queres saír. Ao saír deles deixaralos sen administración.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ti es a única administradora deste espazo. Ao saír farás que a ninguén teña control sobre el.",
@@ -3226,7 +3210,27 @@
         "title_when_query_available": "Resultados",
         "search_placeholder": "Buscar nome e descricións",
         "no_search_result_hint": "Podes intentar unha busca diferente ou comprobar o escrito.",
-        "joining_space": "Uníndote"
+        "joining_space": "Uníndote",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Engadir un espazo existente",
+            "create_prompt": "Queres engadir un espazo no seu lugar?",
+            "create_button": "Crear un novo espazo",
+            "filter_placeholder": "Buscar espazos"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Non se engadiron tódolos seleccionados",
+            "progress_text": {
+                "one": "Engadindo sala...",
+                "other": "Engadindo salas... (%(progress)s de %(count)s)"
+            },
+            "dm_heading": "Mensaxes Directas",
+            "space_dropdown_label": "Selección de Espazos",
+            "space_dropdown_title": "Engadir salas existentes",
+            "create": "Queres engadir unha nova sala?",
+            "create_prompt": "Crear unha nova sala",
+            "subspace_moved_note": "Engadir espazos moveuse."
+        },
+        "room_filter_placeholder": "Buscar salas"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",

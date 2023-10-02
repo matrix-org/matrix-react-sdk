@@ -83,7 +83,6 @@
     "Session name": "Назва сеансу",
     "Session ID": "ID сеансу",
     "Session key": "Ключ сеансу",
-    "Direct Messages": "Особисті повідомлення",
     "Room Settings - %(roomName)s": "Налаштування кімнати - %(roomName)s",
     "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
     "Verify your other session using one of the options below.": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
@@ -464,21 +463,6 @@
     "Invite anyway and never warn me again": "Усе одно запросити й більше не попереджати",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Неможливо знайти профілі для Matrix ID, перерахованих унизу — все одно бажаєте запросити їх?",
     "The following users may not exist": "Таких користувачів може не існувати",
-    "Adding spaces has moved.": "Додавання просторів переміщено.",
-    "Search for rooms": "Пошук кімнат",
-    "Create a new room": "Створити нову кімнату",
-    "Want to add a new room instead?": "Хочете додати нову кімнату натомість?",
-    "Add existing rooms": "Додати наявні кімнати",
-    "Space selection": "Вибір простору",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Додавання кімнат...",
-        "other": "Додавання кімнат... (%(progress)s з %(count)s)"
-    },
-    "Not all selected were added": "Не всі вибрані додано",
-    "Search for spaces": "Пошук просторів",
-    "Create a new space": "Створити новий простір",
-    "Want to add a new space instead?": "Хочете натомість цього додати новий простір?",
-    "Add existing space": "Додати наявний простір",
     "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
     "e.g. my-room": "наприклад, моя-кімната",
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
@@ -3637,7 +3621,27 @@
         "title_when_query_available": "Результати",
         "search_placeholder": "Шукати назви та описи",
         "no_search_result_hint": "Ви можете спробувати інший пошуковий запит або перевірити помилки.",
-        "joining_space": "Приєднання"
+        "joining_space": "Приєднання",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Додати наявний простір",
+            "create_prompt": "Хочете натомість цього додати новий простір?",
+            "create_button": "Створити новий простір",
+            "filter_placeholder": "Пошук просторів"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Не всі вибрані додано",
+            "progress_text": {
+                "one": "Додавання кімнат...",
+                "other": "Додавання кімнат... (%(progress)s з %(count)s)"
+            },
+            "dm_heading": "Особисті повідомлення",
+            "space_dropdown_label": "Вибір простору",
+            "space_dropdown_title": "Додати наявні кімнати",
+            "create": "Хочете додати нову кімнату натомість?",
+            "create_prompt": "Створити нову кімнату",
+            "subspace_moved_note": "Додавання просторів переміщено."
+        },
+        "room_filter_placeholder": "Пошук кімнат"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",

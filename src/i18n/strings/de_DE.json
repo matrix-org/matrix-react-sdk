@@ -192,7 +192,6 @@
     "Upload Error": "Fehler beim Hochladen",
     "Deactivate account": "Benutzerkonto deaktivieren",
     "Lock": "Schloss",
-    "Direct Messages": "Direktnachrichten",
     "Recently Direct Messaged": "Zuletzt kontaktiert",
     "Command Help": "Befehl Hilfe",
     "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
@@ -623,7 +622,6 @@
         "other": "%(count)s Mitglieder",
         "one": "%(count)s Mitglied"
     },
-    "Create a new room": "Neuen Raum erstellen",
     "Create a space": "Neuen Space erstellen",
     "Leave space": "Space verlassen",
     "<inviter/> invites you": "Du wirst von <inviter/> eingeladen",
@@ -639,8 +637,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Lade Leute mittels Anzeigename, E-Mail-Adresse oder Benutzername (z. B. <userId/>) ein oder <a>teile diesen Space</a>.",
     "Invite to %(roomName)s": "In %(roomName)s einladen",
     "We couldn't create your DM.": "Wir konnten deine Direktnachricht nicht erstellen.",
-    "Add existing rooms": "Bestehende Räume hinzufügen",
-    "Space selection": "Space-Auswahl",
     "%(count)s people you know have already joined": {
         "one": "%(count)s Person, die du kennst, ist schon beigetreten",
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
     "Sending": "Senden",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
-    "Want to add a new room instead?": "Willst du einen neuen Raum hinzufügen?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Raum hinzufügen …",
-        "other": "Räume hinzufügen … (%(progress)s von %(count)s)"
-    },
-    "Not all selected were added": "Nicht alle Ausgewählten konnten hinzugefügt werden",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
     "Some suggestions may be hidden for privacy.": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein.",
@@ -671,12 +661,6 @@
     "You don't have permission to do this": "Du bist dazu nicht berechtigt",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
-    "Adding spaces has moved.": "Das Hinzufügen von Spaces ist umgezogen.",
-    "Search for rooms": "Räume suchen",
-    "Search for spaces": "Spaces suchen",
-    "Create a new space": "Neuen Space erstellen",
-    "Want to add a new space instead?": "Willst du stattdessen einen neuen Space hinzufügen?",
-    "Add existing space": "Existierenden Space hinzufügen",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
     "Search spaces": "Spaces durchsuchen",
     "Select spaces": "Spaces wählen",
@@ -3644,7 +3628,27 @@
         "title_when_query_available": "Ergebnisse",
         "search_placeholder": "Nach Name und Beschreibung filtern",
         "no_search_result_hint": "Versuche es mit etwas anderem oder prüfe auf Tippfehler.",
-        "joining_space": "Trete bei"
+        "joining_space": "Trete bei",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Existierenden Space hinzufügen",
+            "create_prompt": "Willst du stattdessen einen neuen Space hinzufügen?",
+            "create_button": "Neuen Space erstellen",
+            "filter_placeholder": "Spaces suchen"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Nicht alle Ausgewählten konnten hinzugefügt werden",
+            "progress_text": {
+                "one": "Raum hinzufügen …",
+                "other": "Räume hinzufügen … (%(progress)s von %(count)s)"
+            },
+            "dm_heading": "Direktnachrichten",
+            "space_dropdown_label": "Space-Auswahl",
+            "space_dropdown_title": "Bestehende Räume hinzufügen",
+            "create": "Willst du einen neuen Raum hinzufügen?",
+            "create_prompt": "Neuen Raum erstellen",
+            "subspace_moved_note": "Das Hinzufügen von Spaces ist umgezogen."
+        },
+        "room_filter_placeholder": "Räume suchen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",

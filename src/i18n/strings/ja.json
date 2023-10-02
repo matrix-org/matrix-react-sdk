@@ -110,7 +110,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "このルームを<oldVersion />から<newVersion />にアップグレードします。",
     "Session name": "セッション名",
     "Session key": "セッションキー",
-    "Direct Messages": "ダイレクトメッセージ",
     "Removing…": "削除しています…",
     "Destroy cross-signing keys?": "クロス署名鍵を破棄してよろしいですか？",
     "Clear cross-signing keys": "クロス署名鍵を削除",
@@ -483,18 +482,12 @@
     "Leave space": "スペースから退出",
     "Create a space": "スペースを作成",
     "Invite to %(roomName)s": "%(roomName)sに招待",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "ルームを追加しています…",
-        "other": "ルームを追加しています…（計%(count)s個のうち%(progress)s個）"
-    },
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "Add a space to a space you manage.": "新しいスペースを、あなたが管理するスペースに追加。",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "Close dialog": "ダイアログを閉じる",
     "Preparing to download logs": "ログのダウンロードを準備しています",
     "Reason (optional)": "理由（任意）",
-    "Create a new space": "新しいスペースを作成",
-    "Add existing space": "既存のスペースを追加",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
         "other": "%(spaceName)sと他%(count)s個"
@@ -520,11 +513,6 @@
     },
     "Submit logs": "ログを提出",
     "Notes": "メモ",
-    "Search for rooms": "ルームを検索",
-    "Create a new room": "新しいルームを作成",
-    "Want to add a new room instead?": "代わりに新しいルームを追加しますか？",
-    "Add existing rooms": "既存のルームを追加",
-    "Want to add a new space instead?": "代わりに新しいスペースを追加しますか？",
     "Spaces you know that contain this space": "このスペースを含む参加済のスペース",
     "Spaces you know that contain this room": "このルームを含む参加済のスペース",
     "%(count)s members": {
@@ -562,7 +550,6 @@
     "Search for rooms or people": "ルームと連絡先を検索",
     "Invite anyway": "招待",
     "Invite anyway and never warn me again": "招待し、再び警告しない",
-    "Search for spaces": "スペースを検索",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
     "Search Dialog": "検索ダイアログ",
     "Upload %(count)s other files": {
@@ -644,7 +631,6 @@
     "Hold": "保留",
     "Resume": "再開",
     "Moderation": "モデレート",
-    "Space selection": "スペースの選択",
     "Looks good!": "問題ありません！",
     "Cancel All": "全てキャンセル",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
@@ -715,7 +701,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
-    "Adding spaces has moved.": "スペースの追加機能は移動しました。",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
@@ -764,7 +749,6 @@
     "%(members)s and %(last)s": "%(members)sと%(last)s",
     "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)sに更新",
     "Unsent": "未送信",
-    "Not all selected were added": "選択されたもの全てが追加されてはいません",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
@@ -3493,7 +3477,27 @@
         "title_when_query_available": "結果",
         "search_placeholder": "名前と説明文を検索",
         "no_search_result_hint": "別のキーワードで検索するか、キーワードが正しいか確認してください。",
-        "joining_space": "参加しています"
+        "joining_space": "参加しています",
+        "add_existing_subspace": {
+            "space_dropdown_title": "既存のスペースを追加",
+            "create_prompt": "代わりに新しいスペースを追加しますか？",
+            "create_button": "新しいスペースを作成",
+            "filter_placeholder": "スペースを検索"
+        },
+        "add_existing_room_space": {
+            "error_heading": "選択されたもの全てが追加されてはいません",
+            "progress_text": {
+                "one": "ルームを追加しています…",
+                "other": "ルームを追加しています…（計%(count)s個のうち%(progress)s個）"
+            },
+            "dm_heading": "ダイレクトメッセージ",
+            "space_dropdown_label": "スペースの選択",
+            "space_dropdown_title": "既存のルームを追加",
+            "create": "代わりに新しいルームを追加しますか？",
+            "create_prompt": "新しいルームを作成",
+            "subspace_moved_note": "スペースの追加機能は移動しました。"
+        },
+        "room_filter_placeholder": "ルームを検索"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "このホームサーバーは地図を表示するように設定されていません。",

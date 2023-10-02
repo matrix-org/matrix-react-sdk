@@ -87,7 +87,6 @@
     "Link to selected message": "Веза ка изабраној поруци",
     "Email (optional)": "Мејл (изборно)",
     "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
-    "Direct Messages": "Директне поруке",
     "%(count)s verified sessions": {
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
@@ -1433,7 +1432,10 @@
         "context_menu": {
             "explore": "Истражи собе"
         },
-        "no_search_result_hint": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке."
+        "no_search_result_hint": "Можда ћете желети да испробате другачију претрагу или да проверите да ли имате правописне грешке.",
+        "add_existing_room_space": {
+            "dm_heading": "Директне поруке"
+        }
     },
     "terms": {
         "tos": "Услови коришћења",

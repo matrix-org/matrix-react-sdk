@@ -244,7 +244,6 @@
         "one": "1 sesion i verifikuar"
     },
     "Recent Conversations": "Biseda Së Fundi",
-    "Direct Messages": "Mesazhe të Drejtpërdrejtë",
     "Something went wrong trying to invite the users.": "Diç shkoi ters teksa provohej të ftoheshin përdoruesit.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "S’i ftuam dot këta përdorues. Ju lutemi, kontrolloni përdoruesit që doni të ftoni dhe riprovoni.",
     "Failed to find the following users": "S’u arrit të gjendeshin përdoruesit vijues",
@@ -624,8 +623,6 @@
     "Unable to start audio streaming.": "S’arrihet të niset transmetim audio.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
-    "Create a new room": "Krijoni dhomë të re",
-    "Space selection": "Përzgjedhje hapësire",
     "Leave space": "Braktiseni hapësirën",
     "Create a space": "Krijoni një hapësirë",
     "<inviter/> invites you": "<inviter/> ju fton",
@@ -641,7 +638,6 @@
     "Consult first": "Konsultohu së pari",
     "Invited people will be able to read old messages.": "Personat e ftuar do të jenë në gjendje të lexojnë mesazhe të vjetër.",
     "We couldn't create your DM.": "S’e krijuam dot DM-në tuaj.",
-    "Add existing rooms": "Shtoni dhoma ekzistuese",
     "%(count)s people you know have already joined": {
         "one": "%(count)s person që e njihni është bërë pjesë tashmë",
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
@@ -654,12 +650,6 @@
     "Sending": "Po dërgohet",
     "You may contact me if you have any follow up questions": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme",
     "To leave the beta, visit your settings.": "Që të braktisni beta-n, vizitoni rregullimet tuaja.",
-    "Want to add a new room instead?": "Doni të shtohet një dhomë e re, në vend të kësaj?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Po shtohet dhomë…",
-        "other": "Po shtohen dhoma… (%(progress)s nga %(count)s)"
-    },
-    "Not all selected were added": "S’u shtuan të gjithë të përzgjedhurit",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -687,12 +677,6 @@
     "Only people invited will be able to find and join this space.": "Vetëm personat e ftuar do të jenë në gjendje të gjejnë dhe hyjnë në këtë hapësirë.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Cilido do të jetë në gjendje ta gjejë dhe hyjë në këtë hapësirë, jo thjesht anëtarët e <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Cilido te <SpaceName/> do të jetë në gjendje ta gjejë dhe hyjë.",
-    "Adding spaces has moved.": "Shtimi i hapësirave është lëvizur.",
-    "Search for rooms": "Kërkoni për dhoma",
-    "Search for spaces": "Kërkoni për hapësira",
-    "Create a new space": "Krijoni një hapësirë të re",
-    "Want to add a new space instead?": "Në vend të kësaj, doni të shtoni një hapësirë të re?",
-    "Add existing space": "Shtoni hapësirë ekzistuese",
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "Would you like to leave the rooms in this space?": "Doni të braktisen dhomat në këtë hapësirë?",
@@ -3548,7 +3532,27 @@
         "title_when_query_available": "Përfundime",
         "search_placeholder": "Kërko te emra dhe përshkrime",
         "no_search_result_hint": "Mund të doni të provoni një tjetër kërkim ose të kontrolloni për gabime shkrimi.",
-        "joining_space": "Po hyhet"
+        "joining_space": "Po hyhet",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Shtoni hapësirë ekzistuese",
+            "create_prompt": "Në vend të kësaj, doni të shtoni një hapësirë të re?",
+            "create_button": "Krijoni një hapësirë të re",
+            "filter_placeholder": "Kërkoni për hapësira"
+        },
+        "add_existing_room_space": {
+            "error_heading": "S’u shtuan të gjithë të përzgjedhurit",
+            "progress_text": {
+                "one": "Po shtohet dhomë…",
+                "other": "Po shtohen dhoma… (%(progress)s nga %(count)s)"
+            },
+            "dm_heading": "Mesazhe të Drejtpërdrejtë",
+            "space_dropdown_label": "Përzgjedhje hapësire",
+            "space_dropdown_title": "Shtoni dhoma ekzistuese",
+            "create": "Doni të shtohet një dhomë e re, në vend të kësaj?",
+            "create_prompt": "Krijoni dhomë të re",
+            "subspace_moved_note": "Shtimi i hapësirave është lëvizur."
+        },
+        "room_filter_placeholder": "Kërkoni për dhoma"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",

@@ -245,7 +245,6 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Ще обновите стаята от <oldVersion /> до <newVersion />.",
     "Verification Request": "Заявка за потвърждение",
     "Recent Conversations": "Скорошни разговори",
-    "Direct Messages": "Директни съобщения",
     "Failed to find the following users": "Неуспешно откриване на следните потребители",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Следните потребители не съществуват или са невалидни и не могат да бъдат поканени: %(csvNames)s",
     "Not Trusted": "Недоверено",
@@ -2154,7 +2153,10 @@
         "share_public": "Споделете публичното си място",
         "invite_link": "Сподели връзка с покана",
         "invite": "Покани хора",
-        "invite_description": "Покани чрез имейл или потребителско име"
+        "invite_description": "Покани чрез имейл или потребителско име",
+        "add_existing_room_space": {
+            "dm_heading": "Директни съобщения"
+        }
     },
     "terms": {
         "integration_manager": "Използвайте ботове, връзки с други мрежи, приспособления и стикери",

@@ -1281,7 +1281,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         const cli = MatrixClientPeg.safeGet();
         const userId = cli.getUserId()!;
         if (this.props.kind === InviteKind.Dm) {
-            title = _t("Direct Messages");
+            title = _t("space|add_existing_room_space|dm_heading");
 
             if (identityServersEnabled) {
                 helpText = _t(

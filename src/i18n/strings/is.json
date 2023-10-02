@@ -72,7 +72,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
     "Room Settings - %(roomName)s": "Stillingar spjallrásar - %(roomName)s",
     "Recently Direct Messaged": "Nýsend bein skilaboð",
-    "Direct Messages": "Bein skilaboð",
     "Preparing to download logs": "Undirbý niðurhal atvikaskráa",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
@@ -110,12 +109,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)ss",
     "Message edits": "Breytingar á skilaboðum",
-    "Search for rooms": "Leita að spjallrásum",
-    "Create a new room": "Búa til nýja spjallrás",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Bæti við spjallrás ...",
-        "other": "Bæti við spjallrásum... (%(progress)s af %(count)s)"
-    },
     "Zimbabwe": "Simbabve",
     "Zambia": "Sambía",
     "Yemen": "Jemen",
@@ -405,15 +398,12 @@
     "MB": "MB",
     "Private space (invite only)": "Einkasvæði (einungis gegn boði)",
     "Notes": "Minnispunktar",
-    "Want to add a new room instead?": "Viltu frekar bæta við nýrri spjallrás?",
-    "Add existing rooms": "Bæta við fyrirliggjandi spjallrásum",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
     },
     "Recently viewed": "Nýlega skoðað",
     "Deactivate account": "Gera notandaaðgang óvirkann",
-    "Space selection": "Val svæðis",
     "Folder": "Mappa",
     "Headphones": "Heyrnartól",
     "Anchor": "Akkeri",
@@ -511,7 +501,6 @@
     "Invite anyway": "Bjóða samt",
     "Invite anyway and never warn me again": "Bjóða samt og ekki vara mig við aftur",
     "The following users may not exist": "Eftirfarandi notendur eru mögulega ekki til",
-    "Create a new space": "Búa til nýtt svæði",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
@@ -554,9 +543,6 @@
     "Sorry, the poll did not end. Please try again.": "Því miður, könnuninni lauk ekki. Prófaðu aftur.",
     "Failed to end poll": "Mistókst að ljúka könnun",
     "The poll has ended. No votes were cast.": "Könnuninni er lokið. Engin atkvæði voru greidd.",
-    "Search for spaces": "Leita að svæðum",
-    "Want to add a new space instead?": "Viltu frekar bæta við nýju svæði?",
-    "Add existing space": "Bæta við fyrirliggjandi svæði",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
@@ -622,7 +608,6 @@
     "Or send invite link": "Eða senda boðstengil",
     "Incompatible Database": "Ósamhæfður gagnagrunnur",
     "No recent messages by %(user)s found": "Engin nýleg skilaboð frá %(user)s fundust",
-    "Not all selected were added": "Ekki var öllu völdu bætt við",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
@@ -637,7 +622,6 @@
     "A connection error occurred while trying to contact the server.": "Villa kom upp þegar reynt var að tengjast þjóninum.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Öryggi dulritaðra skilaboða er tryggt með enda-í-enda dulritun. Einungis þú og viðtakendurnir hafa dulritunarlyklana til að lesa slík skilaboð.",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
-    "Adding spaces has moved.": "Aðgerðin til að bæta við svæðum hefur verið flutt.",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "Upload %(count)s other files": {
         "one": "Senda inn %(count)s skrá til viðbótar",
@@ -3140,7 +3124,27 @@
         "title_when_query_unavailable": "Spjallrásir og svæði",
         "title_when_query_available": "Niðurstöður",
         "search_placeholder": "Leita í nöfnum og lýsingum",
-        "joining_space": "Geng í hópinn"
+        "joining_space": "Geng í hópinn",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Bæta við fyrirliggjandi svæði",
+            "create_prompt": "Viltu frekar bæta við nýju svæði?",
+            "create_button": "Búa til nýtt svæði",
+            "filter_placeholder": "Leita að svæðum"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Ekki var öllu völdu bætt við",
+            "progress_text": {
+                "one": "Bæti við spjallrás ...",
+                "other": "Bæti við spjallrásum... (%(progress)s af %(count)s)"
+            },
+            "dm_heading": "Bein skilaboð",
+            "space_dropdown_label": "Val svæðis",
+            "space_dropdown_title": "Bæta við fyrirliggjandi spjallrásum",
+            "create": "Viltu frekar bæta við nýrri spjallrás?",
+            "create_prompt": "Búa til nýja spjallrás",
+            "subspace_moved_note": "Aðgerðin til að bæta við svæðum hefur verið flutt."
+        },
+        "room_filter_placeholder": "Leita að spjallrásum"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",

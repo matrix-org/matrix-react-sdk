@@ -16,7 +16,6 @@
     "AM": "EL",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
-    "Direct Messages": "Isiklikud sõnumid",
     "Sunday": "Pühapäev",
     "Monday": "Esmaspäev",
     "Tuesday": "Teisipäev",
@@ -623,8 +622,6 @@
     "Unable to start audio streaming.": "Audiovoo käivitamine ei õnnestu.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Kutsu kedagi tema nime, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda kogukonnakeskust</a>.",
-    "Create a new room": "Loo uus jututuba",
-    "Space selection": "Kogukonnakeskuse valik",
     "Leave space": "Lahku kogukonnakeskusest",
     "Create a space": "Loo kogukonnakeskus",
     "%(count)s members": {
@@ -639,7 +636,6 @@
     },
     "No results found": "Tulemusi ei ole",
     "<inviter/> invites you": "<inviter/> saatis sulle kutse",
-    "Add existing rooms": "Lisa olemasolevaid jututubasid",
     "%(count)s people you know have already joined": {
         "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
         "one": "%(count)s sulle tuttav kasutaja on juba liitunud"
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unustasid või oled kaotanud kõik võimalused ligipääsu taastamiseks? <a>Lähtesta kõik ühe korraga</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
     "Sending": "Saadan",
-    "Want to add a new room instead?": "Kas sa selle asemel soovid lisada jututuba?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Lisan jututuba...",
-        "other": "Lisan jututubasid... (%(progress)s/%(count)s)"
-    },
-    "Not all selected were added": "Kõiki valituid me ei lisanud",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Or send invite link": "Või saada kutse link",
@@ -681,11 +671,6 @@
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Palun arvesta, et uuendusega tehakse jututoast uus variant</b>. Kõik senised sõnumid jäävad sellesse jututuppa arhiveeritud olekus.",
     "Leave %(spaceName)s": "Lahku %(spaceName)s kogukonnakeskusest",
     "You won't be able to rejoin unless you are re-invited.": "Ilma uue kutseta sa ei saa uuesti liituda.",
-    "Want to add a new space instead?": "Kas sa selle asemel soovid lisada uut kogukonnakeskust?",
-    "Create a new space": "Loo uus kogukonnakeskus",
-    "Search for spaces": "Otsi kogukonnakeskusi",
-    "Search for rooms": "Otsi jututube",
-    "Adding spaces has moved.": "Kogukondade lisamine asub nüüd uues kohas.",
     "Anyone in <SpaceName/> will be able to find and join.": "Kõik <SpaceName/> kogukonna liikmed saavad seda leida ning võivad temaga liituda.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Mitte ainult <SpaceName/> kogukonna liikmed, vaid kõik saavad seda kogukonda leida ja võivad temaga liituda.",
     "Only people invited will be able to find and join this space.": "See kogukond on leitav vaid kutse olemasolul ning liitumine on võimalik vaid kutse alusel.",
@@ -696,7 +681,6 @@
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Sa oled selle kogukonna ainus haldaja. Kui lahkud, siis ei leidu enam kedagi, kellel oleks seal haldusõigusi.",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Mõnedes jututubades või kogukondades oled sa ainus haldaja. Kuna sa nüüd soovid neist lahkuda, siis jäävad nad haldajata.",
     "These are likely ones other room admins are a part of.": "Ilmselt on tegemist nendega, mille liikmed on teiste jututubade haldajad.",
-    "Add existing space": "Lisa olemasolev kogukonnakeskus",
     "To join a space you'll need an invite.": "Kogukonnakeskusega liitumiseks vajad kutset.",
     "Would you like to leave the rooms in this space?": "Kas sa soovid lahkuda ka selle kogukonna jututubadest?",
     "You are about to leave <spaceName/>.": "Sa oled lahkumas <spaceName/> kogukonnast.",
@@ -3637,7 +3621,27 @@
         "title_when_query_available": "Tulemused",
         "search_placeholder": "Otsi nimede ja kirjelduste seast",
         "no_search_result_hint": "Aga proovi muuta otsingusõna või kontrolli ega neis trükivigu polnud.",
-        "joining_space": "Liitun"
+        "joining_space": "Liitun",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Lisa olemasolev kogukonnakeskus",
+            "create_prompt": "Kas sa selle asemel soovid lisada uut kogukonnakeskust?",
+            "create_button": "Loo uus kogukonnakeskus",
+            "filter_placeholder": "Otsi kogukonnakeskusi"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Kõiki valituid me ei lisanud",
+            "progress_text": {
+                "one": "Lisan jututuba...",
+                "other": "Lisan jututubasid... (%(progress)s/%(count)s)"
+            },
+            "dm_heading": "Isiklikud sõnumid",
+            "space_dropdown_label": "Kogukonnakeskuse valik",
+            "space_dropdown_title": "Lisa olemasolevaid jututubasid",
+            "create": "Kas sa selle asemel soovid lisada jututuba?",
+            "create_prompt": "Loo uus jututuba",
+            "subspace_moved_note": "Kogukondade lisamine asub nüüd uues kohas."
+        },
+        "room_filter_placeholder": "Otsi jututube"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",

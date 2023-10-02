@@ -285,7 +285,6 @@
     "Sign in with SSO": "Faça login com SSO (Login Único)",
     "Incoming Verification Request": "Recebendo solicitação de confirmação",
     "Recently Direct Messaged": "Conversas recentes",
-    "Direct Messages": "Conversas",
     "Server isn't responding": "O servidor não está respondendo",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Seu servidor não está respondendo a algumas de suas solicitações. Abaixo estão alguns dos motivos mais prováveis.",
     "The server (%(serverName)s) took too long to respond.": "O servidor (%(serverName)s) demorou muito para responder.",
@@ -625,7 +624,6 @@
     "Leave space": "Sair do espaço",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de e-mail, nome de usuário (como <userId/>) ou <a>compartilhe este espaço</a>.",
-    "Create a new room": "Criar uma nova sala",
     "Create a space": "Criar um espaço",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador.",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
@@ -641,20 +639,11 @@
     "Private space (invite only)": "Espaço privado (apenas com convite)",
     "Space visibility": "Visibilidade do Espaço",
     "To leave the beta, visit your settings.": "Para sair do beta, vá nas suas configurações.",
-    "Search for rooms": "Buscar salas",
-    "Add existing rooms": "Adicionar salas existentes",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Adicionando sala…",
-        "other": "Adicionando salas… (%(progress)s de %(count)s)"
-    },
-    "Create a new space": "Criar um novo espaço",
-    "Add existing space": "Adicionar espaço existente",
     "%(count)s people you know have already joined": {
         "one": "%(count)s pessoa que você conhece já entrou",
         "other": "%(count)s pessoas que você conhece já entraram"
     },
     "MB": "MB",
-    "Space selection": "Seleção de Espaços",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e %(count)s outros"
@@ -2757,7 +2746,22 @@
         "invite_link": "Compartilhar link de convite",
         "invite": "Convidar pessoas",
         "invite_description": "Convidar com email ou nome de usuário",
-        "invite_this_space": "Convidar para este espaço"
+        "invite_this_space": "Convidar para este espaço",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Adicionar espaço existente",
+            "create_button": "Criar um novo espaço"
+        },
+        "add_existing_room_space": {
+            "progress_text": {
+                "one": "Adicionando sala…",
+                "other": "Adicionando salas… (%(progress)s de %(count)s)"
+            },
+            "dm_heading": "Conversas",
+            "space_dropdown_label": "Seleção de Espaços",
+            "space_dropdown_title": "Adicionar salas existentes",
+            "create_prompt": "Criar uma nova sala"
+        },
+        "room_filter_placeholder": "Buscar salas"
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",

@@ -83,7 +83,6 @@
     "Verify your other session using one of the options below.": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
     "Philippines": "Filipīnas",
     "Not Trusted": "Neuzticama",
-    "Direct Messages": "Tiešā sarakste",
     "%(count)s sessions": {
         "one": "%(count)s sesija",
         "other": "%(count)s sesijas"
@@ -154,7 +153,6 @@
     "Email (optional)": "Epasts (izvēles)",
     "Invite to %(roomName)s": "Uzaicināt uz %(roomName)s",
     "Continue With Encryption Disabled": "Turpināt ar atspējotu šifrēšanu",
-    "Create a new room": "Izveidot jaunu istabu",
     "%(name)s cancelled": "%(name)s atcēla",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
@@ -428,7 +426,6 @@
     "Some suggestions may be hidden for privacy.": "Daži ieteikumi var būt slēpti dēļ privātuma.",
     "Search for rooms or people": "Meklēt istabas vai cilvēkus",
     "Message preview": "Ziņas priekšskatījums",
-    "Search for rooms": "Meklēt istabas",
     "Corn": "Kukurūza",
     "Reason (optional)": "Iemesls (izvēles)",
     "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
@@ -461,7 +458,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Pārtraukt lietotāju runāšanu vecajā istabas versijā un publicēt ziņojumu, kurā lietotājiem tiek ieteikts pāriet uz jauno istabu",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Jaunās istabas sākumā ievietojiet saiti uz veco istabu, lai cilvēki varētu apskatīt vecās ziņas",
     "Automatically invite members from this room to the new one": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno",
-    "Want to add a new room instead?": "Vai tā vietā vēlaties pievienot jaunu istabu?",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
     "Clear cache and resync": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt",
@@ -484,7 +480,6 @@
     "Use <arrows/> to scroll": "Lietojiet <arrows/> ritināšanai",
     "Search for": "Meklēt",
     "Remove search filter for %(filter)s": "Noņemt meklēšanas filtru %(filter)s",
-    "Search for spaces": "Meklēt vietas",
     "Recently viewed": "Nesen skatītie",
     "Start a group chat": "Uzsākt grupas čatu",
     "common": {
@@ -1803,7 +1798,16 @@
         "invite_link": "Dalīties ar uzaicinājuma saiti",
         "invite": "Uzaicināt cilvēkus",
         "invite_this_space": "Uzaicināt uz šo vietu",
-        "user_lacks_permission": "Jums nav atļaujas"
+        "user_lacks_permission": "Jums nav atļaujas",
+        "add_existing_subspace": {
+            "filter_placeholder": "Meklēt vietas"
+        },
+        "add_existing_room_space": {
+            "dm_heading": "Tiešā sarakste",
+            "create": "Vai tā vietā vēlaties pievienot jaunu istabu?",
+            "create_prompt": "Izveidot jaunu istabu"
+        },
+        "room_filter_placeholder": "Meklēt istabas"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Šis bāzes serveris nav konfigurēts karšu attēlošanai.",

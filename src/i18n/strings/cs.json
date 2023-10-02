@@ -246,7 +246,6 @@
     "Lock": "Zámek",
     "This backup is trusted because it has been restored on this session": "Záloze věříme, protože už byla v této relaci načtena",
     "Encrypted by a deleted session": "Šifrované smazanou relací",
-    "Direct Messages": "Přímé zprávy",
     "%(count)s sessions": {
         "other": "%(count)s relací",
         "one": "%(count)s relace"
@@ -626,8 +625,6 @@
     "Unable to start audio streaming.": "Nelze spustit streamování zvuku.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Pozvěte někoho pomocí jeho jména, uživatelského jména (například <userId/>) nebo <a>sdílejte tento prostor</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Pozvěte někoho pomocí jeho jména, e-mailové adresy, uživatelského jména (například <userId/>) nebo <a>sdílejte tento prostor</a>.",
-    "Create a new room": "Vytvořit novou místnost",
-    "Space selection": "Výběr prostoru",
     "Leave space": "Opusit prostor",
     "Create a space": "Vytvořit prostor",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
@@ -643,7 +640,6 @@
         "other": "%(count)s lidí, které znáte, se již připojili"
     },
     "Invited people will be able to read old messages.": "Pozvaní lidé budou moci číst staré zprávy.",
-    "Add existing rooms": "Přidat stávající místnosti",
     "We couldn't create your DM.": "Nemohli jsme vytvořit vaši přímou zprávu.",
     "Consult first": "Nejprve se poraďte",
     "You most likely do not want to reset your event index store": "Pravděpodobně nechcete resetovat úložiště indexů událostí",
@@ -655,12 +651,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
     "Sending": "Odesílání",
-    "Want to add a new room instead?": "Chcete místo toho přidat novou místnost?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Přidávání místnosti...",
-        "other": "Přidávání místností... (%(progress)s z %(count)s)"
-    },
-    "Not all selected were added": "Ne všechny vybrané byly přidány",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
     "Or send invite link": "Nebo pošlete pozvánku",
@@ -680,7 +670,6 @@
     "Select spaces": "Vybrané prostory",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všechny prostory. Přístup bude ve výchozím nastavení pouze na pozvánky",
     "User Directory": "Adresář uživatelů",
-    "Add existing space": "Přidat stávající prostor",
     "Leave %(spaceName)s": "Opustit %(spaceName)s",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jste jediným správcem některých místností nebo prostorů, které chcete opustit. Jejich opuštěním zůstanou bez správců.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jste jediným správcem tohoto prostoru. Jeho opuštění bude znamenat, že nad ním nebude mít nikdo kontrolu.",
@@ -692,11 +681,6 @@
     "Only people invited will be able to find and join this space.": "Tento prostor budou moci najít a připojit se k němu pouze pozvaní lidé.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Kdokoliv bude moci najít a připojit se k tomuto prostoru, nejen členové <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Kdokoli v <SpaceName/> ho bude moci najít a připojit se.",
-    "Adding spaces has moved.": "Přidávání prostorů bylo přesunuto.",
-    "Search for rooms": "Hledat místnosti",
-    "Search for spaces": "Hledat prostory",
-    "Create a new space": "Vytvořit nový prostor",
-    "Want to add a new space instead?": "Chcete místo toho přidat nový prostor?",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
     "Would you like to leave the rooms in this space?": "Chcete odejít z místností v tomto prostoru?",
     "You are about to leave <spaceName/>.": "Odcházíte z <spaceName/>.",
@@ -3644,7 +3628,27 @@
         "title_when_query_available": "Výsledky",
         "search_placeholder": "Hledat názvy a popisy",
         "no_search_result_hint": "Možná budete chtít zkusit vyhledat něco jiného nebo zkontrolovat překlepy.",
-        "joining_space": "Připojování"
+        "joining_space": "Připojování",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Přidat stávající prostor",
+            "create_prompt": "Chcete místo toho přidat nový prostor?",
+            "create_button": "Vytvořit nový prostor",
+            "filter_placeholder": "Hledat prostory"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Ne všechny vybrané byly přidány",
+            "progress_text": {
+                "one": "Přidávání místnosti...",
+                "other": "Přidávání místností... (%(progress)s z %(count)s)"
+            },
+            "dm_heading": "Přímé zprávy",
+            "space_dropdown_label": "Výběr prostoru",
+            "space_dropdown_title": "Přidat stávající místnosti",
+            "create": "Chcete místo toho přidat novou místnost?",
+            "create_prompt": "Vytvořit novou místnost",
+            "subspace_moved_note": "Přidávání prostorů bylo přesunuto."
+        },
+        "room_filter_placeholder": "Hledat místnosti"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",

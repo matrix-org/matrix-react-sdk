@@ -229,7 +229,6 @@
     "e.g. my-room": "bv. mijn-kamer",
     "Close dialog": "Dialoog sluiten",
     "Lock": "Hangslot",
-    "Direct Messages": "Direct gesprek",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
     "Failed to connect to integration manager": "Verbinding met integratiebeheerder is mislukt",
@@ -626,8 +625,6 @@
     "Unable to start audio streaming.": "Kan audiostream niet starten.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Nodig iemand uit per naam, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Nodig iemand uit per naam, e-mail, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
-    "Create a new room": "Nieuwe kamer aanmaken",
-    "Space selection": "Space-selectie",
     "Leave space": "Space verlaten",
     "Create a space": "Space maken",
     "<inviter/> invites you": "<inviter/> nodigt je uit",
@@ -644,7 +641,6 @@
     "Consult first": "Eerst overleggen",
     "Invited people will be able to read old messages.": "Uitgenodigde personen kunnen de oude berichten lezen.",
     "We couldn't create your DM.": "We konden je DM niet aanmaken.",
-    "Add existing rooms": "Bestaande kamers toevoegen",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persoon die je kent is al geregistreerd",
         "other": "%(count)s personen die je kent hebben zich al geregistreerd"
@@ -655,12 +651,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "Sending": "Wordt verstuurd",
-    "Want to add a new room instead?": "Wil je anders een nieuwe kamer toevoegen?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Kamer toevoegen...",
-        "other": "Kamers toevoegen... (%(progress)s van %(count)s)"
-    },
-    "Not all selected were added": "Niet alle geselecteerden zijn toegevoegd",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
     "Or send invite link": "Of verstuur je uitnodigingslink",
@@ -691,12 +681,6 @@
     "Only people invited will be able to find and join this space.": "Alleen uitgenodigde personen kunnen deze Space vinden en aan deelnemen.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Iedereen zal in staat zijn om deze Space te vinden en aan deel te nemen, niet alleen leden van <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Iedereen in <SpaceName/> zal in staat zijn om te zoeken en deel te nemen.",
-    "Adding spaces has moved.": "Spaces toevoegen is verplaatst.",
-    "Search for rooms": "Naar kamers zoeken",
-    "Search for spaces": "Naar Spaces zoeken",
-    "Create a new space": "Maak een nieuwe Space",
-    "Want to add a new space instead?": "Een nieuwe Space toevoegen?",
-    "Add existing space": "Bestaande Space toevoegen",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Would you like to leave the rooms in this space?": "Wil je de kamers verlaten in deze Space?",
     "You are about to leave <spaceName/>.": "Je staat op het punt <spaceName/> te verlaten.",
@@ -3313,7 +3297,27 @@
         "title_when_query_available": "Resultaten",
         "search_placeholder": "In namen en omschrijvingen zoeken",
         "no_search_result_hint": "Je kan een andere zoekterm proberen of controleren op een typefout.",
-        "joining_space": "Toetreden"
+        "joining_space": "Toetreden",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Bestaande Space toevoegen",
+            "create_prompt": "Een nieuwe Space toevoegen?",
+            "create_button": "Maak een nieuwe Space",
+            "filter_placeholder": "Naar Spaces zoeken"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Niet alle geselecteerden zijn toegevoegd",
+            "progress_text": {
+                "one": "Kamer toevoegen...",
+                "other": "Kamers toevoegen... (%(progress)s van %(count)s)"
+            },
+            "dm_heading": "Direct gesprek",
+            "space_dropdown_label": "Space-selectie",
+            "space_dropdown_title": "Bestaande kamers toevoegen",
+            "create": "Wil je anders een nieuwe kamer toevoegen?",
+            "create_prompt": "Nieuwe kamer aanmaken",
+            "subspace_moved_note": "Spaces toevoegen is verplaatst."
+        },
+        "room_filter_placeholder": "Naar kamers zoeken"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",

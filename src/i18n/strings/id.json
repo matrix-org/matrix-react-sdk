@@ -473,22 +473,6 @@
     "The following users may not exist": "Pengguna berikut ini mungkin tidak ada",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gunakan sebuah server identitas untuk mengundang melalui email. Kelola di <settings>Pengaturan</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gunakan sebuah server identitas untuk mengundang melalui email. <default>Gunakan bawaan (%(defaultIdentityServerName)s)</default> atau kelola di <settings>Pengaturan</settings>.",
-    "Adding spaces has moved.": "Menambahkan space telah dipindah.",
-    "Search for rooms": "Cari ruangan",
-    "Create a new room": "Buat sebuah ruangan baru",
-    "Want to add a new room instead?": "Ingin menambahkan sebuah ruangan yang baru saja?",
-    "Add existing rooms": "Tambahkan ruangan yang sudah ada",
-    "Space selection": "Pilihan space",
-    "Direct Messages": "Pesan Langsung",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Menambahkan ruangan...",
-        "other": "Menambahkan ruangan... (%(progress)s dari %(count)s)"
-    },
-    "Not all selected were added": "Tidak semua yang terpilih ditambahkan",
-    "Search for spaces": "Cari space",
-    "Create a new space": "Buat sebuah space baru",
-    "Want to add a new space instead?": "Ingin menambahkan sebuah space yang baru saja?",
-    "Add existing space": "Tambahkan space yang sudah ada",
     "e.g. my-room": "mis. ruangan-saya",
     "%(count)s people you know have already joined": {
         "one": "%(count)s orang yang Anda tahu telah bergabung",
@@ -3644,7 +3628,27 @@
         "title_when_query_available": "Hasil",
         "search_placeholder": "Cari nama dan deskripsi",
         "no_search_result_hint": "Anda mungkin ingin mencoba pencarian yang berbeda atau periksa untuk typo.",
-        "joining_space": "Bergabung"
+        "joining_space": "Bergabung",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Tambahkan space yang sudah ada",
+            "create_prompt": "Ingin menambahkan sebuah space yang baru saja?",
+            "create_button": "Buat sebuah space baru",
+            "filter_placeholder": "Cari space"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Tidak semua yang terpilih ditambahkan",
+            "progress_text": {
+                "one": "Menambahkan ruangan...",
+                "other": "Menambahkan ruangan... (%(progress)s dari %(count)s)"
+            },
+            "dm_heading": "Pesan Langsung",
+            "space_dropdown_label": "Pilihan space",
+            "space_dropdown_title": "Tambahkan ruangan yang sudah ada",
+            "create": "Ingin menambahkan sebuah ruangan yang baru saja?",
+            "create_prompt": "Buat sebuah ruangan baru",
+            "subspace_moved_note": "Menambahkan space telah dipindah."
+        },
+        "room_filter_placeholder": "Cari ruangan"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",

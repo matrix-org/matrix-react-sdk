@@ -232,23 +232,18 @@
     "%(name)s wants to verify": "%(name)s님이 확인을 요청합니다",
     "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
-    "Search for rooms": "방 검색",
-    "Search for spaces": "스페이스 검색",
     "Recently Direct Messaged": "최근 다이렉트 메세지",
     "Recently viewed": "최근에 확인한",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
     "Private space (invite only)": "비공개 스페이스 (초대 필요)",
     "Leave all rooms": "모든 방에서 떠나기",
-    "Create a new space": "새로운 스페이스 만들기",
     "Create a space": "스페이스 만들기",
     "Or send invite link": "또는 초대 링크 보내기",
     "Recent Conversations": "최근 대화 목록",
     "Start a conversation with someone using their name or username (like <userId/>).": "이름이나 사용자명(<userId/> 형식)을 사용하는 사람들과 대화를 시작하세요.",
-    "Direct Messages": "다이렉트 메세지",
     "If you can't see who you're looking for, send them your invite link below.": "찾으려는 사람이 보이지 않으면, 아래의 초대링크를 보내세요.",
     "Some suggestions may be hidden for privacy.": "일부 추천 목록은 개인 정보 보호를 위해 보이지 않을 수 있습니다.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "이름, 이메일, 사용자명(<userId/>) 으로 대화를 시작하세요.",
-    "Add existing rooms": "기존 방 추가",
     "Slovakia": "슬로바키아",
     "Argentina": "아르헨티나",
     "Laos": "라오스",
@@ -1451,7 +1446,16 @@
         "share_public": "당신의 공개 스페이스 공유하기",
         "invite_this_space": "이 스페이스로 초대하기",
         "title_when_query_unavailable": "방 및 스페이스 목록",
-        "search_placeholder": "이름 및 설명 검색"
+        "search_placeholder": "이름 및 설명 검색",
+        "add_existing_subspace": {
+            "create_button": "새로운 스페이스 만들기",
+            "filter_placeholder": "스페이스 검색"
+        },
+        "add_existing_room_space": {
+            "dm_heading": "다이렉트 메세지",
+            "space_dropdown_title": "기존 방 추가"
+        },
+        "room_filter_placeholder": "방 검색"
     },
     "terms": {
         "integration_manager": "봇, 브릿지, 위젯 그리고 스티커 팩을 사용",

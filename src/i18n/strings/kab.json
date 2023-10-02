@@ -149,7 +149,6 @@
     "Confirm to continue": "Sentem i wakken ad tkemmleḍ",
     "Failed to find the following users": "Ur nessaweḍ ara ad naf iseqdacen",
     "Recent Conversations": "Idiwenniyen n melmi kan",
-    "Direct Messages": "Iznan usligen",
     "Upload completed": "Asali yemmed",
     "Signature upload success": "Asali n uzmul yedda akken iwata",
     "Clear cache and resync": "Sfeḍ takatut tuffirt syen ales amtawi",
@@ -2086,6 +2085,9 @@
     "space": {
         "context_menu": {
             "explore": "Snirem tixxamin"
+        },
+        "add_existing_room_space": {
+            "dm_heading": "Iznan usligen"
         }
     },
     "terms": {

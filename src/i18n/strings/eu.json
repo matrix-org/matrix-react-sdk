@@ -243,7 +243,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Gela eguneratzea ekintza aurreratu bat da eta akatsen, falta diren ezaugarrien, edo segurtasun arazoen erruz gela ezegonkorra denean aholkatzen da.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Gela hau <oldVersion /> bertsiotik <newVersion /> bertsiora eguneratuko duzu.",
     "Recent Conversations": "Azken elkarrizketak",
-    "Direct Messages": "Mezu zuzenak",
     "Failed to find the following users": "Ezin izan dira honako erabiltzaile hauek aurkitu",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Honako erabiltzaile hauek agian ez dira existitzen edo baliogabeak dira, eta ezin dira gonbidatu: %(csvNames)s",
     "Lock": "Blokeatu",
@@ -1685,6 +1684,9 @@
     "space": {
         "context_menu": {
             "explore": "Arakatu gelak"
+        },
+        "add_existing_room_space": {
+            "dm_heading": "Mezu zuzenak"
         }
     },
     "terms": {

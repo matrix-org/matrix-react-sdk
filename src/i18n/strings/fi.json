@@ -245,7 +245,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Tämä yleensä vaikuttaa siihen, miten huonetta käsitellään palvelimella. Jos sinulla on ongelmia %(brand)stisi kanssa, <a>ilmoita virheestä</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Olat päivittämässä tätä huonetta versiosta <oldVersion/> versioon <newVersion/>.",
     "Recent Conversations": "Viimeaikaiset keskustelut",
-    "Direct Messages": "Yksityisviestit",
     "Lock": "Lukko",
     "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
     "%(count)s sessions": {
@@ -596,18 +595,10 @@
     },
     "Remember this": "Muista tämä",
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
-    "Create a new room": "Luo uusi huone",
     "Sending": "Lähetetään",
     "The server is not configured to indicate what the problem is (CORS).": "Palvelinta ei ole säädetty ilmoittamaan, mikä ongelma on kyseessä (CORS).",
     "Invited people will be able to read old messages.": "Kutsutut ihmiset voivat lukea vanhoja viestejä.",
     "We couldn't create your DM.": "Yksityisviestiä ei voitu luoda.",
-    "Want to add a new room instead?": "Haluatko kuitenkin lisätä uuden huoneen?",
-    "Add existing rooms": "Lisää olemassa olevia huoneita",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Lisätään huonetta...",
-        "other": "Lisätään huoneita... (%(progress)s/%(count)s)"
-    },
-    "Not all selected were added": "Kaikkia valittuja ei lisätty",
     "%(count)s people you know have already joined": {
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
@@ -631,13 +622,7 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Kuka tahansa avaruudessa <SpaceName/> voi löytää ja liittyä.",
     "Private space (invite only)": "Yksityinen avaruus (vain kutsulla)",
     "Select spaces": "Valitse avaruudet",
-    "Want to add a new space instead?": "Haluatko lisätä sen sijaan uuden avaruuden?",
-    "Add existing space": "Lisää olemassa oleva avaruus",
-    "Space selection": "Avaruuden valinta",
-    "Search for rooms": "Etsi huoneita",
-    "Search for spaces": "Etsi avaruuksia",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
-    "Create a new space": "Luo uusi avaruus",
     "Create a space": "Luo avaruus",
     "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
     "User Directory": "Käyttäjähakemisto",
@@ -663,7 +648,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Valitse, millä avaruuksilla on pääsyoikeus tähän huoneeseen. Jos avaruus valitaan, sen jäsenet voivat löytää ja liittyä huoneeseen <RoomName/>.",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Olet ainoa ylläpitäjä joissain huoneissa tai avaruuksissa, joista haluat lähteä. Niistä lähteminen jättää ne ilman yhtään ylläpitäjää.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Olet tämän avaruuden ainoa ylläpitäjä. Avaruudesta lähteminen tarkoittaa, että kenelläkään ei ole oikeuksia hallita sitä.",
-    "Adding spaces has moved.": "Avaruuksien lisääminen on siirtynyt.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -3292,7 +3276,27 @@
         "title_when_query_available": "Tulokset",
         "search_placeholder": "Etsi nimistä ja kuvauksista",
         "no_search_result_hint": "Kokeile eri hakua tai tarkista haku kirjoitusvirheiden varalta.",
-        "joining_space": "Liitytään"
+        "joining_space": "Liitytään",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Lisää olemassa oleva avaruus",
+            "create_prompt": "Haluatko lisätä sen sijaan uuden avaruuden?",
+            "create_button": "Luo uusi avaruus",
+            "filter_placeholder": "Etsi avaruuksia"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Kaikkia valittuja ei lisätty",
+            "progress_text": {
+                "one": "Lisätään huonetta...",
+                "other": "Lisätään huoneita... (%(progress)s/%(count)s)"
+            },
+            "dm_heading": "Yksityisviestit",
+            "space_dropdown_label": "Avaruuden valinta",
+            "space_dropdown_title": "Lisää olemassa olevia huoneita",
+            "create": "Haluatko kuitenkin lisätä uuden huoneen?",
+            "create_prompt": "Luo uusi huone",
+            "subspace_moved_note": "Avaruuksien lisääminen on siirtynyt."
+        },
+        "room_filter_placeholder": "Etsi huoneita"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",

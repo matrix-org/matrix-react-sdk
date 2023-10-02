@@ -213,7 +213,6 @@
     "Close dialog": "Stäng dialogrutan",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Berätta vad som gick fel, eller skapa ännu hellre ett GitHub-ärende som beskriver problemet.",
     "Recent Conversations": "Senaste konversationerna",
-    "Direct Messages": "Direktmeddelanden",
     "Incoming Verification Request": "Inkommande verifieringsbegäran",
     "Integrations are disabled": "Integrationer är inaktiverade",
     "Integrations not allowed": "Integrationer är inte tillåtna",
@@ -626,8 +625,6 @@
     "Unable to start audio streaming.": "Kunde inte starta ljudströmning.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>), eller <a>dela det här utrymmet</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>), eller <a>dela det här rummet</a>.",
-    "Create a new room": "Skapa ett nytt rum",
-    "Space selection": "Utrymmesval",
     "Leave space": "Lämna utrymmet",
     "Create a space": "Skapa ett utrymme",
     "<inviter/> invites you": "<inviter/> bjuder in dig",
@@ -642,7 +639,6 @@
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
     },
-    "Add existing rooms": "Lägg till existerande rum",
     "We couldn't create your DM.": "Vi kunde inte skapa ditt DM.",
     "Reset event store": "Återställ händelselagring",
     "Invited people will be able to read old messages.": "Inbjudna personer kommer att kunna läsa gamla meddelanden.",
@@ -657,12 +653,6 @@
     "Sending": "Skickar",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
-    "Want to add a new room instead?": "Vill du lägga till ett nytt rum istället?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Lägger till rum…",
-        "other": "Lägger till rum… (%(progress)s av %(count)s)"
-    },
-    "Not all selected were added": "Inte alla valda tillades",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
     "Search for rooms or people": "Sök efter rum eller personer",
@@ -670,12 +660,6 @@
     "Sent": "Skickat",
     "You don't have permission to do this": "Du har inte behörighet att göra detta",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
-    "Adding spaces has moved.": "Tilläggning av utrymmen har flyttats.",
-    "Search for rooms": "Sök efter rum",
-    "Search for spaces": "Sök efter utrymmen",
-    "Create a new space": "Skapa ett nytt utrymme",
-    "Want to add a new space instead?": "Vill du lägga till ett nytt utrymme istället?",
-    "Add existing space": "Lägg till existerande utrymme",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
     "Automatically invite members from this room to the new one": "Bjud automatiskt in medlemmar från det här rummet till det nya",
     "These are likely ones other room admins are a part of.": "Dessa är troligen såna andra rumsadmins är med i.",
@@ -3587,7 +3571,27 @@
         "title_when_query_available": "Resultat",
         "search_placeholder": "Sök namn och beskrivningar",
         "no_search_result_hint": "Du kanske vill pröva en annan söksträng eller kolla efter felstavningar.",
-        "joining_space": "Går med"
+        "joining_space": "Går med",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Lägg till existerande utrymme",
+            "create_prompt": "Vill du lägga till ett nytt utrymme istället?",
+            "create_button": "Skapa ett nytt utrymme",
+            "filter_placeholder": "Sök efter utrymmen"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Inte alla valda tillades",
+            "progress_text": {
+                "one": "Lägger till rum…",
+                "other": "Lägger till rum… (%(progress)s av %(count)s)"
+            },
+            "dm_heading": "Direktmeddelanden",
+            "space_dropdown_label": "Utrymmesval",
+            "space_dropdown_title": "Lägg till existerande rum",
+            "create": "Vill du lägga till ett nytt rum istället?",
+            "create_prompt": "Skapa ett nytt rum",
+            "subspace_moved_note": "Tilläggning av utrymmen har flyttats."
+        },
+        "room_filter_placeholder": "Sök efter rum"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",

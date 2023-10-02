@@ -93,7 +93,6 @@
         "other": "Fjern %(count)s meldingar",
         "one": "Fjern 1 melding"
     },
-    "Direct Messages": "Folk",
     "Invalid theme schema.": "",
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
@@ -1131,6 +1130,9 @@
     "space": {
         "context_menu": {
             "explore": "Utforsk romma"
+        },
+        "add_existing_room_space": {
+            "dm_heading": "Folk"
         }
     },
     "terms": {

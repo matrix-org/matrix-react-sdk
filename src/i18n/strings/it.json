@@ -245,7 +245,6 @@
         "one": "1 sessione verificata"
     },
     "Recent Conversations": "Conversazioni recenti",
-    "Direct Messages": "Messaggi diretti",
     "Lock": "Lucchetto",
     "Failed to find the following users": "Impossibile trovare i seguenti utenti",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "I seguenti utenti potrebbero non esistere o non sono validi, perciò non possono essere invitati: %(csvNames)s",
@@ -627,8 +626,6 @@
     "Unable to start audio streaming.": "Impossibile avviare lo streaming audio.",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invita qualcuno usando il suo nome, indirizzo email, nome utente (come <userId/>) o <a>condividi questo spazio</a>.",
-    "Create a new room": "Crea nuova stanza",
-    "Space selection": "Selezione spazio",
     "Leave space": "Esci dallo spazio",
     "Create a space": "Crea uno spazio",
     "<inviter/> invites you": "<inviter/> ti ha invitato/a",
@@ -643,7 +640,6 @@
         "other": "%(count)s persone che conosci sono già entrate",
         "one": "%(count)s persona che conosci è già entrata"
     },
-    "Add existing rooms": "Aggiungi stanze esistenti",
     "Invited people will be able to read old messages.": "Le persone invitate potranno leggere i vecchi messaggi.",
     "You most likely do not want to reset your event index store": "Probabilmente non hai bisogno di reinizializzare il tuo archivio indice degli eventi",
     "We couldn't create your DM.": "Non abbiamo potuto creare il tuo messaggio diretto.",
@@ -656,12 +652,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hai dimenticato o perso tutti i metodi di recupero? <a>Reimposta tutto</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
     "Sending": "Invio in corso",
-    "Want to add a new room instead?": "Vuoi invece aggiungere una nuova stanza?",
-    "Adding rooms... (%(progress)s out of %(count)s)": {
-        "one": "Aggiunta stanza...",
-        "other": "Aggiunta stanze... (%(progress)s di %(count)s)"
-    },
-    "Not all selected were added": "Non tutti i selezionati sono stati aggiunti",
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
     "Or send invite link": "O manda un collegamento di invito",
@@ -691,12 +681,6 @@
     "Only people invited will be able to find and join this space.": "Solo le persone invitate potranno trovare ed entrare in questo spazio.",
     "Anyone in <SpaceName/> will be able to find and join.": "Chiunque in <SpaceName/> potrà trovare ed entrare.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Chiunque potrà trovare ed entrare in questo spazio, non solo i membri di <SpaceName/>.",
-    "Adding spaces has moved.": "L'aggiunta di spazi è stata spostata.",
-    "Search for rooms": "Cerca stanze",
-    "Search for spaces": "Cerca spazi",
-    "Create a new space": "Crea un nuovo spazio",
-    "Want to add a new space instead?": "Vuoi piuttosto aggiungere un nuovo spazio?",
-    "Add existing space": "Aggiungi spazio esistente",
     "To join a space you'll need an invite.": "Per entrare in uno spazio ti serve un invito.",
     "Would you like to leave the rooms in this space?": "Vuoi uscire dalle stanze di questo spazio?",
     "You are about to leave <spaceName/>.": "Stai per uscire da <spaceName/>.",
@@ -3644,7 +3628,27 @@
         "title_when_query_available": "Risultati",
         "search_placeholder": "Cerca nomi e descrizioni",
         "no_search_result_hint": "Prova a fare una ricerca diversa o controllare errori di battitura.",
-        "joining_space": "Entrata in corso"
+        "joining_space": "Entrata in corso",
+        "add_existing_subspace": {
+            "space_dropdown_title": "Aggiungi spazio esistente",
+            "create_prompt": "Vuoi piuttosto aggiungere un nuovo spazio?",
+            "create_button": "Crea un nuovo spazio",
+            "filter_placeholder": "Cerca spazi"
+        },
+        "add_existing_room_space": {
+            "error_heading": "Non tutti i selezionati sono stati aggiunti",
+            "progress_text": {
+                "one": "Aggiunta stanza...",
+                "other": "Aggiunta stanze... (%(progress)s di %(count)s)"
+            },
+            "dm_heading": "Messaggi diretti",
+            "space_dropdown_label": "Selezione spazio",
+            "space_dropdown_title": "Aggiungi stanze esistenti",
+            "create": "Vuoi invece aggiungere una nuova stanza?",
+            "create_prompt": "Crea nuova stanza",
+            "subspace_moved_note": "L'aggiunta di spazi è stata spostata."
+        },
+        "room_filter_placeholder": "Cerca stanze"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
