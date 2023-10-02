@@ -18,7 +18,6 @@ import { IdTokenClaims } from "oidc-client-ts";
 
 import {
     getStoredOidcClientId,
-    getStoredOidcIdTokenClaims,
     getStoredOidcTokenIssuer,
     persistOidcAuthenticatedSettings,
 } from "../../../src/utils/oidc/persistOidcSettings";
@@ -74,18 +73,6 @@ describe("persist OIDC settings", () => {
         });
         it("should throw when no clientId in session storage", () => {
             expect(() => getStoredOidcClientId()).toThrow("Oidc client id not found in storage");
-        });
-    });
-
-    describe("getStoredOidcIdTokenClaims()", () => {
-        it("should return issuer from session storage", () => {
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(JSON.stringify(idTokenClaims));
-            expect(getStoredOidcIdTokenClaims()).toEqual(idTokenClaims);
-            expect(sessionStorage.getItem).toHaveBeenCalledWith("mx_oidc_id_token_claims");
-        });
-
-        it("should return undefined when no issuer in session storage", () => {
-            expect(getStoredOidcIdTokenClaims()).toBeUndefined();
         });
     });
 });
