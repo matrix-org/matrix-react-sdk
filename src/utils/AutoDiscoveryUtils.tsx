@@ -21,10 +21,11 @@ import {
     OidcClientConfig,
     M_AUTHENTICATION,
     IClientWellKnown,
+    AutoDiscoveryError,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t, TranslationKey, UserFriendlyError } from "../languageHandler";
+import { _t, _td, TranslationKey, UserFriendlyError } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
@@ -38,6 +39,35 @@ export interface IAuthComponentState {
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
 }
+
+const isAutoDiscoveryError = (err: unknown): err is AutoDiscoveryError => {
+    return AutoDiscovery.ALL_ERRORS.includes(err as AutoDiscoveryError);
+};
+
+const mapAutoDiscoveryErrorTranslation = (err: AutoDiscoveryError): TranslationKey => {
+    switch (err) {
+        case AutoDiscoveryError.GenericFailure:
+            return _td("Invalid homeserver discovery response");
+        case AutoDiscoveryError.Invalid:
+            return _td("Failed to get autodiscovery configuration from server");
+        case AutoDiscoveryError.InvalidHsBaseUrl:
+            return _td("Invalid base_url for m.homeserver");
+        case AutoDiscoveryError.InvalidHomeserver:
+            return _td("Homeserver URL does not appear to be a valid Matrix homeserver");
+        case AutoDiscoveryError.InvalidIsBaseUrl:
+            return _td("Invalid base_url for m.identity_server");
+        case AutoDiscoveryError.InvalidIdentityServer:
+            return _td("Identity server URL does not appear to be a valid identity server");
+        case AutoDiscoveryError.InvalidIs:
+            return _td("Invalid identity server discovery response");
+        case AutoDiscoveryError.MissingWellknown:
+            return _td("No .well-known JSON file found");
+        case AutoDiscoveryError.InvalidJson:
+            return _td("Invalid JSON");
+        case AutoDiscoveryError.HomeserverTooOld:
+            return _td("auth|autodiscovery_hs_incompatible");
+    }
+};
 
 export default class AutoDiscoveryUtils {
     /**
@@ -210,8 +240,7 @@ export default class AutoDiscoveryUtils {
         } else if (isResult && isResult.state !== AutoDiscovery.PROMPT) {
             logger.error("Error determining preferred identity server URL:", isResult);
             if (isResult.state === AutoDiscovery.FAIL_ERROR) {
-                if (AutoDiscovery.ALL_ERRORS.indexOf(isResult.error as string) !== -1) {
-                    // XXX: We mark these with _td at the top of Login.tsx - we should come up with a better solution
+                if (isAutoDiscoveryError(isResult.error)) {
                     throw new UserFriendlyError(String(isResult.error) as TranslationKey);
                 }
                 throw new UserFriendlyError("auth|autodiscovery_unexpected_error_is");
@@ -227,12 +256,8 @@ export default class AutoDiscoveryUtils {
         if (hsResult.state !== AutoDiscovery.SUCCESS) {
             logger.error("Error processing homeserver config:", hsResult);
             if (!syntaxOnly || !AutoDiscoveryUtils.isLivelinessError(hsResult.error)) {
-                if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error as string) !== -1) {
-                    // XXX: We mark these with _td at the top of Login.tsx - we should come up with a better solution
-                    throw new UserFriendlyError(String(hsResult.error) as TranslationKey);
-                }
-                if (hsResult.error === AutoDiscovery.ERROR_HOMESERVER_TOO_OLD) {
-                    throw new UserFriendlyError("auth|autodiscovery_hs_incompatible");
+                if (isAutoDiscoveryError(hsResult.error)) {
+                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(hsResult.error));
                 }
                 throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
             } // else the error is not related to syntax - continue anyways.

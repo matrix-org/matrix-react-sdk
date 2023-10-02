@@ -502,6 +502,7 @@
         "sign_in_or_register_description": "Use your account or create a new one to continue.",
         "sign_in_description": "Use your account to continue.",
         "register_action": "Create Account",
+        "autodiscovery_hs_incompatible": "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
         "misconfigured_title": "Your %(brand)s is misconfigured",
         "misconfigured_body": "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.",
         "failed_connect_identity_server": "Cannot reach identity server",
@@ -511,7 +512,6 @@
         "no_hs_url_provided": "No homeserver URL provided",
         "autodiscovery_unexpected_error_hs": "Unexpected error resolving homeserver configuration",
         "autodiscovery_unexpected_error_is": "Unexpected error resolving identity server configuration",
-        "autodiscovery_hs_incompatible": "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
         "account_deactivated": "This account has been deactivated.",
         "incorrect_credentials": "Incorrect username and/or password.",
         "incorrect_credentials_detail": "Please note you are logging into the %(hs)s server, not matrix.org.",
@@ -1950,6 +1950,15 @@
         },
         "m.sticker": "%(senderName)s: %(stickerName)s"
     },
+    "Invalid homeserver discovery response": "Invalid homeserver discovery response",
+    "Failed to get autodiscovery configuration from server": "Failed to get autodiscovery configuration from server",
+    "Invalid base_url for m.homeserver": "Invalid base_url for m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Homeserver URL does not appear to be a valid Matrix homeserver",
+    "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
+    "Invalid identity server discovery response": "Invalid identity server discovery response",
+    "No .well-known JSON file found": "No .well-known JSON file found",
+    "Invalid JSON": "Invalid JSON",
     "cannot_reach_homeserver": "Cannot reach homeserver",
     "cannot_reach_homeserver_detail": "Ensure you have a stable internet connection, or get in touch with the server admin",
     "error": {
@@ -3959,13 +3968,5 @@
         "switch_theme_dark": "Switch to dark mode"
     },
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-    "Invalid homeserver discovery response": "Invalid homeserver discovery response",
-    "Failed to get autodiscovery configuration from server": "Failed to get autodiscovery configuration from server",
-    "Invalid base_url for m.homeserver": "Invalid base_url for m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "Homeserver URL does not appear to be a valid Matrix homeserver",
-    "Invalid identity server discovery response": "Invalid identity server discovery response",
-    "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
-    "General failure": "General failure",
     "error_app_open_in_another_tab": "%(brand)s has been opened in another tab."
 }
