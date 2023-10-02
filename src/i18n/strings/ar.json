@@ -78,9 +78,6 @@
     "Download %(text)s": "تحميل %(text)s",
     "Decrypt %(text)s": "فك تشفير %(text)s",
     "Error decrypting attachment": "تعذر فك تشفير المرفق",
-    "The encryption used by this room isn't supported.": "التشفير الذي تستخدمه هذه الغرفة غير مدعوم.",
-    "Encryption not enabled": "التشفير غير مفعل",
-    "Ignored attempt to disable encryption": "تم تجاهل محاولة تعطيل التشفير",
     "Yesterday": "أمس",
     "Today": "اليوم",
     "Saturday": "السبت",
@@ -792,7 +789,12 @@
         "mab": {
             "label": "إجراءات الرسائل"
         },
-        "error_no_renderer": "تعذر عرض هذا الحدث"
+        "error_no_renderer": "تعذر عرض هذا الحدث",
+        "m.room.encryption": {
+            "disable_attempt": "تم تجاهل محاولة تعطيل التشفير",
+            "disabled": "التشفير غير مفعل",
+            "unsupported": "التشفير الذي تستخدمه هذه الغرفة غير مدعوم."
+        }
     },
     "slash_command": {
         "shrug": "ادخل احد الرموز ¯\\_(ツ)_/¯ قبل نص الرسالة",

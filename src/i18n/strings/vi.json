@@ -399,12 +399,6 @@
     "Error decrypting attachment": "Lỗi khi giải mã tệp đính kèm",
     "Download %(text)s": "Tải xuống %(text)s",
     "Error processing audio message": "Lỗi khi xử lý tin nhắn âm thanh",
-    "The encryption used by this room isn't supported.": "Mã hóa mà phòng này sử dụng không được hỗ trợ.",
-    "Encryption not enabled": "Mã hóa không được bật",
-    "Ignored attempt to disable encryption": "Bỏ qua nỗ lực vô hiệu hóa mã hóa",
-    "Some encryption parameters have been changed.": "Một số thông số mã hóa vừa được thay đổi.",
-    "Decrypting": "Đang giải mã",
-    "Downloading": "Đang tải xuống",
     "Yesterday": "Hôm qua",
     "Today": "Hôm nay",
     "Saturday": "Thứ bảy",
@@ -855,15 +849,11 @@
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "%(members)s and more": "%(members)s và nhiều người khác",
-    "Messages in this chat will be end-to-end encrypted.": "Tin nhắn trong phòng này sẽ được mã hóa đầu-cuối.",
     "%(count)s participants": {
         "one": "1 người tham gia",
         "other": "%(count)s người tham gia"
     },
-    "The sender has blocked you from receiving this message": "Người gửi không cho bạn nhận tin nhắn này",
-    "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "Invites by email can only be sent one at a time": "Chỉ có thể gửi một thư điện tử mời mỗi lần",
-    "The beginning of the room": "Bắt đầu phòng",
     "Open room": "Mở phòng",
     "%(members)s and %(last)s": "%(members)s và %(last)s",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
@@ -894,9 +884,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
     "Cameras": "Máy quay",
     "unavailable": "không có sẵn",
-    "Error details": "Chi tiết lỗi",
-    "Jump to date": "Nhảy đến ngày",
-    "Message pending moderation: %(reason)s": "Tin nhắn chờ duyệt: %(reason)s",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "Click": "Nhấn",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
@@ -909,7 +896,6 @@
     "Confirm that you would like to deactivate your account. If you proceed:": "Xác nhận bạn muốn vô hiệu hóa tài khoản. Nếu bạn tiếp tục:",
     "You will leave all rooms and DMs that you are in": "Bạn sẽ rời tất cả phòng và tin nhắn trực tiếp mà bạn đã tham gia",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Bạn sẽ bị xóa khỏi máy chủ định danh: bạn bè của bạn sẽ không tìm thấy bạn bằng địa chỉ thư điện tử hay số điện thoại",
-    "Message pending moderation": "Tin nhắn chờ duyệt",
     "Message in %(room)s": "Tin nhắn trong %(room)s",
     "Message from %(user)s": "Tin nhắn từ %(user)s",
     "Show: Matrix rooms": "Hiện: Phòng Matrix",
@@ -2391,7 +2377,20 @@
             "unable_to_find": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng không thể tìm thấy nó.",
             "title": "Không tải được vị trí dòng thời gian"
         },
-        "error_no_renderer": "Sự kiện này không thể được hiển thị"
+        "error_no_renderer": "Sự kiện này không thể được hiển thị",
+        "decryption_failure_blocked": "Người gửi không cho bạn nhận tin nhắn này",
+        "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
+        "download_action_downloading": "Đang tải xuống",
+        "download_action_decrypting": "Đang giải mã",
+        "m.room.encryption": {
+            "parameters_changed": "Một số thông số mã hóa vừa được thay đổi.",
+            "enabled_local": "Tin nhắn trong phòng này sẽ được mã hóa đầu-cuối.",
+            "disable_attempt": "Bỏ qua nỗ lực vô hiệu hóa mã hóa",
+            "disabled": "Mã hóa không được bật",
+            "unsupported": "Mã hóa mà phòng này sử dụng không được hỗ trợ."
+        },
+        "pending_moderation_reason": "Tin nhắn chờ duyệt: %(reason)s",
+        "pending_moderation": "Tin nhắn chờ duyệt"
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -3669,7 +3668,10 @@
         "jump_to_bottom_button": "Di chuyển đến các tin nhắn gần đây nhất",
         "jump_read_marker": "Chuyển đến tin nhắn chưa đọc đầu tiên.",
         "inviter_unknown": "Không xác định",
-        "failed_reject_invite": "Không thể từ chối lời mời"
+        "failed_reject_invite": "Không thể từ chối lời mời",
+        "error_jump_to_date_details": "Chi tiết lỗi",
+        "jump_to_date_beginning": "Bắt đầu phòng",
+        "jump_to_date": "Nhảy đến ngày"
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",

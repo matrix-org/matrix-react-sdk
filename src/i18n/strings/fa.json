@@ -493,9 +493,6 @@
     "Show image": "نمایش تصویر",
     "Error decrypting image": "خطا در رمزگشایی تصویر",
     "Invalid file%(extra)s": "پرونده نامعتبر%(extra)s",
-    "The encryption used by this room isn't supported.": "رمزگذاری استفاده شده توسط این اتاق پشتیبانی نمی شود.",
-    "Encryption not enabled": "رمزگذاری فعال نیست",
-    "Ignored attempt to disable encryption": "تلاش برای غیرفعال کردن رمزگذاری نادیده گرفته شد",
     "Remove %(count)s messages": {
         "one": "حذف ۱ پیام",
         "other": "حذف %(count)s پیام"
@@ -1716,7 +1713,12 @@
             "unable_to_find": "سعی شد یک نقطه‌ی زمانی خاص در پیام‌های این اتاق بارگیری و نمایش داده شود، اما پیداکردن آن میسر نیست.",
             "title": "بارگیری و نمایش پیام‌ها با مشکل مواجه شد"
         },
-        "error_no_renderer": "امکان نمایش این رخداد وجود ندارد"
+        "error_no_renderer": "امکان نمایش این رخداد وجود ندارد",
+        "m.room.encryption": {
+            "disable_attempt": "تلاش برای غیرفعال کردن رمزگذاری نادیده گرفته شد",
+            "disabled": "رمزگذاری فعال نیست",
+            "unsupported": "رمزگذاری استفاده شده توسط این اتاق پشتیبانی نمی شود."
+        }
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",

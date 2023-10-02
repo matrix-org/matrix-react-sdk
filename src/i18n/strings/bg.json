@@ -287,8 +287,6 @@
         "other": "%(count)s сесии",
         "one": "%(count)s сесия"
     },
-    "Encryption not enabled": "Шифроването не е включено",
-    "The encryption used by this room isn't supported.": "Шифроването използвано от тази стая не се поддържа.",
     "You declined": "Отказахте",
     "%(name)s declined": "%(name)s отказа",
     "Can't load this message": "Съобщението не може да се зареди",
@@ -393,7 +391,6 @@
     "Video conference ended by %(senderName)s": "Видео конференцията беше прекратена от %(senderName)s",
     "Join the conference from the room information card on the right": "Присъединете се към конференцията от информацията за стаята в дясно",
     "Join the conference at the top of this room": "Присъединете се към конференцията в горната част на стаята",
-    "Ignored attempt to disable encryption": "Опитът за изключване на шифроването беше игнориран",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -1447,7 +1444,12 @@
             "unable_to_find": "Беше направен опит да се зареди конкретна точка в хронологията на тази стая, но не я намери.",
             "title": "Неуспешно зареждане на позицията в хронологията"
         },
-        "error_no_renderer": "Това събитие не може да бъде показано"
+        "error_no_renderer": "Това събитие не може да бъде показано",
+        "m.room.encryption": {
+            "disable_attempt": "Опитът за изключване на шифроването беше игнориран",
+            "disabled": "Шифроването не е включено",
+            "unsupported": "Шифроването използвано от тази стая не се поддържа."
+        }
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",

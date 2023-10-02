@@ -238,8 +238,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Ɛreḍ adrurem deg wazemzakud i wakken ad twaliḍ ma yella llan wid yellan uqbel.",
     "Remove recent messages by %(user)s": "Kkes iznan n melmi kan sɣur %(user)s",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "I tugget meqqren n yiznan, ayagi yezmer ad yeṭṭef kra n wakud. Ṛǧu ur sirin ara amsaɣ-ik·im deg leɛḍil.",
-    "Encryption not enabled": "Awgelhen ur yermid ara",
-    "The encryption used by this room isn't supported.": "Awgelhen yettusqedcen ur yettusefrak ara s texxamt-a.",
     "Invalid file%(extra)s": "D afaylu %(extra)s arameɣtu",
     "Error decrypting image": "Tuccḍa deg uwgelhen n tugna",
     "Show image": "Sken tugna",
@@ -1407,7 +1405,11 @@
             "unable_to_find": "Ɛerḍeɣ ad d-saliɣ tazmilt tufrint tesnakudt n texxamt-a, maca ur ssawḍeɣ ara ad t-naf.",
             "title": "Asali n yideg n tesnakudt ur yeddi ara"
         },
-        "error_no_renderer": "Tadyant-a ur tezmir ad d-tettwaskan"
+        "error_no_renderer": "Tadyant-a ur tezmir ad d-tettwaskan",
+        "m.room.encryption": {
+            "disabled": "Awgelhen ur yermid ara",
+            "unsupported": "Awgelhen yettusqedcen ur yettusefrak ara s texxamt-a."
+        }
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",

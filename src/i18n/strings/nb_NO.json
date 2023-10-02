@@ -147,7 +147,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
-    "Encryption not enabled": "Kryptering er ikke skrudd på",
     "Create new room": "Opprett et nytt rom",
     "Language Dropdown": "Språk-nedfallsmeny",
     "Custom level": "Tilpasset nivå",
@@ -518,7 +517,6 @@
     "Sending": "Sender",
     "MB": "MB",
     "Add reaction": "Legg til reaksjon",
-    "Downloading": "Laster ned",
     "Connection failed": "Tilkobling mislyktes",
     "Corn": "Mais",
     "Cloud": "Sky",
@@ -1183,6 +1181,10 @@
         "send_state_sent": "Meldingen ble sendt",
         "mab": {
             "label": "Meldingshandlinger"
+        },
+        "download_action_downloading": "Laster ned",
+        "m.room.encryption": {
+            "disabled": "Kryptering er ikke skrudd på"
         }
     },
     "slash_command": {

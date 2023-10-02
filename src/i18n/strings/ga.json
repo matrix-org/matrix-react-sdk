@@ -301,7 +301,6 @@
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
-    "Decrypting": "Ag Díchriptiú",
     "Sent": "Seolta",
     "Sending": "Ag Seoladh",
     "Unnamed room": "Seomra gan ainm",
@@ -616,7 +615,8 @@
         },
         "load_error": {
             "title": "Níor lódáladh áit amlíne"
-        }
+        },
+        "download_action_decrypting": "Ag Díchriptiú"
     },
     "slash_command": {
         "nick": "Athraíonn sé d'ainm taispeána",

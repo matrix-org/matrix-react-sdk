@@ -102,7 +102,6 @@
         "one": "%(count)s sesija",
         "other": "%(count)s sesijas"
     },
-    "Encryption not enabled": "Šifrēšana nav iespējota",
     "Use the <a>Desktop app</a> to search encrypted messages": "Izmantojiet <a>lietotni</a>, lai veiktu šifrētu ziņu meklēšanu",
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "The server is offline.": "Serveris bezsaistē.",
@@ -552,7 +551,6 @@
     "Recently viewed": "Nesen skatītie",
     "Who will you chat to the most?": "Ar ko jūs sarakstīsieties visvairāk?",
     "Start a group chat": "Uzsākt grupas čatu",
-    "Messages in this chat will be end-to-end encrypted.": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
     "common": {
         "about": "Par",
         "analytics": "Analītika",
@@ -1263,6 +1261,10 @@
             "no_permission": "Notika mēģinājums specifisku posmu šīs istabas laika skalā, bet jums nav atļaujas skatīt konkrēto ziņu.",
             "unable_to_find": "Mēģinājums ielādēt šīs istabas čata vēstures izvēlēto posmu neizdevās, jo tas netika atrasts.",
             "title": "Neizdevās ielādēt laikpaziņojumu pozīciju"
+        },
+        "m.room.encryption": {
+            "enabled_local": "Ziņām šajā istabā tiek piemērota pilnīga šifrēšana.",
+            "disabled": "Šifrēšana nav iespējota"
         }
     },
     "slash_command": {

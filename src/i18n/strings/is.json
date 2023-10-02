@@ -424,8 +424,6 @@
         "other": "%(count)s atkvæði"
     },
     "Show image": "Birta mynd",
-    "Decrypting": "Afkóðun",
-    "Downloading": "Sæki",
     "Missed call": "Ósvarað símtal",
     "An unknown error occurred": "Óþekkt villa kom upp",
     "Connection failed": "Tenging mistókst",
@@ -463,8 +461,6 @@
     "Incompatible local cache": "Ósamhæft staðvært skyndiminni",
     "Feedback sent! Thanks, we appreciate it!": "Umsögn send! Takk, við kunnum að meta þetta!",
     "Continue With Encryption Disabled": "Halda áfram með dulritun óvirka",
-    "Encryption not enabled": "Dulritun ekki virk",
-    "Ignored attempt to disable encryption": "Hunsaði tilraun til að gera dulritun óvirka",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Reset everything": "Frumstilla allt",
@@ -516,10 +512,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
     "Spaces you know that contain this room": "Svæði sem þú veist að innihalda þetta svæði",
     "Spaces you know that contain this space": "Svæði sem þú veist að innihalda þetta svæði",
-    "Pick a date to jump to": "Veldu dagsetningu til að hoppa á",
-    "Message pending moderation": "Efni sem bíður yfirferðar",
-    "Message pending moderation: %(reason)s": "Efni sem bíður yfirferðar: %(reason)s",
-    "Jump to date": "Hoppa á dagsetningu",
     "Not a valid Security Key": "Ekki gildur öryggislykill",
     "This looks like a valid Security Key!": "Þetta lítur út eins og gildur öryggislykill!",
     "Enter Security Key": "Settu inn öryggislykil",
@@ -596,8 +588,6 @@
     "Collapse quotes": "Fella saman tilvitnanir",
     "Reply in thread": "Svara í spjallþræði",
     "Error processing audio message": "Villa við meðhöndlun hljóðskilaboða",
-    "The encryption used by this room isn't supported.": "Dulritunin sem notuð er í þessari spjallrás er ekki studd.",
-    "The beginning of the room": "Upphaf spjallrásarinnar",
     "The call is in an unknown state!": "Símtalið er í óþekktu ástandi!",
     "Unknown failure: %(reason)s": "Óþekkt bilun: %(reason)s",
     "Remove %(count)s messages": {
@@ -838,7 +828,6 @@
     "You will no longer be able to log in": "Þú munt ekki lengur geta skráð þig inn",
     "You will not be able to reactivate your account": "Þú munt ekki geta endurvirkjað aðganginn þinn",
     "You don't have permission to share locations": "Þú hefur ekki heimildir til að deila staðsetningum",
-    "Messages in this chat will be end-to-end encrypted.": "Skilaboð í þessu spjalli verða enda-í-enda dulrituð.",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
     "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
     "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
@@ -849,7 +838,6 @@
     "<w>WARNING:</w> <description/>": "<w>AÐVÖRUN:</w> <description/>",
     "Error downloading image": "Villa kom upp við að sækja mynd",
     "Unable to show image due to error": "Get ekki birt mynd vegna villu",
-    "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -2223,7 +2211,18 @@
             "unable_to_find": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en tókst ekki að finna þetta.",
             "title": "Mistókst að hlaða inn staðsetningu á tímalínu"
         },
-        "error_no_renderer": "Ekki tókst að birta þennan atburð"
+        "error_no_renderer": "Ekki tókst að birta þennan atburð",
+        "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
+        "download_action_downloading": "Sæki",
+        "download_action_decrypting": "Afkóðun",
+        "m.room.encryption": {
+            "enabled_local": "Skilaboð í þessu spjalli verða enda-í-enda dulrituð.",
+            "disable_attempt": "Hunsaði tilraun til að gera dulritun óvirka",
+            "disabled": "Dulritun ekki virk",
+            "unsupported": "Dulritunin sem notuð er í þessari spjallrás er ekki studd."
+        },
+        "pending_moderation_reason": "Efni sem bíður yfirferðar: %(reason)s",
+        "pending_moderation": "Efni sem bíður yfirferðar"
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
@@ -3380,7 +3379,10 @@
         "jump_to_bottom_button": "Skruna að nýjustu skilaboðunum",
         "jump_read_marker": "Fara í fyrstu ólesnu skilaboðin.",
         "inviter_unknown": "Óþekkt",
-        "failed_reject_invite": "Mistókst að hafna boði"
+        "failed_reject_invite": "Mistókst að hafna boði",
+        "jump_to_date_beginning": "Upphaf spjallrásarinnar",
+        "jump_to_date": "Hoppa á dagsetningu",
+        "jump_to_date_prompt": "Veldu dagsetningu til að hoppa á"
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",

@@ -108,8 +108,6 @@
         "one": "1 потврђена сесија"
     },
     "Remove recent messages by %(user)s": "Уклони недавне поруке корисника %(user)s",
-    "Encryption not enabled": "Шифровање није омогућено",
-    "The encryption used by this room isn't supported.": "Начин шифровања унутар ове собе није подржан.",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "Light bulb": "сијалица",
@@ -977,7 +975,11 @@
             "unable_to_find": "Покушао сам да учитам одређену тачку у временској линији ове собе али нисам могао да је нађем.",
             "title": "Нисам могао да учитам позицију у временској линији"
         },
-        "error_no_renderer": "Овај догађај не може бити приказан"
+        "error_no_renderer": "Овај догађај не може бити приказан",
+        "m.room.encryption": {
+            "disabled": "Шифровање није омогућено",
+            "unsupported": "Начин шифровања унутар ове собе није подржан."
+        }
     },
     "slash_command": {
         "shrug": "Придодаје ¯\\_(ツ)_/¯ обичној поруци",

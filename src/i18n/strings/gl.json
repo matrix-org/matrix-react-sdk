@@ -207,8 +207,6 @@
         "other": "Eliminar %(count)s mensaxes",
         "one": "Eliminar 1 mensaxe"
     },
-    "Encryption not enabled": "Cifrado desactivado",
-    "The encryption used by this room isn't supported.": "O cifrado desta sala non está soportado.",
     "Show image": "Mostrar imaxe",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Estás a ignorar a esta usuaria, polo que a imaxe está agochada. <a>Mostrar igualmente.</a>",
     "You verified %(name)s": "Verificaches a %(name)s",
@@ -390,7 +388,6 @@
     "Video conference ended by %(senderName)s": "Video conferencia rematada por %(senderName)s",
     "Video conference updated by %(senderName)s": "Video conferencia actualizada por %(senderName)s",
     "Video conference started by %(senderName)s": "Video conferencia iniciada por %(senderName)s",
-    "Ignored attempt to disable encryption": "Intento ignorado de desactivar o cifrado",
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -771,11 +768,9 @@
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Es a única administradora dalgunhas salas ou espazos dos que queres saír. Ao saír deles deixaralos sen administración.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ti es a única administradora deste espazo. Ao saír farás que a ninguén teña control sobre el.",
     "You won't be able to rejoin unless you are re-invited.": "Non poderás volver a unirte se non te volven a convidar.",
-    "Decrypting": "Descifrando",
     "Missed call": "Chamada perdida",
     "Call declined": "Chamada rexeitada",
     "Unknown failure: %(reason)s": "Fallo descoñecido: %(reason)s",
-    "Some encryption parameters have been changed.": "Algún dos parámetros de cifrado foron cambiados.",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "Would you like to leave the rooms in this space?": "Queres saír destas salas neste espazo?",
     "You are about to leave <spaceName/>.": "Vas saír de <spaceName/>.",
@@ -784,7 +779,6 @@
     "Don't leave any rooms": "Non saír de ningunha sala",
     "MB": "MB",
     "In reply to <a>this message</a>": "En resposta a <a>esta mensaxe</a>",
-    "Downloading": "Descargando",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -839,11 +833,6 @@
     "Could not fetch location": "Non se obtivo a localización",
     "Location": "Localización",
     "toggle event": "activar evento",
-    "Pick a date to jump to": "Elixe unha data á que ir",
-    "Message pending moderation": "Mensaxe pendente de moderar",
-    "Message pending moderation: %(reason)s": "Mensaxe pendente de moderar: %(reason)s",
-    "Jump to date": "Ir á data",
-    "The beginning of the room": "O inicio da sala",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Esto agrupa os teus chats cos membros deste espazo. Apagandoo ocultará estos chats da túa vista de %(spaceName)s.",
@@ -945,7 +934,6 @@
     "You're in": "Estás dentro",
     "You need to have the right permissions in order to share locations in this room.": "Tes que ter os permisos axeitados para poder compartir a localización nesta sala.",
     "You don't have permission to share locations": "Non tes permiso para compartir localizacións",
-    "Messages in this chat will be end-to-end encrypted.": "As mensaxes deste chat van estar cifrados de extremo-a-extremo.",
     "Saved Items": "Elementos gardados",
     "Choose a locale": "Elixe o idioma",
     "Interactively verify by emoji": "Verificar interactivamente usando emoji",
@@ -2309,7 +2297,18 @@
             "unable_to_find": "Intentouse cargar un punto específico do historial desta sala, pero non se puido atopar.",
             "title": "Fallo ao cargar posición da liña temporal"
         },
-        "error_no_renderer": "Non se puido amosar este evento"
+        "error_no_renderer": "Non se puido amosar este evento",
+        "download_action_downloading": "Descargando",
+        "download_action_decrypting": "Descifrando",
+        "m.room.encryption": {
+            "parameters_changed": "Algún dos parámetros de cifrado foron cambiados.",
+            "enabled_local": "As mensaxes deste chat van estar cifrados de extremo-a-extremo.",
+            "disable_attempt": "Intento ignorado de desactivar o cifrado",
+            "disabled": "Cifrado desactivado",
+            "unsupported": "O cifrado desta sala non está soportado."
+        },
+        "pending_moderation_reason": "Mensaxe pendente de moderar: %(reason)s",
+        "pending_moderation": "Mensaxe pendente de moderar"
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -3489,7 +3488,10 @@
         "jump_read_marker": "Ir a primeira mensaxe non lida.",
         "inviter_unknown": "Descoñecido",
         "failed_reject_invite": "Fallo ao rexeitar o convite",
-        "creating_room_text": "Estamos creando unha sala con %(names)s"
+        "creating_room_text": "Estamos creando unha sala con %(names)s",
+        "jump_to_date_beginning": "O inicio da sala",
+        "jump_to_date": "Ir á data",
+        "jump_to_date_prompt": "Elixe unha data á que ir"
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",

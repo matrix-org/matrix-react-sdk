@@ -267,8 +267,6 @@
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Подтвердите удаление учётной записи с помощью единой точки входа.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Вы уверены, что хотите деактивировать свою учётную запись? Это необратимое действие.",
     "Confirm account deactivation": "Подтвердите деактивацию учётной записи",
-    "Encryption not enabled": "Шифрование не включено",
-    "The encryption used by this room isn't supported.": "Шифрование этой комнаты не поддерживается.",
     "You verified %(name)s": "Вы подтвердили %(name)s",
     "You cancelled verifying %(name)s": "Вы отменили подтверждение %(name)s",
     "You accepted": "Вы приняли",
@@ -391,7 +389,6 @@
     "Video conference started by %(senderName)s": "%(senderName)s начал(а) видеоконференцию",
     "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
     "Modal Widget": "Модальный виджет",
-    "Ignored attempt to disable encryption": "Игнорируемая попытка отключить шифрование",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
@@ -764,7 +761,6 @@
     "Add reaction": "Отреагировать",
     "Error processing voice message": "Ошибка при обработке голосового сообщения",
     "Error processing audio message": "Ошибка обработки звукового сообщения",
-    "Decrypting": "Расшифровка",
     "The call is in an unknown state!": "Вызов в неизвестном состоянии!",
     "An unknown error occurred": "Произошла неизвестная ошибка",
     "Their device couldn't start the camera or microphone": "Их устройство не может запустить камеру или микрофон",
@@ -773,7 +769,6 @@
     "Missed call": "Пропущенный вызов",
     "Call back": "Перезвонить",
     "Call declined": "Вызов отклонён",
-    "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
     "Unknown failure: %(reason)s": "Неизвестная ошибка: %(reason)s",
     "No answer": "Нет ответа",
     "Leave some rooms": "Покинуть несколько комнат",
@@ -784,7 +779,6 @@
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
     "MB": "Мб",
     "In reply to <a>this message</a>": "В ответ на <a>это сообщение</a>",
-    "Downloading": "Загрузка",
     "%(count)s reply": {
         "one": "%(count)s ответ",
         "other": "%(count)s ответов"
@@ -837,11 +831,6 @@
     "Sorry, your vote was not registered. Please try again.": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
     "Vote not registered": "Голос не засчитан",
     "Reply in thread": "Обсудить",
-    "Pick a date to jump to": "Выберите дату для перехода",
-    "Message pending moderation": "Сообщение ожидает модерации",
-    "Message pending moderation: %(reason)s": "Сообщение ожидает модерации: %(reason)s",
-    "Jump to date": "Перейти к дате",
-    "The beginning of the room": "Начало комнаты",
     "Recently viewed": "Недавно просмотренные",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
@@ -939,7 +928,6 @@
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
     "Coworkers and teams": "Коллеги и команды",
     "Friends and family": "Друзья и семья",
-    "Messages in this chat will be end-to-end encrypted.": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
     "We'll help you get connected.": "Мы поможем вам подключиться.",
@@ -2413,7 +2401,18 @@
             "unable_to_find": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
             "title": "Не удалось загрузить метку из хронологии"
         },
-        "error_no_renderer": "Не удалось отобразить это событие"
+        "error_no_renderer": "Не удалось отобразить это событие",
+        "download_action_downloading": "Загрузка",
+        "download_action_decrypting": "Расшифровка",
+        "m.room.encryption": {
+            "parameters_changed": "Некоторые параметры шифрования были изменены.",
+            "enabled_local": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
+            "disable_attempt": "Игнорируемая попытка отключить шифрование",
+            "disabled": "Шифрование не включено",
+            "unsupported": "Шифрование этой комнаты не поддерживается."
+        },
+        "pending_moderation_reason": "Сообщение ожидает модерации: %(reason)s",
+        "pending_moderation": "Сообщение ожидает модерации"
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",
@@ -3663,7 +3662,10 @@
         "jump_read_marker": "Перейти к первому непрочитанному сообщению.",
         "inviter_unknown": "Неизвестно",
         "failed_reject_invite": "Не удалось отклонить приглашение",
-        "creating_room_text": "Мы создаем комнату с %(names)s"
+        "creating_room_text": "Мы создаем комнату с %(names)s",
+        "jump_to_date_beginning": "Начало комнаты",
+        "jump_to_date": "Перейти к дате",
+        "jump_to_date_prompt": "Выберите дату для перехода"
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",

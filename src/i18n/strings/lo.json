@@ -770,17 +770,6 @@
     "Cat": "ແມວ",
     "Dog": "ໝາ",
     "Error processing audio message": "ການປະມວນຜົນຂໍ້ຄວາມສຽງຜິດພາດ",
-    "Pick a date to jump to": "ເລືອກວັນທີເພື່ອໄປຫາ",
-    "Message pending moderation": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ",
-    "Message pending moderation: %(reason)s": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ: %(reason)s",
-    "The encryption used by this room isn't supported.": "ບໍ່ຮອງຮັບການເຂົ້າລະຫັດທີ່ໃຊ້ໂດຍຫ້ອງນີ້.",
-    "Encryption not enabled": "ບໍ່ໄດ້ເປີດໃຊ້ການເຂົ້າລະຫັດ",
-    "Ignored attempt to disable encryption": "ປະຕິເສດຄວາມພະຍາຍາມປິດການເຂົ້າລະຫັດ",
-    "Some encryption parameters have been changed.": "ບາງຕົວກໍານົດການເຂົ້າລະຫັດໄດ້ຖືກປ່ຽນແປງ.",
-    "Decrypting": "ການຖອດລະຫັດ",
-    "Downloading": "ກຳລັງດາວໂຫຼດ",
-    "Jump to date": "ໄປຫາວັນທີ",
-    "The beginning of the room": "ຈຸດເລີ່ມຕົ້ນຂອງຫ້ອງ",
     "Yesterday": "ມື້ວານນີ້",
     "Today": "ມື້ນີ້",
     "Saturday": "ວັນເສົາ",
@@ -2139,7 +2128,17 @@
             "unable_to_find": "ພະຍາຍາມໂຫຼດຈຸດສະເພາະໃນທາມລາຍຂອງຫ້ອງນີ້, ແຕ່ບໍ່ສາມາດຊອກຫາມັນໄດ້.",
             "title": "ໂຫຼດຕໍາແໜ່ງທາມລາຍບໍ່ສຳເລັດ"
         },
-        "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້"
+        "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
+        "download_action_downloading": "ກຳລັງດາວໂຫຼດ",
+        "download_action_decrypting": "ການຖອດລະຫັດ",
+        "m.room.encryption": {
+            "parameters_changed": "ບາງຕົວກໍານົດການເຂົ້າລະຫັດໄດ້ຖືກປ່ຽນແປງ.",
+            "disable_attempt": "ປະຕິເສດຄວາມພະຍາຍາມປິດການເຂົ້າລະຫັດ",
+            "disabled": "ບໍ່ໄດ້ເປີດໃຊ້ການເຂົ້າລະຫັດ",
+            "unsupported": "ບໍ່ຮອງຮັບການເຂົ້າລະຫັດທີ່ໃຊ້ໂດຍຫ້ອງນີ້."
+        },
+        "pending_moderation_reason": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ: %(reason)s",
+        "pending_moderation": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ"
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -3312,7 +3311,10 @@
         "jump_to_bottom_button": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
         "jump_read_marker": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
         "inviter_unknown": "ບໍ່ຮູ້ຈັກ",
-        "failed_reject_invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ"
+        "failed_reject_invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ",
+        "jump_to_date_beginning": "ຈຸດເລີ່ມຕົ້ນຂອງຫ້ອງ",
+        "jump_to_date": "ໄປຫາວັນທີ",
+        "jump_to_date_prompt": "ເລືອກວັນທີເພື່ອໄປຫາ"
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",

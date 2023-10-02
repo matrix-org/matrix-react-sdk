@@ -202,8 +202,6 @@
     "Lock": "Cadeado",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
-    "Encryption not enabled": "Criptografia desativada",
-    "The encryption used by this room isn't supported.": "A criptografia usada nesta sala não é suportada.",
     "%(name)s wants to verify": "%(name)s solicita confirmação",
     "Enter the name of a new server you want to explore.": "Digite o nome do novo servidor que você deseja explorar.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Por favor, diga-nos o que aconteceu de errado ou, ainda melhor, crie um bilhete de erro no GitHub que descreva o problema.",
@@ -373,7 +371,6 @@
     "Information": "Informação",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "Ignored attempt to disable encryption": "A tentativa de desativar a criptografia foi ignorada",
     "Join the conference at the top of this room": "Entre na chamada em grupo no topo desta sala",
     "Join the conference from the room information card on the right": "Participe da chamada em grupo, clicando no botão de informações da sala, à direita da tela",
     "Video conference ended by %(senderName)s": "Chamada de vídeo em grupo encerrada por %(senderName)s",
@@ -720,8 +717,6 @@
     "Add reaction": "Adicionar reação",
     "Error processing voice message": "Erro ao processar a mensagem de voz",
     "Error processing audio message": "Erro ao processar a mensagem de áudio",
-    "Some encryption parameters have been changed.": "Alguns parâmetros de criptografia foram modificados.",
-    "Decrypting": "Decriptando",
     "The call is in an unknown state!": "A chamada está em um estado desconhecido!",
     "Missed call": "Chamada perdida",
     "Unknown failure: %(reason)s": "Falha desconhecida: %(reason)s",
@@ -760,7 +755,6 @@
     "No votes cast": "Sem votos expressos",
     "Sorry, your vote was not registered. Please try again.": "Desculpe, seu voto não foi registrado. Por favor, tente novamente.",
     "Vote not registered": "Voto não registrado",
-    "Downloading": "Baixando",
     "Recently viewed": "Visualizado recentemente",
     "Reply in thread": "Responder no tópico",
     "%(count)s reply": {
@@ -771,7 +765,6 @@
     "Leave some rooms": "Sair de algumas salas",
     "Leave all rooms": "Sair de todas as salas",
     "Don't leave any rooms": "Não saia de nenhuma sala",
-    "Jump to date": "Ir para Data",
     "Public rooms": "Salas públicas",
     "Add new server…": "Adicionar um novo servidor…",
     "%(count)s participants": {
@@ -1907,7 +1900,15 @@
             "unable_to_find": "Não foi possível carregar um trecho específico da conversa desta sala.",
             "title": "Não foi possível carregar um trecho da conversa"
         },
-        "error_no_renderer": "Este evento não pôde ser exibido"
+        "error_no_renderer": "Este evento não pôde ser exibido",
+        "download_action_downloading": "Baixando",
+        "download_action_decrypting": "Decriptando",
+        "m.room.encryption": {
+            "parameters_changed": "Alguns parâmetros de criptografia foram modificados.",
+            "disable_attempt": "A tentativa de desativar a criptografia foi ignorada",
+            "disabled": "Criptografia desativada",
+            "unsupported": "A criptografia usada nesta sala não é suportada."
+        }
     },
     "slash_command": {
         "spoiler": "Envia esta mensagem como spoiler",
@@ -2926,7 +2927,8 @@
         "jump_to_bottom_button": "Ir para as mensagens recentes",
         "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas.",
         "inviter_unknown": "Desconhecido",
-        "failed_reject_invite": "Não foi possível recusar o convite"
+        "failed_reject_invite": "Não foi possível recusar o convite",
+        "jump_to_date": "Ir para Data"
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",

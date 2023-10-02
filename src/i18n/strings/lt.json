@@ -140,7 +140,6 @@
         "other": "%(count)s seansai(-ų)",
         "one": "%(count)s seansas"
     },
-    "Encryption not enabled": "Šifravimas neįjungtas",
     "Are you sure you want to deactivate your account? This is irreversible.": "Ar tikrai norite deaktyvuoti savo paskyrą? Tai yra negrįžtama.",
     "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
     "Dog": "Šuo",
@@ -222,7 +221,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-    "The encryption used by this room isn't supported.": "Šiame kambaryje naudojamas šifravimas nėra palaikomas.",
     "You sent a verification request": "Jūs išsiuntėte patvirtinimo užklausą",
     "Continue With Encryption Disabled": "Tęsti išjungus šifravimą",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Patvirtinkite šį vartotoją, kad pažymėtumėte jį kaip patikimą. Vartotojų pažymėjimas patikimais suteikia jums papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
@@ -319,7 +317,6 @@
     "Add an Integration": "Pridėti Integraciją",
     "Add reaction": "Pridėti reakciją",
     "Error processing voice message": "Klaida apdorojant balso pranešimą",
-    "Ignored attempt to disable encryption": "Bandymas išjungti šifravimą buvo ignoruotas",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dideliam žinučių kiekiui tai gali užtrukti kurį laiką. Prašome neperkrauti savo kliento.",
     "No recent messages by %(user)s found": "Nerasta jokių naujesnių %(user)s žinučių",
     "You cancelled": "Jūs atšaukėte",
@@ -510,15 +507,6 @@
     "No answer": "Jokio atsakymo",
     "Call back": "Perskambinti",
     "Call declined": "Skambutis atmestas",
-    "Pick a date to jump to": "Pasirinkite datą, į kurią norite pereiti",
-    "Message pending moderation": "Žinutė laukia moderavimo",
-    "Message pending moderation: %(reason)s": "Žinutė laukia moderavimo: %(reason)s",
-    "Messages in this chat will be end-to-end encrypted.": "Žinutės šiame pokalbyje bus visapusiškai užšifruotos.",
-    "Some encryption parameters have been changed.": "Pakeisti kai kurie šifravimo parametrai.",
-    "Decrypting": "Iššifruojama",
-    "Downloading": "Atsiunčiama",
-    "Jump to date": "Peršokti į datą",
-    "The beginning of the room": "Kambario pradžia",
     "%(count)s reply": {
         "one": "%(count)s atsakymas",
         "other": "%(count)s atsakymai"
@@ -1622,7 +1610,18 @@
             "unable_to_find": "Bandyta įkelti konkrečią vietą šio kambario laiko juostoje, bet nepavyko jos rasti.",
             "title": "Nepavyko įkelti laiko juostos pozicijos"
         },
-        "error_no_renderer": "Nepavyko parodyti šio įvykio"
+        "error_no_renderer": "Nepavyko parodyti šio įvykio",
+        "download_action_downloading": "Atsiunčiama",
+        "download_action_decrypting": "Iššifruojama",
+        "m.room.encryption": {
+            "parameters_changed": "Pakeisti kai kurie šifravimo parametrai.",
+            "enabled_local": "Žinutės šiame pokalbyje bus visapusiškai užšifruotos.",
+            "disable_attempt": "Bandymas išjungti šifravimą buvo ignoruotas",
+            "disabled": "Šifravimas neįjungtas",
+            "unsupported": "Šiame kambaryje naudojamas šifravimas nėra palaikomas."
+        },
+        "pending_moderation_reason": "Žinutė laukia moderavimo: %(reason)s",
+        "pending_moderation": "Žinutė laukia moderavimo"
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",
@@ -2546,7 +2545,10 @@
         "jump_to_bottom_button": "Slinkite prie naujausių žinučių",
         "jump_read_marker": "Pereiti prie pirmos neperskaitytos žinutės.",
         "inviter_unknown": "Nežinoma",
-        "failed_reject_invite": "Nepavyko atmesti pakvietimo"
+        "failed_reject_invite": "Nepavyko atmesti pakvietimo",
+        "jump_to_date_beginning": "Kambario pradžia",
+        "jump_to_date": "Peršokti į datą",
+        "jump_to_date_prompt": "Pasirinkite datą, į kurią norite pereiti"
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"

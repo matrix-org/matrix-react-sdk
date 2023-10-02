@@ -284,8 +284,6 @@
         "other": "%(count)s saio",
         "one": "saio %(count)s"
     },
-    "Encryption not enabled": "Zifratzea gaitu gabe",
-    "The encryption used by this room isn't supported.": "Gela honetan erabilitako zifratzea ez da onartzen.",
     "Clear all data in this session?": "Garbitu saio honetako datu guztiak?",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Saio honetako datuak garbitzea behin betirako da. Zifratutako mezuak galdu egingo dira gakoen babes-kopia egin ez bada.",
     "Session name": "Saioaren izena",
@@ -1086,7 +1084,11 @@
             "unable_to_find": "Gela honen denbora-lerroko puntu zehatz bat kargatzen saiatu da, baina ezin izan da aurkitu.",
             "title": "Huts egin du denbora-lerroko puntua kargatzean"
         },
-        "error_no_renderer": "Ezin izan da gertakari hau bistaratu"
+        "error_no_renderer": "Ezin izan da gertakari hau bistaratu",
+        "m.room.encryption": {
+            "disabled": "Zifratzea gaitu gabe",
+            "unsupported": "Gela honetan erabilitako zifratzea ez da onartzen."
+        }
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",

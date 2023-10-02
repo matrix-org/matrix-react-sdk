@@ -454,9 +454,6 @@
     "Download %(text)s": "הורד %(text)s",
     "Decrypt %(text)s": "פענח %(text)s",
     "Error decrypting attachment": "שגיאה בפענוח קבצים מצורפים",
-    "The encryption used by this room isn't supported.": "ההצפנה בה משתמשים בחדר זה אינה נתמכת.",
-    "Encryption not enabled": "ההצפנה לא מופעלת",
-    "Ignored attempt to disable encryption": "התעלם מהניסיון להשבית את ההצפנה",
     "Remove %(count)s messages": {
         "one": "הסר הודעה 1",
         "other": "הסר %(count)s הודעות"
@@ -708,11 +705,6 @@
     "Thread options": "אפשרויות שרשור",
     "Can't create a thread from an event with an existing relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים",
     "Reply in thread": "מענה בשרשור",
-    "Messages in this chat will be end-to-end encrypted.": "הודעות בצ'אט זה יוצפו מקצה לקצה.",
-    "Some encryption parameters have been changed.": "מספר פרמטרים של הצפנה שונו.",
-    "Decrypting": "מפענח",
-    "Downloading": "מוריד",
-    "Jump to date": "קיפצו לתאריך",
     "You may contact me if you have any follow up questions": "אתם יכולים לתקשר איתי אם יש לכם שאלות המשך",
     "Feedback sent! Thanks, we appreciate it!": "משוב נשלח! תודה, אנחנו מודים לכם",
     "Search for rooms or people": "חפשו אנשים או חדרים",
@@ -1802,7 +1794,16 @@
             "unable_to_find": "ניסה לטעון נקודה מסוימת בציר הזמן של החדר הזה, אך לא הצליח למצוא אותה.",
             "title": "טעינת מיקום ציר הזמן נכשלה"
         },
-        "error_no_renderer": "לא ניתן להציג את הארוע הזה"
+        "error_no_renderer": "לא ניתן להציג את הארוע הזה",
+        "download_action_downloading": "מוריד",
+        "download_action_decrypting": "מפענח",
+        "m.room.encryption": {
+            "parameters_changed": "מספר פרמטרים של הצפנה שונו.",
+            "enabled_local": "הודעות בצ'אט זה יוצפו מקצה לקצה.",
+            "disable_attempt": "התעלם מהניסיון להשבית את ההצפנה",
+            "disabled": "ההצפנה לא מופעלת",
+            "unsupported": "ההצפנה בה משתמשים בחדר זה אינה נתמכת."
+        }
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2809,7 +2810,8 @@
         "jump_read_marker": "קפצו להודעה הראשונה שלא נקראה.",
         "inviter_unknown": "לא ידוע",
         "failed_reject_invite": "דחיית הזמנה נכשלה",
-        "creating_room_text": "יצרנו חדר עם %(names)s"
+        "creating_room_text": "יצרנו חדר עם %(names)s",
+        "jump_to_date": "קיפצו לתאריך"
     },
     "file_panel": {
         "guest_note": "עליך <a> להירשם </a> כדי להשתמש בפונקציונליות זו",

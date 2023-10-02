@@ -513,9 +513,6 @@
     "Video conference started by %(senderName)s": "Video konferans %(senderName)s tarafından başlatıldı",
     "Video conference updated by %(senderName)s": "Video konferans %(senderName)s tarafından güncellendi",
     "Video conference ended by %(senderName)s": "Video konferans %(senderName)s tarafından sonlandırıldı",
-    "The encryption used by this room isn't supported.": "Bu odada kullanılan şifreleme desteklenmiyor.",
-    "Encryption not enabled": "Şifreleme etkin değil",
-    "Ignored attempt to disable encryption": "Şifrelemeyi devre dışı bırakma denemesi yok sayıldı",
     "IRC display name width": "IRC görünen ad genişliği",
     "Australia": "Avustralya",
     "Aruba": "Aruba",
@@ -1372,7 +1369,12 @@
             "unable_to_find": "Bu odanın akışında belirli bir noktaya yüklemeye çalışıldı , ancak bulunamadı.",
             "title": "Zaman çizelgesi konumu yüklenemedi"
         },
-        "error_no_renderer": "Bu olay görüntülenemedi"
+        "error_no_renderer": "Bu olay görüntülenemedi",
+        "m.room.encryption": {
+            "disable_attempt": "Şifrelemeyi devre dışı bırakma denemesi yok sayıldı",
+            "disabled": "Şifreleme etkin değil",
+            "unsupported": "Bu odada kullanılan şifreleme desteklenmiyor."
+        }
     },
     "slash_command": {
         "spoiler": "Mesajı sürprizbozan olarak gönder",

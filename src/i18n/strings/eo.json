@@ -278,8 +278,6 @@
         "other": "%(count)s salutaĵoj",
         "one": "%(count)s salutaĵo"
     },
-    "Encryption not enabled": "Ĉifrado ne estas ŝaltita",
-    "The encryption used by this room isn't supported.": "La ĉifro uzata de ĉi tiu ĉambro ne estas subtenata.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Vi malatentis ĉi tiun uzanton, ĝia mesaĝo estas do kaŝita. <a>Tamen montri.</a>",
     "You declined": "Vi rifuzis",
     "%(name)s declined": "%(name)s rifuzis",
@@ -388,7 +386,6 @@
     "Video conference ended by %(senderName)s": "Grupan vidvokon finis %(senderName)s",
     "Join the conference from the room information card on the right": "Aliĝu al la grupa voko per la dekstraflanka karto kun informoj pri ĉambro",
     "Join the conference at the top of this room": "Aliĝu al la grupa voko supre je la ĉambro",
-    "Ignored attempt to disable encryption": "Malatentis provon malŝalti ĉifradon",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
@@ -763,7 +760,6 @@
     "Please provide an address": "Bonvolu doni adreson",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Malsukcesis komencigo de serĉado de mesaĝoj, kontrolu <a>viajn agordojn</a> por pliaj informoj",
     "Error processing audio message": "Eraris traktado de sonmesaĝo",
-    "Decrypting": "Malĉifrante",
     "The call is in an unknown state!": "La voko estas en nekonata stato!",
     "Unknown failure: %(reason)s": "Malsukceso nekonata: %(reason)s",
     "No answer": "Sen respondo",
@@ -780,7 +776,6 @@
     "Leave some rooms": "Foriri de iuj ĉambroj",
     "Leave all rooms": "Foriri de ĉiuj ĉambroj",
     "Don't leave any rooms": "Foriru de neniuj ĉambroj",
-    "Some encryption parameters have been changed.": "Ŝanĝiĝis iuj parametroj de ĉifrado.",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ĉu vi certas, ke vi volas fini ĉi tiun balotenketon? Ĉi tio montros la finajn rezultojn de la balotenketo kaj malhelpos personojn povi voĉdoni.",
     "End Poll": "Finu Balotenketon",
     "Sorry, the poll did not end. Please try again.": "Pardonu, la balotenketo ne finiĝis. Bonvolu reprovi.",
@@ -1894,7 +1889,14 @@
             "unable_to_find": "Provis enlegi certan parton de ĉi tiu historio, sed malsukcesis ĝin trovi.",
             "title": "Malsukcesis enlegi lokon en historio"
         },
-        "error_no_renderer": "Ĉi tiu okazo ne povis montriĝi"
+        "error_no_renderer": "Ĉi tiu okazo ne povis montriĝi",
+        "download_action_decrypting": "Malĉifrante",
+        "m.room.encryption": {
+            "parameters_changed": "Ŝanĝiĝis iuj parametroj de ĉifrado.",
+            "disable_attempt": "Malatentis provon malŝalti ĉifradon",
+            "disabled": "Ĉifrado ne estas ŝaltita",
+            "unsupported": "La ĉifro uzata de ĉi tiu ĉambro ne estas subtenata."
+        }
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",

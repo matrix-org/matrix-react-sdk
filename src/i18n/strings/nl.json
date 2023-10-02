@@ -263,8 +263,6 @@
         "other": "%(count)s sessies",
         "one": "%(count)s sessie"
     },
-    "Encryption not enabled": "Versleuteling niet ingeschakeld",
-    "The encryption used by this room isn't supported.": "De versleuteling gebruikt in deze kamer wordt niet ondersteund.",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Je hebt deze persoon genegeerd, dus de berichten worden verborgen. <a>Toch tonen?</a>",
     "You verified %(name)s": "Je hebt %(name)s geverifieerd",
     "You cancelled verifying %(name)s": "Je hebt de verificatie van %(name)s geannuleerd",
@@ -577,7 +575,6 @@
     "Click to view edits": "Klik om bewerkingen te zien",
     "Edited at %(date)s": "Bewerkt op %(date)s",
     "Join the conference at the top of this room": "Deelnemen aan de vergadering bovenaan deze kamer",
-    "Ignored attempt to disable encryption": "Poging om versleuteling uit te schakelen genegeerd",
     "Not encrypted": "Niet versleuteld",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
@@ -771,11 +768,9 @@
     "Create a new space": "Maak een nieuwe Space",
     "Want to add a new space instead?": "Een nieuwe Space toevoegen?",
     "Add existing space": "Bestaande Space toevoegen",
-    "Decrypting": "Ontsleutelen",
     "Missed call": "Oproep gemist",
     "Call declined": "Oproep geweigerd",
     "Unknown failure: %(reason)s": "Onbekende fout: %(reason)s",
-    "Some encryption parameters have been changed.": "Enkele versleutingsparameters zijn gewijzigd.",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Would you like to leave the rooms in this space?": "Wil je de kamers verlaten in deze Space?",
     "You are about to leave <spaceName/>.": "Je staat op het punt <spaceName/> te verlaten.",
@@ -785,7 +780,6 @@
     "MB": "MB",
     "In reply to <a>this message</a>": "In antwoord op <a>dit bericht</a>",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
-    "Downloading": "Downloaden",
     "%(count)s reply": {
         "one": "%(count)s reactie",
         "other": "%(count)s reacties"
@@ -845,12 +839,7 @@
     "Missing domain separator e.g. (:domain.org)": "Ontbrekend domeinscheidingsteken, bijv. (:voorbeeld.nl)",
     "toggle event": "wissel gebeurtenis",
     "Could not fetch location": "Kan locatie niet ophalen",
-    "Message pending moderation": "Bericht in afwachting van moderatie",
-    "Message pending moderation: %(reason)s": "Bericht in afwachting van moderatie: %(reason)s",
     "This address does not point at this room": "Dit adres verwijst niet naar deze kamer",
-    "Pick a date to jump to": "Kies een datum om naar toe te springen",
-    "Jump to date": "Spring naar datum",
-    "The beginning of the room": "Het begin van de kamer",
     "Location": "Locatie",
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
@@ -945,7 +934,6 @@
     "You're in": "Je bent binnen",
     "You need to have the right permissions in order to share locations in this room.": "Je dient de juiste rechten te hebben om locaties in deze ruimte te delen.",
     "You don't have permission to share locations": "Je bent niet gemachtigd om locaties te delen",
-    "Messages in this chat will be end-to-end encrypted.": "Berichten in deze chat worden eind-tot-eind versleuteld.",
     "Saved Items": "Opgeslagen items",
     "Choose a locale": "Kies een landinstelling",
     "Interactively verify by emoji": "Interactief verifiëren door emoji",
@@ -2344,7 +2332,18 @@
             "unable_to_find": "Geprobeerd een gegeven punt in de tijdslijn van deze kamer te laden, maar kon dit niet vinden.",
             "title": "Laden van tijdslijnpositie is mislukt"
         },
-        "error_no_renderer": "Deze gebeurtenis kon niet weergegeven worden"
+        "error_no_renderer": "Deze gebeurtenis kon niet weergegeven worden",
+        "download_action_downloading": "Downloaden",
+        "download_action_decrypting": "Ontsleutelen",
+        "m.room.encryption": {
+            "parameters_changed": "Enkele versleutingsparameters zijn gewijzigd.",
+            "enabled_local": "Berichten in deze chat worden eind-tot-eind versleuteld.",
+            "disable_attempt": "Poging om versleuteling uit te schakelen genegeerd",
+            "disabled": "Versleuteling niet ingeschakeld",
+            "unsupported": "De versleuteling gebruikt in deze kamer wordt niet ondersteund."
+        },
+        "pending_moderation_reason": "Bericht in afwachting van moderatie: %(reason)s",
+        "pending_moderation": "Bericht in afwachting van moderatie"
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -3582,7 +3581,10 @@
         "jump_read_marker": "Spring naar het eerste ongelezen bericht.",
         "inviter_unknown": "Onbekend",
         "failed_reject_invite": "Weigeren van uitnodiging is mislukt",
-        "creating_room_text": "We maken een kamer aan met %(names)s"
+        "creating_room_text": "We maken een kamer aan met %(names)s",
+        "jump_to_date_beginning": "Het begin van de kamer",
+        "jump_to_date": "Spring naar datum",
+        "jump_to_date_prompt": "Kies een datum om naar toe te springen"
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",

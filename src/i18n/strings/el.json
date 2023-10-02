@@ -584,13 +584,6 @@
     "Can't create a thread from an event with an existing relation": "Δεν είναι δυνατή η δημιουργία νήματος από ένα συμβάν με μια υπάρχουσα σχέση",
     "Reply in thread": "Απάντηση στο νήμα",
     "Error processing audio message": "Σφάλμα επεξεργασίας του ηχητικού μηνύματος",
-    "Pick a date to jump to": "Επιλέξτε μια ημερομηνία για να μεταβείτε",
-    "Message pending moderation": "Μήνυμα σε εκκρεμότητα συντονισμού",
-    "Message pending moderation: %(reason)s": "Μήνυμα σε εκκρεμότητα συντονισμού: %(reason)s",
-    "The encryption used by this room isn't supported.": "Η κρυπτογράφηση που χρησιμοποιείται από αυτό το δωμάτιο δεν υποστηρίζεται.",
-    "Encryption not enabled": "Η κρυπτογράφηση δεν ενεργοποιήθηκε",
-    "Ignored attempt to disable encryption": "Αγνοήθηκε προσπάθεια απενεργοποίησης κρυπτογράφησης",
-    "Some encryption parameters have been changed.": "Ορισμένες παράμετροι κρυπτογράφησης έχουν αλλάξει.",
     "%(count)s reply": {
         "one": "%(count)s απάντηση",
         "other": "%(count)s απαντήσεις"
@@ -636,10 +629,6 @@
     "Results will be visible when the poll is ended": "Τα αποτελέσματα θα είναι ορατά όταν τελειώσει η δημοσκόπηση",
     "Sorry, your vote was not registered. Please try again.": "Λυπούμαστε, η ψήφος σας δεν καταχωρήθηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Vote not registered": "Η ψήφος δεν έχει καταχωρηθεί",
-    "Decrypting": "Αποκρυπτογράφηση",
-    "Downloading": "Γίνεται λήψη",
-    "Jump to date": "Μετάβαση σε ημερομηνία",
-    "The beginning of the room": "Η αρχή του δωματίου",
     "The call is in an unknown state!": "Η κλήση βρίσκεται σε άγνωστη κατάσταση!",
     "Missed call": "Αναπάντητη κλήση",
     "Unknown failure: %(reason)s": "Άγνωστο σφάλμα: %(reason)s",
@@ -2143,7 +2132,17 @@
             "unable_to_find": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν καταφέρατε να το βρείτε.",
             "title": "Δεν ήταν δυνατή η φόρτωση της θέσης του χρονολόγιου"
         },
-        "error_no_renderer": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος"
+        "error_no_renderer": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος",
+        "download_action_downloading": "Γίνεται λήψη",
+        "download_action_decrypting": "Αποκρυπτογράφηση",
+        "m.room.encryption": {
+            "parameters_changed": "Ορισμένες παράμετροι κρυπτογράφησης έχουν αλλάξει.",
+            "disable_attempt": "Αγνοήθηκε προσπάθεια απενεργοποίησης κρυπτογράφησης",
+            "disabled": "Η κρυπτογράφηση δεν ενεργοποιήθηκε",
+            "unsupported": "Η κρυπτογράφηση που χρησιμοποιείται από αυτό το δωμάτιο δεν υποστηρίζεται."
+        },
+        "pending_moderation_reason": "Μήνυμα σε εκκρεμότητα συντονισμού: %(reason)s",
+        "pending_moderation": "Μήνυμα σε εκκρεμότητα συντονισμού"
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -3298,7 +3297,10 @@
         "jump_to_bottom_button": "Κύλιση στα πιο πρόσφατα μηνύματα",
         "jump_read_marker": "Πηγαίνετε στο πρώτο μη αναγνωσμένο μήνυμα.",
         "inviter_unknown": "Άγνωστο",
-        "failed_reject_invite": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης"
+        "failed_reject_invite": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
+        "jump_to_date_beginning": "Η αρχή του δωματίου",
+        "jump_to_date": "Μετάβαση σε ημερομηνία",
+        "jump_to_date_prompt": "Επιλέξτε μια ημερομηνία για να μεταβείτε"
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",

@@ -296,8 +296,6 @@
         "other": "%(count)s sesiones",
         "one": "%(count)s sesión"
     },
-    "Encryption not enabled": "El cifrado no está activado",
-    "The encryption used by this room isn't supported.": "El cifrado usado por esta sala no es compatible.",
     "Show image": "Ver imagen",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ha ignorado a esta cuenta, así que su mensaje está oculto. <a>Ver de todos modos.</a>",
     "You verified %(name)s": "Has verificado a %(name)s",
@@ -381,7 +379,6 @@
     "Video conference ended by %(senderName)s": "Videoconferencia terminada por %(senderName)s",
     "Join the conference from the room information card on the right": "Únete a la conferencia desde el panel de información de la sala de la derecha",
     "Join the conference at the top of this room": "Únete a la conferencia en la parte de arriba de la sala",
-    "Ignored attempt to disable encryption": "Se ha ignorado un intento de desactivar el cifrado",
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
     "Zimbabwe": "Zimbabue",
@@ -771,11 +768,9 @@
     "Create a new space": "Crear un nuevo espacio",
     "Want to add a new space instead?": "¿Quieres añadir un espacio nuevo en su lugar?",
     "Add existing space": "Añadir un espacio ya existente",
-    "Decrypting": "Descifrando",
     "Missed call": "Llamada perdida",
     "Call declined": "Llamada rechazada",
     "Unknown failure: %(reason)s": "Fallo desconocido: %(reason)s",
-    "Some encryption parameters have been changed.": "Algunos parámetros del cifrado han cambiado.",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "Don't leave any rooms": "No salir de ninguna sala",
     "Leave all rooms": "Salir de todas las salas",
@@ -784,7 +779,6 @@
     "You are about to leave <spaceName/>.": "Estás a punto de salirte de <spaceName/>.",
     "MB": "MB",
     "In reply to <a>this message</a>": "En respuesta a <a>este mensaje</a>",
-    "Downloading": "Descargando",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
@@ -844,11 +838,6 @@
     "Sections to show": "Secciones que mostrar",
     "Could not fetch location": "No se ha podido conseguir la ubicación",
     "toggle event": "activar o desactivar el evento",
-    "Message pending moderation": "Mensaje esperando revisión",
-    "Message pending moderation: %(reason)s": "Mensaje esperando revisión: %(reason)s",
-    "Pick a date to jump to": "Elige la fecha a la que saltar",
-    "Jump to date": "Saltar a una fecha",
-    "The beginning of the room": "Inicio de la sala",
     "Feedback sent! Thanks, we appreciate it!": "¡Opinión enviada! Gracias, te lo agradecemos.",
     "Use <arrows/> to scroll": "Usa <arrows/> para desplazarte",
     "Location": "Ubicación",
@@ -946,7 +935,6 @@
     "You're in": "Estás en",
     "You don't have permission to share locations": "No tienes permiso para compartir ubicaciones",
     "Saved Items": "Elementos guardados",
-    "Messages in this chat will be end-to-end encrypted.": "Los mensajes en esta conversación serán cifrados de extremo a extremo.",
     "Choose a locale": "Elige un idioma",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
@@ -964,8 +952,6 @@
     "Message in %(room)s": "Mensaje en %(room)s",
     "Declining…": "Rechazando…",
     "Answered elsewhere": "Respondido en otro sitio",
-    "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
-    "Error details": "Detalles del error",
     "unavailable": "no disponible",
     "unknown status code": "error de estado desconocido",
     "unknown": "desconocido",
@@ -977,8 +963,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
     "Can't start voice message": "No se ha podido empezar el mensaje de voz",
-    "Server returned %(statusCode)s with error code %(errorCode)s": "El servidor devolvió un %(statusCode)s con el código de error %(errorCode)s",
-    "The sender has blocked you from receiving this message": "La persona que ha enviado este mensaje te ha bloqueado, no puedes recibir el mensaje",
     "Waiting for partner to confirm…": "Esperando a que la otra persona confirme…",
     "Message from %(user)s": "Mensaje de %(user)s",
     "Enable MSC3946 (to support late-arriving room archives)": "",
@@ -2468,7 +2452,20 @@
             "unable_to_find": "Se ha intentado cargar cierto punto en la cronología de esta sala, pero no se ha podido encontrarlo.",
             "title": "Fallo al cargar el historial"
         },
-        "error_no_renderer": "No se ha podido mostrar este evento"
+        "error_no_renderer": "No se ha podido mostrar este evento",
+        "decryption_failure_blocked": "La persona que ha enviado este mensaje te ha bloqueado, no puedes recibir el mensaje",
+        "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
+        "download_action_downloading": "Descargando",
+        "download_action_decrypting": "Descifrando",
+        "m.room.encryption": {
+            "parameters_changed": "Algunos parámetros del cifrado han cambiado.",
+            "enabled_local": "Los mensajes en esta conversación serán cifrados de extremo a extremo.",
+            "disable_attempt": "Se ha ignorado un intento de desactivar el cifrado",
+            "disabled": "El cifrado no está activado",
+            "unsupported": "El cifrado usado por esta sala no es compatible."
+        },
+        "pending_moderation_reason": "Mensaje esperando revisión: %(reason)s",
+        "pending_moderation": "Mensaje esperando revisión"
     },
     "slash_command": {
         "spoiler": "Envía el mensaje como un spoiler",
@@ -3769,7 +3766,12 @@
         "jump_read_marker": "Ir al primer mensaje no leído.",
         "inviter_unknown": "Desconocido",
         "failed_reject_invite": "Falló al rechazar invitación",
-        "creating_room_text": "Estamos creando una sala con %(names)s"
+        "creating_room_text": "Estamos creando una sala con %(names)s",
+        "error_jump_to_date": "El servidor devolvió un %(statusCode)s con el código de error %(errorCode)s",
+        "error_jump_to_date_details": "Detalles del error",
+        "jump_to_date_beginning": "Inicio de la sala",
+        "jump_to_date": "Saltar a una fecha",
+        "jump_to_date_prompt": "Elige la fecha a la que saltar"
     },
     "file_panel": {
         "guest_note": "<a>Regístrate</a> para usar esta funcionalidad",

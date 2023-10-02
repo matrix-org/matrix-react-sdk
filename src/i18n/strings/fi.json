@@ -284,8 +284,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
-    "Encryption not enabled": "Salaus pois käytöstä",
-    "The encryption used by this room isn't supported.": "Tämän huoneen käyttämää salausta ei tueta.",
     "You declined": "Kieltäydyit",
     "%(name)s declined": "%(name)s kieltäytyi",
     "Something went wrong trying to invite the users.": "Käyttäjien kutsumisessa meni jotain pieleen.",
@@ -617,7 +615,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Tämä %(brand)s-versio ei tue joidenkin salattujen tiedostojen katselua",
     "Use the <a>Desktop app</a> to see all encrypted files": "Voit tarkastella kaikkia salattuja tiedostoja <a>työpöytäsovelluksella</a>",
     "Use the <a>Desktop app</a> to search encrypted messages": "Käytä salattuja viestejä <a>työpöytäsovelluksella</a>",
-    "Ignored attempt to disable encryption": "Ohitettu yritys poistaa salaus käytöstä",
     "This widget would like to:": "Tämä sovelma haluaa:",
     "The server has denied your request.": "Palvelin eväsi pyyntösi.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
@@ -685,7 +682,6 @@
     "Only people invited will be able to find and join this space.": "Vain kutsutut ihmiset voivat löytää tämän avaruuden ja liittyä siihen.",
     "Including %(commaSeparatedMembers)s": "Mukaan lukien %(commaSeparatedMembers)s",
     "Error processing audio message": "Virhe ääniviestiä käsiteltäessä",
-    "Decrypting": "Puretaan salausta",
     "The call is in an unknown state!": "Puhelu on tuntemattomassa tilassa!",
     "Missed call": "Vastaamaton puhelu",
     "Unknown failure: %(reason)s": "Tuntematon virhe: %(reason)s",
@@ -724,8 +720,6 @@
     "Don't leave any rooms": "Älä poistu mistään huoneesta",
     "Or send invite link": "Tai lähetä kutsulinkki",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Viestihaun alustus epäonnistui. Lisätietoa <a>asetuksissa</a>.",
-    "Some encryption parameters have been changed.": "Joitakin salausparametreja on muutettu.",
-    "Downloading": "Ladataan",
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
@@ -780,8 +774,6 @@
     "Results will be visible when the poll is ended": "Tulokset näkyvät, kun kysely on päättynyt",
     "Sorry, you can't edit a poll after votes have been cast.": "Et voi muokata kyselyä äänestyksen jälkeen.",
     "Can't edit poll": "Kyselyä ei voi muokata",
-    "Pick a date to jump to": "Valitse päivämäärä, mihin siirrytään",
-    "Jump to date": "Siirry päivämäärään",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -806,7 +798,6 @@
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
     "%(featureName)s Beta feedback": "Ominaisuuden %(featureName)s beetapalaute",
     "Including you, %(commaSeparatedMembers)s": "Mukaan lukien sinä, %(commaSeparatedMembers)s",
-    "The beginning of the room": "Huoneen alku",
     "%(count)s participants": {
         "one": "1 osallistuja",
         "other": "%(count)s osallistujaa"
@@ -879,9 +870,6 @@
     "Who will you chat to the most?": "Kenen kanssa keskustelet eniten?",
     "Choose a locale": "Valitse maa-asetusto",
     "You don't have permission to share locations": "Sinulla ei ole oikeutta jakaa sijainteja",
-    "Message pending moderation": "Viesti odottaa moderointia",
-    "Message pending moderation: %(reason)s": "Viesti odottaa moderointia: %(reason)s",
-    "Messages in this chat will be end-to-end encrypted.": "Tässä keskustelussa olevat viestit salataan päästä päähän.",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Search for": "Etsittävät kohteet",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -910,12 +898,9 @@
     "Message from %(user)s": "Viesti käyttäjältä %(user)s",
     "Message in %(room)s": "Viesti huoneessa %(room)s",
     "Answered elsewhere": "Vastattu muualla",
-    "The sender has blocked you from receiving this message": "Lähettäjä on estänyt sinua saamasta tätä viestiä",
     "unavailable": "ei saatavilla",
     "unknown status code": "tuntematon tilakoodi",
-    "Server returned %(statusCode)s with error code %(errorCode)s": "Palvelin palautti tilakoodin %(statusCode)s ja virhekoodin %(errorCode)s",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
-    "Error details": "Virheen tiedot",
     "common": {
         "about": "Tietoa",
         "analytics": "Analytiikka",
@@ -2340,7 +2325,19 @@
             "unable_to_find": "Huoneen aikajanan tietty hetki yritettiin ladata, mutta sitä ei löytynyt.",
             "title": "Aikajanapaikan lataaminen epäonnistui"
         },
-        "error_no_renderer": "Tätä tapahtumaa ei voitu näyttää"
+        "error_no_renderer": "Tätä tapahtumaa ei voitu näyttää",
+        "decryption_failure_blocked": "Lähettäjä on estänyt sinua saamasta tätä viestiä",
+        "download_action_downloading": "Ladataan",
+        "download_action_decrypting": "Puretaan salausta",
+        "m.room.encryption": {
+            "parameters_changed": "Joitakin salausparametreja on muutettu.",
+            "enabled_local": "Tässä keskustelussa olevat viestit salataan päästä päähän.",
+            "disable_attempt": "Ohitettu yritys poistaa salaus käytöstä",
+            "disabled": "Salaus pois käytöstä",
+            "unsupported": "Tämän huoneen käyttämää salausta ei tueta."
+        },
+        "pending_moderation_reason": "Viesti odottaa moderointia: %(reason)s",
+        "pending_moderation": "Viesti odottaa moderointia"
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -3561,7 +3558,12 @@
         "jump_to_bottom_button": "Vieritä tuoreimpiin viesteihin",
         "jump_read_marker": "Hyppää ensimmäiseen lukemattomaan viestiin.",
         "inviter_unknown": "Tuntematon",
-        "failed_reject_invite": "Kutsun hylkääminen epäonnistui"
+        "failed_reject_invite": "Kutsun hylkääminen epäonnistui",
+        "error_jump_to_date": "Palvelin palautti tilakoodin %(statusCode)s ja virhekoodin %(errorCode)s",
+        "error_jump_to_date_details": "Virheen tiedot",
+        "jump_to_date_beginning": "Huoneen alku",
+        "jump_to_date": "Siirry päivämäärään",
+        "jump_to_date_prompt": "Valitse päivämäärä, mihin siirrytään"
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",

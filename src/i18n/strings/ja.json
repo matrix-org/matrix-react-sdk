@@ -123,8 +123,6 @@
     "Manually export keys": "手動で鍵をエクスポート",
     "You'll lose access to your encrypted messages": "暗号化されたメッセージにアクセスできなくなります",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "このルームを<oldVersion />から<newVersion />にアップグレードします。",
-    "Encryption not enabled": "暗号化が有効になっていません",
-    "The encryption used by this room isn't supported.": "このルームで使用されている暗号化はサポートされていません。",
     "Session name": "セッション名",
     "Session key": "セッションキー",
     "Direct Messages": "ダイレクトメッセージ",
@@ -509,7 +507,6 @@
     "Video conference updated by %(senderName)s": "%(senderName)sがビデオ会議を更新しました",
     "Join the conference from the room information card on the right": "右側のルーム情報カードから会議に参加",
     "Join the conference at the top of this room": "このルームの上部で会議に参加",
-    "Ignored attempt to disable encryption": "暗号化を無効にする試みを無視しました",
     "Remove %(count)s messages": {
         "one": "1件のメッセージを削除",
         "other": "%(count)s件のメッセージを削除"
@@ -563,8 +560,6 @@
         "other": "%(count)s個の投票"
     },
     "Reply in thread": "スレッドで返信",
-    "Decrypting": "復号化しています",
-    "Downloading": "ダウンロードしています",
     "An unknown error occurred": "不明なエラーが発生しました",
     "In reply to <a>this message</a>": "<a>このメッセージ</a>への返信",
     "Location": "位置情報",
@@ -754,8 +749,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
     "The poll has ended. No votes were cast.": "アンケートが終了しました。投票はありませんでした。",
     "Error processing audio message": "音声メッセージを処理する際にエラーが発生しました",
-    "The beginning of the room": "ルームの先頭",
-    "Jump to date": "日付に移動",
     "Incoming Verification Request": "認証のリクエストが届いています",
     "Failed to start livestream": "ライブストリームの開始に失敗しました",
     "Unable to start audio streaming.": "音声ストリーミングを開始できません。",
@@ -804,7 +797,6 @@
         "one": "合計%(count)s票。投票すると結果を確認できます",
         "other": "合計%(count)s票。投票すると結果を確認できます"
     },
-    "Some encryption parameters have been changed.": "暗号化のパラメーターのいくつかが変更されました。",
     "The call is in an unknown state!": "通話の状態が不明です！",
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
@@ -821,7 +813,6 @@
     "Collapse quotes": "引用を折りたたむ",
     "Expand quotes": "引用を展開",
     "Click": "クリック",
-    "Pick a date to jump to": "日付を選択して移動",
     "You are not allowed to view this server's rooms list": "このサーバーのルームの一覧を閲覧する許可がありません",
     "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
     "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
@@ -895,7 +886,6 @@
     "You need to have the right permissions in order to share locations in this room.": "このルームでの位置情報の共有には適切な権限が必要です。",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
-    "%(displayName)s (%(matrixId)s)": "%(displayName)s（%(matrixId)s）",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
     "An error occurred while stopping your live location, please try again": "位置情報（ライブ）を停止している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location, please try again": "位置情報（ライブ）を共有している際にエラーが発生しました。もう一度やり直してください",
@@ -903,7 +893,6 @@
     "An error occurred while stopping your live location": "位置情報（ライブ）を停止する際にエラーが発生しました",
     "Online community members": "オンラインコミュニティーのメンバー",
     "Preserve system messages": "システムメッセージを保存",
-    "Message pending moderation": "保留中のメッセージのモデレート",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
@@ -920,7 +909,6 @@
     "We couldn't invite those users. Please check the users you want to invite and try again.": "ユーザーを招待できませんでした。招待したいユーザーを確認して、もう一度試してください。",
     "Open room": "ルームを開く",
     "Hide my messages from new joiners": "自分のメッセージを新しい参加者に表示しない",
-    "Messages in this chat will be end-to-end encrypted.": "このチャットのメッセージはエンドツーエンドで暗号化されます。",
     "You don't have permission to share locations": "位置情報の共有に必要な権限がありません",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "あなたの古いメッセージは、それを受信した人には表示され続けます。これは電子メールの場合と同様です。あなたが送信したメッセージを今後のルームの参加者に表示しないようにしますか？",
@@ -928,7 +916,6 @@
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "注意：ブラウザーはサポートされていません。期待通りに動作しない可能性があります。",
     "Show: %(instance)s rooms (%(server)s)": "表示：%(instance)s ルーム（%(server)s）",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
-    "Message pending moderation: %(reason)s": "メッセージはモデレートの保留中です：%(reason)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "このユーザーに関するシステムメッセージ（メンバーシップの変更、プロフィールの変更など）も削除したい場合は、チェックを外してください",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
         "one": "%(user)sによる%(count)s件のメッセージを削除しようとしています。これは会話に参加している全員からメッセージを永久に削除します。続行してよろしいですか？",
@@ -2469,7 +2456,19 @@
             "unable_to_find": "このルームのタイムラインの特定の地点を読み込もうとしましたが、見つけられませんでした。",
             "title": "タイムラインの位置を読み込めませんでした"
         },
-        "error_no_renderer": "このイベントは表示できませんでした"
+        "error_no_renderer": "このイベントは表示できませんでした",
+        "disambiguated_profile": "%(displayName)s（%(matrixId)s）",
+        "download_action_downloading": "ダウンロードしています",
+        "download_action_decrypting": "復号化しています",
+        "m.room.encryption": {
+            "parameters_changed": "暗号化のパラメーターのいくつかが変更されました。",
+            "enabled_local": "このチャットのメッセージはエンドツーエンドで暗号化されます。",
+            "disable_attempt": "暗号化を無効にする試みを無視しました",
+            "disabled": "暗号化が有効になっていません",
+            "unsupported": "このルームで使用されている暗号化はサポートされていません。"
+        },
+        "pending_moderation_reason": "メッセージはモデレートの保留中です：%(reason)s",
+        "pending_moderation": "保留中のメッセージのモデレート"
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",
@@ -3771,7 +3770,10 @@
         "jump_read_marker": "最初の未読メッセージに移動。",
         "inviter_unknown": "不明",
         "failed_reject_invite": "招待を辞退できませんでした",
-        "creating_room_text": "%(names)sという名前のルームを作成しています"
+        "creating_room_text": "%(names)sという名前のルームを作成しています",
+        "jump_to_date_beginning": "ルームの先頭",
+        "jump_to_date": "日付に移動",
+        "jump_to_date_prompt": "日付を選択して移動"
     },
     "file_panel": {
         "guest_note": "この機能を使用するには<a>登録</a>する必要があります",

@@ -231,8 +231,6 @@
         "other": "删除 %(count)s 条消息",
         "one": "删除 1 条消息"
     },
-    "Encryption not enabled": "未启用加密",
-    "The encryption used by this room isn't supported.": "不支持此房间使用的加密方式。",
     "Show image": "显示图像",
     "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "你已忽略此用户，所以其消息已被隐藏。<a>仍然显示。</a>",
     "You verified %(name)s": "你验证了 %(name)s",
@@ -626,7 +624,6 @@
     "Marshall Islands": "马绍尔群岛",
     "Malta": "马耳他",
     "Mali": "马里",
-    "Ignored attempt to disable encryption": "已忽略禁用加密的尝试",
     "Sint Maarten": "圣马丁岛",
     "Slovenia": "斯洛文尼亚",
     "Singapore": "新加坡",
@@ -764,7 +761,6 @@
     "Want to add a new space instead?": "想要添加一个新空间？",
     "Add existing space": "增加现有的空间",
     "Error processing audio message": "处理音频消息时出错",
-    "Decrypting": "解密中",
     "The call is in an unknown state!": "通话处于未知状态！",
     "Missed call": "未接来电",
     "Unknown failure: %(reason)s": "未知错误：%(reason)s",
@@ -775,7 +771,6 @@
     "No answer": "无响应",
     "Call back": "回拨",
     "Call declined": "拒绝通话",
-    "Some encryption parameters have been changed.": "一些加密参数已更改。",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "Would you like to leave the rooms in this space?": "你想俩开此空间内的房间吗？",
     "You are about to leave <spaceName/>.": "你即将离开 <spaceName/>。",
@@ -784,7 +779,6 @@
     "Don't leave any rooms": "不离开任何房间",
     "MB": "MB",
     "In reply to <a>this message</a>": "答复<a>此消息</a>",
-    "Downloading": "下载中",
     "%(count)s reply": {
         "one": "%(count)s 条回复",
         "other": "%(count)s 条回复"
@@ -869,12 +863,6 @@
     "Expand quotes": "展开引号",
     "Collapse quotes": "折叠引号",
     "View live location": "查看实时位置",
-    "Pick a date to jump to": "选个日期以跳转",
-    "Message pending moderation": "待审核的消息",
-    "Message pending moderation: %(reason)s": "消息待审核：%(reason)s",
-    "Messages in this chat will be end-to-end encrypted.": "此聊天中的消息会被端到端加密。",
-    "Jump to date": "跳至日期",
-    "The beginning of the room": "房间的开头",
     "What location type do you want to share?": "你想分享什么位置类型？",
     "Drop a Pin": "放置图钉",
     "My live location": "我的实时位置",
@@ -2329,7 +2317,18 @@
             "unable_to_find": "尝试加载此房间的时间线的特定时间点，但是无法找到。",
             "title": "加载时间线位置失败"
         },
-        "error_no_renderer": "无法显示此事件"
+        "error_no_renderer": "无法显示此事件",
+        "download_action_downloading": "下载中",
+        "download_action_decrypting": "解密中",
+        "m.room.encryption": {
+            "parameters_changed": "一些加密参数已更改。",
+            "enabled_local": "此聊天中的消息会被端到端加密。",
+            "disable_attempt": "已忽略禁用加密的尝试",
+            "disabled": "未启用加密",
+            "unsupported": "不支持此房间使用的加密方式。"
+        },
+        "pending_moderation_reason": "消息待审核：%(reason)s",
+        "pending_moderation": "待审核的消息"
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -3559,7 +3558,10 @@
         "jump_read_marker": "跳到第一条未读消息。",
         "inviter_unknown": "未知的",
         "failed_reject_invite": "拒绝邀请失败",
-        "creating_room_text": "正在创建房间%(names)s"
+        "creating_room_text": "正在创建房间%(names)s",
+        "jump_to_date_beginning": "房间的开头",
+        "jump_to_date": "跳至日期",
+        "jump_to_date_prompt": "选个日期以跳转"
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
