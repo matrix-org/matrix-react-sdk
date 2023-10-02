@@ -7,7 +7,6 @@
     "Monday": "Mandag",
     "Wednesday": "Onsdag",
     "unknown error code": "ukjent feilkode",
-    "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne meldingen. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Saturday": "Lørdag",
@@ -72,9 +71,6 @@
     "Folder": "Mappe",
     "collapse": "skjul",
     "expand": "utvid",
-    "Unavailable": "Ikke tilgjengelig",
-    "Changelog": "Endringslogg",
-    "Confirm Removal": "Bekreft fjerning",
     "Session name": "Øktens navn",
     "Filter results": "Filtrerresultater",
     "An error has occurred.": "En feil har oppstått.",
@@ -114,7 +110,6 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "Removing…": "Fjerner …",
     "Session ID": "Økt-ID",
     "Session key": "Øktnøkkel",
     "Updating %(brand)s": "Oppdaterer %(brand)s",
@@ -147,7 +142,6 @@
     "%(name)s cancelled": "%(name)s avbrøt",
     "%(name)s wants to verify": "%(name)s ønsker å verifisere",
     "Submit logs": "Send inn loggføringer",
-    "Clear all data": "Tøm alle data",
     "Upload completed": "Opplasting fullført",
     "Unable to upload": "Mislyktes i å laste opp",
     "Aeroplane": "Fly",
@@ -162,11 +156,6 @@
     "Ok": "OK",
     "Santa": "Julenisse",
     "Message preview": "Meldingsforhåndsvisning",
-    "Remove recent messages by %(user)s": "Fjern nylige meldinger fra %(user)s",
-    "Remove %(count)s messages": {
-        "other": "Slett %(count)s meldinger",
-        "one": "Slett 1 melding"
-    },
     "Incompatible Database": "Inkompatibel database",
     "Integrations are disabled": "Integreringer er skrudd av",
     "Integrations not allowed": "Integreringer er ikke tillatt",
@@ -274,7 +263,6 @@
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
     "Transfer": "Overfør",
     "Invite by email": "Inviter gjennom E-post",
-    "Reason (optional)": "Årsak (valgfritt)",
     "Upgrade Room Version": "Oppgrader romversjon",
     "Dial pad": "Nummerpanel",
     "Zimbabwe": "Zimbabwe",
@@ -1506,7 +1494,10 @@
             "reset_successful": "Passordet ditt har blitt tilbakestilt.",
             "return_to_login": "Gå tilbake til påloggingsskjermen"
         },
-        "country_dropdown": "Nedfallsmeny over land"
+        "country_dropdown": "Nedfallsmeny over land",
+        "soft_logout": {
+            "clear_data_button": "Tøm alle data"
+        }
     },
     "room_list": {
         "show_previews": "Vis forhåndsvisninger av meldinger",
@@ -1602,7 +1593,9 @@
         "release_notes_toast_title": "Hva er nytt",
         "toast_title": "Oppdater %(brand)s",
         "no_update": "Ingen oppdateringer er tilgjengelige.",
-        "check_action": "Let etter oppdateringer"
+        "check_action": "Let etter oppdateringer",
+        "unavailable": "Ikke tilgjengelig",
+        "changelog": "Endringslogg"
     },
     "threads": {
         "show_thread_filter": "Vis:"
@@ -1829,7 +1822,14 @@
         "deactivate_confirm_title": "Vil du deaktivere brukeren?",
         "deactivate_confirm_action": "Deaktiver brukeren",
         "error_deactivate": "Mislyktes i å deaktivere brukeren",
-        "edit_own_devices": "Rediger enheter"
+        "edit_own_devices": "Rediger enheter",
+        "redact": {
+            "confirm_title": "Fjern nylige meldinger fra %(user)s",
+            "confirm_button": {
+                "other": "Slett %(count)s meldinger",
+                "one": "Slett 1 melding"
+            }
+        }
     },
     "stickers": {
         "empty": "Du har ikke skrudd på noen klistremerkepakker for øyeblikket",
@@ -1875,5 +1875,11 @@
             "network_dropdown_add_dialog_placeholder": "Tjenernavn"
         }
     },
-    "dialog_close_label": "Lukk dialog"
+    "dialog_close_label": "Lukk dialog",
+    "redact": {
+        "error": "Du kan ikke slette denne meldingen. (%(code)s)",
+        "ongoing": "Fjerner …",
+        "confirm_button": "Bekreft fjerning",
+        "reason_label": "Årsak (valgfritt)"
+    }
 }

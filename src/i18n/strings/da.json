@@ -32,14 +32,11 @@
     "Sunday": "Søndag",
     "Today": "I dag",
     "Friday": "Fredag",
-    "Changelog": "Ændringslog",
-    "Unavailable": "Utilgængelig",
     "Filter results": "Filtrér resultater",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
     "Send": "Send",
-    "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Wednesday": "Onsdag",
@@ -767,7 +764,9 @@
         "see_changes_button": "Hvad er nyt?",
         "release_notes_toast_title": "Hvad er nyt",
         "error_encountered": "En fejl er opstået (%(errorDetail)s).",
-        "no_update": "Ingen opdatering tilgængelig."
+        "no_update": "Ingen opdatering tilgængelig.",
+        "unavailable": "Utilgængelig",
+        "changelog": "Ændringslog"
     },
     "space": {
         "context_menu": {
@@ -885,5 +884,8 @@
         "public_rooms": {
             "network_dropdown_add_dialog_title": "Tilføj en ny server"
         }
+    },
+    "redact": {
+        "error": "Du kan ikke slette denne besked. (%(code)s)"
     }
 }

@@ -29,10 +29,6 @@
     "Moderator": "Điều phối viên",
     "%(items)s and %(lastItem)s": "%(items)s và %(lastItem)s",
     "Vietnam": "Việt Nam",
-    "Confirm Removal": "Xác nhận Loại bỏ",
-    "Removing…": "Đang xóa…",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Thử cuộn lên trong dòng thời gian để xem có cái nào trước đó không.",
-    "No recent messages by %(user)s found": "Không tìm thấy tin nhắn gần đây của %(user)s",
     "Switch theme": "Chuyển đổi chủ đề",
     "Sign in with SSO": "Đăng nhập bằng SSO",
     "Delete Widget": "Xóa Widget",
@@ -219,15 +215,7 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Bất kỳ ai trong <SpaceName/> đều có thể tìm và tham gia.",
     "Private space (invite only)": "space riêng tư (chỉ mời)",
     "Space visibility": "Khả năng hiển thị space",
-    "Clear all data": "Xóa tất cả dữ liệu",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Xóa tất cả dữ liệu khỏi phiên này là vĩnh viễn. Các tin nhắn được mã hóa sẽ bị mất trừ khi các khóa của chúng đã được sao lưu.",
-    "Clear all data in this session?": "Xóa tất cả dữ liệu trong phiên này?",
-    "Reason (optional)": "Lý do (không bắt buộc)",
-    "You cannot delete this message. (%(code)s)": "Bạn không thể xóa tin nhắn này.  (%(code)s)",
     "Email address": "Địa chỉ thư điện tử",
-    "Changelog": "Lịch sử thay đổi",
-    "Unavailable": "Không có sẵn",
-    "Unable to load commit detail: %(msg)s": "Không thể tải chi tiết cam kết: %(msg)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Sử dụng máy chủ định danh để mời qua địa chỉ thư điện tử. Quản lý trong mục Cài đặt <settings>Settings</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Sử dụng máy chủ nhận dạng để mời qua thư điện tử. <default>Sử dụng mặc định (%(defaultIdentityServerName)s)</default> hoặc quản lý trong mục Cài đặt <settings>Settings</settings>.",
@@ -314,12 +302,6 @@
     "Monday": "Thứ hai",
     "Sunday": "Chủ nhật",
     "Filter results": "Lọc kết quả",
-    "Remove %(count)s messages": {
-        "one": "Bỏ một tin nhắn",
-        "other": "Bỏ %(count)s tin nhắn"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Đối với một lượng lớn thư, quá trình này có thể mất một chút thời gian. Vui lòng không làm mới khách hàng của bạn trong thời gian chờ đợi.",
-    "Remove recent messages by %(user)s": "Bỏ các tin nhắn gần đây bởi %(user)s",
     "not specified": "không được chỉ định",
     "Failed to connect to integration manager": "Không kết nối được với trình quản lý tích hợp",
     "unknown error code": "mã lỗi không xác định",
@@ -3100,7 +3082,12 @@
         "autodiscovery_invalid_is": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
         "autodiscovery_invalid_is_response": "Phản hồi phát hiện máy chủ nhận dạng không hợp lệ",
         "server_picker_description_matrix.org": "Tham gia hàng triệu máy chủ công cộng miễn phí lớn nhất",
-        "server_picker_title_default": "Tùy chọn máy chủ"
+        "server_picker_title_default": "Tùy chọn máy chủ",
+        "soft_logout": {
+            "clear_data_title": "Xóa tất cả dữ liệu trong phiên này?",
+            "clear_data_description": "Xóa tất cả dữ liệu khỏi phiên này là vĩnh viễn. Các tin nhắn được mã hóa sẽ bị mất trừ khi các khóa của chúng đã được sao lưu.",
+            "clear_data_button": "Xóa tất cả dữ liệu"
+        }
     },
     "room_list": {
         "sort_unread_first": "Hiển thị các phòng có tin nhắn chưa đọc trước",
@@ -3350,7 +3337,10 @@
         "no_update": "Không có bản cập nhật nào.",
         "downloading": "Đang tải xuống cập nhật…",
         "new_version_available": "Có phiên bản mới. Cập nhật ngay bây giờ <a>Update now.</a>",
-        "check_action": "Kiểm tra cập nhật"
+        "check_action": "Kiểm tra cập nhật",
+        "error_unable_load_commit": "Không thể tải chi tiết cam kết: %(msg)s",
+        "unavailable": "Không có sẵn",
+        "changelog": "Lịch sử thay đổi"
     },
     "threads": {
         "all_threads": "Tất cả chủ đề",
@@ -3950,7 +3940,17 @@
         "deactivate_confirm_action": "Hủy kích hoạt người dùng",
         "error_deactivate": "Không thể hủy kích hoạt người dùng",
         "role_label": "Vai trò trong <RoomName/>",
-        "edit_own_devices": "Chỉnh sửa thiết bị"
+        "edit_own_devices": "Chỉnh sửa thiết bị",
+        "redact": {
+            "no_recent_messages_title": "Không tìm thấy tin nhắn gần đây của %(user)s",
+            "no_recent_messages_description": "Thử cuộn lên trong dòng thời gian để xem có cái nào trước đó không.",
+            "confirm_title": "Bỏ các tin nhắn gần đây bởi %(user)s",
+            "confirm_description_2": "Đối với một lượng lớn thư, quá trình này có thể mất một chút thời gian. Vui lòng không làm mới khách hàng của bạn trong thời gian chờ đợi.",
+            "confirm_button": {
+                "one": "Bỏ một tin nhắn",
+                "other": "Bỏ %(count)s tin nhắn"
+            }
+        }
     },
     "stickers": {
         "empty": "Bạn hiện chưa bật bất kỳ gói nhãn dán nào",
@@ -4056,5 +4056,11 @@
             "network_dropdown_selected_label": "Hiện: Phòng Matrix"
         }
     },
-    "dialog_close_label": "Đóng hộp thoại"
+    "dialog_close_label": "Đóng hộp thoại",
+    "redact": {
+        "error": "Bạn không thể xóa tin nhắn này.  (%(code)s)",
+        "ongoing": "Đang xóa…",
+        "confirm_button": "Xác nhận Loại bỏ",
+        "reason_label": "Lý do (không bắt buộc)"
+    }
 }

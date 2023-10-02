@@ -42,7 +42,6 @@
     "Create new room": "Vytvoriť novú miestnosť",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
-    "Confirm Removal": "Potvrdiť odstránenie",
     "An error has occurred.": "Vyskytla sa chyba.",
     "Unable to restore session": "Nie je možné obnoviť reláciu",
     "Verification Pending": "Nedokončené overenie",
@@ -61,14 +60,11 @@
     "Sunday": "Nedeľa",
     "Today": "Dnes",
     "Friday": "Piatok",
-    "Changelog": "Zoznam zmien",
-    "Unavailable": "Nedostupné",
     "Filter results": "Filtrovať výsledky",
     "Tuesday": "Utorok",
     "Saturday": "Sobota",
     "Monday": "Pondelok",
     "Wednesday": "Streda",
-    "You cannot delete this message. (%(code)s)": "Nemôžete vymazať túto správu. (%(code)s)",
     "Thursday": "Štvrtok",
     "Yesterday": "Včera",
     "Send Logs": "Odoslať záznamy",
@@ -91,7 +87,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
     "Updating %(brand)s": "Prebieha aktualizácia %(brand)s",
-    "Unable to load commit detail: %(msg)s": "Nie je možné načítať podrobnosti pre commit: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Aby ste po odhlásení neprišli o možnosť čítať históriu šifrovaných konverzácií, mali by ste si ešte pred odhlásením exportovať šifrovacie kľúče miestností. Prosím vráťte sa k novšej verzii %(brand)s a exportujte si kľúče",
     "Incompatible Database": "Nekompatibilná databáza",
     "Continue With Encryption Disabled": "Pokračovať s vypnutým šifrovaním",
@@ -187,7 +182,6 @@
     "Clear cross-signing keys": "Vyčistiť kľúče na krížové podpisovanie",
     "a new cross-signing key signature": "nový podpis kľúča pre krížové podpisovanie",
     "a device cross-signing signature": "krížový podpis zariadenia",
-    "Removing…": "Odstraňovanie…",
     "IRC display name width": "Šírka zobrazovaného mena IRC",
     "Lock": "Zámka",
     "This backup is trusted because it has been restored on this session": "Táto záloha je dôveryhodná, lebo už bola načítaná v tejto relácii",
@@ -447,17 +441,12 @@
     "Encrypted by a deleted session": "Šifrované odstránenou reláciou",
     "%(name)s wants to verify": "%(name)s chce overiť",
     "Search spaces": "Hľadať priestory",
-    "Remove %(count)s messages": {
-        "other": "Odstrániť %(count)s správ",
-        "one": "Odstrániť 1 správu"
-    },
     "Create a space": "Vytvoriť priestor",
     "%(count)s verified sessions": {
         "one": "1 overená relácia",
         "other": "%(count)s overených relácií"
     },
     "Sign out and remove encryption keys?": "Odhlásiť sa a odstrániť šifrovacie kľúče?",
-    "Remove recent messages by %(user)s": "Odstrániť posledné správy používateľa %(user)s",
     "Looks good!": "Vyzerá to super!",
     "If you can't see who you're looking for, send them your invite link below.": "Ak nevidíte, koho hľadáte, pošlite mu odkaz na pozvánku nižšie.",
     "Or send invite link": "Alebo pošlite pozvánku",
@@ -520,7 +509,6 @@
     "Cancelled signature upload": "Zrušené nahrávanie podpisu",
     "Integrations not allowed": "Integrácie nie sú povolené",
     "Integrations are disabled": "Integrácie sú zakázané",
-    "Clear all data": "Vymazať všetky údaje",
     "edited": "upravené",
     "Message edits": "Úpravy správy",
     "Switch theme": "Prepnúť motív",
@@ -535,7 +523,6 @@
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Určite, ktoré priestory budú mať prístup do tejto miestnosti. Ak je vybraný priestor, jeho členovia môžu nájsť a pripojiť sa k <RoomName/>.",
     "Select spaces": "Vybrať priestory",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
     "Automatically invite members from this room to the new one": "Automaticky pozvať členov z tejto miestnosti do novej",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s vaším %(brand)s, nahláste prosím <a>chybu</a>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s %(brand)s, nahláste prosím chybu.",
@@ -546,7 +533,6 @@
     "Are you sure you want to deactivate your account? This is irreversible.": "Ste si istí, že chcete deaktivovať svoje konto? Je to nezvratné.",
     "Anyone in <SpaceName/> will be able to find and join.": "Ktokoľvek v <SpaceName/> bude môcť nájsť a pripojiť sa.",
     "Space visibility": "Viditeľnosť priestoru",
-    "Reason (optional)": "Dôvod (voliteľný)",
     "Leave space": "Opustiť priestor",
     "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
@@ -641,14 +627,10 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ste si istí, že chcete ukončiť túto anketu? Zobrazia sa konečné výsledky ankety a ľudia nebudú môcť už hlasovať.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Overením tohto zariadenia ho označíte ako dôveryhodné a používatelia, ktorí vás overili, budú tomuto zariadeniu dôverovať.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Overenie tohto používateľa označí jeho reláciu ako dôveryhodnú a zároveň označí vašu reláciu ako dôveryhodnú pre neho.",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vymazanie všetkých údajov z tejto relácie je trvalé. Zašifrované správy sa stratia, pokiaľ neboli zálohované ich kľúče.",
-    "Clear all data in this session?": "Vymazať všetky údaje v tejto relácii?",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Týchto používateľov sme nemohli pozvať. Skontrolujte prosím používateľov, ktorých chcete pozvať, a skúste to znova.",
     "Something went wrong trying to invite the users.": "Pri pokuse o pozvanie používateľov sa niečo pokazilo.",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Nasledujúci používatelia nemusia existovať alebo sú neplatní a nemožno ich pozvať: %(csvNames)s",
     "Failed to find the following users": "Nepodarilo sa nájsť týchto používateľov",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Pri veľkom množstve správ to môže trvať určitý čas. Medzitým prosím neobnovujte svojho klienta.",
-    "No recent messages by %(user)s found": "Nenašli sa žiadne nedávne správy od používateľa %(user)s",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Na pozvanie e-mailom použite server identity. Vykonajte zmeny v <settings>Nastaveniach</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Na pozvanie e-mailom použite server identity. <default>Použite predvolený (%(defaultIdentityServerName)s)</default> alebo spravujte v <settings>nastaveniach</settings>.",
     "Recently viewed": "Nedávno zobrazené",
@@ -723,12 +705,6 @@
     "Resend %(unsentCount)s reaction(s)": "Opätovné odoslanie %(unsentCount)s reakcií",
     "Consult first": "Najprv konzultovať",
     "You are sharing your live location": "Zdieľate svoju polohu v reálnom čase",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Zrušte označenie, ak chcete odstrániť aj systémové správy o tomto používateľovi (napr. zmena členstva, zmena profilu...)",
-    "Preserve system messages": "Zachovať systémové správy",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Chystáte sa odstrániť %(count)s správu od používateľa %(user)s. Týmto ju natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?",
-        "other": "Chystáte sa odstrániť %(count)s správ od používateľa %(user)s. Týmto ich natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?"
-    },
     "Unsent": "Neodoslané",
     "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s začal/a videohovor",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
-    "Can't start voice message": "Nemožno spustiť hlasovú správu",
     "unknown": "neznáme",
     "Loading live location…": "Načítavanie polohy v reálnom čase…",
     "Fetching keys from server…": "Získavanie kľúčov zo servera…",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Spustiť priamu správu aj tak",
     "Start DM anyway and never warn me again": "Spustiť priamu správu aj tak a nikdy ma už nevarovať",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie je možné nájsť používateľské profily pre Matrix ID zobrazené nižšie - chcete aj tak začať priamu správu?",
-    "Are you sure you wish to remove (delete) this event?": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
-    "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť.",
     "Upgrade room": "Aktualizovať miestnosť",
     "Other spaces you know": "Ďalšie priestory, ktoré poznáte",
     "Failed to query public rooms": "Nepodarilo sa vyhľadať verejné miestnosti",
@@ -3312,7 +3284,12 @@
         "autodiscovery_invalid_is_response": "Neplatná odpoveď pri zisťovaní servera totožností",
         "server_picker_description": "Môžete použiť nastavenia vlastného servera na prihlásenie sa na iné servery Matrix-u zadaním inej adresy URL domovského servera. To vám umožní používať %(brand)s s existujúcim účtom Matrix na inom domovskom serveri.",
         "server_picker_description_matrix.org": "Pripojte sa k mnohým používateľom najväčšieho verejného domovského servera zdarma",
-        "server_picker_title_default": "Možnosti servera"
+        "server_picker_title_default": "Možnosti servera",
+        "soft_logout": {
+            "clear_data_title": "Vymazať všetky údaje v tejto relácii?",
+            "clear_data_description": "Vymazanie všetkých údajov z tejto relácie je trvalé. Zašifrované správy sa stratia, pokiaľ neboli zálohované ich kľúče.",
+            "clear_data_button": "Vymazať všetky údaje"
+        }
     },
     "room_list": {
         "sort_unread_first": "Najprv ukázať miestnosti s neprečítanými správami",
@@ -3567,7 +3544,10 @@
         "no_update": "K dispozícii nie je žiadna aktualizácia.",
         "downloading": "Sťahovanie aktualizácie…",
         "new_version_available": "Je dostupná nová verzia. <a>Aktualizovať.</a>",
-        "check_action": "Skontrolovať dostupnosť aktualizácie"
+        "check_action": "Skontrolovať dostupnosť aktualizácie",
+        "error_unable_load_commit": "Nie je možné načítať podrobnosti pre commit: %(msg)s",
+        "unavailable": "Nedostupné",
+        "changelog": "Zoznam zmien"
     },
     "threads": {
         "all_threads": "Všetky vlákna",
@@ -4230,7 +4210,23 @@
         "deactivate_confirm_action": "Deaktivovať používateľa",
         "error_deactivate": "Nepodarilo sa deaktivovať používateľa",
         "role_label": "Rola v <RoomName/>",
-        "edit_own_devices": "Upraviť zariadenia"
+        "edit_own_devices": "Upraviť zariadenia",
+        "redact": {
+            "no_recent_messages_title": "Nenašli sa žiadne nedávne správy od používateľa %(user)s",
+            "no_recent_messages_description": "Skúste sa posunúť nahor na časovej osi a pozrite sa, či tam nie sú nejaké skoršie.",
+            "confirm_title": "Odstrániť posledné správy používateľa %(user)s",
+            "confirm_description_1": {
+                "one": "Chystáte sa odstrániť %(count)s správu od používateľa %(user)s. Týmto ju natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?",
+                "other": "Chystáte sa odstrániť %(count)s správ od používateľa %(user)s. Týmto ich natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?"
+            },
+            "confirm_description_2": "Pri veľkom množstve správ to môže trvať určitý čas. Medzitým prosím neobnovujte svojho klienta.",
+            "confirm_keep_state_label": "Zachovať systémové správy",
+            "confirm_keep_state_explainer": "Zrušte označenie, ak chcete odstrániť aj systémové správy o tomto používateľovi (napr. zmena členstva, zmena profilu...)",
+            "confirm_button": {
+                "other": "Odstrániť %(count)s správ",
+                "one": "Odstrániť 1 správu"
+            }
+        }
     },
     "stickers": {
         "empty": "Momentálne nemáte aktívne žiadne balíčky s nálepkami",
@@ -4355,5 +4351,17 @@
             "network_dropdown_selected_label": "Zobraziť: Matrix miestnosti"
         }
     },
-    "dialog_close_label": "Zavrieť dialógové okno"
+    "dialog_close_label": "Zavrieť dialógové okno",
+    "voice_message": {
+        "cant_start_broadcast_title": "Nemožno spustiť hlasovú správu",
+        "cant_start_broadcast_description": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu."
+    },
+    "redact": {
+        "error": "Nemôžete vymazať túto správu. (%(code)s)",
+        "ongoing": "Odstraňovanie…",
+        "confirm_description": "Ste si istí, že chcete túto udalosť odstrániť (vymazať)?",
+        "confirm_description_state": "Upozorňujeme, že odstránením takýchto zmien v miestnosti by sa zmena mohla zvrátiť.",
+        "confirm_button": "Potvrdiť odstránenie",
+        "reason_label": "Dôvod (voliteľný)"
+    }
 }

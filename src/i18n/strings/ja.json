@@ -3,18 +3,15 @@
     "unknown error code": "不明なエラーコード",
     "Unnamed room": "名前のないルーム",
     "Thursday": "木曜日",
-    "You cannot delete this message. (%(code)s)": "このメッセージを削除できません。(%(code)s）",
     "Send": "送信",
     "Sunday": "日曜日",
     "Today": "今日",
     "Monday": "月曜日",
     "Friday": "金曜日",
     "Yesterday": "昨日",
-    "Changelog": "更新履歴",
     "Wednesday": "水曜日",
     "Tuesday": "火曜日",
     "Saturday": "土曜日",
-    "Unavailable": "使用できません",
     "Filter results": "結果を絞り込む",
     "Sun": "日",
     "Mon": "月",
@@ -65,7 +62,6 @@
     "collapse": "折りたたむ",
     "expand": "展開",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
-    "Confirm Removal": "削除の確認",
     "An error has occurred.": "エラーが発生しました。",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "以前%(host)sにて、メンバーの遅延ロードを有効にした%(brand)sが使用されていました。このバージョンでは、遅延ロードは無効です。ローカルのキャッシュにはこれらの2つの設定の間での互換性がないため、%(brand)sはアカウントを再同期する必要があります。",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "他のバージョンの%(brand)sが別のタブで開いている場合は、それを閉じてください。同じホスト上で遅延ロードを有効と無効の両方に設定して%(brand)sを使用すると、問題が発生します。",
@@ -106,11 +102,8 @@
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "このルームを<oldVersion />から<newVersion />にアップグレードします。",
     "Session name": "セッション名",
     "Session key": "セッションキー",
-    "Removing…": "削除しています…",
     "Destroy cross-signing keys?": "クロス署名鍵を破棄してよろしいですか？",
     "Clear cross-signing keys": "クロス署名鍵を削除",
-    "Clear all data in this session?": "このセッションの全てのデータを削除してよろしいですか？",
-    "Clear all data": "全てのデータを消去",
     "Message edits": "メッセージの編集履歴",
     "Sign out and remove encryption keys?": "サインアウトして、暗号鍵を削除しますか？",
     "Email (optional)": "電子メール（任意）",
@@ -466,14 +459,6 @@
     "%(name)s accepted": "%(name)sは受け付けました",
     "%(name)s cancelled": "%(name)sは中止しました",
     "%(name)s declined": "%(name)sは拒否しました",
-    "Remove %(count)s messages": {
-        "one": "1件のメッセージを削除",
-        "other": "%(count)s件のメッセージを削除"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "大量のメッセージだと時間がかかるかもしれません。その間はクライアントを再読み込みしないでください。",
-    "Remove recent messages by %(user)s": "%(user)sからの最近のメッセージを削除",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "タイムラインを上にスクロールして、以前のものがあるかどうかを確認してください。",
-    "No recent messages by %(user)s found": "%(user)sからの最近のメッセージが見つかりません",
     "Not encrypted": "暗号化されていません",
     "Leave space": "スペースから退出",
     "Create a space": "スペースを作成",
@@ -481,7 +466,6 @@
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "Add a space to a space you manage.": "新しいスペースを、あなたが管理するスペースに追加。",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
-    "Reason (optional)": "理由（任意）",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
         "other": "%(spaceName)sと他%(count)s個"
@@ -692,7 +676,6 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
     "Live location error": "位置情報（ライブ）のエラー",
     "Live location enabled": "位置情報（ライブ）が有効です",
     "%(count)s participants": {
@@ -706,7 +689,6 @@
     "View list": "一覧を表示",
     "View List": "一覧を表示",
     "Remember my selection for this widget": "このウィジェットに関する選択を記憶",
-    "Unable to load commit detail: %(msg)s": "コミットの詳細を読み込めません：%(msg)s",
     "Explore public spaces in the new search dialog": "新しい検索ダイアログで公開スペースを探す",
     "Start a group chat": "グループチャットを開始",
     "Other options": "その他のオプション",
@@ -736,14 +718,11 @@
     "%(members)s and %(last)s": "%(members)sと%(last)s",
     "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)sに更新",
     "Unsent": "未送信",
-    "Can't start voice message": "音声メッセージを開始できません",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
     "An error occurred while stopping your live location, please try again": "位置情報（ライブ）を停止している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location, please try again": "位置情報（ライブ）を共有している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location": "位置情報（ライブ）を共有している際にエラーが発生しました",
     "An error occurred while stopping your live location": "位置情報（ライブ）を停止する際にエラーが発生しました",
-    "Preserve system messages": "システムメッセージを保存",
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
     "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
@@ -763,11 +742,6 @@
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "あなたの古いメッセージは、それを受信した人には表示され続けます。これは電子メールの場合と同様です。あなたが送信したメッセージを今後のルームの参加者に表示しないようにしますか？",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "このユーザーに関するシステムメッセージ（メンバーシップの変更、プロフィールの変更など）も削除したい場合は、チェックを外してください",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "%(user)sによる%(count)s件のメッセージを削除しようとしています。これは会話に参加している全員からメッセージを永久に削除します。続行してよろしいですか？",
-        "other": "%(user)sによる%(count)s件のメッセージを削除しようとしています。これは会話に参加している全員からメッセージを永久に削除します。続行してよろしいですか？"
-    },
     "Consult first": "初めに相談",
     "unknown": "不明",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "メッセージは削除されませんが、インデックスを再構成している間、検索のパフォーマンスが低下します",
@@ -3177,7 +3151,12 @@
         "autodiscovery_invalid_is_response": "IDサーバーのディスカバリー（発見）に関する不正な応答です",
         "server_picker_description": "異なるホームサーバーのURLを設定すると、他のMatrixのサーバーにサインインできます。それにより、異なるホームサーバーにある既存のMatrixのアカウントを%(brand)sで使用できます。",
         "server_picker_description_matrix.org": "最大の公開サーバーで、数百万人に無料で参加",
-        "server_picker_title_default": "サーバーのオプション"
+        "server_picker_title_default": "サーバーのオプション",
+        "soft_logout": {
+            "clear_data_title": "このセッションの全てのデータを削除してよろしいですか？",
+            "clear_data_description": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
+            "clear_data_button": "全てのデータを消去"
+        }
     },
     "room_list": {
         "sort_unread_first": "未読メッセージのあるルームを最初に表示",
@@ -3423,7 +3402,10 @@
         "no_update": "更新はありません。",
         "downloading": "更新をダウンロードしています…",
         "new_version_available": "新しいバージョンが利用可能です。<a>今すぐ更新</a>",
-        "check_action": "更新を確認"
+        "check_action": "更新を確認",
+        "error_unable_load_commit": "コミットの詳細を読み込めません：%(msg)s",
+        "unavailable": "使用できません",
+        "changelog": "更新履歴"
     },
     "threads": {
         "all_threads": "全てのスレッド",
@@ -4047,7 +4029,23 @@
         "deactivate_confirm_action": "ユーザーを無効化",
         "error_deactivate": "ユーザーの無効化に失敗しました",
         "role_label": "<RoomName/>での役割",
-        "edit_own_devices": "端末を編集"
+        "edit_own_devices": "端末を編集",
+        "redact": {
+            "no_recent_messages_title": "%(user)sからの最近のメッセージが見つかりません",
+            "no_recent_messages_description": "タイムラインを上にスクロールして、以前のものがあるかどうかを確認してください。",
+            "confirm_title": "%(user)sからの最近のメッセージを削除",
+            "confirm_description_1": {
+                "one": "%(user)sによる%(count)s件のメッセージを削除しようとしています。これは会話に参加している全員からメッセージを永久に削除します。続行してよろしいですか？",
+                "other": "%(user)sによる%(count)s件のメッセージを削除しようとしています。これは会話に参加している全員からメッセージを永久に削除します。続行してよろしいですか？"
+            },
+            "confirm_description_2": "大量のメッセージだと時間がかかるかもしれません。その間はクライアントを再読み込みしないでください。",
+            "confirm_keep_state_label": "システムメッセージを保存",
+            "confirm_keep_state_explainer": "このユーザーに関するシステムメッセージ（メンバーシップの変更、プロフィールの変更など）も削除したい場合は、チェックを外してください",
+            "confirm_button": {
+                "one": "1件のメッセージを削除",
+                "other": "%(count)s件のメッセージを削除"
+            }
+        }
     },
     "stickers": {
         "empty": "現在、ステッカーパックが有効になっていません",
@@ -4151,5 +4149,15 @@
             "network_dropdown_selected_label": "表示：Matrixルーム"
         }
     },
-    "dialog_close_label": "ダイアログを閉じる"
+    "dialog_close_label": "ダイアログを閉じる",
+    "voice_message": {
+        "cant_start_broadcast_title": "音声メッセージを開始できません",
+        "cant_start_broadcast_description": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。"
+    },
+    "redact": {
+        "error": "このメッセージを削除できません。(%(code)s）",
+        "ongoing": "削除しています…",
+        "confirm_button": "削除の確認",
+        "reason_label": "理由（任意）"
+    }
 }

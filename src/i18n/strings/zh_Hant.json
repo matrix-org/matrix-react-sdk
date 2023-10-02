@@ -38,7 +38,6 @@
         "one": "（~%(count)s 結果）",
         "other": "（~%(count)s 結果）"
     },
-    "Confirm Removal": "確認刪除",
     "Unable to restore session": "無法復原工作階段",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
     "This will allow you to reset your password and receive notifications.": "這讓您可以重設您的密碼與接收通知。",
@@ -62,13 +61,10 @@
     "Sunday": "星期日",
     "Today": "今天",
     "Friday": "星期五",
-    "Changelog": "變更記錄檔",
-    "Unavailable": "無法取得",
     "Filter results": "過濾結果",
     "Tuesday": "星期二",
     "Saturday": "星期六",
     "Monday": "星期一",
-    "You cannot delete this message. (%(code)s)": "您無法刪除此訊息。(%(code)s)",
     "Thursday": "星期四",
     "Yesterday": "昨天",
     "Wednesday": "星期三",
@@ -102,7 +98,6 @@
     "Unable to restore backup": "無法復原備份",
     "No backup found!": "找不到備份！",
     "Failed to decrypt %(failedCount)s sessions!": "無法解密 %(failedCount)s 個工作階段！",
-    "Unable to load commit detail: %(msg)s": "無法載入遞交的詳細資訊：%(msg)s",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "驗證此工作階段，並標記為可受信任。由您將工作階段標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
     "Incoming Verification Request": "收到的驗證請求",
     "Email (optional)": "電子郵件（選擇性）",
@@ -199,22 +194,12 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升級這個聊天室需要關閉目前的執行個體並重新建立一個新的聊天室來替代。為了給予聊天室成員最佳的體驗，我們將會：",
     "Resend %(unsentCount)s reaction(s)": "重新傳送 %(unsentCount)s 反應",
     "Your homeserver doesn't seem to support this feature.": "您的家伺服器似乎並不支援此功能。",
-    "Clear all data": "清除所有資料",
-    "Removing…": "正在刪除…",
     "Find others by phone or email": "透過電話或電子郵件尋找其他人",
     "Be found by phone or email": "透過電話或電子郵件找到",
     "Command Help": "指令說明",
     "Deactivate account": "停用帳號",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "使用身分伺服器以透過電子郵件邀請。<default>使用預設值 (%(defaultIdentityServerName)s)</default>或在<settings>設定</settings>中管理。",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "使用身分伺服器以透過電子郵件邀請。在<settings>設定</settings>中管理。",
-    "No recent messages by %(user)s found": "找不到 %(user)s 最近的訊息",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "試著在時間軸上捲動以檢視有沒有較早的。",
-    "Remove recent messages by %(user)s": "移除 %(user)s 最近的訊息",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "若有大量訊息需刪除，可能需要一些時間。請不要在此時重新整理您的客戶端。",
-    "Remove %(count)s messages": {
-        "other": "移除 %(count)s 則訊息",
-        "one": "移除 1 則訊息"
-    },
     "e.g. my-room": "例如：my-room",
     "%(name)s accepted": "%(name)s 已接受",
     "%(name)s cancelled": "%(name)s 已取消",
@@ -245,8 +230,6 @@
         "other": "%(count)s 個工作階段",
         "one": "%(count)s 個工作階段"
     },
-    "Clear all data in this session?": "清除此工作階段中的所有資料？",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "將會永久清除此工作階段的所有資料。除非已備份金鑰，否則將會遺失所有加密訊息。",
     "Session name": "工作階段名稱",
     "Session key": "工作階段金鑰",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "驗證此使用者將會把他們的工作階段標記為受信任，並同時為他們標記您的工作階段為可信任。",
@@ -581,7 +564,6 @@
     "Approve widget permissions": "批准小工具權限",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "請注意，如果您不新增電子郵件且忘記密碼，您將<b>永遠失去對您帳號的存取權</b>。",
     "Continuing without email": "不使用電子郵件來繼續",
-    "Reason (optional)": "理由（選擇性）",
     "Hold": "保留",
     "Resume": "繼續",
     "Transfer": "轉接",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "加入 %(roomAddress)s",
     "Search Dialog": "搜尋對話方塊",
     "You are sharing your live location": "您正在分享您的即時位置",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若您也想移除此使用者的系統訊息（例如成員資格變更、個人資料變更…），請取消勾選",
-    "Preserve system messages": "保留系統訊息",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "您將要移除 %(user)s 的 %(count)s 則訊息。將會為對話中的所有人永久移除它們。確定要繼續嗎？",
-        "other": "您將要移除 %(user)s 的 %(count)s 則訊息。將會為對話中的所有人永久移除它們。確定要繼續嗎？"
-    },
     "Unsent": "未傳送",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s 開始了視訊通話",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播以開始錄製語音訊息。",
-    "Can't start voice message": "無法開始語音訊息",
     "unknown": "未知",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "在設定中啟用「%(manageIntegrations)s」來執行此動作。",
     "Loading live location…": "正在載入即時位置…",
@@ -807,8 +781,6 @@
     "Start DM anyway and never warn me again": "開始直接訊息且不要再次警告",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "找不到下方列出的 Matrix ID 個人檔案，您是否仍要開始直接訊息？",
     "Upgrade room": "升級聊天室",
-    "Note that removing room changes like this could undo the change.": "請注意，像這樣移除聊天是變更可能會還原變更。",
-    "Are you sure you wish to remove (delete) this event?": "您真的想要移除（刪除）此活動嗎？",
     "Other spaces you know": "您知道的其他空間",
     "Failed to query public rooms": "檢索公開聊天室失敗",
     "common": {
@@ -3312,7 +3284,12 @@
         "autodiscovery_invalid_is_response": "身份伺服器探索回應無效",
         "server_picker_description": "您可以透過指定不同的家伺服器網址，來登入至其他的 Matrix 伺服器。使用自訂伺服器選項讓您可以使用 %(brand)s 登入到不同家伺服器上的 Matrix 帳號。",
         "server_picker_description_matrix.org": "在最大的公開伺服器上，免費與數百萬人一起交流",
-        "server_picker_title_default": "伺服器選項"
+        "server_picker_title_default": "伺服器選項",
+        "soft_logout": {
+            "clear_data_title": "清除此工作階段中的所有資料？",
+            "clear_data_description": "將會永久清除此工作階段的所有資料。除非已備份金鑰，否則將會遺失所有加密訊息。",
+            "clear_data_button": "清除所有資料"
+        }
     },
     "room_list": {
         "sort_unread_first": "先顯示有未讀訊息的聊天室",
@@ -3567,7 +3544,10 @@
         "no_update": "沒有可用的更新。",
         "downloading": "正在下載更新…",
         "new_version_available": "有可用的新版本。<a>立刻更新。</a>",
-        "check_action": "檢查更新"
+        "check_action": "檢查更新",
+        "error_unable_load_commit": "無法載入遞交的詳細資訊：%(msg)s",
+        "unavailable": "無法取得",
+        "changelog": "變更記錄檔"
     },
     "threads": {
         "all_threads": "所有討論串",
@@ -4230,7 +4210,23 @@
         "deactivate_confirm_action": "停用使用者",
         "error_deactivate": "無法停用使用者",
         "role_label": "<RoomName/> 中的角色",
-        "edit_own_devices": "編輯裝置"
+        "edit_own_devices": "編輯裝置",
+        "redact": {
+            "no_recent_messages_title": "找不到 %(user)s 最近的訊息",
+            "no_recent_messages_description": "試著在時間軸上捲動以檢視有沒有較早的。",
+            "confirm_title": "移除 %(user)s 最近的訊息",
+            "confirm_description_1": {
+                "one": "您將要移除 %(user)s 的 %(count)s 則訊息。將會為對話中的所有人永久移除它們。確定要繼續嗎？",
+                "other": "您將要移除 %(user)s 的 %(count)s 則訊息。將會為對話中的所有人永久移除它們。確定要繼續嗎？"
+            },
+            "confirm_description_2": "若有大量訊息需刪除，可能需要一些時間。請不要在此時重新整理您的客戶端。",
+            "confirm_keep_state_label": "保留系統訊息",
+            "confirm_keep_state_explainer": "若您也想移除此使用者的系統訊息（例如成員資格變更、個人資料變更…），請取消勾選",
+            "confirm_button": {
+                "other": "移除 %(count)s 則訊息",
+                "one": "移除 1 則訊息"
+            }
+        }
     },
     "stickers": {
         "empty": "您目前沒有啟用任何貼圖包",
@@ -4355,5 +4351,17 @@
             "network_dropdown_selected_label": "顯示：Matrix 聊天室"
         }
     },
-    "dialog_close_label": "關閉對話框"
+    "dialog_close_label": "關閉對話框",
+    "voice_message": {
+        "cant_start_broadcast_title": "無法開始語音訊息",
+        "cant_start_broadcast_description": "您無法開始語音訊息，因為您目前正在錄製直播。請結束您的直播以開始錄製語音訊息。"
+    },
+    "redact": {
+        "error": "您無法刪除此訊息。(%(code)s)",
+        "ongoing": "正在刪除…",
+        "confirm_description": "您真的想要移除（刪除）此活動嗎？",
+        "confirm_description_state": "請注意，像這樣移除聊天是變更可能會還原變更。",
+        "confirm_button": "確認刪除",
+        "reason_label": "理由（選擇性）"
+    }
 }

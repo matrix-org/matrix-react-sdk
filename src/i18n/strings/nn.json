@@ -59,10 +59,7 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "collapse": "Slå saman",
     "expand": "Utvid",
-    "Unavailable": "Utilgjengeleg",
-    "Changelog": "Endringslogg",
     "not specified": "Ikkje spesifisert",
-    "Confirm Removal": "Godkjenn Fjerning",
     "An error has occurred.": "Noko gjekk gale.",
     "Clear Storage and Sign Out": "Tøm Lager og Logg Ut",
     "Send Logs": "Send Loggar",
@@ -78,17 +75,8 @@
     "Share User": "Del Brukar",
     "Share Room Message": "Del Rommelding",
     "Link to selected message": "Lenk til den valde meldinga",
-    "You cannot delete this message. (%(code)s)": "Du kan ikkje sletta meldinga. (%(code)s)",
     "Session ID": "Økt-ID",
     "Filter results": "Filtrer resultat",
-    "No recent messages by %(user)s found": "Fann ingen nyare meldingar frå %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Prøv å rulle oppover i historikken for å sjå om det finst nokon eldre.",
-    "Remove recent messages by %(user)s": "Fjern nyare meldingar frå %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Ved store mengder meldingar kan dette ta tid. Ver venleg å ikkje last om klienten din mens dette pågår.",
-    "Remove %(count)s messages": {
-        "other": "Fjern %(count)s meldingar",
-        "one": "Fjern 1 melding"
-    },
     "Invalid theme schema.": "",
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
@@ -99,7 +87,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte.",
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Norway": "Noreg",
@@ -993,7 +980,10 @@
         "autodiscovery_invalid_is_base_url": "Feil base_url for m.identity_server",
         "autodiscovery_invalid_is": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
         "autodiscovery_invalid_is_response": "Feil svar frå identitetstenaren (discovery response)",
-        "server_picker_description_matrix.org": "Kom ihop med millionar av andre på den største offentlege tenaren"
+        "server_picker_description_matrix.org": "Kom ihop med millionar av andre på den største offentlege tenaren",
+        "soft_logout": {
+            "clear_data_description": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte."
+        }
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1043,7 +1033,9 @@
         "release_notes_toast_title": "Kva er nytt",
         "error_encountered": "Noko gjekk gale (%(errorDetail)s).",
         "no_update": "Inga oppdatering er tilgjengeleg.",
-        "check_action": "Sjå etter oppdateringar"
+        "check_action": "Sjå etter oppdateringar",
+        "unavailable": "Utilgjengeleg",
+        "changelog": "Endringslogg"
     },
     "location_sharing": {
         "expand_map": "Utvid kart"
@@ -1303,7 +1295,17 @@
         "promote_warning": "Du kan ikkje angre denne endringa, fordi brukaren du forfremmar vil få same tilgangsnivå som du har no.",
         "deactivate_confirm_title": "Deaktivere brukar?",
         "deactivate_confirm_action": "Deaktiver brukar",
-        "error_deactivate": "Fekk ikkje til å deaktivere brukaren"
+        "error_deactivate": "Fekk ikkje til å deaktivere brukaren",
+        "redact": {
+            "no_recent_messages_title": "Fann ingen nyare meldingar frå %(user)s",
+            "no_recent_messages_description": "Prøv å rulle oppover i historikken for å sjå om det finst nokon eldre.",
+            "confirm_title": "Fjern nyare meldingar frå %(user)s",
+            "confirm_description_2": "Ved store mengder meldingar kan dette ta tid. Ver venleg å ikkje last om klienten din mens dette pågår.",
+            "confirm_button": {
+                "other": "Fjern %(count)s meldingar",
+                "one": "Fjern 1 melding"
+            }
+        }
     },
     "stickers": {
         "empty": "Du har for tida ikkje skrudd nokre klistremerkepakkar på"
@@ -1350,5 +1352,9 @@
             "network_dropdown_add_dialog_title": "Legg til ein ny tenar",
             "network_dropdown_add_dialog_description": "Skriv inn namn på ny tenar du ynskjer å utforske."
         }
+    },
+    "redact": {
+        "error": "Du kan ikkje sletta meldinga. (%(code)s)",
+        "confirm_button": "Godkjenn Fjerning"
     }
 }

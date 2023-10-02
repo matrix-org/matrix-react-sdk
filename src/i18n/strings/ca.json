@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
-    "Confirm Removal": "Confirmeu l'eliminació",
     "An error has occurred.": "S'ha produït un error.",
     "Unable to restore session": "No s'ha pogut restaurar la sessió",
     "Verification Pending": "Verificació pendent",
@@ -62,14 +61,11 @@
     "Sunday": "Diumenge",
     "Today": "Avui",
     "Friday": "Divendres",
-    "Changelog": "Registre de canvis",
-    "Unavailable": "No disponible",
     "Filter results": "Resultats del filtre",
     "Tuesday": "Dimarts",
     "Saturday": "Dissabte",
     "Monday": "Dilluns",
     "Wednesday": "Dimecres",
-    "You cannot delete this message. (%(code)s)": "No podeu eliminar aquest missatge. (%(code)s)",
     "Thursday": "Dijous",
     "Yesterday": "Ahir",
     "We encountered an error trying to restore your previous session.": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
@@ -661,7 +657,9 @@
         "see_changes_button": "Què hi ha de nou?",
         "release_notes_toast_title": "Novetats",
         "error_encountered": "S'ha trobat un error (%(errorDetail)s).",
-        "no_update": "No hi ha cap actualització disponible."
+        "no_update": "No hi ha cap actualització disponible.",
+        "unavailable": "No disponible",
+        "changelog": "Registre de canvis"
     },
     "room_list": {
         "failed_remove_tag": "No s'ha pogut esborrar l'etiqueta %(tagName)s de la sala",
@@ -856,5 +854,9 @@
     },
     "truncated_list_n_more": {
         "other": "I %(count)s més..."
+    },
+    "redact": {
+        "error": "No podeu eliminar aquest missatge. (%(code)s)",
+        "confirm_button": "Confirmeu l'eliminació"
     }
 }

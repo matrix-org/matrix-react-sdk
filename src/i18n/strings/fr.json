@@ -36,7 +36,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Confirm Removal": "Confirmer la suppression",
     "Unable to restore session": "Impossible de restaurer la session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
     "Create new room": "Créer un nouveau salon",
@@ -62,14 +61,11 @@
     "Sunday": "Dimanche",
     "Today": "Aujourd’hui",
     "Friday": "Vendredi",
-    "Changelog": "Journal des modifications",
-    "Unavailable": "Indisponible",
     "Filter results": "Filtrer les résultats",
     "Tuesday": "Mardi",
     "Saturday": "Samedi",
     "Monday": "Lundi",
     "Wednesday": "Mercredi",
-    "You cannot delete this message. (%(code)s)": "Vous ne pouvez pas supprimer ce message. (%(code)s)",
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
     "Send Logs": "Envoyer les journaux",
@@ -103,7 +99,6 @@
     "Unable to restore backup": "Impossible de restaurer la sauvegarde",
     "No backup found!": "Aucune sauvegarde n’a été trouvée !",
     "Failed to decrypt %(failedCount)s sessions!": "Le déchiffrement de %(failedCount)s sessions a échoué !",
-    "Unable to load commit detail: %(msg)s": "Impossible de charger les détails de l’envoi : %(msg)s",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Vérifier cet utilisateur pour le marquer comme fiable. Faire confiance aux utilisateurs vous permet d’être tranquille lorsque vous utilisez des messages chiffrés de bout en bout.",
     "Incoming Verification Request": "Demande de vérification entrante",
     "Email (optional)": "E-mail (facultatif)",
@@ -200,22 +195,12 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "La mise à niveau de ce salon nécessite de fermer l’instance actuelle du salon et de créer un nouveau salon à la place. Pour fournir la meilleure expérience possible aux utilisateurs, nous allons :",
     "Resend %(unsentCount)s reaction(s)": "Renvoyer %(unsentCount)s réaction(s)",
     "Your homeserver doesn't seem to support this feature.": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité.",
-    "Clear all data": "Supprimer toutes les données",
-    "Removing…": "Suppression…",
     "Find others by phone or email": "Trouver d’autres personnes par téléphone ou e-mail",
     "Be found by phone or email": "Être trouvé par téléphone ou e-mail",
     "Deactivate account": "Désactiver le compte",
     "Command Help": "Aide aux commandes",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Utilisez un serveur d’identité pour inviter avec un e-mail. <default>Utilisez le serveur par défaut (%(defaultIdentityServerName)s)</default> ou gérez-le dans les <settings>Paramètres</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilisez un serveur d’identité pour inviter par e-mail. Gérez-le dans les <settings>Paramètres</settings>.",
-    "No recent messages by %(user)s found": "Aucun message récent de %(user)s n’a été trouvé",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Essayez de faire défiler le fil de discussion vers le haut pour voir s’il y en a de plus anciens.",
-    "Remove recent messages by %(user)s": "Supprimer les messages récents de %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Pour un grand nombre de messages, cela peut prendre du temps. N’actualisez pas votre client pendant ce temps.",
-    "Remove %(count)s messages": {
-        "other": "Supprimer %(count)s messages",
-        "one": "Supprimer 1 message"
-    },
     "e.g. my-room": "par ex. mon-salon",
     "%(name)s accepted": "%(name)s a accepté",
     "%(name)s cancelled": "%(name)s a annulé",
@@ -246,8 +231,6 @@
         "other": "%(count)s sessions",
         "one": "%(count)s session"
     },
-    "Clear all data in this session?": "Supprimer toutes les données de cette session ?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "La suppression de toutes les données de cette session est permanente. Les messages chiffrés seront perdus sauf si les clés ont été sauvegardées.",
     "Session name": "Nom de la session",
     "Session key": "Clé de la session",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Vérifier cet utilisateur marquera sa session comme fiable, et marquera aussi votre session comme fiable pour lui.",
@@ -580,7 +563,6 @@
     "Transfer": "Transférer",
     "A call can only be transferred to a single user.": "Un appel ne peut être transféré qu’à un seul utilisateur.",
     "Invite by email": "Inviter par e-mail",
-    "Reason (optional)": "Raison (optionnelle)",
     "Hold": "Mettre en pause",
     "Resume": "Reprendre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Si vous avez oublié votre clé de sécurité, vous pouvez <button>définir de nouvelles options de récupération</button>",
@@ -724,12 +706,6 @@
     "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
     "You are sharing your live location": "Vous partagez votre position en direct",
     "Unsent": "Non envoyé",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Décocher si vous voulez également retirer les messages systèmes de cet utilisateur (par exemple changement de statut ou de profil…)",
-    "Preserve system messages": "Préserver les messages systèmes",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "Vous êtes sur le point de supprimer %(count)s messages de %(user)s. Ils seront supprimés définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?",
-        "one": "Vous êtes sur le point de supprimer %(count)s message de %(user)s. Il sera supprimé définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?"
-    },
     "An error occurred while stopping your live location, please try again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer",
     "%(count)s participants": {
         "one": "1 participant",
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
-    "Can't start voice message": "Impossible de commencer un message vocal",
     "unknown": "inconnu",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
     "Loading live location…": "Chargement de la position en direct…",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Commencer la conversation privée quand même",
     "Start DM anyway and never warn me again": "Commencer quand même la conversation privée et ne plus me prévenir",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même commencer une conversation privée ?",
-    "Note that removing room changes like this could undo the change.": "Notez bien que la suppression de modification du salon comme celui-ci peut annuler ce changement.",
-    "Are you sure you wish to remove (delete) this event?": "Êtes-vous sûr de vouloir supprimer cet évènement ?",
     "Upgrade room": "Mettre à niveau le salon",
     "Other spaces you know": "Autres espaces que vous connaissez",
     "Failed to query public rooms": "Impossible d’interroger les salons publics",
@@ -3312,7 +3284,12 @@
         "autodiscovery_invalid_is_response": "Réponse non valide lors de la découverte du serveur d'identité",
         "server_picker_description": "Vous pouvez utiliser l’option de serveur personnalisé pour vous connecter à d'autres serveurs Matrix en spécifiant une URL de serveur d'accueil différente. Cela vous permet d’utiliser %(brand)s avec un compte Matrix existant sur un serveur d’accueil différent.",
         "server_picker_description_matrix.org": "Rejoignez des millions d’utilisateurs gratuitement sur le plus grand serveur public",
-        "server_picker_title_default": "Options serveur"
+        "server_picker_title_default": "Options serveur",
+        "soft_logout": {
+            "clear_data_title": "Supprimer toutes les données de cette session ?",
+            "clear_data_description": "La suppression de toutes les données de cette session est permanente. Les messages chiffrés seront perdus sauf si les clés ont été sauvegardées.",
+            "clear_data_button": "Supprimer toutes les données"
+        }
     },
     "room_list": {
         "sort_unread_first": "Afficher les salons non lus en premier",
@@ -3567,7 +3544,10 @@
         "no_update": "Aucune mise à jour disponible.",
         "downloading": "Téléchargement de la mise-à-jour…",
         "new_version_available": "Nouvelle version disponible. <a>Faire la mise à niveau maintenant.</a>",
-        "check_action": "Rechercher une mise à jour"
+        "check_action": "Rechercher une mise à jour",
+        "error_unable_load_commit": "Impossible de charger les détails de l’envoi : %(msg)s",
+        "unavailable": "Indisponible",
+        "changelog": "Journal des modifications"
     },
     "threads": {
         "all_threads": "Tous les fils de discussion",
@@ -4230,7 +4210,23 @@
         "deactivate_confirm_action": "Désactiver l’utilisateur",
         "error_deactivate": "Échec de la désactivation de l’utilisateur",
         "role_label": "Rôle dans <RoomName/>",
-        "edit_own_devices": "Modifier les appareils"
+        "edit_own_devices": "Modifier les appareils",
+        "redact": {
+            "no_recent_messages_title": "Aucun message récent de %(user)s n’a été trouvé",
+            "no_recent_messages_description": "Essayez de faire défiler le fil de discussion vers le haut pour voir s’il y en a de plus anciens.",
+            "confirm_title": "Supprimer les messages récents de %(user)s",
+            "confirm_description_1": {
+                "other": "Vous êtes sur le point de supprimer %(count)s messages de %(user)s. Ils seront supprimés définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?",
+                "one": "Vous êtes sur le point de supprimer %(count)s message de %(user)s. Il sera supprimé définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?"
+            },
+            "confirm_description_2": "Pour un grand nombre de messages, cela peut prendre du temps. N’actualisez pas votre client pendant ce temps.",
+            "confirm_keep_state_label": "Préserver les messages systèmes",
+            "confirm_keep_state_explainer": "Décocher si vous voulez également retirer les messages systèmes de cet utilisateur (par exemple changement de statut ou de profil…)",
+            "confirm_button": {
+                "other": "Supprimer %(count)s messages",
+                "one": "Supprimer 1 message"
+            }
+        }
     },
     "stickers": {
         "empty": "Vous n'avez activé aucun jeu d’autocollants pour l’instant",
@@ -4355,5 +4351,17 @@
             "network_dropdown_selected_label": "Afficher : Salons Matrix"
         }
     },
-    "dialog_close_label": "Fermer la boîte de dialogue"
+    "dialog_close_label": "Fermer la boîte de dialogue",
+    "voice_message": {
+        "cant_start_broadcast_title": "Impossible de commencer un message vocal",
+        "cant_start_broadcast_description": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal."
+    },
+    "redact": {
+        "error": "Vous ne pouvez pas supprimer ce message. (%(code)s)",
+        "ongoing": "Suppression…",
+        "confirm_description": "Êtes-vous sûr de vouloir supprimer cet évènement ?",
+        "confirm_description_state": "Notez bien que la suppression de modification du salon comme celui-ci peut annuler ce changement.",
+        "confirm_button": "Confirmer la suppression",
+        "reason_label": "Raison (optionnelle)"
+    }
 }

@@ -36,7 +36,6 @@
     "An error has occurred.": "Ocorreu um erro.",
     "Email address": "Endereço de e-mail",
     "Warning!": "Atenção!",
-    "Confirm Removal": "Confirmar a remoção",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
     "Home": "Home",
@@ -62,18 +61,14 @@
     "Sunday": "Domingo",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
-    "Changelog": "Registro de alterações",
-    "Unavailable": "Indisponível",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
-    "You cannot delete this message. (%(code)s)": "Você não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os relatórios, você deve <a>criar um bilhete de erro no GitHub</a> para descrever seu problema.",
-    "Unable to load commit detail: %(msg)s": "Não foi possível carregar os detalhes do envio: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Para evitar perder seu histórico de bate-papo, você precisa exportar as chaves da sua sala antes de se desconectar. Quando entrar novamente, você precisará usar a versão mais atual do %(brand)s",
     "Incompatible Database": "Banco de dados incompatível",
     "Continue With Encryption Disabled": "Continuar com criptografia desativada",
@@ -181,7 +176,6 @@
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
     "%(name)s wants to verify": "%(name)s solicita confirmação",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Você já usou uma versão mais recente do %(brand)s nesta sessão. Para usar esta versão novamente com a criptografia de ponta a ponta, você terá que se desconectar e entrar novamente.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Confirme este usuário para torná-lo confiável. Confiar nos usuários fornece segurança adicional ao trocar mensagens criptografadas de ponta a ponta.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Confirme este aparelho para torná-lo confiável. Confiar neste aparelho fornecerá segurança adicional para você e aos outros ao trocarem mensagens criptografadas de ponta a ponta.",
@@ -204,9 +198,6 @@
     "edited": "editado",
     "Submit logs": "Enviar relatórios",
     "e.g. my-room": "por exemplo: minha-sala",
-    "Removing…": "Removendo…",
-    "Clear all data in this session?": "Limpar todos os dados nesta sessão?",
-    "Clear all data": "Limpar todos os dados",
     "Are you sure you want to deactivate your account? This is irreversible.": "Tem certeza de que deseja desativar sua conta? Isso é irreversível.",
     "Confirm account deactivation": "Confirmar desativação da conta",
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
@@ -228,12 +219,6 @@
     "%(count)s sessions": {
         "other": "%(count)s sessões",
         "one": "%(count)s sessão"
-    },
-    "No recent messages by %(user)s found": "Nenhuma mensagem recente de %(user)s foi encontrada",
-    "Remove recent messages by %(user)s": "Apagar mensagens de %(user)s na sala",
-    "Remove %(count)s messages": {
-        "other": "Apagar %(count)s mensagens para todos",
-        "one": "Remover 1 mensagem"
     },
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Use um servidor de identidade para convidar por e-mail. <default>Use o padrão (%(defaultIdentityServerName)s)</default> ou um servidor personalizado em <settings>Configurações</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Use um servidor de identidade para convidar por e-mail. Gerencie o servidor em <settings>Configurações</settings>.",
@@ -293,7 +278,6 @@
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Apagar chaves de autoverificação é permanente. Qualquer pessoa com quem você se confirmou receberá alertas de segurança. Não é aconselhável fazer isso, a menos que você tenha perdido todos os aparelhos nos quais fez a autoverificação.",
     "Clear cross-signing keys": "Limpar chaves autoverificadas",
     "a device cross-signing signature": "um aparelho autoverificado",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Quando há muitas mensagens, isso pode levar algum tempo. Por favor, não recarregue o seu cliente enquanto isso.",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
     "Upload completed": "Envio concluído",
     "Cancelled signature upload": "Envio cancelado da assinatura",
@@ -308,7 +292,6 @@
     "Message edits": "Edições na mensagem",
     "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Tente rolar para cima na conversa para ver se há mensagens anteriores.",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Prove a sua identidade por meio do seu Acesso único, para confirmar a desativação da sua conta.",
@@ -580,7 +563,6 @@
     "Approve widget permissions": "Autorizar as permissões do widget",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
-    "Reason (optional)": "Motivo (opcional)",
     "Hold": "Pausar",
     "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
@@ -2512,7 +2494,12 @@
         "autodiscovery_invalid_is": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
         "autodiscovery_invalid_is_response": "Resposta de descoberta do servidor de identidade inválida",
         "server_picker_description_matrix.org": "Junte-se a milhões de pessoas gratuitamente no maior servidor público",
-        "server_picker_title_default": "Opções do servidor"
+        "server_picker_title_default": "Opções do servidor",
+        "soft_logout": {
+            "clear_data_title": "Limpar todos os dados nesta sessão?",
+            "clear_data_description": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
+            "clear_data_button": "Limpar todos os dados"
+        }
     },
     "room_list": {
         "sort_unread_first": "Mostrar salas não lidas em primeiro",
@@ -2722,7 +2709,10 @@
         "error_encountered": "Erro encontrado (%(errorDetail)s).",
         "no_update": "Nenhuma atualização disponível.",
         "new_version_available": "Nova versão disponível. <a>Atualize agora.</a>",
-        "check_action": "Verificar atualizações"
+        "check_action": "Verificar atualizações",
+        "error_unable_load_commit": "Não foi possível carregar os detalhes do envio: %(msg)s",
+        "unavailable": "Indisponível",
+        "changelog": "Registro de alterações"
     },
     "threads": {
         "show_thread_filter": "Exibir:"
@@ -3164,7 +3154,17 @@
         "deactivate_confirm_action": "Desativar usuário",
         "error_deactivate": "Falha ao desativar o usuário",
         "role_label": "Cargo em <RoomName/>",
-        "edit_own_devices": "Editar dispositivos"
+        "edit_own_devices": "Editar dispositivos",
+        "redact": {
+            "no_recent_messages_title": "Nenhuma mensagem recente de %(user)s foi encontrada",
+            "no_recent_messages_description": "Tente rolar para cima na conversa para ver se há mensagens anteriores.",
+            "confirm_title": "Apagar mensagens de %(user)s na sala",
+            "confirm_description_2": "Quando há muitas mensagens, isso pode levar algum tempo. Por favor, não recarregue o seu cliente enquanto isso.",
+            "confirm_button": {
+                "other": "Apagar %(count)s mensagens para todos",
+                "one": "Remover 1 mensagem"
+            }
+        }
     },
     "stickers": {
         "empty": "No momento, você não tem pacotes de figurinhas ativados",
@@ -3257,5 +3257,11 @@
             "network_dropdown_add_server_option": "Adicionar um novo servidor…"
         }
     },
-    "dialog_close_label": "Fechar caixa de diálogo"
+    "dialog_close_label": "Fechar caixa de diálogo",
+    "redact": {
+        "error": "Você não pode apagar esta mensagem. (%(code)s)",
+        "ongoing": "Removendo…",
+        "confirm_button": "Confirmar a remoção",
+        "reason_label": "Motivo (opcional)"
+    }
 }

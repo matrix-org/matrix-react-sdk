@@ -27,14 +27,11 @@
     "Sunday": "ראשון",
     "Today": "היום",
     "Friday": "שישי",
-    "Changelog": "דו\"ח שינויים",
-    "Unavailable": "לא זמין",
     "Filter results": "סנן התוצאות",
     "Tuesday": "שלישי",
     "Saturday": "שבת",
     "Monday": "שני",
     "Wednesday": "רביעי",
-    "You cannot delete this message. (%(code)s)": "לא ניתן למחוק הודעה זו. (%(code)s)",
     "Thursday": "חמישי",
     "Yesterday": "אתמול",
     "Moderator": "מנהל",
@@ -376,14 +373,7 @@
     "Incompatible Database": "מסד נתונים לא תואם",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "השתמשת בעבר בגרסה חדשה יותר של %(brand)s עם הפעלה זו. כדי להשתמש בגרסה זו שוב עם הצפנה מקצה לקצה, יהיה עליך לצאת ולחזור שוב.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "כדי להימנע מאיבוד היסטוריית הצ'אט שלכם, עליכם לייצא את מפתחות החדר שלכם לפני שאתם מתנתקים. יהיה עליכם לחזור לגרסה החדשה יותר של %(brand)s כדי לעשות זאת",
-    "Clear all data": "נקה את כל הנתונים",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "ניקוי כל הנתונים מהפגישה זו הוא קבוע. הודעות מוצפנות יאבדו אלא אם כן גובו על המפתחות שלהן.",
-    "Clear all data in this session?": "למחוק את כל הנתונים בפגישה זו?",
-    "Reason (optional)": "סיבה (לא חובה)",
-    "Confirm Removal": "אשר הסרה",
-    "Removing…": "מסיר…",
     "Email address": "כתובת דוא\"ל",
-    "Unable to load commit detail: %(msg)s": "לא ניתן לטעון את פרטי ההתחייבות: %(msg)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "לפני שמגישים יומנים, עליכם <a> ליצור בעיה של GitHub </a> כדי לתאר את הבעיה שלכם.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. לנהל ב <settings>הגדרות</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. <default> השתמש בברירת המחדל (%(defaultIdentityServerName)s) </default> או נהל ב <settings>הגדרות</settings>.",
@@ -395,14 +385,6 @@
     "%(name)s cancelled": "%(name)s ביטל",
     "%(name)s declined": "%(name)s סרב",
     "%(name)s accepted": "%(name)s אישרו",
-    "Remove %(count)s messages": {
-        "one": "הסר הודעה 1",
-        "other": "הסר %(count)s הודעות"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "עבור כמות גדולה של הודעות, זה עלול לארוך זמן מה. אנא אל תרענן את הלקוח שלך בינתיים.",
-    "Remove recent messages by %(user)s": "הסר את ההודעות האחרונות של %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "נסה לגלול למעלה בציר הזמן כדי לראות אם יש קודמים.",
-    "No recent messages by %(user)s found": "לא נמצאו הודעות אחרונות של %(user)s",
     "%(count)s sessions": {
         "one": "%(count)s מושבים",
         "other": "%(count)s מושבים"
@@ -607,7 +589,6 @@
     "Create a space": "צור מרחב עבודה",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
-    "Preserve system messages": "שמור את הודעות המערכת",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "%(count)s Members": {
         "one": "%(count)s חברים"
@@ -2391,7 +2372,12 @@
         "autodiscovery_invalid_is": "נראה שכתובת האתר של שרת זהות אינה שרת זהות חוקי",
         "autodiscovery_invalid_is_response": "תגובת גילוי שרת זהות לא חוקית",
         "server_picker_description_matrix.org": "הצטרפו למיליונים בחינם בשרת הציבורי הגדול ביותר",
-        "server_picker_title_default": "אפשרויות שרת"
+        "server_picker_title_default": "אפשרויות שרת",
+        "soft_logout": {
+            "clear_data_title": "למחוק את כל הנתונים בפגישה זו?",
+            "clear_data_description": "ניקוי כל הנתונים מהפגישה זו הוא קבוע. הודעות מוצפנות יאבדו אלא אם כן גובו על המפתחות שלהן.",
+            "clear_data_button": "נקה את כל הנתונים"
+        }
     },
     "room_list": {
         "sort_unread_first": "הצג תחילה חדרים עם הודעות שלא נקראו",
@@ -2575,7 +2561,10 @@
         "error_encountered": "ארעה שגיעה %(errorDetail)s .",
         "no_update": "אין עדכון זמין.",
         "new_version_available": "גרסא חדשה קיימת. <a>שדרגו עכשיו.</a>",
-        "check_action": "בדוק עדכונים"
+        "check_action": "בדוק עדכונים",
+        "error_unable_load_commit": "לא ניתן לטעון את פרטי ההתחייבות: %(msg)s",
+        "unavailable": "לא זמין",
+        "changelog": "דו\"ח שינויים"
     },
     "threads": {
         "all_threads": "כל הקישורים",
@@ -3038,7 +3027,18 @@
         "deactivate_confirm_action": "השבת משתמש",
         "error_deactivate": "השבתת משתמש נכשלה",
         "role_label": "תפקיד בחדר <RoomName/>",
-        "edit_own_devices": "הגדרת מכשירים"
+        "edit_own_devices": "הגדרת מכשירים",
+        "redact": {
+            "no_recent_messages_title": "לא נמצאו הודעות אחרונות של %(user)s",
+            "no_recent_messages_description": "נסה לגלול למעלה בציר הזמן כדי לראות אם יש קודמים.",
+            "confirm_title": "הסר את ההודעות האחרונות של %(user)s",
+            "confirm_description_2": "עבור כמות גדולה של הודעות, זה עלול לארוך זמן מה. אנא אל תרענן את הלקוח שלך בינתיים.",
+            "confirm_keep_state_label": "שמור את הודעות המערכת",
+            "confirm_button": {
+                "one": "הסר הודעה 1",
+                "other": "הסר %(count)s הודעות"
+            }
+        }
     },
     "stickers": {
         "empty": "כרגע אין לך חבילות מדבקה מופעלות",
@@ -3120,5 +3120,11 @@
             "network_dropdown_add_dialog_placeholder": "שם השרת"
         }
     },
-    "dialog_close_label": "סגור דיאלוג"
+    "dialog_close_label": "סגור דיאלוג",
+    "redact": {
+        "error": "לא ניתן למחוק הודעה זו. (%(code)s)",
+        "ongoing": "מסיר…",
+        "confirm_button": "אשר הסרה",
+        "reason_label": "סיבה (לא חובה)"
+    }
 }

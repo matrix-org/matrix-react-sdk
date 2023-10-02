@@ -1,8 +1,6 @@
 {
     "Create new room": "إنشاء غرفة جديدة",
     "Send": "إرسال",
-    "Unavailable": "غير متوفر",
-    "Changelog": "سِجل التغييرات",
     "Sun": "الأحد",
     "Mon": "الإثنين",
     "Tue": "الثلاثاء",
@@ -74,14 +72,6 @@
     "Deactivate account": "تعطيل الحساب",
     "Backup version:": "نسخة الاحتياطي:",
     "This backup is trusted because it has been restored on this session": "هذا الاحتياطي موثوق به لأنه تمت استعادته في هذا الاتصال",
-    "Remove %(count)s messages": {
-        "one": "احذف رسالة واحدة",
-        "other": "احذف %(count)s رسائل"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "قد يستغرق هذا وقتًا بحسب عدد الرسائل. من فضلك لا تحدث عمليك أثناء ذلك.",
-    "Remove recent messages by %(user)s": "قم بإزالة رسائل %(user)s الأخيرة",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "حاول الصعود في المخطط الزمني لمعرفة ما إذا كانت هناك سابقات.",
-    "No recent messages by %(user)s found": "لم يتم العثور على رسائل حديثة من %(user)s",
     "%(count)s sessions": {
         "one": "%(count)s اتصال",
         "other": "%(count)s اتصالات"
@@ -1301,7 +1291,9 @@
         "error_encountered": "صودِفَ خطأ: (%(errorDetail)s).",
         "no_update": "لا يوجد هناك أي تحديث.",
         "new_version_available": "ثمة إصدارٌ جديد. <a>حدّث الآن.</a>",
-        "check_action": "ابحث عن تحديث"
+        "check_action": "ابحث عن تحديث",
+        "unavailable": "غير متوفر",
+        "changelog": "سِجل التغييرات"
     },
     "labs_mjolnir": {
         "room_name": "قائمة الحظر",
@@ -1545,7 +1537,17 @@
         "deactivate_confirm_title": "إلغاء نشاط المستخدم؟",
         "deactivate_confirm_description": "سيؤدي إلغاء نشاط هذا المستخدم إلى تسجيل خروجهم ومنعهم من تسجيل الدخول مرة أخرى. بالإضافة إلى ذلك ، سيغادرون جميع الغرف التي يتواجدون فيها. لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد أنك تريد إلغاء نشاط هذا المستخدم؟",
         "deactivate_confirm_action": "إلغاء نشاط المستخدم",
-        "error_deactivate": "تعذر إلغاء نشاط المستخدم"
+        "error_deactivate": "تعذر إلغاء نشاط المستخدم",
+        "redact": {
+            "no_recent_messages_title": "لم يتم العثور على رسائل حديثة من %(user)s",
+            "no_recent_messages_description": "حاول الصعود في المخطط الزمني لمعرفة ما إذا كانت هناك سابقات.",
+            "confirm_title": "قم بإزالة رسائل %(user)s الأخيرة",
+            "confirm_description_2": "قد يستغرق هذا وقتًا بحسب عدد الرسائل. من فضلك لا تحدث عمليك أثناء ذلك.",
+            "confirm_button": {
+                "one": "احذف رسالة واحدة",
+                "other": "احذف %(count)s رسائل"
+            }
+        }
     },
     "stickers": {
         "empty": "ليس لديك حاليًا أي حزم ملصقات ممكّنة",

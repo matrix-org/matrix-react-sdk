@@ -36,7 +36,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
     "An error has occurred.": "Ein Fehler ist aufgetreten.",
     "Email address": "E-Mail-Adresse",
-    "Confirm Removal": "Entfernen bestätigen",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
     "Create new room": "Neuer Raum",
@@ -62,14 +61,11 @@
     "Sunday": "Sonntag",
     "Today": "Heute",
     "Friday": "Freitag",
-    "Changelog": "Änderungsprotokoll",
-    "Unavailable": "Nicht verfügbar",
     "Filter results": "Ergebnisse filtern",
     "Tuesday": "Dienstag",
     "Saturday": "Samstag",
     "Monday": "Montag",
     "Wednesday": "Mittwoch",
-    "You cannot delete this message. (%(code)s)": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
     "Thursday": "Donnerstag",
     "Yesterday": "Gestern",
     "Send Logs": "Sende Protokoll",
@@ -101,7 +97,6 @@
     "Continue With Encryption Disabled": "Mit deaktivierter Verschlüsselung fortfahren",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
-    "Unable to load commit detail: %(msg)s": "Konnte Übermittlungsdetails nicht laden: %(msg)s",
     "Unable to load backup status": "Konnte Sicherungsstatus nicht laden",
     "Failed to decrypt %(failedCount)s sessions!": "Konnte %(failedCount)s Sitzungen nicht entschlüsseln!",
     "Dog": "Hund",
@@ -202,11 +197,6 @@
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
     "Session name": "Sitzungsname",
     "Sign out and remove encryption keys?": "Abmelden und Verschlüsselungsschlüssel entfernen?",
-    "Remove recent messages by %(user)s": "Kürzlich gesendete Nachrichten von %(user)s entfernen",
-    "Remove %(count)s messages": {
-        "other": "%(count)s Nachrichten entfernen",
-        "one": "Eine Nachricht entfernen"
-    },
     "This backup is trusted because it has been restored on this session": "Dieser Sicherung wird vertraut, da sie während dieser Sitzung wiederhergestellt wurde",
     "Encrypted by a deleted session": "Von einer gelöschten Sitzung verschlüsselt",
     "e.g. my-room": "z. B. mein-raum",
@@ -216,18 +206,12 @@
     "Recent Conversations": "Letzte Unterhaltungen",
     "Not Trusted": "Nicht vertraut",
     "Ask this user to verify their session, or manually verify it below.": "Bitte diesen Nutzer, seine Sitzung zu verifizieren, oder verifiziere diese unten manuell.",
-    "Clear all data in this session?": "Alle Daten dieser Sitzung löschen?",
-    "Clear all data": "Alle Daten löschen",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Bestätige die Deaktivierung deines Kontos, indem du deine Identität mithilfe deines Single-Sign-On-Anbieters nachweist.",
     "Confirm account deactivation": "Deaktivierung des Kontos bestätigen",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
     "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
-    "No recent messages by %(user)s found": "Keine neuen Nachrichten von %(user)s gefunden",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Submit logs": "Protokolldateien senden",
-    "Removing…": "Löschen…",
     "Destroy cross-signing keys?": "Cross-Signing-Schlüssel zerstören?",
     "Clear cross-signing keys": "Cross-Signing-Schlüssel löschen",
     "Server did not require any authentication": "Der Server benötigt keine Authentifizierung",
@@ -269,7 +253,6 @@
     "Sign in with SSO": "Einmalanmeldung verwenden",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Das Löschen aller Daten aus dieser Sitzung ist dauerhaft. Verschlüsselte Nachrichten gehen verloren, sofern deine Schlüssel nicht gesichert wurden.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Wenn du diesen Benutzer verifizierst werden seine Sitzungen für dich und deine Sitzungen für ihn als vertrauenswürdig markiert.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifiziere dieses Gerät, um es als vertrauenswürdig zu markieren. Das Vertrauen in dieses Gerät gibt dir und anderen Benutzern zusätzliche Sicherheit, wenn ihr Ende-zu-Ende verschlüsselte Nachrichten verwendet.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verifiziere dieses Gerät und es wird es als vertrauenswürdig markiert. Benutzer, die sich bei dir verifiziert haben, werden diesem Gerät auch vertrauen.",
@@ -581,7 +564,6 @@
     "United Kingdom": "Großbritannien",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
     "Continuing without email": "Ohne E-Mail fortfahren",
-    "Reason (optional)": "Grund (optional)",
     "Hold": "Halten",
     "Resume": "Fortsetzen",
     "Transfer": "Übertragen",
@@ -723,12 +705,6 @@
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
     "You are sharing your live location": "Du teilst deinen Echtzeit-Standort",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Deaktivieren, wenn du auch Systemnachrichten bzgl. des Nutzers löschen willst (z. B. Mitglieds- und Profiländerungen …)",
-    "Preserve system messages": "Systemnachrichten behalten",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Du bist gerade dabei, %(count)s Nachricht von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?",
-        "other": "Du bist gerade dabei, %(count)s Nachrichten von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?"
-    },
     "%(count)s participants": {
         "one": "1 Teilnehmer",
         "other": "%(count)s Teilnehmer"
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
-    "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "unknown": "unbekannt",
     "Loading live location…": "Lade Live-Standort …",
     "Fetching keys from server…": "Lade Schlüssel vom Server …",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Dennoch DM beginnen",
     "Start DM anyway and never warn me again": "Dennoch DM beginnen und mich nicht mehr warnen",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Konnte keine Profile für die folgenden Matrix-IDs finden – möchtest du dennoch eine Direktnachricht beginnen?",
-    "Are you sure you wish to remove (delete) this event?": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
-    "Note that removing room changes like this could undo the change.": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
     "Upgrade room": "Raum aktualisieren",
     "Other spaces you know": "Andere dir bekannte Spaces",
     "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
@@ -3319,7 +3291,12 @@
         "autodiscovery_invalid_is_response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers",
         "server_picker_description": "Du kannst in den benutzerdefinierten Server-Optionen eine andere Heim-Server-URL angeben, um dich bei anderen Matrix-Servern anzumelden. Dadurch kannst du %(brand)s mit einem auf einem anderen Heim-Server liegenden Matrix-Konto nutzen.",
         "server_picker_description_matrix.org": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
-        "server_picker_title_default": "Server-Einstellungen"
+        "server_picker_title_default": "Server-Einstellungen",
+        "soft_logout": {
+            "clear_data_title": "Alle Daten dieser Sitzung löschen?",
+            "clear_data_description": "Das Löschen aller Daten aus dieser Sitzung ist dauerhaft. Verschlüsselte Nachrichten gehen verloren, sofern deine Schlüssel nicht gesichert wurden.",
+            "clear_data_button": "Alle Daten löschen"
+        }
     },
     "room_list": {
         "sort_unread_first": "Räume mit ungelesenen Nachrichten zuerst zeigen",
@@ -3574,7 +3551,10 @@
         "no_update": "Keine Aktualisierung verfügbar.",
         "downloading": "Lade Aktualisierung herunter …",
         "new_version_available": "Neue Version verfügbar. <a>Jetzt aktualisieren.</a>",
-        "check_action": "Nach Aktualisierung suchen"
+        "check_action": "Nach Aktualisierung suchen",
+        "error_unable_load_commit": "Konnte Übermittlungsdetails nicht laden: %(msg)s",
+        "unavailable": "Nicht verfügbar",
+        "changelog": "Änderungsprotokoll"
     },
     "threads": {
         "all_threads": "Alle Threads",
@@ -4237,7 +4217,23 @@
         "deactivate_confirm_action": "Konto deaktivieren",
         "error_deactivate": "Benutzer konnte nicht deaktiviert werden",
         "role_label": "Rolle in <RoomName/>",
-        "edit_own_devices": "Sitzungen anzeigen"
+        "edit_own_devices": "Sitzungen anzeigen",
+        "redact": {
+            "no_recent_messages_title": "Keine neuen Nachrichten von %(user)s gefunden",
+            "no_recent_messages_description": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
+            "confirm_title": "Kürzlich gesendete Nachrichten von %(user)s entfernen",
+            "confirm_description_1": {
+                "one": "Du bist gerade dabei, %(count)s Nachricht von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?",
+                "other": "Du bist gerade dabei, %(count)s Nachrichten von %(user)s Benutzern zu löschen. Die Nachrichten werden für niemanden mehr sichtbar sein. Willst du fortfahren?"
+            },
+            "confirm_description_2": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
+            "confirm_keep_state_label": "Systemnachrichten behalten",
+            "confirm_keep_state_explainer": "Deaktivieren, wenn du auch Systemnachrichten bzgl. des Nutzers löschen willst (z. B. Mitglieds- und Profiländerungen …)",
+            "confirm_button": {
+                "other": "%(count)s Nachrichten entfernen",
+                "one": "Eine Nachricht entfernen"
+            }
+        }
     },
     "stickers": {
         "empty": "Keine Sticker-Pakete aktiviert",
@@ -4362,5 +4358,17 @@
             "network_dropdown_selected_label": "Zeige: Matrix-Räume"
         }
     },
-    "dialog_close_label": "Dialog schließen"
+    "dialog_close_label": "Dialog schließen",
+    "voice_message": {
+        "cant_start_broadcast_title": "Kann Sprachnachricht nicht beginnen",
+        "cant_start_broadcast_description": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen."
+    },
+    "redact": {
+        "error": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
+        "ongoing": "Löschen…",
+        "confirm_description": "Möchtest du dieses Ereignis wirklich entfernen (löschen)?",
+        "confirm_description_state": "Beachte, dass das Entfernen von Raumänderungen diese rückgängig machen könnte.",
+        "confirm_button": "Entfernen bestätigen",
+        "reason_label": "Grund (optional)"
+    }
 }

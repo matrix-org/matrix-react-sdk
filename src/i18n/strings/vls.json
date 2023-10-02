@@ -123,10 +123,6 @@
     "collapse": "toeklappn",
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
-    "Unable to load commit detail: %(msg)s": "Kostege ’t commitdetail nie loadn: %(msg)s",
-    "Unavailable": "Nie beschikboar",
-    "Changelog": "Wyzigiengslogboek",
-    "Confirm Removal": "Verwyderienge bevestign",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Vo je gespreksgeschiedenisse nie kwyt te speeln, moe je je gesprekssleuters exporteern vooraleer da je jen afmeldt. Je goa moetn werekeern noa de nieuwere versie van %(brand)s vo dit te doen",
     "Incompatible Database": "Incompatibele database",
     "Continue With Encryption Disabled": "Verdergoan me versleuterienge uutgeschoakeld",
@@ -190,7 +186,6 @@
     "No backup found!": "Geen back-up gevoundn!",
     "Failed to decrypt %(failedCount)s sessions!": "Ountsleutern van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer.",
-    "You cannot delete this message. (%(code)s)": "Je kut dit bericht nie verwydern. (%(code)s)",
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
     "Email (optional)": "E-mailadresse (optioneel)",
@@ -198,8 +193,6 @@
     "Message edits": "Berichtbewerkiengn",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
     "Upload all": "Alles iploadn",
-    "Removing…": "Bezig me te verwydern…",
-    "Clear all data": "Alle gegeevns wissn",
     "Your homeserver doesn't seem to support this feature.": "Je thuusserver biedt geen oundersteunienge vo deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) herverstuurn",
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
@@ -960,7 +953,10 @@
         "autodiscovery_invalid_is_base_url": "Oungeldige base_url vo m.identity_server",
         "autodiscovery_invalid_is": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
         "autodiscovery_invalid_is_response": "Oungeldig identiteitsserverountdekkiengsantwoord",
-        "server_picker_description_matrix.org": "Doe mee me miljoenen anderen ip de grotste publieke server"
+        "server_picker_description_matrix.org": "Doe mee me miljoenen anderen ip de grotste publieke server",
+        "soft_logout": {
+            "clear_data_button": "Alle gegeevns wissn"
+        }
     },
     "export_chat": {
         "messages": "Berichtn"
@@ -1013,7 +1009,10 @@
         "release_notes_toast_title": "Wuk es ’t er nieuw",
         "error_encountered": "’t Es e foute ipgetreedn (%(errorDetail)s).",
         "no_update": "Geen update beschikboar.",
-        "check_action": "Controleern ip updates"
+        "check_action": "Controleern ip updates",
+        "error_unable_load_commit": "Kostege ’t commitdetail nie loadn: %(msg)s",
+        "unavailable": "Nie beschikboar",
+        "changelog": "Wyzigiengslogboek"
     },
     "room_list": {
         "failed_remove_tag": "Verwydern van %(tagName)s-label van gesprek is mislukt",
@@ -1245,5 +1244,10 @@
     "General failure": "Algemene foute",
     "truncated_list_n_more": {
         "other": "En %(count)s meer…"
+    },
+    "redact": {
+        "error": "Je kut dit bericht nie verwydern. (%(code)s)",
+        "ongoing": "Bezig me te verwydern…",
+        "confirm_button": "Verwyderienge bevestign"
     }
 }

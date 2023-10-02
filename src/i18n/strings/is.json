@@ -45,15 +45,11 @@
     "Home": "Forsíða",
     "collapse": "fella saman",
     "expand": "fletta út",
-    "Unavailable": "Ekki tiltækt",
-    "Changelog": "Breytingaskrá",
-    "Confirm Removal": "Staðfesta fjarlægingu",
     "Filter results": "Sía niðurstöður",
     "An error has occurred.": "Villa kom upp.",
     "Send Logs": "Senda atvikaskrár",
     "Verification Pending": "Sannvottun í bið",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
-    "You cannot delete this message. (%(code)s)": "Þú getur ekki eytt þessum skilaboðum. (%(code)s)",
     "Session ID": "Auðkenni setu",
     "Delete Widget": "Eyða viðmótshluta",
     "Create new room": "Búa til nýja spjallrás",
@@ -72,8 +68,6 @@
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
     },
-    "Remove recent messages by %(user)s": "Fjarlægja nýleg skilaboð frá %(user)s",
-    "Removing…": "Er að fjarlægja…",
     "edited": "breytti",
     "Banana": "Banani",
     "Fire": "Eldur",
@@ -418,7 +412,6 @@
     "Pizza": "Flatbökur",
     "Apple": "Epli",
     "Messaging": "Skilaboð",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
     "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
     "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
     "Incompatible local cache": "Ósamhæft staðvært skyndiminni",
@@ -489,8 +482,6 @@
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Hver sem er getur fundið og tekið þátt í þessu svæði, ekki bara meðlimir í <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Hver sem er í <SpaceName/> getur fundið og tekið þátt.",
     "Space visibility": "Sýnileiki svæðis",
-    "Clear all data": "Hreinsa öll gögn",
-    "Reason (optional)": "Ástæða (valkvætt)",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
@@ -501,10 +492,6 @@
     "Integrations not allowed": "Samþættingar eru ekki leyfðar",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
-    "Remove %(count)s messages": {
-        "one": "Fjarlægja 1 skilaboð",
-        "other": "Fjarlægja %(count)s skilaboð"
-    },
     "%(count)s sessions": {
         "one": "%(count)s seta",
         "other": "%(count)s setur"
@@ -550,7 +537,6 @@
     "Click the button below to confirm your identity.": "Smelltu á hnappinn hér að neðan til að staðfesta auðkennið þitt.",
     "Confirm to continue": "Staðfestu til að halda áfram",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Staðfestu að aðgangurinn þinn sé gerður óvirkur með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
-    "Clear all data in this session?": "Hreinsa öll gögn í þessari setu?",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -597,7 +583,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
     "Or send invite link": "Eða senda boðstengil",
     "Incompatible Database": "Ósamhæfður gagnagrunnur",
-    "No recent messages by %(user)s found": "Engin nýleg skilaboð frá %(user)s fundust",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
@@ -638,7 +623,6 @@
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
     "Want to add an existing space instead?": "Viltu frekar bæta við fyrirliggjandi svæði?",
     "Add a space to a space you manage.": "Bættu svæði við eitthvað svæði sem þú stýrir.",
-    "Preserve system messages": "Geyma kerfisskilaboð",
     "Consult first": "Ráðfæra fyrst",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
@@ -2845,7 +2829,11 @@
         "autodiscovery_invalid_is_base_url": "Ógilt base_url fyrir m.identity_server",
         "autodiscovery_invalid_is": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
         "server_picker_description_matrix.org": "Taktu þátt ókeypis ásamt milljónum annarra á stærsta almenningsþjóninum",
-        "server_picker_title_default": "Valkostir vefþjóns"
+        "server_picker_title_default": "Valkostir vefþjóns",
+        "soft_logout": {
+            "clear_data_title": "Hreinsa öll gögn í þessari setu?",
+            "clear_data_button": "Hreinsa öll gögn"
+        }
     },
     "room_list": {
         "sort_unread_first": "Birta spjallrásir með ólesnum skilaboðum fyrst",
@@ -3077,7 +3065,9 @@
         "error_encountered": "Villa fannst (%(errorDetail)s).",
         "no_update": "Engin uppfærsla tiltæk.",
         "new_version_available": "Ný útgáfa tiltæk. <a>Uppfæra núna.</a>",
-        "check_action": "Athuga með uppfærslu"
+        "check_action": "Athuga með uppfærslu",
+        "unavailable": "Ekki tiltækt",
+        "changelog": "Breytingaskrá"
     },
     "threads": {
         "all_threads": "Allir spjallþræðir",
@@ -3641,7 +3631,17 @@
         "deactivate_confirm_action": "Gera notanda óvirkan",
         "error_deactivate": "Mistókst að gera þennan notanda óvirkan",
         "role_label": "Hlutverk í <RoomName/>",
-        "edit_own_devices": "Breyta tækjum"
+        "edit_own_devices": "Breyta tækjum",
+        "redact": {
+            "no_recent_messages_title": "Engin nýleg skilaboð frá %(user)s fundust",
+            "no_recent_messages_description": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
+            "confirm_title": "Fjarlægja nýleg skilaboð frá %(user)s",
+            "confirm_keep_state_label": "Geyma kerfisskilaboð",
+            "confirm_button": {
+                "one": "Fjarlægja 1 skilaboð",
+                "other": "Fjarlægja %(count)s skilaboð"
+            }
+        }
     },
     "stickers": {
         "empty": "Í augnablikinu ertu ekki með neina límmerkjapakka virkjaða",
@@ -3739,5 +3739,11 @@
             "network_dropdown_selected_label": "Birta: Matrix-spjallrásir"
         }
     },
-    "dialog_close_label": "Loka glugga"
+    "dialog_close_label": "Loka glugga",
+    "redact": {
+        "error": "Þú getur ekki eytt þessum skilaboðum. (%(code)s)",
+        "ongoing": "Er að fjarlægja…",
+        "confirm_button": "Staðfesta fjarlægingu",
+        "reason_label": "Ástæða (valkvætt)"
+    }
 }

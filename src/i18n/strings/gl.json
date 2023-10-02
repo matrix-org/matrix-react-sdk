@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
-    "Confirm Removal": "Confirma a retirada",
     "An error has occurred.": "Algo fallou.",
     "Unable to restore session": "Non se puido restaurar a sesión",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se anteriormente utilizaches unha versión máis recente de %(brand)s, a túa sesión podería non ser compatible con esta versión. Pecha esta ventá e volve á versión máis recente.",
@@ -62,14 +61,11 @@
     "Sunday": "Domingo",
     "Today": "Hoxe",
     "Friday": "Venres",
-    "Changelog": "Rexistro de cambios",
-    "Unavailable": "Non dispoñible",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
     "Saturday": "Sábado",
     "Monday": "Luns",
     "Wednesday": "Mércores",
-    "You cannot delete this message. (%(code)s)": "Non pode eliminar esta mensaxe. (%(code)s)",
     "Thursday": "Xoves",
     "Yesterday": "Onte",
     "Send Logs": "Enviar informes",
@@ -178,14 +174,6 @@
         "other": "%(count)s sesións",
         "one": "%(count)s sesión"
     },
-    "No recent messages by %(user)s found": "Non se atoparon mensaxes recentes de %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Desprázate na cronoloxía para ver se hai algúns máis recentes.",
-    "Remove recent messages by %(user)s": "Eliminar mensaxes recentes de %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Podería demorar un tempo se é un número grande de mensaxes. Non actualices o cliente mentras tanto.",
-    "Remove %(count)s messages": {
-        "other": "Eliminar %(count)s mensaxes",
-        "one": "Eliminar 1 mensaxe"
-    },
     "%(name)s accepted": "%(name)s aceptou",
     "%(name)s declined": "%(name)s declinou",
     "%(name)s cancelled": "%(name)s cancelou",
@@ -196,13 +184,8 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usa un servidor de identidade para convidar por email. <default>Usa o valor por defecto (%(defaultIdentityServerName)s)</default> ou xestionao en <settings>Axustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Usa un servidor de identidade para convidar por email. Xestionao en <settings>Axustes</settings>.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema.",
-    "Unable to load commit detail: %(msg)s": "Non se cargou o detalle do commit: %(msg)s",
-    "Removing…": "Eliminando…",
     "Destroy cross-signing keys?": "Destruír chaves de sinatura-cruzada?",
     "Clear cross-signing keys": "Baleirar chaves de sinatura-cruzada",
-    "Clear all data in this session?": "¿Baleirar todos os datos desta sesión?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "O baleirado dos datos da sesión é permanente. As mensaxes cifradas perderánse a menos que as súas chaves estiveren nunha copia de apoio.",
-    "Clear all data": "Eliminar todos os datos",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Para evitar perder o historial da conversa, debes exportar as chaves da sala antes de saír. Necesitarás volver á nova versión de %(brand)s para facer esto",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Xa utilizaches unha versión máis nova de %(brand)s nesta sesión. Para usar esta versión novamente con cifrado extremo-a-extremo tes que saír e volver a acceder.",
     "Incompatible Database": "Base de datos non compatible",
@@ -581,7 +564,6 @@
     "Approve widget permissions": "Aprovar permisos do widget",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
     "Continuing without email": "Continuando sen email",
-    "Reason (optional)": "Razón (optativa)",
     "Hold": "Colgar",
     "Resume": "Retomar",
     "Transfer": "Transferir",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "Unirse a %(roomAddress)s",
     "Search Dialog": "Diálogo de busca",
     "You are sharing your live location": "Vas compartir en directo a túa localización",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Desmarcar se tamén queres eliminar as mensaxes do sistema acerca da usuaria (ex. cambios na membresía, cambios no perfil...)",
-    "Preserve system messages": "Conservar mensaxes do sistema",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Vas eliminar %(count)s mensaxe de %(user)s. Esto eliminaraa de xeito permanente para todas na conversa. Tes a certeza de querer eliminala?",
-        "other": "Vas a eliminar %(count)s mensaxes de %(user)s. Así eliminaralos de xeito permanente para todas na conversa. Tes a certeza de facelo?"
-    },
     "Unsent": "Sen enviar",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
     "%(count)s participants": {
@@ -2940,7 +2916,12 @@
         "autodiscovery_invalid_is_response": "Resposta de descubrimento de identidade do servidor non válida",
         "server_picker_description": "Podes usar as opcións personalizadas do servidor para acceder a outros servidores Matrix indicando o URL do servidor de inicio. Así podes usar %(brand)s cunha conta Matrix rexistrada nun servidor diferente.",
         "server_picker_description_matrix.org": "Únete a millóns de persoas gratuitamente no maior servidor público",
-        "server_picker_title_default": "Opcións do servidor"
+        "server_picker_title_default": "Opcións do servidor",
+        "soft_logout": {
+            "clear_data_title": "¿Baleirar todos os datos desta sesión?",
+            "clear_data_description": "O baleirado dos datos da sesión é permanente. As mensaxes cifradas perderánse a menos que as súas chaves estiveren nunha copia de apoio.",
+            "clear_data_button": "Eliminar todos os datos"
+        }
     },
     "room_list": {
         "sort_unread_first": "Mostrar primeiro as salas con mensaxes sen ler",
@@ -3157,7 +3138,10 @@
         "error_encountered": "Houbo un erro (%(errorDetail)s).",
         "no_update": "Sen actualizacións.",
         "new_version_available": "Nova versión dispoñible. <a>Actualiza.</a>",
-        "check_action": "Comprobar actualización"
+        "check_action": "Comprobar actualización",
+        "error_unable_load_commit": "Non se cargou o detalle do commit: %(msg)s",
+        "unavailable": "Non dispoñible",
+        "changelog": "Rexistro de cambios"
     },
     "threads": {
         "all_threads": "Tódalas conversas",
@@ -3760,7 +3744,23 @@
         "deactivate_confirm_action": "Desactivar usuaria",
         "error_deactivate": "Fallo ao desactivar a usuaria",
         "role_label": "Rol en <RoomName/>",
-        "edit_own_devices": "Editar dispositivos"
+        "edit_own_devices": "Editar dispositivos",
+        "redact": {
+            "no_recent_messages_title": "Non se atoparon mensaxes recentes de %(user)s",
+            "no_recent_messages_description": "Desprázate na cronoloxía para ver se hai algúns máis recentes.",
+            "confirm_title": "Eliminar mensaxes recentes de %(user)s",
+            "confirm_description_1": {
+                "one": "Vas eliminar %(count)s mensaxe de %(user)s. Esto eliminaraa de xeito permanente para todas na conversa. Tes a certeza de querer eliminala?",
+                "other": "Vas a eliminar %(count)s mensaxes de %(user)s. Así eliminaralos de xeito permanente para todas na conversa. Tes a certeza de facelo?"
+            },
+            "confirm_description_2": "Podería demorar un tempo se é un número grande de mensaxes. Non actualices o cliente mentras tanto.",
+            "confirm_keep_state_label": "Conservar mensaxes do sistema",
+            "confirm_keep_state_explainer": "Desmarcar se tamén queres eliminar as mensaxes do sistema acerca da usuaria (ex. cambios na membresía, cambios no perfil...)",
+            "confirm_button": {
+                "other": "Eliminar %(count)s mensaxes",
+                "one": "Eliminar 1 mensaxe"
+            }
+        }
     },
     "stickers": {
         "empty": "Non ten paquetes de iconas activados",
@@ -3859,5 +3859,11 @@
             "network_dropdown_selected_label": "Mostrar: salas Matrix"
         }
     },
-    "dialog_close_label": "Pechar diálogo"
+    "dialog_close_label": "Pechar diálogo",
+    "redact": {
+        "error": "Non pode eliminar esta mensaxe. (%(code)s)",
+        "ongoing": "Eliminando…",
+        "confirm_button": "Confirma a retirada",
+        "reason_label": "Razón (optativa)"
+    }
 }

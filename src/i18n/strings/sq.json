@@ -29,8 +29,6 @@
     "Sunday": "E diel",
     "Today": "Sot",
     "Friday": "E premte",
-    "Changelog": "Regjistër ndryshimesh",
-    "Unavailable": "Jo i passhëm",
     "Filter results": "Filtroni përfundimet",
     "Tuesday": "E martë",
     "Unnamed room": "Dhomë e paemërtuar",
@@ -38,7 +36,6 @@
     "Monday": "E hënë",
     "Wednesday": "E mërkurë",
     "unknown error code": "kod gabimi të panjohur",
-    "You cannot delete this message. (%(code)s)": "S’mund ta fshini këtë mesazh. (%(code)s)",
     "Thursday": "E enjte",
     "Yesterday": "Dje",
     "PM": "PM",
@@ -59,7 +56,6 @@
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
     "collapse": "tkurre",
     "expand": "zgjeroje",
-    "Confirm Removal": "Ripohoni Heqjen",
     "An error has occurred.": "Ndodhi një gabim.",
     "Verification Pending": "Verifikim Në Pritje të Miratimit",
     "Session ID": "ID sesioni",
@@ -102,7 +98,6 @@
     "Unable to restore backup": "S’arrihet të rikthehet kopjeruajtje",
     "No backup found!": "S’u gjet kopjeruajtje!",
     "Failed to decrypt %(failedCount)s sessions!": "S’u arrit të shfshehtëzohet sesioni %(failedCount)s!",
-    "Unable to load commit detail: %(msg)s": "S’arrihet të ngarkohen hollësi depozitimi: %(msg)s",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifikojeni këtë përdorues që t’i vihet shenjë si i besuar. Përdoruesit e besuar ju më tepër siguri kur përdorni mesazhe të fshehtëzuar skaj-më-skaj.",
     "Incoming Verification Request": "Kërkesë Verifikimi e Ardhur",
     "Email (optional)": "Email (në daçi)",
@@ -197,9 +192,7 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
     "Your homeserver doesn't seem to support this feature.": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori.",
-    "Clear all data": "Spastro krejt të dhënat",
     "Deactivate account": "Çaktivizoje llogarinë",
-    "Removing…": "Po hiqet…",
     "Share User": "Ndani Përdorues",
     "Command Help": "Ndihmë Urdhri",
     "Find others by phone or email": "Gjeni të tjerë përmes telefoni ose email-i",
@@ -207,14 +200,6 @@
     "Spanner": "Çelës",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Përdorni një shërbyes identitetesh për të ftuar me email. <default>Përdorni parazgjedhjen (%(defaultIdentityServerName)s)</default> ose administrojeni që nga <settings>Rregullimet</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Përdorni një shërbyes identitetesh për të ftuar me email. Administrojeni që nga <settings>Rregullimet</settings>.",
-    "No recent messages by %(user)s found": "S’u gjetën mesazhe së fundi nga %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Provoni të ngjiteni sipër në rrjedhën kohore, që të shihni nëse ka patur të tillë më herët.",
-    "Remove recent messages by %(user)s": "Hiq mesazhe së fundi nga %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Për një sasi të madhe mesazhesh, kjo mund të dojë ca kohë. Ju lutemi, mos e rifreskoni klientin tuaj gjatë kësaj kohe.",
-    "Remove %(count)s messages": {
-        "other": "Hiq %(count)s mesazhe",
-        "one": "Hiq 1 mesazh"
-    },
     "e.g. my-room": "p.sh., dhoma-ime",
     "%(name)s accepted": "%(name)s pranoi",
     "%(name)s cancelled": "%(name)s anuloi",
@@ -243,8 +228,6 @@
         "other": "%(count)s sesione",
         "one": "%(count)s sesion"
     },
-    "Clear all data in this session?": "Të pastrohen krejt të dhënat në këtë sesion?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Spastrimi i krejt të dhënave prej këtij sesioni është përfundimtar. Mesazhet e fshehtëzuar do të humbin, veç në qofshin kopjeruajtur kyçet e tyre.",
     "Session name": "Emër sesioni",
     "Session key": "Kyç sesioni",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verifikimi i këtij përdoruesi do t’i vërë shenjë sesionit të tij si të besuar dhe sesionit tuaj si të besuar për ta.",
@@ -581,7 +564,6 @@
     "Continuing without email": "Vazhdim pa email",
     "Hold": "Mbaje",
     "Resume": "Rimerre",
-    "Reason (optional)": "Arsye (opsionale)",
     "Transfer": "Shpërngule",
     "A call can only be transferred to a single user.": "Një thirrje mund të shpërngulet vetëm te një përdorues.",
     "Dial pad": "Butona numrash",
@@ -722,12 +704,6 @@
     "Join %(roomAddress)s": "Hyni te %(roomAddress)s",
     "Search Dialog": "Dialog Kërkimi",
     "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
-    "Preserve system messages": "Ruaji mesazhet e sistemit",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Hiqini shenjën, nëse doni të hiqni mesazhe sistemi në këtë përdorues (p.sh., ndryshime anëtarësimi, ndryshime profili…)",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë për këdo te biseda. Doni të vazhdohet?",
-        "one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?"
-    },
     "Unsent": "Të padërguar",
     "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
     "%(count)s participants": {
@@ -787,8 +763,6 @@
     "Output devices": "Pajisje output-i",
     "Input devices": "Pajisje input-i",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor.",
-    "Can't start voice message": "S’niset dot mesazh zanor",
     "unknown": "e panjohur",
     "Loading live location…": "Po ngarkohet vendndodhje “live”…",
     "Fetching keys from server…": "Po sillen kyçet prej shërbyesi…",
@@ -3228,7 +3202,12 @@
         "autodiscovery_invalid_is_response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
         "server_picker_description": "Që të bëni hyrjen te shërbyes të tjerë Matrix, duke specifikuar një URL të një shërbyesi Home tjetër, mund të përdorni mundësitë vetjake për shërbyesin. Kjo ju lejon të përdorni %(brand)s në një tjetër shërbyes Home me një llogari Matrix ekzistuese.",
         "server_picker_description_matrix.org": "Bashkojuni milionave, falas, në shërbyesin më të madh publik",
-        "server_picker_title_default": "Mundësi Shërbyesi"
+        "server_picker_title_default": "Mundësi Shërbyesi",
+        "soft_logout": {
+            "clear_data_title": "Të pastrohen krejt të dhënat në këtë sesion?",
+            "clear_data_description": "Spastrimi i krejt të dhënave prej këtij sesioni është përfundimtar. Mesazhet e fshehtëzuar do të humbin, veç në qofshin kopjeruajtur kyçet e tyre.",
+            "clear_data_button": "Spastro krejt të dhënat"
+        }
     },
     "room_list": {
         "sort_unread_first": "Së pari shfaq dhoma me mesazhe të palexuar",
@@ -3478,7 +3457,10 @@
         "no_update": "S’ka përditësim gati.",
         "downloading": "Po shkarkohet përditësim…",
         "new_version_available": "Version i ri gati. <a>Përditësojeni tani.</a>",
-        "check_action": "Kontrollo për përditësime"
+        "check_action": "Kontrollo për përditësime",
+        "error_unable_load_commit": "S’arrihet të ngarkohen hollësi depozitimi: %(msg)s",
+        "unavailable": "Jo i passhëm",
+        "changelog": "Regjistër ndryshimesh"
     },
     "threads": {
         "all_threads": "Krejt rrjedhat",
@@ -4123,7 +4105,23 @@
         "deactivate_confirm_action": "Çaktivizoje përdoruesin",
         "error_deactivate": "S’u arrit të çaktivizohet përdorues",
         "role_label": "Rol në <RoomName/>",
-        "edit_own_devices": "Përpunoni pajisje"
+        "edit_own_devices": "Përpunoni pajisje",
+        "redact": {
+            "no_recent_messages_title": "S’u gjetën mesazhe së fundi nga %(user)s",
+            "no_recent_messages_description": "Provoni të ngjiteni sipër në rrjedhën kohore, që të shihni nëse ka patur të tillë më herët.",
+            "confirm_title": "Hiq mesazhe së fundi nga %(user)s",
+            "confirm_description_1": {
+                "other": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë për këdo te biseda. Doni të vazhdohet?",
+                "one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?"
+            },
+            "confirm_description_2": "Për një sasi të madhe mesazhesh, kjo mund të dojë ca kohë. Ju lutemi, mos e rifreskoni klientin tuaj gjatë kësaj kohe.",
+            "confirm_keep_state_label": "Ruaji mesazhet e sistemit",
+            "confirm_keep_state_explainer": "Hiqini shenjën, nëse doni të hiqni mesazhe sistemi në këtë përdorues (p.sh., ndryshime anëtarësimi, ndryshime profili…)",
+            "confirm_button": {
+                "other": "Hiq %(count)s mesazhe",
+                "one": "Hiq 1 mesazh"
+            }
+        }
     },
     "stickers": {
         "empty": "Hëpërhë, s’keni të aktivizuar ndonjë pako ngjitësesh",
@@ -4248,5 +4246,15 @@
             "network_dropdown_selected_label": "Shfaq: Dhoma Matrix"
         }
     },
-    "dialog_close_label": "Mbylle dialogun"
+    "dialog_close_label": "Mbylle dialogun",
+    "voice_message": {
+        "cant_start_broadcast_title": "S’niset dot mesazh zanor",
+        "cant_start_broadcast_description": "S’mund të niset mesazh zanor, ngaqë aktualisht po incizoni një transmetim të drejtpërdrejtë. Ju lutemi, përfundoni transmetimin e drejtpërdrejtë, që të mund të nisni incizimin e një mesazhi zanor."
+    },
+    "redact": {
+        "error": "S’mund ta fshini këtë mesazh. (%(code)s)",
+        "ongoing": "Po hiqet…",
+        "confirm_button": "Ripohoni Heqjen",
+        "reason_label": "Arsye (opsionale)"
+    }
 }

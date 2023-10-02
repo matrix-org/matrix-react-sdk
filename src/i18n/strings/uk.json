@@ -11,15 +11,12 @@
     "Sunday": "Неділя",
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
-    "Changelog": "Журнал змін",
-    "Unavailable": "Недоступний",
     "Filter results": "Відфільтрувати результати",
     "Tuesday": "Вівторок",
     "Unnamed room": "Неназвана кімната",
     "Saturday": "Субота",
     "Monday": "Понеділок",
     "Wednesday": "Середа",
-    "You cannot delete this message. (%(code)s)": "Ви не можете видалити це повідомлення. (%(code)s)",
     "Send": "Надіслати",
     "Thursday": "Четвер",
     "Yesterday": "Вчора",
@@ -167,7 +164,6 @@
     "IRC display name width": "Ширина псевдоніма IRC",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Зашифровані повідомлення захищені наскрізним шифруванням. Лише ви та отримувачі повідомлень мають ключі для їх читання.",
     "Encrypted by a deleted session": "Зашифроване видаленим сеансом",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Звірте цього користувача щоб позначити його довіреним. Довіряння користувачам додає спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Звірте цей пристрій щоб позначити його довіреним. Довіряння цьому пристрою додає вам та іншим користувачам спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
     "I don't want my encrypted messages": "Мені не потрібні мої зашифровані повідомлення",
@@ -438,7 +434,6 @@
     "Share User": "Поділитися користувачем",
     "Some suggestions may be hidden for privacy.": "Деякі пропозиції можуть бути сховані для приватності.",
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
-    "Remove recent messages by %(user)s": "Вилучити останні повідомлення від %(user)s",
     "Home": "Домівка",
     "Allow this widget to verify your identity": "Дозволити цьому віджету перевіряти вашу особу",
     "Sign in with SSO": "Увійти за допомогою SSO",
@@ -447,11 +442,6 @@
     "Delete Widget": "Видалити віджет",
     "Private space (invite only)": "Приватний простір (лише за запрошенням)",
     "Space visibility": "Видимість простору",
-    "Reason (optional)": "Причина (не обов'язково)",
-    "Clear all data": "Очистити всі дані",
-    "Clear all data in this session?": "Очистити всі дані сеансу?",
-    "Confirm Removal": "Підтвердити вилучення",
-    "Removing…": "Вилучення…",
     "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
     "e.g. my-room": "наприклад, моя-кімната",
     "Switch theme": "Змінити тему",
@@ -618,17 +608,9 @@
     "%(name)s cancelled": "%(name)s скасовує",
     "%(name)s declined": "%(name)s відхиляє",
     "%(name)s accepted": "%(name)s погоджується",
-    "Remove %(count)s messages": {
-        "one": "Видалити 1 повідомлення",
-        "other": "Видалити %(count)s повідомлень"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Залежно від кількості повідомлень, це може тривати довго. Не перезавантажуйте клієнт, поки це триває.",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Гортайте стрічку вище, щоб побачити, чи були такі раніше.",
-    "No recent messages by %(user)s found": "Не знайдено недавніх повідомлень %(user)s",
     "Recently viewed": "Недавно переглянуті",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Використовуйте сервер ідентифікації, щоб запрошувати через е-пошту. <default>Наприклад, типовий %(defaultIdentityServerName)s,</default> або інший у <settings>налаштуваннях</settings>.",
-    "Unable to load commit detail: %(msg)s": "Не вдалося звантажити дані про коміт: %(msg)s",
     "Server did not return valid authentication information.": "Сервер надав хибні дані розпізнання.",
     "Server did not require any authentication": "Сервер не попросив увійти",
     "Add a space to a space you manage.": "Додайте простір до іншого простору, яким ви керуєте.",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "Приєднатися до %(roomAddress)s",
     "Search Dialog": "Вікно пошуку",
     "You are sharing your live location": "Ви ділитеся місцеперебуванням",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Вимкніть, щоб також видалити системні повідомлення про користувача (зміни членства, редагування профілю…)",
-    "Preserve system messages": "Залишити системні повідомлення",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Ви збираєтеся видалити %(count)s повідомлення від %(user)s. Це видалить його назавжди для всіх у розмові. Точно продовжити?",
-        "other": "Ви збираєтеся видалити %(count)s повідомлень від %(user)s. Це видалить їх назавжди для всіх у розмові. Точно продовжити?"
-    },
     "Unsent": "Не надіслано",
     "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
-    "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
     "unknown": "невідомо",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Увімкніть «%(manageIntegrations)s» в Налаштуваннях, щоб зробити це.",
     "Loading live location…": "Завантаження місця перебування наживо…",
@@ -806,9 +780,7 @@
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
     "Start DM anyway and never warn me again": "Усе одно розпочати особисте спілкування і більше ніколи не попереджати мене",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Не вдалося знайти профілі для перелічених далі Matrix ID — ви все одно хочете розпочати особисте спілкування?",
-    "Are you sure you wish to remove (delete) this event?": "Ви впевнені, що хочете вилучити (видалити) цю подію?",
     "Upgrade room": "Поліпшити кімнату",
-    "Note that removing room changes like this could undo the change.": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
     "Other spaces you know": "Інші відомі вам простори",
     "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
     "common": {
@@ -3312,7 +3284,12 @@
         "autodiscovery_invalid_is_response": "Хибна відповідь самоналаштування сервера ідентифікації",
         "server_picker_description": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
         "server_picker_description_matrix.org": "Приєднуйтесь безплатно до мільйонів інших на найбільшому загальнодоступному сервері",
-        "server_picker_title_default": "Опції сервера"
+        "server_picker_title_default": "Опції сервера",
+        "soft_logout": {
+            "clear_data_title": "Очистити всі дані сеансу?",
+            "clear_data_description": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
+            "clear_data_button": "Очистити всі дані"
+        }
     },
     "room_list": {
         "sort_unread_first": "Спочатку показувати кімнати з непрочитаними повідомленнями",
@@ -3567,7 +3544,10 @@
         "no_update": "Оновлення відсутні.",
         "downloading": "Завантаження оновлення…",
         "new_version_available": "Доступна нова версія. <a>Оновити зараз</a>",
-        "check_action": "Перевірити на наявність оновлень"
+        "check_action": "Перевірити на наявність оновлень",
+        "error_unable_load_commit": "Не вдалося звантажити дані про коміт: %(msg)s",
+        "unavailable": "Недоступний",
+        "changelog": "Журнал змін"
     },
     "threads": {
         "all_threads": "Усі гілки",
@@ -4230,7 +4210,23 @@
         "deactivate_confirm_action": "Деактивувати користувача",
         "error_deactivate": "Не вдалося деактивувати користувача",
         "role_label": "Роль у <RoomName/>",
-        "edit_own_devices": "Керувати пристроями"
+        "edit_own_devices": "Керувати пристроями",
+        "redact": {
+            "no_recent_messages_title": "Не знайдено недавніх повідомлень %(user)s",
+            "no_recent_messages_description": "Гортайте стрічку вище, щоб побачити, чи були такі раніше.",
+            "confirm_title": "Вилучити останні повідомлення від %(user)s",
+            "confirm_description_1": {
+                "one": "Ви збираєтеся видалити %(count)s повідомлення від %(user)s. Це видалить його назавжди для всіх у розмові. Точно продовжити?",
+                "other": "Ви збираєтеся видалити %(count)s повідомлень від %(user)s. Це видалить їх назавжди для всіх у розмові. Точно продовжити?"
+            },
+            "confirm_description_2": "Залежно від кількості повідомлень, це може тривати довго. Не перезавантажуйте клієнт, поки це триває.",
+            "confirm_keep_state_label": "Залишити системні повідомлення",
+            "confirm_keep_state_explainer": "Вимкніть, щоб також видалити системні повідомлення про користувача (зміни членства, редагування профілю…)",
+            "confirm_button": {
+                "one": "Видалити 1 повідомлення",
+                "other": "Видалити %(count)s повідомлень"
+            }
+        }
     },
     "stickers": {
         "empty": "У вас поки немає пакунків наліпок",
@@ -4355,5 +4351,17 @@
             "network_dropdown_selected_label": "Показати: кімнати Matrix"
         }
     },
-    "dialog_close_label": "Закрити діалогове вікно"
+    "dialog_close_label": "Закрити діалогове вікно",
+    "voice_message": {
+        "cant_start_broadcast_title": "Не можливо запустити запис голосового повідомлення",
+        "cant_start_broadcast_description": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення."
+    },
+    "redact": {
+        "error": "Ви не можете видалити це повідомлення. (%(code)s)",
+        "ongoing": "Вилучення…",
+        "confirm_description": "Ви впевнені, що хочете вилучити (видалити) цю подію?",
+        "confirm_description_state": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
+        "confirm_button": "Підтвердити вилучення",
+        "reason_label": "Причина (не обов'язково)"
+    }
 }

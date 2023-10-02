@@ -49,9 +49,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Unavailable": "Pas disponible",
-    "Changelog": "Istoric dels cambiaments (Changelog)",
-    "Removing…": "Supression en cors…",
     "Send": "Mandar",
     "An error has occurred.": "Una error s'es producha.",
     "Session name": "Nom de session",
@@ -434,5 +431,12 @@
     "bug_reporting": {
         "thank_you": "Mercés !",
         "textarea_label": "Nòtas"
+    },
+    "update": {
+        "unavailable": "Pas disponible",
+        "changelog": "Istoric dels cambiaments (Changelog)"
+    },
+    "redact": {
+        "ongoing": "Supression en cors…"
     }
 }

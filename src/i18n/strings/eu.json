@@ -38,7 +38,6 @@
         "one": "(~%(count)s emaitza)",
         "other": "(~%(count)s emaitza)"
     },
-    "Confirm Removal": "Berretsi kentzea",
     "Unable to restore session": "Ezin izan da saioa berreskuratu",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
@@ -62,14 +61,11 @@
     "Sunday": "Igandea",
     "Today": "Gaur",
     "Friday": "Ostirala",
-    "Changelog": "Aldaketa-egunkaria",
-    "Unavailable": "Eskuraezina",
     "Filter results": "Iragazi emaitzak",
     "Tuesday": "Asteartea",
     "Saturday": "Larunbata",
     "Monday": "Astelehena",
     "Wednesday": "Asteazkena",
-    "You cannot delete this message. (%(code)s)": "Ezin duzu mezu hau ezabatu. (%(code)s)",
     "Thursday": "Osteguna",
     "Yesterday": "Atzo",
     "Send Logs": "Bidali egunkariak",
@@ -102,7 +98,6 @@
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
     "Failed to decrypt %(failedCount)s sessions!": "Ezin izan dira %(failedCount)s saio deszifratu!",
-    "Unable to load commit detail: %(msg)s": "Ezin izan dira xehetasunak kargatu: %(msg)s",
     "Dog": "Txakurra",
     "Cat": "Katua",
     "Lion": "Lehoia",
@@ -197,22 +192,12 @@
     "Upload all": "Igo denak",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du. Kideei esperientziarik onena emateko, hau egingo dugu:",
     "Message edits": "Mezuaren edizioak",
-    "Removing…": "Kentzen…",
-    "Clear all data": "Garbitu datu guztiak",
     "Your homeserver doesn't seem to support this feature.": "Antza zure hasiera-zerbitzariak ez du ezaugarri hau onartzen.",
     "Resend %(unsentCount)s reaction(s)": "Birbidali %(unsentCount)s erreakzio",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
     "Deactivate account": "Desaktibatu kontua",
     "Command Help": "Aginduen laguntza",
-    "No recent messages by %(user)s found": "Ez da %(user)s erabiltzailearen azken mezurik aurkitu",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Saiatu denbora-lerroa gora korritzen aurreko besterik dagoen ikusteko.",
-    "Remove recent messages by %(user)s": "Kendu %(user)s erabiltzailearen azken mezuak",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Mezu kopuru handientzako, honek denbora behar lezake. Ez freskatu zure bezeroa bitartean.",
-    "Remove %(count)s messages": {
-        "other": "Kendu %(count)s mezu",
-        "one": "Kendu mezu 1"
-    },
     "e.g. my-room": "adib. nire-gela",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. <default>Erabili lehenetsitakoa (%(defaultIdentityServerName)s)</default> edo gehitu bat <settings>Ezarpenak</settings> atalean.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
@@ -244,8 +229,6 @@
         "other": "%(count)s saio",
         "one": "saio %(count)s"
     },
-    "Clear all data in this session?": "Garbitu saio honetako datu guztiak?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Saio honetako datuak garbitzea behin betirako da. Zifratutako mezuak galdu egingo dira gakoen babes-kopia egin ez bada.",
     "Session name": "Saioaren izena",
     "Session key": "Saioaren gakoa",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
@@ -1476,7 +1459,12 @@
         "autodiscovery_invalid_is_base_url": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
         "autodiscovery_invalid_is": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
         "autodiscovery_invalid_is_response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
-        "server_picker_description_matrix.org": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean"
+        "server_picker_description_matrix.org": "Elkartu milioika pertsonekin dohain hasiera zerbitzari publiko handienean",
+        "soft_logout": {
+            "clear_data_title": "Garbitu saio honetako datu guztiak?",
+            "clear_data_description": "Saio honetako datuak garbitzea behin betirako da. Zifratutako mezuak galdu egingo dira gakoen babes-kopia egin ez bada.",
+            "clear_data_button": "Garbitu datu guztiak"
+        }
     },
     "export_chat": {
         "messages": "Mezuak"
@@ -1559,7 +1547,10 @@
         "error_encountered": "Errorea aurkitu da (%(errorDetail)s).",
         "no_update": "Ez dago eguneraketarik eskuragarri.",
         "new_version_available": "Bertsio berri eskuragarri. <a>Eguneratu orain.</a>",
-        "check_action": "Bilatu ekuneraketa"
+        "check_action": "Bilatu ekuneraketa",
+        "error_unable_load_commit": "Ezin izan dira xehetasunak kargatu: %(msg)s",
+        "unavailable": "Eskuraezina",
+        "changelog": "Aldaketa-egunkaria"
     },
     "labs_mjolnir": {
         "room_name": "Nire debeku-zerrenda",
@@ -1861,7 +1852,17 @@
         "deactivate_confirm_title": "Desaktibatu erabiltzailea?",
         "deactivate_confirm_description": "Erabiltzailea desaktibatzean saioa itxiko zaio eta ezin izango du berriro hasi. Gainera, dauden gela guztietatik aterako da. Ekintza hau ezin da aurreko egoera batera ekarri. Ziur erabiltzaile hau desaktibatu nahi duzula?",
         "deactivate_confirm_action": "Desaktibatu erabiltzailea",
-        "error_deactivate": "Huts egin du erabiltzailea desaktibatzeak"
+        "error_deactivate": "Huts egin du erabiltzailea desaktibatzeak",
+        "redact": {
+            "no_recent_messages_title": "Ez da %(user)s erabiltzailearen azken mezurik aurkitu",
+            "no_recent_messages_description": "Saiatu denbora-lerroa gora korritzen aurreko besterik dagoen ikusteko.",
+            "confirm_title": "Kendu %(user)s erabiltzailearen azken mezuak",
+            "confirm_description_2": "Mezu kopuru handientzako, honek denbora behar lezake. Ez freskatu zure bezeroa bitartean.",
+            "confirm_button": {
+                "other": "Kendu %(count)s mezu",
+                "one": "Kendu mezu 1"
+            }
+        }
     },
     "stickers": {
         "empty": "Ez duzu eranskailu multzorik aktibatuta",
@@ -1912,5 +1913,10 @@
             "network_dropdown_add_dialog_placeholder": "Zerbitzari-izena"
         }
     },
-    "dialog_close_label": "Itxi elkarrizketa-koadroa"
+    "dialog_close_label": "Itxi elkarrizketa-koadroa",
+    "redact": {
+        "error": "Ezin duzu mezu hau ezabatu. (%(code)s)",
+        "ongoing": "Kentzen…",
+        "confirm_button": "Berretsi kentzea"
+    }
 }

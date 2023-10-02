@@ -35,7 +35,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Confirm Removal": "ยืนยันการลบ",
     "Home": "เมนูหลัก",
     "(~%(count)s results)": {
         "one": "(~%(count)s ผลลัพท์)",
@@ -45,15 +44,12 @@
     "Sunday": "วันอาทิตย์",
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
-    "Changelog": "บันทึกการเปลี่ยนแปลง",
-    "Unavailable": "ไม่มี",
     "Send": "ส่ง",
     "Tuesday": "วันอังคาร",
     "Unnamed room": "ห้องที่ไม่มีชื่อ",
     "Saturday": "วันเสาร์",
     "Monday": "วันจันทร์",
     "Wednesday": "วันพุธ",
-    "You cannot delete this message. (%(code)s)": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
     "Thursday": "วันพฤหัสบดี",
     "Yesterday": "เมื่อวานนี้",
     "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
@@ -472,7 +468,9 @@
         "see_changes_button": "มีอะไรใหม่?",
         "release_notes_toast_title": "มีอะไรใหม่",
         "error_encountered": "เกิดข้อผิดพลาด (%(errorDetail)s)",
-        "no_update": "ไม่มีอัปเดตที่ใหม่กว่า"
+        "no_update": "ไม่มีอัปเดตที่ใหม่กว่า",
+        "unavailable": "ไม่มี",
+        "changelog": "บันทึกการเปลี่ยนแปลง"
     },
     "file_panel": {
         "guest_note": "คุณต้อง<a>ลงทะเบียน</a>เพื่อใช้ฟังก์ชันนี้"
@@ -635,5 +633,9 @@
             "server_unavailable": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :("
         }
     },
-    "General failure": "ข้อผิดพลาดทั่วไป"
+    "General failure": "ข้อผิดพลาดทั่วไป",
+    "redact": {
+        "error": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
+        "confirm_button": "ยืนยันการลบ"
+    }
 }

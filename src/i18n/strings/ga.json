@@ -190,9 +190,6 @@
     "Ok": "Togha",
     "Lock": "Glasáil",
     "Home": "Tús",
-    "Removing…": "ag Baint…",
-    "Changelog": "Loga na n-athruithe",
-    "Unavailable": "Níl sé ar fáil",
     "expand": "méadaigh",
     "collapse": "cumaisc",
     "edited": "curtha in eagar",
@@ -820,7 +817,9 @@
         }
     },
     "update": {
-        "see_changes_button": "Cad é nua?"
+        "see_changes_button": "Cad é nua?",
+        "unavailable": "Níl sé ar fáil",
+        "changelog": "Loga na n-athruithe"
     },
     "user_menu": {
         "switch_theme_light": "Athraigh go mód geal",
@@ -929,5 +928,8 @@
     "error_dialog": {
         "forget_room_failed": "Níor dhearnadh dearmad ar an seomra %(errCode)s"
     },
-    "info_tooltip_title": "Eolas"
+    "info_tooltip_title": "Eolas",
+    "redact": {
+        "ongoing": "ag Baint…"
+    }
 }

@@ -42,7 +42,6 @@
     "Oct": "十月",
     "Nov": "十一月",
     "Dec": "十二月",
-    "Confirm Removal": "确认移除",
     "This will allow you to reset your password and receive notifications.": "这将允许你重置你的密码和接收通知。",
     "Send": "发送",
     "Unnamed room": "未命名的房间",
@@ -62,14 +61,11 @@
     "Sunday": "星期日",
     "Today": "今天",
     "Friday": "星期五",
-    "Changelog": "更改日志",
-    "Unavailable": "无法获得",
     "Filter results": "过滤结果",
     "Tuesday": "星期二",
     "Saturday": "星期六",
     "Monday": "星期一",
     "Wednesday": "星期三",
-    "You cannot delete this message. (%(code)s)": "你无法删除这条消息。(%(code)s)",
     "Thursday": "星期四",
     "Yesterday": "昨天",
     "Clear Storage and Sign Out": "清除存储并登出",
@@ -162,7 +158,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
     "Start using Key Backup": "开始使用密钥备份",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
-    "Unable to load commit detail: %(msg)s": "无法加载提交详情：%(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "为避免丢失聊天记录，你必须在登出前导出房间密钥。你需要切换至新版 %(brand)s 方可继续执行此操作",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "验证此用户并将其标记为已信任。在收发端到端加密消息时，信任用户可让你更加放心。",
     "Incoming Verification Request": "收到验证请求",
@@ -199,14 +194,6 @@
         "other": "%(count)s 个会话",
         "one": "%(count)s 个会话"
     },
-    "No recent messages by %(user)s found": "没有找到 %(user)s 最近发送的消息",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "请尝试在时间线中向上滚动以查看是否有更早的。",
-    "Remove recent messages by %(user)s": "删除 %(user)s 最近发送的消息",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "对于大量消息，可能会消耗一段时间。在此期间请不要刷新你的客户端。",
-    "Remove %(count)s messages": {
-        "other": "删除 %(count)s 条消息",
-        "one": "删除 1 条消息"
-    },
     "%(name)s accepted": "%(name)s 接受了",
     "%(name)s declined": "%(name)s 拒绝了",
     "%(name)s cancelled": "%(name)s 取消了",
@@ -216,13 +203,9 @@
     "e.g. my-room": "例如 my-room",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "使用一个身份服务器以通过邮箱邀请。<default>使用默认（%(defaultIdentityServerName)s）</default>或在<settings>设置</settings>中管理。",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "使用一个身份服务器以通过邮箱邀请。在<settings>设置</settings>中管理。",
-    "Removing…": "正在移除…",
     "Destroy cross-signing keys?": "销毁交叉签名密钥？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "删除交叉签名密钥是永久的。所有你验证过的人都会看到安全警报。除非你丢失了所有可以交叉签名的设备，否则几乎可以确定你不想这么做。",
     "Clear cross-signing keys": "清楚交叉签名密钥",
-    "Clear all data in this session?": "是否清除此会话中的所有数据？",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "清除此会话中的所有数据是永久的。加密消息会丢失，除非其密钥已被备份。",
-    "Clear all data": "清除所有数据",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "你曾在此会话中使用了一个更新版本的 %(brand)s。要再使用此版本并使用端到端加密，你需要登出再重新登录。",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "通过单点登录证明你的身份并确认停用你的账户。",
     "Are you sure you want to deactivate your account? This is irreversible.": "你确定要停用你的账户吗？此操作不可逆。",
@@ -383,7 +366,6 @@
     "Invalid Security Key": "安全密钥无效",
     "Wrong Security Key": "安全密钥错误",
     "Transfer": "传输",
-    "Reason (optional)": "理由（可选）",
     "Not encrypted": "未加密",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
@@ -746,7 +728,6 @@
     "You cannot search for rooms that are neither a room nor a space": "你无法搜索既不是房间也不是空间的房间",
     "We'll help you get connected.": "",
     "You will not be able to reactivate your account": "你将无法重新激活你的账户",
-    "Preserve system messages": "保留系统消息",
     "Remove them from everything I'm able to": "",
     "Unsent": "未发送",
     "Search Dialog": "搜索对话",
@@ -773,7 +754,6 @@
     "Manually verify by text": "用文本手动验证",
     "Interactively verify by emoji": "用表情符号交互式验证",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
     "common": {
         "about": "关于",
         "analytics": "统计分析服务",
@@ -2988,7 +2968,12 @@
         "autodiscovery_invalid_is_response": "无效的身份服务器搜索响应",
         "server_picker_description": "你可以使用自定义服务器选项来指定不同的家服务器URL以登录其他Matrix服务器。这让你能把%(brand)s和不同家服务器上的已有Matrix账户搭配使用。",
         "server_picker_description_matrix.org": "免费加入最大的公共服务器，成为数百万用户中的一员",
-        "server_picker_title_default": "服务器选项"
+        "server_picker_title_default": "服务器选项",
+        "soft_logout": {
+            "clear_data_title": "是否清除此会话中的所有数据？",
+            "clear_data_description": "清除此会话中的所有数据是永久的。加密消息会丢失，除非其密钥已被备份。",
+            "clear_data_button": "清除所有数据"
+        }
     },
     "room_list": {
         "sort_unread_first": "优先显示有未读消息的房间",
@@ -3226,7 +3211,10 @@
         "error_encountered": "遇到错误 (%(errorDetail)s)。",
         "no_update": "没有可用更新。",
         "new_version_available": "新版本可用。<a>现在更新。</a>",
-        "check_action": "检查更新"
+        "check_action": "检查更新",
+        "error_unable_load_commit": "无法加载提交详情：%(msg)s",
+        "unavailable": "无法获得",
+        "changelog": "更改日志"
     },
     "threads": {
         "all_threads": "所有消息列",
@@ -3830,7 +3818,19 @@
         "deactivate_confirm_action": "停用用户",
         "error_deactivate": "停用用户失败",
         "role_label": "<RoomName/> 中的角色",
-        "edit_own_devices": "编辑设备"
+        "edit_own_devices": "编辑设备",
+        "redact": {
+            "no_recent_messages_title": "没有找到 %(user)s 最近发送的消息",
+            "no_recent_messages_description": "请尝试在时间线中向上滚动以查看是否有更早的。",
+            "confirm_title": "删除 %(user)s 最近发送的消息",
+            "confirm_description_2": "对于大量消息，可能会消耗一段时间。在此期间请不要刷新你的客户端。",
+            "confirm_keep_state_label": "保留系统消息",
+            "confirm_keep_state_explainer": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
+            "confirm_button": {
+                "other": "删除 %(count)s 条消息",
+                "one": "删除 1 条消息"
+            }
+        }
     },
     "stickers": {
         "empty": "你目前未启用任何贴纸包",
@@ -3932,5 +3932,11 @@
             "network_dropdown_selected_label": "显示：Matrix房间"
         }
     },
-    "dialog_close_label": "关闭对话框"
+    "dialog_close_label": "关闭对话框",
+    "redact": {
+        "error": "你无法删除这条消息。(%(code)s)",
+        "ongoing": "正在移除…",
+        "confirm_button": "确认移除",
+        "reason_label": "理由（可选）"
+    }
 }

@@ -42,15 +42,12 @@
     "Sunday": "Domingo",
     "Today": "Hoy",
     "Friday": "Viernes",
-    "Changelog": "Registro de cambios",
-    "Unavailable": "No disponible",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
     "Unnamed room": "Sala sin nombre",
     "Saturday": "Sábado",
     "Monday": "Lunes",
     "Send": "Enviar",
-    "You cannot delete this message. (%(code)s)": "No puedes eliminar este mensaje. (%(code)s)",
     "Thursday": "Jueves",
     "Yesterday": "Ayer",
     "Wednesday": "Miércoles",
@@ -70,7 +67,6 @@
     "Delete Widget": "Eliminar accesorio",
     "collapse": "encoger",
     "expand": "desplegar",
-    "Confirm Removal": "Confirmar eliminación",
     "Clear Storage and Sign Out": "Borrar almacenamiento y cerrar sesión",
     "Send Logs": "Enviar Registros",
     "We encountered an error trying to restore your previous session.": "Encontramos un error al intentar restaurar su sesión anterior.",
@@ -155,7 +151,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Los mensajes cifrados son seguros con el cifrado punto a punto. Solo tú y el/los destinatario/s tiene/n las claves para leer estos mensajes.",
     "Start using Key Backup": "Comenzar a usar la copia de claves",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema.",
-    "Unable to load commit detail: %(msg)s": "No se pudo cargar el detalle del commit: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Para evitar perder tu historial de chat, debes exportar las claves de la sala antes de salir. Debes volver a la versión actual de %(brand)s para esto",
     "Incompatible Database": "Base de datos incompatible",
     "Continue With Encryption Disabled": "Seguir con el cifrado desactivado",
@@ -216,13 +211,9 @@
     "e.g. my-room": "p.ej. mi-sala",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usar un servidor de identidad para invitar a través de correo electrónico. <default>. Usar (%(defaultIdentityServerName)s)</default>o seleccione en <settings>Ajustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilice un servidor de identidad para invitar por correo electrónico. Gestionar en <settings>Ajustes</settings>.",
-    "Removing…": "Quitando…",
     "Destroy cross-signing keys?": "¿Destruir las claves de firma cruzada?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La eliminación de claves de firma cruzada es definitiva. Cualquiera con el que lo hayas verificado verá alertas de seguridad. Es casi seguro que no quieres hacer esto, a menos que hayas perdido todos los dispositivos puedas usar hacer una firma cruzada.",
     "Clear cross-signing keys": "Borrar claves de firma cruzada",
-    "Clear all data in this session?": "¿Borrar todos los datos en esta sesión?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "La eliminación de todos los datos de esta sesión es definitiva. Los mensajes cifrados se perderán, a menos que se haya hecho una copia de seguridad de sus claves.",
-    "Clear all data": "Borrar todos los datos",
     "Server did not require any authentication": "El servidor no requirió ninguna autenticación",
     "Server did not return valid authentication information.": "El servidor no devolvió información de autenticación válida.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirme la desactivación de su cuenta, usando Registro Único para probar su identidad.",
@@ -242,14 +233,6 @@
     "a key signature": "un firma de clave",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontró un error durante la carga de:",
     "Encrypted by a deleted session": "Cifrado por una sesión eliminada",
-    "No recent messages by %(user)s found": "No se han encontrado mensajes recientes de %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Intente desplazarse hacia arriba en la línea de tiempo para ver si hay alguna anterior.",
-    "Remove recent messages by %(user)s": "Eliminar mensajes recientes de %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Para una gran cantidad de mensajes, esto podría llevar algún tiempo. Por favor, no recargues tu aplicación mientras tanto.",
-    "Remove %(count)s messages": {
-        "other": "Eliminar %(count)s mensajes",
-        "one": "Eliminar 1 mensaje"
-    },
     "Failed to connect to integration manager": "Error al conectarse con el administrador de integración",
     "%(count)s verified sessions": {
         "other": "%(count)s sesiones verificadas",
@@ -500,7 +483,6 @@
     "Transfer": "Transferir",
     "A call can only be transferred to a single user.": "Una llamada solo puede transferirse a un usuario.",
     "Invite by email": "Invitar a través de correo electrónico",
-    "Reason (optional)": "Motivo (opcional)",
     "Dial pad": "Teclado numérico",
     "Sint Maarten": "San Martín",
     "Singapore": "Singapur",
@@ -723,12 +705,6 @@
     "Search Dialog": "Ventana de búsqueda",
     "Join %(roomAddress)s": "Unirte a %(roomAddress)s",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?",
-        "one": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?"
-    },
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "No marques esta casilla si quieres borrar también los mensajes del sistema sobre el usuario (ej.: entradas y salidas, cambios en su perfil…)",
-    "Preserve system messages": "Mantener mensajes del sistema",
     "Unsent": "No enviado",
     "%(count)s participants": {
         "one": "1 participante",
@@ -801,7 +777,6 @@
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
-    "Can't start voice message": "No se ha podido empezar el mensaje de voz",
     "Waiting for partner to confirm…": "Esperando a que la otra persona confirme…",
     "Enable MSC3946 (to support late-arriving room archives)": "",
     "common": {
@@ -3170,7 +3145,12 @@
         "autodiscovery_invalid_is_response": "Respuesta inválida de descubrimiento de servidor de identidad",
         "server_picker_description": "Puedes usar la opción de servidor personalizado para iniciar sesión a otro servidor de Matrix, escribiendo una dirección URL de servidor base diferente. Esto te permite usar %(brand)s con una cuenta de Matrix que ya exista en otro servidor base.",
         "server_picker_description_matrix.org": "Únete de forma gratuita a millones de personas en el servidor público más grande",
-        "server_picker_title_default": "Opciones del servidor"
+        "server_picker_title_default": "Opciones del servidor",
+        "soft_logout": {
+            "clear_data_title": "¿Borrar todos los datos en esta sesión?",
+            "clear_data_description": "La eliminación de todos los datos de esta sesión es definitiva. Los mensajes cifrados se perderán, a menos que se haya hecho una copia de seguridad de sus claves.",
+            "clear_data_button": "Borrar todos los datos"
+        }
     },
     "room_list": {
         "sort_unread_first": "Colocar al principio las salas con mensajes sin leer",
@@ -3412,7 +3392,10 @@
         "no_update": "No hay actualizaciones disponibles.",
         "downloading": "Descargando actualización…",
         "new_version_available": "Nueva versión disponible. <a>Actualizar ahora.</a>",
-        "check_action": "Comprobar si hay actualizaciones"
+        "check_action": "Comprobar si hay actualizaciones",
+        "error_unable_load_commit": "No se pudo cargar el detalle del commit: %(msg)s",
+        "unavailable": "No disponible",
+        "changelog": "Registro de cambios"
     },
     "threads": {
         "all_threads": "Todos los hilos",
@@ -4043,7 +4026,23 @@
         "deactivate_confirm_action": "Desactivar usuario",
         "error_deactivate": "Error en desactivar usuario",
         "role_label": "Rol en <RoomName/>",
-        "edit_own_devices": "Gestionar dispositivos"
+        "edit_own_devices": "Gestionar dispositivos",
+        "redact": {
+            "no_recent_messages_title": "No se han encontrado mensajes recientes de %(user)s",
+            "no_recent_messages_description": "Intente desplazarse hacia arriba en la línea de tiempo para ver si hay alguna anterior.",
+            "confirm_title": "Eliminar mensajes recientes de %(user)s",
+            "confirm_description_1": {
+                "other": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?",
+                "one": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?"
+            },
+            "confirm_description_2": "Para una gran cantidad de mensajes, esto podría llevar algún tiempo. Por favor, no recargues tu aplicación mientras tanto.",
+            "confirm_keep_state_label": "Mantener mensajes del sistema",
+            "confirm_keep_state_explainer": "No marques esta casilla si quieres borrar también los mensajes del sistema sobre el usuario (ej.: entradas y salidas, cambios en su perfil…)",
+            "confirm_button": {
+                "other": "Eliminar %(count)s mensajes",
+                "one": "Eliminar 1 mensaje"
+            }
+        }
     },
     "stickers": {
         "empty": "Actualmente no tienes ningún paquete de pegatinas activado",
@@ -4157,5 +4156,14 @@
             "network_dropdown_selected_label": "Mostrar: salas de Matrix"
         }
     },
-    "dialog_close_label": "Cerrar diálogo"
+    "dialog_close_label": "Cerrar diálogo",
+    "voice_message": {
+        "cant_start_broadcast_title": "No se ha podido empezar el mensaje de voz"
+    },
+    "redact": {
+        "error": "No puedes eliminar este mensaje. (%(code)s)",
+        "ongoing": "Quitando…",
+        "confirm_button": "Confirmar eliminación",
+        "reason_label": "Motivo (opcional)"
+    }
 }

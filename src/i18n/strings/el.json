@@ -38,7 +38,6 @@
         "one": "(~%(count)s αποτέλεσμα)",
         "other": "(~%(count)s αποτελέσματα)"
     },
-    "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
     "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
     "not specified": "μη καθορισμένο",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
@@ -49,15 +48,12 @@
     "Sunday": "Κυριακή",
     "Today": "Σήμερα",
     "Friday": "Παρασκευή",
-    "Changelog": "Αλλαγές",
-    "Unavailable": "Μη διαθέσιμο",
     "Send": "Αποστολή",
     "Tuesday": "Τρίτη",
     "Unnamed room": "Ανώνυμο δωμάτιο",
     "Saturday": "Σάββατο",
     "Monday": "Δευτέρα",
     "Wednesday": "Τετάρτη",
-    "You cannot delete this message. (%(code)s)": "Δεν μπορείτε να διαγράψετε αυτό το μήνυμα. (%(code)s)",
     "Thursday": "Πέμπτη",
     "Yesterday": "Χθές",
     "AM": "ΠΜ",
@@ -406,12 +402,6 @@
     "Signature upload success": "Επιτυχία μεταφόρτωσης υπογραφής",
     "Cancelled signature upload": "Ακυρώθηκε η μεταφόρτωση υπογραφής",
     "Upload completed": "Η μεταφόρτωση ολοκληρώθηκε",
-    "Clear all data in this session?": "Εκκαθάριση όλων των δεδομένων σε αυτήν την περίοδο σύνδεσης;",
-    "Clear all data": "Εκκαθάριση όλων των δεδομένων",
-    "Remove %(count)s messages": {
-        "other": "Αφαίρεση %(count)s μηνυμάτων",
-        "one": "Αφαίρεση 1 μηνύματος"
-    },
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
@@ -592,18 +582,6 @@
     "Sorry, the poll did not end. Please try again.": "Συγνώμη, η δημοσκόπηση δεν τερματίστηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Failed to end poll": "Αποτυχία τερματισμού της δημοσκόπησης",
     "Anyone in <SpaceName/> will be able to find and join.": "Οποιοσδήποτε στο <SpaceName/> θα μπορεί να βρει και να συμμετάσχει σε αυτό το δωμάτιο.",
-    "Reason (optional)": "Αιτία (προαιρετικό)",
-    "Removing…": "Αφαίρεση…",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Καταργήστε την επιλογή εάν θέλετε επίσης να καταργήσετε τα μηνύματα συστήματος σε αυτόν τον χρήστη (π.χ. αλλαγή μέλους, αλλαγή προφίλ…)",
-    "Preserve system messages": "Διατήρηση μηνυμάτων συστήματος",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Για μεγάλο αριθμό μηνυμάτων, αυτό μπορεί να πάρει κάποιο χρόνο. Μην ανανεώνετε το προγράμμα-πελάτη σας στο μεταξύ.",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "Πρόκειται να αφαιρέσετε %(count)s μηνύματα του χρήστη %(user)s. Αυτό θα τα καταργήσει οριστικά για όλους στη συνομιλία. Θέλετε να συνεχίσετε;",
-        "one": "Πρόκειται να αφαιρέσετε %(count)s μήνυμα του χρήστη %(user)s. Αυτό θα το καταργήσει οριστικά για όλους στη συνομιλία. Θέλετε να συνεχίσετε;"
-    },
-    "Remove recent messages by %(user)s": "Καταργήστε πρόσφατα μηνύματα από %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Δοκιμάστε να κάνετε κύλιση στη γραμμή χρόνου για να δείτε αν υπάρχουν παλαιότερα.",
-    "No recent messages by %(user)s found": "Δε βρέθηκαν πρόσφατα μηνύματα από %(user)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Προτού υποβάλετε αρχεία καταγραφής, πρέπει να <a>δημιουργήσετε ένα ζήτημα GitHub</a> για να περιγράψετε το πρόβλημά σας.",
     "e.g. my-room": "π.χ. my-room",
     "Spanner": "Γερμανικό κλειδί",
@@ -630,8 +608,6 @@
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Έχετε χρησιμοποιήσει στο παρελθόν μια νεότερη έκδοση του %(brand)s με αυτήν την συνεδρία. Για να χρησιμοποιήσετε ξανά αυτήν την έκδοση με κρυπτογράφηση από άκρο σε άκρο, θα πρέπει να αποσυνδεθείτε και να συνδεθείτε ξανά.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Για να αποφύγετε να χάσετε το ιστορικό των συνομιλιών σας, πρέπει να εξαγάγετε τα κλειδιά του δωματίου σας πριν αποσυνδεθείτε. Για να το κάνετε αυτό, θα χρειαστεί να επιστρέψετε στη νεότερη έκδοση του %(brand)s",
     "Add a space to a space you manage.": "Προσθέστε έναν χώρο σε ένα χώρο που διαχειρίζεστε.",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Η εκκαθάριση όλων των δεδομένων από αυτήν τη συνεδρία είναι μόνιμη. Τα κρυπτογραφημένα μηνύματα θα χαθούν εκτός εάν έχουν δημιουργηθεί αντίγραφα ασφαλείας των κλειδιών τους.",
-    "Unable to load commit detail: %(msg)s": "Δεν είναι δυνατή η φόρτωση των λεπτομερειών δέσμευσης: %(msg)s",
     "Data on this screen is shared with %(widgetDomain)s": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s",
     "Other spaces or rooms you might not know": "Άλλοι χώροι ή δωμάτια που ίσως δε γνωρίζετε",
     "Spaces you know that contain this space": "Χώροι που γνωρίζετε ότι περιέχουν αυτόν το χώρο",
@@ -2761,7 +2737,12 @@
         "autodiscovery_invalid_is_response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
         "server_picker_description": "Μπορείτε να χρησιμοποιήσετε τις προσαρμοσμένες επιλογές διακομιστή για να συνδεθείτε σε άλλους διακομιστές Matrix, καθορίζοντας μια διαφορετική διεύθυνση URL του κεντρικού διακομιστή. Αυτό σας επιτρέπει να χρησιμοποιείτε το %(brand)s με έναν υπάρχοντα λογαριασμό Matrix σε διαφορετικό τοπικό διακομιστή.",
         "server_picker_description_matrix.org": "Συμμετέχετε δωρεάν στον μεγαλύτερο δημόσιο διακομιστή",
-        "server_picker_title_default": "Επιλογές Διακομιστή"
+        "server_picker_title_default": "Επιλογές Διακομιστή",
+        "soft_logout": {
+            "clear_data_title": "Εκκαθάριση όλων των δεδομένων σε αυτήν την περίοδο σύνδεσης;",
+            "clear_data_description": "Η εκκαθάριση όλων των δεδομένων από αυτήν τη συνεδρία είναι μόνιμη. Τα κρυπτογραφημένα μηνύματα θα χαθούν εκτός εάν έχουν δημιουργηθεί αντίγραφα ασφαλείας των κλειδιών τους.",
+            "clear_data_button": "Εκκαθάριση όλων των δεδομένων"
+        }
     },
     "room_list": {
         "sort_unread_first": "Εμφάνιση δωματίων με μη αναγνωσμένα μηνύματα πρώτα",
@@ -2985,7 +2966,10 @@
         "error_encountered": "Παρουσιάστηκε σφάλμα (%(errorDetail)s).",
         "no_update": "Δεν υπάρχει διαθέσιμη ενημέρωση.",
         "new_version_available": "Νέα έκδοση διαθέσιμη. <a>Ενημέρωση τώρα.</a>",
-        "check_action": "Έλεγχος για ενημέρωση"
+        "check_action": "Έλεγχος για ενημέρωση",
+        "error_unable_load_commit": "Δεν είναι δυνατή η φόρτωση των λεπτομερειών δέσμευσης: %(msg)s",
+        "unavailable": "Μη διαθέσιμο",
+        "changelog": "Αλλαγές"
     },
     "threads": {
         "all_threads": "Όλα τα νήματα",
@@ -3546,7 +3530,23 @@
         "deactivate_confirm_action": "Απενεργοποίηση χρήστη",
         "error_deactivate": "Η απενεργοποίηση χρήστη απέτυχε",
         "role_label": "Ρόλος στο <RoomName/>",
-        "edit_own_devices": "Επεξεργασία συσκευών"
+        "edit_own_devices": "Επεξεργασία συσκευών",
+        "redact": {
+            "no_recent_messages_title": "Δε βρέθηκαν πρόσφατα μηνύματα από %(user)s",
+            "no_recent_messages_description": "Δοκιμάστε να κάνετε κύλιση στη γραμμή χρόνου για να δείτε αν υπάρχουν παλαιότερα.",
+            "confirm_title": "Καταργήστε πρόσφατα μηνύματα από %(user)s",
+            "confirm_description_1": {
+                "other": "Πρόκειται να αφαιρέσετε %(count)s μηνύματα του χρήστη %(user)s. Αυτό θα τα καταργήσει οριστικά για όλους στη συνομιλία. Θέλετε να συνεχίσετε;",
+                "one": "Πρόκειται να αφαιρέσετε %(count)s μήνυμα του χρήστη %(user)s. Αυτό θα το καταργήσει οριστικά για όλους στη συνομιλία. Θέλετε να συνεχίσετε;"
+            },
+            "confirm_description_2": "Για μεγάλο αριθμό μηνυμάτων, αυτό μπορεί να πάρει κάποιο χρόνο. Μην ανανεώνετε το προγράμμα-πελάτη σας στο μεταξύ.",
+            "confirm_keep_state_label": "Διατήρηση μηνυμάτων συστήματος",
+            "confirm_keep_state_explainer": "Καταργήστε την επιλογή εάν θέλετε επίσης να καταργήσετε τα μηνύματα συστήματος σε αυτόν τον χρήστη (π.χ. αλλαγή μέλους, αλλαγή προφίλ…)",
+            "confirm_button": {
+                "other": "Αφαίρεση %(count)s μηνυμάτων",
+                "one": "Αφαίρεση 1 μηνύματος"
+            }
+        }
     },
     "stickers": {
         "empty": "Προς το παρόν δεν έχετε ενεργοποιημένο κάποιο πακέτο αυτοκόλλητων",
@@ -3642,5 +3642,11 @@
             "network_dropdown_add_server_option": "Προσθήκη νέου διακομιστή…"
         }
     },
-    "dialog_close_label": "Κλείσιμο διαλόγου"
+    "dialog_close_label": "Κλείσιμο διαλόγου",
+    "redact": {
+        "error": "Δεν μπορείτε να διαγράψετε αυτό το μήνυμα. (%(code)s)",
+        "ongoing": "Αφαίρεση…",
+        "confirm_button": "Επιβεβαίωση αφαίρεσης",
+        "reason_label": "Αιτία (προαιρετικό)"
+    }
 }

@@ -36,7 +36,6 @@
     "An error has occurred.": "Ocorreu um erro.",
     "Email address": "Endereço de email",
     "Warning!": "Atenção!",
-    "Confirm Removal": "Confirmar Remoção",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
     "Create new room": "Criar nova sala",
@@ -51,15 +50,12 @@
     "Sunday": "Domingo",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
-    "Changelog": "Histórico de alterações",
-    "Unavailable": "Indisponível",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
     "Send": "Enviar",
-    "You cannot delete this message. (%(code)s)": "Não pode apagar esta mensagem. (%(code)s)",
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
@@ -739,7 +735,9 @@
         "release_notes_toast_title": "Novidades",
         "error_encountered": "Erro encontrado (%(errorDetail)s).",
         "no_update": "Nenhuma atualização disponível.",
-        "check_action": "Procurar atualizações"
+        "check_action": "Procurar atualizações",
+        "unavailable": "Indisponível",
+        "changelog": "Histórico de alterações"
     },
     "composer": {
         "autocomplete": {
@@ -944,5 +942,9 @@
             "title": "Busca falhou",
             "server_unavailable": "O servidor pode estar indisponível, sobrecarregado, ou a busca ultrapassou o tempo limite :("
         }
+    },
+    "redact": {
+        "error": "Não pode apagar esta mensagem. (%(code)s)",
+        "confirm_button": "Confirmar Remoção"
     }
 }

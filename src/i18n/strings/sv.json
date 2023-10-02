@@ -40,14 +40,11 @@
     "Sunday": "söndag",
     "Today": "idag",
     "Friday": "fredag",
-    "Changelog": "Ändringslogg",
-    "Unavailable": "Otillgänglig",
     "Filter results": "Filtrera resultaten",
     "Tuesday": "tisdag",
     "Saturday": "lördag",
     "Monday": "måndag",
     "Wednesday": "onsdag",
-    "You cannot delete this message. (%(code)s)": "Du kan inte radera det här meddelandet. (%(code)s)",
     "Send": "Skicka",
     "Thursday": "torsdag",
     "Yesterday": "igår",
@@ -73,7 +70,6 @@
     "We encountered an error trying to restore your previous session.": "Ett fel uppstod vid återställning av din tidigare session.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Om du nyligen har använt en senare version av %(brand)s kan din session vara inkompatibel med den här versionen. Stäng det här fönstret och använd senare versionen istället.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Att rensa webbläsarens lagring kan lösa problemet, men då loggas du ut och krypterad chatthistorik blir oläslig.",
-    "Confirm Removal": "Bekräfta borttagning",
     "collapse": "fäll ihop",
     "expand": "fäll ut",
     "Share Room": "Dela rum",
@@ -185,14 +181,6 @@
     "Cancel All": "Avbryt alla",
     "Upload Error": "Uppladdningsfel",
     "Deactivate account": "Inaktivera konto",
-    "No recent messages by %(user)s found": "Inga nyliga meddelanden från %(user)s hittades",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Pröva att skrolla upp i tidslinjen för att se om det finns några tidigare.",
-    "Remove recent messages by %(user)s": "Ta bort nyliga meddelanden från %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "För en stor mängd meddelanden kan det ta lite tid. Vänligen ladda inte om din klient under tiden.",
-    "Remove %(count)s messages": {
-        "other": "Ta bort %(count)s meddelanden",
-        "one": "Ta bort 1 meddelande"
-    },
     "edited": "redigerat",
     "Failed to connect to integration manager": "Kunde inte ansluta till integrationshanterare",
     "%(name)s accepted": "%(name)s accepterade",
@@ -240,14 +228,9 @@
     },
     "%(name)s declined": "%(name)s avslog",
     "Submit logs": "Skicka loggar",
-    "Unable to load commit detail: %(msg)s": "Kunde inte ladda commit-detalj: %(msg)s",
-    "Removing…": "Tar bort…",
     "Destroy cross-signing keys?": "Förstöra korssigneringsnycklar?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Radering av korssigneringsnycklar är permanent. Alla du har verifierat med kommer att se säkerhetsvarningar. Du vill troligen inte göra detta, såvida du inte har tappat bort alla enheter du kan korssignera från.",
     "Clear cross-signing keys": "Rensa korssigneringsnycklar",
-    "Clear all data in this session?": "Rensa all data i den här sessionen?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Rensning av all data från den här sessionen är permanent. Krypterade meddelande kommer att förloras om inte deras nycklar har säkerhetskopierats.",
-    "Clear all data": "Rensa all data",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "För att undvika att förlora din chatthistorik måste du exportera dina rumsnycklar innan du loggar ut. Du behöver gå tillbaka till den nyare versionen av %(brand)s för att göra detta",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Du har tidigare använt en nyare version av %(brand)s med den här sessionen. Om du vill använda den här versionen igen med totalsträckskryptering behöver du logga ut och logga in igen.",
     "Incompatible Database": "Inkompatibel databas",
@@ -575,7 +558,6 @@
     "Cayman Islands": "Caymanöarna",
     "Caribbean Netherlands": "Karibiska Nederländerna",
     "Cape Verde": "Kap Verde",
-    "Reason (optional)": "Orsak (valfritt)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
     "Continuing without email": "Fortsätter utan e-post",
     "Hold": "Parkera",
@@ -738,12 +720,6 @@
     "Live until %(expiryTime)s": "Realtid tills %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "Uppdaterade %(humanizedUpdateTime)s",
     "Unsent": "Ej skickat",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Bocka ur om du även vill ta bort systemmeddelanden för denna användaren (förändrat medlemskap, ny profilbild, m.m.)",
-    "Preserve system messages": "Bevara systemmeddelanden",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?",
-        "other": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?"
-    },
     "Hide my messages from new joiners": "Dölj mina meddelanden för nya som går med",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Kommer dina meddelanden fortfarande vara synliga för folk som har tagit emot dem, precis som e-post du har skickat tidigare. Vill du dölja dina skickade meddelanden från personer som går med i rum i framtiden?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Kommer du tas bort från din identitetsserver: dina vänner kommer inte längre kunna hitta dig med din e-postadress eller ditt telefonnummer",
@@ -787,8 +763,6 @@
     "Manually verify by text": "Verifiera manuellt med text",
     "%(name)s started a video call": "%(name)s startade ett videosamtal",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kan inte starta ett röstmeddelande eftersom du spelar in en direktsändning. Vänligen avsluta din direktsändning för att starta inspelning av ett röstmeddelande.",
-    "Can't start voice message": "Kan inte starta röstmeddelanden",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
     "unknown": "okänd",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktivera '%(manageIntegrations)s' i inställningarna för att göra detta.",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Starta DM ändå",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Kunde inte hitta profiler för Matrix-ID:n nedan — skulle du vilja starta ett DM ändå?",
     "Invites by email can only be sent one at a time": "Inbjudningar via e-post kan endast skickas en i taget",
-    "Are you sure you wish to remove (delete) this event?": "Är du säker på att du vill ta bort (radera) den här händelsen?",
-    "Note that removing room changes like this could undo the change.": "Observera att om du tar bort rumsändringar som den här kanske det ångrar ändringen.",
     "common": {
         "about": "Om",
         "analytics": "Statistik",
@@ -3263,7 +3235,12 @@
         "autodiscovery_invalid_is_response": "Ogiltigt identitetsserverupptäcktssvar",
         "server_picker_description": "Du kan använda egna serverinställningar för att logga in på andra Matrix-servrar genom att ange en URL för en annan hemserver. Då kan du använda %(brand)s med ett existerande Matrix-konto på en annan hemserver.",
         "server_picker_description_matrix.org": "Gå med miljontals användare gratis på den största publika servern",
-        "server_picker_title_default": "Serveralternativ"
+        "server_picker_title_default": "Serveralternativ",
+        "soft_logout": {
+            "clear_data_title": "Rensa all data i den här sessionen?",
+            "clear_data_description": "Rensning av all data från den här sessionen är permanent. Krypterade meddelande kommer att förloras om inte deras nycklar har säkerhetskopierats.",
+            "clear_data_button": "Rensa all data"
+        }
     },
     "room_list": {
         "sort_unread_first": "Visa rum med olästa meddelanden först",
@@ -3517,7 +3494,10 @@
         "no_update": "Ingen uppdatering tillgänglig.",
         "downloading": "Hämtar uppdatering …",
         "new_version_available": "Ny version tillgänglig. <a>Uppdatera nu.</a>",
-        "check_action": "Leta efter uppdatering"
+        "check_action": "Leta efter uppdatering",
+        "error_unable_load_commit": "Kunde inte ladda commit-detalj: %(msg)s",
+        "unavailable": "Otillgänglig",
+        "changelog": "Ändringslogg"
     },
     "threads": {
         "all_threads": "Alla trådar",
@@ -4170,7 +4150,23 @@
         "deactivate_confirm_action": "Inaktivera användaren",
         "error_deactivate": "Misslyckades att inaktivera användaren",
         "role_label": "Roll i <RoomName/>",
-        "edit_own_devices": "Redigera enheter"
+        "edit_own_devices": "Redigera enheter",
+        "redact": {
+            "no_recent_messages_title": "Inga nyliga meddelanden från %(user)s hittades",
+            "no_recent_messages_description": "Pröva att skrolla upp i tidslinjen för att se om det finns några tidigare.",
+            "confirm_title": "Ta bort nyliga meddelanden från %(user)s",
+            "confirm_description_1": {
+                "one": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?",
+                "other": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?"
+            },
+            "confirm_description_2": "För en stor mängd meddelanden kan det ta lite tid. Vänligen ladda inte om din klient under tiden.",
+            "confirm_keep_state_label": "Bevara systemmeddelanden",
+            "confirm_keep_state_explainer": "Bocka ur om du även vill ta bort systemmeddelanden för denna användaren (förändrat medlemskap, ny profilbild, m.m.)",
+            "confirm_button": {
+                "other": "Ta bort %(count)s meddelanden",
+                "one": "Ta bort 1 meddelande"
+            }
+        }
     },
     "stickers": {
         "empty": "Du har för närvarande inga dekalpaket aktiverade",
@@ -4295,5 +4291,17 @@
             "network_dropdown_selected_label": "Visa: Matrixrum"
         }
     },
-    "dialog_close_label": "Stäng dialogrutan"
+    "dialog_close_label": "Stäng dialogrutan",
+    "voice_message": {
+        "cant_start_broadcast_title": "Kan inte starta röstmeddelanden",
+        "cant_start_broadcast_description": "Du kan inte starta ett röstmeddelande eftersom du spelar in en direktsändning. Vänligen avsluta din direktsändning för att starta inspelning av ett röstmeddelande."
+    },
+    "redact": {
+        "error": "Du kan inte radera det här meddelandet. (%(code)s)",
+        "ongoing": "Tar bort…",
+        "confirm_description": "Är du säker på att du vill ta bort (radera) den här händelsen?",
+        "confirm_description_state": "Observera att om du tar bort rumsändringar som den här kanske det ångrar ändringen.",
+        "confirm_button": "Bekräfta borttagning",
+        "reason_label": "Orsak (valfritt)"
+    }
 }

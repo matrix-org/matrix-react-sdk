@@ -50,7 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
-    "Confirm Removal": "Konfirmi forigon",
     "An error has occurred.": "Okazis eraro.",
     "Unable to restore session": "Salutaĵo ne rehaveblas",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se vi antaŭe uzis pli novan version de %(brand)s, via salutaĵo eble ne akordos kun ĉi tiu versio. Fermu ĉi tiun fenestron kaj revenu al la pli nova versio.",
@@ -62,14 +61,11 @@
     "Sunday": "Dimanĉo",
     "Today": "Hodiaŭ",
     "Friday": "Vendredo",
-    "Changelog": "Protokolo de ŝanĝoj",
-    "Unavailable": "Nedisponebla",
     "Filter results": "Filtri rezultojn",
     "Tuesday": "Mardo",
     "Saturday": "Sabato",
     "Monday": "Lundo",
     "Wednesday": "Merkredo",
-    "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
     "Thursday": "Ĵaŭdo",
     "Yesterday": "Hieraŭ",
     "Dog": "Hundo",
@@ -175,11 +171,8 @@
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
-    "Unable to load commit detail: %(msg)s": "Ne povas enlegi detalojn de enmeto: %(msg)s",
-    "Removing…": "Forigante…",
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Clear all data": "Vakigi ĉiujn datumojn",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Por eviti perdon de via babila historio, vi devas elporti la ŝlosilojn de viaj ĉambroj antaŭ adiaŭo. Por tio vi bezonos reveni al la pli nova versio de %(brand)s",
     "Incompatible Database": "Neakorda datumbazo",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Vi antaŭe uzis %(brand)s-on je %(host)s kun ŝaltita malfrua enlegado de anoj. En ĉi tiu versio, malfrua enlegado estas malŝaltita. Ĉar la loka kaŝmemoro de ambaŭ versioj ne akordas, %(brand)s bezonas respeguli vian konton.",
@@ -205,14 +198,6 @@
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
     "Deactivate account": "Malaktivigi konton",
-    "No recent messages by %(user)s found": "Neniuj freŝaj mesaĝoj de %(user)s troviĝis",
-    "Remove recent messages by %(user)s": "Forigi freŝajn mesaĝojn de %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Je granda nombro da mesaĝoj, tio povas daŭri iomon da tempo. Bonvolu ne aktualigi vian klienton dume.",
-    "Remove %(count)s messages": {
-        "other": "Forigi %(count)s mesaĝojn",
-        "one": "Forigi 1 mesaĝon"
-    },
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Provu rulumi supren tra la historio por kontroli, ĉu ne estas iuj pli fruaj.",
     "%(name)s accepted": "%(name)s akceptis",
     "%(name)s cancelled": "%(name)s nuligis",
     "%(name)s wants to verify": "%(name)s volas kontroli",
@@ -244,8 +229,6 @@
     "Destroy cross-signing keys?": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Forigo de delege ĉifraj ŝlosiloj estas porĉiama. Ĉiu, kun kiu vi interkontrolis, vidos avertojn pri sekureco. Vi preskaŭ certe ne volas ĉi tion fari, malse vi perdis ĉiun aparaton, el kiu vi povus delege subskribadi.",
     "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
-    "Clear all data in this session?": "Ĉu vakigi ĉiujn datumojn en ĉi tiu salutaĵo?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Vakigo de ĉiuj datumoj el ĉi tiu salutaĵo estas porĉiama. Ĉifritaj mesaĝoj perdiĝos, malse iliaj ŝlosiloj savkopiiĝis.",
     "Session name": "Nomo de salutaĵo",
     "Session key": "Ŝlosilo de salutaĵo",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Kontrolo de tiu ĉi uzanto markos ĝian salutaĵon fidata, kaj ankaŭ markos vian salutaĵon fidata por ĝi.",
@@ -573,7 +556,6 @@
     "Cocos (Keeling) Islands": "Kokosinsuloj",
     "Cayman Islands": "Kajmaninsuloj",
     "Invite by email": "Inviti per retpoŝto",
-    "Reason (optional)": "Kialo (malnepra)",
     "Hold": "Paŭzigi",
     "Resume": "Daŭrigi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>",
@@ -2510,7 +2492,12 @@
         "autodiscovery_invalid_is": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
         "autodiscovery_invalid_is_response": "Nevalida eltrova respondo de identiga servilo",
         "server_picker_description_matrix.org": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
-        "server_picker_title_default": "Elektebloj de servilo"
+        "server_picker_title_default": "Elektebloj de servilo",
+        "soft_logout": {
+            "clear_data_title": "Ĉu vakigi ĉiujn datumojn en ĉi tiu salutaĵo?",
+            "clear_data_description": "Vakigo de ĉiuj datumoj el ĉi tiu salutaĵo estas porĉiama. Ĉifritaj mesaĝoj perdiĝos, malse iliaj ŝlosiloj savkopiiĝis.",
+            "clear_data_button": "Vakigi ĉiujn datumojn"
+        }
     },
     "room_list": {
         "sort_unread_first": "Montri ĉambrojn kun nelegitaj mesaĝoj kiel unuajn",
@@ -2748,7 +2735,10 @@
         "error_encountered": "Eraron renkonti (%(errorDetail)s).",
         "no_update": "Neniuj ĝisdatigoj haveblas.",
         "new_version_available": "Nova versio estas disponebla. <a>Ĝisdatigu nun.</a>",
-        "check_action": "Kontroli ĝisdatigojn"
+        "check_action": "Kontroli ĝisdatigojn",
+        "error_unable_load_commit": "Ne povas enlegi detalojn de enmeto: %(msg)s",
+        "unavailable": "Nedisponebla",
+        "changelog": "Protokolo de ŝanĝoj"
     },
     "theme": {
         "light_high_contrast": "Malpeza alta kontrasto"
@@ -3226,7 +3216,17 @@
         "deactivate_confirm_action": "Malaktivigi uzanton",
         "error_deactivate": "Malsukcesis malaktivigi uzanton",
         "role_label": "Rolo en <RoomName/>",
-        "edit_own_devices": "Redakti aparatojn"
+        "edit_own_devices": "Redakti aparatojn",
+        "redact": {
+            "no_recent_messages_title": "Neniuj freŝaj mesaĝoj de %(user)s troviĝis",
+            "no_recent_messages_description": "Provu rulumi supren tra la historio por kontroli, ĉu ne estas iuj pli fruaj.",
+            "confirm_title": "Forigi freŝajn mesaĝojn de %(user)s",
+            "confirm_description_2": "Je granda nombro da mesaĝoj, tio povas daŭri iomon da tempo. Bonvolu ne aktualigi vian klienton dume.",
+            "confirm_button": {
+                "other": "Forigi %(count)s mesaĝojn",
+                "one": "Forigi 1 mesaĝon"
+            }
+        }
     },
     "stickers": {
         "empty": "Vi havas neniujn ŝaltitajn glumarkarojn",
@@ -3310,5 +3310,11 @@
             "network_dropdown_add_dialog_placeholder": "Nomo de servilo"
         }
     },
-    "dialog_close_label": "Fermi interagujon"
+    "dialog_close_label": "Fermi interagujon",
+    "redact": {
+        "error": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
+        "ongoing": "Forigante…",
+        "confirm_button": "Konfirmi forigon",
+        "reason_label": "Kialo (malnepra)"
+    }
 }

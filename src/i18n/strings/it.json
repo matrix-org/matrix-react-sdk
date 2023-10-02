@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
     "expand": "espandi",
-    "Confirm Removal": "Conferma la rimozione",
     "An error has occurred.": "Si è verificato un errore.",
     "Unable to restore session": "Impossibile ripristinare la sessione",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se hai usato precedentemente una versione più recente di %(brand)s, la tua sessione potrebbe essere incompatibile con questa versione. Chiudi questa finestra e torna alla versione più recente.",
@@ -62,14 +61,11 @@
     "Sunday": "Domenica",
     "Today": "Oggi",
     "Friday": "Venerdì",
-    "Changelog": "Cambiamenti",
-    "Unavailable": "Non disponibile",
     "Filter results": "Filtra risultati",
     "Tuesday": "Martedì",
     "Saturday": "Sabato",
     "Monday": "Lunedì",
     "Wednesday": "Mercoledì",
-    "You cannot delete this message. (%(code)s)": "Non puoi eliminare questo messaggio. (%(code)s)",
     "Thursday": "Giovedì",
     "Yesterday": "Ieri",
     "We encountered an error trying to restore your previous session.": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
@@ -103,7 +99,6 @@
     "Unable to restore backup": "Impossibile ripristinare il backup",
     "No backup found!": "Nessun backup trovato!",
     "Failed to decrypt %(failedCount)s sessions!": "Decifrazione di %(failedCount)s sessioni fallita!",
-    "Unable to load commit detail: %(msg)s": "Caricamento dettagli del commit fallito: %(msg)s",
     "Dog": "Cane",
     "Cat": "Gatto",
     "Lion": "Leone",
@@ -200,22 +195,12 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
     "Your homeserver doesn't seem to support this feature.": "Il tuo homeserver non sembra supportare questa funzione.",
-    "Clear all data": "Elimina tutti i dati",
-    "Removing…": "Rimozione…",
     "Find others by phone or email": "Trova altri per telefono o email",
     "Be found by phone or email": "Trovato per telefono o email",
     "Deactivate account": "Disattiva account",
     "Command Help": "Aiuto comando",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usa un server d'identità per invitare via email. <default>Usa quello predefinito (%(defaultIdentityServerName)s)</default> o gestiscilo nelle <settings>impostazioni</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Usa un server di identità per invitare via email. Gestisci nelle <settings>impostazioni</settings>.",
-    "No recent messages by %(user)s found": "Non sono stati trovati messaggi recenti dell'utente %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Prova a scorrere la linea temporale per vedere se ce ne sono di precedenti.",
-    "Remove recent messages by %(user)s": "Rimuovi gli ultimi messaggi di %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Se i messaggi sono tanti può volerci un po' di tempo. Nel frattempo, per favore, non fare alcun refresh.",
-    "Remove %(count)s messages": {
-        "other": "Rimuovi %(count)s messaggi",
-        "one": "Rimuovi 1 messaggio"
-    },
     "e.g. my-room": "es. mia-stanza",
     "%(name)s accepted": "%(name)s ha accettato",
     "%(name)s cancelled": "%(name)s ha annullato",
@@ -246,8 +231,6 @@
         "other": "%(count)s sessioni",
         "one": "%(count)s sessione"
     },
-    "Clear all data in this session?": "Svuotare tutti i dati in questa sessione?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Lo svuotamento dei dati di questa sessione è permanente. I messaggi cifrati andranno persi a meno non si abbia un backup delle loro chiavi.",
     "Session name": "Nome sessione",
     "Session key": "Chiave sessione",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "La verifica di questo utente contrassegnerà come fidata la sua sessione a te e viceversa.",
@@ -581,7 +564,6 @@
     "This widget would like to:": "Il widget vorrebbe:",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Solo un avviso, se non aggiungi un'email e dimentichi la password, potresti <b>perdere permanentemente l'accesso al tuo account</b>.",
     "Continuing without email": "Continuando senza email",
-    "Reason (optional)": "Motivo (facoltativo)",
     "Hold": "Sospendi",
     "Resume": "Riprendi",
     "Transfer": "Trasferisci",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "Entra in %(roomAddress)s",
     "Search Dialog": "Finestra di ricerca",
     "You are sharing your live location": "Stai condividendo la tua posizione in tempo reale",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Deseleziona se vuoi rimuovere anche i messaggi di sistema per questo utente (es. cambiamenti di sottoscrizione, modifiche al profilo…)",
-    "Preserve system messages": "Conserva i messaggi di sistema",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Stai per rimuovere %(count)s messaggio di %(user)s. Verrà rimosso permanentemente per chiunque nella conversazione. Vuoi continuare?",
-        "other": "Stai per rimuovere %(count)s messaggi di %(user)s. Verranno rimossi permanentemente per chiunque nella conversazione. Vuoi continuare?"
-    },
     "Unsent": "Non inviato",
     "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s ha iniziato una videochiamata",
     "Thread root ID: %(threadRootId)s": "ID root del thread: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Non puoi iniziare un messaggio vocale perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare un messaggio vocale.",
-    "Can't start voice message": "Impossibile iniziare il messaggio vocale",
     "unknown": "sconosciuto",
     "Loading live location…": "Caricamento posizione in tempo reale…",
     "Fetching keys from server…": "Ricezione delle chiavi dal server…",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Inizia il messaggio lo stesso",
     "Start DM anyway and never warn me again": "Inizia il messaggio lo stesso e non avvisarmi più",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque iniziare un messaggio diretto?",
-    "Are you sure you wish to remove (delete) this event?": "Vuoi davvero rimuovere (eliminare) questo evento?",
-    "Note that removing room changes like this could undo the change.": "Nota che la rimozione delle modifiche della stanza come questa può annullare la modifica.",
     "Upgrade room": "Aggiorna stanza",
     "Other spaces you know": "Altri spazi che conosci",
     "Failed to query public rooms": "Richiesta di stanze pubbliche fallita",
@@ -3319,7 +3291,12 @@
         "autodiscovery_invalid_is_response": "Risposta non valida cercando server di identità",
         "server_picker_description": "Puoi usare le opzioni server personalizzate per accedere ad altri server Matrix specificando un URL homeserver diverso. Ciò ti permette di usare %(brand)s con un account Matrix esistente su un homeserver differente.",
         "server_picker_description_matrix.org": "Unisciti gratis a milioni nel più grande server pubblico",
-        "server_picker_title_default": "Opzioni server"
+        "server_picker_title_default": "Opzioni server",
+        "soft_logout": {
+            "clear_data_title": "Svuotare tutti i dati in questa sessione?",
+            "clear_data_description": "Lo svuotamento dei dati di questa sessione è permanente. I messaggi cifrati andranno persi a meno non si abbia un backup delle loro chiavi.",
+            "clear_data_button": "Elimina tutti i dati"
+        }
     },
     "room_list": {
         "sort_unread_first": "Mostra prima le stanze con messaggi non letti",
@@ -3574,7 +3551,10 @@
         "no_update": "Nessun aggiornamento disponibile.",
         "downloading": "Scaricamento aggiornamento…",
         "new_version_available": "Nuova versione disponibile. <a>Aggiorna ora.</a>",
-        "check_action": "Controlla aggiornamenti"
+        "check_action": "Controlla aggiornamenti",
+        "error_unable_load_commit": "Caricamento dettagli del commit fallito: %(msg)s",
+        "unavailable": "Non disponibile",
+        "changelog": "Cambiamenti"
     },
     "threads": {
         "all_threads": "Tutte le conversazioni",
@@ -4237,7 +4217,23 @@
         "deactivate_confirm_action": "Disattiva utente",
         "error_deactivate": "Disattivazione utente fallita",
         "role_label": "Ruolo in <RoomName/>",
-        "edit_own_devices": "Modifica dispositivi"
+        "edit_own_devices": "Modifica dispositivi",
+        "redact": {
+            "no_recent_messages_title": "Non sono stati trovati messaggi recenti dell'utente %(user)s",
+            "no_recent_messages_description": "Prova a scorrere la linea temporale per vedere se ce ne sono di precedenti.",
+            "confirm_title": "Rimuovi gli ultimi messaggi di %(user)s",
+            "confirm_description_1": {
+                "one": "Stai per rimuovere %(count)s messaggio di %(user)s. Verrà rimosso permanentemente per chiunque nella conversazione. Vuoi continuare?",
+                "other": "Stai per rimuovere %(count)s messaggi di %(user)s. Verranno rimossi permanentemente per chiunque nella conversazione. Vuoi continuare?"
+            },
+            "confirm_description_2": "Se i messaggi sono tanti può volerci un po' di tempo. Nel frattempo, per favore, non fare alcun refresh.",
+            "confirm_keep_state_label": "Conserva i messaggi di sistema",
+            "confirm_keep_state_explainer": "Deseleziona se vuoi rimuovere anche i messaggi di sistema per questo utente (es. cambiamenti di sottoscrizione, modifiche al profilo…)",
+            "confirm_button": {
+                "other": "Rimuovi %(count)s messaggi",
+                "one": "Rimuovi 1 messaggio"
+            }
+        }
     },
     "stickers": {
         "empty": "Non hai ancora alcun pacchetto di adesivi attivato",
@@ -4362,5 +4358,17 @@
             "network_dropdown_selected_label": "Mostra: stanze di Matrix"
         }
     },
-    "dialog_close_label": "Chiudi finestra"
+    "dialog_close_label": "Chiudi finestra",
+    "voice_message": {
+        "cant_start_broadcast_title": "Impossibile iniziare il messaggio vocale",
+        "cant_start_broadcast_description": "Non puoi iniziare un messaggio vocale perché stai registrando una trasmissione in diretta. Termina la trasmissione per potere iniziare un messaggio vocale."
+    },
+    "redact": {
+        "error": "Non puoi eliminare questo messaggio. (%(code)s)",
+        "ongoing": "Rimozione…",
+        "confirm_description": "Vuoi davvero rimuovere (eliminare) questo evento?",
+        "confirm_description_state": "Nota che la rimozione delle modifiche della stanza come questa può annullare la modifica.",
+        "confirm_button": "Conferma la rimozione",
+        "reason_label": "Motivo (facoltativo)"
+    }
 }

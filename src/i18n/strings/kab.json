@@ -50,10 +50,6 @@
     "Yesterday": "Iḍelli",
     "edited": "yettwaẓreg",
     "collapse": "fneẓ",
-    "Unavailable": "Ulac",
-    "Changelog": "Aɣmis n yisnifal",
-    "Removing…": "Tukksa…",
-    "Confirm Removal": "Sentem tukksa",
     "Send": "Azen",
     "Session name": "Isem n tɣimit",
     "Email address": "Tansa n yimayl",
@@ -122,17 +118,12 @@
         "other": "Tiɣimiyin n %(count)s",
         "one": "Tiɣimit n %(count)s"
     },
-    "Remove %(count)s messages": {
-        "one": "Kkes 1 izen",
-        "other": "Kkes iznan n %(count)s"
-    },
     "%(name)s accepted": "%(name)s yettwaqbel",
     "%(name)s declined": "%(name)s yettwagi",
     "%(name)s cancelled": "%(name)s yettwasefsex",
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
-    "Clear all data": "Sfeḍ meṛṛa isefka",
     "Continue With Encryption Disabled": "Kemmel s uwgelhen yensan",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Sentem asensi n umiḍan s useqdec n unekcum asuf i ubeggen n timagit-ik·im.",
     "Confirm account deactivation": "Sentem asensi n umiḍan",
@@ -195,10 +186,6 @@
         "other": "%(count)s isenqed tiɣimiyin",
         "one": "1 n tɣimit i yettwasneqden"
     },
-    "No recent messages by %(user)s found": "Ulac iznan i yettwafen sɣur %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Ɛreḍ adrurem deg wazemzakud i wakken ad twaliḍ ma yella llan wid yellan uqbel.",
-    "Remove recent messages by %(user)s": "Kkes iznan n melmi kan sɣur %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "I tugget meqqren n yiznan, ayagi yezmer ad yeṭṭef kra n wakud. Ṛǧu ur sirin ara amsaɣ-ik·im deg leɛḍil.",
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
     "%(duration)ss": "%(duration)ss",
@@ -263,15 +250,11 @@
     "Wrong file type": "Anaw n yifuyla d arameɣtu",
     "Looks good!": "Yettban igerrez!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
-    "Unable to load commit detail: %(msg)s": "D awezɣi ad d-tali telqayt n usentem: %(msg)s",
-    "You cannot delete this message. (%(code)s)": "Ur tezmireḍ ara ad tekkseḍ izen-a. (%(code)s)",
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
-    "Clear all data in this session?": "Sfeḍ akk isefka seg tɣimit-a?",
     "Incompatible Database": "Taffa n yisefka ur temada ara",
     "Recently Direct Messaged": "Izen usrid n melmi kan",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Asfaḍ akk n yisefka seg tɣimit-a ad yili i lebda. Ad ak-ruḥen yiznan yettwawgelhen ala ma yella tisura ttwaḥerzent.",
     "Are you sure you want to deactivate your account? This is irreversible.": "S tidet tebɣiḍ ad tsenseḍ amiḍăn-ik·im? Ulac tuɣalin ɣer deffir.",
     "There was a problem communicating with the server. Please try again.": "Tella-d tuccḍa mi ara nettaɛraḍ ad nemmeslay d uqeddac. Ɛreḍ tikkelt-nniḍen.",
     "Server did not require any authentication": "Aqeddac ur isuter ara akk asesteb",
@@ -1836,7 +1819,12 @@
         "autodiscovery_invalid_is_base_url": "D arameɣtu base_url i m.identity_server",
         "autodiscovery_invalid_is": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
         "autodiscovery_invalid_is_response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
-        "server_picker_description_matrix.org": "Rnu ɣer yimelyan n yimdanen baṭel ɣef uqeddac azayez ameqqran akk"
+        "server_picker_description_matrix.org": "Rnu ɣer yimelyan n yimdanen baṭel ɣef uqeddac azayez ameqqran akk",
+        "soft_logout": {
+            "clear_data_title": "Sfeḍ akk isefka seg tɣimit-a?",
+            "clear_data_description": "Asfaḍ akk n yisefka seg tɣimit-a ad yili i lebda. Ad ak-ruḥen yiznan yettwawgelhen ala ma yella tisura ttwaḥerzent.",
+            "clear_data_button": "Sfeḍ meṛṛa isefka"
+        }
     },
     "export_chat": {
         "messages": "Iznan"
@@ -1954,7 +1942,10 @@
         "error_encountered": "Tuccaḍ i d-yettwamuggren (%(errorDetail)s).",
         "no_update": "Ulac lqem i yellan.",
         "new_version_available": "Lqem amaynut yella. <a>Leqqem tura.</a>",
-        "check_action": "Nadi lqem"
+        "check_action": "Nadi lqem",
+        "error_unable_load_commit": "D awezɣi ad d-tali telqayt n usentem: %(msg)s",
+        "unavailable": "Ulac",
+        "changelog": "Aɣmis n yisnifal"
     },
     "labs_mjolnir": {
         "room_name": "Tabdart-inu n tigtin",
@@ -2242,7 +2233,17 @@
         "deactivate_confirm_title": "Kkes aseqdac-a?",
         "deactivate_confirm_description": "Asemmet n useqdac-a ad t-isuffeɣ yerna ur as-yettaǧǧa ara ad yales ad yeqqen. Daɣen, ad ffɣen akk seg texxamin ideg llan. Tigawt-a dayen ur tettwasefsax ara. S tidet tebɣiḍ ad tsemmteḍ aseqdac-a?",
         "deactivate_confirm_action": "Kkes aseqdac",
-        "error_deactivate": "Asensi n useqdac ur yeddi ara"
+        "error_deactivate": "Asensi n useqdac ur yeddi ara",
+        "redact": {
+            "no_recent_messages_title": "Ulac iznan i yettwafen sɣur %(user)s",
+            "no_recent_messages_description": "Ɛreḍ adrurem deg wazemzakud i wakken ad twaliḍ ma yella llan wid yellan uqbel.",
+            "confirm_title": "Kkes iznan n melmi kan sɣur %(user)s",
+            "confirm_description_2": "I tugget meqqren n yiznan, ayagi yezmer ad yeṭṭef kra n wakud. Ṛǧu ur sirin ara amsaɣ-ik·im deg leɛḍil.",
+            "confirm_button": {
+                "one": "Kkes 1 izen",
+                "other": "Kkes iznan n %(count)s"
+            }
+        }
     },
     "stickers": {
         "empty": "Ulac ɣer-k·m akka tura ikemmusen n yimyintaḍ yettwaremden",
@@ -2296,5 +2297,10 @@
             "network_dropdown_add_dialog_placeholder": "Isem n uqeddac"
         }
     },
-    "dialog_close_label": "Mdel adiwenni"
+    "dialog_close_label": "Mdel adiwenni",
+    "redact": {
+        "error": "Ur tezmireḍ ara ad tekkseḍ izen-a. (%(code)s)",
+        "ongoing": "Tukksa…",
+        "confirm_button": "Sentem tukksa"
+    }
 }

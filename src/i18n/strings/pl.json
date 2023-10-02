@@ -45,7 +45,6 @@
         "one": "(~%(count)s wynik)",
         "other": "(~%(count)s wyników)"
     },
-    "Confirm Removal": "Potwierdź usunięcie",
     "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -55,14 +54,11 @@
     "Sunday": "Niedziela",
     "Today": "Dzisiaj",
     "Friday": "Piątek",
-    "Changelog": "Dziennik zmian",
-    "Unavailable": "Niedostępny",
     "Filter results": "Filtruj wyniki",
     "Tuesday": "Wtorek",
     "Saturday": "Sobota",
     "Monday": "Poniedziałek",
     "Wednesday": "Środa",
-    "You cannot delete this message. (%(code)s)": "Nie możesz usunąć tej wiadomości. (%(code)s)",
     "Thursday": "Czwartek",
     "Yesterday": "Wczoraj",
     "%(duration)ss": "%(duration)ss",
@@ -181,10 +177,6 @@
     "Upload %(count)s other files": {
         "other": "Prześlij %(count)s innych plików",
         "one": "Prześlij %(count)s inny plik"
-    },
-    "Remove %(count)s messages": {
-        "other": "Usuń %(count)s wiadomości",
-        "one": "Usuń 1 wiadomość"
     },
     "Switch theme": "Przełącz motyw",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Ci użytkownicy mogą nie istnieć lub są nieprawidłowi, i nie mogą zostać zaproszeni: %(csvNames)s",
@@ -334,7 +326,6 @@
     "Jordan": "Jordania",
     "Jersey": "Jersey",
     "Upload Error": "Błąd wysyłania",
-    "Removing…": "Usuwanie…",
     "Incompatible Database": "Niekompatybilna baza danych",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
@@ -455,11 +446,7 @@
     "Italy": "Włochy",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Użyj serwera tożsamości, aby zapraszać przez e-mail. Zarządzaj w <settings>Ustawieniach</settings>.",
     "Verification Request": "Żądanie weryfikacji",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dla większej liczby wiadomości, może to zająć trochę czasu. Nie odświeżaj klienta w tym czasie.",
-    "Remove recent messages by %(user)s": "Usuń ostatnie wiadomości od %(user)s",
-    "No recent messages by %(user)s found": "Nie znaleziono ostatnich wiadomości od %(user)s",
     "Find others by phone or email": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
-    "Clear all data": "Wyczyść wszystkie dane",
     "Incompatible local cache": "Niekompatybilna lokalna pamięć podręczna",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Przed wysłaniem logów, <a>zgłoś problem na GitHubie</a> opisujący twój problem.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Niektóre pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
@@ -667,19 +654,6 @@
     "Only people invited will be able to find and join this space.": "Tylko osoby zaproszone będą mogły znaleźć i dołączyć do tej przestrzeni.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Każdy będzie mógł znaleźć i dołączyć do tej przestrzeni, nie tylko członkowie <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Każdy w <SpaceName/> będzie mógł znaleźć i dołączyć.",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Wyczyszczenie wszystkich danych z tej sesji jest permanentne. Wiadomości szyfrowane zostaną utracone, jeśli nie zabezpieczono ich kluczy.",
-    "Clear all data in this session?": "Wyczyścić wszystkie dane w tej sesji?",
-    "Reason (optional)": "Powód (opcjonalne)",
-    "Unable to load commit detail: %(msg)s": "Nie można wczytać szczegółów commitu: %(msg)s",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nie możesz rozpocząć wiadomości głosowej, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć nagrywanie wiadomości głosowej.",
-    "Can't start voice message": "Nie można rozpocząć wiadomości głosowej",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Odznacz, jeśli chcesz również usunąć wiadomości systemowe tego użytkownika (np. zmiana członkostwa, profilu…)",
-    "Preserve system messages": "Zachowaj komunikaty systemowe",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Zamierzasz usunąć %(count)s wiadomość przez %(user)s. To usunie ją permanentnie dla wszystkich w konwersacji. Czy chcesz kontynuować?",
-        "other": "Zamierzasz usunąć %(count)s wiadomości przez %(user)s. To usunie je permanentnie dla wszystkich w konwersacji. Czy chcesz kontynuować?"
-    },
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Spróbuj przewinąć się w górę na osi czasu, aby sprawdzić, czy nie ma wcześniejszych.",
     "Desktop app logo": "Logo aplikacji Desktop",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
@@ -806,8 +780,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Thread root ID: %(threadRootId)s": "ID root wątku: %(threadRootId)s",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono",
-    "Are you sure you wish to remove (delete) this event?": "Czy na pewno chcesz usunąć to wydarzenie?",
-    "Note that removing room changes like this could undo the change.": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
     "Other spaces you know": "Inne przestrzenie, które znasz",
     "Upgrade room": "Ulepsz pokój",
     "common": {
@@ -3306,7 +3278,12 @@
         "autodiscovery_invalid_is_response": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości",
         "server_picker_description": "Możesz użyć niestandardowych opcji serwera, aby zalogować się na inny serwer Matrix, wprowadzając inny adres URL serwera. Umożliwi Ci to na korzystanie z %(brand)s z istniejącym już kontem Matrix na innym serwerze domowym.",
         "server_picker_description_matrix.org": "Dołącz do milionów za darmo na największym publicznym serwerze",
-        "server_picker_title_default": "Opcje serwera"
+        "server_picker_title_default": "Opcje serwera",
+        "soft_logout": {
+            "clear_data_title": "Wyczyścić wszystkie dane w tej sesji?",
+            "clear_data_description": "Wyczyszczenie wszystkich danych z tej sesji jest permanentne. Wiadomości szyfrowane zostaną utracone, jeśli nie zabezpieczono ich kluczy.",
+            "clear_data_button": "Wyczyść wszystkie dane"
+        }
     },
     "room_list": {
         "sort_unread_first": "Pokazuj najpierw pokoje z nieprzeczytanymi wiadomościami",
@@ -3561,7 +3538,10 @@
         "no_update": "Brak aktualizacji.",
         "downloading": "Pobieranie aktualizacji…",
         "new_version_available": "Nowa wersja dostępna. <a>Aktualizuj teraz.</a>",
-        "check_action": "Sprawdź aktualizacje"
+        "check_action": "Sprawdź aktualizacje",
+        "error_unable_load_commit": "Nie można wczytać szczegółów commitu: %(msg)s",
+        "unavailable": "Niedostępny",
+        "changelog": "Dziennik zmian"
     },
     "threads": {
         "all_threads": "Wszystkie wątki",
@@ -4212,7 +4192,23 @@
         "deactivate_confirm_action": "Dezaktywuj użytkownika",
         "error_deactivate": "Nie udało się zdezaktywować użytkownika",
         "role_label": "Role w <RoomName/>",
-        "edit_own_devices": "Edytuj urządzenia"
+        "edit_own_devices": "Edytuj urządzenia",
+        "redact": {
+            "no_recent_messages_title": "Nie znaleziono ostatnich wiadomości od %(user)s",
+            "no_recent_messages_description": "Spróbuj przewinąć się w górę na osi czasu, aby sprawdzić, czy nie ma wcześniejszych.",
+            "confirm_title": "Usuń ostatnie wiadomości od %(user)s",
+            "confirm_description_1": {
+                "one": "Zamierzasz usunąć %(count)s wiadomość przez %(user)s. To usunie ją permanentnie dla wszystkich w konwersacji. Czy chcesz kontynuować?",
+                "other": "Zamierzasz usunąć %(count)s wiadomości przez %(user)s. To usunie je permanentnie dla wszystkich w konwersacji. Czy chcesz kontynuować?"
+            },
+            "confirm_description_2": "Dla większej liczby wiadomości, może to zająć trochę czasu. Nie odświeżaj klienta w tym czasie.",
+            "confirm_keep_state_label": "Zachowaj komunikaty systemowe",
+            "confirm_keep_state_explainer": "Odznacz, jeśli chcesz również usunąć wiadomości systemowe tego użytkownika (np. zmiana członkostwa, profilu…)",
+            "confirm_button": {
+                "other": "Usuń %(count)s wiadomości",
+                "one": "Usuń 1 wiadomość"
+            }
+        }
     },
     "stickers": {
         "empty": "Nie masz obecnie włączonych żadnych pakietów naklejek",
@@ -4337,5 +4333,17 @@
             "network_dropdown_selected_label": "Pokaż: Pokoje Matrix"
         }
     },
-    "dialog_close_label": "Zamknij okno dialogowe"
+    "dialog_close_label": "Zamknij okno dialogowe",
+    "voice_message": {
+        "cant_start_broadcast_title": "Nie można rozpocząć wiadomości głosowej",
+        "cant_start_broadcast_description": "Nie możesz rozpocząć wiadomości głosowej, ponieważ już nagrywasz transmisję na żywo. Zakończ transmisję na żywo, aby rozpocząć nagrywanie wiadomości głosowej."
+    },
+    "redact": {
+        "error": "Nie możesz usunąć tej wiadomości. (%(code)s)",
+        "ongoing": "Usuwanie…",
+        "confirm_description": "Czy na pewno chcesz usunąć to wydarzenie?",
+        "confirm_description_state": "Usuwanie zmian pokoju w taki sposób może cofnąć zmianę.",
+        "confirm_button": "Potwierdź usunięcie",
+        "reason_label": "Powód (opcjonalne)"
+    }
 }

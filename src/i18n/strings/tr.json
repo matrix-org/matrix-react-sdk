@@ -42,30 +42,24 @@
         "other": "(~%(count)s sonuçlar)"
     },
     "Create new room": "Yeni Oda Oluştur",
-    "Confirm Removal": "Kaldırma İşlemini Onayla",
     "Unable to restore session": "Oturum geri yüklenemiyor",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Today": "Bugün",
     "Friday": "Cuma",
-    "Changelog": "Değişiklikler",
-    "Unavailable": "Kullanım dışı",
     "Tuesday": "Salı",
     "Unnamed room": "İsimsiz oda",
     "Saturday": "Cumartesi",
     "Monday": "Pazartesi",
     "Wednesday": "Çarşamba",
     "Send": "Gönder",
-    "You cannot delete this message. (%(code)s)": "Bu mesajı silemezsiniz (%(code)s)",
     "Thursday": "Perşembe",
     "Yesterday": "Dün",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
-    "Removing…": "Siliniyor…",
-    "Clear all data": "Bütün verileri sil",
     "Incompatible Database": "Uyumsuz Veritabanı",
     "Filter results": "Sonuçları filtrele",
     "Integrations are disabled": "Bütünleştirmeler kapatılmış",
@@ -164,10 +158,6 @@
     "Cake": "Kek",
     "Heart": "Kalp",
     "Trophy": "Ödül",
-    "Remove %(count)s messages": {
-        "other": "%(count)s mesajı sil",
-        "one": "1 mesajı sil"
-    },
     "Rooster": "Horoz",
     "%(duration)ss": "%(duration)ssn",
     "%(duration)sm": "%(duration)sdk",
@@ -202,7 +192,6 @@
     "Delete Widget": "Görsel Bileşen Sil",
     "Destroy cross-signing keys?": "Çarpraz-imzalama anahtarlarını imha et?",
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
-    "Clear all data in this session?": "Bu oturumdaki tüm verileri temizle?",
     "Session name": "Oturum adı",
     "Session key": "Oturum anahtarı",
     "Recent Conversations": "Güncel Sohbetler",
@@ -491,7 +480,6 @@
     "Spanner": "Anahtar",
     "Smiley": "Gülen yüz",
     "Dial pad": "Arama tuşları",
-    "No recent messages by %(user)s found": "%(user)s kullanıcısın hiç yeni ileti yok",
     "Not encrypted": "Şifrelenmemiş",
     "Backup version:": "Yedekleme sürümü:",
     "Looks good!": "İyi görünüyor!",
@@ -502,9 +490,6 @@
     "Transfer": "Aktar",
     "Hold": "Beklet",
     "Resume": "Devam et",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
-    "Remove recent messages by %(user)s": "%(user)s kullanıcısından en son iletileri kaldır",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Daha önceden kalma iletilerin var olup olmadığını kontrol etmek için zaman çizelgesinde yukarı doğru kaydırın.",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -1806,7 +1791,11 @@
         "autodiscovery_invalid_is_base_url": "m.kimlik_sunucu için geçersiz base_url",
         "autodiscovery_invalid_is": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
         "autodiscovery_invalid_is_response": "Geçersiz kimlik sunucu keşfi yanıtı",
-        "server_picker_description_matrix.org": "En büyük açık sunucu üzerindeki milyonlara ücretsiz ulaşmak için katılın"
+        "server_picker_description_matrix.org": "En büyük açık sunucu üzerindeki milyonlara ücretsiz ulaşmak için katılın",
+        "soft_logout": {
+            "clear_data_title": "Bu oturumdaki tüm verileri temizle?",
+            "clear_data_button": "Bütün verileri sil"
+        }
     },
     "room_list": {
         "sort_unread_first": "Önce okunmamış mesajları olan odaları göster",
@@ -1970,7 +1959,9 @@
         "error_encountered": "Hata oluştu (%(errorDetail)s).",
         "no_update": "Güncelleme yok.",
         "new_version_available": "Yeni sürüm mevcut: <a> Şimdi güncelle.</a>",
-        "check_action": "Güncelleme kontrolü"
+        "check_action": "Güncelleme kontrolü",
+        "unavailable": "Kullanım dışı",
+        "changelog": "Değişiklikler"
     },
     "theme": {
         "light_high_contrast": "Yüksek ışık kontrastı"
@@ -2273,7 +2264,17 @@
         "deactivate_confirm_description": "Bu kullanıcı etkisizleştirmek onu bir daha oturum açmasını engeller.Ek olarak da bulundukları bütün odalardan atılırlar. Bu eylem geri dönüştürülebilir. Bu kullanıcıyı etkisizleştirmek istediğinize emin misiniz?",
         "deactivate_confirm_action": "Kullanıcıyı pasifleştir",
         "error_deactivate": "Kullanıcı pasifleştirme başarısız",
-        "edit_own_devices": "Cihazları düzenle"
+        "edit_own_devices": "Cihazları düzenle",
+        "redact": {
+            "no_recent_messages_title": "%(user)s kullanıcısın hiç yeni ileti yok",
+            "no_recent_messages_description": "Daha önceden kalma iletilerin var olup olmadığını kontrol etmek için zaman çizelgesinde yukarı doğru kaydırın.",
+            "confirm_title": "%(user)s kullanıcısından en son iletileri kaldır",
+            "confirm_description_2": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
+            "confirm_button": {
+                "other": "%(count)s mesajı sil",
+                "one": "1 mesajı sil"
+            }
+        }
     },
     "stickers": {
         "empty": "Açılmış herhangi bir çıkartma paketine sahip değilsiniz",
@@ -2330,5 +2331,10 @@
             "network_dropdown_add_dialog_placeholder": "Sunucu adı"
         }
     },
-    "dialog_close_label": "Kutucuğu kapat"
+    "dialog_close_label": "Kutucuğu kapat",
+    "redact": {
+        "error": "Bu mesajı silemezsiniz (%(code)s)",
+        "ongoing": "Siliniyor…",
+        "confirm_button": "Kaldırma İşlemini Onayla"
+    }
 }

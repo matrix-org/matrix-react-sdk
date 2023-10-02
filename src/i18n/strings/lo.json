@@ -533,7 +533,6 @@
     "Only people invited will be able to find and join this space.": "ມີແຕ່ຄົນທີ່ຖືກເຊີນເທົ່ານັ້ນທີ່ສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມພື້ນທີ່ນີ້ໄດ້.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "ທຸກຄົນຈະສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມພື້ນທີ່ນີ້, ບໍ່ພຽງແຕ່ສະມາຊິກຂອງ <SpaceName/> ເທົ່ານັ້ນ.",
     "Anyone in <SpaceName/> will be able to find and join.": "ທຸກຄົນໃນ <SpaceName/> ຈະສາມາດຊອກຫາ ແລະ ເຂົ້າຮ່ວມໄດ້.",
-    "Clear all data": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ",
     "An error has occurred.": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
     "Sorry, the poll did not end. Please try again.": "ຂໍອະໄພ,ບໍ່ສາມາດສິ້ນສຸດການສຳຫຼວດ. ກະລຸນາລອງອີກຄັ້ງ.",
     "Failed to end poll": "ບໍ່ສາມາດສີ່ນສູດການສຳຫຼວດ",
@@ -572,7 +571,6 @@
     "Tuesday": "ວັນອັງຄານ",
     "Monday": "ວັນຈັນ",
     "Sunday": "ວັນອາທິດ",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "ການລຶບລ້າງຂໍ້ມູນທັງໝົດຈາກລະບົບນີ້ຖາວອນ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດຈະສູນເສຍເວັ້ນເສຍແຕ່ກະແຈຂອງເຂົາເຈົ້າໄດ້ຮັບການສໍາຮອງຂໍ້ມູນ.",
     "%(duration)sd": "%(duration)sd",
     "unknown error code": "ລະຫັດຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "Don't leave any rooms": "ຢ່າອອກຈາກຫ້ອງ",
@@ -703,28 +701,6 @@
     "The room upgrade could not be completed": "ການຍົກລະດັບຫ້ອງບໍ່ສຳເລັດໄດ້",
     "Failed to upgrade room": "ຍົກລະດັບຫ້ອງບໍ່ສຳເລັດ",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "ເພື່ອລາຍງານບັນຫາຄວາມປອດໄພທີ່ກ່ຽວຂ້ອງກັບ Matrix, ກະລຸນາອ່ານ <a>ນະໂຍບາຍການເປີດເຜີຍຄວາມປອດໄພ</a> Matrix.org.",
-    "Clear all data in this session?": "ລຶບລ້າງຂໍ້ມູນທັງໝົດໃນລະບົບນີ້ບໍ?",
-    "Reason (optional)": "ເຫດຜົນ (ທາງເລືອກ)",
-    "Confirm Removal": "ຢືນຢັນການລຶບອອກ",
-    "Removing…": "ກຳລັງລຶບ…",
-    "You cannot delete this message. (%(code)s)": "ທ່ານບໍ່ສາມາດລຶບຂໍ້ຄວາມນີ້ໄດ້. (%(code)s)",
-    "Changelog": "ບັນທຶກການປ່ຽນແປງ",
-    "Unavailable": "ບໍ່ສາມາດໃຊ້ງານໄດ້",
-    "Unable to load commit detail: %(msg)s": "ບໍ່ສາມາດໂຫຼດລາຍລະອຽດຂອງ commit: %(msg)s",
-    "Remove %(count)s messages": {
-        "one": "ລຶບອອກ 1 ຂໍ້ຄວາມ",
-        "other": "ເອົາ %(count)s ຂໍ້ຄວາມອອກ"
-    },
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "ຍົກເລີກການກວດກາ ຖ້າທ່ານຕ້ອງການລຶບຂໍ້ຄວາມໃນລະບົບຜູ້ໃຊ້ນີ້ (ເຊັ່ນ: ການປ່ຽນແປງສະມາຊິກ, ການປ່ຽນແປງໂປຣໄຟລ໌...)",
-    "Preserve system messages": "ຮັກສາຂໍ້ຄວາມຂອງລະບົບ",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "ສໍາລັບຈໍານວນຂໍ້ຄວາມຂະຫນາດໃຫຍ່, ນີ້ອາດຈະໃຊ້ເວລາ, ກະລຸນາຢ່າໂຫຼດຂໍ້ມູນລູກຄ້າຂອງທ່ານຄືນໃໝ່ໃນລະຫວ່າງນີ້.",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "ທ່ານກຳລັງຈະລຶບ %(count)s ຂໍ້ຄວາມໂດຍ %(user)s. ນີ້ຈະເປັນການລຶບຂໍ້ຄວາມອອກຖາວອນສຳລັບທຸກຄົນໃນການສົນທະນາ. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?",
-        "other": "ທ່ານກຳລັງຈະລຶບ %(count)s ຂໍ້ຄວາມອອກໂດຍ %(user)s. ນີ້ຈະເປັນການລຶບຂໍ້ຄວາມອອກຖາວອນສຳລັບທຸກຄົນໃນການສົນທະນາ. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?"
-    },
-    "Remove recent messages by %(user)s": "ລຶບຂໍ້ຄວາມຫຼ້າສຸດໂດຍ %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "ລອງເລື່ອນຂຶ້ນໃນທາມລາຍເພື່ອເບິ່ງວ່າມີອັນໃດກ່ອນໜ້ານີ້.",
-    "No recent messages by %(user)s found": "ບໍ່ພົບຂໍ້ຄວາມຫຼ້າສຸດໂດຍ %(user)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ກ່ອນທີ່ຈະສົ່ງບັນທຶກ, ທ່ານຕ້ອງ <a>ສ້າງບັນຫາ GitHub</a> ເພື່ອອະທິບາຍບັນຫາຂອງທ່ານ.",
     "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
     "a key signature": "ລາຍເຊັນຫຼັກ",
@@ -2772,7 +2748,12 @@
         "autodiscovery_invalid_is_response": "ການຕອບສະໜອງ ການຄົ້ນພົບຕົວຕົນຂອງເຊີບເວີບໍ່ຖືກຕ້ອງ",
         "server_picker_description": "ທ່ານສາມາດໃຊ້ຕົວເລືອກເຊີບເວີແບບກຳນົດເອງເພື່ອເຂົ້າສູ່ລະບົບເຊີບເວີ Matrix ອື່ນໂດຍການລະບຸ URL ເຊີບເວີອື່ນ. ນີ້ແມ່ນອະນຸຍາດໃຫ້ທ່ານໃຊ້ %(brand)s ກັບບັນຊີ Matrix ທີ່ມີຢູ່ແລ້ວໃນ homeserver ອື່ນ.",
         "server_picker_description_matrix.org": "ເຂົ້າຮ່ວມຫຼາຍລ້ານຄົນໄດ້ໂດຍບໍ່ເສຍຄ່າໃນເຊີບເວີສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດ",
-        "server_picker_title_default": "ຕົວເລືອກເຊີບເວີ"
+        "server_picker_title_default": "ຕົວເລືອກເຊີບເວີ",
+        "soft_logout": {
+            "clear_data_title": "ລຶບລ້າງຂໍ້ມູນທັງໝົດໃນລະບົບນີ້ບໍ?",
+            "clear_data_description": "ການລຶບລ້າງຂໍ້ມູນທັງໝົດຈາກລະບົບນີ້ຖາວອນ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດຈະສູນເສຍເວັ້ນເສຍແຕ່ກະແຈຂອງເຂົາເຈົ້າໄດ້ຮັບການສໍາຮອງຂໍ້ມູນ.",
+            "clear_data_button": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ"
+        }
     },
     "room_list": {
         "sort_unread_first": "ສະແດງຫ້ອງຂໍ້ຄວາມທີ່ຍັງບໍ່ທັນໄດ້ອ່ານກ່ອນ",
@@ -2996,7 +2977,10 @@
         "error_encountered": "ພົບຂໍ້ຜິດພາດ (%(errorDetail)s).",
         "no_update": "ບໍ່ໄດ້ອັບເດດ.",
         "new_version_available": "ເວີຊັ້ນໃໝ່ພ້ອມໃຊ້ງານ. <a>ອັບເດດດຽວນີ້.</a>",
-        "check_action": "ກວດເບິ່ງເພຶ່ອອັບເດດ"
+        "check_action": "ກວດເບິ່ງເພຶ່ອອັບເດດ",
+        "error_unable_load_commit": "ບໍ່ສາມາດໂຫຼດລາຍລະອຽດຂອງ commit: %(msg)s",
+        "unavailable": "ບໍ່ສາມາດໃຊ້ງານໄດ້",
+        "changelog": "ບັນທຶກການປ່ຽນແປງ"
     },
     "threads": {
         "all_threads": "ກະທູ້ທັງໝົດ",
@@ -3565,7 +3549,23 @@
         "deactivate_confirm_action": "ປິດໃຊ້ງານຜູ້ໃຊ້",
         "error_deactivate": "ປິດໃຊ້ງານຜູ້ໃຊ້ບໍ່ສຳເລັດ",
         "role_label": "ບົດບາດໃນ <RoomName />",
-        "edit_own_devices": "ແກ້ໄຂອຸປະກອນ"
+        "edit_own_devices": "ແກ້ໄຂອຸປະກອນ",
+        "redact": {
+            "no_recent_messages_title": "ບໍ່ພົບຂໍ້ຄວາມຫຼ້າສຸດໂດຍ %(user)s",
+            "no_recent_messages_description": "ລອງເລື່ອນຂຶ້ນໃນທາມລາຍເພື່ອເບິ່ງວ່າມີອັນໃດກ່ອນໜ້ານີ້.",
+            "confirm_title": "ລຶບຂໍ້ຄວາມຫຼ້າສຸດໂດຍ %(user)s",
+            "confirm_description_1": {
+                "one": "ທ່ານກຳລັງຈະລຶບ %(count)s ຂໍ້ຄວາມໂດຍ %(user)s. ນີ້ຈະເປັນການລຶບຂໍ້ຄວາມອອກຖາວອນສຳລັບທຸກຄົນໃນການສົນທະນາ. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?",
+                "other": "ທ່ານກຳລັງຈະລຶບ %(count)s ຂໍ້ຄວາມອອກໂດຍ %(user)s. ນີ້ຈະເປັນການລຶບຂໍ້ຄວາມອອກຖາວອນສຳລັບທຸກຄົນໃນການສົນທະນາ. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?"
+            },
+            "confirm_description_2": "ສໍາລັບຈໍານວນຂໍ້ຄວາມຂະຫນາດໃຫຍ່, ນີ້ອາດຈະໃຊ້ເວລາ, ກະລຸນາຢ່າໂຫຼດຂໍ້ມູນລູກຄ້າຂອງທ່ານຄືນໃໝ່ໃນລະຫວ່າງນີ້.",
+            "confirm_keep_state_label": "ຮັກສາຂໍ້ຄວາມຂອງລະບົບ",
+            "confirm_keep_state_explainer": "ຍົກເລີກການກວດກາ ຖ້າທ່ານຕ້ອງການລຶບຂໍ້ຄວາມໃນລະບົບຜູ້ໃຊ້ນີ້ (ເຊັ່ນ: ການປ່ຽນແປງສະມາຊິກ, ການປ່ຽນແປງໂປຣໄຟລ໌...)",
+            "confirm_button": {
+                "one": "ລຶບອອກ 1 ຂໍ້ຄວາມ",
+                "other": "ເອົາ %(count)s ຂໍ້ຄວາມອອກ"
+            }
+        }
     },
     "stickers": {
         "empty": "ທ່ານບໍ່ໄດ້ເປີດໃຊ້ສະຕິກເກີແພັກເກັດໃນປັດຈຸບັນ",
@@ -3660,5 +3660,11 @@
             "network_dropdown_add_dialog_placeholder": "ຊື່ເຊີບເວີ"
         }
     },
-    "dialog_close_label": "ປິດກ່ອງໂຕ້ຕອບ"
+    "dialog_close_label": "ປິດກ່ອງໂຕ້ຕອບ",
+    "redact": {
+        "error": "ທ່ານບໍ່ສາມາດລຶບຂໍ້ຄວາມນີ້ໄດ້. (%(code)s)",
+        "ongoing": "ກຳລັງລຶບ…",
+        "confirm_button": "ຢືນຢັນການລຶບອອກ",
+        "reason_label": "ເຫດຜົນ (ທາງເລືອກ)"
+    }
 }

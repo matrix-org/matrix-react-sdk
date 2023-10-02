@@ -27,15 +27,12 @@
     "%(items)s and %(lastItem)s": "%(items)s dan %(lastItem)s",
     "Sunday": "Minggu",
     "Today": "Hari Ini",
-    "Changelog": "Changelog",
-    "Unavailable": "Tidak Tersedia",
     "Tuesday": "Selasa",
     "Unnamed room": "Ruang tanpa nama",
     "Friday": "Jumat",
     "Saturday": "Sabtu",
     "Monday": "Senin",
     "Wednesday": "Rabu",
-    "You cannot delete this message. (%(code)s)": "Anda tidak dapat menghapus pesan ini. (%(code)s)",
     "Send": "Kirim",
     "Thursday": "Kamis",
     "Yesterday": "Kemarin",
@@ -303,7 +300,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)sd",
     "Home": "Beranda",
-    "Removing…": "Menghilangkan…",
     "Resume": "Lanjutkan",
     "Lock": "Gembok",
     "Mushroom": "Jamur",
@@ -386,7 +382,6 @@
         "one": "(~%(count)s hasil)",
         "other": "(~%(count)s hasil)"
     },
-    "Confirm Removal": "Konfirmasi Penghapusan",
     "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
     "Sent": "Terkirim",
@@ -418,14 +413,6 @@
     "%(name)s cancelled": "%(name)s membatalkan",
     "%(name)s declined": "%(name)s menolak",
     "%(name)s accepted": "%(name)s menerima",
-    "Remove %(count)s messages": {
-        "one": "Hapus 1 pesan",
-        "other": "Hapus %(count)s pesan"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Untuk pesan yang jumlahnya banyak, ini mungkin membutuhkan beberapa waktu. Jangan muat ulang klien Anda untuk sementara.",
-    "Remove recent messages by %(user)s": "Hapus pesan terkini dari %(user)s",
-    "No recent messages by %(user)s found": "Tidak ada pesan terkini dari %(user)s yang ditemukan",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Coba gulir ke atas di lini masa untuk melihat apa ada pesan-pesan sebelumnya.",
     "%(count)s sessions": {
         "one": "%(count)s sesi",
         "other": "%(count)s sesi"
@@ -451,11 +438,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Siapa saja di <SpaceName/> dapat menemukan dan bergabung.",
     "Private space (invite only)": "Space pribadi (undangan saja)",
     "Space visibility": "Visibilitas space",
-    "Clear all data": "Hapus semua data",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Menghapus semua data dari sesi ini itu permanen. Pesan-pesan terenkripsi akan hilang kecuali jika kunci-kuncinya telah dicadangkan.",
-    "Clear all data in this session?": "Hapus semua data di sesi ini?",
-    "Reason (optional)": "Alasan (opsional)",
-    "Unable to load commit detail: %(msg)s": "Tidak dapat memuat detail komit: %(msg)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Sebelum mengirimkan catatan, Anda harus <a>membuat sebuah issue GitHub</a> untuk menjelaskan masalah Anda.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gunakan sebuah server identitas untuk mengundang melalui email. Kelola di <settings>Pengaturan</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gunakan sebuah server identitas untuk mengundang melalui email. <default>Gunakan bawaan (%(defaultIdentityServerName)s)</default> atau kelola di <settings>Pengaturan</settings>.",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "Bergabung dengan %(roomAddress)s",
     "Search Dialog": "Dialog Pencarian",
     "You are sharing your live location": "Anda membagikan lokasi langsung Anda",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Jangan centang jika Anda juga ingin menghapus pesan-pesan sistem pada pengguna ini (mis. perubahan keanggotaan, perubahan profil…)",
-    "Preserve system messages": "Simpan pesan-pesan sistem",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?",
-        "other": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?"
-    },
     "Unsent": "Belum dikirim",
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara.",
-    "Can't start voice message": "Tidak dapat memulai pesan suara",
     "unknown": "tidak diketahui",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktifkan '%(manageIntegrations)s' di Pengaturan untuk melakukan ini.",
     "Loading live location…": "Memuat lokasi langsung…",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Mulai percakapan langsung saja",
     "Start DM anyway and never warn me again": "Mulai percakapan langsung saja dan jangan peringatkan saya lagi",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang disertakan di bawah — apakah Anda ingin memulai percakapan langsung saja?",
-    "Are you sure you wish to remove (delete) this event?": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
-    "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
     "Upgrade room": "Tingkatkan ruangan",
     "Other spaces you know": "Space lainnya yang Anda tahu",
     "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
@@ -3319,7 +3291,12 @@
         "autodiscovery_invalid_is_response": "Respons penemuan server identitas tidak absah",
         "server_picker_description": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
         "server_picker_description_matrix.org": "Bergabung dengan jutaan orang lainnya secara gratis di server publik terbesar",
-        "server_picker_title_default": "Opsi Server"
+        "server_picker_title_default": "Opsi Server",
+        "soft_logout": {
+            "clear_data_title": "Hapus semua data di sesi ini?",
+            "clear_data_description": "Menghapus semua data dari sesi ini itu permanen. Pesan-pesan terenkripsi akan hilang kecuali jika kunci-kuncinya telah dicadangkan.",
+            "clear_data_button": "Hapus semua data"
+        }
     },
     "room_list": {
         "sort_unread_first": "Tampilkan ruangan dengan pesan yang belum dibaca dahulu",
@@ -3574,7 +3551,10 @@
         "no_update": "Tidak ada pembaruan yang tersedia.",
         "downloading": "Mengunduh pembaruan…",
         "new_version_available": "Versi yang baru telah tersedia. <a>Perbarui sekarang.</a>",
-        "check_action": "Periksa untuk pembaruan"
+        "check_action": "Periksa untuk pembaruan",
+        "error_unable_load_commit": "Tidak dapat memuat detail komit: %(msg)s",
+        "unavailable": "Tidak Tersedia",
+        "changelog": "Changelog"
     },
     "threads": {
         "all_threads": "Semua utasan",
@@ -4237,7 +4217,23 @@
         "deactivate_confirm_action": "Nonaktifkan pengguna",
         "error_deactivate": "Gagal untuk menonaktifkan pengguna",
         "role_label": "Peran di <RoomName/>",
-        "edit_own_devices": "Edit perangkat"
+        "edit_own_devices": "Edit perangkat",
+        "redact": {
+            "no_recent_messages_title": "Tidak ada pesan terkini dari %(user)s yang ditemukan",
+            "no_recent_messages_description": "Coba gulir ke atas di lini masa untuk melihat apa ada pesan-pesan sebelumnya.",
+            "confirm_title": "Hapus pesan terkini dari %(user)s",
+            "confirm_description_1": {
+                "one": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?",
+                "other": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?"
+            },
+            "confirm_description_2": "Untuk pesan yang jumlahnya banyak, ini mungkin membutuhkan beberapa waktu. Jangan muat ulang klien Anda untuk sementara.",
+            "confirm_keep_state_label": "Simpan pesan-pesan sistem",
+            "confirm_keep_state_explainer": "Jangan centang jika Anda juga ingin menghapus pesan-pesan sistem pada pengguna ini (mis. perubahan keanggotaan, perubahan profil…)",
+            "confirm_button": {
+                "one": "Hapus 1 pesan",
+                "other": "Hapus %(count)s pesan"
+            }
+        }
     },
     "stickers": {
         "empty": "Anda saat ini tidak memiliki paket stiker apa pun yang diaktifkan",
@@ -4362,5 +4358,17 @@
             "network_dropdown_selected_label": "Tampilkan: ruangan Matrix"
         }
     },
-    "dialog_close_label": "Tutup dialog"
+    "dialog_close_label": "Tutup dialog",
+    "voice_message": {
+        "cant_start_broadcast_title": "Tidak dapat memulai pesan suara",
+        "cant_start_broadcast_description": "Anda tidak dapat memulai sebuah pesan suara karena Anda saat ini merekam sebuah siaran langsung. Silakan mengakhiri siaran langsung Anda untuk memulai merekam sebuah pesan suara."
+    },
+    "redact": {
+        "error": "Anda tidak dapat menghapus pesan ini. (%(code)s)",
+        "ongoing": "Menghilangkan…",
+        "confirm_description": "Apakah Anda yakin ingin menghilangkan (menghapus) peristiwa ini?",
+        "confirm_description_state": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
+        "confirm_button": "Konfirmasi Penghapusan",
+        "reason_label": "Alasan (opsional)"
+    }
 }

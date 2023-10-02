@@ -42,7 +42,6 @@
         "one": "(~%(count)s resultaat)",
         "other": "(~%(count)s resultaten)"
     },
-    "Confirm Removal": "Verwijdering bevestigen",
     "Unable to restore session": "Herstellen van sessie mislukt",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
     "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
@@ -62,13 +61,10 @@
     "Sunday": "Zondag",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
-    "Changelog": "Wijzigingslogboek",
-    "Unavailable": "Niet beschikbaar",
     "Filter results": "Resultaten filteren",
     "Tuesday": "Dinsdag",
     "Saturday": "Zaterdag",
     "Monday": "Maandag",
-    "You cannot delete this message. (%(code)s)": "Je kan dit bericht niet verwijderen. (%(code)s)",
     "Thursday": "Donderdag",
     "Yesterday": "Gisteren",
     "Wednesday": "Woensdag",
@@ -146,7 +142,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
-    "Unable to load commit detail: %(msg)s": "Kan commitdetail niet laden: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Om jouw kamergeschiedenis niet te verliezen vóór het uitloggen dien je jouw veiligheidssleutel te exporteren. Dat moet vanuit de nieuwere versie van %(brand)s",
     "Incompatible Database": "Incompatibele database",
     "Continue With Encryption Disabled": "Verdergaan met versleuteling uitgeschakeld",
@@ -198,22 +193,12 @@
     "Upload all": "Alles versturen",
     "Message edits": "Berichtbewerkingen",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Deze kamer bijwerken vereist dat je de huidige afsluit en in de plaats een nieuwe kamer aanmaakt. Om leden de best mogelijke ervaring te bieden, zullen we:",
-    "Removing…": "Bezig met verwijderen…",
-    "Clear all data": "Alle gegevens wissen",
     "Your homeserver doesn't seem to support this feature.": "Jouw homeserver biedt geen ondersteuning voor deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
     "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
     "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
     "Deactivate account": "Account sluiten",
     "Command Help": "Hulp bij opdrachten",
-    "No recent messages by %(user)s found": "Geen recente berichten door %(user)s gevonden",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Probeer omhoog te scrollen in de tijdslijn om te kijken of er eerdere zijn.",
-    "Remove recent messages by %(user)s": "Recente berichten door %(user)s verwijderen",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Bij een groot aantal berichten kan dit even duren. Herlaad je cliënt niet gedurende deze tijd.",
-    "Remove %(count)s messages": {
-        "other": "%(count)s berichten verwijderen",
-        "one": "1 bericht verwijderen"
-    },
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om uit te nodigen op e-mailadres. <default>Gebruik de standaardserver (%(defaultIdentityServerName)s)</default> of beheer de server in de <settings>Instellingen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om anderen uit te nodigen via e-mail. Beheer de server in de <settings>Instellingen</settings>.",
     "e.g. my-room": "bv. mijn-kamer",
@@ -239,8 +224,6 @@
     "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
-    "Clear all data in this session?": "Alle gegevens in deze sessie verwijderen?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Het verwijderen van alle gegevens in deze sessie is niet terug te draaien. Versleutelde berichten zullen verloren gaan, tenzij je een back-up van de sleutels hebt.",
     "Session name": "Sessienaam",
     "Session key": "Sessiesleutel",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Deze persoon verifiëren zal de sessie als vertrouwd markeren voor jullie beide.",
@@ -511,7 +494,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Start een kamer met iemand door hun naam, e-mailadres of inlognaam (zoals <userId/>) te typen.",
     "Backup version:": "Versie reservekopie:",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
-    "Reason (optional)": "Reden (niet vereist)",
     "Not encrypted": "Niet versleuteld",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
@@ -723,12 +705,6 @@
     "Unsent": "niet verstuurd",
     "Search Dialog": "Dialoogvenster Zoeken",
     "Join %(roomAddress)s": "%(roomAddress)s toetreden",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Schakel het vinkje uit als je ook systeemberichten van deze persoon wil verwijderen (bijv. lidmaatschapswijziging, profielwijziging...)",
-    "Preserve system messages": "Systeemberichten behouden",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Je staat op het punt %(count)s bericht te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?",
-        "other": "Je staat op het punt %(count)s berichten te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?"
-    },
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -3012,7 +2988,12 @@
         "autodiscovery_invalid_is_response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
         "server_picker_description": "Je kan de aangepaste serveropties gebruiken om je aan te melden bij andere Matrix-servers door een andere server-URL op te geven. Hierdoor kan je %(brand)s gebruiken met een bestaand Matrix-account op een andere thuisserver.",
         "server_picker_description_matrix.org": "Neem deel aan de grootste publieke server samen met miljoenen anderen",
-        "server_picker_title_default": "Server opties"
+        "server_picker_title_default": "Server opties",
+        "soft_logout": {
+            "clear_data_title": "Alle gegevens in deze sessie verwijderen?",
+            "clear_data_description": "Het verwijderen van alle gegevens in deze sessie is niet terug te draaien. Versleutelde berichten zullen verloren gaan, tenzij je een back-up van de sleutels hebt.",
+            "clear_data_button": "Alle gegevens wissen"
+        }
     },
     "room_list": {
         "sort_unread_first": "Kamers met ongelezen berichten als eerste tonen",
@@ -3244,7 +3225,10 @@
         "error_encountered": "Er is een fout opgetreden (%(errorDetail)s).",
         "no_update": "Geen update beschikbaar.",
         "new_version_available": "Nieuwe versie beschikbaar. <a>Nu updaten.</a>",
-        "check_action": "Controleren op updates"
+        "check_action": "Controleren op updates",
+        "error_unable_load_commit": "Kan commitdetail niet laden: %(msg)s",
+        "unavailable": "Niet beschikbaar",
+        "changelog": "Wijzigingslogboek"
     },
     "threads": {
         "all_threads": "Alle discussies",
@@ -3848,7 +3832,23 @@
         "deactivate_confirm_action": "Persoon deactiveren",
         "error_deactivate": "Deactiveren van persoon is mislukt",
         "role_label": "Rol in <RoomName/>",
-        "edit_own_devices": "Apparaten bewerken"
+        "edit_own_devices": "Apparaten bewerken",
+        "redact": {
+            "no_recent_messages_title": "Geen recente berichten door %(user)s gevonden",
+            "no_recent_messages_description": "Probeer omhoog te scrollen in de tijdslijn om te kijken of er eerdere zijn.",
+            "confirm_title": "Recente berichten door %(user)s verwijderen",
+            "confirm_description_1": {
+                "one": "Je staat op het punt %(count)s bericht te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?",
+                "other": "Je staat op het punt %(count)s berichten te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?"
+            },
+            "confirm_description_2": "Bij een groot aantal berichten kan dit even duren. Herlaad je cliënt niet gedurende deze tijd.",
+            "confirm_keep_state_label": "Systeemberichten behouden",
+            "confirm_keep_state_explainer": "Schakel het vinkje uit als je ook systeemberichten van deze persoon wil verwijderen (bijv. lidmaatschapswijziging, profielwijziging...)",
+            "confirm_button": {
+                "other": "%(count)s berichten verwijderen",
+                "one": "1 bericht verwijderen"
+            }
+        }
     },
     "stickers": {
         "empty": "Je hebt momenteel geen stickerpakketten ingeschakeld",
@@ -3950,5 +3950,11 @@
             "network_dropdown_selected_label": "Toon: Matrix kamers"
         }
     },
-    "dialog_close_label": "Dialoog sluiten"
+    "dialog_close_label": "Dialoog sluiten",
+    "redact": {
+        "error": "Je kan dit bericht niet verwijderen. (%(code)s)",
+        "ongoing": "Bezig met verwijderen…",
+        "confirm_button": "Verwijdering bevestigen",
+        "reason_label": "Reden (niet vereist)"
+    }
 }

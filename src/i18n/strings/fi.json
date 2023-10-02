@@ -27,7 +27,6 @@
         "one": "(~%(count)s tulos)",
         "other": "(~%(count)s tulosta)"
     },
-    "Confirm Removal": "Varmista poistaminen",
     "Unable to restore session": "Istunnon palautus epäonnistui",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
     "Verification Pending": "Varmennus odottaa",
@@ -60,13 +59,10 @@
     "Sunday": "Sunnuntai",
     "Today": "Tänään",
     "Friday": "Perjantai",
-    "Changelog": "Muutosloki",
-    "Unavailable": "Ei saatavilla",
     "Filter results": "Suodata tuloksia",
     "Tuesday": "Tiistai",
     "Saturday": "Lauantai",
     "Monday": "Maanantai",
-    "You cannot delete this message. (%(code)s)": "Et voi poistaa tätä viestiä. (%(code)s)",
     "Thursday": "Torstai",
     "Yesterday": "Eilen",
     "Wednesday": "Keskiviikko",
@@ -161,7 +157,6 @@
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "Unable to load commit detail: %(msg)s": "Commitin tietojen hakeminen epäonnistui: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Jotta et menetä keskusteluhistoriaasi, sinun täytyy tallentaa huoneen avaimet ennen kuin kirjaudut ulos. Joudut käyttämään uudempaa %(brand)sin versiota tätä varten",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Varmenna tämä käyttäjä merkitäksesi hänet luotetuksi. Käyttäjiin luottaminen antaa sinulle ylimääräistä mielenrauhaa käyttäessäsi päästä päähän -salausta.",
     "Incoming Verification Request": "Saapuva varmennuspyyntö",
@@ -200,20 +195,10 @@
     "Upload all": "Lähetä kaikki palvelimelle",
     "Your homeserver doesn't seem to support this feature.": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta.",
     "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
-    "Clear all data": "Poista kaikki tiedot",
-    "Removing…": "Poistetaan…",
     "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
     "Be found by phone or email": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella",
     "Deactivate account": "Poista tili pysyvästi",
     "Command Help": "Komento-ohje",
-    "No recent messages by %(user)s found": "Käyttäjän %(user)s kirjoittamia viimeaikaisia viestejä ei löytynyt",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Kokeile vierittää aikajanaa ylöspäin nähdäksesi, löytyykö aiempia viestejä.",
-    "Remove recent messages by %(user)s": "Poista käyttäjän %(user)s viimeaikaiset viestit",
-    "Remove %(count)s messages": {
-        "other": "Poista %(count)s viestiä",
-        "one": "Poista yksi viesti"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "e.g. my-room": "esim. oma-huone",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
     "%(name)s accepted": "%(name)s hyväksyi",
@@ -240,8 +225,6 @@
         "other": "%(count)s istuntoa",
         "one": "%(count)s istunto"
     },
-    "Clear all data in this session?": "Poista kaikki tämän istunnon tiedot?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
     "%(name)s declined": "%(name)s kieltäytyi",
@@ -557,7 +540,6 @@
     "Confirm encryption setup": "Vahvista salauksen asetukset",
     "Confirm account deactivation": "Vahvista tilin deaktivointi",
     "a key signature": "avaimen allekirjoitus",
-    "Reason (optional)": "Syy (valinnainen)",
     "Security Phrase": "Turvalause",
     "Security Key": "Turva-avain",
     "Hold": "Pidä",
@@ -659,10 +641,6 @@
     "Public rooms": "Julkiset huoneet",
     "The poll has ended. Top answer: %(topAnswer)s": "Kysely on päättynyt. Suosituin vastaus: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Kysely on päättynyt. Ääniä ei annettu.",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "Olet poistamassa käyttäjän %(user)s %(count)s viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?",
-        "one": "Olet poistamassa käyttäjän %(user)s yhtä viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?"
-    },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
@@ -684,7 +662,6 @@
     "You will leave all rooms and DMs that you are in": "Poistut kaikista huoneista ja yksityisviesteistä, joissa olet",
     "You will no longer be able to log in": "Et voi enää kirjautua",
     "To continue, please enter your account password:": "Jatka kirjoittamalla tilisi salasana:",
-    "Preserve system messages": "Säilytä järjestelmän viestit",
     "%(members)s and %(last)s": "%(members)s ja %(last)s",
     "Developer": "Kehittäjä",
     "Close sidebar": "Sulje sivupalkki",
@@ -3015,7 +2992,12 @@
         "autodiscovery_invalid_is": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
         "autodiscovery_invalid_is_response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
         "server_picker_description_matrix.org": "Liity ilmaiseksi miljoonien joukkoon suurimmalla julkisella palvelimella",
-        "server_picker_title_default": "Palvelinasetukset"
+        "server_picker_title_default": "Palvelinasetukset",
+        "soft_logout": {
+            "clear_data_title": "Poista kaikki tämän istunnon tiedot?",
+            "clear_data_description": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
+            "clear_data_button": "Poista kaikki tiedot"
+        }
     },
     "room_list": {
         "sort_unread_first": "Näytä ensimmäisenä huoneet, joissa on lukemattomia viestejä",
@@ -3226,7 +3208,10 @@
         "no_update": "Ei päivityksiä saatavilla.",
         "downloading": "Ladataan päivitystä…",
         "new_version_available": "Uusi versio saatavilla. <a>Päivitä nyt.</a>",
-        "check_action": "Tarkista päivitykset"
+        "check_action": "Tarkista päivitykset",
+        "error_unable_load_commit": "Commitin tietojen hakeminen epäonnistui: %(msg)s",
+        "unavailable": "Ei saatavilla",
+        "changelog": "Muutosloki"
     },
     "threads": {
         "all_threads": "Kaikki ketjut",
@@ -3825,7 +3810,22 @@
         "deactivate_confirm_action": "Poista käyttäjä pysyvästi",
         "error_deactivate": "Käyttäjän poistaminen epäonnistui",
         "role_label": "Rooli huoneessa <RoomName/>",
-        "edit_own_devices": "Muokkaa laitteita"
+        "edit_own_devices": "Muokkaa laitteita",
+        "redact": {
+            "no_recent_messages_title": "Käyttäjän %(user)s kirjoittamia viimeaikaisia viestejä ei löytynyt",
+            "no_recent_messages_description": "Kokeile vierittää aikajanaa ylöspäin nähdäksesi, löytyykö aiempia viestejä.",
+            "confirm_title": "Poista käyttäjän %(user)s viimeaikaiset viestit",
+            "confirm_description_1": {
+                "other": "Olet poistamassa käyttäjän %(user)s %(count)s viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?",
+                "one": "Olet poistamassa käyttäjän %(user)s yhtä viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?"
+            },
+            "confirm_description_2": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
+            "confirm_keep_state_label": "Säilytä järjestelmän viestit",
+            "confirm_button": {
+                "other": "Poista %(count)s viestiä",
+                "one": "Poista yksi viesti"
+            }
+        }
     },
     "stickers": {
         "empty": "Sinulla ei ole tarrapaketteja käytössä",
@@ -3949,5 +3949,11 @@
             "network_dropdown_selected_label": "Näytä: Matrix-huoneet"
         }
     },
-    "dialog_close_label": "Sulje dialogi"
+    "dialog_close_label": "Sulje dialogi",
+    "redact": {
+        "error": "Et voi poistaa tätä viestiä. (%(code)s)",
+        "ongoing": "Poistetaan…",
+        "confirm_button": "Varmista poistaminen",
+        "reason_label": "Syy (valinnainen)"
+    }
 }

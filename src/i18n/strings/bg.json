@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "свий",
     "expand": "разшири",
-    "Confirm Removal": "Потвърдете премахването",
     "Verification Pending": "Очакване на потвърждение",
     "An error has occurred.": "Възникна грешка.",
     "Unable to restore session": "Неуспешно възстановяване на сесията",
@@ -62,14 +61,11 @@
     "Sunday": "Неделя",
     "Today": "Днес",
     "Friday": "Петък",
-    "Changelog": "Списък на промените",
-    "Unavailable": "Не е наличен",
     "Filter results": "Филтриране на резултати",
     "Tuesday": "Вторник",
     "Saturday": "Събота",
     "Monday": "Понеделник",
     "Wednesday": "Сряда",
-    "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
     "Yesterday": "Вчера",
     "Clear Storage and Sign Out": "Изчисти запазените данни и излез",
@@ -103,7 +99,6 @@
     "Unable to restore backup": "Неуспешно възстановяване на резервно копие",
     "No backup found!": "Не е открито резервно копие!",
     "Failed to decrypt %(failedCount)s sessions!": "Неуспешно разшифроване на %(failedCount)s сесии!",
-    "Unable to load commit detail: %(msg)s": "Неуспешно зареждане на информация за commit: %(msg)s",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Потвърди потребителя и го маркирай като доверен. Доверяването на потребители Ви дава допълнително спокойствие при използване на съобщения шифровани от край-до-край.",
     "Incoming Verification Request": "Входяща заявка за потвърждение",
     "Email (optional)": "Имейл (незадължително)",
@@ -198,8 +193,6 @@
     "Upload all": "Качи всички",
     "Message edits": "Редакции на съобщение",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
-    "Removing…": "Премахване…",
-    "Clear all data": "Изчисти всички данни",
     "Your homeserver doesn't seem to support this feature.": "Не изглежда сървърът ви да поддържа тази функция.",
     "Resend %(unsentCount)s reaction(s)": "Изпрати наново %(unsentCount)s реакция(и)",
     "Find others by phone or email": "Открийте други по телефон или имейл",
@@ -208,14 +201,6 @@
     "Command Help": "Помощ за команди",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Използвайте сървър за самоличност за да каните по имейл. <default>Използвайте сървъра за самоличност по подразбиране (%(defaultIdentityServerName)s)</default> или настройте друг в <settings>Настройки</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Използвайте сървър за самоличност за да каните по имейл. Управлявайте в <settings>Настройки</settings>.",
-    "No recent messages by %(user)s found": "Не са намерени скорошни съобщения от %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Опитайте се да проверите по-нагоре в историята за по-ранни.",
-    "Remove recent messages by %(user)s": "Премахване на скорошни съобщения от %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Може да отнеме известно време за голям брой съобщения. Моля, не презареждайте страницата междувременно.",
-    "Remove %(count)s messages": {
-        "other": "Премахни %(count)s съобщения",
-        "one": "Премахни 1 съобщение"
-    },
     "e.g. my-room": "например my-room",
     "%(name)s accepted": "%(name)s прие",
     "%(name)s cancelled": "%(name)s отказа",
@@ -254,8 +239,6 @@
     "Verify your other session using one of the options below.": "Верифицирайте другите си сесии използвайки една от опциите по-долу.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Изтриването на ключовете за кръстосано-подписване е необратимо. Всички, с които сте се верифицирали ще видят предупреждения за сигурността. Почти със сигурност не искате да направите това, освен ако не сте загубили всички устройства, от които можете да подписвате кръстосано.",
     "Clear cross-signing keys": "Изчисти ключовете за кръстосано-подписване",
-    "Clear all data in this session?": "Изчисти всички данни в тази сесия?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Изчистването на всички данни от сесията е необратимо. Шифрованите съобщения ще бъдат загубени, освен ако няма резервно копие на ключовете им.",
     "Server did not require any authentication": "Сървърът не изисква никаква автентикация",
     "Server did not return valid authentication information.": "Сървърът не върна валидна информация относно автентикация.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Потвърдете деактивацията на профила си използвайки Single Sign On за потвърждаване на самоличността.",
@@ -1903,7 +1886,12 @@
         "autodiscovery_invalid_is_base_url": "Невалиден base_url в m.identity_server",
         "autodiscovery_invalid_is": "Адресът на сървърът за самоличност не изглежда да е валиден сървър за самоличност",
         "autodiscovery_invalid_is_response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
-        "server_picker_description_matrix.org": "Присъединете се безплатно към милиони други на най-големия публичен сървър"
+        "server_picker_description_matrix.org": "Присъединете се безплатно към милиони други на най-големия публичен сървър",
+        "soft_logout": {
+            "clear_data_title": "Изчисти всички данни в тази сесия?",
+            "clear_data_description": "Изчистването на всички данни от сесията е необратимо. Шифрованите съобщения ще бъдат загубени, освен ако няма резервно копие на ключовете им.",
+            "clear_data_button": "Изчисти всички данни"
+        }
     },
     "export_chat": {
         "messages": "Съобщения"
@@ -2001,7 +1989,10 @@
         "error_encountered": "Възникна грешка (%(errorDetail)s).",
         "no_update": "Няма нова версия.",
         "new_version_available": "Налична е нова версия. <a>Обновете сега.</a>",
-        "check_action": "Провери за нова версия"
+        "check_action": "Провери за нова версия",
+        "error_unable_load_commit": "Неуспешно зареждане на информация за commit: %(msg)s",
+        "unavailable": "Не е наличен",
+        "changelog": "Списък на промените"
     },
     "labs_mjolnir": {
         "room_name": "Моя списък с блокирания",
@@ -2359,7 +2350,17 @@
         "deactivate_confirm_title": "Деактивиране на потребителя?",
         "deactivate_confirm_description": "Деактивирането на потребителя ще ги изхвърли от профила и няма да им позволи да влязат пак. Също така, ще напуснат всички стаи, в които са. Действието е необратимо. Сигурните ли сте, че искате да деактивирате този потребител?",
         "deactivate_confirm_action": "Деактивирай потребителя",
-        "error_deactivate": "Неуспешно деактивиране на потребител"
+        "error_deactivate": "Неуспешно деактивиране на потребител",
+        "redact": {
+            "no_recent_messages_title": "Не са намерени скорошни съобщения от %(user)s",
+            "no_recent_messages_description": "Опитайте се да проверите по-нагоре в историята за по-ранни.",
+            "confirm_title": "Премахване на скорошни съобщения от %(user)s",
+            "confirm_description_2": "Може да отнеме известно време за голям брой съобщения. Моля, не презареждайте страницата междувременно.",
+            "confirm_button": {
+                "other": "Премахни %(count)s съобщения",
+                "one": "Премахни 1 съобщение"
+            }
+        }
     },
     "stickers": {
         "empty": "В момента нямате включени пакети със стикери",
@@ -2426,5 +2427,10 @@
             "network_dropdown_add_dialog_placeholder": "Име на сървър"
         }
     },
-    "dialog_close_label": "Затвори прозореца"
+    "dialog_close_label": "Затвори прозореца",
+    "redact": {
+        "error": "Това съобщение не може да бъде изтрито. (%(code)s)",
+        "ongoing": "Премахване…",
+        "confirm_button": "Потвърдете премахването"
+    }
 }

@@ -39,7 +39,6 @@
     "Oct": "Okt.",
     "Nov": "Nov.",
     "Dec": "Dec.",
-    "Confirm Removal": "Apstipriniet dzēšanu",
     "Unable to restore session": "Neizdevās atjaunot sesiju",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
     "and %(count)s others...": {
@@ -62,14 +61,11 @@
     "Sunday": "Svētdiena",
     "Today": "Šodien",
     "Friday": "Piektdiena",
-    "Changelog": "Izmaiņu vēsture",
-    "Unavailable": "Nesasniedzams",
     "Filter results": "Filtrēt rezultātus",
     "Tuesday": "Otrdiena",
     "Saturday": "Sestdiena",
     "Monday": "Pirmdiena",
     "Wednesday": "Trešdiena",
-    "You cannot delete this message. (%(code)s)": "Tu nevari dzēst šo ziņu. (%(code)s)",
     "Thursday": "Ceturtdiena",
     "Yesterday": "Vakardien",
     "%(count)s verified sessions": {
@@ -87,7 +83,6 @@
     "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
-    "Remove recent messages by %(user)s": "Dzēst nesenās ziņas no %(user)s",
     "Banana": "Banāns",
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
@@ -160,13 +155,7 @@
     "Share User": "Dalīties ar lietotāja kontaktdatiem",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
-    "Removing…": "Dzēš…",
     "edited": "rediģēts",
-    "Remove %(count)s messages": {
-        "one": "Dzēst 1 ziņu",
-        "other": "Dzēst %(count)s ziņas"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Lielam ziņu apjomam tas var aizņemt kādu laiku. Lūdzu, tikmēr neatsvaidziniet klientu.",
     "You signed in to a new session without verifying it:": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
     "%(count)s people you know have already joined": {
         "other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
@@ -423,7 +412,6 @@
     "Search for rooms or people": "Meklēt istabas vai cilvēkus",
     "Message preview": "Ziņas priekšskatījums",
     "Corn": "Kukurūza",
-    "Reason (optional)": "Iemesls (izvēles)",
     "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot.",
     "Sorry, the poll did not end. Please try again.": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
@@ -456,9 +444,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
     "Clear cache and resync": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt",
-    "Clear all data": "Notīrīt visus datus",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Visu šīs sesijas datu dzēšana ir neatgriezeniska. Šifrētās ziņas tiks zaudētas, ja vien to atslēgas nebūs dublētas.",
-    "Clear all data in this session?": "Notīrīt visus šīs sesijas datus?",
     "Recent searches": "Nesenie meklējumi",
     "To search messages, look for this icon at the top of a room <icon/>": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
     "Other searches": "Citi meklējumi",
@@ -471,7 +456,6 @@
     "Some results may be hidden": "Atsevišķi rezultāti var būt slēpti",
     "Other options": "Citas iespējas",
     "Use \"%(query)s\" to search": "Izmantot \"%(query)s\" meklēšanai",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Mēģiniet ritināt laika joslu uz augšu, lai redzētu, vai ir kādas agrākas ziņas.",
     "Use <arrows/> to scroll": "Lietojiet <arrows/> ritināšanai",
     "Search for": "Meklēt",
     "Remove search filter for %(filter)s": "Noņemt meklēšanas filtru %(filter)s",
@@ -1651,7 +1635,12 @@
         },
         "common_failures": {},
         "server_picker_description_matrix.org": "Pievienojieties bez maksas miljoniem lietotāju lielākajā publiskajā serverī",
-        "server_picker_title_default": "Servera parametri"
+        "server_picker_title_default": "Servera parametri",
+        "soft_logout": {
+            "clear_data_title": "Notīrīt visus šīs sesijas datus?",
+            "clear_data_description": "Visu šīs sesijas datu dzēšana ir neatgriezeniska. Šifrētās ziņas tiks zaudētas, ja vien to atslēgas nebūs dublētas.",
+            "clear_data_button": "Notīrīt visus datus"
+        }
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -1782,7 +1771,9 @@
         "error_encountered": "Gadījās kļūda (%(errorDetail)s).",
         "no_update": "Nav atjauninājumu.",
         "new_version_available": "Pieejama jauna versija. <a>Atjaunināt.</a>",
-        "check_action": "Pārbaudīt atjauninājumus"
+        "check_action": "Pārbaudīt atjauninājumus",
+        "unavailable": "Nesasniedzams",
+        "changelog": "Izmaiņu vēsture"
     },
     "threads": {
         "show_thread_filter": "Rādīt:"
@@ -2070,7 +2061,16 @@
         "promote_warning": "Tu nevarēsi atcelt šo darbību, jo šim lietotājam piešķir tādu pašu statusa līmeni, kāds ir Tev.",
         "deactivate_confirm_title": "Deaktivizēt lietotāju?",
         "deactivate_confirm_action": "Deaktivizēt lietotāju",
-        "edit_own_devices": "Rediģēt ierīces"
+        "edit_own_devices": "Rediģēt ierīces",
+        "redact": {
+            "no_recent_messages_description": "Mēģiniet ritināt laika joslu uz augšu, lai redzētu, vai ir kādas agrākas ziņas.",
+            "confirm_title": "Dzēst nesenās ziņas no %(user)s",
+            "confirm_description_2": "Lielam ziņu apjomam tas var aizņemt kādu laiku. Lūdzu, tikmēr neatsvaidziniet klientu.",
+            "confirm_button": {
+                "one": "Dzēst 1 ziņu",
+                "other": "Dzēst %(count)s ziņas"
+            }
+        }
     },
     "stickers": {
         "empty": "Neviena uzlīmju paka nav iespējota",
@@ -2140,5 +2140,11 @@
             "network_dropdown_selected_label_instance": "Rādīt: %(instance)s istabas (%(server)s)",
             "network_dropdown_selected_label": "Rādīt: Matrix istabas"
         }
+    },
+    "redact": {
+        "error": "Tu nevari dzēst šo ziņu. (%(code)s)",
+        "ongoing": "Dzēš…",
+        "confirm_button": "Apstipriniet dzēšanu",
+        "reason_label": "Iemesls (izvēles)"
     }
 }

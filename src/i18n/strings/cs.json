@@ -50,7 +50,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
-    "Confirm Removal": "Potvrdit odstranění",
     "Unable to restore session": "Nelze obnovit relaci",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
@@ -61,13 +60,10 @@
     "Sunday": "Neděle",
     "Today": "Dnes",
     "Friday": "Pátek",
-    "Changelog": "Seznam změn",
-    "Unavailable": "Nedostupné",
     "Filter results": "Filtrovat výsledky",
     "Tuesday": "Úterý",
     "Saturday": "Sobota",
     "Monday": "Pondělí",
-    "You cannot delete this message. (%(code)s)": "Tuto zprávu nemůžete smazat. (%(code)s)",
     "Thursday": "Čtvrtek",
     "Yesterday": "Včera",
     "Wednesday": "Středa",
@@ -157,7 +153,6 @@
     "Headphones": "Sluchátka",
     "Folder": "Desky",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pro odeslání záznamů je potřeba <a>vytvořit issue na GitHubu</a> s popisem problému.",
-    "Unable to load commit detail: %(msg)s": "Nepovedlo se načíst detaily revize: %(msg)s",
     "Incompatible Database": "Nekompatibilní databáze",
     "Continue With Encryption Disabled": "Pokračovat bez šifrování",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Po ověření bude uživatel označen jako důvěryhodný. Ověřování uživatelů vám dává větší jistotu, že je komunikace důvěrná.",
@@ -197,22 +192,12 @@
     "Deactivate account": "Deaktivace účtu",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. <default>Použít výchozí (%(defaultIdentityServerName)s)</default> nebo přenastavit <settings>Nastavení</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. Přenastavit v <settings>Nastavení</settings>.",
-    "Removing…": "Odstaňování…",
-    "Clear all data": "Smazat všechna data",
     "Your homeserver doesn't seem to support this feature.": "Váš domovský server asi tuto funkci nepodporuje.",
     "Message edits": "Úpravy zpráv",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizace této místnosti vyžaduje uzavření stávající místnosti a vytvoření nové místnosti, která ji nahradí. Pro usnadnění procesu pro členy místnosti, provedeme:",
     "Command Help": "Nápověda příkazu",
     "Find others by phone or email": "Najít ostatní pomocí e-mailu nebo telefonu",
     "Be found by phone or email": "Umožnit ostatním mě nalézt pomocí e-mailu nebo telefonu",
-    "No recent messages by %(user)s found": "Nebyly nalezeny žádné nedávné zprávy od uživatele %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Zkuste posunout časovou osu nahoru, jestli tam nejsou nějaké dřívější.",
-    "Remove recent messages by %(user)s": "Odstranit nedávné zprávy od uživatele %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Pro větší množství zpráv to může nějakou dobu trvat. V průběhu prosím neobnovujte klienta.",
-    "Remove %(count)s messages": {
-        "other": "Odstranit %(count)s zpráv",
-        "one": "Odstranit zprávu"
-    },
     "%(name)s accepted": "%(name)s přijal(a)",
     "%(name)s cancelled": "%(name)s zrušil(a)",
     "%(name)s wants to verify": "%(name)s chce ověřit",
@@ -239,8 +224,6 @@
         "other": "%(count)s relací",
         "one": "%(count)s relace"
     },
-    "Clear all data in this session?": "Smazat všechna data v této relaci?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Výmaz všech dat v relaci je nevratný. Pokud nemáte zálohované šifrovací klíče, přijdete o šifrované zprávy.",
     "Session name": "Název relace",
     "Session key": "Klíč relace",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Ověření uživatele označí jeho relace za důvěryhodné a vaše relace budou důvěryhodné pro něj.",
@@ -304,7 +287,6 @@
     "Decline All": "Odmítnout vše",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pozvěte někoho pomocí jeho jména, e-mailové adresy, uživatelského jména (například <userId/>) nebo <a>sdílejte tuto místnost</a>.",
     "Invite by email": "Pozvat emailem",
-    "Reason (optional)": "Důvod (volitelné)",
     "Sign in with SSO": "Přihlásit pomocí SSO",
     "Hold": "Podržet",
     "Resume": "Pokračovat",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "Vstoupit do %(roomAddress)s",
     "Search Dialog": "Dialogové okno hledání",
     "You are sharing your live location": "Sdílíte svoji polohu živě",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Zrušte zaškrtnutí, pokud chcete odstranit i systémové zprávy tohoto uživatele (např. změna členství, změna profilu...)",
-    "Preserve system messages": "Zachovat systémové zprávy",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Chystáte se odstranit %(count)s zprávu od %(user)s. Tím ji trvale odstraníte pro všechny účastníky konverzace. Přejete si pokračovat?",
-        "other": "Chystáte se odstranit %(count)s zpráv od %(user)s. Tím je trvale odstraníte pro všechny účastníky konverzace. Přejete si pokračovat?"
-    },
     "Unsent": "Neodeslané",
     "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Hlasovou zprávu nelze spustit, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli začít nahrávat hlasovou zprávu.",
-    "Can't start voice message": "Nelze spustit hlasovou zprávu",
     "unknown": "neznámé",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Pro provedení povolte v Nastavení položku '%(manageIntegrations)s'.",
     "Loading live location…": "Načítání polohy živě…",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Zahájit přímou zprávu i přesto",
     "Start DM anyway and never warn me again": "Zahájit přímou zprávu i přesto a nikdy už mě nevarovat",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Není možné najít uživatelské profily pro níže uvedené Matrix ID - chcete přesto založit DM?",
-    "Note that removing room changes like this could undo the change.": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
-    "Are you sure you wish to remove (delete) this event?": "Opravdu chcete tuto událost odstranit (smazat)?",
     "Upgrade room": "Aktualizovat místnost",
     "Other spaces you know": "Další prostory, které znáte",
     "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti",
@@ -3319,7 +3291,12 @@
         "autodiscovery_invalid_is_response": "Neplatná odpověď při hledání serveru identity",
         "server_picker_description": "Můžete použít vlastní volbu serveru a přihlásit se k jiným Matrix serverům zadáním adresy URL domovského serveru. To vám umožní používat %(brand)s s existujícím Matrix účtem na jiném domovském serveru.",
         "server_picker_description_matrix.org": "Přidejte k miliónům registrovaným na největším veřejném serveru",
-        "server_picker_title_default": "Možnosti serveru"
+        "server_picker_title_default": "Možnosti serveru",
+        "soft_logout": {
+            "clear_data_title": "Smazat všechna data v této relaci?",
+            "clear_data_description": "Výmaz všech dat v relaci je nevratný. Pokud nemáte zálohované šifrovací klíče, přijdete o šifrované zprávy.",
+            "clear_data_button": "Smazat všechna data"
+        }
     },
     "room_list": {
         "sort_unread_first": "Zobrazovat místnosti s nepřečtenými zprávami jako první",
@@ -3574,7 +3551,10 @@
         "no_update": "Není dostupná žádná aktualizace.",
         "downloading": "Stahování aktualizace…",
         "new_version_available": "Je dostupná nová verze. <a>Aktualizovat nyní.</a>",
-        "check_action": "Zkontrolovat aktualizace"
+        "check_action": "Zkontrolovat aktualizace",
+        "error_unable_load_commit": "Nepovedlo se načíst detaily revize: %(msg)s",
+        "unavailable": "Nedostupné",
+        "changelog": "Seznam změn"
     },
     "threads": {
         "all_threads": "Všechna vlákna",
@@ -4237,7 +4217,23 @@
         "deactivate_confirm_action": "Deaktivovat uživatele",
         "error_deactivate": "Deaktivace uživatele se nezdařila",
         "role_label": "Role v <RoomName/>",
-        "edit_own_devices": "Upravit zařízení"
+        "edit_own_devices": "Upravit zařízení",
+        "redact": {
+            "no_recent_messages_title": "Nebyly nalezeny žádné nedávné zprávy od uživatele %(user)s",
+            "no_recent_messages_description": "Zkuste posunout časovou osu nahoru, jestli tam nejsou nějaké dřívější.",
+            "confirm_title": "Odstranit nedávné zprávy od uživatele %(user)s",
+            "confirm_description_1": {
+                "one": "Chystáte se odstranit %(count)s zprávu od %(user)s. Tím ji trvale odstraníte pro všechny účastníky konverzace. Přejete si pokračovat?",
+                "other": "Chystáte se odstranit %(count)s zpráv od %(user)s. Tím je trvale odstraníte pro všechny účastníky konverzace. Přejete si pokračovat?"
+            },
+            "confirm_description_2": "Pro větší množství zpráv to může nějakou dobu trvat. V průběhu prosím neobnovujte klienta.",
+            "confirm_keep_state_label": "Zachovat systémové zprávy",
+            "confirm_keep_state_explainer": "Zrušte zaškrtnutí, pokud chcete odstranit i systémové zprávy tohoto uživatele (např. změna členství, změna profilu...)",
+            "confirm_button": {
+                "other": "Odstranit %(count)s zpráv",
+                "one": "Odstranit zprávu"
+            }
+        }
     },
     "stickers": {
         "empty": "Momentálně nemáte aktivní žádné balíčky s nálepkami",
@@ -4362,5 +4358,17 @@
             "network_dropdown_selected_label": "Zobrazit: Matrix místnosti"
         }
     },
-    "dialog_close_label": "Zavřít dialog"
+    "dialog_close_label": "Zavřít dialog",
+    "voice_message": {
+        "cant_start_broadcast_title": "Nelze spustit hlasovou zprávu",
+        "cant_start_broadcast_description": "Hlasovou zprávu nelze spustit, protože právě nahráváte živé vysílání. Ukončete prosím živé vysílání, abyste mohli začít nahrávat hlasovou zprávu."
+    },
+    "redact": {
+        "error": "Tuto zprávu nemůžete smazat. (%(code)s)",
+        "ongoing": "Odstaňování…",
+        "confirm_description": "Opravdu chcete tuto událost odstranit (smazat)?",
+        "confirm_description_state": "Upozorňujeme, že odstranění takových změn v místnosti by mohlo vést ke zrušení změny.",
+        "confirm_button": "Potvrdit odstranění",
+        "reason_label": "Důvod (volitelné)"
+    }
 }

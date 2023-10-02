@@ -2,8 +2,6 @@
     "Sunday": "یکشنبه",
     "Today": "امروز",
     "Friday": "آدینه",
-    "Changelog": "تغییراتِ به‌وجودآمده",
-    "Unavailable": "غیرقابل‌دسترسی",
     "Tuesday": "سه‌شنبه",
     "Unnamed room": "گپ نام‌گذاری نشده",
     "Saturday": "شنبه",
@@ -11,7 +9,6 @@
     "Wednesday": "چهارشنبه",
     "Send": "ارسال",
     "unknown error code": "کد خطای ناشناخته",
-    "You cannot delete this message. (%(code)s)": "شما نمی‌توانید این پیام را پاک کنید. (%(code)s)",
     "Thursday": "پنج‌شنبه",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
@@ -401,13 +398,6 @@
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "این دستگاه را تأیید کنید تا به عنوان مورد اعتماد علامت‌گذاری شود. اعتماد به این دستگاه در هنگام استفاده از رمزنگاری سرتاسر آرامش و اطمینان بیشتری را برای شما به ارمغان می‌آورد.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "با تأیید این کاربر ، نشست وی به عنوان مورد اعتماد علامت‌گذاری شده و همچنین نشست شما به عنوان مورد اعتماد برای وی علامت‌گذاری خواهد شد.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "این کاربر را تأیید کنید تا به عنوان کاربر مورد اعتماد علامت‌گذاری شود. اعتماد به کاربران آرامش و اطمینان بیشتری به شما در استفاده از رمزنگاری سرتاسر می‌دهد.",
-    "Clear all data": "پاک کردن همه داده ها",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "پاک کردن همه داده های این جلسه غیرقابل بازگشت است. پیامهای رمزگذاری شده از بین می‌روند مگر اینکه از کلیدهای آنها پشتیبان تهیه شده باشد.",
-    "Clear all data in this session?": "همه داده‌های این نشست پاک شود؟",
-    "Reason (optional)": "دلیل (اختیاری)",
-    "Confirm Removal": "تأیید حذف",
-    "Removing…": "در حال حذف…",
-    "Unable to load commit detail: %(msg)s": "بارگیری جزئیات commit انجام نشد: %(msg)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
     "You may contact me if you have any follow up questions": "در صورت داشتن هرگونه سوال پیگیری ممکن است با من تماس بگیرید",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. اینکار را می‌توانید از طریق بخش <settings>تنظیمات</settings> انجام دهید.",
@@ -434,14 +424,6 @@
         "other": "%(count)s اتاق",
         "one": "%(count)s اتاق"
     },
-    "Remove %(count)s messages": {
-        "one": "حذف ۱ پیام",
-        "other": "حذف %(count)s پیام"
-    },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "برای مقدار زیادی پیام ممکن است مدتی طول بکشد. لطفا در این بین مرورگر خود را refresh نکنید.",
-    "Remove recent messages by %(user)s": "حذف پیام‌های اخیر %(user)s",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "در پیام‌ها بالا بروید تا ببینید آیا موارد قدیمی وجود دارد یا خیر.",
-    "No recent messages by %(user)s found": "هیچ پیام جدیدی برای %(user)s یافت نشد",
     "%(count)s sessions": {
         "one": "%(count)s نشست",
         "other": "%(count)s نشست"
@@ -2236,7 +2218,12 @@
         "autodiscovery_invalid_is": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
         "autodiscovery_invalid_is_response": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی",
         "server_picker_description_matrix.org": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
-        "server_picker_title_default": "گزینه های سرور"
+        "server_picker_title_default": "گزینه های سرور",
+        "soft_logout": {
+            "clear_data_title": "همه داده‌های این نشست پاک شود؟",
+            "clear_data_description": "پاک کردن همه داده های این جلسه غیرقابل بازگشت است. پیامهای رمزگذاری شده از بین می‌روند مگر اینکه از کلیدهای آنها پشتیبان تهیه شده باشد.",
+            "clear_data_button": "پاک کردن همه داده ها"
+        }
     },
     "room_list": {
         "sort_unread_first": "ابتدا اتاق های با پیام خوانده نشده را نمایش بده",
@@ -2447,7 +2434,10 @@
         "error_encountered": "خطای رخ داده (%(errorDetail)s).",
         "no_update": "هیچ به روزرسانی جدیدی موجود نیست.",
         "new_version_available": "نسخه‌ی جدید موجود است. <a>هم‌اکنون به‌روزرسانی کنید.</a>",
-        "check_action": "بررسی برای به‌روزرسانی جدید"
+        "check_action": "بررسی برای به‌روزرسانی جدید",
+        "error_unable_load_commit": "بارگیری جزئیات commit انجام نشد: %(msg)s",
+        "unavailable": "غیرقابل‌دسترسی",
+        "changelog": "تغییراتِ به‌وجودآمده"
     },
     "theme": {
         "light_high_contrast": "بالاترین کنتراست قالب روشن"
@@ -2892,7 +2882,17 @@
         "deactivate_confirm_description": "با غیرفعال کردن این کاربر، او از سیستم خارج شده و از ورود مجدد وی جلوگیری می‌شود. علاوه بر این، او تمام اتاق هایی را که در آن هست ترک می کند. این عمل قابل برگشت نیست. آیا مطمئن هستید که می خواهید این کاربر را غیرفعال کنید؟",
         "deactivate_confirm_action": "غیرفعال کردن کاربر",
         "error_deactivate": "غیرفعال کردن کاربر انجام نشد",
-        "edit_own_devices": "ویرایش دستگاه‌ها"
+        "edit_own_devices": "ویرایش دستگاه‌ها",
+        "redact": {
+            "no_recent_messages_title": "هیچ پیام جدیدی برای %(user)s یافت نشد",
+            "no_recent_messages_description": "در پیام‌ها بالا بروید تا ببینید آیا موارد قدیمی وجود دارد یا خیر.",
+            "confirm_title": "حذف پیام‌های اخیر %(user)s",
+            "confirm_description_2": "برای مقدار زیادی پیام ممکن است مدتی طول بکشد. لطفا در این بین مرورگر خود را refresh نکنید.",
+            "confirm_button": {
+                "one": "حذف ۱ پیام",
+                "other": "حذف %(count)s پیام"
+            }
+        }
     },
     "stickers": {
         "empty": "شما در حال حاضر هیچ بسته برچسب فعالی ندارید",
@@ -2966,5 +2966,11 @@
             "network_dropdown_add_dialog_placeholder": "نام سرور"
         }
     },
-    "dialog_close_label": "بستن گفتگو"
+    "dialog_close_label": "بستن گفتگو",
+    "redact": {
+        "error": "شما نمی‌توانید این پیام را پاک کنید. (%(code)s)",
+        "ongoing": "در حال حذف…",
+        "confirm_button": "تأیید حذف",
+        "reason_label": "دلیل (اختیاری)"
+    }
 }

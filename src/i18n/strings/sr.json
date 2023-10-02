@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
-    "Confirm Removal": "Потврди уклањање",
     "An error has occurred.": "Догодила се грешка.",
     "Unable to restore session": "Не могу да повратим сесију",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако сте претходно користили новије издање апликације %(brand)s, ваша сесија може бити некомпатибилна са овим издањем. Затворите овај прозор и вратите се на новије издање.",
@@ -62,14 +61,11 @@
     "Sunday": "Недеља",
     "Today": "Данас",
     "Friday": "Петак",
-    "Changelog": "Записник о изменама",
-    "Unavailable": "Недоступан",
     "Filter results": "Филтрирај резултате",
     "Tuesday": "Уторак",
     "Saturday": "Субота",
     "Monday": "Понедељак",
     "Wednesday": "Среда",
-    "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
     "Send Logs": "Пошаљи записнике",
@@ -87,7 +83,6 @@
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
     },
-    "Remove recent messages by %(user)s": "Уклони недавне поруке корисника %(user)s",
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "Light bulb": "сијалица",
@@ -344,9 +339,6 @@
     "United Kingdom": "Уједињено Краљевство",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домаћи сервер је прекорачио ограничење неког ресурса.",
     "Your homeserver has exceeded its user limit.": "Ваш домаћи сервер је прекорачио ограничење корисника.",
-    "Removing…": "Уклањам…",
-    "Clear all data in this session?": "Да очистим све податке у овој сесији?",
-    "Reason (optional)": "Разлог (опционо)",
     "Not encrypted": "Није шифровано",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
@@ -412,7 +404,6 @@
     "Dog": "Пас",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
-    "Clear all data": "Очисти све податке",
     "Sign in with SSO": "Пријавите се помоћу SSO",
     "Kosovo": "/",
     "End": "",
@@ -1244,7 +1235,11 @@
         "country_dropdown": "Падајући списак земаља",
         "common_failures": {},
         "captcha_description": "Овај кућни сервер жели да се увери да нисте робот.",
-        "server_picker_description_matrix.org": "Придружите се милионима других бесплатно на највећем јавном серверу"
+        "server_picker_description_matrix.org": "Придружите се милионима других бесплатно на највећем јавном серверу",
+        "soft_logout": {
+            "clear_data_title": "Да очистим све податке у овој сесији?",
+            "clear_data_button": "Очисти све податке"
+        }
     },
     "export_chat": {
         "messages": "Поруке"
@@ -1371,7 +1366,9 @@
         "toast_description": "Доступна је нова верзија %(brand)s",
         "error_encountered": "Догодила се грешка (%(errorDetail)s).",
         "no_update": "Нема нових ажурирања.",
-        "check_action": "Провери да ли има ажурирања"
+        "check_action": "Провери да ли има ажурирања",
+        "unavailable": "Недоступан",
+        "changelog": "Записник о изменама"
     },
     "user_menu": {
         "switch_theme_light": "Пребаци на светлу тему",
@@ -1531,7 +1528,10 @@
         "redact_button": "Уклони недавне поруке",
         "error_ban_user": "Неуспех при забрањивању приступа кориснику",
         "error_mute_user": "Неуспех при пригушивању корисника",
-        "promote_warning": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви."
+        "promote_warning": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви.",
+        "redact": {
+            "confirm_title": "Уклони недавне поруке корисника %(user)s"
+        }
     },
     "stickers": {
         "empty": "Тренутно немате омогућено било које паковање са налепницама"
@@ -1584,5 +1584,11 @@
             "network_dropdown_add_dialog_description": "Унесите име новог сервера који желите да истражите.",
             "network_dropdown_add_dialog_placeholder": "Име сервера"
         }
+    },
+    "redact": {
+        "error": "Не можете обрисати ову поруку. (%(code)s)",
+        "ongoing": "Уклањам…",
+        "confirm_button": "Потврди уклањање",
+        "reason_label": "Разлог (опционо)"
     }
 }

@@ -42,21 +42,17 @@
         "one": "(~%(count)s개의 결과)",
         "other": "(~%(count)s개의 결과)"
     },
-    "Confirm Removal": "삭제 확인",
     "Unable to restore session": "세션을 복구할 수 없음",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "이전에 최근 버전의 %(brand)s을 썼다면, 세션이 이 버전과 맞지 않을 것입니다. 창을 닫고 최근 버전으로 돌아가세요.",
     "This will allow you to reset your password and receive notifications.": "이렇게 하면 비밀번호를 다시 설정하고 알림을 받을 수 있습니다.",
     "Sunday": "일요일",
     "Today": "오늘",
     "Friday": "금요일",
-    "Changelog": "바뀐 점",
-    "Unavailable": "이용할 수 없음",
     "Send": "보내기",
     "Tuesday": "화요일",
     "Unnamed room": "이름 없는 방",
     "Saturday": "토요일",
     "Monday": "월요일",
-    "You cannot delete this message. (%(code)s)": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
     "Thursday": "목요일",
     "Yesterday": "어제",
     "Wednesday": "수요일",
@@ -156,9 +152,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <default>기본 (%(defaultIdentityServerName)s)을(를) 사용하거나</default> <settings>설정</settings>에서 관리하세요.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <settings>설정</settings>에서 관리하세요.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "Unable to load commit detail: %(msg)s": "커밋 세부 정보를 불러올 수 없음: %(msg)s",
-    "Removing…": "제거 중…",
-    "Clear all data": "모든 데이터 지우기",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "대화 기록을 잃지 않으려면, 로그아웃하기 전에 방 키를 내보내야 합니다. 이 작업을 수행하려면 최신 버전의 %(brand)s으로 가야 합니다",
     "Incompatible Database": "호환하지 않는 데이터베이스",
     "Continue With Encryption Disabled": "암호화를 끈 채 계속하기",
@@ -207,14 +200,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>경고</b>: 신뢰할 수 있는 컴퓨터에서만 키 백업을 설정해야 합니다.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s개의 리액션 다시 보내기",
     "Email (optional)": "이메일 (선택)",
-    "No recent messages by %(user)s found": "%(user)s님의 최근 메시지 없음",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "이전 타임라인이 있는지 위로 스크롤하세요.",
-    "Remove recent messages by %(user)s": "%(user)s님의 최근 메시지 삭제",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "메시지의 양이 많아서 시간이 걸릴 수 있습니다. 처리하는 동안 클라이언트를 새로고침하지 말아주세요.",
-    "Remove %(count)s messages": {
-        "other": "%(count)s개의 메시지 삭제",
-        "one": "1개의 메시지 삭제"
-    },
     "e.g. my-room": "예: my-room",
     "%(name)s accepted": "%(name)s님이 수락했습니다",
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
@@ -1221,7 +1206,10 @@
         "autodiscovery_invalid_is_base_url": "잘못된 m.identity_server 용 base_url",
         "autodiscovery_invalid_is": "ID 서버 URL이 올바른 ID 서버가 아님",
         "autodiscovery_invalid_is_response": "잘못된 ID 서버 검색 응답",
-        "server_picker_description_matrix.org": "가장 넓은 공개 서버에 수 백 만명이 무료로 등록함"
+        "server_picker_description_matrix.org": "가장 넓은 공개 서버에 수 백 만명이 무료로 등록함",
+        "soft_logout": {
+            "clear_data_button": "모든 데이터 지우기"
+        }
     },
     "export_chat": {
         "title": "대화 내보내기",
@@ -1318,7 +1306,10 @@
         "release_notes_toast_title": "새로운 점",
         "error_encountered": "오류가 일어났습니다 (%(errorDetail)s).",
         "no_update": "업데이트가 없습니다.",
-        "check_action": "업데이트 확인"
+        "check_action": "업데이트 확인",
+        "error_unable_load_commit": "커밋 세부 정보를 불러올 수 없음: %(msg)s",
+        "unavailable": "이용할 수 없음",
+        "changelog": "바뀐 점"
     },
     "labs_mjolnir": {
         "room_name": "차단 목록",
@@ -1625,7 +1616,17 @@
         "deactivate_confirm_title": "사용자를 비활성화합니까?",
         "deactivate_confirm_description": "사용자를 비활성화하면 사용자는 로그아웃되며 다시 로그인할 수 없게 됩니다. 또한 사용자는 모든 방에서 떠나게 됩니다. 이 작업은 돌이킬 수 없습니다. 이 사용자를 비활성화하겠습니까?",
         "deactivate_confirm_action": "사용자 비활성화",
-        "error_deactivate": "사용자 비활성화에 실패함"
+        "error_deactivate": "사용자 비활성화에 실패함",
+        "redact": {
+            "no_recent_messages_title": "%(user)s님의 최근 메시지 없음",
+            "no_recent_messages_description": "이전 타임라인이 있는지 위로 스크롤하세요.",
+            "confirm_title": "%(user)s님의 최근 메시지 삭제",
+            "confirm_description_2": "메시지의 양이 많아서 시간이 걸릴 수 있습니다. 처리하는 동안 클라이언트를 새로고침하지 말아주세요.",
+            "confirm_button": {
+                "other": "%(count)s개의 메시지 삭제",
+                "one": "1개의 메시지 삭제"
+            }
+        }
     },
     "stickers": {
         "empty": "현재 사용하고 있는 스티커 팩이 없음",
@@ -1680,5 +1681,10 @@
     "truncated_list_n_more": {
         "other": "%(count)s개 더..."
     },
-    "dialog_close_label": "대화 상자 닫기"
+    "dialog_close_label": "대화 상자 닫기",
+    "redact": {
+        "error": "이 메시지를 삭제할 수 없습니다. (%(code)s)",
+        "ongoing": "제거 중…",
+        "confirm_button": "삭제 확인"
+    }
 }

@@ -2,8 +2,6 @@
     "Sunday": "Sekmadienis",
     "Today": "Šiandien",
     "Friday": "Penktadienis",
-    "Changelog": "Keitinių žurnalas",
-    "Unavailable": "Neprieinamas",
     "Filter results": "Išfiltruoti rezultatus",
     "Tuesday": "Antradienis",
     "Unnamed room": "Kambarys be pavadinimo",
@@ -12,7 +10,6 @@
     "Wednesday": "Trečiadienis",
     "Send": "Siųsti",
     "unknown error code": "nežinomas klaidos kodas",
-    "You cannot delete this message. (%(code)s)": "Jūs negalite trinti šios žinutės. (%(code)s)",
     "Thursday": "Ketvirtadienis",
     "Yesterday": "Vakar",
     "Sun": "Sek",
@@ -76,7 +73,6 @@
     "No backup found!": "Nerasta jokios atsarginės kopijos!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
     "%(items)s and %(lastItem)s": "%(items)s ir %(lastItem)s",
-    "Remove recent messages by %(user)s": "Pašalinti paskutines %(user)s žinutes",
     "Room Settings - %(roomName)s": "Kambario nustatymai - %(roomName)s",
     "Upgrade public room": "Atnaujinti viešą kambarį",
     "Upload files (%(current)s of %(total)s)": "Įkelti failus (%(current)s iš %(total)s)",
@@ -106,7 +102,6 @@
     "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
     "You'll lose access to your encrypted messages": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Įspėjimas</b>: atsarginę raktų kopiją sukurkite tik iš patikimo kompiuterio.",
-    "Confirm Removal": "Patvirtinkite pašalinimą",
     "Manually export keys": "Eksportuoti raktus rankiniu būdu",
     "Verify your other session using one of the options below.": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
     "%(count)s verified sessions": {
@@ -203,9 +198,7 @@
     "Confirm encryption setup": "Patvirtinti šifravimo sąranką",
     "Click the button below to confirm setting up encryption.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
     "Deactivate account": "Deaktyvuoti paskyrą",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Pabandykite slinkti aukštyn laiko juostoje, kad sužinotumėte, ar yra ankstesnių.",
     "This backup is trusted because it has been restored on this session": "Ši atsarginė kopija yra patikima, nes buvo atkurta šiame seanse",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Šio seanso duomenų išvalymas yra negrįžtamas. Šifruotos žinutės bus prarastos, nebent buvo sukurta jų raktų atsarginė kopija.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Trūksta kai kurių seanso duomenų, įskaitant šifruotų žinučių raktus. Atsijunkite ir prisijunkite, kad tai išspręstumėte, atkurdami raktus iš atsarginės kopijos.",
     "Restoring keys from backup": "Raktų atkūrimas iš atsarginės kopijos",
     "Your homeserver has exceeded its user limit.": "Jūsų serveris pasiekė savo vartotojų limitą.",
@@ -232,10 +225,6 @@
     "Not Trusted": "Nepatikimas",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
     "Your browser likely removed this data when running low on disk space.": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
-    "Remove %(count)s messages": {
-        "one": "Pašalinti 1 žinutę",
-        "other": "Pašalinti %(count)s žinutes(-ų)"
-    },
     "Backup version:": "Atsarginės kopijos versija:",
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
@@ -269,13 +258,9 @@
     "We encountered an error trying to restore your previous session.": "Bandant atkurti ankstesnį seansą įvyko klaida.",
     "Confirm this user's session by comparing the following with their User Settings:": "Patvirtinkite šio vartotojo seansą, palygindami tai, kas nurodyta toliau, su jo Vartotojo Nustatymais:",
     "Confirm by comparing the following with the User Settings in your other session:": "Patvirtinkite, palygindami tai, kas nurodyta toliau, su Vartotojo Nustatymais kitame jūsų seanse:",
-    "Clear all data in this session?": "Išvalyti visus duomenis šiame seanse?",
     "Missing session data": "Trūksta seanso duomenų",
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
-    "Reason (optional)": "Priežastis (nebūtina)",
     "edited": "pakeista",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dideliam žinučių kiekiui tai gali užtrukti kurį laiką. Prašome neperkrauti savo kliento.",
-    "No recent messages by %(user)s found": "Nerasta jokių naujesnių %(user)s žinučių",
     "Not encrypted": "Neužšifruota",
     "Mexico": "Meksika",
     "Malaysia": "Malaizija",
@@ -419,8 +404,6 @@
     "Server did not require any authentication": "Serveris nereikalavo jokio autentifikavimo",
     "There was a problem communicating with the server. Please try again.": "Kilo problemų bendraujant su serveriu. Bandykite dar kartą.",
     "Confirm account deactivation": "Patvirtinkite paskyros deaktyvavimą",
-    "Clear all data": "Išvalyti visus duomenis",
-    "Removing…": "Pašalinama…",
     "You may contact me if you have any follow up questions": "Jei turite papildomų klausimų, galite susisiekti su manimi",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
@@ -2210,7 +2193,12 @@
         "autodiscovery_invalid_is": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
         "autodiscovery_invalid_is_response": "Klaidingas tapatybės serverio radimo atsakas",
         "server_picker_description_matrix.org": "Prisijunkite prie milijonų didžiausiame viešame serveryje nemokamai",
-        "server_picker_title_default": "Serverio Parinktys"
+        "server_picker_title_default": "Serverio Parinktys",
+        "soft_logout": {
+            "clear_data_title": "Išvalyti visus duomenis šiame seanse?",
+            "clear_data_description": "Šio seanso duomenų išvalymas yra negrįžtamas. Šifruotos žinutės bus prarastos, nebent buvo sukurta jų raktų atsarginė kopija.",
+            "clear_data_button": "Išvalyti visus duomenis"
+        }
     },
     "room_list": {
         "sort_unread_first": "Pirmiausia rodyti kambarius su neperskaitytomis žinutėmis",
@@ -2384,7 +2372,9 @@
         "error_encountered": "Susidurta su klaida (%(errorDetail)s).",
         "no_update": "Nėra galimų atnaujinimų.",
         "new_version_available": "Galima nauja versija. <a>Atnaujinti dabar.</a>",
-        "check_action": "Tikrinti, ar yra atnaujinimų"
+        "check_action": "Tikrinti, ar yra atnaujinimų",
+        "unavailable": "Neprieinamas",
+        "changelog": "Keitinių žurnalas"
     },
     "theme": {
         "light_high_contrast": "Šviesi didelio kontrasto",
@@ -2785,7 +2775,17 @@
         "deactivate_confirm_action": "Deaktyvuoti vartotoją",
         "error_deactivate": "Nepavyko deaktyvuoti vartotojo",
         "role_label": "Rolė <RoomName/>",
-        "edit_own_devices": "Redaguoti įrenginius"
+        "edit_own_devices": "Redaguoti įrenginius",
+        "redact": {
+            "no_recent_messages_title": "Nerasta jokių naujesnių %(user)s žinučių",
+            "no_recent_messages_description": "Pabandykite slinkti aukštyn laiko juostoje, kad sužinotumėte, ar yra ankstesnių.",
+            "confirm_title": "Pašalinti paskutines %(user)s žinutes",
+            "confirm_description_2": "Dideliam žinučių kiekiui tai gali užtrukti kurį laiką. Prašome neperkrauti savo kliento.",
+            "confirm_button": {
+                "one": "Pašalinti 1 žinutę",
+                "other": "Pašalinti %(count)s žinutes(-ų)"
+            }
+        }
     },
     "threads": {
         "open_thread": "Atidaryti temą"
@@ -2860,5 +2860,11 @@
             "network_dropdown_add_dialog_placeholder": "Serverio pavadinimas"
         }
     },
-    "dialog_close_label": "Uždaryti dialogą"
+    "dialog_close_label": "Uždaryti dialogą",
+    "redact": {
+        "error": "Jūs negalite trinti šios žinutės. (%(code)s)",
+        "ongoing": "Pašalinama…",
+        "confirm_button": "Patvirtinkite pašalinimą",
+        "reason_label": "Priežastis (nebūtina)"
+    }
 }

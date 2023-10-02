@@ -36,7 +36,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Email address": "Электронная почта",
     "Session ID": "ID сеанса",
-    "Confirm Removal": "Подтвердите удаление",
     "Unable to restore session": "Восстановление сеанса не удалось",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
     "Create new room": "Создать комнату",
@@ -62,13 +61,10 @@
     "Sunday": "Воскресенье",
     "Today": "Сегодня",
     "Friday": "Пятница",
-    "Changelog": "История изменений",
-    "Unavailable": "Недоступен",
     "Filter results": "Фильтрация результатов",
     "Tuesday": "Вторник",
     "Saturday": "Суббота",
     "Monday": "Понедельник",
-    "You cannot delete this message. (%(code)s)": "Это сообщение нельзя удалить. (%(code)s)",
     "Thursday": "Четверг",
     "Yesterday": "Вчера",
     "Wednesday": "Среда",
@@ -168,7 +164,6 @@
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
-    "Unable to load commit detail: %(msg)s": "Не возможно загрузить детали подтверждения:: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Чтобы не потерять историю чата, вы должны экспортировать ключи от комнаты перед выходом из системы. Для этого вам нужно будет вернуться к более новой версии %(brand)s",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Проверить этого пользователя, чтобы отметить его, как доверенного. Доверенные пользователи дают вам больше уверенности при использовании шифрованных сообщений.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Ранее вы использовали %(brand)s на %(host)s с отложенной загрузкой участников. В этой версии отложенная загрузка отключена. Поскольку локальный кеш не совместим между этими двумя настройками, %(brand)s необходимо повторно синхронизировать вашу учётную запись.",
@@ -195,8 +190,6 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Removing…": "Удаление…",
-    "Clear all data": "Очистить все данные",
     "Your homeserver doesn't seem to support this feature.": "Ваш сервер, похоже, не поддерживает эту возможность.",
     "Message edits": "Правки сообщения",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Модернизация этой комнаты требует закрытие комнаты в текущем состояние и создания новой комнаты вместо неё. Чтобы упростить процесс для участников, будет сделано:",
@@ -205,14 +198,6 @@
     "Upload all": "Загрузить всё",
     "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
     "Deactivate account": "Деактивировать учётную запись",
-    "No recent messages by %(user)s found": "Последние сообщения от %(user)s не найдены",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Попробуйте пролистать ленту сообщений вверх, чтобы увидеть, есть ли более ранние.",
-    "Remove recent messages by %(user)s": "Удалить последние сообщения от %(user)s",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Для большого количества сообщений это может занять некоторое время. Пожалуйста, не обновляйте своего клиента в это время.",
-    "Remove %(count)s messages": {
-        "other": "Удалить %(count)s сообщения(-й)",
-        "one": "Удалить 1 сообщение"
-    },
     "e.g. my-room": "например, моя-комната",
     "Command Help": "Помощь команды",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
@@ -241,7 +226,6 @@
     "%(name)s wants to verify": "%(name)s желает подтвердить",
     "Destroy cross-signing keys?": "Уничтожить ключи кросс-подписи?",
     "Clear cross-signing keys": "Очистить ключи кросс-подписи",
-    "Clear all data in this session?": "Очистить все данные в этом сеансе?",
     "Session name": "Название сеанса",
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
@@ -260,7 +244,6 @@
     "Submit logs": "Отправить логи",
     "IRC display name width": "Ширина отображаемого имени IRC",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Очистка всех данных в этом сеансе является необратимой. Зашифрованные сообщения будут потеряны, если их ключи не были зарезервированы.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ранее вы использовали более новую версию %(brand)s через этот сеанс. Чтобы снова использовать эту версию со сквозным шифрованием, вам нужно будет выйти из учётной записи и снова войти.",
     "There was a problem communicating with the server. Please try again.": "Возникла проблема со связью с сервером. Пожалуйста, попробуйте еще раз.",
     "Server did not require any authentication": "Сервер не требует проверки подлинности",
@@ -327,7 +310,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
     "Continuing without email": "Продолжить без электронной почты",
-    "Reason (optional)": "Причина (необязательно)",
     "Decline All": "Отклонить все",
     "Approve widget permissions": "Одобрить разрешения виджета",
     "Zimbabwe": "Зимбабве",
@@ -768,12 +750,6 @@
     "Confirm that you would like to deactivate your account. If you proceed:": "Подтвердите, что вы хотите деактивировать свою учётную запись. Если продолжите:",
     "You will not be able to reactivate your account": "Вы не сможете повторно активировать свою учётную запись",
     "To continue, please enter your account password:": "Для продолжения введите пароль учётной записи:",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Отключите, чтобы удалить системные сообщения о пользователе (изменения членства, редактирование профиля…)",
-    "Preserve system messages": "Оставить системные сообщения",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "one": "Вы собираетесь удалить %(count)s сообщение от %(user)s. Это удалит его навсегда для всех в разговоре. Точно продолжить?",
-        "other": "Вы собираетесь удалить %(count)s сообщений от %(user)s. Это удалит их навсегда для всех в разговоре. Точно продолжить?"
-    },
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -3080,7 +3056,12 @@
         "autodiscovery_invalid_is_response": "Неверный ответ на запрос идентификации сервера",
         "server_picker_description": "Вы можете использовать пользовательские опции сервера для входа на другие серверы Matrix, указав URL-адрес другого домашнего сервера. Это позволяет использовать %(brand)s с существующей учётной записью Matrix на другом домашнем сервере.",
         "server_picker_description_matrix.org": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
-        "server_picker_title_default": "Параметры сервера"
+        "server_picker_title_default": "Параметры сервера",
+        "soft_logout": {
+            "clear_data_title": "Очистить все данные в этом сеансе?",
+            "clear_data_description": "Очистка всех данных в этом сеансе является необратимой. Зашифрованные сообщения будут потеряны, если их ключи не были зарезервированы.",
+            "clear_data_button": "Очистить все данные"
+        }
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3319,7 +3300,10 @@
         "no_update": "Нет доступных обновлений.",
         "downloading": "Загрузка обновления…",
         "new_version_available": "Доступна новая версия. <a>Обновить сейчас.</a>",
-        "check_action": "Проверить наличие обновлений"
+        "check_action": "Проверить наличие обновлений",
+        "error_unable_load_commit": "Не возможно загрузить детали подтверждения:: %(msg)s",
+        "unavailable": "Недоступен",
+        "changelog": "История изменений"
     },
     "threads": {
         "all_threads": "Все обсуждения",
@@ -3932,7 +3916,23 @@
         "deactivate_confirm_action": "Деактивировать пользователя",
         "error_deactivate": "Не удалось деактивировать пользователя",
         "role_label": "Роль в <RoomName/>",
-        "edit_own_devices": "Редактировать сеансы"
+        "edit_own_devices": "Редактировать сеансы",
+        "redact": {
+            "no_recent_messages_title": "Последние сообщения от %(user)s не найдены",
+            "no_recent_messages_description": "Попробуйте пролистать ленту сообщений вверх, чтобы увидеть, есть ли более ранние.",
+            "confirm_title": "Удалить последние сообщения от %(user)s",
+            "confirm_description_1": {
+                "one": "Вы собираетесь удалить %(count)s сообщение от %(user)s. Это удалит его навсегда для всех в разговоре. Точно продолжить?",
+                "other": "Вы собираетесь удалить %(count)s сообщений от %(user)s. Это удалит их навсегда для всех в разговоре. Точно продолжить?"
+            },
+            "confirm_description_2": "Для большого количества сообщений это может занять некоторое время. Пожалуйста, не обновляйте своего клиента в это время.",
+            "confirm_keep_state_label": "Оставить системные сообщения",
+            "confirm_keep_state_explainer": "Отключите, чтобы удалить системные сообщения о пользователе (изменения членства, редактирование профиля…)",
+            "confirm_button": {
+                "other": "Удалить %(count)s сообщения(-й)",
+                "one": "Удалить 1 сообщение"
+            }
+        }
     },
     "stickers": {
         "empty": "У вас ещё нет наклеек",
@@ -4042,5 +4042,11 @@
             "network_dropdown_selected_label": "Показать: комнаты Matrix"
         }
     },
-    "dialog_close_label": "Закрыть диалог"
+    "dialog_close_label": "Закрыть диалог",
+    "redact": {
+        "error": "Это сообщение нельзя удалить. (%(code)s)",
+        "ongoing": "Удаление…",
+        "confirm_button": "Подтвердите удаление",
+        "reason_label": "Причина (необязательно)"
+    }
 }

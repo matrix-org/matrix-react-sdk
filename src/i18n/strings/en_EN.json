@@ -541,6 +541,11 @@
         "server_picker_description_matrix.org": "Join millions for free on the largest public server",
         "continue_with_idp": "Continue with %(provider)s",
         "sign_in_with_sso": "Sign in with single sign-on",
+        "soft_logout": {
+            "clear_data_title": "Clear all data in this session?",
+            "clear_data_description": "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.",
+            "clear_data_button": "Clear all data"
+        },
         "server_picker_failed_validate_homeserver": "Unable to validate homeserver",
         "server_picker_invalid_url": "Invalid URL",
         "server_picker_required": "Specify a homeserver",
@@ -2420,7 +2425,10 @@
         "no_update": "No update available.",
         "downloading": "Downloading update…",
         "new_version_available": "New version available. <a>Update now.</a>",
-        "check_action": "Check for update"
+        "check_action": "Check for update",
+        "error_unable_load_commit": "Unable to load commit detail: %(msg)s",
+        "unavailable": "Unavailable",
+        "changelog": "Changelog"
     },
     "chat_card_back_action_label": "Back to chat",
     "room_summary_card_back_action_label": "Room information",
@@ -2500,6 +2508,8 @@
         "experimental_section": "Early previews",
         "experimental_description": "Feeling experimental? Try out our latest ideas in development. These features are not finalised; they may be unstable, may change, or may be dropped altogether. <a>Learn more</a>.",
         "video_rooms_beta": "Video rooms are a beta feature",
+        "beta_feedback_title": "%(featureName)s Beta feedback",
+        "beta_feedback_leave_button": "To leave the beta, visit your settings.",
         "sliding_sync_server_support": "Your server has native support",
         "sliding_sync_server_no_support": "Your server lacks native support",
         "sliding_sync_server_specify_proxy": "Your server lacks native support, you must specify a proxy",
@@ -2512,9 +2522,7 @@
         "leave_beta_reload": "Leaving the beta will reload %(brand)s.",
         "join_beta_reload": "Joining the beta will reload %(brand)s.",
         "leave_beta": "Leave the beta",
-        "join_beta": "Join the beta",
-        "beta_feedback_title": "%(featureName)s Beta feedback",
-        "beta_feedback_leave_button": "To leave the beta, visit your settings."
+        "join_beta": "Join the beta"
     },
     "room_settings": {
         "security": {
@@ -2848,11 +2856,6 @@
         "submit_debug_logs": "Submit debug logs",
         "matrix_security_issue": "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.",
         "create_new_issue": "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.",
-        "before_submitting": "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.",
-        "download_logs": "Download logs",
-        "github_issue": "GitHub issue",
-        "additional_context": "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.",
-        "send_logs": "Send logs",
         "error_empty": "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.",
         "preparing_logs": "Preparing to send logs",
         "logs_sent": "Logs sent",
@@ -2860,7 +2863,12 @@
         "failed_send_logs": "Failed to send logs: ",
         "preparing_download": "Preparing to download logs",
         "unsupported_browser": "Reminder: Your browser is unsupported, so your experience may be unpredictable.",
-        "textarea_label": "Notes"
+        "before_submitting": "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.",
+        "download_logs": "Download logs",
+        "github_issue": "GitHub issue",
+        "textarea_label": "Notes",
+        "additional_context": "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.",
+        "send_logs": "Send logs"
     },
     "labs_mjolnir": {
         "room_name": "My Ban List",
@@ -3278,7 +3286,23 @@
         "deactivate_confirm_action": "Deactivate user",
         "error_deactivate": "Failed to deactivate user",
         "role_label": "Role in <RoomName/>",
-        "edit_own_devices": "Edit devices"
+        "edit_own_devices": "Edit devices",
+        "redact": {
+            "no_recent_messages_title": "No recent messages by %(user)s found",
+            "no_recent_messages_description": "Try scrolling up in the timeline to see if there are any earlier ones.",
+            "confirm_title": "Remove recent messages by %(user)s",
+            "confirm_description_1": {
+                "other": "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?",
+                "one": "You are about to remove %(count)s message by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?"
+            },
+            "confirm_description_2": "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.",
+            "confirm_keep_state_label": "Preserve system messages",
+            "confirm_keep_state_explainer": "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)",
+            "confirm_button": {
+                "other": "Remove %(count)s messages",
+                "one": "Remove 1 message"
+            }
+        }
     },
     "%(count)s reply": {
         "other": "%(count)s replies",
@@ -3533,34 +3557,19 @@
             "network_dropdown_selected_label": "Show: Matrix rooms"
         }
     },
-    "No recent messages by %(user)s found": "No recent messages by %(user)s found",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Try scrolling up in the timeline to see if there are any earlier ones.",
-    "Remove recent messages by %(user)s": "Remove recent messages by %(user)s",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?",
-        "one": "You are about to remove %(count)s message by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?"
+    "dialog_close_label": "Close dialog",
+    "voice_message": {
+        "cant_start_broadcast_title": "Can't start voice message",
+        "cant_start_broadcast_description": "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message."
     },
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.",
-    "Preserve system messages": "Preserve system messages",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)",
-    "Remove %(count)s messages": {
-        "other": "Remove %(count)s messages",
-        "one": "Remove 1 message"
+    "redact": {
+        "error": "You cannot delete this message. (%(code)s)",
+        "ongoing": "Removing…",
+        "confirm_description": "Are you sure you wish to remove (delete) this event?",
+        "confirm_description_state": "Note that removing room changes like this could undo the change.",
+        "confirm_button": "Confirm Removal",
+        "reason_label": "Reason (optional)"
     },
-    "Can't start voice message": "Can't start voice message",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.",
-    "Unable to load commit detail: %(msg)s": "Unable to load commit detail: %(msg)s",
-    "Unavailable": "Unavailable",
-    "Changelog": "Changelog",
-    "You cannot delete this message. (%(code)s)": "You cannot delete this message. (%(code)s)",
-    "Removing…": "Removing…",
-    "Are you sure you wish to remove (delete) this event?": "Are you sure you wish to remove (delete) this event?",
-    "Note that removing room changes like this could undo the change.": "Note that removing room changes like this could undo the change.",
-    "Confirm Removal": "Confirm Removal",
-    "Reason (optional)": "Reason (optional)",
-    "Clear all data in this session?": "Clear all data in this session?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.",
-    "Clear all data": "Clear all data",
     "Anyone in <SpaceName/> will be able to find and join.": "Anyone in <SpaceName/> will be able to find and join.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Anyone will be able to find and join this space, not just members of <SpaceName/>.",
     "Only people invited will be able to find and join this space.": "Only people invited will be able to find and join this space.",
@@ -3982,6 +3991,5 @@
         "switch_theme_dark": "Switch to dark mode"
     },
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab.",
-    "dialog_close_label": "Close dialog"
+    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab."
 }

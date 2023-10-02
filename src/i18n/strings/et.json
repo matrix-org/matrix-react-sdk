@@ -28,11 +28,6 @@
     "Create new room": "Loo uus jututuba",
     "collapse": "ahenda",
     "expand": "laienda",
-    "Remove recent messages by %(user)s": "Eemalda %(user)s hiljutised sõnumid",
-    "Remove %(count)s messages": {
-        "other": "Eemalda %(count)s sõnumit",
-        "one": "Eemalda 1 sõnum"
-    },
     "Sign out and remove encryption keys?": "Logi välja ja eemalda krüptimisvõtmed?",
     "Upload files (%(current)s of %(total)s)": "Laadin faile üles (%(current)s / %(total)s)",
     "Upload files": "Laadi failid üles",
@@ -90,9 +85,6 @@
     "Server did not require any authentication": "Server ei nõudnud mitte mingisugust autentimist",
     "Recent Conversations": "Hiljutised vestlused",
     "Encrypted by a deleted session": "Krüptitud kustutatud sessiooni poolt",
-    "No recent messages by %(user)s found": "Kasutajalt %(user)s ei leitud hiljutisi sõnumeid",
-    "Try scrolling up in the timeline to see if there are any earlier ones.": "Vaata kas ajajoonel ülespool leidub varasemaid sõnumeid.",
-    "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Kui sõnumeid on väga palju, siis võib nüüd aega kuluda. Oodates palun ära tee ühtegi päringut ega andmevärskendust.",
     "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
     "Dog": "Koer",
     "Cat": "Kass",
@@ -249,18 +241,9 @@
         "other": "ja %(count)s muud...",
         "one": "ja üks muu..."
     },
-    "Unable to load commit detail: %(msg)s": "Ei õnnestu laadida sõnumi lisateavet: %(msg)s",
-    "Unavailable": "Ei ole saadaval",
-    "Changelog": "Versioonimuudatuste loend",
-    "You cannot delete this message. (%(code)s)": "Sa ei saa seda sõnumit kustutada. (%(code)s)",
-    "Removing…": "Eemaldan…",
     "Destroy cross-signing keys?": "Kas hävitame risttunnustamise võtmed?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Risttunnustamise võtmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kõik sinu verifitseeritud vestluskaaslased näevad seejärel turvateateid. Kui sa just pole kaotanud ligipääsu kõikidele oma seadmetele, kust sa risttunnustamist oled teinud, siis sa ilmselgelt ei peaks kustutamist ette võtma.",
     "Clear cross-signing keys": "Eemalda risttunnustamise võtmed",
-    "Confirm Removal": "Kinnita eemaldamine",
-    "Clear all data in this session?": "Kas eemaldame kõik selle sessiooni andmed?",
-    "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Sessiooni kõikide andmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kui sa pole varundanud krüptovõtmeid, siis sa kaotad ligipääsu krüptitud sõnumitele.",
-    "Clear all data": "Eemalda kõik andmed",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Kinnitamaks seda, et soovid oma konto kasutusest eemaldada, kasuta oma isiku tuvastamiseks ühekordset sisselogimist.",
     "To continue, use Single Sign On to prove your identity.": "Jätkamaks tuvasta oma isik kasutades ühekordset sisselogimist.",
     "Confirm to continue": "Soovin jätkata",
@@ -581,7 +564,6 @@
     "Decline All": "Keeldu kõigist",
     "Continuing without email": "Jätka ilma e-posti aadressi seadistamiseta",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lihtsalt hoiatame, et kui sa ei lisa e-posti aadressi ning unustad oma konto salasõna, siis sa võid <b>püsivalt kaotada ligipääsu oma kontole</b>.",
-    "Reason (optional)": "Põhjus (kui soovid lisada)",
     "Hold": "Pane ootele",
     "Resume": "Jätka",
     "Transfer": "Suuna kõne edasi",
@@ -723,12 +705,6 @@
     "Join %(roomAddress)s": "Liitu %(roomAddress)s jututoaga",
     "Search Dialog": "Otsinguvaade",
     "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
-        "other": "Sa oled kustutamas %(count)s sõnumit kasutajalt %(user)s. Sellega kustutatakse nad püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?",
-        "one": "Sa oled kustutamas %(count)s sõnumi kasutajalt %(user)s. Sellega kustutatakse ta püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?"
-    },
-    "Preserve system messages": "Näita süsteemseid teateid",
-    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Kui sa samuti soovid mitte kuvada selle kasutajaga seotud süsteemseid teateid (näiteks liikmelisuse muutused, profiili muutused, jne), siis eemalda see valik",
     "Unsent": "Saatmata",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "%(count)s participants": {
@@ -788,8 +764,6 @@
     "%(name)s started a video call": "%(name)s algatas videokõne",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
-    "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
-    "Can't start voice message": "Häälsõnumi salvestamine või esitamine ei õnnestu",
     "unknown": "teadmata",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
     "Loading live location…": "Reaalajas asukoht on laadimisel…",
@@ -806,8 +780,6 @@
     "Start DM anyway": "Ikkagi alusta vestlust",
     "Start DM anyway and never warn me again": "Alusta siiski ja ära hoiata mind enam",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid nendega vestlust alustada?",
-    "Are you sure you wish to remove (delete) this event?": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
-    "Note that removing room changes like this could undo the change.": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
     "Upgrade room": "Uuenda jututoa versiooni",
     "Other spaces you know": "Muud kogukonnad, mida sa tead",
     "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud",
@@ -3312,7 +3284,12 @@
         "autodiscovery_invalid_is_response": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
         "server_picker_description": "Kohandatud serveriseadistusi saad kasutada selleks, et logida sisse sinu valitud koduserverisse. See võimaldab sinul kasutada %(brand)s'i mõnes teises koduserveri hallatava kasutajakontoga.",
         "server_picker_description_matrix.org": "Liitu tasuta nende miljonitega, kas kasutavad suurimat avalikku Matrix'i serverit",
-        "server_picker_title_default": "Serveri seadistused"
+        "server_picker_title_default": "Serveri seadistused",
+        "soft_logout": {
+            "clear_data_title": "Kas eemaldame kõik selle sessiooni andmed?",
+            "clear_data_description": "Sessiooni kõikide andmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kui sa pole varundanud krüptovõtmeid, siis sa kaotad ligipääsu krüptitud sõnumitele.",
+            "clear_data_button": "Eemalda kõik andmed"
+        }
     },
     "room_list": {
         "sort_unread_first": "Näita lugemata sõnumitega jututubasid esimesena",
@@ -3567,7 +3544,10 @@
         "no_update": "Uuendusi pole saadaval.",
         "downloading": "Laadin alla uuendust…",
         "new_version_available": "Saadaval on uus versioon. <a>Uuenda nüüd.</a>",
-        "check_action": "Kontrolli uuendusi"
+        "check_action": "Kontrolli uuendusi",
+        "error_unable_load_commit": "Ei õnnestu laadida sõnumi lisateavet: %(msg)s",
+        "unavailable": "Ei ole saadaval",
+        "changelog": "Versioonimuudatuste loend"
     },
     "threads": {
         "all_threads": "Kõik jutulõngad",
@@ -4230,7 +4210,23 @@
         "deactivate_confirm_action": "Deaktiveeri kasutaja",
         "error_deactivate": "Kasutaja deaktiveerimine ei õnnestunud",
         "role_label": "Roll jututoas <RoomName/>",
-        "edit_own_devices": "Muuda seadmeid"
+        "edit_own_devices": "Muuda seadmeid",
+        "redact": {
+            "no_recent_messages_title": "Kasutajalt %(user)s ei leitud hiljutisi sõnumeid",
+            "no_recent_messages_description": "Vaata kas ajajoonel ülespool leidub varasemaid sõnumeid.",
+            "confirm_title": "Eemalda %(user)s hiljutised sõnumid",
+            "confirm_description_1": {
+                "other": "Sa oled kustutamas %(count)s sõnumit kasutajalt %(user)s. Sellega kustutatakse nad püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?",
+                "one": "Sa oled kustutamas %(count)s sõnumi kasutajalt %(user)s. Sellega kustutatakse ta püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?"
+            },
+            "confirm_description_2": "Kui sõnumeid on väga palju, siis võib nüüd aega kuluda. Oodates palun ära tee ühtegi päringut ega andmevärskendust.",
+            "confirm_keep_state_label": "Näita süsteemseid teateid",
+            "confirm_keep_state_explainer": "Kui sa samuti soovid mitte kuvada selle kasutajaga seotud süsteemseid teateid (näiteks liikmelisuse muutused, profiili muutused, jne), siis eemalda see valik",
+            "confirm_button": {
+                "other": "Eemalda %(count)s sõnumit",
+                "one": "Eemalda 1 sõnum"
+            }
+        }
     },
     "stickers": {
         "empty": "Sul pole ühtegi kleepsupakki kasutusel",
@@ -4355,5 +4351,17 @@
             "network_dropdown_selected_label": "Näita: Matrix'i jututoad"
         }
     },
-    "dialog_close_label": "Sulge dialoog"
+    "dialog_close_label": "Sulge dialoog",
+    "voice_message": {
+        "cant_start_broadcast_title": "Häälsõnumi salvestamine või esitamine ei õnnestu",
+        "cant_start_broadcast_description": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne."
+    },
+    "redact": {
+        "error": "Sa ei saa seda sõnumit kustutada. (%(code)s)",
+        "ongoing": "Eemaldan…",
+        "confirm_description": "Kas sa oled kindel, et soovid kustutada selle sündmuse?",
+        "confirm_description_state": "Palun arvesta jututoa muudatuste eemaldamine võib eemaldada ka selle muutuse.",
+        "confirm_button": "Kinnita eemaldamine",
+        "reason_label": "Põhjus (kui soovid lisada)"
+    }
 }
