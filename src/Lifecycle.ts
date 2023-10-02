@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient, MatrixClient, SSOAction } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
@@ -65,9 +65,13 @@ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPaylo
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
-import { getStoredOidcClientId, getStoredOidcTokenIssuer, persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
+import {
+    getStoredOidcClientId,
+    getStoredOidcIdTokenClaims,
+    getStoredOidcTokenIssuer,
+    persistOidcAuthenticatedSettings,
+} from "./utils/oidc/persistOidcSettings";
 import GenericToast from "./components/views/toasts/GenericToast";
-import { OidcTokenRefresher } from "matrix-js-sdk/src/oidc/tokenRefresher";
 import {
     ACCESS_TOKEN_IV,
     ACCESS_TOKEN_STORAGE_KEY,
@@ -79,6 +83,7 @@ import {
     REFRESH_TOKEN_STORAGE_KEY,
     tryDecryptToken,
 } from "./utils/tokens/tokens";
+import { TokenRefresher } from "./utils/oidc/TokenRefresher";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -398,10 +403,9 @@ export function attemptTokenLogin(
  * Clear storage then save new credentials in storage
  * @param credentials as returned from login
  */
-async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds, settings): Promise<void> {
+async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): Promise<void> {
     await clearStorage();
     await persistCredentials(credentials);
-    await persistOidcClientSettings(settings);
 
     // remember that we just logged in
     sessionStorage.setItem("mx_fresh_login", String(true));
@@ -752,7 +756,12 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
     return doSetLoggedIn(credentials, overwrite);
 }
 
-async function checkForOidcTODOName(credentials: IMatrixClientCreds): Promise<OidcTokenRefresher | undefined> {
+/**
+ * When we have a refreshToken and an OIDC token issuer in storage
+ * @param credentials
+ * @returns Promise that resolves to a TokenRefresher, or undefined
+ */
+async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promise<OidcTokenRefresher | undefined> {
     if (!credentials.refreshToken) {
         return;
     }
@@ -762,15 +771,23 @@ async function checkForOidcTODOName(credentials: IMatrixClientCreds): Promise<Oi
     }
     try {
         const clientId = getStoredOidcClientId();
+        const idTokenClaims = getStoredOidcIdTokenClaims();
         // @TODO(kerrya) this should probably come from somewhere
         const redirectUri = window.location.origin;
         const deviceId = credentials.deviceId;
         if (!deviceId) {
-            throw new Error("Expected deviceId in user credentials.")
+            throw new Error("Expected deviceId in user credentials.");
         }
-        const tokenRefresher = new OidcTokenRefresher(credentials.refreshToken,
-            { issuer: tokenIssuer }, clientId, redirectUri, deviceId);
-            return tokenRefresher;
+        const tokenRefresher = new TokenRefresher(
+            { issuer: tokenIssuer },
+            clientId,
+            redirectUri,
+            deviceId,
+            idTokenClaims!,
+            credentials.userId,
+        );
+        await tokenRefresher.oidcClientReady;
+        return tokenRefresher;
     } catch (error) {
         logger.error("Failed to initialise OIDC token refresher", error);
     }
@@ -817,11 +834,11 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
-    const tokenRefresher = await checkForOidcTODOName(credentials);
+    const tokenRefresher = await createOidcTokenRefresher(credentials);
 
     // check the session lock just before creating the new client
     checkSessionLock();
-    MatrixClientPeg.replaceUsingCreds({ ...credentials, tokenRefresher });
+    MatrixClientPeg.replaceUsingCreds(credentials, tokenRefresher);
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
