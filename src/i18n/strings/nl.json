@@ -3065,16 +3065,7 @@
             "completing_setup": "De configuratie van je nieuwe apparaat voltooien"
         },
         "country_dropdown": "Landselectie",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Ongeldig homeserver-vindbaarheids-antwoord",
-            "cannot_find_autodiscovery_config": "Ophalen van auto-vindbaarheidsconfiguratie van server is mislukt",
-            "invalid_homeserver_base_url": "Ongeldige base_url voor m.homeserver",
-            "homeserver_url_invalid": "De homeserver-URL lijkt geen geldige Matrix-homeserver",
-            "invalid_identity_server_discovery": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
-            "invalid_identity_server_base_url": "Ongeldige base_url voor m.identity_server",
-            "invalid_identity_server_url": "De identiteitsserver-URL lijkt geen geldige identiteitsserver",
-            "general_failure": "Algemene fout"
-        },
+        "common_failures": {},
         "captcha_description": "Deze homeserver wil graag weten of je geen robot bent."
     },
     "room_list": {
@@ -3915,5 +3906,13 @@
         "error_loading_user_profile": "Kon persoonsprofiel niet laden"
     },
     "console_wait": "Wacht!",
-    "cant_load_page": "Kon pagina niet laden"
+    "cant_load_page": "Kon pagina niet laden",
+    "Invalid homeserver discovery response": "Ongeldig homeserver-vindbaarheids-antwoord",
+    "Failed to get autodiscovery configuration from server": "Ophalen van auto-vindbaarheidsconfiguratie van server is mislukt",
+    "Invalid base_url for m.homeserver": "Ongeldige base_url voor m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "De homeserver-URL lijkt geen geldige Matrix-homeserver",
+    "Invalid identity server discovery response": "Ongeldig identiteitsserver-vindbaarheidsantwoord",
+    "Invalid base_url for m.identity_server": "Ongeldige base_url voor m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lijkt geen geldige identiteitsserver",
+    "General failure": "Algemene fout"
 }

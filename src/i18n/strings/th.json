@@ -443,9 +443,7 @@
             "passwords_mismatch": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
             "return_to_login": "กลับไปยังหน้าลงชื่อเข้าใช้"
         },
-        "common_failures": {
-            "general_failure": "ข้อผิดพลาดทั่วไป"
-        }
+        "common_failures": {}
     },
     "setting": {
         "help_about": {
@@ -628,5 +626,6 @@
             "title": "การค้นหาล้มเหลว",
             "server_unavailable": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :("
         }
-    }
+    },
+    "General failure": "ข้อผิดพลาดทั่วไป"
 }

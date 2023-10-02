@@ -3138,16 +3138,7 @@
             "confirm_code_match": "Проверьте, чтобы код ниже совпадал с тем, что показан на другом устройстве:"
         },
         "country_dropdown": "Выпадающий список стран",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Неверный ответ при попытке обнаружения домашнего сервера",
-            "cannot_find_autodiscovery_config": "Не удалось получить конфигурацию автообнаружения с сервера",
-            "invalid_homeserver_base_url": "Неверный base_url для m.homeserver",
-            "homeserver_url_invalid": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
-            "invalid_identity_server_discovery": "Неверный ответ на запрос идентификации сервера",
-            "invalid_identity_server_base_url": "Неверный base_url для m.identity_server",
-            "invalid_identity_server_url": "URL-адрес сервера идентификации не является действительным сервером идентификации",
-            "general_failure": "Общая ошибка"
-        },
+        "common_failures": {},
         "captcha_description": "Этот сервер хотел бы убедиться, что вы не робот."
     },
     "room_list": {
@@ -4005,5 +3996,13 @@
         "error_loading_user_profile": "Не удалось загрузить профиль пользователя"
     },
     "console_wait": "Подождите!",
-    "cant_load_page": "Невозможно загрузить страницу"
+    "cant_load_page": "Невозможно загрузить страницу",
+    "Invalid homeserver discovery response": "Неверный ответ при попытке обнаружения домашнего сервера",
+    "Failed to get autodiscovery configuration from server": "Не удалось получить конфигурацию автообнаружения с сервера",
+    "Invalid base_url for m.homeserver": "Неверный base_url для m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
+    "Invalid identity server discovery response": "Неверный ответ на запрос идентификации сервера",
+    "Invalid base_url for m.identity_server": "Неверный base_url для m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL-адрес сервера идентификации не является действительным сервером идентификации",
+    "General failure": "Общая ошибка"
 }

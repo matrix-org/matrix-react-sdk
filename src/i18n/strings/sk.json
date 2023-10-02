@@ -3392,16 +3392,7 @@
             "completing_setup": "Dokončenie nastavenia nového zariadenia"
         },
         "country_dropdown": "Rozbaľovacie okno krajiny",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Neplatná odpoveď pri zisťovaní domovského servera",
-            "cannot_find_autodiscovery_config": "Nepodarilo sa získať nastavenie automatického zisťovania zo servera",
-            "invalid_homeserver_base_url": "Neplatná base_url pre m.homeserver",
-            "homeserver_url_invalid": "Adresa URL domovského servera sa nezdá byť platným domovským serverom Matrixu",
-            "invalid_identity_server_discovery": "Neplatná odpoveď pri zisťovaní servera totožností",
-            "invalid_identity_server_base_url": "Neplatná base_url pre m.identity_server",
-            "invalid_identity_server_url": "URL adresa servera totožností sa nezdá byť platným serverom totožností",
-            "general_failure": "Všeobecná chyba"
-        },
+        "common_failures": {},
         "captcha_description": "Tento domovský server by sa rád uistil, že nie ste robot."
     },
     "room_list": {
@@ -4318,5 +4309,13 @@
         "error_loading_user_profile": "Nie je možné načítať profil používateľa"
     },
     "console_wait": "Počkajte!",
-    "cant_load_page": "Nie je možné načítať stránku"
+    "cant_load_page": "Nie je možné načítať stránku",
+    "Invalid homeserver discovery response": "Neplatná odpoveď pri zisťovaní domovského servera",
+    "Failed to get autodiscovery configuration from server": "Nepodarilo sa získať nastavenie automatického zisťovania zo servera",
+    "Invalid base_url for m.homeserver": "Neplatná base_url pre m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Adresa URL domovského servera sa nezdá byť platným domovským serverom Matrixu",
+    "Invalid identity server discovery response": "Neplatná odpoveď pri zisťovaní servera totožností",
+    "Invalid base_url for m.identity_server": "Neplatná base_url pre m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL adresa servera totožností sa nezdá byť platným serverom totožností",
+    "General failure": "Všeobecná chyba"
 }

@@ -3399,16 +3399,7 @@
             "completing_setup": "Menyelesaikan penyiapan perangkat baru Anda"
         },
         "country_dropdown": "Dropdown Negara",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Respons penemuan homeserver tidak absah",
-            "cannot_find_autodiscovery_config": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
-            "invalid_homeserver_base_url": "base_url tidak absah untuk m.homeserver",
-            "homeserver_url_invalid": "URL homeserver sepertinya bukan sebagai homeserver Matrix yang absah",
-            "invalid_identity_server_discovery": "Respons penemuan server identitas tidak absah",
-            "invalid_identity_server_base_url": "base_url tidak absah untuk m.identity_server",
-            "invalid_identity_server_url": "URL server identitas terlihat bukan sebagai server identitas yang absah",
-            "general_failure": "Kesalahan umum"
-        },
+        "common_failures": {},
         "captcha_description": "Homeserver ini memastikan Anda bahwa Anda bukan sebuah robot."
     },
     "room_list": {
@@ -4325,5 +4316,13 @@
         "error_loading_user_profile": "Tidak dapat memuat profil pengguna"
     },
     "console_wait": "Tunggu!",
-    "cant_load_page": "Tidak dapat memuat halaman"
+    "cant_load_page": "Tidak dapat memuat halaman",
+    "Invalid homeserver discovery response": "Respons penemuan homeserver tidak absah",
+    "Failed to get autodiscovery configuration from server": "Gagal untuk mendapatkan konfigurasi penemuan otomatis dari server",
+    "Invalid base_url for m.homeserver": "base_url tidak absah untuk m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL homeserver sepertinya bukan sebagai homeserver Matrix yang absah",
+    "Invalid identity server discovery response": "Respons penemuan server identitas tidak absah",
+    "Invalid base_url for m.identity_server": "base_url tidak absah untuk m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL server identitas terlihat bukan sebagai server identitas yang absah",
+    "General failure": "Kesalahan umum"
 }

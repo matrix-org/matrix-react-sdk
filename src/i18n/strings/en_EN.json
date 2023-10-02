@@ -606,16 +606,6 @@
         },
         "reset_password_action": "Reset password",
         "reset_password_title": "Reset your password",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Invalid homeserver discovery response",
-            "cannot_find_autodiscovery_config": "Failed to get autodiscovery configuration from server",
-            "invalid_homeserver_base_url": "Invalid base_url for m.homeserver",
-            "homeserver_url_invalid": "Homeserver URL does not appear to be a valid Matrix homeserver",
-            "invalid_identity_server_discovery": "Invalid identity server discovery response",
-            "invalid_identity_server_base_url": "Invalid base_url for m.identity_server",
-            "invalid_identity_server_url": "Identity server URL does not appear to be a valid identity server",
-            "general_failure": "General failure"
-        },
         "unsupported_auth_email": "This homeserver does not support login using email address.",
         "failed_homeserver_discovery": "Failed to perform homeserver discovery",
         "unsupported_auth": "This homeserver doesn't offer any login flows that are supported by this client.",
@@ -3948,5 +3938,13 @@
         "switch_theme_dark": "Switch to dark mode"
     },
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
+    "Invalid homeserver discovery response": "Invalid homeserver discovery response",
+    "Failed to get autodiscovery configuration from server": "Failed to get autodiscovery configuration from server",
+    "Invalid base_url for m.homeserver": "Invalid base_url for m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Homeserver URL does not appear to be a valid Matrix homeserver",
+    "Invalid identity server discovery response": "Invalid identity server discovery response",
+    "Invalid base_url for m.identity_server": "Invalid base_url for m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Identity server URL does not appear to be a valid identity server",
+    "General failure": "General failure",
     "error_app_open_in_another_tab": "%(brand)s has been opened in another tab."
 }

@@ -3088,16 +3088,7 @@
             "waiting_for_device": "Odotetaan laitteen sisäänkirjautumista"
         },
         "country_dropdown": "Maapudotusvalikko",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Epäkelpo kotipalvelimen etsinnän vastaus",
-            "cannot_find_autodiscovery_config": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
-            "invalid_homeserver_base_url": "Epäkelpo base_url palvelimelle m.homeserver",
-            "homeserver_url_invalid": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
-            "invalid_identity_server_discovery": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
-            "invalid_identity_server_base_url": "Epäkelpo base_url palvelimelle m.identity_server",
-            "invalid_identity_server_url": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
-            "general_failure": "Yleinen virhe"
-        },
+        "common_failures": {},
         "captcha_description": "Tämä kotipalvelin haluaa varmistaa, ettet ole robotti."
     },
     "room_list": {
@@ -3914,5 +3905,13 @@
         "error_loading_user_profile": "Käyttäjäprofiilia ei voitu ladata"
     },
     "console_wait": "Odota!",
-    "cant_load_page": "Sivun lataaminen ei onnistunut"
+    "cant_load_page": "Sivun lataaminen ei onnistunut",
+    "Invalid homeserver discovery response": "Epäkelpo kotipalvelimen etsinnän vastaus",
+    "Failed to get autodiscovery configuration from server": "Automaattisen etsinnän asetusten hakeminen palvelimelta epäonnistui",
+    "Invalid base_url for m.homeserver": "Epäkelpo base_url palvelimelle m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Kotipalvelimen osoite ei näytä olevan kelvollinen Matrix-kotipalvelin",
+    "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
+    "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
+    "General failure": "Yleinen virhe"
 }

@@ -2896,13 +2896,7 @@
             "waiting_for_device": "Bíð eftir að tækið skráist inn"
         },
         "country_dropdown": "Fellilisti með löndum",
-        "common_failures": {
-            "invalid_homeserver_base_url": "Ógilt base_url fyrir m.homeserver",
-            "homeserver_url_invalid": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
-            "invalid_identity_server_base_url": "Ógilt base_url fyrir m.identity_server",
-            "invalid_identity_server_url": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
-            "general_failure": "Almenn bilun"
-        },
+        "common_failures": {},
         "captcha_description": "Þessi heimaþjónn vill ganga úr skugga um að þú sért ekki vélmenni."
     },
     "room_list": {
@@ -3704,5 +3698,10 @@
         "error_loading_user_profile": "Gat ekki hlaðið inn notandasniði"
     },
     "console_wait": "Bíddu!",
-    "cant_load_page": "Gat ekki hlaðið inn síðu"
+    "cant_load_page": "Gat ekki hlaðið inn síðu",
+    "Invalid base_url for m.homeserver": "Ógilt base_url fyrir m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Slóð heimaþjóns virðist ekki beina á gildan heimaþjón",
+    "Invalid base_url for m.identity_server": "Ógilt base_url fyrir m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Slóð á auðkennisþjón virðist ekki vera á gildan auðkennisþjón",
+    "General failure": "Almenn bilun"
 }

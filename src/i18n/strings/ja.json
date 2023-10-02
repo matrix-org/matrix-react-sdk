@@ -3232,16 +3232,7 @@
             "completing_setup": "新しい端末の設定を完了しています"
         },
         "country_dropdown": "国一覧",
-        "common_failures": {
-            "invalid_homeserver_discovery": "ホームサーバーのディスカバリー（発見）に関する不正な応答です",
-            "cannot_find_autodiscovery_config": "自動発見の設定をサーバーから取得できませんでした",
-            "invalid_homeserver_base_url": "m.homeserverの不正なbase_url",
-            "homeserver_url_invalid": "これは正しいMatrixのホームサーバーのURLではありません",
-            "invalid_identity_server_discovery": "IDサーバーのディスカバリー（発見）に関する不正な応答です",
-            "invalid_identity_server_base_url": "m.identity_serverの不正なbase_url",
-            "invalid_identity_server_url": "これは正しいIDサーバーのURLではありません",
-            "general_failure": "一般エラー"
-        },
+        "common_failures": {},
         "captcha_description": "このホームサーバーは、あなたがロボットではないことの確認を求めています。"
     },
     "room_list": {
@@ -4116,5 +4107,13 @@
         "error_loading_user_profile": "ユーザーのプロフィールを読み込めませんでした"
     },
     "console_wait": "お待ちください！",
-    "cant_load_page": "ページを読み込めませんでした"
+    "cant_load_page": "ページを読み込めませんでした",
+    "Invalid homeserver discovery response": "ホームサーバーのディスカバリー（発見）に関する不正な応答です",
+    "Failed to get autodiscovery configuration from server": "自動発見の設定をサーバーから取得できませんでした",
+    "Invalid base_url for m.homeserver": "m.homeserverの不正なbase_url",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "これは正しいMatrixのホームサーバーのURLではありません",
+    "Invalid identity server discovery response": "IDサーバーのディスカバリー（発見）に関する不正な応答です",
+    "Invalid base_url for m.identity_server": "m.identity_serverの不正なbase_url",
+    "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
+    "General failure": "一般エラー"
 }

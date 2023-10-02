@@ -947,16 +947,7 @@
             "reset_successful": "Je paswoord is heringesteld.",
             "return_to_login": "Were noa ’t anmeldiengsscherm"
         },
-        "common_failures": {
-            "invalid_homeserver_discovery": "Oungeldig thuusserverountdekkiengsantwoord",
-            "cannot_find_autodiscovery_config": "Iphoaln van auto-ountdekkiengsconfiguroasje van server is mislukt",
-            "invalid_homeserver_base_url": "Oungeldige base_url vo m.homeserver",
-            "homeserver_url_invalid": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
-            "invalid_identity_server_discovery": "Oungeldig identiteitsserverountdekkiengsantwoord",
-            "invalid_identity_server_base_url": "Oungeldige base_url vo m.identity_server",
-            "invalid_identity_server_url": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
-            "general_failure": "Algemene foute"
-        },
+        "common_failures": {},
         "captcha_description": "Deze thuusserver wil geirn weetn of da je gy geen robot zyt."
     },
     "export_chat": {
@@ -1234,5 +1225,13 @@
         },
         "error_loading_user_profile": "Kostege ’t gebruukersprofiel nie loadn"
     },
-    "cant_load_page": "Kostege ’t blad nie loadn"
+    "cant_load_page": "Kostege ’t blad nie loadn",
+    "Invalid homeserver discovery response": "Oungeldig thuusserverountdekkiengsantwoord",
+    "Failed to get autodiscovery configuration from server": "Iphoaln van auto-ountdekkiengsconfiguroasje van server is mislukt",
+    "Invalid base_url for m.homeserver": "Oungeldige base_url vo m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "De thuusserver-URL lykt geen geldige Matrix-thuusserver te zyn",
+    "Invalid identity server discovery response": "Oungeldig identiteitsserverountdekkiengsantwoord",
+    "Invalid base_url for m.identity_server": "Oungeldige base_url vo m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
+    "General failure": "Algemene foute"
 }

@@ -1468,16 +1468,7 @@
             "return_to_login": "Itzuli saio hasierarako pantailara"
         },
         "country_dropdown": "Herrialde menua",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
-            "cannot_find_autodiscovery_config": "Huts egin du aurkikuntza automatikoaren konfigurazioa zerbitzaritik eskuratzean",
-            "invalid_homeserver_base_url": "Baliogabeko base_url  m.homeserver zerbitzariarentzat",
-            "homeserver_url_invalid": "Hasiera-zerbitzariaren URL-a ez dirudi baliozko hasiera-zerbitzari batena",
-            "invalid_identity_server_discovery": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
-            "invalid_identity_server_base_url": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
-            "invalid_identity_server_url": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
-            "general_failure": "Hutsegite orokorra"
-        },
+        "common_failures": {},
         "captcha_description": "Hasiera-zerbitzari honek robota ez zarela egiaztatu nahi du."
     },
     "export_chat": {
@@ -1887,5 +1878,13 @@
         },
         "error_loading_user_profile": "Ezin izan da erabiltzaile-profila kargatu"
     },
-    "cant_load_page": "Ezin izan da orria kargatu"
+    "cant_load_page": "Ezin izan da orria kargatu",
+    "Invalid homeserver discovery response": "Baliogabeko hasiera-zerbitzarien bilaketaren erantzuna",
+    "Failed to get autodiscovery configuration from server": "Huts egin du aurkikuntza automatikoaren konfigurazioa zerbitzaritik eskuratzean",
+    "Invalid base_url for m.homeserver": "Baliogabeko base_url  m.homeserver zerbitzariarentzat",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Hasiera-zerbitzariaren URL-a ez dirudi baliozko hasiera-zerbitzari batena",
+    "Invalid identity server discovery response": "Baliogabeko erantzuna identitate zerbitzariaren bilaketan",
+    "Invalid base_url for m.identity_server": "Baliogabeko base_url m.identity_server zerbitzariarentzat",
+    "Identity server URL does not appear to be a valid identity server": "Identitate-zerbitzariaren URL-a ez dirudi baliozko identitate-zerbitzari batena",
+    "General failure": "Hutsegite orokorra"
 }

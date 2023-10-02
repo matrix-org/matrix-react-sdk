@@ -3343,16 +3343,7 @@
             "completing_setup": "Slutför inställning av din nya enhet"
         },
         "country_dropdown": "Land-dropdown",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Ogiltigt hemserverupptäcktssvar",
-            "cannot_find_autodiscovery_config": "Misslyckades att få konfiguration för autoupptäckt från servern",
-            "invalid_homeserver_base_url": "Ogiltig base_url för m.homeserver",
-            "homeserver_url_invalid": "Hemserver-URL:en verkar inte vara en giltig Matrix-hemserver",
-            "invalid_identity_server_discovery": "Ogiltigt identitetsserverupptäcktssvar",
-            "invalid_identity_server_base_url": "Ogiltig base_url för m.identity_server",
-            "invalid_identity_server_url": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
-            "general_failure": "Allmänt fel"
-        },
+        "common_failures": {},
         "captcha_description": "Denna hemserver vill se till att du inte är en robot."
     },
     "room_list": {
@@ -4258,5 +4249,13 @@
         "error_loading_user_profile": "Kunde inte ladda användarprofil"
     },
     "console_wait": "Vänta!",
-    "cant_load_page": "Kunde inte ladda sidan"
+    "cant_load_page": "Kunde inte ladda sidan",
+    "Invalid homeserver discovery response": "Ogiltigt hemserverupptäcktssvar",
+    "Failed to get autodiscovery configuration from server": "Misslyckades att få konfiguration för autoupptäckt från servern",
+    "Invalid base_url for m.homeserver": "Ogiltig base_url för m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Hemserver-URL:en verkar inte vara en giltig Matrix-hemserver",
+    "Invalid identity server discovery response": "Ogiltigt identitetsserverupptäcktssvar",
+    "Invalid base_url for m.identity_server": "Ogiltig base_url för m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Identitetsserver-URL:en verkar inte vara en giltig Matrix-identitetsserver",
+    "General failure": "Allmänt fel"
 }

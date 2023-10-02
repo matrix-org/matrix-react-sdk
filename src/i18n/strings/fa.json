@@ -2245,16 +2245,7 @@
             "return_to_login": "بازگشت به صفحه‌ی ورود"
         },
         "country_dropdown": "لیست کشور",
-        "common_failures": {
-            "invalid_homeserver_discovery": "پاسخ جستجوی سرور معتبر نیست",
-            "cannot_find_autodiscovery_config": "دریافت پیکربندیِ جستجوی خودکار از سرور موفقیت‌آمیز نبود",
-            "invalid_homeserver_base_url": "base_url نامعتبر برای m.homeserver",
-            "homeserver_url_invalid": "به نظر می‌رسد که آدرس سرور، متعلق به یک سرور معتبر نباشد",
-            "invalid_identity_server_discovery": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی",
-            "invalid_identity_server_base_url": "base_url نامعتبر برای سرور m.identity_server",
-            "invalid_identity_server_url": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
-            "general_failure": "خطای عمومی"
-        },
+        "common_failures": {},
         "captcha_description": "این سرور می خواهد مطمئن شود که شما یک ربات نیستید."
     },
     "room_list": {
@@ -2935,5 +2926,13 @@
         },
         "error_loading_user_profile": "امکان نمایش پروفایل کاربر میسر نیست"
     },
-    "cant_load_page": "نمایش صفحه امکان‌پذیر نبود"
+    "cant_load_page": "نمایش صفحه امکان‌پذیر نبود",
+    "Invalid homeserver discovery response": "پاسخ جستجوی سرور معتبر نیست",
+    "Failed to get autodiscovery configuration from server": "دریافت پیکربندیِ جستجوی خودکار از سرور موفقیت‌آمیز نبود",
+    "Invalid base_url for m.homeserver": "base_url نامعتبر برای m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "به نظر می‌رسد که آدرس سرور، متعلق به یک سرور معتبر نباشد",
+    "Invalid identity server discovery response": "پاسخ نامعتبر برای جستجوی سرور هویت‌سنجی",
+    "Invalid base_url for m.identity_server": "base_url نامعتبر برای سرور m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "به نظر می‌رسد آدرس سرور هویت‌سنجی، متعلق به یک سرور هویت‌سنجی معتبر نیست",
+    "General failure": "خطای عمومی"
 }

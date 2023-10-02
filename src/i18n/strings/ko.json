@@ -1209,16 +1209,7 @@
             "reset_successful": "비밀번호가 초기화되었습니다.",
             "return_to_login": "로그인 화면으로 돌아가기"
         },
-        "common_failures": {
-            "invalid_homeserver_discovery": "잘못된 홈서버 검색 응답",
-            "cannot_find_autodiscovery_config": "서버에서 자동 검색 설정 얻기에 실패함",
-            "invalid_homeserver_base_url": "잘못된 m.homeserver 용 base_url",
-            "homeserver_url_invalid": "홈서버 URL이 올바른 Matrix 홈서버가 아님",
-            "invalid_identity_server_discovery": "잘못된 ID 서버 검색 응답",
-            "invalid_identity_server_base_url": "잘못된 m.identity_server 용 base_url",
-            "invalid_identity_server_url": "ID 서버 URL이 올바른 ID 서버가 아님",
-            "general_failure": "일반적인 실패"
-        },
+        "common_failures": {},
         "captcha_description": "이 홈서버는 당신이 로봇이 아닌지 확인하고 싶어합니다."
     },
     "export_chat": {
@@ -1657,5 +1648,13 @@
         },
         "error_loading_user_profile": "사용자 프로필을 불러올 수 없음"
     },
-    "cant_load_page": "페이지를 불러올 수 없음"
+    "cant_load_page": "페이지를 불러올 수 없음",
+    "Invalid homeserver discovery response": "잘못된 홈서버 검색 응답",
+    "Failed to get autodiscovery configuration from server": "서버에서 자동 검색 설정 얻기에 실패함",
+    "Invalid base_url for m.homeserver": "잘못된 m.homeserver 용 base_url",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "홈서버 URL이 올바른 Matrix 홈서버가 아님",
+    "Invalid identity server discovery response": "잘못된 ID 서버 검색 응답",
+    "Invalid base_url for m.identity_server": "잘못된 m.identity_server 용 base_url",
+    "Identity server URL does not appear to be a valid identity server": "ID 서버 URL이 올바른 ID 서버가 아님",
+    "General failure": "일반적인 실패"
 }

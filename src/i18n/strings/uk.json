@@ -3392,16 +3392,7 @@
             "completing_setup": "Завершення налаштування нового пристрою"
         },
         "country_dropdown": "Спадний список країн",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Хибна відповідь самоналаштування домашнього сервера",
-            "cannot_find_autodiscovery_config": "Не вдалося отримати параметри самоналаштування від сервера",
-            "invalid_homeserver_base_url": "Хибний base_url у m.homeserver",
-            "homeserver_url_invalid": "Сервер за URL-адресою не виглядає дійсним домашнім сервером Matrix",
-            "invalid_identity_server_discovery": "Хибна відповідь самоналаштування сервера ідентифікації",
-            "invalid_identity_server_base_url": "Хибний base_url у m.identity_server",
-            "invalid_identity_server_url": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
-            "general_failure": "Загальний збій"
-        },
+        "common_failures": {},
         "captcha_description": "Домашній сервер бажає впевнитися, що ви не робот."
     },
     "room_list": {
@@ -4318,5 +4309,13 @@
         "error_loading_user_profile": "Не вдалося звантажити профіль користувача"
     },
     "console_wait": "Заждіть!",
-    "cant_load_page": "Не вдалося завантажити сторінку"
+    "cant_load_page": "Не вдалося завантажити сторінку",
+    "Invalid homeserver discovery response": "Хибна відповідь самоналаштування домашнього сервера",
+    "Failed to get autodiscovery configuration from server": "Не вдалося отримати параметри самоналаштування від сервера",
+    "Invalid base_url for m.homeserver": "Хибний base_url у m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Сервер за URL-адресою не виглядає дійсним домашнім сервером Matrix",
+    "Invalid identity server discovery response": "Хибна відповідь самоналаштування сервера ідентифікації",
+    "Invalid base_url for m.identity_server": "Хибний base_url у m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
+    "General failure": "Загальний збій"
 }

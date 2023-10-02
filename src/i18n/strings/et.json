@@ -3392,16 +3392,7 @@
             "completing_setup": "Lõpetame uue seadme seadistamise"
         },
         "country_dropdown": "Riikide valik",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Vigane vastus koduserveri tuvastamise päringule",
-            "cannot_find_autodiscovery_config": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
-            "invalid_homeserver_base_url": "m.homeserver'i kehtetu base_url",
-            "homeserver_url_invalid": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
-            "invalid_identity_server_discovery": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
-            "invalid_identity_server_base_url": "m.identity_server'i kehtetu base_url",
-            "invalid_identity_server_url": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
-            "general_failure": "Üldine viga"
-        },
+        "common_failures": {},
         "captcha_description": "See server soovib kindlaks teha, et sa ei ole robot."
     },
     "room_list": {
@@ -4318,5 +4309,13 @@
         "error_loading_user_profile": "Kasutajaprofiili laadimine ei õnnestunud"
     },
     "console_wait": "Palun oota!",
-    "cant_load_page": "Lehe laadimine ei õnnestunud"
+    "cant_load_page": "Lehe laadimine ei õnnestunud",
+    "Invalid homeserver discovery response": "Vigane vastus koduserveri tuvastamise päringule",
+    "Failed to get autodiscovery configuration from server": "Serveri automaattuvastuse seadistuste laadimine ei õnnestunud",
+    "Invalid base_url for m.homeserver": "m.homeserver'i kehtetu base_url",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Koduserveri URL ei tundu viitama korrektsele Matrix'i koduserverile",
+    "Invalid identity server discovery response": "Vigane vastus isikutuvastusserveri tuvastamise päringule",
+    "Invalid base_url for m.identity_server": "m.identity_server'i kehtetu base_url",
+    "Identity server URL does not appear to be a valid identity server": "Isikutuvastusserveri aadress ei tundu viitama kehtivale isikutuvastusserverile",
+    "General failure": "Üldine viga"
 }

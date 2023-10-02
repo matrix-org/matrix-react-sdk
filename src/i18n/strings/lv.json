@@ -1670,9 +1670,7 @@
             "reset_successful": "Jūsu parole ir atiestatīta.",
             "return_to_login": "Atgriezties uz pierakstīšanās lapu"
         },
-        "common_failures": {
-            "general_failure": "Vispārīga kļūda"
-        }
+        "common_failures": {}
     },
     "room_list": {
         "sort_unread_first": "Rādīt istabas ar nelasītām ziņām augšpusē",
@@ -2103,5 +2101,6 @@
         },
         "error_loading_user_profile": "Nevarēja ielādēt lietotāja profilu"
     },
-    "cant_load_page": "Neizdevās ielādēt lapu"
+    "cant_load_page": "Neizdevās ielādēt lapu",
+    "General failure": "Vispārīga kļūda"
 }

@@ -3318,16 +3318,7 @@
             "completing_setup": "Új eszköz beállításának elvégzése"
         },
         "country_dropdown": "Ország lenyíló menü",
-        "common_failures": {
-            "invalid_homeserver_discovery": "A Matrix-kiszolgáló felderítésére kapott válasz érvénytelen",
-            "cannot_find_autodiscovery_config": "Nem sikerült lekérni az automatikus felderítés beállításait a kiszolgálóról",
-            "invalid_homeserver_base_url": "Hibás base_url az m.homeserver -hez",
-            "homeserver_url_invalid": "A matrix URL nem tűnik érvényesnek",
-            "invalid_identity_server_discovery": "Az azonosítási kiszolgáló felderítésére érkezett válasz érvénytelen",
-            "invalid_identity_server_base_url": "Érvénytelen base_url az m.identity_server -hez",
-            "invalid_identity_server_url": "Az azonosítási kiszolgáló webcíme nem tűnik érvényesnek",
-            "general_failure": "Általános hiba"
-        },
+        "common_failures": {},
         "captcha_description": "A Matrix-kiszolgáló ellenőrizné, hogy Ön nem egy robot."
     },
     "room_list": {
@@ -4222,5 +4213,13 @@
         "error_loading_user_profile": "A felhasználói profil nem tölthető be"
     },
     "console_wait": "Várjon!",
-    "cant_load_page": "Az oldal nem tölthető be"
+    "cant_load_page": "Az oldal nem tölthető be",
+    "Invalid homeserver discovery response": "A Matrix-kiszolgáló felderítésére kapott válasz érvénytelen",
+    "Failed to get autodiscovery configuration from server": "Nem sikerült lekérni az automatikus felderítés beállításait a kiszolgálóról",
+    "Invalid base_url for m.homeserver": "Hibás base_url az m.homeserver -hez",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "A matrix URL nem tűnik érvényesnek",
+    "Invalid identity server discovery response": "Az azonosítási kiszolgáló felderítésére érkezett válasz érvénytelen",
+    "Invalid base_url for m.identity_server": "Érvénytelen base_url az m.identity_server -hez",
+    "Identity server URL does not appear to be a valid identity server": "Az azonosítási kiszolgáló webcíme nem tűnik érvényesnek",
+    "General failure": "Általános hiba"
 }

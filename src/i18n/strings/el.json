@@ -2811,16 +2811,7 @@
             "return_to_login": "Επιστροφή στην οθόνη σύνδεσης"
         },
         "country_dropdown": "Αναπτυσσόμενο μενού Χώρας",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Μη έγκυρη απόκριση εντοπισμού κεντρικού διακομιστή",
-            "cannot_find_autodiscovery_config": "Απέτυχε η λήψη της διαμόρφωσης αυτόματης ανακάλυψης από τον διακομιστή",
-            "invalid_homeserver_base_url": "Μη έγκυρο base_url για m.homeserver",
-            "homeserver_url_invalid": "Η διεύθυνση URL του κεντρικού διακομιστή δε φαίνεται να αντιστοιχεί σε έγκυρο διακομιστή Matrix",
-            "invalid_identity_server_discovery": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
-            "invalid_identity_server_base_url": "Μη έγκυρο base_url για m.identity_server",
-            "invalid_identity_server_url": "Η διεύθυνση URL διακομιστή ταυτοποίησης δε φαίνεται να είναι έγκυρη",
-            "general_failure": "Γενική αποτυχία"
-        },
+        "common_failures": {},
         "captcha_description": "Αυτός ο κεντρικός διακομιστής θα ήθελε να βεβαιωθεί ότι δεν είστε ρομπότ."
     },
     "room_list": {
@@ -3609,5 +3600,13 @@
         "error_loading_user_profile": "Αδυναμία φόρτωσης του προφίλ χρήστη"
     },
     "console_wait": "Μια στιγμή!",
-    "cant_load_page": "Δεν ήταν δυνατή η φόρτωση της σελίδας"
+    "cant_load_page": "Δεν ήταν δυνατή η φόρτωση της σελίδας",
+    "Invalid homeserver discovery response": "Μη έγκυρη απόκριση εντοπισμού κεντρικού διακομιστή",
+    "Failed to get autodiscovery configuration from server": "Απέτυχε η λήψη της διαμόρφωσης αυτόματης ανακάλυψης από τον διακομιστή",
+    "Invalid base_url for m.homeserver": "Μη έγκυρο base_url για m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Η διεύθυνση URL του κεντρικού διακομιστή δε φαίνεται να αντιστοιχεί σε έγκυρο διακομιστή Matrix",
+    "Invalid identity server discovery response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
+    "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Η διεύθυνση URL διακομιστή ταυτοποίησης δε φαίνεται να είναι έγκυρη",
+    "General failure": "Γενική αποτυχία"
 }

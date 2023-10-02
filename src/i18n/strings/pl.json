@@ -3386,16 +3386,7 @@
             "completing_setup": "Kończenie konfiguracji nowego urządzenia"
         },
         "country_dropdown": "Rozwijana lista krajów",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Nieprawidłowa odpowiedź na wykrycie serwera domowego",
-            "cannot_find_autodiscovery_config": "Nie udało się uzyskać konfiguracji autodiscovery z serwera",
-            "invalid_homeserver_base_url": "Nieprawidłowy base_url dla m.homeserver",
-            "homeserver_url_invalid": "URL serwera domowego nie wygląda na prawidłowy serwer domowy Matrix",
-            "invalid_identity_server_discovery": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości",
-            "invalid_identity_server_base_url": "Nieprawidłowy base_url dla m.identity_server",
-            "invalid_identity_server_url": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
-            "general_failure": "Ogólny błąd"
-        },
+        "common_failures": {},
         "captcha_description": "Serwer domowy prosi o potwierdzenie, że nie jesteś robotem."
     },
     "room_list": {
@@ -4300,5 +4291,13 @@
         "error_loading_user_profile": "Nie udało się załadować profilu"
     },
     "console_wait": "Czekaj!",
-    "cant_load_page": "Nie można załadować strony"
+    "cant_load_page": "Nie można załadować strony",
+    "Invalid homeserver discovery response": "Nieprawidłowa odpowiedź na wykrycie serwera domowego",
+    "Failed to get autodiscovery configuration from server": "Nie udało się uzyskać konfiguracji autodiscovery z serwera",
+    "Invalid base_url for m.homeserver": "Nieprawidłowy base_url dla m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL serwera domowego nie wygląda na prawidłowy serwer domowy Matrix",
+    "Invalid identity server discovery response": "Nieprawidłowa odpowiedź na wykrycie serwera tożsamości",
+    "Invalid base_url for m.identity_server": "Nieprawidłowy base_url dla m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL serwera tożsamości nie wydaje się być prawidłowym serwerem tożsamości",
+    "General failure": "Ogólny błąd"
 }

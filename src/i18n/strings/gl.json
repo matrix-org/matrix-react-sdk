@@ -2993,16 +2993,7 @@
             "return_to_login": "Volver a pantalla de acceso"
         },
         "country_dropdown": "Despregable de países",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Resposta de descubrimento do servidor non válida",
-            "cannot_find_autodiscovery_config": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
-            "invalid_homeserver_base_url": "base_url non válido para m.homeserver",
-            "homeserver_url_invalid": "O URL do servidor non semella ser un servidor Matrix válido",
-            "invalid_identity_server_discovery": "Resposta de descubrimento de identidade do servidor non válida",
-            "invalid_identity_server_base_url": "base_url para m.identity_server non válida",
-            "invalid_identity_server_url": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
-            "general_failure": "Fallo xeral"
-        },
+        "common_failures": {},
         "captcha_description": "Este servidor quere asegurarse de que non es un robot."
     },
     "room_list": {
@@ -3824,5 +3815,13 @@
         "error_loading_user_profile": "Non se cargou o perfil da usuaria"
     },
     "console_wait": "Agarda!",
-    "cant_load_page": "Non se puido cargar a páxina"
+    "cant_load_page": "Non se puido cargar a páxina",
+    "Invalid homeserver discovery response": "Resposta de descubrimento do servidor non válida",
+    "Failed to get autodiscovery configuration from server": "Fallo ó obter a configuración de autodescubrimento desde o servidor",
+    "Invalid base_url for m.homeserver": "base_url non válido para m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "O URL do servidor non semella ser un servidor Matrix válido",
+    "Invalid identity server discovery response": "Resposta de descubrimento de identidade do servidor non válida",
+    "Invalid base_url for m.identity_server": "base_url para m.identity_server non válida",
+    "Identity server URL does not appear to be a valid identity server": "O URL do servidor de identidade non semella ser un servidor de identidade válido",
+    "General failure": "Fallo xeral"
 }

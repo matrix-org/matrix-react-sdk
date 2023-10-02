@@ -3041,16 +3041,7 @@
             "return_to_login": "返回登录页面"
         },
         "country_dropdown": "国家下拉菜单",
-        "common_failures": {
-            "invalid_homeserver_discovery": "无效的家服务器搜索响应",
-            "cannot_find_autodiscovery_config": "从服务器获取自动发现配置时失败",
-            "invalid_homeserver_base_url": "m.homeserver 的 base_url 无效",
-            "homeserver_url_invalid": "家服务器链接不像是有效的 Matrix 家服务器",
-            "invalid_identity_server_discovery": "无效的身份服务器搜索响应",
-            "invalid_identity_server_base_url": "m.identity_server 的 base_url 无效",
-            "invalid_identity_server_url": "身份服务器链接不像是有效的身份服务器",
-            "general_failure": "一般错误"
-        },
+        "common_failures": {},
         "captcha_description": "此家服务器想要确认你不是机器人。"
     },
     "room_list": {
@@ -3897,5 +3888,13 @@
         "error_loading_user_profile": "无法加载用户资料"
     },
     "console_wait": "等等！",
-    "cant_load_page": "无法加载页面"
+    "cant_load_page": "无法加载页面",
+    "Invalid homeserver discovery response": "无效的家服务器搜索响应",
+    "Failed to get autodiscovery configuration from server": "从服务器获取自动发现配置时失败",
+    "Invalid base_url for m.homeserver": "m.homeserver 的 base_url 无效",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "家服务器链接不像是有效的 Matrix 家服务器",
+    "Invalid identity server discovery response": "无效的身份服务器搜索响应",
+    "Invalid base_url for m.identity_server": "m.identity_server 的 base_url 无效",
+    "Identity server URL does not appear to be a valid identity server": "身份服务器链接不像是有效的身份服务器",
+    "General failure": "一般错误"
 }

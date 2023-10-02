@@ -2819,16 +2819,7 @@
             "return_to_login": "ກັບໄປທີ່ໜ້າຈໍເພື່ອເຂົ້າສູ່ລະບົບ"
         },
         "country_dropdown": "ເລືອກປະເທດຜ່ານເມນູແບບເລື່ອນລົງ",
-        "common_failures": {
-            "invalid_homeserver_discovery": "ການຕອບກັບຫານຄົ້ນຫາ homeserver ບໍ່ຖືກຕ້ອງ",
-            "cannot_find_autodiscovery_config": "ບໍ່ສາມາດຮັບການກຳນົດຄ່າ ການຄົ້ນຫາອັດຕະໂນມັດ ຈາກເຊີບເວີໄດ້",
-            "invalid_homeserver_base_url": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.homeserver",
-            "homeserver_url_invalid": "Homeserver URL ບໍ່ສະເເດງເປັນ Matrix homeserver ທີ່ຖືກຕ້ອງ",
-            "invalid_identity_server_discovery": "ການຕອບສະໜອງ ການຄົ້ນພົບຕົວຕົນຂອງເຊີບເວີບໍ່ຖືກຕ້ອງ",
-            "invalid_identity_server_base_url": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.identity_server",
-            "invalid_identity_server_url": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
-            "general_failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ"
-        },
+        "common_failures": {},
         "captcha_description": "homeserver ນີ້ຕ້ອງການໃຫ້ແນ່ໃຈວ່າທ່ານບໍ່ແມ່ນຫຸ່ນຍົນ."
     },
     "room_list": {
@@ -3625,5 +3616,13 @@
         "error_loading_user_profile": "ບໍ່ສາມາດໂຫຼດໂປຣໄຟລ໌ຂອງຜູ້ໃຊ້ໄດ້"
     },
     "console_wait": "ລໍຖ້າ!",
-    "cant_load_page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້"
+    "cant_load_page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້",
+    "Invalid homeserver discovery response": "ການຕອບກັບຫານຄົ້ນຫາ homeserver ບໍ່ຖືກຕ້ອງ",
+    "Failed to get autodiscovery configuration from server": "ບໍ່ສາມາດຮັບການກຳນົດຄ່າ ການຄົ້ນຫາອັດຕະໂນມັດ ຈາກເຊີບເວີໄດ້",
+    "Invalid base_url for m.homeserver": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Homeserver URL ບໍ່ສະເເດງເປັນ Matrix homeserver ທີ່ຖືກຕ້ອງ",
+    "Invalid identity server discovery response": "ການຕອບສະໜອງ ການຄົ້ນພົບຕົວຕົນຂອງເຊີບເວີບໍ່ຖືກຕ້ອງ",
+    "Invalid base_url for m.identity_server": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
+    "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ"
 }

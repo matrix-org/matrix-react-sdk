@@ -3308,16 +3308,7 @@
             "completing_setup": "Po plotësohet ujdisja e pajisjes tuaj të re"
         },
         "country_dropdown": "Menu Hapmbyll Vendesh",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
-            "cannot_find_autodiscovery_config": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
-            "invalid_homeserver_base_url": "Parametër base_url i pavlefshëm për m.homeserver",
-            "homeserver_url_invalid": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
-            "invalid_identity_server_discovery": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
-            "invalid_identity_server_base_url": "Parametër base_url i i pavlefshëm për m.identity_server",
-            "invalid_identity_server_url": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
-            "general_failure": "Dështim i përgjithshëm"
-        },
+        "common_failures": {},
         "captcha_description": "Ky Shërbyes Home do të donte të sigurohej se s’jeni robot."
     },
     "room_list": {
@@ -4211,5 +4202,13 @@
         "error_loading_user_profile": "S’u ngarkua dot profili i përdoruesit"
     },
     "console_wait": "Daleni!",
-    "cant_load_page": "S’u ngarkua dot faqja"
+    "cant_load_page": "S’u ngarkua dot faqja",
+    "Invalid homeserver discovery response": "Përgjigje e pavlefshme zbulimi shërbyesi Home",
+    "Failed to get autodiscovery configuration from server": "S’u arrit të merrej formësim vetëzbulimi nga shërbyesi",
+    "Invalid base_url for m.homeserver": "Parametër base_url i pavlefshëm për m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-ja e shërbyesit Home s’duket të jetë një shërbyes Home i vlefshëm",
+    "Invalid identity server discovery response": "Përgjigje e pavlefshme zbulimi identiteti shërbyesi",
+    "Invalid base_url for m.identity_server": "Parametër base_url i i pavlefshëm për m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL-ja e shërbyesit të identiteteve s’duket të jetë një shërbyes i vlefshëm identitetesh",
+    "General failure": "Dështim i përgjithshëm"
 }

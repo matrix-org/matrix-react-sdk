@@ -987,16 +987,7 @@
             "reset_successful": "Passodet ditt vart nullstilt.",
             "return_to_login": "Gå attende til innlogging"
         },
-        "common_failures": {
-            "invalid_homeserver_discovery": "Feil svar frå heimetenaren (discovery response)",
-            "cannot_find_autodiscovery_config": "Klarde ikkje å hente automatisk oppsett frå tenaren",
-            "invalid_homeserver_base_url": "Feil base_url for m.homeserver",
-            "homeserver_url_invalid": "URL-adressa virkar ikkje til å vere ein gyldig Matrix-heimetenar",
-            "invalid_identity_server_discovery": "Feil svar frå identitetstenaren (discovery response)",
-            "invalid_identity_server_base_url": "Feil base_url for m.identity_server",
-            "invalid_identity_server_url": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
-            "general_failure": "Generell feil"
-        }
+        "common_failures": {}
     },
     "export_chat": {
         "messages": "Meldingar"
@@ -1329,5 +1320,13 @@
             "server_unavailable": "Tenaren er kanskje utilgjengeleg, overlasta, elles så vart søket tidsavbrote :("
         },
         "error_loading_user_profile": "Klarde ikkje å laste brukarprofilen"
-    }
+    },
+    "Invalid homeserver discovery response": "Feil svar frå heimetenaren (discovery response)",
+    "Failed to get autodiscovery configuration from server": "Klarde ikkje å hente automatisk oppsett frå tenaren",
+    "Invalid base_url for m.homeserver": "Feil base_url for m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-adressa virkar ikkje til å vere ein gyldig Matrix-heimetenar",
+    "Invalid identity server discovery response": "Feil svar frå identitetstenaren (discovery response)",
+    "Invalid base_url for m.identity_server": "Feil base_url for m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL-adressa virkar ikkje til å vere ein gyldig identitetstenar",
+    "General failure": "Generell feil"
 }

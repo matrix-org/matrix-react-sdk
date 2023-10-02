@@ -1900,16 +1900,7 @@
             "return_to_login": "Връщане към страницата за влизане в профила"
         },
         "country_dropdown": "Падащо меню за избор на държава",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Невалиден отговор по време на откриването на конфигурацията за сървъра",
-            "cannot_find_autodiscovery_config": "Неуспешно автоматично откриване на конфигурацията за сървъра",
-            "invalid_homeserver_base_url": "Невалиден base_url в m.homeserver",
-            "homeserver_url_invalid": "Homeserver адресът не изглежда да е валиден Matrix сървър",
-            "invalid_identity_server_discovery": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
-            "invalid_identity_server_base_url": "Невалиден base_url в m.identity_server",
-            "invalid_identity_server_url": "Адресът на сървърът за самоличност не изглежда да е валиден сървър за самоличност",
-            "general_failure": "Обща грешка"
-        },
+        "common_failures": {},
         "captcha_description": "Сървърът иска да потвърди, че не сте робот."
     },
     "export_chat": {
@@ -2399,5 +2390,13 @@
         },
         "error_loading_user_profile": "Неуспешно зареждане на потребителския профил"
     },
-    "cant_load_page": "Страницата не можа да бъде заредена"
+    "cant_load_page": "Страницата не можа да бъде заредена",
+    "Invalid homeserver discovery response": "Невалиден отговор по време на откриването на конфигурацията за сървъра",
+    "Failed to get autodiscovery configuration from server": "Неуспешно автоматично откриване на конфигурацията за сървъра",
+    "Invalid base_url for m.homeserver": "Невалиден base_url в m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "Homeserver адресът не изглежда да е валиден Matrix сървър",
+    "Invalid identity server discovery response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
+    "Invalid base_url for m.identity_server": "Невалиден base_url в m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "Адресът на сървърът за самоличност не изглежда да е валиден сървър за самоличност",
+    "General failure": "Обща грешка"
 }

@@ -2537,16 +2537,7 @@
             "return_to_login": "Reiri al saluta paĝo"
         },
         "country_dropdown": "Landa falmenuo",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Nevalida eltrova respondo de hejmservilo",
-            "cannot_find_autodiscovery_config": "Malsukcesis akiri agordojn de memaga eltrovado de la servilo",
-            "invalid_homeserver_base_url": "Nevalida base_url por m.homeserver",
-            "homeserver_url_invalid": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
-            "invalid_identity_server_discovery": "Nevalida eltrova respondo de identiga servilo",
-            "invalid_identity_server_base_url": "Nevalida base_url por m.identity_server",
-            "invalid_identity_server_url": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
-            "general_failure": "Ĝenerala fiasko"
-        },
+        "common_failures": {},
         "captcha_description": "Ĉi tiu hejmservilo volas certigi, ke vi ne estas roboto."
     },
     "room_list": {
@@ -3279,5 +3270,13 @@
         },
         "error_loading_user_profile": "Ne povis enlegi profilon de uzanto"
     },
-    "cant_load_page": "Ne povis enlegi paĝon"
+    "cant_load_page": "Ne povis enlegi paĝon",
+    "Invalid homeserver discovery response": "Nevalida eltrova respondo de hejmservilo",
+    "Failed to get autodiscovery configuration from server": "Malsukcesis akiri agordojn de memaga eltrovado de la servilo",
+    "Invalid base_url for m.homeserver": "Nevalida base_url por m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL por hejmservilo ŝajne ne ligas al valida hejmservilo de Matrix",
+    "Invalid identity server discovery response": "Nevalida eltrova respondo de identiga servilo",
+    "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
+    "General failure": "Ĝenerala fiasko"
 }

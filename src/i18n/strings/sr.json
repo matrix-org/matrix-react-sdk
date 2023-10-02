@@ -1243,9 +1243,7 @@
             "return_to_login": "Врати ме на екран за пријаву"
         },
         "country_dropdown": "Падајући списак земаља",
-        "common_failures": {
-            "general_failure": "Општа грешка"
-        },
+        "common_failures": {},
         "captcha_description": "Овај кућни сервер жели да се увери да нисте робот."
     },
     "export_chat": {
@@ -1563,5 +1561,6 @@
             "server_unavailable": "Сервер је можда недоступан, преоптерећен или је истекло време претраживања :("
         }
     },
-    "cant_load_page": "Учитавање странице није успело"
+    "cant_load_page": "Учитавање странице није успело",
+    "General failure": "Општа грешка"
 }

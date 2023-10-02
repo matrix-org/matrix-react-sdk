@@ -3234,16 +3234,7 @@
             "completing_setup": "Terminando de configurar tu nuevo dispositivo"
         },
         "country_dropdown": "Seleccione país",
-        "common_failures": {
-            "invalid_homeserver_discovery": "Respuesta inválida de descubrimiento de servidor base",
-            "cannot_find_autodiscovery_config": "No se pudo obtener la configuración de autodescubrimiento del servidor",
-            "invalid_homeserver_base_url": "URL-base inválida para m.homeserver",
-            "homeserver_url_invalid": "La URL del servidor base no parece ser un servidor válido de Matrix",
-            "invalid_identity_server_discovery": "Respuesta inválida de descubrimiento de servidor de identidad",
-            "invalid_identity_server_base_url": "URL_base no válida para m.identity_server",
-            "invalid_identity_server_url": "La URL del servidor de identidad no parece ser un servidor de identidad válido",
-            "general_failure": "Error no especificado"
-        },
+        "common_failures": {},
         "captcha_description": "A este servidor le gustaría asegurarse de que no eres un robot."
     },
     "room_list": {
@@ -4120,5 +4111,13 @@
         "error_loading_user_profile": "No se pudo cargar el perfil de usuario"
     },
     "console_wait": "¡Espera!",
-    "cant_load_page": "No se ha podido cargar la página"
+    "cant_load_page": "No se ha podido cargar la página",
+    "Invalid homeserver discovery response": "Respuesta inválida de descubrimiento de servidor base",
+    "Failed to get autodiscovery configuration from server": "No se pudo obtener la configuración de autodescubrimiento del servidor",
+    "Invalid base_url for m.homeserver": "URL-base inválida para m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "La URL del servidor base no parece ser un servidor válido de Matrix",
+    "Invalid identity server discovery response": "Respuesta inválida de descubrimiento de servidor de identidad",
+    "Invalid base_url for m.identity_server": "URL_base no válida para m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "La URL del servidor de identidad no parece ser un servidor de identidad válido",
+    "General failure": "Error no especificado"
 }
