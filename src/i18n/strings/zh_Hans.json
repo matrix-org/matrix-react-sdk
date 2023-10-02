@@ -63,19 +63,15 @@
     "Today": "今天",
     "Friday": "星期五",
     "Changelog": "更改日志",
-    "Failed to send logs: ": "无法发送日志： ",
     "Unavailable": "无法获得",
     "Filter results": "过滤结果",
     "Tuesday": "星期二",
-    "Preparing to send logs": "正在准备发送日志",
     "Saturday": "星期六",
     "Monday": "星期一",
     "Wednesday": "星期三",
     "You cannot delete this message. (%(code)s)": "你无法删除这条消息。(%(code)s)",
     "Thursday": "星期四",
-    "Logs sent": "日志已发送",
     "Yesterday": "昨天",
-    "Thank you!": "谢谢！",
     "Clear Storage and Sign Out": "清除存储并登出",
     "Send Logs": "发送日志",
     "Share Room Message": "分享房间消息",
@@ -165,10 +161,6 @@
     "Folder": "文件夹",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
     "Start using Key Backup": "开始使用密钥备份",
-    "The following users may not exist": "以下用户可能不存在",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "找不到下列 Matrix ID 的用户资料，你还是要邀请吗？",
-    "Invite anyway and never warn me again": "还是邀请，不用再提醒我",
-    "Invite anyway": "还是邀请",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
     "Unable to load commit detail: %(msg)s": "无法加载提交详情：%(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "为避免丢失聊天记录，你必须在登出前导出房间密钥。你需要切换至新版 %(brand)s 方可继续执行此操作",
@@ -224,10 +216,6 @@
     "e.g. my-room": "例如 my-room",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "使用一个身份服务器以通过邮箱邀请。<default>使用默认（%(defaultIdentityServerName)s）</default>或在<settings>设置</settings>中管理。",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "使用一个身份服务器以通过邮箱邀请。在<settings>设置</settings>中管理。",
-    "Close dialog": "关闭对话框",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "请告诉我们哪里出错了，或最好创建一个 GitHub issue 来描述此问题。",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "提醒：你的浏览器不被支持，所以你的体验可能不可预料。",
-    "Notes": "提示",
     "Removing…": "正在移除…",
     "Destroy cross-signing keys?": "销毁交叉签名密钥？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "删除交叉签名密钥是永久的。所有你验证过的人都会看到安全警报。除非你丢失了所有可以交叉签名的设备，否则几乎可以确定你不想这么做。",
@@ -326,7 +314,6 @@
     "Confirm encryption setup": "确认加密设置",
     "Click the button below to confirm setting up encryption.": "点击下方按钮以确认设置加密。",
     "IRC display name width": "IRC 显示名称宽度",
-    "Preparing to download logs": "正在准备下载日志",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
     "Backup version:": "备份版本：",
@@ -636,7 +623,6 @@
     "A call can only be transferred to a single user.": "通话只能转移到单个用户。",
     "We couldn't create your DM.": "我们无法创建你的私聊。",
     "You may contact me if you have any follow up questions": "如果你有任何后续问题，可以联系我",
-    "To leave the beta, visit your settings.": "要离开beta，请访问你的设置。",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -740,7 +726,6 @@
     "%(members)s and more": "%(members)s和更多",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "若你找不到要找的房间，请请求邀请或创建新房间。",
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
-    "%(featureName)s Beta feedback": "%(featureName)sBeta反馈",
     "Use <arrows/> to scroll": "用<arrows/>来滚动",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
     "toggle event": "切换事件",
@@ -1102,7 +1087,9 @@
         "beta_section": "即将到来的功能",
         "beta_description": "%(brand)s的下一步是什么？实验室是早期获得东西、测试新功能和在它们发布前帮助塑造的最好方式。",
         "experimental_section": "早期预览",
-        "experimental_description": "想要做点实验？试试我们开发中的最新点子。这些功能尚未确定；它们可能不稳定，可能会变动，也可能被完全丢弃。<a>了解更多</a>。"
+        "experimental_description": "想要做点实验？试试我们开发中的最新点子。这些功能尚未确定；它们可能不稳定，可能会变动，也可能被完全丢弃。<a>了解更多</a>。",
+        "beta_feedback_title": "%(featureName)sBeta反馈",
+        "beta_feedback_leave_button": "要离开beta，请访问你的设置。"
     },
     "keyboard": {
         "home": "主页",
@@ -1240,7 +1227,15 @@
         "uploading_logs": "正在上传日志",
         "downloading_logs": "正在下载日志",
         "create_new_issue": "请在 GitHub 上<newIssueLink>创建一个新 issue</newIssueLink> 以便我们调查此错误。",
-        "waiting_for_server": "正在等待服务器响应"
+        "waiting_for_server": "正在等待服务器响应",
+        "error_empty": "请告诉我们哪里出错了，或最好创建一个 GitHub issue 来描述此问题。",
+        "preparing_logs": "正在准备发送日志",
+        "logs_sent": "日志已发送",
+        "thank_you": "谢谢！",
+        "failed_send_logs": "无法发送日志： ",
+        "preparing_download": "正在准备下载日志",
+        "unsupported_browser": "提醒：你的浏览器不被支持，所以你的体验可能不可预料。",
+        "textarea_label": "提示"
     },
     "time": {
         "hours_minutes_seconds_left": "剩余%(hours)s小时%(minutes)s分钟%(seconds)s秒",
@@ -3656,7 +3651,11 @@
         "error_version_unsupported_space": "用户的家服务器版本不支持空间。",
         "error_version_unsupported_room": "用户的家服务器不支持此房间版本。",
         "error_unknown": "未知服务器错误",
-        "to_space": "邀请至 %(spaceName)s"
+        "to_space": "邀请至 %(spaceName)s",
+        "unable_find_profiles_description_default": "找不到下列 Matrix ID 的用户资料，你还是要邀请吗？",
+        "unable_find_profiles_title": "以下用户可能不存在",
+        "unable_find_profiles_invite_never_warn_label_default": "还是邀请，不用再提醒我",
+        "unable_find_profiles_invite_label_default": "还是邀请"
     },
     "scalar": {
         "error_create": "无法创建挂件。",
@@ -3932,5 +3931,6 @@
             "network_dropdown_selected_label_instance": "显示：%(instance)s房间（%(server)s）",
             "network_dropdown_selected_label": "显示：Matrix房间"
         }
-    }
+    },
+    "dialog_close_label": "关闭对话框"
 }

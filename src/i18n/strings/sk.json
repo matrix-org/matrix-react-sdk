@@ -62,19 +62,15 @@
     "Today": "Dnes",
     "Friday": "Piatok",
     "Changelog": "Zoznam zmien",
-    "Failed to send logs: ": "Nepodarilo sa odoslať záznamy: ",
     "Unavailable": "Nedostupné",
     "Filter results": "Filtrovať výsledky",
     "Tuesday": "Utorok",
-    "Preparing to send logs": "príprava odoslania záznamov",
     "Saturday": "Sobota",
     "Monday": "Pondelok",
     "Wednesday": "Streda",
     "You cannot delete this message. (%(code)s)": "Nemôžete vymazať túto správu. (%(code)s)",
     "Thursday": "Štvrtok",
-    "Logs sent": "Záznamy boli odoslané",
     "Yesterday": "Včera",
-    "Thank you!": "Ďakujeme!",
     "Send Logs": "Odoslať záznamy",
     "Clear Storage and Sign Out": "Vymazať úložisko a odhlásiť sa",
     "We encountered an error trying to restore your previous session.": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
@@ -95,7 +91,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
     "Updating %(brand)s": "Prebieha aktualizácia %(brand)s",
-    "The following users may not exist": "Nasledujúci používatelia pravdepodobne neexistujú",
     "Unable to load commit detail: %(msg)s": "Nie je možné načítať podrobnosti pre commit: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Aby ste po odhlásení neprišli o možnosť čítať históriu šifrovaných konverzácií, mali by ste si ešte pred odhlásením exportovať šifrovacie kľúče miestností. Prosím vráťte sa k novšej verzii %(brand)s a exportujte si kľúče",
     "Incompatible Database": "Nekompatibilná databáza",
@@ -108,9 +103,6 @@
     "Unable to restore backup": "Nie je možné obnoviť zo zálohy",
     "No backup found!": "Nebola nájdená žiadna záloha!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepodarilo sa dešifrovať %(failedCount)s relácií!",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nie je možné nájsť používateľský profil pre Matrix ID zobrazené nižšie. Chcete ich napriek tomu pozvať?",
-    "Invite anyway and never warn me again": "Napriek tomu pozvať a viac neupozorňovať",
-    "Invite anyway": "Napriek tomu pozvať",
     "Dog": "Pes",
     "Cat": "Mačka",
     "Lion": "Lev",
@@ -489,7 +481,6 @@
     "MB": "MB",
     "Sent": "Odoslané",
     "Sending": "Odosielanie",
-    "Notes": "Poznámky",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />.",
     "Backup version:": "Verzia zálohy:",
     "Upgrade private room": "Aktualizovať súkromnú miestnosť",
@@ -541,7 +532,6 @@
     "Search for rooms or people": "Hľadať miestnosti alebo ľudí",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
     "Not encrypted": "Nie je zašifrované",
-    "Close dialog": "Zavrieť dialógové okno",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všetky priestory. Prístup bude predvolený len pre pozvaných",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Určite, ktoré priestory budú mať prístup do tejto miestnosti. Ak je vybraný priestor, jeho členovia môžu nájsť a pripojiť sa k <RoomName/>.",
     "Select spaces": "Vybrať priestory",
@@ -560,7 +550,6 @@
     "Leave space": "Opustiť priestor",
     "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
-    "Preparing to download logs": "Príprava na prevzatie záznamov",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ste jediným správcom niektorých miestností alebo priestorov, ktoré chcete opustiť. Ich opustenie ich ponechá bez administrátorov.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ste jediným správcom tohto priestoru. Jeho opustenie bude znamenať, že nad ním nikto nebude mať kontrolu.",
@@ -631,7 +620,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
     "Be found by phone or email": "Byť nájdený pomocou telefónu alebo e-mailu",
     "Find others by phone or email": "Nájsť ostatných pomocou telefónu alebo e-mailu",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Povedzte nám prosím, čo sa pokazilo, alebo radšej vytvorte príspevok v službe GitHub, v ktorom problém popíšete.",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizácia tejto miestnosti vyžaduje zrušenie aktuálnej inštancie miestnosti a vytvorenie novej miestnosti na jej mieste. Aby sme členom miestnosti poskytli čo najlepšiu skúsenosť, budeme:",
     "%(count)s votes": {
         "one": "%(count)s hlas",
@@ -697,8 +685,6 @@
     "Spaces you know that contain this room": "Priestory, o ktorých viete, že obsahujú túto miestnosť",
     "Spaces you know that contain this space": "Priestory, o ktorých viete, že obsahujú tento priestor",
     "User Directory": "Adresár používateľov",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Pripomíname: Váš prehliadač nie je podporovaný, takže vaše skúsenosti môžu byť nepredvídateľné.",
-    "To leave the beta, visit your settings.": "Ak chcete opustiť beta verziu, navštívte svoje nastavenia.",
     "Sections to show": "Sekcie na zobrazenie",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
@@ -749,7 +735,6 @@
         "one": "1 účastník",
         "other": "%(count)s účastníkov"
     },
-    "%(featureName)s Beta feedback": "%(featureName)s Beta spätná väzba",
     "Live location ended": "Ukončenie polohy v reálnom čase",
     "Live until %(expiryTime)s": "Poloha v reálnom čase do %(expiryTime)s",
     "Live location enabled": "Poloha v reálnom čase zapnutá",
@@ -1165,7 +1150,9 @@
         "beta_section": "Pripravované funkcie",
         "beta_description": "Čo vás čaká v aplikácii %(brand)s? Laboratóriá sú najlepším spôsobom, ako získať funkcie v predstihu, otestovať nové funkcie a pomôcť ich vytvoriť ešte pred ich skutočným spustením.",
         "experimental_section": "Predbežné ukážky",
-        "experimental_description": "Chcete experimentovať? Vyskúšajte naše najnovšie nápady vo vývojovom štádiu. Tieto funkcie nie sú dokončené; môžu byť nestabilné, môžu sa zmeniť alebo môžu byť úplne zrušené. <a>Zistiť viac</a>."
+        "experimental_description": "Chcete experimentovať? Vyskúšajte naše najnovšie nápady vo vývojovom štádiu. Tieto funkcie nie sú dokončené; môžu byť nestabilné, môžu sa zmeniť alebo môžu byť úplne zrušené. <a>Zistiť viac</a>.",
+        "beta_feedback_title": "%(featureName)s Beta spätná väzba",
+        "beta_feedback_leave_button": "Ak chcete opustiť beta verziu, navštívte svoje nastavenia."
     },
     "keyboard": {
         "home": "Domov",
@@ -1324,7 +1311,15 @@
         "uploading_logs": "Nahrávanie záznamov",
         "downloading_logs": "Sťahovanie záznamov",
         "create_new_issue": "Prosím <newIssueLink>vytvorte nový problém</newIssueLink> na GitHube, aby sme mohli túto chybu preskúmať.",
-        "waiting_for_server": "Čakanie na odpoveď zo servera"
+        "waiting_for_server": "Čakanie na odpoveď zo servera",
+        "error_empty": "Povedzte nám prosím, čo sa pokazilo, alebo radšej vytvorte príspevok v službe GitHub, v ktorom problém popíšete.",
+        "preparing_logs": "príprava odoslania záznamov",
+        "logs_sent": "Záznamy boli odoslané",
+        "thank_you": "Ďakujeme!",
+        "failed_send_logs": "Nepodarilo sa odoslať záznamy: ",
+        "preparing_download": "Príprava na prevzatie záznamov",
+        "unsupported_browser": "Pripomíname: Váš prehliadač nie je podporovaný, takže vaše skúsenosti môžu byť nepredvídateľné.",
+        "textarea_label": "Poznámky"
     },
     "time": {
         "hours_minutes_seconds_left": "ostáva %(hours)sh %(minutes)sm %(seconds)ss",
@@ -4044,7 +4039,11 @@
         "error_version_unsupported_space": "Používateľov domovský server nepodporuje verziu priestoru.",
         "error_version_unsupported_room": "Používateľov domovský server nepodporuje verziu miestnosti.",
         "error_unknown": "Neznáma chyba servera",
-        "to_space": "Pozvať do priestoru %(spaceName)s"
+        "to_space": "Pozvať do priestoru %(spaceName)s",
+        "unable_find_profiles_description_default": "Nie je možné nájsť používateľský profil pre Matrix ID zobrazené nižšie. Chcete ich napriek tomu pozvať?",
+        "unable_find_profiles_title": "Nasledujúci používatelia pravdepodobne neexistujú",
+        "unable_find_profiles_invite_never_warn_label_default": "Napriek tomu pozvať a viac neupozorňovať",
+        "unable_find_profiles_invite_label_default": "Napriek tomu pozvať"
     },
     "scalar": {
         "error_create": "Nie je možné vytvoriť widget.",
@@ -4355,5 +4354,6 @@
             "network_dropdown_selected_label_instance": "Zobraziť: %(instance)s miestnosti (%(server)s)",
             "network_dropdown_selected_label": "Zobraziť: Matrix miestnosti"
         }
-    }
+    },
+    "dialog_close_label": "Zavrieť dialógové okno"
 }

@@ -1123,7 +1123,11 @@
         "error_version_unsupported_space": "The user's homeserver does not support the version of the space.",
         "error_version_unsupported_room": "The user's homeserver does not support the version of the room.",
         "error_unknown": "Unknown server error",
-        "to_space": "Invite to %(spaceName)s"
+        "to_space": "Invite to %(spaceName)s",
+        "unable_find_profiles_description_default": "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?",
+        "unable_find_profiles_title": "The following users may not exist",
+        "unable_find_profiles_invite_never_warn_label_default": "Invite anyway and never warn me again",
+        "unable_find_profiles_invite_label_default": "Invite anyway"
     },
     "widget": {
         "error_need_to_be_logged_in": "You need to be logged in.",
@@ -2508,7 +2512,9 @@
         "leave_beta_reload": "Leaving the beta will reload %(brand)s.",
         "join_beta_reload": "Joining the beta will reload %(brand)s.",
         "leave_beta": "Leave the beta",
-        "join_beta": "Join the beta"
+        "join_beta": "Join the beta",
+        "beta_feedback_title": "%(featureName)s Beta feedback",
+        "beta_feedback_leave_button": "To leave the beta, visit your settings."
     },
     "room_settings": {
         "security": {
@@ -2846,7 +2852,15 @@
         "download_logs": "Download logs",
         "github_issue": "GitHub issue",
         "additional_context": "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.",
-        "send_logs": "Send logs"
+        "send_logs": "Send logs",
+        "error_empty": "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.",
+        "preparing_logs": "Preparing to send logs",
+        "logs_sent": "Logs sent",
+        "thank_you": "Thank you!",
+        "failed_send_logs": "Failed to send logs: ",
+        "preparing_download": "Preparing to download logs",
+        "unsupported_browser": "Reminder: Your browser is unsupported, so your experience may be unpredictable.",
+        "textarea_label": "Notes"
     },
     "labs_mjolnir": {
         "room_name": "My Ban List",
@@ -3519,21 +3533,6 @@
             "network_dropdown_selected_label": "Show: Matrix rooms"
         }
     },
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?",
-    "The following users may not exist": "The following users may not exist",
-    "Invite anyway and never warn me again": "Invite anyway and never warn me again",
-    "Invite anyway": "Invite anyway",
-    "Close dialog": "Close dialog",
-    "%(featureName)s Beta feedback": "%(featureName)s Beta feedback",
-    "To leave the beta, visit your settings.": "To leave the beta, visit your settings.",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.",
-    "Preparing to send logs": "Preparing to send logs",
-    "Logs sent": "Logs sent",
-    "Thank you!": "Thank you!",
-    "Failed to send logs: ": "Failed to send logs: ",
-    "Preparing to download logs": "Preparing to download logs",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Reminder: Your browser is unsupported, so your experience may be unpredictable.",
-    "Notes": "Notes",
     "No recent messages by %(user)s found": "No recent messages by %(user)s found",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Try scrolling up in the timeline to see if there are any earlier ones.",
     "Remove recent messages by %(user)s": "Remove recent messages by %(user)s",
@@ -3983,5 +3982,6 @@
         "switch_theme_dark": "Switch to dark mode"
     },
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab."
+    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab.",
+    "dialog_close_label": "Close dialog"
 }

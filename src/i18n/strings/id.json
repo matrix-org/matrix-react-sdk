@@ -39,7 +39,6 @@
     "Send": "Kirim",
     "Thursday": "Kamis",
     "Yesterday": "Kemarin",
-    "Thank you!": "Terima kasih!",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Moderator": "Moderator",
     "Restricted": "Dibatasi",
@@ -311,7 +310,6 @@
     "Folder": "Map",
     "Scissors": "Gunting",
     "Ok": "Ok",
-    "Notes": "Nota",
     "edited": "diedit",
     "Headphones": "Headphone",
     "Anchor": "Jangkar",
@@ -381,10 +379,8 @@
     "Share User": "Bagikan Pengguna",
     "Share Room": "Bagikan Ruangan",
     "Incompatible Database": "Databasis Tidak Kompatibel",
-    "Invite anyway": "Undang saja",
     "Send Logs": "Kirim Catatan",
     "Filter results": "Saring hasil",
-    "Logs sent": "Catatan terkirim",
     "Delete Widget": "Hapus Widget",
     "(~%(count)s results)": {
         "one": "(~%(count)s hasil)",
@@ -461,16 +457,6 @@
     "Reason (optional)": "Alasan (opsional)",
     "Unable to load commit detail: %(msg)s": "Tidak dapat memuat detail komit: %(msg)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Sebelum mengirimkan catatan, Anda harus <a>membuat sebuah issue GitHub</a> untuk menjelaskan masalah Anda.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Ingat: Browser Anda tidak didukung, jadi pengalaman Anda mungkin tidak dapat diprediksi.",
-    "Preparing to download logs": "Mempersiapkan untuk mengunduh catatan",
-    "Failed to send logs: ": "Gagal untuk mengirimkan catatan: ",
-    "Preparing to send logs": "Mempersiapkan untuk mengirimkan catatan",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Mohon beri tahu kami apa saja yang salah atau, lebih baik, buat sebuah issue GitHub yang menjelaskan masalahnya.",
-    "To leave the beta, visit your settings.": "Untuk keluar dari beta, pergi ke pengaturan Anda.",
-    "Close dialog": "Tutup dialog",
-    "Invite anyway and never warn me again": "Undang saja dan jangan peringatkan saya lagi",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Tidak dapat menemukan profil untuk ID Matrix yang dicantumkan di bawah — apakah Anda ingin mengundang mereka saja?",
-    "The following users may not exist": "Pengguna berikut ini mungkin tidak ada",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gunakan sebuah server identitas untuk mengundang melalui email. Kelola di <settings>Pengaturan</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gunakan sebuah server identitas untuk mengundang melalui email. <default>Gunakan bawaan (%(defaultIdentityServerName)s)</default> atau kelola di <settings>Pengaturan</settings>.",
     "e.g. my-room": "mis. ruangan-saya",
@@ -749,7 +735,6 @@
         "one": "1 perserta",
         "other": "%(count)s perserta"
     },
-    "%(featureName)s Beta feedback": "Masukan %(featureName)s Beta",
     "Live location ended": "Lokasi langsung berakhir",
     "Live location enabled": "Lokasi langsung diaktifkan",
     "Live location error": "Kesalahan lokasi langsung",
@@ -1166,7 +1151,9 @@
         "beta_section": "Fitur yang akan datang",
         "beta_description": "Apa berikutnya untuk %(brand)s? Fitur Uji Coba merupakan cara yang terbaik untuk mendapatkan hal-hal baru lebih awal, mencoba fitur baru dan membantu memperbaikinya sebelum diluncurkan.",
         "experimental_section": "Pratinjau awal",
-        "experimental_description": "Merasa eksperimental? Coba ide terkini kami dalam pengembangan. Fitur ini belum selesai; mereka mungkin tidak stabil, mungkin berubah, atau dihapus sama sekali. <a>Pelajari lebih lanjut</a>."
+        "experimental_description": "Merasa eksperimental? Coba ide terkini kami dalam pengembangan. Fitur ini belum selesai; mereka mungkin tidak stabil, mungkin berubah, atau dihapus sama sekali. <a>Pelajari lebih lanjut</a>.",
+        "beta_feedback_title": "Masukan %(featureName)s Beta",
+        "beta_feedback_leave_button": "Untuk keluar dari beta, pergi ke pengaturan Anda."
     },
     "keyboard": {
         "home": "Beranda",
@@ -1325,7 +1312,15 @@
         "uploading_logs": "Mengunggah catatan",
         "downloading_logs": "Mengunduh catatan",
         "create_new_issue": "Mohon <newIssueLink>buat sebuah issue baru</newIssueLink> di GitHub supaya kami dapat memeriksa kutu ini.",
-        "waiting_for_server": "Menunggu respon dari server"
+        "waiting_for_server": "Menunggu respon dari server",
+        "error_empty": "Mohon beri tahu kami apa saja yang salah atau, lebih baik, buat sebuah issue GitHub yang menjelaskan masalahnya.",
+        "preparing_logs": "Mempersiapkan untuk mengirimkan catatan",
+        "logs_sent": "Catatan terkirim",
+        "thank_you": "Terima kasih!",
+        "failed_send_logs": "Gagal untuk mengirimkan catatan: ",
+        "preparing_download": "Mempersiapkan untuk mengunduh catatan",
+        "unsupported_browser": "Ingat: Browser Anda tidak didukung, jadi pengalaman Anda mungkin tidak dapat diprediksi.",
+        "textarea_label": "Nota"
     },
     "time": {
         "hours_minutes_seconds_left": "Sisa %(hours)sj %(minutes)sm %(seconds)sd",
@@ -4051,7 +4046,11 @@
         "error_version_unsupported_space": "Homeserver pengguna tidak mendukung versi space.",
         "error_version_unsupported_room": "Homeserver penggunanya tidak mendukung versi ruangannya.",
         "error_unknown": "Kesalahan server yang tidak diketahui",
-        "to_space": "Undang ke %(spaceName)s"
+        "to_space": "Undang ke %(spaceName)s",
+        "unable_find_profiles_description_default": "Tidak dapat menemukan profil untuk ID Matrix yang dicantumkan di bawah — apakah Anda ingin mengundang mereka saja?",
+        "unable_find_profiles_title": "Pengguna berikut ini mungkin tidak ada",
+        "unable_find_profiles_invite_never_warn_label_default": "Undang saja dan jangan peringatkan saya lagi",
+        "unable_find_profiles_invite_label_default": "Undang saja"
     },
     "scalar": {
         "error_create": "Tidak dapat membuat widget.",
@@ -4362,5 +4361,6 @@
             "network_dropdown_selected_label_instance": "Tampilkan: %(instance)s ruangan (%(server)s)",
             "network_dropdown_selected_label": "Tampilkan: ruangan Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Tutup dialog"
 }

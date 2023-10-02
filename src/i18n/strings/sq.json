@@ -30,20 +30,16 @@
     "Today": "Sot",
     "Friday": "E premte",
     "Changelog": "Regjistër ndryshimesh",
-    "Failed to send logs: ": "S’u arrit të dërgoheshin regjistra: ",
     "Unavailable": "Jo i passhëm",
     "Filter results": "Filtroni përfundimet",
     "Tuesday": "E martë",
-    "Preparing to send logs": "Po përgatitet për dërgim regjistrash",
     "Unnamed room": "Dhomë e paemërtuar",
     "Saturday": "E shtunë",
     "Monday": "E hënë",
     "Wednesday": "E mërkurë",
     "unknown error code": "kod gabimi të panjohur",
-    "Thank you!": "Faleminderit!",
     "You cannot delete this message. (%(code)s)": "S’mund ta fshini këtë mesazh. (%(code)s)",
     "Thursday": "E enjte",
-    "Logs sent": "Regjistrat u dërguan",
     "Yesterday": "Dje",
     "PM": "PM",
     "AM": "AM",
@@ -107,10 +103,6 @@
     "No backup found!": "S’u gjet kopjeruajtje!",
     "Failed to decrypt %(failedCount)s sessions!": "S’u arrit të shfshehtëzohet sesioni %(failedCount)s!",
     "Unable to load commit detail: %(msg)s": "S’arrihet të ngarkohen hollësi depozitimi: %(msg)s",
-    "The following users may not exist": "Përdoruesit vijues mund të mos ekzistojnë",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "S’arrihet të gjenden profile për ID-të Matrix të treguara më poshtë - do të donit të ftohet, sido qoftë?",
-    "Invite anyway and never warn me again": "Ftoji sido që të jetë dhe mos më sinjalizo më kurrë",
-    "Invite anyway": "Ftoji sido qoftë",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifikojeni këtë përdorues që t’i vihet shenjë si i besuar. Përdoruesit e besuar ju më tepër siguri kur përdorni mesazhe të fshehtëzuar skaj-më-skaj.",
     "Incoming Verification Request": "Kërkesë Verifikimi e Ardhur",
     "Email (optional)": "Email (në daçi)",
@@ -183,7 +175,6 @@
     "Scissors": "Gërshërë",
     "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
     "edited": "e përpunuar",
-    "Notes": "Shënime",
     "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
     "Missing session data": "Mungojnë të dhëna sesioni",
     "Upload files": "Ngarko kartela",
@@ -208,7 +199,6 @@
     "Your homeserver doesn't seem to support this feature.": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori.",
     "Clear all data": "Spastro krejt të dhënat",
     "Deactivate account": "Çaktivizoje llogarinë",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Ju lutemi, na tregoni ç’shkoi keq ose, akoma më mirë, krijoni në GitHub një çështje që përshkruan problemin.",
     "Removing…": "Po hiqet…",
     "Share User": "Ndani Përdorues",
     "Command Help": "Ndihmë Urdhri",
@@ -226,7 +216,6 @@
         "one": "Hiq 1 mesazh"
     },
     "e.g. my-room": "p.sh., dhoma-ime",
-    "Close dialog": "Mbylle dialogun",
     "%(name)s accepted": "%(name)s pranoi",
     "%(name)s cancelled": "%(name)s anuloi",
     "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
@@ -292,7 +281,6 @@
     "Verify your other session using one of the options below.": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
     "Lock": "Kyçje",
     "Submit logs": "Parashtro regjistra",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Kujtesë: Shfletuesi juaj është i pambuluar, ndaj punimi juaj mund të jetë i paparashikueshëm.",
     "Unable to upload": "S’arrihet të ngarkohet",
     "Restoring keys from backup": "Po rikthehen kyçesh nga kopjeruajtje",
     "%(completed)s of %(total)s keys restored": "U rikthyen %(completed)s nga %(total)s kyçe",
@@ -327,7 +315,6 @@
     "A connection error occurred while trying to contact the server.": "Ndodhi një gabim teksa provohej lidhja me shërbyesin.",
     "The server is not configured to indicate what the problem is (CORS).": "Shërbyesi s’është formësuar të tregojë se cili është problemi (CORS).",
     "Recent changes that have not yet been received": "Ndryshime tani së fundi që s’janë marrë ende",
-    "Preparing to download logs": "Po bëhet gati për shkarkim regjistrash",
     "Not encrypted": "Jo e fshehtëzuar",
     "Backup version:": "Version kopjeruajtjeje:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij ose emrin e tij të përdoruesit (bie fjala, <userId/>).",
@@ -649,7 +636,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
     "Sending": "Po dërgohet",
     "You may contact me if you have any follow up questions": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme",
-    "To leave the beta, visit your settings.": "Që të braktisni beta-n, vizitoni rregullimet tuaja.",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -748,7 +734,6 @@
         "one": "1 pjesëmarrës",
         "other": "%(count)s pjesëmarrës"
     },
-    "%(featureName)s Beta feedback": "Përshtypje për %(featureName)s Beta",
     "Unread email icon": "Ikonë email-esh të palexuar",
     "An error occurred whilst sharing your live location, please try again": "Ndodhi një gabim teksa tregohej vendndodhja juaj aty për aty, ju lutemi, riprovoni",
     "Live location enabled": "Vendndodhje aty për aty e aktivizuar",
@@ -1147,7 +1132,9 @@
         "beta_section": "Veçori të ardhshme",
         "beta_description": "Ç’vjen më pas për %(brand)s? Labs janë mënyra më e mirë për t’i pasur gjërat që herët, për të testuar veçori të reja dhe për të ndihmuar t’u jepet formë para se të hidhen faktikisht në qarkullim.",
         "experimental_section": "Paraparje të hershme",
-        "experimental_description": "Ndiheni eksperimentues? Provoni idetë tona më të reja në zhvillim. Këto veçori s’janë të përfunduara; mund të jenë të paqëndrueshme, mund të ndryshojnë, ose mund të braktisen faqe. <a>Mësoni më tepër</a>."
+        "experimental_description": "Ndiheni eksperimentues? Provoni idetë tona më të reja në zhvillim. Këto veçori s’janë të përfunduara; mund të jenë të paqëndrueshme, mund të ndryshojnë, ose mund të braktisen faqe. <a>Mësoni më tepër</a>.",
+        "beta_feedback_title": "Përshtypje për %(featureName)s Beta",
+        "beta_feedback_leave_button": "Që të braktisni beta-n, vizitoni rregullimet tuaja."
     },
     "keyboard": {
         "home": "Kreu",
@@ -1306,7 +1293,15 @@
         "uploading_logs": "Po ngarkohen regjistra",
         "downloading_logs": "Po shkarkohen regjistra",
         "create_new_issue": "Ju lutemi, <newIssueLink>krijoni një çështje të re</newIssueLink> në GitHub, që të mund ta hetojmë këtë të metë.",
-        "waiting_for_server": "Po pritet për përgjigje nga shërbyesi"
+        "waiting_for_server": "Po pritet për përgjigje nga shërbyesi",
+        "error_empty": "Ju lutemi, na tregoni ç’shkoi keq ose, akoma më mirë, krijoni në GitHub një çështje që përshkruan problemin.",
+        "preparing_logs": "Po përgatitet për dërgim regjistrash",
+        "logs_sent": "Regjistrat u dërguan",
+        "thank_you": "Faleminderit!",
+        "failed_send_logs": "S’u arrit të dërgoheshin regjistra: ",
+        "preparing_download": "Po bëhet gati për shkarkim regjistrash",
+        "unsupported_browser": "Kujtesë: Shfletuesi juaj është i pambuluar, ndaj punimi juaj mund të jetë i paparashikueshëm.",
+        "textarea_label": "Shënime"
     },
     "time": {
         "hours_minutes_seconds_left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3938,7 +3933,11 @@
         "error_version_unsupported_space": "Shërbyesi Home i përdoruesit s’e mbulon versionin e hapësirës.",
         "error_version_unsupported_room": "Shërbyesi Home i përdoruesit s’e mbulon versionin e dhomës.",
         "error_unknown": "Gabim i panjohur shërbyesi",
-        "to_space": "Ftojeni te %(spaceName)s"
+        "to_space": "Ftojeni te %(spaceName)s",
+        "unable_find_profiles_description_default": "S’arrihet të gjenden profile për ID-të Matrix të treguara më poshtë - do të donit të ftohet, sido qoftë?",
+        "unable_find_profiles_title": "Përdoruesit vijues mund të mos ekzistojnë",
+        "unable_find_profiles_invite_never_warn_label_default": "Ftoji sido që të jetë dhe mos më sinjalizo më kurrë",
+        "unable_find_profiles_invite_label_default": "Ftoji sido qoftë"
     },
     "scalar": {
         "error_create": "S’arrihet të krijohet widget-i.",
@@ -4248,5 +4247,6 @@
             "network_dropdown_selected_label_instance": "Shfaq: Dhoma %(instance)s (%(server)s)",
             "network_dropdown_selected_label": "Shfaq: Dhoma Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Mbylle dialogun"
 }

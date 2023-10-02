@@ -14,7 +14,6 @@
     "Saturday": "சனி",
     "Today": "இன்று",
     "Yesterday": "நேற்று",
-    "Thank you!": "உங்களுக்கு நன்றி",
     "Server may be unavailable, overloaded, or you hit a bug.": "",
     "Sun": "ஞாயிறு",
     "Mon": "திங்கள்",
@@ -75,7 +74,8 @@
         "send_logs": "பதிவுகளை அனுப்பு",
         "collecting_information": "செயலியின் பதிப்பு தகவல்கள் சேகரிக்கப்படுகிறது",
         "collecting_logs": "பதிவுகள் சேகரிக்கப்படுகிறது",
-        "waiting_for_server": "வழங்கியின் பதிலுக்காக காத்திருக்கிறது"
+        "waiting_for_server": "வழங்கியின் பதிலுக்காக காத்திருக்கிறது",
+        "thank_you": "உங்களுக்கு நன்றி"
     },
     "devtools": {
         "event_type": "நிகழ்வு வகை",

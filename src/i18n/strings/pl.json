@@ -56,19 +56,15 @@
     "Today": "Dzisiaj",
     "Friday": "Piątek",
     "Changelog": "Dziennik zmian",
-    "Failed to send logs: ": "Nie udało się wysłać dzienników: ",
     "Unavailable": "Niedostępny",
     "Filter results": "Filtruj wyniki",
     "Tuesday": "Wtorek",
-    "Preparing to send logs": "Przygotowuję do wysłania dzienników",
     "Saturday": "Sobota",
     "Monday": "Poniedziałek",
     "Wednesday": "Środa",
     "You cannot delete this message. (%(code)s)": "Nie możesz usunąć tej wiadomości. (%(code)s)",
     "Thursday": "Czwartek",
-    "Logs sent": "Wysłano dzienniki",
     "Yesterday": "Wczoraj",
-    "Thank you!": "Dziękujemy!",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sg",
@@ -177,8 +173,6 @@
         "one": "%(count)s sesja"
     },
     "Integrations are disabled": "Integracje są wyłączone",
-    "Invite anyway": "Zaproś mimo to",
-    "Notes": "Notatki",
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
@@ -198,9 +192,6 @@
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Nie udało się zaprosić tych użytkowników. Proszę sprawdzić zaproszonych użytkowników i spróbować ponownie.",
     "Something went wrong trying to invite the users.": "Coś poszło nie tak podczas zapraszania użytkowników.",
     "Invite by email": "Zaproś przez e-mail",
-    "Invite anyway and never warn me again": "Zaproś mimo to i nie ostrzegaj ponownie",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nie znaleziono profilów dla identyfikatorów Matrix wymienionych poniżej - czy chcesz rozpocząć wiadomość prywatną mimo to?",
-    "The following users may not exist": "Wymienieni użytkownicy mogą nie istnieć",
     "Sign in with SSO": "Zaloguj się z SSO",
     "Start a conversation with someone using their name or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy lub nazwy użytkownika (np. <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Rozpocznij konwersację z innymi korzystając z ich nazwy, adresu e-mail lub nazwy użytkownika (np. <userId/>).",
@@ -343,7 +334,6 @@
     "Jordan": "Jordania",
     "Jersey": "Jersey",
     "Upload Error": "Błąd wysyłania",
-    "Close dialog": "Zamknij okno dialogowe",
     "Removing…": "Usuwanie…",
     "Incompatible Database": "Niekompatybilna baza danych",
     "Zimbabwe": "Zimbabwe",
@@ -690,17 +680,12 @@
         "other": "Zamierzasz usunąć %(count)s wiadomości przez %(user)s. To usunie je permanentnie dla wszystkich w konwersacji. Czy chcesz kontynuować?"
     },
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Spróbuj przewinąć się w górę na osi czasu, aby sprawdzić, czy nie ma wcześniejszych.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Przypomnienie: Twoja przeglądarka nie jest wspierana, więc Twoje doświadczenie może być nieprzewidywalne.",
-    "Preparing to download logs": "Przygotowuję do pobrania dzienników",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Powiedz nam, co poszło nie tak, lub nawet lepiej - utwórz zgłoszenie na platformie GitHub, które opisuje problem.",
-    "To leave the beta, visit your settings.": "Aby wyjść z bety, odwiedź swoje ustawienia.",
     "Desktop app logo": "Logo aplikacji Desktop",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
         "other": "%(count)s osób, które znasz, już dołączyło"
     },
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
-    "%(featureName)s Beta feedback": "%(featureName)s opinia Beta",
     "Cancelled signature upload": "Przesyłanie sygnatury zostało anulowane",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Zaktualizujesz ten pokój z wersji <oldVersion /> do <newVersion />.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Aktualizacja spowoduje utworzenie pokoju w nowej wersji</b>. Wszystkie bieżące wiadomości zostaną zarchiwizowane w tym pokoju.",
@@ -1164,7 +1149,9 @@
         "beta_section": "Nadchodzące zmiany",
         "beta_description": "Co następne dla %(brand)s? Laboratoria to najlepsze miejsce do przetestowania nowych funkcji i możliwość pomocy w testowaniu zanim dotrą one do szerszego grona użytkowników.",
         "experimental_section": "Wczesny podgląd",
-        "experimental_description": "Chcesz poeksperymentować? Wypróbuj nasze najnowsze pomysły w trakcie rozwoju. Przedstawione funkcje nie zostały w pełni ukończone; mogą być niestabilne; mogą się zmienić lub zostać kompletnie porzucone. <a>Dowiedz się więcej</a>."
+        "experimental_description": "Chcesz poeksperymentować? Wypróbuj nasze najnowsze pomysły w trakcie rozwoju. Przedstawione funkcje nie zostały w pełni ukończone; mogą być niestabilne; mogą się zmienić lub zostać kompletnie porzucone. <a>Dowiedz się więcej</a>.",
+        "beta_feedback_title": "%(featureName)s opinia Beta",
+        "beta_feedback_leave_button": "Aby wyjść z bety, odwiedź swoje ustawienia."
     },
     "keyboard": {
         "home": "Strona główna",
@@ -1323,7 +1310,15 @@
         "uploading_logs": "Wysyłanie logów",
         "downloading_logs": "Pobieranie logów",
         "create_new_issue": "<newIssueLink>Utwórz nowe zgłoszenie</newIssueLink> na GitHubie, abyśmy mogli zbadać ten błąd.",
-        "waiting_for_server": "Czekam na odpowiedź serwera"
+        "waiting_for_server": "Czekam na odpowiedź serwera",
+        "error_empty": "Powiedz nam, co poszło nie tak, lub nawet lepiej - utwórz zgłoszenie na platformie GitHub, które opisuje problem.",
+        "preparing_logs": "Przygotowuję do wysłania dzienników",
+        "logs_sent": "Wysłano dzienniki",
+        "thank_you": "Dziękujemy!",
+        "failed_send_logs": "Nie udało się wysłać dzienników: ",
+        "preparing_download": "Przygotowuję do pobrania dzienników",
+        "unsupported_browser": "Przypomnienie: Twoja przeglądarka nie jest wspierana, więc Twoje doświadczenie może być nieprzewidywalne.",
+        "textarea_label": "Notatki"
     },
     "time": {
         "hours_minutes_seconds_left": "pozostało %(hours)s godz. %(minutes)s min. %(seconds)ss",
@@ -4026,7 +4021,11 @@
         "error_version_unsupported_space": "Serwer domowy użytkownika nie wspiera tej wersji przestrzeni.",
         "error_version_unsupported_room": "Serwer domowy użytkownika nie wspiera tej wersji pokoju.",
         "error_unknown": "Nieznany błąd serwera",
-        "to_space": "Zaproś do %(spaceName)s"
+        "to_space": "Zaproś do %(spaceName)s",
+        "unable_find_profiles_description_default": "Nie znaleziono profilów dla identyfikatorów Matrix wymienionych poniżej - czy chcesz rozpocząć wiadomość prywatną mimo to?",
+        "unable_find_profiles_title": "Wymienieni użytkownicy mogą nie istnieć",
+        "unable_find_profiles_invite_never_warn_label_default": "Zaproś mimo to i nie ostrzegaj ponownie",
+        "unable_find_profiles_invite_label_default": "Zaproś mimo to"
     },
     "scalar": {
         "error_create": "Nie można utworzyć widżetu.",
@@ -4337,5 +4336,6 @@
             "network_dropdown_selected_label_instance": "Pokaż: Pokoje %(instance)s (%(server)s)",
             "network_dropdown_selected_label": "Pokaż: Pokoje Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Zamknij okno dialogowe"
 }

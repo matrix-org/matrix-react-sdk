@@ -64,14 +64,6 @@
     "Restricted": "Sınırlı",
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
-    "Invite anyway and never warn me again": "Yinede davet et ve asla beni uyarma",
-    "Invite anyway": "Yinede davet et",
-    "Close dialog": "Kutucuğu kapat",
-    "Preparing to send logs": "Loglar gönderilmek için hazırlanıyor",
-    "Logs sent": "Loglar gönderiliyor",
-    "Thank you!": "Teşekkürler!",
-    "Failed to send logs: ": "Logların gönderilmesi başarısız: ",
-    "Notes": "Notlar",
     "Removing…": "Siliniyor…",
     "Clear all data": "Bütün verileri sil",
     "Incompatible Database": "Uyumsuz Veritabanı",
@@ -193,9 +185,6 @@
     "Deactivate account": "Hesabı pasifleştir",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
-    "The following users may not exist": "Belirtilen kullanıcılar mevcut olmayabilir",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Altta belirtilen Matrix ID li profiller bulunamıyor - Onları yinede davet etmek ister misiniz?",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Lütfen neyin yanlış gittiğini bize bildirin ya da en güzeli problemi tanımlayan bir GitHub talebi oluşturun.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
     "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
@@ -513,8 +502,6 @@
     "Transfer": "Aktar",
     "Hold": "Beklet",
     "Resume": "Devam et",
-    "Preparing to download logs": "Loglar indirilmeye hazırlanıyor",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Hatırlatma:Tarayıcınız desteklenmiyor, deneyiminiz öngörülemiyor.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
     "Remove recent messages by %(user)s": "%(user)s kullanıcısından en son iletileri kaldır",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Daha önceden kalma iletilerin var olup olmadığını kontrol etmek için zaman çizelgesinde yukarı doğru kaydırın.",
@@ -787,7 +774,15 @@
         "uploading_logs": "Günlükler yükleniyor",
         "downloading_logs": "Günlükler indiriliyor",
         "create_new_issue": "Lütfen GitHub’da <newIssueLink>Yeni bir talep</newIssueLink> oluşturun ki bu hatayı inceleyebilelim.",
-        "waiting_for_server": "Sunucudan yanıt bekleniyor"
+        "waiting_for_server": "Sunucudan yanıt bekleniyor",
+        "error_empty": "Lütfen neyin yanlış gittiğini bize bildirin ya da en güzeli problemi tanımlayan bir GitHub talebi oluşturun.",
+        "preparing_logs": "Loglar gönderilmek için hazırlanıyor",
+        "logs_sent": "Loglar gönderiliyor",
+        "thank_you": "Teşekkürler!",
+        "failed_send_logs": "Logların gönderilmesi başarısız: ",
+        "preparing_download": "Loglar indirilmeye hazırlanıyor",
+        "unsupported_browser": "Hatırlatma:Tarayıcınız desteklenmiyor, deneyiminiz öngörülemiyor.",
+        "textarea_label": "Notlar"
     },
     "time": {
         "seconds_left": "%(seconds)s saniye kaldı",
@@ -2143,7 +2138,11 @@
         "error_permissions_room": "Bu odaya kişi davet etme izniniz yok.",
         "error_bad_state": "Kullanıcının davet edilebilmesi için öncesinde yasağının kaldırılması gereklidir.",
         "error_version_unsupported_room": "Kullanıcının ana sunucusu odanın sürümünü desteklemiyor.",
-        "error_unknown": "Bilinmeyen sunucu hatası"
+        "error_unknown": "Bilinmeyen sunucu hatası",
+        "unable_find_profiles_description_default": "Altta belirtilen Matrix ID li profiller bulunamıyor - Onları yinede davet etmek ister misiniz?",
+        "unable_find_profiles_title": "Belirtilen kullanıcılar mevcut olmayabilir",
+        "unable_find_profiles_invite_never_warn_label_default": "Yinede davet et ve asla beni uyarma",
+        "unable_find_profiles_invite_label_default": "Yinede davet et"
     },
     "scalar": {
         "error_create": "Görsel bileşen oluşturulamıyor.",
@@ -2330,5 +2329,6 @@
             "network_dropdown_add_dialog_description": "Keşfetmek istediğiniz sunucunun adını girin.",
             "network_dropdown_add_dialog_placeholder": "Sunucu adı"
         }
-    }
+    },
+    "dialog_close_label": "Kutucuğu kapat"
 }

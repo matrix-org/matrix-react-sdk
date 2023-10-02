@@ -51,7 +51,6 @@
     "Send": "Skicka",
     "Thursday": "torsdag",
     "Yesterday": "igår",
-    "Thank you!": "Tack!",
     "Restricted": "Begränsad",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -61,9 +60,6 @@
         "other": "(~%(count)s resultat)",
         "one": "(~%(count)s resultat)"
     },
-    "Preparing to send logs": "Förbereder sändning av loggar",
-    "Logs sent": "Loggar skickade",
-    "Failed to send logs: ": "Misslyckades att skicka loggar: ",
     "Verification Pending": "Avvaktar verifiering",
     "This will allow you to reset your password and receive notifications.": "Det här låter dig återställa lösenordet och ta emot aviseringar.",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -158,15 +154,10 @@
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
     "Email (optional)": "E-post (valfritt)",
-    "The following users may not exist": "Följande användare kanske inte existerar",
-    "Invite anyway and never warn me again": "Bjud in ändå och varna mig aldrig igen",
-    "Invite anyway": "Bjud in ändå",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterade meddelanden är säkrade med totalsträckskryptering. Bara du och mottagaren/na har nycklarna för att läsa dessa meddelanden.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifiera denna användare för att markera den som betrodd. Att lita på användare ger en extra sinnesfrid när man använder totalsträckskrypterade meddelanden.",
     "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kunde inte hitta profiler för de Matrix-ID:n som listas nedan - vill du bjuda in dem ändå?",
-    "Notes": "Anteckningar",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Du har tidigare använt %(brand)s på %(host)s med fördröjd inladdning av medlemmar aktiverat. I den här versionen är fördröjd inladdning inaktiverat. Eftersom den lokala cachen inte är kompatibel mellan dessa två inställningar behöver %(brand)s synkronisera om ditt konto.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Om den andra versionen av %(brand)s fortfarande är öppen i en annan flik, stäng den eftersom användning av %(brand)s på samma värd med fördröjd inladdning både aktiverad och inaktiverad samtidigt kommer att orsaka problem.",
     "Incompatible local cache": "Inkompatibel lokal cache",
@@ -210,8 +201,6 @@
     "e.g. my-room": "t.ex. mitt-rum",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Använd en identitetsserver för att bjuda in via e-post. <default>Använd förval (%(defaultIdentityServerName)s)</default> eller hantera i <settings>inställningarna</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Använd en identitetsserver för att bjuda in via e-post. Hantera i <settings>inställningarna</settings>.",
-    "Close dialog": "Stäng dialogrutan",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Berätta vad som gick fel, eller skapa ännu hellre ett GitHub-ärende som beskriver problemet.",
     "Recent Conversations": "Senaste konversationerna",
     "Incoming Verification Request": "Inkommande verifieringsbegäran",
     "Integrations are disabled": "Integrationer är inaktiverade",
@@ -251,8 +240,6 @@
     },
     "%(name)s declined": "%(name)s avslog",
     "Submit logs": "Skicka loggar",
-    "Preparing to download logs": "Förbereder nedladdning av loggar",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Påminnelse: Din webbläsare stöds inte, så din upplevelse kan vara oförutsägbar.",
     "Unable to load commit detail: %(msg)s": "Kunde inte ladda commit-detalj: %(msg)s",
     "Removing…": "Tar bort…",
     "Destroy cross-signing keys?": "Förstöra korssigneringsnycklar?",
@@ -652,7 +639,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
     "Sending": "Skickar",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
-    "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
     "Search for rooms or people": "Sök efter rum eller personer",
@@ -758,7 +744,6 @@
         "one": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?",
         "other": "Du håller på att ta bort %(count)s meddelanden från %(user)s. Detta kommer ta bort dem permanent för alla i konversationen. Vill du verkligen fortsätta?"
     },
-    "%(featureName)s Beta feedback": "%(featureName)s Betaåterkoppling",
     "Hide my messages from new joiners": "Dölj mina meddelanden för nya som går med",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Kommer dina meddelanden fortfarande vara synliga för folk som har tagit emot dem, precis som e-post du har skickat tidigare. Vill du dölja dina skickade meddelanden från personer som går med i rum i framtiden?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Kommer du tas bort från din identitetsserver: dina vänner kommer inte längre kunna hitta dig med din e-postadress eller ditt telefonnummer",
@@ -1161,7 +1146,9 @@
         "beta_section": "Kommande funktioner",
         "beta_description": "Vad händer härnäst med %(brand)s? Experiment är det bästa sättet att få saker tidigt, pröva nya funktioner, och hjälpa till att forma dem innan de egentligen släpps.",
         "experimental_section": "Tidiga förhandstittar",
-        "experimental_description": "Känner du dig äventyrlig? Pröva våra senaste idéer under utveckling. Dessa funktioner är inte slutförda; de kan vara instabila, kan ändras, eller kan tas bort helt. <a>Läs mer</a>."
+        "experimental_description": "Känner du dig äventyrlig? Pröva våra senaste idéer under utveckling. Dessa funktioner är inte slutförda; de kan vara instabila, kan ändras, eller kan tas bort helt. <a>Läs mer</a>.",
+        "beta_feedback_title": "%(featureName)s Betaåterkoppling",
+        "beta_feedback_leave_button": "För att lämna betan, besök dina inställningar."
     },
     "keyboard": {
         "home": "Hem",
@@ -1320,7 +1307,15 @@
         "uploading_logs": "Laddar upp loggar",
         "downloading_logs": "Laddar ner loggar",
         "create_new_issue": "Vänligen <newIssueLink>skapa ett nytt ärende</newIssueLink> på GitHub så att vi kan undersöka denna bugg.",
-        "waiting_for_server": "Väntar på svar från servern"
+        "waiting_for_server": "Väntar på svar från servern",
+        "error_empty": "Berätta vad som gick fel, eller skapa ännu hellre ett GitHub-ärende som beskriver problemet.",
+        "preparing_logs": "Förbereder sändning av loggar",
+        "logs_sent": "Loggar skickade",
+        "thank_you": "Tack!",
+        "failed_send_logs": "Misslyckades att skicka loggar: ",
+        "preparing_download": "Förbereder nedladdning av loggar",
+        "unsupported_browser": "Påminnelse: Din webbläsare stöds inte, så din upplevelse kan vara oförutsägbar.",
+        "textarea_label": "Anteckningar"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss kvar",
@@ -3985,7 +3980,11 @@
         "error_version_unsupported_space": "Användarens hemserver stöder inte utrymmets version.",
         "error_version_unsupported_room": "Användarens hemserver stöder inte versionen av rummet.",
         "error_unknown": "Okänt serverfel",
-        "to_space": "Bjud in till %(spaceName)s"
+        "to_space": "Bjud in till %(spaceName)s",
+        "unable_find_profiles_description_default": "Kunde inte hitta profiler för de Matrix-ID:n som listas nedan - vill du bjuda in dem ändå?",
+        "unable_find_profiles_title": "Följande användare kanske inte existerar",
+        "unable_find_profiles_invite_never_warn_label_default": "Bjud in ändå och varna mig aldrig igen",
+        "unable_find_profiles_invite_label_default": "Bjud in ändå"
     },
     "scalar": {
         "error_create": "Kunde inte skapa widgeten.",
@@ -4295,5 +4294,6 @@
             "network_dropdown_selected_label_instance": "Visa: %(instance)s-rum (%(server)s)",
             "network_dropdown_selected_label": "Visa: Matrixrum"
         }
-    }
+    },
+    "dialog_close_label": "Stäng dialogrutan"
 }

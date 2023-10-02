@@ -14,12 +14,8 @@
     "Wednesday": "水曜日",
     "Tuesday": "火曜日",
     "Saturday": "土曜日",
-    "Failed to send logs: ": "ログの送信に失敗しました： ",
     "Unavailable": "使用できません",
     "Filter results": "結果を絞り込む",
-    "Preparing to send logs": "ログを送信する準備をしています",
-    "Logs sent": "ログが送信されました",
-    "Thank you!": "ありがとうございます！",
     "Sun": "日",
     "Mon": "月",
     "Tue": "火",
@@ -485,8 +481,6 @@
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "Add a space to a space you manage.": "新しいスペースを、あなたが管理するスペースに追加。",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
-    "Close dialog": "ダイアログを閉じる",
-    "Preparing to download logs": "ログのダウンロードを準備しています",
     "Reason (optional)": "理由（任意）",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
@@ -512,7 +506,6 @@
         "other": "%(count)s個の投票"
     },
     "Submit logs": "ログを提出",
-    "Notes": "メモ",
     "Spaces you know that contain this space": "このスペースを含む参加済のスペース",
     "Spaces you know that contain this room": "このルームを含む参加済のスペース",
     "%(count)s members": {
@@ -548,8 +541,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "名前かユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "名前、メールアドレス、ユーザー名（<userId/>の形式）で検索して、チャットを開始しましょう。",
     "Search for rooms or people": "ルームと連絡先を検索",
-    "Invite anyway": "招待",
-    "Invite anyway and never warn me again": "招待し、再び警告しない",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
     "Search Dialog": "検索ダイアログ",
     "Upload %(count)s other files": {
@@ -563,8 +554,6 @@
     "Signature upload success": "署名のアップロードに成功しました",
     "Cancelled signature upload": "署名のアップロードをキャンセルしました",
     "Open in OpenStreetMap": "OpenStreetMapで開く",
-    "The following users may not exist": "次のユーザーは存在しない可能性があります",
-    "To leave the beta, visit your settings.": "ベータ版の使用を終了するには、設定を開いてください。",
     "Message preview": "メッセージのプレビュー",
     "Sent": "送信済",
     "You don't have permission to do this": "これを行う権限がありません",
@@ -596,7 +585,6 @@
     "End Poll": "アンケートを終了",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "このユーザーを認証すると、信頼済として表示します。ユーザーを信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "以下のMatrix IDのプロフィールを発見できません。招待しますか？",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s個のセッションの復号化に失敗しました！",
     "No backup found!": "バックアップがありません！",
     "Unable to restore backup": "バックアップを復元できません",
@@ -707,7 +695,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
     "Live location error": "位置情報（ライブ）のエラー",
     "Live location enabled": "位置情報（ライブ）が有効です",
-    "%(featureName)s Beta feedback": "%(featureName)sのベータ版のフィードバック",
     "%(count)s participants": {
         "other": "%(count)s人の参加者",
         "one": "1人の参加者"
@@ -775,7 +762,6 @@
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "あなたの古いメッセージは、それを受信した人には表示され続けます。これは電子メールの場合と同様です。あなたが送信したメッセージを今後のルームの参加者に表示しないようにしますか？",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "注意：ブラウザーはサポートされていません。期待通りに動作しない可能性があります。",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "このユーザーに関するシステムメッセージ（メンバーシップの変更、プロフィールの変更など）も削除したい場合は、チェックを外してください",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -802,7 +788,6 @@
     "Remove search filter for %(filter)s": "%(filter)sの検索フィルターを削除",
     "Some results may be hidden": "いくつかの結果が表示されていない可能性があります",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "発生した問題を教えてください。または、問題を説明するGitHub issueを作成してください。",
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
@@ -1137,7 +1122,9 @@
         "beta_section": "今後の機能",
         "beta_description": "%(brand)sのラボでは、最新の機能をいち早く使用したり、テストしたりできるほか、機能が実際にリリースされる前の改善作業を支援することができます。",
         "experimental_section": "早期プレビュー",
-        "experimental_description": "実験に参加したいですか？開発中のアイディアを試してください。これらの機能は完成していません。不安定な可能性や変更される可能性、また、開発が中止される可能性もあります。<a>詳細を確認</a>。"
+        "experimental_description": "実験に参加したいですか？開発中のアイディアを試してください。これらの機能は完成していません。不安定な可能性や変更される可能性、また、開発が中止される可能性もあります。<a>詳細を確認</a>。",
+        "beta_feedback_title": "%(featureName)sのベータ版のフィードバック",
+        "beta_feedback_leave_button": "ベータ版の使用を終了するには、設定を開いてください。"
     },
     "keyboard": {
         "home": "ホーム",
@@ -1290,7 +1277,15 @@
         "uploading_logs": "ログをアップロードしています",
         "downloading_logs": "ログをダウンロードしています",
         "create_new_issue": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。",
-        "waiting_for_server": "サーバーからの応答を待っています"
+        "waiting_for_server": "サーバーからの応答を待っています",
+        "error_empty": "発生した問題を教えてください。または、問題を説明するGitHub issueを作成してください。",
+        "preparing_logs": "ログを送信する準備をしています",
+        "logs_sent": "ログが送信されました",
+        "thank_you": "ありがとうございます！",
+        "failed_send_logs": "ログの送信に失敗しました： ",
+        "preparing_download": "ログのダウンロードを準備しています",
+        "unsupported_browser": "注意：ブラウザーはサポートされていません。期待通りに動作しない可能性があります。",
+        "textarea_label": "メモ"
     },
     "time": {
         "hours_minutes_seconds_left": "残り%(hours)s時間%(minutes)s分%(seconds)s秒",
@@ -3865,7 +3860,11 @@
         "error_version_unsupported_space": "ユーザーのホームサーバーは、このバージョンのスペースをサポートしていません。",
         "error_version_unsupported_room": "ユーザーのホームサーバーは、このバージョンのルームをサポートしていません。",
         "error_unknown": "不明なサーバーエラー",
-        "to_space": "%(spaceName)sに招待"
+        "to_space": "%(spaceName)sに招待",
+        "unable_find_profiles_description_default": "以下のMatrix IDのプロフィールを発見できません。招待しますか？",
+        "unable_find_profiles_title": "次のユーザーは存在しない可能性があります",
+        "unable_find_profiles_invite_never_warn_label_default": "招待し、再び警告しない",
+        "unable_find_profiles_invite_label_default": "招待"
     },
     "scalar": {
         "error_create": "ウィジェットを作成できません。",
@@ -4151,5 +4150,6 @@
             "network_dropdown_selected_label_instance": "表示：%(instance)s ルーム（%(server)s）",
             "network_dropdown_selected_label": "表示：Matrixルーム"
         }
-    }
+    },
+    "dialog_close_label": "ダイアログを閉じる"
 }

@@ -63,19 +63,15 @@
     "Today": "Oggi",
     "Friday": "Venerdì",
     "Changelog": "Cambiamenti",
-    "Failed to send logs: ": "Invio dei log fallito: ",
     "Unavailable": "Non disponibile",
     "Filter results": "Filtra risultati",
     "Tuesday": "Martedì",
-    "Preparing to send logs": "Preparazione invio dei log",
     "Saturday": "Sabato",
     "Monday": "Lunedì",
     "Wednesday": "Mercoledì",
     "You cannot delete this message. (%(code)s)": "Non puoi eliminare questo messaggio. (%(code)s)",
     "Thursday": "Giovedì",
-    "Logs sent": "Log inviati",
     "Yesterday": "Ieri",
-    "Thank you!": "Grazie!",
     "We encountered an error trying to restore your previous session.": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
     "Clear Storage and Sign Out": "Elimina l'archiviazione e disconnetti",
     "Send Logs": "Invia i log",
@@ -108,10 +104,6 @@
     "No backup found!": "Nessun backup trovato!",
     "Failed to decrypt %(failedCount)s sessions!": "Decifrazione di %(failedCount)s sessioni fallita!",
     "Unable to load commit detail: %(msg)s": "Caricamento dettagli del commit fallito: %(msg)s",
-    "The following users may not exist": "I seguenti utenti potrebbero non esistere",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque invitarli?",
-    "Invite anyway and never warn me again": "Invitali lo stesso e non avvisarmi più",
-    "Invite anyway": "Invita comunque",
     "Dog": "Cane",
     "Cat": "Gatto",
     "Lion": "Leone",
@@ -187,7 +179,6 @@
     "Email (optional)": "Email (facoltativa)",
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
     "edited": "modificato",
-    "Notes": "Note",
     "Sign out and remove encryption keys?": "Disconnettere e rimuovere le chiavi di crittografia?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Per aiutarci a prevenire questa cosa in futuro, <a>inviaci i log</a>.",
     "Missing session data": "Dati di sessione mancanti",
@@ -210,7 +201,6 @@
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
     "Your homeserver doesn't seem to support this feature.": "Il tuo homeserver non sembra supportare questa funzione.",
     "Clear all data": "Elimina tutti i dati",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Per favore dicci cos'è andato storto, o meglio, crea una segnalazione su GitHub che descriva il problema.",
     "Removing…": "Rimozione…",
     "Find others by phone or email": "Trova altri per telefono o email",
     "Be found by phone or email": "Trovato per telefono o email",
@@ -227,7 +217,6 @@
         "one": "Rimuovi 1 messaggio"
     },
     "e.g. my-room": "es. mia-stanza",
-    "Close dialog": "Chiudi finestra",
     "%(name)s accepted": "%(name)s ha accettato",
     "%(name)s cancelled": "%(name)s ha annullato",
     "%(name)s wants to verify": "%(name)s vuole verificare",
@@ -292,7 +281,6 @@
     "Server did not return valid authentication information.": "Il server non ha restituito informazioni di autenticazione valide.",
     "There was a problem communicating with the server. Please try again.": "C'è stato un problema nella comunicazione con il server. Riprova.",
     "Submit logs": "Invia registri",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Promemoria: il tuo browser non è supportato, perciò la tua esperienza può essere imprevedibile.",
     "Unable to upload": "Impossibile inviare",
     "Restoring keys from backup": "Ripristino delle chiavi dal backup",
     "%(completed)s of %(total)s keys restored": "%(completed)s di %(total)s chiavi ripristinate",
@@ -329,7 +317,6 @@
     "A connection error occurred while trying to contact the server.": "Si è verificato un errore di connessione tentando di contattare il server.",
     "The server is not configured to indicate what the problem is (CORS).": "Il server non è configurato per indicare qual è il problema (CORS).",
     "Recent changes that have not yet been received": "Modifiche recenti che non sono ancora state ricevute",
-    "Preparing to download logs": "Preparazione al download dei log",
     "Backup version:": "Versione backup:",
     "Not encrypted": "Non cifrato",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome o il nome utente (come <userId/>).",
@@ -653,7 +640,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
     "Sending": "Invio in corso",
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
-    "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
     "Or send invite link": "O manda un collegamento di invito",
     "Some suggestions may be hidden for privacy.": "Alcuni suggerimenti potrebbero essere nascosti per privacy.",
     "Search for rooms or people": "Cerca stanze o persone",
@@ -749,7 +735,6 @@
         "one": "1 partecipante",
         "other": "%(count)s partecipanti"
     },
-    "%(featureName)s Beta feedback": "Feedback %(featureName)s beta",
     "Live location enabled": "Posizione in tempo reale attivata",
     "Close sidebar": "Chiudi barra laterale",
     "View List": "Vedi lista",
@@ -1166,7 +1151,9 @@
         "beta_section": "Funzionalità in arrivo",
         "beta_description": "Cosa riserva il futuro di %(brand)s? I laboratori sono il miglior modo di provare cose in anticipo, testare nuove funzioni ed aiutare a plasmarle prima che vengano distribuite.",
         "experimental_section": "Anteprime",
-        "experimental_description": "Ti senti di sperimentare? Prova le nostre ultime idee in sviluppo. Queste funzioni non sono complete; potrebbero essere instabili, cambiare o essere scartate. <a>Maggiori informazioni</a>."
+        "experimental_description": "Ti senti di sperimentare? Prova le nostre ultime idee in sviluppo. Queste funzioni non sono complete; potrebbero essere instabili, cambiare o essere scartate. <a>Maggiori informazioni</a>.",
+        "beta_feedback_title": "Feedback %(featureName)s beta",
+        "beta_feedback_leave_button": "Per abbandonare la beta, vai nelle impostazioni."
     },
     "keyboard": {
         "home": "Pagina iniziale",
@@ -1325,7 +1312,15 @@
         "uploading_logs": "Invio dei log",
         "downloading_logs": "Scaricamento dei log",
         "create_new_issue": "<newIssueLink>Segnala un nuovo problema</newIssueLink> su GitHub in modo che possiamo indagare su questo errore.",
-        "waiting_for_server": "In attesa di una risposta dal server"
+        "waiting_for_server": "In attesa di una risposta dal server",
+        "error_empty": "Per favore dicci cos'è andato storto, o meglio, crea una segnalazione su GitHub che descriva il problema.",
+        "preparing_logs": "Preparazione invio dei log",
+        "logs_sent": "Log inviati",
+        "thank_you": "Grazie!",
+        "failed_send_logs": "Invio dei log fallito: ",
+        "preparing_download": "Preparazione al download dei log",
+        "unsupported_browser": "Promemoria: il tuo browser non è supportato, perciò la tua esperienza può essere imprevedibile.",
+        "textarea_label": "Note"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)so %(minutes)sm %(seconds)ss rimasti",
@@ -4051,7 +4046,11 @@
         "error_version_unsupported_space": "L'homeserver dell'utente non supporta la versione dello spazio.",
         "error_version_unsupported_room": "L'homeserver dell'utente non supporta la versione della stanza.",
         "error_unknown": "Errore sconosciuto del server",
-        "to_space": "Invita in %(spaceName)s"
+        "to_space": "Invita in %(spaceName)s",
+        "unable_find_profiles_description_default": "Impossibile trovare profili per gli ID Matrix elencati sotto - vuoi comunque invitarli?",
+        "unable_find_profiles_title": "I seguenti utenti potrebbero non esistere",
+        "unable_find_profiles_invite_never_warn_label_default": "Invitali lo stesso e non avvisarmi più",
+        "unable_find_profiles_invite_label_default": "Invita comunque"
     },
     "scalar": {
         "error_create": "Impossibile creare il widget.",
@@ -4362,5 +4361,6 @@
             "network_dropdown_selected_label_instance": "Mostra: stanze di %(instance)s (%(server)s)",
             "network_dropdown_selected_label": "Mostra: stanze di Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Chiudi finestra"
 }

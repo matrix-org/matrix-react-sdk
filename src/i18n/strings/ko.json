@@ -60,7 +60,6 @@
     "Thursday": "목요일",
     "Yesterday": "어제",
     "Wednesday": "수요일",
-    "Thank you!": "감사합니다!",
     "PM": "오후",
     "AM": "오전",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s년 %(monthName)s %(day)s일 (%(weekDayName)s)",
@@ -73,9 +72,6 @@
     "Delete Widget": "위젯 삭제",
     "collapse": "접기",
     "expand": "펼치기",
-    "Preparing to send logs": "로그 보내려고 준비 중",
-    "Logs sent": "로그 보내짐",
-    "Failed to send logs: ": "로그 보내기에 실패함: ",
     "Share Room": "방 공유",
     "Share User": "사용자 공유",
     "Share Room Message": "방 메시지 공유",
@@ -159,13 +155,7 @@
     "edited": "편집됨",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <default>기본 (%(defaultIdentityServerName)s)을(를) 사용하거나</default> <settings>설정</settings>에서 관리하세요.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <settings>설정</settings>에서 관리하세요.",
-    "The following users may not exist": "다음 사용자는 존재하지 않을 수 있습니다",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "아래에 나열된 Matrix ID에서 프로필을 찾을 수 없습니다 - 무시하고 그들을 초대할까요?",
-    "Invite anyway and never warn me again": "무시하고 초대, 그리고 다시 경고하지 않기",
-    "Invite anyway": "무시하고 초대",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "무엇이 잘못되거나 더 나은 지 알려주세요, 문제를 설명하는 GitHub 이슈를 만들어주세요.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "Notes": "참고",
     "Unable to load commit detail: %(msg)s": "커밋 세부 정보를 불러올 수 없음: %(msg)s",
     "Removing…": "제거 중…",
     "Clear all data": "모든 데이터 지우기",
@@ -226,7 +216,6 @@
         "one": "1개의 메시지 삭제"
     },
     "e.g. my-room": "예: my-room",
-    "Close dialog": "대화 상자 닫기",
     "%(name)s accepted": "%(name)s님이 수락했습니다",
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
     "%(name)s wants to verify": "%(name)s님이 확인을 요청합니다",
@@ -477,7 +466,13 @@
         "collecting_information": "앱 버전 정보를 수집하는 중",
         "collecting_logs": "로그 수집 중",
         "create_new_issue": "이 버그를 조사할 수 있도록 GitHub에 <newIssueLink>새 이슈를 추가</newIssueLink>해주세요.",
-        "waiting_for_server": "서버에서 응답을 기다리는 중"
+        "waiting_for_server": "서버에서 응답을 기다리는 중",
+        "error_empty": "무엇이 잘못되거나 더 나은 지 알려주세요, 문제를 설명하는 GitHub 이슈를 만들어주세요.",
+        "preparing_logs": "로그 보내려고 준비 중",
+        "logs_sent": "로그 보내짐",
+        "thank_you": "감사합니다!",
+        "failed_send_logs": "로그 보내기에 실패함: ",
+        "textarea_label": "참고"
     },
     "time": {
         "n_minutes_ago": "%(num)s분 전",
@@ -1483,7 +1478,11 @@
         "error_permissions_room": "이 방에 사람을 초대할 권한이 없습니다.",
         "error_bad_state": "초대하려면 사용자가 출입 금지되지 않은 상태여야 합니다.",
         "error_version_unsupported_room": "사용자의 홈서버가 방의 버전을 호환하지 않습니다.",
-        "error_unknown": "알 수 없는 서버 오류"
+        "error_unknown": "알 수 없는 서버 오류",
+        "unable_find_profiles_description_default": "아래에 나열된 Matrix ID에서 프로필을 찾을 수 없습니다 - 무시하고 그들을 초대할까요?",
+        "unable_find_profiles_title": "다음 사용자는 존재하지 않을 수 있습니다",
+        "unable_find_profiles_invite_never_warn_label_default": "무시하고 초대, 그리고 다시 경고하지 않기",
+        "unable_find_profiles_invite_label_default": "무시하고 초대"
     },
     "widget": {
         "error_need_to_be_logged_in": "로그인을 해야 합니다.",
@@ -1680,5 +1679,6 @@
     },
     "truncated_list_n_more": {
         "other": "%(count)s개 더..."
-    }
+    },
+    "dialog_close_label": "대화 상자 닫기"
 }

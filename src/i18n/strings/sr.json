@@ -72,10 +72,6 @@
     "You cannot delete this message. (%(code)s)": "Не можете обрисати ову поруку. (%(code)s)",
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
-    "Thank you!": "Хвала вам!",
-    "Preparing to send logs": "Припремам се за слање записника",
-    "Logs sent": "Записници су послати",
-    "Failed to send logs: ": "Нисам успео да пошаљем записнике: ",
     "Send Logs": "Пошаљи записнике",
     "Clear Storage and Sign Out": "Очисти складиште и одјави ме",
     "We encountered an error trying to restore your previous session.": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
@@ -605,7 +601,11 @@
         "send_logs": "Пошаљи записнике",
         "collecting_information": "Прикупљам податке о издању апликације",
         "collecting_logs": "Прикупљам записнике",
-        "waiting_for_server": "Чекам на одговор са сервера"
+        "waiting_for_server": "Чекам на одговор са сервера",
+        "preparing_logs": "Припремам се за слање записника",
+        "logs_sent": "Записници су послати",
+        "thank_you": "Хвала вам!",
+        "failed_send_logs": "Нисам успео да пошаљем записнике: "
     },
     "time": {
         "few_seconds_ago": "пре неколико секунди",

@@ -43,19 +43,15 @@
     "Today": "Hoy",
     "Friday": "Viernes",
     "Changelog": "Registro de cambios",
-    "Failed to send logs: ": "Error al enviar registros: ",
     "Unavailable": "No disponible",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
-    "Preparing to send logs": "Preparando para enviar registros",
     "Unnamed room": "Sala sin nombre",
     "Saturday": "Sábado",
     "Monday": "Lunes",
     "Send": "Enviar",
-    "Thank you!": "¡Gracias!",
     "You cannot delete this message. (%(code)s)": "No puedes eliminar este mensaje. (%(code)s)",
     "Thursday": "Jueves",
-    "Logs sent": "Registros enviados",
     "Yesterday": "Ayer",
     "Wednesday": "Miércoles",
     "%(weekDayName)s %(time)s": "%(weekDayName)s a las %(time)s",
@@ -158,10 +154,6 @@
     "Folder": "Carpeta",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Los mensajes cifrados son seguros con el cifrado punto a punto. Solo tú y el/los destinatario/s tiene/n las claves para leer estos mensajes.",
     "Start using Key Backup": "Comenzar a usar la copia de claves",
-    "The following users may not exist": "Puede que estos usuarios no existan",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No se pudieron encontrar perfiles para los IDs Matrix listados a continuación, ¿Quieres invitarles igualmente?",
-    "Invite anyway and never warn me again": "Invitar igualmente, y no preguntar más en el futuro",
-    "Invite anyway": "Invitar igualmente",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema.",
     "Unable to load commit detail: %(msg)s": "No se pudo cargar el detalle del commit: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Para evitar perder tu historial de chat, debes exportar las claves de la sala antes de salir. Debes volver a la versión actual de %(brand)s para esto",
@@ -224,10 +216,6 @@
     "e.g. my-room": "p.ej. mi-sala",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usar un servidor de identidad para invitar a través de correo electrónico. <default>. Usar (%(defaultIdentityServerName)s)</default>o seleccione en <settings>Ajustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilice un servidor de identidad para invitar por correo electrónico. Gestionar en <settings>Ajustes</settings>.",
-    "Close dialog": "Cerrar diálogo",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Por favor, cuéntanos qué ha fallado o, mejor aún, crea una incidencia en GitHub describiendo el problema.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Recordatorio: Su navegador no es compatible, por lo que su experiencia puede ser impredecible.",
-    "Notes": "Notas",
     "Removing…": "Quitando…",
     "Destroy cross-signing keys?": "¿Destruir las claves de firma cruzada?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La eliminación de claves de firma cruzada es definitiva. Cualquiera con el que lo hayas verificado verá alertas de seguridad. Es casi seguro que no quieres hacer esto, a menos que hayas perdido todos los dispositivos puedas usar hacer una firma cruzada.",
@@ -306,7 +294,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "Preparing to download logs": "Preparándose para descargar registros",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Anteriormente usaste una versión más nueva de %(brand)s con esta sesión. Para volver a utilizar esta versión con cifrado de extremo a extremo, deberá cerrar sesión y volver a iniciar sesión.",
     "To continue, use Single Sign On to prove your identity.": "Para continuar, utilice el inicio de sesión único para demostrar su identidad.",
     "Confirm to continue": "Confirmar para continuar",
@@ -652,7 +639,6 @@
     "Reset everything": "Restablecer todo",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
-    "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
     "Or send invite link": "O envía un enlace de invitación",
     "Some suggestions may be hidden for privacy.": "Puede que algunas sugerencias no se muestren por motivos de privacidad.",
     "Search for rooms or people": "Busca salas o gente",
@@ -744,7 +730,6 @@
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "No marques esta casilla si quieres borrar también los mensajes del sistema sobre el usuario (ej.: entradas y salidas, cambios en su perfil…)",
     "Preserve system messages": "Mantener mensajes del sistema",
     "Unsent": "No enviado",
-    "%(featureName)s Beta feedback": "Danos tu opinión sobre la beta de %(featureName)s",
     "%(count)s participants": {
         "one": "1 participante",
         "other": "%(count)s participantes"
@@ -1147,7 +1132,9 @@
         "bridge_state_channel": "Canal: <channelLink/>",
         "beta_section": "Funcionalidades futuras",
         "beta_description": "¿Qué novedades se esperan en %(brand)s? La sección de experimentos es la mejor manera de ver las cosas antes de que se publiquen, probar nuevas funcionalidades y ayudar a mejorarlas antes de su lanzamiento.",
-        "experimental_description": "¿Te apetece probar cosas experimentales? Aquí encontrarás nuestras ideas en desarrollo. No están terminadas, pueden ser inestables, cambiar o dejar de estar disponibles. <a>Más información</a>."
+        "experimental_description": "¿Te apetece probar cosas experimentales? Aquí encontrarás nuestras ideas en desarrollo. No están terminadas, pueden ser inestables, cambiar o dejar de estar disponibles. <a>Más información</a>.",
+        "beta_feedback_title": "Danos tu opinión sobre la beta de %(featureName)s",
+        "beta_feedback_leave_button": "Para salir de la beta, ve a tus ajustes."
     },
     "keyboard": {
         "home": "Inicio",
@@ -1304,7 +1291,15 @@
         "uploading_logs": "Subiendo registros",
         "downloading_logs": "Descargando registros",
         "create_new_issue": "Por favor, <newIssueLink>crea un nuevo nodo </newIssueLink> en GitHub para que podamos investigar este error.",
-        "waiting_for_server": "Esperando una respuesta del servidor"
+        "waiting_for_server": "Esperando una respuesta del servidor",
+        "error_empty": "Por favor, cuéntanos qué ha fallado o, mejor aún, crea una incidencia en GitHub describiendo el problema.",
+        "preparing_logs": "Preparando para enviar registros",
+        "logs_sent": "Registros enviados",
+        "thank_you": "¡Gracias!",
+        "failed_send_logs": "Error al enviar registros: ",
+        "preparing_download": "Preparándose para descargar registros",
+        "unsupported_browser": "Recordatorio: Su navegador no es compatible, por lo que su experiencia puede ser impredecible.",
+        "textarea_label": "Notas"
     },
     "time": {
         "hours_minutes_seconds_left": "queda(n) %(hours)sh %(minutes)sm %(seconds)ss",
@@ -3861,7 +3856,11 @@
         "error_version_unsupported_space": "El servidor base del usuario no es compatible con la versión de este espacio.",
         "error_version_unsupported_room": "El servidor del usuario no soporta la versión de la sala.",
         "error_unknown": "Error desconocido del servidor",
-        "to_space": "Invitar a %(spaceName)s"
+        "to_space": "Invitar a %(spaceName)s",
+        "unable_find_profiles_description_default": "No se pudieron encontrar perfiles para los IDs Matrix listados a continuación, ¿Quieres invitarles igualmente?",
+        "unable_find_profiles_title": "Puede que estos usuarios no existan",
+        "unable_find_profiles_invite_never_warn_label_default": "Invitar igualmente, y no preguntar más en el futuro",
+        "unable_find_profiles_invite_label_default": "Invitar igualmente"
     },
     "scalar": {
         "error_create": "No se ha podido crear el accesorio.",
@@ -4157,5 +4156,6 @@
             "network_dropdown_selected_label_instance": "Mostrar: salas de %(instance)s (%(server)s)",
             "network_dropdown_selected_label": "Mostrar: salas de Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Cerrar diálogo"
 }

@@ -63,19 +63,15 @@
     "Today": "今天",
     "Friday": "星期五",
     "Changelog": "變更記錄檔",
-    "Failed to send logs: ": "無法傳送除錯訊息： ",
     "Unavailable": "無法取得",
     "Filter results": "過濾結果",
     "Tuesday": "星期二",
-    "Preparing to send logs": "準備傳送除錯訊息",
     "Saturday": "星期六",
     "Monday": "星期一",
     "You cannot delete this message. (%(code)s)": "您無法刪除此訊息。(%(code)s)",
     "Thursday": "星期四",
-    "Logs sent": "記錄檔已經傳送",
     "Yesterday": "昨天",
     "Wednesday": "星期三",
-    "Thank you!": "感謝您！",
     "Send Logs": "傳送紀錄檔",
     "Clear Storage and Sign Out": "清除儲存的東西並登出",
     "We encountered an error trying to restore your previous session.": "我們在嘗試復原您先前的工作階段時遇到了一點錯誤。",
@@ -107,10 +103,6 @@
     "No backup found!": "找不到備份！",
     "Failed to decrypt %(failedCount)s sessions!": "無法解密 %(failedCount)s 個工作階段！",
     "Unable to load commit detail: %(msg)s": "無法載入遞交的詳細資訊：%(msg)s",
-    "The following users may not exist": "以下的使用者可能不存在",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "找不到下列 Matrix ID 的簡介，您無論如何都想邀請他們嗎？",
-    "Invite anyway and never warn me again": "無論如何都要邀請，而且不要再警告我",
-    "Invite anyway": "無論如何都要邀請",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "驗證此工作階段，並標記為可受信任。由您將工作階段標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
     "Incoming Verification Request": "收到的驗證請求",
     "Email (optional)": "電子郵件（選擇性）",
@@ -185,7 +177,6 @@
     "Scissors": "剪刀",
     "Room Settings - %(roomName)s": "聊天室設定 - %(roomName)s",
     "Remember my selection for this widget": "記住我對這個小工具的選擇",
-    "Notes": "註記",
     "Sign out and remove encryption keys?": "登出並移除加密金鑰？",
     "To help us prevent this in future, please <a>send us logs</a>.": "要協助我們讓這個問題不再發生，請<a>將紀錄檔傳送給我們</a>。",
     "Missing session data": "遺失工作階段資料",
@@ -210,7 +201,6 @@
     "Your homeserver doesn't seem to support this feature.": "您的家伺服器似乎並不支援此功能。",
     "Clear all data": "清除所有資料",
     "Removing…": "正在刪除…",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "請告訴我們發生了什麼錯誤，或更好的是，在 GitHub 上建立描述問題的議題。",
     "Find others by phone or email": "透過電話或電子郵件尋找其他人",
     "Be found by phone or email": "透過電話或電子郵件找到",
     "Command Help": "指令說明",
@@ -226,7 +216,6 @@
         "one": "移除 1 則訊息"
     },
     "e.g. my-room": "例如：my-room",
-    "Close dialog": "關閉對話框",
     "%(name)s accepted": "%(name)s 已接受",
     "%(name)s cancelled": "%(name)s 已取消",
     "%(name)s wants to verify": "%(name)s 想要驗證",
@@ -291,7 +280,6 @@
     "Server did not return valid authentication information.": "伺服器沒有回傳有效的驗證資訊。",
     "There was a problem communicating with the server. Please try again.": "與伺服器通訊時發生問題。請再試一次。",
     "Submit logs": "遞交紀錄檔",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "提醒：您的瀏覽器不受支援，所以您的使用體驗可能無法預測。",
     "Unable to upload": "無法上傳",
     "Restoring keys from backup": "從備份還原金鑰",
     "%(completed)s of %(total)s keys restored": "%(total)s 中的 %(completed)s 金鑰已復原",
@@ -329,7 +317,6 @@
     "A connection error occurred while trying to contact the server.": "在試圖與伺服器溝通時遇到連線錯誤。",
     "The server is not configured to indicate what the problem is (CORS).": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
     "Recent changes that have not yet been received": "尚未收到最新變更",
-    "Preparing to download logs": "正在準備下載紀錄檔",
     "Not encrypted": "未加密",
     "Backup version:": "備份版本：",
     "Start a conversation with someone using their name or username (like <userId/>).": "使用某人的名字或使用者名稱（如 <userId/>）以與他們開始對話。",
@@ -653,7 +640,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
     "Sending": "傳送中",
     "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
-    "To leave the beta, visit your settings.": "請到設定頁面離開 Beta 測試版。",
     "Or send invite link": "或傳送邀請連結",
     "Some suggestions may be hidden for privacy.": "出於隱私考量，可能會隱藏一些建議。",
     "Search for rooms or people": "搜尋聊天室或夥伴",
@@ -745,7 +731,6 @@
     },
     "Unsent": "未傳送",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
-    "%(featureName)s Beta feedback": "%(featureName)s Beta 測試回饋",
     "%(count)s participants": {
         "one": "1 位成員",
         "other": "%(count)s 個參與者"
@@ -1165,7 +1150,9 @@
         "beta_section": "即將推出的功能",
         "beta_description": "%(brand)s 的下一步是什麼？實驗室是提早取得資訊、測試新功能，並在實際釋出前協助塑造它們的最佳方式。",
         "experimental_section": "提早預覽",
-        "experimental_description": "想要做點實驗？歡迎測試我們開發中的最新創意功能。這些功能尚未完成設計；可能不穩定、可能會變動，也可能會被完全捨棄。<a>取得更多資訊</a>。"
+        "experimental_description": "想要做點實驗？歡迎測試我們開發中的最新創意功能。這些功能尚未完成設計；可能不穩定、可能會變動，也可能會被完全捨棄。<a>取得更多資訊</a>。",
+        "beta_feedback_title": "%(featureName)s Beta 測試回饋",
+        "beta_feedback_leave_button": "請到設定頁面離開 Beta 測試版。"
     },
     "keyboard": {
         "home": "首頁",
@@ -1324,7 +1311,15 @@
         "uploading_logs": "正在上傳紀錄檔",
         "downloading_logs": "正在下載紀錄檔",
         "create_new_issue": "請在 GitHub 上<newIssueLink>建立新議題</newIssueLink>，這樣我們才能調查這個錯誤。",
-        "waiting_for_server": "正在等待來自伺服器的回應"
+        "waiting_for_server": "正在等待來自伺服器的回應",
+        "error_empty": "請告訴我們發生了什麼錯誤，或更好的是，在 GitHub 上建立描述問題的議題。",
+        "preparing_logs": "準備傳送除錯訊息",
+        "logs_sent": "記錄檔已經傳送",
+        "thank_you": "感謝您！",
+        "failed_send_logs": "無法傳送除錯訊息： ",
+        "preparing_download": "正在準備下載紀錄檔",
+        "unsupported_browser": "提醒：您的瀏覽器不受支援，所以您的使用體驗可能無法預測。",
+        "textarea_label": "註記"
     },
     "time": {
         "hours_minutes_seconds_left": "剩餘 %(hours)s 小時 %(minutes)s 分鐘 %(seconds)s 秒",
@@ -4044,7 +4039,11 @@
         "error_version_unsupported_space": "使用者的家伺服器不支援這個聊天空間的版本。",
         "error_version_unsupported_room": "使用者的家伺服器不支援此聊天室版本。",
         "error_unknown": "未知的伺服器錯誤",
-        "to_space": "邀請加入 %(spaceName)s"
+        "to_space": "邀請加入 %(spaceName)s",
+        "unable_find_profiles_description_default": "找不到下列 Matrix ID 的簡介，您無論如何都想邀請他們嗎？",
+        "unable_find_profiles_title": "以下的使用者可能不存在",
+        "unable_find_profiles_invite_never_warn_label_default": "無論如何都要邀請，而且不要再警告我",
+        "unable_find_profiles_invite_label_default": "無論如何都要邀請"
     },
     "scalar": {
         "error_create": "無法建立小工具。",
@@ -4355,5 +4354,6 @@
             "network_dropdown_selected_label_instance": "顯示：%(instance)s 聊天室 (%(server)s)",
             "network_dropdown_selected_label": "顯示：Matrix 聊天室"
         }
-    }
+    },
+    "dialog_close_label": "關閉對話框"
 }

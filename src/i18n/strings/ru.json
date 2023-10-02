@@ -63,19 +63,15 @@
     "Today": "Сегодня",
     "Friday": "Пятница",
     "Changelog": "История изменений",
-    "Failed to send logs: ": "Не удалось отправить журналы: ",
     "Unavailable": "Недоступен",
     "Filter results": "Фильтрация результатов",
     "Tuesday": "Вторник",
-    "Preparing to send logs": "Подготовка к отправке журналов",
     "Saturday": "Суббота",
     "Monday": "Понедельник",
     "You cannot delete this message. (%(code)s)": "Это сообщение нельзя удалить. (%(code)s)",
     "Thursday": "Четверг",
-    "Logs sent": "Журналы отправлены",
     "Yesterday": "Вчера",
     "Wednesday": "Среда",
-    "Thank you!": "Спасибо!",
     "Send Logs": "Отправить логи",
     "Clear Storage and Sign Out": "Очистить хранилище и выйти",
     "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
@@ -90,8 +86,6 @@
     "Update any local room aliases to point to the new room": "Обновим локальные псевдонимы комнат",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
-    "The following users may not exist": "Следующих пользователей может не существовать",
-    "Invite anyway and never warn me again": "Пригласить и больше не предупреждать",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы.",
     "Incompatible Database": "Несовместимая база данных",
     "Continue With Encryption Disabled": "Продолжить с отключенным шифрованием",
@@ -174,9 +168,6 @@
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не возможно найти профили для MatrixID, приведенных ниже — все равно желаете их пригласить?",
-    "Invite anyway": "Всё равно пригласить",
-    "Notes": "Заметка",
     "Unable to load commit detail: %(msg)s": "Не возможно загрузить детали подтверждения:: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Чтобы не потерять историю чата, вы должны экспортировать ключи от комнаты перед выходом из системы. Для этого вам нужно будет вернуться к более новой версии %(brand)s",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Проверить этого пользователя, чтобы отметить его, как доверенного. Доверенные пользователи дают вам больше уверенности при использовании шифрованных сообщений.",
@@ -204,7 +195,6 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
     "Clear all data": "Очистить все данные",
     "Your homeserver doesn't seem to support this feature.": "Ваш сервер, похоже, не поддерживает эту возможность.",
@@ -224,7 +214,6 @@
         "one": "Удалить 1 сообщение"
     },
     "e.g. my-room": "например, моя-комната",
-    "Close dialog": "Закрыть диалог",
     "Command Help": "Помощь команды",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
@@ -269,7 +258,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
     "Submit logs": "Отправить логи",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
     "IRC display name width": "Ширина отображаемого имени IRC",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Очистка всех данных в этом сеансе является необратимой. Зашифрованные сообщения будут потеряны, если их ключи не были зарезервированы.",
@@ -328,7 +316,6 @@
     "Switch theme": "Сменить тему",
     "Confirm encryption setup": "Подтвердите настройку шифрования",
     "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
-    "Preparing to download logs": "Подготовка к загрузке журналов",
     "Not encrypted": "Не зашифровано",
     "Backup version:": "Версия резервной копии:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя или имя пользователя (например, <userId/>).",
@@ -676,7 +663,6 @@
     "Only people invited will be able to find and join this space.": "Только приглашенные люди смогут найти и присоединиться к этому пространству.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Любой сможет найти и присоединиться к этому пространству, а не только члены <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Любой человек в <SpaceName/> сможет найти и присоединиться.",
-    "To leave the beta, visit your settings.": "Чтобы выйти из бета-версии, зайдите в настройки.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -788,7 +774,6 @@
         "one": "Вы собираетесь удалить %(count)s сообщение от %(user)s. Это удалит его навсегда для всех в разговоре. Точно продолжить?",
         "other": "Вы собираетесь удалить %(count)s сообщений от %(user)s. Это удалит их навсегда для всех в разговоре. Точно продолжить?"
     },
-    "%(featureName)s Beta feedback": "%(featureName)s — отзыв о бета-версии",
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -1112,7 +1097,9 @@
         "beta_section": "Новые возможности",
         "beta_description": "Что нового в %(brand)s? Labs — это лучший способ получить и испытать новые функции, помогая сформировать их перед выходом в свет.",
         "experimental_section": "Предпросмотр",
-        "experimental_description": "Время экспериментов? Попробуйте наши последние наработки. Эти функции не заверешены; они могут быть нестабильными, постоянно меняющимися, или вовсе отброшенными. <a>Узнайте больше</a>."
+        "experimental_description": "Время экспериментов? Попробуйте наши последние наработки. Эти функции не заверешены; они могут быть нестабильными, постоянно меняющимися, или вовсе отброшенными. <a>Узнайте больше</a>.",
+        "beta_feedback_title": "%(featureName)s — отзыв о бета-версии",
+        "beta_feedback_leave_button": "Чтобы выйти из бета-версии, зайдите в настройки."
     },
     "keyboard": {
         "home": "Главная",
@@ -1266,7 +1253,15 @@
         "uploading_logs": "Загрузка журналов",
         "downloading_logs": "Скачивание журналов",
         "create_new_issue": "Пожалуйста, <newIssueLink> создайте новую проблему/вопрос </newIssueLink> на GitHub, чтобы мы могли расследовать эту ошибку.",
-        "waiting_for_server": "Ожидание ответа от сервера"
+        "waiting_for_server": "Ожидание ответа от сервера",
+        "error_empty": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
+        "preparing_logs": "Подготовка к отправке журналов",
+        "logs_sent": "Журналы отправлены",
+        "thank_you": "Спасибо!",
+        "failed_send_logs": "Не удалось отправить журналы: ",
+        "preparing_download": "Подготовка к загрузке журналов",
+        "unsupported_browser": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
+        "textarea_label": "Заметка"
     },
     "time": {
         "hours_minutes_seconds_left": "Осталось %(hours)sч %(minutes)sм %(seconds)sс",
@@ -3754,7 +3749,11 @@
         "error_version_unsupported_space": "Домашний сервер пользователя не поддерживает версию пространства.",
         "error_version_unsupported_room": "Домашний сервер пользователя не поддерживает версию комнаты.",
         "error_unknown": "Неизвестная ошибка сервера",
-        "to_space": "Пригласить в %(spaceName)s"
+        "to_space": "Пригласить в %(spaceName)s",
+        "unable_find_profiles_description_default": "Не возможно найти профили для MatrixID, приведенных ниже — все равно желаете их пригласить?",
+        "unable_find_profiles_title": "Следующих пользователей может не существовать",
+        "unable_find_profiles_invite_never_warn_label_default": "Пригласить и больше не предупреждать",
+        "unable_find_profiles_invite_label_default": "Всё равно пригласить"
     },
     "scalar": {
         "error_create": "Не удалось создать виджет.",
@@ -4042,5 +4041,6 @@
             "network_dropdown_selected_label_instance": "Показать: %(instance)s комнат (%(server)s)",
             "network_dropdown_selected_label": "Показать: комнаты Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Закрыть диалог"
 }

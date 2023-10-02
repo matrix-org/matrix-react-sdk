@@ -63,19 +63,15 @@
     "Today": "Днес",
     "Friday": "Петък",
     "Changelog": "Списък на промените",
-    "Failed to send logs: ": "Неуспешно изпращане на логове: ",
     "Unavailable": "Не е наличен",
     "Filter results": "Филтриране на резултати",
     "Tuesday": "Вторник",
-    "Preparing to send logs": "Подготовка за изпращане на логове",
     "Saturday": "Събота",
     "Monday": "Понеделник",
     "Wednesday": "Сряда",
     "You cannot delete this message. (%(code)s)": "Това съобщение не може да бъде изтрито. (%(code)s)",
     "Thursday": "Четвъртък",
-    "Logs sent": "Логовете са изпратени",
     "Yesterday": "Вчера",
-    "Thank you!": "Благодарим!",
     "Clear Storage and Sign Out": "Изчисти запазените данни и излез",
     "Send Logs": "Изпрати логове",
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
@@ -108,10 +104,6 @@
     "No backup found!": "Не е открито резервно копие!",
     "Failed to decrypt %(failedCount)s sessions!": "Неуспешно разшифроване на %(failedCount)s сесии!",
     "Unable to load commit detail: %(msg)s": "Неуспешно зареждане на информация за commit: %(msg)s",
-    "The following users may not exist": "Следните потребители може да не съществуват",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не бяга открити профили за изброените по-долу Matrix идентификатори. Желаете ли да ги поканите въпреки това?",
-    "Invite anyway and never warn me again": "Покани въпреки това и не питай отново",
-    "Invite anyway": "Покани въпреки това",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Потвърди потребителя и го маркирай като доверен. Доверяването на потребители Ви дава допълнително спокойствие при използване на съобщения шифровани от край-до-край.",
     "Incoming Verification Request": "Входяща заявка за потвърждение",
     "Email (optional)": "Имейл (незадължително)",
@@ -185,7 +177,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
     "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
-    "Notes": "Бележки",
     "Sign out and remove encryption keys?": "Излизане и премахване на ключовете за шифроване?",
     "To help us prevent this in future, please <a>send us logs</a>.": "За да ни помогнете да предотвратим това в бъдеще, моля <a>изпратете логове</a>.",
     "Missing session data": "Липсват данни за сесията",
@@ -207,7 +198,6 @@
     "Upload all": "Качи всички",
     "Message edits": "Редакции на съобщение",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Моля, кажете ни какво се обърка, или още по-добре - създайте проблем в GitHub обясняващ ситуацията.",
     "Removing…": "Премахване…",
     "Clear all data": "Изчисти всички данни",
     "Your homeserver doesn't seem to support this feature.": "Не изглежда сървърът ви да поддържа тази функция.",
@@ -227,7 +217,6 @@
         "one": "Премахни 1 съобщение"
     },
     "e.g. my-room": "например my-room",
-    "Close dialog": "Затвори прозореца",
     "%(name)s accepted": "%(name)s прие",
     "%(name)s cancelled": "%(name)s отказа",
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
@@ -260,7 +249,6 @@
     },
     "%(name)s declined": "%(name)s отказа",
     "Submit logs": "Изпрати логове",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напомняне: браузърът ви не се поддържа, така че не всичко може да работи правилно.",
     "Destroy cross-signing keys?": "Унищожаване на ключовете за кръстосано-подписване?",
     "You signed in to a new session without verifying it:": "Влязохте в нова сесия без да я верифицирате:",
     "Verify your other session using one of the options below.": "Верифицирайте другите си сесии използвайки една от опциите по-долу.",
@@ -337,7 +325,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Започнете разговор с някой използвайки тяхното име или потребителско име (като <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Започнете разговор с някой използвайки тяхното име, имейл адрес или потребителско име (като <userId/>).",
     "Invite by email": "Покани по имейл",
-    "Preparing to download logs": "Подготвяне за изтегляне на логове",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -880,7 +867,15 @@
         "uploading_logs": "Качване на логове",
         "downloading_logs": "Изтегляне на логове",
         "create_new_issue": "Моля, <newIssueLink>отворете нов проблем</newIssueLink> в GitHub за да проучим проблема.",
-        "waiting_for_server": "Изчакване на отговор от сървъра"
+        "waiting_for_server": "Изчакване на отговор от сървъра",
+        "error_empty": "Моля, кажете ни какво се обърка, или още по-добре - създайте проблем в GitHub обясняващ ситуацията.",
+        "preparing_logs": "Подготовка за изпращане на логове",
+        "logs_sent": "Логовете са изпратени",
+        "thank_you": "Благодарим!",
+        "failed_send_logs": "Неуспешно изпращане на логове: ",
+        "preparing_download": "Подготвяне за изтегляне на логове",
+        "unsupported_browser": "Напомняне: браузърът ви не се поддържа, така че не всичко може да работи правилно.",
+        "textarea_label": "Бележки"
     },
     "time": {
         "date_at_time": "%(date)s в %(time)s",
@@ -2203,7 +2198,11 @@
         "error_bad_state": "Трябва да се махне блокирането на потребителя преди да може да бъде поканен пак.",
         "error_version_unsupported_room": "Сървърът на потребителя не поддържа версията на стаята.",
         "error_unknown": "Непозната сървърна грешка",
-        "to_space": "Покани в %(spaceName)s"
+        "to_space": "Покани в %(spaceName)s",
+        "unable_find_profiles_description_default": "Не бяга открити профили за изброените по-долу Matrix идентификатори. Желаете ли да ги поканите въпреки това?",
+        "unable_find_profiles_title": "Следните потребители може да не съществуват",
+        "unable_find_profiles_invite_never_warn_label_default": "Покани въпреки това и не питай отново",
+        "unable_find_profiles_invite_label_default": "Покани въпреки това"
     },
     "widget": {
         "error_need_to_be_logged_in": "Трябва да влезете в профила си.",
@@ -2426,5 +2425,6 @@
             "network_dropdown_add_dialog_description": "Въведете името на новия сървър, който искате да прегледате.",
             "network_dropdown_add_dialog_placeholder": "Име на сървър"
         }
-    }
+    },
+    "dialog_close_label": "Затвори прозореца"
 }

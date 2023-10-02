@@ -94,7 +94,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Vaata kas ajajoonel ülespool leidub varasemaid sõnumeid.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Kui sõnumeid on väga palju, siis võib nüüd aega kuluda. Oodates palun ära tee ühtegi päringut ega andmevärskendust.",
     "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid neile kutse saata?",
     "Dog": "Koer",
     "Cat": "Kass",
     "Lion": "Lõvi",
@@ -159,15 +158,9 @@
     "Headphones": "Kõrvaklapid",
     "Folder": "Kaust",
     "Warning!": "Hoiatus!",
-    "Close dialog": "Sulge dialoog",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Meeldetuletus: sinu brauser ei ole toetatud ja seega rakenduse kasutuskogemus võib olla ennustamatu.",
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
     "not specified": "määratlemata",
     "unknown error code": "tundmatu veakood",
-    "Logs sent": "Logikirjed saadetud",
-    "Thank you!": "Suur tänu!",
-    "Preparing to send logs": "Valmistun logikirjete saatmiseks",
-    "Failed to send logs: ": "Logikirjete saatmine ei õnnestunud: ",
     "Are you sure you want to deactivate your account? This is irreversible.": "Kas sa oled kindel, et soovid oma konto sulgeda? Seda tegevust ei saa hiljem tagasi pöörata.",
     "Confirm account deactivation": "Kinnita konto sulgemine",
     "There was a problem communicating with the server. Please try again.": "Serveriühenduses tekkis viga. Palun proovi uuesti.",
@@ -197,12 +190,7 @@
     "Email (optional)": "E-posti aadress (kui soovid)",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posti teel kutse saatmiseks kasuta isikutuvastusserverit. Võid kasutada <default>vaikimisi serverit (%(defaultIdentityServerName)s)</default> või määrata muud serverid <settings>seadistustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Kasutajatele e-posti teel kutse saatmiseks pruugi isikutuvastusserverit. Täpsemalt saad seda <settings>hallata seadistustes</settings>.",
-    "The following users may not exist": "Järgnevaid kasutajaid ei pruugi olla olemas",
-    "Invite anyway and never warn me again": "Kutsu siiski ja ära hoiata mind enam",
-    "Invite anyway": "Kutsu siiski",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Palun kirjelda seda, mis läks valesti ja loo GitHub'is veateade.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Enne logide saatmist sa peaksid <a>GitHub'is looma veateate</a> ja kirjeldama seal tekkinud probleemi.",
-    "Notes": "Märkused",
     "You signed in to a new session without verifying it:": "Sa logisid sisse uude sessiooni ilma seda verifitseerimata:",
     "Verify your other session using one of the options below.": "Verifitseeri oma teine sessioon kasutades üht alljärgnevatest võimalustest.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) logis sisse uude sessiooni ilma seda verifitseerimata:",
@@ -329,7 +317,6 @@
     "Recent changes that have not yet been received": "Hiljutised muudatused, mis pole veel alla laetud või saabunud",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
-    "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
     "Not encrypted": "Krüptimata",
     "Backup version:": "Varukoopia versioon:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime või kasutajanime (näiteks <userId/>).",
@@ -653,7 +640,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
     "Sending": "Saadan",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
-    "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Or send invite link": "Või saada kutse link",
     "Some suggestions may be hidden for privacy.": "Mõned soovitused võivad privaatsusseadistuste tõttu olla peidetud.",
     "Search for rooms or people": "Otsi jututubasid või inimesi",
@@ -749,7 +735,6 @@
         "one": "1 osaleja",
         "other": "%(count)s oselejat"
     },
-    "%(featureName)s Beta feedback": "%(featureName)s beetaversiooni tagasiside",
     "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
     "Live location enabled": "Reaalajas asukoha jagamine on kasutusel",
     "Live location error": "Viga asukoha jagamisel reaalajas",
@@ -1165,7 +1150,9 @@
         "beta_section": "Tulevikus lisanduvad funktsionaalsused",
         "beta_description": "Mida %(brand)s tulevikus teha oskab? Arendusjärgus funktsionaalsuste loendist leiad võimalusi, mis varsti on kõigile saadaval, kuid sa saad neid juba katsetada ning ka mõjutada missuguseks nad lõplikukt kujunevad.",
         "experimental_section": "Varased arendusjärgud",
-        "experimental_description": "Soovid katsetada? Proovi meie uusimaid arendusmõtteid. Need funktsionaalsused pole üldsegi veel valmis, nad võivad toimida puudulikult, võivad muutuda või sootuks lõpetamata jääda. <a>Lisateavet leiad siit</a>."
+        "experimental_description": "Soovid katsetada? Proovi meie uusimaid arendusmõtteid. Need funktsionaalsused pole üldsegi veel valmis, nad võivad toimida puudulikult, võivad muutuda või sootuks lõpetamata jääda. <a>Lisateavet leiad siit</a>.",
+        "beta_feedback_title": "%(featureName)s beetaversiooni tagasiside",
+        "beta_feedback_leave_button": "Beetaversiooni saad välja lülitada rakenduse seadistustest."
     },
     "keyboard": {
         "home": "Avaleht",
@@ -1324,7 +1311,15 @@
         "uploading_logs": "Laadin logisid üles",
         "downloading_logs": "Laadin logisid alla",
         "create_new_issue": "Selle vea uurimiseks palun <newIssueLink>loo uus veateade</newIssueLink> meie GitHub'is.",
-        "waiting_for_server": "Ootan serverilt vastust"
+        "waiting_for_server": "Ootan serverilt vastust",
+        "error_empty": "Palun kirjelda seda, mis läks valesti ja loo GitHub'is veateade.",
+        "preparing_logs": "Valmistun logikirjete saatmiseks",
+        "logs_sent": "Logikirjed saadetud",
+        "thank_you": "Suur tänu!",
+        "failed_send_logs": "Logikirjete saatmine ei õnnestunud: ",
+        "preparing_download": "Valmistun logikirjete allalaadimiseks",
+        "unsupported_browser": "Meeldetuletus: sinu brauser ei ole toetatud ja seega rakenduse kasutuskogemus võib olla ennustamatu.",
+        "textarea_label": "Märkused"
     },
     "time": {
         "hours_minutes_seconds_left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss",
@@ -4044,7 +4039,11 @@
         "error_version_unsupported_space": "Kasutaja koduserver ei toeta selle kogukonna versiooni.",
         "error_version_unsupported_room": "Kasutaja koduserver ei toeta selle jututoa versiooni.",
         "error_unknown": "Tundmatu serveriviga",
-        "to_space": "Kutsu kogukonnakeskusesse %(spaceName)s"
+        "to_space": "Kutsu kogukonnakeskusesse %(spaceName)s",
+        "unable_find_profiles_description_default": "Allpool loetletud Matrix'i kasutajatunnustele ei leidunud profiile. Kas sa ikkagi tahaksid neile kutse saata?",
+        "unable_find_profiles_title": "Järgnevaid kasutajaid ei pruugi olla olemas",
+        "unable_find_profiles_invite_never_warn_label_default": "Kutsu siiski ja ära hoiata mind enam",
+        "unable_find_profiles_invite_label_default": "Kutsu siiski"
     },
     "scalar": {
         "error_create": "Vidina loomine ei õnnestunud.",
@@ -4355,5 +4354,6 @@
             "network_dropdown_selected_label_instance": "Näita: %(instance)s jututuba %(server)s serveris",
             "network_dropdown_selected_label": "Näita: Matrix'i jututoad"
         }
-    }
+    },
+    "dialog_close_label": "Sulge dialoog"
 }

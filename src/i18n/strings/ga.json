@@ -193,7 +193,6 @@
     "Removing…": "ag Baint…",
     "Changelog": "Loga na n-athruithe",
     "Unavailable": "Níl sé ar fáil",
-    "Notes": "Nótaí",
     "expand": "méadaigh",
     "collapse": "cumaisc",
     "edited": "curtha in eagar",
@@ -661,7 +660,8 @@
         }
     },
     "bug_reporting": {
-        "collecting_logs": "ag Bailiú logaí"
+        "collecting_logs": "ag Bailiú logaí",
+        "textarea_label": "Nótaí"
     },
     "voip": {
         "dialpad": "Eochaircheap",

@@ -12,11 +12,9 @@
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
     "Changelog": "Журнал змін",
-    "Failed to send logs: ": "Не вдалося надіслати журнали: ",
     "Unavailable": "Недоступний",
     "Filter results": "Відфільтрувати результати",
     "Tuesday": "Вівторок",
-    "Preparing to send logs": "Приготування до надсилання журланла",
     "Unnamed room": "Неназвана кімната",
     "Saturday": "Субота",
     "Monday": "Понеділок",
@@ -24,9 +22,7 @@
     "You cannot delete this message. (%(code)s)": "Ви не можете видалити це повідомлення. (%(code)s)",
     "Send": "Надіслати",
     "Thursday": "Четвер",
-    "Logs sent": "Журнали надіслані",
     "Yesterday": "Вчора",
-    "Thank you!": "Дякуємо!",
     "Warning!": "Увага!",
     "Sun": "нд",
     "Mon": "пн",
@@ -439,7 +435,6 @@
     "collapse": "згорнути",
     "Recently Direct Messaged": "Недавно надіслані особисті повідомлення",
     "User Directory": "Каталог користувачів",
-    "Preparing to download logs": "Приготування до завантаження журналів",
     "Share User": "Поділитися користувачем",
     "Some suggestions may be hidden for privacy.": "Деякі пропозиції можуть бути сховані для приватності.",
     "You may contact me if you have any follow up questions": "Можете зв’язатися зі мною, якщо у вас виникнуть додаткові запитання",
@@ -457,15 +452,8 @@
     "Clear all data in this session?": "Очистити всі дані сеансу?",
     "Confirm Removal": "Підтвердити вилучення",
     "Removing…": "Вилучення…",
-    "Notes": "Примітки",
-    "Close dialog": "Закрити діалогове вікно",
-    "Invite anyway": "Усе одно запросити",
-    "Invite anyway and never warn me again": "Усе одно запросити й більше не попереджати",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Неможливо знайти профілі для Matrix ID, перерахованих унизу — все одно бажаєте запросити їх?",
-    "The following users may not exist": "Таких користувачів може не існувати",
     "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
     "e.g. my-room": "наприклад, моя-кімната",
-    "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
     "Switch theme": "Змінити тему",
     "<inviter/> invites you": "<inviter/> запрошує вас",
     "No results found": "Нічого не знайдено",
@@ -639,8 +627,6 @@
     "No recent messages by %(user)s found": "Не знайдено недавніх повідомлень %(user)s",
     "Recently viewed": "Недавно переглянуті",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Нагадуємо, що ваш браузер не підтримується, тож деякі функції можуть не працювати.",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Будь ласка, повідомте нам, що пішло не так; а ще краще створіть обговорення на GitHub із описом проблеми.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Використовуйте сервер ідентифікації, щоб запрошувати через е-пошту. <default>Наприклад, типовий %(defaultIdentityServerName)s,</default> або інший у <settings>налаштуваннях</settings>.",
     "Unable to load commit detail: %(msg)s": "Не вдалося звантажити дані про коміт: %(msg)s",
     "Server did not return valid authentication information.": "Сервер надав хибні дані розпізнання.",
@@ -749,7 +735,6 @@
         "one": "1 учасник",
         "other": "%(count)s учасників"
     },
-    "%(featureName)s Beta feedback": "%(featureName)s — відгук про бетаверсію",
     "Live location ended": "Показ місцеперебування наживо завершено",
     "Live location enabled": "Показ місцеперебування наживо ввімкнено",
     "Live location error": "Помилка показу місцеперебування наживо",
@@ -1165,7 +1150,9 @@
         "beta_section": "Майбутні функції",
         "beta_description": "Що далі для %(brand)s? Експериментальні — це найкращий спосіб спробувати функції на ранній стадії розробки, протестувати їх і допомогти сформувати їх до фактичного запуску.",
         "experimental_section": "Ранній огляд",
-        "experimental_description": "Відчуваєте себе експериментатором? Спробуйте наші новітні задуми в розробці. Ці функції не остаточні; вони можуть бути нестабільними, можуть змінюватися або взагалі можуть бути відкинуті. <a>Докладніше</a>."
+        "experimental_description": "Відчуваєте себе експериментатором? Спробуйте наші новітні задуми в розробці. Ці функції не остаточні; вони можуть бути нестабільними, можуть змінюватися або взагалі можуть бути відкинуті. <a>Докладніше</a>.",
+        "beta_feedback_title": "%(featureName)s — відгук про бетаверсію",
+        "beta_feedback_leave_button": "Щоб вийти з бета-тестування, перейдіть до налаштувань."
     },
     "keyboard": {
         "home": "Домівка",
@@ -1324,7 +1311,15 @@
         "uploading_logs": "Відвантаження журналів",
         "downloading_logs": "Завантаження журналів",
         "create_new_issue": "<newIssueLink>Створіть нове обговорення</newIssueLink> на GitHub, щоб ми могли розібратися з цією вадою.",
-        "waiting_for_server": "Очікується відповідь від сервера"
+        "waiting_for_server": "Очікується відповідь від сервера",
+        "error_empty": "Будь ласка, повідомте нам, що пішло не так; а ще краще створіть обговорення на GitHub із описом проблеми.",
+        "preparing_logs": "Приготування до надсилання журланла",
+        "logs_sent": "Журнали надіслані",
+        "thank_you": "Дякуємо!",
+        "failed_send_logs": "Не вдалося надіслати журнали: ",
+        "preparing_download": "Приготування до завантаження журналів",
+        "unsupported_browser": "Нагадуємо, що ваш браузер не підтримується, тож деякі функції можуть не працювати.",
+        "textarea_label": "Примітки"
     },
     "time": {
         "hours_minutes_seconds_left": "Залишилося %(hours)sгод %(minutes)sхв %(seconds)sс",
@@ -4044,7 +4039,11 @@
         "error_version_unsupported_space": "Домашній сервер користувача не підтримувати версію простору.",
         "error_version_unsupported_room": "Домашній сервер користувача не підтримує версію кімнати.",
         "error_unknown": "Невідома помилка з боку сервера",
-        "to_space": "Запросити до %(spaceName)s"
+        "to_space": "Запросити до %(spaceName)s",
+        "unable_find_profiles_description_default": "Неможливо знайти профілі для Matrix ID, перерахованих унизу — все одно бажаєте запросити їх?",
+        "unable_find_profiles_title": "Таких користувачів може не існувати",
+        "unable_find_profiles_invite_never_warn_label_default": "Усе одно запросити й більше не попереджати",
+        "unable_find_profiles_invite_label_default": "Усе одно запросити"
     },
     "scalar": {
         "error_create": "Неможливо створити віджет.",
@@ -4355,5 +4354,6 @@
             "network_dropdown_selected_label_instance": "Показати: кімнати %(instance)s (%(server)s)",
             "network_dropdown_selected_label": "Показати: кімнати Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Закрити діалогове вікно"
 }

@@ -122,16 +122,7 @@
     "Create new room": "E nieuw gesprek anmoakn",
     "collapse": "toeklappn",
     "expand": "uutklappn",
-    "The following users may not exist": "De volgende gebruukers bestoan meugliks nie",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kostege geen profieln vo de Matrix-ID’s hieroundern viendn - wil je ze algelyk uutnodign?",
-    "Invite anyway and never warn me again": "Algelyk uutnodign en myn nooit nie mi woarschuwn",
-    "Invite anyway": "Algelyk uutnodign",
-    "Preparing to send logs": "Logboekn wordn voorbereid vo verzendienge",
-    "Logs sent": "Logboekn verstuurd",
-    "Thank you!": "Merci!",
-    "Failed to send logs: ": "Verstuurn van logboekn mislukt: ",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
-    "Notes": "Ipmerkiengn",
     "Unable to load commit detail: %(msg)s": "Kostege ’t commitdetail nie loadn: %(msg)s",
     "Unavailable": "Nie beschikboar",
     "Changelog": "Wyzigiengslogboek",
@@ -207,7 +198,6 @@
     "Message edits": "Berichtbewerkiengn",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
     "Upload all": "Alles iploadn",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Vertelt uus wuk dat der verkeerd is geloopn, of nog beter, makt e foutmeldienge an ip GitHub woarin da je 't probleem beschryft.",
     "Removing…": "Bezig me te verwydern…",
     "Clear all data": "Alle gegeevns wissn",
     "Your homeserver doesn't seem to support this feature.": "Je thuusserver biedt geen oundersteunienge vo deze functie.",
@@ -371,7 +361,13 @@
         "before_submitting": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
         "collecting_information": "App-versieinformoasje wor verzoameld",
         "collecting_logs": "Logboekn worden verzoameld",
-        "waiting_for_server": "Wachtn ip antwoord van de server"
+        "waiting_for_server": "Wachtn ip antwoord van de server",
+        "error_empty": "Vertelt uus wuk dat der verkeerd is geloopn, of nog beter, makt e foutmeldienge an ip GitHub woarin da je 't probleem beschryft.",
+        "preparing_logs": "Logboekn wordn voorbereid vo verzendienge",
+        "logs_sent": "Logboekn verstuurd",
+        "thank_you": "Merci!",
+        "failed_send_logs": "Verstuurn van logboekn mislukt: ",
+        "textarea_label": "Ipmerkiengn"
     },
     "settings": {
         "use_12_hour_format": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",
@@ -1124,7 +1120,11 @@
         "error_permissions_room": "J’en èt geen toestemmienge vo menschn in dit gesprek uut te nodign.",
         "error_bad_state": "De gebruuker kun nie uutgenodigd wordn voda z’n verbannienge oungedoan gemakt gewist es.",
         "error_version_unsupported_room": "Den thuusserver van de gebruuker biedt geen oundersteunienge vo de gespreksversie.",
-        "error_unknown": "Ounbekende serverfoute"
+        "error_unknown": "Ounbekende serverfoute",
+        "unable_find_profiles_description_default": "Kostege geen profieln vo de Matrix-ID’s hieroundern viendn - wil je ze algelyk uutnodign?",
+        "unable_find_profiles_title": "De volgende gebruukers bestoan meugliks nie",
+        "unable_find_profiles_invite_never_warn_label_default": "Algelyk uutnodign en myn nooit nie mi woarschuwn",
+        "unable_find_profiles_invite_label_default": "Algelyk uutnodign"
     },
     "widget": {
         "error_need_to_be_logged_in": "Hiervoorn moe je angemeld zyn.",

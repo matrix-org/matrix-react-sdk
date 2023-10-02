@@ -22,7 +22,6 @@
     "PM": "PM",
     "AM": "AM",
     "Moderator": "Moderator",
-    "Thank you!": "Mercés !",
     "Ok": "Validar",
     "Fish": "Pes",
     "Butterfly": "Parpalhòl",
@@ -50,7 +49,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Notes": "Nòtas",
     "Unavailable": "Pas disponible",
     "Changelog": "Istoric dels cambiaments (Changelog)",
     "Removing…": "Supression en cors…",
@@ -432,5 +430,9 @@
         "public_rooms": {
             "network_dropdown_add_dialog_placeholder": "Títol del servidor"
         }
+    },
+    "bug_reporting": {
+        "thank_you": "Mercés !",
+        "textarea_label": "Nòtas"
     }
 }

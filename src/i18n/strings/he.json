@@ -28,19 +28,15 @@
     "Today": "היום",
     "Friday": "שישי",
     "Changelog": "דו\"ח שינויים",
-    "Failed to send logs: ": "כשל במשלוח יומנים: ",
     "Unavailable": "לא זמין",
     "Filter results": "סנן התוצאות",
     "Tuesday": "שלישי",
-    "Preparing to send logs": "מתכונן לשלוח יומנים",
     "Saturday": "שבת",
     "Monday": "שני",
     "Wednesday": "רביעי",
     "You cannot delete this message. (%(code)s)": "לא ניתן למחוק הודעה זו. (%(code)s)",
     "Thursday": "חמישי",
-    "Logs sent": "יומנים נשלחו",
     "Yesterday": "אתמול",
-    "Thank you!": "רב תודות!",
     "Moderator": "מנהל",
     "Restricted": "מחוץ לתחום",
     "Timor-Leste": "טמור-לסטה",
@@ -388,16 +384,7 @@
     "Removing…": "מסיר…",
     "Email address": "כתובת דוא\"ל",
     "Unable to load commit detail: %(msg)s": "לא ניתן לטעון את פרטי ההתחייבות: %(msg)s",
-    "Notes": "הערות",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "לפני שמגישים יומנים, עליכם <a> ליצור בעיה של GitHub </a> כדי לתאר את הבעיה שלכם.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "תזכורת: הדפדפן שלך אינו נתמך, כך שהחוויה שלך עשויה להיות בלתי צפויה.",
-    "Preparing to download logs": "מתכונן להורדת יומנים",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "אנא ספר לנו מה השתבש או, יותר טוב, צור בעיה של GitHub המתארת את הבעיה.",
-    "Close dialog": "סגור דיאלוג",
-    "Invite anyway": "הזמן בכל מקרה",
-    "Invite anyway and never warn me again": "הזמן בכל מקרה ולעולם לא הזהיר אותי שוב",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "לא הצלחת למצוא פרופילים עבור מזהי המטריצה המפורטים להלן - האם תרצה להזמין אותם בכל זאת?",
-    "The following users may not exist": "המשתמשים הבאים עשויים שלא להתקיים",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. לנהל ב <settings>הגדרות</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. <default> השתמש בברירת המחדל (%(defaultIdentityServerName)s) </default> או נהל ב <settings>הגדרות</settings>.",
     "Home": "הבית",
@@ -650,7 +637,6 @@
         "other": "%(spaceName)sו%(count)s אחרים"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
-    "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
     "Close sidebar": "סגור סרגל צד",
     "common": {
         "about": "אודות",
@@ -892,7 +878,8 @@
         "bridge_state_creator": "הגשר הזה נוצר על ידי משתמש <user />.",
         "bridge_state_manager": "הגשר הזה מנוהל על ידי משתמש <user />.",
         "bridge_state_workspace": "סביבת עבודה: <networkLink/>",
-        "bridge_state_channel": "ערוץ: <channelLink/>"
+        "bridge_state_channel": "ערוץ: <channelLink/>",
+        "beta_feedback_leave_button": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות."
     },
     "keyboard": {
         "home": "הבית",
@@ -1016,7 +1003,15 @@
         "uploading_logs": "מעלה לוגים",
         "downloading_logs": "מוריד לוגים",
         "create_new_issue": "אנא <newIssueLink> צור בעיה חדשה </newIssueLink> ב- GitHub כדי שנוכל לחקור את הבאג הזה.",
-        "waiting_for_server": "ממתין לתשובה מהשרת"
+        "waiting_for_server": "ממתין לתשובה מהשרת",
+        "error_empty": "אנא ספר לנו מה השתבש או, יותר טוב, צור בעיה של GitHub המתארת את הבעיה.",
+        "preparing_logs": "מתכונן לשלוח יומנים",
+        "logs_sent": "יומנים נשלחו",
+        "thank_you": "רב תודות!",
+        "failed_send_logs": "כשל במשלוח יומנים: ",
+        "preparing_download": "מתכונן להורדת יומנים",
+        "unsupported_browser": "תזכורת: הדפדפן שלך אינו נתמך, כך שהחוויה שלך עשויה להיות בלתי צפויה.",
+        "textarea_label": "הערות"
     },
     "time": {
         "hours_minutes_seconds_left": "נשארו %(hours)s שעות, %(minutes)s דקות ו-%(seconds)s שניות",
@@ -2880,7 +2875,11 @@
         "error_version_unsupported_space": "השרת של המשתמש אינו תומך בגירסא זו של מרחבי עבודה.",
         "error_version_unsupported_room": "השרת של המשתמש אינו תומך בחדר זה.",
         "error_unknown": "שגיאת שרת לא ידועה",
-        "to_space": "הזמן אל %(spaceName)s"
+        "to_space": "הזמן אל %(spaceName)s",
+        "unable_find_profiles_description_default": "לא הצלחת למצוא פרופילים עבור מזהי המטריצה המפורטים להלן - האם תרצה להזמין אותם בכל זאת?",
+        "unable_find_profiles_title": "המשתמשים הבאים עשויים שלא להתקיים",
+        "unable_find_profiles_invite_never_warn_label_default": "הזמן בכל מקרה ולעולם לא הזהיר אותי שוב",
+        "unable_find_profiles_invite_label_default": "הזמן בכל מקרה"
     },
     "scalar": {
         "error_create": "לא ניתן היה ליצור ווידג'ט.",
@@ -3120,5 +3119,6 @@
             "network_dropdown_add_dialog_description": "הזן את שם השרת החדש שתרצה לחקור.",
             "network_dropdown_add_dialog_placeholder": "שם השרת"
         }
-    }
+    },
+    "dialog_close_label": "סגור דיאלוג"
 }

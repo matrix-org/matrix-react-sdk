@@ -72,10 +72,6 @@
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
-    "Thank you!": "Obrigado!",
-    "Preparing to send logs": "Preparando para enviar relatórios",
-    "Logs sent": "Relatórios enviados",
-    "Failed to send logs: ": "Falha ao enviar os relatórios:· ",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os relatórios, você deve <a>criar um bilhete de erro no GitHub</a> para descrever seu problema.",
     "Unable to load commit detail: %(msg)s": "Não foi possível carregar os detalhes do envio: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Para evitar perder seu histórico de bate-papo, você precisa exportar as chaves da sua sala antes de se desconectar. Quando entrar novamente, você precisará usar a versão mais atual do %(brand)s",
@@ -108,10 +104,6 @@
     "No backup found!": "Nenhum backup encontrado!",
     "Send Logs": "Enviar relatórios",
     "Failed to decrypt %(failedCount)s sessions!": "Falha ao descriptografar as sessões de %(failedCount)s!",
-    "The following users may not exist": "Os seguintes usuários podem não existir",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Não é possível encontrar perfis para os IDs da Matrix listados abaixo - você gostaria de convidá-los mesmo assim?",
-    "Invite anyway and never warn me again": "Convide mesmo assim e nunca mais me avise",
-    "Invite anyway": "Convide mesmo assim",
     "Dog": "Cachorro",
     "Cat": "Gato",
     "Lion": "Leão",
@@ -189,7 +181,6 @@
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
     "%(name)s wants to verify": "%(name)s solicita confirmação",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Por favor, diga-nos o que aconteceu de errado ou, ainda melhor, crie um bilhete de erro no GitHub que descreva o problema.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Você já usou uma versão mais recente do %(brand)s nesta sessão. Para usar esta versão novamente com a criptografia de ponta a ponta, você terá que se desconectar e entrar novamente.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Confirme este usuário para torná-lo confiável. Confiar nos usuários fornece segurança adicional ao trocar mensagens criptografadas de ponta a ponta.",
@@ -213,8 +204,6 @@
     "edited": "editado",
     "Submit logs": "Enviar relatórios",
     "e.g. my-room": "por exemplo: minha-sala",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Lembrete: seu navegador não é compatível; portanto, sua experiência pode ser imprevisível.",
-    "Notes": "Notas",
     "Removing…": "Removendo…",
     "Clear all data in this session?": "Limpar todos os dados nesta sessão?",
     "Clear all data": "Limpar todos os dados",
@@ -223,7 +212,6 @@
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
-    "Close dialog": "Fechar caixa de diálogo",
     "There was a problem communicating with the server. Please try again.": "Ocorreu um problema na comunicação com o servidor. Por favor, tente novamente.",
     "Server did not require any authentication": "O servidor não exigiu autenticação",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Se você confirmar esse usuário, a sessão será marcada como confiável para você e para ele.",
@@ -323,7 +311,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Tente rolar para cima na conversa para ver se há mensagens anteriores.",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "Preparing to download logs": "Preparando os relatórios para download",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Prove a sua identidade por meio do seu Acesso único, para confirmar a desativação da sua conta.",
     "To continue, use Single Sign On to prove your identity.": "Para continuar, use o Acesso único para provar a sua identidade.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Comece uma conversa, a partir do nome ou nome de usuário de alguém (por exemplo: <userId/>).",
@@ -638,7 +625,6 @@
     "Anyone in <SpaceName/> will be able to find and join.": "Todos em <SpaceName/> poderão ver e entrar.",
     "Private space (invite only)": "Espaço privado (apenas com convite)",
     "Space visibility": "Visibilidade do Espaço",
-    "To leave the beta, visit your settings.": "Para sair do beta, vá nas suas configurações.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s pessoa que você conhece já entrou",
         "other": "%(count)s pessoas que você conhece já entraram"
@@ -925,7 +911,8 @@
         "bridge_state_creator": "Esta integração foi disponibilizada por <user />.",
         "bridge_state_manager": "Esta integração é desenvolvida por <user />.",
         "bridge_state_workspace": "Espaço de trabalho: <networkLink/>",
-        "bridge_state_channel": "Canal: <channelLink/>"
+        "bridge_state_channel": "Canal: <channelLink/>",
+        "beta_feedback_leave_button": "Para sair do beta, vá nas suas configurações."
     },
     "keyboard": {
         "home": "Home",
@@ -1043,7 +1030,15 @@
         "uploading_logs": "Enviando relatórios",
         "downloading_logs": "Baixando relatórios",
         "create_new_issue": "Por favor, <newIssueLink>crie um novo bilhete de erro</newIssueLink> no GitHub para que possamos investigar esta falha.",
-        "waiting_for_server": "Aguardando a resposta do servidor"
+        "waiting_for_server": "Aguardando a resposta do servidor",
+        "error_empty": "Por favor, diga-nos o que aconteceu de errado ou, ainda melhor, crie um bilhete de erro no GitHub que descreva o problema.",
+        "preparing_logs": "Preparando para enviar relatórios",
+        "logs_sent": "Relatórios enviados",
+        "thank_you": "Obrigado!",
+        "failed_send_logs": "Falha ao enviar os relatórios:· ",
+        "preparing_download": "Preparando os relatórios para download",
+        "unsupported_browser": "Lembrete: seu navegador não é compatível; portanto, sua experiência pode ser imprevisível.",
+        "textarea_label": "Notas"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -3003,7 +2998,11 @@
         "error_bad_state": "O banimento do usuário precisa ser removido antes de ser convidado.",
         "error_version_unsupported_room": "O servidor desta(e) usuária(o) não suporta a versão desta sala.",
         "error_unknown": "Erro de servidor desconhecido",
-        "to_space": "Convidar para %(spaceName)s"
+        "to_space": "Convidar para %(spaceName)s",
+        "unable_find_profiles_description_default": "Não é possível encontrar perfis para os IDs da Matrix listados abaixo - você gostaria de convidá-los mesmo assim?",
+        "unable_find_profiles_title": "Os seguintes usuários podem não existir",
+        "unable_find_profiles_invite_never_warn_label_default": "Convide mesmo assim e nunca mais me avise",
+        "unable_find_profiles_invite_label_default": "Convide mesmo assim"
     },
     "scalar": {
         "error_create": "Não foi possível criar o widget.",
@@ -3257,5 +3256,6 @@
             "network_dropdown_add_dialog_placeholder": "Nome do servidor",
             "network_dropdown_add_server_option": "Adicionar um novo servidor…"
         }
-    }
+    },
+    "dialog_close_label": "Fechar caixa de diálogo"
 }

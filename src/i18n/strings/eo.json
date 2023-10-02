@@ -72,10 +72,6 @@
     "You cannot delete this message. (%(code)s)": "Vi ne povas forigi tiun ĉi mesaĝon. (%(code)s)",
     "Thursday": "Ĵaŭdo",
     "Yesterday": "Hieraŭ",
-    "Thank you!": "Dankon!",
-    "Logs sent": "Protokolo sendiĝis",
-    "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
-    "Preparing to send logs": "Pretigante sendon de protokolo",
     "Dog": "Hundo",
     "Cat": "Kato",
     "Lion": "Leono",
@@ -135,7 +131,6 @@
     "Anchor": "Ankro",
     "Headphones": "Kapaŭdilo",
     "Folder": "Dosierujo",
-    "Invite anyway": "Tamen inviti",
     "Updating %(brand)s": "Ĝisdatigante %(brand)s",
     "Room Settings - %(roomName)s": "Agordoj de ĉambro – %(roomName)s",
     "Failed to upgrade room": "Malsukcesis gradaltigi ĉambron",
@@ -179,12 +174,7 @@
     "Remember my selection for this widget": "Memoru mian elekton por tiu ĉi fenestraĵo",
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
-    "The following users may not exist": "La jenaj uzantoj eble ne ekzistas",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ne povas trovi profilojn de la ĉi-subaj Matrix-identigilojn – ĉu vi tamen volas inviti ilin?",
-    "Invite anyway and never warn me again": "Tamen inviti kaj neniam min averti ree",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Bonvolu diri al ni kio misokazis, aŭ pli bone raporti problemon per GitHub.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
-    "Notes": "Notoj",
     "Unable to load commit detail: %(msg)s": "Ne povas enlegi detalojn de enmeto: %(msg)s",
     "Removing…": "Forigante…",
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
@@ -229,7 +219,6 @@
     "e.g. my-room": "ekzemple mia-chambro",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. <default>Uzu la norman (%(defaultIdentityServerName)s)</default> aŭ administru per <settings>Agordoj</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. Administru per <settings>Agordoj</settings>.",
-    "Close dialog": "Fermi interagujon",
     "Command Help": "Helpo pri komando",
     "Lock": "Seruro",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
@@ -287,7 +276,6 @@
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
     "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
     "Submit logs": "Alŝuti protokolon",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Rememorigo: via foliumilo ne estas subtenata, kaj via sperto do povas esti stranga.",
     "Server did not require any authentication": "Servilo bezonis nenian kontrolon de aŭtentiko",
     "Server did not return valid authentication information.": "Servilo ne redonis validajn informojn pri kontrolo de aŭtentiko.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Knfirmu malaktivigon de via konto per identiĝo per ununura saluto.",
@@ -332,7 +320,6 @@
     "You're all caught up.": "Sen sciigoj.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu la ĉambron</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Komencu interparolon kun iu per ĝia nomo aŭ uzantonomo (kiel <userId/>).",
-    "Preparing to download logs": "Preparante elŝuton de protokolo",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
@@ -642,7 +629,6 @@
     },
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
-    "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Sending": "Sendante",
@@ -952,7 +938,8 @@
         "bridge_state_creator": "Ĉi tiu ponto estas provizita de <user />.",
         "bridge_state_manager": "Ĉi tiu ponto estas administrata de <user />.",
         "bridge_state_workspace": "Laborspaco: <networkLink/>",
-        "bridge_state_channel": "Kanalo: <channelLink/>"
+        "bridge_state_channel": "Kanalo: <channelLink/>",
+        "beta_feedback_leave_button": "Por foriri de la prova versio, iru al viaj agordoj."
     },
     "keyboard": {
         "home": "Hejmo",
@@ -1070,7 +1057,15 @@
         "uploading_logs": "Alŝutante protokolon",
         "downloading_logs": "Elŝutante protokolon",
         "create_new_issue": "Bonvolu <newIssueLink>raporti novan problemon</newIssueLink> je GitHub, por ke ni povu ĝin esplori.",
-        "waiting_for_server": "Atendante respondon el la servilo"
+        "waiting_for_server": "Atendante respondon el la servilo",
+        "error_empty": "Bonvolu diri al ni kio misokazis, aŭ pli bone raporti problemon per GitHub.",
+        "preparing_logs": "Pretigante sendon de protokolo",
+        "logs_sent": "Protokolo sendiĝis",
+        "thank_you": "Dankon!",
+        "failed_send_logs": "Malsukcesis sendi protokolon: ",
+        "preparing_download": "Preparante elŝuton de protokolo",
+        "unsupported_browser": "Rememorigo: via foliumilo ne estas subtenata, kaj via sperto do povas esti stranga.",
+        "textarea_label": "Notoj"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh. %(minutes)sm. %(seconds)ss. restas",
@@ -3078,7 +3073,11 @@
         "error_version_unsupported_space": "La hejmservilo de la uzanto ne subtenas la version de la aro.",
         "error_version_unsupported_room": "Hejmservilo de ĉi tiu uzanto ne subtenas la version de la ĉambro.",
         "error_unknown": "Nekonata servila eraro",
-        "to_space": "Inviti al %(spaceName)s"
+        "to_space": "Inviti al %(spaceName)s",
+        "unable_find_profiles_description_default": "Ne povas trovi profilojn de la ĉi-subaj Matrix-identigilojn – ĉu vi tamen volas inviti ilin?",
+        "unable_find_profiles_title": "La jenaj uzantoj eble ne ekzistas",
+        "unable_find_profiles_invite_never_warn_label_default": "Tamen inviti kaj neniam min averti ree",
+        "unable_find_profiles_invite_label_default": "Tamen inviti"
     },
     "scalar": {
         "error_create": "Ne povas krei fenestraĵon.",
@@ -3310,5 +3309,6 @@
             "network_dropdown_add_dialog_description": "Enigu la nomon de nova servilo, kiun vi volas esplori.",
             "network_dropdown_add_dialog_placeholder": "Nomo de servilo"
         }
-    }
+    },
+    "dialog_close_label": "Fermi interagujon"
 }

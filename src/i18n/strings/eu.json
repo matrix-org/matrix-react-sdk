@@ -63,19 +63,15 @@
     "Today": "Gaur",
     "Friday": "Ostirala",
     "Changelog": "Aldaketa-egunkaria",
-    "Failed to send logs: ": "Huts egin du egunkariak bidaltzean: ",
     "Unavailable": "Eskuraezina",
     "Filter results": "Iragazi emaitzak",
     "Tuesday": "Asteartea",
-    "Preparing to send logs": "Egunkariak bidaltzeko prestatzen",
     "Saturday": "Larunbata",
     "Monday": "Astelehena",
     "Wednesday": "Asteazkena",
     "You cannot delete this message. (%(code)s)": "Ezin duzu mezu hau ezabatu. (%(code)s)",
     "Thursday": "Osteguna",
-    "Logs sent": "Egunkariak bidalita",
     "Yesterday": "Atzo",
-    "Thank you!": "Eskerrik asko!",
     "Send Logs": "Bidali egunkariak",
     "Clear Storage and Sign Out": "Garbitu biltegiratzea eta amaitu saioa",
     "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
@@ -107,10 +103,6 @@
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
     "Failed to decrypt %(failedCount)s sessions!": "Ezin izan dira %(failedCount)s saio deszifratu!",
     "Unable to load commit detail: %(msg)s": "Ezin izan dira xehetasunak kargatu: %(msg)s",
-    "The following users may not exist": "Hurrengo erabiltzaileak agian ez dira existitzen",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ezin izan dira behean zerrendatutako Matrix ID-een profilak, berdin gonbidatu nahi dituzu?",
-    "Invite anyway and never warn me again": "Gonbidatu edonola ere eta ez abisatu inoiz gehiago",
-    "Invite anyway": "Gonbidatu hala ere",
     "Dog": "Txakurra",
     "Cat": "Katua",
     "Lion": "Lehoia",
@@ -186,7 +178,6 @@
     "Room Settings - %(roomName)s": "Gelaren ezarpenak - %(roomName)s",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
     "edited": "editatua",
-    "Notes": "Oharrak",
     "Sign out and remove encryption keys?": "Amaitu saioa eta kendu zifratze gakoak?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Etorkizunean hau ekiditeko, <a>bidali guri egunkariak</a>.",
     "Missing session data": "Saioaren datuak falta dira",
@@ -210,7 +201,6 @@
     "Clear all data": "Garbitu datu guztiak",
     "Your homeserver doesn't seem to support this feature.": "Antza zure hasiera-zerbitzariak ez du ezaugarri hau onartzen.",
     "Resend %(unsentCount)s reaction(s)": "Birbidali %(unsentCount)s erreakzio",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Esaguzu zer ez den behar bezala ibili edo, hobe oraindik, sortu GitHub txosten bat zure arazoa deskribatuz.",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
     "Deactivate account": "Desaktibatu kontua",
@@ -226,7 +216,6 @@
     "e.g. my-room": "adib. nire-gela",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. <default>Erabili lehenetsitakoa (%(defaultIdentityServerName)s)</default> edo gehitu bat <settings>Ezarpenak</settings> atalean.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
-    "Close dialog": "Itxi elkarrizketa-koadroa",
     "%(name)s accepted": "%(name)s onartuta",
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
@@ -290,7 +279,6 @@
     "Server did not return valid authentication information.": "Zerbitzariak ez du baliozko autentifikazio informaziorik itzuli.",
     "There was a problem communicating with the server. Please try again.": "Arazo bat egon da zerbitzariarekin komunikatzeko. Saiatu berriro.",
     "Submit logs": "Bidali egunkariak",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
     "Unable to upload": "Ezin izan da igo",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
@@ -577,7 +565,14 @@
         "collecting_information": "Aplikazioaren bertsio-informazioa biltzen",
         "collecting_logs": "Egunkariak biltzen",
         "create_new_issue": "<newIssueLink>Sortu txosten berri bat</newIssueLink> GitHub zerbitzarian arazo hau ikertu dezagun.",
-        "waiting_for_server": "Zerbitzariaren erantzunaren zain"
+        "waiting_for_server": "Zerbitzariaren erantzunaren zain",
+        "error_empty": "Esaguzu zer ez den behar bezala ibili edo, hobe oraindik, sortu GitHub txosten bat zure arazoa deskribatuz.",
+        "preparing_logs": "Egunkariak bidaltzeko prestatzen",
+        "logs_sent": "Egunkariak bidalita",
+        "thank_you": "Eskerrik asko!",
+        "failed_send_logs": "Huts egin du egunkariak bidaltzean: ",
+        "unsupported_browser": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
+        "textarea_label": "Oharrak"
     },
     "time": {
         "few_seconds_ago": "duela segundo batzuk",
@@ -1718,7 +1713,11 @@
         "error_permissions_room": "Ez duzu jendea gela honetara gonbidatzeko baimenik.",
         "error_bad_state": "Erabiltzaileari debekua kendu behar zaio gonbidatu aurretik.",
         "error_version_unsupported_room": "Erabiltzailearen hasiera-zerbitzariak ez du gelaren bertsioa onartzen.",
-        "error_unknown": "Zerbitzari errore ezezaguna"
+        "error_unknown": "Zerbitzari errore ezezaguna",
+        "unable_find_profiles_description_default": "Ezin izan dira behean zerrendatutako Matrix ID-een profilak, berdin gonbidatu nahi dituzu?",
+        "unable_find_profiles_title": "Hurrengo erabiltzaileak agian ez dira existitzen",
+        "unable_find_profiles_invite_never_warn_label_default": "Gonbidatu edonola ere eta ez abisatu inoiz gehiago",
+        "unable_find_profiles_invite_label_default": "Gonbidatu hala ere"
     },
     "widget": {
         "error_need_to_be_logged_in": "Saioa hasi duzu.",
@@ -1912,5 +1911,6 @@
             "network_dropdown_add_dialog_description": "Sartu arakatu nahi duzun zerbitzari berriaren izena.",
             "network_dropdown_add_dialog_placeholder": "Zerbitzari-izena"
         }
-    }
+    },
+    "dialog_close_label": "Itxi elkarrizketa-koadroa"
 }

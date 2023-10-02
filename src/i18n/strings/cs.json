@@ -71,11 +71,7 @@
     "Thursday": "Čtvrtek",
     "Yesterday": "Včera",
     "Wednesday": "Středa",
-    "Thank you!": "Děkujeme vám!",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Preparing to send logs": "Příprava na odeslání záznamů",
-    "Logs sent": "Záznamy odeslány",
-    "Failed to send logs: ": "Nepodařilo se odeslat záznamy: ",
     "Upgrade Room Version": "Aktualizovat verzi místnosti",
     "Create a new room with the same name, description and avatar": "Vznikne místnost se stejným názvem, popisem a avatarem",
     "Update any local room aliases to point to the new room": "Aktualizujeme všechny lokální aliasy místnosti tak, aby ukazovaly na novou místnost",
@@ -160,10 +156,6 @@
     "Anchor": "Kotva",
     "Headphones": "Sluchátka",
     "Folder": "Desky",
-    "The following users may not exist": "Následující uživatel možná neexistuje",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nepovedlo se najít profily následujících Matrix ID - chcete je stejně pozvat?",
-    "Invite anyway and never warn me again": "Stejně je pozvat a nikdy mě nevarujte znovu",
-    "Invite anyway": "Stejně je pozvat",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pro odeslání záznamů je potřeba <a>vytvořit issue na GitHubu</a> s popisem problému.",
     "Unable to load commit detail: %(msg)s": "Nepovedlo se načíst detaily revize: %(msg)s",
     "Incompatible Database": "Nekompatibilní databáze",
@@ -185,7 +177,6 @@
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Abyste po odhlášení nepřišli o přístup k historii šifrovaných konverzací, měli byste si před odhlášením exportovat šifrovací klíče místností. Prosím vraťte se k novější verzi %(brand)su a exportujte si klíče",
     "Room Settings - %(roomName)s": "Nastavení místnosti - %(roomName)s",
     "edited": "upraveno",
-    "Notes": "Poznámky",
     "Sign out and remove encryption keys?": "Odhlásit a odstranit šifrovací klíče?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Abychom tomu mohli pro příště předejít, <a>pošlete nám prosím záznamy</a>.",
     "Missing session data": "Chybějící data relace",
@@ -206,8 +197,6 @@
     "Deactivate account": "Deaktivace účtu",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. <default>Použít výchozí (%(defaultIdentityServerName)s)</default> nebo přenastavit <settings>Nastavení</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. Přenastavit v <settings>Nastavení</settings>.",
-    "Close dialog": "Zavřít dialog",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Dejte nám vědět, prosím, co se pokazilo nebo vytvořte issue na GitHubu, kde problém popište.",
     "Removing…": "Odstaňování…",
     "Clear all data": "Smazat všechna data",
     "Your homeserver doesn't seem to support this feature.": "Váš domovský server asi tuto funkci nepodporuje.",
@@ -284,7 +273,6 @@
     "Your homeserver has exceeded its user limit.": "Na vašem domovském serveru byl překročen limit počtu uživatelů.",
     "Your homeserver has exceeded one of its resource limits.": "Na vašem domovském serveru byl překročen limit systémových požadavků.",
     "Ok": "Ok",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Připomínka: váš prohlížeč není podporován, takže vaše zkušenost může být nepředvídatelná.",
     "To continue, use Single Sign On to prove your identity.": "Pro pokračování prokažte svou identitu pomocí Jednotného přihlášení.",
     "Confirm to continue": "Pro pokračování potvrďte",
     "Click the button below to confirm your identity.": "Klikněte na tlačítko níže pro potvrzení vaší identity.",
@@ -292,7 +280,6 @@
     "Signature upload success": "Podpis úspěšně nahrán",
     "Signature upload failed": "Podpis se nepodařilo nahrát",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
-    "Preparing to download logs": "Příprava na stažení záznamů",
     "a new cross-signing key signature": "nový klíč pro křížový podpis",
     "a key signature": "podpis klíče",
     "%(brand)s encountered an error during upload of:": "%(brand)s narazil na chybu při nahrávání:",
@@ -652,7 +639,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
     "Sending": "Odesílání",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
-    "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
     "Or send invite link": "Nebo pošlete pozvánku",
     "Some suggestions may be hidden for privacy.": "Některé návrhy mohou být z důvodu ochrany soukromí skryty.",
     "Search for rooms or people": "Hledat místnosti nebo osoby",
@@ -749,7 +735,6 @@
         "one": "1 účastník",
         "other": "%(count)s účastníků"
     },
-    "%(featureName)s Beta feedback": "Zpětná vazba beta funkce %(featureName)s",
     "Live location ended": "Sdílení polohy živě skončilo",
     "Live location enabled": "Poloha živě povolena",
     "Live location error": "Chyba polohy živě",
@@ -1166,7 +1151,9 @@
         "beta_section": "Připravované funkce",
         "beta_description": "Co se chystá pro %(brand)s? Experimentální funkce jsou nejlepším způsobem, jak se dostat k novým věcem v raném stádiu, vyzkoušet nové funkce a pomoci je formovat ještě před jejich spuštěním.",
         "experimental_section": "Předběžné ukázky",
-        "experimental_description": "Rádi experimentujete? Vyzkoušejte naše nejnovější nápady ve vývoji. Tyto funkce nejsou dokončeny; mohou být nestabilní, mohou se změnit nebo mohou být zcela vypuštěny. <a>Zjistěte více</a>."
+        "experimental_description": "Rádi experimentujete? Vyzkoušejte naše nejnovější nápady ve vývoji. Tyto funkce nejsou dokončeny; mohou být nestabilní, mohou se změnit nebo mohou být zcela vypuštěny. <a>Zjistěte více</a>.",
+        "beta_feedback_title": "Zpětná vazba beta funkce %(featureName)s",
+        "beta_feedback_leave_button": "Chcete-li opustit beta verzi, jděte do nastavení."
     },
     "keyboard": {
         "home": "Domov",
@@ -1325,7 +1312,15 @@
         "uploading_logs": "Nahrávání záznamů",
         "downloading_logs": "Stahování záznamů",
         "create_new_issue": "Vytvořte prosím <newIssueLink>novou issue</newIssueLink> na GitHubu abychom mohli chybu opravit.",
-        "waiting_for_server": "Čekám na odezvu ze serveru"
+        "waiting_for_server": "Čekám na odezvu ze serveru",
+        "error_empty": "Dejte nám vědět, prosím, co se pokazilo nebo vytvořte issue na GitHubu, kde problém popište.",
+        "preparing_logs": "Příprava na odeslání záznamů",
+        "logs_sent": "Záznamy odeslány",
+        "thank_you": "Děkujeme vám!",
+        "failed_send_logs": "Nepodařilo se odeslat záznamy: ",
+        "preparing_download": "Příprava na stažení záznamů",
+        "unsupported_browser": "Připomínka: váš prohlížeč není podporován, takže vaše zkušenost může být nepředvídatelná.",
+        "textarea_label": "Poznámky"
     },
     "time": {
         "hours_minutes_seconds_left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss",
@@ -4051,7 +4046,11 @@
         "error_version_unsupported_space": "Domovský server uživatele nepodporuje danou verzi prostoru.",
         "error_version_unsupported_room": "Uživatelův domovský server nepodporuje verzi této místnosti.",
         "error_unknown": "Neznámá chyba serveru",
-        "to_space": "Pozvat do %(spaceName)s"
+        "to_space": "Pozvat do %(spaceName)s",
+        "unable_find_profiles_description_default": "Nepovedlo se najít profily následujících Matrix ID - chcete je stejně pozvat?",
+        "unable_find_profiles_title": "Následující uživatel možná neexistuje",
+        "unable_find_profiles_invite_never_warn_label_default": "Stejně je pozvat a nikdy mě nevarujte znovu",
+        "unable_find_profiles_invite_label_default": "Stejně je pozvat"
     },
     "scalar": {
         "error_create": "Nepodařilo se vytvořit widget.",
@@ -4362,5 +4361,6 @@
             "network_dropdown_selected_label_instance": "Zobrazit: %(instance)s místností (%(server)s)",
             "network_dropdown_selected_label": "Zobrazit: Matrix místnosti"
         }
-    }
+    },
+    "dialog_close_label": "Zavřít dialog"
 }

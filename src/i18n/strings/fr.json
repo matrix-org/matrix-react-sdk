@@ -72,10 +72,6 @@
     "You cannot delete this message. (%(code)s)": "Vous ne pouvez pas supprimer ce message. (%(code)s)",
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
-    "Thank you!": "Merci !",
-    "Logs sent": "Journaux envoyés",
-    "Failed to send logs: ": "Échec lors de l’envoi des journaux : ",
-    "Preparing to send logs": "Préparation de l’envoi des journaux",
     "Send Logs": "Envoyer les journaux",
     "Clear Storage and Sign Out": "Effacer le stockage et se déconnecter",
     "We encountered an error trying to restore your previous session.": "Une erreur est survenue lors de la restauration de la dernière session.",
@@ -108,10 +104,6 @@
     "No backup found!": "Aucune sauvegarde n’a été trouvée !",
     "Failed to decrypt %(failedCount)s sessions!": "Le déchiffrement de %(failedCount)s sessions a échoué !",
     "Unable to load commit detail: %(msg)s": "Impossible de charger les détails de l’envoi : %(msg)s",
-    "The following users may not exist": "Les utilisateurs suivants pourraient ne pas exister",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même les inviter ?",
-    "Invite anyway and never warn me again": "Inviter quand même et ne plus me prévenir",
-    "Invite anyway": "Inviter quand même",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Vérifier cet utilisateur pour le marquer comme fiable. Faire confiance aux utilisateurs vous permet d’être tranquille lorsque vous utilisez des messages chiffrés de bout en bout.",
     "Incoming Verification Request": "Demande de vérification entrante",
     "Email (optional)": "E-mail (facultatif)",
@@ -186,7 +178,6 @@
     "Scissors": "Ciseaux",
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
     "Remember my selection for this widget": "Se souvenir de mon choix pour ce widget",
-    "Notes": "Notes",
     "Sign out and remove encryption keys?": "Se déconnecter et supprimer les clés de chiffrement ?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Pour nous aider à éviter cela dans le futur, veuillez <a>nous envoyer les journaux</a>.",
     "Missing session data": "Données de la session manquantes",
@@ -211,7 +202,6 @@
     "Your homeserver doesn't seem to support this feature.": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité.",
     "Clear all data": "Supprimer toutes les données",
     "Removing…": "Suppression…",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Dites-nous ce qui s’est mal passé ou, encore mieux, créez un rapport d’erreur sur GitHub qui décrit le problème.",
     "Find others by phone or email": "Trouver d’autres personnes par téléphone ou e-mail",
     "Be found by phone or email": "Être trouvé par téléphone ou e-mail",
     "Deactivate account": "Désactiver le compte",
@@ -227,7 +217,6 @@
         "one": "Supprimer 1 message"
     },
     "e.g. my-room": "par ex. mon-salon",
-    "Close dialog": "Fermer la boîte de dialogue",
     "%(name)s accepted": "%(name)s a accepté",
     "%(name)s cancelled": "%(name)s a annulé",
     "%(name)s wants to verify": "%(name)s veut vérifier",
@@ -292,7 +281,6 @@
     "Server did not return valid authentication information.": "Le serveur n’a pas renvoyé des informations d’authentification valides.",
     "There was a problem communicating with the server. Please try again.": "Un problème est survenu en essayant de communiquer avec le serveur. Veuillez réessayer.",
     "Submit logs": "Envoyer les journaux",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Rappel : Votre navigateur n’est pas pris en charge donc votre expérience pourrait être aléatoire.",
     "Unable to upload": "Envoi impossible",
     "Restoring keys from backup": "Restauration des clés depuis la sauvegarde",
     "%(completed)s of %(total)s keys restored": "%(completed)s clés sur %(total)s restaurées",
@@ -318,7 +306,6 @@
     "Security Key": "Clé de sécurité",
     "Use your Security Key to continue.": "Utilisez votre clé de sécurité pour continuer.",
     "Backup version:": "Version de la sauvegarde :",
-    "Preparing to download logs": "Préparation du téléchargement des journaux",
     "Not encrypted": "Non-chiffré",
     "Unable to set up keys": "Impossible de configurer les clés",
     "Recent changes that have not yet been received": "Changements récents qui n’ont pas encore été reçus",
@@ -653,7 +640,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
     "Sending": "Envoi",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
-    "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
     "Or send invite link": "Ou envoyer le lien d’invitation",
     "Some suggestions may be hidden for privacy.": "Certaines suggestions pourraient être masquées pour votre confidentialité.",
     "Search for rooms or people": "Rechercher des salons ou des gens",
@@ -745,7 +731,6 @@
         "one": "Vous êtes sur le point de supprimer %(count)s message de %(user)s. Il sera supprimé définitivement et pour tout le monde dans la conversation. Voulez-vous continuer ?"
     },
     "An error occurred while stopping your live location, please try again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer",
-    "%(featureName)s Beta feedback": "Commentaires sur la bêta de %(featureName)s",
     "%(count)s participants": {
         "one": "1 participant",
         "other": "%(count)s participants"
@@ -1165,7 +1150,9 @@
         "beta_section": "Fonctionnalités à venir",
         "beta_description": "Que va-t-il se passer dans %(brand)s ? La section expérimentale est la meilleure manière d’avoir des choses en avance, tester les nouvelles fonctionnalités et d’aider à les affiner avant leur lancement officiel.",
         "experimental_section": "Avant-premières",
-        "experimental_description": "Envie d’expériences ? Essayez nos dernières idées en développement. Ces fonctionnalités ne sont pas terminées ; elles peuvent changer, être instables, ou être complètement abandonnées. <a>En savoir plus</a>."
+        "experimental_description": "Envie d’expériences ? Essayez nos dernières idées en développement. Ces fonctionnalités ne sont pas terminées ; elles peuvent changer, être instables, ou être complètement abandonnées. <a>En savoir plus</a>.",
+        "beta_feedback_title": "Commentaires sur la bêta de %(featureName)s",
+        "beta_feedback_leave_button": "Pour quitter la bêta, consultez les paramètres."
     },
     "keyboard": {
         "home": "Accueil",
@@ -1324,7 +1311,15 @@
         "uploading_logs": "Envoi des journaux",
         "downloading_logs": "Téléchargement des journaux",
         "create_new_issue": "Veuillez <newIssueLink>créer un nouveau rapport</newIssueLink> sur GitHub afin que l’on enquête sur cette erreur.",
-        "waiting_for_server": "En attente d’une réponse du serveur"
+        "waiting_for_server": "En attente d’une réponse du serveur",
+        "error_empty": "Dites-nous ce qui s’est mal passé ou, encore mieux, créez un rapport d’erreur sur GitHub qui décrit le problème.",
+        "preparing_logs": "Préparation de l’envoi des journaux",
+        "logs_sent": "Journaux envoyés",
+        "thank_you": "Merci !",
+        "failed_send_logs": "Échec lors de l’envoi des journaux : ",
+        "preparing_download": "Préparation du téléchargement des journaux",
+        "unsupported_browser": "Rappel : Votre navigateur n’est pas pris en charge donc votre expérience pourrait être aléatoire.",
+        "textarea_label": "Notes"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -4044,7 +4039,11 @@
         "error_version_unsupported_space": "Le serveur d’accueil de l’utilisateur ne prend pas en charge la version de cet espace.",
         "error_version_unsupported_room": "Le serveur d’accueil de l’utilisateur ne prend pas en charge la version de ce salon.",
         "error_unknown": "Erreur de serveur inconnue",
-        "to_space": "Inviter à %(spaceName)s"
+        "to_space": "Inviter à %(spaceName)s",
+        "unable_find_profiles_description_default": "Impossible de trouver les profils pour les identifiants Matrix listés ci-dessous. Voulez-vous quand même les inviter ?",
+        "unable_find_profiles_title": "Les utilisateurs suivants pourraient ne pas exister",
+        "unable_find_profiles_invite_never_warn_label_default": "Inviter quand même et ne plus me prévenir",
+        "unable_find_profiles_invite_label_default": "Inviter quand même"
     },
     "scalar": {
         "error_create": "Impossible de créer le widget.",
@@ -4355,5 +4354,6 @@
             "network_dropdown_selected_label_instance": "Afficher : %(instance)s salons (%(server)s)",
             "network_dropdown_selected_label": "Afficher : Salons Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Fermer la boîte de dialogue"
 }

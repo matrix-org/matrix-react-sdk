@@ -63,19 +63,15 @@
     "Today": "Ma",
     "Friday": "Péntek",
     "Changelog": "Változások",
-    "Failed to send logs: ": "Hiba a napló küldésénél: ",
     "Unavailable": "Elérhetetlen",
     "Filter results": "Találatok szűrése",
     "Tuesday": "Kedd",
-    "Preparing to send logs": "Előkészülés napló küldéshez",
     "Saturday": "Szombat",
     "Monday": "Hétfő",
     "You cannot delete this message. (%(code)s)": "Nem törölheted ezt az üzenetet. (%(code)s)",
     "Thursday": "Csütörtök",
-    "Logs sent": "Napló elküldve",
     "Yesterday": "Tegnap",
     "Wednesday": "Szerda",
-    "Thank you!": "Köszönjük!",
     "Send Logs": "Naplók küldése",
     "Clear Storage and Sign Out": "Tárhely törlése és kijelentkezés",
     "We encountered an error trying to restore your previous session.": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
@@ -108,10 +104,6 @@
     "No backup found!": "Mentés nem található!",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s kapcsolatot nem lehet visszafejteni!",
     "Unable to load commit detail: %(msg)s": "A véglegesítés részleteinek betöltése sikertelen: %(msg)s",
-    "The following users may not exist": "Az alábbi felhasználók lehet, hogy nem léteznek",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Az alábbi Matrix ID-koz nem sikerül megtalálni a profilokat - így is meghívod őket?",
-    "Invite anyway and never warn me again": "Mindenképpen meghív és ne figyelmeztess többet",
-    "Invite anyway": "Meghívás mindenképp",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Ellenőrizd ezt a felhasználót, hogy megbízhatónak lehessen tekinteni. Megbízható felhasználók további nyugalmat jelenthetnek ha végpontól végpontig titkosítást használsz.",
     "Incoming Verification Request": "Bejövő Hitelesítési Kérés",
     "Email (optional)": "E-mail (nem kötelező)",
@@ -186,7 +178,6 @@
     "Scissors": "Olló",
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
-    "Notes": "Megjegyzések",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>.",
     "Missing session data": "A munkamenetadatok hiányzik",
@@ -211,7 +202,6 @@
     "Clear all data": "Minden adat törlése",
     "Your homeserver doesn't seem to support this feature.": "Úgy tűnik, hogy a Matrix-kiszolgálója nem támogatja ezt a szolgáltatást.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reakció újraküldése",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Kérlek mond el nekünk mi az ami nem működött, vagy még jobb, ha egy GitHub jegyben leírod a problémát.",
     "Find others by phone or email": "Keressen meg másokat telefonszám vagy e-mail-cím alapján",
     "Be found by phone or email": "Találják meg telefonszám vagy e-mail-cím alapján",
     "Deactivate account": "Fiók zárolása",
@@ -227,7 +217,6 @@
         "one": "1 üzenet törlése"
     },
     "e.g. my-room": "pl.: szobam",
-    "Close dialog": "Ablak bezárása",
     "%(name)s accepted": "%(name)s elfogadta",
     "%(name)s cancelled": "%(name)s megszakította",
     "%(name)s wants to verify": "%(name)s ellenőrizni szeretné",
@@ -290,7 +279,6 @@
     "There was a problem communicating with the server. Please try again.": "A szerverrel való kommunikációval probléma történt. Kérlek próbáld újra.",
     "Sign in with SSO": "Belépés SSO-val",
     "Submit logs": "Napló elküldése",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Emlékeztető: A böngésződ nem támogatott, így az élmény kiszámíthatatlan lehet.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Erősítsd meg egyszeri bejelentkezéssel, hogy felfüggeszted ezt a fiókot.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Biztos, hogy felfüggeszted a fiókodat? Ezt nem lehet visszavonni.",
     "Unable to upload": "Nem lehet feltölteni",
@@ -329,7 +317,6 @@
     "A connection error occurred while trying to contact the server.": "Kapcsolati hiba történt a kiszolgáló elérése során.",
     "The server is not configured to indicate what the problem is (CORS).": "A kiszolgáló nem úgy van beállítva, hogy megjelenítse a probléma forrását (CORS).",
     "Recent changes that have not yet been received": "A legutóbbi változások, amelyek még nem érkeztek meg",
-    "Preparing to download logs": "Napló előkészítése feltöltéshez",
     "Not encrypted": "Nem titkosított",
     "Backup version:": "Mentés verziója:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Indíts beszélgetést valakivel és használd hozzá a nevét vagy a felhasználói nevét (mint <userId/>).",
@@ -652,7 +639,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
     "Sending": "Küldés",
-    "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
     "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
     "Or send invite link": "Vagy meghívó link küldése",
@@ -754,7 +740,6 @@
     "Live location ended": "Élő pozíció megosztás befejeződött",
     "Live until %(expiryTime)s": "Élő eddig: %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "Frissítve %(humanizedUpdateTime)s",
-    "%(featureName)s Beta feedback": "%(featureName)s béta visszajelzés",
     "%(count)s participants": {
         "one": "1 résztvevő",
         "other": "%(count)s résztvevő"
@@ -1152,7 +1137,9 @@
         "beta_section": "Készülő funkciók",
         "beta_description": "Mi várható a(z) %(brand)s fejlesztésében? A labor a legjobb hely az új dolgok kipróbálásához, visszajelzés adásához és a funkciók éles indulás előtti kialakításában történő segítséghez.",
         "experimental_section": "Lehetőségek korai megjelenítése",
-        "experimental_description": "Kísérletező kedvében van? Próbálja ki a legújabb fejlesztési ötleteinket. Ezek nincsenek befejezve; lehet, hogy instabilak, megváltozhatnak vagy el is tűnhetnek. <a>Tudjon meg többet</a>."
+        "experimental_description": "Kísérletező kedvében van? Próbálja ki a legújabb fejlesztési ötleteinket. Ezek nincsenek befejezve; lehet, hogy instabilak, megváltozhatnak vagy el is tűnhetnek. <a>Tudjon meg többet</a>.",
+        "beta_feedback_title": "%(featureName)s béta visszajelzés",
+        "beta_feedback_leave_button": "A beállításokban tudja elhagyni a bétát."
     },
     "keyboard": {
         "home": "Kezdőlap",
@@ -1311,7 +1298,15 @@
         "uploading_logs": "Naplók feltöltése folyamatban",
         "downloading_logs": "Naplók letöltése folyamatban",
         "create_new_issue": "Ahhoz hogy megvizsgálhassuk a hibát, <newIssueLink>hozzon létre egy új hibajegyet</newIssueLink> a GitHubon.",
-        "waiting_for_server": "Várakozás a kiszolgáló válaszára"
+        "waiting_for_server": "Várakozás a kiszolgáló válaszára",
+        "error_empty": "Kérlek mond el nekünk mi az ami nem működött, vagy még jobb, ha egy GitHub jegyben leírod a problémát.",
+        "preparing_logs": "Előkészülés napló küldéshez",
+        "logs_sent": "Napló elküldve",
+        "thank_you": "Köszönjük!",
+        "failed_send_logs": "Hiba a napló küldésénél: ",
+        "preparing_download": "Napló előkészítése feltöltéshez",
+        "unsupported_browser": "Emlékeztető: A böngésződ nem támogatott, így az élmény kiszámíthatatlan lehet.",
+        "textarea_label": "Megjegyzések"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s ó %(minutes)s p %(seconds)s mp van hátra",
@@ -3950,7 +3945,11 @@
         "error_version_unsupported_space": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott tér verziót.",
         "error_version_unsupported_room": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott szobaverziót.",
         "error_unknown": "Ismeretlen kiszolgálóhiba",
-        "to_space": "Meghívás ide: %(spaceName)s"
+        "to_space": "Meghívás ide: %(spaceName)s",
+        "unable_find_profiles_description_default": "Az alábbi Matrix ID-koz nem sikerül megtalálni a profilokat - így is meghívod őket?",
+        "unable_find_profiles_title": "Az alábbi felhasználók lehet, hogy nem léteznek",
+        "unable_find_profiles_invite_never_warn_label_default": "Mindenképpen meghív és ne figyelmeztess többet",
+        "unable_find_profiles_invite_label_default": "Meghívás mindenképp"
     },
     "scalar": {
         "error_create": "Nem lehet kisalkalmazást létrehozni.",
@@ -4259,5 +4258,6 @@
             "network_dropdown_selected_label_instance": "Megjelenít: %(instance)s szoba (%(server)s)",
             "network_dropdown_selected_label": "Megjelenít: Matrix szobák"
         }
-    }
+    },
+    "dialog_close_label": "Ablak bezárása"
 }

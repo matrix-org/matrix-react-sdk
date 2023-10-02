@@ -408,22 +408,8 @@
     "Confirm Removal": "تأیید حذف",
     "Removing…": "در حال حذف…",
     "Unable to load commit detail: %(msg)s": "بارگیری جزئیات commit انجام نشد: %(msg)s",
-    "Notes": "یادداشت‌ها",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "یادآوری: مرورگر شما پشتیبانی نمی شود ، بنابراین ممکن است تجربه شما غیرقابل پیش بینی باشد.",
-    "Preparing to download logs": "در حال آماده سازی برای بارگیری گزارش ها",
-    "Failed to send logs: ": "ارسال گزارش با خطا مواجه شد: ",
-    "Thank you!": "با سپاس!",
-    "Logs sent": "گزارش‌های مربوط ارسال شد",
-    "Preparing to send logs": "در حال آماده سازی برای ارسال گزارش ها",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "لطفاً به ما بگویید چه مشکلی پیش آمد و یا اینکه لطف کنید و یک مسئله GitHub ایجاد کنید که مشکل را توصیف کند.",
     "You may contact me if you have any follow up questions": "در صورت داشتن هرگونه سوال پیگیری ممکن است با من تماس بگیرید",
-    "To leave the beta, visit your settings.": "برای خروج از بتا به بخش تنظیمات مراجعه کنید.",
-    "Close dialog": "بستن گفتگو",
-    "Invite anyway": "به هر حال دعوت کن",
-    "Invite anyway and never warn me again": "به هر حال دعوت کن و دیگر هرگز به من هشدار نده",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "برای شناسه‌های ماتریکس زیر، پروفایلی پیدا نشد - آیا به هر حال می خواهید آنها را دعوت کنید؟",
-    "The following users may not exist": "کاربران زیر ممکن است وجود نداشته باشند",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. اینکار را می‌توانید از طریق بخش <settings>تنظیمات</settings> انجام دهید.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. <default>از پیش فرض (%(defaultIdentityServerName)s) استفاده کنید</default> یا آن را در بخش <settings>تنظیمات</settings> مدیریت کنید.",
     "Wrong file type": "نوع فایل اشتباه است",
@@ -898,7 +884,8 @@
         "bridge_state_creator": "این پل ارتباطی توسط <user /> ارائه شده‌است.",
         "bridge_state_manager": "این پل ارتباطی توسط <user /> مدیریت می‌شود.",
         "bridge_state_workspace": "فضای کار:<networkLink/>",
-        "bridge_state_channel": "کانال:<channelLink/>"
+        "bridge_state_channel": "کانال:<channelLink/>",
+        "beta_feedback_leave_button": "برای خروج از بتا به بخش تنظیمات مراجعه کنید."
     },
     "keyboard": {
         "home": "خانه",
@@ -1019,7 +1006,15 @@
         "uploading_logs": "در حال بارگذاری لاگ‌ها",
         "downloading_logs": "در حال دریافت لاگ‌ها",
         "create_new_issue": "لطفا در GitHub <newIssueLink>یک مسئله جدید ایجاد کنید</newIssueLink> تا بتوانیم این اشکال را بررسی کنیم.",
-        "waiting_for_server": "در انتظار پاسخی از سمت سرور"
+        "waiting_for_server": "در انتظار پاسخی از سمت سرور",
+        "error_empty": "لطفاً به ما بگویید چه مشکلی پیش آمد و یا اینکه لطف کنید و یک مسئله GitHub ایجاد کنید که مشکل را توصیف کند.",
+        "preparing_logs": "در حال آماده سازی برای ارسال گزارش ها",
+        "logs_sent": "گزارش‌های مربوط ارسال شد",
+        "thank_you": "با سپاس!",
+        "failed_send_logs": "ارسال گزارش با خطا مواجه شد: ",
+        "preparing_download": "در حال آماده سازی برای بارگیری گزارش ها",
+        "unsupported_browser": "یادآوری: مرورگر شما پشتیبانی نمی شود ، بنابراین ممکن است تجربه شما غیرقابل پیش بینی باشد.",
+        "textarea_label": "یادداشت‌ها"
     },
     "time": {
         "seconds_left": "%(seconds)s ثانیه باقی‌مانده",
@@ -2750,7 +2745,11 @@
         "error_version_unsupported_space": "نسخه فضای شما با سرور خانگی کاربر سازگاری ندارد.",
         "error_version_unsupported_room": "سرور کاربر از نسخه‌ی اتاق پشتیبانی نمی‌کند.",
         "error_unknown": "خطای ناشناخته از سمت سرور",
-        "to_space": "دعوت به %(spaceName)s"
+        "to_space": "دعوت به %(spaceName)s",
+        "unable_find_profiles_description_default": "برای شناسه‌های ماتریکس زیر، پروفایلی پیدا نشد - آیا به هر حال می خواهید آنها را دعوت کنید؟",
+        "unable_find_profiles_title": "کاربران زیر ممکن است وجود نداشته باشند",
+        "unable_find_profiles_invite_never_warn_label_default": "به هر حال دعوت کن و دیگر هرگز به من هشدار نده",
+        "unable_find_profiles_invite_label_default": "به هر حال دعوت کن"
     },
     "scalar": {
         "error_create": "ایجاد ابزارک امکان پذیر نیست.",
@@ -2966,5 +2965,6 @@
             "network_dropdown_add_dialog_description": "نام سرور جدیدی که می خواهید در آن کاوش کنید را وارد کنید.",
             "network_dropdown_add_dialog_placeholder": "نام سرور"
         }
-    }
+    },
+    "dialog_close_label": "بستن گفتگو"
 }

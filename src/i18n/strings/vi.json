@@ -228,21 +228,7 @@
     "Changelog": "Lịch sử thay đổi",
     "Unavailable": "Không có sẵn",
     "Unable to load commit detail: %(msg)s": "Không thể tải chi tiết cam kết: %(msg)s",
-    "Notes": "Ghi chú",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Nhắc nhở: Trình duyệt của bạn không được hỗ trợ, vì vậy trải nghiệm của bạn có thể không thể đoán trước được.",
-    "Preparing to download logs": "Chuẩn bị tải nhật ký xuống",
-    "Failed to send logs: ": "Không gửi được nhật ký: ",
-    "Thank you!": "Cảm ơn bạn!",
-    "Logs sent": "Nhật ký đã được gửi",
-    "Preparing to send logs": "Chuẩn bị gửi nhật ký",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Vui lòng cho chúng tôi biết điều gì đã xảy ra hoặc tốt hơn là tạo sự cố trên GitHub để mô tả vấn đề.",
-    "To leave the beta, visit your settings.": "Để rời khỏi bản beta, hãy truy cập mục cài đặt của bạn.",
-    "Close dialog": "Đóng hộp thoại",
-    "Invite anyway": "Vẫn mời",
-    "Invite anyway and never warn me again": "Vẫn mời và không bao giờ cảnh báo tôi nữa",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Không thể tìm thấy hồ sơ cho ID Matrix được liệt kê bên dưới - bạn có muốn mời họ không?",
-    "The following users may not exist": "Những người dùng sau có thể không tồn tại",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Sử dụng máy chủ định danh để mời qua địa chỉ thư điện tử. Quản lý trong mục Cài đặt <settings>Settings</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Sử dụng máy chủ nhận dạng để mời qua thư điện tử. <default>Sử dụng mặc định (%(defaultIdentityServerName)s)</default> hoặc quản lý trong mục Cài đặt <settings>Settings</settings>.",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
@@ -1116,7 +1102,8 @@
         "beta_section": "Tính năng sắp tới",
         "beta_description": "Những gì sắp đến với %(brand)s? Phòng thí điểm là nơi tốt nhất để có mọi thứ sớm, thử nghiệm tính năng mới và giúp hoàn thiện trước khi chúng thực sự ra mắt.",
         "experimental_section": "Thử trước tính năng mới",
-        "experimental_description": "Muốn trải nghiệm? Thử các ý tưởng mới nhất còn đang được phát triển của chúng tôi. Các tính năng này chưa được hoàn thiện, chúng có thể không ổn định, có thể thay đổi, hay bị loại bỏ hoàn toàn. <a>Tìm hiểu thêm</a>."
+        "experimental_description": "Muốn trải nghiệm? Thử các ý tưởng mới nhất còn đang được phát triển của chúng tôi. Các tính năng này chưa được hoàn thiện, chúng có thể không ổn định, có thể thay đổi, hay bị loại bỏ hoàn toàn. <a>Tìm hiểu thêm</a>.",
+        "beta_feedback_leave_button": "Để rời khỏi bản beta, hãy truy cập mục cài đặt của bạn."
     },
     "keyboard": {
         "home": "Nhà",
@@ -1255,7 +1242,15 @@
         "uploading_logs": "Tải lên nhật ký",
         "downloading_logs": "Đang tải nhật ký xuống",
         "create_new_issue": "Vui lòng <newIssueLink> tạo một vấn đề mới </newIssueLink> trên GitHub để chúng tôi có thể điều tra lỗi này.",
-        "waiting_for_server": "Đang chờ phản hồi từ máy chủ"
+        "waiting_for_server": "Đang chờ phản hồi từ máy chủ",
+        "error_empty": "Vui lòng cho chúng tôi biết điều gì đã xảy ra hoặc tốt hơn là tạo sự cố trên GitHub để mô tả vấn đề.",
+        "preparing_logs": "Chuẩn bị gửi nhật ký",
+        "logs_sent": "Nhật ký đã được gửi",
+        "thank_you": "Cảm ơn bạn!",
+        "failed_send_logs": "Không gửi được nhật ký: ",
+        "preparing_download": "Chuẩn bị tải nhật ký xuống",
+        "unsupported_browser": "Nhắc nhở: Trình duyệt của bạn không được hỗ trợ, vì vậy trải nghiệm của bạn có thể không thể đoán trước được.",
+        "textarea_label": "Ghi chú"
     },
     "time": {
         "hours_minutes_seconds_left": "Còn lại %(hours)s giờ %(minutes)s phút %(seconds)s giây",
@@ -3764,7 +3759,11 @@
         "error_version_unsupported_space": "Máy chủ nhà của người dùng không hỗ trợ phiên bản của space.",
         "error_version_unsupported_room": "Phiên bản máy chủ nhà của người dùng không hỗ trợ phiên bản phòng này.",
         "error_unknown": "Lỗi máy chủ không xác định",
-        "to_space": "Mời tham gia %(spaceName)s"
+        "to_space": "Mời tham gia %(spaceName)s",
+        "unable_find_profiles_description_default": "Không thể tìm thấy hồ sơ cho ID Matrix được liệt kê bên dưới - bạn có muốn mời họ không?",
+        "unable_find_profiles_title": "Những người dùng sau có thể không tồn tại",
+        "unable_find_profiles_invite_never_warn_label_default": "Vẫn mời và không bao giờ cảnh báo tôi nữa",
+        "unable_find_profiles_invite_label_default": "Vẫn mời"
     },
     "scalar": {
         "error_create": "Không thể tạo widget.",
@@ -4056,5 +4055,6 @@
             "network_dropdown_add_dialog_placeholder": "Tên máy chủ",
             "network_dropdown_selected_label": "Hiện: Phòng Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Đóng hộp thoại"
 }

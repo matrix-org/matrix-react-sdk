@@ -72,10 +72,6 @@
     "Thursday": "Donderdag",
     "Yesterday": "Gisteren",
     "Wednesday": "Woensdag",
-    "Thank you!": "Bedankt!",
-    "Logs sent": "Logs verstuurd",
-    "Failed to send logs: ": "Versturen van logs mislukt: ",
-    "Preparing to send logs": "Logs voorbereiden voor versturen",
     "Clear Storage and Sign Out": "Opslag wissen en uitloggen",
     "Send Logs": "Logs versturen",
     "We encountered an error trying to restore your previous session.": "Het herstel van je vorige sessie is mislukt.",
@@ -149,10 +145,6 @@
     "Folder": "Map",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
-    "The following users may not exist": "Volgende personen bestaan mogelijk niet",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kan geen profielen voor de Matrix-ID’s hieronder vinden - wil je ze toch uitnodigen?",
-    "Invite anyway and never warn me again": "Alsnog uitnodigen en mij nooit meer waarschuwen",
-    "Invite anyway": "Alsnog uitnodigen",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
     "Unable to load commit detail: %(msg)s": "Kan commitdetail niet laden: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Om jouw kamergeschiedenis niet te verliezen vóór het uitloggen dien je jouw veiligheidssleutel te exporteren. Dat moet vanuit de nieuwere versie van %(brand)s",
@@ -186,7 +178,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
     "Email (optional)": "E-mailadres (optioneel)",
     "Remember my selection for this widget": "Onthoud mijn keuze voor deze widget",
-    "Notes": "Opmerkingen",
     "Sign out and remove encryption keys?": "Uitloggen en versleutelingssleutels verwijderen?",
     "To help us prevent this in future, please <a>send us logs</a>.": "<a>Stuur ons jouw logs</a> om dit in de toekomst te helpen voorkomen.",
     "Missing session data": "Sessiegegevens ontbreken",
@@ -211,7 +202,6 @@
     "Clear all data": "Alle gegevens wissen",
     "Your homeserver doesn't seem to support this feature.": "Jouw homeserver biedt geen ondersteuning voor deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Laat ons weten wat er verkeerd is gegaan, of nog beter, maak een foutrapport aan op GitHub, waarin je het probleem beschrijft.",
     "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
     "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
     "Deactivate account": "Account sluiten",
@@ -227,7 +217,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om uit te nodigen op e-mailadres. <default>Gebruik de standaardserver (%(defaultIdentityServerName)s)</default> of beheer de server in de <settings>Instellingen</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Gebruik een identiteitsserver om anderen uit te nodigen via e-mail. Beheer de server in de <settings>Instellingen</settings>.",
     "e.g. my-room": "bv. mijn-kamer",
-    "Close dialog": "Dialoog sluiten",
     "Lock": "Hangslot",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
@@ -552,7 +541,6 @@
     "St. Lucia": "Sint Lucia",
     "South Sudan": "Zuid-Soedan",
     "Oman": "Oman",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Herinnering: Jouw browser wordt niet ondersteund. Dit kan een negatieve impact hebben op je ervaring.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
     "Your firewall or anti-virus is blocking the request.": "Jouw firewall of antivirussoftware blokkeert de aanvraag.",
@@ -612,7 +600,6 @@
     "Server did not require any authentication": "Server heeft geen authenticatie nodig",
     "There was a problem communicating with the server. Please try again.": "Er was een communicatie probleem met de server. Probeer het opnieuw.",
     "Upload completed": "Upload voltooid",
-    "Preparing to download logs": "Klaarmaken om logs te downloaden",
     "Submit logs": "Logs versturen",
     "Dial pad": "Kiestoetsen",
     "IRC display name width": "Breedte IRC-weergavenaam",
@@ -652,7 +639,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "Sending": "Wordt verstuurd",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
-    "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
     "Or send invite link": "Of verstuur je uitnodigingslink",
     "Some suggestions may be hidden for privacy.": "Sommige suggesties kunnen om privacyredenen verborgen zijn.",
     "Search for rooms or people": "Zoek naar kamers of personen",
@@ -743,7 +729,6 @@
         "one": "Je staat op het punt %(count)s bericht te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?",
         "other": "Je staat op het punt %(count)s berichten te verwijderen door %(user)s. Hierdoor worden ze permanent verwijderd voor iedereen in het gesprek. Wil je doorgaan?"
     },
-    "%(featureName)s Beta feedback": "%(featureName)s Bèta-feedback",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -1103,7 +1088,9 @@
         "bridge_state_creator": "Dank aan <user /> voor de brug.",
         "bridge_state_manager": "Brug onderhouden door <user />.",
         "bridge_state_workspace": "Werkplaats: <networkLink/>",
-        "bridge_state_channel": "Kanaal: <channelLink/>"
+        "bridge_state_channel": "Kanaal: <channelLink/>",
+        "beta_feedback_title": "%(featureName)s Bèta-feedback",
+        "beta_feedback_leave_button": "Om de beta te verlaten, ga naar je instellingen."
     },
     "keyboard": {
         "home": "Home",
@@ -1244,7 +1231,15 @@
         "uploading_logs": "Logs uploaden",
         "downloading_logs": "Logs downloaden",
         "create_new_issue": "<newIssueLink>Maak een nieuwe issue aan</newIssueLink> op GitHub zodat we deze bug kunnen onderzoeken.",
-        "waiting_for_server": "Wachten op antwoord van de server"
+        "waiting_for_server": "Wachten op antwoord van de server",
+        "error_empty": "Laat ons weten wat er verkeerd is gegaan, of nog beter, maak een foutrapport aan op GitHub, waarin je het probleem beschrijft.",
+        "preparing_logs": "Logs voorbereiden voor versturen",
+        "logs_sent": "Logs verstuurd",
+        "thank_you": "Bedankt!",
+        "failed_send_logs": "Versturen van logs mislukt: ",
+        "preparing_download": "Klaarmaken om logs te downloaden",
+        "unsupported_browser": "Herinnering: Jouw browser wordt niet ondersteund. Dit kan een negatieve impact hebben op je ervaring.",
+        "textarea_label": "Opmerkingen"
     },
     "time": {
         "seconds_left": "%(seconds)s's over",
@@ -3674,7 +3669,11 @@
         "error_version_unsupported_space": "De server van de persoon ondersteunt de versie van de ruimte niet.",
         "error_version_unsupported_room": "De homeserver van de persoon biedt geen ondersteuning voor deze kamerversie.",
         "error_unknown": "Onbekende serverfout",
-        "to_space": "Voor %(spaceName)s uitnodigen"
+        "to_space": "Voor %(spaceName)s uitnodigen",
+        "unable_find_profiles_description_default": "Kan geen profielen voor de Matrix-ID’s hieronder vinden - wil je ze toch uitnodigen?",
+        "unable_find_profiles_title": "Volgende personen bestaan mogelijk niet",
+        "unable_find_profiles_invite_never_warn_label_default": "Alsnog uitnodigen en mij nooit meer waarschuwen",
+        "unable_find_profiles_invite_label_default": "Alsnog uitnodigen"
     },
     "scalar": {
         "error_create": "Kan widget niet aanmaken.",
@@ -3950,5 +3949,6 @@
             "network_dropdown_selected_label_instance": "Toon: %(instance)s kamers (%(server)s)",
             "network_dropdown_selected_label": "Toon: Matrix kamers"
         }
-    }
+    },
+    "dialog_close_label": "Dialoog sluiten"
 }

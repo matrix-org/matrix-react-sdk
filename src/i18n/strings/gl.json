@@ -63,19 +63,15 @@
     "Today": "Hoxe",
     "Friday": "Venres",
     "Changelog": "Rexistro de cambios",
-    "Failed to send logs: ": "Fallo ao enviar os informes: ",
     "Unavailable": "Non dispoñible",
     "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
-    "Preparing to send logs": "Preparándose para enviar informe",
     "Saturday": "Sábado",
     "Monday": "Luns",
     "Wednesday": "Mércores",
     "You cannot delete this message. (%(code)s)": "Non pode eliminar esta mensaxe. (%(code)s)",
     "Thursday": "Xoves",
-    "Logs sent": "Informes enviados",
     "Yesterday": "Onte",
-    "Thank you!": "Grazas!",
     "Send Logs": "Enviar informes",
     "Clear Storage and Sign Out": "Limpar o almacenamento e Saír",
     "We encountered an error trying to restore your previous session.": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
@@ -199,15 +195,7 @@
     "e.g. my-room": "ex. a-miña-sala",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usa un servidor de identidade para convidar por email. <default>Usa o valor por defecto (%(defaultIdentityServerName)s)</default> ou xestionao en <settings>Axustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Usa un servidor de identidade para convidar por email. Xestionao en <settings>Axustes</settings>.",
-    "The following users may not exist": "As seguintes usuarias poderían non existir",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Non se atopou o perfil dos IDs Matrix da lista inferior - ¿Desexas convidalas igualmente?",
-    "Invite anyway and never warn me again": "Convidar igualmente e non avisarme outra vez",
-    "Invite anyway": "Convidar igualmente",
-    "Close dialog": "Pechar diálogo",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Cóntanos o que fallou ou, mellor aínda, abre un informe en GitHub que describa o problema.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Lembra: o teu navegador non está soportado, polo que poderían acontecer situacións non agardadas.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema.",
-    "Notes": "Notas",
     "Unable to load commit detail: %(msg)s": "Non se cargou o detalle do commit: %(msg)s",
     "Removing…": "Eliminando…",
     "Destroy cross-signing keys?": "Destruír chaves de sinatura-cruzada?",
@@ -329,7 +317,6 @@
     "A connection error occurred while trying to contact the server.": "Aconteceu un fallo de conexión ó intentar contactar co servidor.",
     "The server is not configured to indicate what the problem is (CORS).": "O servidor non está configurado para sinalar cal é o problema (CORS).",
     "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
-    "Preparing to download logs": "Preparándose para descargar rexistro",
     "Not encrypted": "Sen cifrar",
     "Backup version:": "Versión da copia:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
@@ -653,7 +640,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "Sending": "Enviando",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
-    "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
     "Or send invite link": "Ou envía ligazón de convite",
     "Some suggestions may be hidden for privacy.": "Algunhas suxestións poderían estar agochadas por privacidade.",
     "Search for rooms or people": "Busca salas ou persoas",
@@ -745,7 +731,6 @@
     },
     "Unsent": "Sen enviar",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
-    "%(featureName)s Beta feedback": "Informe sobre %(featureName)s Beta",
     "%(count)s participants": {
         "one": "1 participante",
         "other": "%(count)s participantes"
@@ -1098,7 +1083,9 @@
         "bridge_state_creator": "Esta ponte está proporcionada por <user />.",
         "bridge_state_manager": "Esta ponte está xestionada por <user />.",
         "bridge_state_workspace": "Espazo de traballo: <networkLink/>",
-        "bridge_state_channel": "Canle: <channelLink/>"
+        "bridge_state_channel": "Canle: <channelLink/>",
+        "beta_feedback_title": "Informe sobre %(featureName)s Beta",
+        "beta_feedback_leave_button": "Para saír da beta, vai aos axustes."
     },
     "keyboard": {
         "home": "Inicio",
@@ -1236,7 +1223,15 @@
         "uploading_logs": "Subindo o rexistro",
         "downloading_logs": "Descargando o rexistro",
         "create_new_issue": "Por favor <newIssueLink>abre un novo informe</newIssueLink> en GitHub para poder investigar o problema.",
-        "waiting_for_server": "Agardando pola resposta do servidor"
+        "waiting_for_server": "Agardando pola resposta do servidor",
+        "error_empty": "Cóntanos o que fallou ou, mellor aínda, abre un informe en GitHub que describa o problema.",
+        "preparing_logs": "Preparándose para enviar informe",
+        "logs_sent": "Informes enviados",
+        "thank_you": "Grazas!",
+        "failed_send_logs": "Fallo ao enviar os informes: ",
+        "preparing_download": "Preparándose para descargar rexistro",
+        "unsupported_browser": "Lembra: o teu navegador non está soportado, polo que poderían acontecer situacións non agardadas.",
+        "textarea_label": "Notas"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -3581,7 +3576,11 @@
         "error_version_unsupported_space": "O servidor de inicio da usuaria non soporta a versión do Espazo.",
         "error_version_unsupported_room": "O servidor da usuaria non soporta a versión da sala.",
         "error_unknown": "Erro descoñecido no servidor",
-        "to_space": "Convidar a %(spaceName)s"
+        "to_space": "Convidar a %(spaceName)s",
+        "unable_find_profiles_description_default": "Non se atopou o perfil dos IDs Matrix da lista inferior - ¿Desexas convidalas igualmente?",
+        "unable_find_profiles_title": "As seguintes usuarias poderían non existir",
+        "unable_find_profiles_invite_never_warn_label_default": "Convidar igualmente e non avisarme outra vez",
+        "unable_find_profiles_invite_label_default": "Convidar igualmente"
     },
     "scalar": {
         "error_create": "Non se puido crear o trebello.",
@@ -3859,5 +3858,6 @@
             "network_dropdown_selected_label_instance": "Mostrar: salas de %(instance)s (%(server)s)",
             "network_dropdown_selected_label": "Mostrar: salas Matrix"
         }
-    }
+    },
+    "dialog_close_label": "Pechar diálogo"
 }

@@ -63,19 +63,15 @@
     "Today": "Šodien",
     "Friday": "Piektdiena",
     "Changelog": "Izmaiņu vēsture",
-    "Failed to send logs: ": "Neizdevās nosūtīt logfailus: ",
     "Unavailable": "Nesasniedzams",
     "Filter results": "Filtrēt rezultātus",
     "Tuesday": "Otrdiena",
-    "Preparing to send logs": "Gatavojos nosūtīt atutošanas logfailus",
     "Saturday": "Sestdiena",
     "Monday": "Pirmdiena",
     "Wednesday": "Trešdiena",
     "You cannot delete this message. (%(code)s)": "Tu nevari dzēst šo ziņu. (%(code)s)",
     "Thursday": "Ceturtdiena",
-    "Logs sent": "Logfaili nosūtīti",
     "Yesterday": "Vakardien",
-    "Thank you!": "Tencinam!",
     "%(count)s verified sessions": {
         "one": "1 verificēta sesija",
         "other": "%(count)s verificētas sesijas"
@@ -446,7 +442,6 @@
     "Live location error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
     "Live location ended": "Reāllaika atrašanās vietas kopīgošana pārtraukta",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
     "Upload %(count)s other files": {
         "one": "Augšupielādēt %(count)s citu failu",
@@ -695,7 +690,11 @@
         "send_logs": "Nosūtīt logfailus",
         "collecting_information": "Tiek iegūta programmas versijas informācija",
         "collecting_logs": "Tiek iegūti logfaili",
-        "waiting_for_server": "Tiek gaidīta atbilde no servera"
+        "waiting_for_server": "Tiek gaidīta atbilde no servera",
+        "preparing_logs": "Gatavojos nosūtīt atutošanas logfailus",
+        "logs_sent": "Logfaili nosūtīti",
+        "thank_you": "Tencinam!",
+        "failed_send_logs": "Neizdevās nosūtīt logfailus: "
     },
     "time": {
         "seconds_left": "%(seconds)s sekundes atlikušas",
@@ -1976,7 +1975,8 @@
         "room_failed_partial_title": "Dažus uzaicinājumus nevarēja nosūtīt",
         "error_permissions_room": "Jums nav atļaujas uzaicināt cilvēkus šajā istabā.",
         "error_bad_state": "Lietotājam jābūt atceltam pieejas liegumam pirms uzaicināšanas.",
-        "to_space": "Uzaicināt uz %(spaceName)s"
+        "to_space": "Uzaicināt uz %(spaceName)s",
+        "unable_find_profiles_description_default": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?"
     },
     "scalar": {
         "error_create": "Neizdevās izveidot widžetu.",

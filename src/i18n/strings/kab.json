@@ -21,7 +21,6 @@
     "PM": "MD",
     "AM": "FT",
     "Moderator": "Aseɣyad",
-    "Thank you!": "Tanemmirt!",
     "Ok": "Ih",
     "Cat": "Amcic",
     "Lion": "Izem",
@@ -51,8 +50,6 @@
     "Yesterday": "Iḍelli",
     "edited": "yettwaẓreg",
     "collapse": "fneẓ",
-    "Close dialog": "Mdel adiwenni",
-    "Notes": "Tamawin",
     "Unavailable": "Ulac",
     "Changelog": "Aɣmis n yisnifal",
     "Removing…": "Tukksa…",
@@ -78,7 +75,6 @@
     "Pencil": "Akeryun",
     "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
-    "Logs sent": "Iɣmisen ttewaznen",
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(lastItem)s": "%(items)s d %(lastItem)s",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
@@ -136,10 +132,6 @@
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
-    "The following users may not exist": "Iseqdacen i d-iteddun yezmer ad ilin ulac-iten",
-    "Invite anyway": "Ɣas akken nced-d",
-    "Preparing to send logs": "Aheyyi n tuzna n yiɣmisen",
-    "Failed to send logs: ": "Tuzna n yiɣmisen ur teddi ara: ",
     "Clear all data": "Sfeḍ meṛṛa isefka",
     "Continue With Encryption Disabled": "Kemmel s uwgelhen yensan",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Sentem asensi n umiḍan s useqdec n unekcum asuf i ubeggen n timagit-ik·im.",
@@ -258,9 +250,6 @@
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
-    "Invite anyway and never warn me again": "Ɣas akken nced-d yerna ur iyi-id-ttɛeggin ara akk",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Ttxil-k·m ini-aɣ-d acu ur nteddu ara akken ilaq neɣ, akken i igerrez, rnu ugur deg Github ara ad d-igelmen ugur.",
-    "Preparing to download logs": "Aheyyi i usali n yiɣmisen",
     "Failed to connect to integration manager": "Tuqqna ɣer umsefrak n umsidef ur yeddi ara",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Afaylu-a <b>ɣezzif aṭas</b> i wakken ad d-yali. Talast n teɣzi n ufaylu d %(limit)s maca afaylu-a d %(sizeOfThisFile)s.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Ifuyla-a <b>ɣezzifit aṭas</b> i wakken ad d-alin. Talast n teɣzi n ufaylu d %(limit)s.",
@@ -281,8 +270,6 @@
     "Clear all data in this session?": "Sfeḍ akk isefka seg tɣimit-a?",
     "Incompatible Database": "Taffa n yisefka ur temada ara",
     "Recently Direct Messaged": "Izen usrid n melmi kan",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "D awezɣi ad d-naf imuɣna n yisulay Matrix i d-yettwabdaren ddaw - tebɣiḍ ad ten-id-tnecdeḍ ɣas akken?",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Asmekti: Iming-ik·im ur yettusefrak ara, ihi tarmit-ik·im yezmer ur d-tettili ara.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Asfaḍ akk n yisefka seg tɣimit-a ad yili i lebda. Ad ak-ruḥen yiznan yettwawgelhen ala ma yella tisura ttwaḥerzent.",
     "Are you sure you want to deactivate your account? This is irreversible.": "S tidet tebɣiḍ ad tsenseḍ amiḍăn-ik·im? Ulac tuɣalin ɣer deffir.",
@@ -859,7 +846,15 @@
         "uploading_logs": "Asali n yiɣmisen",
         "downloading_logs": "Asader n yiɣmisen",
         "create_new_issue": "Ttxil-k·m <newIssueLink>rnu ugur amaynut</newIssueLink> deg GitHub akken ad nessiweḍ ad nezrew abug-a.",
-        "waiting_for_server": "Aṛaǧu n tririt sɣur aqeddac"
+        "waiting_for_server": "Aṛaǧu n tririt sɣur aqeddac",
+        "error_empty": "Ttxil-k·m ini-aɣ-d acu ur nteddu ara akken ilaq neɣ, akken i igerrez, rnu ugur deg Github ara ad d-igelmen ugur.",
+        "preparing_logs": "Aheyyi n tuzna n yiɣmisen",
+        "logs_sent": "Iɣmisen ttewaznen",
+        "thank_you": "Tanemmirt!",
+        "failed_send_logs": "Tuzna n yiɣmisen ur teddi ara: ",
+        "preparing_download": "Aheyyi i usali n yiɣmisen",
+        "unsupported_browser": "Asmekti: Iming-ik·im ur yettusefrak ara, ihi tarmit-ik·im yezmer ur d-tettili ara.",
+        "textarea_label": "Tamawin"
     },
     "time": {
         "few_seconds_ago": "kra n tesinin seg yimir-nni",
@@ -2119,7 +2114,11 @@
         "error_permissions_room": "Ur tesεiḍ ara tasiregt ad d-necdeḍ imdanen ɣer texxamt-a.",
         "error_bad_state": "Aseqdac ilaq ad yettwakkes uqbel ad izmiren ad t-id-snubegten.",
         "error_version_unsupported_room": "Aqeddac agejdan n useqdac ur issefrek ara lqem n texxamt yettwafernen.",
-        "error_unknown": "Tuccḍa n uqeddac d tarussint"
+        "error_unknown": "Tuccḍa n uqeddac d tarussint",
+        "unable_find_profiles_description_default": "D awezɣi ad d-naf imuɣna n yisulay Matrix i d-yettwabdaren ddaw - tebɣiḍ ad ten-id-tnecdeḍ ɣas akken?",
+        "unable_find_profiles_title": "Iseqdacen i d-iteddun yezmer ad ilin ulac-iten",
+        "unable_find_profiles_invite_never_warn_label_default": "Ɣas akken nced-d yerna ur iyi-id-ttɛeggin ara akk",
+        "unable_find_profiles_invite_label_default": "Ɣas akken nced-d"
     },
     "scalar": {
         "error_create": "Timerna n uwiǧit ulamek.",
@@ -2296,5 +2295,6 @@
             "network_dropdown_add_dialog_description": "Sekcem isem n uqeddac amaynut i tebɣiḍ ad tesnirmeḍ.",
             "network_dropdown_add_dialog_placeholder": "Isem n uqeddac"
         }
-    }
+    },
+    "dialog_close_label": "Mdel adiwenni"
 }

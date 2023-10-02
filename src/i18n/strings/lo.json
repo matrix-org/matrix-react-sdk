@@ -323,10 +323,6 @@
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
-    "Invite anyway": "ເຊີນເລີຍ",
-    "Invite anyway and never warn me again": "ເຊີນເລີຍ ແລະ ບໍ່ເຄີຍເຕືອນຂ້ອຍອີກ",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "ບໍ່ສາມາດຊອກຫາໂປຣໄຟລ໌ສຳລັບ Matrix IDs ທີ່ລະບຸໄວ້ຂ້າງລຸ່ມນີ້ - ທ່ານຕ້ອງການເຊີນເຂົາເຈົ້າບໍ່?",
-    "The following users may not exist": "ຜູ້ໃຊ້ຕໍ່ໄປນີ້ອາດຈະບໍ່ມີຢູ່",
     "Send Logs": "ສົ່ງບັນທຶກ",
     "Clear Storage and Sign Out": "ລຶບບ່ອນຈັດເກັບຂໍ້ມູນ ແລະ ອອກຈາກລະບົບ",
     "Sign out and remove encryption keys?": "ອອກຈາກລະບົບ ແລະ ລຶບລະຫັດການເຂົ້າລະຫັດອອກບໍ?",
@@ -729,16 +725,11 @@
     "Remove recent messages by %(user)s": "ລຶບຂໍ້ຄວາມຫຼ້າສຸດໂດຍ %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "ລອງເລື່ອນຂຶ້ນໃນທາມລາຍເພື່ອເບິ່ງວ່າມີອັນໃດກ່ອນໜ້ານີ້.",
     "No recent messages by %(user)s found": "ບໍ່ພົບຂໍ້ຄວາມຫຼ້າສຸດໂດຍ %(user)s",
-    "Notes": "ບັນທຶກ",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ກ່ອນທີ່ຈະສົ່ງບັນທຶກ, ທ່ານຕ້ອງ <a>ສ້າງບັນຫາ GitHub</a> ເພື່ອອະທິບາຍບັນຫາຂອງທ່ານ.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "ແຈ້ງເຕືອນ: ບຼາວເຊີຂອງທ່ານບໍ່ຮອງຮັບ, ດັ່ງນັ້ນປະສົບການຂອງທ່ານຈຶ່ງຄາດເດົາບໍ່ໄດ້.",
-    "Preparing to download logs": "ກຳລັງກະກຽມດາວໂຫຼດບັນທຶກ",
-    "Failed to send logs: ": "ສົ່ງບັນທຶກບໍ່ສຳເລັດ: ",
     "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
-    "Thank you!": "ຂອບໃຈ!",
     "Link to room": "ເຊື່ອມຕໍ່ທີ່ຫ້ອງ",
     "Link to selected message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມທີ່ເລືອກ",
     "Share Room Message": "ແບ່ງປັນຂໍ້ຄວາມໃນຫ້ອງ",
@@ -746,12 +737,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "ຖ້າຫາກວ່າທ່ານເຄິຍໃຊ້ເວີຊັ້ນທີ່ໃໝ່ກວ່າຂອງ %(brand)s,ລະບົບຂອງທ່ານອາດຈະບໍ່ສອດຄ່ອງກັນໄດ້ກັບເວີຊັ້ນນີ້. ປິດໜ້າຕ່າງນີ້ແລ້ວກັບຄືນໄປຫາເວີຊັ້ນຫຼ້າສຸດ.",
     "Unable to restore session": "ບໍ່ສາມາດກູ້ລະບົບໄດ້",
     "Continuing without email": "ສືບຕໍ່ໂດຍບໍ່ມີອີເມວ",
-    "Logs sent": "ສົ່ງບັນທຶກແລ້ວ",
-    "Preparing to send logs": "ກຳລັງກະກຽມສົ່ງບັນທຶກ",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "ກະລຸນາບອກພວກເຮົາວ່າມີຫຍັງຜິດພາດ ຫຼື, ດີກວ່າ, ສ້າງບັນຫາ GitHub ເພື່ອອະທິບາຍບັນຫາ.",
-    "To leave the beta, visit your settings.": "ເພື່ອອອກຈາກເບຕ້າ, ໃຫ້ເຂົ້າໄປທີ່ການຕັ້ງຄ່າຂອງທ່ານ.",
-    "%(featureName)s Beta feedback": "%(featureName)s ຄຳຕິຊົມເບຕ້າ",
-    "Close dialog": "ປິດກ່ອງໂຕ້ຕອບ",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -1042,7 +1027,9 @@
         "bridge_state_creator": "ຂົວນີ້ຖືກສະໜອງໃຫ້ໂດຍ <user />.",
         "bridge_state_manager": "ຂົວນີ້ຖືກຄຸ້ມຄອງໂດຍ <user />.",
         "bridge_state_workspace": "ພື້ນທີ່ເຮັດວຽກ: <networkLink/>",
-        "bridge_state_channel": "ຊ່ອງ: <channelLink/>"
+        "bridge_state_channel": "ຊ່ອງ: <channelLink/>",
+        "beta_feedback_title": "%(featureName)s ຄຳຕິຊົມເບຕ້າ",
+        "beta_feedback_leave_button": "ເພື່ອອອກຈາກເບຕ້າ, ໃຫ້ເຂົ້າໄປທີ່ການຕັ້ງຄ່າຂອງທ່ານ."
     },
     "keyboard": {
         "home": "ໜ້າຫຼັກ",
@@ -1180,7 +1167,15 @@
         "uploading_logs": "ກຳລັງບັນທຶກການອັບໂຫຼດ",
         "downloading_logs": "ບັນທຶກການດາວໂຫຼດ",
         "create_new_issue": "ກະລຸນາ <newIssueLink>ສ້າງບັນຫາໃໝ່</newIssueLink> ໃນ GitHub ເພື່ອໃຫ້ພວກເຮົາສາມາດກວດສອບຂໍ້ຜິດພາດນີ້ໄດ້.",
-        "waiting_for_server": "ກຳລັງລໍຖ້າການຕອບສະໜອງຈາກເຊີບເວີ"
+        "waiting_for_server": "ກຳລັງລໍຖ້າການຕອບສະໜອງຈາກເຊີບເວີ",
+        "error_empty": "ກະລຸນາບອກພວກເຮົາວ່າມີຫຍັງຜິດພາດ ຫຼື, ດີກວ່າ, ສ້າງບັນຫາ GitHub ເພື່ອອະທິບາຍບັນຫາ.",
+        "preparing_logs": "ກຳລັງກະກຽມສົ່ງບັນທຶກ",
+        "logs_sent": "ສົ່ງບັນທຶກແລ້ວ",
+        "thank_you": "ຂອບໃຈ!",
+        "failed_send_logs": "ສົ່ງບັນທຶກບໍ່ສຳເລັດ: ",
+        "preparing_download": "ກຳລັງກະກຽມດາວໂຫຼດບັນທຶກ",
+        "unsupported_browser": "ແຈ້ງເຕືອນ: ບຼາວເຊີຂອງທ່ານບໍ່ຮອງຮັບ, ດັ່ງນັ້ນປະສົບການຂອງທ່ານຈຶ່ງຄາດເດົາບໍ່ໄດ້.",
+        "textarea_label": "ບັນທຶກ"
     },
     "time": {
         "seconds_left": "ຍັງເຫຼືອ %(seconds)s",
@@ -3397,7 +3392,11 @@
         "error_version_unsupported_space": "homeserver ຂອງຜູ້ໃຊ້ບໍ່ຮອງຮັບເວີຊັນຂອງພື້ນທີ່ດັ່ງກ່າວ.",
         "error_version_unsupported_room": "homeserver ຂອງຜູ້ໃຊ້ບໍ່ຮອງຮັບເວີຊັນຂອງຫ້ອງ.",
         "error_unknown": "ຄວາມຜິດພາດຂອງເຊີບເວີທີ່ບໍ່ຮູ້ຈັກ",
-        "to_space": "ຊີນໄປທີ່ %(spaceName)s"
+        "to_space": "ຊີນໄປທີ່ %(spaceName)s",
+        "unable_find_profiles_description_default": "ບໍ່ສາມາດຊອກຫາໂປຣໄຟລ໌ສຳລັບ Matrix IDs ທີ່ລະບຸໄວ້ຂ້າງລຸ່ມນີ້ - ທ່ານຕ້ອງການເຊີນເຂົາເຈົ້າບໍ່?",
+        "unable_find_profiles_title": "ຜູ້ໃຊ້ຕໍ່ໄປນີ້ອາດຈະບໍ່ມີຢູ່",
+        "unable_find_profiles_invite_never_warn_label_default": "ເຊີນເລີຍ ແລະ ບໍ່ເຄີຍເຕືອນຂ້ອຍອີກ",
+        "unable_find_profiles_invite_label_default": "ເຊີນເລີຍ"
     },
     "scalar": {
         "error_create": "ບໍ່ສາມາດສ້າງ widget ໄດ້.",
@@ -3660,5 +3659,6 @@
             "network_dropdown_add_dialog_description": "ໃສ່ຊື່ຂອງເຊີບເວີໃໝ່ທີ່ທ່ານຕ້ອງການສຳຫຼວດ.",
             "network_dropdown_add_dialog_placeholder": "ຊື່ເຊີບເວີ"
         }
-    }
+    },
+    "dialog_close_label": "ປິດກ່ອງໂຕ້ຕອບ"
 }

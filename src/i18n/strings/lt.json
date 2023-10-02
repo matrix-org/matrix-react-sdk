@@ -15,7 +15,6 @@
     "You cannot delete this message. (%(code)s)": "Jūs negalite trinti šios žinutės. (%(code)s)",
     "Thursday": "Ketvirtadienis",
     "Yesterday": "Vakar",
-    "Thank you!": "Ačiū!",
     "Sun": "Sek",
     "Mon": "Pir",
     "Tue": "Ant",
@@ -56,8 +55,6 @@
     "Create new room": "Sukurti naują kambarį",
     "collapse": "suskleisti",
     "expand": "išskleisti",
-    "Logs sent": "Žurnalai išsiųsti",
-    "Failed to send logs: ": "Nepavyko išsiųsti žurnalų: ",
     "An error has occurred.": "Įvyko klaida.",
     "Failed to upgrade room": "Nepavyko atnaujinti kambario",
     "The room upgrade could not be completed": "Nepavyko užbaigti kambario atnaujinimo",
@@ -71,7 +68,6 @@
     "Home": "Pradžia",
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
-    "Preparing to send logs": "Ruošiamasi išsiųsti žurnalus",
     "Incompatible Database": "Nesuderinama duomenų bazė",
     "Incompatible local cache": "Nesuderinamas vietinis podėlis",
     "Updating %(brand)s": "Atnaujinama %(brand)s",
@@ -216,9 +212,7 @@
     "Your homeserver has exceeded one of its resource limits.": "Jūsų serveris pasiekė vieną iš savo resursų limitų.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Norėdami pranešti apie su Matrix susijusią saugos problemą, perskaitykite Matrix.org <a>Saugumo Atskleidimo Poliiką</a>.",
     "Failed to connect to integration manager": "Nepavyko prisijungti prie integracijų tvarkytuvo",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Pasakyite mums kas nutiko, arba, dar geriau, sukurkite GitHub problemą su jos apibūdinimu.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Prieš pateikiant žurnalus jūs turite <a>sukurti GitHub problemą</a>, kad apibūdintumėte savo problemą.",
-    "Notes": "Pastabos",
     "Integrations are disabled": "Integracijos yra išjungtos",
     "Integrations not allowed": "Integracijos neleidžiamos",
     "Link to most recent message": "Nuoroda į naujausią žinutę",
@@ -279,7 +273,6 @@
     "Missing session data": "Trūksta seanso duomenų",
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "Reason (optional)": "Priežastis (nebūtina)",
-    "Preparing to download logs": "Ruošiamasi parsiųsti žurnalus",
     "edited": "pakeista",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dideliam žinučių kiekiui tai gali užtrukti kurį laiką. Prašome neperkrauti savo kliento.",
     "No recent messages by %(user)s found": "Nerasta jokių naujesnių %(user)s žinučių",
@@ -428,10 +421,7 @@
     "Confirm account deactivation": "Patvirtinkite paskyros deaktyvavimą",
     "Clear all data": "Išvalyti visus duomenis",
     "Removing…": "Pašalinama…",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Primename: Jūsų naršyklė yra nepalaikoma, todėl jūsų patirtis gali būti nenuspėjama.",
     "You may contact me if you have any follow up questions": "Jei turite papildomų klausimų, galite susisiekti su manimi",
-    "To leave the beta, visit your settings.": "Norėdami išeiti iš beta versijos, apsilankykite savo nustatymuose.",
-    "Close dialog": "Uždaryti dialogą",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
     "South Korea": "Pietų Korėja",
@@ -736,7 +726,8 @@
         "bridge_state_creator": "Šis tiltas buvo parūpintas <user />.",
         "bridge_state_manager": "Šis tiltas yra tvarkomas <user />.",
         "bridge_state_workspace": "Darbo aplinka: <networkLink/>",
-        "bridge_state_channel": "Kanalas: <channelLink/>"
+        "bridge_state_channel": "Kanalas: <channelLink/>",
+        "beta_feedback_leave_button": "Norėdami išeiti iš beta versijos, apsilankykite savo nustatymuose."
     },
     "keyboard": {
         "home": "Pradžia",
@@ -830,7 +821,15 @@
         "uploading_logs": "Įkeliami žurnalai",
         "downloading_logs": "Parsiunčiami žurnalai",
         "create_new_issue": "Prašome <newIssueLink>sukurti naują problemą</newIssueLink> GitHub'e, kad mes galėtume ištirti šią klaidą.",
-        "waiting_for_server": "Laukiama atsakymo iš serverio"
+        "waiting_for_server": "Laukiama atsakymo iš serverio",
+        "error_empty": "Pasakyite mums kas nutiko, arba, dar geriau, sukurkite GitHub problemą su jos apibūdinimu.",
+        "preparing_logs": "Ruošiamasi išsiųsti žurnalus",
+        "logs_sent": "Žurnalai išsiųsti",
+        "thank_you": "Ačiū!",
+        "failed_send_logs": "Nepavyko išsiųsti žurnalų: ",
+        "preparing_download": "Ruošiamasi parsiųsti žurnalus",
+        "unsupported_browser": "Primename: Jūsų naršyklė yra nepalaikoma, todėl jūsų patirtis gali būti nenuspėjama.",
+        "textarea_label": "Pastabos"
     },
     "time": {
         "seconds_left": "%(seconds)ss liko",
@@ -2860,5 +2859,6 @@
             "network_dropdown_add_dialog_description": "Įveskite naujo, norimo žvalgyti serverio pavadinimą.",
             "network_dropdown_add_dialog_placeholder": "Serverio pavadinimas"
         }
-    }
+    },
+    "dialog_close_label": "Uždaryti dialogą"
 }

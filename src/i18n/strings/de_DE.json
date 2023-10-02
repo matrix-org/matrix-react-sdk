@@ -63,19 +63,15 @@
     "Today": "Heute",
     "Friday": "Freitag",
     "Changelog": "Änderungsprotokoll",
-    "Failed to send logs: ": "Senden von Protokolldateien fehlgeschlagen: ",
     "Unavailable": "Nicht verfügbar",
     "Filter results": "Ergebnisse filtern",
     "Tuesday": "Dienstag",
-    "Preparing to send logs": "Senden von Protokolldateien wird vorbereitet",
     "Saturday": "Samstag",
     "Monday": "Montag",
     "Wednesday": "Mittwoch",
     "You cannot delete this message. (%(code)s)": "Diese Nachricht kann nicht gelöscht werden. (%(code)s)",
     "Thursday": "Donnerstag",
-    "Logs sent": "Protokolldateien gesendet",
     "Yesterday": "Gestern",
-    "Thank you!": "Danke!",
     "Send Logs": "Sende Protokoll",
     "Clear Storage and Sign Out": "Speicher leeren und abmelden",
     "We encountered an error trying to restore your previous session.": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
@@ -108,10 +104,6 @@
     "Unable to load commit detail: %(msg)s": "Konnte Übermittlungsdetails nicht laden: %(msg)s",
     "Unable to load backup status": "Konnte Sicherungsstatus nicht laden",
     "Failed to decrypt %(failedCount)s sessions!": "Konnte %(failedCount)s Sitzungen nicht entschlüsseln!",
-    "The following users may not exist": "Eventuell existieren folgende Benutzer nicht",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
-    "Invite anyway and never warn me again": "Trotzdem einladen und mich nicht mehr warnen",
-    "Invite anyway": "Dennoch einladen",
     "Dog": "Hund",
     "Cat": "Katze",
     "Lion": "Löwe",
@@ -235,10 +227,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Submit logs": "Protokolldateien senden",
-    "Close dialog": "Dialog schließen",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Bitte teile uns mit, was schief lief - oder besser, beschreibe das Problem auf GitHub in einem \"Issue\".",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Warnung: Dein Browser wird nicht unterstützt. Die Anwendung kann instabil sein.",
-    "Notes": "Notizen",
     "Removing…": "Löschen…",
     "Destroy cross-signing keys?": "Cross-Signing-Schlüssel zerstören?",
     "Clear cross-signing keys": "Cross-Signing-Schlüssel löschen",
@@ -329,7 +317,6 @@
     "Security Phrase": "Sicherheitsphrase",
     "Security Key": "Sicherheitsschlüssel",
     "Use your Security Key to continue.": "Benutze deinen Sicherheitsschlüssel um fortzufahren.",
-    "Preparing to download logs": "Bereite das Herunterladen der Protokolle vor",
     "Not encrypted": "Nicht verschlüsselt",
     "Backup version:": "Version der Sicherung:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Starte ein Gespräch unter Verwendung des Namen oder Benutzernamens des Gegenübers (z. B. <userId/>).",
@@ -653,7 +640,6 @@
     "Sending": "Senden",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
-    "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
     "Some suggestions may be hidden for privacy.": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein.",
     "Or send invite link": "Oder versende einen Einladungslink",
     "Search for rooms or people": "Räume oder Leute suchen",
@@ -764,7 +750,6 @@
     "You will not be able to reactivate your account": "Du wirst dein Konto nicht reaktivieren können",
     "Confirm that you would like to deactivate your account. If you proceed:": "Bestätige, dass du dein Konto deaktivieren möchtest. Wenn du fortfährst, tritt folgendes ein:",
     "To continue, please enter your account password:": "Um fortzufahren, gib bitte das Passwort deines Kontos ein:",
-    "%(featureName)s Beta feedback": "Rückmeldung zur %(featureName)s-Beta",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
     "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
@@ -1166,7 +1151,9 @@
         "beta_section": "Zukünftige Funktionen",
         "beta_description": "Was passiert als nächstes in %(brand)s? Das Labor ist deine erste Anlaufstelle, um Funktionen früh zu erhalten, zu testen und mitzugestalten, bevor sie tatsächlich veröffentlicht werden.",
         "experimental_section": "Frühe Vorschauen",
-        "experimental_description": "Experimentierfreudig? Probiere unsere neuesten, sich in Entwicklung befindlichen Ideen aus. Diese Funktionen sind nicht final; Sie könnten instabil sein, sich verändern oder sogar ganz entfernt werden. <a>Erfahre mehr</a>."
+        "experimental_description": "Experimentierfreudig? Probiere unsere neuesten, sich in Entwicklung befindlichen Ideen aus. Diese Funktionen sind nicht final; Sie könnten instabil sein, sich verändern oder sogar ganz entfernt werden. <a>Erfahre mehr</a>.",
+        "beta_feedback_title": "Rückmeldung zur %(featureName)s-Beta",
+        "beta_feedback_leave_button": "Du kannst die Beta in den Einstellungen deaktivieren."
     },
     "keyboard": {
         "home": "Startseite",
@@ -1325,7 +1312,15 @@
         "uploading_logs": "Lade Protokolle hoch",
         "downloading_logs": "Lade Protokolle herunter",
         "create_new_issue": "Bitte <newIssueLink>erstelle ein neues Issue</newIssueLink> auf GitHub damit wir diesen Fehler untersuchen können.",
-        "waiting_for_server": "Warte auf Antwort vom Server"
+        "waiting_for_server": "Warte auf Antwort vom Server",
+        "error_empty": "Bitte teile uns mit, was schief lief - oder besser, beschreibe das Problem auf GitHub in einem \"Issue\".",
+        "preparing_logs": "Senden von Protokolldateien wird vorbereitet",
+        "logs_sent": "Protokolldateien gesendet",
+        "thank_you": "Danke!",
+        "failed_send_logs": "Senden von Protokolldateien fehlgeschlagen: ",
+        "preparing_download": "Bereite das Herunterladen der Protokolle vor",
+        "unsupported_browser": "Warnung: Dein Browser wird nicht unterstützt. Die Anwendung kann instabil sein.",
+        "textarea_label": "Notizen"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s verbleibend",
@@ -4051,7 +4046,11 @@
         "error_version_unsupported_space": "Die Space-Version wird vom Heim-Server des Benutzers nicht unterstützt.",
         "error_version_unsupported_room": "Die Raumversion wird vom Heim-Server des Benutzers nicht unterstützt.",
         "error_unknown": "Unbekannter Server-Fehler",
-        "to_space": "In %(spaceName)s einladen"
+        "to_space": "In %(spaceName)s einladen",
+        "unable_find_profiles_description_default": "Profile für die nachfolgenden Matrix-IDs wurden nicht gefunden – willst du sie dennoch einladen?",
+        "unable_find_profiles_title": "Eventuell existieren folgende Benutzer nicht",
+        "unable_find_profiles_invite_never_warn_label_default": "Trotzdem einladen und mich nicht mehr warnen",
+        "unable_find_profiles_invite_label_default": "Dennoch einladen"
     },
     "scalar": {
         "error_create": "Widget kann nicht erstellt werden.",
@@ -4362,5 +4361,6 @@
             "network_dropdown_selected_label_instance": "%(instance)s Räume zeigen (%(server)s)",
             "network_dropdown_selected_label": "Zeige: Matrix-Räume"
         }
-    }
+    },
+    "dialog_close_label": "Dialog schließen"
 }

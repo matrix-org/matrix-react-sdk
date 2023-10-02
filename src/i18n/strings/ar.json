@@ -3,7 +3,6 @@
     "Send": "إرسال",
     "Unavailable": "غير متوفر",
     "Changelog": "سِجل التغييرات",
-    "Thank you!": "شكرًا !",
     "Sun": "الأحد",
     "Mon": "الإثنين",
     "Tue": "الثلاثاء",
@@ -31,7 +30,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s ‏%(time)s",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
-    "Logs sent": "تم ارسال سجل الاحداث",
     "You signed in to a new session without verifying it:": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
     "Verify your other session using one of the options below.": "أكِّد جلستك الأخرى باستخدام أحد الخيارات أدناه.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
@@ -427,7 +425,9 @@
         "uploading_logs": "رفع السجلات",
         "downloading_logs": "تحميل السجلات",
         "create_new_issue": "الرجاء <newIssueLink> إنشاء إشكال جديد</newIssueLink> على GitHub حتى نتمكن من التحقيق في هذا الخطأ.",
-        "waiting_for_server": "في انتظار الرد مِن الخادوم"
+        "waiting_for_server": "في انتظار الرد مِن الخادوم",
+        "logs_sent": "تم ارسال سجل الاحداث",
+        "thank_you": "شكرًا !"
     },
     "time": {
         "date_at_time": "%(date)s في %(time)s"

@@ -43,10 +43,6 @@
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Wednesday": "Onsdag",
-    "Thank you!": "Tak!",
-    "Logs sent": "Logfiler sendt",
-    "Failed to send logs: ": "Kunne ikke sende logfiler: ",
-    "Preparing to send logs": "Forbereder afsendelse af logfiler",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Headphones": "Hovedtelefoner",
@@ -384,7 +380,11 @@
         "send_logs": "Send logs",
         "collecting_information": "Indsamler app versionsoplysninger",
         "collecting_logs": "Indsamler logfiler",
-        "waiting_for_server": "Venter på svar fra server"
+        "waiting_for_server": "Venter på svar fra server",
+        "preparing_logs": "Forbereder afsendelse af logfiler",
+        "logs_sent": "Logfiler sendt",
+        "thank_you": "Tak!",
+        "failed_send_logs": "Kunne ikke sende logfiler: "
     },
     "time": {
         "date_at_time": "%(date)s om %(time)s"

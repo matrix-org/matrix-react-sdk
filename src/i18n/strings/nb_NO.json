@@ -72,8 +72,6 @@
     "Folder": "Mappe",
     "collapse": "skjul",
     "expand": "utvid",
-    "Close dialog": "Lukk dialog",
-    "Notes": "Merknader",
     "Unavailable": "Ikke tilgjengelig",
     "Changelog": "Endringslogg",
     "Confirm Removal": "Bekreft fjerning",
@@ -116,7 +114,6 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "Thank you!": "Tusen takk!",
     "Removing…": "Fjerner …",
     "Session ID": "Økt-ID",
     "Session key": "Øktnøkkel",
@@ -135,7 +132,6 @@
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Create new room": "Opprett et nytt rom",
-    "Logs sent": "Loggbøkene ble sendt",
     "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
     "%(count)s verified sessions": {
@@ -159,7 +155,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "Invite anyway": "Inviter likevel",
     "a key signature": "en nøkkelsignatur",
     "Send Logs": "Send loggbøker",
     "Command Help": "Kommandohjelp",
@@ -172,7 +167,6 @@
         "other": "Slett %(count)s meldinger",
         "one": "Slett 1 melding"
     },
-    "Failed to send logs: ": "Mislyktes i å sende loggbøker: ",
     "Incompatible Database": "Inkompatibel database",
     "Integrations are disabled": "Integreringer er skrudd av",
     "Integrations not allowed": "Integreringer er ikke tillatt",
@@ -754,7 +748,11 @@
         "submit_debug_logs": "Send inn avlusingsloggbøker",
         "title": "Feilrapportering",
         "send_logs": "Send loggbøker",
-        "github_issue": "Github-saksrapport"
+        "github_issue": "Github-saksrapport",
+        "logs_sent": "Loggbøkene ble sendt",
+        "thank_you": "Tusen takk!",
+        "failed_send_logs": "Mislyktes i å sende loggbøker: ",
+        "textarea_label": "Merknader"
     },
     "time": {
         "date_at_time": "%(date)s klokken %(time)s",
@@ -1737,7 +1735,8 @@
         "invalid_address": "Adressen ble ikke gjenkjent",
         "error_permissions_room": "Du har ikke tilgang til å invitere personer til dette rommet.",
         "error_unknown": "Ukjent tjenerfeil",
-        "to_space": "Inviter til %(spaceName)s"
+        "to_space": "Inviter til %(spaceName)s",
+        "unable_find_profiles_invite_label_default": "Inviter likevel"
     },
     "scalar": {
         "error_create": "Klarte ikke lage widgeten.",
@@ -1875,5 +1874,6 @@
             "network_dropdown_add_dialog_title": "Legg til en ny tjener",
             "network_dropdown_add_dialog_placeholder": "Tjenernavn"
         }
-    }
+    },
+    "dialog_close_label": "Lukk dialog"
 }

@@ -63,7 +63,6 @@
     "Thursday": "Quinta-feira",
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
-    "Thank you!": "Obrigado!",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s-%(monthName)s-%(fullYear)s",
     "Anguilla": "Anguilla",
     "United States": "Estados Unidos",
@@ -413,7 +412,8 @@
         "send_logs": "Enviar relatórios de erro",
         "collecting_information": "A recolher informação da versão da app",
         "collecting_logs": "A recolher logs",
-        "waiting_for_server": "À espera de resposta do servidor"
+        "waiting_for_server": "À espera de resposta do servidor",
+        "thank_you": "Obrigado!"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",

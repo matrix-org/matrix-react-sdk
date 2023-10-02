@@ -63,22 +63,15 @@
     "Today": "Avui",
     "Friday": "Divendres",
     "Changelog": "Registre de canvis",
-    "Failed to send logs: ": "No s'han pogut enviar els logs: ",
     "Unavailable": "No disponible",
     "Filter results": "Resultats del filtre",
     "Tuesday": "Dimarts",
-    "Preparing to send logs": "Preparant l'enviament de logs",
     "Saturday": "Dissabte",
     "Monday": "Dilluns",
     "Wednesday": "Dimecres",
     "You cannot delete this message. (%(code)s)": "No podeu eliminar aquest missatge. (%(code)s)",
     "Thursday": "Dijous",
-    "Logs sent": "Logs enviats",
     "Yesterday": "Ahir",
-    "Thank you!": "Gràcies!",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
-    "Invite anyway and never warn me again": "Convidar igualment i no avisar-me de nou",
-    "Invite anyway": "Convidar igualment",
     "We encountered an error trying to restore your previous session.": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
     "Upload Error": "Error de pujada",
     "A connection error occurred while trying to contact the server.": "S'ha produït un error de connexió mentre s'intentava connectar al servidor.",
@@ -197,7 +190,11 @@
         "send_logs": "Envia els registres",
         "collecting_information": "S'està recollint la informació de la versió de l'aplicació",
         "collecting_logs": "S'estan recopilant els registres",
-        "waiting_for_server": "S'està esperant una resposta del servidor"
+        "waiting_for_server": "S'està esperant una resposta del servidor",
+        "preparing_logs": "Preparant l'enviament de logs",
+        "logs_sent": "Logs enviats",
+        "thank_you": "Gràcies!",
+        "failed_send_logs": "No s'han pogut enviar els logs: "
     },
     "settings": {
         "use_12_hour_format": "Mostra les marques de temps en format de 12 hores (p.e. 2:30pm)",
@@ -763,7 +760,10 @@
         "failed_generic": "No s'ha pogut realitzar l'operació",
         "invalid_address": "Adreça no reconeguda",
         "error_permissions_room": "No teniu permís per convidar gent a aquesta sala.",
-        "error_unknown": "Error de servidor desconegut"
+        "error_unknown": "Error de servidor desconegut",
+        "unable_find_profiles_description_default": "No s'ha trobat el perfil pels IDs de Matrix següents, els voleu convidar igualment?",
+        "unable_find_profiles_invite_never_warn_label_default": "Convidar igualment i no avisar-me de nou",
+        "unable_find_profiles_invite_label_default": "Convidar igualment"
     },
     "widget": {
         "error_need_to_be_logged_in": "Has d'haver iniciat sessió.",

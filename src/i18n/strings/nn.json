@@ -59,10 +59,6 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "collapse": "Slå saman",
     "expand": "Utvid",
-    "Preparing to send logs": "Førebur loggsending",
-    "Logs sent": "Loggar sende",
-    "Thank you!": "Takk skal du ha!",
-    "Failed to send logs: ": "Fekk ikkje til å senda loggar: ",
     "Unavailable": "Utilgjengeleg",
     "Changelog": "Endringslogg",
     "not specified": "Ikkje spesifisert",
@@ -311,7 +307,11 @@
         "send_logs": "Send loggar inn",
         "collecting_information": "Samlar versjonsinfo for programmet",
         "collecting_logs": "Samlar loggar",
-        "waiting_for_server": "Ventar på svar frå tenaren"
+        "waiting_for_server": "Ventar på svar frå tenaren",
+        "preparing_logs": "Førebur loggsending",
+        "logs_sent": "Loggar sende",
+        "thank_you": "Takk skal du ha!",
+        "failed_send_logs": "Fekk ikkje til å senda loggar: "
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss att",

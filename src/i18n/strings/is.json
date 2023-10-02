@@ -45,10 +45,6 @@
     "Home": "Forsíða",
     "collapse": "fella saman",
     "expand": "fletta út",
-    "Preparing to send logs": "Undirbý sendingu atvikaskráa",
-    "Logs sent": "Sendi atvikaskrár",
-    "Thank you!": "Takk fyrir!",
-    "Failed to send logs: ": "Mistókst að senda atvikaskrár: ",
     "Unavailable": "Ekki tiltækt",
     "Changelog": "Breytingaskrá",
     "Confirm Removal": "Staðfesta fjarlægingu",
@@ -72,7 +68,6 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
     "Room Settings - %(roomName)s": "Stillingar spjallrásar - %(roomName)s",
     "Recently Direct Messaged": "Nýsend bein skilaboð",
-    "Preparing to download logs": "Undirbý niðurhal atvikaskráa",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
@@ -397,7 +392,6 @@
     "Sending": "Sendi",
     "MB": "MB",
     "Private space (invite only)": "Einkasvæði (einungis gegn boði)",
-    "Notes": "Minnispunktar",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -497,10 +491,6 @@
     "Space visibility": "Sýnileiki svæðis",
     "Clear all data": "Hreinsa öll gögn",
     "Reason (optional)": "Ástæða (valkvætt)",
-    "Close dialog": "Loka glugga",
-    "Invite anyway": "Bjóða samt",
-    "Invite anyway and never warn me again": "Bjóða samt og ekki vara mig við aftur",
-    "The following users may not exist": "Eftirfarandi notendur eru mögulega ekki til",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
@@ -649,7 +639,6 @@
     "Want to add an existing space instead?": "Viltu frekar bæta við fyrirliggjandi svæði?",
     "Add a space to a space you manage.": "Bættu svæði við eitthvað svæði sem þú stýrir.",
     "Preserve system messages": "Geyma kerfisskilaboð",
-    "To leave the beta, visit your settings.": "Til að hætta í beta-prófunarútgáfunni, skaltu fara í stillingarnar þínar.",
     "Consult first": "Ráðfæra fyrst",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
@@ -686,7 +675,6 @@
     "Live location ended": "Staðsetningu í rauntíma lauk",
     "Interactively verify by emoji": "Sannprófa gagnvirkt með táknmyndum",
     "Manually verify by text": "Sannreyna handvirkt með texta",
-    "%(featureName)s Beta feedback": "%(featureName)s beta umsögn",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Start a conversation with someone using their name or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi eða notandanafn (eins og <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
@@ -1008,7 +996,9 @@
         "bridge_state_workspace": "Vinnusvæði: <networkLink/>",
         "bridge_state_channel": "Rás: <channelLink/>",
         "beta_section": "Væntanlegir eiginleikar",
-        "beta_description": "Hvað er væntanlegt í %(brand)s? Að taka þátt í tilraunum gefur færi á að sjá nýja hluti fyrr, prófa nýja eiginleika og vera með í að móta þá áður en þeir fara í almenna notkun."
+        "beta_description": "Hvað er væntanlegt í %(brand)s? Að taka þátt í tilraunum gefur færi á að sjá nýja hluti fyrr, prófa nýja eiginleika og vera með í að móta þá áður en þeir fara í almenna notkun.",
+        "beta_feedback_title": "%(featureName)s beta umsögn",
+        "beta_feedback_leave_button": "Til að hætta í beta-prófunarútgáfunni, skaltu fara í stillingarnar þínar."
     },
     "keyboard": {
         "home": "Forsíða",
@@ -1156,7 +1146,13 @@
         "collecting_logs": "Safna atvikaskrám",
         "uploading_logs": "Sendi inn atvikaskrár",
         "downloading_logs": "Sæki atvikaskrá",
-        "waiting_for_server": "Bíð eftir svari frá vefþjóni"
+        "waiting_for_server": "Bíð eftir svari frá vefþjóni",
+        "preparing_logs": "Undirbý sendingu atvikaskráa",
+        "logs_sent": "Sendi atvikaskrár",
+        "thank_you": "Takk fyrir!",
+        "failed_send_logs": "Mistókst að senda atvikaskrár: ",
+        "preparing_download": "Undirbý niðurhal atvikaskráa",
+        "textarea_label": "Minnispunktar"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sk %(minutes)sm %(seconds)ss eftir",
@@ -3472,7 +3468,10 @@
         "error_version_unsupported_space": "Heimaþjónn notandans styður ekki útgáfu svæðisins.",
         "error_version_unsupported_room": "Heimaþjónn notandans styður ekki útgáfu spjallrásarinnar.",
         "error_unknown": "Óþekkt villa á þjóni",
-        "to_space": "Bjóða inn á %(spaceName)s"
+        "to_space": "Bjóða inn á %(spaceName)s",
+        "unable_find_profiles_title": "Eftirfarandi notendur eru mögulega ekki til",
+        "unable_find_profiles_invite_never_warn_label_default": "Bjóða samt og ekki vara mig við aftur",
+        "unable_find_profiles_invite_label_default": "Bjóða samt"
     },
     "scalar": {
         "error_create": "Gat ekki búið til viðmótshluta.",
@@ -3739,5 +3738,6 @@
             "network_dropdown_selected_label_instance": "Sýna: %(instance)s spjallrásir (%(server)s)",
             "network_dropdown_selected_label": "Birta: Matrix-spjallrásir"
         }
-    }
+    },
+    "dialog_close_label": "Loka glugga"
 }

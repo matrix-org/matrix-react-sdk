@@ -545,8 +545,6 @@
     "Send Logs": "Αποστολή Αρχείων καταγραφής",
     "Clear Storage and Sign Out": "Εκκαθάριση Χώρου αποθήκευσης και Αποσύνδεση",
     "Sign out and remove encryption keys?": "Αποσύνδεση και κατάργηση κλειδιών κρυπτογράφησης;",
-    "Failed to send logs: ": "Αποτυχία αποστολής αρχείων καταγραφής: ",
-    "Thank you!": "Ευχαριστώ!",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
     "%(name)s wants to verify": "%(name)s θέλει να επαληθεύσει",
@@ -606,18 +604,7 @@
     "Remove recent messages by %(user)s": "Καταργήστε πρόσφατα μηνύματα από %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Δοκιμάστε να κάνετε κύλιση στη γραμμή χρόνου για να δείτε αν υπάρχουν παλαιότερα.",
     "No recent messages by %(user)s found": "Δε βρέθηκαν πρόσφατα μηνύματα από %(user)s",
-    "Notes": "Σημειώσεις",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Προτού υποβάλετε αρχεία καταγραφής, πρέπει να <a>δημιουργήσετε ένα ζήτημα GitHub</a> για να περιγράψετε το πρόβλημά σας.",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Υπενθύμιση: Το πρόγραμμα περιήγησής σας δεν υποστηρίζεται, επομένως η εμπειρία σας μπορεί να είναι απρόβλεπτη.",
-    "Preparing to download logs": "Προετοιμασία λήψης αρχείων καταγραφής",
-    "Logs sent": "Τα αρχεία καταγραφής στάλθηκαν",
-    "Preparing to send logs": "Προετοιμασία αποστολής αρχείων καταγραφής",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Πείτε μας τι πήγε στραβά ή, καλύτερα, δημιουργήστε ένα ζήτημα στο GitHub που να περιγράφει το πρόβλημα.",
-    "To leave the beta, visit your settings.": "Για να αποχωρήσετε από την έκδοση beta, μεταβείτε στις ρυθμίσεις σας.",
-    "Close dialog": "Κλείσιμο διαλόγου",
-    "Invite anyway": "Πρόσκληση ούτως ή άλλως",
-    "Invite anyway and never warn me again": "Προσκαλέστε ούτως ή άλλως και μην με προειδοποιήσετε ποτέ ξανά",
-    "The following users may not exist": "Οι παρακάτω χρήστες ενδέχεται να μην υπάρχουν",
     "e.g. my-room": "π.χ. my-room",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
@@ -636,7 +623,6 @@
     "Confirm to continue": "Επιβεβαιώστε για να συνεχίσετε",
     "To continue, use Single Sign On to prove your identity.": "Για να συνεχίσετε, χρησιμοποιήστε σύνδεση Single Sign On για να αποδείξετε την ταυτότητά σας.",
     "toggle event": "μεταβολή συμβάντος",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Δεν είναι δυνατή η εύρεση προφίλ για τα αναγνωριστικά Matrix που αναφέρονται παρακάτω - θα θέλατε να τα προσκαλέσετε ούτως ή άλλως;",
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
@@ -1046,7 +1032,8 @@
         "bridge_state_creator": "Αυτή η γέφυρα παρέχεται από τον <user />.",
         "bridge_state_manager": "Αυτή τη γέφυρα τη διαχειρίζεται ο <user />.",
         "bridge_state_workspace": "Χώρος εργασίας: <networkLink/>",
-        "bridge_state_channel": "Κανάλι: <channelLink/>"
+        "bridge_state_channel": "Κανάλι: <channelLink/>",
+        "beta_feedback_leave_button": "Για να αποχωρήσετε από την έκδοση beta, μεταβείτε στις ρυθμίσεις σας."
     },
     "keyboard": {
         "home": "Αρχική",
@@ -1184,7 +1171,15 @@
         "uploading_logs": "Μεταφόρτωση αρχείων καταγραφής",
         "downloading_logs": "Λήψη αρχείων καταγραφής",
         "create_new_issue": "Παρακαλούμε <newIssueLink>δημιουργήστε ένα νέο issue</newIssueLink> στο GitHub ώστε να μπορέσουμε να διερευνήσουμε αυτό το σφάλμα.",
-        "waiting_for_server": "Αναμονή απάντησης από τον διακομιστή"
+        "waiting_for_server": "Αναμονή απάντησης από τον διακομιστή",
+        "error_empty": "Πείτε μας τι πήγε στραβά ή, καλύτερα, δημιουργήστε ένα ζήτημα στο GitHub που να περιγράφει το πρόβλημα.",
+        "preparing_logs": "Προετοιμασία αποστολής αρχείων καταγραφής",
+        "logs_sent": "Τα αρχεία καταγραφής στάλθηκαν",
+        "thank_you": "Ευχαριστώ!",
+        "failed_send_logs": "Αποτυχία αποστολής αρχείων καταγραφής: ",
+        "preparing_download": "Προετοιμασία λήψης αρχείων καταγραφής",
+        "unsupported_browser": "Υπενθύμιση: Το πρόγραμμα περιήγησής σας δεν υποστηρίζεται, επομένως η εμπειρία σας μπορεί να είναι απρόβλεπτη.",
+        "textarea_label": "Σημειώσεις"
     },
     "time": {
         "seconds_left": "%(seconds)ss απομένουν",
@@ -3380,7 +3375,11 @@
         "error_version_unsupported_space": "Ο κεντρικός διακομιστής του χρήστη δεν υποστηρίζει την έκδοση του χώρου.",
         "error_version_unsupported_room": "Ο κεντρικός διακομιστής του χρήστη δεν υποστηρίζει την έκδοση του δωματίου.",
         "error_unknown": "Άγνωστο σφάλμα διακομιστή",
-        "to_space": "Πρόσκληση σε %(spaceName)s"
+        "to_space": "Πρόσκληση σε %(spaceName)s",
+        "unable_find_profiles_description_default": "Δεν είναι δυνατή η εύρεση προφίλ για τα αναγνωριστικά Matrix που αναφέρονται παρακάτω - θα θέλατε να τα προσκαλέσετε ούτως ή άλλως;",
+        "unable_find_profiles_title": "Οι παρακάτω χρήστες ενδέχεται να μην υπάρχουν",
+        "unable_find_profiles_invite_never_warn_label_default": "Προσκαλέστε ούτως ή άλλως και μην με προειδοποιήσετε ποτέ ξανά",
+        "unable_find_profiles_invite_label_default": "Πρόσκληση ούτως ή άλλως"
     },
     "scalar": {
         "error_create": "Αδυναμία δημιουργίας μικροεφαρμογής.",
@@ -3642,5 +3641,6 @@
             "network_dropdown_add_dialog_placeholder": "Ονομα διακομιστή",
             "network_dropdown_add_server_option": "Προσθήκη νέου διακομιστή…"
         }
-    }
+    },
+    "dialog_close_label": "Κλείσιμο διαλόγου"
 }

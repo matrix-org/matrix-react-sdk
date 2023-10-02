@@ -70,7 +70,6 @@
     "Thursday": "Torstai",
     "Yesterday": "Eilen",
     "Wednesday": "Keskiviikko",
-    "Thank you!": "Kiitos!",
     "Dog": "Koira",
     "Cat": "Kissa",
     "Lion": "Leijona",
@@ -145,11 +144,6 @@
     "Are you sure you want to sign out?": "Haluatko varmasti kirjautua ulos?",
     "Updating %(brand)s": "Päivitetään %(brand)s",
     "Incompatible Database": "Yhteensopimaton tietokanta",
-    "Failed to send logs: ": "Lokien lähettäminen epäonnistui: ",
-    "Logs sent": "Lokit lähetetty",
-    "Preparing to send logs": "Valmistaudutaan lokien lähettämiseen",
-    "Invite anyway": "Kutsu silti",
-    "Invite anyway and never warn me again": "Kutsu silti, äläkä varoita minua enää uudelleen",
     "Elephant": "Norsu",
     "You'll lose access to your encrypted messages": "Menetät pääsyn salattuihin viesteihisi",
     "Create a new room with the same name, description and avatar": "luomme uuden huoneen samalla nimellä, kuvauksella ja kuvalla",
@@ -166,8 +160,6 @@
     "Share Room Message": "Jaa huoneviesti",
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
-    "The following users may not exist": "Seuraavat käyttäjät eivät välttämättä ole olemassa",
-    "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Alla luetelluille Matrix ID:ille ei löytynyt profiileja. Haluaisitko kutsua ne siitä huolimatta?",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
     "Unable to load commit detail: %(msg)s": "Commitin tietojen hakeminen epäonnistui: %(msg)s",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Jotta et menetä keskusteluhistoriaasi, sinun täytyy tallentaa huoneen avaimet ennen kuin kirjaudut ulos. Joudut käyttämään uudempaa %(brand)sin versiota tätä varten",
@@ -203,14 +195,12 @@
     "edited": "muokattu",
     "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
-    "Notes": "Huomautukset",
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
     "Upload all": "Lähetä kaikki palvelimelle",
     "Your homeserver doesn't seem to support this feature.": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta.",
     "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
     "Clear all data": "Poista kaikki tiedot",
-    "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Kerro mikä meni pieleen, tai, mikä parempaa, luo GitHub-issue joka kuvailee ongelman.",
     "Removing…": "Poistetaan…",
     "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
     "Be found by phone or email": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella",
@@ -225,7 +215,6 @@
     },
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "e.g. my-room": "esim. oma-huone",
-    "Close dialog": "Sulje dialogi",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
     "%(name)s accepted": "%(name)s hyväksyi",
     "%(name)s cancelled": "%(name)s peruutti",
@@ -263,7 +252,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
     "Sign in with SSO": "Kirjaudu kertakirjautumista käyttäen",
     "Submit logs": "Lähetä lokit",
-    "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
     "There was a problem communicating with the server. Please try again.": "Palvelinyhteydessä oli ongelma. Yritä uudelleen.",
     "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
     "Verify your other session using one of the options below.": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
@@ -306,7 +294,6 @@
     "The server is offline.": "Palvelin ei ole verkossa.",
     "Your firewall or anti-virus is blocking the request.": "Palomuurisi tai virustentorjuntaohjelmasi estää pyynnön.",
     "The server (%(serverName)s) took too long to respond.": "Palvelin (%(serverName)s) ei vastannut ajoissa.",
-    "Preparing to download logs": "Valmistellaan lokien lataamista",
     "Comoros": "Komorit",
     "Colombia": "Kolumbia",
     "Cocos (Keeling) Islands": "Kookossaaret",
@@ -676,7 +663,6 @@
         "other": "Olet poistamassa käyttäjän %(user)s %(count)s viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?",
         "one": "Olet poistamassa käyttäjän %(user)s yhtä viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?"
     },
-    "To leave the beta, visit your settings.": "Poistu beetasta asetuksista.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
@@ -686,7 +672,6 @@
     "Link to room": "Linkitä huoneeseen",
     "Automatically invite members from this room to the new one": "Kutsu jäsenet tästä huoneesta automaattisesti uuteen huoneeseen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
-    "%(featureName)s Beta feedback": "Ominaisuuden %(featureName)s beetapalaute",
     "%(count)s participants": {
         "one": "1 osallistuja",
         "other": "%(count)s osallistujaa"
@@ -1078,7 +1063,9 @@
         "bridge_state_workspace": "Työtila: <networkLink/>",
         "bridge_state_channel": "Kanava: <channelLink/>",
         "beta_section": "Tulevat ominaisuudet",
-        "experimental_section": "Ennakot"
+        "experimental_section": "Ennakot",
+        "beta_feedback_title": "Ominaisuuden %(featureName)s beetapalaute",
+        "beta_feedback_leave_button": "Poistu beetasta asetuksista."
     },
     "keyboard": {
         "home": "Etusivu",
@@ -1233,7 +1220,15 @@
         "uploading_logs": "Lähetetään lokeja",
         "downloading_logs": "Ladataan lokeja",
         "create_new_issue": "<newIssueLink>Luo uusi issue</newIssueLink> GitHubissa, jotta voimme tutkia tätä ongelmaa.",
-        "waiting_for_server": "Odotetaan vastausta palvelimelta"
+        "waiting_for_server": "Odotetaan vastausta palvelimelta",
+        "error_empty": "Kerro mikä meni pieleen, tai, mikä parempaa, luo GitHub-issue joka kuvailee ongelman.",
+        "preparing_logs": "Valmistaudutaan lokien lähettämiseen",
+        "logs_sent": "Lokit lähetetty",
+        "thank_you": "Kiitos!",
+        "failed_send_logs": "Lokien lähettäminen epäonnistui: ",
+        "preparing_download": "Valmistellaan lokien lataamista",
+        "unsupported_browser": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
+        "textarea_label": "Huomautukset"
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s jäljellä",
@@ -3654,7 +3649,11 @@
         "error_version_unsupported_space": "Käyttäjän kotipalvelin ei tue avaruuden versiota.",
         "error_version_unsupported_room": "Käyttäjän kotipalvelin ei tue huoneen versiota.",
         "error_unknown": "Tuntematon palvelinvirhe",
-        "to_space": "Kutsu avaruuteen %(spaceName)s"
+        "to_space": "Kutsu avaruuteen %(spaceName)s",
+        "unable_find_profiles_description_default": "Alla luetelluille Matrix ID:ille ei löytynyt profiileja. Haluaisitko kutsua ne siitä huolimatta?",
+        "unable_find_profiles_title": "Seuraavat käyttäjät eivät välttämättä ole olemassa",
+        "unable_find_profiles_invite_never_warn_label_default": "Kutsu silti, äläkä varoita minua enää uudelleen",
+        "unable_find_profiles_invite_label_default": "Kutsu silti"
     },
     "scalar": {
         "error_create": "Sovelman luominen epäonnistui.",
@@ -3949,5 +3948,6 @@
             "network_dropdown_selected_label_instance": "Näytä: %(instance)s-huoneet (%(server)s)",
             "network_dropdown_selected_label": "Näytä: Matrix-huoneet"
         }
-    }
+    },
+    "dialog_close_label": "Sulje dialogi"
 }
