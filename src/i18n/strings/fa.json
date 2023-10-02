@@ -450,15 +450,7 @@
     },
     "Join millions for free on the largest public server": "به بزرگترین سرور عمومی با میلیون ها نفر کاربر بپیوندید",
     "Server Options": "گزینه های سرور",
-    "This address is already in use": "این آدرس قبلاً استفاده شده‌است",
-    "This address is available to use": "این آدرس برای استفاده در دسترس است",
     "e.g. my-room": "به عنوان مثال، my-room",
-    "Some characters not allowed": "برخی از کاراکترها مجاز نیستند",
-    "Room address": "آدرس اتاق",
-    "<a>In reply to</a> <pill>": "<a>در پاسخ به</a><pill>",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "بارگیری رویدادی که به آن پاسخ داده شد امکان پذیر نیست، یا وجود ندارد یا شما اجازه مشاهده آن را ندارید.",
-    "Custom level": "سطح دلخواه",
-    "Power level": "سطح قدرت",
     "Filter results": "پالایش نتایج",
     "Server did not return valid authentication information.": "سرور اطلاعات احراز هویت معتبری را باز نگرداند.",
     "Server did not require any authentication": "سرور به احراز هویت احتیاج نداشت",
@@ -510,16 +502,9 @@
         "other": "و %(count)s مورد دیگر ..."
     },
     "Encrypted by a deleted session": "با یک نشست حذف شده رمزگذاری شده است",
-    "Language Dropdown": "منو زبان",
-    "Information": "اطلاعات",
     "%(count)s people you know have already joined": {
         "one": "%(count)s نفر از افرادی که می شناسید قبلاً پیوسته‌اند",
         "other": "%(count)s نفر از افرادی که می شناسید قبلاً به آن پیوسته‌اند"
-    },
-    "Including %(commaSeparatedMembers)s": "شامل %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "نمایش ۱ عضو",
-        "other": "نمایش همه %(count)s عضو"
     },
     "expand": "گشودن",
     "collapse": "بستن",
@@ -527,7 +512,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "این نسخه از %(brand)s از مشاهده برخی از پرونده های رمزگذاری شده پشتیبانی نمی کند",
     "Use the <a>Desktop app</a> to search encrypted messages": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Use the <a>Desktop app</a> to see all encrypted files": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
-    "Cancel search": "لغو جستجو",
     "Submit logs": "ارسال لاگ‌ها",
     "edited": "ویرایش شده",
     "%(name)s wants to verify": "%(name)s می‌خواهد تأیید هویت کند",
@@ -1044,7 +1028,9 @@
         "moderator": "معاون",
         "admin": "ادمین",
         "custom": "%(level)s دلخواه",
-        "mod": "معاون"
+        "mod": "معاون",
+        "label": "سطح قدرت",
+        "custom_level": "سطح دلخواه"
     },
     "bug_reporting": {
         "matrix_security_issue": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",
@@ -1736,7 +1722,11 @@
             "tooltip_sub": "برای مشاهده ویرایش ها کلیک کنید",
             "tooltip_label": "ویرایش شده در %(date)s. برای مشاهده ویرایش ها کلیک کنید."
         },
-        "error_rendering_message": "بارگیری این پیام امکان پذیر نیست"
+        "error_rendering_message": "بارگیری این پیام امکان پذیر نیست",
+        "reply": {
+            "error_loading": "بارگیری رویدادی که به آن پاسخ داده شد امکان پذیر نیست، یا وجود ندارد یا شما اجازه مشاهده آن را ندارید.",
+            "in_reply_to": "<a>در پاسخ به</a><pill>"
+        }
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",
@@ -2001,7 +1991,11 @@
             "canonical_alias_field_label": "آدرس اصلی",
             "avatar_field_label": "آواتار اتاق",
             "aliases_no_items_label": "آدرس دیگری منتشر نشده است، در زیر اضافه کنید",
-            "aliases_items_label": "دیگر آدرس‌های منتشر شده:"
+            "aliases_items_label": "دیگر آدرس‌های منتشر شده:",
+            "alias_heading": "آدرس اتاق",
+            "alias_field_safe_localpart_invalid": "برخی از کاراکترها مجاز نیستند",
+            "alias_field_taken_valid": "این آدرس برای استفاده در دسترس است",
+            "alias_field_taken_invalid_domain": "این آدرس قبلاً استفاده شده‌است"
         },
         "advanced": {
             "unfederated": "این اتاق توسط سرورهای ماتریکس در دسترس نیست",
@@ -2691,7 +2685,12 @@
         "jump_to_bottom_button": "به جدیدترین پیام‌ها بروید",
         "jump_read_marker": "رفتن به اولین پیام خوانده نشده.",
         "inviter_unknown": "ناشناخته",
-        "failed_reject_invite": "رد دعوتنامه با شکست همراه شد"
+        "failed_reject_invite": "رد دعوتنامه با شکست همراه شد",
+        "face_pile_tooltip_label": {
+            "one": "نمایش ۱ عضو",
+            "other": "نمایش همه %(count)s عضو"
+        },
+        "face_pile_tooltip_shortcut": "شامل %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2954,5 +2953,10 @@
         "error_loading_user_profile": "امکان نمایش پروفایل کاربر میسر نیست"
     },
     "cant_load_page": "نمایش صفحه امکان‌پذیر نبود",
-    "General failure": "خطای عمومی"
+    "General failure": "خطای عمومی",
+    "emoji_picker": {
+        "cancel_search_label": "لغو جستجو"
+    },
+    "info_tooltip_title": "اطلاعات",
+    "language_dropdown_label": "منو زبان"
 }

@@ -41,7 +41,6 @@
         "one": "(~%(count)s ผลลัพท์)",
         "other": "(~%(count)s ผลลัพท์)"
     },
-    "Custom level": "กำหนดระดับเอง",
     "Verification Pending": "รอการตรวจสอบ",
     "Sunday": "วันอาทิตย์",
     "Today": "วันนี้",
@@ -199,7 +198,8 @@
     "power_level": {
         "default": "ค่าเริ่มต้น",
         "moderator": "ผู้ช่วยดูแล",
-        "admin": "ผู้ดูแล"
+        "admin": "ผู้ดูแล",
+        "custom_level": "กำหนดระดับเอง"
     },
     "bug_reporting": {
         "send_logs": "ส่งล็อก",

@@ -50,7 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
-    "Custom level": "Propra nivelo",
     "And %(count)s more...": {
         "other": "Kaj %(count)s pliaj…"
     },
@@ -80,7 +79,6 @@
     "Logs sent": "Protokolo sendiĝis",
     "Failed to send logs: ": "Malsukcesis sendi protokolon: ",
     "Preparing to send logs": "Pretigante sendon de protokolo",
-    "<a>In reply to</a> <pill>": "<a>Responde al</a> <pill>",
     "Dog": "Hundo",
     "Cat": "Kato",
     "Lion": "Leono",
@@ -195,7 +193,6 @@
     "Removing…": "Forigante…",
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ne povas enlegi la responditan okazon; aŭ ĝi ne ekzistas, aŭ vi ne rajtas vidi ĝin.",
     "Clear all data": "Vakigi ĉiujn datumojn",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Por eviti perdon de via babila historio, vi devas elporti la ŝlosilojn de viaj ĉambroj antaŭ adiaŭo. Por tio vi bezonos reveni al la pli nova versio de %(brand)s",
     "Incompatible Database": "Neakorda datumbazo",
@@ -218,8 +215,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Malsukcesis malĉifri%(failedCount)s salutaĵojn!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Averto</b>: vi agordu ŝlosilan savkopion nur per fidata komputilo.",
     "Resend %(unsentCount)s reaction(s)": "Resendi %(unsentCount)s reago(j)n",
-    "Some characters not allowed": "Iuj signoj ne estas permesitaj",
-    "Power level": "Povnivelo",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gradaltigo de ĉi tiu ĉambro bezonas fermi ĝin, kaj krei novan por anstataŭi ĝin. Por plejbonigi sperton de la ĉambranoj, ni:",
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
@@ -235,7 +230,6 @@
     "%(name)s accepted": "%(name)s akceptis",
     "%(name)s cancelled": "%(name)s nuligis",
     "%(name)s wants to verify": "%(name)s volas kontroli",
-    "Cancel search": "Nuligi serĉon",
     "e.g. my-room": "ekzemple mia-chambro",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. <default>Uzu la norman (%(defaultIdentityServerName)s)</default> aŭ administru per <settings>Agordoj</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. Administru per <settings>Agordoj</settings>.",
@@ -263,7 +257,6 @@
         "one": "%(count)s salutaĵo"
     },
     "%(name)s declined": "%(name)s rifuzis",
-    "Language Dropdown": "Lingva falmenuo",
     "Destroy cross-signing keys?": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Forigo de delege ĉifraj ŝlosiloj estas porĉiama. Ĉiu, kun kiu vi interkontrolis, vidos avertojn pri sekureco. Vi preskaŭ certe ne volas ĉi tion fari, malse vi perdis ĉiun aparaton, el kiu vi povus delege subskribadi.",
     "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
@@ -325,9 +318,6 @@
     "Confirm encryption setup": "Konfirmi agordon de ĉifrado",
     "Click the button below to confirm setting up encryption.": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
     "IRC display name width": "Larĝo de vidiga nomo de IRC",
-    "Room address": "Adreso de ĉambro",
-    "This address is available to use": "Ĉi tiu adreso estas uzebla",
-    "This address is already in use": "Ĉi tiu adreso jam estas uzata",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Vi antaŭe uzis pli novan version de %(brand)s kun tiu ĉi salutaĵo. Por ree uzi ĉi tiun version kun tutvoja ĉifrado, vi devos adiaŭi kaj resaluti.",
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
@@ -355,7 +345,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Invitu iun per ĝia nomo, uzantonomo (kiel <userId/>), aŭ <a>diskonigu la ĉambron</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "Komencu interparolon kun iu per ĝia nomo aŭ uzantonomo (kiel <userId/>).",
     "Preparing to download logs": "Preparante elŝuton de protokolo",
-    "Information": "Informoj",
     "This version of %(brand)s does not support searching encrypted messages": "Ĉi tiu versio de %(brand)s ne subtenas serĉadon de ĉifritaj mesaĝoj",
     "This version of %(brand)s does not support viewing some encrypted files": "Ĉi tiu versio de %(brand)s ne subtenas montradon de iuj ĉifritaj dosieroj",
     "Use the <a>Desktop app</a> to search encrypted messages": "Uzu la <a>labortablan aplikaĵon</a> por serĉi ĉifritajn mesaĝojn",
@@ -671,11 +660,6 @@
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
     },
-    "Including %(commaSeparatedMembers)s": "Inkluzive je %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Montri 1 anon",
-        "other": "Montri ĉiujn %(count)s anojn"
-    },
     "We couldn't create your DM.": "Ni ne povis krei vian individuan ĉambron.",
     "You may contact me if you have any follow up questions": "Vi povas min kontakti okaze de pliaj demandoj",
     "To leave the beta, visit your settings.": "Por foriri de la prova versio, iru al viaj agordoj.",
@@ -729,7 +713,6 @@
     "Create a new space": "Krei novan aron",
     "Want to add a new space instead?": "Ĉu vi volas aldoni novan aron anstataŭe?",
     "Add existing space": "Aldoni jaman aron",
-    "Please provide an address": "Bonvolu doni adreson",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Malsukcesis komencigo de serĉado de mesaĝoj, kontrolu <a>viajn agordojn</a> por pliaj informoj",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "Would you like to leave the rooms in this space?": "Ĉu vi volus foriri de la ĉambroj en ĉi tiu aro?",
@@ -1103,7 +1086,9 @@
         "moderator": "Ĉambrestro",
         "admin": "Administranto",
         "custom": "Propra (%(level)s)",
-        "mod": "Reguligisto"
+        "mod": "Reguligisto",
+        "label": "Povnivelo",
+        "custom_level": "Propra nivelo"
     },
     "bug_reporting": {
         "matrix_security_issue": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
@@ -1903,7 +1888,11 @@
             "tooltip_sub": "Klaku por vidi redaktojn",
             "tooltip_label": "Redaktita je %(date)s. Klaku por vidi redaktojn."
         },
-        "error_rendering_message": "Ne povas enlegi ĉi tiun mesaĝon"
+        "error_rendering_message": "Ne povas enlegi ĉi tiun mesaĝon",
+        "reply": {
+            "error_loading": "Ne povas enlegi la responditan okazon; aŭ ĝi ne ekzistas, aŭ vi ne rajtas vidi ĝin.",
+            "in_reply_to": "<a>Responde al</a> <pill>"
+        }
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",
@@ -2237,7 +2226,12 @@
             "canonical_alias_field_label": "Ĉefa adreso",
             "avatar_field_label": "Profilbildo de ĉambro",
             "aliases_no_items_label": "Ankoraŭ neniuj aliaj publikigitaj adresoj; aldonu iun sube",
-            "aliases_items_label": "Aliaj publikigitaj adresoj:"
+            "aliases_items_label": "Aliaj publikigitaj adresoj:",
+            "alias_heading": "Adreso de ĉambro",
+            "alias_field_safe_localpart_invalid": "Iuj signoj ne estas permesitaj",
+            "alias_field_required_invalid": "Bonvolu doni adreson",
+            "alias_field_taken_valid": "Ĉi tiu adreso estas uzebla",
+            "alias_field_taken_invalid_domain": "Ĉi tiu adreso jam estas uzata"
         },
         "advanced": {
             "unfederated": "Ĉi tiu ĉambro ne atingeblas por foraj serviloj de Matrix",
@@ -3013,7 +3007,12 @@
         "jump_to_bottom_button": "Rulumi al plej freŝaj mesaĝoj",
         "jump_read_marker": "Salti al unua nelegita mesaĝo.",
         "inviter_unknown": "Nekonata",
-        "failed_reject_invite": "Malsukcesis rifuzi inviton"
+        "failed_reject_invite": "Malsukcesis rifuzi inviton",
+        "face_pile_tooltip_label": {
+            "one": "Montri 1 anon",
+            "other": "Montri ĉiujn %(count)s anojn"
+        },
+        "face_pile_tooltip_shortcut": "Inkluzive je %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3296,5 +3295,10 @@
         "error_loading_user_profile": "Ne povis enlegi profilon de uzanto"
     },
     "cant_load_page": "Ne povis enlegi paĝon",
-    "General failure": "Ĝenerala fiasko"
+    "General failure": "Ĝenerala fiasko",
+    "emoji_picker": {
+        "cancel_search_label": "Nuligi serĉon"
+    },
+    "info_tooltip_title": "Informoj",
+    "language_dropdown_label": "Lingva falmenuo"
 }

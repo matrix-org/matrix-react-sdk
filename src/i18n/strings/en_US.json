@@ -7,7 +7,6 @@
         "one": "and one other..."
     },
     "An error has occurred.": "An error has occurred.",
-    "Custom level": "Custom level",
     "Email address": "Email address",
     "Join Room": "Join Room",
     "Moderator": "Moderator",
@@ -149,7 +148,8 @@
         "restricted": "Restricted",
         "moderator": "Moderator",
         "admin": "Admin",
-        "custom": "Custom (%(level)s)"
+        "custom": "Custom (%(level)s)",
+        "custom_level": "Custom level"
     },
     "bug_reporting": {
         "send_logs": "Send logs",

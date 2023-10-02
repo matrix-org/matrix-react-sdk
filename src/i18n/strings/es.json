@@ -7,7 +7,6 @@
     "An error has occurred.": "Un error ha ocurrido.",
     "Email address": "Dirección de correo electrónico",
     "Join Room": "Unirme a la sala",
-    "Custom level": "Nivel personalizado",
     "Home": "Inicio",
     "Create new room": "Crear una nueva sala",
     "Unable to restore session": "No se puede recuperar la sesión",
@@ -75,8 +74,6 @@
     "Delete Widget": "Eliminar accesorio",
     "collapse": "encoger",
     "expand": "desplegar",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "No se pudo cargar el evento al que se respondió, bien porque no existe o no tiene permiso para verlo.",
-    "<a>In reply to</a> <pill>": "<a>Respondiendo a </a> <pill>",
     "And %(count)s more...": {
         "other": "Y %(count)s más…"
     },
@@ -227,10 +224,7 @@
     "Ask this user to verify their session, or manually verify it below.": "Pídele al usuario que verifique su sesión, o verifícala manualmente a continuación.",
     "Not Trusted": "No es de confianza",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
-    "Language Dropdown": "Lista selección de idiomas",
-    "Power level": "Nivel de poder",
     "e.g. my-room": "p.ej. mi-sala",
-    "Some characters not allowed": "Algunos caracteres no están permitidos",
     "Enter a server name": "Escribe un nombre de servidor",
     "Looks good": "Se ve bien",
     "Can't find this server or its room list": "No se ha podido encontrar este servidor o su lista de salas",
@@ -294,7 +288,6 @@
     "%(name)s wants to verify": "%(name)s quiere verificar",
     "edited": "editado",
     "Submit logs": "Enviar registros",
-    "Cancel search": "Cancelar búsqueda",
     "Upload completed": "Subida completada",
     "Cancelled signature upload": "Subida de firma cancelada",
     "Unable to upload": "No se ha podido enviar",
@@ -325,10 +318,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "Information": "Información",
-    "Room address": "Dirección de la sala",
-    "This address is available to use": "Esta dirección está disponible para usar",
-    "This address is already in use": "Esta dirección ya está en uso",
     "Preparing to download logs": "Preparándose para descargar registros",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Anteriormente usaste una versión más nueva de %(brand)s con esta sesión. Para volver a utilizar esta versión con cifrado de extremo a extremo, deberá cerrar sesión y volver a iniciar sesión.",
     "To continue, use Single Sign On to prove your identity.": "Para continuar, utilice el inicio de sesión único para demostrar su identidad.",
@@ -682,11 +671,6 @@
     "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
     "Reset everything": "Restablecer todo",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
-    "Including %(commaSeparatedMembers)s": "Incluyendo %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Ver 1 miembro",
-        "other": "Ver los %(count)s miembros"
-    },
     "Want to add a new room instead?": "¿Quieres añadir una sala nueva en su lugar?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Añadiendo salas… (%(progress)s de %(count)s)",
@@ -702,7 +686,6 @@
     "Message preview": "Vista previa del mensaje",
     "Sent": "Enviado",
     "You don't have permission to do this": "No tienes permisos para hacer eso",
-    "Please provide an address": "Por favor, elige una dirección",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Ha fallado el sistema de búsqueda de mensajes. Comprueba <a>tus ajustes</a> para más información",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "User Directory": "Lista de usuarios",
@@ -739,7 +722,6 @@
     "Would you like to leave the rooms in this space?": "¿Quieres salir también de las salas del espacio?",
     "You are about to leave <spaceName/>.": "Estás a punto de salirte de <spaceName/>.",
     "MB": "MB",
-    "In reply to <a>this message</a>": "En respuesta a <a>este mensaje</a>",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
@@ -776,21 +758,16 @@
     "Failed to end poll": "No se ha podido terminar la encuesta",
     "The poll has ended. Top answer: %(topAnswer)s": "La encuesta ha terminado. Opción ganadora: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "La encuesta ha terminado. Nadie ha votado.",
-    "Including you, %(commaSeparatedMembers)s": "Además de ti, %(commaSeparatedMembers)s",
     "Recently viewed": "Visto recientemente",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar otro dispositivo",
-    "Missing domain separator e.g. (:domain.org)": "Falta el separador de dominio, ej.: (:dominio.org)",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera acceso a tu cuenta y a las claves de cifrado almacenadas en esta sesión. Sin ellas, no podrás leer todos tus mensajes seguros en ninguna sesión.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Aquí encontrarás tus conversaciones con los miembros del espacio. Si lo desactivas, estas no aparecerán mientras veas el espacio %(spaceName)s.",
-    "This address had invalid server or is already in use": "Esta dirección tiene un servidor no válido o ya está siendo usada",
     "Sections to show": "Secciones que mostrar",
     "toggle event": "activar o desactivar el evento",
     "Feedback sent! Thanks, we appreciate it!": "¡Opinión enviada! Gracias, te lo agradecemos.",
     "Use <arrows/> to scroll": "Usa <arrows/> para desplazarte",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s y %(space2Name)s",
-    "This address does not point at this room": "La dirección no apunta a esta sala",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Falta el nombre de la sala o el separador (ej.: mi-sala:dominio.org)",
     "Search Dialog": "Ventana de búsqueda",
     "Join %(roomAddress)s": "Unirte a %(roomAddress)s",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
@@ -877,7 +854,6 @@
     "Fetching keys from server…": "Obteniendo claves del servidor…",
     "Checking…": "Comprobando…",
     "Adding…": "Añadiendo…",
-    "Message in %(room)s": "Mensaje en %(room)s",
     "unavailable": "no disponible",
     "unknown status code": "error de estado desconocido",
     "unknown": "desconocido",
@@ -889,7 +865,6 @@
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
     "Can't start voice message": "No se ha podido empezar el mensaje de voz",
     "Waiting for partner to confirm…": "Esperando a que la otra persona confirme…",
-    "Message from %(user)s": "Mensaje de %(user)s",
     "Enable MSC3946 (to support late-arriving room archives)": "",
     "common": {
         "about": "Acerca de",
@@ -1356,7 +1331,9 @@
         "moderator": "Moderador",
         "admin": "Admin",
         "mod": "Mod",
-        "custom": "Personalizado (%(level)s)"
+        "custom": "Personalizado (%(level)s)",
+        "label": "Nivel de poder",
+        "custom_level": "Nivel personalizado"
     },
     "bug_reporting": {
         "introduction": "Si ya has informado de un fallo a través de GitHub, los registros de depuración nos pueden ayudar a investigar mejor el problema. ",
@@ -2458,7 +2435,12 @@
             "tooltip_sub": "Haz clic para ver las ediciones",
             "tooltip_label": "Última vez editado: %(date)s. Haz clic para ver los cambios."
         },
-        "error_rendering_message": "No se ha podido cargar este mensaje"
+        "error_rendering_message": "No se ha podido cargar este mensaje",
+        "reply": {
+            "error_loading": "No se pudo cargar el evento al que se respondió, bien porque no existe o no tiene permiso para verlo.",
+            "in_reply_to": "<a>Respondiendo a </a> <pill>",
+            "in_reply_to_for_export": "En respuesta a <a>este mensaje</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Envía el mensaje como un spoiler",
@@ -2821,7 +2803,16 @@
             "canonical_alias_field_label": "Dirección principal",
             "avatar_field_label": "Avatar de la sala",
             "aliases_no_items_label": "Todavía no hay direcciones publicadas, puedes añadir una más abajo",
-            "aliases_items_label": "Otras direcciones publicadas:"
+            "aliases_items_label": "Otras direcciones publicadas:",
+            "alias_heading": "Dirección de la sala",
+            "alias_field_has_domain_invalid": "Falta el separador de dominio, ej.: (:dominio.org)",
+            "alias_field_has_localpart_invalid": "Falta el nombre de la sala o el separador (ej.: mi-sala:dominio.org)",
+            "alias_field_safe_localpart_invalid": "Algunos caracteres no están permitidos",
+            "alias_field_required_invalid": "Por favor, elige una dirección",
+            "alias_field_matches_invalid": "La dirección no apunta a esta sala",
+            "alias_field_taken_valid": "Esta dirección está disponible para usar",
+            "alias_field_taken_invalid_domain": "Esta dirección ya está en uso",
+            "alias_field_taken_invalid": "Esta dirección tiene un servidor no válido o ya está siendo usada"
         },
         "advanced": {
             "unfederated": "Esta sala no es accesible desde otros servidores de Matrix",
@@ -3782,7 +3773,13 @@
         "error_jump_to_date_details": "Detalles del error",
         "jump_to_date_beginning": "Inicio de la sala",
         "jump_to_date": "Saltar a una fecha",
-        "jump_to_date_prompt": "Elige la fecha a la que saltar"
+        "jump_to_date_prompt": "Elige la fecha a la que saltar",
+        "face_pile_tooltip_label": {
+            "one": "Ver 1 miembro",
+            "other": "Ver los %(count)s miembros"
+        },
+        "face_pile_tooltip_shortcut_joined": "Además de ti, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Incluyendo %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "<a>Regístrate</a> para usar esta funcionalidad",
@@ -4141,5 +4138,14 @@
     },
     "console_wait": "¡Espera!",
     "cant_load_page": "No se ha podido cargar la página",
-    "General failure": "Error no especificado"
+    "General failure": "Error no especificado",
+    "emoji_picker": {
+        "cancel_search_label": "Cancelar búsqueda"
+    },
+    "info_tooltip_title": "Información",
+    "language_dropdown_label": "Lista selección de idiomas",
+    "pill": {
+        "permalink_other_room": "Mensaje en %(room)s",
+        "permalink_this_room": "Mensaje de %(user)s"
+    }
 }

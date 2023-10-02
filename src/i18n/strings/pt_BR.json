@@ -39,7 +39,6 @@
     "Confirm Removal": "Confirmar a remoção",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
-    "Custom level": "Nível personalizado",
     "Home": "Home",
     "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
@@ -60,7 +59,6 @@
     "Delete Widget": "Apagar widget",
     "collapse": "recolher",
     "expand": "expandir",
-    "<a>In reply to</a> <pill>": "<a>Em resposta a</a> <pill>",
     "And %(count)s more...": {
         "other": "E %(count)s mais..."
     },
@@ -78,7 +76,6 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Thank you!": "Obrigado!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Não é possível carregar o evento que foi respondido, ele não existe ou você não tem permissão para visualizá-lo.",
     "Preparing to send logs": "Preparando para enviar relatórios",
     "Logs sent": "Relatórios enviados",
     "Failed to send logs: ": "Falha ao enviar os relatórios:· ",
@@ -219,13 +216,7 @@
     "%(name)s cancelled": "%(name)s cancelou",
     "edited": "editado",
     "Submit logs": "Enviar relatórios",
-    "Cancel search": "Cancelar busca",
-    "Language Dropdown": "Menu suspenso de idiomas",
-    "Room address": "Endereço da sala",
     "e.g. my-room": "por exemplo: minha-sala",
-    "Some characters not allowed": "Alguns caracteres não são permitidos",
-    "This address is available to use": "Este endereço está disponível para uso",
-    "This address is already in use": "Este endereço já está em uso",
     "Enter a server name": "Digite um nome de servidor",
     "Can't find this server or its room list": "Não foi possível encontrar este servidor ou sua lista de salas",
     "Your server": "Seu servidor",
@@ -241,7 +232,6 @@
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
-    "Power level": "Nível de permissão",
     "Looks good": "Muito bem",
     "Close dialog": "Fechar caixa de diálogo",
     "There was a problem communicating with the server. Please try again.": "Ocorreu um problema na comunicação com o servidor. Por favor, tente novamente.",
@@ -347,7 +337,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Use o <a>app para Computador</a> para buscar mensagens criptografadas",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versão do %(brand)s não permite visualizar alguns arquivos criptografados",
     "This version of %(brand)s does not support searching encrypted messages": "Esta versão do %(brand)s não permite buscar mensagens criptografadas",
-    "Information": "Informação",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
     "Preparing to download logs": "Preparando os relatórios para download",
@@ -677,19 +666,12 @@
     "Create a new space": "Criar um novo espaço",
     "Add existing space": "Adicionar espaço existente",
     "You are not allowed to view this server's rooms list": "Você não tem a permissão para ver a lista de salas deste servidor",
-    "Please provide an address": "Por favor, digite um endereço",
     "%(count)s people you know have already joined": {
         "one": "%(count)s pessoa que você conhece já entrou",
         "other": "%(count)s pessoas que você conhece já entraram"
     },
-    "Including %(commaSeparatedMembers)s": "Incluindo %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Ver 1 membro",
-        "other": "Ver todos os %(count)s membros"
-    },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Falha na inicialização da pesquisa por mensagem, confire <a>suas configurações</a> para mais informações",
     "MB": "MB",
-    "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Space selection": "Seleção de Espaços",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
@@ -700,7 +682,6 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "Including you, %(commaSeparatedMembers)s": "Incluindo você, %(commaSeparatedMembers)s",
     "%(count)s votes": {
         "one": "%(count)s voto",
         "other": "%(count)s votos"
@@ -1074,7 +1055,9 @@
         "moderator": "Moderador/a",
         "admin": "Administrador/a",
         "mod": "Moderador",
-        "custom": "Personalizado (%(level)s)"
+        "custom": "Personalizado (%(level)s)",
+        "label": "Nível de permissão",
+        "custom_level": "Nível personalizado"
     },
     "bug_reporting": {
         "matrix_security_issue": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
@@ -1915,7 +1898,12 @@
             "tooltip_sub": "Clicar para ver edições",
             "tooltip_label": "Editado em %(date)s. Clique para ver edições."
         },
-        "error_rendering_message": "Não foi possível carregar esta mensagem"
+        "error_rendering_message": "Não foi possível carregar esta mensagem",
+        "reply": {
+            "error_loading": "Não é possível carregar o evento que foi respondido, ele não existe ou você não tem permissão para visualizá-lo.",
+            "in_reply_to": "<a>Em resposta a</a> <pill>",
+            "in_reply_to_for_export": "Em resposta a <a>esta mensagem</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Envia esta mensagem como spoiler",
@@ -2255,7 +2243,12 @@
             "canonical_alias_field_label": "Endereço principal",
             "avatar_field_label": "Foto da sala",
             "aliases_no_items_label": "Nenhum endereço publicado ainda, adicione um abaixo",
-            "aliases_items_label": "Outros endereços publicados:"
+            "aliases_items_label": "Outros endereços publicados:",
+            "alias_heading": "Endereço da sala",
+            "alias_field_safe_localpart_invalid": "Alguns caracteres não são permitidos",
+            "alias_field_required_invalid": "Por favor, digite um endereço",
+            "alias_field_taken_valid": "Este endereço está disponível para uso",
+            "alias_field_taken_invalid_domain": "Este endereço já está em uso"
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos",
@@ -2942,7 +2935,13 @@
         "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas.",
         "inviter_unknown": "Desconhecido",
         "failed_reject_invite": "Não foi possível recusar o convite",
-        "jump_to_date": "Ir para Data"
+        "jump_to_date": "Ir para Data",
+        "face_pile_tooltip_label": {
+            "one": "Ver 1 membro",
+            "other": "Ver todos os %(count)s membros"
+        },
+        "face_pile_tooltip_shortcut_joined": "Incluindo você, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Incluindo %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
@@ -3243,5 +3242,10 @@
         "error_loading_user_profile": "Não foi possível carregar o perfil do usuário"
     },
     "cant_load_page": "Não foi possível carregar a página",
-    "General failure": "Falha geral"
+    "General failure": "Falha geral",
+    "emoji_picker": {
+        "cancel_search_label": "Cancelar busca"
+    },
+    "info_tooltip_title": "Informação",
+    "language_dropdown_label": "Menu suspenso de idiomas"
 }

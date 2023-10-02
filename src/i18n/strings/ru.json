@@ -34,7 +34,6 @@
     "not specified": "не задан",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Custom level": "Специальные права",
     "Email address": "Электронная почта",
     "Session ID": "ID сеанса",
     "Confirm Removal": "Подтвердите удаление",
@@ -63,7 +62,6 @@
     "collapse": "свернуть",
     "expand": "развернуть",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "<a>In reply to</a> <pill>": "<a>В ответ на</a> <pill>",
     "Sunday": "Воскресенье",
     "Today": "Сегодня",
     "Friday": "Пятница",
@@ -85,7 +83,6 @@
     "Clear Storage and Sign Out": "Очистить хранилище и выйти",
     "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой.",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не удается загрузить событие, на которое был дан ответ. Либо оно не существует, либо у вас нет разрешения на его просмотр.",
     "Share Room": "Поделиться комнатой",
     "Link to most recent message": "Ссылка на последнее сообщение",
     "Share User": "Поделиться пользователем",
@@ -180,7 +177,6 @@
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
-    "Power level": "Уровень прав",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Не возможно найти профили для MatrixID, приведенных ниже — все равно желаете их пригласить?",
     "Invite anyway": "Всё равно пригласить",
     "Notes": "Заметка",
@@ -211,7 +207,6 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Some characters not allowed": "Некоторые символы не разрешены",
     "Join millions for free on the largest public server": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
@@ -237,7 +232,6 @@
     "Command Help": "Помощь команды",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
-    "Cancel search": "Отменить поиск",
     "Direct Messages": "Личные сообщения",
     "%(count)s sessions": {
         "other": "Сеансов: %(count)s",
@@ -261,7 +255,6 @@
     "%(name)s declined": "%(name)s отказал(а)",
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
-    "Language Dropdown": "Список языков",
     "Enter a server name": "Введите имя сервера",
     "Looks good": "В порядке",
     "Your server": "Ваш сервер",
@@ -286,9 +279,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
     "Submit logs": "Отправить логи",
-    "Room address": "Адрес комнаты",
-    "This address is available to use": "Этот адрес доступен",
-    "This address is already in use": "Этот адрес уже используется",
     "Enter the name of a new server you want to explore.": "Введите имя нового сервера для просмотра.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
     "IRC display name width": "Ширина отображаемого имени IRC",
@@ -351,7 +341,6 @@
     "Confirm encryption setup": "Подтвердите настройку шифрования",
     "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
     "Preparing to download logs": "Подготовка к загрузке журналов",
-    "Information": "Информация",
     "Not encrypted": "Не зашифровано",
     "Backup version:": "Версия резервной копии:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя или имя пользователя (например, <userId/>).",
@@ -721,15 +710,9 @@
     "Want to add a new space instead?": "Хотите добавить новое пространство?",
     "Add existing space": "Добавить существующее пространство",
     "You are not allowed to view this server's rooms list": "Вам не разрешено просматривать список комнат этого сервера",
-    "Please provide an address": "Пожалуйста, укажите адрес",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
-    },
-    "Including %(commaSeparatedMembers)s": "Включая %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Посмотреть 1 участника",
-        "other": "Просмотреть всех %(count)s участников"
     },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
     "Leave some rooms": "Покинуть несколько комнат",
@@ -739,7 +722,6 @@
     "You are about to leave <spaceName/>.": "Вы собираетесь покинуть <spaceName/>.",
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
     "MB": "Мб",
-    "In reply to <a>this message</a>": "В ответ на <a>это сообщение</a>",
     "%(count)s reply": {
         "one": "%(count)s ответ",
         "other": "%(count)s ответов"
@@ -768,11 +750,6 @@
     "Failed to end poll": "Не удалось завершить опрос",
     "The poll has ended. Top answer: %(topAnswer)s": "Опрос завершен. Победил ответ: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Опрос завершен. Ни одного голоса не было.",
-    "This address had invalid server or is already in use": "Этот адрес имеет недопустимый сервер или уже используется",
-    "This address does not point at this room": "Этот адрес не указывает на эту комнату",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Отсутствует имя комнаты или разделитель (my-room:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Отсутствует разделитель домена (:domain.org)",
-    "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -872,8 +849,6 @@
     "<w>WARNING:</w> <description/>": "<w>ВНИМАНИЕ:</w> <description/>",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Message in %(room)s": "Сообщение в %(room)s",
-    "Message from %(user)s": "Сообщение от %(user)s",
     "common": {
         "about": "О комнате",
         "analytics": "Аналитика",
@@ -1318,7 +1293,9 @@
         "moderator": "Модератор",
         "admin": "Администратор",
         "mod": "Модератор",
-        "custom": "Пользовательский (%(level)s)"
+        "custom": "Пользовательский (%(level)s)",
+        "label": "Уровень прав",
+        "custom_level": "Специальные права"
     },
     "bug_reporting": {
         "introduction": "Если вы отправили ошибку через GitHub, журналы отладки могут помочь нам отследить проблему. ",
@@ -2405,7 +2382,12 @@
             "tooltip_sub": "Нажмите для просмотра правок",
             "tooltip_label": "Изменено %(date)s. Нажмите для посмотра истории изменений."
         },
-        "error_rendering_message": "Не удалось загрузить это сообщение"
+        "error_rendering_message": "Не удалось загрузить это сообщение",
+        "reply": {
+            "error_loading": "Не удается загрузить событие, на которое был дан ответ. Либо оно не существует, либо у вас нет разрешения на его просмотр.",
+            "in_reply_to": "<a>В ответ на</a> <pill>",
+            "in_reply_to_for_export": "В ответ на <a>это сообщение</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",
@@ -2763,7 +2745,16 @@
             "canonical_alias_field_label": "Главный адрес",
             "avatar_field_label": "Аватар комнаты",
             "aliases_no_items_label": "Пока нет других публичных адресов, добавьте их ниже",
-            "aliases_items_label": "Прочие публичные адреса:"
+            "aliases_items_label": "Прочие публичные адреса:",
+            "alias_heading": "Адрес комнаты",
+            "alias_field_has_domain_invalid": "Отсутствует разделитель домена (:domain.org)",
+            "alias_field_has_localpart_invalid": "Отсутствует имя комнаты или разделитель (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "Некоторые символы не разрешены",
+            "alias_field_required_invalid": "Пожалуйста, укажите адрес",
+            "alias_field_matches_invalid": "Этот адрес не указывает на эту комнату",
+            "alias_field_taken_valid": "Этот адрес доступен",
+            "alias_field_taken_invalid_domain": "Этот адрес уже используется",
+            "alias_field_taken_invalid": "Этот адрес имеет недопустимый сервер или уже используется"
         },
         "advanced": {
             "unfederated": "Это комната недоступна из других серверов Matrix",
@@ -3676,7 +3667,13 @@
         "creating_room_text": "Мы создаем комнату с %(names)s",
         "jump_to_date_beginning": "Начало комнаты",
         "jump_to_date": "Перейти к дате",
-        "jump_to_date_prompt": "Выберите дату для перехода"
+        "jump_to_date_prompt": "Выберите дату для перехода",
+        "face_pile_tooltip_label": {
+            "one": "Посмотреть 1 участника",
+            "other": "Просмотреть всех %(count)s участников"
+        },
+        "face_pile_tooltip_shortcut_joined": "Включая вас, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Включая %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
@@ -4026,5 +4023,14 @@
     },
     "console_wait": "Подождите!",
     "cant_load_page": "Невозможно загрузить страницу",
-    "General failure": "Общая ошибка"
+    "General failure": "Общая ошибка",
+    "emoji_picker": {
+        "cancel_search_label": "Отменить поиск"
+    },
+    "info_tooltip_title": "Информация",
+    "language_dropdown_label": "Список языков",
+    "pill": {
+        "permalink_other_room": "Сообщение в %(room)s",
+        "permalink_this_room": "Сообщение от %(user)s"
+    }
 }

@@ -274,17 +274,7 @@
     },
     "Join millions for free on the largest public server": "Tham gia hàng triệu máy chủ công cộng miễn phí lớn nhất",
     "Server Options": "Tùy chọn máy chủ",
-    "This address is already in use": "Địa chỉ này đã được sử dụng",
-    "This address is available to use": "Địa chỉ này có sẵn để sử dụng",
-    "Please provide an address": "Vui lòng cung cấp địa chỉ",
-    "Some characters not allowed": "Một số ký tự không được phép",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
-    "Room address": "Địa chỉ phòng",
-    "In reply to <a>this message</a>": "Để trả lời <a>tin nhắn này</a>",
-    "<a>In reply to</a> <pill>": "Trả lời <a>In reply to</a> <pill>",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Không thể tải sự kiện đã được trả lời, sự kiện đó không tồn tại hoặc bạn không có quyền xem sự kiện đó.",
-    "Custom level": "Cấp độ tùy chọn",
-    "Power level": "Cấp độ sức mạnh",
     "Use your Security Key to continue.": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
     "Security Key": "Chìa khóa bảo mật",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Nhập Chuỗi bảo mật hoặc <button>sử dụng Khóa bảo mật</button> của bạn để tiếp tục.",
@@ -345,16 +335,9 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nếu bạn làm vậy, xin lưu ý rằng không có thư nào của bạn sẽ bị xóa, nhưng trải nghiệm tìm kiếm có thể bị giảm sút trong một vài phút trong khi chỉ mục được tạo lại",
     "You most likely do not want to reset your event index store": "Rất có thể bạn không muốn đặt lại kho chỉ mục sự kiện của mình",
     "Reset event store?": "Đặt lại kho sự kiện?",
-    "Language Dropdown": "Danh sách ngôn ngữ",
-    "Information": "Thông tin",
     "%(count)s people you know have already joined": {
         "one": "%(count)s người bạn đã biết vừa tham gia",
         "other": "%(count)s người bạn đã biết vừa tham gia"
-    },
-    "Including %(commaSeparatedMembers)s": "Bao gồm %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Xem một thành viên",
-        "other": "Xem tất cả %(count)s thành viên"
     },
     "expand": "mở rộng",
     "collapse": "thu hẹp",
@@ -363,7 +346,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để tìm kiếm tin nhắn được mã hóa",
     "Use the <a>Desktop app</a> to see all encrypted files": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để xem tất cả các tệp được mã hóa",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Không thể khởi chạy tìm kiếm tin nhắn, hãy kiểm tra cài đặt của bạn <a>your settings</a> để biết thêm thông tin",
-    "Cancel search": "Hủy tìm kiếm",
     "Submit logs": "Gửi nhật ký",
     "edited": "đã chỉnh sửa",
     "%(name)s wants to verify": "%(name)s muốn xác thực",
@@ -782,10 +764,6 @@
     "Failed to end poll": "Kết thúc cuộc thăm dò ý kiến thất bại",
     "The poll has ended. Top answer: %(topAnswer)s": "Cuộc thăm dò ý kiến đã kết thúc. Câu trả lời đứng đầu: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Cuộc thăm dò ý kiến đã kết thúc. Không có phiếu bầu được bỏ.",
-    "This address had invalid server or is already in use": "Địa chỉ này có máy chủ không hợp lệ hoặc đã được sử dụng",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Thiếu tên phòng hoặc dấu cách. Ví dụ: (my-room:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Thiếu dấu tách tên miền. Ví dụ: (:domain.org)",
-    "Including you, %(commaSeparatedMembers)s": "Bao gồm bạn, %(commaSeparatedMembers)s",
     "toggle event": "chuyển đổi sự kiện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
@@ -835,15 +813,12 @@
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
-    "This address does not point at this room": "Địa chỉ này không trỏ đến phòng này",
     "Choose a locale": "Chọn vùng miền",
     "Coworkers and teams": "Đồng nghiệp và nhóm",
     "Online community members": "Thành viên cộng đồng trực tuyến",
     "Confirm that you would like to deactivate your account. If you proceed:": "Xác nhận bạn muốn vô hiệu hóa tài khoản. Nếu bạn tiếp tục:",
     "You will leave all rooms and DMs that you are in": "Bạn sẽ rời tất cả phòng và tin nhắn trực tiếp mà bạn đã tham gia",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Bạn sẽ bị xóa khỏi máy chủ định danh: bạn bè của bạn sẽ không tìm thấy bạn bằng địa chỉ thư điện tử hay số điện thoại",
-    "Message in %(room)s": "Tin nhắn trong %(room)s",
-    "Message from %(user)s": "Tin nhắn từ %(user)s",
     "Show: Matrix rooms": "Hiện: Phòng Matrix",
     "Friends and family": "Bạn bè và gia đình",
     "Adding…": "Đang thêm…",
@@ -1299,7 +1274,9 @@
         "moderator": "Điều phối viên",
         "admin": "Quản trị viên",
         "mod": "Người quản trị",
-        "custom": "Tùy chỉnh (%(level)s)"
+        "custom": "Tùy chỉnh (%(level)s)",
+        "label": "Cấp độ sức mạnh",
+        "custom_level": "Cấp độ tùy chọn"
     },
     "bug_reporting": {
         "introduction": "Nếu bạn đã báo cáo lỗi qua GitHub, nhật ký gỡ lỗi có thể giúp chúng tôi theo dõi vấn đề. ",
@@ -2395,7 +2372,12 @@
             "tooltip_sub": "Nhấp để xem các chỉnh sửa",
             "tooltip_label": "Đã chỉnh sửa vào %(date)s. Bấm để xem các chỉnh sửa."
         },
-        "error_rendering_message": "Không thể tải tin nhắn này"
+        "error_rendering_message": "Không thể tải tin nhắn này",
+        "reply": {
+            "error_loading": "Không thể tải sự kiện đã được trả lời, sự kiện đó không tồn tại hoặc bạn không có quyền xem sự kiện đó.",
+            "in_reply_to": "Trả lời <a>In reply to</a> <pill>",
+            "in_reply_to_for_export": "Để trả lời <a>tin nhắn này</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",
@@ -2770,7 +2752,16 @@
             "canonical_alias_field_label": "Địa chỉ chính",
             "avatar_field_label": "Hình đại diện phòng",
             "aliases_no_items_label": "Chưa có địa chỉ đã xuất bản nào khác, hãy thêm một địa chỉ bên dưới",
-            "aliases_items_label": "Các địa chỉ công khai khác:"
+            "aliases_items_label": "Các địa chỉ công khai khác:",
+            "alias_heading": "Địa chỉ phòng",
+            "alias_field_has_domain_invalid": "Thiếu dấu tách tên miền. Ví dụ: (:domain.org)",
+            "alias_field_has_localpart_invalid": "Thiếu tên phòng hoặc dấu cách. Ví dụ: (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "Một số ký tự không được phép",
+            "alias_field_required_invalid": "Vui lòng cung cấp địa chỉ",
+            "alias_field_matches_invalid": "Địa chỉ này không trỏ đến phòng này",
+            "alias_field_taken_valid": "Địa chỉ này có sẵn để sử dụng",
+            "alias_field_taken_invalid_domain": "Địa chỉ này đã được sử dụng",
+            "alias_field_taken_invalid": "Địa chỉ này có máy chủ không hợp lệ hoặc đã được sử dụng"
         },
         "advanced": {
             "unfederated": "Phòng này không thể truy cập từ xa bằng máy chủ Matrix",
@@ -3683,7 +3674,13 @@
         "failed_reject_invite": "Không thể từ chối lời mời",
         "error_jump_to_date_details": "Chi tiết lỗi",
         "jump_to_date_beginning": "Bắt đầu phòng",
-        "jump_to_date": "Nhảy đến ngày"
+        "jump_to_date": "Nhảy đến ngày",
+        "face_pile_tooltip_label": {
+            "one": "Xem một thành viên",
+            "other": "Xem tất cả %(count)s thành viên"
+        },
+        "face_pile_tooltip_shortcut_joined": "Bao gồm bạn, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Bao gồm %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -4040,5 +4037,14 @@
         "error_loading_user_profile": "Không thể tải hồ sơ người dùng"
     },
     "cant_load_page": "Không thể tải trang",
-    "General failure": "Thất bại chung"
+    "General failure": "Thất bại chung",
+    "emoji_picker": {
+        "cancel_search_label": "Hủy tìm kiếm"
+    },
+    "info_tooltip_title": "Thông tin",
+    "language_dropdown_label": "Danh sách ngôn ngữ",
+    "pill": {
+        "permalink_other_room": "Tin nhắn trong %(room)s",
+        "permalink_this_room": "Tin nhắn từ %(user)s"
+    }
 }

@@ -51,8 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "свий",
     "expand": "разшири",
-    "Custom level": "Персонализирано ниво",
-    "<a>In reply to</a> <pill>": "<a>В отговор на</a> <pill>",
     "And %(count)s more...": {
         "other": "И %(count)s други..."
     },
@@ -81,7 +79,6 @@
     "Logs sent": "Логовете са изпратени",
     "Yesterday": "Вчера",
     "Thank you!": "Благодарим!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
     "Clear Storage and Sign Out": "Изчисти запазените данни и излез",
     "Send Logs": "Изпрати логове",
     "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
@@ -192,7 +189,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
     "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
-    "Power level": "Ниво на достъп",
     "Notes": "Бележки",
     "Sign out and remove encryption keys?": "Излизане и премахване на ключовете за шифроване?",
     "To help us prevent this in future, please <a>send us logs</a>.": "За да ни помогнете да предотвратим това в бъдеще, моля <a>изпратете логове</a>.",
@@ -212,7 +208,6 @@
     "Upload Error": "Грешка при качване",
     "Remember my selection for this widget": "Запомни избора ми за това приспособление",
     "edited": "редактирано",
-    "Some characters not allowed": "Някои символи не са позволени",
     "Upload all": "Качи всички",
     "Message edits": "Редакции на съобщение",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
@@ -237,7 +232,6 @@
     },
     "e.g. my-room": "например my-room",
     "Close dialog": "Затвори прозореца",
-    "Cancel search": "Отмени търсенето",
     "%(name)s accepted": "%(name)s прие",
     "%(name)s cancelled": "%(name)s отказа",
     "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
@@ -246,7 +240,6 @@
         "other": "%(count)s потвърдени сесии",
         "one": "1 потвърдена сесия"
     },
-    "Language Dropdown": "Падащо меню за избор на език",
     "Integrations are disabled": "Интеграциите са изключени",
     "Integrations not allowed": "Интеграциите не са разрешени",
     "Upgrade private room": "Обнови лична стая",
@@ -321,9 +314,6 @@
     "Your homeserver has exceeded its user limit.": "Надвишен е лимитът за потребители на сървъра ви.",
     "Your homeserver has exceeded one of its resource limits.": "Беше надвишен някой от лимитите на сървъра.",
     "Ok": "Добре",
-    "Room address": "Адрес на стаята",
-    "This address is available to use": "Адресът е наличен за ползване",
-    "This address is already in use": "Адресът вече се използва",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Използвали сте и по-нова версия на %(brand)s от сегашната за тази сесия. За да използвате сегашната версия отново с шифроване от-край-до-край, ще е необходимо да излезете и да влезете отново.",
     "Restoring keys from backup": "Възстановяване на ключове от резервно копие",
     "%(completed)s of %(total)s keys restored": "%(completed)s от %(total)s ключа са възстановени",
@@ -360,7 +350,6 @@
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Започнете разговор с някой използвайки тяхното име, имейл адрес или потребителско име (като <userId/>).",
     "Invite by email": "Покани по имейл",
     "Preparing to download logs": "Подготвяне за изтегляне на логове",
-    "Information": "Информация",
     "This version of %(brand)s does not support searching encrypted messages": "Тази версия на %(brand)s не поддържа търсенето в шифровани съобщения",
     "This version of %(brand)s does not support viewing some encrypted files": "Тази версия на %(brand)s не поддържа преглеждането на някои шифровани файлове",
     "Use the <a>Desktop app</a> to search encrypted messages": "Използвайте <a>Desktop приложението</a> за да търсите в шифровани съобщения",
@@ -889,7 +878,9 @@
         "moderator": "Модератор",
         "admin": "Администратор",
         "custom": "Собствен (%(level)s)",
-        "mod": "Модератор"
+        "mod": "Модератор",
+        "label": "Ниво на достъп",
+        "custom_level": "Персонализирано ниво"
     },
     "bug_reporting": {
         "matrix_security_issue": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",
@@ -1463,7 +1454,11 @@
             "tooltip_sub": "Кликнете за да видите редакциите",
             "tooltip_label": "Редактирано на %(date)s. Кликнете за да видите редакциите."
         },
-        "error_rendering_message": "Съобщението не може да се зареди"
+        "error_rendering_message": "Съобщението не може да се зареди",
+        "reply": {
+            "error_loading": "Не може да се зареди събитието, на което е отговорено. Или не съществува или нямате достъп да го видите.",
+            "in_reply_to": "<a>В отговор на</a> <pill>"
+        }
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",
@@ -1687,7 +1682,11 @@
             "canonical_alias_field_label": "Основен адрес",
             "avatar_field_label": "Снимка на стаята",
             "aliases_no_items_label": "Все още няма други публикувани адреси, добавете такъв по-долу",
-            "aliases_items_label": "Други публикувани адреси:"
+            "aliases_items_label": "Други публикувани адреси:",
+            "alias_heading": "Адрес на стаята",
+            "alias_field_safe_localpart_invalid": "Някои символи не са позволени",
+            "alias_field_taken_valid": "Адресът е наличен за ползване",
+            "alias_field_taken_invalid_domain": "Адресът вече се използва"
         },
         "advanced": {
             "unfederated": "Тази стая не е достъпна за отдалечени Matrix сървъри",
@@ -2414,5 +2413,10 @@
         "error_loading_user_profile": "Неуспешно зареждане на потребителския профил"
     },
     "cant_load_page": "Страницата не можа да бъде заредена",
-    "General failure": "Обща грешка"
+    "General failure": "Обща грешка",
+    "emoji_picker": {
+        "cancel_search_label": "Отмени търсенето"
+    },
+    "info_tooltip_title": "Информация",
+    "language_dropdown_label": "Падащо меню за избор на език"
 }

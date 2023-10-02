@@ -37,15 +37,12 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
     "Ask this user to verify their session, or manually verify it below.": "اطلب من هذا المستخدم التحقُّق من جلسته أو تحقَّق منها يدويًّا أدناه.",
     "Not Trusted": "غير موثوقة",
-    "Language Dropdown": "قائمة اللغة المنسدلة",
-    "Information": "المعلومات",
     "expand": "توسيع",
     "collapse": "تضييق",
     "This version of %(brand)s does not support searching encrypted messages": "لا يدعم هذا الإصدار من %(brand)s البحث في الرسائل المشفرة",
     "This version of %(brand)s does not support viewing some encrypted files": "لا يدعم هذا الإصدار من %(brand)s s عرض بعض الملفات المشفرة",
     "Use the <a>Desktop app</a> to search encrypted messages": "استخدم <a> تطبيق سطح المكتب </a> للبحث في الرسائل المشفرة",
     "Use the <a>Desktop app</a> to see all encrypted files": "استخدم <a> تطبيق سطح المكتب </a> لمشاهدة جميع الملفات المشفرة",
-    "Cancel search": "إلغاء البحث",
     "Submit logs": "إرسال السجلات",
     "edited": "عُدل",
     "%(name)s wants to verify": "%(name)s يريد التحقق",
@@ -1569,5 +1566,10 @@
         "add_integrations": "إضافة عناصر الواجهة والجسور والروبوتات",
         "share_button": "شارك الغرفة",
         "settings_button": "إعدادات الغرفة"
-    }
+    },
+    "emoji_picker": {
+        "cancel_search_label": "إلغاء البحث"
+    },
+    "info_tooltip_title": "المعلومات",
+    "language_dropdown_label": "قائمة اللغة المنسدلة"
 }

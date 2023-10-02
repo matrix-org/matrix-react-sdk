@@ -7,7 +7,6 @@
         "one": "és még egy..."
     },
     "An error has occurred.": "Hiba történt.",
-    "Custom level": "Egyedi szint",
     "Email address": "E-mail-cím",
     "Home": "Kezdőlap",
     "Join Room": "Belépés a szobába",
@@ -63,7 +62,6 @@
     "expand": "kinyitás",
     "Send": "Elküldés",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(fullYear)s. %(monthName)s %(day)s., %(weekDayName)s",
-    "<a>In reply to</a> <pill>": "<a>Válasz neki</a> <pill>",
     "Sunday": "Vasárnap",
     "Today": "Ma",
     "Friday": "Péntek",
@@ -85,7 +83,6 @@
     "Clear Storage and Sign Out": "Tárhely törlése és kijelentkezés",
     "We encountered an error trying to restore your previous session.": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "A böngésző tárolójának törlése megoldhatja a problémát, de ezzel kijelentkezik és a titkosított beszélgetéseinek előzményei olvashatatlanná válnak.",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nem lehet betölteni azt az eseményt amire válaszoltál, mert vagy nem létezik, vagy nincs jogod megnézni.",
     "Share Room": "Szoba megosztása",
     "Link to most recent message": "Hivatkozás a legfrissebb üzenethez",
     "Share User": "Felhasználó megosztása",
@@ -192,7 +189,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Figyelmeztetés</b>: csak biztonságos számítógépről állítson be kulcsmentést.",
     "Scissors": "Olló",
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
-    "Power level": "Hozzáférési szint",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
     "Notes": "Megjegyzések",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
@@ -211,7 +207,6 @@
     },
     "Cancel All": "Összes megszakítása",
     "Upload Error": "Feltöltési hiba",
-    "Some characters not allowed": "Néhány karakter nem engedélyezett",
     "edited": "szerkesztve",
     "Upload all": "Összes feltöltése",
     "Message edits": "Üzenetszerkesztések",
@@ -237,7 +232,6 @@
     },
     "e.g. my-room": "pl.: szobam",
     "Close dialog": "Ablak bezárása",
-    "Cancel search": "Keresés megszakítása",
     "%(name)s accepted": "%(name)s elfogadta",
     "%(name)s cancelled": "%(name)s megszakította",
     "%(name)s wants to verify": "%(name)s ellenőrizni szeretné",
@@ -254,7 +248,6 @@
         "other": "%(count)s ellenőrzött munkamenet",
         "one": "1 ellenőrzött munkamenet"
     },
-    "Language Dropdown": "Nyelvválasztó lenyíló menü",
     "Recent Conversations": "Legújabb Beszélgetések",
     "Direct Messages": "Közvetlen Beszélgetések",
     "Failed to find the following users": "Az alábbi felhasználók nem találhatók",
@@ -328,9 +321,6 @@
     "Your homeserver has exceeded its user limit.": "A Matrix-kiszolgálója túllépte a felhasználói szám korlátját.",
     "Your homeserver has exceeded one of its resource limits.": "A Matrix-kiszolgálója túllépte valamelyik erőforráskorlátját.",
     "Ok": "Rendben",
-    "Room address": "Szoba címe",
-    "This address is available to use": "Ez a cím használható",
-    "This address is already in use": "Ez a cím már használatban van",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ezt a munkamenetet előzőleg egy újabb %(brand)s verzióval használtad. Ahhoz, hogy újra ezt a verziót tudd használni végpontok közötti titkosítással, ki kell lépned majd újra vissza.",
     "Message preview": "Üzenet előnézet",
     "Switch theme": "Kinézet váltása",
@@ -351,7 +341,6 @@
     "A connection error occurred while trying to contact the server.": "Kapcsolati hiba történt a kiszolgáló elérése során.",
     "The server is not configured to indicate what the problem is (CORS).": "A kiszolgáló nem úgy van beállítva, hogy megjelenítse a probléma forrását (CORS).",
     "Recent changes that have not yet been received": "A legutóbbi változások, amelyek még nem érkeztek meg",
-    "Information": "Információ",
     "Preparing to download logs": "Napló előkészítése feltöltéshez",
     "Not encrypted": "Nem titkosított",
     "Backup version:": "Mentés verziója:",
@@ -683,11 +672,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
     "Sending": "Küldés",
-    "Including %(commaSeparatedMembers)s": "Beleértve: %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "1 résztvevő megmutatása",
-        "other": "Az összes %(count)s résztvevő megmutatása"
-    },
     "Want to add a new room instead?": "Inkább új szobát adna hozzá?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Szobák hozzáadása…",
@@ -703,7 +687,6 @@
     "Sent": "Elküldve",
     "You don't have permission to do this": "Nincs jogosultsága ehhez",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Üzenek keresés kezdő beállítása sikertelen, ellenőrizze a <a>beállításait</a> további információkért",
-    "Please provide an address": "Kérem adja meg a címet",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
     "Automatically invite members from this room to the new one": "Tagok automatikus meghívása ebből a szobából az újba",
@@ -739,7 +722,6 @@
     "Leave all rooms": "Kilépés minden szobából",
     "Don't leave any rooms": "Ne lépjen ki egy szobából sem",
     "MB": "MB",
-    "In reply to <a>this message</a>": "Válasz erre az <a>üzenetre</a>",
     "%(count)s reply": {
         "one": "%(count)s válasz",
         "other": "%(count)s válasz"
@@ -780,14 +762,9 @@
     "Spaces you're in": "Terek, amelynek tagja",
     "Sections to show": "Megjelenítendő részek",
     "Link to room": "Hivatkozás a szobához",
-    "Including you, %(commaSeparatedMembers)s": "Önt is beleértve, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből.",
     "Verify other device": "Másik eszköz ellenőrzése",
-    "This address had invalid server or is already in use": "Ez a cím érvénytelen szervert tartalmaz vagy már használatban van",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Szoba név vagy elválasztó hiányzik, pl.: (szobam:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Domain elválasztás hiányzik, pl.: (:domain.org)",
     "toggle event": "esemény be/ki",
-    "This address does not point at this room": "Ez a cím nem erre a szobára mutat",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
     "Use <arrows/> to scroll": "Görgetés ezekkel: <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "E-mail meghívóból egyszerre csak egy küldhető el",
     "Desktop app logo": "Asztali alkalmazás profilkép",
     "Requires your server to support the stable version of MSC3827": "A Matrix-kiszolgálónak támogatnia kell az MSC3827 stabil verzióját",
-    "Message from %(user)s": "Üzenet tőle: %(user)s",
-    "Message in %(room)s": "Üzenet itt: %(room)s",
     "unavailable": "nem érhető el",
     "unknown status code": "ismeretlen állapotkód",
     "Start DM anyway": "Közvetlen beszélgetés indítása mindenképpen",
@@ -1363,7 +1338,9 @@
         "moderator": "Moderátor",
         "admin": "Admin",
         "mod": "Mod",
-        "custom": "Egyéni (%(level)s)"
+        "custom": "Egyéni (%(level)s)",
+        "label": "Hozzáférési szint",
+        "custom_level": "Egyedi szint"
     },
     "bug_reporting": {
         "introduction": "Ha a GitHubon keresztül küldött be hibajegyet, akkor a hibakeresési napló segít nekünk felderíteni a problémát. ",
@@ -2507,7 +2484,12 @@
             "tooltip_sub": "A szerkesztések megtekintéséhez kattints",
             "tooltip_label": "Szerkesztés ideje: %(date)s. Kattintson a szerkesztések megtekintéséhez."
         },
-        "error_rendering_message": "Ezt az üzenetet nem sikerült betölteni"
+        "error_rendering_message": "Ezt az üzenetet nem sikerült betölteni",
+        "reply": {
+            "error_loading": "Nem lehet betölteni azt az eseményt amire válaszoltál, mert vagy nem létezik, vagy nincs jogod megnézni.",
+            "in_reply_to": "<a>Válasz neki</a> <pill>",
+            "in_reply_to_for_export": "Válasz erre az <a>üzenetre</a>"
+        }
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",
@@ -2874,7 +2856,16 @@
             "canonical_alias_field_label": "Fő cím",
             "avatar_field_label": "Szoba profilképe",
             "aliases_no_items_label": "Nincs másik nyilvánosságra hozott cím, alább adj hozzá egyet",
-            "aliases_items_label": "Másik nyilvánosságra hozott cím:"
+            "aliases_items_label": "Másik nyilvánosságra hozott cím:",
+            "alias_heading": "Szoba címe",
+            "alias_field_has_domain_invalid": "Domain elválasztás hiányzik, pl.: (:domain.org)",
+            "alias_field_has_localpart_invalid": "Szoba név vagy elválasztó hiányzik, pl.: (szobam:domain.org)",
+            "alias_field_safe_localpart_invalid": "Néhány karakter nem engedélyezett",
+            "alias_field_required_invalid": "Kérem adja meg a címet",
+            "alias_field_matches_invalid": "Ez a cím nem erre a szobára mutat",
+            "alias_field_taken_valid": "Ez a cím használható",
+            "alias_field_taken_invalid_domain": "Ez a cím már használatban van",
+            "alias_field_taken_invalid": "Ez a cím érvénytelen szervert tartalmaz vagy már használatban van"
         },
         "advanced": {
             "unfederated": "Ez a szoba távoli Matrix-kiszolgálóról nem érhető el",
@@ -3867,7 +3858,13 @@
         "error_jump_to_date_details": "Hiba részletei",
         "jump_to_date_beginning": "A szoba indulása",
         "jump_to_date": "Ugrás időpontra",
-        "jump_to_date_prompt": "Idő kiválasztása az ugráshoz"
+        "jump_to_date_prompt": "Idő kiválasztása az ugráshoz",
+        "face_pile_tooltip_label": {
+            "one": "1 résztvevő megmutatása",
+            "other": "Az összes %(count)s résztvevő megmutatása"
+        },
+        "face_pile_tooltip_shortcut_joined": "Önt is beleértve, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Beleértve: %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "<a>Regisztrálnod kell</a> hogy ezt használhasd",
@@ -4243,5 +4240,14 @@
     },
     "console_wait": "Várjon!",
     "cant_load_page": "Az oldal nem tölthető be",
-    "General failure": "Általános hiba"
+    "General failure": "Általános hiba",
+    "emoji_picker": {
+        "cancel_search_label": "Keresés megszakítása"
+    },
+    "info_tooltip_title": "Információ",
+    "language_dropdown_label": "Nyelvválasztó lenyíló menü",
+    "pill": {
+        "permalink_other_room": "Üzenet itt: %(room)s",
+        "permalink_this_room": "Üzenet tőle: %(user)s"
+    }
 }

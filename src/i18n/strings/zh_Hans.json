@@ -8,7 +8,6 @@
         "other": "和其他%(count)s个人……",
         "one": "和其它一个..."
     },
-    "Custom level": "自定义级别",
     "Home": "主页",
     "Moderator": "协管员",
     "not specified": "未指定",
@@ -59,7 +58,6 @@
     "%(duration)sm": "%(duration)s 分钟",
     "%(duration)sh": "%(duration)s 小时",
     "%(duration)sd": "%(duration)s 天",
-    "<a>In reply to</a> <pill>": "<a>答复</a> <pill>",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "如果你之前使用过较新版本的 %(brand)s，则你的会话可能与当前版本不兼容。请关闭此窗口并使用最新版本。",
     "Sunday": "星期日",
     "Today": "今天",
@@ -78,7 +76,6 @@
     "Logs sent": "日志已发送",
     "Yesterday": "昨天",
     "Thank you!": "谢谢！",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "无法加载被回复的事件，它可能不存在，也可能是你没有权限查看它。",
     "And %(count)s more...": {
         "other": "和 %(count)s 个其他…"
     },
@@ -191,7 +188,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：你应此只在受信任的电脑上设置密钥备份。",
     "Email (optional)": "电子邮箱（可选）",
     "Join millions for free on the largest public server": "免费加入最大的公共服务器，成为数百万用户中的一员",
-    "Power level": "权力级别",
     "Remember my selection for this widget": "记住我对此挂件的选择",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
@@ -229,12 +225,7 @@
     "%(name)s wants to verify": "%(name)s 想要验证",
     "edited": "已编辑",
     "Submit logs": "提交日志",
-    "Cancel search": "取消搜索",
-    "Room address": "房间地址",
     "e.g. my-room": "例如 my-room",
-    "Some characters not allowed": "不允许使用某些字符",
-    "This address is available to use": "此地址可用",
-    "This address is already in use": "此地址已被使用",
     "Enter a server name": "请输入服务器名",
     "Looks good": "看着不错",
     "Can't find this server or its room list": "找不到此服务器或其房间列表",
@@ -347,7 +338,6 @@
     "Confirm encryption setup": "确认加密设置",
     "Click the button below to confirm setting up encryption.": "点击下方按钮以确认设置加密。",
     "IRC display name width": "IRC 显示名称宽度",
-    "Language Dropdown": "语言下拉菜单",
     "Preparing to download logs": "正在准备下载日志",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
@@ -421,7 +411,6 @@
     "Reason (optional)": "理由（可选）",
     "Create a new room": "创建新房间",
     "Server Options": "服务器选项",
-    "Information": "信息",
     "Not encrypted": "未加密",
     "Leave space": "离开空间",
     "Create a space": "创建空间",
@@ -677,11 +666,6 @@
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
     },
-    "Including %(commaSeparatedMembers)s": "包括 %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "查看 1 位成员",
-        "other": "查看全部 %(count)s 位成员"
-    },
     "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面端英语</a>来搜索加密消息",
     "Use the <a>Desktop app</a> to see all encrypted files": "使用<a>桌面端应用</a>来查看所有加密文件",
     "Failed to start livestream": "开始流直播失败",
@@ -702,7 +686,6 @@
     "Message preview": "消息预览",
     "Sent": "已发送",
     "You don't have permission to do this": "你无权执行此操作",
-    "Please provide an address": "请提供地址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "消息搜索初始化失败，请检查<a>你的设置</a>以获取更多信息",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
@@ -739,7 +722,6 @@
     "Leave all rooms": "离开所有房间",
     "Don't leave any rooms": "不离开任何房间",
     "MB": "MB",
-    "In reply to <a>this message</a>": "答复<a>此消息</a>",
     "%(count)s reply": {
         "one": "%(count)s 条回复",
         "other": "%(count)s 条回复"
@@ -778,7 +760,6 @@
     "Use \"%(query)s\" to search": "使用 \"%(query)s\" 来搜索",
     "Other rooms in %(spaceName)s": "%(spaceName)s 中的其他房间",
     "Spaces you're in": "你所在的空间",
-    "Including you, %(commaSeparatedMembers)s": "包括你，%(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
     "Sections to show": "要显示的部分",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
@@ -797,10 +778,6 @@
     "%(featureName)s Beta feedback": "%(featureName)sBeta反馈",
     "Use <arrows/> to scroll": "用<arrows/>来滚动",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
-    "This address does not point at this room": "此地址不指向此房间",
-    "This address had invalid server or is already in use": "此地址的服务器无效或已被使用",
-    "Missing room name or separator e.g. (my-room:domain.org)": "缺少房间名称或分隔符，例子（my-room:domain.org）",
-    "Missing domain separator e.g. (:domain.org)": "缺少域分隔符，例子（:domain.org）",
     "toggle event": "切换事件",
     "%(count)s Members": {
         "one": "%(count)s个成员",
@@ -1288,7 +1265,9 @@
         "moderator": "协管员",
         "admin": "管理员",
         "mod": "管理员",
-        "custom": "自定义（%(level)s）"
+        "custom": "自定义（%(level)s）",
+        "label": "权力级别",
+        "custom_level": "自定义级别"
     },
     "bug_reporting": {
         "introduction": "若你通过GitHub提交bug，则调试日志能帮助我们追踪问题。 ",
@@ -2321,7 +2300,12 @@
             "tooltip_sub": "点击查看编辑历史",
             "tooltip_label": "编辑于 %(date)s。点击以查看编辑历史。"
         },
-        "error_rendering_message": "无法加载此消息"
+        "error_rendering_message": "无法加载此消息",
+        "reply": {
+            "error_loading": "无法加载被回复的事件，它可能不存在，也可能是你没有权限查看它。",
+            "in_reply_to": "<a>答复</a> <pill>",
+            "in_reply_to_for_export": "答复<a>此消息</a>"
+        }
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",
@@ -2679,7 +2663,16 @@
             "canonical_alias_field_label": "主要地址",
             "avatar_field_label": "房间头像",
             "aliases_no_items_label": "还没有其他公布的地址，在下方添加一个",
-            "aliases_items_label": "其他公布的地址："
+            "aliases_items_label": "其他公布的地址：",
+            "alias_heading": "房间地址",
+            "alias_field_has_domain_invalid": "缺少域分隔符，例子（:domain.org）",
+            "alias_field_has_localpart_invalid": "缺少房间名称或分隔符，例子（my-room:domain.org）",
+            "alias_field_safe_localpart_invalid": "不允许使用某些字符",
+            "alias_field_required_invalid": "请提供地址",
+            "alias_field_matches_invalid": "此地址不指向此房间",
+            "alias_field_taken_valid": "此地址可用",
+            "alias_field_taken_invalid_domain": "此地址已被使用",
+            "alias_field_taken_invalid": "此地址的服务器无效或已被使用"
         },
         "advanced": {
             "unfederated": "此房间无法被远程 Matrix 服务器访问",
@@ -3572,7 +3565,13 @@
         "creating_room_text": "正在创建房间%(names)s",
         "jump_to_date_beginning": "房间的开头",
         "jump_to_date": "跳至日期",
-        "jump_to_date_prompt": "选个日期以跳转"
+        "jump_to_date_prompt": "选个日期以跳转",
+        "face_pile_tooltip_label": {
+            "one": "查看 1 位成员",
+            "other": "查看全部 %(count)s 位成员"
+        },
+        "face_pile_tooltip_shortcut_joined": "包括你，%(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "包括 %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3918,5 +3917,10 @@
     },
     "console_wait": "等等！",
     "cant_load_page": "无法加载页面",
-    "General failure": "一般错误"
+    "General failure": "一般错误",
+    "emoji_picker": {
+        "cancel_search_label": "取消搜索"
+    },
+    "info_tooltip_title": "信息",
+    "language_dropdown_label": "语言下拉菜单"
 }

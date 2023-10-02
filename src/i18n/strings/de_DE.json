@@ -39,7 +39,6 @@
     "Confirm Removal": "Entfernen bestätigen",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
-    "Custom level": "Selbstdefiniertes Berechtigungslevel",
     "Create new room": "Neuer Raum",
     "Home": "Startseite",
     "(~%(count)s results)": {
@@ -63,7 +62,6 @@
     "collapse": "Verbergen",
     "expand": "Erweitern",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
-    "<a>In reply to</a> <pill>": "<a>Als Antwort auf</a> <pill>",
     "Sunday": "Sonntag",
     "Today": "Heute",
     "Friday": "Freitag",
@@ -81,7 +79,6 @@
     "Logs sent": "Protokolldateien gesendet",
     "Yesterday": "Gestern",
     "Thank you!": "Danke!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Das Ereignis, auf das geantwortet wurde, kann nicht geladen werden, da es entweder nicht existiert oder du keine Berechtigung zum Betrachten hast.",
     "Send Logs": "Sende Protokoll",
     "Clear Storage and Sign Out": "Speicher leeren und abmelden",
     "We encountered an error trying to restore your previous session.": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
@@ -191,7 +188,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Join millions for free on the largest public server": "Schließe dich kostenlos auf dem größten öffentlichen Server Millionen von Menschen an",
     "Scissors": "Schere",
-    "Power level": "Berechtigungsstufe",
     "Room Settings - %(roomName)s": "Raumeinstellungen - %(roomName)s",
     "edited": "bearbeitet",
     "Upload files": "Dateien hochladen",
@@ -244,9 +240,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Submit logs": "Protokolldateien senden",
-    "Cancel search": "Suche abbrechen",
-    "Language Dropdown": "Sprachauswahl",
-    "Some characters not allowed": "Einige Zeichen sind nicht erlaubt",
     "Enter a server name": "Gib einen Server-Namen ein",
     "Looks good": "Das sieht gut aus",
     "Can't find this server or its room list": "Kann diesen Server oder seine Raumliste nicht finden",
@@ -327,9 +320,6 @@
     "Your homeserver has exceeded its user limit.": "Dein Heim-Server hat den Benutzergrenzwert erreicht.",
     "Your homeserver has exceeded one of its resource limits.": "Dein Heim-Server hat einen seiner Ressourcengrenzwerte erreicht.",
     "Ok": "Ok",
-    "Room address": "Raumadresse",
-    "This address is available to use": "Diese Adresse ist verfügbar",
-    "This address is already in use": "Diese Adresse wird bereits verwendet",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Du hast für diese Sitzung zuvor eine neuere Version von %(brand)s verwendet. Um diese Version mit Ende-zu-Ende-Verschlüsselung wieder zu benutzen, musst du dich erst ab- und dann wieder anmelden.",
     "Switch theme": "Design wechseln",
     "Message preview": "Nachrichtenvorschau",
@@ -352,7 +342,6 @@
     "Security Key": "Sicherheitsschlüssel",
     "Use your Security Key to continue.": "Benutze deinen Sicherheitsschlüssel um fortzufahren.",
     "Preparing to download logs": "Bereite das Herunterladen der Protokolle vor",
-    "Information": "Information",
     "Not encrypted": "Nicht verschlüsselt",
     "Backup version:": "Version der Sicherung:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Starte ein Gespräch unter Verwendung des Namen oder Benutzernamens des Gegenübers (z. B. <userId/>).",
@@ -681,13 +670,8 @@
     "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
-    "View all %(count)s members": {
-        "other": "Alle %(count)s Mitglieder anzeigen",
-        "one": "Mitglied anzeigen"
-    },
     "Sending": "Senden",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
-    "Including %(commaSeparatedMembers)s": "Inklusive %(commaSeparatedMembers)s",
     "Want to add a new room instead?": "Willst du einen neuen Raum hinzufügen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Raum hinzufügen …",
@@ -702,7 +686,6 @@
     "Search for rooms or people": "Räume oder Leute suchen",
     "Sent": "Gesendet",
     "You don't have permission to do this": "Du bist dazu nicht berechtigt",
-    "Please provide an address": "Bitte gib eine Adresse an",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisierung der Suche fehlgeschlagen, für weitere Informationen öffne <a>deine Einstellungen</a>",
     "User Directory": "Benutzerverzeichnis",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator.",
@@ -742,7 +725,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
     "Would you like to leave the rooms in this space?": "Willst du die Räume in diesem Space verlassen?",
     "MB": "MB",
-    "In reply to <a>this message</a>": "Antwort auf <a>diese Nachricht</a>",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
     "Thread options": "Thread-Optionen",
     "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
@@ -781,13 +763,8 @@
     "The poll has ended. No votes were cast.": "Umfrage beendet. Es wurden keine Stimmen abgegeben.",
     "Messaging": "Kommunikation",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
-    "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
     "Verify other device": "Anderes Gerät verifizieren",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Fehlender Raumname oder Doppelpunkt (z. B. dein-raum:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Fehlender Doppelpunkt vor Server (z. B. :domain.org)",
     "toggle event": "Event umschalten",
-    "This address had invalid server or is already in use": "Diese Adresse hat einen ungültigen Server oder wird bereits verwendet",
-    "This address does not point at this room": "Diese Adresse verweist nicht auf diesen Raum",
     "Feedback sent! Thanks, we appreciate it!": "Rückmeldung gesendet! Danke, wir wissen es zu schätzen!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s und %(space2Name)s",
     "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "E-Mail-Einladungen können nur nacheinander gesendet werden",
     "Desktop app logo": "Desktop-App-Logo",
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
-    "Message from %(user)s": "Nachricht von %(user)s",
-    "Message in %(room)s": "Nachricht in %(room)s",
     "unavailable": "Nicht verfügbar",
     "unknown status code": "Unbekannter Statuscode",
     "Start DM anyway": "Dennoch DM beginnen",
@@ -1377,7 +1352,9 @@
         "moderator": "Moderator",
         "admin": "Admin",
         "mod": "Moderator",
-        "custom": "Benutzerdefiniert (%(level)s)"
+        "custom": "Benutzerdefiniert (%(level)s)",
+        "label": "Berechtigungsstufe",
+        "custom_level": "Selbstdefiniertes Berechtigungslevel"
     },
     "bug_reporting": {
         "introduction": "Wenn du uns einen Bug auf GitHub gemeldet hast, können uns Debug-Logs helfen, das Problem zu finden. ",
@@ -2571,7 +2548,12 @@
             "tooltip_sub": "Klicke, um Änderungen anzuzeigen",
             "tooltip_label": "Am %(date)s geändert. Klicke, um Änderungen anzuzeigen."
         },
-        "error_rendering_message": "Diese Nachricht kann nicht geladen werden"
+        "error_rendering_message": "Diese Nachricht kann nicht geladen werden",
+        "reply": {
+            "error_loading": "Das Ereignis, auf das geantwortet wurde, kann nicht geladen werden, da es entweder nicht existiert oder du keine Berechtigung zum Betrachten hast.",
+            "in_reply_to": "<a>Als Antwort auf</a> <pill>",
+            "in_reply_to_for_export": "Antwort auf <a>diese Nachricht</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",
@@ -2946,7 +2928,16 @@
             "canonical_alias_field_label": "Primäre Adresse",
             "avatar_field_label": "Raumbild",
             "aliases_no_items_label": "Keine anderen öffentlichen Adressen vorhanden. Du kannst weiter unten eine hinzufügen",
-            "aliases_items_label": "Andere öffentliche Adressen:"
+            "aliases_items_label": "Andere öffentliche Adressen:",
+            "alias_heading": "Raumadresse",
+            "alias_field_has_domain_invalid": "Fehlender Doppelpunkt vor Server (z. B. :domain.org)",
+            "alias_field_has_localpart_invalid": "Fehlender Raumname oder Doppelpunkt (z. B. dein-raum:domain.org)",
+            "alias_field_safe_localpart_invalid": "Einige Zeichen sind nicht erlaubt",
+            "alias_field_required_invalid": "Bitte gib eine Adresse an",
+            "alias_field_matches_invalid": "Diese Adresse verweist nicht auf diesen Raum",
+            "alias_field_taken_valid": "Diese Adresse ist verfügbar",
+            "alias_field_taken_invalid_domain": "Diese Adresse wird bereits verwendet",
+            "alias_field_taken_invalid": "Diese Adresse hat einen ungültigen Server oder wird bereits verwendet"
         },
         "advanced": {
             "unfederated": "Dieser Raum ist von Personen auf anderen Matrix-Servern nicht betretbar",
@@ -3964,7 +3955,13 @@
         "error_jump_to_date_details": "Fehlerdetails",
         "jump_to_date_beginning": "Der Anfang des Raums",
         "jump_to_date": "Zu Datum springen",
-        "jump_to_date_prompt": "Wähle eine Datum aus"
+        "jump_to_date_prompt": "Wähle eine Datum aus",
+        "face_pile_tooltip_label": {
+            "other": "Alle %(count)s Mitglieder anzeigen",
+            "one": "Mitglied anzeigen"
+        },
+        "face_pile_tooltip_shortcut_joined": "Mit dir, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Inklusive %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Du musst dich <a>registrieren</a>, um diese Funktionalität nutzen zu können",
@@ -4346,5 +4343,14 @@
     },
     "console_wait": "Warte!",
     "cant_load_page": "Konnte Seite nicht laden",
-    "General failure": "Allgemeiner Fehler"
+    "General failure": "Allgemeiner Fehler",
+    "emoji_picker": {
+        "cancel_search_label": "Suche abbrechen"
+    },
+    "info_tooltip_title": "Information",
+    "language_dropdown_label": "Sprachauswahl",
+    "pill": {
+        "permalink_other_room": "Nachricht in %(room)s",
+        "permalink_this_room": "Nachricht von %(user)s"
+    }
 }

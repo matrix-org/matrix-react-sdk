@@ -8,7 +8,6 @@
         "one": "외 한 명...",
         "other": "외 %(count)s명..."
     },
-    "Custom level": "맞춤 등급",
     "Home": "홈",
     "Join Room": "방에 참가",
     "Moderator": "조정자",
@@ -72,7 +71,6 @@
     "%(duration)sd": "%(duration)s일",
     "Filter results": "필터 결과",
     "Delete Widget": "위젯 삭제",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "응답한 이벤트를 불러오지 못했습니다, 존재하지 않거나 볼 수 있는 권한이 없습니다.",
     "collapse": "접기",
     "expand": "펼치기",
     "Preparing to send logs": "로그 보내려고 준비 중",
@@ -89,7 +87,6 @@
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
-    "<a>In reply to</a> <pill>": "<a>관련 대화</a> <pill>",
     "Updating %(brand)s": "%(brand)s 업데이트 중",
     "Upgrade this room to version %(version)s": "이 방을 %(version)s 버전으로 업그레이드",
     "Upgrade Room Version": "방 버전 업그레이드",
@@ -159,7 +156,6 @@
     "Anchor": "닻",
     "Headphones": "헤드폰",
     "Folder": "폴더",
-    "Power level": "권한 등급",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "암호화된 메시지는 종단간 암호화로 보호됩니다. 오직 당신과 상대방만 이 메시지를 읽을 수 있는 키를 갖습니다.",
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
@@ -223,7 +219,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s개의 세션 복호화에 실패했습니다!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>경고</b>: 신뢰할 수 있는 컴퓨터에서만 키 백업을 설정해야 합니다.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s개의 리액션 다시 보내기",
-    "Some characters not allowed": "일부 문자는 허용할 수 없습니다",
     "Email (optional)": "이메일 (선택)",
     "Join millions for free on the largest public server": "가장 넓은 공개 서버에 수 백 만명이 무료로 등록함",
     "No recent messages by %(user)s found": "%(user)s님의 최근 메시지 없음",
@@ -236,7 +231,6 @@
     },
     "e.g. my-room": "예: my-room",
     "Close dialog": "대화 상자 닫기",
-    "Cancel search": "검색 취소",
     "%(name)s accepted": "%(name)s님이 수락했습니다",
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
     "%(name)s wants to verify": "%(name)s님이 확인을 요청합니다",
@@ -478,7 +472,9 @@
         "restricted": "제한됨",
         "moderator": "조정자",
         "admin": "관리자",
-        "custom": "맞춤 (%(level)s)"
+        "custom": "맞춤 (%(level)s)",
+        "label": "권한 등급",
+        "custom_level": "맞춤 등급"
     },
     "bug_reporting": {
         "submit_debug_logs": "디버그 로그 전송하기",
@@ -904,6 +900,10 @@
         },
         "edits": {
             "tooltip_label": "%(date)s에 편집함. 클릭해서 편집 보기."
+        },
+        "reply": {
+            "error_loading": "응답한 이벤트를 불러오지 못했습니다, 존재하지 않거나 볼 수 있는 권한이 없습니다.",
+            "in_reply_to": "<a>관련 대화</a> <pill>"
         }
     },
     "slash_command": {
@@ -1065,7 +1065,8 @@
             "error_updating_canonical_alias_title": "기본 주소 업데이트 중 오류",
             "error_updating_canonical_alias_description": "방의 기본 주소를 업데이트하는 중 오류가 발생했습니다. 서버가 허용하지 않거나 일시적인 오류 발생일 수 있습니다.",
             "canonical_alias_field_label": "기본 주소",
-            "avatar_field_label": "방 아바타"
+            "avatar_field_label": "방 아바타",
+            "alias_field_safe_localpart_invalid": "일부 문자는 허용할 수 없습니다"
         },
         "advanced": {
             "unfederated": "이 방은 원격 Matrix 서버로 접근할 수 없음",
@@ -1672,5 +1673,8 @@
         "error_loading_user_profile": "사용자 프로필을 불러올 수 없음"
     },
     "cant_load_page": "페이지를 불러올 수 없음",
-    "General failure": "일반적인 실패"
+    "General failure": "일반적인 실패",
+    "emoji_picker": {
+        "cancel_search_label": "검색 취소"
+    }
 }

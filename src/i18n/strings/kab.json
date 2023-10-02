@@ -136,10 +136,6 @@
     "%(name)s cancelled": "%(name)s yettwasefsex",
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
-    "Cancel search": "Sefsex anadi",
-    "Power level": "Sagen aswir",
-    "Custom level": "Sagen aswir",
-    "<a>In reply to</a> <pill>": "<a>Deg tririt i</a> <pill>",
     "e.g. my-room": "e.g. taxxamt-inu",
     "And %(count)s more...": {
         "other": "D %(count)s ugar..."
@@ -202,12 +198,6 @@
     "Bell": "Anayna",
     "Delete Widget": "Kkes awiǧit",
     "expand": "snefli",
-    "Language Dropdown": "Tabdart n udrurem n tutlayin",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "YEgguma ad d-tali tedyant iɣef d-ttunefk tririt, ahat d tilin ur telli ara neɣ ur tesɛiḍ ara tisirag ad tt-twaliḍ.",
-    "Room address": "Tansa n texxamt",
-    "Some characters not allowed": "Kra n yisekkilen ur ttusirgen ara",
-    "This address is available to use": "Tansa-a tella i useqdec",
-    "This address is already in use": "Tansa-a ha-tt-an yakan deg useqdec",
     "Looks good": "Ayagi yettban yelha",
     "Can't find this server or its room list": "D awezɣi ad d-naf aqeddac-a neɣ tabdart-is n texxamt",
     "Your server": "Aqeddac-ik·im",
@@ -296,7 +286,6 @@
     "Looks good!": "Yettban igerrez!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
     "Join millions for free on the largest public server": "Rnu ɣer yimelyan n yimdanen baṭel ɣef uqeddac azayez ameqqran akk",
-    "Information": "Talɣut",
     "Unable to load commit detail: %(msg)s": "D awezɣi ad d-tali telqayt n usentem: %(msg)s",
     "You cannot delete this message. (%(code)s)": "Ur tezmireḍ ara ad tekkseḍ izen-a. (%(code)s)",
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
@@ -864,7 +853,9 @@
         "moderator": "Aseɣyad",
         "admin": "Anedbal",
         "custom": "Sagen (%(level)s)",
-        "mod": "Atrar"
+        "mod": "Atrar",
+        "label": "Sagen aswir",
+        "custom_level": "Sagen aswir"
     },
     "bug_reporting": {
         "matrix_security_issue": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
@@ -1423,7 +1414,11 @@
             "tooltip_sub": "Sit i wakken ad twaliḍ aseẓreg",
             "tooltip_label": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag."
         },
-        "error_rendering_message": "Yegguma ad d-yali yizen-a"
+        "error_rendering_message": "Yegguma ad d-yali yizen-a",
+        "reply": {
+            "error_loading": "YEgguma ad d-tali tedyant iɣef d-ttunefk tririt, ahat d tilin ur telli ara neɣ ur tesɛiḍ ara tisirag ad tt-twaliḍ.",
+            "in_reply_to": "<a>Deg tririt i</a> <pill>"
+        }
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",
@@ -1629,7 +1624,11 @@
             "canonical_alias_field_label": "Tansa tagejdant",
             "avatar_field_label": "Avaṭar n texxamt",
             "aliases_no_items_label": "Ulac tansiwin i d-yeffɣen akka tura, rnu yiwet ddaw",
-            "aliases_items_label": "Tansiwin-nniḍen i d-yeffɣen:"
+            "aliases_items_label": "Tansiwin-nniḍen i d-yeffɣen:",
+            "alias_heading": "Tansa n texxamt",
+            "alias_field_safe_localpart_invalid": "Kra n yisekkilen ur ttusirgen ara",
+            "alias_field_taken_valid": "Tansa-a tella i useqdec",
+            "alias_field_taken_invalid_domain": "Tansa-a ha-tt-an yakan deg useqdec"
         },
         "advanced": {
             "unfederated": "Anekcum er texxamt-a ulamek s yiqeddacen n Matrix inmeggagen",
@@ -2286,5 +2285,10 @@
         "error_loading_user_profile": "Yegguma ad d-yali umaɣnu n useqdac"
     },
     "cant_load_page": "Asali n usebter ur yeddi ara",
-    "General failure": "Tuccḍa tamatut"
+    "General failure": "Tuccḍa tamatut",
+    "emoji_picker": {
+        "cancel_search_label": "Sefsex anadi"
+    },
+    "info_tooltip_title": "Talɣut",
+    "language_dropdown_label": "Tabdart n udrurem n tutlayin"
 }

@@ -93,7 +93,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Cancel search": "Tühista otsing",
     "Server did not require any authentication": "Server ei nõudnud mitte mingisugust autentimist",
     "Recent Conversations": "Hiljutised vestlused",
     "Encrypted by a deleted session": "Krüptitud kustutatud sessiooni poolt",
@@ -263,7 +262,6 @@
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
     "Delete Widget": "Kustuta vidin",
-    "Language Dropdown": "Keelevalik",
     "Your homeserver has exceeded its user limit.": "Sinu koduserver on ületanud kasutajate arvu ülempiiri.",
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
     "Ok": "Sobib",
@@ -272,13 +270,6 @@
         "other": "ja %(count)s muud...",
         "one": "ja üks muu..."
     },
-    "Power level": "Õiguste tase",
-    "Custom level": "Kohandatud õigused",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ei ole võimalik laadida seda sündmust, millele vastus on tehtud - teda kas pole olemas või sul pole õigusi seda näha.",
-    "Room address": "Jututoa aadress",
-    "Some characters not allowed": "Mõned tähemärgid ei ole siin lubatud",
-    "This address is available to use": "See aadress on kasutatav",
-    "This address is already in use": "See aadress on juba kasutusel",
     "And %(count)s more...": {
         "other": "Ja %(count)s muud..."
     },
@@ -332,7 +323,6 @@
         "other": "%(count)s sessiooni",
         "one": "%(count)s sessioon"
     },
-    "<a>In reply to</a> <pill>": "<a>Vastuseks kasutajale</a> <pill>",
     "This backup is trusted because it has been restored on this session": "See varukoopia on usaldusväärne, sest ta on taastatud sellest sessioonist",
     "Start using Key Backup": "Võta kasutusele krüptovõtmete varundamine",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Selleks, et sa ei kaotaks oma vestluste ajalugu, pead sa eksportima jututoa krüptovõtmed enne välja logimist. Küll, aga pead sa selleks kasutama %(brand)s uuemat versiooni",
@@ -352,7 +342,6 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
     "Preparing to download logs": "Valmistun logikirjete allalaadimiseks",
-    "Information": "Teave",
     "Not encrypted": "Krüptimata",
     "Backup version:": "Varukoopia versioon:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Alusta vestlust kasutades teise osapoole nime või kasutajanime (näiteks <userId/>).",
@@ -683,11 +672,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unustasid või oled kaotanud kõik võimalused ligipääsu taastamiseks? <a>Lähtesta kõik ühe korraga</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
     "Sending": "Saadan",
-    "Including %(commaSeparatedMembers)s": "Sealhulgas %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Vaata üht liiget",
-        "other": "Vaata kõiki %(count)s liiget"
-    },
     "Want to add a new room instead?": "Kas sa selle asemel soovid lisada jututuba?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Lisan jututuba...",
@@ -703,7 +687,6 @@
     "Sent": "Saadetud",
     "You don't have permission to do this": "Sul puuduvad selleks toiminguks õigused",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Sõnumite otsingu ettevalmistamine ei õnnestunud, lisateavet leiad <a>rakenduse seadistustest</a>",
-    "Please provide an address": "Palun sisesta aadress",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt.",
     "User Directory": "Kasutajate kataloog",
     "You're removing all spaces. Access will default to invite only": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
@@ -739,7 +722,6 @@
     "Leave all rooms": "Lahku kõikidest jututubadest",
     "Don't leave any rooms": "Ära lahku ühestki jututoast",
     "MB": "MB",
-    "In reply to <a>this message</a>": "Vastuseks <a>sellele sõnumile</a>",
     "%(count)s reply": {
         "one": "%(count)s vastus",
         "other": "%(count)s vastust"
@@ -778,16 +760,11 @@
     "Other rooms in %(spaceName)s": "Muud jututoad %(spaceName)s kogukonnad",
     "Spaces you're in": "Kogukonnad, mille liige sa oled",
     "Link to room": "Link jututoale",
-    "Including you, %(commaSeparatedMembers)s": "Seahulgas Sina, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Sellega rühmitad selle kogukonna liikmetega peetavaid vestlusi. Kui seadistus pole kasutusel, siis on neid vestlusi %(spaceName)s kogukonna vaates ei kuvata.",
     "Sections to show": "Näidatavad valikud",
     "Open in OpenStreetMap": "Ava OpenStreetMap'is",
     "toggle event": "lülita sündmus sisse/välja",
-    "This address had invalid server or is already in use": "Selle aadressiga seotud server on kas kirjas vigaselt või on juba kasutusel",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Jututoa nimi või eraldaja on puudu (näiteks jututuba:domeen.ee)",
-    "Missing domain separator e.g. (:domain.org)": "Domeeni eraldaja on puudu (näiteks :domeen.ee)",
     "Verify other device": "Verifitseeri oma teine seade",
-    "This address does not point at this room": "Antud aadress ei viita sellele jututoale",
     "Use <arrows/> to scroll": "Kerimiseks kasuta <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Tagasiside on saadetud. Täname, sellest on loodetavasti kasu!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Kutseid saad e-posti teel saata vaid ükshaaval",
     "Desktop app logo": "Töölauarakenduse logo",
     "Requires your server to support the stable version of MSC3827": "Eeldab, et sinu koduserver toetab MSC3827 stabiilset versiooni",
-    "Message from %(user)s": "Sõnum kasutajalt %(user)s",
-    "Message in %(room)s": "Sõnum jututoas %(room)s",
     "unavailable": "pole saadaval",
     "unknown status code": "teadmata olekukood",
     "Start DM anyway": "Ikkagi alusta vestlust",
@@ -1376,7 +1351,9 @@
         "moderator": "Moderaator",
         "admin": "Peakasutaja",
         "mod": "Moderaator",
-        "custom": "Kohandatud õigused (%(level)s)"
+        "custom": "Kohandatud õigused (%(level)s)",
+        "label": "Õiguste tase",
+        "custom_level": "Kohandatud õigused"
     },
     "bug_reporting": {
         "introduction": "Kui sa oled GitHub'is teinud meile veateate, siis silumislogid võivad aidata vea lahendamisel. ",
@@ -2570,7 +2547,12 @@
             "tooltip_sub": "Muudatuste nägemiseks klõpsi",
             "tooltip_label": "Muudetud %(date)s. Klõpsi et näha varasemaid versioone."
         },
-        "error_rendering_message": "Selle sõnumi laadimine ei õnnestu"
+        "error_rendering_message": "Selle sõnumi laadimine ei õnnestu",
+        "reply": {
+            "error_loading": "Ei ole võimalik laadida seda sündmust, millele vastus on tehtud - teda kas pole olemas või sul pole õigusi seda näha.",
+            "in_reply_to": "<a>Vastuseks kasutajale</a> <pill>",
+            "in_reply_to_for_export": "Vastuseks <a>sellele sõnumile</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",
@@ -2945,7 +2927,16 @@
             "canonical_alias_field_label": "Põhiaadress",
             "avatar_field_label": "Jututoa tunnuspilt ehk avatar",
             "aliases_no_items_label": "Ühtegi muud aadressi pole veel avaldatud, lisa üks alljärgnevalt",
-            "aliases_items_label": "Muud avaldatud aadressid:"
+            "aliases_items_label": "Muud avaldatud aadressid:",
+            "alias_heading": "Jututoa aadress",
+            "alias_field_has_domain_invalid": "Domeeni eraldaja on puudu (näiteks :domeen.ee)",
+            "alias_field_has_localpart_invalid": "Jututoa nimi või eraldaja on puudu (näiteks jututuba:domeen.ee)",
+            "alias_field_safe_localpart_invalid": "Mõned tähemärgid ei ole siin lubatud",
+            "alias_field_required_invalid": "Palun sisesta aadress",
+            "alias_field_matches_invalid": "Antud aadress ei viita sellele jututoale",
+            "alias_field_taken_valid": "See aadress on kasutatav",
+            "alias_field_taken_invalid_domain": "See aadress on juba kasutusel",
+            "alias_field_taken_invalid": "Selle aadressiga seotud server on kas kirjas vigaselt või on juba kasutusel"
         },
         "advanced": {
             "unfederated": "See jututuba ei ole leitav teiste Matrix'i serverite jaoks",
@@ -3957,7 +3948,13 @@
         "error_jump_to_date_details": "Vea teave",
         "jump_to_date_beginning": "Jututoa algus",
         "jump_to_date": "Vaata kuupäeva",
-        "jump_to_date_prompt": "Vali kuupäev, mida soovid vaadata"
+        "jump_to_date_prompt": "Vali kuupäev, mida soovid vaadata",
+        "face_pile_tooltip_label": {
+            "one": "Vaata üht liiget",
+            "other": "Vaata kõiki %(count)s liiget"
+        },
+        "face_pile_tooltip_shortcut_joined": "Seahulgas Sina, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Sealhulgas %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",
@@ -4339,5 +4336,14 @@
     },
     "console_wait": "Palun oota!",
     "cant_load_page": "Lehe laadimine ei õnnestunud",
-    "General failure": "Üldine viga"
+    "General failure": "Üldine viga",
+    "emoji_picker": {
+        "cancel_search_label": "Tühista otsing"
+    },
+    "info_tooltip_title": "Teave",
+    "language_dropdown_label": "Keelevalik",
+    "pill": {
+        "permalink_other_room": "Sõnum jututoas %(room)s",
+        "permalink_this_room": "Sõnum kasutajalt %(user)s"
+    }
 }

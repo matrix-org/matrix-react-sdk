@@ -100,8 +100,6 @@
     "Upload Error": "Įkėlimo klaida",
     "Email (optional)": "El. paštas (neprivaloma)",
     "Direct Messages": "Privačios žinutės",
-    "Power level": "Galios lygis",
-    "Custom level": "Pritaikytas lygis",
     "Can't find this server or its room list": "Negalime rasti šio serverio arba jo kambarių sąrašo",
     "Recently Direct Messaged": "Neseniai tiesiogiai susirašyta",
     "Command Help": "Komandų pagalba",
@@ -320,7 +318,6 @@
     "Brazil": "Brazilija",
     "Belgium": "Belgija",
     "Bangladesh": "Bangladešas",
-    "Cancel search": "Atšaukti paiešką",
     "Submit logs": "Pateikti žurnalus",
     "Botswana": "Botsvana",
     "Bosnia": "Bosnija",
@@ -827,7 +824,9 @@
         "moderator": "Moderatorius",
         "admin": "Administratorius",
         "mod": "Moderatorius",
-        "custom": "Pasirinktinis (%(level)s)"
+        "custom": "Pasirinktinis (%(level)s)",
+        "label": "Galios lygis",
+        "custom_level": "Pritaikytas lygis"
     },
     "bug_reporting": {
         "introduction": "Jei per GitHub pateikėte klaidą, derinimo žurnalai gali padėti mums nustatyti problemą. ",
@@ -2850,5 +2849,8 @@
             "server_unavailable": "Gali būti, kad serveris neprieinamas, perkrautas arba pasibaigė paieškai skirtas laikas :("
         }
     },
-    "General failure": "Bendras triktis"
+    "General failure": "Bendras triktis",
+    "emoji_picker": {
+        "cancel_search_label": "Atšaukti paiešką"
+    }
 }

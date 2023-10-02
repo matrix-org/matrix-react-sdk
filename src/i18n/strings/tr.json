@@ -5,7 +5,6 @@
         "other": "ve %(count)s diğerleri..."
     },
     "An error has occurred.": "Bir hata oluştu.",
-    "Custom level": "Özel seviye",
     "Email address": "E-posta Adresi",
     "Home": "Ev",
     "Join Room": "Odaya Katıl",
@@ -64,9 +63,7 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
     "expand": "genişlet",
-    "Power level": "Güç düzeyi",
     "e.g. my-room": "örn. odam",
-    "Some characters not allowed": "Bazı karakterlere izin verilmiyor",
     "Invite anyway and never warn me again": "Yinede davet et ve asla beni uyarma",
     "Invite anyway": "Yinede davet et",
     "Close dialog": "Kutucuğu kapat",
@@ -197,7 +194,6 @@
     "And %(count)s more...": {
         "other": "ve %(count)s kez daha..."
     },
-    "Language Dropdown": "Dil Listesi",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
     "The following users may not exist": "Belirtilen kullanıcılar mevcut olmayabilir",
@@ -218,7 +214,6 @@
         "other": "%(count)s oturum",
         "one": "%(count)s oturum"
     },
-    "Cancel search": "Aramayı iptal et",
     "Delete Widget": "Görsel Bileşen Sil",
     "Destroy cross-signing keys?": "Çarpraz-imzalama anahtarlarını imha et?",
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
@@ -526,7 +521,6 @@
     "Transfer": "Aktar",
     "Hold": "Beklet",
     "Resume": "Devam et",
-    "Information": "Bilgi",
     "Enter a server name": "Sunucu adı girin",
     "Can't find this server or its room list": "Sunucuda veya oda listesinde bulunamıyor",
     "Add a new server": "Yeni sunucu ekle",
@@ -788,7 +782,9 @@
         "moderator": "Moderatör",
         "admin": "Admin",
         "custom": "Özel (%(level)s)",
-        "mod": "Mod"
+        "mod": "Mod",
+        "label": "Güç düzeyi",
+        "custom_level": "Özel seviye"
     },
     "bug_reporting": {
         "submit_debug_logs": "Hata ayıklama kayıtlarını gönder",
@@ -1611,7 +1607,8 @@
             "canonical_alias_field_label": "Ana adres",
             "avatar_field_label": "Oda avatarı",
             "aliases_no_items_label": "Henüz yayınlanmış başka adres yok, aşağıdan bir tane ekle",
-            "aliases_items_label": "Diğer yayınlanmış adresler:"
+            "aliases_items_label": "Diğer yayınlanmış adresler:",
+            "alias_field_safe_localpart_invalid": "Bazı karakterlere izin verilmiyor"
         },
         "advanced": {
             "unfederated": "Bu oda uzak Matrix Sunucuları tarafından erişilebilir değil",
@@ -2322,5 +2319,10 @@
         "error_loading_user_profile": "Kullanıcı profili yüklenemedi"
     },
     "cant_load_page": "Sayfa yüklenemiyor",
-    "General failure": "Genel başarısızlık"
+    "General failure": "Genel başarısızlık",
+    "emoji_picker": {
+        "cancel_search_label": "Aramayı iptal et"
+    },
+    "info_tooltip_title": "Bilgi",
+    "language_dropdown_label": "Dil Listesi"
 }

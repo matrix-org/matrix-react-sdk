@@ -1094,7 +1094,9 @@
         "moderator": "Moderator",
         "admin": "Admin",
         "custom": "Custom (%(level)s)",
-        "mod": "Mod"
+        "mod": "Mod",
+        "label": "Power level",
+        "custom_level": "Custom level"
     },
     "invite": {
         "failed_title": "Failed to invite",
@@ -1883,6 +1885,11 @@
                 "one": "%(oneUser)ssent a hidden message"
             }
         },
+        "reply": {
+            "error_loading": "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.",
+            "in_reply_to": "<a>In reply to</a> <pill>",
+            "in_reply_to_for_export": "In reply to <a>this message</a>"
+        },
         "context_menu": {
             "view_source": "View source",
             "show_url_preview": "Show preview",
@@ -2133,6 +2140,12 @@
         "jump_to_date_beginning": "The beginning of the room",
         "jump_to_date": "Jump to date",
         "jump_to_date_prompt": "Pick a date to jump to",
+        "face_pile_tooltip_label": {
+            "other": "View all %(count)s members",
+            "one": "View 1 member"
+        },
+        "face_pile_tooltip_shortcut_joined": "Including you, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Including %(commaSeparatedMembers)s",
         "edit_topic": "Edit topic",
         "read_topic": "Click to read topic",
         "drop_file_prompt": "Drop file here to upload",
@@ -2251,11 +2264,10 @@
         "live_enable_description": "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.",
         "live_toggle_label": "Enable live location sharing",
         "live_share_button": "Share for %(duration)s",
+        "error_fetch_location": "Could not fetch location",
         "click_move_pin": "Click to move the pin",
         "click_drop_pin": "Click to drop a pin",
         "share_button": "Share location",
-        "stop_and_close": "Stop and close",
-        "error_fetch_location": "Could not fetch location",
         "error_no_perms_title": "You don't have permission to share locations",
         "error_no_perms_description": "You need to have the right permissions in order to share locations in this room.",
         "error_send_title": "We couldn't send your location",
@@ -2264,7 +2276,8 @@
         "share_type_own": "My current location",
         "share_type_live": "My live location",
         "share_type_pin": "Drop a Pin",
-        "share_type_prompt": "What location type do you want to share?"
+        "share_type_prompt": "What location type do you want to share?",
+        "stop_and_close": "Stop and close"
     },
     "export_chat": {
         "unload_confirm": "Are you sure you want to exit during this export?",
@@ -2572,7 +2585,16 @@
             "default_url_previews_off": "URL previews are disabled by default for participants in this room.",
             "url_preview_encryption_warning": "In encrypted rooms, like this one, URL previews are disabled by default to ensure that your homeserver (where the previews are generated) cannot gather information about links you see in this room.",
             "url_preview_explainer": "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.",
-            "url_previews_section": "URL Previews"
+            "url_previews_section": "URL Previews",
+            "alias_heading": "Room address",
+            "alias_field_has_domain_invalid": "Missing domain separator e.g. (:domain.org)",
+            "alias_field_has_localpart_invalid": "Missing room name or separator e.g. (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "Some characters not allowed",
+            "alias_field_required_invalid": "Please provide an address",
+            "alias_field_matches_invalid": "This address does not point at this room",
+            "alias_field_taken_valid": "This address is available to use",
+            "alias_field_taken_invalid_domain": "This address is already in use",
+            "alias_field_taken_invalid": "This address had invalid server or is already in use"
         },
         "visibility": {
             "error_update_guest_access": "Failed to update the guest access of this space",
@@ -3351,7 +3373,9 @@
         "categories": "Categories",
         "quick_reactions": "Quick Reactions"
     },
-    "Cancel search": "Cancel search",
+    "emoji_picker": {
+        "cancel_search_label": "Cancel search"
+    },
     "keyboard": {
         "backspace": "Backspace",
         "page_up": "Page Up",
@@ -3427,31 +3451,13 @@
         "rotate_left": "Rotate Left",
         "rotate_right": "Rotate Right"
     },
-    "Information": "Information",
-    "Language Dropdown": "Language Dropdown",
-    "Message in %(room)s": "Message in %(room)s",
-    "Message from %(user)s": "Message from %(user)s",
-    "Power level": "Power level",
-    "Custom level": "Custom level",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.",
-    "<a>In reply to</a> <pill>": "<a>In reply to</a> <pill>",
-    "In reply to <a>this message</a>": "In reply to <a>this message</a>",
-    "Room address": "Room address",
-    "e.g. my-room": "e.g. my-room",
-    "Missing domain separator e.g. (:domain.org)": "Missing domain separator e.g. (:domain.org)",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Missing room name or separator e.g. (my-room:domain.org)",
-    "Some characters not allowed": "Some characters not allowed",
-    "Please provide an address": "Please provide an address",
-    "This address does not point at this room": "This address does not point at this room",
-    "This address is available to use": "This address is available to use",
-    "This address is already in use": "This address is already in use",
-    "This address had invalid server or is already in use": "This address had invalid server or is already in use",
-    "View all %(count)s members": {
-        "other": "View all %(count)s members",
-        "one": "View 1 member"
+    "info_tooltip_title": "Information",
+    "language_dropdown_label": "Language Dropdown",
+    "pill": {
+        "permalink_other_room": "Message in %(room)s",
+        "permalink_this_room": "Message from %(user)s"
     },
-    "Including you, %(commaSeparatedMembers)s": "Including you, %(commaSeparatedMembers)s",
-    "Including %(commaSeparatedMembers)s": "Including %(commaSeparatedMembers)s",
+    "e.g. my-room": "e.g. my-room",
     "%(count)s people you know have already joined": {
         "other": "%(count)s people you know have already joined",
         "one": "%(count)s person you know has already joined"

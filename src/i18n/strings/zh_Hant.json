@@ -9,7 +9,6 @@
     "Tue": "週二",
     "unknown error code": "未知的錯誤代碼",
     "Create new room": "建立新聊天室",
-    "Custom level": "自訂等級",
     "Home": "首頁",
     "Moderator": "版主",
     "not specified": "未指定",
@@ -63,7 +62,6 @@
         "other": "與更多 %(count)s 個…"
     },
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s，%(monthName)s %(day)s %(fullYear)s",
-    "<a>In reply to</a> <pill>": "<a>回覆給</a> <pill>",
     "Sunday": "星期日",
     "Today": "今天",
     "Friday": "星期五",
@@ -81,7 +79,6 @@
     "Yesterday": "昨天",
     "Wednesday": "星期三",
     "Thank you!": "感謝您！",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "無法載入要回覆的活動，它可能不存在或是您沒有權限檢視它。",
     "Send Logs": "傳送紀錄檔",
     "Clear Storage and Sign Out": "清除儲存的東西並登出",
     "We encountered an error trying to restore your previous session.": "我們在嘗試復原您先前的工作階段時遇到了一點錯誤。",
@@ -191,7 +188,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
     "Room Settings - %(roomName)s": "聊天室設定 - %(roomName)s",
-    "Power level": "權限等級",
     "Remember my selection for this widget": "記住我對這個小工具的選擇",
     "Notes": "註記",
     "Sign out and remove encryption keys?": "登出並移除加密金鑰？",
@@ -211,7 +207,6 @@
     "Cancel All": "全部取消",
     "Upload Error": "上傳錯誤",
     "edited": "已編輯",
-    "Some characters not allowed": "不允許某些字元",
     "Upload all": "上傳全部",
     "Message edits": "訊息編輯紀錄",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升級這個聊天室需要關閉目前的執行個體並重新建立一個新的聊天室來替代。為了給予聊天室成員最佳的體驗，我們將會：",
@@ -236,7 +231,6 @@
     },
     "e.g. my-room": "例如：my-room",
     "Close dialog": "關閉對話框",
-    "Cancel search": "取消搜尋",
     "%(name)s accepted": "%(name)s 已接受",
     "%(name)s cancelled": "%(name)s 已取消",
     "%(name)s wants to verify": "%(name)s 想要驗證",
@@ -253,7 +247,6 @@
         "other": "%(count)s 個已驗證的工作階段",
         "one": "1 個已驗證的工作階段"
     },
-    "Language Dropdown": "語言下拉式選單",
     "Recent Conversations": "最近的對話",
     "Direct Messages": "私人訊息",
     "Failed to find the following users": "找不到以下使用者",
@@ -324,9 +317,6 @@
     "Confirm encryption setup": "確認加密設定",
     "Click the button below to confirm setting up encryption.": "點擊下方按鈕以確認設定加密。",
     "IRC display name width": "IRC 顯示名稱寬度",
-    "Room address": "聊天室位址",
-    "This address is available to use": "此位址可用",
-    "This address is already in use": "此位址已被使用",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "您先前在此工作階段中使用了較新版本的 %(brand)s。要再次與此版本使用端對端加密，您必須先登出再登入。",
     "Your homeserver has exceeded its user limit.": "您的家伺服器已超過使用者限制。",
     "Your homeserver has exceeded one of its resource limits.": "您的家伺服器已超過其中一種資源限制。",
@@ -352,7 +342,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
     "Recent changes that have not yet been received": "尚未收到最新變更",
     "Preparing to download logs": "正在準備下載紀錄檔",
-    "Information": "資訊",
     "Not encrypted": "未加密",
     "Backup version:": "備份版本：",
     "Start a conversation with someone using their name or username (like <userId/>).": "使用某人的名字或使用者名稱（如 <userId/>）以與他們開始對話。",
@@ -683,11 +672,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘記或遺失了所有復原方法？<a>重設全部</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
     "Sending": "傳送中",
-    "Including %(commaSeparatedMembers)s": "包含 %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "檢視 1 個成員",
-        "other": "檢視全部 %(count)s 個成員"
-    },
     "Want to add a new room instead?": "想要新增新聊天室嗎？",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "正在新增聊天室…",
@@ -702,7 +686,6 @@
     "Search for rooms or people": "搜尋聊天室或夥伴",
     "Sent": "已傳送",
     "You don't have permission to do this": "您沒有權限執行此動作",
-    "Please provide an address": "請提供位址",
     "Message search initialisation failed, check <a>your settings</a> for more information": "訊息搜尋初始化失敗，請檢查<a>您的設定</a>以取得更多資訊",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。",
     "User Directory": "使用者目錄",
@@ -739,7 +722,6 @@
     "Leave all rooms": "離開所有聊天室",
     "Don't leave any rooms": "不要離開任何聊天室",
     "MB": "MB",
-    "In reply to <a>this message</a>": "回覆<a>此訊息</a>",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
         "other": "%(count)s 回覆"
@@ -778,16 +760,11 @@
     "Use \"%(query)s\" to search": "使用「%(query)s」搜尋",
     "Other rooms in %(spaceName)s": "其他在 %(spaceName)s 中的聊天室",
     "Spaces you're in": "您所在的聊天空間",
-    "Including you, %(commaSeparatedMembers)s": "包含您，%(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。",
     "Sections to show": "要顯示的部份",
     "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
     "toggle event": "切換事件",
-    "This address had invalid server or is already in use": "此位址的伺服器無效或已被使用",
-    "Missing room name or separator e.g. (my-room:domain.org)": "缺少聊天室名稱或分隔符號，例如 (my-room:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "缺少網域名分隔符號，例如 (:domain.org)",
     "Verify other device": "驗證其他裝置",
-    "This address does not point at this room": "此位址並未指向此聊天室",
     "Use <arrows/> to scroll": "使用 <arrows/> 捲動",
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 與 %(space2Name)s",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "透過電子郵件傳送的邀請一次只能傳送一個",
     "Desktop app logo": "桌面應用程式標誌",
     "Requires your server to support the stable version of MSC3827": "您的伺服器必須支援穩定版本的 MSC3827",
-    "Message from %(user)s": "來自 %(user)s 的訊息",
-    "Message in %(room)s": "%(room)s 中的訊息",
     "unavailable": "無法使用",
     "unknown status code": "未知狀態代碼",
     "Start DM anyway": "開始直接訊息",
@@ -1376,7 +1351,9 @@
         "moderator": "版主",
         "admin": "管理員",
         "mod": "版主",
-        "custom": "自訂 (%(level)s)"
+        "custom": "自訂 (%(level)s)",
+        "label": "權限等級",
+        "custom_level": "自訂等級"
     },
     "bug_reporting": {
         "introduction": "若您透過 GitHub 遞交錯誤，除錯紀錄檔可以協助我們追蹤問題。 ",
@@ -2570,7 +2547,12 @@
             "tooltip_sub": "點擊以檢視編輯",
             "tooltip_label": "編輯於 %(date)s。點擊以檢視編輯。"
         },
-        "error_rendering_message": "無法載入此訊息"
+        "error_rendering_message": "無法載入此訊息",
+        "reply": {
+            "error_loading": "無法載入要回覆的活動，它可能不存在或是您沒有權限檢視它。",
+            "in_reply_to": "<a>回覆給</a> <pill>",
+            "in_reply_to_for_export": "回覆<a>此訊息</a>"
+        }
     },
     "slash_command": {
         "spoiler": "將指定訊息以劇透傳送",
@@ -2945,7 +2927,16 @@
             "canonical_alias_field_label": "主要位址",
             "avatar_field_label": "聊天室大頭照",
             "aliases_no_items_label": "尚無其他已發佈的位址，在下方新增一個",
-            "aliases_items_label": "其他已發佈位址："
+            "aliases_items_label": "其他已發佈位址：",
+            "alias_heading": "聊天室位址",
+            "alias_field_has_domain_invalid": "缺少網域名分隔符號，例如 (:domain.org)",
+            "alias_field_has_localpart_invalid": "缺少聊天室名稱或分隔符號，例如 (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "不允許某些字元",
+            "alias_field_required_invalid": "請提供位址",
+            "alias_field_matches_invalid": "此位址並未指向此聊天室",
+            "alias_field_taken_valid": "此位址可用",
+            "alias_field_taken_invalid_domain": "此位址已被使用",
+            "alias_field_taken_invalid": "此位址的伺服器無效或已被使用"
         },
         "advanced": {
             "unfederated": "此聊天室無法被遠端的 Matrix 伺服器存取",
@@ -3957,7 +3948,13 @@
         "error_jump_to_date_details": "錯誤詳細資訊",
         "jump_to_date_beginning": "聊天室開頭",
         "jump_to_date": "跳至日期",
-        "jump_to_date_prompt": "挑選要跳至的日期"
+        "jump_to_date_prompt": "挑選要跳至的日期",
+        "face_pile_tooltip_label": {
+            "one": "檢視 1 個成員",
+            "other": "檢視全部 %(count)s 個成員"
+        },
+        "face_pile_tooltip_shortcut_joined": "包含您，%(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "包含 %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",
@@ -4339,5 +4336,14 @@
     },
     "console_wait": "等等！",
     "cant_load_page": "無法載入頁面",
-    "General failure": "一般錯誤"
+    "General failure": "一般錯誤",
+    "emoji_picker": {
+        "cancel_search_label": "取消搜尋"
+    },
+    "info_tooltip_title": "資訊",
+    "language_dropdown_label": "語言下拉式選單",
+    "pill": {
+        "permalink_other_room": "%(room)s 中的訊息",
+        "permalink_this_room": "來自 %(user)s 的訊息"
+    }
 }

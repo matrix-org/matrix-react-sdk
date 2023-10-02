@@ -95,7 +95,6 @@
     "Saturday": "li jy. dy. xa detri",
     "Today": "cabdei",
     "Yesterday": "prulamdei",
-    "Cancel search": "nu co'u sisku",
     "Switch theme": "nu basti fi le ka jvinu",
     "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
     "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
@@ -116,7 +115,6 @@
     "Upload %(count)s other files": {
         "one": "nu kibdu'a %(count)s vreji poi na du"
     },
-    "<a>In reply to</a> <pill>": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi",
     "Share Room": "nu jungau fi le du'u ve zilbe'i",
     "Share User": "nu jungau fi le du'u pilno",
     "Share Room Message": "nu jungau fi le du'u notci",
@@ -319,6 +317,9 @@
         },
         "m.image": {
             "sent": ".i pa pixra cu zilbe'i fi la'o zoi. %(senderDisplayName)s .zoi"
+        },
+        "reply": {
+            "in_reply_to": ".i nu <a>spuda</a> tu'a la'o zoi. <pill> .zoi"
         }
     },
     "slash_command": {
@@ -541,5 +542,8 @@
         "search_failed": {
             "title": ".i da nabmi lo nu sisku"
         }
+    },
+    "emoji_picker": {
+        "cancel_search_label": "nu co'u sisku"
     }
 }

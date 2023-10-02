@@ -22,7 +22,6 @@
     "Create new room": "Vytvořit novou místnost",
     "unknown error code": "neznámý kód chyby",
     "An error has occurred.": "Nastala chyba.",
-    "Custom level": "Vlastní úroveň",
     "Email address": "E-mailová adresa",
     "and %(count)s others...": {
         "other": "a %(count)s další...",
@@ -77,8 +76,6 @@
     "Wednesday": "Středa",
     "Thank you!": "Děkujeme vám!",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Není možné načíst událost, na kterou se odpovídalo. Buď neexistuje, nebo nemáte oprávnění ji zobrazit.",
-    "<a>In reply to</a> <pill>": "<a>V odpovědi na</a> <pill>",
     "Preparing to send logs": "Příprava na odeslání záznamů",
     "Logs sent": "Záznamy odeslány",
     "Failed to send logs: ": "Nepodařilo se odeslat záznamy: ",
@@ -189,7 +186,6 @@
     "Email (optional)": "E-mail (nepovinné)",
     "Join millions for free on the largest public server": "Přidejte k miliónům registrovaným na největším veřejném serveru",
     "Scissors": "Nůžky",
-    "Power level": "Úroveň oprávnění",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Abyste po odhlášení nepřišli o přístup k historii šifrovaných konverzací, měli byste si před odhlášením exportovat šifrovací klíče místností. Prosím vraťte se k novější verzi %(brand)su a exportujte si klíče",
     "Room Settings - %(roomName)s": "Nastavení místnosti - %(roomName)s",
     "edited": "upraveno",
@@ -211,7 +207,6 @@
     "Cancel All": "Zrušit vše",
     "Upload Error": "Chyba při nahrávání",
     "Remember my selection for this widget": "Zapamatovat si volbu pro tento widget",
-    "Some characters not allowed": "Nějaké znaky jsou zakázané",
     "Deactivate account": "Deaktivace účtu",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. <default>Použít výchozí (%(defaultIdentityServerName)s)</default> nebo přenastavit <settings>Nastavení</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Odeslat pozvánku pomocí serveru identit. Přenastavit v <settings>Nastavení</settings>.",
@@ -236,7 +231,6 @@
     "%(name)s accepted": "%(name)s přijal(a)",
     "%(name)s cancelled": "%(name)s zrušil(a)",
     "%(name)s wants to verify": "%(name)s chce ověřit",
-    "Cancel search": "Zrušit hledání",
     "e.g. my-room": "např. moje-mistnost",
     "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
@@ -253,7 +247,6 @@
         "other": "%(count)s ověřených relací",
         "one": "1 ověřená relace"
     },
-    "Language Dropdown": "Menu jazyků",
     "Lock": "Zámek",
     "This backup is trusted because it has been restored on this session": "Záloze věříme, protože už byla v této relaci načtena",
     "Encrypted by a deleted session": "Šifrované smazanou relací",
@@ -303,9 +296,6 @@
     "Your homeserver has exceeded its user limit.": "Na vašem domovském serveru byl překročen limit počtu uživatelů.",
     "Your homeserver has exceeded one of its resource limits.": "Na vašem domovském serveru byl překročen limit systémových požadavků.",
     "Ok": "Ok",
-    "Room address": "Adresa místnosti",
-    "This address is available to use": "Tato adresa je dostupná",
-    "This address is already in use": "Tato adresa je již používána",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Připomínka: váš prohlížeč není podporován, takže vaše zkušenost může být nepředvídatelná.",
     "To continue, use Single Sign On to prove your identity.": "Pro pokračování prokažte svou identitu pomocí Jednotného přihlášení.",
     "Confirm to continue": "Pro pokračování potvrďte",
@@ -352,7 +342,6 @@
     "Server Options": "Možnosti serveru",
     "This version of %(brand)s does not support viewing some encrypted files": "Tato verze %(brand)s nepodporuje zobrazení některých šifrovaných souborů",
     "This version of %(brand)s does not support searching encrypted messages": "Tato verze %(brand)s nepodporuje hledání v šifrovaných zprávách",
-    "Information": "Informace",
     "Madagascar": "Madagaskar",
     "Macedonia": "Makedonie",
     "Macau": "Macao",
@@ -682,11 +671,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
     "Sending": "Odesílání",
-    "Including %(commaSeparatedMembers)s": "Včetně %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Zobrazit jednoho člena",
-        "other": "Zobrazit všech %(count)s členů"
-    },
     "Want to add a new room instead?": "Chcete místo toho přidat novou místnost?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Přidávání místnosti...",
@@ -702,7 +686,6 @@
     "Message preview": "Náhled zprávy",
     "Sent": "Odesláno",
     "You don't have permission to do this": "K tomu nemáte povolení",
-    "Please provide an address": "Uveďte prosím adresu",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializace vyhledávání zpráv se nezdařila, zkontrolujte <a>svá nastavení</a>",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
@@ -739,7 +722,6 @@
     "Don't leave any rooms": "Neodcházet z žádné místnosti",
     "Leave all rooms": "Odejít ze všech místností",
     "MB": "MB",
-    "In reply to <a>this message</a>": "V odpovědi na <a>tuto zprávu</a>",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
         "other": "%(count)s odpovědí"
@@ -778,16 +760,11 @@
     "Use \"%(query)s\" to search": "Pro vyhledávání použijte \"%(query)s\"",
     "Other rooms in %(spaceName)s": "Další místnosti v %(spaceName)s",
     "Spaces you're in": "Prostory, ve kterých se nacházíte",
-    "Including you, %(commaSeparatedMembers)s": "Včetně vás, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Vaše konverzace s členy tohoto prostoru se seskupí. Vypnutím této funkce se tyto chaty skryjí z vašeho pohledu na %(spaceName)s.",
     "Sections to show": "Sekce pro zobrazení",
     "Open in OpenStreetMap": "Otevřít v OpenStreetMap",
     "toggle event": "přepnout událost",
-    "This address had invalid server or is already in use": "Tato adresa měla neplatný server nebo je již používána",
-    "Missing domain separator e.g. (:domain.org)": "Chybí oddělovač domény, např. (:domain.org)",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Chybí název místnosti nebo oddělovač, např. (my-room:domain.org)",
     "Verify other device": "Ověřit jiné zařízení",
-    "This address does not point at this room": "Tato adresa neukazuje na tuto místnost",
     "Use <arrows/> to scroll": "K pohybu použijte <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Pozvánky e-mailem lze zasílat pouze po jedné",
     "Desktop app logo": "Logo desktopové aplikace",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilní verzi MSC3827",
-    "Message from %(user)s": "Zpráva od %(user)s",
-    "Message in %(room)s": "Zpráva v %(room)s",
     "unavailable": "nedostupný",
     "unknown status code": "neznámý kód stavu",
     "Start DM anyway": "Zahájit přímou zprávu i přesto",
@@ -1377,7 +1352,9 @@
         "moderator": "Moderátor",
         "admin": "Správce",
         "mod": "Moderátor",
-        "custom": "Vlastní (%(level)s)"
+        "custom": "Vlastní (%(level)s)",
+        "label": "Úroveň oprávnění",
+        "custom_level": "Vlastní úroveň"
     },
     "bug_reporting": {
         "introduction": "Pokud jste odeslali chybu prostřednictvím GitHubu, ladící protokoly nám mohou pomoci problém vysledovat. ",
@@ -2571,7 +2548,12 @@
             "tooltip_sub": "Klikněte pro zobrazení úprav",
             "tooltip_label": "Upraveno v %(date)s. Klinutím zobrazíte změny."
         },
-        "error_rendering_message": "Tuto zprávu nelze načíst"
+        "error_rendering_message": "Tuto zprávu nelze načíst",
+        "reply": {
+            "error_loading": "Není možné načíst událost, na kterou se odpovídalo. Buď neexistuje, nebo nemáte oprávnění ji zobrazit.",
+            "in_reply_to": "<a>V odpovědi na</a> <pill>",
+            "in_reply_to_for_export": "V odpovědi na <a>tuto zprávu</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Odešle danou zprávu jako spoiler",
@@ -2946,7 +2928,16 @@
             "canonical_alias_field_label": "Hlavní adresa",
             "avatar_field_label": "Avatar místnosti",
             "aliases_no_items_label": "Zatím žádné další publikované adresy, přidejte nějakou níže",
-            "aliases_items_label": "Další publikované adresy:"
+            "aliases_items_label": "Další publikované adresy:",
+            "alias_heading": "Adresa místnosti",
+            "alias_field_has_domain_invalid": "Chybí oddělovač domény, např. (:domain.org)",
+            "alias_field_has_localpart_invalid": "Chybí název místnosti nebo oddělovač, např. (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "Nějaké znaky jsou zakázané",
+            "alias_field_required_invalid": "Uveďte prosím adresu",
+            "alias_field_matches_invalid": "Tato adresa neukazuje na tuto místnost",
+            "alias_field_taken_valid": "Tato adresa je dostupná",
+            "alias_field_taken_invalid_domain": "Tato adresa je již používána",
+            "alias_field_taken_invalid": "Tato adresa měla neplatný server nebo je již používána"
         },
         "advanced": {
             "unfederated": "Tato místnost není přístupná vzdáleným Matrix serverům",
@@ -3964,7 +3955,13 @@
         "error_jump_to_date_details": "Podrobnosti o chybě",
         "jump_to_date_beginning": "Začátek místnosti",
         "jump_to_date": "Přejít na datum",
-        "jump_to_date_prompt": "Vyberte datum, na které chcete přejít"
+        "jump_to_date_prompt": "Vyberte datum, na které chcete přejít",
+        "face_pile_tooltip_label": {
+            "one": "Zobrazit jednoho člena",
+            "other": "Zobrazit všech %(count)s členů"
+        },
+        "face_pile_tooltip_shortcut_joined": "Včetně vás, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Včetně %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Pro využívání této funkce se <a>zaregistrujte</a>",
@@ -4346,5 +4343,14 @@
     },
     "console_wait": "Pozor!",
     "cant_load_page": "Nepovedlo se načíst stránku",
-    "General failure": "Nějaká chyba"
+    "General failure": "Nějaká chyba",
+    "emoji_picker": {
+        "cancel_search_label": "Zrušit hledání"
+    },
+    "info_tooltip_title": "Informace",
+    "language_dropdown_label": "Menu jazyků",
+    "pill": {
+        "permalink_other_room": "Zpráva v %(room)s",
+        "permalink_this_room": "Zpráva od %(user)s"
+    }
 }

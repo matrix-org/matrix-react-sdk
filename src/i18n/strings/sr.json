@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
-    "Custom level": "Прилагођени ниво",
     "And %(count)s more...": {
         "other": "И %(count)s других..."
     },
@@ -62,7 +61,6 @@
     "Verification Pending": "Чека се на проверу",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверите ваш мејл и кликните на везу унутар њега. Када ово урадите, кликните на дугме „настави“.",
     "This will allow you to reset your password and receive notifications.": "Ово омогућава поновно постављање лозинке и примање обавештења.",
-    "<a>In reply to</a> <pill>": "<a>Као одговор за</a> <pill>",
     "Session ID": "ИД сесије",
     "Sunday": "Недеља",
     "Today": "Данас",
@@ -85,7 +83,6 @@
     "Clear Storage and Sign Out": "Очисти складиште и одјави ме",
     "We encountered an error trying to restore your previous session.": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим.",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
     "Share Room": "Подели собу",
     "Link to most recent message": "Веза ка најновијој поруци",
     "Share User": "Подели корисника",
@@ -361,7 +358,6 @@
     "Clear all data in this session?": "Да очистим све податке у овој сесији?",
     "Reason (optional)": "Разлог (опционо)",
     "Not encrypted": "Није шифровано",
-    "Power level": "Ниво снаге",
     "Folder": "фасцикла",
     "Headphones": "слушалице",
     "Anchor": "сидро",
@@ -425,7 +421,6 @@
     "Cat": "мачка",
     "Dog": "Пас",
     "This version of %(brand)s does not support searching encrypted messages": "Ова верзија %(brand)s с не подржава претраживање шифрованих порука",
-    "Cancel search": "Откажи претрагу",
     "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
     "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
     "Clear all data": "Очисти све податке",
@@ -613,7 +608,9 @@
         "restricted": "Ограничено",
         "moderator": "Модератор",
         "admin": "Админ",
-        "custom": "Посебан %(level)s"
+        "custom": "Посебан %(level)s",
+        "label": "Ниво снаге",
+        "custom_level": "Прилагођени ниво"
     },
     "bug_reporting": {
         "submit_debug_logs": "Пошаљи записнике за поправљање грешака",
@@ -987,6 +984,10 @@
         "scalar_starter_link": {
             "dialog_title": "Додај уградњу",
             "dialog_description": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?"
+        },
+        "reply": {
+            "error_loading": "Не могу да учитам догађај на који је послат одговор, или не постоји или немате овлашћење да га погледате.",
+            "in_reply_to": "<a>Као одговор за</a> <pill>"
         }
     },
     "slash_command": {
@@ -1572,5 +1573,8 @@
         }
     },
     "cant_load_page": "Учитавање странице није успело",
-    "General failure": "Општа грешка"
+    "General failure": "Општа грешка",
+    "emoji_picker": {
+        "cancel_search_label": "Откажи претрагу"
+    }
 }

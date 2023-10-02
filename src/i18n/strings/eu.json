@@ -10,7 +10,6 @@
     "Session ID": "Saioaren IDa",
     "Moderator": "Moderatzailea",
     "An error has occurred.": "Errore bat gertatu da.",
-    "Custom level": "Maila pertsonalizatua",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
     "not specified": "zehaztu gabe",
     "Sun": "Ig",
@@ -63,7 +62,6 @@
     },
     "Delete Widget": "Ezabatu trepeta",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s(e)ko %(monthName)sk %(day)sa",
-    "<a>In reply to</a> <pill>": "<a>honi erantzunez:</a> <pill>",
     "Sunday": "Igandea",
     "Today": "Gaur",
     "Friday": "Ostirala",
@@ -85,7 +83,6 @@
     "Clear Storage and Sign Out": "Garbitu biltegiratzea eta amaitu saioa",
     "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri.",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ezin izan da erantzundako gertaera kargatu, edo ez dago edo ez duzu ikusteko baimenik.",
     "Share Room": "Partekatu gela",
     "Link to most recent message": "Esteka azken mezura",
     "Share User": "Partekatu erabiltzailea",
@@ -190,7 +187,6 @@
     "Are you sure you want to sign out?": "Ziur saioa amaitu nahi duzula?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
-    "Power level": "Botere maila",
     "Room Settings - %(roomName)s": "Gelaren ezarpenak - %(roomName)s",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
     "edited": "editatua",
@@ -206,7 +202,6 @@
     },
     "Cancel All": "Ezeztatu dena",
     "Upload Error": "Igoera errorea",
-    "Some characters not allowed": "Karaktere batzuk ez dira onartzen",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Saioaren datu batzuk, zifratutako mezuen gakoak barne, falta dira. Amaitu saioa eta hasi saioa berriro hau konpontzeko, gakoak babes-kopiatik berreskuratuz.",
     "Your browser likely removed this data when running low on disk space.": "Ziur asko zure nabigatzaileak kendu ditu datu hauek diskoan leku gutxi zuelako.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Fitxategi hau <b>handiegia da</b> igo ahal izateko. Fitxategiaren tamaina-muga %(limit)s da, baina fitxategi honen tamaina %(sizeOfThisFile)s da.",
@@ -236,7 +231,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. <default>Erabili lehenetsitakoa (%(defaultIdentityServerName)s)</default> edo gehitu bat <settings>Ezarpenak</settings> atalean.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
     "Close dialog": "Itxi elkarrizketa-koadroa",
-    "Cancel search": "Ezeztatu bilaketa",
     "%(name)s accepted": "%(name)s onartuta",
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
@@ -252,7 +246,6 @@
     "Upgrade public room": "Eguneratu gela publikoa",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Gela eguneratzea ekintza aurreratu bat da eta akatsen, falta diren ezaugarrien, edo segurtasun arazoen erruz gela ezegonkorra denean aholkatzen da.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Gela hau <oldVersion /> bertsiotik <newVersion /> bertsiora eguneratuko duzu.",
-    "Language Dropdown": "Hizkuntza menua",
     "Recent Conversations": "Azken elkarrizketak",
     "Direct Messages": "Mezu zuzenak",
     "Failed to find the following users": "Ezin izan dira honako erabiltzaile hauek aurkitu",
@@ -327,9 +320,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
     "Message preview": "Mezu-aurrebista",
-    "Room address": "Gelaren helbidea",
-    "This address is available to use": "Gelaren helbide hau erabilgarri dago",
-    "This address is already in use": "Gelaren helbide hau erabilita dago",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
     "Switch theme": "Aldatu azala",
     "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
@@ -584,7 +574,9 @@
         "moderator": "Moderatzailea",
         "admin": "Kudeatzailea",
         "custom": "Pertsonalizatua (%(level)s)",
-        "mod": "Moderatzailea"
+        "mod": "Moderatzailea",
+        "label": "Botere maila",
+        "custom_level": "Maila pertsonalizatua"
     },
     "bug_reporting": {
         "matrix_security_issue": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
@@ -1102,7 +1094,11 @@
             "tooltip_sub": "Klik egin edizioak ikusteko",
             "tooltip_label": "Edizio data: %(date)s. Sakatu edizioak ikusteko."
         },
-        "error_rendering_message": "Ezin izan da mezu hau kargatu"
+        "error_rendering_message": "Ezin izan da mezu hau kargatu",
+        "reply": {
+            "error_loading": "Ezin izan da erantzundako gertaera kargatu, edo ez dago edo ez duzu ikusteko baimenik.",
+            "in_reply_to": "<a>honi erantzunez:</a> <pill>"
+        }
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",
@@ -1283,7 +1279,11 @@
             "canonical_alias_field_label": "Helbide nagusia",
             "avatar_field_label": "Gelaren abatarra",
             "aliases_no_items_label": "Ez dago argitaratutako beste helbiderik, gehitu bat azpian",
-            "aliases_items_label": "Argitaratutako beste helbideak:"
+            "aliases_items_label": "Argitaratutako beste helbideak:",
+            "alias_heading": "Gelaren helbidea",
+            "alias_field_safe_localpart_invalid": "Karaktere batzuk ez dira onartzen",
+            "alias_field_taken_valid": "Gelaren helbide hau erabilgarri dago",
+            "alias_field_taken_invalid_domain": "Gelaren helbide hau erabilita dago"
         },
         "advanced": {
             "unfederated": "Gela hau ez dago eskuragarri urruneko zerbitzarietan",
@@ -1902,5 +1902,9 @@
         "error_loading_user_profile": "Ezin izan da erabiltzaile-profila kargatu"
     },
     "cant_load_page": "Ezin izan da orria kargatu",
-    "General failure": "Hutsegite orokorra"
+    "General failure": "Hutsegite orokorra",
+    "emoji_picker": {
+        "cancel_search_label": "Ezeztatu bilaketa"
+    },
+    "language_dropdown_label": "Hizkuntza menua"
 }

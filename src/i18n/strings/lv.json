@@ -1,7 +1,6 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
     "An error has occurred.": "Notikusi kļūda.",
-    "Custom level": "Pielāgots līmenis",
     "Email address": "Epasta adrese",
     "Home": "Mājup",
     "Join Room": "Pievienoties istabai",
@@ -60,7 +59,6 @@
     "Delete Widget": "Dzēst vidžetu",
     "collapse": "sakļaut",
     "expand": "izvērst",
-    "<a>In reply to</a> <pill>": "<a>Atbildē uz</a> <pill>",
     "And %(count)s more...": {
         "other": "Un par %(count)s vairāk..."
     },
@@ -118,16 +116,12 @@
     "IRC display name width": "IRC parādāmā vārda platums",
     "Are you sure you want to deactivate your account? This is irreversible.": "Vai tiešām vēlaties deaktivizēt savu kontu? Tas ir neatgriezeniski.",
     "Deactivate account": "Deaktivizēt kontu",
-    "This address is already in use": "Šī adrese jau tiek izmantota",
-    "This address is available to use": "Šī adrese ir pieejama",
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
     "e.g. my-room": "piem., mana-istaba",
-    "Room address": "Istabas adrese",
     "Add a new server": "Pievienot jaunu serveri",
     "Your server": "Jūsu serveris",
     "Integrations are disabled": "Integrācijas ir atspējotas",
     "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
-    "Cancel search": "Atcelt meklējumu",
     "Flag": "Karogs",
     "Recent Conversations": "Nesenās sarunas",
     "Start a conversation with someone using their name or username (like <userId/>).": "Uzsāciet sarunu ar citiem, izmantojot vārdu vai lietotājvārdu (piemērs - <userId/>).",
@@ -466,7 +460,6 @@
     "Live location error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
     "Live location ended": "Reāllaika atrašanās vietas kopīgošana pārtraukta",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
-    "Information": "Informācija",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
     "This version of %(brand)s does not support viewing some encrypted files": "Šī %(brand)s versija neatbalsta atsevišķu šifrētu failu skatīšanu",
@@ -715,7 +708,8 @@
         "restricted": "Ierobežots",
         "moderator": "Moderators",
         "admin": "Administrators",
-        "custom": "Pielāgots (%(level)s)"
+        "custom": "Pielāgots (%(level)s)",
+        "custom_level": "Pielāgots līmenis"
     },
     "bug_reporting": {
         "submit_debug_logs": "Iesniegt atutošanas logfailus",
@@ -1268,7 +1262,10 @@
             "tooltip_title": "Rediģēts %(date)s",
             "tooltip_label": "Rediģēts %(date)s. Noklikšķiniet, lai skatītu redakcijas."
         },
-        "error_rendering_message": "Nevar ielādēt šo ziņu"
+        "error_rendering_message": "Nevar ielādēt šo ziņu",
+        "reply": {
+            "in_reply_to": "<a>Atbildē uz</a> <pill>"
+        }
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",
@@ -1482,7 +1479,10 @@
             "error_updating_alias_description": "Notikusi kļūda, mēģinot atjaunināt istabas alternatīvās adreses. Iespējams, tas ir liegts servera iestatījumos vai arī notikusi kāda pagaidu kļūme.",
             "error_deleting_alias_description_forbidden": "Jums nav atļaujas dzēst adresi.",
             "aliases_no_items_label": "Pagaidām nav nevienas publiskotas adreses, pievienojiet zemāk",
-            "aliases_items_label": "Citas publiskotās adreses:"
+            "aliases_items_label": "Citas publiskotās adreses:",
+            "alias_heading": "Istabas adrese",
+            "alias_field_taken_valid": "Šī adrese ir pieejama",
+            "alias_field_taken_invalid_domain": "Šī adrese jau tiek izmantota"
         },
         "advanced": {
             "unfederated": "Šī istaba nav pieejama no citiem Matrix serveriem",
@@ -2126,5 +2126,9 @@
         "error_loading_user_profile": "Nevarēja ielādēt lietotāja profilu"
     },
     "cant_load_page": "Neizdevās ielādēt lapu",
-    "General failure": "Vispārīga kļūda"
+    "General failure": "Vispārīga kļūda",
+    "emoji_picker": {
+        "cancel_search_label": "Atcelt meklējumu"
+    },
+    "info_tooltip_title": "Informācija"
 }

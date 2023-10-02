@@ -46,13 +46,11 @@
     "Join Room": "Entra a la sala",
     "not specified": "sense especificar",
     "Email address": "Correu electrònic",
-    "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "Delete Widget": "Suprimeix el giny",
     "Home": "Inici",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
-    "Custom level": "Nivell personalitzat",
     "And %(count)s more...": {
         "other": "I %(count)s més..."
     },
@@ -88,7 +86,6 @@
     "Upload Error": "Error de pujada",
     "A connection error occurred while trying to contact the server.": "S'ha produït un error de connexió mentre s'intentava connectar al servidor.",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
-    "Power level": "Nivell d'autoritat",
     "e.g. my-room": "p.e. la-meva-sala",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Prèviament has fet servir %(brand)s a %(host)s amb la càrrega mandrosa de membres activada. En aquesta versió la càrrega mandrosa està desactivada. Com que la memòria cau local no és compatible entre les dues versions, %(brand)s necessita tornar a sincronitzar el teu compte.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. <default>Utilitza el predeterminat (%(defaultIdentityServerName)s)</default> o gestiona'l a <settings>Configuració</settings>.",
@@ -194,7 +191,9 @@
         "restricted": "Restringit",
         "moderator": "Moderador",
         "admin": "Administrador",
-        "custom": "Personalitzat (%(level)s)"
+        "custom": "Personalitzat (%(level)s)",
+        "label": "Nivell d'autoritat",
+        "custom_level": "Nivell personalitzat"
     },
     "bug_reporting": {
         "submit_debug_logs": "Enviar logs de depuració",
@@ -464,6 +463,9 @@
         "scalar_starter_link": {
             "dialog_title": "Afegeix una integració",
             "dialog_description": "Estàs a punt de ser redirigit a una web de tercers per autenticar el teu compte i poder ser utilitzat amb %(integrationsUrl)s. Vols continuar?"
+        },
+        "reply": {
+            "in_reply_to": "<a>En resposta a</a> <pill>"
         }
     },
     "slash_command": {

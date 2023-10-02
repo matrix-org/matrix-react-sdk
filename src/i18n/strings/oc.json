@@ -50,7 +50,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Cancel search": "Anullar la recèrca",
     "Server name": "Títol del servidor",
     "Notes": "Nòtas",
     "Unavailable": "Pas disponible",
@@ -426,5 +425,8 @@
         "m.image": {
             "show_image": "Afichar l'imatge"
         }
+    },
+    "emoji_picker": {
+        "cancel_search_label": "Anullar la recèrca"
     }
 }

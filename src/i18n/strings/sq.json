@@ -63,8 +63,6 @@
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
     "collapse": "tkurre",
     "expand": "zgjeroje",
-    "Custom level": "Nivel vetjak",
-    "<a>In reply to</a> <pill>": "<a>Në Përgjigje të</a> <pill>",
     "Confirm Removal": "Ripohoni Heqjen",
     "An error has occurred.": "Ndodhi një gabim.",
     "Verification Pending": "Verifikim Në Pritje të Miratimit",
@@ -99,7 +97,6 @@
     "Put a link back to the old room at the start of the new room so people can see old messages": "Vendosni në krye të dhomës së re një lidhje për te dhoma e vjetër, që njerëzit të mund të shohin mesazhet e vjetër",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës.",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "S’arrihet të ngarkohet akti të cilit iu përgjigj, ose nuk ekziston, ose s’keni leje ta shihni.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Më parë përdornit %(brand)s në %(host)s me <em>lazy loading</em> anëtarësh të aktivizuar. Në këtë version <em>lazy loading</em> është çaktivizuar. Ngaqë fshehtina vendore s’është e përputhshme mes këtyre dy rregullimeve, %(brand)s-i lyp të rinjëkohësohet llogaria juaj.",
     "Update any local room aliases to point to the new room": "Përditësoni çfarëdo aliasesh dhomash vendore që të shpien te dhoma e re",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Ndalojuni përdoruesve të flasin në versionin e vjetër të dhomës, dhe postoni një mesazh që u këshillon atyre të hidhen te dhoma e re",
@@ -189,7 +186,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
     "Scissors": "Gërshërë",
     "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
-    "Power level": "Shkallë pushteti",
     "edited": "e përpunuar",
     "Notes": "Shënime",
     "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
@@ -202,7 +198,6 @@
     "Cancel All": "Anuloji Krejt",
     "Upload Error": "Gabim Ngarkimi",
     "Remember my selection for this widget": "Mbaje mend përzgjedhjen time për këtë widget",
-    "Some characters not allowed": "Disa shenja nuk lejohen",
     "To help us prevent this in future, please <a>send us logs</a>.": "Për të na ndihmuar ta parandalojmë këtë në të ardhmen, ju lutemi, <a>dërgonani regjistra</a>.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
     "Your browser likely removed this data when running low on disk space.": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk.",
@@ -239,7 +234,6 @@
     "%(name)s accepted": "%(name)s pranoi",
     "%(name)s cancelled": "%(name)s anuloi",
     "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
-    "Cancel search": "Anulo kërkimin",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
@@ -253,7 +247,6 @@
         "other": "%(count)s sesione të verifikuar",
         "one": "1 sesion i verifikuar"
     },
-    "Language Dropdown": "Menu Hapmbyll Gjuhësh",
     "Recent Conversations": "Biseda Së Fundi",
     "Direct Messages": "Mesazhe të Drejtpërdrejtë",
     "Something went wrong trying to invite the users.": "Diç shkoi ters teksa provohej të ftoheshin përdoruesit.",
@@ -326,9 +319,6 @@
     "Your homeserver has exceeded its user limit.": "Shërbyesi juaj Home ka tejkaluar kufijtë e tij të përdorimit.",
     "Your homeserver has exceeded one of its resource limits.": "Shërbyesi juaj Home ka tejkaluar një nga kufijtë e tij të burimeve.",
     "Ok": "OK",
-    "Room address": "Adresë dhome",
-    "This address is available to use": "Kjo adresë është e lirë për përdorim",
-    "This address is already in use": "Kjo adresë është e përdorur tashmë",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Me këtë sesion, keni përdorur më herët një version më të ri të %(brand)s-it. Që të ripërdorni këtë version me fshehtëzim skaj më skaj, do t’ju duhet të bëni daljen dhe të rihyni.",
     "Recently Direct Messaged": "Me Mesazhe të Drejtpërdrejtë Së Fundi",
     "Switch theme": "Ndërroni temën",
@@ -351,7 +341,6 @@
     "Recent changes that have not yet been received": "Ndryshime tani së fundi që s’janë marrë ende",
     "Preparing to download logs": "Po bëhet gati për shkarkim regjistrash",
     "Not encrypted": "Jo e fshehtëzuar",
-    "Information": "Informacion",
     "Backup version:": "Version kopjeruajtjeje:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij ose emrin e tij të përdoruesit (bie fjala, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
@@ -679,11 +668,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
     "Sending": "Po dërgohet",
-    "Including %(commaSeparatedMembers)s": "Prfshi %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Shihni 1 anëtar",
-        "other": "Shihni krejt %(count)s anëtarët"
-    },
     "You may contact me if you have any follow up questions": "Mund të lidheni me mua, nëse keni pyetje të mëtejshme",
     "To leave the beta, visit your settings.": "Që të braktisni beta-n, vizitoni rregullimet tuaja.",
     "Want to add a new room instead?": "Doni të shtohet një dhomë e re, në vend të kësaj?",
@@ -697,7 +681,6 @@
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
     "You don't have permission to do this": "S’keni leje ta bëni këtë",
-    "Please provide an address": "Ju lutemi, jepni një adresë",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Dështoi gatitja e kërkimit në mesazhe, për më tepër hollësi, shihni <a>rregullimet tuaja</a>",
     "Sent": "U dërgua",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin.",
@@ -736,7 +719,6 @@
     "Leave all rooms": "Braktisi krejt dhomat",
     "Don't leave any rooms": "Mos braktis ndonjë dhomë",
     "MB": "MB",
-    "In reply to <a>this message</a>": "Në përgjigje të <a>këtij mesazhi</a>",
     "%(count)s reply": {
         "one": "%(count)s përgjigje",
         "other": "%(count)s përgjigje"
@@ -778,15 +760,10 @@
     "Other rooms in %(spaceName)s": "Dhoma të tjera në %(spaceName)s",
     "Spaces you're in": "Hapësira ku jeni i pranishëm",
     "Link to room": "Lidhje për te dhoma",
-    "Including you, %(commaSeparatedMembers)s": "Përfshi ju, %(commaSeparatedMembers)s",
     "Open in OpenStreetMap": "Hape në OpenStreetMap",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Kjo grupon fjalosjet tuaja me anëtarë në këtë hapësirë. Çaktivizimi i kësaj do t’i fshehë këto fjalosje prej pamjes tuaj për %(spaceName)s.",
     "Sections to show": "Ndarje për t’u shfaqur",
-    "This address had invalid server or is already in use": "Kjo adresë kishte një shërbyes të pavlefshëm ose është e përdorur tashmë",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Mungon emër ose ndarës dhome, p.sh. (dhoma-ime:përkatësi.org)",
-    "Missing domain separator e.g. (:domain.org)": "Mungon ndarë përkatësie, p.sh. (:domain.org)",
     "Verify other device": "Verifikoni pajisje tjetër",
-    "This address does not point at this room": "Kjo adresë nuk shpie te kjo dhomë",
     "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
@@ -884,8 +861,6 @@
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
     "Invites by email can only be sent one at a time": "Ftesat me email mund të dërgohen vetëm një në herë",
     "Desktop app logo": "Stemë aplikacioni Desktop",
-    "Message from %(user)s": "Mesazh nga %(user)s",
-    "Message in %(room)s": "Mesazh në %(room)s",
     "Requires your server to support the stable version of MSC3827": "Lyp që shërbyesi juaj të mbulojë versionin e qëndrueshëm të MSC3827",
     "unknown status code": "kod i panjohur gjendjeje",
     "Start DM anyway": "Nis MD sido qoftë",
@@ -1358,7 +1333,9 @@
         "moderator": "Moderator",
         "admin": "Përgjegjës",
         "mod": "Moderator",
-        "custom": "Vetjak (%(level)s)"
+        "custom": "Vetjak (%(level)s)",
+        "label": "Shkallë pushteti",
+        "custom_level": "Nivel vetjak"
     },
     "bug_reporting": {
         "introduction": "Nëse keni parashtruar një të metë përmes GitHub-i, regjistrat e diagnostikimit na ndihmojnë të kapim problemin. ",
@@ -2498,7 +2475,12 @@
             "tooltip_sub": "Klikoni që të shihni përpunime",
             "tooltip_label": "Përpunuar më %(date)s. Klikoni që të shihni përpunimet."
         },
-        "error_rendering_message": "S’ngarkohet dot ky mesazh"
+        "error_rendering_message": "S’ngarkohet dot ky mesazh",
+        "reply": {
+            "error_loading": "S’arrihet të ngarkohet akti të cilit iu përgjigj, ose nuk ekziston, ose s’keni leje ta shihni.",
+            "in_reply_to": "<a>Në Përgjigje të</a> <pill>",
+            "in_reply_to_for_export": "Në përgjigje të <a>këtij mesazhi</a>"
+        }
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",
@@ -2864,7 +2846,16 @@
             "canonical_alias_field_label": "Adresë kryesore",
             "avatar_field_label": "Avatar dhome",
             "aliases_no_items_label": "Ende pa adresa të tjera të publikuara, shtoni një më poshtë",
-            "aliases_items_label": "Adresa të tjera të publikuara:"
+            "aliases_items_label": "Adresa të tjera të publikuara:",
+            "alias_heading": "Adresë dhome",
+            "alias_field_has_domain_invalid": "Mungon ndarë përkatësie, p.sh. (:domain.org)",
+            "alias_field_has_localpart_invalid": "Mungon emër ose ndarës dhome, p.sh. (dhoma-ime:përkatësi.org)",
+            "alias_field_safe_localpart_invalid": "Disa shenja nuk lejohen",
+            "alias_field_required_invalid": "Ju lutemi, jepni një adresë",
+            "alias_field_matches_invalid": "Kjo adresë nuk shpie te kjo dhomë",
+            "alias_field_taken_valid": "Kjo adresë është e lirë për përdorim",
+            "alias_field_taken_invalid_domain": "Kjo adresë është e përdorur tashmë",
+            "alias_field_taken_invalid": "Kjo adresë kishte një shërbyes të pavlefshëm ose është e përdorur tashmë"
         },
         "advanced": {
             "unfederated": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
@@ -3855,7 +3846,13 @@
         "error_jump_to_date_details": "Hollësi gabimi",
         "jump_to_date_beginning": "Fillimi i dhomës",
         "jump_to_date": "Kalo te datë",
-        "jump_to_date_prompt": "Zgjidhni një datë ku të kalohet"
+        "jump_to_date_prompt": "Zgjidhni një datë ku të kalohet",
+        "face_pile_tooltip_label": {
+            "one": "Shihni 1 anëtar",
+            "other": "Shihni krejt %(count)s anëtarët"
+        },
+        "face_pile_tooltip_shortcut_joined": "Përfshi ju, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Prfshi %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",
@@ -4232,5 +4229,14 @@
     },
     "console_wait": "Daleni!",
     "cant_load_page": "S’u ngarkua dot faqja",
-    "General failure": "Dështim i përgjithshëm"
+    "General failure": "Dështim i përgjithshëm",
+    "emoji_picker": {
+        "cancel_search_label": "Anulo kërkimin"
+    },
+    "info_tooltip_title": "Informacion",
+    "language_dropdown_label": "Menu Hapmbyll Gjuhësh",
+    "pill": {
+        "permalink_other_room": "Mesazh në %(room)s",
+        "permalink_this_room": "Mesazh nga %(user)s"
+    }
 }

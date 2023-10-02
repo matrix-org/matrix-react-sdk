@@ -28,7 +28,6 @@
         "other": "i %(count)s innych...",
         "one": "i jeden inny..."
     },
-    "Custom level": "Własny poziom",
     "Email address": "Adres e-mail",
     "Home": "Strona główna",
     "Join Room": "Dołącz do pokoju",
@@ -77,7 +76,6 @@
     "Delete Widget": "Usuń widżet",
     "collapse": "Zwiń",
     "expand": "Rozwiń",
-    "<a>In reply to</a> <pill>": "<a>W odpowiedzi do</a> <pill>",
     "Clear Storage and Sign Out": "Wyczyść pamięć i wyloguj się",
     "Send Logs": "Wyślij dzienniki",
     "We encountered an error trying to restore your previous session.": "Napotkaliśmy błąd podczas przywracania poprzedniej sesji.",
@@ -153,7 +151,6 @@
     "Anchor": "Kotwica",
     "Headphones": "Słuchawki",
     "Folder": "Folder",
-    "Power level": "Poziom uprawnień",
     "Room Settings - %(roomName)s": "Ustawienia pokoju - %(roomName)s",
     "Globe": "Ziemia",
     "Smiley": "Uśmiech",
@@ -168,9 +165,7 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zaszyfrowane wiadomości są zabezpieczone przy użyciu szyfrowania end-to-end. Tylko Ty oraz ich adresaci posiadają klucze do ich rozszyfrowania.",
     "Start using Key Backup": "Rozpocznij z użyciem klucza kopii zapasowej",
     "Deactivate account": "Dezaktywuj konto",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nie zdołano wczytać zdarzenia, na które odpowiedziano, może ono nie istnieć lub nie masz uprawnienia, by je zobaczyć.",
     "e.g. my-room": "np. mój-pokój",
-    "Some characters not allowed": "Niektóre znaki niedozwolone",
     "Direct Messages": "Wiadomości prywatne",
     "Looks good": "Wygląda dobrze",
     "Your server": "Twój serwer",
@@ -191,7 +186,6 @@
         "one": "%(count)s sesja"
     },
     "Integrations are disabled": "Integracje są wyłączone",
-    "Cancel search": "Anuluj wyszukiwanie",
     "Invite anyway": "Zaproś mimo to",
     "Notes": "Notatki",
     "Session name": "Nazwa sesji",
@@ -364,7 +358,6 @@
     "Close dialog": "Zamknij okno dialogowe",
     "Removing…": "Usuwanie…",
     "Incompatible Database": "Niekompatybilna baza danych",
-    "Information": "Informacje",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Jemen",
@@ -705,10 +698,6 @@
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Każdy będzie mógł znaleźć i dołączyć do tej przestrzeni, nie tylko członkowie <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Każdy w <SpaceName/> będzie mógł znaleźć i dołączyć.",
     "Online community members": "Członkowie społeczności online",
-    "View all %(count)s members": {
-        "one": "Wyświetl 1 członka",
-        "other": "Wyświetl wszystkich %(count)s członków"
-    },
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Wyczyszczenie wszystkich danych z tej sesji jest permanentne. Wiadomości szyfrowane zostaną utracone, jeśli nie zabezpieczono ich kluczy.",
     "Clear all data in this session?": "Wyczyścić wszystkie dane w tej sesji?",
     "Reason (optional)": "Powód (opcjonalne)",
@@ -757,20 +746,6 @@
         "one": "%(count)s osoba, którą znasz, już dołączyła",
         "other": "%(count)s osób, które znasz, już dołączyło"
     },
-    "Including %(commaSeparatedMembers)s": "Włączając %(commaSeparatedMembers)s",
-    "Including you, %(commaSeparatedMembers)s": "Włączając Ciebie, %(commaSeparatedMembers)s",
-    "This address had invalid server or is already in use": "Ten adres posiadał nieprawidłowy serwer lub jest już w użyciu",
-    "This address is already in use": "Ten adres jest już w użyciu",
-    "This address is available to use": "Można użyć tego adresu",
-    "This address does not point at this room": "Ten adres nie wskazuje na ten pokój",
-    "Please provide an address": "Podaj adres",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Brakuje nazwy pokoju lub separatora np. (mój-pokój:domena.org)",
-    "Missing domain separator e.g. (:domain.org)": "Brakuje separatora domeny np. (:domena.org)",
-    "Room address": "Adres pokoju",
-    "In reply to <a>this message</a>": "W odpowiedzi do <a>tej wiadomości</a>",
-    "Message from %(user)s": "Wiadomość od %(user)s",
-    "Language Dropdown": "Rozwiń języki",
-    "Message in %(room)s": "Wiadomość w %(room)s",
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
     "%(featureName)s Beta feedback": "%(featureName)s opinia Beta",
     "Cancelled signature upload": "Przesyłanie sygnatury zostało anulowane",
@@ -1375,7 +1350,9 @@
         "moderator": "Moderator",
         "admin": "Administrator",
         "mod": "Moderator",
-        "custom": "Własny (%(level)s)"
+        "custom": "Własny (%(level)s)",
+        "label": "Poziom uprawnień",
+        "custom_level": "Własny poziom"
     },
     "bug_reporting": {
         "introduction": "Jeśli zgłosiłeś błąd za pomocą serwisu GitHub, dzienniki debugowania mogą pomóc nam w namierzeniu problemu. ",
@@ -2565,7 +2542,12 @@
             "tooltip_sub": "Kliknij, aby wyświetlić edycje",
             "tooltip_label": "Edytowano w %(date)s. Kliknij, aby zobaczyć zmiany."
         },
-        "error_rendering_message": "Nie można wczytać tej wiadomości"
+        "error_rendering_message": "Nie można wczytać tej wiadomości",
+        "reply": {
+            "error_loading": "Nie zdołano wczytać zdarzenia, na które odpowiedziano, może ono nie istnieć lub nie masz uprawnienia, by je zobaczyć.",
+            "in_reply_to": "<a>W odpowiedzi do</a> <pill>",
+            "in_reply_to_for_export": "W odpowiedzi do <a>tej wiadomości</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",
@@ -2940,7 +2922,16 @@
             "canonical_alias_field_label": "Główny adres",
             "avatar_field_label": "Awatar pokoju",
             "aliases_no_items_label": "Brak innych opublikowanych adresów, dodaj jakiś poniżej",
-            "aliases_items_label": "Inne opublikowane adresy:"
+            "aliases_items_label": "Inne opublikowane adresy:",
+            "alias_heading": "Adres pokoju",
+            "alias_field_has_domain_invalid": "Brakuje separatora domeny np. (:domena.org)",
+            "alias_field_has_localpart_invalid": "Brakuje nazwy pokoju lub separatora np. (mój-pokój:domena.org)",
+            "alias_field_safe_localpart_invalid": "Niektóre znaki niedozwolone",
+            "alias_field_required_invalid": "Podaj adres",
+            "alias_field_matches_invalid": "Ten adres nie wskazuje na ten pokój",
+            "alias_field_taken_valid": "Można użyć tego adresu",
+            "alias_field_taken_invalid_domain": "Ten adres jest już w użyciu",
+            "alias_field_taken_invalid": "Ten adres posiadał nieprawidłowy serwer lub jest już w użyciu"
         },
         "advanced": {
             "unfederated": "Ten pokój nie jest dostępny na zdalnych serwerach Matrix",
@@ -3941,7 +3932,13 @@
         "error_jump_to_date_details": "Szczegóły błędu",
         "jump_to_date_beginning": "Początek pokoju",
         "jump_to_date": "Przeskocz do daty",
-        "jump_to_date_prompt": "Wybierz datę do której przeskoczyć"
+        "jump_to_date_prompt": "Wybierz datę do której przeskoczyć",
+        "face_pile_tooltip_label": {
+            "one": "Wyświetl 1 członka",
+            "other": "Wyświetl wszystkich %(count)s członków"
+        },
+        "face_pile_tooltip_shortcut_joined": "Włączając Ciebie, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Włączając %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -4321,5 +4318,14 @@
     },
     "console_wait": "Czekaj!",
     "cant_load_page": "Nie można załadować strony",
-    "General failure": "Ogólny błąd"
+    "General failure": "Ogólny błąd",
+    "emoji_picker": {
+        "cancel_search_label": "Anuluj wyszukiwanie"
+    },
+    "info_tooltip_title": "Informacje",
+    "language_dropdown_label": "Rozwiń języki",
+    "pill": {
+        "permalink_other_room": "Wiadomość w %(room)s",
+        "permalink_this_room": "Wiadomość od %(user)s"
+    }
 }

@@ -94,7 +94,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашній сервер перевищив одне із своїх обмежень ресурсів.",
     "Ok": "Гаразд",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Щоб повідомити про проблеми безпеки Matrix, будь ласка, прочитайте <a>Політику розкриття інформації</a> Matrix.org.",
-    "Power level": "Рівень повноважень",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Використовуйте сервер ідентифікації щоб запрошувати через е-пошту. Керується у <settings>налаштуваннях</settings>.",
     "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
     "Confirm this user's session by comparing the following with their User Settings:": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
@@ -434,16 +433,12 @@
     "You're all caught up.": "Все готово.",
     "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
     "Confirm encryption setup": "Підтвердити налаштування шифрування",
-    "<a>In reply to</a> <pill>": "<a>У відповідь на</a> <pill>",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора.",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
     "Link to most recent message": "Посилання на останнє повідомлення",
     "Share Room": "Поділитись кімнатою",
     "edited": "змінено",
-    "Language Dropdown": "Спадне меню мов",
-    "Information": "Відомості",
     "collapse": "згорнути",
-    "Cancel search": "Скасувати пошук",
     "Recently Direct Messaged": "Недавно надіслані особисті повідомлення",
     "User Directory": "Каталог користувачів",
     "Preparing to download logs": "Приготування до завантаження журналів",
@@ -498,14 +493,7 @@
         "other": "І ще %(count)s..."
     },
     "Join millions for free on the largest public server": "Приєднуйтесь безплатно до мільйонів інших на найбільшому загальнодоступному сервері",
-    "This address is already in use": "Ця адреса вже використовується",
-    "This address is available to use": "Ця адреса доступна",
-    "Please provide an address": "Будь ласка, вкажіть адресу",
-    "Some characters not allowed": "Деякі символи не дозволені",
     "e.g. my-room": "наприклад, моя-кімната",
-    "Room address": "Адреса кімнати",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Не вдалося завантажити подію, на яку було надано відповідь, її або не існує, або у вас немає дозволу на її перегляд.",
-    "Custom level": "Власний рівень",
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
     "Switch theme": "Змінити тему",
     "<inviter/> invites you": "<inviter/> запрошує вас",
@@ -543,7 +531,6 @@
     "Sent": "Надіслано",
     "Sending": "Надсилання",
     "MB": "МБ",
-    "In reply to <a>this message</a>": "У відповідь на <a>це повідомлення</a>",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
         "other": "Сеансів: %(count)s"
@@ -570,11 +557,6 @@
     "%(count)s people you know have already joined": {
         "one": "%(count)s осіб, яких ви знаєте, уже приєдналися",
         "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
-    },
-    "Including %(commaSeparatedMembers)s": "Включно з %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Переглянути 1 учасника",
-        "other": "Переглянути усіх %(count)s учасників"
     },
     "This version of %(brand)s does not support searching encrypted messages": "Ця версія %(brand)s не підтримує пошук зашифрованих повідомлень",
     "Keys restored": "Ключ відновлено",
@@ -750,7 +732,6 @@
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Якщо ви скинете все, то почнете заново без довірених сеансів, користувачів і доступу до минулих повідомлень.",
     "Reset everything": "Скинути все",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забули чи втратили всі способи відновлення? <a>Скинути все</a>",
-    "Including you, %(commaSeparatedMembers)s": "Включно з вами, %(commaSeparatedMembers)s",
     "Incoming Verification Request": "Надійшов запит на звірку",
     "Integrations are disabled": "Інтеграції вимкнені",
     "Integrations not allowed": "Інтеграції не дозволені",
@@ -783,11 +764,7 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
     "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
-    "This address had invalid server or is already in use": "Ця адреса містить хибний сервер чи вже використовується",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Бракує назви кімнати чи розділювача (my-room:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Бракує розділювача домену (:domain.org)",
     "Verify other device": "Звірити інший пристрій",
-    "This address does not point at this room": "Ця адреса не вказує на цю кімнату",
     "Use <arrows/> to scroll": "Використовуйте <arrows/>, щоб прокручувати",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Запрошення електронною поштою можна надсилати лише одне за раз",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
-    "Message from %(user)s": "Повідомлення від %(user)s",
-    "Message in %(room)s": "Повідомлення в %(room)s",
     "unavailable": "недоступний",
     "unknown status code": "невідомий код стану",
     "Start DM anyway": "Усе одно розпочати особисте спілкування",
@@ -1376,7 +1351,9 @@
         "moderator": "Модератор",
         "admin": "Адміністратор",
         "mod": "Модератор",
-        "custom": "Власний (%(level)s)"
+        "custom": "Власний (%(level)s)",
+        "label": "Рівень повноважень",
+        "custom_level": "Власний рівень"
     },
     "bug_reporting": {
         "introduction": "Якщо ви надіслали звіт про ваду на GitHub, журнали зневадження можуть допомогти нам визначити проблему. ",
@@ -2570,7 +2547,12 @@
             "tooltip_sub": "Натисніть, щоб переглянути зміни",
             "tooltip_label": "Змінено %(date)s. Натисніть, щоб переглянути зміни."
         },
-        "error_rendering_message": "Не вдалося завантажити це повідомлення"
+        "error_rendering_message": "Не вдалося завантажити це повідомлення",
+        "reply": {
+            "error_loading": "Не вдалося завантажити подію, на яку було надано відповідь, її або не існує, або у вас немає дозволу на її перегляд.",
+            "in_reply_to": "<a>У відповідь на</a> <pill>",
+            "in_reply_to_for_export": "У відповідь на <a>це повідомлення</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",
@@ -2945,7 +2927,16 @@
             "canonical_alias_field_label": "Основна адреса",
             "avatar_field_label": "Аватар кімнати",
             "aliases_no_items_label": "Поки немає загальнодоступних адрес, додайте їх унизу",
-            "aliases_items_label": "Інші загальнодоступні адреси:"
+            "aliases_items_label": "Інші загальнодоступні адреси:",
+            "alias_heading": "Адреса кімнати",
+            "alias_field_has_domain_invalid": "Бракує розділювача домену (:domain.org)",
+            "alias_field_has_localpart_invalid": "Бракує назви кімнати чи розділювача (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "Деякі символи не дозволені",
+            "alias_field_required_invalid": "Будь ласка, вкажіть адресу",
+            "alias_field_matches_invalid": "Ця адреса не вказує на цю кімнату",
+            "alias_field_taken_valid": "Ця адреса доступна",
+            "alias_field_taken_invalid_domain": "Ця адреса вже використовується",
+            "alias_field_taken_invalid": "Ця адреса містить хибний сервер чи вже використовується"
         },
         "advanced": {
             "unfederated": "Ця кімната недоступна для віддалених серверів Matrix",
@@ -3957,7 +3948,13 @@
         "error_jump_to_date_details": "Подробиці помилки",
         "jump_to_date_beginning": "Початок кімнати",
         "jump_to_date": "Перейти до дати",
-        "jump_to_date_prompt": "Виберіть до якої дати перейти"
+        "jump_to_date_prompt": "Виберіть до якої дати перейти",
+        "face_pile_tooltip_label": {
+            "one": "Переглянути 1 учасника",
+            "other": "Переглянути усіх %(count)s учасників"
+        },
+        "face_pile_tooltip_shortcut_joined": "Включно з вами, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Включно з %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
@@ -4339,5 +4336,14 @@
     },
     "console_wait": "Заждіть!",
     "cant_load_page": "Не вдалося завантажити сторінку",
-    "General failure": "Загальний збій"
+    "General failure": "Загальний збій",
+    "emoji_picker": {
+        "cancel_search_label": "Скасувати пошук"
+    },
+    "info_tooltip_title": "Відомості",
+    "language_dropdown_label": "Спадне меню мов",
+    "pill": {
+        "permalink_other_room": "Повідомлення в %(room)s",
+        "permalink_this_room": "Повідомлення від %(user)s"
+    }
 }

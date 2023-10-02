@@ -39,7 +39,6 @@
     "Confirm Removal": "Confirmer la suppression",
     "Unable to restore session": "Impossible de restaurer la session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
-    "Custom level": "Rang personnalisé",
     "Create new room": "Créer un nouveau salon",
     "(~%(count)s results)": {
         "one": "(~%(count)s résultat)",
@@ -63,7 +62,6 @@
     "collapse": "réduire",
     "Send": "Envoyer",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s",
-    "<a>In reply to</a> <pill>": "<a>En réponse à</a> <pill>",
     "Sunday": "Dimanche",
     "Today": "Aujourd’hui",
     "Friday": "Vendredi",
@@ -85,7 +83,6 @@
     "Clear Storage and Sign Out": "Effacer le stockage et se déconnecter",
     "We encountered an error trying to restore your previous session.": "Une erreur est survenue lors de la restauration de la dernière session.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles.",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossible de charger l’évènement auquel il a été répondu, soit il n’existe pas, soit vous n'avez pas l’autorisation de le voir.",
     "Share Room": "Partager le salon",
     "Link to most recent message": "Lien vers le message le plus récent",
     "Share User": "Partager l’utilisateur",
@@ -192,7 +189,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attention</b> : vous ne devriez configurer la sauvegarde des clés que depuis un ordinateur de confiance.",
     "Scissors": "Ciseaux",
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
-    "Power level": "Rang",
     "Remember my selection for this widget": "Se souvenir de mon choix pour ce widget",
     "Notes": "Notes",
     "Sign out and remove encryption keys?": "Se déconnecter et supprimer les clés de chiffrement ?",
@@ -212,7 +208,6 @@
     "Cancel All": "Tout annuler",
     "Upload Error": "Erreur d’envoi",
     "edited": "modifié",
-    "Some characters not allowed": "Certains caractères ne sont pas autorisés",
     "Upload all": "Tout envoyer",
     "Message edits": "Modifications du message",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "La mise à niveau de ce salon nécessite de fermer l’instance actuelle du salon et de créer un nouveau salon à la place. Pour fournir la meilleure expérience possible aux utilisateurs, nous allons :",
@@ -237,7 +232,6 @@
     },
     "e.g. my-room": "par ex. mon-salon",
     "Close dialog": "Fermer la boîte de dialogue",
-    "Cancel search": "Annuler la recherche",
     "%(name)s accepted": "%(name)s a accepté",
     "%(name)s cancelled": "%(name)s a annulé",
     "%(name)s wants to verify": "%(name)s veut vérifier",
@@ -254,7 +248,6 @@
         "other": "%(count)s sessions vérifiées",
         "one": "1 session vérifiée"
     },
-    "Language Dropdown": "Sélection de la langue",
     "Recent Conversations": "Conversations récentes",
     "Direct Messages": "Conversations privées",
     "Failed to find the following users": "Impossible de trouver les utilisateurs suivants",
@@ -325,9 +318,6 @@
     "Confirm encryption setup": "Confirmer la configuration du chiffrement",
     "Click the button below to confirm setting up encryption.": "Cliquez sur le bouton ci-dessous pour confirmer la configuration du chiffrement.",
     "IRC display name width": "Largeur du nom d’affichage IRC",
-    "Room address": "Adresse du salon",
-    "This address is available to use": "Cette adresse est disponible",
-    "This address is already in use": "Cette adresse est déjà utilisée",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Vous avez précédemment utilisé une version plus récente de %(brand)s avec cette session. Pour réutiliser cette version avec le chiffrement de bout en bout, vous devrez vous déconnecter et vous reconnecter.",
     "Your homeserver has exceeded its user limit.": "Votre serveur d’accueil a dépassé ses limites d’utilisateurs.",
     "Your homeserver has exceeded one of its resource limits.": "Votre serveur d’accueil a dépassé une de ses limites de ressources.",
@@ -345,7 +335,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Utilisez une <a>Application de bureau</a> pour rechercher dans tous les messages chiffrés",
     "Use the <a>Desktop app</a> to see all encrypted files": "Utilisez une <a>Application de bureau</a> pour voir tous les fichiers chiffrés",
     "Preparing to download logs": "Préparation du téléchargement des journaux",
-    "Information": "Informations",
     "Not encrypted": "Non-chiffré",
     "Unable to set up keys": "Impossible de configurer les clés",
     "Recent changes that have not yet been received": "Changements récents qui n’ont pas encore été reçus",
@@ -683,11 +672,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Vous avez perdu ou oublié tous vos moyens de récupération ? <a>Tout réinitialiser</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
     "Sending": "Envoi",
-    "Including %(commaSeparatedMembers)s": "Dont %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Afficher le membre",
-        "other": "Afficher les %(count)s membres"
-    },
     "Want to add a new room instead?": "Voulez-vous plutôt ajouter un nouveau salon ?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Ajout du salon…",
@@ -702,7 +686,6 @@
     "Search for rooms or people": "Rechercher des salons ou des gens",
     "Sent": "Envoyé",
     "You don't have permission to do this": "Vous n’avez pas les permissions nécessaires pour effectuer cette action",
-    "Please provide an address": "Veuillez fournir une adresse",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Échec de l’initialisation de la recherche de messages, vérifiez <a>vos paramètres</a> pour plus d’information",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur.",
     "User Directory": "Répertoire utilisateur",
@@ -739,7 +722,6 @@
     "Leave all rooms": "Quitter tous les salons",
     "Don't leave any rooms": "Ne quitter aucun salon",
     "MB": "Mo",
-    "In reply to <a>this message</a>": "En réponse à <a>ce message</a>",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
         "one": "%(count)s réponse",
@@ -778,16 +760,11 @@
     "Use \"%(query)s\" to search": "Utilisez « %(query)s » pour rechercher",
     "Other rooms in %(spaceName)s": "Autres salons dans %(spaceName)s",
     "Spaces you're in": "Espaces où vous êtes",
-    "Including you, %(commaSeparatedMembers)s": "Dont vous, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s.",
     "Sections to show": "Sections à afficher",
     "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
     "Verify other device": "Vérifier un autre appareil",
-    "This address had invalid server or is already in use": "Cette adresse a un serveur invalide ou est déjà utilisée",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Nom de salon ou séparateur manquant, par exemple (mon-salon:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Séparateur de domaine manquant, par exemple (:domain.org)",
     "toggle event": "Afficher/masquer l’évènement",
-    "This address does not point at this room": "Cette adresse ne pointe pas vers ce salon",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s et %(space2Name)s",
     "Search Dialog": "Fenêtre de recherche",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Les invitations par e-mail ne peuvent être envoyées qu’une par une",
     "Desktop app logo": "Logo de l’application de bureau",
     "Requires your server to support the stable version of MSC3827": "Requiert la prise en charge par le serveur de la version stable du MSC3827",
-    "Message from %(user)s": "Message de %(user)s",
-    "Message in %(room)s": "Message dans %(room)s",
     "unavailable": "indisponible",
     "unknown status code": "code de statut inconnu",
     "Start DM anyway": "Commencer la conversation privée quand même",
@@ -1376,7 +1351,9 @@
         "moderator": "Modérateur",
         "admin": "Administrateur",
         "mod": "Modérateur",
-        "custom": "Personnalisé (%(level)s)"
+        "custom": "Personnalisé (%(level)s)",
+        "label": "Rang",
+        "custom_level": "Rang personnalisé"
     },
     "bug_reporting": {
         "introduction": "Si vous avez soumis une anomalie via GitHub, les journaux de débogage peuvent nous aider à cibler le problème. ",
@@ -2570,7 +2547,12 @@
             "tooltip_sub": "Cliquez pour voir les modifications",
             "tooltip_label": "Modifié le %(date)s. Cliquer pour voir les modifications."
         },
-        "error_rendering_message": "Impossible de charger ce message"
+        "error_rendering_message": "Impossible de charger ce message",
+        "reply": {
+            "error_loading": "Impossible de charger l’évènement auquel il a été répondu, soit il n’existe pas, soit vous n'avez pas l’autorisation de le voir.",
+            "in_reply_to": "<a>En réponse à</a> <pill>",
+            "in_reply_to_for_export": "En réponse à <a>ce message</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",
@@ -2945,7 +2927,16 @@
             "canonical_alias_field_label": "Adresse principale",
             "avatar_field_label": "Avatar du salon",
             "aliases_no_items_label": "Aucune autre adresse n’est publiée, ajoutez-en une ci-dessous",
-            "aliases_items_label": "Autres adresses publiées :"
+            "aliases_items_label": "Autres adresses publiées :",
+            "alias_heading": "Adresse du salon",
+            "alias_field_has_domain_invalid": "Séparateur de domaine manquant, par exemple (:domain.org)",
+            "alias_field_has_localpart_invalid": "Nom de salon ou séparateur manquant, par exemple (mon-salon:domain.org)",
+            "alias_field_safe_localpart_invalid": "Certains caractères ne sont pas autorisés",
+            "alias_field_required_invalid": "Veuillez fournir une adresse",
+            "alias_field_matches_invalid": "Cette adresse ne pointe pas vers ce salon",
+            "alias_field_taken_valid": "Cette adresse est disponible",
+            "alias_field_taken_invalid_domain": "Cette adresse est déjà utilisée",
+            "alias_field_taken_invalid": "Cette adresse a un serveur invalide ou est déjà utilisée"
         },
         "advanced": {
             "unfederated": "Ce salon n’est pas accessible par les serveurs Matrix distants",
@@ -3957,7 +3948,13 @@
         "error_jump_to_date_details": "Détails de l’erreur",
         "jump_to_date_beginning": "Le début de ce salon",
         "jump_to_date": "Aller à la date",
-        "jump_to_date_prompt": "Choisissez vers quelle date aller"
+        "jump_to_date_prompt": "Choisissez vers quelle date aller",
+        "face_pile_tooltip_label": {
+            "one": "Afficher le membre",
+            "other": "Afficher les %(count)s membres"
+        },
+        "face_pile_tooltip_shortcut_joined": "Dont vous, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Dont %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Vous devez vous <a>inscrire</a> pour utiliser cette fonctionnalité",
@@ -4339,5 +4336,14 @@
     },
     "console_wait": "Attendez !",
     "cant_load_page": "Impossible de charger la page",
-    "General failure": "Erreur générale"
+    "General failure": "Erreur générale",
+    "emoji_picker": {
+        "cancel_search_label": "Annuler la recherche"
+    },
+    "info_tooltip_title": "Informations",
+    "language_dropdown_label": "Sélection de la langue",
+    "pill": {
+        "permalink_other_room": "Message dans %(room)s",
+        "permalink_this_room": "Message de %(user)s"
+    }
 }

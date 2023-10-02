@@ -413,17 +413,7 @@
     },
     "Join millions for free on the largest public server": "הצטרפו למיליונים בחינם בשרת הציבורי הגדול ביותר",
     "Server Options": "אפשרויות שרת",
-    "This address is already in use": "כתובת זו נמצאת בשימוש",
-    "This address is available to use": "כתובת זו זמינה לשימוש",
-    "Some characters not allowed": "חלק מהתווים אינם מורשים",
     "e.g. my-room": "כגון החדר-שלי",
-    "Room address": "כתובת חדר",
-    "<a>In reply to</a> <pill>": "<a> בתשובה ל- </a> <pill>",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "לא ניתן לטעון אירוע שהשיב לו, או שהוא לא קיים או שאין לך הרשאה להציג אותו.",
-    "Custom level": "דרגה מותאמת",
-    "Power level": "דרגת מנהל",
-    "Language Dropdown": "תפריט שפות",
-    "Information": "מידע",
     "collapse": "אחד",
     "expand": "הרחב",
     "This version of %(brand)s does not support searching encrypted messages": "גרסה זו של %(brand)s אינה תומכת בחיפוש הודעות מוצפנות",
@@ -468,7 +458,6 @@
         "other": "ו %(count)s אחרים..."
     },
     "Encrypted by a deleted session": "הוצפן על ידי מושב שנמחק",
-    "Cancel search": "בטל חיפוש",
     "Submit logs": "הגש יומנים",
     "edited": "נערך",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
@@ -1032,7 +1021,9 @@
         "moderator": "מנהל",
         "admin": "אדמין",
         "custom": "ידני %(level)s",
-        "mod": "ממתן"
+        "mod": "ממתן",
+        "label": "דרגת מנהל",
+        "custom_level": "דרגה מותאמת"
     },
     "bug_reporting": {
         "introduction": "אם שלחתם באג דרך GitHub, שליחת לוגים יכולה לעזור לנו לאתר את הבעיה. ",
@@ -1808,7 +1799,11 @@
             "tooltip_sub": "לחץ לצפות בעריכות",
             "tooltip_label": "נערך ב-%(date)s. לחץ לצפייה בעריכות."
         },
-        "error_rendering_message": "לא ניתן לטעון הודעה זו"
+        "error_rendering_message": "לא ניתן לטעון הודעה זו",
+        "reply": {
+            "error_loading": "לא ניתן לטעון אירוע שהשיב לו, או שהוא לא קיים או שאין לך הרשאה להציג אותו.",
+            "in_reply_to": "<a> בתשובה ל- </a> <pill>"
+        }
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",
@@ -2115,7 +2110,11 @@
             "canonical_alias_field_label": "כתובת ראשית",
             "avatar_field_label": "אוואטר של החדר",
             "aliases_no_items_label": "עדיין אין כתובות שפורסמו, הוסף כתובת למטה",
-            "aliases_items_label": "כתובות מפורסמות אחרות:"
+            "aliases_items_label": "כתובות מפורסמות אחרות:",
+            "alias_heading": "כתובת חדר",
+            "alias_field_safe_localpart_invalid": "חלק מהתווים אינם מורשים",
+            "alias_field_taken_valid": "כתובת זו זמינה לשימוש",
+            "alias_field_taken_invalid_domain": "כתובת זו נמצאת בשימוש"
         },
         "advanced": {
             "unfederated": "לא ניתן לגשת לחדר זה באמצעות שרתי מטריקס מרוחקים",
@@ -3106,5 +3105,10 @@
         "error_loading_user_profile": "לא ניתן לטעון את פרופיל המשתמש"
     },
     "cant_load_page": "לא ניתן לטעון את הדף",
-    "General failure": "שגיאה כללית"
+    "General failure": "שגיאה כללית",
+    "emoji_picker": {
+        "cancel_search_label": "בטל חיפוש"
+    },
+    "info_tooltip_title": "מידע",
+    "language_dropdown_label": "תפריט שפות"
 }

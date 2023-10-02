@@ -7,7 +7,6 @@
         "other": "ja %(count)s muuta...",
         "one": "ja yksi muu..."
     },
-    "Custom level": "Mukautettu taso",
     "Email address": "Sähköpostiosoite",
     "Join Room": "Liity huoneeseen",
     "Moderator": "Valvoja",
@@ -75,7 +74,6 @@
     "Yesterday": "Eilen",
     "Wednesday": "Keskiviikko",
     "Thank you!": "Kiitos!",
-    "<a>In reply to</a> <pill>": "<a>Vastauksena käyttäjälle</a> <pill>",
     "Dog": "Koira",
     "Cat": "Kissa",
     "Lion": "Leijona",
@@ -171,8 +169,6 @@
     "Share Room Message": "Jaa huoneviesti",
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
-    "Power level": "Oikeuksien taso",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Tapahtuman, johon oli vastattu, lataaminen epäonnistui. Se joko ei ole olemassa tai sinulla ei ole oikeutta katsoa sitä.",
     "The following users may not exist": "Seuraavat käyttäjät eivät välttämättä ole olemassa",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Alla luetelluille Matrix ID:ille ei löytynyt profiileja. Haluaisitko kutsua ne siitä huolimatta?",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
@@ -208,7 +204,6 @@
     },
     "Cancel All": "Peruuta kaikki",
     "Upload Error": "Lähetysvirhe",
-    "Some characters not allowed": "Osaa merkeistä ei sallita",
     "edited": "muokattu",
     "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
@@ -235,7 +230,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Suuren viestimäärän tapauksessa toiminto voi kestää jonkin aikaa. Älä lataa asiakasohjelmaasi uudelleen sillä aikaa.",
     "e.g. my-room": "esim. oma-huone",
     "Close dialog": "Sulje dialogi",
-    "Cancel search": "Peruuta haku",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
     "%(name)s accepted": "%(name)s hyväksyi",
     "%(name)s cancelled": "%(name)s peruutti",
@@ -249,7 +243,6 @@
         "other": "%(count)s varmennettua istuntoa",
         "one": "1 varmennettu istunto"
     },
-    "Language Dropdown": "Kielipudotusvalikko",
     "Upgrade private room": "Päivitä yksityinen huone",
     "Upgrade public room": "Päivitä julkinen huone",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Huoneen päivittäminen on monimutkainen toimenpide ja yleensä sitä suositellaan, kun huone on epävakaa bugien, puuttuvien ominaisuuksien tai tietoturvaongelmien takia.",
@@ -315,12 +308,9 @@
     "Your homeserver has exceeded its user limit.": "Kotipalvelimesi on ylittänyt käyttäjärajansa.",
     "Your homeserver has exceeded one of its resource limits.": "Kotipalvelimesi on ylittänyt jonkin resurssirajansa.",
     "Ok": "OK",
-    "This address is available to use": "Tämä osoite on käytettävissä",
-    "This address is already in use": "Tämä osoite on jo käytössä",
     "Switch theme": "Vaihda teemaa",
     "Looks good!": "Hyvältä näyttää!",
     "Wrong file type": "Väärä tiedostotyyppi",
-    "Room address": "Huoneen osoite",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
     "Server isn't responding": "Palvelin ei vastaa",
     "Decline All": "Kieltäydy kaikista",
@@ -480,7 +470,6 @@
     "a new cross-signing key signature": "Uusi ristiinvarmennuksen allekirjoitus",
     "Backup version:": "Varmuuskopiointiversio:",
     "Server Options": "Palvelinasetukset",
-    "Information": "Tiedot",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Sambia",
     "Yemen": "Jemen",
@@ -640,10 +629,6 @@
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
     },
-    "View all %(count)s members": {
-        "one": "Näytä yksi jäsen",
-        "other": "Näytä kaikki %(count)s jäsentä"
-    },
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
@@ -652,7 +637,6 @@
     "Sent": "Lähetetty",
     "Server did not require any authentication": "Palvelin ei vaatinut mitään tunnistautumista",
     "Only people invited will be able to find and join this space.": "Vain kutsutut ihmiset voivat löytää tämän avaruuden ja liittyä siihen.",
-    "Including %(commaSeparatedMembers)s": "Mukaan lukien %(commaSeparatedMembers)s",
     "Space visibility": "Avaruuden näkyvyys",
     "Leave space": "Poistu avaruudesta",
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
@@ -676,7 +660,6 @@
     "User Directory": "Käyttäjähakemisto",
     "MB": "Mt",
     "Server did not return valid authentication information.": "Palvelin ei palauttanut kelvollista tunnistautumistietoa.",
-    "Please provide an address": "Määritä osoite",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
     "Leave all rooms": "Poistu kaikista huoneista",
@@ -718,7 +701,6 @@
         "one": "%(count)s ääni",
         "other": "%(count)s ääntä"
     },
-    "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -729,8 +711,6 @@
         "one": "Olet poistamassa käyttäjän %(user)s yhtä viestiä. Toimenpide poistaa ne pysyvästi kaikilta keskustelun osapuolilta. Haluatko jatkaa?"
     },
     "To leave the beta, visit your settings.": "Poistu beetasta asetuksista.",
-    "This address does not point at this room": "Tämä osoite ei osoita tähän huoneeseen",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Puuttuva huoneen nimi tai erotin, esim. (oma-huone:verkkotunnus.org)",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
@@ -741,7 +721,6 @@
     "Automatically invite members from this room to the new one": "Kutsu jäsenet tästä huoneesta automaattisesti uuteen huoneeseen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
     "%(featureName)s Beta feedback": "Ominaisuuden %(featureName)s beetapalaute",
-    "Including you, %(commaSeparatedMembers)s": "Mukaan lukien sinä, %(commaSeparatedMembers)s",
     "%(count)s participants": {
         "one": "1 osallistuja",
         "other": "%(count)s osallistujaa"
@@ -815,7 +794,6 @@
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
     "Saved Items": "Tallennetut kohteet",
-    "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
     "<w>WARNING:</w> <description/>": "<w>VAROITUS:</w> <description/>",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
     "View List": "Näytä luettelo",
@@ -829,8 +807,6 @@
     "Checking…": "Tarkistetaan…",
     "Invites by email can only be sent one at a time": "Sähköpostikutsuja voi lähettää vain yhden kerrallaan",
     "Adding…": "Lisätään…",
-    "Message from %(user)s": "Viesti käyttäjältä %(user)s",
-    "Message in %(room)s": "Viesti huoneessa %(room)s",
     "unavailable": "ei saatavilla",
     "unknown status code": "tuntematon tilakoodi",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
@@ -1282,7 +1258,9 @@
         "moderator": "Valvoja",
         "admin": "Ylläpitäjä",
         "mod": "Valvoja",
-        "custom": "Mukautettu (%(level)s)"
+        "custom": "Mukautettu (%(level)s)",
+        "label": "Oikeuksien taso",
+        "custom_level": "Mukautettu taso"
     },
     "bug_reporting": {
         "introduction": "Jos olet tehnyt ilmoituksen ohjelmistovirheestä GitHubiin, vianjäljityslokit voivat auttaa ongelman selvittämisessä. ",
@@ -2332,7 +2310,12 @@
             "tooltip_sub": "Napsauta nähdäksesi muokkaukset",
             "tooltip_label": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset."
         },
-        "error_rendering_message": "Tätä viestiä ei voi ladata"
+        "error_rendering_message": "Tätä viestiä ei voi ladata",
+        "reply": {
+            "error_loading": "Tapahtuman, johon oli vastattu, lataaminen epäonnistui. Se joko ei ole olemassa tai sinulla ei ole oikeutta katsoa sitä.",
+            "in_reply_to": "<a>Vastauksena käyttäjälle</a> <pill>",
+            "in_reply_to_for_export": "Vastauksena <a>tähän viestiin</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",
@@ -2687,7 +2670,15 @@
             "canonical_alias_field_label": "Pääosoite",
             "avatar_field_label": "Huoneen kuva",
             "aliases_no_items_label": "Toistaiseksi ei muita julkaistuja osoitteita, lisää alle",
-            "aliases_items_label": "Muut julkaistut osoitteet:"
+            "aliases_items_label": "Muut julkaistut osoitteet:",
+            "alias_heading": "Huoneen osoite",
+            "alias_field_has_localpart_invalid": "Puuttuva huoneen nimi tai erotin, esim. (oma-huone:verkkotunnus.org)",
+            "alias_field_safe_localpart_invalid": "Osaa merkeistä ei sallita",
+            "alias_field_required_invalid": "Määritä osoite",
+            "alias_field_matches_invalid": "Tämä osoite ei osoita tähän huoneeseen",
+            "alias_field_taken_valid": "Tämä osoite on käytettävissä",
+            "alias_field_taken_invalid_domain": "Tämä osoite on jo käytössä",
+            "alias_field_taken_invalid": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä"
         },
         "advanced": {
             "unfederated": "Tähän huoneeseen ei pääse ulkopuolisilta Matrix-palvelimilta",
@@ -3572,7 +3563,13 @@
         "error_jump_to_date_details": "Virheen tiedot",
         "jump_to_date_beginning": "Huoneen alku",
         "jump_to_date": "Siirry päivämäärään",
-        "jump_to_date_prompt": "Valitse päivämäärä, mihin siirrytään"
+        "jump_to_date_prompt": "Valitse päivämäärä, mihin siirrytään",
+        "face_pile_tooltip_label": {
+            "one": "Näytä yksi jäsen",
+            "other": "Näytä kaikki %(count)s jäsentä"
+        },
+        "face_pile_tooltip_shortcut_joined": "Mukaan lukien sinä, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Mukaan lukien %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3933,5 +3930,14 @@
     },
     "console_wait": "Odota!",
     "cant_load_page": "Sivun lataaminen ei onnistunut",
-    "General failure": "Yleinen virhe"
+    "General failure": "Yleinen virhe",
+    "emoji_picker": {
+        "cancel_search_label": "Peruuta haku"
+    },
+    "info_tooltip_title": "Tiedot",
+    "language_dropdown_label": "Kielipudotusvalikko",
+    "pill": {
+        "permalink_other_room": "Viesti huoneessa %(room)s",
+        "permalink_this_room": "Viesti käyttäjältä %(user)s"
+    }
 }

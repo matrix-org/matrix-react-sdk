@@ -6,7 +6,6 @@
         "one": "και ένας ακόμα...",
         "other": "και %(count)s άλλοι..."
     },
-    "Custom level": "Προσαρμοσμένο επίπεδο",
     "Email address": "Ηλεκτρονική διεύθυνση",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
@@ -637,29 +636,12 @@
     "Add existing space": "Προσθήκη υπάρχοντος χώρου",
     "Server name": "Ονομα διακομιστή",
     "Server Options": "Επιλογές Διακομιστή",
-    "This address had invalid server or is already in use": "Αυτή η διεύθυνση έχει μη έγκυρο διακομιστή ή χρησιμοποιείται ήδη",
-    "This address is already in use": "Αυτή η διεύθυνση χρησιμοποιείται ήδη",
-    "This address is available to use": "Αυτή η διεύθυνση είναι διαθέσιμη για χρήση",
-    "This address does not point at this room": "Αυτή η διεύθυνση δεν οδηγεί σε αυτό το δωμάτιο",
-    "Please provide an address": "Παρακαλώ δώστε μια διεύθυνση",
-    "Some characters not allowed": "Ορισμένοι χαρακτήρες δεν επιτρέπονται",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Λείπει το όνομα δωματίου ή το διαχωριστικό τομέα π.χ (my-room:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Λείπει το διαχωριστικό τομέα π.χ. (:domain.org)",
     "e.g. my-room": "π.χ. my-room",
-    "Room address": "Διεύθυνση δωματίου",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Αδυναμία φόρτωσης του συμβάντος στο οποίο δόθηκε απάντηση, είτε δεν υπάρχει είτε δεν έχετε άδεια να το προβάλετε.",
-    "Language Dropdown": "Επιλογή Γλώσσας",
-    "Information": "Πληροφορίες",
-    "View all %(count)s members": {
-        "one": "Προβολή 1 μέλους",
-        "other": "Προβολή όλων των %(count)s μελών"
-    },
     "This version of %(brand)s does not support searching encrypted messages": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την αναζήτηση κρυπτογραφημένων μηνυμάτων",
     "This version of %(brand)s does not support viewing some encrypted files": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την προβολή ορισμένων κρυπτογραφημένων αρχείων",
     "Use the <a>Desktop app</a> to search encrypted messages": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα μηνύματα",
     "Use the <a>Desktop app</a> to see all encrypted files": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα αρχεία",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Η προετοιμασία της αναζήτησης μηνυμάτων απέτυχε, ελέγξτε τις <a>ρυθμίσεις σας</a> για περισσότερες πληροφορίες",
-    "Cancel search": "Ακύρωση αναζήτησης",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
@@ -690,15 +672,10 @@
     "And %(count)s more...": {
         "other": "Και %(count)s ακόμα..."
     },
-    "In reply to <a>this message</a>": "Ως απαντηση σε<a>αυτό το μήνυμα</a>",
-    "<a>In reply to</a> <pill>": "<a>Ως απαντηση σε</a> <pill>",
-    "Power level": "Επίπεδο ισχύος",
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
     },
-    "Including %(commaSeparatedMembers)s": "Συμπεριλαμβανομένου %(commaSeparatedMembers)s",
-    "Including you, %(commaSeparatedMembers)s": "Συμπεριλαμβανομένου σας, %(commaSeparatedMembers)s",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Έχετε χρησιμοποιήσει στο παρελθόν μια νεότερη έκδοση του %(brand)s με αυτήν την συνεδρία. Για να χρησιμοποιήσετε ξανά αυτήν την έκδοση με κρυπτογράφηση από άκρο σε άκρο, θα πρέπει να αποσυνδεθείτε και να συνδεθείτε ξανά.",
     "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Για να αποφύγετε να χάσετε το ιστορικό των συνομιλιών σας, πρέπει να εξαγάγετε τα κλειδιά του δωματίου σας πριν αποσυνδεθείτε. Για να το κάνετε αυτό, θα χρειαστεί να επιστρέψετε στη νεότερη έκδοση του %(brand)s",
     "Add a space to a space you manage.": "Προσθέστε έναν χώρο σε ένα χώρο που διαχειρίζεστε.",
@@ -1223,7 +1200,9 @@
         "moderator": "Συντονιστής",
         "admin": "Διαχειριστής",
         "custom": "Προσαρμοσμένα (%(level)s)",
-        "mod": "Συντονιστής"
+        "mod": "Συντονιστής",
+        "label": "Επίπεδο ισχύος",
+        "custom_level": "Προσαρμοσμένο επίπεδο"
     },
     "bug_reporting": {
         "introduction": "Εάν έχετε υποβάλει ένα σφάλμα μέσω του GitHub, τα αρχεία καταγραφής εντοπισμού σφαλμάτων μπορούν να μας βοηθήσουν να εντοπίσουμε το πρόβλημα. ",
@@ -2135,7 +2114,12 @@
             "tooltip_sub": "Κάντε κλικ για να δείτε τις τροποποιήσεις",
             "tooltip_label": "Επεξεργάστηκε στις %(date)s. Κάντε κλικ για να δείτε τις τροποποιήσεις."
         },
-        "error_rendering_message": "Δεν είναι δυνατή η φόρτωση αυτού του μηνύματος"
+        "error_rendering_message": "Δεν είναι δυνατή η φόρτωση αυτού του μηνύματος",
+        "reply": {
+            "error_loading": "Αδυναμία φόρτωσης του συμβάντος στο οποίο δόθηκε απάντηση, είτε δεν υπάρχει είτε δεν έχετε άδεια να το προβάλετε.",
+            "in_reply_to": "<a>Ως απαντηση σε</a> <pill>",
+            "in_reply_to_for_export": "Ως απαντηση σε<a>αυτό το μήνυμα</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",
@@ -2466,7 +2450,16 @@
             "canonical_alias_field_label": "Κύρια διεύθυνση",
             "avatar_field_label": "Εικόνα δωματίου",
             "aliases_no_items_label": "Δεν υπάρχουν δημοσιευμένες διευθύνσεις, προσθέστε μία παρακάτω",
-            "aliases_items_label": "Άλλες δημοσιευμένες διευθύνσεις:"
+            "aliases_items_label": "Άλλες δημοσιευμένες διευθύνσεις:",
+            "alias_heading": "Διεύθυνση δωματίου",
+            "alias_field_has_domain_invalid": "Λείπει το διαχωριστικό τομέα π.χ. (:domain.org)",
+            "alias_field_has_localpart_invalid": "Λείπει το όνομα δωματίου ή το διαχωριστικό τομέα π.χ (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "Ορισμένοι χαρακτήρες δεν επιτρέπονται",
+            "alias_field_required_invalid": "Παρακαλώ δώστε μια διεύθυνση",
+            "alias_field_matches_invalid": "Αυτή η διεύθυνση δεν οδηγεί σε αυτό το δωμάτιο",
+            "alias_field_taken_valid": "Αυτή η διεύθυνση είναι διαθέσιμη για χρήση",
+            "alias_field_taken_invalid_domain": "Αυτή η διεύθυνση χρησιμοποιείται ήδη",
+            "alias_field_taken_invalid": "Αυτή η διεύθυνση έχει μη έγκυρο διακομιστή ή χρησιμοποιείται ήδη"
         },
         "advanced": {
             "unfederated": "Αυτό το δωμάτιο δεν είναι προσβάσιμο από απομακρυσμένους διακομιστές Matrix",
@@ -3309,7 +3302,13 @@
         "failed_reject_invite": "Δεν ήταν δυνατή η απόρριψη της πρόσκλησης",
         "jump_to_date_beginning": "Η αρχή του δωματίου",
         "jump_to_date": "Μετάβαση σε ημερομηνία",
-        "jump_to_date_prompt": "Επιλέξτε μια ημερομηνία για να μεταβείτε"
+        "jump_to_date_prompt": "Επιλέξτε μια ημερομηνία για να μεταβείτε",
+        "face_pile_tooltip_label": {
+            "one": "Προβολή 1 μέλους",
+            "other": "Προβολή όλων των %(count)s μελών"
+        },
+        "face_pile_tooltip_shortcut_joined": "Συμπεριλαμβανομένου σας, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Συμπεριλαμβανομένου %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
@@ -3628,5 +3627,10 @@
     },
     "console_wait": "Μια στιγμή!",
     "cant_load_page": "Δεν ήταν δυνατή η φόρτωση της σελίδας",
-    "General failure": "Γενική αποτυχία"
+    "General failure": "Γενική αποτυχία",
+    "emoji_picker": {
+        "cancel_search_label": "Ακύρωση αναζήτησης"
+    },
+    "info_tooltip_title": "Πληροφορίες",
+    "language_dropdown_label": "Επιλογή Γλώσσας"
 }

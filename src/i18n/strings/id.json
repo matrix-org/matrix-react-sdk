@@ -306,7 +306,6 @@
     "Home": "Beranda",
     "Removing…": "Menghilangkan…",
     "Resume": "Lanjutkan",
-    "Information": "Informasi",
     "Lock": "Gembok",
     "Mushroom": "Jamur",
     "Folder": "Map",
@@ -376,7 +375,6 @@
     "Cancel All": "Batalkan Semua",
     "Upload all": "Unggah semua",
     "Upload files": "Unggah file",
-    "Power level": "Tingkat daya",
     "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
@@ -397,7 +395,6 @@
     "Join Room": "Bergabung dengan Ruangan",
     "Sent": "Terkirim",
     "MB": "MB",
-    "Custom level": "Tingkat kustom",
     "Hold": "Jeda",
     "Transfer": "Pindah",
     "Sending": "Mengirim",
@@ -505,31 +502,16 @@
     },
     "Join millions for free on the largest public server": "Bergabung dengan jutaan orang lainnya secara gratis di server publik terbesar",
     "Server Options": "Opsi Server",
-    "This address is already in use": "Alamat ini sudah digunakan",
-    "This address is available to use": "Alamat ini dapat digunakan",
-    "Please provide an address": "Mohon masukkan sebuah alamat",
-    "Some characters not allowed": "Beberapa karakter tidak diizinkan",
     "e.g. my-room": "mis. ruangan-saya",
-    "Room address": "Alamat ruangan",
-    "In reply to <a>this message</a>": "Membalas ke <a>pesan ini</a>",
-    "<a>In reply to</a> <pill>": "<a>Membalas ke</a> <pill>",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Tidak dapat memuat peristiwa yang dibalas, karena tidak ada atau Anda tidak memiliki izin untuk menampilkannya.",
-    "Language Dropdown": "Dropdown Bahasa",
     "%(count)s people you know have already joined": {
         "one": "%(count)s orang yang Anda tahu telah bergabung",
         "other": "%(count)s orang yang Anda tahu telah bergabung"
-    },
-    "Including %(commaSeparatedMembers)s": "Termasuk %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Tampilkan 1 pengguna",
-        "other": "Tampilkan semua %(count)s anggota"
     },
     "This version of %(brand)s does not support searching encrypted messages": "Versi %(brand)s ini tidak mendukung pencarian pesan terenkripsi",
     "This version of %(brand)s does not support viewing some encrypted files": "Versi %(brand)s ini tidak mendukung penampilan beberapa file terenkripsi",
     "Use the <a>Desktop app</a> to search encrypted messages": "Gunakan <a>aplikasi desktop</a> untuk mencari pesan-pesan terenkripsi",
     "Use the <a>Desktop app</a> to see all encrypted files": "Gunakan <a>aplikasi desktop</a> untuk melihat semua file terenkripsi",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisasi pencarian pesan gagal, periksa <a>pengaturan Anda</a> untuk informasi lanjut",
-    "Cancel search": "Batalkan pencarian",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Anda akan meningkatkan ruangan ini dari <oldVersion /> ke <newVersion />.",
     "Recent changes that have not yet been received": "Perubahan terbaru yang belum diterima",
     "The server is not configured to indicate what the problem is (CORS).": "Server tidak diatur untuk menandakan apa masalahnya (CORS).",
@@ -778,16 +760,11 @@
     "Use \"%(query)s\" to search": "Gunakan \"%(query)s\" untuk mencari",
     "Other rooms in %(spaceName)s": "Ruangan lainnya di %(spaceName)s",
     "Spaces you're in": "Space yang Anda berada",
-    "Including you, %(commaSeparatedMembers)s": "Termasuk Anda, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ini mengelompokkan obrolan Anda dengan anggota space ini. Menonaktifkan ini akan menyembunyikan obrolan dari tampilan %(spaceName)s Anda.",
     "Sections to show": "Bagian untuk ditampilkan",
     "Open in OpenStreetMap": "Buka di OpenStreetMap",
     "toggle event": "alih peristiwa",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Kurang nama ruangan atau pemisah mis. (ruangan-saya:domain.org)",
-    "Missing domain separator e.g. (:domain.org)": "Kurang pemisah domain mis. (:domain.org)",
-    "This address had invalid server or is already in use": "Alamat ini memiliki server yang tidak absah atau telah digunakan",
     "Verify other device": "Verifikasi perangkat lain",
-    "This address does not point at this room": "Alamat ini tidak mengarah ke ruangan ini",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
     "Use <arrows/> to scroll": "Gunakan <arrows/> untuk menggulirkan",
     "Feedback sent! Thanks, we appreciate it!": "Masukan terkirim! Terima kasih, kami mengapresiasinya!",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Undangan lewat surel hanya dapat dikirim satu-satu",
     "Desktop app logo": "Logo aplikasi desktop",
     "Requires your server to support the stable version of MSC3827": "Mengharuslkan server Anda mendukung versi MSC3827 yang stabil",
-    "Message from %(user)s": "Pesan dari %(user)s",
-    "Message in %(room)s": "Pesan dalam %(room)s",
     "unavailable": "tidak tersedia",
     "unknown status code": "kode keadaan tidak diketahui",
     "Start DM anyway": "Mulai percakapan langsung saja",
@@ -1377,7 +1352,9 @@
         "moderator": "Moderator",
         "admin": "Admin",
         "mod": "Mod",
-        "custom": "Kustom (%(level)s)"
+        "custom": "Kustom (%(level)s)",
+        "label": "Tingkat daya",
+        "custom_level": "Tingkat kustom"
     },
     "bug_reporting": {
         "introduction": "Jika Anda mengirim sebuah kutu via GitHub, catatan pengawakutu dapat membantu kami melacak masalahnya. ",
@@ -2571,7 +2548,12 @@
             "tooltip_sub": "Klik untuk melihat editan",
             "tooltip_label": "Diedit di %(date)s. Klik untuk melihat editan."
         },
-        "error_rendering_message": "Tidak dapat memuat pesan ini"
+        "error_rendering_message": "Tidak dapat memuat pesan ini",
+        "reply": {
+            "error_loading": "Tidak dapat memuat peristiwa yang dibalas, karena tidak ada atau Anda tidak memiliki izin untuk menampilkannya.",
+            "in_reply_to": "<a>Membalas ke</a> <pill>",
+            "in_reply_to_for_export": "Membalas ke <a>pesan ini</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",
@@ -2946,7 +2928,16 @@
             "canonical_alias_field_label": "Alamat utama",
             "avatar_field_label": "Avatar ruangan",
             "aliases_no_items_label": "Tidak ada alamat yang dipublikasikan, tambahkan satu di bawah",
-            "aliases_items_label": "Alamat lainnya yang dipublikasikan:"
+            "aliases_items_label": "Alamat lainnya yang dipublikasikan:",
+            "alias_heading": "Alamat ruangan",
+            "alias_field_has_domain_invalid": "Kurang pemisah domain mis. (:domain.org)",
+            "alias_field_has_localpart_invalid": "Kurang nama ruangan atau pemisah mis. (ruangan-saya:domain.org)",
+            "alias_field_safe_localpart_invalid": "Beberapa karakter tidak diizinkan",
+            "alias_field_required_invalid": "Mohon masukkan sebuah alamat",
+            "alias_field_matches_invalid": "Alamat ini tidak mengarah ke ruangan ini",
+            "alias_field_taken_valid": "Alamat ini dapat digunakan",
+            "alias_field_taken_invalid_domain": "Alamat ini sudah digunakan",
+            "alias_field_taken_invalid": "Alamat ini memiliki server yang tidak absah atau telah digunakan"
         },
         "advanced": {
             "unfederated": "Ruangan ini tidak dapat diakses oleh pengguna Matrix jarak jauh",
@@ -3964,7 +3955,13 @@
         "error_jump_to_date_details": "Detail kesalahan",
         "jump_to_date_beginning": "Awalan ruangan",
         "jump_to_date": "Pergi ke tanggal",
-        "jump_to_date_prompt": "Pilih sebuah tanggal untuk pergi ke tanggalnya"
+        "jump_to_date_prompt": "Pilih sebuah tanggal untuk pergi ke tanggalnya",
+        "face_pile_tooltip_label": {
+            "one": "Tampilkan 1 pengguna",
+            "other": "Tampilkan semua %(count)s anggota"
+        },
+        "face_pile_tooltip_shortcut_joined": "Termasuk Anda, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Termasuk %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -4346,5 +4343,14 @@
     },
     "console_wait": "Tunggu!",
     "cant_load_page": "Tidak dapat memuat halaman",
-    "General failure": "Kesalahan umum"
+    "General failure": "Kesalahan umum",
+    "emoji_picker": {
+        "cancel_search_label": "Batalkan pencarian"
+    },
+    "info_tooltip_title": "Informasi",
+    "language_dropdown_label": "Dropdown Bahasa",
+    "pill": {
+        "permalink_other_room": "Pesan dalam %(room)s",
+        "permalink_this_room": "Pesan dari %(user)s"
+    }
 }

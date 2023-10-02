@@ -324,16 +324,6 @@
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
-    "Please provide an address": "ກະລຸນາລະບຸທີ່ຢູ່",
-    "Some characters not allowed": "ບໍ່ອະນຸຍາດໃຫ້ບາງຕົວອັກສອນ",
-    "Missing room name or separator e.g. (my-room:domain.org)": "ບໍ່ມີຊື່ຫ້ອງ ຫຼື ຕົວແຍກເຊັ່ນ: (my-room:domain.org)",
-    "View all %(count)s members": {
-        "one": "ເບິ່ງສະມາຊິກ 1 ຄົນ",
-        "other": "ເບິ່ງສະມາຊິກ %(count)s ທັງໝົດ"
-    },
-    "Including %(commaSeparatedMembers)s": "ລວມທັງ %(commaSeparatedMembers)s",
-    "Including you, %(commaSeparatedMembers)s": "ລວມທັງທ່ານ, %(commaSeparatedMembers)s",
-    "This address had invalid server or is already in use": "ທີ່ຢູ່ນີ້ມີເຊີບເວີທີ່ບໍ່ຖືກຕ້ອງ ຫຼື ຖືກໃຊ້ງານຢູ່ແລ້ວ",
     "Join millions for free on the largest public server": "ເຂົ້າຮ່ວມຫຼາຍລ້ານຄົນໄດ້ໂດຍບໍ່ເສຍຄ່າໃນເຊີບເວີສາທາລະນະທີ່ໃຫຍ່ທີ່ສຸດ",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "ທ່ານສາມາດໃຊ້ຕົວເລືອກເຊີບເວີແບບກຳນົດເອງເພື່ອເຂົ້າສູ່ລະບົບເຊີບເວີ Matrix ອື່ນໂດຍການລະບຸ URL ເຊີບເວີອື່ນ. ນີ້ແມ່ນອະນຸຍາດໃຫ້ທ່ານໃຊ້ %(brand)s ກັບບັນຊີ Matrix ທີ່ມີຢູ່ແລ້ວໃນ homeserver ອື່ນ.",
     "Server Options": "ຕົວເລືອກເຊີບເວີ",
@@ -374,17 +364,7 @@
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "ການລຶບລ້າງພື້ນທີ່ຈັດເກັບຂໍ້ມູນຂອງບຣາວເຊີຂອງທ່ານອາດຈະແກ້ໄຂບັນຫາໄດ້, ແຕ່ຈະເຮັດໃຫ້ທ່ານອອກຈາກລະບົບ ແລະ ເຮັດໃຫ້ປະຫວັດການສົນທະນາທີ່ເຂົ້າລະຫັດໄວ້ນັ້ນບໍ່ສາມາດອ່ານໄດ້.",
     "Not encrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
-    "Missing domain separator e.g. (:domain.org)": "ຂາດຕົວແຍກໂດເມນ e.g. (:domain.org)",
     "e.g. my-room": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ",
-    "Room address": "ທີ່ຢູ່ຫ້ອງ",
-    "In reply to <a>this message</a>": "ໃນການຕອບກັບ <a>ຂໍ້ຄວາມນີ້</a>",
-    "<a>In reply to</a> <pill>": "<a>ຕອບກັບ</a> <pill>",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "ບໍ່ສາມາດໂຫຼດກິດຈະກຳທີ່ຕອບກັບມາໄດ້, ມັນບໍ່ຢູ່ ຫຼື ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງມັນ.",
-    "Custom level": "ລະດັບທີ່ກໍາຫນົດເອງ",
-    "Power level": "ລະດັບພະລັງງານ",
-    "This address is already in use": "ທີ່ຢູ່ນີ້ຖືກໃຊ້ແລ້ວ",
-    "This address is available to use": "ທີ່ຢູ່ນີ້ສາມາດໃຊ້ໄດ້",
-    "This address does not point at this room": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ຊີ້ໄປທີ່ຫ້ອງນີ້",
     "Switch theme": "ສະຫຼັບຫົວຂໍ້",
     "<inviter/> invites you": "<inviter/> ເຊີນທ່ານ",
     "Create new room": "ສ້າງຫ້ອງໃຫມ່",
@@ -551,8 +531,6 @@
     "You don't have permission to do this": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເຮັດສິ່ງນີ້",
     "An error occurred while stopping your live location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
-    "Language Dropdown": "ເລື່ອນພາສາລົງ",
-    "Information": "ຂໍ້ມູນ",
     "expand": "ຂະຫຍາຍ",
     "collapse": "ບໍ່ສຳເລັດ",
     "This version of %(brand)s does not support searching encrypted messages": "ເວີຊັ້ນຂອງ %(brand)s ບໍ່ຮອງຮັບການຊອກຫາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ",
@@ -560,7 +538,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອຊອກຫາຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້",
     "Use the <a>Desktop app</a> to see all encrypted files": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອເບິ່ງໄຟລ໌ທີ່ຖືກເຂົ້າລະຫັດທັງໝົດ",
     "Message search initialisation failed, check <a>your settings</a> for more information": "ເລີ່ມຕົ້ນການຄົ້ນຫາຂໍ້ຄວາມບ່ສຳເລັດ, ໃຫ້ກວດເບິ່ງ <a>ການຕັ້ງຄ່າຂອງທ່ານ</a> ສໍາລັບຂໍ້ມູນເພີ່ມເຕີມ",
-    "Cancel search": "ຍົກເລີກການຄົ້ນຫາ",
     "MB": "ເມກາໄບ",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການສິ້ນສຸດການສຳຫຼວດນີ້? ນີ້ຈະສະແດງຜົນສຸດທ້າຍຂອງການລົງຄະແນນສຽງ ແລະ ຢຸດບໍ່ໃຫ້ປະຊາຊົນສາມາດລົງຄະແນນສຽງໄດ້.",
     "End Poll": "ສິ້ນສຸດການສຳຫຼວດ",
@@ -1218,7 +1195,9 @@
         "moderator": "ຜູ້ດຳເນິນລາຍການ",
         "admin": "ບໍລິຫານ",
         "custom": "ກຳນົດ(%(level)s)ເອງ",
-        "mod": "ກາປັບປ່ຽນ"
+        "mod": "ກາປັບປ່ຽນ",
+        "label": "ລະດັບພະລັງງານ",
+        "custom_level": "ລະດັບທີ່ກໍາຫນົດເອງ"
     },
     "bug_reporting": {
         "introduction": "ຖ້າທ່ານໄດ້ສົ່ງຂໍ້ບົກພ່ອງຜ່ານ GitHub, ບັນທຶກການຂໍ້ຜິດພາດສາມາດຊ່ວຍພວກເຮົາຕິດຕາມບັນຫາໄດ້. ",
@@ -2133,7 +2112,12 @@
             "tooltip_sub": "ກົດເພື່ອເບິ່ງການແກ້ໄຂ",
             "tooltip_label": "ແກ້ໄຂເມື່ອ %(date)s. ກົດເພື່ອເບິ່ງການແກ້ໄຂ."
         },
-        "error_rendering_message": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມນີ້ໄດ້"
+        "error_rendering_message": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມນີ້ໄດ້",
+        "reply": {
+            "error_loading": "ບໍ່ສາມາດໂຫຼດກິດຈະກຳທີ່ຕອບກັບມາໄດ້, ມັນບໍ່ຢູ່ ຫຼື ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງມັນ.",
+            "in_reply_to": "<a>ຕອບກັບ</a> <pill>",
+            "in_reply_to_for_export": "ໃນການຕອບກັບ <a>ຂໍ້ຄວາມນີ້</a>"
+        }
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",
@@ -2468,7 +2452,16 @@
             "canonical_alias_field_label": "ທີ່ຢູ່ຫຼັກ",
             "avatar_field_label": "ຮູບ avatar ຫ້ອງ",
             "aliases_no_items_label": "ບໍ່ມີທີ່ຢູ່ທີ່ເຜີຍແຜ່ອື່ນໆເທື່ອ, ເພີ່ມທີ່ຢູ່ຫນຶ່ງຂ້າງລຸ່ມນີ້",
-            "aliases_items_label": "ທີ່ຢູ່ອື່ນໆທີ່ເຜີຍແຜ່:"
+            "aliases_items_label": "ທີ່ຢູ່ອື່ນໆທີ່ເຜີຍແຜ່:",
+            "alias_heading": "ທີ່ຢູ່ຫ້ອງ",
+            "alias_field_has_domain_invalid": "ຂາດຕົວແຍກໂດເມນ e.g. (:domain.org)",
+            "alias_field_has_localpart_invalid": "ບໍ່ມີຊື່ຫ້ອງ ຫຼື ຕົວແຍກເຊັ່ນ: (my-room:domain.org)",
+            "alias_field_safe_localpart_invalid": "ບໍ່ອະນຸຍາດໃຫ້ບາງຕົວອັກສອນ",
+            "alias_field_required_invalid": "ກະລຸນາລະບຸທີ່ຢູ່",
+            "alias_field_matches_invalid": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ຊີ້ໄປທີ່ຫ້ອງນີ້",
+            "alias_field_taken_valid": "ທີ່ຢູ່ນີ້ສາມາດໃຊ້ໄດ້",
+            "alias_field_taken_invalid_domain": "ທີ່ຢູ່ນີ້ຖືກໃຊ້ແລ້ວ",
+            "alias_field_taken_invalid": "ທີ່ຢູ່ນີ້ມີເຊີບເວີທີ່ບໍ່ຖືກຕ້ອງ ຫຼື ຖືກໃຊ້ງານຢູ່ແລ້ວ"
         },
         "advanced": {
             "unfederated": "ຫ້ອງນີ້ບໍ່ສາມາດເຂົ້າເຖິງໄດ້ໂດຍເຊີບເວີ Matrix ໄລຍະໄກ",
@@ -3325,7 +3318,13 @@
         "failed_reject_invite": "ປະຕິເສດຄຳເຊີນບໍ່ສຳເລັດ",
         "jump_to_date_beginning": "ຈຸດເລີ່ມຕົ້ນຂອງຫ້ອງ",
         "jump_to_date": "ໄປຫາວັນທີ",
-        "jump_to_date_prompt": "ເລືອກວັນທີເພື່ອໄປຫາ"
+        "jump_to_date_prompt": "ເລືອກວັນທີເພື່ອໄປຫາ",
+        "face_pile_tooltip_label": {
+            "one": "ເບິ່ງສະມາຊິກ 1 ຄົນ",
+            "other": "ເບິ່ງສະມາຊິກ %(count)s ທັງໝົດ"
+        },
+        "face_pile_tooltip_shortcut_joined": "ລວມທັງທ່ານ, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "ລວມທັງ %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3646,5 +3645,10 @@
     },
     "console_wait": "ລໍຖ້າ!",
     "cant_load_page": "ບໍ່ສາມາດໂຫຼດໜ້າໄດ້",
-    "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ"
+    "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ",
+    "emoji_picker": {
+        "cancel_search_label": "ຍົກເລີກການຄົ້ນຫາ"
+    },
+    "info_tooltip_title": "ຂໍ້ມູນ",
+    "language_dropdown_label": "ເລື່ອນພາສາລົງ"
 }

@@ -51,7 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
-    "Custom level": "Nivel personalizado",
     "And %(count)s more...": {
         "other": "E %(count)s máis..."
     },
@@ -63,7 +62,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Comprobe o seu correo electrónico e pulse na ligazón que contén. Unha vez feito iso prema continuar.",
     "This will allow you to reset your password and receive notifications.": "Isto permitiralle restablecer o seu contrasinal e recibir notificacións.",
     "Session ID": "ID de sesión",
-    "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
     "Sunday": "Domingo",
     "Today": "Hoxe",
     "Friday": "Venres",
@@ -81,7 +79,6 @@
     "Logs sent": "Informes enviados",
     "Yesterday": "Onte",
     "Thank you!": "Grazas!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Non se cargou o evento ao que respondía, ou non existe ou non ten permiso para velo.",
     "Send Logs": "Enviar informes",
     "Clear Storage and Sign Out": "Limpar o almacenamento e Saír",
     "We encountered an error trying to restore your previous session.": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
@@ -205,13 +202,7 @@
     "%(name)s wants to verify": "%(name)s desexa verificar",
     "edited": "editada",
     "Submit logs": "Enviar rexistro",
-    "Cancel search": "Cancelar busca",
-    "Language Dropdown": "Selector de idioma",
-    "Room address": "Enderezo da sala",
     "e.g. my-room": "ex. a-miña-sala",
-    "Some characters not allowed": "Algúns caracteres non permitidos",
-    "This address is available to use": "Este enderezo está dispoñible",
-    "This address is already in use": "Este enderezo xa se está a utilizar",
     "Enter a server name": "Escribe un nome de servidor",
     "Looks good": "Pinta ben",
     "Can't find this server or its room list": "Non se atopa o servidor ou a súa lista de salas",
@@ -247,7 +238,6 @@
     "Server did not return valid authentication information.": "O servidor non devolveu información válida de autenticación.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica esta usuaria para marcala como confiable. Ao confiar nas usuarias proporcionache tranquilidade extra cando usas cifrado de extremo-a-extremo.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Ao verificar esta usuaria marcarás a súa sesión como confiable, e tamén marcará a túa sesión como confiable para elas.",
-    "Power level": "Nivel responsabilidade",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica este dispositivo para marcalo como confiable. Confiando neste dispositivo permite que ti e outras usuarias estedes máis tranquilas ao utilizar mensaxes cifradas.",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Ao verificar este dispositivo marcaralo como confiable, e as usuarias que confiaron en ti tamén confiarán nel.",
     "Incoming Verification Request": "Solicitude entrante de verificación",
@@ -352,7 +342,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "O servidor non está configurado para sinalar cal é o problema (CORS).",
     "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
     "Preparing to download logs": "Preparándose para descargar rexistro",
-    "Information": "Información",
     "Not encrypted": "Sen cifrar",
     "Backup version:": "Versión da copia:",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inicia unha conversa con alguén usando o seu nome ou nome de usuaria (como <userId/>).",
@@ -683,11 +672,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "Sending": "Enviando",
-    "Including %(commaSeparatedMembers)s": "Incluíndo a %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Ver 1 membro",
-        "other": "Ver tódolos %(count)s membros"
-    },
     "Want to add a new room instead?": "Queres engadir unha nova sala?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Engadindo sala...",
@@ -704,7 +688,6 @@
     "You don't have permission to do this": "Non tes permiso para facer isto",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
     "User Directory": "Directorio de Usuarias",
-    "Please provide an address": "Proporciona un enderezo",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Fallou a inicialización da busca de mensaxes, comproba <a>os axustes</a> para máis información",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
     "Automatically invite members from this room to the new one": "Convidar automáticamente membros desta sala á nova sala",
@@ -739,7 +722,6 @@
     "Leave all rooms": "Saír de tódalas salas",
     "Don't leave any rooms": "Non saír de ningunha sala",
     "MB": "MB",
-    "In reply to <a>this message</a>": "En resposta a <a>esta mensaxe</a>",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -778,16 +760,11 @@
     "Failed to end poll": "Non rematou a enquisa por un fallo",
     "The poll has ended. Top answer: %(topAnswer)s": "Rematou a enquisa. O máis votado: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Rematou a enquisa. Non houbo votos.",
-    "Including you, %(commaSeparatedMembers)s": "Incluíndote a ti, %(commaSeparatedMembers)s",
     "toggle event": "activar evento",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Esto agrupa os teus chats cos membros deste espazo. Apagandoo ocultará estos chats da túa vista de %(spaceName)s.",
     "Sections to show": "Seccións a mostrar",
-    "This address had invalid server or is already in use": "Este enderezo ten un servidor non válido ou xa está en uso",
-    "This address does not point at this room": "Este enderezo non dirixe a esta sala",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Falta o nome da sala ou separador ex. (sala:dominio.org)",
-    "Missing domain separator e.g. (:domain.org)": "Falta o separador do cominio ex. (:dominio.org)",
     "Use <arrows/> to scroll": "Usa <arrows/> para desprazarte",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
@@ -1285,7 +1262,9 @@
         "moderator": "Moderador",
         "admin": "Administrador",
         "mod": "Mod",
-        "custom": "Personalizado (%(level)s)"
+        "custom": "Personalizado (%(level)s)",
+        "label": "Nivel responsabilidade",
+        "custom_level": "Nivel personalizado"
     },
     "bug_reporting": {
         "introduction": "Se informaches do fallo en GitHub, os rexistros poden ser útiles para arranxar o problema. ",
@@ -2301,7 +2280,12 @@
             "tooltip_sub": "Preme para ver as edicións",
             "tooltip_label": "Editada o %(date)s. Preme para ver edicións."
         },
-        "error_rendering_message": "Non se cargou a mensaxe"
+        "error_rendering_message": "Non se cargou a mensaxe",
+        "reply": {
+            "error_loading": "Non se cargou o evento ao que respondía, ou non existe ou non ten permiso para velo.",
+            "in_reply_to": "<a>En resposta a</a> <pill>",
+            "in_reply_to_for_export": "En resposta a <a>esta mensaxe</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",
@@ -2639,7 +2623,16 @@
             "canonical_alias_field_label": "Enderezo principal",
             "avatar_field_label": "Avatar da sala",
             "aliases_no_items_label": "Aínda non hai outros enderezos publicados, engade un embaixo",
-            "aliases_items_label": "Outros enderezos publicados:"
+            "aliases_items_label": "Outros enderezos publicados:",
+            "alias_heading": "Enderezo da sala",
+            "alias_field_has_domain_invalid": "Falta o separador do cominio ex. (:dominio.org)",
+            "alias_field_has_localpart_invalid": "Falta o nome da sala ou separador ex. (sala:dominio.org)",
+            "alias_field_safe_localpart_invalid": "Algúns caracteres non permitidos",
+            "alias_field_required_invalid": "Proporciona un enderezo",
+            "alias_field_matches_invalid": "Este enderezo non dirixe a esta sala",
+            "alias_field_taken_valid": "Este enderezo está dispoñible",
+            "alias_field_taken_invalid_domain": "Este enderezo xa se está a utilizar",
+            "alias_field_taken_invalid": "Este enderezo ten un servidor non válido ou xa está en uso"
         },
         "advanced": {
             "unfederated": "Esta sala non é accesible por servidores Matrix remotos",
@@ -3502,7 +3495,13 @@
         "creating_room_text": "Estamos creando unha sala con %(names)s",
         "jump_to_date_beginning": "O inicio da sala",
         "jump_to_date": "Ir á data",
-        "jump_to_date_prompt": "Elixe unha data á que ir"
+        "jump_to_date_prompt": "Elixe unha data á que ir",
+        "face_pile_tooltip_label": {
+            "one": "Ver 1 membro",
+            "other": "Ver tódolos %(count)s membros"
+        },
+        "face_pile_tooltip_shortcut_joined": "Incluíndote a ti, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Incluíndo a %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3845,5 +3844,10 @@
     },
     "console_wait": "Agarda!",
     "cant_load_page": "Non se puido cargar a páxina",
-    "General failure": "Fallo xeral"
+    "General failure": "Fallo xeral",
+    "emoji_picker": {
+        "cancel_search_label": "Cancelar busca"
+    },
+    "info_tooltip_title": "Información",
+    "language_dropdown_label": "Selector de idioma"
 }

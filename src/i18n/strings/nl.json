@@ -32,7 +32,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s, %(time)s",
     "Email address": "E-mailadres",
-    "Custom level": "Aangepast niveau",
     "Home": "Home",
     "Join Room": "Kamer toetreden",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
@@ -63,7 +62,6 @@
     "And %(count)s more...": {
         "other": "En %(count)s meer…"
     },
-    "<a>In reply to</a> <pill>": "<a>Als antwoord op</a> <pill>",
     "Sunday": "Zondag",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
@@ -81,7 +79,6 @@
     "Logs sent": "Logs verstuurd",
     "Failed to send logs: ": "Versturen van logs mislukt: ",
     "Preparing to send logs": "Logs voorbereiden voor versturen",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kan de gebeurtenis waarop gereageerd was niet laden. Wellicht bestaat die niet, of je hebt geen toestemming die te bekijken.",
     "Clear Storage and Sign Out": "Opslag wissen en uitloggen",
     "Send Logs": "Logs versturen",
     "We encountered an error trying to restore your previous session.": "Het herstel van je vorige sessie is mislukt.",
@@ -155,7 +152,6 @@
     "Folder": "Map",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
-    "Power level": "Machtsniveau",
     "The following users may not exist": "Volgende personen bestaan mogelijk niet",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kan geen profielen voor de Matrix-ID’s hieronder vinden - wil je ze toch uitnodigen?",
     "Invite anyway and never warn me again": "Alsnog uitnodigen en mij nooit meer waarschuwen",
@@ -212,7 +208,6 @@
     "Cancel All": "Alles annuleren",
     "Upload Error": "Fout bij versturen van bestand",
     "edited": "bewerkt",
-    "Some characters not allowed": "Sommige tekens zijn niet toegestaan",
     "Upload all": "Alles versturen",
     "Message edits": "Berichtbewerkingen",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Deze kamer bijwerken vereist dat je de huidige afsluit en in de plaats een nieuwe kamer aanmaakt. Om leden de best mogelijke ervaring te bieden, zullen we:",
@@ -257,8 +252,6 @@
     "%(name)s declined": "%(name)s heeft geweigerd",
     "%(name)s cancelled": "%(name)s heeft geannuleerd",
     "%(name)s wants to verify": "%(name)s wil verifiëren",
-    "Cancel search": "Zoeken annuleren",
-    "Language Dropdown": "Taalselectie",
     "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
@@ -542,10 +535,6 @@
     "Looks good": "Ziet er goed uit",
     "Enter a server name": "Geef een servernaam",
     "Server Options": "Server opties",
-    "This address is already in use": "Dit adres is al in gebruik",
-    "This address is available to use": "Dit adres kan worden gebruikt",
-    "Room address": "Kameradres",
-    "Information": "Informatie",
     "This version of %(brand)s does not support searching encrypted messages": "Deze versie van %(brand)s ondersteunt niet het doorzoeken van versleutelde berichten",
     "This version of %(brand)s does not support viewing some encrypted files": "Deze versie van %(brand)s ondersteunt niet de mogelijkheid sommige versleutelde bestanden te weergeven",
     "Use the <a>Desktop app</a> to search encrypted messages": "Gebruik de <a>Desktop-toepassing</a> om alle versleutelde berichten te zien",
@@ -682,11 +671,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "Sending": "Wordt verstuurd",
-    "Including %(commaSeparatedMembers)s": "Inclusief %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "1 lid bekijken",
-        "other": "Bekijk alle %(count)s personen"
-    },
     "Want to add a new room instead?": "Wil je anders een nieuwe kamer toevoegen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Kamer toevoegen...",
@@ -702,7 +686,6 @@
     "Message preview": "Voorbeeld van bericht",
     "Sent": "Verstuurd",
     "You don't have permission to do this": "Je hebt geen rechten om dit te doen",
-    "Please provide an address": "Geef een adres op",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Bericht zoeken initialisatie mislukt, controleer <a>je instellingen</a> voor meer informatie",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "User Directory": "Personengids",
@@ -739,7 +722,6 @@
     "Leave all rooms": "Alle kamers verlaten",
     "Don't leave any rooms": "Geen kamers verlaten",
     "MB": "MB",
-    "In reply to <a>this message</a>": "In antwoord op <a>dit bericht</a>",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
         "one": "%(count)s reactie",
@@ -781,13 +763,8 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Dit groepeert jouw chats met leden van deze space. Als je dit uitschakelt, worden deze chats verborgen voor %(spaceName)s.",
     "Sections to show": "Te tonen secties",
     "Link to room": "Link naar kamer",
-    "Including you, %(commaSeparatedMembers)s": "Inclusief jij, %(commaSeparatedMembers)s",
     "Verify other device": "Verifieer ander apparaat",
-    "This address had invalid server or is already in use": "Dit adres heeft een ongeldige server of is al in gebruik",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Ontbrekende kamernaam of scheidingsteken, bijv. (mijn-kamer:voorbeeld.nl)",
-    "Missing domain separator e.g. (:domain.org)": "Ontbrekend domeinscheidingsteken, bijv. (:voorbeeld.nl)",
     "toggle event": "wissel gebeurtenis",
-    "This address does not point at this room": "Dit adres verwijst niet naar deze kamer",
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
@@ -1293,7 +1270,9 @@
         "moderator": "Moderator",
         "admin": "Beheerder",
         "mod": "Mod",
-        "custom": "Aangepast (%(level)s)"
+        "custom": "Aangepast (%(level)s)",
+        "label": "Machtsniveau",
+        "custom_level": "Aangepast niveau"
     },
     "bug_reporting": {
         "introduction": "Als je een bug via GitHub hebt ingediend, kunnen foutopsporingslogboeken ons helpen het probleem op te sporen. ",
@@ -2336,7 +2315,12 @@
             "tooltip_sub": "Klik om bewerkingen te zien",
             "tooltip_label": "Bewerkt op %(date)s. Klik om de bewerkingen te bekijken."
         },
-        "error_rendering_message": "Dit bericht kan niet geladen worden"
+        "error_rendering_message": "Dit bericht kan niet geladen worden",
+        "reply": {
+            "error_loading": "Kan de gebeurtenis waarop gereageerd was niet laden. Wellicht bestaat die niet, of je hebt geen toestemming die te bekijken.",
+            "in_reply_to": "<a>Als antwoord op</a> <pill>",
+            "in_reply_to_for_export": "In antwoord op <a>dit bericht</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",
@@ -2685,7 +2669,16 @@
             "canonical_alias_field_label": "Hoofdadres",
             "avatar_field_label": "Kamerafbeelding",
             "aliases_no_items_label": "Nog geen andere gepubliceerde adressen, voeg er hieronder een toe",
-            "aliases_items_label": "Andere gepubliceerde adressen:"
+            "aliases_items_label": "Andere gepubliceerde adressen:",
+            "alias_heading": "Kameradres",
+            "alias_field_has_domain_invalid": "Ontbrekend domeinscheidingsteken, bijv. (:voorbeeld.nl)",
+            "alias_field_has_localpart_invalid": "Ontbrekende kamernaam of scheidingsteken, bijv. (mijn-kamer:voorbeeld.nl)",
+            "alias_field_safe_localpart_invalid": "Sommige tekens zijn niet toegestaan",
+            "alias_field_required_invalid": "Geef een adres op",
+            "alias_field_matches_invalid": "Dit adres verwijst niet naar deze kamer",
+            "alias_field_taken_valid": "Dit adres kan worden gebruikt",
+            "alias_field_taken_invalid_domain": "Dit adres is al in gebruik",
+            "alias_field_taken_invalid": "Dit adres heeft een ongeldige server of is al in gebruik"
         },
         "advanced": {
             "unfederated": "Deze kamer is niet toegankelijk vanaf externe Matrix-servers",
@@ -3595,7 +3588,13 @@
         "creating_room_text": "We maken een kamer aan met %(names)s",
         "jump_to_date_beginning": "Het begin van de kamer",
         "jump_to_date": "Spring naar datum",
-        "jump_to_date_prompt": "Kies een datum om naar toe te springen"
+        "jump_to_date_prompt": "Kies een datum om naar toe te springen",
+        "face_pile_tooltip_label": {
+            "one": "1 lid bekijken",
+            "other": "Bekijk alle %(count)s personen"
+        },
+        "face_pile_tooltip_shortcut_joined": "Inclusief jij, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Inclusief %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
@@ -3936,5 +3935,10 @@
     },
     "console_wait": "Wacht!",
     "cant_load_page": "Kon pagina niet laden",
-    "General failure": "Algemene fout"
+    "General failure": "Algemene fout",
+    "emoji_picker": {
+        "cancel_search_label": "Zoeken annuleren"
+    },
+    "info_tooltip_title": "Informatie",
+    "language_dropdown_label": "Taalselectie"
 }

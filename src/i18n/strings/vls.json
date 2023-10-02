@@ -122,10 +122,6 @@
     "Create new room": "E nieuw gesprek anmoakn",
     "collapse": "toeklappn",
     "expand": "uutklappn",
-    "Power level": "Machtsniveau",
-    "Custom level": "Angepast niveau",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kostege de gebeurtenisse woarip da der gereageerd gewist was nie loadn. Allichte bestoa ze nie, of è je geen toeloatienge vo ze te bekykn.",
-    "<a>In reply to</a> <pill>": "<a>As antwoord ip</a> <pill>",
     "And %(count)s more...": {
         "other": "En %(count)s meer…"
     },
@@ -209,7 +205,6 @@
     "You cannot delete this message. (%(code)s)": "Je kut dit bericht nie verwydern. (%(code)s)",
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
-    "Some characters not allowed": "Sommige tekens zyn nie toegeloatn",
     "Email (optional)": "E-mailadresse (optioneel)",
     "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
     "Session ID": "Sessie-ID",
@@ -367,7 +362,9 @@
         "default": "Standoard",
         "restricted": "Beperkten toegank",
         "moderator": "Moderator",
-        "admin": "Beheerder"
+        "admin": "Beheerder",
+        "label": "Machtsniveau",
+        "custom_level": "Angepast niveau"
     },
     "bug_reporting": {
         "submit_debug_logs": "Foutipsporiengslogboekn indienn",
@@ -708,6 +705,10 @@
         },
         "edits": {
             "tooltip_label": "Bewerkt ip %(date)s. Klikt vo de bewerkiengn te bekykn."
+        },
+        "reply": {
+            "error_loading": "Kostege de gebeurtenisse woarip da der gereageerd gewist was nie loadn. Allichte bestoa ze nie, of è je geen toeloatienge vo ze te bekykn.",
+            "in_reply_to": "<a>As antwoord ip</a> <pill>"
         }
     },
     "slash_command": {
@@ -831,7 +832,8 @@
             "error_updating_canonical_alias_title": "Foute by ’t bywerkn van ’t hoofdadresse",
             "error_updating_canonical_alias_description": "’t Es e foute ipgetreedn by ’t bywerkn van ’t hoofdadresse van ’t gesprek. Dit wor meugliks nie toegeloatn deur de server, of der es een tydelik probleem ipgetreedn.",
             "canonical_alias_field_label": "Hoofdadresse",
-            "avatar_field_label": "Gespreksavatar"
+            "avatar_field_label": "Gespreksavatar",
+            "alias_field_safe_localpart_invalid": "Sommige tekens zyn nie toegeloatn"
         },
         "advanced": {
             "unfederated": "Dit gesprek es nie toegankelik voor externe Matrix-servers",

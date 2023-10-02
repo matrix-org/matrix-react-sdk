@@ -187,7 +187,6 @@
     "Algeria": "an Ailgéir",
     "Albania": "an Albáin",
     "Afghanistan": "an Afganastáin",
-    "Information": "Eolas",
     "Ok": "Togha",
     "Lock": "Glasáil",
     "Home": "Tús",
@@ -313,7 +312,6 @@
         "other": "(~%(count)s torthaí)"
     },
     "Email address": "Seoladh ríomhphoist",
-    "Custom level": "Leibhéal saincheaptha",
     "common": {
         "about": "Faoi",
         "analytics": "Anailísiú sonraí",
@@ -508,7 +506,8 @@
         "restricted": "Teoranta",
         "moderator": "Modhnóir",
         "admin": "Riarthóir",
-        "mod": "Mod"
+        "mod": "Mod",
+        "custom_level": "Leibhéal saincheaptha"
     },
     "settings": {
         "always_show_message_timestamps": "Taispeáin stampaí ama teachtaireachta i gcónaí",
@@ -929,5 +928,6 @@
     },
     "error_dialog": {
         "forget_room_failed": "Níor dhearnadh dearmad ar an seomra %(errCode)s"
-    }
+    },
+    "info_tooltip_title": "Eolas"
 }

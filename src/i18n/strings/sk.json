@@ -42,7 +42,6 @@
     "Create new room": "Vytvoriť novú miestnosť",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
-    "Custom level": "Vlastná úroveň",
     "And %(count)s more...": {
         "other": "A %(count)s ďalších…"
     },
@@ -62,7 +61,6 @@
     "collapse": "zbaliť",
     "expand": "rozbaliť",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "<a>In reply to</a> <pill>": "<a>Odpoveď na</a> <pill>",
     "Sunday": "Nedeľa",
     "Today": "Dnes",
     "Friday": "Piatok",
@@ -80,7 +78,6 @@
     "Logs sent": "Záznamy boli odoslané",
     "Yesterday": "Včera",
     "Thank you!": "Ďakujeme!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Nie je možné načítať udalosť odkazovanú v odpovedi. Takáto udalosť buď neexistuje alebo nemáte povolenie na jej zobrazenie.",
     "Send Logs": "Odoslať záznamy",
     "Clear Storage and Sign Out": "Vymazať úložisko a odhlásiť sa",
     "We encountered an error trying to restore your previous session.": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
@@ -181,7 +178,6 @@
     "Folder": "Fascikel",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Šifrované správy sú zabezpečené end-to-end šifrovaním. Kľúče na čítanie týchto správ máte len vy a príjemca (príjemcovia).",
     "Start using Key Backup": "Začnite používať zálohovanie kľúčov",
-    "Power level": "Úroveň oprávnenia",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Overte tohto používateľa a označte ho ako dôveryhodného. Dôveryhodní používatelia vám poskytujú dodatočný pokoj na duši pri používaní end-to-end šifrovaných správ.",
     "Incoming Verification Request": "Prichádzajúca žiadosť o overenie",
     "I don't want my encrypted messages": "Nezáleží mi na zašifrovaných správach",
@@ -504,9 +500,6 @@
     "Sent": "Odoslané",
     "Sending": "Odosielanie",
     "Notes": "Poznámky",
-    "This address is already in use": "Táto adresa sa už používa",
-    "This address is available to use": "Túto adresu je možné použiť",
-    "Please provide an address": "Uveďte prosím adresu",
     "Enter the name of a new server you want to explore.": "Zadajte názov nového servera, ktorý chcete preskúmať.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />.",
     "This version of %(brand)s does not support searching encrypted messages": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ",
@@ -531,8 +524,6 @@
         "other": "%(count)s relácie"
     },
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
-    "Information": "Informácie",
-    "Room address": "Adresa miestnosti",
     "Upload %(count)s other files": {
         "one": "Nahrať %(count)s ďalší súbor",
         "other": "Nahrať %(count)s ďalších súborov"
@@ -544,10 +535,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
     "Invite to %(roomName)s": "Pozvať do miestnosti %(roomName)s",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
-    "View all %(count)s members": {
-        "one": "Zobraziť 1 člena",
-        "other": "Zobraziť všetkých %(count)s členov"
-    },
     "Server isn't responding": "Server neodpovedá",
     "Confirm to continue": "Potvrďte, ak chcete pokračovať",
     "Confirm account deactivation": "Potvrdiť deaktiváciu účtu",
@@ -568,7 +555,6 @@
     "Search for rooms or people": "Hľadať miestnosti alebo ľudí",
     "Search for rooms": "Hľadať miestnosti",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inicializácia vyhľadávania správ zlyhala, pre viac informácií skontrolujte <a>svoje nastavenia</a>",
-    "Cancel search": "Zrušiť vyhľadávanie",
     "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Overte toto zariadenie a označte ho ako dôveryhodné. Dôveryhodnosť tohto zariadenia poskytuje vám a ostatným používateľom väčší pokoj pri používaní end-to-end šifrovaných správ.",
     "Use the <a>Desktop app</a> to search encrypted messages": "Použite <a>Desktop aplikáciu</a> na vyhľadávanie zašifrovaných správ",
     "Not encrypted": "Nie je zašifrované",
@@ -610,7 +596,6 @@
     "Add existing rooms": "Pridať existujúce miestnosti",
     "Add a space to a space you manage.": "Pridať priestor do priestoru, ktorý spravujete.",
     "Add a new server": "Pridať nový server",
-    "Some characters not allowed": "Niektoré znaky nie sú povolené",
     "Upload Error": "Chyba pri nahrávaní",
     "Your browser likely removed this data when running low on disk space.": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Chýbajú niektoré údaje relácie vrátane zašifrovaných kľúčov správ. Odhláste sa a prihláste sa, aby ste to opravili a obnovili kľúče zo zálohy.",
@@ -644,7 +629,6 @@
         "one": "%(count)s človek, ktorého poznáte, sa už pripojil",
         "other": "%(count)s ľudí, ktorých poznáte, sa už pripojilo"
     },
-    "Including %(commaSeparatedMembers)s": "Vrátane %(commaSeparatedMembers)s",
     "Reset everything": "Obnoviť všetko",
     "We couldn't create your DM.": "Nemohli sme vytvoriť vašu priamu správu.",
     "<inviter/> invites you": "<inviter/> vás pozýva",
@@ -673,7 +657,6 @@
     "Server did not require any authentication": "Server nevyžadoval žiadne overenie",
     "Upload completed": "Nahrávanie dokončené",
     "Enter a server name": "Zadajte názov servera",
-    "Language Dropdown": "Rozbaľovací zoznam jazykov",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
     "Be found by phone or email": "Byť nájdený pomocou telefónu alebo e-mailu",
     "Find others by phone or email": "Nájsť ostatných pomocou telefónu alebo e-mailu",
@@ -714,11 +697,7 @@
     "Recently viewed": "Nedávno zobrazené",
     "Link to room": "Odkaz na miestnosť",
     "Spaces you're in": "Priestory, v ktorých sa nachádzate",
-    "Including you, %(commaSeparatedMembers)s": "Vrátane vás, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Týmto spôsobom zoskupíte svoje konverzácie s členmi tohto priestoru. Ak túto funkciu vypnete, tieto konverzácie sa skryjú z vášho zobrazenia %(spaceName)s.",
-    "Missing domain separator e.g. (:domain.org)": "Chýbajúci oddeľovač domény, napr. (:domena.sk)",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Chýbajúci názov miestnosti alebo oddeľovač, napr. (moja-miestnost:domena.sk)",
-    "This address had invalid server or is already in use": "Táto adresa mala neplatný server alebo sa už používa",
     "Missing session data": "Chýbajú údaje relácie",
     "Only people invited will be able to find and join this space.": "Tento priestor budú môcť nájsť a pripojiť sa k nemu len pozvaní ľudia.",
     "Want to add an existing space instead?": "Chcete radšej pridať už existujúci priestor?",
@@ -755,11 +734,9 @@
     "Want to add a new space instead?": "Chcete namiesto toho pridať nový priestor?",
     "You are not allowed to view this server's rooms list": "Nemáte povolené zobraziť zoznam miestností tohto servera",
     "Sections to show": "Sekcie na zobrazenie",
-    "This address does not point at this room": "Táto adresa nesmeruje do tejto miestnosti",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
-    "In reply to <a>this message</a>": "V odpovedi na <a>túto správu</a>",
     "Invite by email": "Pozvať e-mailom",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Vaša aplikácia %(brand)s vám na to neumožňuje použiť správcu integrácie. Obráťte sa na administrátora.",
     "You don't have permission to do this": "Na toto nemáte oprávnenie",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Pozvánky e-mailom sa môžu posielať len po jednej",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
-    "Message from %(user)s": "Správa od %(user)s",
-    "Message in %(room)s": "Správa v %(room)s",
     "unavailable": "nedostupný",
     "unknown status code": "neznámy kód stavu",
     "Start DM anyway": "Spustiť priamu správu aj tak",
@@ -1376,7 +1351,9 @@
         "moderator": "Moderátor",
         "admin": "Správca",
         "mod": "Moderátor",
-        "custom": "Vlastný (%(level)s)"
+        "custom": "Vlastný (%(level)s)",
+        "label": "Úroveň oprávnenia",
+        "custom_level": "Vlastná úroveň"
     },
     "bug_reporting": {
         "introduction": "Ak ste odoslali chybu prostredníctvom služby GitHub, záznamy o ladení nám môžu pomôcť nájsť problém. ",
@@ -2570,7 +2547,12 @@
             "tooltip_sub": "Kliknutím zobrazíte úpravy",
             "tooltip_label": "Upravené %(date)s. Kliknutím zobrazíte úpravy."
         },
-        "error_rendering_message": "Nemožno načítať túto správu"
+        "error_rendering_message": "Nemožno načítať túto správu",
+        "reply": {
+            "error_loading": "Nie je možné načítať udalosť odkazovanú v odpovedi. Takáto udalosť buď neexistuje alebo nemáte povolenie na jej zobrazenie.",
+            "in_reply_to": "<a>Odpoveď na</a> <pill>",
+            "in_reply_to_for_export": "V odpovedi na <a>túto správu</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",
@@ -2945,7 +2927,16 @@
             "canonical_alias_field_label": "Hlavná adresa",
             "avatar_field_label": "Obrázok miestnosti",
             "aliases_no_items_label": "Zatiaľ neboli zverejnené žiadne ďalšie adresy, pridajte ich nižšie",
-            "aliases_items_label": "Iné zverejnené adresy:"
+            "aliases_items_label": "Iné zverejnené adresy:",
+            "alias_heading": "Adresa miestnosti",
+            "alias_field_has_domain_invalid": "Chýbajúci oddeľovač domény, napr. (:domena.sk)",
+            "alias_field_has_localpart_invalid": "Chýbajúci názov miestnosti alebo oddeľovač, napr. (moja-miestnost:domena.sk)",
+            "alias_field_safe_localpart_invalid": "Niektoré znaky nie sú povolené",
+            "alias_field_required_invalid": "Uveďte prosím adresu",
+            "alias_field_matches_invalid": "Táto adresa nesmeruje do tejto miestnosti",
+            "alias_field_taken_valid": "Túto adresu je možné použiť",
+            "alias_field_taken_invalid_domain": "Táto adresa sa už používa",
+            "alias_field_taken_invalid": "Táto adresa mala neplatný server alebo sa už používa"
         },
         "advanced": {
             "unfederated": "Táto miestnosť nie je prístupná zo vzdialených Matrix serverov",
@@ -3957,7 +3948,13 @@
         "error_jump_to_date_details": "Podrobnosti o chybe",
         "jump_to_date_beginning": "Začiatok miestnosti",
         "jump_to_date": "Prejsť na dátum",
-        "jump_to_date_prompt": "Vyberte dátum, na ktorý chcete prejsť"
+        "jump_to_date_prompt": "Vyberte dátum, na ktorý chcete prejsť",
+        "face_pile_tooltip_label": {
+            "one": "Zobraziť 1 člena",
+            "other": "Zobraziť všetkých %(count)s členov"
+        },
+        "face_pile_tooltip_shortcut_joined": "Vrátane vás, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Vrátane %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",
@@ -4339,5 +4336,14 @@
     },
     "console_wait": "Počkajte!",
     "cant_load_page": "Nie je možné načítať stránku",
-    "General failure": "Všeobecná chyba"
+    "General failure": "Všeobecná chyba",
+    "emoji_picker": {
+        "cancel_search_label": "Zrušiť vyhľadávanie"
+    },
+    "info_tooltip_title": "Informácie",
+    "language_dropdown_label": "Rozbaľovací zoznam jazykov",
+    "pill": {
+        "permalink_other_room": "Správa v %(room)s",
+        "permalink_this_room": "Správa od %(user)s"
+    }
 }

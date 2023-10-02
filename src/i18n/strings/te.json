@@ -1,6 +1,5 @@
 {
     "An error has occurred.": "ఒక లోపము సంభవించినది.",
-    "Custom level": "అనుకూల స్థాయి",
     "Sun": "ఆదివారం",
     "Mon": "సోమవారం",
     "Tue": "మంగళవారం",
@@ -67,7 +66,8 @@
     },
     "power_level": {
         "default": "డిఫాల్ట్",
-        "admin": "అడ్మిన్"
+        "admin": "అడ్మిన్",
+        "custom_level": "అనుకూల స్థాయి"
     },
     "bug_reporting": {
         "send_logs": "నమోదును పంపు",

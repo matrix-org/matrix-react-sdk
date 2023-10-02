@@ -51,8 +51,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
     "expand": "espandi",
-    "Custom level": "Livello personalizzato",
-    "<a>In reply to</a> <pill>": "<a>In risposta a</a> <pill>",
     "And %(count)s more...": {
         "other": "E altri %(count)s ..."
     },
@@ -81,7 +79,6 @@
     "Logs sent": "Log inviati",
     "Yesterday": "Ieri",
     "Thank you!": "Grazie!",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Impossibile caricare l'evento a cui si è risposto, o non esiste o non hai il permesso di visualizzarlo.",
     "We encountered an error trying to restore your previous session.": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
     "Clear Storage and Sign Out": "Elimina l'archiviazione e disconnetti",
     "Send Logs": "Invia i log",
@@ -182,7 +179,6 @@
     "Folder": "Cartella",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "I messaggi cifrati sono resi sicuri con una crittografia end-to-end. Solo tu e il/i destinatario/i avete le chiavi per leggere questi messaggi.",
     "Start using Key Backup": "Inizia ad usare il backup chiavi",
-    "Power level": "Livello poteri",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica questo utente per contrassegnarlo come affidabile. La fiducia degli utenti offre una maggiore tranquillità quando si utilizzano messaggi cifrati end-to-end.",
     "Incoming Verification Request": "Richiesta di verifica in arrivo",
     "I don't want my encrypted messages": "Non voglio i miei messaggi cifrati",
@@ -212,7 +208,6 @@
     },
     "Cancel All": "Annulla tutto",
     "Upload Error": "Errore di invio",
-    "Some characters not allowed": "Alcuni caratteri non sono permessi",
     "Upload all": "Invia tutto",
     "Message edits": "Modifiche del messaggio",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
@@ -237,7 +232,6 @@
     },
     "e.g. my-room": "es. mia-stanza",
     "Close dialog": "Chiudi finestra",
-    "Cancel search": "Annulla ricerca",
     "%(name)s accepted": "%(name)s ha accettato",
     "%(name)s cancelled": "%(name)s ha annullato",
     "%(name)s wants to verify": "%(name)s vuole verificare",
@@ -254,7 +248,6 @@
         "other": "%(count)s sessioni verificate",
         "one": "1 sessione verificata"
     },
-    "Language Dropdown": "Lingua a tendina",
     "Recent Conversations": "Conversazioni recenti",
     "Direct Messages": "Messaggi diretti",
     "Lock": "Lucchetto",
@@ -325,9 +318,6 @@
     "Confirm encryption setup": "Conferma impostazione crittografia",
     "Click the button below to confirm setting up encryption.": "Clicca il pulsante sotto per confermare l'impostazione della crittografia.",
     "IRC display name width": "Larghezza nome di IRC",
-    "Room address": "Indirizzo stanza",
-    "This address is available to use": "Questo indirizzo è disponibile per l'uso",
-    "This address is already in use": "Questo indirizzo è già in uso",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Hai precedentemente usato una versione più recente di %(brand)s con questa sessione. Per usare ancora questa versione con la crittografia end to end, dovrai disconnetterti e riaccedere.",
     "Your homeserver has exceeded its user limit.": "Il tuo homeserver ha superato il limite di utenti.",
     "Your homeserver has exceeded one of its resource limits.": "Il tuo homeserver ha superato uno dei suoi limiti di risorse.",
@@ -352,7 +342,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "Il server non è configurato per indicare qual è il problema (CORS).",
     "Recent changes that have not yet been received": "Modifiche recenti che non sono ancora state ricevute",
     "Preparing to download logs": "Preparazione al download dei log",
-    "Information": "Informazione",
     "Backup version:": "Versione backup:",
     "Not encrypted": "Non cifrato",
     "Start a conversation with someone using their name or username (like <userId/>).": "Inizia una conversazione con qualcuno usando il suo nome o il nome utente (come <userId/>).",
@@ -683,11 +672,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hai dimenticato o perso tutti i metodi di recupero? <a>Reimposta tutto</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
     "Sending": "Invio in corso",
-    "Including %(commaSeparatedMembers)s": "Inclusi %(commaSeparatedMembers)s",
-    "View all %(count)s members": {
-        "one": "Vedi 1 membro",
-        "other": "Vedi tutti i %(count)s membri"
-    },
     "Want to add a new room instead?": "Vuoi invece aggiungere una nuova stanza?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Aggiunta stanza...",
@@ -702,7 +686,6 @@
     "Search for rooms or people": "Cerca stanze o persone",
     "Sent": "Inviato",
     "You don't have permission to do this": "Non hai il permesso per farlo",
-    "Please provide an address": "Inserisci un indirizzo",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Inizializzazione ricerca messaggi fallita, controlla <a>le impostazioni</a> per maggiori informazioni",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
@@ -739,7 +722,6 @@
     "Leave all rooms": "Esci da tutte le stanze",
     "Don't leave any rooms": "Non uscire da alcuna stanza",
     "MB": "MB",
-    "In reply to <a>this message</a>": "In risposta a <a>questo messaggio</a>",
     "%(count)s reply": {
         "one": "%(count)s risposta",
         "other": "%(count)s risposte"
@@ -778,16 +760,11 @@
     "Other rooms in %(spaceName)s": "Altre stanze in %(spaceName)s",
     "Spaces you're in": "Spazi in cui sei",
     "Link to room": "Collegamento alla stanza",
-    "Including you, %(commaSeparatedMembers)s": "Incluso te, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ciò raggruppa le tue chat con i membri di questo spazio. Se lo disattivi le chat verranno nascoste dalla tua vista di %(spaceName)s.",
     "Sections to show": "Sezioni da mostrare",
     "Open in OpenStreetMap": "Apri in OpenStreetMap",
-    "This address had invalid server or is already in use": "Questo indirizzo aveva un server non valido o è già in uso",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Nome o separatore della stanza mancante, es. (mia-stanza:dominio.org)",
-    "Missing domain separator e.g. (:domain.org)": "Separatore del dominio mancante, es. (:dominio.org)",
     "toggle event": "commuta evento",
     "Verify other device": "Verifica altro dispositivo",
-    "This address does not point at this room": "Questo indirizzo non punta a questa stanza",
     "Use <arrows/> to scroll": "Usa <arrows/> per scorrere",
     "Feedback sent! Thanks, we appreciate it!": "Opinione inviata! Grazie, lo apprezziamo!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
@@ -886,8 +863,6 @@
     "Invites by email can only be sent one at a time": "Gli inviti per email possono essere inviati uno per volta",
     "Desktop app logo": "Logo app desktop",
     "Requires your server to support the stable version of MSC3827": "Richiede che il tuo server supporti la versione stabile di MSC3827",
-    "Message from %(user)s": "Messaggio da %(user)s",
-    "Message in %(room)s": "Messaggio in %(room)s",
     "unavailable": "non disponibile",
     "unknown status code": "codice di stato sconosciuto",
     "Start DM anyway": "Inizia il messaggio lo stesso",
@@ -1377,7 +1352,9 @@
         "moderator": "Moderatore",
         "admin": "Amministratore",
         "mod": "Moderatore",
-        "custom": "Personalizzato (%(level)s)"
+        "custom": "Personalizzato (%(level)s)",
+        "label": "Livello poteri",
+        "custom_level": "Livello personalizzato"
     },
     "bug_reporting": {
         "introduction": "Se hai inviato un errore via GitHub, i log di debug possono aiutarci ad individuare il problema. ",
@@ -2571,7 +2548,12 @@
             "tooltip_sub": "Clicca per vedere le modifiche",
             "tooltip_label": "Modificato alle %(date)s. Clicca per vedere le modifiche."
         },
-        "error_rendering_message": "Impossibile caricare questo messaggio"
+        "error_rendering_message": "Impossibile caricare questo messaggio",
+        "reply": {
+            "error_loading": "Impossibile caricare l'evento a cui si è risposto, o non esiste o non hai il permesso di visualizzarlo.",
+            "in_reply_to": "<a>In risposta a</a> <pill>",
+            "in_reply_to_for_export": "In risposta a <a>questo messaggio</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",
@@ -2946,7 +2928,16 @@
             "canonical_alias_field_label": "Indirizzo principale",
             "avatar_field_label": "Avatar della stanza",
             "aliases_no_items_label": "Nessun altro indirizzo ancora pubblicato, aggiungine uno sotto",
-            "aliases_items_label": "Altri indirizzi pubblicati:"
+            "aliases_items_label": "Altri indirizzi pubblicati:",
+            "alias_heading": "Indirizzo stanza",
+            "alias_field_has_domain_invalid": "Separatore del dominio mancante, es. (:dominio.org)",
+            "alias_field_has_localpart_invalid": "Nome o separatore della stanza mancante, es. (mia-stanza:dominio.org)",
+            "alias_field_safe_localpart_invalid": "Alcuni caratteri non sono permessi",
+            "alias_field_required_invalid": "Inserisci un indirizzo",
+            "alias_field_matches_invalid": "Questo indirizzo non punta a questa stanza",
+            "alias_field_taken_valid": "Questo indirizzo è disponibile per l'uso",
+            "alias_field_taken_invalid_domain": "Questo indirizzo è già in uso",
+            "alias_field_taken_invalid": "Questo indirizzo aveva un server non valido o è già in uso"
         },
         "advanced": {
             "unfederated": "Questa stanza non è accessibile da server di Matrix remoti",
@@ -3964,7 +3955,13 @@
         "error_jump_to_date_details": "Dettagli errore",
         "jump_to_date_beginning": "L'inizio della stanza",
         "jump_to_date": "Salta alla data",
-        "jump_to_date_prompt": "Scegli una data in cui saltare"
+        "jump_to_date_prompt": "Scegli una data in cui saltare",
+        "face_pile_tooltip_label": {
+            "one": "Vedi 1 membro",
+            "other": "Vedi tutti i %(count)s membri"
+        },
+        "face_pile_tooltip_shortcut_joined": "Incluso te, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Inclusi %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Devi <a>registrarti</a> per usare questa funzionalità",
@@ -4346,5 +4343,14 @@
     },
     "console_wait": "Aspetta!",
     "cant_load_page": "Caricamento pagina fallito",
-    "General failure": "Guasto generale"
+    "General failure": "Guasto generale",
+    "emoji_picker": {
+        "cancel_search_label": "Annulla ricerca"
+    },
+    "info_tooltip_title": "Informazione",
+    "language_dropdown_label": "Lingua a tendina",
+    "pill": {
+        "permalink_other_room": "Messaggio in %(room)s",
+        "permalink_this_room": "Messaggio da %(user)s"
+    }
 }

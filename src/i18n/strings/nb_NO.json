@@ -71,7 +71,6 @@
     "Headphones": "Hodetelefoner",
     "Folder": "Mappe",
     "Direct Messages": "Direktemeldinger",
-    "Cancel search": "Avbryt søket",
     "collapse": "skjul",
     "expand": "utvid",
     "Close dialog": "Lukk dialog",
@@ -117,7 +116,6 @@
     "not specified": "ikke spesifisert",
     "edited": "redigert",
     "Delete Widget": "Slett modul",
-    "Power level": "Styrkenivå",
     "e.g. my-room": "f.eks. mitt-rom",
     "Enter a server name": "Skriv inn et tjenernavn",
     "Looks good": "Ser bra ut",
@@ -143,8 +141,6 @@
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Create new room": "Opprett et nytt rom",
-    "Language Dropdown": "Språk-nedfallsmeny",
-    "Custom level": "Tilpasset nivå",
     "And %(count)s more...": {
         "other": "Og %(count)s til..."
     },
@@ -172,7 +168,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "Some characters not allowed": "Noen tegn er ikke tillatt",
     "Invite anyway": "Inviter likevel",
     "a key signature": "en nøkkelsignatur",
     "Send Logs": "Send loggbøker",
@@ -186,8 +181,6 @@
         "other": "Slett %(count)s meldinger",
         "one": "Slett 1 melding"
     },
-    "Room address": "Rommets adresse",
-    "This address is available to use": "Denne adressen er allerede i bruk",
     "Failed to send logs: ": "Mislyktes i å sende loggbøker: ",
     "Incompatible Database": "Inkompatibel database",
     "Integrations are disabled": "Integreringer er skrudd av",
@@ -293,9 +286,6 @@
     "Security Key": "Sikkerhetsnøkkel",
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
-    "This address is already in use": "Denne adressen er allerede i bruk",
-    "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
-    "Information": "Informasjon",
     "Not encrypted": "Ikke kryptert",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
@@ -766,7 +756,9 @@
         "restricted": "Begrenset",
         "moderator": "Moderator",
         "admin": "Admin",
-        "mod": "Mod"
+        "mod": "Mod",
+        "label": "Styrkenivå",
+        "custom_level": "Tilpasset nivå"
     },
     "bug_reporting": {
         "matrix_security_issue": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
@@ -1201,7 +1193,10 @@
             "tooltip_title": "Redigert den %(date)s",
             "tooltip_sub": "Klikk for å vise redigeringer"
         },
-        "error_rendering_message": "Klarte ikke å laste inn denne meldingen"
+        "error_rendering_message": "Klarte ikke å laste inn denne meldingen",
+        "reply": {
+            "in_reply_to": "<a>Som svar på</a> <pill>"
+        }
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",
@@ -1370,7 +1365,11 @@
             "canonical_alias_field_label": "Hovedadresse",
             "avatar_field_label": "Rommets avatar",
             "aliases_no_items_label": "Det er ingen publiserte adresser enda, legg til en nedenfor",
-            "aliases_items_label": "Andre publiserte adresser:"
+            "aliases_items_label": "Andre publiserte adresser:",
+            "alias_heading": "Rommets adresse",
+            "alias_field_safe_localpart_invalid": "Noen tegn er ikke tillatt",
+            "alias_field_taken_valid": "Denne adressen er allerede i bruk",
+            "alias_field_taken_invalid_domain": "Denne adressen er allerede i bruk"
         },
         "advanced": {
             "room_version_section": "Romversjon",
@@ -1865,5 +1864,10 @@
         },
         "error_loading_user_profile": "Klarte ikke å laste inn brukerprofilen"
     },
-    "cant_load_page": "Klarte ikke å laste inn siden"
+    "cant_load_page": "Klarte ikke å laste inn siden",
+    "emoji_picker": {
+        "cancel_search_label": "Avbryt søket"
+    },
+    "info_tooltip_title": "Informasjon",
+    "language_dropdown_label": "Språk-nedfallsmeny"
 }

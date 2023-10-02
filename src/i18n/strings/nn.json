@@ -59,7 +59,6 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "collapse": "Slå saman",
     "expand": "Utvid",
-    "<a>In reply to</a> <pill>": "<a>Som svar til</a> <pill>",
     "And %(count)s more...": {
         "other": "Og %(count)s til..."
     },
@@ -88,8 +87,6 @@
     "Link to selected message": "Lenk til den valde meldinga",
     "You cannot delete this message. (%(code)s)": "Du kan ikkje sletta meldinga. (%(code)s)",
     "Session ID": "Økt-ID",
-    "Custom level": "Tilpassa nivå",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Klarte ikkje å lasta handlinga som vert svara til. Anten finst ho ikkje elles har du ikkje tilgang til å sjå ho.",
     "Filter results": "Filtrer resultat",
     "No recent messages by %(user)s found": "Fann ingen nyare meldingar frå %(user)s",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prøv å rulle oppover i historikken for å sjå om det finst nokon eldre.",
@@ -100,7 +97,6 @@
         "one": "Fjern 1 melding"
     },
     "Direct Messages": "Folk",
-    "Power level": "Tilgangsnivå",
     "Invalid theme schema.": "",
     "Can't find this server or its room list": "Klarde ikkje å finna tenaren eller romkatalogen til den",
     "Upload completed": "Opplasting fullført",
@@ -311,7 +307,9 @@
         "restricted": "Avgrensa",
         "moderator": "Moderator",
         "admin": "Administrator",
-        "custom": "Tilpassa (%(level)s)"
+        "custom": "Tilpassa (%(level)s)",
+        "label": "Tilgangsnivå",
+        "custom_level": "Tilpassa nivå"
     },
     "bug_reporting": {
         "matrix_security_issue": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
@@ -731,6 +729,10 @@
         "scalar_starter_link": {
             "dialog_title": "Legg tillegg til",
             "dialog_description": "Du held på å verta teken til ei tredje-partisside so du kan godkjenna brukaren din til bruk med %(integrationsUrl)s. Vil du gå fram?"
+        },
+        "reply": {
+            "error_loading": "Klarte ikkje å lasta handlinga som vert svara til. Anten finst ho ikkje elles har du ikkje tilgang til å sjå ho.",
+            "in_reply_to": "<a>Som svar til</a> <pill>"
         }
     },
     "slash_command": {

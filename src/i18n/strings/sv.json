@@ -5,7 +5,6 @@
         "one": "och en annan…"
     },
     "An error has occurred.": "Ett fel har inträffat.",
-    "Custom level": "Anpassad nivå",
     "Email address": "E-postadress",
     "Home": "Hem",
     "Join Room": "Gå med i rum",
@@ -75,7 +74,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Delete Widget": "Radera widget",
-    "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
     "Clear Storage and Sign Out": "Rensa lagring och logga ut",
     "Send Logs": "Skicka loggar",
     "Unable to restore session": "Kunde inte återställa sessionen",
@@ -85,7 +83,6 @@
     "Confirm Removal": "Bekräfta borttagning",
     "collapse": "fäll ihop",
     "expand": "fäll ut",
-    "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
     "Share Room": "Dela rum",
     "Link to most recent message": "Länk till senaste meddelandet",
     "Share User": "Dela användare",
@@ -172,7 +169,6 @@
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifiera denna användare för att markera den som betrodd. Att lita på användare ger en extra sinnesfrid när man använder totalsträckskrypterade meddelanden.",
     "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "Power level": "Behörighetsnivå",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Kunde inte hitta profiler för de Matrix-ID:n som listas nedan - vill du bjuda in dem ändå?",
     "Notes": "Anteckningar",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Du har tidigare använt %(brand)s på %(host)s med fördröjd inladdning av medlemmar aktiverat. I den här versionen är fördröjd inladdning inaktiverat. Eftersom den lokala cachen inte är kompatibel mellan dessa två inställningar behöver %(brand)s synkronisera om ditt konto.",
@@ -215,10 +211,7 @@
     "%(name)s accepted": "%(name)s accepterade",
     "%(name)s cancelled": "%(name)s avbröt",
     "%(name)s wants to verify": "%(name)s vill verifiera",
-    "Cancel search": "Avbryt sökningen",
-    "Language Dropdown": "Språkmeny",
     "e.g. my-room": "t.ex. mitt-rum",
-    "Some characters not allowed": "Vissa tecken är inte tillåtna",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Använd en identitetsserver för att bjuda in via e-post. <default>Använd förval (%(defaultIdentityServerName)s)</default> eller hantera i <settings>inställningarna</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Använd en identitetsserver för att bjuda in via e-post. Hantera i <settings>inställningarna</settings>.",
     "Close dialog": "Stäng dialogrutan",
@@ -263,10 +256,6 @@
     },
     "%(name)s declined": "%(name)s avslog",
     "Submit logs": "Skicka loggar",
-    "Information": "Information",
-    "Room address": "Rumsadress",
-    "This address is available to use": "Adressen är tillgänglig",
-    "This address is already in use": "Adressen är upptagen",
     "Enter a server name": "Ange ett servernamn",
     "Looks good": "Ser bra ut",
     "Can't find this server or its room list": "Kan inte hitta den här servern eller dess rumslista",
@@ -681,12 +670,7 @@
     "Reset everything": "Återställ allt",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
-    "View all %(count)s members": {
-        "one": "Visa 1 medlem",
-        "other": "Visa alla %(count)s medlemmar"
-    },
     "Sending": "Skickar",
-    "Including %(commaSeparatedMembers)s": "Inklusive %(commaSeparatedMembers)s",
     "You may contact me if you have any follow up questions": "Ni kan kontakta mig om ni har vidare frågor",
     "To leave the beta, visit your settings.": "För att lämna betan, besök dina inställningar.",
     "Want to add a new room instead?": "Vill du lägga till ett nytt rum istället?",
@@ -703,7 +687,6 @@
     "Sent": "Skickat",
     "You don't have permission to do this": "Du har inte behörighet att göra detta",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör.",
-    "Please provide an address": "Ange en adress, tack",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Initialisering av meddelandesök misslyckades, kolla <a>dina inställningar</a> för mer information",
     "Adding spaces has moved.": "Tilläggning av utrymmen har flyttats.",
     "Search for rooms": "Sök efter rum",
@@ -738,7 +721,6 @@
     "Leave some rooms": "Lämna vissa rum",
     "Leave all rooms": "Lämna alla rum",
     "Don't leave any rooms": "Lämna inga rum",
-    "In reply to <a>this message</a>": "Som svar på <a>detta meddelande</a>",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svar"
@@ -758,7 +740,6 @@
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
     "Recently viewed": "Nyligen sedda",
-    "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "toggle event": "växla händelse",
     "%(count)s votes": {
         "one": "%(count)s röst",
@@ -774,10 +755,6 @@
     "Failed to end poll": "Misslyckades att avsluta omröstning",
     "The poll has ended. Top answer: %(topAnswer)s": "Omröstningen har avslutats. Toppsvar: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Omröstningen har avslutats. Inga röster avgavs.",
-    "This address had invalid server or is already in use": "Den adressen hade en ogiltig server eller användes redan",
-    "This address does not point at this room": "Den här adressen pekar inte på någon rum",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Rumsnamn eller -separator saknades, t.ex. (mitt-rum:domän.org)",
-    "Missing domain separator e.g. (:domain.org)": "Domänseparator saknades, t.ex. (:domän.org)",
     "Forget": "Glöm",
     "Open in OpenStreetMap": "Öppna i OpenStreetMap",
     "Verify other device": "Verifiera annan enhet",
@@ -885,10 +862,8 @@
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "unavailable": "otillgänglig",
-    "Message from %(user)s": "Meddelande från %(user)s",
     "unknown status code": "okänd statuskod",
     "Desktop app logo": "Skrivbordsappslogga",
-    "Message in %(room)s": "Meddelande i rum %(room)s",
     "Start DM anyway and never warn me again": "Starta DM ändå och varna mig aldrig igen",
     "Start DM anyway": "Starta DM ändå",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Kunde inte hitta profiler för Matrix-ID:n nedan — skulle du vilja starta ett DM ändå?",
@@ -1372,7 +1347,9 @@
         "moderator": "Moderator",
         "admin": "Administratör",
         "mod": "Mod",
-        "custom": "Anpassad (%(level)s)"
+        "custom": "Anpassad (%(level)s)",
+        "label": "Behörighetsnivå",
+        "custom_level": "Anpassad nivå"
     },
     "bug_reporting": {
         "introduction": "Om du har rapporterat en bugg via GitHub så kan felsökningsloggar hjälpa oss att hitta problemet. ",
@@ -2523,7 +2500,12 @@
             "tooltip_sub": "Klicka för att visa redigeringar",
             "tooltip_label": "Redigerat vid %(date)s. Klicka för att visa redigeringar."
         },
-        "error_rendering_message": "Kan inte ladda det här meddelandet"
+        "error_rendering_message": "Kan inte ladda det här meddelandet",
+        "reply": {
+            "error_loading": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
+            "in_reply_to": "<a>Som svar på</a> <pill>",
+            "in_reply_to_for_export": "Som svar på <a>detta meddelande</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",
@@ -2897,7 +2879,16 @@
             "canonical_alias_field_label": "Huvudadress",
             "avatar_field_label": "Rumsavatar",
             "aliases_no_items_label": "Inga andra publicerade adresser än, lägg till en nedan",
-            "aliases_items_label": "Andra publicerade adresser:"
+            "aliases_items_label": "Andra publicerade adresser:",
+            "alias_heading": "Rumsadress",
+            "alias_field_has_domain_invalid": "Domänseparator saknades, t.ex. (:domän.org)",
+            "alias_field_has_localpart_invalid": "Rumsnamn eller -separator saknades, t.ex. (mitt-rum:domän.org)",
+            "alias_field_safe_localpart_invalid": "Vissa tecken är inte tillåtna",
+            "alias_field_required_invalid": "Ange en adress, tack",
+            "alias_field_matches_invalid": "Den här adressen pekar inte på någon rum",
+            "alias_field_taken_valid": "Adressen är tillgänglig",
+            "alias_field_taken_invalid_domain": "Adressen är upptagen",
+            "alias_field_taken_invalid": "Den adressen hade en ogiltig server eller användes redan"
         },
         "advanced": {
             "unfederated": "Detta rum är inte tillgängligt för externa Matrix-servrar",
@@ -3898,7 +3889,13 @@
         "error_jump_to_date_details": "Feldetaljer",
         "jump_to_date_beginning": "Början av rummet",
         "jump_to_date": "Hoppa till datum",
-        "jump_to_date_prompt": "Välj ett datum att hoppa till"
+        "jump_to_date_prompt": "Välj ett datum att hoppa till",
+        "face_pile_tooltip_label": {
+            "one": "Visa 1 medlem",
+            "other": "Visa alla %(count)s medlemmar"
+        },
+        "face_pile_tooltip_shortcut_joined": "Inklusive dig, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Inklusive %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
@@ -4279,5 +4276,14 @@
     },
     "console_wait": "Vänta!",
     "cant_load_page": "Kunde inte ladda sidan",
-    "General failure": "Allmänt fel"
+    "General failure": "Allmänt fel",
+    "emoji_picker": {
+        "cancel_search_label": "Avbryt sökningen"
+    },
+    "info_tooltip_title": "Information",
+    "language_dropdown_label": "Språkmeny",
+    "pill": {
+        "permalink_other_room": "Meddelande i rum %(room)s",
+        "permalink_this_room": "Meddelande från %(user)s"
+    }
 }

@@ -45,7 +45,6 @@
     "Home": "Forsíða",
     "collapse": "fella saman",
     "expand": "fletta út",
-    "<a>In reply to</a> <pill>": "<a>Sem svar til</a> <pill>",
     "Preparing to send logs": "Undirbý sendingu atvikaskráa",
     "Logs sent": "Sendi atvikaskrár",
     "Thank you!": "Takk fyrir!",
@@ -415,7 +414,6 @@
     "Add existing rooms": "Bæta við fyrirliggjandi spjallrásum",
     "Server name": "Heiti þjóns",
     "Looks good": "Lítur vel út",
-    "Information": "Upplýsingar",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -461,7 +459,6 @@
     "Add a new server": "Bæta við nýjum þjóni",
     "Your server": "Netþjónninn þinn",
     "Can't find this server or its room list": "Fann ekki þennan netþjón eða spjallrásalista hans",
-    "This address is already in use": "Þetta vistfang er nú þegar í notkun",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -528,8 +525,6 @@
     "Create a new space": "Búa til nýtt svæði",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
-    "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
-    "Including you, %(commaSeparatedMembers)s": "Að þér meðtöldum, %(commaSeparatedMembers)s",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
@@ -538,7 +533,6 @@
     "Integrations not allowed": "Samþættingar eru ekki leyfðar",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
-    "Cancel search": "Hætta við leitina",
     "Remove %(count)s messages": {
         "one": "Fjarlægja 1 skilaboð",
         "other": "Fjarlægja %(count)s skilaboð"
@@ -576,25 +570,11 @@
     "Add existing space": "Bæta við fyrirliggjandi svæði",
     "Join millions for free on the largest public server": "Taktu þátt ókeypis ásamt milljónum annarra á stærsta almenningsþjóninum",
     "Server Options": "Valkostir vefþjóns",
-    "This address had invalid server or is already in use": "Þetta vistfang er með ógildan netþjón eða er nú þegar í notkun",
-    "This address is available to use": "Þetta vistfang er tiltækt til notkunar",
-    "This address does not point at this room": "Vistfangið beinir ekki á þessa spjallrás",
-    "Please provide an address": "Gefðu upp vistfang",
-    "Some characters not allowed": "Sumir stafir eru óleyfilegir",
     "Enter a server name": "Settu inn nafn á þjóni",
     "e.g. my-room": "t.d. mín-spjallrás",
-    "Room address": "Vistfang spjallrásar",
-    "In reply to <a>this message</a>": "Sem svar við <a>þessum skilaboðum</a>",
-    "Custom level": "Sérsniðið stig",
-    "Power level": "Stig valda",
-    "Language Dropdown": "Fellilisti tungumála",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
         "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
-    },
-    "View all %(count)s members": {
-        "one": "Sjá 1 meðlim",
-        "other": "Sjá alla %(count)s meðlimina"
     },
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
@@ -657,8 +637,6 @@
     "Incompatible Database": "Ósamhæfður gagnagrunnur",
     "No recent messages by %(user)s found": "Engin nýleg skilaboð frá %(user)s fundust",
     "Not all selected were added": "Ekki var öllu völdu bætt við",
-    "Missing room name or separator e.g. (my-room:domain.org)": "Vantar heiti spjallrásar eða aðgreini, t.d. (spjallrásin-mín:lén.org)",
-    "Missing domain separator e.g. (:domain.org)": "Vantar aðgreini léns, t.d. (:lén.org)",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Frumstilling leitar í skilaboðum mistókst, skoðaðu <a>stillingarnar þínar</a> til að fá nánari upplýsingar",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
@@ -1205,7 +1183,9 @@
         "moderator": "Umsjónarmaður",
         "admin": "Stjórnandi",
         "mod": "Umsjón",
-        "custom": "Sérsniðið (%(level)s)"
+        "custom": "Sérsniðið (%(level)s)",
+        "label": "Stig valda",
+        "custom_level": "Sérsniðið stig"
     },
     "bug_reporting": {
         "introduction": "Ef þú hefur tilkynnt vandamál í gegnum GitHub, þá geta atvikaskrár hjálpað okkur við að finna ástæður vandamálanna. ",
@@ -2217,7 +2197,11 @@
             "tooltip_sub": "Smelltu hér til að skoða breytingar",
             "tooltip_label": "Breytt þann %(date)s. Smelltu hér til að skoða breytingar."
         },
-        "error_rendering_message": "Gat ekki hlaðið inn þessum skilaboðum"
+        "error_rendering_message": "Gat ekki hlaðið inn þessum skilaboðum",
+        "reply": {
+            "in_reply_to": "<a>Sem svar til</a> <pill>",
+            "in_reply_to_for_export": "Sem svar við <a>þessum skilaboðum</a>"
+        }
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",
@@ -2554,7 +2538,16 @@
             "canonical_alias_field_label": "Aðalvistfang",
             "avatar_field_label": "Auðkennismynd spjallrásar",
             "aliases_no_items_label": "Engin önnur birt vistföng ennþá, bættu einu við hér fyrir neðan",
-            "aliases_items_label": "Önnur birt vistföng:"
+            "aliases_items_label": "Önnur birt vistföng:",
+            "alias_heading": "Vistfang spjallrásar",
+            "alias_field_has_domain_invalid": "Vantar aðgreini léns, t.d. (:lén.org)",
+            "alias_field_has_localpart_invalid": "Vantar heiti spjallrásar eða aðgreini, t.d. (spjallrásin-mín:lén.org)",
+            "alias_field_safe_localpart_invalid": "Sumir stafir eru óleyfilegir",
+            "alias_field_required_invalid": "Gefðu upp vistfang",
+            "alias_field_matches_invalid": "Vistfangið beinir ekki á þessa spjallrás",
+            "alias_field_taken_valid": "Þetta vistfang er tiltækt til notkunar",
+            "alias_field_taken_invalid_domain": "Þetta vistfang er nú þegar í notkun",
+            "alias_field_taken_invalid": "Þetta vistfang er með ógildan netþjón eða er nú þegar í notkun"
         },
         "advanced": {
             "unfederated": "Þessi spjallrás er ekki aðgengileg fjartengdum Matrix-netþjónum",
@@ -3390,7 +3383,13 @@
         "failed_reject_invite": "Mistókst að hafna boði",
         "jump_to_date_beginning": "Upphaf spjallrásarinnar",
         "jump_to_date": "Hoppa á dagsetningu",
-        "jump_to_date_prompt": "Veldu dagsetningu til að hoppa á"
+        "jump_to_date_prompt": "Veldu dagsetningu til að hoppa á",
+        "face_pile_tooltip_label": {
+            "one": "Sjá 1 meðlim",
+            "other": "Sjá alla %(count)s meðlimina"
+        },
+        "face_pile_tooltip_shortcut_joined": "Að þér meðtöldum, %(commaSeparatedMembers)s",
+        "face_pile_tooltip_shortcut": "Þar með taldir %(commaSeparatedMembers)s"
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3725,5 +3724,10 @@
     },
     "console_wait": "Bíddu!",
     "cant_load_page": "Gat ekki hlaðið inn síðu",
-    "General failure": "Almenn bilun"
+    "General failure": "Almenn bilun",
+    "emoji_picker": {
+        "cancel_search_label": "Hætta við leitina"
+    },
+    "info_tooltip_title": "Upplýsingar",
+    "language_dropdown_label": "Fellilisti tungumála"
 }
