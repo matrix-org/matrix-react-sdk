@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import fetchMock from "fetch-mock-jest";
+import { Translation } from "matrix-web-i18n";
 import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api";
 
 import SdkConfig from "../src/SdkConfig";
@@ -31,7 +32,6 @@ import {
     TranslatedString,
     UserFriendlyError,
     TranslationKey,
-    Translation,
 } from "../src/languageHandler";
 import { stubClient } from "./test-utils";
 import { setupLanguageMock } from "./setup/setupLanguage";
