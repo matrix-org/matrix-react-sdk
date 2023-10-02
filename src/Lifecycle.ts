@@ -72,7 +72,8 @@ import {
     ACCESS_TOKEN_STORAGE_KEY,
     HAS_ACCESS_TOKEN_STORAGE_KEY,
     HAS_REFRESH_TOKEN_STORAGE_KEY,
-    persistTokenInStorage,
+    persistAccessTokenInStorage,
+    persistRefreshTokenInStorage,
     REFRESH_TOKEN_IV,
     REFRESH_TOKEN_STORAGE_KEY,
     tryDecryptToken,
@@ -846,20 +847,8 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     localStorage.setItem("mx_user_id", credentials.userId);
     localStorage.setItem("mx_is_guest", JSON.stringify(credentials.guest));
 
-    await persistTokenInStorage(
-        ACCESS_TOKEN_STORAGE_KEY,
-        ACCESS_TOKEN_IV,
-        credentials.accessToken,
-        credentials.pickleKey,
-        HAS_ACCESS_TOKEN_STORAGE_KEY,
-    );
-    await persistTokenInStorage(
-        REFRESH_TOKEN_STORAGE_KEY,
-        REFRESH_TOKEN_IV,
-        credentials.refreshToken,
-        credentials.pickleKey,
-        HAS_REFRESH_TOKEN_STORAGE_KEY,
-    );
+    await persistAccessTokenInStorage(credentials.accessToken, credentials.pickleKey);
+    await persistRefreshTokenInStorage(credentials.refreshToken, credentials.pickleKey);
 
     if (credentials.pickleKey) {
         localStorage.setItem("mx_has_pickle_key", String(true));

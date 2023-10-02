@@ -164,3 +164,39 @@ export async function persistTokenInStorage(
         }
     }
 }
+
+/**
+ * Wraps persistTokenInStorage with accessToken storage keys
+ * @param token the token to store, when undefined any existing accessToken is removed from storage
+ * @param pickleKey optional pickle key used to encrypt token
+ */
+export async function persistAccessTokenInStorage(
+    token: string | undefined,
+    pickleKey: string | undefined,
+): Promise<void> {
+    return persistTokenInStorage(
+        ACCESS_TOKEN_STORAGE_KEY,
+        ACCESS_TOKEN_IV,
+        token,
+        pickleKey,
+        HAS_ACCESS_TOKEN_STORAGE_KEY,
+    );
+}
+
+/**
+ * Wraps persistTokenInStorage with refreshToken storage keys
+ * @param token the token to store, when undefined any existing refreshToken is removed from storage
+ * @param pickleKey optional pickle key used to encrypt token
+ */
+export async function persistRefreshTokenInStorage(
+    token: string | undefined,
+    pickleKey: string | undefined,
+): Promise<void> {
+    return persistTokenInStorage(
+        REFRESH_TOKEN_STORAGE_KEY,
+        REFRESH_TOKEN_IV,
+        token,
+        pickleKey,
+        HAS_REFRESH_TOKEN_STORAGE_KEY,
+    );
+}
