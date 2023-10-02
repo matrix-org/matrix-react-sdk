@@ -241,7 +241,7 @@ export default class AutoDiscoveryUtils {
             logger.error("Error determining preferred identity server URL:", isResult);
             if (isResult.state === AutoDiscovery.FAIL_ERROR) {
                 if (isAutoDiscoveryError(isResult.error)) {
-                    throw new UserFriendlyError(String(isResult.error) as TranslationKey);
+                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(isResult.error));
                 }
                 throw new UserFriendlyError("auth|autodiscovery_unexpected_error_is");
             } // else the error is not related to syntax - continue anyways.
