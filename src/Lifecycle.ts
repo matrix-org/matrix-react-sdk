@@ -618,9 +618,6 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
 
-        // const oidcClientSettingsRaw = sessionStorage.getItem("oidcClientSettings");
-        // const oidcClientSettings = oidcClientSettingsRaw ? JSON.parse(oidcClientSettingsRaw) : undefined;
-
         logger.log(`Restoring session for ${userId}`);
         await doSetLoggedIn(
             {
