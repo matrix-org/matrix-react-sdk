@@ -220,6 +220,8 @@ export function createSharedRoomWithUser(
         // wait for the other user to join the room, otherwise our attempt to open his user details may race
         // with his join.
         cy.findByText(" joined the room", { exact: false }).should("exist");
-        return roomId;
+
+        // Cypress complains if we return an immediate here rather than a promise.
+        return Promise.resolve(roomId);
     });
 }
