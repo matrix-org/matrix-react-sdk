@@ -630,7 +630,6 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
                 guest: isGuest,
                 pickleKey: pickleKey ?? undefined,
                 freshLogin: freshLogin,
-                // oidcClientSettings,
             },
             false,
         );
