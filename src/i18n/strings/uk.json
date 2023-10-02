@@ -717,10 +717,6 @@
         "one": "%(count)s голос надісланий. Проголосуйте, щоб побачити результати",
         "other": "%(count)s голосів надіслано. Проголосуйте, щоб побачити результати"
     },
-    "Final result based on %(count)s votes": {
-        "one": "Остаточний результат на підставі %(count)s голосу",
-        "other": "Остаточний результат на підставі %(count)s голосів"
-    },
     "%(name)s wants to verify": "%(name)s бажає звірити",
     "%(name)s cancelled": "%(name)s скасовує",
     "%(name)s declined": "%(name)s відхиляє",
@@ -955,7 +951,6 @@
     "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
     "Manually verify by text": "Звірити вручну за допомогою тексту",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
-    "Video call ended": "Відеовиклик завершено",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
     "Error downloading image": "Помилка завантаження зображення",
     "Unable to show image due to error": "Не вдалося показати зображення через помилку",
@@ -967,8 +962,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "unknown": "невідомо",
     "Declining…": "Відхилення…",
-    "There are no past polls in this room": "У цій кімнаті ще не проводилися опитувань",
-    "There are no active polls in this room": "У цій кімнаті немає активних опитувань",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Увімкніть «%(manageIntegrations)s» в Налаштуваннях, щоб зробити це.",
     "Loading live location…": "Завантаження місця перебування наживо…",
     "Fetching keys from server…": "Отримання ключів із сервера…",
@@ -976,26 +969,10 @@
     "Waiting for partner to confirm…": "Очікування підтвердження партнером…",
     "Adding…": "Додавання…",
     "Starting export process…": "Початок процесу експорту…",
-    "Loading polls": "Завантаження опитувань",
     "Ended a poll": "Завершує опитування",
     "Due to decryption errors, some votes may not be counted": "Через помилки розшифрування деякі голоси можуть бути не враховані",
     "The sender has blocked you from receiving this message": "Відправник заблокував вам отримання цього повідомлення",
     "Answered elsewhere": "Відповіли деінде",
-    "View poll": "Переглянути опитування",
-    "Past polls": "Минулі опитування",
-    "Active polls": "Активні опитування",
-    "View poll in timeline": "Переглянути опитування у стрічці",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "За попередній день немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
-        "other": "За останні %(count)s днів немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці"
-    },
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "За попередній день немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
-        "other": "За останні %(count)s днів немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці"
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
-    "There are no active polls. Load more polls to view polls for previous months": "Немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
-    "Load more polls": "Завантажити більше опитувань",
     "Invites by email can only be sent one at a time": "Запрошення електронною поштою можна надсилати лише одне за раз",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
@@ -2257,7 +2234,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Відеовиклик розпочато о %(roomName)s.",
-            "video_call_started_unsupported": "Відеовиклик розпочато о %(roomName)s. (не підтримується цим браузером)"
+            "video_call_started_unsupported": "Відеовиклик розпочато о %(roomName)s. (не підтримується цим браузером)",
+            "video_call_ended": "Відеовиклик завершено"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s розпочинає голосовий виклик.",
@@ -4274,7 +4252,31 @@
         "pinned_messages_button": "Закріплені",
         "export_chat_button": "Експортувати бесіду",
         "share_button": "Поділитись кімнатою",
-        "settings_button": "Налаштування кімнати"
+        "settings_button": "Налаштування кімнати",
+        "poll": {
+            "view_in_timeline": "Переглянути опитування у стрічці",
+            "active_heading": "Активні опитування",
+            "past_heading": "Минулі опитування",
+            "loading": "Завантаження опитувань",
+            "load_more": "Завантажити більше опитувань",
+            "empty_active": "У цій кімнаті немає активних опитувань",
+            "empty_past": "У цій кімнаті ще не проводилися опитувань",
+            "empty_active_load_more": "Немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
+            "empty_past_load_more": "Немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
+            "empty_active_load_more_n_days": {
+                "one": "За попередній день немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
+                "other": "За останні %(count)s днів немає активних опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці"
+            },
+            "empty_past_load_more_n_days": {
+                "one": "За попередній день немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці",
+                "other": "За останні %(count)s днів немає минулих опитувань. Завантажте більше опитувань, щоб переглянути опитування за попередні місяці"
+            },
+            "view_poll": "Переглянути опитування",
+            "final_result": {
+                "one": "Остаточний результат на підставі %(count)s голосу",
+                "other": "Остаточний результат на підставі %(count)s голосів"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Відхилити запрошення",

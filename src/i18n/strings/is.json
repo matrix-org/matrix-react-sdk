@@ -584,10 +584,6 @@
         "other": "%(count)s atkvæði greidd. Greiddu atkvæði til að sjá útkomuna"
     },
     "Results will be visible when the poll is ended": "Niðurstöður birtast einungis eftir að könnuninni hefur lokið",
-    "Final result based on %(count)s votes": {
-        "one": "Lokaniðurstöður byggðar á %(count)s atkvæði",
-        "other": "Lokaniðurstöður byggðar á %(count)s atkvæðum"
-    },
     "Sorry, your vote was not registered. Please try again.": "Því miður, atkvæðið þitt var ekki skráð. Prófaðu aftur.",
     "Vote not registered": "Atkvæði ekki skráð",
     "Sorry, you can't edit a poll after votes have been cast.": "Því miður, þú getur ekki breytt könnun eftir að atkvæði hafa verið greidd.",
@@ -822,7 +818,6 @@
     "Friends and family": "Vinir og fjölskylda",
     "We'll help you get connected.": "Við munum hjálpa þér að tengjast.",
     "Choose a locale": "Veldu staðfærslu",
-    "Video call ended": "Mynddsímtali lauk",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
     "Live location error": "Villa í rauntímastaðsetningu",
@@ -1909,7 +1904,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Myndsamtal er byrjað í %(roomName)s.",
-            "video_call_started_unsupported": "Myndsamtal er byrjað í %(roomName)s. (Ekki stutt af þessum vafra)"
+            "video_call_started_unsupported": "Myndsamtal er byrjað í %(roomName)s. (Ekki stutt af þessum vafra)",
+            "video_call_ended": "Mynddsímtali lauk"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hringdi raddsímtal.",
@@ -3664,7 +3660,13 @@
         "pinned_messages_button": "Fest",
         "export_chat_button": "Flytja út spjall",
         "share_button": "Deila spjallrás",
-        "settings_button": "Stillingar spjallrásar"
+        "settings_button": "Stillingar spjallrásar",
+        "poll": {
+            "final_result": {
+                "one": "Lokaniðurstöður byggðar á %(count)s atkvæði",
+                "other": "Lokaniðurstöður byggðar á %(count)s atkvæðum"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Hafna boði",

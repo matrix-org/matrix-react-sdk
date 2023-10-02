@@ -634,10 +634,6 @@
     },
     "No votes cast": "Καμία ψήφος",
     "Results will be visible when the poll is ended": "Τα αποτελέσματα θα είναι ορατά όταν τελειώσει η δημοσκόπηση",
-    "Final result based on %(count)s votes": {
-        "one": "Τελικό αποτέλεσμα με βάση %(count)s ψήφο",
-        "other": "Τελικό αποτέλεσμα με βάση %(count)s ψήφους"
-    },
     "Sorry, your vote was not registered. Please try again.": "Λυπούμαστε, η ψήφος σας δεν καταχωρήθηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Vote not registered": "Η ψήφος δεν έχει καταχωρηθεί",
     "Decrypting": "Αποκρυπτογράφηση",
@@ -3565,7 +3561,13 @@
         "pinned_messages_button": "Καρφιτσωμένο",
         "export_chat_button": "Εξαγωγή συνομιλίας",
         "share_button": "Κοινή χρήση δωματίου",
-        "settings_button": "Ρυθμίσεις δωματίου"
+        "settings_button": "Ρυθμίσεις δωματίου",
+        "poll": {
+            "final_result": {
+                "one": "Τελικό αποτέλεσμα με βάση %(count)s ψήφο",
+                "other": "Τελικό αποτέλεσμα με βάση %(count)s ψήφους"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Απόρριψη πρόσκλησης",

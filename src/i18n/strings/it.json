@@ -826,10 +826,6 @@
     "Failed to end poll": "Chiusura del sondaggio fallita",
     "The poll has ended. Top answer: %(topAnswer)s": "Il sondaggio è terminato. Risposta più scelta: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Il sondaggio è terminato. Nessun voto inviato.",
-    "Final result based on %(count)s votes": {
-        "one": "Risultato finale basato su %(count)s voto",
-        "other": "Risultato finale basato su %(count)s voti"
-    },
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vuoi davvero terminare questo sondaggio? Verranno mostrati i risultati finali e le persone non potranno più votare.",
     "Recent searches": "Ricerche recenti",
     "To search messages, look for this icon at the top of a room <icon/>": "Per cercare messaggi, trova questa icona in cima ad una stanza <icon/>",
@@ -955,7 +951,6 @@
     "Interactively verify by emoji": "Verifica interattivamente con emoji",
     "Manually verify by text": "Verifica manualmente con testo",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
-    "Video call ended": "Videochiamata terminata",
     "%(name)s started a video call": "%(name)s ha iniziato una videochiamata",
     "Error downloading image": "Errore di scaricamento dell'immagine",
     "Unable to show image due to error": "Impossibile mostrare l'immagine per un errore",
@@ -966,8 +961,6 @@
     "Can't start voice message": "Impossibile iniziare il messaggio vocale",
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "unknown": "sconosciuto",
-    "There are no past polls in this room": "In questa stanza non ci sono sondaggi passati",
-    "There are no active polls in this room": "In questa stanza non ci sono sondaggi attivi",
     "Declining…": "Rifiuto…",
     "Loading live location…": "Caricamento posizione in tempo reale…",
     "Fetching keys from server…": "Ricezione delle chiavi dal server…",
@@ -976,26 +969,10 @@
     "Waiting for partner to confirm…": "In attesa che il partner confermi…",
     "Adding…": "Aggiunta…",
     "Starting export process…": "Inizio processo di esportazione…",
-    "Loading polls": "Caricamento sondaggi",
     "Ended a poll": "Terminato un sondaggio",
     "Due to decryption errors, some votes may not be counted": "A causa di errori di decifrazione, alcuni voti potrebbero non venire contati",
     "Answered elsewhere": "Risposto altrove",
     "The sender has blocked you from receiving this message": "Il mittente ti ha bloccato dalla ricezione di questo messaggio",
-    "View poll": "Vedi sondaggio",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Non ci sono sondaggi passati nell'ultimo giorno. Carica più sondaggi per vedere quelli dei mesi precedenti",
-        "other": "Non ci sono sondaggi passati negli ultimi %(count)s giorni. Carica più sondaggi per vedere quelli dei mesi precedenti"
-    },
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Non ci sono sondaggi attivi nell'ultimo giorno. Carica più sondaggi per vedere quelli dei mesi precedenti",
-        "other": "Non ci sono sondaggi attivi negli ultimi %(count)s giorni. Carica più sondaggi per vedere quelli dei mesi precedenti"
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Non ci sono sondaggi passati. Carica più sondaggi per vedere quelli dei mesi precedenti",
-    "There are no active polls. Load more polls to view polls for previous months": "Non ci sono sondaggi attivi. Carica più sondaggi per vedere quelli dei mesi precedenti",
-    "Load more polls": "Carica più sondaggi",
-    "Past polls": "Sondaggi passati",
-    "Active polls": "Sondaggi attivi",
-    "View poll in timeline": "Vedi sondaggio nella linea temporale",
     "Invites by email can only be sent one at a time": "Gli inviti per email possono essere inviati uno per volta",
     "Desktop app logo": "Logo app desktop",
     "Requires your server to support the stable version of MSC3827": "Richiede che il tuo server supporti la versione stabile di MSC3827",
@@ -2258,7 +2235,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Videochiamata iniziata in %(roomName)s.",
-            "video_call_started_unsupported": "Videochiamata iniziata in %(roomName)s. (non supportata da questo browser)"
+            "video_call_started_unsupported": "Videochiamata iniziata in %(roomName)s. (non supportata da questo browser)",
+            "video_call_ended": "Videochiamata terminata"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s ha iniziato una telefonata.",
@@ -4281,7 +4259,31 @@
         "pinned_messages_button": "Fissato",
         "export_chat_button": "Esporta conversazione",
         "share_button": "Condividi stanza",
-        "settings_button": "Impostazioni stanza"
+        "settings_button": "Impostazioni stanza",
+        "poll": {
+            "view_in_timeline": "Vedi sondaggio nella linea temporale",
+            "active_heading": "Sondaggi attivi",
+            "past_heading": "Sondaggi passati",
+            "loading": "Caricamento sondaggi",
+            "load_more": "Carica più sondaggi",
+            "empty_active": "In questa stanza non ci sono sondaggi attivi",
+            "empty_past": "In questa stanza non ci sono sondaggi passati",
+            "empty_active_load_more": "Non ci sono sondaggi attivi. Carica più sondaggi per vedere quelli dei mesi precedenti",
+            "empty_past_load_more": "Non ci sono sondaggi passati. Carica più sondaggi per vedere quelli dei mesi precedenti",
+            "empty_active_load_more_n_days": {
+                "one": "Non ci sono sondaggi attivi nell'ultimo giorno. Carica più sondaggi per vedere quelli dei mesi precedenti",
+                "other": "Non ci sono sondaggi attivi negli ultimi %(count)s giorni. Carica più sondaggi per vedere quelli dei mesi precedenti"
+            },
+            "empty_past_load_more_n_days": {
+                "one": "Non ci sono sondaggi passati nell'ultimo giorno. Carica più sondaggi per vedere quelli dei mesi precedenti",
+                "other": "Non ci sono sondaggi passati negli ultimi %(count)s giorni. Carica più sondaggi per vedere quelli dei mesi precedenti"
+            },
+            "view_poll": "Vedi sondaggio",
+            "final_result": {
+                "one": "Risultato finale basato su %(count)s voto",
+                "other": "Risultato finale basato su %(count)s voti"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Rifiuta l'invito",

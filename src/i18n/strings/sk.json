@@ -722,10 +722,6 @@
         "one": "%(count)s odovzdaný hlas. Hlasujte a pozrite si výsledky",
         "other": "%(count)s odovzdaných hlasov. Hlasujte a pozrite si výsledky"
     },
-    "Final result based on %(count)s votes": {
-        "one": "Konečný výsledok na základe %(count)s hlasu",
-        "other": "Konečný výsledok na základe %(count)s hlasov"
-    },
     "Sorry, your vote was not registered. Please try again.": "Je nám ľúto, váš hlas nebol zaregistrovaný. Skúste to prosím znova.",
     "Vote not registered": "Hlasovanie nie je zaregistrované",
     "No votes cast": "Žiadne odovzdané hlasy",
@@ -955,7 +951,6 @@
     "Interactively verify by emoji": "Interaktívne overte pomocou emotikonov",
     "Manually verify by text": "Manuálne overte pomocou textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
-    "Video call ended": "Videohovor ukončený",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
     "Error downloading image": "Chyba pri sťahovaní obrázku",
     "Unable to show image due to error": "Nie je možné zobraziť obrázok kvôli chybe",
@@ -968,34 +963,16 @@
     "unknown": "neznáme",
     "Declining…": "Odmietanie …",
     "Loading live location…": "Načítavanie polohy v reálnom čase…",
-    "There are no past polls in this room": "V tejto miestnosti nie sú žiadne predchádzajúce ankety",
-    "There are no active polls in this room": "V tejto miestnosti nie sú žiadne aktívne ankety",
     "Fetching keys from server…": "Získavanie kľúčov zo servera…",
     "Checking…": "Kontrolovanie…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Ak to chcete urobiť, povoľte v Nastaveniach položku \"%(manageIntegrations)s\".",
     "Waiting for partner to confirm…": "Čakanie na potvrdenie od partnera…",
     "Adding…": "Pridávanie…",
     "Starting export process…": "Spustenie procesu exportu…",
-    "Loading polls": "Načítavanie ankiet",
     "Ended a poll": "Ukončil anketu",
     "Due to decryption errors, some votes may not be counted": "Z dôvodu chýb v dešifrovaní sa niektoré hlasy nemusia započítať",
     "The sender has blocked you from receiving this message": "Odosielateľ vám zablokoval príjem tejto správy",
     "Answered elsewhere": "Hovor prijatý inde",
-    "View poll": "Zobraziť anketu",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Za posledný deň nie sú k dispozícii žiadne minulé ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
-        "other": "Za posledných %(count)s dní nie sú žiadne predchádzajúce ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace"
-    },
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Za uplynulý deň nie sú žiadne aktívne ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
-        "other": "Za posledných %(count)s dní nie sú aktívne žiadne ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace"
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Nie sú žiadne predchádzajúce ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
-    "There are no active polls. Load more polls to view polls for previous months": "Nie sú aktívne žiadne ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
-    "Load more polls": "Načítať ďalšie ankety",
-    "Past polls": "Predchádzajúce ankety",
-    "Active polls": "Aktívne ankety",
-    "View poll in timeline": "Zobraziť anketu na časovej osi",
     "Invites by email can only be sent one at a time": "Pozvánky e-mailom sa môžu posielať len po jednej",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
@@ -2257,7 +2234,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Videohovor sa začal v %(roomName)s.",
-            "video_call_started_unsupported": "Videohovor sa začal v %(roomName)s. (nie je podporované v tomto prehliadači)"
+            "video_call_started_unsupported": "Videohovor sa začal v %(roomName)s. (nie je podporované v tomto prehliadači)",
+            "video_call_ended": "Videohovor ukončený"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s uskutočnil telefonát.",
@@ -4274,7 +4252,31 @@
         "pinned_messages_button": "Pripnuté",
         "export_chat_button": "Exportovať konverzáciu",
         "share_button": "Zdieľať miestnosť",
-        "settings_button": "Nastavenia miestnosti"
+        "settings_button": "Nastavenia miestnosti",
+        "poll": {
+            "view_in_timeline": "Zobraziť anketu na časovej osi",
+            "active_heading": "Aktívne ankety",
+            "past_heading": "Predchádzajúce ankety",
+            "loading": "Načítavanie ankiet",
+            "load_more": "Načítať ďalšie ankety",
+            "empty_active": "V tejto miestnosti nie sú žiadne aktívne ankety",
+            "empty_past": "V tejto miestnosti nie sú žiadne predchádzajúce ankety",
+            "empty_active_load_more": "Nie sú aktívne žiadne ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
+            "empty_past_load_more": "Nie sú žiadne predchádzajúce ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
+            "empty_active_load_more_n_days": {
+                "one": "Za uplynulý deň nie sú žiadne aktívne ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
+                "other": "Za posledných %(count)s dní nie sú aktívne žiadne ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace"
+            },
+            "empty_past_load_more_n_days": {
+                "one": "Za posledný deň nie sú k dispozícii žiadne minulé ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace",
+                "other": "Za posledných %(count)s dní nie sú žiadne predchádzajúce ankety. Načítaním ďalších ankiet zobrazíte ankety za predchádzajúce mesiace"
+            },
+            "view_poll": "Zobraziť anketu",
+            "final_result": {
+                "one": "Konečný výsledok na základe %(count)s hlasu",
+                "other": "Konečný výsledok na základe %(count)s hlasov"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Odmietnuť pozvanie",

@@ -1453,7 +1453,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Video call started in %(roomName)s.",
-            "video_call_started_unsupported": "Video call started in %(roomName)s. (not supported by this browser)"
+            "video_call_started_unsupported": "Video call started in %(roomName)s. (not supported by this browser)",
+            "video_call_ended": "Video call ended"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s placed a voice call.",
@@ -3143,7 +3144,31 @@
         "pinned_messages_button": "Pinned",
         "export_chat_button": "Export chat",
         "share_button": "Share room",
-        "settings_button": "Room settings"
+        "settings_button": "Room settings",
+        "poll": {
+            "view_in_timeline": "View poll in timeline",
+            "active_heading": "Active polls",
+            "past_heading": "Past polls",
+            "loading": "Loading polls",
+            "load_more": "Load more polls",
+            "empty_active": "There are no active polls in this room",
+            "empty_past": "There are no past polls in this room",
+            "empty_active_load_more": "There are no active polls. Load more polls to view polls for previous months",
+            "empty_past_load_more": "There are no past polls. Load more polls to view polls for previous months",
+            "empty_active_load_more_n_days": {
+                "other": "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months",
+                "one": "There are no active polls for the past day. Load more polls to view polls for previous months"
+            },
+            "empty_past_load_more_n_days": {
+                "other": "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months",
+                "one": "There are no past polls for the past day. Load more polls to view polls for previous months"
+            },
+            "view_poll": "View poll",
+            "final_result": {
+                "other": "Final result based on %(count)s votes",
+                "one": "Final result based on %(count)s vote"
+            }
+        }
     },
     "%(count)s verified sessions": {
         "other": "%(count)s verified sessions",
@@ -3157,30 +3182,7 @@
         "other": "%(count)s votes",
         "one": "%(count)s vote"
     },
-    "View poll in timeline": "View poll in timeline",
-    "Active polls": "Active polls",
-    "Past polls": "Past polls",
-    "Loading polls": "Loading polls",
-    "Load more polls": "Load more polls",
-    "There are no active polls in this room": "There are no active polls in this room",
-    "There are no past polls in this room": "There are no past polls in this room",
-    "There are no active polls. Load more polls to view polls for previous months": "There are no active polls. Load more polls to view polls for previous months",
-    "There are no past polls. Load more polls to view polls for previous months": "There are no past polls. Load more polls to view polls for previous months",
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "other": "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months",
-        "one": "There are no active polls for the past day. Load more polls to view polls for previous months"
-    },
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "other": "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months",
-        "one": "There are no past polls for the past day. Load more polls to view polls for previous months"
-    },
-    "View poll": "View poll",
-    "Final result based on %(count)s votes": {
-        "other": "Final result based on %(count)s votes",
-        "one": "Final result based on %(count)s vote"
-    },
     "%(name)s started a video call": "%(name)s started a video call",
-    "Video call ended": "Video call ended",
     "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.": "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.",
     "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.": "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.",
     "Server returned %(statusCode)s with error code %(errorCode)s": "Server returned %(statusCode)s with error code %(errorCode)s",

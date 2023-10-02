@@ -844,10 +844,6 @@
     "Missing domain separator e.g. (:domain.org)": "Thiếu dấu tách tên miền. Ví dụ: (:domain.org)",
     "Including you, %(commaSeparatedMembers)s": "Bao gồm bạn, %(commaSeparatedMembers)s",
     "toggle event": "chuyển đổi sự kiện",
-    "Final result based on %(count)s votes": {
-        "one": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu",
-        "other": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu"
-    },
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "unknown": "không rõ",
@@ -897,15 +893,11 @@
     "Show spaces": "Hiện spaces",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
     "Cameras": "Máy quay",
-    "Past polls": "Các cuộc bỏ phiếu trước",
-    "Active polls": "Các cuộc bỏ phiếu hiện tại",
     "unavailable": "không có sẵn",
     "Error details": "Chi tiết lỗi",
     "Jump to date": "Nhảy đến ngày",
     "Message pending moderation: %(reason)s": "Tin nhắn chờ duyệt: %(reason)s",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
-    "Video call ended": "Cuộc gọi truyền hình đã kết thúc",
-    "View poll in timeline": "Xem cuộc bỏ phiếu trong dòng thời gian",
     "Click": "Nhấn",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
@@ -2065,7 +2057,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Cuộc gọi truyền hình đã bắt đầu trong %(roomName)s.",
-            "video_call_started_unsupported": "Cuộc gọi truyền hình đã được bắt đầu ở %(roomName)s. (không được trình duyệt này hỗ trợ)"
+            "video_call_started_unsupported": "Cuộc gọi truyền hình đã được bắt đầu ở %(roomName)s. (không được trình duyệt này hỗ trợ)",
+            "video_call_ended": "Cuộc gọi truyền hình đã kết thúc"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s đã thực hiện một cuộc gọi thoại.",
@@ -3978,7 +3971,16 @@
         "pinned_messages_button": "Đã ghim",
         "export_chat_button": "Xuất trò chuyện",
         "share_button": "Phòng chia sẻ",
-        "settings_button": "Cài đặt phòng"
+        "settings_button": "Cài đặt phòng",
+        "poll": {
+            "view_in_timeline": "Xem cuộc bỏ phiếu trong dòng thời gian",
+            "active_heading": "Các cuộc bỏ phiếu hiện tại",
+            "past_heading": "Các cuộc bỏ phiếu trước",
+            "final_result": {
+                "one": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu",
+                "other": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Từ chối lời mời",

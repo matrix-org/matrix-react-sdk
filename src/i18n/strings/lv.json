@@ -469,10 +469,6 @@
     "Call back": "Atzvanīt",
     "Call declined": "Zvans noraidīts",
     "Corn": "Kukurūza",
-    "Final result based on %(count)s votes": {
-        "one": "Gala rezultāts pamatojoties uz %(count)s balss",
-        "other": "Gala rezultāts pamatojoties uz %(count)s balsīm"
-    },
     "Based on %(count)s votes": {
         "one": "Pamatojoties uz %(count)s balss",
         "other": "Pamatojoties uz %(count)s balsīm"
@@ -2076,7 +2072,13 @@
         "pinned_messages_button": "Piesprausts",
         "export_chat_button": "Eksportēt čatu",
         "share_button": "Dalīties ar istabu",
-        "settings_button": "Istabas iestatījumi"
+        "settings_button": "Istabas iestatījumi",
+        "poll": {
+            "final_result": {
+                "one": "Gala rezultāts pamatojoties uz %(count)s balss",
+                "other": "Gala rezultāts pamatojoties uz %(count)s balsīm"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Noraidīt uzaicinājumu",

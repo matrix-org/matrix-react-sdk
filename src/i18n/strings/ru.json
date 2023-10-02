@@ -834,10 +834,6 @@
         "other": "%(count)s голосов. Проголосуйте, чтобы увидеть результаты"
     },
     "No votes cast": "Голосов нет",
-    "Final result based on %(count)s votes": {
-        "one": "Окончательный результат на основе %(count)s голоса",
-        "other": "Окончательный результат на основе %(count)s голосов"
-    },
     "Sorry, your vote was not registered. Please try again.": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
     "Vote not registered": "Голос не засчитан",
     "Reply in thread": "Обсудить",
@@ -957,12 +953,8 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
     "<w>WARNING:</w> <description/>": "<w>ВНИМАНИЕ:</w> <description/>",
     "Error downloading image": "Ошибка при скачивании изображения",
-    "Video call ended": "Видеозвонок завершён",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Active polls": "Активные опросы",
-    "There are no active polls in this room": "В этой комнате нет активных опросов",
-    "View poll in timeline": "Посмотреть опрос в ленте сообщений",
     "Message in %(room)s": "Сообщение в %(room)s",
     "Message from %(user)s": "Сообщение от %(user)s",
     "common": {
@@ -2083,7 +2075,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Видеовызов начался в %(roomName)s.",
-            "video_call_started_unsupported": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)"
+            "video_call_started_unsupported": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)",
+            "video_call_ended": "Видеозвонок завершён"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s сделал голосовой вызов.",
@@ -3961,7 +3954,16 @@
         "pinned_messages_button": "Закреплено",
         "export_chat_button": "Экспорт чата",
         "share_button": "Поделиться комнатой",
-        "settings_button": "Настройки комнаты"
+        "settings_button": "Настройки комнаты",
+        "poll": {
+            "view_in_timeline": "Посмотреть опрос в ленте сообщений",
+            "active_heading": "Активные опросы",
+            "empty_active": "В этой комнате нет активных опросов",
+            "final_result": {
+                "one": "Окончательный результат на основе %(count)s голоса",
+                "other": "Окончательный результат на основе %(count)s голосов"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Отклонить приглашение",

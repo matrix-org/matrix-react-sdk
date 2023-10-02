@@ -828,10 +828,6 @@
         "other": "%(count)s votos. Vota para ver los resultados"
     },
     "No votes cast": "Ningún voto",
-    "Final result based on %(count)s votes": {
-        "one": "Resultados finales (%(count)s voto)",
-        "other": "Resultados finales (%(count)s votos)"
-    },
     "Sorry, your vote was not registered. Please try again.": "Lo sentimos, no se ha podido registrar el voto. Inténtalo otra vez.",
     "Vote not registered": "Voto no emitido",
     "Based on %(count)s votes": {
@@ -955,7 +951,6 @@
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
-    "Video call ended": "Videollamada terminada",
     "%(name)s started a video call": "%(name)s comenzó una videollamada",
     "Unable to show image due to error": "No es posible mostrar la imagen debido a un error",
     "Error downloading image": "Error al descargar la imagen",
@@ -973,22 +968,15 @@
     "Error details": "Detalles del error",
     "unavailable": "no disponible",
     "unknown status code": "error de estado desconocido",
-    "View poll": "Ver encuesta",
-    "Load more polls": "Cargar más encuestas",
-    "Loading polls": "Cargando encuestas",
-    "Active polls": "Encuestas activas",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Ended a poll": "Cerró una encuesta",
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
     "This session is backing up your keys.": "",
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
-    "Past polls": "Encuestas anteriores",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
     "Can't start voice message": "No se ha podido empezar el mensaje de voz",
-    "There are no active polls in this room": "Esta sala no tiene encuestas activas",
-    "There are no past polls in this room": "Esta sala no tiene encuestas anteriores",
     "Server returned %(statusCode)s with error code %(errorCode)s": "El servidor devolvió un %(statusCode)s con el código de error %(errorCode)s",
     "The sender has blocked you from receiving this message": "La persona que ha enviado este mensaje te ha bloqueado, no puedes recibir el mensaje",
     "Waiting for partner to confirm…": "Esperando a que la otra persona confirme…",
@@ -2144,7 +2132,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Videollamada empezada en %(roomName)s.",
-            "video_call_started_unsupported": "Videollamada empezada en %(roomName)s. (no compatible con este navegador)"
+            "video_call_started_unsupported": "Videollamada empezada en %(roomName)s. (no compatible con este navegador)",
+            "video_call_ended": "Videollamada terminada"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hizo una llamada de voz.",
@@ -4076,7 +4065,20 @@
         "pinned_messages_button": "Fijado",
         "export_chat_button": "Exportar conversación",
         "share_button": "Compartir la sala",
-        "settings_button": "Configuración de la sala"
+        "settings_button": "Configuración de la sala",
+        "poll": {
+            "active_heading": "Encuestas activas",
+            "past_heading": "Encuestas anteriores",
+            "loading": "Cargando encuestas",
+            "load_more": "Cargar más encuestas",
+            "empty_active": "Esta sala no tiene encuestas activas",
+            "empty_past": "Esta sala no tiene encuestas anteriores",
+            "view_poll": "Ver encuesta",
+            "final_result": {
+                "one": "Resultados finales (%(count)s voto)",
+                "other": "Resultados finales (%(count)s votos)"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Rechazar invitación",

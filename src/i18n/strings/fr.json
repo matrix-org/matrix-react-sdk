@@ -828,10 +828,6 @@
         "other": "%(count)s votes exprimés. Votez pour voir les résultats"
     },
     "No votes cast": "Aucun vote exprimé",
-    "Final result based on %(count)s votes": {
-        "one": "Résultat final sur la base de %(count)s vote",
-        "other": "Résultat final sur la base de %(count)s votes"
-    },
     "Recent searches": "Recherches récentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
     "Other searches": "Autres recherches",
@@ -955,7 +951,6 @@
     "Interactively verify by emoji": "Vérifier de façon interactive avec des émojis",
     "Manually verify by text": "Vérifier manuellement avec un texte",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
-    "Video call ended": "Appel vidéo terminé",
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
     "Error downloading image": "Erreur lors du téléchargement de l’image",
     "Unable to show image due to error": "Impossible d’afficher l’image à cause d’une erreur",
@@ -967,8 +962,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "unknown": "inconnu",
     "Declining…": "Refus…",
-    "There are no past polls in this room": "Il n’y a aucun ancien sondage dans ce salon",
-    "There are no active polls in this room": "Il n’y a aucun sondage en cours dans ce salon",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
     "Loading live location…": "Chargement de la position en direct…",
     "Fetching keys from server…": "Récupération des clés depuis le serveur…",
@@ -976,26 +969,10 @@
     "Waiting for partner to confirm…": "Attente de la confirmation du partenaire…",
     "Adding…": "Ajout…",
     "Starting export process…": "Démarrage du processus d’export…",
-    "Loading polls": "Chargement des sondages",
     "Ended a poll": "Sondage terminé",
     "Due to decryption errors, some votes may not be counted": "À cause d’erreurs de déchiffrement, certains votes pourraient ne pas avoir été pris en compte",
     "The sender has blocked you from receiving this message": "L’expéditeur a bloqué la réception de votre message",
     "Answered elsewhere": "Répondu autre part",
-    "View poll": "Voir le sondage",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Il n'y a pas d’ancien sondage depuis hier. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
-        "other": "Il n'y a pas d’ancien sondage sur les %(count)s derniers jours. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs"
-    },
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Il n’y a aucun sondage actif depuis hier. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
-        "other": "Il n'y a pas de sondage en cours sur les %(count)s derniers jours. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs"
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Il n'y a pas d’ancien sondage. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
-    "There are no active polls. Load more polls to view polls for previous months": "Il n'y a pas de sondage en cours. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
-    "Load more polls": "Charger plus de sondages",
-    "Past polls": "Anciens sondages",
-    "Active polls": "Sondages en cours",
-    "View poll in timeline": "Consulter la chronologie des sondages",
     "Invites by email can only be sent one at a time": "Les invitations par e-mail ne peuvent être envoyées qu’une par une",
     "Desktop app logo": "Logo de l’application de bureau",
     "Requires your server to support the stable version of MSC3827": "Requiert la prise en charge par le serveur de la version stable du MSC3827",
@@ -2257,7 +2234,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Appel vidéo commencé dans %(roomName)s.",
-            "video_call_started_unsupported": "Appel vidéo commencé dans %(roomName)s. (non pris en charge par ce navigateur)"
+            "video_call_started_unsupported": "Appel vidéo commencé dans %(roomName)s. (non pris en charge par ce navigateur)",
+            "video_call_ended": "Appel vidéo terminé"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s a passé un appel audio.",
@@ -4274,7 +4252,31 @@
         "pinned_messages_button": "Épinglé",
         "export_chat_button": "Exporter la conversation",
         "share_button": "Partager le salon",
-        "settings_button": "Paramètres du salon"
+        "settings_button": "Paramètres du salon",
+        "poll": {
+            "view_in_timeline": "Consulter la chronologie des sondages",
+            "active_heading": "Sondages en cours",
+            "past_heading": "Anciens sondages",
+            "loading": "Chargement des sondages",
+            "load_more": "Charger plus de sondages",
+            "empty_active": "Il n’y a aucun sondage en cours dans ce salon",
+            "empty_past": "Il n’y a aucun ancien sondage dans ce salon",
+            "empty_active_load_more": "Il n'y a pas de sondage en cours. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
+            "empty_past_load_more": "Il n'y a pas d’ancien sondage. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
+            "empty_active_load_more_n_days": {
+                "one": "Il n’y a aucun sondage actif depuis hier. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
+                "other": "Il n'y a pas de sondage en cours sur les %(count)s derniers jours. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs"
+            },
+            "empty_past_load_more_n_days": {
+                "one": "Il n'y a pas d’ancien sondage depuis hier. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs",
+                "other": "Il n'y a pas d’ancien sondage sur les %(count)s derniers jours. Veuillez charger plus de sondages pour consulter les sondages des mois antérieurs"
+            },
+            "view_poll": "Voir le sondage",
+            "final_result": {
+                "one": "Résultat final sur la base de %(count)s vote",
+                "other": "Résultat final sur la base de %(count)s votes"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Rejeter l’invitation",

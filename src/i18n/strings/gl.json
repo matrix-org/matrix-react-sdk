@@ -836,10 +836,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "Rematou a enquisa. O máis votado: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Rematou a enquisa. Non houbo votos.",
     "Including you, %(commaSeparatedMembers)s": "Incluíndote a ti, %(commaSeparatedMembers)s",
-    "Final result based on %(count)s votes": {
-        "one": "Resultado final baseado en %(count)s voto",
-        "other": "Resultado final baseado en %(count)s votos"
-    },
     "Could not fetch location": "Non se obtivo a localización",
     "Location": "Localización",
     "toggle event": "activar evento",
@@ -3780,7 +3776,13 @@
         "pinned_messages_button": "Fixado",
         "export_chat_button": "Exportar chat",
         "share_button": "Compartir sala",
-        "settings_button": "Axustes da sala"
+        "settings_button": "Axustes da sala",
+        "poll": {
+            "final_result": {
+                "one": "Resultado final baseado en %(count)s voto",
+                "other": "Resultado final baseado en %(count)s votos"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Rexeitar convite",

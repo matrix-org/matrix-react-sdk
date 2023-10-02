@@ -771,10 +771,6 @@
         "other": "%(count)s ääntä annettu. Äänestä nähdäksesi tulokset"
     },
     "No votes cast": "Ääniä ei annettu",
-    "Final result based on %(count)s votes": {
-        "one": "Lopullinen tulos %(count)s äänen perusteella",
-        "other": "Lopullinen tulos %(count)s äänen perusteella"
-    },
     "Sorry, your vote was not registered. Please try again.": "Valitettavasti ääntäsi ei rekisteröity. Yritä uudelleen.",
     "Vote not registered": "Ääntä ei rekisteröity",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
@@ -886,7 +882,6 @@
     "Message pending moderation": "Viesti odottaa moderointia",
     "Message pending moderation: %(reason)s": "Viesti odottaa moderointia: %(reason)s",
     "Messages in this chat will be end-to-end encrypted.": "Tässä keskustelussa olevat viestit salataan päästä päähän.",
-    "Video call ended": "Videopuhelu päättyi",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Search for": "Etsittävät kohteet",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -919,24 +914,6 @@
     "unavailable": "ei saatavilla",
     "unknown status code": "tuntematon tilakoodi",
     "Server returned %(statusCode)s with error code %(errorCode)s": "Palvelin palautti tilakoodin %(statusCode)s ja virhekoodin %(errorCode)s",
-    "View poll": "Näytä kysely",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Menneitä kyselyitä ei ole viimeisen vuorokauden ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
-        "other": "Menneitä kyselyitä ei ole viimeisen %(count)s päivän ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt."
-    },
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Aktiivisia kyselyitä ei ole viimeisen vuorokauden ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
-        "other": "Aktiivisia kyselyitä ei ole viimeisen %(count)s päivän ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt."
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Menneitä kyselyitä ei ole. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
-    "There are no active polls. Load more polls to view polls for previous months": "Aktiivisia kyselyitä ei ole. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
-    "There are no past polls in this room": "Tässä huoneessa ei ole menneitä kyselyitä",
-    "There are no active polls in this room": "Tässä huoneessa ei ole aktiivisia kyselyitä",
-    "Load more polls": "Lataa lisää kyselyitä",
-    "Loading polls": "Ladataan kyselyitä",
-    "Past polls": "Menneet kyselyt",
-    "Active polls": "Aktiiviset kyselyt",
-    "View poll in timeline": "Näytä kysely aikajanalla",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "Error details": "Virheen tiedot",
     "common": {
@@ -2033,7 +2010,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Videopuhelu alkoi huoneessa %(roomName)s.",
-            "video_call_started_unsupported": "Videopuhelu alkoi huoneessa %(roomName)s. (ei tuettu selaimesi toimesta)"
+            "video_call_started_unsupported": "Videopuhelu alkoi huoneessa %(roomName)s. (ei tuettu selaimesi toimesta)",
+            "video_call_ended": "Videopuhelu päättyi"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s soitti äänipuhelun.",
@@ -3870,7 +3848,31 @@
         "pinned_messages_button": "Kiinnitetty",
         "export_chat_button": "Vie keskustelu",
         "share_button": "Jaa huone",
-        "settings_button": "Huoneen asetukset"
+        "settings_button": "Huoneen asetukset",
+        "poll": {
+            "view_in_timeline": "Näytä kysely aikajanalla",
+            "active_heading": "Aktiiviset kyselyt",
+            "past_heading": "Menneet kyselyt",
+            "loading": "Ladataan kyselyitä",
+            "load_more": "Lataa lisää kyselyitä",
+            "empty_active": "Tässä huoneessa ei ole aktiivisia kyselyitä",
+            "empty_past": "Tässä huoneessa ei ole menneitä kyselyitä",
+            "empty_active_load_more": "Aktiivisia kyselyitä ei ole. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
+            "empty_past_load_more": "Menneitä kyselyitä ei ole. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
+            "empty_active_load_more_n_days": {
+                "one": "Aktiivisia kyselyitä ei ole viimeisen vuorokauden ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
+                "other": "Aktiivisia kyselyitä ei ole viimeisen %(count)s päivän ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt."
+            },
+            "empty_past_load_more_n_days": {
+                "one": "Menneitä kyselyitä ei ole viimeisen vuorokauden ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt.",
+                "other": "Menneitä kyselyitä ei ole viimeisen %(count)s päivän ajalta. Lataa lisää kyselyitä nähdäksesi aiempien kuukausien kyselyt."
+            },
+            "view_poll": "Näytä kysely",
+            "final_result": {
+                "one": "Lopullinen tulos %(count)s äänen perusteella",
+                "other": "Lopullinen tulos %(count)s äänen perusteella"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Hylkää kutsu",

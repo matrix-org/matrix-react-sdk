@@ -308,7 +308,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         if (showResults && poll.undecryptableRelationsCount) {
             totalText = _t("Due to decryption errors, some votes may not be counted");
         } else if (poll.isEnded) {
-            totalText = _t("Final result based on %(count)s votes", { count: totalVotes });
+            totalText = _t("right_panel|poll|final_result", { count: totalVotes });
         } else if (!disclosed) {
             totalText = _t("Results will be visible when the poll is ended");
         } else if (myVote === undefined) {

@@ -758,10 +758,6 @@
         "other": "%(count)s votos expressos. Vote para ver os resultados"
     },
     "No votes cast": "Sem votos expressos",
-    "Final result based on %(count)s votes": {
-        "one": "Resultado final baseado em %(count)s votos",
-        "other": "Resultado final baseado em %(count)s votos"
-    },
     "Sorry, your vote was not registered. Please try again.": "Desculpe, seu voto não foi registrado. Por favor, tente novamente.",
     "Vote not registered": "Voto não registrado",
     "Downloading": "Baixando",
@@ -3180,7 +3176,13 @@
         "files_button": "Arquivos",
         "export_chat_button": "Exportar conversa",
         "share_button": "Compartilhar sala",
-        "settings_button": "Configurações da sala"
+        "settings_button": "Configurações da sala",
+        "poll": {
+            "final_result": {
+                "one": "Resultado final baseado em %(count)s votos",
+                "other": "Resultado final baseado em %(count)s votos"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Recusar o convite",

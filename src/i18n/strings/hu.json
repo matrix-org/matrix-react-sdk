@@ -821,10 +821,6 @@
         "other": "%(count)s leadott szavazat. Szavazzon az eredmény megtekintéséhez"
     },
     "No votes cast": "Nem adtak le szavazatot",
-    "Final result based on %(count)s votes": {
-        "one": "Végeredmény %(count)s szavazat alapján",
-        "other": "Végeredmény %(count)s szavazat alapján"
-    },
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Biztosan lezárod ezt a szavazást? Ez megszünteti az új szavazatok leadásának lehetőségét, és kijelzi a végeredményt.",
     "End Poll": "Szavazás lezárása",
     "Sorry, the poll did not end. Please try again.": "Sajnáljuk, a szavazás nem lett lezárva. Kérjük, próbáld újra.",
@@ -955,7 +951,6 @@
     "Interactively verify by emoji": "Interaktív ellenőrzés emodzsikkal",
     "Manually verify by text": "Kézi szöveges ellenőrzés",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s vagy %(recoveryFile)s",
-    "Video call ended": "Videó hívás befejeződött",
     "%(name)s started a video call": "%(name)s videóhívást indított",
     "Error downloading image": "Kép letöltési hiba",
     "Unable to show image due to error": "Kép megjelenítése egy hiba miatt nem lehetséges",
@@ -967,8 +962,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "unknown": "ismeretlen",
     "Loading live location…": "Élő földrajzi helyzet meghatározás betöltése…",
-    "There are no past polls in this room": "Nincsenek régebbi szavazások ebben a szobában",
-    "There are no active polls in this room": "Nincsenek aktív szavazások ebben a szobában",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
     "Checking…": "Ellenőrzés…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Ehhez engedélyezd a(z) „%(manageIntegrations)s”-t a Beállításokban.",
@@ -976,26 +969,10 @@
     "Adding…": "Hozzáadás…",
     "Declining…": "Elutasítás…",
     "Starting export process…": "Exportálási folyamat indítása…",
-    "Loading polls": "Szavazások betöltése",
     "Ended a poll": "Lezárta a szavazást",
     "Due to decryption errors, some votes may not be counted": "Visszafejtési hibák miatt néhány szavazat nem kerül beszámításra",
     "The sender has blocked you from receiving this message": "A feladó megtagadta az Ön hozzáférését ehhez az üzenethez",
     "Answered elsewhere": "Máshol lett felvéve",
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "other": "%(count)s napja nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
-        "one": "Nincs aktív szavazás az elmúlt napokból. További szavazások betöltése az előző havi szavazások megjelenítéséhez"
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Nincs régebbi szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
-    "There are no active polls. Load more polls to view polls for previous months": "Nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
-    "Load more polls": "Még több szavazás betöltése",
-    "Past polls": "Régi szavazások",
-    "Active polls": "Aktív szavazások",
-    "View poll in timeline": "Szavazás megjelenítése az idővonalon",
-    "View poll": "Szavazás megtekintése",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Nincs aktív szavazás az elmúlt napokból. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
-        "other": "%(count)s napja nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez"
-    },
     "Invites by email can only be sent one at a time": "E-mail meghívóból egyszerre csak egy küldhető el",
     "Desktop app logo": "Asztali alkalmazás profilkép",
     "Requires your server to support the stable version of MSC3827": "A Matrix-kiszolgálónak támogatnia kell az MSC3827 stabil verzióját",
@@ -2203,7 +2180,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Videóhívás indult itt: %(roomName)s.",
-            "video_call_started_unsupported": "Videóhívás indult itt: %(roomName)s. (ebben a böngészőben ez nem támogatott)"
+            "video_call_started_unsupported": "Videóhívás indult itt: %(roomName)s. (ebben a böngészőben ez nem támogatott)",
+            "video_call_ended": "Videó hívás befejeződött"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hanghívást indított.",
@@ -4178,7 +4156,31 @@
         "pinned_messages_button": "Kitűzött",
         "export_chat_button": "Beszélgetés exportálása",
         "share_button": "Szoba megosztása",
-        "settings_button": "Szoba beállítások"
+        "settings_button": "Szoba beállítások",
+        "poll": {
+            "view_in_timeline": "Szavazás megjelenítése az idővonalon",
+            "active_heading": "Aktív szavazások",
+            "past_heading": "Régi szavazások",
+            "loading": "Szavazások betöltése",
+            "load_more": "Még több szavazás betöltése",
+            "empty_active": "Nincsenek aktív szavazások ebben a szobában",
+            "empty_past": "Nincsenek régebbi szavazások ebben a szobában",
+            "empty_active_load_more": "Nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
+            "empty_past_load_more": "Nincs régebbi szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
+            "empty_active_load_more_n_days": {
+                "other": "%(count)s napja nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
+                "one": "Nincs aktív szavazás az elmúlt napokból. További szavazások betöltése az előző havi szavazások megjelenítéséhez"
+            },
+            "empty_past_load_more_n_days": {
+                "one": "Nincs aktív szavazás az elmúlt napokból. További szavazások betöltése az előző havi szavazások megjelenítéséhez",
+                "other": "%(count)s napja nincs aktív szavazás. További szavazások betöltése az előző havi szavazások megjelenítéséhez"
+            },
+            "view_poll": "Szavazás megtekintése",
+            "final_result": {
+                "one": "Végeredmény %(count)s szavazat alapján",
+                "other": "Végeredmény %(count)s szavazat alapján"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Meghívó elutasítása",

@@ -743,10 +743,6 @@
         "one": "%(count)s個の投票に基づく",
         "other": "%(count)s個の投票に基づく"
     },
-    "Final result based on %(count)s votes": {
-        "one": "合計%(count)s票に基づく最終結果",
-        "other": "合計%(count)s票に基づく最終結果"
-    },
     "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。",
     "Missing session data": "セッションのデータがありません",
@@ -878,7 +874,6 @@
     "Output devices": "出力装置",
     "Cameras": "カメラ",
     "Unread email icon": "未読メールアイコン",
-    "Video call ended": "ビデオ通話が終了しました",
     "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
     "Error downloading image": "画像をダウンロードする際にエラーが発生しました",
     "Unable to show image due to error": "エラーにより画像を表示できません",
@@ -967,8 +962,6 @@
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
     "Declining…": "拒否しています…",
-    "There are no past polls in this room": "このルームに過去のアンケートはありません",
-    "There are no active polls in this room": "このルームに実施中のアンケートはありません",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "これを行うには設定から「%(manageIntegrations)s」を有効にしてください。",
     "Loading live location…": "位置情報（ライブ）を読み込んでいます…",
     "Fetching keys from server…": "鍵をサーバーから取得しています…",
@@ -2137,7 +2130,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "ビデオ通話が%(roomName)sで開始しました。",
-            "video_call_started_unsupported": "ビデオ通話が%(roomName)sで開始しました。（このブラウザーではサポートされていません）"
+            "video_call_started_unsupported": "ビデオ通話が%(roomName)sで開始しました。（このブラウザーではサポートされていません）",
+            "video_call_ended": "ビデオ通話が終了しました"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)sが音声通話を行いました。",
@@ -4072,7 +4066,15 @@
         "pinned_messages_button": "固定メッセージ",
         "export_chat_button": "チャットをエクスポート",
         "share_button": "ルームを共有",
-        "settings_button": "ルームの設定"
+        "settings_button": "ルームの設定",
+        "poll": {
+            "empty_active": "このルームに実施中のアンケートはありません",
+            "empty_past": "このルームに過去のアンケートはありません",
+            "final_result": {
+                "one": "合計%(count)s票に基づく最終結果",
+                "other": "合計%(count)s票に基づく最終結果"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "招待を辞退",

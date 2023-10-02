@@ -659,10 +659,6 @@
     },
     "No votes cast": "ບໍ່ມີການລົງຄະແນນສຽງ",
     "Results will be visible when the poll is ended": "ຜົນໄດ້ຮັບຈະເຫັນໄດ້ເມື່ອການສໍາຫຼວດສິ້ນສຸດລົງ",
-    "Final result based on %(count)s votes": {
-        "one": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ",
-        "other": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ"
-    },
     "Sorry, your vote was not registered. Please try again.": "ຂໍອະໄພ, ການລົງຄະແນນສຽງຂອງທ່ານບໍ່ໄດ້ລົງທະບຽນ. ກະລຸນາລອງອີກຄັ້ງ.",
     "Vote not registered": "ລົງຄະແນນສຽງບໍ່ໄດ້ລົງທະບຽນ",
     "Sorry, you can't edit a poll after votes have been cast.": "ຂໍອະໄພ, ທ່ານບໍ່ສາມາດແກ້ໄຂແບບສຳຫຼວດໄດ້ຫຼັງຈາກລົງຄະແນນສຽງແລ້ວ.",
@@ -3581,7 +3577,13 @@
         "pinned_messages_button": "ໄດ້ປັກໝຸດ",
         "export_chat_button": "ສົ່ງການສົນທະນາອອກ",
         "share_button": "ແບ່ງປັນຫ້ອງ",
-        "settings_button": "ການຕັ້ງຄ່າຫ້ອງ"
+        "settings_button": "ການຕັ້ງຄ່າຫ້ອງ",
+        "poll": {
+            "final_result": {
+                "one": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ",
+                "other": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "ປະຕິເສດຄຳເຊີນ",

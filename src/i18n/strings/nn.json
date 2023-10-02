@@ -162,10 +162,6 @@
     "Expand quotes": "Utvid sitat",
     "Deactivate account": "Avliv brukarkontoen",
     "Join the conference from the room information card on the right": "Bli med i konferanse frå rominfo-kortet til høgre",
-    "Final result based on %(count)s votes": {
-        "one": "Endeleg resultat basert etter %(count)s stemme",
-        "other": "Endeleg resultat basert etter %(count)s stemmer"
-    },
     "common": {
         "analytics": "Statistikk",
         "error": "Noko gjekk gale",
@@ -1297,7 +1293,13 @@
     },
     "right_panel": {
         "share_button": "Del rom",
-        "settings_button": "Rominnstillingar"
+        "settings_button": "Rominnstillingar",
+        "poll": {
+            "final_result": {
+                "one": "Endeleg resultat basert etter %(count)s stemme",
+                "other": "Endeleg resultat basert etter %(count)s stemmer"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Sei nei til innbyding",

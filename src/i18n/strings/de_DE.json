@@ -834,10 +834,6 @@
         "other": "%(count)s Stimmen abgegeben. Stimme ab, um die Ergebnisse zu sehen"
     },
     "No votes cast": "Es wurden noch keine Stimmen abgegeben",
-    "Final result based on %(count)s votes": {
-        "one": "Es wurde %(count)s Stimme abgegeben",
-        "other": "Es wurden %(count)s Stimmen abgegeben"
-    },
     "Sorry, your vote was not registered. Please try again.": "Wir konnten deine Stimme leider nicht erfassen. Versuche es bitte erneut.",
     "Vote not registered": "Stimme nicht erfasst",
     "Messaging": "Kommunikation",
@@ -955,7 +951,6 @@
     "Choose a locale": "Wähle ein Gebietsschema",
     "Saved Items": "Gespeicherte Elemente",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
-    "Video call ended": "Videoanruf beendet",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
     "Error downloading image": "Fehler beim Herunterladen des Bildes",
     "Unable to show image due to error": "Kann Bild aufgrund eines Fehlers nicht anzeigen",
@@ -967,8 +962,6 @@
     "%(displayName)s (%(matrixId)s)": "%(displayName)s (%(matrixId)s)",
     "unknown": "unbekannt",
     "Declining…": "Ablehnen …",
-    "There are no past polls in this room": "In diesem Raum gibt es keine abgeschlossenen Umfragen",
-    "There are no active polls in this room": "In diesem Raum gibt es keine aktiven Umfragen",
     "Loading live location…": "Lade Live-Standort …",
     "Fetching keys from server…": "Lade Schlüssel vom Server …",
     "Checking…": "Überprüfe …",
@@ -976,26 +969,10 @@
     "Waiting for partner to confirm…": "Warte auf Bestätigung des Gesprächspartners …",
     "Adding…": "Füge hinzu …",
     "Starting export process…": "Beginne Exportvorgang …",
-    "Loading polls": "Lade Umfragen",
     "The sender has blocked you from receiving this message": "Der Absender hat dich vom Erhalt dieser Nachricht ausgeschlossen",
     "Due to decryption errors, some votes may not be counted": "Evtl. werden infolge von Entschlüsselungsfehlern einige Stimmen nicht gezählt",
     "Ended a poll": "Eine Umfrage beendet",
     "Answered elsewhere": "Anderswo beantwortet",
-    "View poll": "Umfrage ansehen",
-    "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Für den vergangenen Tag sind keine beendeten Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
-        "other": "Für die vergangenen %(count)s Tage sind keine beendeten Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen"
-    },
-    "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months": {
-        "one": "Für den vergangenen Tag sind keine aktiven Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
-        "other": "Für die vergangenen %(count)s Tage sind keine aktiven Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen"
-    },
-    "There are no past polls. Load more polls to view polls for previous months": "Es sind keine vergangenen Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
-    "There are no active polls. Load more polls to view polls for previous months": "Es sind keine aktiven Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
-    "Load more polls": "Weitere Umfragen laden",
-    "Past polls": "Vergangene Umfragen",
-    "Active polls": "Aktive Umfragen",
-    "View poll in timeline": "Umfrage im Verlauf anzeigen",
     "Invites by email can only be sent one at a time": "E-Mail-Einladungen können nur nacheinander gesendet werden",
     "Desktop app logo": "Desktop-App-Logo",
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
@@ -2258,7 +2235,8 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Ein Videoanruf hat in %(roomName)s begonnen.",
-            "video_call_started_unsupported": "Ein Videoanruf hat in %(roomName)s begonnen. (Von diesem Browser nicht unterstützt)"
+            "video_call_started_unsupported": "Ein Videoanruf hat in %(roomName)s begonnen. (Von diesem Browser nicht unterstützt)",
+            "video_call_ended": "Videoanruf beendet"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hat einen Sprachanruf getätigt.",
@@ -4281,7 +4259,31 @@
         "pinned_messages_button": "Angeheftet",
         "export_chat_button": "Unterhaltung exportieren",
         "share_button": "Raum teilen",
-        "settings_button": "Raumeinstellungen"
+        "settings_button": "Raumeinstellungen",
+        "poll": {
+            "view_in_timeline": "Umfrage im Verlauf anzeigen",
+            "active_heading": "Aktive Umfragen",
+            "past_heading": "Vergangene Umfragen",
+            "loading": "Lade Umfragen",
+            "load_more": "Weitere Umfragen laden",
+            "empty_active": "In diesem Raum gibt es keine aktiven Umfragen",
+            "empty_past": "In diesem Raum gibt es keine abgeschlossenen Umfragen",
+            "empty_active_load_more": "Es sind keine aktiven Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
+            "empty_past_load_more": "Es sind keine vergangenen Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
+            "empty_active_load_more_n_days": {
+                "one": "Für den vergangenen Tag sind keine aktiven Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
+                "other": "Für die vergangenen %(count)s Tage sind keine aktiven Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen"
+            },
+            "empty_past_load_more_n_days": {
+                "one": "Für den vergangenen Tag sind keine beendeten Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen",
+                "other": "Für die vergangenen %(count)s Tage sind keine beendeten Umfragen verfügbar. Lade weitere Umfragen, um die der vorherigen Monate zu sehen"
+            },
+            "view_poll": "Umfrage ansehen",
+            "final_result": {
+                "one": "Es wurde %(count)s Stimme abgegeben",
+                "other": "Es wurden %(count)s Stimmen abgegeben"
+            }
+        }
     },
     "reject_invitation_dialog": {
         "title": "Einladung ablehnen",
