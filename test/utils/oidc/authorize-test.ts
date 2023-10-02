@@ -104,22 +104,24 @@ describe("OIDC authorization", () => {
         };
 
         beforeEach(() => {
-            mocked(completeAuthorizationCodeGrant).mockClear().mockResolvedValue({
-                oidcClientSettings: {
-                    clientId,
-                    issuer,
-                },
-                tokenResponse,
-                homeserverUrl,
-                identityServerUrl,
-                idTokenClaims: {
-                    aud: "123",
-                    iss: issuer,
-                    sub: "123",
-                    exp: 123,
-                    iat: 456,
-                }
-            });
+            mocked(completeAuthorizationCodeGrant)
+                .mockClear()
+                .mockResolvedValue({
+                    oidcClientSettings: {
+                        clientId,
+                        issuer,
+                    },
+                    tokenResponse,
+                    homeserverUrl,
+                    identityServerUrl,
+                    idTokenClaims: {
+                        aud: "123",
+                        iss: issuer,
+                        sub: "123",
+                        exp: 123,
+                        iat: 456,
+                    },
+                });
         });
 
         it("should throw when query params do not include state and code", async () => {
