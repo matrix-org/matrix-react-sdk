@@ -40,8 +40,10 @@ export interface IAuthComponentState {
     serverDeadError?: ReactNode;
 }
 
+const AutoDiscoveryErrors = Object.values(AutoDiscoveryError);
+
 const isAutoDiscoveryError = (err: unknown): err is AutoDiscoveryError => {
-    return AutoDiscovery.ALL_ERRORS.includes(err as AutoDiscoveryError);
+    return AutoDiscoveryErrors.includes(err as AutoDiscoveryError);
 };
 
 const mapAutoDiscoveryErrorTranslation = (err: AutoDiscoveryError): TranslationKey => {
