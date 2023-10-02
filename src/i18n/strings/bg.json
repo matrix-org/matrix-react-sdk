@@ -92,9 +92,6 @@
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ако другата версия на %(brand)s все още е отворена в друг таб, моля затворете я. Използването на %(brand)s на един адрес във версии с постепенно и без постепенно зареждане ще причини проблеми.",
     "Incompatible local cache": "Несъвместим локален кеш",
     "Clear cache and resync": "Изчисти кеша и ресинхронизирай",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "За да избегнете загубата на чат история, трябва да експортирате ключовете на стаята преди да излезете от профила си. Ще трябва да се върнете към по-новата версия на %(brand)s за да направите това",
-    "Incompatible Database": "Несъвместима база данни",
-    "Continue With Encryption Disabled": "Продължи с изключено шифроване",
     "Unable to load backup status": "Неуспешно зареждане на състоянието на резервното копие",
     "Unable to restore backup": "Неуспешно възстановяване на резервно копие",
     "No backup found!": "Не е открито резервно копие!",
@@ -239,12 +236,6 @@
     "Verify your other session using one of the options below.": "Верифицирайте другите си сесии използвайки една от опциите по-долу.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Изтриването на ключовете за кръстосано-подписване е необратимо. Всички, с които сте се верифицирали ще видят предупреждения за сигурността. Почти със сигурност не искате да направите това, освен ако не сте загубили всички устройства, от които можете да подписвате кръстосано.",
     "Clear cross-signing keys": "Изчисти ключовете за кръстосано-подписване",
-    "Server did not require any authentication": "Сървърът не изисква никаква автентикация",
-    "Server did not return valid authentication information.": "Сървърът не върна валидна информация относно автентикация.",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "Потвърдете деактивацията на профила си използвайки Single Sign On за потвърждаване на самоличността.",
-    "Are you sure you want to deactivate your account? This is irreversible.": "Сигурни ли сте, че искате да деактивирате профила си? Това е необратимо.",
-    "Confirm account deactivation": "Потвърдете деактивирането на профила",
-    "There was a problem communicating with the server. Please try again.": "Имаше проблем при комуникацията със сървъра. Опитайте пак.",
     "Session name": "Име на сесията",
     "Session key": "Ключ за сесията",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Верифицирането на този потребител ще маркира сесията им като доверена при вас, както и вашата като доверена при тях.",
@@ -273,7 +264,6 @@
     "Your homeserver has exceeded its user limit.": "Надвишен е лимитът за потребители на сървъра ви.",
     "Your homeserver has exceeded one of its resource limits.": "Беше надвишен някой от лимитите на сървъра.",
     "Ok": "Добре",
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Използвали сте и по-нова версия на %(brand)s от сегашната за тази сесия. За да използвате сегашната версия отново с шифроване от-край-до-край, ще е необходимо да излезете и да влезете отново.",
     "Restoring keys from backup": "Възстановяване на ключове от резервно копие",
     "%(completed)s of %(total)s keys restored": "%(completed)s от %(total)s ключа са възстановени",
     "Keys restored": "Ключовете бяха възстановени",
@@ -560,7 +550,6 @@
     "United States": "Съединените щати",
     "United Kingdom": "Обединеното кралство",
     "Leave space": "Напусни пространство",
-    "Create a space": "Създаване на пространство",
     "unknown person": "",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
     "common": {
@@ -1078,7 +1067,13 @@
             "email_address_label": "Имейл адрес",
             "remove_msisdn_prompt": "Премахни %(phone)s?",
             "add_msisdn_instructions": "Беше изпратено SMS съобщение към +%(msisdn)s. Въведете съдържащият се код за потвърждение.",
-            "msisdn_label": "Телефонен номер"
+            "msisdn_label": "Телефонен номер",
+            "deactivate_confirm_body_sso": "Потвърдете деактивацията на профила си използвайки Single Sign On за потвърждаване на самоличността.",
+            "deactivate_confirm_body": "Сигурни ли сте, че искате да деактивирате профила си? Това е необратимо.",
+            "deactivate_confirm_continue": "Потвърдете деактивирането на профила",
+            "error_deactivate_communication": "Имаше проблем при комуникацията със сървъра. Опитайте пак.",
+            "error_deactivate_no_auth": "Сървърът не изисква никаква автентикация",
+            "error_deactivate_invalid_auth": "Сървърът не върна валидна информация относно автентикация."
         },
         "key_backup": {
             "backup_in_progress": "Прави се резервно копие на ключовете Ви (първото копие може да отнеме няколко минути).",
@@ -1759,7 +1754,11 @@
         "cross_signing_room_warning": "Някой използва непозната сесия",
         "cross_signing_room_verified": "Всички в тази стая са верифицирани",
         "cross_signing_room_normal": "Тази стая е шифрована от-край-до-край",
-        "unsupported": "Този клиент не поддържа шифроване от край до край."
+        "unsupported": "Този клиент не поддържа шифроване от край до край.",
+        "incompatible_database_sign_out_description": "За да избегнете загубата на чат история, трябва да експортирате ключовете на стаята преди да излезете от профила си. Ще трябва да се върнете към по-новата версия на %(brand)s за да направите това",
+        "incompatible_database_description": "Използвали сте и по-нова версия на %(brand)s от сегашната за тази сесия. За да използвате сегашната версия отново с шифроване от-край-до-край, ще е необходимо да излезете и да влезете отново.",
+        "incompatible_database_title": "Несъвместима база данни",
+        "incompatible_database_disable": "Продължи с изключено шифроване"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -2034,7 +2033,8 @@
         "private_heading": "Вашето лично пространство",
         "add_details_prompt": "Добавете някои подробности, за да помогнете на хората да го разпознаят.",
         "label": "Създаване на пространство",
-        "add_details_prompt_2": "Можете да ги промените по всяко време."
+        "add_details_prompt_2": "Можете да ги промените по всяко време.",
+        "subspace_dropdown_title": "Създаване на пространство"
     },
     "user_menu": {
         "switch_theme_light": "Смени на светъл режим",

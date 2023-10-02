@@ -123,9 +123,6 @@
     "collapse": "toeklappn",
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Vo je gespreksgeschiedenisse nie kwyt te speeln, moe je je gesprekssleuters exporteern vooraleer da je jen afmeldt. Je goa moetn werekeern noa de nieuwere versie van %(brand)s vo dit te doen",
-    "Incompatible Database": "Incompatibele database",
-    "Continue With Encryption Disabled": "Verdergoan me versleuterienge uutgeschoakeld",
     "Filter results": "Resultoatn filtern",
     "An error has occurred.": "’t Is e foute ipgetreedn.",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
@@ -865,7 +862,10 @@
         "setup_secure_backup": {
             "explainer": "Makt een back-up van je sleuters vooraleer da je jen afmeldt vo ze nie kwyt te speeln.",
             "title": "Instelln"
-        }
+        },
+        "incompatible_database_sign_out_description": "Vo je gespreksgeschiedenisse nie kwyt te speeln, moe je je gesprekssleuters exporteern vooraleer da je jen afmeldt. Je goa moetn werekeern noa de nieuwere versie van %(brand)s vo dit te doen",
+        "incompatible_database_title": "Incompatibele database",
+        "incompatible_database_disable": "Verdergoan me versleuterienge uutgeschoakeld"
     },
     "auth": {
         "sign_in_with_sso": "Anmeldn met enkele anmeldienge",

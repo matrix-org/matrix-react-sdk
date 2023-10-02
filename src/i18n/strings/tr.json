@@ -60,7 +60,6 @@
     "Restricted": "Sınırlı",
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
-    "Incompatible Database": "Uyumsuz Veritabanı",
     "Filter results": "Sonuçları filtrele",
     "Integrations are disabled": "Bütünleştirmeler kapatılmış",
     "Integrations not allowed": "Bütünleştirmelere izin verilmiyor",
@@ -176,8 +175,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
-    "Continue With Encryption Disabled": "Şifreleme Kapalı Şekilde Devam Et",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
     "Upload %(count)s other files": {
         "other": "%(count)s diğer dosyaları yükle",
@@ -1675,7 +1672,10 @@
         "cross_signing_room_warning": "Birisi bilinmeyen bir oturum kullanıyor",
         "cross_signing_room_verified": "Bu odadaki herkes doğrulanmış",
         "cross_signing_room_normal": "Bu oda uçtan uça şifreli",
-        "unsupported": "Bu istemci uçtan uca şifrelemeyi desteklemiyor."
+        "unsupported": "Bu istemci uçtan uca şifrelemeyi desteklemiyor.",
+        "incompatible_database_sign_out_description": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
+        "incompatible_database_title": "Uyumsuz Veritabanı",
+        "incompatible_database_disable": "Şifreleme Kapalı Şekilde Devam Et"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",

@@ -82,7 +82,6 @@
     "Confirm this user's session by comparing the following with their User Settings:": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
     "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat).",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -263,7 +262,8 @@
             "error_invalid_email": "El correu electrònic no és vàlid",
             "error_invalid_email_detail": "Sembla que aquest correu electrònic no és vàlid",
             "error_add_email": "No s'ha pogut afegir el correu electrònic",
-            "msisdn_label": "Número de telèfon"
+            "msisdn_label": "Número de telèfon",
+            "deactivate_confirm_body_sso": "Confirma la desactivació del teu compte mitjançant la inscripció única SSO (per demostrar la teva identitat)."
         },
         "key_backup": {
             "setup_secure_backup": {

@@ -406,16 +406,6 @@
     "Confirm encryption setup": "راه‌اندازی رمزگذاری را تأیید کنید",
     "e.g. my-room": "به عنوان مثال، my-room",
     "Filter results": "پالایش نتایج",
-    "Server did not return valid authentication information.": "سرور اطلاعات احراز هویت معتبری را باز نگرداند.",
-    "Server did not require any authentication": "سرور به احراز هویت احتیاج نداشت",
-    "There was a problem communicating with the server. Please try again.": "مشکلی در برقراری ارتباط با سرور وجود داشت. لطفا دوباره تلاش کنید.",
-    "Confirm account deactivation": "غیرفعال کردن حساب کاربری را تأیید کنید",
-    "Are you sure you want to deactivate your account? This is irreversible.": "آیا از غیرفعال‌کردن حساب کاربری خود اطمینان دارید؟ این کار غیر قابل بازگشت است.",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "برای غیرفعال‌کردن حساب کاربری خود ابتدا باید هویت خود را ثابت کنید که برای این کار می‌توانید از احراز هویت یکپارچه استفاده کنید.",
-    "Continue With Encryption Disabled": "با رمزنگاری غیرفعال ادامه بده",
-    "Incompatible Database": "پایگاه داده ناسازگار",
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "شما قبلاً با این نشست از نسخه جدیدتر %(brand)s استفاده کرده‌اید. برای استفاده مجدد از این نسخه با قابلیت رمزنگاری سرتاسر ، باید از حسابتان خارج شده و دوباره وارد برنامه شوید.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "برای جلوگیری از دست دادن تاریخچه‌ی گفتگوی خود باید قبل از ورود به برنامه ، کلیدهای اتاق خود را استخراج (Export) کنید. برای این کار باید از نسخه جدیدتر %(brand)s استفاده کنید",
     "%(count)s members": {
         "other": "%(count)s عضو",
         "one": "%(count)s عضو"
@@ -464,7 +454,6 @@
     "This backup is trusted because it has been restored on this session": "این نسخه‌ی پشتیبان قابل اعتماد است چرا که بر روی این نشست بازیابی شد",
     "not specified": "مشخص نشده",
     "Failed to connect to integration manager": "اتصال به سیستم مدیریت ادغام انجام نشد",
-    "Create a space": "ساختن یک محیط",
     "Folder": "پوشه",
     "Headphones": "هدفون",
     "Anchor": "لنگر",
@@ -1241,7 +1230,13 @@
             "email_address_label": "آدرس ایمیل",
             "remove_msisdn_prompt": "%(phone)s را پاک می‌کنید؟",
             "add_msisdn_instructions": "یک پیام متنی به +%(msisdn)s ارسال شد. لطفا کد تائید موجود در آن را وارد کنید.",
-            "msisdn_label": "شماره تلفن"
+            "msisdn_label": "شماره تلفن",
+            "deactivate_confirm_body_sso": "برای غیرفعال‌کردن حساب کاربری خود ابتدا باید هویت خود را ثابت کنید که برای این کار می‌توانید از احراز هویت یکپارچه استفاده کنید.",
+            "deactivate_confirm_body": "آیا از غیرفعال‌کردن حساب کاربری خود اطمینان دارید؟ این کار غیر قابل بازگشت است.",
+            "deactivate_confirm_continue": "غیرفعال کردن حساب کاربری را تأیید کنید",
+            "error_deactivate_communication": "مشکلی در برقراری ارتباط با سرور وجود داشت. لطفا دوباره تلاش کنید.",
+            "error_deactivate_no_auth": "سرور به احراز هویت احتیاج نداشت",
+            "error_deactivate_invalid_auth": "سرور اطلاعات احراز هویت معتبری را باز نگرداند."
         },
         "sidebar": {
             "title": "نوارکناری",
@@ -2058,7 +2053,11 @@
         "cross_signing_room_warning": "فردی از یک نشست ناشناس استفاده می‌کند",
         "cross_signing_room_verified": "همه‌ی اعضای این اتاق تائید شده‌اند",
         "cross_signing_room_normal": "این اتاق به صورت سرتاسر رمزشده است",
-        "unsupported": "این کلاینت از رمزگذاری سرتاسر پشتیبانی نمی کند."
+        "unsupported": "این کلاینت از رمزگذاری سرتاسر پشتیبانی نمی کند.",
+        "incompatible_database_sign_out_description": "برای جلوگیری از دست دادن تاریخچه‌ی گفتگوی خود باید قبل از ورود به برنامه ، کلیدهای اتاق خود را استخراج (Export) کنید. برای این کار باید از نسخه جدیدتر %(brand)s استفاده کنید",
+        "incompatible_database_description": "شما قبلاً با این نشست از نسخه جدیدتر %(brand)s استفاده کرده‌اید. برای استفاده مجدد از این نسخه با قابلیت رمزنگاری سرتاسر ، باید از حسابتان خارج شده و دوباره وارد برنامه شوید.",
+        "incompatible_database_title": "پایگاه داده ناسازگار",
+        "incompatible_database_disable": "با رمزنگاری غیرفعال ادامه بده"
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2548,7 +2547,8 @@
         "setup_rooms_community_description": "بیایید برای هر یک از آنها یک اتاق درست کنیم.",
         "setup_rooms_description": "بعداً می توانید موارد بیشتری را اضافه کنید ، از جمله موارد موجود.",
         "label": "ساختن یک محیط",
-        "add_details_prompt_2": "شما می‌توانید این را هر زمان که خواستید، تغییر دهید."
+        "add_details_prompt_2": "شما می‌توانید این را هر زمان که خواستید، تغییر دهید.",
+        "subspace_dropdown_title": "ساختن یک محیط"
     },
     "user_menu": {
         "switch_theme_light": "انتخاب حالت روشن",

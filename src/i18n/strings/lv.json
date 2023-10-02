@@ -88,7 +88,6 @@
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
     "Confirm to continue": "Apstipriniet, lai turpinātu",
-    "Confirm account deactivation": "Apstipriniet konta deaktivizēšanu",
     "Incorrect Security Phrase": "Nepareiza slepenā frāze",
     "Security Phrase": "Slepenā frāze",
     "Afghanistan": "Afganistāna",
@@ -98,7 +97,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Uzaiciniet kādu personu, izmantojot vārdu, epasta adresi, lietotājvārdu (piemēram, <userId/>) vai <a>dalieties ar šo istabu</a>.",
     "%(name)s accepted": "%(name)s akceptēja",
     "IRC display name width": "IRC parādāmā vārda platums",
-    "Are you sure you want to deactivate your account? This is irreversible.": "Vai tiešām vēlaties deaktivizēt savu kontu? Tas ir neatgriezeniski.",
     "Deactivate account": "Deaktivizēt kontu",
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
     "e.g. my-room": "piem., mana-istaba",
@@ -143,9 +141,7 @@
     "Create a new room with the same name, description and avatar": "Izveidot istabu ar to pašu nosaukumu, aprakstu un avataru",
     "Email (optional)": "Epasts (izvēles)",
     "Invite to %(roomName)s": "Uzaicināt uz %(roomName)s",
-    "Continue With Encryption Disabled": "Turpināt ar atspējotu šifrēšanu",
     "%(name)s cancelled": "%(name)s atcēla",
-    "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) pierakstījās jaunā sesijā, neveicot tās verifikāciju:",
@@ -437,7 +433,6 @@
     },
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
     "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Lai nezaudētu čata vēsturi, pirms izrakstīšanās no konta jums ir jāeksportē istabas atslēgas. Lai to izdarītu, jums būs jāatgriežas jaunākajā %(brand)s versijā",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Pārtraukt lietotāju runāšanu vecajā istabas versijā un publicēt ziņojumu, kurā lietotājiem tiek ieteikts pāriet uz jauno istabu",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Jaunās istabas sākumā ievietojiet saiti uz veco istabu, lai cilvēki varētu apskatīt vecās ziņas",
     "Automatically invite members from this room to the new one": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno",
@@ -841,7 +836,9 @@
             "email_address_label": "Epasta adrese",
             "remove_msisdn_prompt": "Dzēst %(phone)s?",
             "add_msisdn_instructions": "Teksta ziņa tika nosūtīta uz +%(msisdn)s. Lūdzu, ievadiet tajā esošo verifikācijas kodu.",
-            "msisdn_label": "Tālruņa numurs"
+            "msisdn_label": "Tālruņa numurs",
+            "deactivate_confirm_body": "Vai tiešām vēlaties deaktivizēt savu kontu? Tas ir neatgriezeniski.",
+            "deactivate_confirm_continue": "Apstipriniet konta deaktivizēšanu"
         },
         "sidebar": {
             "metaspaces_home_all_rooms": "Rādīt visas istabas"
@@ -1520,7 +1517,9 @@
         },
         "event_shield_reason_mismatched_sender_key": "Šifrēts ar neverificētu sesiju",
         "event_shield_reason_authenticity_not_guaranteed": "Šīs šifrētās ziņas autentiskums nevar tikt garantēts šajā ierīcē.",
-        "cross_signing_room_normal": "Šajā istabā tiek veikta pilnīga šifrēšana"
+        "cross_signing_room_normal": "Šajā istabā tiek veikta pilnīga šifrēšana",
+        "incompatible_database_sign_out_description": "Lai nezaudētu čata vēsturi, pirms izrakstīšanās no konta jums ir jāeksportē istabas atslēgas. Lai to izdarītu, jums būs jāatgriežas jaunākajā %(brand)s versijā",
+        "incompatible_database_disable": "Turpināt ar atspējotu šifrēšanu"
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",
@@ -1839,7 +1838,8 @@
         "setup_rooms_private_description": "Mēs izveidosim istabas katram no tiem.",
         "address_label": "Adrese",
         "label": "Izveidot vietu",
-        "add_details_prompt_2": "Jebkurā laikā varat to mainīt."
+        "add_details_prompt_2": "Jebkurā laikā varat to mainīt.",
+        "subspace_dropdown_title": "Izveidot vietu"
     },
     "user_menu": {
         "switch_theme_light": "Pārslēgt gaišo režīmu",

@@ -152,9 +152,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <default>기본 (%(defaultIdentityServerName)s)을(를) 사용하거나</default> <settings>설정</settings>에서 관리하세요.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <settings>설정</settings>에서 관리하세요.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "대화 기록을 잃지 않으려면, 로그아웃하기 전에 방 키를 내보내야 합니다. 이 작업을 수행하려면 최신 버전의 %(brand)s으로 가야 합니다",
-    "Incompatible Database": "호환하지 않는 데이터베이스",
-    "Continue With Encryption Disabled": "암호화를 끈 채 계속하기",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "이 사용자를 신뢰할 수 있도록 인증합니다. 종단간 암호화 메시지를 사용할 때 사용자를 신뢰하면 안심이 듭니다.",
     "Incoming Verification Request": "수신 확인 요청",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "이전에 구성원의 불러오기 지연이 켜진 %(host)s에서 %(brand)s을 사용했습니다. 이 버전에서 불러오기 지연은 꺼집니다. 로컬 캐시가 이 두 설정 간에 호환되지 않으므로, %(brand)s은 계정을 다시 동기화 해야 합니다.",
@@ -209,9 +206,7 @@
     "Recently Direct Messaged": "최근 다이렉트 메세지",
     "Recently viewed": "최근에 확인한",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
-    "Private space (invite only)": "비공개 스페이스 (초대 필요)",
     "Leave all rooms": "모든 방에서 떠나기",
-    "Create a space": "스페이스 만들기",
     "Or send invite link": "또는 초대 링크 보내기",
     "Recent Conversations": "최근 대화 목록",
     "Start a conversation with someone using their name or username (like <userId/>).": "이름이나 사용자명(<userId/> 형식)을 사용하는 사람들과 대화를 시작하세요.",
@@ -1101,7 +1096,10 @@
             "explainer": "잃어버리지 않도록 로그아웃하기 전에 키를 백업하세요.",
             "title": "설정"
         },
-        "unsupported": "이 클라이언트는 종단간 암호화를 지원하지 않습니다."
+        "unsupported": "이 클라이언트는 종단간 암호화를 지원하지 않습니다.",
+        "incompatible_database_sign_out_description": "대화 기록을 잃지 않으려면, 로그아웃하기 전에 방 키를 내보내야 합니다. 이 작업을 수행하려면 최신 버전의 %(brand)s으로 가야 합니다",
+        "incompatible_database_title": "호환하지 않는 데이터베이스",
+        "incompatible_database_disable": "암호화를 끈 채 계속하기"
     },
     "emoji": {
         "category_frequently_used": "자주 사용함",
@@ -1344,7 +1342,9 @@
     "create_space": {
         "public_heading": "당신의 공개 스페이스",
         "private_heading": "당신의 비공개 스페이스",
-        "label": "스페이스 만들기"
+        "label": "스페이스 만들기",
+        "subspace_dropdown_title": "스페이스 만들기",
+        "subspace_join_rule_invite_only": "비공개 스페이스 (초대 필요)"
     },
     "room": {
         "drop_file_prompt": "업로드할 파일을 여기에 놓으세요",

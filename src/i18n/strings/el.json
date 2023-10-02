@@ -385,7 +385,6 @@
     "Robot": "Ρομπότ",
     "Smiley": "Χαμογελαστό πρόσωπο",
     "To join a space you'll need an invite.": "Για να συμμετάσχετε σε ένα χώρο θα χρειαστείτε μια πρόσκληση.",
-    "Create a space": "Δημιουργήστε ένα χώρο",
     "Folder": "Φάκελος",
     "Headphones": "Ακουστικά",
     "Anchor": "Άγκυρα",
@@ -547,19 +546,6 @@
     },
     "MB": "MB",
     "End Poll": "Τερματισμός δημοσκόπησης",
-    "Server did not require any authentication": "Ο διακομιστής δεν απαίτησε κάποιο έλεγχο ταυτότητας",
-    "Server did not return valid authentication information.": "Ο διακομιστής δεν επέστρεψε έγκυρες πληροφορίες ελέγχου ταυτότητας.",
-    "There was a problem communicating with the server. Please try again.": "Παρουσιάστηκε πρόβλημα κατά την επικοινωνία με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-    "Confirm account deactivation": "Επιβεβαίωση απενεργοποίησης λογαριασμού",
-    "Are you sure you want to deactivate your account? This is irreversible.": "Είστε βέβαιοι ότι θέλετε να απενεργοποιήσετε τον λογαριασμό σας; Αυτό είναι μη αναστρέψιμο.",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "Επιβεβαιώστε την απενεργοποίηση του λογαριασμού σας χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας.",
-    "Continue With Encryption Disabled": "Συνέχεια με Απενεργοποίηση Κρυπτογράφησης",
-    "Incompatible Database": "Μη συμβατή Βάση Δεδομένων",
-    "Want to add an existing space instead?": "Θέλετε να προσθέσετε έναν υπάρχοντα χώρο;",
-    "Private space (invite only)": "Ιδιωτικός χώρος (μόνο με πρόσκληση)",
-    "Space visibility": "Ορατότητα χώρου",
-    "Only people invited will be able to find and join this space.": "Μόνο τα άτομα που έχουν προσκληθεί θα μπορούν να βρουν και να εγγραφούν σε αυτόν τον χώρο.",
-    "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Οποιοσδήποτε θα μπορεί να βρει και να εγγραφεί σε αυτόν τον χώρο, όχι μόνο μέλη του <SpaceName/>.",
     "Submit logs": "Υποβολή αρχείων καταγραφής",
     "%(count)s votes": {
         "one": "%(count)s ψήφος",
@@ -581,7 +567,6 @@
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Είστε βέβαιοι ότι θέλετε να τερματίσετε αυτήν τη δημοσκόπηση; Αυτό θα εμφανίσει τα τελικά αποτελέσματα της δημοσκόπησης και θα εμποδίσει νέους ψήφους.",
     "Sorry, the poll did not end. Please try again.": "Συγνώμη, η δημοσκόπηση δεν τερματίστηκε. Παρακαλώ προσπαθήστε ξανά.",
     "Failed to end poll": "Αποτυχία τερματισμού της δημοσκόπησης",
-    "Anyone in <SpaceName/> will be able to find and join.": "Οποιοσδήποτε στο <SpaceName/> θα μπορεί να βρει και να συμμετάσχει σε αυτό το δωμάτιο.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Προτού υποβάλετε αρχεία καταγραφής, πρέπει να <a>δημιουργήσετε ένα ζήτημα GitHub</a> για να περιγράψετε το πρόβλημά σας.",
     "e.g. my-room": "π.χ. my-room",
     "Spanner": "Γερμανικό κλειδί",
@@ -605,9 +590,6 @@
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
     },
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Έχετε χρησιμοποιήσει στο παρελθόν μια νεότερη έκδοση του %(brand)s με αυτήν την συνεδρία. Για να χρησιμοποιήσετε ξανά αυτήν την έκδοση με κρυπτογράφηση από άκρο σε άκρο, θα πρέπει να αποσυνδεθείτε και να συνδεθείτε ξανά.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Για να αποφύγετε να χάσετε το ιστορικό των συνομιλιών σας, πρέπει να εξαγάγετε τα κλειδιά του δωματίου σας πριν αποσυνδεθείτε. Για να το κάνετε αυτό, θα χρειαστεί να επιστρέψετε στη νεότερη έκδοση του %(brand)s",
-    "Add a space to a space you manage.": "Προσθέστε έναν χώρο σε ένα χώρο που διαχειρίζεστε.",
     "Data on this screen is shared with %(widgetDomain)s": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s",
     "Other spaces or rooms you might not know": "Άλλοι χώροι ή δωμάτια που ίσως δε γνωρίζετε",
     "Spaces you know that contain this space": "Χώροι που γνωρίζετε ότι περιέχουν αυτόν το χώρο",
@@ -713,7 +695,6 @@
     "Cameras": "Κάμερες",
     "Output devices": "Συσκευές εξόδου",
     "Input devices": "Συσκευές εισόδου",
-    "To continue, please enter your account password:": "Για να συνεχίσετε παρακαλώ εισάγετε τον κωδικό σας:",
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
     "Start a group chat": "Ξεκινήστε μια ομαδική συνομιλία",
     "Other options": "Αλλες επιλογές",
@@ -726,11 +707,6 @@
         "one": "%(count)s Μέλος",
         "other": "%(count)s Μέλη"
     },
-    "You will leave all rooms and DMs that you are in": "Θα αποχωρήσετε από όλα τα δωμάτια και τις συνομιλίες σας",
-    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Κανείς δε θα μπορεί να επαναχρησιμοποιήσει το όνομα χρήστη σας (MXID), συμπεριλαμβανομένου εσάς: αυτό το όνομα χρήστη θα παραμείνει μη διαθέσιμο",
-    "You will not be able to reactivate your account": "Δεν θα μπορείτε να ενεργοποιήσετε ξανά τον λογαριασμό σας",
-    "You will no longer be able to log in": "Δεν θα μπορείτε πλέον να συνδεθείτε",
-    "Confirm that you would like to deactivate your account. If you proceed:": "Επιβεβαιώστε ότι θέλετε να απενεργοποιήσετε τον λογαριασμό σας. Εάν προχωρήσετε:",
     "%(count)s participants": {
         "one": "1 συμμετέχων",
         "other": "%(count)s συμμετέχοντες"
@@ -1444,7 +1420,19 @@
             "email_address_label": "Διεύθυνση Email",
             "remove_msisdn_prompt": "Κατάργηση %(phone)s;",
             "add_msisdn_instructions": "Ένα μήνυμα sms έχει σταλεί στο +%(msisdn)s. Παρακαλώ εισαγάγετε τον κωδικό επαλήθευσης που περιέχει.",
-            "msisdn_label": "Αριθμός Τηλεφώνου"
+            "msisdn_label": "Αριθμός Τηλεφώνου",
+            "deactivate_confirm_body_sso": "Επιβεβαιώστε την απενεργοποίηση του λογαριασμού σας χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας.",
+            "deactivate_confirm_body": "Είστε βέβαιοι ότι θέλετε να απενεργοποιήσετε τον λογαριασμό σας; Αυτό είναι μη αναστρέψιμο.",
+            "deactivate_confirm_continue": "Επιβεβαίωση απενεργοποίησης λογαριασμού",
+            "deactivate_confirm_body_password": "Για να συνεχίσετε παρακαλώ εισάγετε τον κωδικό σας:",
+            "error_deactivate_communication": "Παρουσιάστηκε πρόβλημα κατά την επικοινωνία με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+            "error_deactivate_no_auth": "Ο διακομιστής δεν απαίτησε κάποιο έλεγχο ταυτότητας",
+            "error_deactivate_invalid_auth": "Ο διακομιστής δεν επέστρεψε έγκυρες πληροφορίες ελέγχου ταυτότητας.",
+            "deactivate_confirm_content": "Επιβεβαιώστε ότι θέλετε να απενεργοποιήσετε τον λογαριασμό σας. Εάν προχωρήσετε:",
+            "deactivate_confirm_content_1": "Δεν θα μπορείτε να ενεργοποιήσετε ξανά τον λογαριασμό σας",
+            "deactivate_confirm_content_2": "Δεν θα μπορείτε πλέον να συνδεθείτε",
+            "deactivate_confirm_content_3": "Κανείς δε θα μπορεί να επαναχρησιμοποιήσει το όνομα χρήστη σας (MXID), συμπεριλαμβανομένου εσάς: αυτό το όνομα χρήστη θα παραμείνει μη διαθέσιμο",
+            "deactivate_confirm_content_4": "Θα αποχωρήσετε από όλα τα δωμάτια και τις συνομιλίες σας"
         },
         "sidebar": {
             "title": "Πλαϊνή μπάρα",
@@ -2562,7 +2550,11 @@
         "cross_signing_room_warning": "Κάποιος χρησιμοποιεί μια άγνωστη συνεδρία",
         "cross_signing_room_verified": "Όλοι σε αυτό το δωμάτιο έχουν επαληθευτεί",
         "cross_signing_room_normal": "Αυτό το δωμάτιο έχει κρυπτογράφηση από άκρο σε άκρο",
-        "unsupported": "Αυτό το πρόγραμμα-πελάτης δεν υποστηρίζει κρυπτογράφηση από άκρο σε άκρο."
+        "unsupported": "Αυτό το πρόγραμμα-πελάτης δεν υποστηρίζει κρυπτογράφηση από άκρο σε άκρο.",
+        "incompatible_database_sign_out_description": "Για να αποφύγετε να χάσετε το ιστορικό των συνομιλιών σας, πρέπει να εξαγάγετε τα κλειδιά του δωματίου σας πριν αποσυνδεθείτε. Για να το κάνετε αυτό, θα χρειαστεί να επιστρέψετε στη νεότερη έκδοση του %(brand)s",
+        "incompatible_database_description": "Έχετε χρησιμοποιήσει στο παρελθόν μια νεότερη έκδοση του %(brand)s με αυτήν την συνεδρία. Για να χρησιμοποιήσετε ξανά αυτήν την έκδοση με κρυπτογράφηση από άκρο σε άκρο, θα πρέπει να αποσυνδεθείτε και να συνδεθείτε ξανά.",
+        "incompatible_database_title": "Μη συμβατή Βάση Δεδομένων",
+        "incompatible_database_disable": "Συνέχεια με Απενεργοποίηση Κρυπτογράφησης"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -3126,7 +3118,15 @@
         "address_placeholder": "π.χ. ο-χώρος-μου",
         "address_label": "Διεύθυνση",
         "label": "Δημιουργήστε ένα χώρο",
-        "add_details_prompt_2": "Μπορείτε να τα αλλάξετε ανά πάσα στιγμή."
+        "add_details_prompt_2": "Μπορείτε να τα αλλάξετε ανά πάσα στιγμή.",
+        "subspace_join_rule_restricted_description": "Οποιοσδήποτε στο <SpaceName/> θα μπορεί να βρει και να συμμετάσχει σε αυτό το δωμάτιο.",
+        "subspace_join_rule_public_description": "Οποιοσδήποτε θα μπορεί να βρει και να εγγραφεί σε αυτόν τον χώρο, όχι μόνο μέλη του <SpaceName/>.",
+        "subspace_join_rule_invite_description": "Μόνο τα άτομα που έχουν προσκληθεί θα μπορούν να βρουν και να εγγραφούν σε αυτόν τον χώρο.",
+        "subspace_dropdown_title": "Δημιουργήστε ένα χώρο",
+        "subspace_beta_notice": "Προσθέστε έναν χώρο σε ένα χώρο που διαχειρίζεστε.",
+        "subspace_join_rule_label": "Ορατότητα χώρου",
+        "subspace_join_rule_invite_only": "Ιδιωτικός χώρος (μόνο με πρόσκληση)",
+        "subspace_existing_space_prompt": "Θέλετε να προσθέσετε έναν υπάρχοντα χώρο;"
     },
     "user_menu": {
         "switch_theme_light": "Αλλαγή σε φωτεινό",

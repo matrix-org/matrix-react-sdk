@@ -65,7 +65,6 @@
     "Home": "Pradžia",
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
-    "Incompatible Database": "Nesuderinama duomenų bazė",
     "Incompatible local cache": "Nesuderinamas vietinis podėlis",
     "Updating %(brand)s": "Atnaujinama %(brand)s",
     "This will allow you to reset your password and receive notifications.": "Tai jums leis iš naujo nustatyti slaptažodį ir gauti pranešimus.",
@@ -112,7 +111,6 @@
         "other": "%(count)s seansai(-ų)",
         "one": "%(count)s seansas"
     },
-    "Are you sure you want to deactivate your account? This is irreversible.": "Ar tikrai norite deaktyvuoti savo paskyrą? Tai yra negrįžtama.",
     "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
     "Dog": "Šuo",
     "Cat": "Katė",
@@ -192,7 +190,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-    "Continue With Encryption Disabled": "Tęsti išjungus šifravimą",
     "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Patvirtinkite šį vartotoją, kad pažymėtumėte jį kaip patikimą. Vartotojų pažymėjimas patikimais suteikia jums papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
     "Sign out and remove encryption keys?": "Atsijungti ir pašalinti šifravimo raktus?",
     "Confirm encryption setup": "Patvirtinti šifravimo sąranką",
@@ -232,8 +229,6 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
     "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Patvirtinant šį vartotoją, jo seansas bus pažymėtas kaip patikimas, taip pat jūsų seansas bus pažymėtas kaip patikimas jam.",
     "Security Phrase": "Slaptafrazė",
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Anksčiau šiame seanse naudojote naujesnę %(brand)s versiją. Norėdami vėl naudoti šią versiją su visapusiu šifravimu, turėsite atsijungti ir prisijungti iš naujo.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Tam, kad neprarastumėte savo pokalbių istorijos, prieš atsijungdami turite eksportuoti kambario raktus. Norėdami tai padaryti, turėsite grįžti į naujesnę %(brand)s versiją",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors, naudojant jų vardą, el. pašto adresą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
     "Azerbaijan": "Azerbaidžanas",
@@ -400,10 +395,6 @@
     "Sent": "Išsiųsta",
     "Sending": "Siunčiama",
     "You don't have permission to do this": "Jūs neturite leidimo tai daryti",
-    "Server did not return valid authentication information.": "Serveris negrąžino galiojančios autentifikavimo informacijos.",
-    "Server did not require any authentication": "Serveris nereikalavo jokio autentifikavimo",
-    "There was a problem communicating with the server. Please try again.": "Kilo problemų bendraujant su serveriu. Bandykite dar kartą.",
-    "Confirm account deactivation": "Patvirtinkite paskyros deaktyvavimą",
     "You may contact me if you have any follow up questions": "Jei turite papildomų klausimų, galite susisiekti su manimi",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
@@ -446,7 +437,6 @@
     "Moderation": "Moderavimas",
     "Messaging": "Žinučių siuntimas",
     "To join a space you'll need an invite.": "Norėdami prisijungti prie erdvės, turėsite gauti kvietimą.",
-    "Create a space": "Sukurti erdvę",
     "Vietnam": "Vietnamas",
     "United Arab Emirates": "Jungtiniai Arabų Emiratai",
     "Ukraine": "Ukraina",
@@ -1166,7 +1156,12 @@
             "email_address_label": "El. pašto adresas",
             "remove_msisdn_prompt": "Pašalinti %(phone)s?",
             "add_msisdn_instructions": "Teksto žinutė buvo išsiųsta numeriu +%(msisdn)s. Įveskite joje esantį patvirtinimo kodą.",
-            "msisdn_label": "Telefono Numeris"
+            "msisdn_label": "Telefono Numeris",
+            "deactivate_confirm_body": "Ar tikrai norite deaktyvuoti savo paskyrą? Tai yra negrįžtama.",
+            "deactivate_confirm_continue": "Patvirtinkite paskyros deaktyvavimą",
+            "error_deactivate_communication": "Kilo problemų bendraujant su serveriu. Bandykite dar kartą.",
+            "error_deactivate_no_auth": "Serveris nereikalavo jokio autentifikavimo",
+            "error_deactivate_invalid_auth": "Serveris negrąžino galiojančios autentifikavimo informacijos."
         },
         "sidebar": {
             "title": "Šoninė juosta",
@@ -2063,7 +2058,11 @@
         "cross_signing_room_warning": "Kažkas naudoja nežinomą seansą",
         "cross_signing_room_verified": "Visi šiame kambaryje yra patvirtinti",
         "cross_signing_room_normal": "Šis kambarys visapusiškai užšifruotas",
-        "unsupported": "Šis klientas nepalaiko visapusio šifravimo."
+        "unsupported": "Šis klientas nepalaiko visapusio šifravimo.",
+        "incompatible_database_sign_out_description": "Tam, kad neprarastumėte savo pokalbių istorijos, prieš atsijungdami turite eksportuoti kambario raktus. Norėdami tai padaryti, turėsite grįžti į naujesnę %(brand)s versiją",
+        "incompatible_database_description": "Anksčiau šiame seanse naudojote naujesnę %(brand)s versiją. Norėdami vėl naudoti šią versiją su visapusiu šifravimu, turėsite atsijungti ir prisijungti iš naujo.",
+        "incompatible_database_title": "Nesuderinama duomenų bazė",
+        "incompatible_database_disable": "Tęsti išjungus šifravimą"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2423,7 +2422,8 @@
         "address_placeholder": "pvz., mano-erdvė",
         "address_label": "Adresas",
         "label": "Sukurti erdvę",
-        "add_details_prompt_2": "Jūs tai galite pakeisti bet kada."
+        "add_details_prompt_2": "Jūs tai galite pakeisti bet kada.",
+        "subspace_dropdown_title": "Sukurti erdvę"
     },
     "room": {
         "drop_file_prompt": "Norėdami įkelti, vilkite failą čia",

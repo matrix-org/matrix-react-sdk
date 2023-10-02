@@ -91,9 +91,6 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Aurretik %(brand)s erabili duzu %(host)s zerbitzarian kideen karga alferra gaituta zenuela. Bertsio honetan karga alferra desgaituta dago. Katxe lokala bi ezarpen hauen artean bateragarria ez denez, %(brand)sek zure kontua berriro sinkronizatu behar du.",
     "Incompatible local cache": "Katxe lokal bateraezina",
     "Clear cache and resync": "Garbitu katxea eta sinkronizatu berriro",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "Zure txaten historiala ez galtzeko, zure gelako gakoak esportatu behar dituzu saioa amaitu aurretik. %(brand)s-en bertsio berriagora bueltatu behar zara hau egiteko",
-    "Incompatible Database": "Datu-base bateraezina",
-    "Continue With Encryption Disabled": "Jarraitu zifratzerik gabe",
     "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
@@ -255,12 +252,6 @@
     "Confirm this user's session by comparing the following with their User Settings:": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
     "If they don't match, the security of your communication may be compromised.": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "Berretsi zure kontua desgaitzea Single sign-on bidez zure identitatea frogatuz.",
-    "Are you sure you want to deactivate your account? This is irreversible.": "Ziur kontua desaktibatu nahi duzula? Ez dago gero atzera egiterik.",
-    "Confirm account deactivation": "Baieztatu kontua desaktibatzea",
-    "Server did not require any authentication": "Zerbitzariak ez du autentifikaziorik eskatu",
-    "Server did not return valid authentication information.": "Zerbitzariak ez du baliozko autentifikazio informaziorik itzuli.",
-    "There was a problem communicating with the server. Please try again.": "Arazo bat egon da zerbitzariarekin komunikatzeko. Saiatu berriro.",
     "Submit logs": "Bidali egunkariak",
     "Unable to upload": "Ezin izan da igo",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
@@ -279,7 +270,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
     "Message preview": "Mezu-aurrebista",
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
     "Switch theme": "Aldatu azala",
     "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
     "The server has denied your request.": "Zerbitzariak zure eskariari uko egin dio.",
@@ -753,7 +743,13 @@
             "email_address_label": "E-mail helbidea",
             "remove_msisdn_prompt": "Kendu %(phone)s?",
             "add_msisdn_instructions": "SMS mezu bat bidali zaizu +%(msisdn)s zenbakira. Sartu hemen mezu horrek daukan egiaztatze-kodea.",
-            "msisdn_label": "Telefono zenbakia"
+            "msisdn_label": "Telefono zenbakia",
+            "deactivate_confirm_body_sso": "Berretsi zure kontua desgaitzea Single sign-on bidez zure identitatea frogatuz.",
+            "deactivate_confirm_body": "Ziur kontua desaktibatu nahi duzula? Ez dago gero atzera egiterik.",
+            "deactivate_confirm_continue": "Baieztatu kontua desaktibatzea",
+            "error_deactivate_communication": "Arazo bat egon da zerbitzariarekin komunikatzeko. Saiatu berriro.",
+            "error_deactivate_no_auth": "Zerbitzariak ez du autentifikaziorik eskatu",
+            "error_deactivate_invalid_auth": "Zerbitzariak ez du baliozko autentifikazio informaziorik itzuli."
         },
         "key_backup": {
             "backup_in_progress": "Zure gakoen babes-kopia egiten ari da (lehen babes-kopiak minutu batzuk behar ditzake).",
@@ -1350,7 +1346,11 @@
         "cross_signing_room_warning": "Baten batek saio ezezagun bat erabiltzen du",
         "cross_signing_room_verified": "Gelako guztiak egiaztatuta daude",
         "cross_signing_room_normal": "Gela hau muturretik muturrera zifratuta dago",
-        "unsupported": "Bezero honek ez du muturretik muturrerako zifratzea onartzen."
+        "unsupported": "Bezero honek ez du muturretik muturrerako zifratzea onartzen.",
+        "incompatible_database_sign_out_description": "Zure txaten historiala ez galtzeko, zure gelako gakoak esportatu behar dituzu saioa amaitu aurretik. %(brand)s-en bertsio berriagora bueltatu behar zara hau egiteko",
+        "incompatible_database_description": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
+        "incompatible_database_title": "Datu-base bateraezina",
+        "incompatible_database_disable": "Jarraitu zifratzerik gabe"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",

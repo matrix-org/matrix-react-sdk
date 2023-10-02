@@ -363,16 +363,6 @@
     "Ok": "בסדר",
     "Your homeserver has exceeded one of its resource limits.": "השרת שלכם חרג מאחד או יותר משאבים אשר הוקצו לו.",
     "Your homeserver has exceeded its user limit.": "השרת שלכם חרג ממגבלות מספר המשתמשים שלו.",
-    "Server did not return valid authentication information.": "השרת לא החזיר מידע אימות תקף.",
-    "Server did not require any authentication": "השרת לא נדרש לאימות כלשהו",
-    "There was a problem communicating with the server. Please try again.": "הייתה בעיה בתקשורת עם השרת. בבקשה נסה שוב.",
-    "Confirm account deactivation": "אשר את השבתת החשבון",
-    "Are you sure you want to deactivate your account? This is irreversible.": "האם אתה בטוח שברצונך להשבית את חשבונך? זה בלתי הפיך.",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "אשר את השבתת חשבונך באמצעות כניסה יחידה כדי להוכיח את זהותך.",
-    "Continue With Encryption Disabled": "המשך כאשר ההצפנה מושבתת",
-    "Incompatible Database": "מסד נתונים לא תואם",
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "השתמשת בעבר בגרסה חדשה יותר של %(brand)s עם הפעלה זו. כדי להשתמש בגרסה זו שוב עם הצפנה מקצה לקצה, יהיה עליך לצאת ולחזור שוב.",
-    "To avoid losing your chat history, you must export your room keys before logging out. You will need to go back to the newer version of %(brand)s to do this": "כדי להימנע מאיבוד היסטוריית הצ'אט שלכם, עליכם לייצא את מפתחות החדר שלכם לפני שאתם מתנתקים. יהיה עליכם לחזור לגרסה החדשה יותר של %(brand)s כדי לעשות זאת",
     "Email address": "כתובת דוא\"ל",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "לפני שמגישים יומנים, עליכם <a> ליצור בעיה של GitHub </a> כדי לתאר את הבעיה שלכם.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. לנהל ב <settings>הגדרות</settings>.",
@@ -586,7 +576,6 @@
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
-    "Create a space": "צור מרחב עבודה",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
@@ -609,8 +598,6 @@
     "Search for rooms or people": "חפשו אנשים או חדרים",
     "Message preview": "צפו בהודעה",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
-    "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
-    "Anyone in <SpaceName/> will be able to find and join.": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
     "%(spaceName)s and %(count)s others": {
@@ -1274,7 +1261,13 @@
             "email_address_label": "כתובת דוא\"ל",
             "remove_msisdn_prompt": "הסר מספרי %(phone)s ?",
             "add_msisdn_instructions": "הודעת טקסט נשלחה אל %(msisdn)s. אנא הזן את קוד האימות שהוא מכיל.",
-            "msisdn_label": "מספר טלפון"
+            "msisdn_label": "מספר טלפון",
+            "deactivate_confirm_body_sso": "אשר את השבתת חשבונך באמצעות כניסה יחידה כדי להוכיח את זהותך.",
+            "deactivate_confirm_body": "האם אתה בטוח שברצונך להשבית את חשבונך? זה בלתי הפיך.",
+            "deactivate_confirm_continue": "אשר את השבתת החשבון",
+            "error_deactivate_communication": "הייתה בעיה בתקשורת עם השרת. בבקשה נסה שוב.",
+            "error_deactivate_no_auth": "השרת לא נדרש לאימות כלשהו",
+            "error_deactivate_invalid_auth": "השרת לא החזיר מידע אימות תקף."
         },
         "sidebar": {
             "title": "סרגל צד",
@@ -2205,7 +2198,11 @@
         "cross_signing_room_warning": "מישהו משתמש בהפעלה לא ידועה",
         "cross_signing_room_verified": "כולם מאומתים בחדר זה",
         "cross_signing_room_normal": "חדר זה מוצפן מקצה לקצה",
-        "unsupported": "לקוח זה אינו תומך בהצפנה מקצה לקצה."
+        "unsupported": "לקוח זה אינו תומך בהצפנה מקצה לקצה.",
+        "incompatible_database_sign_out_description": "כדי להימנע מאיבוד היסטוריית הצ'אט שלכם, עליכם לייצא את מפתחות החדר שלכם לפני שאתם מתנתקים. יהיה עליכם לחזור לגרסה החדשה יותר של %(brand)s כדי לעשות זאת",
+        "incompatible_database_description": "השתמשת בעבר בגרסה חדשה יותר של %(brand)s עם הפעלה זו. כדי להשתמש בגרסה זו שוב עם הצפנה מקצה לקצה, יהיה עליך לצאת ולחזור שוב.",
+        "incompatible_database_title": "מסד נתונים לא תואם",
+        "incompatible_database_disable": "המשך כאשר ההצפנה מושבתת"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2684,7 +2681,10 @@
         "setup_rooms_private_description": "ניצור חדרים לכל אחד מהם.",
         "address_placeholder": "לדוגמא מרחב העבודה שלי",
         "address_label": "כתובת",
-        "label": "צור מרחב עבודה"
+        "label": "צור מרחב עבודה",
+        "subspace_join_rule_restricted_description": "כל אחד ב<SpaceName/> יוכל למצוא ולהצטרף.",
+        "subspace_join_rule_public_description": "כל אחד יוכל למצוא ולהצטרך אל חלל עבודה זה. לא רק חברי <SpaceName/>.",
+        "subspace_dropdown_title": "צור מרחב עבודה"
     },
     "user_menu": {
         "switch_theme_light": "שנה למצב בהיר",

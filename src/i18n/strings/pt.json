@@ -189,7 +189,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Convide alguém a partir do nome, endereço de email, nome de utilizador (como <userId/>) ou <a>partilhe este espaço</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convide alguém a partir do nome, email ou nome de utilizador (como <userId/>) ou <a>partilhe esta sala</a>.",
-    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Ninguém poderá reutilizar o seu nome de utilizador (MXID), incluindo o próprio: este nome de utilizador permanecerá indisponível",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Comece uma conversa com alguém a partir do nome, endereço de email ou nome de utilizador (por exemplo: <userId/>).",
     "Zambia": "Zâmbia",
     "Zimbabwe": "Zimbabué",
@@ -483,7 +482,8 @@
             "error_invalid_email": "Endereço de email inválido",
             "error_invalid_email_detail": "Este não aparenta ser um endereço de email válido",
             "error_add_email": "Não foi possível adicionar endereço de email",
-            "add_email_instructions": "Enviámos-lhe um email para confirmar o seu endereço. Por favor siga as instruções no email e depois clique no botão abaixo."
+            "add_email_instructions": "Enviámos-lhe um email para confirmar o seu endereço. Por favor siga as instruções no email e depois clique no botão abaixo.",
+            "deactivate_confirm_content_3": "Ninguém poderá reutilizar o seu nome de utilizador (MXID), incluindo o próprio: este nome de utilizador permanecerá indisponível"
         },
         "voip": {
             "audio_input_empty": "Não foi detetado nenhum microfone",

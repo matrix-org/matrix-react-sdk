@@ -156,7 +156,6 @@
     "Ok": "OK",
     "Santa": "Julenisse",
     "Message preview": "Meldingsforhåndsvisning",
-    "Incompatible Database": "Inkompatibel database",
     "Integrations are disabled": "Integreringer er skrudd av",
     "Integrations not allowed": "Integreringer er ikke tillatt",
     "Confirm to continue": "Bekreft for å fortsette",
@@ -174,7 +173,6 @@
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
-    "Confirm account deactivation": "Bekreft deaktivering av kontoen",
     "The server is offline.": "Denne tjeneren er offline.",
     "Wrong file type": "Feil filtype",
     "Looks good!": "Ser bra ut!",
@@ -907,7 +905,8 @@
             "error_add_email": "Klarte ikke å legge til E-postadressen",
             "email_address_label": "E-postadresse",
             "remove_msisdn_prompt": "Vil du fjerne %(phone)s?",
-            "msisdn_label": "Telefonnummer"
+            "msisdn_label": "Telefonnummer",
+            "deactivate_confirm_continue": "Bekreft deaktivering av kontoen"
         },
         "key_backup": {
             "backup_success": "Suksess!",
@@ -1409,7 +1408,8 @@
             "title": "Dine meldinger er ikke sikre",
             "cause_1": "Hjemmetjeneren din"
         },
-        "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten."
+        "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten.",
+        "incompatible_database_title": "Inkompatibel database"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",

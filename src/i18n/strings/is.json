@@ -385,7 +385,6 @@
     "Sent": "Sent",
     "Sending": "Sendi",
     "MB": "MB",
-    "Private space (invite only)": "Einkasvæði (einungis gegn boði)",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -416,7 +415,6 @@
     "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
     "Incompatible local cache": "Ósamhæft staðvært skyndiminni",
     "Feedback sent! Thanks, we appreciate it!": "Umsögn send! Takk, við kunnum að meta þetta!",
-    "Continue With Encryption Disabled": "Halda áfram með dulritun óvirka",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Reset everything": "Frumstilla allt",
@@ -433,7 +431,6 @@
         "one": "og einn í viðbót...",
         "other": "og %(count)s til viðbótar..."
     },
-    "Create a space": "Búa til svæði",
     "Guitar": "Gítar",
     "Ball": "Bolti",
     "Trophy": "Verðlaun",
@@ -478,10 +475,6 @@
     "Failed to find the following users": "Mistókst að finna eftirfarandi notendur",
     "We couldn't create your DM.": "Það tókst ekki að útbúa beinu skilaboðin þin.",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Ertu viss um að þú viljir ljúka þessari könnun? Þetta mun birta lokaniðurstöður könnunarinnar og koma í veg fyrir að fólk geti kosið.",
-    "Only people invited will be able to find and join this space.": "Aðeins fólk sem hefur verið boðið getur fundið og tekið þátt í þessu svæði.",
-    "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Hver sem er getur fundið og tekið þátt í þessu svæði, ekki bara meðlimir í <SpaceName/>.",
-    "Anyone in <SpaceName/> will be able to find and join.": "Hver sem er í <SpaceName/> getur fundið og tekið þátt.",
-    "Space visibility": "Sýnileiki svæðis",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
@@ -536,7 +529,6 @@
     "Continuing without email": "Halda áfram án tölvupósts",
     "Click the button below to confirm your identity.": "Smelltu á hnappinn hér að neðan til að staðfesta auðkennið þitt.",
     "Confirm to continue": "Staðfestu til að halda áfram",
-    "Confirm your account deactivation by using Single Sign On to prove your identity.": "Staðfestu að aðgangurinn þinn sé gerður óvirkur með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -582,7 +574,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
     "Or send invite link": "Eða senda boðstengil",
-    "Incompatible Database": "Ósamhæfður gagnagrunnur",
     "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
@@ -621,8 +612,6 @@
     "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
-    "Want to add an existing space instead?": "Viltu frekar bæta við fyrirliggjandi svæði?",
-    "Add a space to a space you manage.": "Bættu svæði við eitthvað svæði sem þú stýrir.",
     "Consult first": "Ráðfæra fyrst",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
@@ -646,7 +635,6 @@
     },
     "%(members)s and more": "%(members)s og fleiri",
     "%(members)s and %(last)s": "%(members)s og %(last)s",
-    "Confirm account deactivation": "Staðfestu óvirkjun reiknings",
     "a key signature": "Fingrafar lykils",
     "Saved Items": "Vistuð atriði",
     "Show spaces": "Sýna svæði",
@@ -665,8 +653,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í <settings>stillingunum</settings>.",
     "Something went wrong trying to invite the users.": "Eitthvað fór úrskeiðis við að bjóða notendunum.",
     "The poll has ended. Top answer: %(topAnswer)s": "Könnuninni er lokið. Efsta svarið: %(topAnswer)s",
-    "You will no longer be able to log in": "Þú munt ekki lengur geta skráð þig inn",
-    "You will not be able to reactivate your account": "Þú munt ekki geta endurvirkjað aðganginn þinn",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
     "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
     "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
@@ -1552,7 +1538,11 @@
             "email_address_label": "Tölvupóstfang",
             "remove_msisdn_prompt": "Fjarlægja %(phone)s?",
             "msisdn_label": "Símanúmer",
-            "spell_check_locale_placeholder": "Veldu staðfærslu"
+            "spell_check_locale_placeholder": "Veldu staðfærslu",
+            "deactivate_confirm_body_sso": "Staðfestu að aðgangurinn þinn sé gerður óvirkur með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
+            "deactivate_confirm_continue": "Staðfestu óvirkjun reiknings",
+            "deactivate_confirm_content_1": "Þú munt ekki geta endurvirkjað aðganginn þinn",
+            "deactivate_confirm_content_2": "Þú munt ekki lengur geta skráð þig inn"
         },
         "sidebar": {
             "title": "Hliðarspjald",
@@ -2642,7 +2632,9 @@
         "cross_signing_room_warning": "Einhver er að nota óþekkta setu",
         "cross_signing_room_verified": "Allir á þessari spjallrás eru staðfestir",
         "cross_signing_room_normal": "Þessi spjallrás er enda-í-enda dulrituð",
-        "unsupported": "Þetta forrit styður ekki enda-í-enda dulritun."
+        "unsupported": "Þetta forrit styður ekki enda-í-enda dulritun.",
+        "incompatible_database_title": "Ósamhæfður gagnagrunnur",
+        "incompatible_database_disable": "Halda áfram með dulritun óvirka"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3219,7 +3211,15 @@
         "address_placeholder": "t.d. mitt-svæði",
         "address_label": "Vistfang",
         "label": "Búa til svæði",
-        "add_details_prompt_2": "Þú getur breytt þessu hvenær sem er."
+        "add_details_prompt_2": "Þú getur breytt þessu hvenær sem er.",
+        "subspace_join_rule_restricted_description": "Hver sem er í <SpaceName/> getur fundið og tekið þátt.",
+        "subspace_join_rule_public_description": "Hver sem er getur fundið og tekið þátt í þessu svæði, ekki bara meðlimir í <SpaceName/>.",
+        "subspace_join_rule_invite_description": "Aðeins fólk sem hefur verið boðið getur fundið og tekið þátt í þessu svæði.",
+        "subspace_dropdown_title": "Búa til svæði",
+        "subspace_beta_notice": "Bættu svæði við eitthvað svæði sem þú stýrir.",
+        "subspace_join_rule_label": "Sýnileiki svæðis",
+        "subspace_join_rule_invite_only": "Einkasvæði (einungis gegn boði)",
+        "subspace_existing_space_prompt": "Viltu frekar bæta við fyrirliggjandi svæði?"
     },
     "user_menu": {
         "switch_theme_light": "Skiptu yfir í ljósan ham",
