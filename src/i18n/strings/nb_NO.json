@@ -115,9 +115,6 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
     "not specified": "ikke spesifisert",
-    "You accepted": "Du aksepterte",
-    "You declined": "Du avslo",
-    "You cancelled": "Du avbrøt",
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "Power level": "Styrkenivå",
@@ -175,7 +172,6 @@
         "other": "og %(count)s andre …",
         "one": "og én annen …"
     },
-    "You verified %(name)s": "Du verifiserte %(name)s",
     "Some characters not allowed": "Noen tegn er ikke tillatt",
     "Invite anyway": "Inviter likevel",
     "a key signature": "en nøkkelsignatur",
@@ -190,8 +186,6 @@
         "other": "Slett %(count)s meldinger",
         "one": "Slett 1 melding"
     },
-    "You sent a verification request": "Du sendte en verifiseringsforespørsel",
-    "Error decrypting video": "Feil under dekryptering av video",
     "Add an Integration": "Legg til en integrering",
     "Can't load this message": "Klarte ikke å laste inn denne meldingen",
     "Room address": "Rommets adresse",
@@ -306,8 +300,6 @@
     "This address is already in use": "Denne adressen er allerede i bruk",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
     "Information": "Informasjon",
-    "%(name)s cancelled verifying": "%(name)s avbrøt verifiseringen",
-    "You cancelled verifying %(name)s": "Du avbrøt verifiseringen av %(name)s",
     "Not encrypted": "Ikke kryptert",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
@@ -1191,6 +1183,20 @@
         "m.image": {
             "sent": "%(senderDisplayName)s sendte et bilde.",
             "show_image": "Vis bilde"
+        },
+        "m.key.verification.done": "Du verifiserte %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Du avbrøt verifiseringen av %(name)s",
+            "user_cancelled": "%(name)s avbrøt verifiseringen"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Du aksepterte",
+            "you_declined": "Du avslo",
+            "you_cancelled": "Du avbrøt",
+            "you_started": "Du sendte en verifiseringsforespørsel"
+        },
+        "m.video": {
+            "error_decrypting": "Feil under dekryptering av video"
         }
     },
     "slash_command": {

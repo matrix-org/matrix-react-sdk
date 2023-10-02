@@ -38,7 +38,6 @@
     "Email address": "E-Mail-Adresse",
     "Confirm Removal": "Entfernen bestätigen",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
-    "Error decrypting video": "Videoentschlüsselung fehlgeschlagen",
     "Add an Integration": "Eine Integration hinzufügen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?",
@@ -216,9 +215,6 @@
         "other": "%(count)s Sitzungen",
         "one": "%(count)s Sitzung"
     },
-    "You verified %(name)s": "Du hast %(name)s verifiziert",
-    "You cancelled verifying %(name)s": "Du hast die Verifizierung von %(name)s abgebrochen",
-    "%(name)s cancelled verifying": "%(name)s hat die Verifizierung abgebrochen",
     "%(name)s accepted": "%(name)s hat akzeptiert",
     "%(name)s declined": "%(name)s hat abgelehnt",
     "%(name)s cancelled": "%(name)s hat abgebrochen",
@@ -249,11 +245,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Du blockierst diesen Benutzer, deshalb werden seine Nachrichten nicht angezeigt. <a>Trotzdem anzeigen.</a>",
-    "You accepted": "Du hast angenommen",
-    "You declined": "Du hast abgelehnt",
-    "You cancelled": "Du brachst ab",
-    "You sent a verification request": "Du hast eine Verifizierungsanfrage gesendet",
     "Edited at %(date)s. Click to view edits.": "Am %(date)s geändert. Klicke, um Änderungen anzuzeigen.",
     "Can't load this message": "Diese Nachricht kann nicht geladen werden",
     "Submit logs": "Protokolldateien senden",
@@ -377,11 +368,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Nutze die <a>Desktop-App</a> um verschlüsselte Nachrichten zu durchsuchen",
     "This version of %(brand)s does not support viewing some encrypted files": "Diese Version von %(brand)s kann nicht alle verschlüsselten Dateien anzuzeigen",
     "This version of %(brand)s does not support searching encrypted messages": "Diese Version von %(brand)s kann verschlüsselte Nachrichten nicht durchsuchen",
-    "Join the conference at the top of this room": "An Konferenz oberhalb des Verlaufs teilnehmen",
-    "Join the conference from the room information card on the right": "An der Konferenz kannst du über die rechte Seitenleiste (Rauminfo) teilnehmen",
-    "Video conference ended by %(senderName)s": "Videokonferenz von %(senderName)s beendet",
-    "Video conference updated by %(senderName)s": "Videokonferenz wurde von %(senderName)s aktualisiert",
-    "Video conference started by %(senderName)s": "Videokonferenz von %(senderName)s gestartet",
     "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
     "Modal Widget": "Modales Widget",
     "Uzbekistan": "Usbekistan",
@@ -708,7 +694,6 @@
     "Sending": "Senden",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
     "Including %(commaSeparatedMembers)s": "Inklusive %(commaSeparatedMembers)s",
-    "Error processing voice message": "Fehler beim Verarbeiten der Sprachnachricht",
     "Want to add a new room instead?": "Willst du einen neuen Raum hinzufügen?",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "Raum hinzufügen …",
@@ -801,17 +786,6 @@
     "Failed to end poll": "Beenden der Umfrage fehlgeschlagen",
     "The poll has ended. Top answer: %(topAnswer)s": "Umfrage beendet. Beliebteste Antwort: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Umfrage beendet. Es wurden keine Stimmen abgegeben.",
-    "Based on %(count)s votes": {
-        "one": "%(count)s Stimme abgegeben",
-        "other": "%(count)s Stimmen abgegeben"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s Stimme abgegeben. Stimme ab, um die Ergebnisse zu sehen",
-        "other": "%(count)s Stimmen abgegeben. Stimme ab, um die Ergebnisse zu sehen"
-    },
-    "No votes cast": "Es wurden noch keine Stimmen abgegeben",
-    "Sorry, your vote was not registered. Please try again.": "Wir konnten deine Stimme leider nicht erfassen. Versuche es bitte erneut.",
-    "Vote not registered": "Stimme nicht erfasst",
     "Messaging": "Kommunikation",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "Including you, %(commaSeparatedMembers)s": "Mit dir, %(commaSeparatedMembers)s",
@@ -828,9 +802,6 @@
     "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
     "Search Dialog": "Suchdialog",
     "Join %(roomAddress)s": "%(roomAddress)s betreten",
-    "Results will be visible when the poll is ended": "Ergebnisse werden nach Abschluss der Umfrage sichtbar",
-    "Sorry, you can't edit a poll after votes have been cast.": "Du kannst Umfragen nicht bearbeiten, sobald Stimmen abgegeben wurden.",
-    "Can't edit poll": "Umfrage kann nicht bearbeitet werden",
     "What location type do you want to share?": "Wie willst du deinen Standort teilen?",
     "Drop a Pin": "Standort setzen",
     "My live location": "Mein Echtzeit-Standort",
@@ -923,7 +894,6 @@
     "Can't start voice message": "Kann Sprachnachricht nicht beginnen",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Du kannst keine Sprachnachricht beginnen, da du im Moment eine Echtzeitübertragung aufzeichnest. Bitte beende deine Sprachübertragung, um ein Gespräch zu beginnen.",
     "unknown": "unbekannt",
-    "Declining…": "Ablehnen …",
     "Loading live location…": "Lade Live-Standort …",
     "Fetching keys from server…": "Lade Schlüssel vom Server …",
     "Checking…": "Überprüfe …",
@@ -931,8 +901,6 @@
     "Waiting for partner to confirm…": "Warte auf Bestätigung des Gesprächspartners …",
     "Adding…": "Füge hinzu …",
     "Starting export process…": "Beginne Exportvorgang …",
-    "Due to decryption errors, some votes may not be counted": "Evtl. werden infolge von Entschlüsselungsfehlern einige Stimmen nicht gezählt",
-    "Ended a poll": "Eine Umfrage beendet",
     "Invites by email can only be sent one at a time": "E-Mail-Einladungen können nur nacheinander gesendet werden",
     "Desktop app logo": "Desktop-App-Logo",
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
@@ -2302,7 +2270,12 @@
         "m.widget": {
             "modified": "Das Widget „%(widgetName)s“ wurde von %(senderName)s bearbeitet",
             "added": "%(senderName)s hat das Widget %(widgetName)s hinzugefügt",
-            "removed": "%(senderName)s hat das Widget %(widgetName)s entfernt"
+            "removed": "%(senderName)s hat das Widget %(widgetName)s entfernt",
+            "jitsi_join_top_prompt": "An Konferenz oberhalb des Verlaufs teilnehmen",
+            "jitsi_join_right_prompt": "An der Konferenz kannst du über die rechte Seitenleiste (Rauminfo) teilnehmen",
+            "jitsi_ended": "Videokonferenz von %(senderName)s beendet",
+            "jitsi_updated": "Videokonferenz wurde von %(senderName)s aktualisiert",
+            "jitsi_started": "Videokonferenz von %(senderName)s gestartet"
         },
         "io.element.widgets.layout": "%(senderName)s hat das Raumlayout geändert",
         "m.location": {
@@ -2313,7 +2286,6 @@
         "self_redaction": "Nachricht gelöscht",
         "redaction": "Nachricht von %(name)s gelöscht",
         "m.poll.start": "%(senderName)s hat eine Umfrage begonnen – %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s hat eine Abstimmung beendet",
         "typing_indicator": {
             "one_user": "%(displayName)s tippt …",
             "two_users": "%(names)s und %(lastPerson)s tippen …",
@@ -2485,7 +2457,8 @@
             "changed_rule_users": "%(senderName)s ändert eine Ausschlussregel von %(oldGlob)s nach %(newGlob)s, wegen %(reason)s",
             "changed_rule_rooms": "%(senderName)s ändert eine Ausschlussregel für Räume von %(oldGlob)s nach %(newGlob)s, wegen %(reason)s",
             "changed_rule_servers": "%(senderName)s änderte eine Ausschlussregel für Server von %(oldGlob)s nach %(newGlob)s wegen %(reason)s",
-            "changed_rule_glob": "%(senderName)s aktualisierte eine Ausschlussregel von %(oldGlob)s nach %(newGlob)s wegen %(reason)s"
+            "changed_rule_glob": "%(senderName)s aktualisierte eine Ausschlussregel von %(oldGlob)s nach %(newGlob)s wegen %(reason)s",
+            "message_hidden": "Du blockierst diesen Benutzer, deshalb werden seine Nachrichten nicht angezeigt. <a>Trotzdem anzeigen.</a>"
         },
         "no_permission_messages_before_invite": "Du kannst keine Nachrichten lesen, die gesendet wurden, bevor du eingeladen wurdest.",
         "no_permission_messages_before_join": "Du kannst keine Nachrichten lesen, die gesendet wurden, bevor du beigetreten bist.",
@@ -2546,7 +2519,8 @@
         "m.audio": {
             "unnamed_audio": "Unbenannte Audiodatei",
             "error_downloading_audio": "Fehler beim Herunterladen der Audiodatei",
-            "error_processing_audio": "Fehler beim Verarbeiten der Audionachricht"
+            "error_processing_audio": "Fehler beim Verarbeiten der Audionachricht",
+            "error_processing_voice_message": "Fehler beim Verarbeiten der Sprachnachricht"
         },
         "load_error": {
             "no_permission": "Dir fehlt die Berechtigung, diese alten Nachrichten zu lesen.",
@@ -2584,6 +2558,25 @@
             "error_decrypting": "Entschlüsselung des Bilds fehlgeschlagen",
             "error_downloading": "Fehler beim Herunterladen des Bildes",
             "show_image": "Bild anzeigen"
+        },
+        "m.key.verification.done": "Du hast %(name)s verifiziert",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Du hast die Verifizierung von %(name)s abgebrochen",
+            "user_cancelled": "%(name)s hat die Verifizierung abgebrochen"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Du hast angenommen",
+            "you_declined": "Du hast abgelehnt",
+            "you_cancelled": "Du brachst ab",
+            "declining": "Ablehnen …",
+            "you_started": "Du hast eine Verifizierungsanfrage gesendet"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s hat eine Abstimmung beendet",
+            "ended": "Eine Umfrage beendet"
+        },
+        "m.video": {
+            "error_decrypting": "Videoentschlüsselung fehlgeschlagen"
         }
     },
     "slash_command": {
@@ -4003,7 +3996,22 @@
         "options_placeholder": "Antwortmöglichkeit verfassen",
         "options_add_button": "Antwortmöglichkeit hinzufügen",
         "disclosed_notes": "Abstimmende können die Ergebnisse nach Stimmabgabe sehen",
-        "notes": "Die Ergebnisse werden erst sichtbar, sobald du die Umfrage beendest"
+        "notes": "Die Ergebnisse werden erst sichtbar, sobald du die Umfrage beendest",
+        "unable_edit_title": "Umfrage kann nicht bearbeitet werden",
+        "unable_edit_description": "Du kannst Umfragen nicht bearbeiten, sobald Stimmen abgegeben wurden.",
+        "error_voting_title": "Stimme nicht erfasst",
+        "error_voting_description": "Wir konnten deine Stimme leider nicht erfassen. Versuche es bitte erneut.",
+        "total_decryption_errors": "Evtl. werden infolge von Entschlüsselungsfehlern einige Stimmen nicht gezählt",
+        "total_not_ended": "Ergebnisse werden nach Abschluss der Umfrage sichtbar",
+        "total_no_votes": "Es wurden noch keine Stimmen abgegeben",
+        "total_n_votes": {
+            "one": "%(count)s Stimme abgegeben. Stimme ab, um die Ergebnisse zu sehen",
+            "other": "%(count)s Stimmen abgegeben. Stimme ab, um die Ergebnisse zu sehen"
+        },
+        "total_n_votes_voted": {
+            "one": "%(count)s Stimme abgegeben",
+            "other": "%(count)s Stimmen abgegeben"
+        }
     },
     "failed_load_async_component": "Konnte nicht geladen werden! Überprüfe die Netzwerkverbindung und versuche es erneut.",
     "upload_failed_generic": "Die Datei „%(fileName)s“ konnte nicht hochgeladen werden.",

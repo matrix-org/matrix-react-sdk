@@ -42,7 +42,6 @@
     "Confirm Removal": "Berretsi kentzea",
     "Unable to restore session": "Ezin izan da saioa berreskuratu",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
-    "Error decrypting video": "Errorea bideoa deszifratzean",
     "Add an Integration": "Gehitu integrazioa",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
@@ -241,17 +240,10 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Erabili identitate-zerbitzari bat e-mail bidez gonbidatzeko. Kudeatu <settings>Ezarpenak</settings> atalean.",
     "Close dialog": "Itxi elkarrizketa-koadroa",
     "Cancel search": "Ezeztatu bilaketa",
-    "You verified %(name)s": "%(name)s egiaztatu duzu",
-    "You cancelled verifying %(name)s": "%(name)s egiaztatzeari utzi diozu",
-    "%(name)s cancelled verifying": "%(name)s(e)k egiaztaketa utzi du",
-    "You accepted": "Onartu duzu",
     "%(name)s accepted": "%(name)s onartuta",
-    "You cancelled": "Utzi duzu",
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
-    "You sent a verification request": "Egiaztaketa eskari bat bidali duzu",
     "Failed to connect to integration manager": "Huts egin du integrazio kudeatzailera konektatzean",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Erabiltzaile hau ezikusi duzu, beraz bere mezua ezkutatuta dago. <a>Erakutsi hala ere.</a>",
     "Integrations are disabled": "Integrazioak desgaituta daude",
     "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
@@ -288,7 +280,6 @@
     "Not Trusted": "Ez konfiantzazkoa",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
     "Ask this user to verify their session, or manually verify it below.": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
-    "You declined": "Ukatu egin duzu",
     "%(name)s declined": "%(name)s erabiltzaileak ukatu du",
     "Destroy cross-signing keys?": "Suntsitu zeharkako sinatzerako gakoak?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
@@ -1048,7 +1039,8 @@
             "changed_rule_users": "%(senderName)s erabiltzaileak erabiltzaileak debekatzen dituen araua aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s",
             "changed_rule_rooms": "%(senderName)s erabiltzaileak gelak debekatzen dituen araua aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s",
             "changed_rule_servers": "%(senderName)s erabiltzaileak zerbitzariak debekatzen dituen araua aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s",
-            "changed_rule_glob": "%(senderName)s erabiltzaileak debeku arau bat aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s"
+            "changed_rule_glob": "%(senderName)s erabiltzaileak debeku arau bat aldatu du %(oldGlob)s adierazpenetik %(newGlob)s adierazpenera, arrazoia: %(reason)s",
+            "message_hidden": "Erabiltzaile hau ezikusi duzu, beraz bere mezua ezkutatuta dago. <a>Erakutsi hala ere.</a>"
         },
         "reactions": {
             "tooltip": "<reactors/> erabiltzaileak <reactedWith>%(shortName)s batekin erreakzionatu du</reactedWith>"
@@ -1092,6 +1084,20 @@
             "sent": "%(senderDisplayName)s erabiltzaileak irudi bat bidali du.",
             "error_decrypting": "Errorea audioa deszifratzean",
             "show_image": "Erakutsi irudia"
+        },
+        "m.key.verification.done": "%(name)s egiaztatu duzu",
+        "m.key.verification.cancel": {
+            "you_cancelled": "%(name)s egiaztatzeari utzi diozu",
+            "user_cancelled": "%(name)s(e)k egiaztaketa utzi du"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Onartu duzu",
+            "you_declined": "Ukatu egin duzu",
+            "you_cancelled": "Utzi duzu",
+            "you_started": "Egiaztaketa eskari bat bidali duzu"
+        },
+        "m.video": {
+            "error_decrypting": "Errorea bideoa deszifratzean"
         }
     },
     "slash_command": {

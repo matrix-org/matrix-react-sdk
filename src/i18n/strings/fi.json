@@ -44,7 +44,6 @@
     "Oct": "loka",
     "Nov": "marras",
     "Dec": "joulu",
-    "Error decrypting video": "Virhe purettaessa videon salausta",
     "Add an Integration": "Lisää integraatio",
     "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
     "Restricted": "Rajoitettu",
@@ -241,16 +240,9 @@
     "Close dialog": "Sulje dialogi",
     "Cancel search": "Peruuta haku",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Olet sivuuttanut tämän käyttäjän, joten hänen viestinsä on piilotettu. <a>Näytä silti.</a>",
-    "You verified %(name)s": "Varmensit käyttäjän %(name)s",
-    "You cancelled verifying %(name)s": "Peruutit käyttäjän %(name)s varmennuksen",
-    "%(name)s cancelled verifying": "%(name)s peruutti varmennuksen",
-    "You accepted": "Hyväksyit",
     "%(name)s accepted": "%(name)s hyväksyi",
-    "You cancelled": "Peruutit",
     "%(name)s cancelled": "%(name)s peruutti",
     "%(name)s wants to verify": "%(name)s haluaa varmentaa",
-    "You sent a verification request": "Lähetit varmennuspyynnön",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi henkilöitä sähköpostilla. <default>Käytä oletusta (%(defaultIdentityServerName)s)</default> tai aseta toinen palvelin <settings>asetuksissa</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
     "Integrations are disabled": "Integraatiot ovat pois käytöstä",
@@ -278,7 +270,6 @@
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
-    "You declined": "Kieltäydyit",
     "%(name)s declined": "%(name)s kieltäytyi",
     "Something went wrong trying to invite the users.": "Käyttäjien kutsumisessa meni jotain pieleen.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Emme voineet kutsua kyseisiä käyttäjiä. Tarkista käyttäjät, jotka haluat kutsua ja yritä uudelleen.",
@@ -332,11 +323,6 @@
     "This address is already in use": "Tämä osoite on jo käytössä",
     "Switch theme": "Vaihda teemaa",
     "Looks good!": "Hyvältä näyttää!",
-    "Video conference started by %(senderName)s": "%(senderName)s aloitti ryhmävideopuhelun",
-    "Video conference updated by %(senderName)s": "%(senderName)s päivitti ryhmävideopuhelun",
-    "Video conference ended by %(senderName)s": "%(senderName)s päätti ryhmävideopuhelun",
-    "Join the conference from the room information card on the right": "Liity ryhmäpuheluun oikealla olevasta huoneen tiedoista",
-    "Join the conference at the top of this room": "Liity ryhmäpuheluun huoneen ylälaidassa",
     "Wrong file type": "Väärä tiedostotyyppi",
     "Room address": "Huoneen osoite",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
@@ -665,7 +651,6 @@
         "other": "Näytä kaikki %(count)s jäsentä"
     },
     "Add reaction": "Lisää reaktio",
-    "Error processing voice message": "Virhe ääniviestin käsittelyssä",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
@@ -741,24 +726,10 @@
         "one": "%(count)s ääni",
         "other": "%(count)s ääntä"
     },
-    "Based on %(count)s votes": {
-        "one": "Perustuu %(count)s ääneen",
-        "other": "Perustuu %(count)s ääneen"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s ääni annettu. Äänestä nähdäksesi tulokset",
-        "other": "%(count)s ääntä annettu. Äänestä nähdäksesi tulokset"
-    },
-    "No votes cast": "Ääniä ei annettu",
-    "Sorry, your vote was not registered. Please try again.": "Valitettavasti ääntäsi ei rekisteröity. Yritä uudelleen.",
-    "Vote not registered": "Ääntä ei rekisteröity",
     "In reply to <a>this message</a>": "Vastauksena <a>tähän viestiin</a>",
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
     "Could not fetch location": "Sijaintia ei voitu noutaa",
-    "Results will be visible when the poll is ended": "Tulokset näkyvät, kun kysely on päättynyt",
-    "Sorry, you can't edit a poll after votes have been cast.": "Et voi muokata kyselyä äänestyksen jälkeen.",
-    "Can't edit poll": "Kyselyä ei voi muokata",
     "Recent searches": "Viimeaikaiset haut",
     "Other searches": "Muut haut",
     "Public rooms": "Julkiset huoneet",
@@ -2085,7 +2056,12 @@
         "m.widget": {
             "modified": "%(senderName)s muokkasi sovelmaa %(widgetName)s",
             "added": "%(senderName)s lisäsi sovelman %(widgetName)s",
-            "removed": "%(senderName)s poisti sovelman %(widgetName)s"
+            "removed": "%(senderName)s poisti sovelman %(widgetName)s",
+            "jitsi_join_top_prompt": "Liity ryhmäpuheluun huoneen ylälaidassa",
+            "jitsi_join_right_prompt": "Liity ryhmäpuheluun oikealla olevasta huoneen tiedoista",
+            "jitsi_ended": "%(senderName)s päätti ryhmävideopuhelun",
+            "jitsi_updated": "%(senderName)s päivitti ryhmävideopuhelun",
+            "jitsi_started": "%(senderName)s aloitti ryhmävideopuhelun"
         },
         "io.element.widgets.layout": "%(senderName)s on päivittänyt huoneen asettelun",
         "m.location": {
@@ -2096,7 +2072,6 @@
         "self_redaction": "Viesti poistettu",
         "redaction": "%(name)s poisti viestin",
         "m.poll.start": "%(senderName)s on aloittanut kyselyn - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s on lopettanut kyselyn",
         "typing_indicator": {
             "one_user": "%(displayName)s kirjoittaa…",
             "two_users": "%(names)s ja %(lastPerson)s kirjoittavat…",
@@ -2252,7 +2227,8 @@
             "changed_rule_users": "%(senderName)s muutti sääntöä, joka esti käyttäjiä säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
             "changed_rule_rooms": "%(senderName)s muutti sääntöä, joka esti huoneita säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
             "changed_rule_servers": "%(senderName)s muutti sääntöä, joka esti palvelimia säännöllä %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
-            "changed_rule_glob": "%(senderName)s muutti estosääntöä muodosta %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s"
+            "changed_rule_glob": "%(senderName)s muutti estosääntöä muodosta %(oldGlob)s muotoon %(newGlob)s. Syy: %(reason)s",
+            "message_hidden": "Olet sivuuttanut tämän käyttäjän, joten hänen viestinsä on piilotettu. <a>Näytä silti.</a>"
         },
         "no_permission_messages_before_invite": "Sinulla ei ole oikeutta nähdä viestejä ajalta ennen kutsumistasi.",
         "no_permission_messages_before_join": "Sinulla ei ole oikeutta nähdä viestejä ajalta ennen liittymistäsi.",
@@ -2309,7 +2285,8 @@
         "m.audio": {
             "unnamed_audio": "Nimetön ääni",
             "error_downloading_audio": "Virhe ääntä ladattaessa",
-            "error_processing_audio": "Virhe ääniviestiä käsiteltäessä"
+            "error_processing_audio": "Virhe ääniviestiä käsiteltäessä",
+            "error_processing_voice_message": "Virhe ääniviestin käsittelyssä"
         },
         "load_error": {
             "no_permission": "Aikajanan tietty hetki yritettiin ladata, mutta sinulla ei ole oikeutta nähdä kyseistä viestiä.",
@@ -2341,6 +2318,23 @@
             "error_decrypting": "Virhe purettaessa kuvan salausta",
             "error_downloading": "Virhe kuvaa ladatessa",
             "show_image": "Näytä kuva"
+        },
+        "m.key.verification.done": "Varmensit käyttäjän %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Peruutit käyttäjän %(name)s varmennuksen",
+            "user_cancelled": "%(name)s peruutti varmennuksen"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Hyväksyit",
+            "you_declined": "Kieltäydyit",
+            "you_cancelled": "Peruutit",
+            "you_started": "Lähetit varmennuspyynnön"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s on lopettanut kyselyn"
+        },
+        "m.video": {
+            "error_decrypting": "Virhe purettaessa videon salausta"
         }
     },
     "slash_command": {
@@ -3610,7 +3604,21 @@
         "options_placeholder": "Kirjoita vaihtoehto",
         "options_add_button": "Lisää vaihtoehto",
         "disclosed_notes": "Äänestäjät näkevät tulokset heti äänestettyään",
-        "notes": "Tulokset paljastetaan vasta kun päätät kyselyn"
+        "notes": "Tulokset paljastetaan vasta kun päätät kyselyn",
+        "unable_edit_title": "Kyselyä ei voi muokata",
+        "unable_edit_description": "Et voi muokata kyselyä äänestyksen jälkeen.",
+        "error_voting_title": "Ääntä ei rekisteröity",
+        "error_voting_description": "Valitettavasti ääntäsi ei rekisteröity. Yritä uudelleen.",
+        "total_not_ended": "Tulokset näkyvät, kun kysely on päättynyt",
+        "total_no_votes": "Ääniä ei annettu",
+        "total_n_votes": {
+            "one": "%(count)s ääni annettu. Äänestä nähdäksesi tulokset",
+            "other": "%(count)s ääntä annettu. Äänestä nähdäksesi tulokset"
+        },
+        "total_n_votes_voted": {
+            "one": "Perustuu %(count)s ääneen",
+            "other": "Perustuu %(count)s ääneen"
+        }
     },
     "failed_load_async_component": "Lataaminen epäonnistui! Tarkista verkkoyhteytesi ja yritä uudelleen.",
     "upload_failed_generic": "Tiedoston '%(fileName)s' lähettäminen ei onnistunut.",

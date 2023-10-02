@@ -86,7 +86,6 @@
     "collapse": "fäll ihop",
     "expand": "fäll ut",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
-    "Error decrypting video": "Fel vid avkryptering av video",
     "Add an Integration": "Lägg till integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
     "Share Room": "Dela rum",
@@ -216,16 +215,9 @@
     "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
     "edited": "redigerat",
     "Failed to connect to integration manager": "Kunde inte ansluta till integrationshanterare",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Du har ignorerat den här användaren, så dess meddelande är dolt. <a>Visa ändå.</a>",
-    "You verified %(name)s": "Du verifierade %(name)s",
-    "You cancelled verifying %(name)s": "Du avbröt verifiering av %(name)s",
-    "%(name)s cancelled verifying": "%(name)s avbröt verifiering",
-    "You accepted": "Du accepterade",
     "%(name)s accepted": "%(name)s accepterade",
-    "You cancelled": "Du avbröt",
     "%(name)s cancelled": "%(name)s avbröt",
     "%(name)s wants to verify": "%(name)s vill verifiera",
-    "You sent a verification request": "Du skickade en verifieringsbegäran",
     "Cancel search": "Avbryt sökningen",
     "Language Dropdown": "Språkmeny",
     "e.g. my-room": "t.ex. mitt-rum",
@@ -272,7 +264,6 @@
         "other": "%(count)s sessioner",
         "one": "%(count)s session"
     },
-    "You declined": "Du avslog",
     "%(name)s declined": "%(name)s avslog",
     "Edited at %(date)s": "Redigerat vid %(date)s",
     "Click to view edits": "Klicka för att visa redigeringar",
@@ -372,11 +363,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Starta en konversation med någon med deras namn eller användarnamn (som <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Bjud in någon med deras namn eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
     "Unable to set up keys": "Kunde inte ställa in nycklar",
-    "Join the conference at the top of this room": "Gå med i gruppsamtalet på toppen av det här rummet",
-    "Join the conference from the room information card on the right": "Gå med i gruppsamtalet ifrån informationskortet till höger",
-    "Video conference ended by %(senderName)s": "Videogruppsamtal avslutat av %(senderName)s",
-    "Video conference updated by %(senderName)s": "Videogruppsamtal uppdaterat av %(senderName)s",
-    "Video conference started by %(senderName)s": "Videogruppsamtal startat av %(senderName)s",
     "Use the <a>Desktop app</a> to see all encrypted files": "Använd <a>skrivbordsappen</a> för att se alla krypterade filer",
     "Use the <a>Desktop app</a> to search encrypted messages": "Använd <a>skrivbordsappen</a> söka bland krypterade meddelanden",
     "This version of %(brand)s does not support viewing some encrypted files": "Den här versionen av %(brand)s stöder inte visning av vissa krypterade filer",
@@ -717,7 +703,6 @@
     "Not all selected were added": "Inte alla valda tillades",
     "You are not allowed to view this server's rooms list": "Du tillåts inte att se den här serverns rumslista",
     "Add reaction": "Lägg till reaktion",
-    "Error processing voice message": "Fel vid hantering av röstmeddelande",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
     "Search for rooms or people": "Sök efter rum eller personer",
@@ -779,7 +764,6 @@
     "Themes": "Teman",
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
-    "Vote not registered": "Röst registrerades inte",
     "Recently viewed": "Nyligen sedda",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Could not fetch location": "Kunde inte hämta plats",
@@ -789,16 +773,6 @@
         "one": "%(count)s röst",
         "other": "%(count)s röster"
     },
-    "Based on %(count)s votes": {
-        "one": "Baserat på %(count)s röst",
-        "other": "Baserat på %(count)s röster"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s röst avgiven. Rösta för att ser resultatet",
-        "other": "%(count)s röster avgivna. Rösta för att se resultatet"
-    },
-    "No votes cast": "Inga röster avgivna",
-    "Sorry, your vote was not registered. Please try again.": "Tyvärr så registrerades inte din röst. Vänligen pröva igen.",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Det här grupperar dina chattar med medlemmar i det här utrymmet. Att stänga av det kommer att dölja dessa chattar från din vy av %(spaceName)s.",
     "Sections to show": "Sektioner att visa",
     "Link to room": "Länk till rum",
@@ -827,10 +801,7 @@
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s och %(space2Name)s",
     "Join %(roomAddress)s": "Gå med i %(roomAddress)s",
-    "Sorry, you can't edit a poll after votes have been cast.": "Tyvärr kan du inte redigera en omröstning efter att röster har avgivits.",
-    "Can't edit poll": "Kan inte redigera omröstning",
     "Search Dialog": "Sökdialog",
-    "Results will be visible when the poll is ended": "Resultat kommer att visas när omröstningen avslutas",
     "%(count)s participants": {
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
@@ -923,7 +894,6 @@
     "Can't start voice message": "Kan inte starta röstmeddelanden",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
     "unknown": "okänd",
-    "Declining…": "Nekar…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktivera '%(manageIntegrations)s' i inställningarna för att göra detta.",
     "Loading live location…": "Laddar realtidsposition …",
     "Fetching keys from server…": "Hämtar nycklar från server …",
@@ -933,12 +903,10 @@
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "unavailable": "otillgänglig",
-    "Due to decryption errors, some votes may not be counted": "På grund av avkrypteringsfel kanske inte vissa röster räknas",
     "Message from %(user)s": "Meddelande från %(user)s",
     "unknown status code": "okänd statuskod",
     "Desktop app logo": "Skrivbordsappslogga",
     "Message in %(room)s": "Meddelande i rum %(room)s",
-    "Ended a poll": "Avslutade en omröstning",
     "Start DM anyway and never warn me again": "Starta DM ändå och varna mig aldrig igen",
     "Start DM anyway": "Starta DM ändå",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Kunde inte hitta profiler för Matrix-ID:n nedan — skulle du vilja starta ett DM ändå?",
@@ -2264,7 +2232,12 @@
         "m.widget": {
             "modified": "%(widgetName)s-widget har ändrats av %(senderName)s",
             "added": "%(widgetName)s-widget har lagts till av %(senderName)s",
-            "removed": "%(widgetName)s-widget har tagits bort av %(senderName)s"
+            "removed": "%(widgetName)s-widget har tagits bort av %(senderName)s",
+            "jitsi_join_top_prompt": "Gå med i gruppsamtalet på toppen av det här rummet",
+            "jitsi_join_right_prompt": "Gå med i gruppsamtalet ifrån informationskortet till höger",
+            "jitsi_ended": "Videogruppsamtal avslutat av %(senderName)s",
+            "jitsi_updated": "Videogruppsamtal uppdaterat av %(senderName)s",
+            "jitsi_started": "Videogruppsamtal startat av %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s har uppdaterat rummets arrangemang",
         "m.location": {
@@ -2275,7 +2248,6 @@
         "self_redaction": "Meddelande raderat",
         "redaction": "Meddelande raderat av %(name)s",
         "m.poll.start": "%(senderName)s har startat en omröstning - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s har avslutat en omröstning",
         "typing_indicator": {
             "one_user": "%(displayName)s skriver …",
             "two_users": "%(names)s och %(lastPerson)s skriver …",
@@ -2439,7 +2411,8 @@
             "changed_rule_users": "%(senderName)s ändrade en regel som bannade användare som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
             "changed_rule_rooms": "%(senderName)s ändrade en regel som bannade rum som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
             "changed_rule_servers": "%(senderName)s ändrade en regel som bannade servrar som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
-            "changed_rule_glob": "%(senderName)s uppdaterade en bannregel som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s"
+            "changed_rule_glob": "%(senderName)s uppdaterade en bannregel som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
+            "message_hidden": "Du har ignorerat den här användaren, så dess meddelande är dolt. <a>Visa ändå.</a>"
         },
         "no_permission_messages_before_invite": "Du är inte behörig att se meddelanden från innan du bjöds in.",
         "no_permission_messages_before_join": "Du är inte behörig att se meddelanden från innan du gick med.",
@@ -2500,7 +2473,8 @@
         "m.audio": {
             "unnamed_audio": "Namnlöst ljud",
             "error_downloading_audio": "Fel vid nedladdning av ljud",
-            "error_processing_audio": "Fel vid hantering av ljudmeddelande"
+            "error_processing_audio": "Fel vid hantering av ljudmeddelande",
+            "error_processing_voice_message": "Fel vid hantering av röstmeddelande"
         },
         "load_error": {
             "no_permission": "Försökte ladda en viss punkt i det här rummets tidslinje, men du är inte behörig att visa det aktuella meddelandet.",
@@ -2536,6 +2510,25 @@
             "error_decrypting": "Fel vid avkryptering av bild",
             "error_downloading": "Fel vid nedladdning av bild",
             "show_image": "Visa bild"
+        },
+        "m.key.verification.done": "Du verifierade %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Du avbröt verifiering av %(name)s",
+            "user_cancelled": "%(name)s avbröt verifiering"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Du accepterade",
+            "you_declined": "Du avslog",
+            "you_cancelled": "Du avbröt",
+            "declining": "Nekar…",
+            "you_started": "Du skickade en verifieringsbegäran"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s har avslutat en omröstning",
+            "ended": "Avslutade en omröstning"
+        },
+        "m.video": {
+            "error_decrypting": "Fel vid avkryptering av video"
         }
     },
     "slash_command": {
@@ -3937,7 +3930,22 @@
         "options_placeholder": "Skriv ett alternativ",
         "options_add_button": "Lägg till alternativ",
         "disclosed_notes": "Röstare ser resultatet så fort de har röstat",
-        "notes": "Resultat avslöjas inte förrän du avslutar omröstningen"
+        "notes": "Resultat avslöjas inte förrän du avslutar omröstningen",
+        "unable_edit_title": "Kan inte redigera omröstning",
+        "unable_edit_description": "Tyvärr kan du inte redigera en omröstning efter att röster har avgivits.",
+        "error_voting_title": "Röst registrerades inte",
+        "error_voting_description": "Tyvärr så registrerades inte din röst. Vänligen pröva igen.",
+        "total_decryption_errors": "På grund av avkrypteringsfel kanske inte vissa röster räknas",
+        "total_not_ended": "Resultat kommer att visas när omröstningen avslutas",
+        "total_no_votes": "Inga röster avgivna",
+        "total_n_votes": {
+            "one": "%(count)s röst avgiven. Rösta för att ser resultatet",
+            "other": "%(count)s röster avgivna. Rösta för att se resultatet"
+        },
+        "total_n_votes_voted": {
+            "one": "Baserat på %(count)s röst",
+            "other": "Baserat på %(count)s röster"
+        }
     },
     "failed_load_async_component": "Kan inte ladda! Kolla din nätverksuppkoppling och försök igen.",
     "upload_failed_generic": "Filen '%(fileName)s' kunde inte laddas upp.",

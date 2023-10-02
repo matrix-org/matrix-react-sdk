@@ -19,7 +19,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
-    "Error decrypting video": "解密视频时出错",
     "Verification Pending": "验证等待中",
     "(~%(count)s results)": {
         "one": "（~%(count)s 个结果）",
@@ -226,18 +225,10 @@
         "other": "删除 %(count)s 条消息",
         "one": "删除 1 条消息"
     },
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "你已忽略此用户，所以其消息已被隐藏。<a>仍然显示。</a>",
-    "You verified %(name)s": "你验证了 %(name)s",
-    "You cancelled verifying %(name)s": "你取消了 %(name)s 的验证",
-    "%(name)s cancelled verifying": "%(name)s 取消了验证",
-    "You accepted": "你接受了",
     "%(name)s accepted": "%(name)s 接受了",
-    "You declined": "你拒绝了",
-    "You cancelled": "你取消了",
     "%(name)s declined": "%(name)s 拒绝了",
     "%(name)s cancelled": "%(name)s 取消了",
     "%(name)s wants to verify": "%(name)s 想要验证",
-    "You sent a verification request": "你发送了一个验证请求",
     "Edited at %(date)s": "编辑于 %(date)s",
     "Click to view edits": "点击查看编辑历史",
     "Edited at %(date)s. Click to view edits.": "编辑于 %(date)s。点击以查看编辑历史。",
@@ -533,11 +524,6 @@
     "This widget would like to:": "此挂件想要：",
     "Approve widget permissions": "批准挂件权限",
     "Modal Widget": "模态框挂件（Modal Widget）",
-    "Join the conference at the top of this room": "点击房间顶部加入会议",
-    "Join the conference from the room information card on the right": "从右侧的房间信息卡片加入会议",
-    "Video conference ended by %(senderName)s": "由 %(senderName)s 结束的视频会议",
-    "Video conference updated by %(senderName)s": "由 %(senderName)s 更新的视频会议",
-    "Video conference started by %(senderName)s": "由 %(senderName)s 发起的视频会议",
     "Space selection": "空间选择",
     "Invite to %(roomName)s": "邀请至 %(roomName)s",
     "Invite by email": "通过邮箱邀请",
@@ -705,7 +691,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面端英语</a>来搜索加密消息",
     "Use the <a>Desktop app</a> to see all encrypted files": "使用<a>桌面端应用</a>来查看所有加密文件",
     "Add reaction": "添加反应",
-    "Error processing voice message": "处理语音消息时发生错误",
     "Failed to start livestream": "开始流直播失败",
     "Unable to start audio streaming.": "无法开始音频流媒体。",
     "Hold": "挂起",
@@ -775,16 +760,10 @@
         "one": "%(spaceName)s 和其他 %(count)s 个空间",
         "other": "%(spaceName)s 和其他 %(count)s 个空间"
     },
-    "Based on %(count)s votes": {
-        "one": "基于 %(count)s 票",
-        "other": "基于 %(count)s 票"
-    },
     "%(count)s votes": {
         "one": "%(count)s 票",
         "other": "%(count)s 票"
     },
-    "Sorry, your vote was not registered. Please try again.": "抱歉，你的投票未登记。请重试。",
-    "Vote not registered": "投票未登记",
     "Developer": "开发者",
     "Experimental": "实验性",
     "Themes": "主题",
@@ -792,11 +771,6 @@
     "Messaging": "消息传递",
     "Spaces you know that contain this space": "你知道的包含这个空间的空间",
     "Recently viewed": "最近查看",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "票数已达 %(count)s 票。要查看结果请亲自投票",
-        "other": "票数已达 %(count)s 票。要查看结果请亲自投票"
-    },
-    "No votes cast": "尚无投票",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "您确定要结束此投票吗？ 这将显示投票的最终结果并阻止人们投票。",
     "End Poll": "结束投票",
     "Sorry, the poll did not end. Please try again.": "抱歉，投票没有结束。 请再试一次。",
@@ -837,9 +811,6 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "缺少房间名称或分隔符，例子（my-room:domain.org）",
     "Missing domain separator e.g. (:domain.org)": "缺少域分隔符，例子（:domain.org）",
     "toggle event": "切换事件",
-    "Results will be visible when the poll is ended": "结果将在投票结束时可见",
-    "Sorry, you can't edit a poll after votes have been cast.": "抱歉，你无法在有人投票后编辑投票。",
-    "Can't edit poll": "无法编辑投票",
     "What location type do you want to share?": "你想分享什么位置类型？",
     "Drop a Pin": "放置图钉",
     "My live location": "我的实时位置",
@@ -2074,7 +2045,12 @@
         "m.widget": {
             "modified": "%(senderName)s 修改了 %(widgetName)s 挂件",
             "added": "%(senderName)s 添加了 %(widgetName)s 挂件",
-            "removed": "%(senderName)s 移除了 %(widgetName)s 挂件"
+            "removed": "%(senderName)s 移除了 %(widgetName)s 挂件",
+            "jitsi_join_top_prompt": "点击房间顶部加入会议",
+            "jitsi_join_right_prompt": "从右侧的房间信息卡片加入会议",
+            "jitsi_ended": "由 %(senderName)s 结束的视频会议",
+            "jitsi_updated": "由 %(senderName)s 更新的视频会议",
+            "jitsi_started": "由 %(senderName)s 发起的视频会议"
         },
         "io.element.widgets.layout": "%(senderName)s 更新了房间布局",
         "m.location": {
@@ -2085,7 +2061,6 @@
         "self_redaction": "消息已删除",
         "redaction": "消息被 %(name)s 删除",
         "m.poll.start": "%(senderName)s 发起了投票：%(pollQuestion)s",
-        "m.poll.end": "%(senderName)s 结束了投票",
         "typing_indicator": {
             "one_user": "%(displayName)s 正在输入…",
             "two_users": "%(names)s和%(lastPerson)s正在输入……",
@@ -2249,7 +2224,8 @@
             "changed_rule_users": "%(senderName)s 更改了一个由于%(reason)s而禁止用户%(oldGlob)s跟%(newGlob)s匹配的规则",
             "changed_rule_rooms": "%(senderName)s更改了一个由于%(reason)s而禁止房间%(oldGlob)s跟%(newGlob)s匹配的规则",
             "changed_rule_servers": "%(senderName)s 更新了一个由于%(reason)s而禁止服务器%(oldGlob)s跟%(newGlob)s匹配的规则",
-            "changed_rule_glob": "%(senderName)s 更新了一个由于%(reason)s而禁止%(oldGlob)s跟%(newGlob)s匹配的规则"
+            "changed_rule_glob": "%(senderName)s 更新了一个由于%(reason)s而禁止%(oldGlob)s跟%(newGlob)s匹配的规则",
+            "message_hidden": "你已忽略此用户，所以其消息已被隐藏。<a>仍然显示。</a>"
         },
         "no_permission_messages_before_invite": "你没有权限查看你被邀请之前的消息。",
         "no_permission_messages_before_join": "你没有权限查看你加入前的消息。",
@@ -2301,7 +2277,8 @@
         "m.audio": {
             "unnamed_audio": "未命名的音频",
             "error_downloading_audio": "下载音频时出错",
-            "error_processing_audio": "处理音频消息时出错"
+            "error_processing_audio": "处理音频消息时出错",
+            "error_processing_voice_message": "处理语音消息时发生错误"
         },
         "load_error": {
             "no_permission": "尝试了加载此房间时间线上的特定点，但你没有查看相关消息的权限。",
@@ -2333,6 +2310,23 @@
             "sent": "%(senderDisplayName)s 发送了一张图片。",
             "error_decrypting": "解密图像时出错",
             "show_image": "显示图像"
+        },
+        "m.key.verification.done": "你验证了 %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "你取消了 %(name)s 的验证",
+            "user_cancelled": "%(name)s 取消了验证"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "你接受了",
+            "you_declined": "你拒绝了",
+            "you_cancelled": "你取消了",
+            "you_started": "你发送了一个验证请求"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s 结束了投票"
+        },
+        "m.video": {
+            "error_decrypting": "解密视频时出错"
         }
     },
     "slash_command": {
@@ -3609,7 +3603,21 @@
         "options_placeholder": "写个选项",
         "options_add_button": "添加选项",
         "disclosed_notes": "投票者一投完票就能看到结果",
-        "notes": "结果仅在你结束投票后展示"
+        "notes": "结果仅在你结束投票后展示",
+        "unable_edit_title": "无法编辑投票",
+        "unable_edit_description": "抱歉，你无法在有人投票后编辑投票。",
+        "error_voting_title": "投票未登记",
+        "error_voting_description": "抱歉，你的投票未登记。请重试。",
+        "total_not_ended": "结果将在投票结束时可见",
+        "total_no_votes": "尚无投票",
+        "total_n_votes": {
+            "one": "票数已达 %(count)s 票。要查看结果请亲自投票",
+            "other": "票数已达 %(count)s 票。要查看结果请亲自投票"
+        },
+        "total_n_votes_voted": {
+            "one": "基于 %(count)s 票",
+            "other": "基于 %(count)s 票"
+        }
     },
     "failed_load_async_component": "无法加载！请检查你的网络连接并重试。",
     "upload_failed_generic": "文件《%(fileName)s》上传失败。",

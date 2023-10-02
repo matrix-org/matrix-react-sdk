@@ -83,7 +83,6 @@
     "Session name": "Назва сеансу",
     "Session ID": "ID сеансу",
     "Session key": "Ключ сеансу",
-    "You sent a verification request": "Ви надіслали запит перевірки",
     "Direct Messages": "Особисті повідомлення",
     "Room Settings - %(roomName)s": "Налаштування кімнати - %(roomName)s",
     "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
@@ -181,7 +180,6 @@
     "You'll lose access to your encrypted messages": "Ви втратите доступ до ваших зашифрованих повідомлень",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>",
     "Add an Integration": "Додати інтеграцію",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
     "Comoros": "Коморські Острови",
@@ -442,7 +440,6 @@
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
     "Link to most recent message": "Посилання на останнє повідомлення",
     "Share Room": "Поділитись кімнатою",
-    "Join the conference from the room information card on the right": "Приєднуйтесь до групового виклику з інформаційної картки кімнати праворуч",
     "edited": "змінено",
     "Edited at %(date)s. Click to view edits.": "Змінено %(date)s. Натисніть, щоб переглянути зміни.",
     "Edited at %(date)s": "Змінено %(date)s",
@@ -611,10 +608,7 @@
     "Experimental": "Експериментально",
     "Themes": "Теми",
     "Messaging": "Спілкування",
-    "Vote not registered": "Голос не зареєстрований",
-    "Sorry, your vote was not registered. Please try again.": "Не вдалося зареєструвати ваш голос. Просимо спробувати ще.",
     "Spaces you know that contain this space": "Відомі вам простори, до яких входить цей",
-    "No votes cast": "Жодного голосу",
     "Failed to end poll": "Не вдалося завершити опитування",
     "The poll has ended. No votes were cast.": "Опитування завершене. Жодного голосу не було.",
     "The poll has ended. Top answer: %(topAnswer)s": "Опитування завершене. Перемогла відповідь: %(topAnswer)s",
@@ -687,34 +681,14 @@
     "Submit logs": "Надіслати журнали",
     "Click to view edits": "Натисніть, щоб переглянути зміни",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Ви будете спрямовані до стороннього сайту, щоб автентифікувати використання облікового запису в %(integrationsUrl)s. Продовжити?",
-    "Error processing voice message": "Помилка обробки голосового повідомлення",
-    "Error decrypting video": "Помилка розшифрування відео",
     "%(count)s votes": {
         "one": "%(count)s голос",
         "other": "%(count)s голосів"
     },
-    "Based on %(count)s votes": {
-        "one": "На підставі %(count)s голосу",
-        "other": "На підставі %(count)s голосів"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s голос надісланий. Проголосуйте, щоб побачити результати",
-        "other": "%(count)s голосів надіслано. Проголосуйте, щоб побачити результати"
-    },
     "%(name)s wants to verify": "%(name)s бажає звірити",
     "%(name)s cancelled": "%(name)s скасовує",
     "%(name)s declined": "%(name)s відхиляє",
-    "You cancelled": "Ви скасували",
-    "You declined": "Ви відхилили",
     "%(name)s accepted": "%(name)s погоджується",
-    "You accepted": "Ви погодились",
-    "%(name)s cancelled verifying": "%(name)s скасовує звірку",
-    "You cancelled verifying %(name)s": "Ви скасували звірку %(name)s",
-    "You verified %(name)s": "Ви звірили %(name)s",
-    "Video conference started by %(senderName)s": "%(senderName)s починає груповий відеовиклик",
-    "Video conference updated by %(senderName)s": "%(senderName)s оновлює груповий відеовиклик",
-    "Video conference ended by %(senderName)s": "%(senderName)s завершує груповий відеовиклик",
-    "Join the conference at the top of this room": "Приєднуйтеся до групового виклику вгорі цієї кімнати",
     "Remove %(count)s messages": {
         "one": "Видалити 1 повідомлення",
         "other": "Видалити %(count)s повідомлень"
@@ -826,10 +800,7 @@
     "Use <arrows/> to scroll": "Використовуйте <arrows/>, щоб прокручувати",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
-    "Sorry, you can't edit a poll after votes have been cast.": "Ви не можете редагувати опитування після завершення голосування.",
-    "Can't edit poll": "Неможливо редагувати опитування",
     "Join %(roomAddress)s": "Приєднатися до %(roomAddress)s",
-    "Results will be visible when the poll is ended": "Результати будуть видимі після завершення опитування",
     "Search Dialog": "Вікно пошуку",
     "What location type do you want to share?": "Який вид місцеперебування поширити?",
     "Drop a Pin": "Маркер на карті",
@@ -923,7 +894,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Ви не можете розпочати запис голосового повідомлення, оскільки зараз відбувається запис трансляції наживо. Завершіть трансляцію, щоб розпочати запис голосового повідомлення.",
     "Can't start voice message": "Не можливо запустити запис голосового повідомлення",
     "unknown": "невідомо",
-    "Declining…": "Відхилення…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Увімкніть «%(manageIntegrations)s» в Налаштуваннях, щоб зробити це.",
     "Loading live location…": "Завантаження місця перебування наживо…",
     "Fetching keys from server…": "Отримання ключів із сервера…",
@@ -931,8 +901,6 @@
     "Waiting for partner to confirm…": "Очікування підтвердження партнером…",
     "Adding…": "Додавання…",
     "Starting export process…": "Початок процесу експорту…",
-    "Ended a poll": "Завершує опитування",
-    "Due to decryption errors, some votes may not be counted": "Через помилки розшифрування деякі голоси можуть бути не враховані",
     "Invites by email can only be sent one at a time": "Запрошення електронною поштою можна надсилати лише одне за раз",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
@@ -2301,7 +2269,12 @@
         "m.widget": {
             "modified": "%(senderName)s змінює віджет %(widgetName)s",
             "added": "%(senderName)s додає віджет %(widgetName)s",
-            "removed": "%(senderName)s вилучає віджет %(widgetName)s"
+            "removed": "%(senderName)s вилучає віджет %(widgetName)s",
+            "jitsi_join_top_prompt": "Приєднуйтеся до групового виклику вгорі цієї кімнати",
+            "jitsi_join_right_prompt": "Приєднуйтесь до групового виклику з інформаційної картки кімнати праворуч",
+            "jitsi_ended": "%(senderName)s завершує груповий відеовиклик",
+            "jitsi_updated": "%(senderName)s оновлює груповий відеовиклик",
+            "jitsi_started": "%(senderName)s починає груповий відеовиклик"
         },
         "io.element.widgets.layout": "%(senderName)s оновлює макет кімнати",
         "m.location": {
@@ -2312,7 +2285,6 @@
         "self_redaction": "Повідомлення видалено",
         "redaction": "Повідомлення видалено %(name)s",
         "m.poll.start": "%(senderName)s починає опитування - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s завершує опитування",
         "typing_indicator": {
             "one_user": "%(displayName)s пише…",
             "two_users": "%(names)s та %(lastPerson)s пишуть…",
@@ -2484,7 +2456,8 @@
             "changed_rule_users": "%(senderName)s змінює правило блокування користувачів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
             "changed_rule_rooms": "%(senderName)s змінює правило блокування кімнат зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
             "changed_rule_servers": "%(senderName)s змінює правило блокування серверів зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
-            "changed_rule_glob": "%(senderName)s змінює правило блокування зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s"
+            "changed_rule_glob": "%(senderName)s змінює правило блокування зі збігу з %(oldGlob)s на збіг з %(newGlob)s через %(reason)s",
+            "message_hidden": "Ви ігноруєте цього користувача, тож його повідомлення приховано. <a>Все одно показати.</a>"
         },
         "no_permission_messages_before_invite": "Ви не маєте дозволу на перегляд повідомлень, давніших за ваше запрошення.",
         "no_permission_messages_before_join": "Ви не маєте дозволу на перегляд повідомлень, давніших за ваше приєднання.",
@@ -2545,7 +2518,8 @@
         "m.audio": {
             "unnamed_audio": "Аудіо без назви",
             "error_downloading_audio": "Помилка завантаження аудіо",
-            "error_processing_audio": "Помилка обробки аудіоповідомлення"
+            "error_processing_audio": "Помилка обробки аудіоповідомлення",
+            "error_processing_voice_message": "Помилка обробки голосового повідомлення"
         },
         "load_error": {
             "no_permission": "У вас нема дозволу на перегляд повідомлення за вказаною позицією в стрічці цієї кімнати.",
@@ -2583,6 +2557,25 @@
             "error_decrypting": "Помилка розшифрування зображення",
             "error_downloading": "Помилка завантаження зображення",
             "show_image": "Показати зображення"
+        },
+        "m.key.verification.done": "Ви звірили %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Ви скасували звірку %(name)s",
+            "user_cancelled": "%(name)s скасовує звірку"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Ви погодились",
+            "you_declined": "Ви відхилили",
+            "you_cancelled": "Ви скасували",
+            "declining": "Відхилення…",
+            "you_started": "Ви надіслали запит перевірки"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s завершує опитування",
+            "ended": "Завершує опитування"
+        },
+        "m.video": {
+            "error_decrypting": "Помилка розшифрування відео"
         }
     },
     "slash_command": {
@@ -3996,7 +3989,22 @@
         "options_placeholder": "Вписати варіант",
         "options_add_button": "Додати варіант",
         "disclosed_notes": "Респонденти бачитимуть результати, як тільки вони проголосують",
-        "notes": "Результати показуються лише після завершення опитування"
+        "notes": "Результати показуються лише після завершення опитування",
+        "unable_edit_title": "Неможливо редагувати опитування",
+        "unable_edit_description": "Ви не можете редагувати опитування після завершення голосування.",
+        "error_voting_title": "Голос не зареєстрований",
+        "error_voting_description": "Не вдалося зареєструвати ваш голос. Просимо спробувати ще.",
+        "total_decryption_errors": "Через помилки розшифрування деякі голоси можуть бути не враховані",
+        "total_not_ended": "Результати будуть видимі після завершення опитування",
+        "total_no_votes": "Жодного голосу",
+        "total_n_votes": {
+            "one": "%(count)s голос надісланий. Проголосуйте, щоб побачити результати",
+            "other": "%(count)s голосів надіслано. Проголосуйте, щоб побачити результати"
+        },
+        "total_n_votes_voted": {
+            "one": "На підставі %(count)s голосу",
+            "other": "На підставі %(count)s голосів"
+        }
     },
     "failed_load_async_component": "Завантаження неможливе! Перевірте інтернет-зʼєднання та спробуйте ще.",
     "upload_failed_generic": "Не вдалося вивантажити файл '%(fileName)s'.",

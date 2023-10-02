@@ -444,11 +444,6 @@
     "Pizza": "Flatbökur",
     "Apple": "Epli",
     "Messaging": "Skilaboð",
-    "Video conference started by %(senderName)s": "Myndfjarfundur hafinn af %(senderName)s",
-    "Video conference updated by %(senderName)s": "Myndfjarfundur uppfærður af %(senderName)s",
-    "Video conference ended by %(senderName)s": "Myndfjarfundi lokið af %(senderName)s",
-    "Join the conference from the room information card on the right": "Taka þátt í fjarfundinum á upplýsingaspjaldi spjallrásaarinnar til hægri",
-    "Join the conference at the top of this room": "Taka þátt í fjarfundinum efst í þessari spjallrás",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Prófaðu að skruna upp í tímalínunni til að sjá hvort það séu einhver eldri.",
     "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
     "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
@@ -499,7 +494,6 @@
     "If they don't match, the security of your communication may be compromised.": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð.",
     "Confirm by comparing the following with the User Settings in your other session:": "Staðfestu með því að bera eftirfarandi saman við 'Stillingar notanda' í hinni setunni þinni:",
     "Start using Key Backup": "Byrja að nota öryggisafrit dulritunarlykla",
-    "No votes cast": "Engin atkvæði greidd",
     "Spanner": "Skrúflykill",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
     "Spaces you know that contain this room": "Svæði sem þú veist að innihalda þetta svæði",
@@ -533,7 +527,6 @@
     "Invite anyway and never warn me again": "Bjóða samt og ekki vara mig við aftur",
     "The following users may not exist": "Eftirfarandi notendur eru mögulega ekki til",
     "Create a new space": "Búa til nýtt svæði",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Þú hefur hunsað þennan notanda, þannig að skilaboð frá honum eru falin. <a>Birta samts.</a>",
     "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Including %(commaSeparatedMembers)s": "Þar með taldir %(commaSeparatedMembers)s",
@@ -557,21 +550,6 @@
     "Click to view edits": "Smelltu hér til að skoða breytingar",
     "Edited at %(date)s": "Breytt þann %(date)s",
     "Add reaction": "Bæta við viðbrögðum",
-    "Error processing voice message": "Villa við meðhöndlun talskilaboða",
-    "Error decrypting video": "Villa við afkóðun myndskeiðs",
-    "Based on %(count)s votes": {
-        "one": "Byggt á %(count)s atkvæði",
-        "other": "Byggt á %(count)s atkvæðum"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s atkvæði greitt. Greiddu atkvæði til að sjá útkomuna",
-        "other": "%(count)s atkvæði greidd. Greiddu atkvæði til að sjá útkomuna"
-    },
-    "Results will be visible when the poll is ended": "Niðurstöður birtast einungis eftir að könnuninni hefur lokið",
-    "Sorry, your vote was not registered. Please try again.": "Því miður, atkvæðið þitt var ekki skráð. Prófaðu aftur.",
-    "Vote not registered": "Atkvæði ekki skráð",
-    "Sorry, you can't edit a poll after votes have been cast.": "Því miður, þú getur ekki breytt könnun eftir að atkvæði hafa verið greidd.",
-    "Can't edit poll": "Get ekki breytt könnun",
     "Remove %(count)s messages": {
         "one": "Fjarlægja 1 skilaboð",
         "other": "Fjarlægja %(count)s skilaboð"
@@ -631,8 +609,6 @@
     },
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
-    "You cancelled": "Þú hættir við",
-    "You accepted": "Þú samþykktir",
     "<inviter/> invites you": "<inviter/> býður þér",
     "Enter Security Phrase": "Settu inn öryggisfrasa",
     "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
@@ -651,7 +627,6 @@
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
     "%(name)s accepted": "%(name)s samþykkti",
-    "%(name)s cancelled verifying": "%(name)s hætti við sannvottun",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svör"
@@ -680,10 +655,6 @@
     "Spaces you're in": "Svæði sem þú tilheyrir",
     "Unable to upload": "Ekki tókst að senda inn",
     "Submit logs": "Senda inn atvikaskrár",
-    "You sent a verification request": "Þú sendir beiðni um sannvottun",
-    "You declined": "Þú hafnaðir",
-    "You cancelled verifying %(name)s": "Þú hættir við sannvottun á %(name)s",
-    "You verified %(name)s": "Þú sannreyndir %(name)s",
     "Keys restored": "Dulritunarlyklar endurheimtir",
     "No backup found!": "Ekkert öryggisafrit fannst!",
     "Incorrect Security Phrase": "Rangur öryggisfrasi",
@@ -1980,7 +1951,12 @@
         "m.widget": {
             "modified": "%(widgetName)s viðmótshluta var breytt af %(senderName)s",
             "added": "%(widgetName)s viðmótshluta var bætt við af %(senderName)s",
-            "removed": "%(widgetName)s viðmótshluti var fjarlægður af %(senderName)s"
+            "removed": "%(widgetName)s viðmótshluti var fjarlægður af %(senderName)s",
+            "jitsi_join_top_prompt": "Taka þátt í fjarfundinum efst í þessari spjallrás",
+            "jitsi_join_right_prompt": "Taka þátt í fjarfundinum á upplýsingaspjaldi spjallrásaarinnar til hægri",
+            "jitsi_ended": "Myndfjarfundi lokið af %(senderName)s",
+            "jitsi_updated": "Myndfjarfundur uppfærður af %(senderName)s",
+            "jitsi_started": "Myndfjarfundur hafinn af %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s hefur uppfært framsetningu spjallrásarinnar",
         "m.location": {
@@ -1991,7 +1967,6 @@
         "self_redaction": "Skilaboðum eytt",
         "redaction": "Skilaboðum eytt af %(name)s",
         "m.poll.start": "%(senderName)s hefur sett í gang könnun - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s hefur lokið könnun",
         "typing_indicator": {
             "one_user": "%(displayName)s er að skrifa…",
             "two_users": "%(names)s og %(lastPerson)s eru að skrifa…… …",
@@ -2138,7 +2113,8 @@
             "changed_rule_users": "%(senderName)s breytti reglu sem bannar notendur sem samsvara %(oldGlob)s yfir í að samsvara %(glob)s, vegna %(reason)s",
             "changed_rule_rooms": "%(senderName)s breytti reglu sem bannar spjallrásir sem samsvara %(oldGlob)s yfir í að samsvara %(glob)s, vegna %(reason)s",
             "changed_rule_servers": "%(senderName)s breytti reglu sem bannar netþjóna sem samsvara %(oldGlob)s yfir í að samsvara %(glob)s, vegna %(reason)s",
-            "changed_rule_glob": "%(senderName)s uppfærði bannreglu sem samsvarar %(oldGlob)s yfir í að samsvara %(glob)s, vegna %(reason)s"
+            "changed_rule_glob": "%(senderName)s uppfærði bannreglu sem samsvarar %(oldGlob)s yfir í að samsvara %(glob)s, vegna %(reason)s",
+            "message_hidden": "Þú hefur hunsað þennan notanda, þannig að skilaboð frá honum eru falin. <a>Birta samts.</a>"
         },
         "no_permission_messages_before_invite": "Þú hefur ekki heimildir til að skoða skilaboð frá því áður en þér var boðið.",
         "no_permission_messages_before_join": "Þú hefur ekki heimildir til að skoða skilaboð frá því áður en þú fórst að taka þátt.",
@@ -2194,7 +2170,8 @@
         "m.audio": {
             "unnamed_audio": "Nafnlaust hljóð",
             "error_downloading_audio": "Villa við að sækja hljóð",
-            "error_processing_audio": "Villa við meðhöndlun hljóðskilaboða"
+            "error_processing_audio": "Villa við meðhöndlun hljóðskilaboða",
+            "error_processing_voice_message": "Villa við meðhöndlun talskilaboða"
         },
         "load_error": {
             "no_permission": "Reyndi að hlaða inn tilteknum punkti úr tímalínu þessarar spjallrásar, en þú ert ekki með heimild til að skoða tilteknu skilaboðin.",
@@ -2228,6 +2205,23 @@
             "error_decrypting": "Villa við afkóðun myndar",
             "error_downloading": "Villa kom upp við að sækja mynd",
             "show_image": "Birta mynd"
+        },
+        "m.key.verification.done": "Þú sannreyndir %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Þú hættir við sannvottun á %(name)s",
+            "user_cancelled": "%(name)s hætti við sannvottun"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Þú samþykktir",
+            "you_declined": "Þú hafnaðir",
+            "you_cancelled": "Þú hættir við",
+            "you_started": "Þú sendir beiðni um sannvottun"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s hefur lokið könnun"
+        },
+        "m.video": {
+            "error_decrypting": "Villa við afkóðun myndskeiðs"
         }
     },
     "slash_command": {
@@ -3430,7 +3424,21 @@
         "options_placeholder": "Skrifaðu valmöguleika",
         "options_add_button": "Bæta við valkosti",
         "disclosed_notes": "Kjósendur sjá niðurstöðurnar þegar þeir hafa kosið",
-        "notes": "Niðurstöður birtast einungis eftir að þú hefur lokað könnuninni"
+        "notes": "Niðurstöður birtast einungis eftir að þú hefur lokað könnuninni",
+        "unable_edit_title": "Get ekki breytt könnun",
+        "unable_edit_description": "Því miður, þú getur ekki breytt könnun eftir að atkvæði hafa verið greidd.",
+        "error_voting_title": "Atkvæði ekki skráð",
+        "error_voting_description": "Því miður, atkvæðið þitt var ekki skráð. Prófaðu aftur.",
+        "total_not_ended": "Niðurstöður birtast einungis eftir að könnuninni hefur lokið",
+        "total_no_votes": "Engin atkvæði greidd",
+        "total_n_votes": {
+            "one": "%(count)s atkvæði greitt. Greiddu atkvæði til að sjá útkomuna",
+            "other": "%(count)s atkvæði greidd. Greiddu atkvæði til að sjá útkomuna"
+        },
+        "total_n_votes_voted": {
+            "one": "Byggt á %(count)s atkvæði",
+            "other": "Byggt á %(count)s atkvæðum"
+        }
     },
     "failed_load_async_component": "Mistókst að hlaða inn. Athugaðu nettenginguna þína og reyndu aftur.",
     "upload_failed_generic": "Skrána '%(fileName)s' mistókst að senda inn.",

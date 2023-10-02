@@ -862,7 +862,7 @@ function textForPollStartEvent(event: MatrixEvent, client: MatrixClient): (() =>
 
 function textForPollEndEvent(event: MatrixEvent): (() => string) | null {
     return () =>
-        _t("timeline|m.poll.end", {
+        _t("timeline|m.poll.end|sender_ended", {
             senderName: getSenderName(event),
         });
 }

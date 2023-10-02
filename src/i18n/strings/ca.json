@@ -45,7 +45,6 @@
     },
     "Join Room": "Entra a la sala",
     "not specified": "sense especificar",
-    "Error decrypting video": "Error desxifrant video",
     "Add an Integration": "Afegeix una integració",
     "Email address": "Correu electrònic",
     "<a>In reply to</a> <pill>": "<a>En resposta a</a> <pill>",
@@ -460,6 +459,9 @@
         "m.image": {
             "sent": "%(senderDisplayName)s ha enviat una imatge.",
             "error_decrypting": "Error desxifrant imatge"
+        },
+        "m.video": {
+            "error_decrypting": "Error desxifrant video"
         }
     },
     "slash_command": {

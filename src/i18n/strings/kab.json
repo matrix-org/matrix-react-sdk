@@ -131,12 +131,7 @@
         "one": "Kkes 1 izen",
         "other": "Kkes iznan n %(count)s"
     },
-    "You verified %(name)s": "Tezsneqdeḍ %(name)s",
-    "%(name)s cancelled verifying": "%(name)s isefsex asenqed",
-    "You accepted": "Tqebleḍ",
     "%(name)s accepted": "%(name)s yettwaqbel",
-    "You declined": "Tugiḍ",
-    "You cancelled": "Tesfesxeḍ",
     "%(name)s declined": "%(name)s yettwagi",
     "%(name)s cancelled": "%(name)s yettwasefsex",
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
@@ -286,10 +281,6 @@
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tzegleḍ useqdac-a, ihi iznan-ines ffren. <a>Ɣas akken sken-iten-id.</a>",
-    "You cancelled verifying %(name)s": "Tesfesxeḍ asenqed n %(name)s",
-    "You sent a verification request": "Tuzneḍ asuter n usenqed",
-    "Error decrypting video": "Tuccḍa deg uwgelhen n tvidyut",
     "Edited at %(date)s": "Yettwaẓreg deg %(date)s",
     "Click to view edits": "Sit i wakken ad twaliḍ aseẓreg",
     "Edited at %(date)s. Click to view edits.": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag.",
@@ -1366,7 +1357,8 @@
             "changed_rule_users": "%(senderName)s ibeddel alugen i yugin iseqdacen yemṣadan d %(oldGlob)s deg %(newGlob)s yemṣadan i %(reason)s",
             "changed_rule_rooms": "%(senderName)s ibeddel alugen i yugin tixxamin yemṣadan d %(oldGlob)s deg %(newGlob)s yemṣadan i %(reason)s",
             "changed_rule_servers": "%(senderName)s ibeddel alugen i yugin tixxamin iqeddacen d %(oldGlob)s deg %(newGlob)s yemṣadan i %(reason)s",
-            "changed_rule_glob": "%(senderName)s ibeddel alugen i yemṣadan d %(oldGlob)s deg %(newGlob)s yemṣadan i %(reason)s"
+            "changed_rule_glob": "%(senderName)s ibeddel alugen i yemṣadan d %(oldGlob)s deg %(newGlob)s yemṣadan i %(reason)s",
+            "message_hidden": "Tzegleḍ useqdac-a, ihi iznan-ines ffren. <a>Ɣas akken sken-iten-id.</a>"
         },
         "redacted": {
             "tooltip": "Izen yettwakkes deg %(date)s"
@@ -1413,6 +1405,20 @@
             "sent": "%(senderDisplayName)s yuzen-d tugna.",
             "error_decrypting": "Tuccḍa deg uwgelhen n tugna",
             "show_image": "Sken tugna"
+        },
+        "m.key.verification.done": "Tezsneqdeḍ %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Tesfesxeḍ asenqed n %(name)s",
+            "user_cancelled": "%(name)s isefsex asenqed"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Tqebleḍ",
+            "you_declined": "Tugiḍ",
+            "you_cancelled": "Tesfesxeḍ",
+            "you_started": "Tuzneḍ asuter n usenqed"
+        },
+        "m.video": {
+            "error_decrypting": "Tuccḍa deg uwgelhen n tvidyut"
         }
     },
     "slash_command": {

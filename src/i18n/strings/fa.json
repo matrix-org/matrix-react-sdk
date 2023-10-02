@@ -478,15 +478,6 @@
         "other": "%(count)s اتاق",
         "one": "%(count)s اتاق"
     },
-    "%(name)s cancelled verifying": "%(name)s تأیید هویت را لغو کرد",
-    "You cancelled verifying %(name)s": "شما تأیید هویت %(name)s را لغو کردید",
-    "You verified %(name)s": "شما هویت %(name)s را تأیید کردید",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "شما این کاربر را نادیده گرفته‌اید، بنابراین پیام او نمایش داده نمی‌شود. <a>نمایش بده.</a>",
-    "Video conference started by %(senderName)s": "کنفرانس ویدئویی توسط %(senderName)s آغاز شده است",
-    "Video conference updated by %(senderName)s": "کنفرانس ویدیویی توسط %(senderName)s به روز شد",
-    "Video conference ended by %(senderName)s": "کنفرانس ویدیویی توسط %(senderName)s به پایان رسید",
-    "Join the conference from the room information card on the right": "از طریق کارت اطلاعات اتاق در سمت راست، به کنفرانس بپیوندید",
-    "Join the conference at the top of this room": "از بالای این اتاق به کنفرانس بپوندید",
     "Remove %(count)s messages": {
         "one": "حذف ۱ پیام",
         "other": "حذف %(count)s پیام"
@@ -546,16 +537,10 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "شما در آستانه هدایت شدن به یک سایت ثالث هستید بنابراین می توانید حساب خود را برای استفاده با %(integrationsUrl)s احراز هویت کنید. آیا مایل هستید ادامه دهید؟",
     "Add an Integration": "یکپارچه سازی اضافه کنید",
     "Add reaction": "افزودن واکنش",
-    "Error processing voice message": "خطا در پردازش پیام صوتی",
-    "Error decrypting video": "خطا در رمزگشایی ویدیو",
-    "You sent a verification request": "شما یک درخواست تأیید هویت ارسال کرده‌اید",
     "%(name)s wants to verify": "%(name)s می‌خواهد تأیید هویت کند",
     "%(name)s cancelled": "%(name)s لغو کرد",
     "%(name)s declined": "%(name)s رد کرد",
-    "You cancelled": "شما لغو کردید",
-    "You declined": "شما رد کردید",
     "%(name)s accepted": "%(name)s پذیرفت",
-    "You accepted": "پذیرفتید",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",
     "Backup version:": "نسخه‌ی پشتیبان:",
     "This backup is trusted because it has been restored on this session": "این نسخه‌ی پشتیبان قابل اعتماد است چرا که بر روی این نشست بازیابی شد",
@@ -1543,7 +1528,12 @@
         "m.widget": {
             "modified": "ویجت %(widgetName)s توسط %(senderName)s تغییر کرد",
             "added": "ویجت %(widgetName)s توسط %(senderName)s اضافه شد",
-            "removed": "ویجت %(widgetName)s توسط %(senderName)s حذف گردید"
+            "removed": "ویجت %(widgetName)s توسط %(senderName)s حذف گردید",
+            "jitsi_join_top_prompt": "از بالای این اتاق به کنفرانس بپوندید",
+            "jitsi_join_right_prompt": "از طریق کارت اطلاعات اتاق در سمت راست، به کنفرانس بپیوندید",
+            "jitsi_ended": "کنفرانس ویدیویی توسط %(senderName)s به پایان رسید",
+            "jitsi_updated": "کنفرانس ویدیویی توسط %(senderName)s به روز شد",
+            "jitsi_started": "کنفرانس ویدئویی توسط %(senderName)s آغاز شده است"
         },
         "io.element.widgets.layout": "%(senderName)s قالب نمایش اتاق را تغییر داد",
         "m.location": {
@@ -1552,7 +1542,6 @@
         "self_redaction": "پیغام پاک شد",
         "redaction": "پیام توسط %(name)s حذف شد",
         "m.poll.start": "%(senderName)s یک نظر سنجی را شروع کرد - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s به نظر سنجی پایان داد",
         "typing_indicator": {
             "one_user": "%(displayName)s در حال نوشتن…",
             "two_users": "%(names)s و %(lastPerson)s در حال نوشتن…",
@@ -1676,7 +1665,8 @@
             "changed_rule_users": "%(senderName)s یک قاعده تحریم کاربران را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
             "changed_rule_rooms": "%(senderName)s یک قاعده تحریم اتاق‌ها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
             "changed_rule_servers": "%(senderName)s یک قاعده تحریم سرورها را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای تغییر داد که با %(newGlob)s تطابق داشته باشد",
-            "changed_rule_glob": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد"
+            "changed_rule_glob": "%(senderName)s یک قاعده تحریم را که با %(oldGlob)s تطابق داشت، به دلیل (دلایل) %(reason)s به گونه‌ای به‌روزرسانی کرد که با %(newGlob)s تطابق داشته باشد",
+            "message_hidden": "شما این کاربر را نادیده گرفته‌اید، بنابراین پیام او نمایش داده نمی‌شود. <a>نمایش بده.</a>"
         },
         "redacted": {
             "tooltip": "پیام در %(date)s حذف شد"
@@ -1722,6 +1712,26 @@
             "sent": "%(senderDisplayName)s تصویری ارسال کرد.",
             "error_decrypting": "خطا در رمزگشایی تصویر",
             "show_image": "نمایش تصویر"
+        },
+        "m.key.verification.done": "شما هویت %(name)s را تأیید کردید",
+        "m.key.verification.cancel": {
+            "you_cancelled": "شما تأیید هویت %(name)s را لغو کردید",
+            "user_cancelled": "%(name)s تأیید هویت را لغو کرد"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "پذیرفتید",
+            "you_declined": "شما رد کردید",
+            "you_cancelled": "شما لغو کردید",
+            "you_started": "شما یک درخواست تأیید هویت ارسال کرده‌اید"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s به نظر سنجی پایان داد"
+        },
+        "m.video": {
+            "error_decrypting": "خطا در رمزگشایی ویدیو"
+        },
+        "m.audio": {
+            "error_processing_voice_message": "خطا در پردازش پیام صوتی"
         }
     },
     "slash_command": {

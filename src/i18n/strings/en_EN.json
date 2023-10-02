@@ -1579,7 +1579,12 @@
         "m.widget": {
             "modified": "%(widgetName)s widget modified by %(senderName)s",
             "added": "%(widgetName)s widget added by %(senderName)s",
-            "removed": "%(widgetName)s widget removed by %(senderName)s"
+            "removed": "%(widgetName)s widget removed by %(senderName)s",
+            "jitsi_join_top_prompt": "Join the conference at the top of this room",
+            "jitsi_join_right_prompt": "Join the conference from the room information card on the right",
+            "jitsi_ended": "Video conference ended by %(senderName)s",
+            "jitsi_updated": "Video conference updated by %(senderName)s",
+            "jitsi_started": "Video conference started by %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s has updated the room layout",
         "mjolnir": {
@@ -1599,7 +1604,8 @@
             "changed_rule_users": "%(senderName)s changed a rule that was banning users matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
             "changed_rule_rooms": "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
             "changed_rule_servers": "%(senderName)s changed a rule that was banning servers matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
-            "changed_rule_glob": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s"
+            "changed_rule_glob": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
+            "message_hidden": "You have ignored this user, so their message is hidden. <a>Show anyways.</a>"
         },
         "m.location": {
             "full": "%(senderName)s has shared their location",
@@ -1609,7 +1615,10 @@
         "self_redaction": "Message deleted",
         "redaction": "Message deleted by %(name)s",
         "m.poll.start": "%(senderName)s has started a poll - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s has ended a poll",
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s has ended a poll",
+            "ended": "Ended a poll"
+        },
         "typing_indicator": {
             "one_user": "%(displayName)s is typing …",
             "more_users": {
@@ -1672,6 +1681,7 @@
         "pending_moderation": "Message pending moderation",
         "m.audio": {
             "error_processing_audio": "Error processing audio message",
+            "error_processing_voice_message": "Error processing voice message",
             "unnamed_audio": "Unnamed audio",
             "error_downloading_audio": "Error downloading audio"
         },
@@ -1683,6 +1693,21 @@
             "error_decrypting": "Error decrypting attachment",
             "decrypt_label": "Decrypt %(text)s",
             "error_invalid": "Invalid file%(extra)s"
+        },
+        "m.key.verification.done": "You verified %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "You cancelled verifying %(name)s",
+            "user_cancelled": "%(name)s cancelled verifying"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "You accepted",
+            "you_declined": "You declined",
+            "you_cancelled": "You cancelled",
+            "declining": "Declining…",
+            "you_started": "You sent a verification request"
+        },
+        "m.video": {
+            "error_decrypting": "Error decrypting video"
         },
         "reactions": {
             "label": "%(reactors)s reacted with %(content)s",
@@ -3241,43 +3266,45 @@
     "%(name)s started a video call": "%(name)s started a video call",
     "unknown status code": "unknown status code",
     "unavailable": "unavailable",
-    "Join the conference at the top of this room": "Join the conference at the top of this room",
-    "Join the conference from the room information card on the right": "Join the conference from the room information card on the right",
-    "Video conference ended by %(senderName)s": "Video conference ended by %(senderName)s",
-    "Video conference updated by %(senderName)s": "Video conference updated by %(senderName)s",
-    "Video conference started by %(senderName)s": "Video conference started by %(senderName)s",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
-    "You verified %(name)s": "You verified %(name)s",
-    "You cancelled verifying %(name)s": "You cancelled verifying %(name)s",
-    "%(name)s cancelled verifying": "%(name)s cancelled verifying",
-    "You accepted": "You accepted",
     "%(name)s accepted": "%(name)s accepted",
-    "You declined": "You declined",
-    "You cancelled": "You cancelled",
     "%(name)s declined": "%(name)s declined",
     "%(name)s cancelled": "%(name)s cancelled",
-    "Declining…": "Declining…",
     "%(name)s wants to verify": "%(name)s wants to verify",
-    "You sent a verification request": "You sent a verification request",
-    "Can't edit poll": "Can't edit poll",
-    "Sorry, you can't edit a poll after votes have been cast.": "Sorry, you can't edit a poll after votes have been cast.",
-    "Vote not registered": "Vote not registered",
-    "Sorry, your vote was not registered. Please try again.": "Sorry, your vote was not registered. Please try again.",
-    "Due to decryption errors, some votes may not be counted": "Due to decryption errors, some votes may not be counted",
-    "Results will be visible when the poll is ended": "Results will be visible when the poll is ended",
-    "No votes cast": "No votes cast",
-    "%(count)s votes cast. Vote to see the results": {
-        "other": "%(count)s votes cast. Vote to see the results",
-        "one": "%(count)s vote cast. Vote to see the results"
-    },
-    "Based on %(count)s votes": {
-        "other": "Based on %(count)s votes",
-        "one": "Based on %(count)s vote"
+    "poll": {
+        "unable_edit_title": "Can't edit poll",
+        "unable_edit_description": "Sorry, you can't edit a poll after votes have been cast.",
+        "error_voting_title": "Vote not registered",
+        "error_voting_description": "Sorry, your vote was not registered. Please try again.",
+        "total_decryption_errors": "Due to decryption errors, some votes may not be counted",
+        "total_not_ended": "Results will be visible when the poll is ended",
+        "total_no_votes": "No votes cast",
+        "total_n_votes": {
+            "other": "%(count)s votes cast. Vote to see the results",
+            "one": "%(count)s vote cast. Vote to see the results"
+        },
+        "total_n_votes_voted": {
+            "other": "Based on %(count)s votes",
+            "one": "Based on %(count)s vote"
+        },
+        "create_poll_title": "Create poll",
+        "create_poll_action": "Create Poll",
+        "edit_poll_title": "Edit poll",
+        "failed_send_poll_title": "Failed to post poll",
+        "failed_send_poll_description": "Sorry, the poll you tried to create was not posted.",
+        "type_heading": "Poll type",
+        "type_open": "Open poll",
+        "type_closed": "Closed poll",
+        "topic_heading": "What is your poll question or topic?",
+        "topic_label": "Question or topic",
+        "topic_placeholder": "Write something…",
+        "options_heading": "Create options",
+        "options_label": "Option %(number)s",
+        "options_placeholder": "Write an option",
+        "options_add_button": "Add option",
+        "disclosed_notes": "Voters see results as soon as they have voted",
+        "notes": "Results are only revealed when you end the poll"
     },
     "edited": "edited",
-    "Ended a poll": "Ended a poll",
-    "Error decrypting video": "Error decrypting video",
-    "Error processing voice message": "Error processing voice message",
     "Add reaction": "Add reaction",
     "Custom reaction": "Custom reaction",
     "Add an Integration": "Add an Integration",
@@ -3392,25 +3419,6 @@
     "Language Dropdown": "Language Dropdown",
     "Message in %(room)s": "Message in %(room)s",
     "Message from %(user)s": "Message from %(user)s",
-    "poll": {
-        "create_poll_title": "Create poll",
-        "create_poll_action": "Create Poll",
-        "edit_poll_title": "Edit poll",
-        "failed_send_poll_title": "Failed to post poll",
-        "failed_send_poll_description": "Sorry, the poll you tried to create was not posted.",
-        "type_heading": "Poll type",
-        "type_open": "Open poll",
-        "type_closed": "Closed poll",
-        "topic_heading": "What is your poll question or topic?",
-        "topic_label": "Question or topic",
-        "topic_placeholder": "Write something…",
-        "options_heading": "Create options",
-        "options_label": "Option %(number)s",
-        "options_placeholder": "Write an option",
-        "options_add_button": "Add option",
-        "disclosed_notes": "Voters see results as soon as they have voted",
-        "notes": "Results are only revealed when you end the poll"
-    },
     "Power level": "Power level",
     "Custom level": "Custom level",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.",

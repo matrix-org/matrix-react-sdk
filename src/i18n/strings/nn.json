@@ -52,7 +52,6 @@
     "Saturday": "laurdag",
     "Today": "i dag",
     "Yesterday": "i går",
-    "Error decrypting video": "Noko gjekk gale med videodekrypteringa",
     "Email address": "Epostadresse",
     "Delete Widget": "Slett Widgeten",
     "Create new room": "Lag nytt rom",
@@ -121,9 +120,6 @@
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Join millions for free on the largest public server": "Kom ihop med millionar av andre på den største offentlege tenaren",
-    "Video conference started by %(senderName)s": "Videokonferanse starta av %(senderName)s",
-    "Video conference updated by %(senderName)s": "Videokonferanse oppdatert av %(senderName)s",
-    "Video conference ended by %(senderName)s": "Videokonferanse avslutta av %(senderName)s",
     "Norway": "Noreg",
     "Bahamas": "Bahamas",
     "Azerbaijan": "Aserbajdsjan",
@@ -149,13 +145,9 @@
     "Failed to end poll": "Avslutning av røysting gjekk gale",
     "The poll has ended. Top answer: %(topAnswer)s": "Røystinga er ferdig. Flest stemmer: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Røystinga er ferdig. Ingen røyster vart mottekne.",
-    "Sorry, you can't edit a poll after votes have been cast.": "Beklagar, du kan ikkje endra ei røysting som er i gang.",
-    "Can't edit poll": "Røystinga kan ikkje endrast",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Er du sikker på at du vil avslutta denne røystinga ? Dette vil gjelde for alle, og dei endelege resultata vil bli presentert.",
-    "Results will be visible when the poll is ended": "Resultata vil bli synlege når røystinga er ferdig",
     "Close sidebar": "Lat att sidestolpen",
     "Deactivate account": "Avliv brukarkontoen",
-    "Join the conference from the room information card on the right": "Bli med i konferanse frå rominfo-kortet til høgre",
     "common": {
         "analytics": "Statistikk",
         "error": "Noko gjekk gale",
@@ -599,10 +591,13 @@
         "m.widget": {
             "modified": "%(widgetName)s-widget endra av %(senderName)s",
             "added": "%(widgetName)s-widget lagt til av %(senderName)s",
-            "removed": "%(widgetName)s widget fjerna av %(senderName)s"
+            "removed": "%(widgetName)s widget fjerna av %(senderName)s",
+            "jitsi_join_right_prompt": "Bli med i konferanse frå rominfo-kortet til høgre",
+            "jitsi_ended": "Videokonferanse avslutta av %(senderName)s",
+            "jitsi_updated": "Videokonferanse oppdatert av %(senderName)s",
+            "jitsi_started": "Videokonferanse starta av %(senderName)s"
         },
         "m.poll.start": "%(senderName)s har starta ei røysting - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s har avslutta ei røysting",
         "typing_indicator": {
             "one_user": "%(displayName)s skriv…",
             "two_users": "%(names)s og %(lastPerson)s skriv…",
@@ -728,6 +723,12 @@
         "m.image": {
             "sent": "%(senderDisplayName)s sende eit bilete.",
             "error_decrypting": "Noko gjekk gale med biletedekrypteringa"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s har avslutta ei røysting"
+        },
+        "m.video": {
+            "error_decrypting": "Noko gjekk gale med videodekrypteringa"
         }
     },
     "slash_command": {
@@ -1175,7 +1176,10 @@
         "failed_send_poll_title": "Oppretting av røysting gjekk gale",
         "failed_send_poll_description": "Røystinga du prøvde å oppretta vart ikkje publisert.",
         "topic_heading": "Kva handlar røystinga om ?",
-        "notes": "Resultatet blir synleg når du avsluttar røystinga"
+        "notes": "Resultatet blir synleg når du avsluttar røystinga",
+        "unable_edit_title": "Røystinga kan ikkje endrast",
+        "unable_edit_description": "Beklagar, du kan ikkje endra ei røysting som er i gang.",
+        "total_not_ended": "Resultata vil bli synlege når røystinga er ferdig"
     },
     "failed_load_async_component": "Klarte ikkje lasta! Sjå på nettilkoplinga di og prøv igjen.",
     "upload_failed_generic": "Fila '%(fileName)s' vart ikkje lasta opp.",

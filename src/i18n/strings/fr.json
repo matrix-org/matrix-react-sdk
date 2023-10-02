@@ -39,7 +39,6 @@
     "Confirm Removal": "Confirmer la suppression",
     "Unable to restore session": "Impossible de restaurer la session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
-    "Error decrypting video": "Erreur lors du déchiffrement de la vidéo",
     "Add an Integration": "Ajouter une intégration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "Custom level": "Rang personnalisé",
@@ -242,16 +241,9 @@
     "e.g. my-room": "par ex. mon-salon",
     "Close dialog": "Fermer la boîte de dialogue",
     "Cancel search": "Annuler la recherche",
-    "You verified %(name)s": "Vous avez vérifié %(name)s",
-    "You cancelled verifying %(name)s": "Vous avez annulé la vérification de %(name)s",
-    "%(name)s cancelled verifying": "%(name)s a annulé la vérification",
-    "You accepted": "Vous avez accepté",
     "%(name)s accepted": "%(name)s a accepté",
-    "You cancelled": "Vous avez annulé",
     "%(name)s cancelled": "%(name)s a annulé",
     "%(name)s wants to verify": "%(name)s veut vérifier",
-    "You sent a verification request": "Vous avez envoyé une demande de vérification",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Vous avez ignoré cet utilisateur, donc ses messages sont cachés. <a>Les montrer quand même.</a>",
     "Failed to connect to integration manager": "Échec de la connexion au gestionnaire d’intégrations",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
@@ -293,7 +285,6 @@
     "Not Trusted": "Non fiable",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) s’est connecté à une nouvelle session sans la vérifier :",
     "Ask this user to verify their session, or manually verify it below.": "Demandez à cet utilisateur de vérifier sa session, ou vérifiez-la manuellement ci-dessous.",
-    "You declined": "Vous avez refusé",
     "%(name)s declined": "%(name)s a refusé",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pour signaler un problème de sécurité lié à Matrix, consultez <a>la politique de divulgation de sécurité</a> de Matrix.org.",
     "Enter a server name": "Saisissez le nom d’un serveur",
@@ -359,13 +350,8 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
     "Use the <a>Desktop app</a> to search encrypted messages": "Utilisez une <a>Application de bureau</a> pour rechercher dans tous les messages chiffrés",
     "Use the <a>Desktop app</a> to see all encrypted files": "Utilisez une <a>Application de bureau</a> pour voir tous les fichiers chiffrés",
-    "Join the conference at the top of this room": "Rejoignez la téléconférence en haut de ce salon",
-    "Join the conference from the room information card on the right": "Rejoignez la téléconférence à partir de la carte d’informations sur la droite",
     "Preparing to download logs": "Préparation du téléchargement des journaux",
     "Information": "Informations",
-    "Video conference started by %(senderName)s": "vidéoconférence démarrée par %(senderName)s",
-    "Video conference updated by %(senderName)s": "vidéoconférence mise à jour par %(senderName)s",
-    "Video conference ended by %(senderName)s": "vidéoconférence terminée par %(senderName)s",
     "Not encrypted": "Non-chiffré",
     "Unable to set up keys": "Impossible de configurer les clés",
     "Recent changes that have not yet been received": "Changements récents qui n’ont pas encore été reçus",
@@ -715,7 +701,6 @@
     },
     "Not all selected were added": "Toute la sélection n’a pas été ajoutée",
     "You are not allowed to view this server's rooms list": "Vous n’avez pas l’autorisation d’accéder à la liste des salons de ce serveur",
-    "Error processing voice message": "Erreur lors du traitement du message vocal",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
     "Add reaction": "Ajouter une réaction",
@@ -772,16 +757,10 @@
     "Thread options": "Options des fils de discussion",
     "Forget": "Oublier",
     "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
-    "Based on %(count)s votes": {
-        "one": "Sur la base de %(count)s vote",
-        "other": "Sur la base de %(count)s votes"
-    },
     "%(count)s votes": {
         "one": "%(count)s vote",
         "other": "%(count)s votes"
     },
-    "Sorry, your vote was not registered. Please try again.": "Désolé, votre vote n’a pas été enregistré. Veuillez réessayer.",
-    "Vote not registered": "Vote non enregistré",
     "Recently viewed": "Affiché récemment",
     "Developer": "Développeur",
     "Experimental": "Expérimental",
@@ -799,11 +778,6 @@
     "Failed to end poll": "Impossible de terminer le sondage",
     "The poll has ended. Top answer: %(topAnswer)s": "Le sondage est terminé. Meilleure réponse : %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Le sondage est terminé. Aucun vote n’a été exprimé.",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s vote exprimé. Votez pour voir les résultats",
-        "other": "%(count)s votes exprimés. Votez pour voir les résultats"
-    },
-    "No votes cast": "Aucun vote exprimé",
     "Recent searches": "Recherches récentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
     "Other searches": "Autres recherches",
@@ -825,9 +799,6 @@
     "Location": "Position",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s et %(space2Name)s",
-    "Results will be visible when the poll is ended": "Les résultats seront visibles lorsque le sondage sera terminé",
-    "Can't edit poll": "Impossible de modifier le sondage",
-    "Sorry, you can't edit a poll after votes have been cast.": "Désolé, vous ne pouvez pas modifier un sondage après que les votes aient été exprimés.",
     "Drop a Pin": "Choisir sur la carte",
     "What location type do you want to share?": "Quel type de localisation voulez-vous partager ?",
     "My live location": "Ma position en continu",
@@ -923,7 +894,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Vous ne pouvez pas commencer un message vocal car vous êtes en train d’enregistrer une diffusion en direct. Veuillez terminer cette diffusion pour commencer un message vocal.",
     "Can't start voice message": "Impossible de commencer un message vocal",
     "unknown": "inconnu",
-    "Declining…": "Refus…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
     "Loading live location…": "Chargement de la position en direct…",
     "Fetching keys from server…": "Récupération des clés depuis le serveur…",
@@ -931,8 +901,6 @@
     "Waiting for partner to confirm…": "Attente de la confirmation du partenaire…",
     "Adding…": "Ajout…",
     "Starting export process…": "Démarrage du processus d’export…",
-    "Ended a poll": "Sondage terminé",
-    "Due to decryption errors, some votes may not be counted": "À cause d’erreurs de déchiffrement, certains votes pourraient ne pas avoir été pris en compte",
     "Invites by email can only be sent one at a time": "Les invitations par e-mail ne peuvent être envoyées qu’une par une",
     "Desktop app logo": "Logo de l’application de bureau",
     "Requires your server to support the stable version of MSC3827": "Requiert la prise en charge par le serveur de la version stable du MSC3827",
@@ -2301,7 +2269,12 @@
         "m.widget": {
             "modified": "Widget %(widgetName)s modifié par %(senderName)s",
             "added": "Widget %(widgetName)s ajouté par %(senderName)s",
-            "removed": "Widget %(widgetName)s supprimé par %(senderName)s"
+            "removed": "Widget %(widgetName)s supprimé par %(senderName)s",
+            "jitsi_join_top_prompt": "Rejoignez la téléconférence en haut de ce salon",
+            "jitsi_join_right_prompt": "Rejoignez la téléconférence à partir de la carte d’informations sur la droite",
+            "jitsi_ended": "vidéoconférence terminée par %(senderName)s",
+            "jitsi_updated": "vidéoconférence mise à jour par %(senderName)s",
+            "jitsi_started": "vidéoconférence démarrée par %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s a mis à jour la mise en page du salon",
         "m.location": {
@@ -2312,7 +2285,6 @@
         "self_redaction": "Message supprimé",
         "redaction": "Message supprimé par %(name)s",
         "m.poll.start": "%(senderName)s a démarré un sondage – %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s a terminé un sondage",
         "typing_indicator": {
             "one_user": "%(displayName)s est en train d'écrire…",
             "two_users": "%(names)s et %(lastPerson)s sont en train d’écrire…",
@@ -2484,7 +2456,8 @@
             "changed_rule_users": "%(senderName)s a changé une règle qui bannit les utilisateurs correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
             "changed_rule_rooms": "%(senderName)s a changé une règle qui bannit les salons correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
             "changed_rule_servers": "%(senderName)s a changé une règle qui bannit les serveurs correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
-            "changed_rule_glob": "%(senderName)s a mis à jour une règle de bannissement correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s"
+            "changed_rule_glob": "%(senderName)s a mis à jour une règle de bannissement correspondant à %(oldGlob)s vers une règle correspondant à %(newGlob)s pour %(reason)s",
+            "message_hidden": "Vous avez ignoré cet utilisateur, donc ses messages sont cachés. <a>Les montrer quand même.</a>"
         },
         "no_permission_messages_before_invite": "Vous n’avez pas l’autorisation de voir les messages antérieurs à votre invitation.",
         "no_permission_messages_before_join": "Vous n’avez pas l’autorisation de voir les messages antérieurs à votre arrivée.",
@@ -2545,7 +2518,8 @@
         "m.audio": {
             "unnamed_audio": "Audio sans nom",
             "error_downloading_audio": "Erreur lors du téléchargement de l’audio",
-            "error_processing_audio": "Erreur lors du traitement du message audio"
+            "error_processing_audio": "Erreur lors du traitement du message audio",
+            "error_processing_voice_message": "Erreur lors du traitement du message vocal"
         },
         "load_error": {
             "no_permission": "Un instant donné du fil de discussion n’a pu être chargé car vous n’avez pas la permission de le visualiser.",
@@ -2583,6 +2557,25 @@
             "error_decrypting": "Erreur lors du déchiffrement de l’image",
             "error_downloading": "Erreur lors du téléchargement de l’image",
             "show_image": "Afficher l’image"
+        },
+        "m.key.verification.done": "Vous avez vérifié %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Vous avez annulé la vérification de %(name)s",
+            "user_cancelled": "%(name)s a annulé la vérification"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Vous avez accepté",
+            "you_declined": "Vous avez refusé",
+            "you_cancelled": "Vous avez annulé",
+            "declining": "Refus…",
+            "you_started": "Vous avez envoyé une demande de vérification"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s a terminé un sondage",
+            "ended": "Sondage terminé"
+        },
+        "m.video": {
+            "error_decrypting": "Erreur lors du déchiffrement de la vidéo"
         }
     },
     "slash_command": {
@@ -3996,7 +3989,22 @@
         "options_placeholder": "Écrivez un choix",
         "options_add_button": "Ajouter un choix",
         "disclosed_notes": "Les participants voient les résultats dès qu'ils ont voté",
-        "notes": "Les résultats ne sont révélés que lorsque vous terminez le sondage"
+        "notes": "Les résultats ne sont révélés que lorsque vous terminez le sondage",
+        "unable_edit_title": "Impossible de modifier le sondage",
+        "unable_edit_description": "Désolé, vous ne pouvez pas modifier un sondage après que les votes aient été exprimés.",
+        "error_voting_title": "Vote non enregistré",
+        "error_voting_description": "Désolé, votre vote n’a pas été enregistré. Veuillez réessayer.",
+        "total_decryption_errors": "À cause d’erreurs de déchiffrement, certains votes pourraient ne pas avoir été pris en compte",
+        "total_not_ended": "Les résultats seront visibles lorsque le sondage sera terminé",
+        "total_no_votes": "Aucun vote exprimé",
+        "total_n_votes": {
+            "one": "%(count)s vote exprimé. Votez pour voir les résultats",
+            "other": "%(count)s votes exprimés. Votez pour voir les résultats"
+        },
+        "total_n_votes_voted": {
+            "one": "Sur la base de %(count)s vote",
+            "other": "Sur la base de %(count)s votes"
+        }
     },
     "failed_load_async_component": "Chargement impossible ! Vérifiez votre connexion au réseau et réessayez.",
     "upload_failed_generic": "Le fichier « %(fileName)s » n’a pas pu être envoyé.",

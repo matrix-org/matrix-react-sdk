@@ -44,7 +44,6 @@
     "Join Room": "Unirse a sala",
     "unknown error code": "código de fallo descoñecido",
     "not specified": "non indicado",
-    "Error decrypting video": "Fallo descifrando vídeo",
     "Add an Integration": "Engadir unha integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vai ser redirixido a unha web de terceiros para poder autenticar a súa conta e así utilizar %(integrationsUrl)s. Quere continuar?",
     "Email address": "Enderezo de correo",
@@ -202,18 +201,10 @@
         "other": "Eliminar %(count)s mensaxes",
         "one": "Eliminar 1 mensaxe"
     },
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Estás a ignorar a esta usuaria, polo que a imaxe está agochada. <a>Mostrar igualmente.</a>",
-    "You verified %(name)s": "Verificaches a %(name)s",
-    "You cancelled verifying %(name)s": "Cancelaches a verificación de %(name)s",
-    "%(name)s cancelled verifying": "%(name)s cancelou a verificación",
-    "You accepted": "Aceptaches",
     "%(name)s accepted": "%(name)s aceptou",
-    "You declined": "Declinaches",
-    "You cancelled": "Cancelaches",
     "%(name)s declined": "%(name)s declinou",
     "%(name)s cancelled": "%(name)s cancelou",
     "%(name)s wants to verify": "%(name)s desexa verificar",
-    "You sent a verification request": "Enviaches unha solicitude de verificación",
     "Edited at %(date)s. Click to view edits.": "Editada o %(date)s. Preme para ver edicións.",
     "edited": "editada",
     "Can't load this message": "Non se cargou a mensaxe",
@@ -377,11 +368,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Usa a <a>app de Escritorio</a> para buscar mensaxes cifradas",
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s non soporta o visionado dalgúns ficheiros cifrados",
     "This version of %(brand)s does not support searching encrypted messages": "Esta versión de %(brand)s non soporta a busca de mensaxes cifradas",
-    "Join the conference at the top of this room": "Únete á conferencia na ligazón arriba nesta sala",
-    "Join the conference from the room information card on the right": "Únete á conferencia desde a tarxeta con información da sala á dereita",
-    "Video conference ended by %(senderName)s": "Video conferencia rematada por %(senderName)s",
-    "Video conference updated by %(senderName)s": "Video conferencia actualizada por %(senderName)s",
-    "Video conference started by %(senderName)s": "Video conferencia iniciada por %(senderName)s",
     "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
     "Modal Widget": "Widget modal",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -715,7 +701,6 @@
     },
     "Not all selected were added": "Non se engadiron tódolos seleccionados",
     "You are not allowed to view this server's rooms list": "Non tes permiso para ver a lista de salas deste servidor",
-    "Error processing voice message": "Erro ao procesar a mensaxe de voz",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
     "Add reaction": "Engadir reacción",
@@ -771,10 +756,6 @@
     "Thread options": "Opcións da conversa",
     "Forget": "Esquecer",
     "If you can't see who you're looking for, send them your invite link below.": "Se non atopas a quen buscas, envíalle a túa ligazón de convite.",
-    "Based on %(count)s votes": {
-        "one": "Baseado en %(count)s voto",
-        "other": "Baseado en %(count)s votos"
-    },
     "%(count)s votes": {
         "one": "%(count)s voto",
         "other": "%(count)s votos"
@@ -783,8 +764,6 @@
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e outros %(count)s"
     },
-    "Sorry, your vote was not registered. Please try again.": "O teu voto non foi rexistrado, inténtao outra vez.",
-    "Vote not registered": "Voto non rexistrado",
     "Developer": "Desenvolvemento",
     "Experimental": "Experimental",
     "Themes": "Decorados",
@@ -792,11 +771,6 @@
     "Messaging": "Conversando",
     "Spaces you know that contain this space": "Espazos que sabes conteñen este espazo",
     "Recently viewed": "Visto recentemente",
-    "%(count)s votes cast. Vote to see the results": {
-        "other": "%(count)s votos recollidos. Vota para ver os resultados",
-        "one": "%(count)s voto recollido. Vota para ver os resultados"
-    },
-    "No votes cast": "Sen votos",
     "Recent searches": "Buscas recentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
     "Other searches": "Outras buscas",
@@ -827,10 +801,7 @@
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "Join %(roomAddress)s": "Unirse a %(roomAddress)s",
-    "Sorry, you can't edit a poll after votes have been cast.": "Non se pode editar unha enquisa cando xa recibiu votos.",
-    "Can't edit poll": "Non podes editar a enquisa",
     "Search Dialog": "Diálogo de busca",
-    "Results will be visible when the poll is ended": "Os resultados serán visibles cando remate a enquisa",
     "What location type do you want to share?": "Que tipo de localización queres compartir?",
     "Drop a Pin": "Fixa a posición",
     "My live location": "Localización en direto",
@@ -2054,7 +2025,12 @@
         "m.widget": {
             "modified": "O trebello %(widgetName)s modificado por %(senderName)s",
             "added": "O trebello %(widgetName)s engadido por %(senderName)s",
-            "removed": "%(widgetName)s eliminado por %(senderName)s"
+            "removed": "%(widgetName)s eliminado por %(senderName)s",
+            "jitsi_join_top_prompt": "Únete á conferencia na ligazón arriba nesta sala",
+            "jitsi_join_right_prompt": "Únete á conferencia desde a tarxeta con información da sala á dereita",
+            "jitsi_ended": "Video conferencia rematada por %(senderName)s",
+            "jitsi_updated": "Video conferencia actualizada por %(senderName)s",
+            "jitsi_started": "Video conferencia iniciada por %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s actualizou a disposición da sala",
         "m.location": {
@@ -2065,7 +2041,6 @@
         "self_redaction": "Mensaxe eliminada",
         "redaction": "Mensaxe eliminada por %(name)s",
         "m.poll.start": "%(senderName)s publicou unha enquisa - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s finalizou a enquisa",
         "typing_indicator": {
             "one_user": "%(displayName)s está escribindo…",
             "two_users": "%(names)s e %(lastPerson)s están escribindo…",
@@ -2229,7 +2204,8 @@
             "changed_rule_users": "%(senderName)s cambiou unha regra que bloqueaba usuarias con %(oldGlob)s a %(newGlob)s por %(reason)s",
             "changed_rule_rooms": "%(senderName)s cambiou unha regra que bloqueaba salas con %(oldGlob)s a %(newGlob)s por %(reason)s",
             "changed_rule_servers": "%(senderName)s cambiou unha regra que bloqueaba servidores con %(oldGlob)s a %(newGlob)s por %(reason)s",
-            "changed_rule_glob": "%(senderName)s actualizou unha regra de bloqueo con %(oldGlob)s a %(newGlob)s por %(reason)s"
+            "changed_rule_glob": "%(senderName)s actualizou unha regra de bloqueo con %(oldGlob)s a %(newGlob)s por %(reason)s",
+            "message_hidden": "Estás a ignorar a esta usuaria, polo que a imaxe está agochada. <a>Mostrar igualmente.</a>"
         },
         "no_permission_messages_before_invite": "Non tes permiso para ver mensaxes anteriores a que te unises.",
         "no_permission_messages_before_join": "Non tes permiso para ver mensaxes anteriores a que te unises.",
@@ -2281,7 +2257,8 @@
         "m.audio": {
             "unnamed_audio": "Audio sen nome",
             "error_downloading_audio": "Erro ao descargar o audio",
-            "error_processing_audio": "Erro ao procesar a mensaxe de audio"
+            "error_processing_audio": "Erro ao procesar a mensaxe de audio",
+            "error_processing_voice_message": "Erro ao procesar a mensaxe de voz"
         },
         "load_error": {
             "no_permission": "Intentouse cargar un punto concreto do historial desta sala, pero non tes permiso para ver a mensaxe en cuestión.",
@@ -2313,6 +2290,23 @@
             "sent": "%(senderDisplayName)s enviou unha imaxe.",
             "error_decrypting": "Fallo ao descifrar a imaxe",
             "show_image": "Mostrar imaxe"
+        },
+        "m.key.verification.done": "Verificaches a %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Cancelaches a verificación de %(name)s",
+            "user_cancelled": "%(name)s cancelou a verificación"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Aceptaches",
+            "you_declined": "Declinaches",
+            "you_cancelled": "Cancelaches",
+            "you_started": "Enviaches unha solicitude de verificación"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s finalizou a enquisa"
+        },
+        "m.video": {
+            "error_decrypting": "Fallo descifrando vídeo"
         }
     },
     "slash_command": {
@@ -3539,7 +3533,21 @@
         "options_placeholder": "Escribe unha opción",
         "options_add_button": "Engade unha opción",
         "disclosed_notes": "As votantes ven os resultados xusto despois de votar",
-        "notes": "Os resultados só son visibles cando remata a enquisa"
+        "notes": "Os resultados só son visibles cando remata a enquisa",
+        "unable_edit_title": "Non podes editar a enquisa",
+        "unable_edit_description": "Non se pode editar unha enquisa cando xa recibiu votos.",
+        "error_voting_title": "Voto non rexistrado",
+        "error_voting_description": "O teu voto non foi rexistrado, inténtao outra vez.",
+        "total_not_ended": "Os resultados serán visibles cando remate a enquisa",
+        "total_no_votes": "Sen votos",
+        "total_n_votes": {
+            "other": "%(count)s votos recollidos. Vota para ver os resultados",
+            "one": "%(count)s voto recollido. Vota para ver os resultados"
+        },
+        "total_n_votes_voted": {
+            "one": "Baseado en %(count)s voto",
+            "other": "Baseado en %(count)s votos"
+        }
     },
     "failed_load_async_component": "Non cargou! Comproba a conexión á rede e volta a intentalo.",
     "upload_failed_generic": "Fallou a subida do ficheiro '%(fileName)s'.",

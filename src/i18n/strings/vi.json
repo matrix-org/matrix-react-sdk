@@ -373,25 +373,10 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Bạn sắp được đưa đến trang web của bên thứ ba để bạn có thể xác thực tài khoản của mình để sử dụng với %(integrationsUrl)s. Bạn có muốn tiếp tục không?",
     "Add an Integration": "Thêm tích hợp",
     "Add reaction": "Thêm phản ứng",
-    "Error processing voice message": "Lỗi khi xử lý tin nhắn thoại",
-    "Error decrypting video": "Lỗi khi giải mã video",
-    "You sent a verification request": "Bạn đã gửi một yêu cầu xác thực",
     "%(name)s wants to verify": "%(name)s muốn xác thực",
     "%(name)s cancelled": "%(name)s đã bị hủy",
     "%(name)s declined": "%(name)s đã từ chối",
-    "You cancelled": "Bạn đã hủy bỏ",
-    "You declined": "Bạn đã từ chối",
     "%(name)s accepted": "%(name)s được chấp nhận",
-    "You accepted": "Bạn đã chấp nhận",
-    "%(name)s cancelled verifying": "%(name)s đã hủy xác thực",
-    "You cancelled verifying %(name)s": "Bạn đã hủy xác thực %(name)s",
-    "You verified %(name)s": "Bạn đã xác thực %(name)s",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Bạn đã bỏ qua người dùng này, vì vậy tin nhắn của họ bị ẩn. Hiển thị cũng được <a>Show anyways.</a>",
-    "Video conference started by %(senderName)s": "Hội nghị truyền hình bắt đầu bởi %(senderName)s",
-    "Video conference updated by %(senderName)s": "Hội nghị truyền hình được %(senderName)s cập nhật",
-    "Video conference ended by %(senderName)s": "Hội nghị truyền hình đã kết thúc trước%(senderName)s",
-    "Join the conference from the room information card on the right": "Tham gia hội nghị từ thẻ thông tin phòng bên phải",
-    "Join the conference at the top of this room": "Tham gia hội nghị ở đầu phòng này",
     "Yesterday": "Hôm qua",
     "Today": "Hôm nay",
     "Saturday": "Thứ bảy",
@@ -776,17 +761,6 @@
         "one": "%(count)s phiếu bầu",
         "other": "%(count)s phiếu bầu"
     },
-    "Based on %(count)s votes": {
-        "one": "Dựa theo %(count)s phiếu bầu",
-        "other": "Dựa theo %(count)s phiếu bầu"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s phiếu bầu. Bỏ phiếu để xem kết quả",
-        "other": "%(count)s phiếu bầu. Bỏ phiếu để xem kết quả"
-    },
-    "No votes cast": "Không có phiếu",
-    "Sorry, your vote was not registered. Please try again.": "Xin lỗi, phiếu bầu của bạn đã không được đăng ký. Vui lòng thử lại.",
-    "Vote not registered": "Bỏ phiếu không đăng ký",
     "Recently viewed": "Được xem gần đây",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
@@ -885,7 +859,6 @@
     "<w>WARNING:</w> <description/>": "",
     "Shared their location: ": "",
     "To continue, please enter your account password:": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
-    "Declining…": "Đang từ chối…",
     "common": {
         "about": "Giới thiệu",
         "analytics": "Về dữ liệu phân tích",
@@ -2136,7 +2109,12 @@
         "m.widget": {
             "modified": "%(widgetName)s được sửa tên bởi %(senderName)s",
             "added": "%(widgetName)s widget được thêm vào bởi %(senderName)s",
-            "removed": "%(widgetName)s widget được gỡ bởi %(senderName)s"
+            "removed": "%(widgetName)s widget được gỡ bởi %(senderName)s",
+            "jitsi_join_top_prompt": "Tham gia hội nghị ở đầu phòng này",
+            "jitsi_join_right_prompt": "Tham gia hội nghị từ thẻ thông tin phòng bên phải",
+            "jitsi_ended": "Hội nghị truyền hình đã kết thúc trước%(senderName)s",
+            "jitsi_updated": "Hội nghị truyền hình được %(senderName)s cập nhật",
+            "jitsi_started": "Hội nghị truyền hình bắt đầu bởi %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s đã cập nhật bố trí của phòng",
         "m.location": {
@@ -2145,7 +2123,6 @@
         "self_redaction": "Tin nhắn đã xóa",
         "redaction": "Tin nhắn đã bị %(name)s xóa",
         "m.poll.start": "%(senderName)s vừa bắt đầu một cuộc bình chọn - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s vừa kết thúc một cuộc bình chọn",
         "typing_indicator": {
             "one_user": "%(displayName)s đang gõ …",
             "two_users": "%(names)s và %(lastPerson)s đang gõ …",
@@ -2305,7 +2282,8 @@
             "changed_rule_users": "%(senderName)s đã thay đổi quy tắc cấm người dùng khớp %(oldGlob)s thành %(newGlob)s vì %(reason)s",
             "changed_rule_rooms": "%(senderName)s đã thay đổi quy tắc cấm các phòng khớp với %(oldGlob)s thành khớp với %(newGlob)s vì %(reason)s",
             "changed_rule_servers": "%(senderName)s đã thay đổi một quy tắc cấm các máy chủ khớp với %(oldGlob)s để khớp với %(newGlob)s vì %(reason)s",
-            "changed_rule_glob": "%(senderName)s đã cập nhật quy tắc cấm khớp %(oldGlob)s sang %(newGlob)s cho %(reason)s"
+            "changed_rule_glob": "%(senderName)s đã cập nhật quy tắc cấm khớp %(oldGlob)s sang %(newGlob)s cho %(reason)s",
+            "message_hidden": "Bạn đã bỏ qua người dùng này, vì vậy tin nhắn của họ bị ẩn. Hiển thị cũng được <a>Show anyways.</a>"
         },
         "no_permission_messages_before_invite": "Bạn không có quyền xem tin nhắn trước lúc bạn được mời.",
         "no_permission_messages_before_join": "Bạn không có quyền xem tin nhắn trước lúc bạn tham gia.",
@@ -2361,7 +2339,8 @@
         "m.audio": {
             "unnamed_audio": "Âm thanh không tên",
             "error_downloading_audio": "Lỗi khi tải xuống âm thanh",
-            "error_processing_audio": "Lỗi khi xử lý tin nhắn âm thanh"
+            "error_processing_audio": "Lỗi khi xử lý tin nhắn âm thanh",
+            "error_processing_voice_message": "Lỗi khi xử lý tin nhắn thoại"
         },
         "load_error": {
             "no_permission": "Đã cố gắng tải một điểm cụ thể trong dòng thời gian của phòng này, nhưng bạn không có quyền xem tin nhắn được đề cập.",
@@ -2394,6 +2373,24 @@
             "error_decrypting": "Lỗi khi giải mã hình ảnh",
             "error_downloading": "Lỗi khi tải hình ảnh",
             "show_image": "Hiển thị hình ảnh"
+        },
+        "m.key.verification.done": "Bạn đã xác thực %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Bạn đã hủy xác thực %(name)s",
+            "user_cancelled": "%(name)s đã hủy xác thực"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Bạn đã chấp nhận",
+            "you_declined": "Bạn đã từ chối",
+            "you_cancelled": "Bạn đã hủy bỏ",
+            "declining": "Đang từ chối…",
+            "you_started": "Bạn đã gửi một yêu cầu xác thực"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s vừa kết thúc một cuộc bình chọn"
+        },
+        "m.video": {
+            "error_decrypting": "Lỗi khi giải mã video"
         }
     },
     "slash_command": {
@@ -3715,7 +3712,18 @@
         "options_heading": "Tạo tùy chọn",
         "options_label": "Tùy chọn %(number)s",
         "options_placeholder": "Viết tùy chọn",
-        "options_add_button": "Thêm tùy chọn"
+        "options_add_button": "Thêm tùy chọn",
+        "error_voting_title": "Bỏ phiếu không đăng ký",
+        "error_voting_description": "Xin lỗi, phiếu bầu của bạn đã không được đăng ký. Vui lòng thử lại.",
+        "total_no_votes": "Không có phiếu",
+        "total_n_votes": {
+            "one": "%(count)s phiếu bầu. Bỏ phiếu để xem kết quả",
+            "other": "%(count)s phiếu bầu. Bỏ phiếu để xem kết quả"
+        },
+        "total_n_votes_voted": {
+            "one": "Dựa theo %(count)s phiếu bầu",
+            "other": "Dựa theo %(count)s phiếu bầu"
+        }
     },
     "failed_load_async_component": "Không thể tải dữ liệu! Kiểm tra kết nối mạng và thử lại.",
     "upload_failed_generic": "Không tải lên được tập tin '%(fileName)s' .",

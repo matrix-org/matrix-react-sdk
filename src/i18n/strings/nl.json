@@ -46,7 +46,6 @@
     "Confirm Removal": "Verwijdering bevestigen",
     "Unable to restore session": "Herstellen van sessie mislukt",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
-    "Error decrypting video": "Fout bij het ontsleutelen van de video",
     "Add an Integration": "Voeg een integratie toe",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
     "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
@@ -257,18 +256,10 @@
         "other": "%(count)s sessies",
         "one": "%(count)s sessie"
     },
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Je hebt deze persoon genegeerd, dus de berichten worden verborgen. <a>Toch tonen?</a>",
-    "You verified %(name)s": "Je hebt %(name)s geverifieerd",
-    "You cancelled verifying %(name)s": "Je hebt de verificatie van %(name)s geannuleerd",
-    "%(name)s cancelled verifying": "%(name)s heeft de verificatie geannuleerd",
-    "You accepted": "Je hebt aanvaard",
     "%(name)s accepted": "%(name)s heeft aanvaard",
-    "You declined": "Je hebt geweigerd",
-    "You cancelled": "Je hebt geannuleerd",
     "%(name)s declined": "%(name)s heeft geweigerd",
     "%(name)s cancelled": "%(name)s heeft geannuleerd",
     "%(name)s wants to verify": "%(name)s wil verifiëren",
-    "You sent a verification request": "Je hebt een verificatieverzoek verstuurd",
     "Cancel search": "Zoeken annuleren",
     "Language Dropdown": "Taalselectie",
     "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
@@ -324,10 +315,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Verenigde Staten",
     "United Kingdom": "Verenigd Koninkrijk",
-    "Video conference started by %(senderName)s": "Videovergadering gestart door %(senderName)s",
-    "Video conference updated by %(senderName)s": "Videovergadering geüpdatet door %(senderName)s",
-    "Video conference ended by %(senderName)s": "Videovergadering beëindigd door %(senderName)s",
-    "Join the conference from the room information card on the right": "Neem deel aan de vergadering via de informatiekaart rechts",
     "Romania": "Roemenië",
     "St. Martin": "Sint Maarten/Sint-Maarten",
     "St. Kitts & Nevis": "Saint Kitts en Nevis",
@@ -568,7 +555,6 @@
     "Can't load this message": "Dit bericht kan niet geladen worden",
     "Click to view edits": "Klik om bewerkingen te zien",
     "Edited at %(date)s": "Bewerkt op %(date)s",
-    "Join the conference at the top of this room": "Deelnemen aan de vergadering bovenaan deze kamer",
     "Not encrypted": "Niet versleuteld",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
@@ -714,7 +700,6 @@
     },
     "Not all selected were added": "Niet alle geselecteerden zijn toegevoegd",
     "You are not allowed to view this server's rooms list": "Je hebt geen toegang tot deze server zijn kamergids",
-    "Error processing voice message": "Fout bij verwerking spraakbericht",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
     "Add reaction": "Reactie toevoegen",
@@ -770,10 +755,6 @@
     "Thread options": "Draad opties",
     "Forget": "Vergeet",
     "If you can't see who you're looking for, send them your invite link below.": "Als je niet kan vinden wie je zoekt, stuur ze dan je uitnodigingslink hieronder.",
-    "Based on %(count)s votes": {
-        "one": "Gebaseerd op %(count)s stem",
-        "other": "Gebaseerd op %(count)s stemmen"
-    },
     "%(count)s votes": {
         "one": "%(count)s stem",
         "other": "%(count)s stemmen"
@@ -783,8 +764,6 @@
         "other": "%(spaceName)s en %(count)s andere"
     },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Ontvang toegang tot je account en herstel de tijdens deze sessie opgeslagen versleutelingssleutels, zonder deze sleutels zijn sommige van je versleutelde berichten in je sessies onleesbaar.",
-    "Sorry, your vote was not registered. Please try again.": "Sorry, jouw stem is niet geregistreerd. Probeer het alstublieft opnieuw.",
-    "Vote not registered": "Stem niet geregistreerd",
     "Developer": "Ontwikkelaar",
     "Experimental": "Experimenteel",
     "Themes": "Thema's",
@@ -792,11 +771,6 @@
     "Messaging": "Messaging",
     "Spaces you know that contain this space": "Spaces die je kent met deze Space",
     "Recently viewed": "Recent bekeken",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s stem uitgebracht. Stem om de resultaten te zien",
-        "other": "%(count)s stemmen uitgebracht. Stem om de resultaten te zien"
-    },
-    "No votes cast": "Geen stemmen uitgebracht",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Weet je zeker dat je de poll wil sluiten? Dit zal zichtbaar zijn in de einduitslag van de poll en personen kunnen dan niet langer stemmen.",
     "End Poll": "Poll sluiten",
     "Sorry, the poll did not end. Please try again.": "Helaas, de poll is niet gesloten. Probeer het opnieuw.",
@@ -844,9 +818,6 @@
     "%(displayName)s's live location": "De live locatie van %(displayName)s",
     "We couldn't send your location": "We kunnen jouw locatie niet versturen",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s kan jouw locatie niet versturen. Probeer het later opnieuw.",
-    "Results will be visible when the poll is ended": "Resultaten zijn zichtbaar wanneer de poll is afgelopen",
-    "Sorry, you can't edit a poll after votes have been cast.": "Sorry, je kan een poll niet bewerken nadat er gestemd is.",
-    "Can't edit poll": "Kan poll niet bewerken",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -2089,7 +2060,12 @@
         "m.widget": {
             "modified": "%(widgetName)s-widget aangepast door %(senderName)s",
             "added": "%(widgetName)s-widget toegevoegd door %(senderName)s",
-            "removed": "%(widgetName)s-widget verwijderd door %(senderName)s"
+            "removed": "%(widgetName)s-widget verwijderd door %(senderName)s",
+            "jitsi_join_top_prompt": "Deelnemen aan de vergadering bovenaan deze kamer",
+            "jitsi_join_right_prompt": "Neem deel aan de vergadering via de informatiekaart rechts",
+            "jitsi_ended": "Videovergadering beëindigd door %(senderName)s",
+            "jitsi_updated": "Videovergadering geüpdatet door %(senderName)s",
+            "jitsi_started": "Videovergadering gestart door %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s heeft de kamerindeling bijgewerkt",
         "m.location": {
@@ -2100,7 +2076,6 @@
         "self_redaction": "Bericht verwijderd",
         "redaction": "Bericht verwijderd door %(name)s",
         "m.poll.start": "%(senderName)s is een poll gestart - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s heeft een poll beëindigd",
         "typing_indicator": {
             "one_user": "%(displayName)s is aan het typen…",
             "two_users": "%(names)s en %(lastPerson)s zijn aan het typen…",
@@ -2264,7 +2239,8 @@
             "changed_rule_users": "%(senderName)s heeft het patroon van een banregel voor personen wegens %(reason)s aangepast van %(oldGlob)s tot %(newGlob)s",
             "changed_rule_rooms": "%(senderName)s heeft het patroon van een banregel voor kamers wegens %(reason)s aangepast van %(oldGlob)s tot %(newGlob)s",
             "changed_rule_servers": "%(senderName)s heeft het patroon van een banregel voor servers wegens %(reason)s aangepast van %(oldGlob)s tot %(newGlob)s",
-            "changed_rule_glob": "%(senderName)s heeft het patroon van een banregel wegens %(reason)s aangepast van %(oldGlob)s tot %(newGlob)s"
+            "changed_rule_glob": "%(senderName)s heeft het patroon van een banregel wegens %(reason)s aangepast van %(oldGlob)s tot %(newGlob)s",
+            "message_hidden": "Je hebt deze persoon genegeerd, dus de berichten worden verborgen. <a>Toch tonen?</a>"
         },
         "no_permission_messages_before_invite": "Je bent niet gemachtigd om berichten te bekijken van voordat je werd uitgenodigd.",
         "no_permission_messages_before_join": "Je hebt geen toestemming om berichten te bekijken voor voordat je lid werd.",
@@ -2316,7 +2292,8 @@
         "m.audio": {
             "unnamed_audio": "Naamloze audio",
             "error_downloading_audio": "Fout bij downloaden van audio",
-            "error_processing_audio": "Fout bij verwerking audiobericht"
+            "error_processing_audio": "Fout bij verwerking audiobericht",
+            "error_processing_voice_message": "Fout bij verwerking spraakbericht"
         },
         "load_error": {
             "no_permission": "Je probeert een punt in de tijdlijn van deze kamer te laden, maar je hebt niet voldoende rechten om het bericht te lezen.",
@@ -2348,6 +2325,23 @@
             "sent": "%(senderDisplayName)s heeft een afbeelding gestuurd.",
             "error_decrypting": "Fout bij het ontsleutelen van de afbeelding",
             "show_image": "Afbeelding tonen"
+        },
+        "m.key.verification.done": "Je hebt %(name)s geverifieerd",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Je hebt de verificatie van %(name)s geannuleerd",
+            "user_cancelled": "%(name)s heeft de verificatie geannuleerd"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Je hebt aanvaard",
+            "you_declined": "Je hebt geweigerd",
+            "you_cancelled": "Je hebt geannuleerd",
+            "you_started": "Je hebt een verificatieverzoek verstuurd"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s heeft een poll beëindigd"
+        },
+        "m.video": {
+            "error_decrypting": "Fout bij het ontsleutelen van de video"
         }
     },
     "slash_command": {
@@ -3632,7 +3626,21 @@
         "options_placeholder": "Schrijf een optie",
         "options_add_button": "Optie toevoegen",
         "disclosed_notes": "Kiezers zien resultaten zodra ze hebben gestemd",
-        "notes": "Resultaten worden pas onthuld als je de poll beëindigt"
+        "notes": "Resultaten worden pas onthuld als je de poll beëindigt",
+        "unable_edit_title": "Kan poll niet bewerken",
+        "unable_edit_description": "Sorry, je kan een poll niet bewerken nadat er gestemd is.",
+        "error_voting_title": "Stem niet geregistreerd",
+        "error_voting_description": "Sorry, jouw stem is niet geregistreerd. Probeer het alstublieft opnieuw.",
+        "total_not_ended": "Resultaten zijn zichtbaar wanneer de poll is afgelopen",
+        "total_no_votes": "Geen stemmen uitgebracht",
+        "total_n_votes": {
+            "one": "%(count)s stem uitgebracht. Stem om de resultaten te zien",
+            "other": "%(count)s stemmen uitgebracht. Stem om de resultaten te zien"
+        },
+        "total_n_votes_voted": {
+            "one": "Gebaseerd op %(count)s stem",
+            "other": "Gebaseerd op %(count)s stemmen"
+        }
     },
     "failed_load_async_component": "Laden mislukt! Controleer je netwerktoegang en probeer het nogmaals.",
     "upload_failed_generic": "Het bestand ‘%(fileName)s’ kon niet geüpload worden.",

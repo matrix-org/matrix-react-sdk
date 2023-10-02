@@ -76,7 +76,6 @@
         "other": "(~%(count)s përfundime)",
         "one": "(~%(count)s përfundim)"
     },
-    "Error decrypting video": "Gabim në shfshehtëzim videoje",
     "Delete Widget": "Fshije Widget-in",
     "And %(count)s more...": {
         "other": "Dhe %(count)s të tjerë…"
@@ -240,17 +239,10 @@
     },
     "e.g. my-room": "p.sh., dhoma-ime",
     "Close dialog": "Mbylle dialogun",
-    "You verified %(name)s": "Verifikuat %(name)s",
-    "You cancelled verifying %(name)s": "Anuluat verifikimin e %(name)s",
-    "%(name)s cancelled verifying": "%(name)s anuloi verifikimin",
-    "You accepted": "Pranuat",
     "%(name)s accepted": "%(name)s pranoi",
-    "You cancelled": "Anuluat",
     "%(name)s cancelled": "%(name)s anuloi",
     "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
-    "You sent a verification request": "Dërguat një kërkesë verifikimi",
     "Cancel search": "Anulo kërkimin",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "E keni shpërfillur këtë përdorues, ndaj mesazhi i tij është fshehur. <a>Shfaqe, sido qoftë.</a>",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
     "Integrations are disabled": "Integrimet janë të çaktivizuara",
     "Integrations not allowed": "Integrimet s’lejohen",
@@ -290,7 +282,6 @@
     "Not Trusted": "Jo e Besuar",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) bëri hyrjen në një sesion të ri pa e verifikuar:",
     "Ask this user to verify their session, or manually verify it below.": "Kërkojini këtij përdoruesi të verifikojë sesionin e vet, ose ta verifikojë më poshtë dorazi.",
-    "You declined": "Hodhët poshtë",
     "%(name)s declined": "%(name)s hodhi poshtë",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
     "Enter a server name": "Jepni një emër shërbyesi",
@@ -371,11 +362,6 @@
     "Start a conversation with someone using their name or username (like <userId/>).": "Nisni një bisedë me dikë duke përdorur emrin e tij ose emrin e tij të përdoruesit (bie fjala, <userId/>).",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
-    "Join the conference at the top of this room": "Merrni pjesë në konferencë, në krye të kësaj dhome",
-    "Join the conference from the room information card on the right": "Merrni pjesë në konferencë që prej kartës së informacionit mbi dhomën, në të djathtë",
-    "Video conference ended by %(senderName)s": "Konferenca video u përfundua nga %(senderName)s",
-    "Video conference updated by %(senderName)s": "Konferenca video u përditësua nga %(senderName)s",
-    "Video conference started by %(senderName)s": "Konferenca video u fillua nga %(senderName)s",
     "Use the <a>Desktop app</a> to see all encrypted files": "Që të shihni krejt kartelat e fshehtëzuara, përdorni <a>aplikacionin për Desktop</a>",
     "Use the <a>Desktop app</a> to search encrypted messages": "Që të kërkoni te mesazhe të fshehtëzuar, përdorni <a>aplikacionin për Desktop</a>",
     "This version of %(brand)s does not support viewing some encrypted files": "Ky version i %(brand)s nuk mbulon parjen për disa kartela të fshehtëzuara",
@@ -714,7 +700,6 @@
     "Not all selected were added": "S’u shtuan të gjithë të përzgjedhurit",
     "You are not allowed to view this server's rooms list": "S’keni leje të shihni listën e dhomave të këtij shërbyesi",
     "Add reaction": "Shtoni reagim",
-    "Error processing voice message": "Gabim në përpunimin e mesazhit zanor",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -775,16 +760,10 @@
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
     },
-    "Based on %(count)s votes": {
-        "one": "Bazuar në %(count)s votë",
-        "other": "Bazua në %(count)s vota"
-    },
     "%(count)s votes": {
         "one": "%(count)s votë",
         "other": "%(count)s vota"
     },
-    "Sorry, your vote was not registered. Please try again.": "Na ndjeni, vota juaj s’i regjistruar. Ju lutemi, riprovoni.",
-    "Vote not registered": "Votë e paregjistruar",
     "Developer": "Zhvillues",
     "Experimental": "Eksperimentale",
     "Themes": "Tema",
@@ -798,11 +777,6 @@
     "Failed to end poll": "S’u arrit të përfundohej pyetësori",
     "The poll has ended. Top answer: %(topAnswer)s": "Pyetësori përfundoi. Përgjigja kryesuese: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Pyetësori përfundoi. S’pati vota.",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s votë. Që të shihni përfundimet, votoni",
-        "other": "%(count)s vota. Që të shihni përfundimet, votoni"
-    },
-    "No votes cast": "S’u votua gjë",
     "Recent searches": "Kërkime së fundi",
     "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
     "Other searches": "Kërkime të tjera",
@@ -825,10 +799,7 @@
     "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "Sorry, you can't edit a poll after votes have been cast.": "Na ndjeni, s’mund të përpunoni një pyetësor pasi të jenë hedhur votat.",
-    "Can't edit poll": "S’përpunohet dot pyetësori",
     "Join %(roomAddress)s": "Hyni te %(roomAddress)s",
-    "Results will be visible when the poll is ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori",
     "Search Dialog": "Dialog Kërkimi",
     "What location type do you want to share?": "Ç’lloj vendndodhjeje doni të jepet?",
     "My current location": "Vendndodhja ime e tanishme",
@@ -927,11 +898,8 @@
     "Checking…": "Po kontrollohet…",
     "Waiting for partner to confirm…": "Po pritet ripohimi nga partneri…",
     "Adding…": "Po shtohet…",
-    "Declining…": "Po hidhet poshtë…",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
-    "Ended a poll": "Përfundoi një pyetësor",
-    "Due to decryption errors, some votes may not be counted": "Për shkak gabimesh shfshehtëzimi, disa vota s’mund të numërohen",
     "Invites by email can only be sent one at a time": "Ftesat me email mund të dërgohen vetëm një në herë",
     "Desktop app logo": "Stemë aplikacioni Desktop",
     "Message from %(user)s": "Mesazh nga %(user)s",
@@ -2239,7 +2207,12 @@
         "m.widget": {
             "modified": "Widget-i %(widgetName)s u modifikua nga %(senderName)s",
             "added": "Widget-i %(widgetName)s u shtua nga %(senderName)s",
-            "removed": "Widget-i %(widgetName)s u hoq nga %(senderName)s"
+            "removed": "Widget-i %(widgetName)s u hoq nga %(senderName)s",
+            "jitsi_join_top_prompt": "Merrni pjesë në konferencë, në krye të kësaj dhome",
+            "jitsi_join_right_prompt": "Merrni pjesë në konferencë që prej kartës së informacionit mbi dhomën, në të djathtë",
+            "jitsi_ended": "Konferenca video u përfundua nga %(senderName)s",
+            "jitsi_updated": "Konferenca video u përditësua nga %(senderName)s",
+            "jitsi_started": "Konferenca video u fillua nga %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s ka përditësuar skemën e dhomës",
         "m.location": {
@@ -2250,7 +2223,6 @@
         "self_redaction": "Mesazhi u fshi",
         "redaction": "Mesazh i fshirë nga %(name)s",
         "m.poll.start": "%(senderName)s nisi një anketim - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s e përfundoi anketimin",
         "typing_indicator": {
             "one_user": "%(displayName)s po shtyp …",
             "two_users": "%(names)s dhe %(lastPerson)s të tjerë po shtypin …",
@@ -2414,7 +2386,8 @@
             "changed_rule_users": "%(senderName)s ndryshoi një rregull që dëbonte përdorues me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
             "changed_rule_rooms": "%(senderName)s ndryshoi një rregull që dëbonte dhoma me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
             "changed_rule_servers": "%(senderName)s ndryshoi një rregull që dëbonte shërbyes me përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
-            "changed_rule_glob": "%(senderName)s përditësoi një rregull dëbimesh mbi përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s"
+            "changed_rule_glob": "%(senderName)s përditësoi një rregull dëbimesh mbi përputhje me %(oldGlob)s për përputhje me %(newGlob)s për %(reason)s",
+            "message_hidden": "E keni shpërfillur këtë përdorues, ndaj mesazhi i tij është fshehur. <a>Shfaqe, sido qoftë.</a>"
         },
         "no_permission_messages_before_invite": "S’keni leje të shihni mesazhe nga koha para se t’ju ftonin.",
         "no_permission_messages_before_join": "S’keni leje të shihni mesazhe nga koha para se të merrnit pjesë.",
@@ -2475,7 +2448,8 @@
         "m.audio": {
             "unnamed_audio": "Audio pa emër",
             "error_downloading_audio": "Gabim në shkarkim audioje",
-            "error_processing_audio": "Gabim në përpunim mesazhi audio"
+            "error_processing_audio": "Gabim në përpunim mesazhi audio",
+            "error_processing_voice_message": "Gabim në përpunimin e mesazhit zanor"
         },
         "load_error": {
             "no_permission": "U provua të ngarkohej një pikë e caktuar në kronologjinë e kësaj dhome, por nuk keni leje për ta parë mesazhin në fjalë.",
@@ -2511,6 +2485,25 @@
             "error_decrypting": "Gabim në shfshehtëzim figure",
             "error_downloading": "Gabim gjatë shkarkimit të figurës",
             "show_image": "Shfaq figurë"
+        },
+        "m.key.verification.done": "Verifikuat %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Anuluat verifikimin e %(name)s",
+            "user_cancelled": "%(name)s anuloi verifikimin"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Pranuat",
+            "you_declined": "Hodhët poshtë",
+            "you_cancelled": "Anuluat",
+            "declining": "Po hidhet poshtë…",
+            "you_started": "Dërguat një kërkesë verifikimi"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s e përfundoi anketimin",
+            "ended": "Përfundoi një pyetësor"
+        },
+        "m.video": {
+            "error_decrypting": "Gabim në shfshehtëzim videoje"
         }
     },
     "slash_command": {
@@ -3894,7 +3887,22 @@
         "options_placeholder": "Shkruani një mundësi",
         "options_add_button": "Shtoni mundësi",
         "disclosed_notes": "Votuesit shohin përfundimet sapo të kenë votuar",
-        "notes": "Përfundimet shfaqen vetëm kur të përfundoni pyetësorin"
+        "notes": "Përfundimet shfaqen vetëm kur të përfundoni pyetësorin",
+        "unable_edit_title": "S’përpunohet dot pyetësori",
+        "unable_edit_description": "Na ndjeni, s’mund të përpunoni një pyetësor pasi të jenë hedhur votat.",
+        "error_voting_title": "Votë e paregjistruar",
+        "error_voting_description": "Na ndjeni, vota juaj s’i regjistruar. Ju lutemi, riprovoni.",
+        "total_decryption_errors": "Për shkak gabimesh shfshehtëzimi, disa vota s’mund të numërohen",
+        "total_not_ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori",
+        "total_no_votes": "S’u votua gjë",
+        "total_n_votes": {
+            "one": "%(count)s votë. Që të shihni përfundimet, votoni",
+            "other": "%(count)s vota. Që të shihni përfundimet, votoni"
+        },
+        "total_n_votes_voted": {
+            "one": "Bazuar në %(count)s votë",
+            "other": "Bazua në %(count)s vota"
+        }
     },
     "failed_load_async_component": "S’arrihet të ngarkohet! Kontrolloni lidhjen tuaj në rrjet dhe riprovoni.",
     "upload_failed_generic": "Dështoi ngarkimi i kartelës '%(fileName)s'.",

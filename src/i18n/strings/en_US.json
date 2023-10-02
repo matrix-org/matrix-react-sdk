@@ -42,7 +42,6 @@
     "Confirm Removal": "Confirm Removal",
     "Unable to restore session": "Unable to restore session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
-    "Error decrypting video": "Error decrypting video",
     "Add an Integration": "Add an Integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
     "Create new room": "Create new room",
@@ -311,6 +310,9 @@
         "m.image": {
             "sent": "%(senderDisplayName)s sent an image.",
             "error_decrypting": "Error decrypting image"
+        },
+        "m.video": {
+            "error_decrypting": "Error decrypting video"
         }
     },
     "slash_command": {

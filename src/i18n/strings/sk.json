@@ -37,7 +37,6 @@
     "Join Room": "Vstúpiť do miestnosti",
     "unknown error code": "neznámy kód chyby",
     "not specified": "nezadané",
-    "Error decrypting video": "Chyba pri dešifrovaní videa",
     "Add an Integration": "Pridať integráciu",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete presmerovaní na stránku tretej strany, aby ste mohli overiť svoj účet na použitie s %(integrationsUrl)s. Chcete pokračovať?",
     "Email address": "Emailová adresa",
@@ -464,12 +463,9 @@
     "United States": "Spojené Štáty",
     "United Kingdom": "Spojené Kráľovstvo",
     "Encrypted by a deleted session": "Šifrované odstránenou reláciou",
-    "You cancelled": "Zrušili ste overenie",
-    "You cancelled verifying %(name)s": "Zrušili ste overenie používateľa %(name)s",
     "%(name)s wants to verify": "%(name)s chce overiť",
     "Search spaces": "Hľadať priestory",
     "Search for spaces": "Hľadať priestory",
-    "You sent a verification request": "Odoslali ste žiadosť o overenie",
     "Remove %(count)s messages": {
         "other": "Odstrániť %(count)s správ",
         "one": "Odstrániť 1 správu"
@@ -494,12 +490,10 @@
     "Some suggestions may be hidden for privacy.": "Niektoré návrhy môžu byť skryté kvôli ochrane súkromia.",
     "You're all caught up.": "Všetko ste už stihli.",
     "Allow this widget to verify your identity": "Umožniť tomuto widgetu overiť vašu totožnosť",
-    "%(name)s cancelled verifying": "%(name)s zrušil/a overovanie",
     "Only do this if you have no other device to complete verification with.": "Urobte to len vtedy, ak nemáte iné zariadenie, pomocou ktorého by ste mohli dokončiť overenie.",
     "Server name": "Názov servera",
     "Your server": "Váš server",
     "%(name)s declined": "%(name)s odmietol/a",
-    "You declined": "Zamietli ste overenie",
     "Session key": "Kľúč relácie",
     "Session name": "Názov relácie",
     "Verification Request": "Žiadosť o overenie",
@@ -527,7 +521,6 @@
     "Leave all rooms": "Opustiť všetky miestnosti",
     "Don't leave any rooms": "Neopustiť žiadne miestnosti",
     "Would you like to leave the rooms in this space?": "Chcete opustiť miestnosti v tomto priestore?",
-    "Error processing voice message": "Chyba pri spracovaní hlasovej správy",
     "Invited people will be able to read old messages.": "Pozvaní ľudia si budú môcť prečítať staré správy.",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Pozvite niekoho pomocou jeho mena, používateľského mena (napríklad <userId/>) alebo <a>zdieľate túto miestnosť</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pozvite niekoho pomocou jeho mena, e-mailovej adresy, používateľského mena (napríklad <userId/>) alebo <a>zdieľajte túto miestnosť</a>.",
@@ -566,7 +559,6 @@
     "Cancelled signature upload": "Zrušené nahrávanie podpisu",
     "Integrations not allowed": "Integrácie nie sú povolené",
     "Integrations are disabled": "Integrácie sú zakázané",
-    "You verified %(name)s": "Overili ste používateľa %(name)s",
     "Clear all data": "Vymazať všetky údaje",
     "edited": "upravené",
     "Message edits": "Úpravy správy",
@@ -606,7 +598,6 @@
     "Leave %(spaceName)s": "Opustiť %(spaceName)s",
     "Preparing to download logs": "Príprava na prevzatie záznamov",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "You accepted": "Prijali ste",
     "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ste jediným správcom niektorých miestností alebo priestorov, ktoré chcete opustiť. Ich opustenie ich ponechá bez administrátorov.",
     "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ste jediným správcom tohto priestoru. Jeho opustenie bude znamenať, že nad ním nikto nebude mať kontrolu.",
     "Your firewall or anti-virus is blocking the request.": "Požiadavku blokuje váš firewall alebo antivírus.",
@@ -698,17 +689,6 @@
         "one": "%(count)s hlas",
         "other": "%(count)s hlasov"
     },
-    "Based on %(count)s votes": {
-        "one": "Na základe %(count)s hlasu",
-        "other": "Na základe %(count)s hlasov"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s odovzdaný hlas. Hlasujte a pozrite si výsledky",
-        "other": "%(count)s odovzdaných hlasov. Hlasujte a pozrite si výsledky"
-    },
-    "Sorry, your vote was not registered. Please try again.": "Je nám ľúto, váš hlas nebol zaregistrovaný. Skúste to prosím znova.",
-    "Vote not registered": "Hlasovanie nie je zaregistrované",
-    "No votes cast": "Žiadne odovzdané hlasy",
     "Thread options": "Možnosti vlákna",
     "Server Options": "Možnosti servera",
     "Themes": "Vzhľad",
@@ -733,7 +713,6 @@
     "Something went wrong trying to invite the users.": "Pri pokuse o pozvanie používateľov sa niečo pokazilo.",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Nasledujúci používatelia nemusia existovať alebo sú neplatní a nemožno ich pozvať: %(csvNames)s",
     "Failed to find the following users": "Nepodarilo sa nájsť týchto používateľov",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Tohto používateľa ste ignorovali, takže jeho správa je skrytá. <a>Ukázať aj tak.</a>",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Pri veľkom množstve správ to môže trvať určitý čas. Medzitým prosím neobnovujte svojho klienta.",
     "No recent messages by %(user)s found": "Nenašli sa žiadne nedávne správy od používateľa %(user)s",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Na pozvanie e-mailom použite server identity. Vykonajte zmeny v <settings>Nastaveniach</settings>.",
@@ -768,11 +747,6 @@
     "You most likely do not want to reset your event index store": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
     "Reset event store?": "Obnoviť úložisko udalostí?",
     "Can't load this message": "Nemožno načítať túto správu",
-    "Join the conference from the room information card on the right": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
-    "Join the conference at the top of this room": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
-    "Video conference ended by %(senderName)s": "Videokonferencia ukončená používateľom %(senderName)s",
-    "Video conference updated by %(senderName)s": "Videokonferencia aktualizovaná používateľom %(senderName)s",
-    "Video conference started by %(senderName)s": "Videokonferencia spustená používateľom %(senderName)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
     "Data on this screen is shared with %(widgetDomain)s": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s",
     "If they don't match, the security of your communication may be compromised.": "Ak sa nezhodujú, môže byť ohrozená bezpečnosť vašej komunikácie.",
@@ -825,9 +799,6 @@
     "Server did not return valid authentication information.": "Server nevrátil späť platné informácie o overení.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Potvrďte deaktiváciu konta pomocou jednotného prihlásenia SSO na preukázanie svojej totožnosti.",
     "toggle event": "prepnúť udalosť",
-    "Results will be visible when the poll is ended": "Výsledky budú viditeľné po ukončení ankety",
-    "Sorry, you can't edit a poll after votes have been cast.": "Je nám ľúto, ale po odovzdaní hlasov nie je možné anketu upravovať.",
-    "Can't edit poll": "Nie je možné upraviť anketu",
     "Command Help": "Pomocník príkazov",
     "My live location": "Moja poloha v reálnom čase",
     "My current location": "Moja aktuálna poloha",
@@ -923,7 +894,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Nemôžete spustiť hlasovú správu, pretože práve nahrávate živé vysielanie. Ukončite prosím živé vysielanie, aby ste mohli začať nahrávať hlasovú správu.",
     "Can't start voice message": "Nemožno spustiť hlasovú správu",
     "unknown": "neznáme",
-    "Declining…": "Odmietanie …",
     "Loading live location…": "Načítavanie polohy v reálnom čase…",
     "Fetching keys from server…": "Získavanie kľúčov zo servera…",
     "Checking…": "Kontrolovanie…",
@@ -931,8 +901,6 @@
     "Waiting for partner to confirm…": "Čakanie na potvrdenie od partnera…",
     "Adding…": "Pridávanie…",
     "Starting export process…": "Spustenie procesu exportu…",
-    "Ended a poll": "Ukončil anketu",
-    "Due to decryption errors, some votes may not be counted": "Z dôvodu chýb v dešifrovaní sa niektoré hlasy nemusia započítať",
     "Invites by email can only be sent one at a time": "Pozvánky e-mailom sa môžu posielať len po jednej",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
@@ -2301,7 +2269,12 @@
         "m.widget": {
             "modified": "%(senderName)s zmenil widget %(widgetName)s",
             "added": "%(senderName)s pridal widget %(widgetName)s",
-            "removed": "%(senderName)s odstránil widget %(widgetName)s"
+            "removed": "%(senderName)s odstránil widget %(widgetName)s",
+            "jitsi_join_top_prompt": "Pripojte sa ku konferencii v hornej časti tejto miestnosti",
+            "jitsi_join_right_prompt": "Pripojte sa ku konferencii z informačnej karty miestnosti vpravo",
+            "jitsi_ended": "Videokonferencia ukončená používateľom %(senderName)s",
+            "jitsi_updated": "Videokonferencia aktualizovaná používateľom %(senderName)s",
+            "jitsi_started": "Videokonferencia spustená používateľom %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s aktualizoval usporiadanie miestnosti",
         "m.location": {
@@ -2312,7 +2285,6 @@
         "self_redaction": "Správa vymazaná",
         "redaction": "Správa vymazaná používateľom %(name)s",
         "m.poll.start": "%(senderName)s spustil anketu - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s ukončil anketu",
         "typing_indicator": {
             "one_user": "%(displayName)s píše …",
             "two_users": "%(names)s a %(lastPerson)s píšu …",
@@ -2484,7 +2456,8 @@
             "changed_rule_users": "%(senderName)s zmenil pravidlo zakázať vstúpiť používateľom pôvodne zhodujúcich sa s %(oldGlob)s na používateľov zhodujúcich sa s %(newGlob)s, dôvod: %(reason)s",
             "changed_rule_rooms": "%(senderName)s zmenil pravidlo zakázať vstúpiť do miestností pôvodne zhodujúcich sa s %(oldGlob)s na miestnosti zhodujúce sa s %(newGlob)s, dôvod: %(reason)s",
             "changed_rule_servers": "%(senderName)s zmenil pravidlo, ktoré zakazovalo servery zodpovedajúce %(oldGlob)s na zodpovedajúce %(newGlob)s z %(reason)s",
-            "changed_rule_glob": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť pôvodne sa zhodujúce s %(oldGlob)s na %(newGlob)s, dôvod: %(reason)s"
+            "changed_rule_glob": "%(senderName)s aktualizoval pravidlo zakázať vstúpiť pôvodne sa zhodujúce s %(oldGlob)s na %(newGlob)s, dôvod: %(reason)s",
+            "message_hidden": "Tohto používateľa ste ignorovali, takže jeho správa je skrytá. <a>Ukázať aj tak.</a>"
         },
         "no_permission_messages_before_invite": "Nemáte povolenie na zobrazenie správ z obdobia pred vaším pozvaním.",
         "no_permission_messages_before_join": "Nemáte oprávnenie na zobrazenie správ z obdobia pred vaším vstupom.",
@@ -2545,7 +2518,8 @@
         "m.audio": {
             "unnamed_audio": "Nepomenovaný zvukový záznam",
             "error_downloading_audio": "Chyba pri sťahovaní zvuku",
-            "error_processing_audio": "Chyba pri spracovaní hlasovej správy"
+            "error_processing_audio": "Chyba pri spracovaní hlasovej správy",
+            "error_processing_voice_message": "Chyba pri spracovaní hlasovej správy"
         },
         "load_error": {
             "no_permission": "Pri pokuse načítať konkrétny bod v histórii tejto miestnosti sa vyskytla chyba, nemáte povolenie na zobrazenie zodpovedajúcej správy.",
@@ -2583,6 +2557,25 @@
             "error_decrypting": "Chyba pri dešifrovaní obrázka",
             "error_downloading": "Chyba pri sťahovaní obrázku",
             "show_image": "Zobraziť obrázok"
+        },
+        "m.key.verification.done": "Overili ste používateľa %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Zrušili ste overenie používateľa %(name)s",
+            "user_cancelled": "%(name)s zrušil/a overovanie"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Prijali ste",
+            "you_declined": "Zamietli ste overenie",
+            "you_cancelled": "Zrušili ste overenie",
+            "declining": "Odmietanie …",
+            "you_started": "Odoslali ste žiadosť o overenie"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s ukončil anketu",
+            "ended": "Ukončil anketu"
+        },
+        "m.video": {
+            "error_decrypting": "Chyba pri dešifrovaní videa"
         }
     },
     "slash_command": {
@@ -3996,7 +3989,22 @@
         "options_placeholder": "Napíšte možnosť",
         "options_add_button": "Pridať možnosť",
         "disclosed_notes": "Hlasujúci uvidia výsledky hneď po hlasovaní",
-        "notes": "Výsledky sa zobrazia až po ukončení ankety"
+        "notes": "Výsledky sa zobrazia až po ukončení ankety",
+        "unable_edit_title": "Nie je možné upraviť anketu",
+        "unable_edit_description": "Je nám ľúto, ale po odovzdaní hlasov nie je možné anketu upravovať.",
+        "error_voting_title": "Hlasovanie nie je zaregistrované",
+        "error_voting_description": "Je nám ľúto, váš hlas nebol zaregistrovaný. Skúste to prosím znova.",
+        "total_decryption_errors": "Z dôvodu chýb v dešifrovaní sa niektoré hlasy nemusia započítať",
+        "total_not_ended": "Výsledky budú viditeľné po ukončení ankety",
+        "total_no_votes": "Žiadne odovzdané hlasy",
+        "total_n_votes": {
+            "one": "%(count)s odovzdaný hlas. Hlasujte a pozrite si výsledky",
+            "other": "%(count)s odovzdaných hlasov. Hlasujte a pozrite si výsledky"
+        },
+        "total_n_votes_voted": {
+            "one": "Na základe %(count)s hlasu",
+            "other": "Na základe %(count)s hlasov"
+        }
     },
     "failed_load_async_component": "Nie je možné načítať! Skontrolujte prístup na internet a skúste neskôr.",
     "upload_failed_generic": "Nepodarilo sa nahrať súbor „%(fileName)s“.",

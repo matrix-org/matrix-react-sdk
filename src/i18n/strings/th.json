@@ -43,7 +43,6 @@
     },
     "Custom level": "กำหนดระดับเอง",
     "Verification Pending": "รอการตรวจสอบ",
-    "Error decrypting video": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ",
     "Sunday": "วันอาทิตย์",
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
@@ -341,6 +340,9 @@
         "m.image": {
             "sent": "%(senderDisplayName)s ได้ส่งรูป",
             "error_decrypting": "เกิดข้อผิดพลาดในการถอดรหัสรูป"
+        },
+        "m.video": {
+            "error_decrypting": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ"
         }
     },
     "slash_command": {

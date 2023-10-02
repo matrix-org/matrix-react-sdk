@@ -44,7 +44,6 @@
     "Confirm Removal": "Apstipriniet dzēšanu",
     "Unable to restore session": "Neizdevās atjaunot sesiju",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
-    "Error decrypting video": "Kļūda atšifrējot video",
     "Add an Integration": "Pievienot integrāciju",
     "and %(count)s others...": {
         "other": "un vēl %(count)s citi...",
@@ -84,7 +83,6 @@
     "Logs sent": "Logfaili nosūtīti",
     "Yesterday": "Vakardien",
     "Thank you!": "Tencinam!",
-    "You sent a verification request": "Jūs nosūtījāt verifikācijas pieprasījumu",
     "%(count)s verified sessions": {
         "one": "1 verificēta sesija",
         "other": "%(count)s verificētas sesijas"
@@ -118,9 +116,7 @@
     "United Kingdom": "Lielbritānija",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Izmantojiet identitātes serveri, lai uzaicinātu ar epastu. Pārvaldiet <settings>iestatījumos</settings>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Uzaiciniet kādu personu, izmantojot vārdu, epasta adresi, lietotājvārdu (piemēram, <userId/>) vai <a>dalieties ar šo istabu</a>.",
-    "You verified %(name)s": "Jūs verificējāt %(name)s",
     "%(name)s accepted": "%(name)s akceptēja",
-    "You accepted": "Jūs akceptējāt",
     "IRC display name width": "IRC parādāmā vārda platums",
     "Are you sure you want to deactivate your account? This is irreversible.": "Vai tiešām vēlaties deaktivizēt savu kontu? Tas ir neatgriezeniski.",
     "Deactivate account": "Deaktivizēt kontu",
@@ -162,7 +158,6 @@
     "%(name)s wants to verify": "%(name)s vēlas veikt verifikāciju",
     "Decline All": "Noraidīt visu",
     "%(name)s declined": "%(name)s noraidīja",
-    "You declined": "Jūs noraidījāt",
     "Incoming Verification Request": "Ienākošais veifikācijas pieprasījums",
     "Verification Request": "Verifikācijas pieprasījums",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
@@ -177,7 +172,6 @@
     "Continue With Encryption Disabled": "Turpināt ar atspējotu šifrēšanu",
     "Create a new room": "Izveidot jaunu istabu",
     "%(name)s cancelled": "%(name)s atcēla",
-    "%(name)s cancelled verifying": "%(name)s atcēla verifikāciju",
     "Create a space": "Izveidot vietu",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
@@ -193,8 +187,6 @@
     "edited": "rediģēts",
     "Edited at %(date)s. Click to view edits.": "Rediģēts %(date)s. Noklikšķiniet, lai skatītu redakcijas.",
     "Edited at %(date)s": "Rediģēts %(date)s",
-    "You cancelled": "Jūs atcēlāt",
-    "You cancelled verifying %(name)s": "Jūs atvēlāt %(name)s verifikāciju",
     "Remove %(count)s messages": {
         "one": "Dzēst 1 ziņu",
         "other": "Dzēst %(count)s ziņas"
@@ -460,21 +452,13 @@
     "Server name": "Servera nosaukums",
     "Enter the name of a new server you want to explore.": "Ievadiet nosaukumu jaunam serverim, kuru vēlaties pārlūkot.",
     "Corn": "Kukurūza",
-    "Based on %(count)s votes": {
-        "one": "Pamatojoties uz %(count)s balss",
-        "other": "Pamatojoties uz %(count)s balsīm"
-    },
-    "No votes cast": "Nav balsojumu",
     "Reason (optional)": "Iemesls (izvēles)",
     "You may contact me if you have any follow up questions": "Ja jums ir kādi papildjautājumi, varat sazināties ar mani",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Vai esat pārliecināts, ka vēlaties pārtraukt šo aptauju? Tas parādīs aptaujas galīgos rezultātus un liegs cilvēkiem iespēju balsot.",
-    "Sorry, you can't edit a poll after votes have been cast.": "Atvainojiet, aptauju nevar rediģēt pēc tam, kad balsis jau ir nodotas.",
-    "Results will be visible when the poll is ended": "Rezultāti būs redzami, kad aptauja būs pabeigta",
     "Sorry, the poll did not end. Please try again.": "Atvainojiet, aptauja netika pārtraukta. Lūdzu, mēģiniet vēlreiz.",
     "The poll has ended. No votes were cast.": "Aptauja ir beigusies. Balsis netika nodotas.",
     "The poll has ended. Top answer: %(topAnswer)s": "Aptauja ir beigusies. Populārākā atbilde: %(topAnswer)s",
     "Failed to end poll": "Neizdevās pārtraukt aptauju",
-    "Can't edit poll": "Nevar rediģēt aptauju",
     "End Poll": "Pārtraukt aptauju",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
     "You need to have the right permissions in order to share locations in this room.": "Jums ir jābūt pietiekāmām piekļuves tiesībām, lai kopīgotu atrašanās vietas šajā istabā.",
@@ -496,7 +480,6 @@
     "My live location": "Mana reāllaika atrašanās vieta",
     "My current location": "Mana atrašanās vieta",
     "Location": "Atrašanās vieta",
-    "Error processing voice message": "Balss ziņas apstrādes kļūda",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
     "Information": "Informācija",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
@@ -1090,7 +1073,6 @@
         "self_redaction": "Ziņa ir dzēsta",
         "redaction": "%(name)s izdzēsa ziņu",
         "m.poll.start": "%(senderName)s uzsāka aptauju- %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s pārtrauca aptauju",
         "typing_indicator": {
             "one_user": "%(displayName)s raksta…",
             "two_users": "%(names)s un %(lastPerson)s raksta…",
@@ -1271,6 +1253,26 @@
             "sent": "%(senderDisplayName)s nosūtīja attēlu.",
             "error_decrypting": "Kļūda atšifrējot attēlu",
             "show_image": "Rādīt attēlu"
+        },
+        "m.key.verification.done": "Jūs verificējāt %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Jūs atvēlāt %(name)s verifikāciju",
+            "user_cancelled": "%(name)s atcēla verifikāciju"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Jūs akceptējāt",
+            "you_declined": "Jūs noraidījāt",
+            "you_cancelled": "Jūs atcēlāt",
+            "you_started": "Jūs nosūtījāt verifikācijas pieprasījumu"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s pārtrauca aptauju"
+        },
+        "m.video": {
+            "error_decrypting": "Kļūda atšifrējot video"
+        },
+        "m.audio": {
+            "error_processing_voice_message": "Balss ziņas apstrādes kļūda"
         }
     },
     "slash_command": {
@@ -1948,7 +1950,15 @@
         "options_label": "Variants %(number)s",
         "options_placeholder": "Uzrakstiet variantu",
         "options_add_button": "Pievienot variantu",
-        "notes": "Rezultāti tiks atklāti tikai pēc aptaujas beigām"
+        "notes": "Rezultāti tiks atklāti tikai pēc aptaujas beigām",
+        "unable_edit_title": "Nevar rediģēt aptauju",
+        "unable_edit_description": "Atvainojiet, aptauju nevar rediģēt pēc tam, kad balsis jau ir nodotas.",
+        "total_not_ended": "Rezultāti būs redzami, kad aptauja būs pabeigta",
+        "total_no_votes": "Nav balsojumu",
+        "total_n_votes_voted": {
+            "one": "Pamatojoties uz %(count)s balss",
+            "other": "Pamatojoties uz %(count)s balsīm"
+        }
     },
     "failed_load_async_component": "Ielāde neizdevās! Pārbaudiet interneta savienojumu un mēģiniet vēlreiz.",
     "upload_failed_generic": "'%(fileName)s' augšupielāde neizdevās.",

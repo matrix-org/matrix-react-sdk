@@ -60,19 +60,10 @@
     "Your browser likely removed this data when running low on disk space.": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu.",
     "Find others by phone or email": "Leia teisi kasutajaid telefoninumbri või e-posti aadressi alusel",
     "Be found by phone or email": "Ole leitav telefoninumbri või e-posti aadressi alusel",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Sa oled seda kasutajat eiranud ja seega tema sõnum on peidetud. <a>Näita seda ikkagi.</a>",
-    "You verified %(name)s": "Sa verifitseerisid %(name)s",
-    "You cancelled verifying %(name)s": "Sa tühistasid %(name)s verifitseerimise",
-    "%(name)s cancelled verifying": "%(name)s tühistas verifitseerimise",
-    "You accepted": "Sa nõustusid",
     "%(name)s accepted": "%(name)s nõustus",
-    "You declined": "Sa keeldusid",
-    "You cancelled": "Sa tühistasid",
     "%(name)s declined": "%(name)s keeldus",
     "%(name)s cancelled": "%(name)s tühistas",
     "%(name)s wants to verify": "%(name)s soovib verifitseerida",
-    "You sent a verification request": "Sa saatsid verifitseerimispalve",
-    "Error decrypting video": "Viga videovoo dekrüptimisel",
     "Edited at %(date)s. Click to view edits.": "Muudetud %(date)s. Klõpsi et näha varasemaid versioone.",
     "edited": "muudetud",
     "Can't load this message": "Selle sõnumi laadimine ei õnnestu",
@@ -377,11 +368,6 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Otsinguks krüptitud sõnumite hulgast kasuta <a>Element Desktop</a> rakendust",
     "This version of %(brand)s does not support viewing some encrypted files": "See %(brand)s versioon ei toeta mõnede krüptitud failide vaatatamist",
     "This version of %(brand)s does not support searching encrypted messages": "See %(brand)s versioon ei toeta otsingut krüptitud sõnumite seast",
-    "Join the conference at the top of this room": "Liitu konverentsiga selle jututoa ülaosas",
-    "Join the conference from the room information card on the right": "Liitu konverentsiga selle jututoa infolehelt paremal",
-    "Video conference ended by %(senderName)s": "%(senderName)s lõpetas video rühmakõne",
-    "Video conference updated by %(senderName)s": "%(senderName)s uuendas video rühmakõne",
-    "Video conference started by %(senderName)s": "%(senderName)s alustas video rühmakõnet",
     "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
     "Modal Widget": "Modaalne vidin",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu teist osapoolt tema nime, e-posti aadressi, kasutajanime (nagu <userId/>) alusel või <a>jaga seda jututuba</a>.",
@@ -715,7 +701,6 @@
     },
     "Not all selected were added": "Kõiki valituid me ei lisanud",
     "You are not allowed to view this server's rooms list": "Sul puuduvad õigused selle serveri jututubade loendi vaatamiseks",
-    "Error processing voice message": "Viga häälsõnumi töötlemisel",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Add reaction": "Lisa reaktsioon",
@@ -775,16 +760,10 @@
         "one": "%(spaceName)s ja veel %(count)s kogukond",
         "other": "%(spaceName)s ja muud %(count)s kogukonda"
     },
-    "Based on %(count)s votes": {
-        "one": "Aluseks on %(count)s hääl",
-        "other": "Aluseks on %(count)s häält"
-    },
     "%(count)s votes": {
         "one": "%(count)s hääl",
         "other": "%(count)s häält"
     },
-    "Sorry, your vote was not registered. Please try again.": "Vabandust, aga sinu valik jäi salvestamata. Palun proovi uuesti.",
-    "Vote not registered": "Hääl ei salvestunud",
     "Developer": "Arendajad",
     "Experimental": "Katsed",
     "Themes": "Teemad",
@@ -792,11 +771,6 @@
     "Moderation": "Modereerimine",
     "Spaces you know that contain this space": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see kogukond",
     "Recently viewed": "Hiljuti vaadatud",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s hääl antud. Tulemuste nägemiseks tee oma valik",
-        "other": "%(count)s häält antud. Tulemuste nägemiseks tee oma valik"
-    },
-    "No votes cast": "Hääletanuid ei ole",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Kas sa oled kindel, et soovid lõpetada küsitlust? Sellega on tulemused lõplikud ja rohkem osaleda ei saa.",
     "End Poll": "Lõpeta küsitlus",
     "Sorry, the poll did not end. Please try again.": "Vabandust, aga küsitlus jäi lõpetamata. Palun proovi uuesti.",
@@ -826,10 +800,7 @@
     "Use <arrows/> to scroll": "Kerimiseks kasuta <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Tagasiside on saadetud. Täname, sellest on loodetavasti kasu!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
-    "Can't edit poll": "Küsimustikku ei saa muuta",
-    "Sorry, you can't edit a poll after votes have been cast.": "Vabandust, aga küsimustikku ei saa enam peale hääletamise lõppu muuta.",
     "Join %(roomAddress)s": "Liitu %(roomAddress)s jututoaga",
-    "Results will be visible when the poll is ended": "Tulemused on näha siis, kui küsitlus on lõppenud",
     "Search Dialog": "Otsinguvaade",
     "What location type do you want to share?": "Missugust asukohta sa soovid jagada?",
     "Drop a Pin": "Märgi nööpnõelaga",
@@ -923,7 +894,6 @@
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "Kuna sa hetkel salvestad ringhäälingukõnet, siis häälsõnumi salvestamine või esitamine ei õnnestu. Selleks palun lõpeta ringhäälingukõne.",
     "Can't start voice message": "Häälsõnumi salvestamine või esitamine ei õnnestu",
     "unknown": "teadmata",
-    "Declining…": "Keeldumisel…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
     "Loading live location…": "Reaalajas asukoht on laadimisel…",
     "Fetching keys from server…": "Laadin serverist võtmeid…",
@@ -931,8 +901,6 @@
     "Waiting for partner to confirm…": "Ootan teise osapoole kinnitust…",
     "Adding…": "Lisan…",
     "Starting export process…": "Alustame eksportimist…",
-    "Due to decryption errors, some votes may not be counted": "Dekrüptimisvigade tõttu jääb osa hääli lugemata",
-    "Ended a poll": "Lõpetas küsitluse",
     "Invites by email can only be sent one at a time": "Kutseid saad e-posti teel saata vaid ükshaaval",
     "Desktop app logo": "Töölauarakenduse logo",
     "Requires your server to support the stable version of MSC3827": "Eeldab, et sinu koduserver toetab MSC3827 stabiilset versiooni",
@@ -2301,7 +2269,12 @@
         "m.widget": {
             "modified": "%(senderName)s muutis vidinat %(widgetName)s",
             "added": "%(senderName)s lisas vidina %(widgetName)s",
-            "removed": "%(senderName)s eemaldas vidina %(widgetName)s"
+            "removed": "%(senderName)s eemaldas vidina %(widgetName)s",
+            "jitsi_join_top_prompt": "Liitu konverentsiga selle jututoa ülaosas",
+            "jitsi_join_right_prompt": "Liitu konverentsiga selle jututoa infolehelt paremal",
+            "jitsi_ended": "%(senderName)s lõpetas video rühmakõne",
+            "jitsi_updated": "%(senderName)s uuendas video rühmakõne",
+            "jitsi_started": "%(senderName)s alustas video rühmakõnet"
         },
         "io.element.widgets.layout": "%(senderName)s on uuendanud jututoa välimust",
         "m.location": {
@@ -2312,7 +2285,6 @@
         "self_redaction": "Sõnum on kustutatud",
         "redaction": "%(name)s kustutas sõnumi",
         "m.poll.start": "%(senderName)s algatas küsitluse - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s lõpetas küsitluse",
         "typing_indicator": {
             "one_user": "%(displayName)s kirjutab midagi…",
             "two_users": "%(names)s ja %(lastPerson)s kirjutavad midagi…",
@@ -2484,7 +2456,8 @@
             "changed_rule_users": "%(senderName)s muutis %(reason)s tõttu kasutajate ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
             "changed_rule_rooms": "%(senderName)s muutis %(reason)s tõttu jututubade ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
             "changed_rule_servers": "%(senderName)s muutis %(reason)s tõttu serverite ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
-            "changed_rule_glob": "%(senderName)s muutis %(reason)s tõttu ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s"
+            "changed_rule_glob": "%(senderName)s muutis %(reason)s tõttu ligipääsukeelu reegli algset tingimust %(oldGlob)s uueks tingimuseks %(newGlob)s",
+            "message_hidden": "Sa oled seda kasutajat eiranud ja seega tema sõnum on peidetud. <a>Näita seda ikkagi.</a>"
         },
         "no_permission_messages_before_invite": "Sul pole õigusi vaadata enne kutse saatmist saadetud sõnumeid.",
         "no_permission_messages_before_join": "Sul pole õigusi vaadata enne liitumist saadetud sõnumeid.",
@@ -2545,7 +2518,8 @@
         "m.audio": {
             "unnamed_audio": "Nimetu helifail",
             "error_downloading_audio": "Helifaili allalaadimine ei õnnestunud",
-            "error_processing_audio": "Viga häälsõnumi töötlemisel"
+            "error_processing_audio": "Viga häälsõnumi töötlemisel",
+            "error_processing_voice_message": "Viga häälsõnumi töötlemisel"
         },
         "load_error": {
             "no_permission": "Üritasin laadida teatud hetke selle jututoa ajajoonelt, kuid sul ei ole õigusi selle sõnumi nägemiseks.",
@@ -2583,6 +2557,25 @@
             "error_decrypting": "Viga pildi dekrüptimisel",
             "error_downloading": "Pildifaili allalaadimine ei õnnestunud",
             "show_image": "Näita pilti"
+        },
+        "m.key.verification.done": "Sa verifitseerisid %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Sa tühistasid %(name)s verifitseerimise",
+            "user_cancelled": "%(name)s tühistas verifitseerimise"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Sa nõustusid",
+            "you_declined": "Sa keeldusid",
+            "you_cancelled": "Sa tühistasid",
+            "declining": "Keeldumisel…",
+            "you_started": "Sa saatsid verifitseerimispalve"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s lõpetas küsitluse",
+            "ended": "Lõpetas küsitluse"
+        },
+        "m.video": {
+            "error_decrypting": "Viga videovoo dekrüptimisel"
         }
     },
     "slash_command": {
@@ -3996,7 +3989,22 @@
         "options_placeholder": "Sisesta valik",
         "options_add_button": "Lisa valik",
         "disclosed_notes": "Osalejad näevad tulemusi kohe peale oma valiku tegemist",
-        "notes": "Tulemused on näha vaid siis, kui küsitlus in lõppenud"
+        "notes": "Tulemused on näha vaid siis, kui küsitlus in lõppenud",
+        "unable_edit_title": "Küsimustikku ei saa muuta",
+        "unable_edit_description": "Vabandust, aga küsimustikku ei saa enam peale hääletamise lõppu muuta.",
+        "error_voting_title": "Hääl ei salvestunud",
+        "error_voting_description": "Vabandust, aga sinu valik jäi salvestamata. Palun proovi uuesti.",
+        "total_decryption_errors": "Dekrüptimisvigade tõttu jääb osa hääli lugemata",
+        "total_not_ended": "Tulemused on näha siis, kui küsitlus on lõppenud",
+        "total_no_votes": "Hääletanuid ei ole",
+        "total_n_votes": {
+            "one": "%(count)s hääl antud. Tulemuste nägemiseks tee oma valik",
+            "other": "%(count)s häält antud. Tulemuste nägemiseks tee oma valik"
+        },
+        "total_n_votes_voted": {
+            "one": "Aluseks on %(count)s hääl",
+            "other": "Aluseks on %(count)s häält"
+        }
     },
     "failed_load_async_component": "Laadimine ei õnnestunud! Kontrolli oma võrguühendust ja proovi uuesti.",
     "upload_failed_generic": "Faili '%(fileName)s' üleslaadimine ei õnnestunud.",

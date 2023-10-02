@@ -72,7 +72,6 @@
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
     },
-    "Error decrypting video": "Error al descifrar el vídeo",
     "Add an Integration": "Añadir una Integración",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Estás a punto de ir a un sitio externo para que puedas iniciar sesión con tu cuenta y usarla en %(integrationsUrl)s. ¿Quieres seguir?",
     "Delete Widget": "Eliminar accesorio",
@@ -291,18 +290,10 @@
         "other": "%(count)s sesiones",
         "one": "%(count)s sesión"
     },
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Ha ignorado a esta cuenta, así que su mensaje está oculto. <a>Ver de todos modos.</a>",
-    "You verified %(name)s": "Has verificado a %(name)s",
-    "You cancelled verifying %(name)s": "Has cancelado la verificación de %(name)s",
-    "%(name)s cancelled verifying": "%(name)s canceló la verificación",
-    "You accepted": "Aceptaste",
     "%(name)s accepted": "%(name)s aceptó",
-    "You declined": "Declinaste",
-    "You cancelled": "Cancelaste",
     "%(name)s declined": "%(name)s declinó",
     "%(name)s cancelled": "%(name)s canceló",
     "%(name)s wants to verify": "%(name)s quiere verificar",
-    "You sent a verification request": "Has enviado solicitud de verificación",
     "Edited at %(date)s. Click to view edits.": "Última vez editado: %(date)s. Haz clic para ver los cambios.",
     "edited": "editado",
     "Can't load this message": "No se ha podido cargar este mensaje",
@@ -370,9 +361,6 @@
     "Confirm encryption setup": "Confirmar la configuración de cifrado",
     "Click the button below to confirm setting up encryption.": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
     "This version of %(brand)s does not support searching encrypted messages": "Esta versión de %(brand)s no puede buscar mensajes cifrados",
-    "Video conference ended by %(senderName)s": "Videoconferencia terminada por %(senderName)s",
-    "Join the conference from the room information card on the right": "Únete a la conferencia desde el panel de información de la sala de la derecha",
-    "Join the conference at the top of this room": "Únete a la conferencia en la parte de arriba de la sala",
     "This looks like a valid Security Key!": "¡Parece que es una clave de seguridad válida!",
     "Not a valid Security Key": "No es una clave de seguridad válida",
     "Zimbabwe": "Zimbabue",
@@ -558,8 +546,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Esta versión de %(brand)s no permite ver algunos archivos cifrados",
     "Use the <a>Desktop app</a> to search encrypted messages": "Usa la <a>aplicación de escritorio</a> para buscar en los mensajes cifrados",
     "Use the <a>Desktop app</a> to see all encrypted files": "Usa la <a>aplicación de escritorio</a> para ver todos los archivos cifrados",
-    "Video conference started by %(senderName)s": "Videoconferencia iniciada por %(senderName)s",
-    "Video conference updated by %(senderName)s": "Videoconferencia actualizada por %(senderName)s",
     "Reason (optional)": "Motivo (opcional)",
     "Server Options": "Opciones del servidor",
     "Dial pad": "Teclado numérico",
@@ -714,7 +700,6 @@
     },
     "Not all selected were added": "No se han añadido todas las seleccionadas",
     "You are not allowed to view this server's rooms list": "No tienes permiso para ver la lista de salas de este servidor",
-    "Error processing voice message": "Ha ocurrido un error al procesar el mensaje de voz",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
     "Add reaction": "Reaccionar",
@@ -799,17 +784,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "La encuesta ha terminado. Opción ganadora: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "La encuesta ha terminado. Nadie ha votado.",
     "Including you, %(commaSeparatedMembers)s": "Además de ti, %(commaSeparatedMembers)s",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s voto. Vota para ver los resultados",
-        "other": "%(count)s votos. Vota para ver los resultados"
-    },
-    "No votes cast": "Ningún voto",
-    "Sorry, your vote was not registered. Please try again.": "Lo sentimos, no se ha podido registrar el voto. Inténtalo otra vez.",
-    "Vote not registered": "Voto no emitido",
-    "Based on %(count)s votes": {
-        "other": "%(count)s votos",
-        "one": "%(count)s voto"
-    },
     "Recently viewed": "Visto recientemente",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar otro dispositivo",
@@ -834,9 +808,6 @@
     "My current location": "Mi ubicación actual",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s no ha podido enviar tu ubicación. Por favor, inténtalo de nuevo más tarde.",
     "We couldn't send your location": "No hemos podido enviar tu ubicación",
-    "Results will be visible when the poll is ended": "Los resultados podrán verse cuando la encuesta termine",
-    "Sorry, you can't edit a poll after votes have been cast.": "Lo siento, no puedes editar una encuesta después de que alguien haya votado en ella.",
-    "Can't edit poll": "Encuesta no editable",
     "You are sharing your live location": "Estás compartiendo tu ubicación en tiempo real",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
         "other": "Estás a punto de borrar %(count)s mensajes de %(user)s. También se borrarán permanentemente de los dispositivos de todos en la conversación. ¿Quieres continuar?",
@@ -925,12 +896,10 @@
     "Checking…": "Comprobando…",
     "Adding…": "Añadiendo…",
     "Message in %(room)s": "Mensaje en %(room)s",
-    "Declining…": "Rechazando…",
     "unavailable": "no disponible",
     "unknown status code": "error de estado desconocido",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
-    "Ended a poll": "Cerró una encuesta",
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
     "This session is backing up your keys.": "",
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
@@ -2204,7 +2173,12 @@
         "m.widget": {
             "modified": "%(senderName)s modificó el accesorio %(widgetName)s%(widgetName)sx",
             "added": "%(senderName)s añadió el accesorio %(widgetName)s",
-            "removed": "componente %(widgetName)s eliminado por %(senderName)s"
+            "removed": "componente %(widgetName)s eliminado por %(senderName)s",
+            "jitsi_join_top_prompt": "Únete a la conferencia en la parte de arriba de la sala",
+            "jitsi_join_right_prompt": "Únete a la conferencia desde el panel de información de la sala de la derecha",
+            "jitsi_ended": "Videoconferencia terminada por %(senderName)s",
+            "jitsi_updated": "Videoconferencia actualizada por %(senderName)s",
+            "jitsi_started": "Videoconferencia iniciada por %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s actualizó la disposición de la sala",
         "m.location": {
@@ -2215,7 +2189,6 @@
         "self_redaction": "Mensaje eliminado",
         "redaction": "Mensaje eliminado por %(name)s",
         "m.poll.start": "%(senderName)s ha empezado una encuesta – %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s ha terminado una encuesta",
         "typing_indicator": {
             "one_user": "%(displayName)s está escribiendo…",
             "two_users": "%(names)s y %(lastPerson)s están escribiendo…",
@@ -2379,7 +2352,8 @@
             "changed_rule_users": "%(senderName)s cambió una regla que estaba bloqueando a usuarios que coinciden con %(oldGlob)s a %(newGlob)s por %(reason)s",
             "changed_rule_rooms": "%(senderName)s cambió una regla que estaba bloqueando a salas que coinciden con %(oldGlob)s a %(newGlob)s por %(reason)s",
             "changed_rule_servers": "%(senderName)s cambió una regla que estaba bloqueando a servidores que coinciden con %(oldGlob)s a %(newGlob)s por %(reason)s",
-            "changed_rule_glob": "%(senderName)s actualizó una regla de bloqueo que correspondía a %(oldGlob)s a %(newGlob)s por %(reason)s"
+            "changed_rule_glob": "%(senderName)s actualizó una regla de bloqueo que correspondía a %(oldGlob)s a %(newGlob)s por %(reason)s",
+            "message_hidden": "Ha ignorado a esta cuenta, así que su mensaje está oculto. <a>Ver de todos modos.</a>"
         },
         "no_permission_messages_before_invite": "No tienes permisos para ver mensajes enviados antes de que te invitaran.",
         "no_permission_messages_before_join": "No tienes permisos para ver mensajes enviados antes de que te unieras.",
@@ -2434,7 +2408,8 @@
         "m.audio": {
             "unnamed_audio": "Audio sin título",
             "error_downloading_audio": "Error al descargar el audio",
-            "error_processing_audio": "Error al procesar el mensaje de audio"
+            "error_processing_audio": "Error al procesar el mensaje de audio",
+            "error_processing_voice_message": "Ha ocurrido un error al procesar el mensaje de voz"
         },
         "load_error": {
             "no_permission": "Se ha intentado cargar cierto punto en la cronología de esta sala, pero no tiene permiso para ver el mensaje solicitado.",
@@ -2470,6 +2445,25 @@
             "error_decrypting": "Error al descifrar imagen",
             "error_downloading": "Error al descargar la imagen",
             "show_image": "Ver imagen"
+        },
+        "m.key.verification.done": "Has verificado a %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Has cancelado la verificación de %(name)s",
+            "user_cancelled": "%(name)s canceló la verificación"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Aceptaste",
+            "you_declined": "Declinaste",
+            "you_cancelled": "Cancelaste",
+            "declining": "Rechazando…",
+            "you_started": "Has enviado solicitud de verificación"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s ha terminado una encuesta",
+            "ended": "Cerró una encuesta"
+        },
+        "m.video": {
+            "error_decrypting": "Error al descifrar el vídeo"
         }
     },
     "slash_command": {
@@ -3820,7 +3814,21 @@
         "options_placeholder": "Escribe una opción",
         "options_add_button": "Añadir opción",
         "disclosed_notes": "Quienes voten podrán ver los resultados",
-        "notes": "Los resultados se mostrarán cuando cierres la encuesta"
+        "notes": "Los resultados se mostrarán cuando cierres la encuesta",
+        "unable_edit_title": "Encuesta no editable",
+        "unable_edit_description": "Lo siento, no puedes editar una encuesta después de que alguien haya votado en ella.",
+        "error_voting_title": "Voto no emitido",
+        "error_voting_description": "Lo sentimos, no se ha podido registrar el voto. Inténtalo otra vez.",
+        "total_not_ended": "Los resultados podrán verse cuando la encuesta termine",
+        "total_no_votes": "Ningún voto",
+        "total_n_votes": {
+            "one": "%(count)s voto. Vota para ver los resultados",
+            "other": "%(count)s votos. Vota para ver los resultados"
+        },
+        "total_n_votes_voted": {
+            "other": "%(count)s votos",
+            "one": "%(count)s voto"
+        }
     },
     "failed_load_async_component": "No se ha podido cargar. Comprueba tu conexión de red e inténtalo de nuevo.",
     "upload_failed_generic": "La subida del archivo «%(fileName)s ha fallado.",

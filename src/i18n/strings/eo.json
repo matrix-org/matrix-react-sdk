@@ -44,7 +44,6 @@
     "Join Room": "Aliĝi al ĉambro",
     "unknown error code": "nekonata kodo de eraro",
     "not specified": "nespecifita",
-    "Error decrypting video": "Malĉifro de filmo eraris",
     "Add an Integration": "Aldoni kunigon",
     "Email address": "Retpoŝtadreso",
     "Delete Widget": "Forigi fenestraĵon",
@@ -236,15 +235,9 @@
         "one": "Forigi 1 mesaĝon"
     },
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Provu rulumi supren tra la historio por kontroli, ĉu ne estas iuj pli fruaj.",
-    "You verified %(name)s": "Vi kontrolis %(name)s",
-    "You cancelled verifying %(name)s": "Vi nuligis kontrolon de %(name)s",
-    "%(name)s cancelled verifying": "%(name)s nuligis kontrolon",
-    "You accepted": "Vi akceptis",
     "%(name)s accepted": "%(name)s akceptis",
-    "You cancelled": "Vi nuligis",
     "%(name)s cancelled": "%(name)s nuligis",
     "%(name)s wants to verify": "%(name)s volas kontroli",
-    "You sent a verification request": "Vi sendis peton de kontrolo",
     "Cancel search": "Nuligi serĉon",
     "e.g. my-room": "ekzemple mia-chambro",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Uzu identigan servilon por inviti per retpoŝto. <default>Uzu la norman (%(defaultIdentityServerName)s)</default> aŭ administru per <settings>Agordoj</settings>.",
@@ -272,8 +265,6 @@
         "other": "%(count)s salutaĵoj",
         "one": "%(count)s salutaĵo"
     },
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Vi malatentis ĉi tiun uzanton, ĝia mesaĝo estas do kaŝita. <a>Tamen montri.</a>",
-    "You declined": "Vi rifuzis",
     "%(name)s declined": "%(name)s rifuzis",
     "Language Dropdown": "Lingva falmenuo",
     "Destroy cross-signing keys?": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
@@ -375,11 +366,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Ĉi tiu versio de %(brand)s ne subtenas montradon de iuj ĉifritaj dosieroj",
     "Use the <a>Desktop app</a> to search encrypted messages": "Uzu la <a>labortablan aplikaĵon</a> por serĉi ĉifritajn mesaĝojn",
     "Use the <a>Desktop app</a> to see all encrypted files": "Uzu la <a>labortablan aplikaĵon</a> por vidi ĉiujn ĉifritajn dosierojn",
-    "Video conference started by %(senderName)s": "Grupan vidvokon komencis %(senderName)s",
-    "Video conference updated by %(senderName)s": "Grupan vidvokon ĝisdatigis %(senderName)s",
-    "Video conference ended by %(senderName)s": "Grupan vidvokon finis %(senderName)s",
-    "Join the conference from the room information card on the right": "Aliĝu al la grupa voko per la dekstraflanka karto kun informoj pri ĉambro",
-    "Join the conference at the top of this room": "Aliĝu al la grupa voko supre je la ĉambro",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
     "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
@@ -707,7 +693,6 @@
     "Not all selected were added": "Ne ĉiuj elektitoj aldoniĝis",
     "You are not allowed to view this server's rooms list": "Vi ne rajtas vidi liston de ĉambroj de tu ĉi servilo",
     "Add reaction": "Aldoni reagon",
-    "Error processing voice message": "Eraris traktado de voĉmesaĝo",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Sending": "Sendante",
@@ -765,9 +750,6 @@
     "Failed to end poll": "Malsukcesis fini balotenketon",
     "The poll has ended. Top answer: %(topAnswer)s": "La balotado finiĝis. Plej alta respondo: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "La balotenketo finiĝis. Neniuj voĉoj estis ĵetitaj.",
-    "Results will be visible when the poll is ended": "Rezultoj estos videblaj kiam la balotenketo finiĝos",
-    "Sorry, you can't edit a poll after votes have been cast.": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
-    "Can't edit poll": "Ne povas redakti balotenketon",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
         "other": "%(spaceName)s kaj %(count)s aliaj"
@@ -1691,7 +1673,12 @@
         "m.widget": {
             "modified": "Fenestraĵon %(widgetName)s ŝanĝis %(senderName)s",
             "added": "Fenestraĵon %(widgetName)s aldonis %(senderName)s",
-            "removed": "Fenestraĵon %(widgetName)s forigis %(senderName)s"
+            "removed": "Fenestraĵon %(widgetName)s forigis %(senderName)s",
+            "jitsi_join_top_prompt": "Aliĝu al la grupa voko supre je la ĉambro",
+            "jitsi_join_right_prompt": "Aliĝu al la grupa voko per la dekstraflanka karto kun informoj pri ĉambro",
+            "jitsi_ended": "Grupan vidvokon finis %(senderName)s",
+            "jitsi_updated": "Grupan vidvokon ĝisdatigis %(senderName)s",
+            "jitsi_started": "Grupan vidvokon komencis %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s ĝisdatigis la aranĝon de ĉambro",
         "m.location": {
@@ -1702,7 +1689,6 @@
         "self_redaction": "Mesaĝo foriĝis",
         "redaction": "Mesaĝon forigis %(name)s",
         "m.poll.start": "%(senderName)s komencis balotenketon - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s finis balotenketon",
         "typing_indicator": {
             "one_user": "%(displayName)s tajpas…",
             "two_users": "%(names)s kaj %(lastPerson)s tajpas…",
@@ -1834,7 +1820,8 @@
             "changed_rule_users": "%(senderName)s ŝanĝis regulon forbarintan uzantojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
             "changed_rule_rooms": "%(senderName)s ŝanĝis regulon forbarintan ĉambrojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
             "changed_rule_servers": "%(senderName)s ŝanĝis regulon forbarintan servilojn, kiuj akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
-            "changed_rule_glob": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s"
+            "changed_rule_glob": "%(senderName)s ĝisdatigis forbaran regulon, kiu akordis kun %(oldGlob)s, al akordo kun %(newGlob)s, pro %(reason)s",
+            "message_hidden": "Vi malatentis ĉi tiun uzanton, ĝia mesaĝo estas do kaŝita. <a>Tamen montri.</a>"
         },
         "redacted": {
             "tooltip": "Mesaĝo forigita je %(date)s"
@@ -1875,7 +1862,8 @@
         "m.audio": {
             "unnamed_audio": "Sennoma sondosiero",
             "error_downloading_audio": "Eraris elŝuto de sondosiero",
-            "error_processing_audio": "Eraris traktado de sonmesaĝo"
+            "error_processing_audio": "Eraris traktado de sonmesaĝo",
+            "error_processing_voice_message": "Eraris traktado de voĉmesaĝo"
         },
         "load_error": {
             "no_permission": "Provis enlegi certan parton de ĉi tiu historio, sed vi ne havas permeson vidi ĝin.",
@@ -1900,6 +1888,23 @@
             "sent": "%(senderDisplayName)s sendis bildon.",
             "error_decrypting": "Malĉifro de bildo eraris",
             "show_image": "Montri bildon"
+        },
+        "m.key.verification.done": "Vi kontrolis %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Vi nuligis kontrolon de %(name)s",
+            "user_cancelled": "%(name)s nuligis kontrolon"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Vi akceptis",
+            "you_declined": "Vi rifuzis",
+            "you_cancelled": "Vi nuligis",
+            "you_started": "Vi sendis peton de kontrolo"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s finis balotenketon"
+        },
+        "m.video": {
+            "error_decrypting": "Malĉifro de filmo eraris"
         }
     },
     "slash_command": {
@@ -3031,7 +3036,10 @@
         "failed_send_poll_description": "Pardonu, la balotenketo, kiun vi provis krei, ne estis afiŝita.",
         "type_heading": "Balotspeco",
         "topic_heading": "Kio estas via balotenketo demando aŭ temo?",
-        "notes": "Rezultoj estas malkaŝitaj nur kiam vi finas la balotenketo"
+        "notes": "Rezultoj estas malkaŝitaj nur kiam vi finas la balotenketo",
+        "unable_edit_title": "Ne povas redakti balotenketon",
+        "unable_edit_description": "Pardonu, vi ne povas redakti balotenketon post voĉdonado.",
+        "total_not_ended": "Rezultoj estos videblaj kiam la balotenketo finiĝos"
     },
     "failed_load_async_component": "Ne eblas enlegi! Kontrolu vian retan konekton kaj reprovu.",
     "upload_failed_generic": "Malsukcesis alŝuti dosieron « %(fileName)s ».",

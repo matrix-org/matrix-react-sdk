@@ -39,7 +39,6 @@
     "Confirm Removal": "Confirmar a remoção",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
-    "Error decrypting video": "Erro ao descriptografar o vídeo",
     "Add an Integration": "Adicionar uma integração",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
     "Custom level": "Nível personalizado",
@@ -217,14 +216,9 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Atenção</b>: você só deve configurar o backup de chave em um computador de sua confiança.",
     "Confirm encryption setup": "Confirmar a configuração de criptografia",
     "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
-    "You cancelled verifying %(name)s": "Você cancelou a confirmação de %(name)s",
-    "You accepted": "Você aceitou",
     "%(name)s accepted": "%(name)s aceitou",
-    "You declined": "Você recusou",
-    "You cancelled": "Você cancelou",
     "%(name)s declined": "%(name)s recusou",
     "%(name)s cancelled": "%(name)s cancelou",
-    "You sent a verification request": "Você enviou uma solicitação de confirmação",
     "Edited at %(date)s": "Editado em %(date)s",
     "Click to view edits": "Clicar para ver edições",
     "Edited at %(date)s. Click to view edits.": "Editado em %(date)s. Clique para ver edições.",
@@ -253,7 +247,6 @@
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
-    "%(name)s cancelled verifying": "%(name)s cancelou a confirmação",
     "Power level": "Nível de permissão",
     "Looks good": "Muito bem",
     "Close dialog": "Fechar caixa de diálogo",
@@ -280,8 +273,6 @@
         "other": "Apagar %(count)s mensagens para todos",
         "one": "Remover 1 mensagem"
     },
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Você bloqueou este usuário, portanto, a mensagem dele foi escondida. <a>Mostrar mesmo assim.</a>",
-    "You verified %(name)s": "Você confirmou %(name)s",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Use um servidor de identidade para convidar por e-mail. <default>Use o padrão (%(defaultIdentityServerName)s)</default> ou um servidor personalizado em <settings>Configurações</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Use um servidor de identidade para convidar por e-mail. Gerencie o servidor em <settings>Configurações</settings>.",
     "Destroy cross-signing keys?": "Destruir chaves autoverificadas?",
@@ -365,11 +356,6 @@
     "Information": "Informação",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "Join the conference at the top of this room": "Entre na chamada em grupo no topo desta sala",
-    "Join the conference from the room information card on the right": "Participe da chamada em grupo, clicando no botão de informações da sala, à direita da tela",
-    "Video conference ended by %(senderName)s": "Chamada de vídeo em grupo encerrada por %(senderName)s",
-    "Video conference updated by %(senderName)s": "Chamada de vídeo em grupo atualizada por %(senderName)s",
-    "Video conference started by %(senderName)s": "Chamada de vídeo em grupo iniciada por %(senderName)s",
     "Preparing to download logs": "Preparando os relatórios para download",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Prove a sua identidade por meio do seu Acesso único, para confirmar a desativação da sua conta.",
     "To continue, use Single Sign On to prove your identity.": "Para continuar, use o Acesso único para provar a sua identidade.",
@@ -709,7 +695,6 @@
     },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Falha na inicialização da pesquisa por mensagem, confire <a>suas configurações</a> para mais informações",
     "Add reaction": "Adicionar reação",
-    "Error processing voice message": "Erro ao processar a mensagem de voz",
     "MB": "MB",
     "In reply to <a>this message</a>": "Em resposta a <a>esta mensagem</a>",
     "Space selection": "Seleção de Espaços",
@@ -727,17 +712,6 @@
         "one": "%(count)s voto",
         "other": "%(count)s votos"
     },
-    "Based on %(count)s votes": {
-        "one": "Com base na votação de %(count)s",
-        "other": "Com base em %(count)s votos"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s votos expressos. Vote para ver os resultados",
-        "other": "%(count)s votos expressos. Vote para ver os resultados"
-    },
-    "No votes cast": "Sem votos expressos",
-    "Sorry, your vote was not registered. Please try again.": "Desculpe, seu voto não foi registrado. Por favor, tente novamente.",
-    "Vote not registered": "Voto não registrado",
     "Recently viewed": "Visualizado recentemente",
     "%(count)s reply": {
         "one": "%(count)s resposta",
@@ -1704,7 +1678,12 @@
         "m.widget": {
             "modified": "O widget %(widgetName)s foi modificado por %(senderName)s",
             "added": "O widget %(widgetName)s foi criado por %(senderName)s",
-            "removed": "O widget %(widgetName)s foi removido por %(senderName)s"
+            "removed": "O widget %(widgetName)s foi removido por %(senderName)s",
+            "jitsi_join_top_prompt": "Entre na chamada em grupo no topo desta sala",
+            "jitsi_join_right_prompt": "Participe da chamada em grupo, clicando no botão de informações da sala, à direita da tela",
+            "jitsi_ended": "Chamada de vídeo em grupo encerrada por %(senderName)s",
+            "jitsi_updated": "Chamada de vídeo em grupo atualizada por %(senderName)s",
+            "jitsi_started": "Chamada de vídeo em grupo iniciada por %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s atualizou o layout da sala",
         "m.location": {
@@ -1713,7 +1692,6 @@
         "self_redaction": "Mensagem apagada",
         "redaction": "Mensagem apagada por %(name)s",
         "m.poll.start": "%(senderName)s começou uma enquete - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s encerrou uma enquete",
         "typing_indicator": {
             "one_user": "%(displayName)s está digitando…",
             "two_users": "%(names)s e %(lastPerson)s estão digitando…",
@@ -1845,7 +1823,8 @@
             "changed_rule_users": "%(senderName)s alterou uma regra que bania usuários que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
             "changed_rule_rooms": "%(senderName)s alterou uma regra que bania salas que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
             "changed_rule_servers": "%(senderName)s alterou uma regra que bania servidores que correspondiam a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
-            "changed_rule_glob": "%(senderName)s alterou uma regra que bania o que correspondia a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s"
+            "changed_rule_glob": "%(senderName)s alterou uma regra que bania o que correspondia a %(oldGlob)s para corresponder a %(newGlob)s devido à %(reason)s",
+            "message_hidden": "Você bloqueou este usuário, portanto, a mensagem dele foi escondida. <a>Mostrar mesmo assim.</a>"
         },
         "encrypted_historical_messages_unavailable": "As mensagens criptografadas antes deste ponto não estão disponíveis.",
         "historical_messages_unavailable": "Você não pode ver as mensagens anteriores",
@@ -1902,7 +1881,8 @@
             "unsupported": "A criptografia usada nesta sala não é suportada."
         },
         "m.audio": {
-            "error_processing_audio": "Erro ao processar a mensagem de áudio"
+            "error_processing_audio": "Erro ao processar a mensagem de áudio",
+            "error_processing_voice_message": "Erro ao processar a mensagem de voz"
         },
         "m.file": {
             "download_label": "Baixar %(text)s",
@@ -1914,6 +1894,23 @@
             "sent": "%(senderDisplayName)s enviou uma imagem.",
             "error_decrypting": "Erro ao descriptografar a imagem",
             "show_image": "Mostrar imagem"
+        },
+        "m.key.verification.done": "Você confirmou %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Você cancelou a confirmação de %(name)s",
+            "user_cancelled": "%(name)s cancelou a confirmação"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Você aceitou",
+            "you_declined": "Você recusou",
+            "you_cancelled": "Você cancelou",
+            "you_started": "Você enviou uma solicitação de confirmação"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s encerrou uma enquete"
+        },
+        "m.video": {
+            "error_decrypting": "Erro ao descriptografar o vídeo"
         }
     },
     "slash_command": {
@@ -2958,7 +2955,18 @@
         "inline_intro_text": "Aceitar <policyLink /> para continuar:"
     },
     "poll": {
-        "create_poll_title": "Criar enquete"
+        "create_poll_title": "Criar enquete",
+        "error_voting_title": "Voto não registrado",
+        "error_voting_description": "Desculpe, seu voto não foi registrado. Por favor, tente novamente.",
+        "total_no_votes": "Sem votos expressos",
+        "total_n_votes": {
+            "one": "%(count)s votos expressos. Vote para ver os resultados",
+            "other": "%(count)s votos expressos. Vote para ver os resultados"
+        },
+        "total_n_votes_voted": {
+            "one": "Com base na votação de %(count)s",
+            "other": "Com base em %(count)s votos"
+        }
     },
     "failed_load_async_component": "Não foi possível carregar! Verifique sua conexão de rede e tente novamente.",
     "upload_failed_generic": "O envio do arquivo '%(fileName)s' falhou.",

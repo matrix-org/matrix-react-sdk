@@ -62,7 +62,6 @@
     },
     "Join Room": "ルームに参加",
     "not specified": "指定なし",
-    "Error decrypting video": "動画を復号化する際にエラーが発生しました",
     "Add an Integration": "統合を追加",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)sで使用するアカウントを認証するため、外部サイトに移動します。続行してよろしいですか？",
     "Email address": "メールアドレス",
@@ -156,7 +155,6 @@
     "Upload all": "全てアップロード",
     "Use the <a>Desktop app</a> to search encrypted messages": "<a>デスクトップアプリ</a>を使用すると暗号化されたメッセージを検索できます",
     "%(name)s wants to verify": "%(name)sが認証を要求しています",
-    "You sent a verification request": "認証リクエストを送信しました",
     "Recently Direct Messaged": "最近ダイレクトメッセージで会話したユーザー",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、またはユーザー名（<userId/>の形式）を指定するか、<a>このルームを共有</a>してください。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、メールアドレス、またはユーザー名（<userId/>の形式）を指定するか、<a>このルームを共有</a>してください。",
@@ -487,20 +485,8 @@
     "Your homeserver has exceeded one of its resource limits.": "あなたのホームサーバーはリソースの上限に達しました。",
     "Your homeserver has exceeded its user limit.": "あなたのホームサーバーはユーザー数の上限に達しました。",
     "%(name)s accepted": "%(name)sは受け付けました",
-    "You accepted": "受け付けました",
     "%(name)s cancelled": "%(name)sは中止しました",
     "%(name)s declined": "%(name)sは拒否しました",
-    "You cancelled": "中止しました",
-    "You declined": "拒否しました",
-    "%(name)s cancelled verifying": "%(name)sは認証を中止しました",
-    "You cancelled verifying %(name)s": "%(name)sの認証を中止しました",
-    "You verified %(name)s": "%(name)sを認証しました",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "このユーザーを無視しているのでメッセージは隠されます。<a>表示する。</a>",
-    "Video conference started by %(senderName)s": "%(senderName)sがビデオ会議を開始しました",
-    "Video conference ended by %(senderName)s": "%(senderName)sがビデオ会議を終了しました",
-    "Video conference updated by %(senderName)s": "%(senderName)sがビデオ会議を更新しました",
-    "Join the conference from the room information card on the right": "右側のルーム情報カードから会議に参加",
-    "Join the conference at the top of this room": "このルームの上部で会議に参加",
     "Remove %(count)s messages": {
         "one": "1件のメッセージを削除",
         "other": "%(count)s件のメッセージを削除"
@@ -610,7 +596,6 @@
     "Information": "情報",
     "Search for spaces": "スペースを検索",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
-    "Can't edit poll": "アンケートは編集できません",
     "Search Dialog": "検索ダイアログ",
     "Upload %(count)s other files": {
         "one": "あと%(count)s個のファイルをアップロード",
@@ -624,7 +609,6 @@
         "one": "1人のメンバーを表示",
         "other": "全%(count)s人のメンバーを表示"
     },
-    "Results will be visible when the poll is ended": "アンケートが終了するまで結果は表示できません",
     "Signature upload success": "署名のアップロードに成功しました",
     "Cancelled signature upload": "署名のアップロードをキャンセルしました",
     "This address does not point at this room": "このアドレスはこのルームを指していません",
@@ -721,16 +705,8 @@
     },
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
     "Drop a Pin": "場所を選択",
-    "No votes cast": "投票がありません",
-    "Based on %(count)s votes": {
-        "one": "%(count)s個の投票に基づく",
-        "other": "%(count)s個の投票に基づく"
-    },
-    "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。",
     "Missing session data": "セッションのデータがありません",
-    "Vote not registered": "投票できませんでした",
-    "Sorry, your vote was not registered. Please try again.": "投票できませんでした。もう一度やり直してください。",
     "Something went wrong trying to invite the users.": "ユーザーを招待する際に、問題が発生しました。",
     "Confirm account deactivation": "アカウントの無効化を承認",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、アカウントの無効化を承認してください。",
@@ -748,7 +724,6 @@
     "Continuing without email": "メールアドレスを使用せずに続行",
     "Data on this screen is shared with %(widgetDomain)s": "このスクリーンのデータは%(widgetDomain)sと共有されます",
     "If they don't match, the security of your communication may be compromised.": "一致していない場合は、コミュニケーションのセキュリティーが損なわれている可能性があります。",
-    "Error processing voice message": "音声メッセージを処理する際にエラーが発生しました",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "Signature upload failed": "署名のアップロードに失敗しました",
     "toggle event": "イベントを切り替える",
@@ -777,10 +752,6 @@
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "セキュリティーフレーズを紛失した場合は、<button1>セキュリティーキーを使用</button1>するか、<button2>新しい復旧用の手段</button2>を設定することができます",
     "Remember this": "これを記憶",
     "Message search initialisation failed, check <a>your settings</a> for more information": "メッセージの検索の初期化に失敗しました。<a>設定</a>から詳細を確認してください",
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "合計%(count)s票。投票すると結果を確認できます",
-        "other": "合計%(count)s票。投票すると結果を確認できます"
-    },
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
         "other": "%(count)s人の知人が既に参加しています"
@@ -923,7 +894,6 @@
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
-    "Declining…": "拒否しています…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "これを行うには設定から「%(manageIntegrations)s」を有効にしてください。",
     "Loading live location…": "位置情報（ライブ）を読み込んでいます…",
     "Fetching keys from server…": "鍵をサーバーから取得しています…",
@@ -2204,7 +2174,12 @@
         "m.widget": {
             "modified": "%(widgetName)sウィジェットは%(senderName)sによって変更されました",
             "added": "%(widgetName)sウィジェットが%(senderName)sによって追加されました",
-            "removed": "%(widgetName)sウィジェットが%(senderName)sによって削除されました"
+            "removed": "%(widgetName)sウィジェットが%(senderName)sによって削除されました",
+            "jitsi_join_top_prompt": "このルームの上部で会議に参加",
+            "jitsi_join_right_prompt": "右側のルーム情報カードから会議に参加",
+            "jitsi_ended": "%(senderName)sがビデオ会議を終了しました",
+            "jitsi_updated": "%(senderName)sがビデオ会議を更新しました",
+            "jitsi_started": "%(senderName)sがビデオ会議を開始しました"
         },
         "io.element.widgets.layout": "%(senderName)sがルームのレイアウトを更新しました",
         "m.location": {
@@ -2215,7 +2190,6 @@
         "self_redaction": "メッセージが削除されました",
         "redaction": "%(name)sによってメッセージが削除されました",
         "m.poll.start": "%(senderName)sがアンケートを開始しました - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)sがアンケートを終了しました",
         "typing_indicator": {
             "one_user": "%(displayName)sが入力しています…",
             "two_users": "%(names)sと%(lastPerson)sが入力しています…",
@@ -2379,7 +2353,8 @@
             "changed_rule_users": "%(senderName)sが、%(oldGlob)sにマッチするユーザーをブロックするルールを、%(newGlob)sにマッチするユーザーをブロックするルールに変更しました（理由：%(reason)s）",
             "changed_rule_rooms": "%(senderName)sが、%(oldGlob)sにマッチするルームをブロックするルールを、%(newGlob)sにマッチするルームをブロックするルールに変更しました（理由：%(reason)s）",
             "changed_rule_servers": "%(senderName)sが、%(oldGlob)sにマッチするサーバーをブロックするルールを、%(newGlob)sにマッチするサーバーをブロックするルールに変更しました（理由：%(reason)s）",
-            "changed_rule_glob": "%(senderName)sが、%(oldGlob)sにマッチするブロック用ルールを、%(newGlob)sにマッチするブロック用ルールに更新しました（理由：%(reason)s）"
+            "changed_rule_glob": "%(senderName)sが、%(oldGlob)sにマッチするブロック用ルールを、%(newGlob)sにマッチするブロック用ルールに更新しました（理由：%(reason)s）",
+            "message_hidden": "このユーザーを無視しているのでメッセージは隠されます。<a>表示する。</a>"
         },
         "no_permission_messages_before_invite": "招待される前のメッセージを表示する権限がありません。",
         "no_permission_messages_before_join": "参加する前のメッセージを表示する権限がありません。",
@@ -2438,7 +2413,8 @@
         "m.audio": {
             "unnamed_audio": "名前のない音声",
             "error_downloading_audio": "音声をダウンロードする際にエラーが発生しました",
-            "error_processing_audio": "音声メッセージを処理する際にエラーが発生しました"
+            "error_processing_audio": "音声メッセージを処理する際にエラーが発生しました",
+            "error_processing_voice_message": "音声メッセージを処理する際にエラーが発生しました"
         },
         "load_error": {
             "no_permission": "このルームのタイムラインの特定の地点を読み込もうとしましたが、問題のメッセージを閲覧する権限がありません。",
@@ -2473,6 +2449,24 @@
             "error_decrypting": "画像を復号化する際にエラーが発生しました",
             "error_downloading": "画像をダウンロードする際にエラーが発生しました",
             "show_image": "画像を表示"
+        },
+        "m.key.verification.done": "%(name)sを認証しました",
+        "m.key.verification.cancel": {
+            "you_cancelled": "%(name)sの認証を中止しました",
+            "user_cancelled": "%(name)sは認証を中止しました"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "受け付けました",
+            "you_declined": "拒否しました",
+            "you_cancelled": "中止しました",
+            "declining": "拒否しています…",
+            "you_started": "認証リクエストを送信しました"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)sがアンケートを終了しました"
+        },
+        "m.video": {
+            "error_decrypting": "動画を復号化する際にエラーが発生しました"
         }
     },
     "slash_command": {
@@ -3822,7 +3816,21 @@
         "options_placeholder": "選択肢を記入",
         "options_add_button": "選択肢を追加",
         "disclosed_notes": "投票した人には、投票の際に即座に結果が表示されます",
-        "notes": "結果はアンケートが終了した後で表示されます"
+        "notes": "結果はアンケートが終了した後で表示されます",
+        "unable_edit_title": "アンケートは編集できません",
+        "unable_edit_description": "投票があったアンケートは編集できません。",
+        "error_voting_title": "投票できませんでした",
+        "error_voting_description": "投票できませんでした。もう一度やり直してください。",
+        "total_not_ended": "アンケートが終了するまで結果は表示できません",
+        "total_no_votes": "投票がありません",
+        "total_n_votes": {
+            "one": "合計%(count)s票。投票すると結果を確認できます",
+            "other": "合計%(count)s票。投票すると結果を確認できます"
+        },
+        "total_n_votes_voted": {
+            "one": "%(count)s個の投票に基づく",
+            "other": "%(count)s個の投票に基づく"
+        }
     },
     "failed_load_async_component": "読み込めません！ネットワークの通信状態を確認して、もう一度やり直してください。",
     "upload_failed_generic": "ファイル '%(fileName)s' のアップロードに失敗しました。",

@@ -54,24 +54,10 @@
     "Edited at %(date)s": "عدل في %(date)s",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "أنت على وشك الانتقال إلى موقع تابع لجهة خارجية حتى تتمكن من مصادقة حسابك لاستخدامه مع %(integrationsUrl)s. هل ترغب في الاستمرار؟",
     "Add an Integration": "أضف تكاملاً",
-    "Error decrypting video": "تعذر فك تشفير الفيديو",
-    "You sent a verification request": "أنت أرسلت طلب تحقق",
     "%(name)s wants to verify": "%(name)s يريد التحقق",
     "%(name)s cancelled": "%(name)s رفض",
     "%(name)s declined": "%(name)s رفض",
-    "You cancelled": "أنت رفضت",
-    "You declined": "أنت رفضت",
     "%(name)s accepted": "%(name)s قبل",
-    "You accepted": "أنت قبلت",
-    "%(name)s cancelled verifying": "تم إلغاء التحقق من %(name)s",
-    "You cancelled verifying %(name)s": "لقد ألغيت التحقق من %(name)s",
-    "You verified %(name)s": "لقد تحققت من %(name)s",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "لقد تجاهلت هذا المستخدم ، لذلك تم إخفاء رسالته. <a> العرض على أي حال. </a>",
-    "Video conference started by %(senderName)s": "بدأ مؤتمر الفيديو %(senderName)s",
-    "Video conference updated by %(senderName)s": "حدث مؤتمر الفيديو %(senderName)s",
-    "Video conference ended by %(senderName)s": "أنهى مؤتمر الفيديو %(senderName)s",
-    "Join the conference from the room information card on the right": "انضم إلى المؤتمر من بطاقة معلومات الغرفة على اليمين",
-    "Join the conference at the top of this room": "انضم إلى المؤتمر في الجزء العلوي من هذه الغرفة",
     "Yesterday": "أمس",
     "Today": "اليوم",
     "Saturday": "السبت",
@@ -723,7 +709,12 @@
         "m.widget": {
             "modified": "الودجت %(widgetName)s تعدلت بواسطة %(senderName)s",
             "added": "الودجت %(widgetName)s اضيفت بواسطة %(senderName)s",
-            "removed": "الودجت %(widgetName)s حذفت بواسطة %(senderName)s"
+            "removed": "الودجت %(widgetName)s حذفت بواسطة %(senderName)s",
+            "jitsi_join_top_prompt": "انضم إلى المؤتمر في الجزء العلوي من هذه الغرفة",
+            "jitsi_join_right_prompt": "انضم إلى المؤتمر من بطاقة معلومات الغرفة على اليمين",
+            "jitsi_ended": "أنهى مؤتمر الفيديو %(senderName)s",
+            "jitsi_updated": "حدث مؤتمر الفيديو %(senderName)s",
+            "jitsi_started": "بدأ مؤتمر الفيديو %(senderName)s"
         },
         "self_redaction": "حُذفت الرسالة",
         "redaction": "حذف الرسالة %(name)s",
@@ -759,7 +750,8 @@
             "changed_rule_users": "%(senderName)s قاعدة متغيرة التي تحظر المستخدمين المطابقين %(oldGlob)s من أجل تطابق %(newGlob)s من أجل %(reason)s",
             "changed_rule_rooms": "%(senderName)s قاعدة متغيرة التي تحظر الغرف المطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
             "changed_rule_servers": "%(senderName)s قاعدة متغيرة التي تحظر سيرفرات مطابقة %(oldGlob)s من أجل مطابقة %(newGlob)s من أجل %(reason)s",
-            "changed_rule_glob": "%(senderName)s قاعدة حظر محدثة التي طابقت %(oldGlob)s لتطابق %(newGlob)s من أجل %(reason)s"
+            "changed_rule_glob": "%(senderName)s قاعدة حظر محدثة التي طابقت %(oldGlob)s لتطابق %(newGlob)s من أجل %(reason)s",
+            "message_hidden": "لقد تجاهلت هذا المستخدم ، لذلك تم إخفاء رسالته. <a> العرض على أي حال. </a>"
         },
         "redacted": {
             "tooltip": "حذفت الرسالة في %(date)s"
@@ -798,6 +790,20 @@
             "sent": "قام %(senderDisplayName)s بإرسال صورة.",
             "error_decrypting": "تعذر فك تشفير صورة",
             "show_image": "إظهار الصورة"
+        },
+        "m.key.verification.done": "لقد تحققت من %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "لقد ألغيت التحقق من %(name)s",
+            "user_cancelled": "تم إلغاء التحقق من %(name)s"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "أنت قبلت",
+            "you_declined": "أنت رفضت",
+            "you_cancelled": "أنت رفضت",
+            "you_started": "أنت أرسلت طلب تحقق"
+        },
+        "m.video": {
+            "error_decrypting": "تعذر فك تشفير الفيديو"
         }
     },
     "slash_command": {

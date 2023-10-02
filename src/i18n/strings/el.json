@@ -41,7 +41,6 @@
     },
     "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
     "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
-    "Error decrypting video": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο",
     "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "not specified": "μη καθορισμένο",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
@@ -417,9 +416,6 @@
         "other": "Αφαίρεση %(count)s μηνυμάτων",
         "one": "Αφαίρεση 1 μηνύματος"
     },
-    "Sorry, you can't edit a poll after votes have been cast.": "Λυπούμαστε, δεν μπορείτε να επεξεργαστείτε μια δημοσκόπηση μετά την ψηφοφορία.",
-    "Can't edit poll": "Αδυναμία επεξεργασίας δημοσκόπησης",
-    "You sent a verification request": "Στείλατε ένα αίτημα επαλήθευσης",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
@@ -560,18 +556,7 @@
     "%(name)s wants to verify": "%(name)s θέλει να επαληθεύσει",
     "%(name)s cancelled": "%(name)s ακύρωσε",
     "%(name)s declined": "%(name)s αρνήθηκε",
-    "You cancelled": "Ακυρώσατε",
-    "You declined": "Αρνηθήκατε",
     "%(name)s accepted": "Ο/η %(name)s αποδέχθηκε",
-    "You accepted": "Αποδεχθήκατε",
-    "%(name)s cancelled verifying": "%(name)s ακύρωσε την επαλήθευση",
-    "You cancelled verifying %(name)s": "Ακυρώσατε την επαλήθευση του χρήστη %(name)s",
-    "You verified %(name)s": "Επαληθεύσατε τον χρήστη %(name)s",
-    "Video conference started by %(senderName)s": "Η τηλεδιάσκεψη ξεκίνησε από %(senderName)s",
-    "Video conference updated by %(senderName)s": "Η τηλεδιάσκεψη ενημερώθηκε από %(senderName)s",
-    "Video conference ended by %(senderName)s": "Η τηλεδιάσκεψη τερματίστηκε από %(senderName)s",
-    "Join the conference at the top of this room": "Συμμετάσχετε στην τηλεδιάσκεψη από την κορυφή του δωματίου αυτού",
-    "Join the conference from the room information card on the right": "Συμμετάσχετε στην τηλεδιάσκεψη από την κάρτα πληροφοριών στα δεξιά",
     "%(count)s reply": {
         "one": "%(count)s απάντηση",
         "other": "%(count)s απαντήσεις"
@@ -599,24 +584,11 @@
     "Edited at %(date)s": "Τροποποιήθηκε στις %(date)s",
     "Click to view edits": "Κάντε κλικ για να δείτε τις τροποποιήσεις",
     "Add reaction": "Προσθέστε αντίδραση",
-    "Error processing voice message": "Σφάλμα επεξεργασίας του φωνητικού μηνύματος",
     "%(count)s votes": {
         "one": "%(count)s ψήφος",
         "other": "%(count)s ψήφοι"
     },
     "edited": "επεξεργάστηκε",
-    "Based on %(count)s votes": {
-        "one": "Με βάση %(count)s ψήφο",
-        "other": "Με βάση %(count)s ψήφους"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s ψήφος. Ψηφίστε για να δείτε τα αποτελέσματα",
-        "other": "%(count)s ψήφοι. Ψηφίστε για να δείτε τα αποτελέσματα"
-    },
-    "No votes cast": "Καμία ψήφος",
-    "Results will be visible when the poll is ended": "Τα αποτελέσματα θα είναι ορατά όταν τελειώσει η δημοσκόπηση",
-    "Sorry, your vote was not registered. Please try again.": "Λυπούμαστε, η ψήφος σας δεν καταχωρήθηκε. Παρακαλώ προσπαθήστε ξανά.",
-    "Vote not registered": "Η ψήφος δεν έχει καταχωρηθεί",
     "%(count)s sessions": {
         "one": "%(count)s συνεδρία",
         "other": "%(count)s συνεδρίες"
@@ -704,7 +676,6 @@
     "%(displayName)s's live location": "Η τρέχουσα τοποθεσία του/της %(displayName)s",
     "%(brand)s could not send your location. Please try again later.": "Το %(brand)s δεν μπόρεσε να στείλει την τοποθεσία σας. Παρακαλώ δοκιμάστε ξανά αργότερα.",
     "We couldn't send your location": "Αδυναμία αποστολής της τοποθεσίας σας",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Έχετε αγνοήσει αυτόν τον χρήστη, επομένως τα μηνύματα του είναι κρυφά. <a>Εμφάνιση ούτως ή άλλως.</a>",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
@@ -1892,7 +1863,12 @@
         "m.widget": {
             "modified": "Έγινε αλλαγή στη μικροεφαρμογή %(widgetName)s από τον/την %(senderName)s",
             "added": "Προστέθηκε η μικροεφαρμογή %(widgetName)s από τον/την %(senderName)s",
-            "removed": "Η μικροεφαρμογή %(widgetName)s αφαιρέθηκε από τον/την %(senderName)s"
+            "removed": "Η μικροεφαρμογή %(widgetName)s αφαιρέθηκε από τον/την %(senderName)s",
+            "jitsi_join_top_prompt": "Συμμετάσχετε στην τηλεδιάσκεψη από την κορυφή του δωματίου αυτού",
+            "jitsi_join_right_prompt": "Συμμετάσχετε στην τηλεδιάσκεψη από την κάρτα πληροφοριών στα δεξιά",
+            "jitsi_ended": "Η τηλεδιάσκεψη τερματίστηκε από %(senderName)s",
+            "jitsi_updated": "Η τηλεδιάσκεψη ενημερώθηκε από %(senderName)s",
+            "jitsi_started": "Η τηλεδιάσκεψη ξεκίνησε από %(senderName)s"
         },
         "io.element.widgets.layout": "%(senderName)s έχει ενημερώσει τη διάταξη του δωματίου",
         "m.location": {
@@ -1903,7 +1879,6 @@
         "self_redaction": "Το μήνυμα διαγράφηκε",
         "redaction": "Το μήνυμα διαγράφηκε από %(name)s",
         "m.poll.start": "%(senderName)s ξεκίνησε μια δημοσκόπηση - %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s τερμάτισε μία δημοσκόπηση",
         "typing_indicator": {
             "one_user": "%(displayName)s πληκτρολογεί …",
             "two_users": "%(names)s και %(lastPerson)s πληκτρολογούν …",
@@ -2067,7 +2042,8 @@
             "changed_rule_users": "%(senderName)s άλλαξε έναν κανόνα που απαγόρευε την αντιστοίχιση χρηστών %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
             "changed_rule_rooms": "%(senderName)s άλλαξε έναν κανόνα που απαγόρευε την αντιστοίχιση δωματίων %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
             "changed_rule_servers": "%(senderName)s άλλαξε έναν κανόνα που απαγόρευε την αντιστοίχιση διακομιστών %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
-            "changed_rule_glob": "%(senderName)s ενημέρωσε έναν κανόνα απαγόρευσης που αντιστοιχούσε %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s"
+            "changed_rule_glob": "%(senderName)s ενημέρωσε έναν κανόνα απαγόρευσης που αντιστοιχούσε %(oldGlob)s σε αντιστοίχιση %(newGlob)s για %(reason)s",
+            "message_hidden": "Έχετε αγνοήσει αυτόν τον χρήστη, επομένως τα μηνύματα του είναι κρυφά. <a>Εμφάνιση ούτως ή άλλως.</a>"
         },
         "no_permission_messages_before_invite": "Δεν έχετε άδεια προβολής των μηνυμάτων που δημιουργήθηκαν πριν από την πρόσκληση σας.",
         "no_permission_messages_before_join": "Δεν έχετε άδεια προβολής των μηνυμάτων που δημιουργήθηκαν πριν από την εγγραφή σας.",
@@ -2117,7 +2093,8 @@
         "m.audio": {
             "unnamed_audio": "Ήχος χωρίς όνομα",
             "error_downloading_audio": "Σφάλμα λήψης ήχου",
-            "error_processing_audio": "Σφάλμα επεξεργασίας του ηχητικού μηνύματος"
+            "error_processing_audio": "Σφάλμα επεξεργασίας του ηχητικού μηνύματος",
+            "error_processing_voice_message": "Σφάλμα επεξεργασίας του φωνητικού μηνύματος"
         },
         "load_error": {
             "no_permission": "Προσπαθήσατε να φορτώσετε ένα συγκεκριμένο σημείο στο χρονολόγιο του δωματίου, αλλά δεν έχετε δικαίωμα να δείτε το εν λόγω μήνυμα.",
@@ -2145,6 +2122,23 @@
             "sent": "Ο %(senderDisplayName)s έστειλε μια φωτογραφία.",
             "error_decrypting": "Σφάλμα κατά την αποκρυπτογράφηση της εικόνας",
             "show_image": "Εμφάνιση εικόνας"
+        },
+        "m.key.verification.done": "Επαληθεύσατε τον χρήστη %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Ακυρώσατε την επαλήθευση του χρήστη %(name)s",
+            "user_cancelled": "%(name)s ακύρωσε την επαλήθευση"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Αποδεχθήκατε",
+            "you_declined": "Αρνηθήκατε",
+            "you_cancelled": "Ακυρώσατε",
+            "you_started": "Στείλατε ένα αίτημα επαλήθευσης"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s τερμάτισε μία δημοσκόπηση"
+        },
+        "m.video": {
+            "error_decrypting": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο"
         }
     },
     "slash_command": {
@@ -3346,7 +3340,21 @@
         "options_placeholder": "Γράψτε μια επιλογή",
         "options_add_button": "Προσθήκη επιλογής",
         "disclosed_notes": "Οι ψηφοφόροι βλέπουν τα αποτελέσματα μόλις ψηφίσουν",
-        "notes": "Τα αποτελέσματα αποκαλύπτονται μόνο όταν τελειώσετε τη δημοσκόπηση"
+        "notes": "Τα αποτελέσματα αποκαλύπτονται μόνο όταν τελειώσετε τη δημοσκόπηση",
+        "unable_edit_title": "Αδυναμία επεξεργασίας δημοσκόπησης",
+        "unable_edit_description": "Λυπούμαστε, δεν μπορείτε να επεξεργαστείτε μια δημοσκόπηση μετά την ψηφοφορία.",
+        "error_voting_title": "Η ψήφος δεν έχει καταχωρηθεί",
+        "error_voting_description": "Λυπούμαστε, η ψήφος σας δεν καταχωρήθηκε. Παρακαλώ προσπαθήστε ξανά.",
+        "total_not_ended": "Τα αποτελέσματα θα είναι ορατά όταν τελειώσει η δημοσκόπηση",
+        "total_no_votes": "Καμία ψήφος",
+        "total_n_votes": {
+            "one": "%(count)s ψήφος. Ψηφίστε για να δείτε τα αποτελέσματα",
+            "other": "%(count)s ψήφοι. Ψηφίστε για να δείτε τα αποτελέσματα"
+        },
+        "total_n_votes_voted": {
+            "one": "Με βάση %(count)s ψήφο",
+            "other": "Με βάση %(count)s ψήφους"
+        }
     },
     "failed_load_async_component": "Αδυναμία φόρτωσης! Ελέγξτε την σύνδεση του δικτύου και προσπαθήστε ξανά.",
     "upload_failed_generic": "Απέτυχε το ανέβασμα του αρχείου '%(fileName)s'.",

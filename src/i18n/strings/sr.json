@@ -44,7 +44,6 @@
     "Join Room": "Приступи соби",
     "unknown error code": "непознати код грешке",
     "not specified": "није наведено",
-    "Error decrypting video": "Грешка при дешифровању видеа",
     "Add an Integration": "Додај уградњу",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?",
     "Email address": "Мејл адреса",
@@ -983,6 +982,9 @@
         "m.image": {
             "sent": "%(senderDisplayName)s је послао слику.",
             "error_decrypting": "Грешка при дешифровању слике"
+        },
+        "m.video": {
+            "error_decrypting": "Грешка при дешифровању видеа"
         }
     },
     "slash_command": {
