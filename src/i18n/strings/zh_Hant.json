@@ -272,13 +272,6 @@
     "Ask this user to verify their session, or manually verify it below.": "要求此使用者驗證他們的工作階段，或在下方手動驗證。",
     "%(name)s declined": "%(name)s 拒絕了",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要回報與 Matrix 有關的安全性問題，請閱讀 Matrix.org 的<a>安全性揭露政策</a>。",
-    "Enter a server name": "輸入伺服器名稱",
-    "Looks good": "看起來不錯",
-    "Can't find this server or its room list": "找不到此伺服器或其聊天室清單",
-    "Your server": "您的伺服器",
-    "Add a new server": "加入新的伺服器",
-    "Enter the name of a new server you want to explore.": "輸入您想要探索的新伺服器的名稱。",
-    "Server name": "伺服器名稱",
     "a new master key signature": "新的主金鑰簽署",
     "a new cross-signing key signature": "新交叉簽署金鑰的簽章",
     "a device cross-signing signature": "裝置交叉簽署",
@@ -669,7 +662,6 @@
         "other": "正在新增聊天室…（%(count)s 中的第 %(progress)s 個）"
     },
     "Not all selected were added": "並非所有選定的都被新增了",
-    "You are not allowed to view this server's rooms list": "您不被允許檢視此伺服器的聊天室清單",
     "You may contact me if you have any follow up questions": "如果後續有任何問題，可以聯絡我",
     "To leave the beta, visit your settings.": "請到設定頁面離開 Beta 測試版。",
     "Or send invite link": "或傳送邀請連結",
@@ -816,20 +808,10 @@
         "one": "%(count)s 個成員",
         "other": "%(count)s 個成員"
     },
-    "Show: Matrix rooms": "顯示：Matrix 聊天室",
-    "Show: %(instance)s rooms (%(server)s)": "顯示：%(instance)s 聊天室 (%(server)s)",
-    "Add new server…": "加入新伺服器…",
-    "Remove server “%(roomServer)s”": "移除伺服器「%(roomServer)s」",
     "You cannot search for rooms that are neither a room nor a space": "您無法搜尋既不是聊天室也不是聊天空間的空間",
     "Show spaces": "顯示聊天空間",
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
-    "Online community members": "線上社群成員",
-    "Coworkers and teams": "同事與團隊",
-    "Friends and family": "朋友與家人",
-    "We'll help you get connected.": "我們將會協助您建立聯繫。",
-    "Who will you chat to the most?": "您最常與誰聊天？",
-    "You're in": "加入成功！",
     "Saved Items": "已儲存的項目",
     "Interactively verify by emoji": "透過表情符號互動來驗證",
     "Manually verify by text": "透過文字手動驗證",
@@ -1440,7 +1422,13 @@
         "send_dm": "傳送私人訊息",
         "explore_rooms": "探索公開聊天室",
         "create_room": "建立群組聊天",
-        "create_account": "建立帳號"
+        "create_account": "建立帳號",
+        "use_case_heading1": "加入成功！",
+        "use_case_heading2": "您最常與誰聊天？",
+        "use_case_heading3": "我們將會協助您建立聯繫。",
+        "use_case_personal_messaging": "朋友與家人",
+        "use_case_work_messaging": "同事與團隊",
+        "use_case_community_messaging": "線上社群成員"
     },
     "settings": {
         "show_breadcrumbs": "在聊天室清單上方顯示最近看過的聊天室的捷徑",
@@ -4347,5 +4335,21 @@
     },
     "truncated_list_n_more": {
         "other": "與更多 %(count)s 個…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "輸入伺服器名稱",
+            "network_dropdown_available_valid": "看起來不錯",
+            "network_dropdown_available_invalid_forbidden": "您不被允許檢視此伺服器的聊天室清單",
+            "network_dropdown_available_invalid": "找不到此伺服器或其聊天室清單",
+            "network_dropdown_your_server_description": "您的伺服器",
+            "network_dropdown_remove_server_adornment": "移除伺服器「%(roomServer)s」",
+            "network_dropdown_add_dialog_title": "加入新的伺服器",
+            "network_dropdown_add_dialog_description": "輸入您想要探索的新伺服器的名稱。",
+            "network_dropdown_add_dialog_placeholder": "伺服器名稱",
+            "network_dropdown_add_server_option": "加入新伺服器…",
+            "network_dropdown_selected_label_instance": "顯示：%(instance)s 聊天室 (%(server)s)",
+            "network_dropdown_selected_label": "顯示：Matrix 聊天室"
+        }
     }
 }

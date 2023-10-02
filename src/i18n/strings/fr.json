@@ -273,13 +273,6 @@
     "Ask this user to verify their session, or manually verify it below.": "Demandez à cet utilisateur de vérifier sa session, ou vérifiez-la manuellement ci-dessous.",
     "%(name)s declined": "%(name)s a refusé",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pour signaler un problème de sécurité lié à Matrix, consultez <a>la politique de divulgation de sécurité</a> de Matrix.org.",
-    "Enter a server name": "Saisissez le nom d’un serveur",
-    "Looks good": "Ça a l’air correct",
-    "Can't find this server or its room list": "Impossible de trouver ce serveur ou sa liste de salons",
-    "Your server": "Votre serveur",
-    "Add a new server": "Ajouter un nouveau serveur",
-    "Enter the name of a new server you want to explore.": "Saisissez le nom du nouveau serveur que vous voulez parcourir.",
-    "Server name": "Nom du serveur",
     "a new master key signature": "une nouvelle signature de clé principale",
     "a new cross-signing key signature": "une nouvelle signature de clé de signature croisée",
     "a device cross-signing signature": "une signature de signature croisée d’un appareil",
@@ -669,7 +662,6 @@
         "other": "Ajout des salons… (%(progress)s sur %(count)s)"
     },
     "Not all selected were added": "Toute la sélection n’a pas été ajoutée",
-    "You are not allowed to view this server's rooms list": "Vous n’avez pas l’autorisation d’accéder à la liste des salons de ce serveur",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
     "Or send invite link": "Ou envoyer le lien d’invitation",
@@ -816,20 +808,10 @@
         "other": "%(count)s membres"
     },
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Quand vous vous déconnectez, ces clés seront supprimées de cet appareil, et vous ne pourrez plus lire les messages chiffrés à moins d’avoir les clés de ces messages sur vos autres appareils, ou de les avoir sauvegardées sur le serveur.",
-    "Show: Matrix rooms": "Afficher : Salons Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Afficher : %(instance)s salons (%(server)s)",
-    "Add new server…": "Ajouter un nouveau serveur…",
-    "Remove server “%(roomServer)s”": "Supprimer le serveur « %(roomServer)s »",
     "You cannot search for rooms that are neither a room nor a space": "Vous ne pouvez pas rechercher de salons qui ne soient ni des salons ni des espaces",
     "Show spaces": "Afficher les espaces",
     "Show rooms": "Afficher les salons",
     "Explore public spaces in the new search dialog": "Explorer les espaces publics dans la nouvelle fenêtre de recherche",
-    "Online community members": "Membres de la communauté en ligne",
-    "Coworkers and teams": "Collègues et équipes",
-    "Friends and family": "Famille et amis",
-    "We'll help you get connected.": "Nous allons vous aider à vous connecter.",
-    "Who will you chat to the most?": "À qui allez-vous le plus parler ?",
-    "You're in": "Vous y êtes",
     "Saved Items": "Éléments sauvegardés",
     "Interactively verify by emoji": "Vérifier de façon interactive avec des émojis",
     "Manually verify by text": "Vérifier manuellement avec un texte",
@@ -1440,7 +1422,13 @@
         "send_dm": "Envoyez un message privé",
         "explore_rooms": "Explorez les salons publics",
         "create_room": "Créez une discussion de groupe",
-        "create_account": "Créer un compte"
+        "create_account": "Créer un compte",
+        "use_case_heading1": "Vous y êtes",
+        "use_case_heading2": "À qui allez-vous le plus parler ?",
+        "use_case_heading3": "Nous allons vous aider à vous connecter.",
+        "use_case_personal_messaging": "Famille et amis",
+        "use_case_work_messaging": "Collègues et équipes",
+        "use_case_community_messaging": "Membres de la communauté en ligne"
     },
     "settings": {
         "show_breadcrumbs": "Afficher les raccourcis vers les salons vus récemment au-dessus de la liste des salons",
@@ -4347,5 +4335,21 @@
     },
     "truncated_list_n_more": {
         "other": "Et %(count)s autres…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Saisissez le nom d’un serveur",
+            "network_dropdown_available_valid": "Ça a l’air correct",
+            "network_dropdown_available_invalid_forbidden": "Vous n’avez pas l’autorisation d’accéder à la liste des salons de ce serveur",
+            "network_dropdown_available_invalid": "Impossible de trouver ce serveur ou sa liste de salons",
+            "network_dropdown_your_server_description": "Votre serveur",
+            "network_dropdown_remove_server_adornment": "Supprimer le serveur « %(roomServer)s »",
+            "network_dropdown_add_dialog_title": "Ajouter un nouveau serveur",
+            "network_dropdown_add_dialog_description": "Saisissez le nom du nouveau serveur que vous voulez parcourir.",
+            "network_dropdown_add_dialog_placeholder": "Nom du serveur",
+            "network_dropdown_add_server_option": "Ajouter un nouveau serveur…",
+            "network_dropdown_selected_label_instance": "Afficher : %(instance)s salons (%(server)s)",
+            "network_dropdown_selected_label": "Afficher : Salons Matrix"
+        }
     }
 }

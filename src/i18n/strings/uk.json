@@ -429,7 +429,6 @@
     "Finland": "Фінляндія",
     "Fiji": "Фіджі",
     "Faroe Islands": "Фарерські Острови",
-    "Can't find this server or its room list": "Не вдалося знайти цей сервер або список його кімнат",
     "You're all caught up.": "Все готово.",
     "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
     "Confirm encryption setup": "Підтвердити налаштування шифрування",
@@ -480,14 +479,7 @@
     "Create a new space": "Створити новий простір",
     "Want to add a new space instead?": "Хочете натомість цього додати новий простір?",
     "Add existing space": "Додати наявний простір",
-    "Server name": "Назва сервера",
-    "Enter the name of a new server you want to explore.": "Введіть назву нового сервера, який ви хочете переглянути.",
-    "Add a new server": "Додати новий сервер",
     "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
-    "Your server": "Ваш сервер",
-    "You are not allowed to view this server's rooms list": "Вам не дозволено переглядати список кімнат цього сервера",
-    "Looks good": "Все добре",
-    "Enter a server name": "Введіть назву сервера",
     "e.g. my-room": "наприклад, моя-кімната",
     "To leave the beta, visit your settings.": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
     "Switch theme": "Змінити тему",
@@ -816,20 +808,10 @@
         "one": "%(count)s учасник",
         "other": "%(count)s учасників"
     },
-    "Show: Matrix rooms": "Показати: кімнати Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Показати: кімнати %(instance)s (%(server)s)",
-    "Add new server…": "Додати новий сервер…",
-    "Remove server “%(roomServer)s”": "Вилучити сервер «%(roomServer)s»",
     "You cannot search for rooms that are neither a room nor a space": "Ви не можете шукати кімнати, які не є ні кімнатою, ні простором",
     "Show spaces": "Показати простори",
     "Show rooms": "Показати кімнати",
     "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
-    "Online community members": "Учасники онлайн-спільноти",
-    "Coworkers and teams": "Співробітники та команди",
-    "Friends and family": "Друзі та родина",
-    "We'll help you get connected.": "Ми допоможемо вам з'єднатися.",
-    "Who will you chat to the most?": "З ким ви спілкуватиметеся найбільше?",
-    "You're in": "Ви увійшли",
     "Saved Items": "Збережені елементи",
     "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
     "Manually verify by text": "Звірити вручну за допомогою тексту",
@@ -1440,7 +1422,13 @@
         "send_dm": "Надіслати особисте повідомлення",
         "explore_rooms": "Переглянути загальнодоступні кімнати",
         "create_room": "Створити групову бесіду",
-        "create_account": "Створити обліковий запис"
+        "create_account": "Створити обліковий запис",
+        "use_case_heading1": "Ви увійшли",
+        "use_case_heading2": "З ким ви спілкуватиметеся найбільше?",
+        "use_case_heading3": "Ми допоможемо вам з'єднатися.",
+        "use_case_personal_messaging": "Друзі та родина",
+        "use_case_work_messaging": "Співробітники та команди",
+        "use_case_community_messaging": "Учасники онлайн-спільноти"
     },
     "settings": {
         "show_breadcrumbs": "Показувати нещодавно переглянуті кімнати над списком кімнат",
@@ -4347,5 +4335,21 @@
     },
     "truncated_list_n_more": {
         "other": "І ще %(count)s..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Введіть назву сервера",
+            "network_dropdown_available_valid": "Все добре",
+            "network_dropdown_available_invalid_forbidden": "Вам не дозволено переглядати список кімнат цього сервера",
+            "network_dropdown_available_invalid": "Не вдалося знайти цей сервер або список його кімнат",
+            "network_dropdown_your_server_description": "Ваш сервер",
+            "network_dropdown_remove_server_adornment": "Вилучити сервер «%(roomServer)s»",
+            "network_dropdown_add_dialog_title": "Додати новий сервер",
+            "network_dropdown_add_dialog_description": "Введіть назву нового сервера, який ви хочете переглянути.",
+            "network_dropdown_add_dialog_placeholder": "Назва сервера",
+            "network_dropdown_add_server_option": "Додати новий сервер…",
+            "network_dropdown_selected_label_instance": "Показати: кімнати %(instance)s (%(server)s)",
+            "network_dropdown_selected_label": "Показати: кімнати Matrix"
+        }
     }
 }

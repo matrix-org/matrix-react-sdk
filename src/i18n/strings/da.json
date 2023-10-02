@@ -50,7 +50,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Headphones": "Hovedtelefoner",
-    "Add a new server": "Tilføj en ny server",
     "France": "Frankrig",
     "Finland": "Finland",
     "Egypt": "Egypten",
@@ -881,5 +880,10 @@
     },
     "error_dialog": {
         "forget_room_failed": "Kunne ikke glemme rummet %(errCode)s"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_add_dialog_title": "Tilføj en ny server"
+        }
     }
 }

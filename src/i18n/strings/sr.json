@@ -96,7 +96,6 @@
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "Light bulb": "сијалица",
-    "Looks good": "Изгледа добро",
     "Recent Conversations": "Недавни разговори",
     "Recently Direct Messaged": "Недавне директне поруке",
     "Looks good!": "Изгледа добро!",
@@ -423,10 +422,6 @@
     "Kosovo": "/",
     "End": "",
     "Deactivate account": "Деактивирај налог",
-    "Server name": "Име сервера",
-    "Enter the name of a new server you want to explore.": "Унесите име новог сервера који желите да истражите.",
-    "Add a new server": "Додајте нови сервер",
-    "Your server": "Ваш сервер",
     "Not Trusted": "Није поуздано",
     "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
@@ -1578,5 +1573,14 @@
     },
     "truncated_list_n_more": {
         "other": "И %(count)s других..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_available_valid": "Изгледа добро",
+            "network_dropdown_your_server_description": "Ваш сервер",
+            "network_dropdown_add_dialog_title": "Додајте нови сервер",
+            "network_dropdown_add_dialog_description": "Унесите име новог сервера који желите да истражите.",
+            "network_dropdown_add_dialog_placeholder": "Име сервера"
+        }
     }
 }

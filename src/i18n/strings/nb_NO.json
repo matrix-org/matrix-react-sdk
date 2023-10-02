@@ -117,11 +117,6 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "Enter a server name": "Skriv inn et tjenernavn",
-    "Looks good": "Ser bra ut",
-    "Your server": "Tjeneren din",
-    "Add a new server": "Legg til en ny tjener",
-    "Server name": "Tjenernavn",
     "Thank you!": "Tusen takk!",
     "Removing…": "Fjerner …",
     "Session ID": "Økt-ID",
@@ -1869,5 +1864,14 @@
     "language_dropdown_label": "Språk-nedfallsmeny",
     "truncated_list_n_more": {
         "other": "Og %(count)s til..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Skriv inn et tjenernavn",
+            "network_dropdown_available_valid": "Ser bra ut",
+            "network_dropdown_your_server_description": "Tjeneren din",
+            "network_dropdown_add_dialog_title": "Legg til en ny tjener",
+            "network_dropdown_add_dialog_placeholder": "Tjenernavn"
+        }
     }
 }

@@ -271,13 +271,6 @@
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
     "Clear cross-signing keys": "Garbitu zeharkako sinatzerako gakoak",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
-    "Enter a server name": "Sartu zerbitzari-izena",
-    "Looks good": "Itxura ona du",
-    "Can't find this server or its room list": "Ezin da zerbitzaria aurkitu edo honen gelen zerrenda",
-    "Your server": "Zure zerbitzaria",
-    "Add a new server": "Gehitu zerbitzari berria",
-    "Enter the name of a new server you want to explore.": "Sartu arakatu nahi duzun zerbitzari berriaren izena.",
-    "Server name": "Zerbitzari-izena",
     "a new master key signature": "gako nagusiaren sinadura berria",
     "a new cross-signing key signature": "zeharkako sinatze gako sinadura berria",
     "a device cross-signing signature": "gailuz zeharkako sinadura berria",
@@ -1906,5 +1899,16 @@
     "language_dropdown_label": "Hizkuntza menua",
     "truncated_list_n_more": {
         "other": "Eta %(count)s gehiago…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Sartu zerbitzari-izena",
+            "network_dropdown_available_valid": "Itxura ona du",
+            "network_dropdown_available_invalid": "Ezin da zerbitzaria aurkitu edo honen gelen zerrenda",
+            "network_dropdown_your_server_description": "Zure zerbitzaria",
+            "network_dropdown_add_dialog_title": "Gehitu zerbitzari berria",
+            "network_dropdown_add_dialog_description": "Sartu arakatu nahi duzun zerbitzari berriaren izena.",
+            "network_dropdown_add_dialog_placeholder": "Zerbitzari-izena"
+        }
     }
 }

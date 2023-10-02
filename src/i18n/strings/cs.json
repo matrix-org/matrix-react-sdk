@@ -271,17 +271,10 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) se přihlásil(a) do nové relace bez ověření:",
     "Ask this user to verify their session, or manually verify it below.": "Požádejte tohoto uživatele, aby ověřil svou relaci, nebo jí níže můžete ověřit manuálně.",
     "%(name)s declined": "%(name)s odmítl(a)",
-    "Enter a server name": "Zadejte jméno serveru",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
     "You signed in to a new session without verifying it:": "Přihlásili jste se do nové relace, aniž byste ji ověřili:",
     "Verify your other session using one of the options below.": "Ověřte další relaci jedním z následujících způsobů.",
     "Submit logs": "Odeslat záznamy o chybě",
-    "Looks good": "To vypadá dobře",
-    "Can't find this server or its room list": "Server nebo jeho seznam místností se nepovedlo nalézt",
-    "Your server": "Váš server",
-    "Add a new server": "Přidat nový server",
-    "Enter the name of a new server you want to explore.": "Zadejte jméno serveru, který si chcete prohlédnout.",
-    "Server name": "Jméno serveru",
     "Server did not require any authentication": "Server nevyžadoval žádné ověření",
     "Server did not return valid authentication information.": "Server neposkytl platné informace o ověření.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Potvrďte deaktivaci účtu použtím Jednotného přihlášení.",
@@ -668,7 +661,6 @@
         "other": "Přidávání místností... (%(progress)s z %(count)s)"
     },
     "Not all selected were added": "Ne všechny vybrané byly přidány",
-    "You are not allowed to view this server's rooms list": "Namáte oprávnění zobrazit seznam místností tohoto serveru",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
     "Or send invite link": "Nebo pošlete pozvánku",
@@ -810,10 +802,6 @@
         "one": "%(count)s člen",
         "other": "%(count)s členů"
     },
-    "Show: Matrix rooms": "Zobrazit: Matrix místnosti",
-    "Show: %(instance)s rooms (%(server)s)": "Zobrazit: %(instance)s místností (%(server)s)",
-    "Add new server…": "Přidat nový server…",
-    "Remove server “%(roomServer)s”": "Odstranit server \"%(roomServer)s\"",
     "Remove search filter for %(filter)s": "Odstranit filtr vyhledávání pro %(filter)s",
     "Start a group chat": "Zahájit skupinový chat",
     "Other options": "Další možnosti",
@@ -824,12 +812,6 @@
     "Show spaces": "Zobrazit prostory",
     "Show rooms": "Zobrazit místnosti",
     "Explore public spaces in the new search dialog": "Prozkoumejte veřejné prostory v novém dialogu vyhledávání",
-    "Who will you chat to the most?": "S kým si budete povídat nejčastěji?",
-    "You're in": "Jste přihlášeni",
-    "Online community members": "Členové online komunity",
-    "Coworkers and teams": "Spolupracovníci a týmy",
-    "Friends and family": "Přátelé a rodina",
-    "We'll help you get connected.": "Pomůžeme vám připojit se.",
     "Saved Items": "Uložené položky",
     "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
     "Manually verify by text": "Ruční ověření pomocí textu",
@@ -1441,7 +1423,13 @@
         "send_dm": "Poslat přímou zprávu",
         "explore_rooms": "Prozkoumat veřejné místnosti",
         "create_room": "Vytvořit skupinový chat",
-        "create_account": "Vytvořit účet"
+        "create_account": "Vytvořit účet",
+        "use_case_heading1": "Jste přihlášeni",
+        "use_case_heading2": "S kým si budete povídat nejčastěji?",
+        "use_case_heading3": "Pomůžeme vám připojit se.",
+        "use_case_personal_messaging": "Přátelé a rodina",
+        "use_case_work_messaging": "Spolupracovníci a týmy",
+        "use_case_community_messaging": "Členové online komunity"
     },
     "settings": {
         "show_breadcrumbs": "Zobrazovat zkratky do nedávno zobrazených místností navrchu",
@@ -4354,5 +4342,21 @@
     },
     "truncated_list_n_more": {
         "other": "A %(count)s dalších..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Zadejte jméno serveru",
+            "network_dropdown_available_valid": "To vypadá dobře",
+            "network_dropdown_available_invalid_forbidden": "Namáte oprávnění zobrazit seznam místností tohoto serveru",
+            "network_dropdown_available_invalid": "Server nebo jeho seznam místností se nepovedlo nalézt",
+            "network_dropdown_your_server_description": "Váš server",
+            "network_dropdown_remove_server_adornment": "Odstranit server \"%(roomServer)s\"",
+            "network_dropdown_add_dialog_title": "Přidat nový server",
+            "network_dropdown_add_dialog_description": "Zadejte jméno serveru, který si chcete prohlédnout.",
+            "network_dropdown_add_dialog_placeholder": "Jméno serveru",
+            "network_dropdown_add_server_option": "Přidat nový server…",
+            "network_dropdown_selected_label_instance": "Zobrazit: %(instance)s místností (%(server)s)",
+            "network_dropdown_selected_label": "Zobrazit: Matrix místnosti"
+        }
     }
 }

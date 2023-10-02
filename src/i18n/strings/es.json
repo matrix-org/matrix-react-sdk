@@ -222,13 +222,6 @@
     "Not Trusted": "No es de confianza",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
     "e.g. my-room": "p.ej. mi-sala",
-    "Enter a server name": "Escribe un nombre de servidor",
-    "Looks good": "Se ve bien",
-    "Can't find this server or its room list": "No se ha podido encontrar este servidor o su lista de salas",
-    "Your server": "Tu servidor",
-    "Add a new server": "Añadir un nuevo servidor",
-    "Enter the name of a new server you want to explore.": "Escribe el nombre de un nuevo servidor que quieras explorar.",
-    "Server name": "Nombre del servidor",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usar un servidor de identidad para invitar a través de correo electrónico. <default>. Usar (%(defaultIdentityServerName)s)</default>o seleccione en <settings>Ajustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilice un servidor de identidad para invitar por correo electrónico. Gestionar en <settings>Ajustes</settings>.",
     "Close dialog": "Cerrar diálogo",
@@ -668,7 +661,6 @@
         "one": "Añadiendo sala…"
     },
     "Not all selected were added": "No se han añadido todas las seleccionadas",
-    "You are not allowed to view this server's rooms list": "No tienes permiso para ver la lista de salas de este servidor",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
     "Or send invite link": "O envía un enlace de invitación",
@@ -812,10 +804,6 @@
     "Copy invite link": "Copiar enlace de invitación",
     "Some results may be hidden for privacy": "Algunos resultados pueden estar ocultos por motivos de privacidad",
     "Search for": "Buscar",
-    "Show: %(instance)s rooms (%(server)s)": "Mostrar: salas de %(instance)s (%(server)s)",
-    "Show: Matrix rooms": "Mostrar: salas de Matrix",
-    "Add new server…": "Añadir nuevo servidor…",
-    "Remove server “%(roomServer)s”": "Quitar servidor «%(roomServer)s»",
     "Remove search filter for %(filter)s": "Quitar filtro de búsqueda para %(filter)s",
     "Start a group chat": "Crear conversación en grupo",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Si no encuentras una sala, pide que te inviten a ella o que te manden su enlace.",
@@ -824,12 +812,6 @@
     "Explore public spaces in the new search dialog": "Explora espacios públicos con la nueva ventana de búsqueda",
     "Show spaces": "Ver espacios",
     "Show rooms": "Ver salas",
-    "Online community members": "Miembros de comunidades online",
-    "Coworkers and teams": "Compañeros de trabajo y equipos",
-    "Friends and family": "Familia y amigos",
-    "We'll help you get connected.": "Te ayudamos a conectar.",
-    "Who will you chat to the most?": "¿Con quién hablarás más?",
-    "You're in": "Estás en",
     "Saved Items": "Elementos guardados",
     "Interactively verify by emoji": "Verificar interactivamente usando emojis",
     "Manually verify by text": "Verificar manualmente usando un texto",
@@ -1420,7 +1402,13 @@
         "send_dm": "Envía un mensaje directo",
         "explore_rooms": "Explora las salas públicas",
         "create_room": "Crea un grupo",
-        "create_account": "Crear una cuenta"
+        "create_account": "Crear una cuenta",
+        "use_case_heading1": "Estás en",
+        "use_case_heading2": "¿Con quién hablarás más?",
+        "use_case_heading3": "Te ayudamos a conectar.",
+        "use_case_personal_messaging": "Familia y amigos",
+        "use_case_work_messaging": "Compañeros de trabajo y equipos",
+        "use_case_community_messaging": "Miembros de comunidades online"
     },
     "settings": {
         "show_breadcrumbs": "Incluir encima de la lista de salas unos atajos a las últimas salas que hayas visto",
@@ -4149,5 +4137,21 @@
     },
     "truncated_list_n_more": {
         "other": "Y %(count)s más…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Escribe un nombre de servidor",
+            "network_dropdown_available_valid": "Se ve bien",
+            "network_dropdown_available_invalid_forbidden": "No tienes permiso para ver la lista de salas de este servidor",
+            "network_dropdown_available_invalid": "No se ha podido encontrar este servidor o su lista de salas",
+            "network_dropdown_your_server_description": "Tu servidor",
+            "network_dropdown_remove_server_adornment": "Quitar servidor «%(roomServer)s»",
+            "network_dropdown_add_dialog_title": "Añadir un nuevo servidor",
+            "network_dropdown_add_dialog_description": "Escribe el nombre de un nuevo servidor que quieras explorar.",
+            "network_dropdown_add_dialog_placeholder": "Nombre del servidor",
+            "network_dropdown_add_server_option": "Añadir nuevo servidor…",
+            "network_dropdown_selected_label_instance": "Mostrar: salas de %(instance)s (%(server)s)",
+            "network_dropdown_selected_label": "Mostrar: salas de Matrix"
+        }
     }
 }

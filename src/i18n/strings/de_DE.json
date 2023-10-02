@@ -236,13 +236,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Submit logs": "Protokolldateien senden",
-    "Enter a server name": "Gib einen Server-Namen ein",
-    "Looks good": "Das sieht gut aus",
-    "Can't find this server or its room list": "Kann diesen Server oder seine Raumliste nicht finden",
-    "Your server": "Dein Server",
-    "Add a new server": "Einen Server hinzufügen",
-    "Enter the name of a new server you want to explore.": "Gib den Namen des Servers an, den du erkunden möchtest.",
-    "Server name": "Server-Name",
     "Close dialog": "Dialog schließen",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Bitte teile uns mit, was schief lief - oder besser, beschreibe das Problem auf GitHub in einem \"Issue\".",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Warnung: Dein Browser wird nicht unterstützt. Die Anwendung kann instabil sein.",
@@ -668,7 +661,6 @@
         "one": "Raum hinzufügen …",
         "other": "Räume hinzufügen … (%(progress)s von %(count)s)"
     },
-    "You are not allowed to view this server's rooms list": "Du darfst diese Raumliste nicht sehen",
     "Not all selected were added": "Nicht alle Ausgewählten konnten hinzugefügt werden",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
@@ -790,10 +782,6 @@
     "To continue, please enter your account password:": "Um fortzufahren, gib bitte das Passwort deines Kontos ein:",
     "%(featureName)s Beta feedback": "Rückmeldung zur %(featureName)s-Beta",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
-    "Remove server “%(roomServer)s”": "Server „%(roomServer)s“ entfernen",
-    "Add new server…": "Neuen Server hinzufügen …",
-    "Show: %(instance)s rooms (%(server)s)": "%(instance)s Räume zeigen (%(server)s)",
-    "Show: Matrix rooms": "Zeige: Matrix-Räume",
     "Open room": "Raum öffnen",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
     "Show rooms": "Räume zeigen",
@@ -821,17 +809,11 @@
     "An error occurred while stopping your live location": "Ein Fehler ist während des Beendens deines Echtzeit-Standorts aufgetreten",
     "An error occurred while stopping your live location, please try again": "Ein Fehler ist während des Beendens deines Echtzeit-Standorts aufgetreten, bitte versuche es erneut",
     "Unread email icon": "Ungelesene E-Mail Symbol",
-    "Coworkers and teams": "Kollegen und Gruppen",
-    "Friends and family": "Freunde und Familie",
-    "Who will you chat to the most?": "Mit wem wirst du am meisten schreiben?",
-    "Online community members": "Online Community-Mitglieder",
     "Start a group chat": "Gruppenunterhaltung beginnen",
     "If you can't see who you're looking for, send them your invite link.": "Falls du nicht findest wen du suchst, send ihnen deinen Einladungslink.",
     "Interactively verify by emoji": "Interaktiv per Emoji verifizieren",
     "Manually verify by text": "Manuell per Text verifizieren",
     "Remove search filter for %(filter)s": "Entferne Suchfilter für %(filter)s",
-    "We'll help you get connected.": "Wir helfen dir, dich zu vernetzen.",
-    "You're in": "Los gehts",
     "Saved Items": "Gespeicherte Elemente",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
@@ -1441,7 +1423,13 @@
         "send_dm": "Direkt­­nachricht senden",
         "explore_rooms": "Öffentliche Räume erkunden",
         "create_room": "Gruppenraum erstellen",
-        "create_account": "Konto anlegen"
+        "create_account": "Konto anlegen",
+        "use_case_heading1": "Los gehts",
+        "use_case_heading2": "Mit wem wirst du am meisten schreiben?",
+        "use_case_heading3": "Wir helfen dir, dich zu vernetzen.",
+        "use_case_personal_messaging": "Freunde und Familie",
+        "use_case_work_messaging": "Kollegen und Gruppen",
+        "use_case_community_messaging": "Online Community-Mitglieder"
     },
     "settings": {
         "show_breadcrumbs": "Kürzlich besuchte Räume anzeigen",
@@ -4354,5 +4342,21 @@
     },
     "truncated_list_n_more": {
         "other": "Und %(count)s weitere …"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Gib einen Server-Namen ein",
+            "network_dropdown_available_valid": "Das sieht gut aus",
+            "network_dropdown_available_invalid_forbidden": "Du darfst diese Raumliste nicht sehen",
+            "network_dropdown_available_invalid": "Kann diesen Server oder seine Raumliste nicht finden",
+            "network_dropdown_your_server_description": "Dein Server",
+            "network_dropdown_remove_server_adornment": "Server „%(roomServer)s“ entfernen",
+            "network_dropdown_add_dialog_title": "Einen Server hinzufügen",
+            "network_dropdown_add_dialog_description": "Gib den Namen des Servers an, den du erkunden möchtest.",
+            "network_dropdown_add_dialog_placeholder": "Server-Name",
+            "network_dropdown_add_server_option": "Neuen Server hinzufügen …",
+            "network_dropdown_selected_label_instance": "%(instance)s Räume zeigen (%(server)s)",
+            "network_dropdown_selected_label": "Zeige: Matrix-Räume"
+        }
     }
 }

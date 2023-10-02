@@ -489,14 +489,6 @@
     "Create a new space": "Buat sebuah space baru",
     "Want to add a new space instead?": "Ingin menambahkan sebuah space yang baru saja?",
     "Add existing space": "Tambahkan space yang sudah ada",
-    "Server name": "Nama server",
-    "Enter the name of a new server you want to explore.": "Masukkan nama server baru yang Anda ingin jelajahi.",
-    "Add a new server": "Tambahkan sebuah server baru",
-    "Your server": "Server Anda",
-    "Can't find this server or its room list": "Tidak dapat menemukan server ini atau daftar ruangannya",
-    "You are not allowed to view this server's rooms list": "Anda tidak diizinkan untuk menampilkan daftar ruangan server ini",
-    "Looks good": "Kelihatannya bagus",
-    "Enter a server name": "Masukkan sebuah nama server",
     "e.g. my-room": "mis. ruangan-saya",
     "%(count)s people you know have already joined": {
         "one": "%(count)s orang yang Anda tahu telah bergabung",
@@ -816,20 +808,10 @@
         "one": "%(count)s Anggota",
         "other": "%(count)s Anggota"
     },
-    "Show: Matrix rooms": "Tampilkan: ruangan Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Tampilkan: %(instance)s ruangan (%(server)s)",
-    "Add new server…": "Tambahkan server baru…",
-    "Remove server “%(roomServer)s”": "Hapus server “%(roomServer)s”",
     "You cannot search for rooms that are neither a room nor a space": "Anda tidak dapat mencari ruangan yang bukan sebuah ruangan atau sebuah space",
     "Show spaces": "Tampilkan space",
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
-    "Online community members": "Anggota komunitas daring",
-    "Coworkers and teams": "Teman kerja dan tim",
-    "Friends and family": "Teman dan keluarga",
-    "We'll help you get connected.": "Kami akan membantu Anda untuk terhubung.",
-    "Who will you chat to the most?": "Siapa saja yang sering Anda obrol?",
-    "You're in": "Anda telah masuk",
     "Saved Items": "Item yang Tersimpan",
     "Interactively verify by emoji": "Verifikasi secara interaktif sengan emoji",
     "Manually verify by text": "Verifikasi secara manual dengan teks",
@@ -1441,7 +1423,13 @@
         "send_dm": "Kirim sebuah Pesan Langsung",
         "explore_rooms": "Jelajahi Ruangan Publik",
         "create_room": "Buat sebuah Obrolan Grup",
-        "create_account": "Buat akun"
+        "create_account": "Buat akun",
+        "use_case_heading1": "Anda telah masuk",
+        "use_case_heading2": "Siapa saja yang sering Anda obrol?",
+        "use_case_heading3": "Kami akan membantu Anda untuk terhubung.",
+        "use_case_personal_messaging": "Teman dan keluarga",
+        "use_case_work_messaging": "Teman kerja dan tim",
+        "use_case_community_messaging": "Anggota komunitas daring"
     },
     "settings": {
         "show_breadcrumbs": "Tampilkan jalan pintas ke ruangan yang baru saja ditampilkan di atas daftar ruangan",
@@ -4354,5 +4342,21 @@
     },
     "truncated_list_n_more": {
         "other": "Dan %(count)s lagi..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Masukkan sebuah nama server",
+            "network_dropdown_available_valid": "Kelihatannya bagus",
+            "network_dropdown_available_invalid_forbidden": "Anda tidak diizinkan untuk menampilkan daftar ruangan server ini",
+            "network_dropdown_available_invalid": "Tidak dapat menemukan server ini atau daftar ruangannya",
+            "network_dropdown_your_server_description": "Server Anda",
+            "network_dropdown_remove_server_adornment": "Hapus server “%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Tambahkan sebuah server baru",
+            "network_dropdown_add_dialog_description": "Masukkan nama server baru yang Anda ingin jelajahi.",
+            "network_dropdown_add_dialog_placeholder": "Nama server",
+            "network_dropdown_add_server_option": "Tambahkan server baru…",
+            "network_dropdown_selected_label_instance": "Tampilkan: %(instance)s ruangan (%(server)s)",
+            "network_dropdown_selected_label": "Tampilkan: ruangan Matrix"
+        }
     }
 }

@@ -437,14 +437,6 @@
         "other": "در حال افزودن اتاق‌ها... (%(progress)s از %(count)s)"
     },
     "Not all selected were added": "همه‌ی موارد انتخاب شده، اضافه نشدند",
-    "Server name": "نام سرور",
-    "Enter the name of a new server you want to explore.": "نام سرور جدیدی که می خواهید در آن کاوش کنید را وارد کنید.",
-    "Add a new server": "افزودن سرور جدید",
-    "Your server": "سرور شما",
-    "Can't find this server or its room list": "این سرور و یا لیست اتاق‌های آن پیدا نمی شود",
-    "You are not allowed to view this server's rooms list": "شما مجاز به مشاهده لیست اتاق‌های این سرور نمی‌باشید",
-    "Looks good": "به نظر خوب میاد",
-    "Enter a server name": "نام سرور را وارد کنید",
     "e.g. my-room": "به عنوان مثال، my-room",
     "Filter results": "پالایش نتایج",
     "Server did not return valid authentication information.": "سرور اطلاعات احراز هویت معتبری را باز نگرداند.",
@@ -2960,5 +2952,17 @@
     },
     "truncated_list_n_more": {
         "other": "و %(count)s مورد بیشتر ..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "نام سرور را وارد کنید",
+            "network_dropdown_available_valid": "به نظر خوب میاد",
+            "network_dropdown_available_invalid_forbidden": "شما مجاز به مشاهده لیست اتاق‌های این سرور نمی‌باشید",
+            "network_dropdown_available_invalid": "این سرور و یا لیست اتاق‌های آن پیدا نمی شود",
+            "network_dropdown_your_server_description": "سرور شما",
+            "network_dropdown_add_dialog_title": "افزودن سرور جدید",
+            "network_dropdown_add_dialog_description": "نام سرور جدیدی که می خواهید در آن کاوش کنید را وارد کنید.",
+            "network_dropdown_add_dialog_placeholder": "نام سرور"
+        }
     }
 }

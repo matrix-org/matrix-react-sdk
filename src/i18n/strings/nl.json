@@ -524,12 +524,6 @@
     "Backup version:": "Versie reservekopie:",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
     "Reason (optional)": "Reden (niet vereist)",
-    "Server name": "Servernaam",
-    "Add a new server": "Een nieuwe server toevoegen",
-    "Your server": "Jouw server",
-    "Can't find this server or its room list": "Kan de server of haar kamergids niet vinden",
-    "Looks good": "Ziet er goed uit",
-    "Enter a server name": "Geef een servernaam",
     "Not encrypted": "Niet versleuteld",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
@@ -620,7 +614,6 @@
     "There was a problem communicating with the server. Please try again.": "Er was een communicatie probleem met de server. Probeer het opnieuw.",
     "Upload completed": "Upload voltooid",
     "Preparing to download logs": "Klaarmaken om logs te downloaden",
-    "Enter the name of a new server you want to explore.": "Voer de naam in van een nieuwe server die je wilt ontdekken.",
     "Submit logs": "Logs versturen",
     "Dial pad": "Kiestoetsen",
     "IRC display name width": "Breedte IRC-weergavenaam",
@@ -668,7 +661,6 @@
         "other": "Kamers toevoegen... (%(progress)s van %(count)s)"
     },
     "Not all selected were added": "Niet alle geselecteerden zijn toegevoegd",
-    "You are not allowed to view this server's rooms list": "Je hebt geen toegang tot deze server zijn kamergids",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
     "Or send invite link": "Of verstuur je uitnodigingslink",
@@ -816,20 +808,10 @@
         "other": "%(count)s Leden"
     },
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wanneer je jezelf afmeldt, worden deze sleutels van dit apparaat verwijderd, wat betekent dat je geen versleutelde berichten kunt lezen, tenzij je de sleutels ervoor op je andere apparaten hebt of er een back-up van hebt gemaakt op de server.",
-    "Show: Matrix rooms": "Toon: Matrix kamers",
-    "Show: %(instance)s rooms (%(server)s)": "Toon: %(instance)s kamers (%(server)s)",
-    "Add new server…": "Nieuwe server toevoegen…",
-    "Remove server “%(roomServer)s”": "Verwijder server “%(roomServer)s”",
     "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
     "Show spaces": "Toon spaces",
     "Show rooms": "Toon kamers",
     "Explore public spaces in the new search dialog": "Ontdek openbare ruimtes in het nieuwe zoekvenster",
-    "Online community members": "Leden van online gemeenschap",
-    "Coworkers and teams": "Collega's en teams",
-    "Friends and family": "Vrienden en familie",
-    "We'll help you get connected.": "We helpen je om verbinding te maken.",
-    "Who will you chat to the most?": "Met wie ga je het meest chatten?",
-    "You're in": "Je bent binnen",
     "Saved Items": "Opgeslagen items",
     "Interactively verify by emoji": "Interactief verifiëren door emoji",
     "Manually verify by text": "Handmatig verifiëren via tekst",
@@ -1355,7 +1337,13 @@
         "send_dm": "Start een direct gesprek",
         "explore_rooms": "Publieke kamers ontdekken",
         "create_room": "Maak een groepsgesprek",
-        "create_account": "Registeren"
+        "create_account": "Registeren",
+        "use_case_heading1": "Je bent binnen",
+        "use_case_heading2": "Met wie ga je het meest chatten?",
+        "use_case_heading3": "We helpen je om verbinding te maken.",
+        "use_case_personal_messaging": "Vrienden en familie",
+        "use_case_work_messaging": "Collega's en teams",
+        "use_case_community_messaging": "Leden van online gemeenschap"
     },
     "settings": {
         "show_breadcrumbs": "Snelkoppelingen naar de kamers die je recent hebt bekeken bovenaan de kamerlijst weergeven",
@@ -3942,5 +3930,21 @@
     },
     "truncated_list_n_more": {
         "other": "En %(count)s meer…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Geef een servernaam",
+            "network_dropdown_available_valid": "Ziet er goed uit",
+            "network_dropdown_available_invalid_forbidden": "Je hebt geen toegang tot deze server zijn kamergids",
+            "network_dropdown_available_invalid": "Kan de server of haar kamergids niet vinden",
+            "network_dropdown_your_server_description": "Jouw server",
+            "network_dropdown_remove_server_adornment": "Verwijder server “%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Een nieuwe server toevoegen",
+            "network_dropdown_add_dialog_description": "Voer de naam in van een nieuwe server die je wilt ontdekken.",
+            "network_dropdown_add_dialog_placeholder": "Servernaam",
+            "network_dropdown_add_server_option": "Nieuwe server toevoegen…",
+            "network_dropdown_selected_label_instance": "Toon: %(instance)s kamers (%(server)s)",
+            "network_dropdown_selected_label": "Toon: Matrix kamers"
+        }
     }
 }

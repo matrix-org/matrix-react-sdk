@@ -273,13 +273,6 @@
     "Clear cross-signing keys": "Eszközök közti hitelesítési kulcsok törlése",
     "%(name)s declined": "%(name)s elutasította",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "A Matrixszal kapcsolatos biztonsági hibák jelentésével kapcsolatban olvassa el a Matrix.org <a>biztonsági hibák közzétételi házirendjét</a>.",
-    "Enter a server name": "Add meg a szerver nevét",
-    "Looks good": "Jól néz ki",
-    "Can't find this server or its room list": "A szerver vagy a szoba listája nem található",
-    "Your server": "Matrix szervered",
-    "Add a new server": "Új szerver hozzáadása",
-    "Enter the name of a new server you want to explore.": "Add meg a felfedezni kívánt új szerver nevét.",
-    "Server name": "Szerver neve",
     "a new master key signature": "az új mester kulcs aláírás",
     "a new cross-signing key signature": "az új eszközök közötti kulcs aláírása",
     "a device cross-signing signature": "az eszköz eszközök közötti aláírása",
@@ -669,7 +662,6 @@
         "other": "Szobák hozzáadása… (%(progress)s ennyiből: %(count)s)"
     },
     "Not all selected were added": "Nem az összes kijelölt lett hozzáadva",
-    "You are not allowed to view this server's rooms list": "Nincs joga ennek a szervernek a szobalistáját megnézni",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
     "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
@@ -819,17 +811,7 @@
         "one": "%(count)s tag",
         "other": "%(count)s tag"
     },
-    "Show: Matrix rooms": "Megjelenít: Matrix szobák",
-    "Show: %(instance)s rooms (%(server)s)": "Megjelenít: %(instance)s szoba (%(server)s)",
-    "Add new server…": "Új szerver hozzáadása…",
-    "Remove server “%(roomServer)s”": "Távoli szerver „%(roomServer)s”",
     "Explore public spaces in the new search dialog": "Nyilvános terek felderítése az új keresőben",
-    "Online community members": "Online közösségek tagjai",
-    "Coworkers and teams": "Munkatársak és csoportok",
-    "Friends and family": "Barátok és család",
-    "We'll help you get connected.": "Segítünk a kapcsolatteremtésben.",
-    "Who will you chat to the most?": "Kivel beszélget a legtöbbet?",
-    "You're in": "Itt van:",
     "Saved Items": "Mentett elemek",
     "Interactively verify by emoji": "Interaktív ellenőrzés emodzsikkal",
     "Manually verify by text": "Kézi szöveges ellenőrzés",
@@ -1427,7 +1409,13 @@
         "send_dm": "Közvetlen üzenet küldése",
         "explore_rooms": "Nyilvános szobák felfedezése",
         "create_room": "Készíts csoportos beszélgetést",
-        "create_account": "Fiók létrehozása"
+        "create_account": "Fiók létrehozása",
+        "use_case_heading1": "Itt van:",
+        "use_case_heading2": "Kivel beszélget a legtöbbet?",
+        "use_case_heading3": "Segítünk a kapcsolatteremtésben.",
+        "use_case_personal_messaging": "Barátok és család",
+        "use_case_work_messaging": "Munkatársak és csoportok",
+        "use_case_community_messaging": "Online közösségek tagjai"
     },
     "settings": {
         "show_breadcrumbs": "Gyors elérési gombok megjelenítése a nemrég meglátogatott szobákhoz a szobalista felett",
@@ -4251,5 +4239,21 @@
     },
     "truncated_list_n_more": {
         "other": "És még %(count)s..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Add meg a szerver nevét",
+            "network_dropdown_available_valid": "Jól néz ki",
+            "network_dropdown_available_invalid_forbidden": "Nincs joga ennek a szervernek a szobalistáját megnézni",
+            "network_dropdown_available_invalid": "A szerver vagy a szoba listája nem található",
+            "network_dropdown_your_server_description": "Matrix szervered",
+            "network_dropdown_remove_server_adornment": "Távoli szerver „%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Új szerver hozzáadása",
+            "network_dropdown_add_dialog_description": "Add meg a felfedezni kívánt új szerver nevét.",
+            "network_dropdown_add_dialog_placeholder": "Szerver neve",
+            "network_dropdown_add_server_option": "Új szerver hozzáadása…",
+            "network_dropdown_selected_label_instance": "Megjelenít: %(instance)s szoba (%(server)s)",
+            "network_dropdown_selected_label": "Megjelenít: Matrix szobák"
+        }
     }
 }

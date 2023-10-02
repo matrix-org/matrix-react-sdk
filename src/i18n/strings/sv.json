@@ -252,13 +252,6 @@
     },
     "%(name)s declined": "%(name)s avslog",
     "Submit logs": "Skicka loggar",
-    "Enter a server name": "Ange ett servernamn",
-    "Looks good": "Ser bra ut",
-    "Can't find this server or its room list": "Kan inte hitta den här servern eller dess rumslista",
-    "Your server": "Din server",
-    "Add a new server": "Lägg till en ny server",
-    "Enter the name of a new server you want to explore.": "Ange namnet för en ny server du vill utforska.",
-    "Server name": "Servernamn",
     "Preparing to download logs": "Förbereder nedladdning av loggar",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Påminnelse: Din webbläsare stöds inte, så din upplevelse kan vara oförutsägbar.",
     "Unable to load commit detail: %(msg)s": "Kunde inte ladda commit-detalj: %(msg)s",
@@ -670,7 +663,6 @@
         "other": "Lägger till rum… (%(progress)s av %(count)s)"
     },
     "Not all selected were added": "Inte alla valda tillades",
-    "You are not allowed to view this server's rooms list": "Du tillåts inte att se den här serverns rumslista",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
     "Search for rooms or people": "Sök efter rum eller personer",
@@ -819,17 +811,7 @@
         "other": "%(count)s medlemmar"
     },
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "När du loggar ut kommer nycklarna att raderas från den här enheten, vilket betyder att du inte kommer kunna läsa krypterade meddelanden om du inte har nycklarna för dem på dina andra enheter, eller säkerhetskopierade dem till servern.",
-    "Show: Matrix rooms": "Visa: Matrixrum",
-    "Show: %(instance)s rooms (%(server)s)": "Visa: %(instance)s-rum (%(server)s)",
-    "Add new server…": "Lägg till ny server…",
-    "Remove server “%(roomServer)s”": "Fjärrserver \"%(roomServer)s\"",
     "Explore public spaces in the new search dialog": "Utforska offentliga utrymmen i den nya sökdialogen",
-    "Online community members": "Online-gemenskapsmedlemmar",
-    "Coworkers and teams": "Jobbkamrater och lag",
-    "Friends and family": "Vänner och familj",
-    "We'll help you get connected.": "Vi kommer att hjälpa dig få kontakt.",
-    "Who will you chat to the most?": "Vem vill du chatta med mest?",
-    "You're in": "Du är inne",
     "Saved Items": "Sparade föremål",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "Interactively verify by emoji": "Verifiera interaktivt med emoji",
@@ -1436,7 +1418,13 @@
         "send_dm": "Skicka ett direktmeddelande",
         "explore_rooms": "Utforska offentliga rum",
         "create_room": "Skapa en gruppchatt",
-        "create_account": "Skapa konto"
+        "create_account": "Skapa konto",
+        "use_case_heading1": "Du är inne",
+        "use_case_heading2": "Vem vill du chatta med mest?",
+        "use_case_heading3": "Vi kommer att hjälpa dig få kontakt.",
+        "use_case_personal_messaging": "Vänner och familj",
+        "use_case_work_messaging": "Jobbkamrater och lag",
+        "use_case_community_messaging": "Online-gemenskapsmedlemmar"
     },
     "settings": {
         "show_breadcrumbs": "Visa genvägar till nyligen visade rum över rumslistan",
@@ -4287,5 +4275,21 @@
     },
     "truncated_list_n_more": {
         "other": "Och %(count)s till…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Ange ett servernamn",
+            "network_dropdown_available_valid": "Ser bra ut",
+            "network_dropdown_available_invalid_forbidden": "Du tillåts inte att se den här serverns rumslista",
+            "network_dropdown_available_invalid": "Kan inte hitta den här servern eller dess rumslista",
+            "network_dropdown_your_server_description": "Din server",
+            "network_dropdown_remove_server_adornment": "Fjärrserver \"%(roomServer)s\"",
+            "network_dropdown_add_dialog_title": "Lägg till en ny server",
+            "network_dropdown_add_dialog_description": "Ange namnet för en ny server du vill utforska.",
+            "network_dropdown_add_dialog_placeholder": "Servernamn",
+            "network_dropdown_add_server_option": "Lägg till ny server…",
+            "network_dropdown_selected_label_instance": "Visa: %(instance)s-rum (%(server)s)",
+            "network_dropdown_selected_label": "Visa: Matrixrum"
+        }
     }
 }

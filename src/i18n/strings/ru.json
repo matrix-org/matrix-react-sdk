@@ -251,11 +251,6 @@
     "%(name)s declined": "%(name)s отказал(а)",
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
-    "Enter a server name": "Введите имя сервера",
-    "Looks good": "В порядке",
-    "Your server": "Ваш сервер",
-    "Add a new server": "Добавить сервер",
-    "Server name": "Имя сервера",
     "Destroy cross-signing keys?": "Уничтожить ключи кросс-подписи?",
     "Clear cross-signing keys": "Очистить ключи кросс-подписи",
     "Clear all data in this session?": "Очистить все данные в этом сеансе?",
@@ -275,10 +270,8 @@
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
     "Submit logs": "Отправить логи",
-    "Enter the name of a new server you want to explore.": "Введите имя нового сервера для просмотра.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
     "IRC display name width": "Ширина отображаемого имени IRC",
-    "Can't find this server or its room list": "Не можем найти этот сервер или его список комнат",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Очистка всех данных в этом сеансе является необратимой. Зашифрованные сообщения будут потеряны, если их ключи не были зарезервированы.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Ранее вы использовали более новую версию %(brand)s через этот сеанс. Чтобы снова использовать эту версию со сквозным шифрованием, вам нужно будет выйти из учётной записи и снова войти.",
@@ -700,7 +693,6 @@
     "Create a new space": "Создать новое пространство",
     "Want to add a new space instead?": "Хотите добавить новое пространство?",
     "Add existing space": "Добавить существующее пространство",
-    "You are not allowed to view this server's rooms list": "Вам не разрешено просматривать список комнат этого сервера",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -813,10 +805,6 @@
         "other": "Вы собираетесь удалить %(count)s сообщений от %(user)s. Это удалит их навсегда для всех в разговоре. Точно продолжить?"
     },
     "%(featureName)s Beta feedback": "%(featureName)s — отзыв о бета-версии",
-    "Show: Matrix rooms": "Показать: комнаты Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Показать: %(instance)s комнат (%(server)s)",
-    "Add new server…": "Добавить новый сервер…",
-    "Remove server “%(roomServer)s”": "Удалить сервер «%(roomServer)s»",
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -824,13 +812,7 @@
     "Live location ended": "Трансляция местоположения завершена",
     "Live location enabled": "Трансляция местоположения включена",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
-    "Coworkers and teams": "Коллеги и команды",
-    "Friends and family": "Друзья и семья",
-    "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
-    "We'll help you get connected.": "Мы поможем вам подключиться.",
-    "Online community members": "Участники сообщества в сети",
-    "You're in": "Вы в",
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
@@ -1381,7 +1363,13 @@
         "send_dm": "Отправить личное сообщение",
         "explore_rooms": "Просмотреть публичные комнаты",
         "create_room": "Создать комнату",
-        "create_account": "Создать учётную запись"
+        "create_account": "Создать учётную запись",
+        "use_case_heading1": "Вы в",
+        "use_case_heading2": "С кем вы будете общаться чаще всего?",
+        "use_case_heading3": "Мы поможем вам подключиться.",
+        "use_case_personal_messaging": "Друзья и семья",
+        "use_case_work_messaging": "Коллеги и команды",
+        "use_case_community_messaging": "Участники сообщества в сети"
     },
     "settings": {
         "show_breadcrumbs": "Показывать ссылки на недавние комнаты над списком комнат",
@@ -4034,5 +4022,21 @@
     },
     "truncated_list_n_more": {
         "other": "Еще %(count)s…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Введите имя сервера",
+            "network_dropdown_available_valid": "В порядке",
+            "network_dropdown_available_invalid_forbidden": "Вам не разрешено просматривать список комнат этого сервера",
+            "network_dropdown_available_invalid": "Не можем найти этот сервер или его список комнат",
+            "network_dropdown_your_server_description": "Ваш сервер",
+            "network_dropdown_remove_server_adornment": "Удалить сервер «%(roomServer)s»",
+            "network_dropdown_add_dialog_title": "Добавить сервер",
+            "network_dropdown_add_dialog_description": "Введите имя нового сервера для просмотра.",
+            "network_dropdown_add_dialog_placeholder": "Имя сервера",
+            "network_dropdown_add_server_option": "Добавить новый сервер…",
+            "network_dropdown_selected_label_instance": "Показать: %(instance)s комнат (%(server)s)",
+            "network_dropdown_selected_label": "Показать: комнаты Matrix"
+        }
     }
 }

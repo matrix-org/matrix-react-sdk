@@ -273,13 +273,6 @@
     "Clear cross-signing keys": "Elimina chiavi di firma incrociata",
     "%(name)s declined": "%(name)s ha rifiutato",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Per segnalare un problema di sicurezza relativo a Matrix, leggi la <a>Politica di divulgazione della sicurezza</a> di Matrix.org .",
-    "Enter a server name": "Inserisci il nome di un server",
-    "Looks good": "Sembra giusto",
-    "Can't find this server or its room list": "Impossibile trovare questo server o l'elenco delle sue stanze",
-    "Your server": "Il tuo server",
-    "Add a new server": "Aggiungi un nuovo server",
-    "Enter the name of a new server you want to explore.": "Inserisci il nome di un nuovo server che vuoi esplorare.",
-    "Server name": "Nome server",
     "a new master key signature": "una nuova firma della chiave principale",
     "a new cross-signing key signature": "una nuova firma della chiave a firma incrociata",
     "a device cross-signing signature": "una firma incrociata di dispositivo",
@@ -669,7 +662,6 @@
         "other": "Aggiunta stanze... (%(progress)s di %(count)s)"
     },
     "Not all selected were added": "Non tutti i selezionati sono stati aggiunti",
-    "You are not allowed to view this server's rooms list": "Non hai i permessi per vedere l'elenco di stanze del server",
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
     "Or send invite link": "O manda un collegamento di invito",
@@ -811,10 +803,6 @@
         "one": "%(count)s membro",
         "other": "%(count)s membri"
     },
-    "Show: Matrix rooms": "Mostra: stanze di Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Mostra: stanze di %(instance)s (%(server)s)",
-    "Add new server…": "Aggiungi nuovo server…",
-    "Remove server “%(roomServer)s”": "Rimuovi server “%(roomServer)s”",
     "Remove search filter for %(filter)s": "Rimuovi filtro di ricerca per %(filter)s",
     "Start a group chat": "Inizia una conversazione di gruppo",
     "Other options": "Altre opzioni",
@@ -824,12 +812,6 @@
     "Show spaces": "Mostra spazi",
     "Show rooms": "Mostra stanze",
     "Explore public spaces in the new search dialog": "Esplora gli spazi pubblici nella nuova finestra di ricerca",
-    "You're in": "Sei dentro",
-    "Online community members": "Membri di comunità online",
-    "Coworkers and teams": "Colleghi e squadre",
-    "Friends and family": "Amici e famiglia",
-    "We'll help you get connected.": "Vi aiuteremo a connettervi.",
-    "Who will you chat to the most?": "Con chi parlerai di più?",
     "Saved Items": "Elementi salvati",
     "Interactively verify by emoji": "Verifica interattivamente con emoji",
     "Manually verify by text": "Verifica manualmente con testo",
@@ -1441,7 +1423,13 @@
         "send_dm": "Invia un messaggio diretto",
         "explore_rooms": "Esplora le stanze pubbliche",
         "create_room": "Crea una chat di gruppo",
-        "create_account": "Crea account"
+        "create_account": "Crea account",
+        "use_case_heading1": "Sei dentro",
+        "use_case_heading2": "Con chi parlerai di più?",
+        "use_case_heading3": "Vi aiuteremo a connettervi.",
+        "use_case_personal_messaging": "Amici e famiglia",
+        "use_case_work_messaging": "Colleghi e squadre",
+        "use_case_community_messaging": "Membri di comunità online"
     },
     "settings": {
         "show_breadcrumbs": "Mostra scorciatoie per le stanze viste di recente sopra l'elenco stanze",
@@ -4354,5 +4342,21 @@
     },
     "truncated_list_n_more": {
         "other": "E altri %(count)s ..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Inserisci il nome di un server",
+            "network_dropdown_available_valid": "Sembra giusto",
+            "network_dropdown_available_invalid_forbidden": "Non hai i permessi per vedere l'elenco di stanze del server",
+            "network_dropdown_available_invalid": "Impossibile trovare questo server o l'elenco delle sue stanze",
+            "network_dropdown_your_server_description": "Il tuo server",
+            "network_dropdown_remove_server_adornment": "Rimuovi server “%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Aggiungi un nuovo server",
+            "network_dropdown_add_dialog_description": "Inserisci il nome di un nuovo server che vuoi esplorare.",
+            "network_dropdown_add_dialog_placeholder": "Nome server",
+            "network_dropdown_add_server_option": "Aggiungi nuovo server…",
+            "network_dropdown_selected_label_instance": "Mostra: stanze di %(instance)s (%(server)s)",
+            "network_dropdown_selected_label": "Mostra: stanze di Matrix"
+        }
     }
 }

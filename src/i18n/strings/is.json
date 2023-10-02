@@ -407,8 +407,6 @@
     "Notes": "Minnispunktar",
     "Want to add a new room instead?": "Viltu frekar bæta við nýrri spjallrás?",
     "Add existing rooms": "Bæta við fyrirliggjandi spjallrásum",
-    "Server name": "Heiti þjóns",
-    "Looks good": "Lítur vel út",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -450,10 +448,6 @@
     "Other spaces or rooms you might not know": "Önnur svæði sem þú gætir ekki vitað um",
     "Select spaces": "Veldu svæði",
     "Dial pad": "Talnaborð",
-    "Enter the name of a new server you want to explore.": "Sláðu inn nafn nýja netþjónsins sem þú vilt skoða.",
-    "Add a new server": "Bæta við nýjum þjóni",
-    "Your server": "Netþjónninn þinn",
-    "Can't find this server or its room list": "Fann ekki þennan netþjón eða spjallrásalista hans",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -563,7 +557,6 @@
     "Search for spaces": "Leita að svæðum",
     "Want to add a new space instead?": "Viltu frekar bæta við nýju svæði?",
     "Add existing space": "Bæta við fyrirliggjandi svæði",
-    "Enter a server name": "Settu inn nafn á þjóni",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
@@ -645,7 +638,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Öryggi dulritaðra skilaboða er tryggt með enda-í-enda dulritun. Einungis þú og viðtakendurnir hafa dulritunarlyklana til að lesa slík skilaboð.",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "Adding spaces has moved.": "Aðgerðin til að bæta við svæðum hefur verið flutt.",
-    "You are not allowed to view this server's rooms list": "Þú hefur ekki heimild til að skoða spjallrásalistann á þessum netþjóni",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "Upload %(count)s other files": {
         "one": "Senda inn %(count)s skrá til viðbótar",
@@ -691,7 +683,6 @@
         "one": "%(count)s meðlimur",
         "other": "%(count)s meðlimir"
     },
-    "Add new server…": "Bæta við nýjum þjóni…",
     "%(count)s participants": {
         "one": "1 þáttakandi",
         "other": "%(count)s þátttakendur"
@@ -705,12 +696,6 @@
     "Show rooms": "Sýna spjallrásir",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. <default>Notaðu sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s(</default> eða sýslaðu með þetta í <settings>stillingunum</settings>.",
     "Open room": "Opin spjallrás",
-    "Show: Matrix rooms": "Birta: Matrix-spjallrásir",
-    "Remove server “%(roomServer)s”": "Fjarlægja netþjóninn “%(roomServer)s”",
-    "Online community members": "Meðlimi samfélags á netinu",
-    "Coworkers and teams": "Samstarfsmenn og teymi",
-    "Friends and family": "Vinir og fjölskylda",
-    "We'll help you get connected.": "Við munum hjálpa þér að tengjast.",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
     "Live location error": "Villa í rauntímastaðsetningu",
@@ -718,9 +703,6 @@
     "Interactively verify by emoji": "Sannprófa gagnvirkt með táknmyndum",
     "Manually verify by text": "Sannreyna handvirkt með texta",
     "%(featureName)s Beta feedback": "%(featureName)s beta umsögn",
-    "Show: %(instance)s rooms (%(server)s)": "Sýna: %(instance)s spjallrásir (%(server)s)",
-    "Who will you chat to the most?": "Við hverja muntu helst spjalla?",
-    "You're in": "Þú ert inni",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Start a conversation with someone using their name or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi eða notandanafn (eins og <userId/>).",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
@@ -1270,7 +1252,13 @@
         "send_dm": "Senda bein skilaboð",
         "explore_rooms": "Kanna almenningsspjallrásir",
         "create_room": "Búa til hópspjall",
-        "create_account": "Stofna notandaaðgang"
+        "create_account": "Stofna notandaaðgang",
+        "use_case_heading1": "Þú ert inni",
+        "use_case_heading2": "Við hverja muntu helst spjalla?",
+        "use_case_heading3": "Við munum hjálpa þér að tengjast.",
+        "use_case_personal_messaging": "Vinir og fjölskylda",
+        "use_case_work_messaging": "Samstarfsmenn og teymi",
+        "use_case_community_messaging": "Meðlimi samfélags á netinu"
     },
     "settings": {
         "show_breadcrumbs": "Sýna flýtileiðir í nýskoðaðar spjallrásir fyrir ofan listann yfir spjallrásir",
@@ -3731,5 +3719,21 @@
     },
     "truncated_list_n_more": {
         "other": "Og %(count)s til viðbótar..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Settu inn nafn á þjóni",
+            "network_dropdown_available_valid": "Lítur vel út",
+            "network_dropdown_available_invalid_forbidden": "Þú hefur ekki heimild til að skoða spjallrásalistann á þessum netþjóni",
+            "network_dropdown_available_invalid": "Fann ekki þennan netþjón eða spjallrásalista hans",
+            "network_dropdown_your_server_description": "Netþjónninn þinn",
+            "network_dropdown_remove_server_adornment": "Fjarlægja netþjóninn “%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Bæta við nýjum þjóni",
+            "network_dropdown_add_dialog_description": "Sláðu inn nafn nýja netþjónsins sem þú vilt skoða.",
+            "network_dropdown_add_dialog_placeholder": "Heiti þjóns",
+            "network_dropdown_add_server_option": "Bæta við nýjum þjóni…",
+            "network_dropdown_selected_label_instance": "Sýna: %(instance)s spjallrásir (%(server)s)",
+            "network_dropdown_selected_label": "Birta: Matrix-spjallrásir"
+        }
     }
 }

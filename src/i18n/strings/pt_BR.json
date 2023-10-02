@@ -189,7 +189,6 @@
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
     "%(name)s wants to verify": "%(name)s solicita confirmação",
-    "Enter the name of a new server you want to explore.": "Digite o nome do novo servidor que você deseja explorar.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Por favor, diga-nos o que aconteceu de errado ou, ainda melhor, crie um bilhete de erro no GitHub que descreva o problema.",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "Você já usou uma versão mais recente do %(brand)s nesta sessão. Para usar esta versão novamente com a criptografia de ponta a ponta, você terá que se desconectar e entrar novamente.",
@@ -214,11 +213,6 @@
     "edited": "editado",
     "Submit logs": "Enviar relatórios",
     "e.g. my-room": "por exemplo: minha-sala",
-    "Enter a server name": "Digite um nome de servidor",
-    "Can't find this server or its room list": "Não foi possível encontrar este servidor ou sua lista de salas",
-    "Your server": "Seu servidor",
-    "Add a new server": "Adicionar um novo servidor",
-    "Server name": "Nome do servidor",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Lembrete: seu navegador não é compatível; portanto, sua experiência pode ser imprevisível.",
     "Notes": "Notas",
     "Removing…": "Removendo…",
@@ -229,7 +223,6 @@
     "Server did not return valid authentication information.": "O servidor não retornou informações de autenticação válidas.",
     "Integrations are disabled": "As integrações estão desativadas",
     "Integrations not allowed": "As integrações não estão permitidas",
-    "Looks good": "Muito bem",
     "Close dialog": "Fechar caixa de diálogo",
     "There was a problem communicating with the server. Please try again.": "Ocorreu um problema na comunicação com o servidor. Por favor, tente novamente.",
     "Server did not require any authentication": "O servidor não exigiu autenticação",
@@ -656,7 +649,6 @@
     },
     "Create a new space": "Criar um novo espaço",
     "Add existing space": "Adicionar espaço existente",
-    "You are not allowed to view this server's rooms list": "Você não tem a permissão para ver a lista de salas deste servidor",
     "%(count)s people you know have already joined": {
         "one": "%(count)s pessoa que você conhece já entrou",
         "other": "%(count)s pessoas que você conhece já entraram"
@@ -686,7 +678,6 @@
     "Leave all rooms": "Sair de todas as salas",
     "Don't leave any rooms": "Não saia de nenhuma sala",
     "Public rooms": "Salas públicas",
-    "Add new server…": "Adicionar um novo servidor…",
     "%(count)s participants": {
         "other": "%(count)s participantes",
         "one": "1 participante"
@@ -3249,5 +3240,18 @@
     },
     "truncated_list_n_more": {
         "other": "E %(count)s mais..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Digite um nome de servidor",
+            "network_dropdown_available_valid": "Muito bem",
+            "network_dropdown_available_invalid_forbidden": "Você não tem a permissão para ver a lista de salas deste servidor",
+            "network_dropdown_available_invalid": "Não foi possível encontrar este servidor ou sua lista de salas",
+            "network_dropdown_your_server_description": "Seu servidor",
+            "network_dropdown_add_dialog_title": "Adicionar um novo servidor",
+            "network_dropdown_add_dialog_description": "Digite o nome do novo servidor que você deseja explorar.",
+            "network_dropdown_add_dialog_placeholder": "Nome do servidor",
+            "network_dropdown_add_server_option": "Adicionar um novo servidor…"
+        }
     }
 }

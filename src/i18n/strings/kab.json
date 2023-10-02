@@ -51,7 +51,6 @@
     "Yesterday": "Iḍelli",
     "edited": "yettwaẓreg",
     "collapse": "fneẓ",
-    "Server name": "Isem n uqeddac",
     "Close dialog": "Mdel adiwenni",
     "Notes": "Tamawin",
     "Unavailable": "Ulac",
@@ -137,7 +136,6 @@
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
-    "Enter a server name": "Sekcem isem n uqeddac",
     "The following users may not exist": "Iseqdacen i d-iteddun yezmer ad ilin ulac-iten",
     "Invite anyway": "Ɣas akken nced-d",
     "Preparing to send logs": "Aheyyi n tuzna n yiɣmisen",
@@ -195,11 +193,6 @@
     "Bell": "Anayna",
     "Delete Widget": "Kkes awiǧit",
     "expand": "snefli",
-    "Looks good": "Ayagi yettban yelha",
-    "Can't find this server or its room list": "D awezɣi ad d-naf aqeddac-a neɣ tabdart-is n texxamt",
-    "Your server": "Aqeddac-ik·im",
-    "Add a new server": "Rnu aqeddac amaynut",
-    "Enter the name of a new server you want to explore.": "Sekcem isem n uqeddac amaynut i tebɣiḍ ad tesnirmeḍ.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Seqdec aqeddac n timagit i uncad s yimayl. <default>Seqdec (%(defaultIdentityServerName)s) amezwer</default> neɣ sefrek deg <settings>yiɣewwaren</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Seqdec aqeddac n timagit i uncad s yimayl. Sefrek deg <settings>yiɣewwaren</settings>.",
     "You signed in to a new session without verifying it:": "Teqqneḍ ɣer tɣimit war ma tesneqdeḍ-tt:",
@@ -2290,5 +2283,16 @@
     "language_dropdown_label": "Tabdart n udrurem n tutlayin",
     "truncated_list_n_more": {
         "other": "D %(count)s ugar..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Sekcem isem n uqeddac",
+            "network_dropdown_available_valid": "Ayagi yettban yelha",
+            "network_dropdown_available_invalid": "D awezɣi ad d-naf aqeddac-a neɣ tabdart-is n texxamt",
+            "network_dropdown_your_server_description": "Aqeddac-ik·im",
+            "network_dropdown_add_dialog_title": "Rnu aqeddac amaynut",
+            "network_dropdown_add_dialog_description": "Sekcem isem n uqeddac amaynut i tebɣiḍ ad tesnirmeḍ.",
+            "network_dropdown_add_dialog_placeholder": "Isem n uqeddac"
+        }
     }
 }

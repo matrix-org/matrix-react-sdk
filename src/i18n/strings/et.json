@@ -29,7 +29,6 @@
     "Create new room": "Loo uus jututuba",
     "collapse": "ahenda",
     "expand": "laienda",
-    "Enter the name of a new server you want to explore.": "Sisesta uue serveri nimi mida tahad uurida.",
     "Remove recent messages by %(user)s": "Eemalda %(user)s hiljutised sõnumid",
     "Remove %(count)s messages": {
         "other": "Eemalda %(count)s sõnumit",
@@ -66,9 +65,6 @@
     "%(name)s wants to verify": "%(name)s soovib verifitseerida",
     "edited": "muudetud",
     "Submit logs": "Saada rakenduse logid",
-    "Your server": "Sinu server",
-    "Add a new server": "Lisa uus server",
-    "Server name": "Serveri nimi",
     "Incompatible Database": "Mitteühilduv andmebaas",
     "Continue With Encryption Disabled": "Jätka ilma krüptimiseta",
     "%(duration)ss": "%(duration)s sekund(it)",
@@ -82,7 +78,6 @@
     },
     "Join Room": "Liitu jututoaga",
     "e.g. my-room": "näiteks minu-jututuba",
-    "Can't find this server or its room list": "Ei leia seda serverit ega tema jututubade loendit",
     "Sun": "Pühapäev",
     "Mon": "Esmaspäev",
     "Tue": "Teisipäev",
@@ -201,8 +196,6 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s sessiooni võtme taastamine õnnestus",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Hoiatus</b>: sa peaksid võtmete varunduse seadistama vaid usaldusväärsest arvutist.",
     "Email (optional)": "E-posti aadress (kui soovid)",
-    "Enter a server name": "Sisesta serveri nimi",
-    "Looks good": "Tundub õige",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posti teel kutse saatmiseks kasuta isikutuvastusserverit. Võid kasutada <default>vaikimisi serverit (%(defaultIdentityServerName)s)</default> või määrata muud serverid <settings>seadistustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Kasutajatele e-posti teel kutse saatmiseks pruugi isikutuvastusserverit. Täpsemalt saad seda <settings>hallata seadistustes</settings>.",
     "The following users may not exist": "Järgnevaid kasutajaid ei pruugi olla olemas",
@@ -669,7 +662,6 @@
         "other": "Lisan jututubasid... (%(progress)s/%(count)s)"
     },
     "Not all selected were added": "Kõiki valituid me ei lisanud",
-    "You are not allowed to view this server's rooms list": "Sul puuduvad õigused selle serveri jututubade loendi vaatamiseks",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
     "Or send invite link": "Või saada kutse link",
@@ -816,21 +808,11 @@
         "one": "%(count)s liige",
         "other": "%(count)s liiget"
     },
-    "Show: Matrix rooms": "Näita: Matrix'i jututoad",
-    "Show: %(instance)s rooms (%(server)s)": "Näita: %(instance)s jututuba %(server)s serveris",
-    "Add new server…": "Lisa uus server…",
-    "Remove server “%(roomServer)s”": "Eemalda server „%(roomServer)s“",
     "You cannot search for rooms that are neither a room nor a space": "Sa ei saa otsida sellised objekte, mis pole ei jututoad ega kogukonnad",
     "Show spaces": "Näita kogukondi",
     "Show rooms": "Näita jututubasid",
     "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet",
-    "Online community members": "Võrgupõhise kogukonna liikmed",
-    "Coworkers and teams": "Kolleegid ja töörühmad",
-    "Friends and family": "Perekond ja sõbrad",
-    "We'll help you get connected.": "Me aitame sind Matrix'i võrgu kasutamisel.",
-    "Who will you chat to the most?": "Kellega sa kõige rohkem vestled?",
     "Saved Items": "Salvestatud failid",
-    "You're in": "Kõik on tehtud",
     "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
     "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
@@ -1440,7 +1422,13 @@
         "send_dm": "Saada otsesõnum",
         "explore_rooms": "Sirvi avalikke jututubasid",
         "create_room": "Loo rühmavestlus",
-        "create_account": "Loo kasutajakonto"
+        "create_account": "Loo kasutajakonto",
+        "use_case_heading1": "Kõik on tehtud",
+        "use_case_heading2": "Kellega sa kõige rohkem vestled?",
+        "use_case_heading3": "Me aitame sind Matrix'i võrgu kasutamisel.",
+        "use_case_personal_messaging": "Perekond ja sõbrad",
+        "use_case_work_messaging": "Kolleegid ja töörühmad",
+        "use_case_community_messaging": "Võrgupõhise kogukonna liikmed"
     },
     "settings": {
         "show_breadcrumbs": "Näita viimati külastatud jututubade viiteid jututubade loendi kohal",
@@ -4347,5 +4335,21 @@
     },
     "truncated_list_n_more": {
         "other": "Ja %(count)s muud..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Sisesta serveri nimi",
+            "network_dropdown_available_valid": "Tundub õige",
+            "network_dropdown_available_invalid_forbidden": "Sul puuduvad õigused selle serveri jututubade loendi vaatamiseks",
+            "network_dropdown_available_invalid": "Ei leia seda serverit ega tema jututubade loendit",
+            "network_dropdown_your_server_description": "Sinu server",
+            "network_dropdown_remove_server_adornment": "Eemalda server „%(roomServer)s“",
+            "network_dropdown_add_dialog_title": "Lisa uus server",
+            "network_dropdown_add_dialog_description": "Sisesta uue serveri nimi mida tahad uurida.",
+            "network_dropdown_add_dialog_placeholder": "Serveri nimi",
+            "network_dropdown_add_server_option": "Lisa uus server…",
+            "network_dropdown_selected_label_instance": "Näita: %(instance)s jututuba %(server)s serveris",
+            "network_dropdown_selected_label": "Näita: Matrix'i jututoad"
+        }
     }
 }

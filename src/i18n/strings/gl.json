@@ -93,7 +93,6 @@
     "Sign in with SSO": "Conecta utilizando SSO",
     "Deactivate account": "Desactivar conta",
     "Direct Messages": "Mensaxes Directas",
-    "Enter the name of a new server you want to explore.": "Escribe o nome do novo servidor que queres explorar.",
     "Command Help": "Comando Axuda",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
     "Room Settings - %(roomName)s": "Axustes da sala - %(roomName)s",
@@ -199,12 +198,6 @@
     "edited": "editada",
     "Submit logs": "Enviar rexistro",
     "e.g. my-room": "ex. a-miña-sala",
-    "Enter a server name": "Escribe un nome de servidor",
-    "Looks good": "Pinta ben",
-    "Can't find this server or its room list": "Non se atopa o servidor ou a súa lista de salas",
-    "Your server": "O teu servidor",
-    "Add a new server": "Engadir novo servidor",
-    "Server name": "Nome do servidor",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Usa un servidor de identidade para convidar por email. <default>Usa o valor por defecto (%(defaultIdentityServerName)s)</default> ou xestionao en <settings>Axustes</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Usa un servidor de identidade para convidar por email. Xestionao en <settings>Axustes</settings>.",
     "The following users may not exist": "As seguintes usuarias poderían non existir",
@@ -669,7 +662,6 @@
         "other": "Engadindo salas... (%(progress)s de %(count)s)"
     },
     "Not all selected were added": "Non se engadiron tódolos seleccionados",
-    "You are not allowed to view this server's rooms list": "Non tes permiso para ver a lista de salas deste servidor",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
     "Or send invite link": "Ou envía ligazón de convite",
@@ -816,20 +808,10 @@
         "one": "%(count)s Participante",
         "other": "%(count)s Participantes"
     },
-    "Show: Matrix rooms": "Mostrar: salas Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Mostrar: salas de %(instance)s (%(server)s)",
-    "Add new server…": "Engadir novo servidor…",
-    "Remove server “%(roomServer)s”": "Eliminar servidor \"%(roomServer)s\"",
     "You cannot search for rooms that are neither a room nor a space": "Non podes buscar salas que non son nin unha sala nin un espazo",
     "Show spaces": "Mostrar espazos",
     "Show rooms": "Mostrar salas",
     "Explore public spaces in the new search dialog": "Explorar espazos públicos no novo diálogo de busca",
-    "Online community members": "Membros de comunidades en liña",
-    "Coworkers and teams": "Persoas e equipos do traballo",
-    "We'll help you get connected.": "Axudarémosche a atopalos.",
-    "Friends and family": "Amizades e familia",
-    "Who will you chat to the most?": "Con quen vas falar máis a miúdo?",
-    "You're in": "Estás dentro",
     "Saved Items": "Elementos gardados",
     "Interactively verify by emoji": "Verificar interactivamente usando emoji",
     "Manually verify by text": "Verificar manualmente con texto",
@@ -1352,7 +1334,13 @@
         "send_dm": "Envía unha Mensaxe Directa",
         "explore_rooms": "Explorar Salas Públicas",
         "create_room": "Crear unha Conversa en Grupo",
-        "create_account": "Crea unha conta"
+        "create_account": "Crea unha conta",
+        "use_case_heading1": "Estás dentro",
+        "use_case_heading2": "Con quen vas falar máis a miúdo?",
+        "use_case_heading3": "Axudarémosche a atopalos.",
+        "use_case_personal_messaging": "Amizades e familia",
+        "use_case_work_messaging": "Persoas e equipos do traballo",
+        "use_case_community_messaging": "Membros de comunidades en liña"
     },
     "settings": {
         "show_breadcrumbs": "Mostrar atallos a salas vistas recentemente enriba da lista de salas",
@@ -3851,5 +3839,21 @@
     },
     "truncated_list_n_more": {
         "other": "E %(count)s máis..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Escribe un nome de servidor",
+            "network_dropdown_available_valid": "Pinta ben",
+            "network_dropdown_available_invalid_forbidden": "Non tes permiso para ver a lista de salas deste servidor",
+            "network_dropdown_available_invalid": "Non se atopa o servidor ou a súa lista de salas",
+            "network_dropdown_your_server_description": "O teu servidor",
+            "network_dropdown_remove_server_adornment": "Eliminar servidor \"%(roomServer)s\"",
+            "network_dropdown_add_dialog_title": "Engadir novo servidor",
+            "network_dropdown_add_dialog_description": "Escribe o nome do novo servidor que queres explorar.",
+            "network_dropdown_add_dialog_placeholder": "Nome do servidor",
+            "network_dropdown_add_server_option": "Engadir novo servidor…",
+            "network_dropdown_selected_label_instance": "Mostrar: salas de %(instance)s (%(server)s)",
+            "network_dropdown_selected_label": "Mostrar: salas Matrix"
+        }
     }
 }

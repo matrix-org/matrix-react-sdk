@@ -270,13 +270,6 @@
     "Ask this user to verify their session, or manually verify it below.": "Kërkojini këtij përdoruesi të verifikojë sesionin e vet, ose ta verifikojë më poshtë dorazi.",
     "%(name)s declined": "%(name)s hodhi poshtë",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
-    "Enter a server name": "Jepni një emër shërbyesi",
-    "Looks good": "Duket mirë",
-    "Can't find this server or its room list": "S’gjendet dot ky shërbyes ose lista e dhomave të tij",
-    "Your server": "Shërbyesi juaj",
-    "Add a new server": "Shtoni një shërbyes të ri",
-    "Enter the name of a new server you want to explore.": "Jepni emrin e një shërbyesi të ri që doni të eksploroni.",
-    "Server name": "Emër shërbyesi",
     "a new master key signature": "një nënshkrim i ri kyçi të përgjithshëm",
     "a new cross-signing key signature": "një nënshkrim i ri kyçi <em>cross-signing</em>",
     "a device cross-signing signature": "një nënshkrim <em>cross-signing</em> pajisjeje",
@@ -667,7 +660,6 @@
         "other": "Po shtohen dhoma… (%(progress)s nga %(count)s)"
     },
     "Not all selected were added": "S’u shtuan të gjithë të përzgjedhurit",
-    "You are not allowed to view this server's rooms list": "S’keni leje të shihni listën e dhomave të këtij shërbyesi",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -807,10 +799,6 @@
     "You will not be able to reactivate your account": "S’do të jeni në gjendje të riaktivizoni llogarinë tuaj",
     "Confirm that you would like to deactivate your account. If you proceed:": "Ripohoni se doni të çaktivizohet llogaria juaj. Nëse ecni më tej:",
     "To continue, please enter your account password:": "Që të vazhdohet, ju lutemi, jepni fjalëkalimin e llogarisë tuaj:",
-    "Show: Matrix rooms": "Shfaq: Dhoma Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Shfaq: Dhoma %(instance)s (%(server)s)",
-    "Add new server…": "Shtoni shërbyes të ri…",
-    "Remove server “%(roomServer)s”": "Hiqe shërbyesin “%(roomServer)s”",
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
@@ -819,11 +807,6 @@
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kur dilni nga llogaria, këto kyçe do të fshihen te kjo pajisje, që do të thotë se s’do të jeni në gjendje të lexoni mesazhe të fshehtëzuar, veç në paçi kyçet për ta në pajisjet tuaja të tjera, ose të kopjeruajtur te shërbyesi.",
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Mesazhet tuaj të dikurshëm do të jenë ende të dukshëm për personat që i morën, njësoj si email-et që dërgonit dikur. Doni që mesazhet të jenë të fshehur për persona që hyjnë në dhomë në të ardhmen?",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Do të hiqeni nga shërbyesi i identiteteve: shokët tuaj s’do të jenë më në gjendje t’ju gjejnë përmes email-it apo numrit tuaj të telefonit",
-    "Online community members": "Anëtarë bashkësie internetore",
-    "Coworkers and teams": "Kolegë dhe ekipe",
-    "Friends and family": "Shokë dhe familje",
-    "We'll help you get connected.": "Do t’ju ndihmojmë të lidheni.",
-    "Who will you chat to the most?": "Me kë do të bisedoni më të shumtën?",
     "Saved Items": "Zëra të Ruajtur",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "Interactively verify by emoji": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh",
@@ -831,7 +814,6 @@
     "View List": "Shihni Listën",
     "View list": "Shihni listën",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ose %(recoveryFile)s",
-    "You're in": "Kaq qe",
     "toggle event": "shfaqe/fshihe aktin",
     "Output devices": "Pajisje output-i",
     "Input devices": "Pajisje input-i",
@@ -1422,7 +1404,13 @@
         "send_dm": "Dërgoni Mesazh të Drejtpërdrejtë",
         "explore_rooms": "Eksploroni Dhoma Publike",
         "create_room": "Krijoni një Fjalosje Grupi",
-        "create_account": "Krijoni llogari"
+        "create_account": "Krijoni llogari",
+        "use_case_heading1": "Kaq qe",
+        "use_case_heading2": "Me kë do të bisedoni më të shumtën?",
+        "use_case_heading3": "Do t’ju ndihmojmë të lidheni.",
+        "use_case_personal_messaging": "Shokë dhe familje",
+        "use_case_work_messaging": "Kolegë dhe ekipe",
+        "use_case_community_messaging": "Anëtarë bashkësie internetore"
     },
     "settings": {
         "show_breadcrumbs": "Shfaq te lista e dhomave shkurtore për te dhoma të para së fundi",
@@ -4240,5 +4228,21 @@
     },
     "truncated_list_n_more": {
         "other": "Dhe %(count)s të tjerë…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Jepni një emër shërbyesi",
+            "network_dropdown_available_valid": "Duket mirë",
+            "network_dropdown_available_invalid_forbidden": "S’keni leje të shihni listën e dhomave të këtij shërbyesi",
+            "network_dropdown_available_invalid": "S’gjendet dot ky shërbyes ose lista e dhomave të tij",
+            "network_dropdown_your_server_description": "Shërbyesi juaj",
+            "network_dropdown_remove_server_adornment": "Hiqe shërbyesin “%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Shtoni një shërbyes të ri",
+            "network_dropdown_add_dialog_description": "Jepni emrin e një shërbyesi të ri që doni të eksploroni.",
+            "network_dropdown_add_dialog_placeholder": "Emër shërbyesi",
+            "network_dropdown_add_server_option": "Shtoni shërbyes të ri…",
+            "network_dropdown_selected_label_instance": "Shfaq: Dhoma %(instance)s (%(server)s)",
+            "network_dropdown_selected_label": "Shfaq: Dhoma Matrix"
+        }
     }
 }

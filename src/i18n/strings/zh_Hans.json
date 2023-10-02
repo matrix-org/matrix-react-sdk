@@ -222,13 +222,6 @@
     "edited": "已编辑",
     "Submit logs": "提交日志",
     "e.g. my-room": "例如 my-room",
-    "Enter a server name": "请输入服务器名",
-    "Looks good": "看着不错",
-    "Can't find this server or its room list": "找不到此服务器或其房间列表",
-    "Your server": "你的服务器",
-    "Add a new server": "添加新服务器",
-    "Enter the name of a new server you want to explore.": "输入你想探索的新服务器的服务器名。",
-    "Server name": "服务器名",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "使用一个身份服务器以通过邮箱邀请。<default>使用默认（%(defaultIdentityServerName)s）</default>或在<settings>设置</settings>中管理。",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "使用一个身份服务器以通过邮箱邀请。在<settings>设置</settings>中管理。",
     "Close dialog": "关闭对话框",
@@ -654,7 +647,6 @@
         "other": "正在新增房间……（%(count)s 中的第 %(progress)s 个）"
     },
     "Not all selected were added": "并非所有选中的都被添加",
-    "You are not allowed to view this server's rooms list": "你不被允许查看此服务器的房间列表",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -758,7 +750,6 @@
         "other": "%(count)s 名参与者",
         "one": "一名参与者"
     },
-    "Add new server…": "添加新的服务器…",
     "Verify other device": "验证其他设备",
     "Saved Items": "已保存的项目",
     "%(members)s and %(last)s": "%(members)s和%(last)s",
@@ -784,15 +775,10 @@
     "Show rooms": "显示房间",
     "Show spaces": "显示空间",
     "You cannot search for rooms that are neither a room nor a space": "你无法搜索既不是房间也不是空间的房间",
-    "Who will you chat to the most?": "你会和谁聊得最多？",
     "We'll help you get connected.": "",
-    "Friends and family": "朋友和家人",
-    "Coworkers and teams": "同事和团队",
-    "Online community members": "在线社群成员",
     "You will not be able to reactivate your account": "你将无法重新激活你的账户",
     "Preserve system messages": "保留系统消息",
     "Remove them from everything I'm able to": "",
-    "Remove server “%(roomServer)s”": "移除服务器“%(roomServer)s”",
     "Unsent": "未发送",
     "Search Dialog": "搜索对话",
     "Join %(roomAddress)s": "加入%(roomAddress)s",
@@ -817,8 +803,6 @@
     "Close sidebar": "关闭侧边栏",
     "Manually verify by text": "用文本手动验证",
     "Interactively verify by emoji": "用表情符号交互式验证",
-    "Show: %(instance)s rooms (%(server)s)": "显示：%(instance)s房间（%(server)s）",
-    "Show: Matrix rooms": "显示：Matrix房间",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "若你也想移除关于此用户的系统消息（例如，成员更改、用户资料更改……），则取消勾选",
     "common": {
@@ -1352,7 +1336,11 @@
         "send_dm": "发送私聊",
         "explore_rooms": "探索公共房间",
         "create_room": "创建一个群聊",
-        "create_account": "创建账户"
+        "create_account": "创建账户",
+        "use_case_heading2": "你会和谁聊得最多？",
+        "use_case_personal_messaging": "朋友和家人",
+        "use_case_work_messaging": "同事和团队",
+        "use_case_community_messaging": "在线社群成员"
     },
     "settings": {
         "show_breadcrumbs": "在房间列表上方显示最近浏览过的房间的快捷方式",
@@ -3924,5 +3912,21 @@
     },
     "truncated_list_n_more": {
         "other": "和 %(count)s 个其他…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "请输入服务器名",
+            "network_dropdown_available_valid": "看着不错",
+            "network_dropdown_available_invalid_forbidden": "你不被允许查看此服务器的房间列表",
+            "network_dropdown_available_invalid": "找不到此服务器或其房间列表",
+            "network_dropdown_your_server_description": "你的服务器",
+            "network_dropdown_remove_server_adornment": "移除服务器“%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "添加新服务器",
+            "network_dropdown_add_dialog_description": "输入你想探索的新服务器的服务器名。",
+            "network_dropdown_add_dialog_placeholder": "服务器名",
+            "network_dropdown_add_server_option": "添加新的服务器…",
+            "network_dropdown_selected_label_instance": "显示：%(instance)s房间（%(server)s）",
+            "network_dropdown_selected_label": "显示：Matrix房间"
+        }
     }
 }

@@ -511,16 +511,9 @@
     "Switch theme": "Temayı değiştir",
     "Keys restored": "Anahtarlar geri yüklendi",
     "Submit logs": "Günlükleri kaydet",
-    "Server name": "Sunucu adı",
-    "Your server": "Senin sunucun",
-    "Looks good": "İyi görünüyor",
     "Transfer": "Aktar",
     "Hold": "Beklet",
     "Resume": "Devam et",
-    "Enter a server name": "Sunucu adı girin",
-    "Can't find this server or its room list": "Sunucuda veya oda listesinde bulunamıyor",
-    "Add a new server": "Yeni sunucu ekle",
-    "Enter the name of a new server you want to explore.": "Keşfetmek istediğiniz sunucunun adını girin.",
     "Preparing to download logs": "Loglar indirilmeye hazırlanıyor",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Hatırlatma:Tarayıcınız desteklenmiyor, deneyiminiz öngörülemiyor.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Çok sayıda ileti için bu biraz sürebilir. Lütfen bu sürede kullandığınız istemciyi yenilemeyin.",
@@ -2324,5 +2317,16 @@
     "language_dropdown_label": "Dil Listesi",
     "truncated_list_n_more": {
         "other": "ve %(count)s kez daha..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Sunucu adı girin",
+            "network_dropdown_available_valid": "İyi görünüyor",
+            "network_dropdown_available_invalid": "Sunucuda veya oda listesinde bulunamıyor",
+            "network_dropdown_your_server_description": "Senin sunucun",
+            "network_dropdown_add_dialog_title": "Yeni sunucu ekle",
+            "network_dropdown_add_dialog_description": "Keşfetmek istediğiniz sunucunun adını girin.",
+            "network_dropdown_add_dialog_placeholder": "Sunucu adı"
+        }
     }
 }

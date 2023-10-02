@@ -261,14 +261,6 @@
     "Create a new space": "Tạo space mới",
     "Want to add a new space instead?": "Bạn muốn thêm một space mới thay thế?",
     "Add existing space": "Thêm space hiện có",
-    "Server name": "Tên máy chủ",
-    "Enter the name of a new server you want to explore.": "Nhập tên của một máy chủ mới mà bạn muốn khám phá.",
-    "Add a new server": "Thêm máy chủ mới",
-    "Your server": "Máy chủ của bạn",
-    "Can't find this server or its room list": "Không thể tìm thấy máy chủ này hoặc danh sách phòng của nó",
-    "You are not allowed to view this server's rooms list": "Bạn không được phép xem danh sách phòng của máy chủ này",
-    "Looks good": "Có vẻ ổn",
-    "Enter a server name": "Nhập tên máy chủ",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
     "Use your Security Key to continue.": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
     "Security Key": "Chìa khóa bảo mật",
@@ -803,13 +795,9 @@
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
-    "Coworkers and teams": "Đồng nghiệp và nhóm",
-    "Online community members": "Thành viên cộng đồng trực tuyến",
     "Confirm that you would like to deactivate your account. If you proceed:": "Xác nhận bạn muốn vô hiệu hóa tài khoản. Nếu bạn tiếp tục:",
     "You will leave all rooms and DMs that you are in": "Bạn sẽ rời tất cả phòng và tin nhắn trực tiếp mà bạn đã tham gia",
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Bạn sẽ bị xóa khỏi máy chủ định danh: bạn bè của bạn sẽ không tìm thấy bạn bằng địa chỉ thư điện tử hay số điện thoại",
-    "Show: Matrix rooms": "Hiện: Phòng Matrix",
-    "Friends and family": "Bạn bè và gia đình",
     "Adding…": "Đang thêm…",
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Không ai có thể dùng lại tên người dùng của bạn (MXID), kể cả bạn: tên người dùng này sẽ trở thành không có sẵn",
     "<w>WARNING:</w> <description/>": "",
@@ -1359,7 +1347,10 @@
         "send_dm": "Gửi tin nhắn trực tiếp",
         "explore_rooms": "Khám phá các phòng chung",
         "create_room": "Tạo một cuộc trò chuyện nhóm",
-        "create_account": "Tạo tài khoản"
+        "create_account": "Tạo tài khoản",
+        "use_case_personal_messaging": "Bạn bè và gia đình",
+        "use_case_work_messaging": "Đồng nghiệp và nhóm",
+        "use_case_community_messaging": "Thành viên cộng đồng trực tuyến"
     },
     "settings": {
         "show_breadcrumbs": "Hiển thị shortcuts cho các phòng đã xem gần đây phía trên danh sách phòng",
@@ -4048,5 +4039,18 @@
     },
     "truncated_list_n_more": {
         "other": "Và %(count)s thêm…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Nhập tên máy chủ",
+            "network_dropdown_available_valid": "Có vẻ ổn",
+            "network_dropdown_available_invalid_forbidden": "Bạn không được phép xem danh sách phòng của máy chủ này",
+            "network_dropdown_available_invalid": "Không thể tìm thấy máy chủ này hoặc danh sách phòng của nó",
+            "network_dropdown_your_server_description": "Máy chủ của bạn",
+            "network_dropdown_add_dialog_title": "Thêm máy chủ mới",
+            "network_dropdown_add_dialog_description": "Nhập tên của một máy chủ mới mà bạn muốn khám phá.",
+            "network_dropdown_add_dialog_placeholder": "Tên máy chủ",
+            "network_dropdown_selected_label": "Hiện: Phòng Matrix"
+        }
     }
 }

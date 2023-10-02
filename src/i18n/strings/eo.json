@@ -273,13 +273,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Ĉi tio kutime influas nur traktadon de la ĉambro de la servilo. Se vi spertas problemojn pri %(brand)s, bonvolu <a>raporti problemon</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vi gradaltigos ĉi tiun ĉambron de <oldVersion /> al <newVersion />.",
     "Verification Request": "Kontrolpeto",
-    "Enter a server name": "Enigu nomon de servilo",
-    "Looks good": "Ŝajnas en ordo",
-    "Can't find this server or its room list": "Ne povas trovi ĉi tiun servilon aŭ ĝian liston de ĉambroj",
-    "Your server": "Via servilo",
-    "Add a new server": "Aldoni novan servilon",
-    "Enter the name of a new server you want to explore.": "Enigu la nomon de nova servilo, kiun vi volas esplori.",
-    "Server name": "Nomo de servilo",
     "a new master key signature": "nova ĉefŝlosila subskribo",
     "a new cross-signing key signature": "nova subskribo de delega ŝlosilo",
     "a device cross-signing signature": "delega subskribo de aparato",
@@ -660,7 +653,6 @@
         "other": "Aldonante ĉambrojn… (%(progress)s el %(count)s)"
     },
     "Not all selected were added": "Ne ĉiuj elektitoj aldoniĝis",
-    "You are not allowed to view this server's rooms list": "Vi ne rajtas vidi liston de ĉambroj de tu ĉi servilo",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Sending": "Sendante",
@@ -3302,5 +3294,17 @@
     },
     "truncated_list_n_more": {
         "other": "Kaj %(count)s pliaj…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Enigu nomon de servilo",
+            "network_dropdown_available_valid": "Ŝajnas en ordo",
+            "network_dropdown_available_invalid_forbidden": "Vi ne rajtas vidi liston de ĉambroj de tu ĉi servilo",
+            "network_dropdown_available_invalid": "Ne povas trovi ĉi tiun servilon aŭ ĝian liston de ĉambroj",
+            "network_dropdown_your_server_description": "Via servilo",
+            "network_dropdown_add_dialog_title": "Aldoni novan servilon",
+            "network_dropdown_add_dialog_description": "Enigu la nomon de nova servilo, kiun vi volas esplori.",
+            "network_dropdown_add_dialog_placeholder": "Nomo de servilo"
+        }
     }
 }

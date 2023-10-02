@@ -95,18 +95,15 @@
     },
     "Direct Messages": "Folk",
     "Invalid theme schema.": "",
-    "Can't find this server or its room list": "Klarde ikkje å finna tenaren eller romkatalogen til den",
     "Upload completed": "Opplasting fullført",
     "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
-    "Enter the name of a new server you want to explore.": "Skriv inn namn på ny tenar du ynskjer å utforske.",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
-    "Add a new server": "Legg til ein ny tenar",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte.",
     "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
     "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
@@ -1344,5 +1341,12 @@
     "General failure": "Generell feil",
     "truncated_list_n_more": {
         "other": "Og %(count)s til..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_available_invalid": "Klarde ikkje å finna tenaren eller romkatalogen til den",
+            "network_dropdown_add_dialog_title": "Legg til ein ny tenar",
+            "network_dropdown_add_dialog_description": "Skriv inn namn på ny tenar du ynskjer å utforske."
+        }
     }
 }

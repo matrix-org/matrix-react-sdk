@@ -50,7 +50,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Server name": "Títol del servidor",
     "Notes": "Nòtas",
     "Unavailable": "Pas disponible",
     "Changelog": "Istoric dels cambiaments (Changelog)",
@@ -428,5 +427,10 @@
     },
     "emoji_picker": {
         "cancel_search_label": "Anullar la recèrca"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_add_dialog_placeholder": "Títol del servidor"
+        }
     }
 }

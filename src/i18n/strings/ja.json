@@ -136,9 +136,6 @@
     "Switch theme": "テーマを切り替える",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Encrypted by a deleted session": "削除済のセッションによる暗号化",
-    "Your server": "あなたのサーバー",
-    "Add a new server": "新しいサーバーを追加",
-    "Server name": "サーバー名",
     "Upload files (%(current)s of %(total)s)": "ファイルのアップロード（%(current)s/%(total)s）",
     "Upload files": "ファイルのアップロード",
     "Upload all": "全てアップロード",
@@ -497,7 +494,6 @@
     "Preparing to download logs": "ログのダウンロードを準備しています",
     "Reason (optional)": "理由（任意）",
     "Create a new space": "新しいスペースを作成",
-    "Enter a server name": "サーバー名を入力",
     "Add existing space": "既存のスペースを追加",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
@@ -556,10 +552,8 @@
     "a key signature": "鍵の署名",
     "Sign in with SSO": "シングルサインオンでサインイン",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "復元方法を全て失ってしまいましたか？<a>リセットできます</a>",
-    "Enter the name of a new server you want to explore.": "探したい新しいサーバーの名前を入力してください。",
     "Upgrade public room": "公開ルームをアップグレード",
     "Upgrade private room": "非公開のルームをアップグレード",
-    "Can't find this server or its room list": "このサーバーまたはそのルーム一覧が見つかりません",
     "Be found by phone or email": "自分を電話番号か電子メールで見つけられるようにする",
     "Find others by phone or email": "知人を電話番号か電子メールで探す",
     "Invite by email": "電子メールで招待",
@@ -653,7 +647,6 @@
     "Space selection": "スペースの選択",
     "Looks good!": "問題ありません！",
     "Cancel All": "全てキャンセル",
-    "Looks good": "問題ありません",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
     "a new cross-signing key signature": "新しいクロス署名鍵の署名",
     "a device cross-signing signature": "端末のクロス署名",
@@ -720,7 +713,6 @@
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "クロス署名鍵の削除は取り消せません。認証した相手には、セキュリティーに関する警告が表示されます。クロス署名を行える全ての端末を失ったのでない限り、続行すべきではありません。",
     "There was a problem communicating with the server. Please try again.": "サーバーとの通信時に問題が発生しました。もう一度やり直してください。",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
-    "You are not allowed to view this server's rooms list": "このサーバーのルームの一覧を閲覧する許可がありません",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
     "Adding spaces has moved.": "スペースの追加機能は移動しました。",
@@ -753,7 +745,6 @@
     "Manually verify by text": "テキストを使って手動で認証",
     "Modal Widget": "モーダルウィジェット",
     "You will no longer be able to log in": "ログインできなくなります",
-    "Friends and family": "友達と家族",
     "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
     "%(count)s Members": {
         "other": "%(count)s人の参加者",
@@ -774,10 +765,6 @@
     "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)sに更新",
     "Unsent": "未送信",
     "Not all selected were added": "選択されたもの全てが追加されてはいません",
-    "Show: Matrix rooms": "表示：Matrixルーム",
-    "Add new server…": "新しいサーバーを追加…",
-    "Remove server “%(roomServer)s”": "サーバー“%(roomServer)s”を削除",
-    "Coworkers and teams": "同僚とチーム",
     "Can't start voice message": "音声メッセージを開始できません",
     "You can't start a voice message as you are currently recording a live broadcast. Please end your live broadcast in order to start recording a voice message.": "ライブ配信を録音しているため、音声メッセージを開始できません。音声メッセージの録音を開始するには、ライブ配信を終了してください。",
     "Live until %(expiryTime)s": "%(expiryTime)sまで共有",
@@ -785,7 +772,6 @@
     "An error occurred whilst sharing your live location, please try again": "位置情報（ライブ）を共有している際にエラーが発生しました。もう一度やり直してください",
     "An error occurred whilst sharing your live location": "位置情報（ライブ）を共有している際にエラーが発生しました",
     "An error occurred while stopping your live location": "位置情報（ライブ）を停止する際にエラーが発生しました",
-    "Online community members": "オンラインコミュニティーのメンバー",
     "Preserve system messages": "システムメッセージを保存",
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
@@ -806,7 +792,6 @@
     "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "あなたの古いメッセージは、それを受信した人には表示され続けます。これは電子メールの場合と同様です。あなたが送信したメッセージを今後のルームの参加者に表示しないようにしますか？",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "注意：ブラウザーはサポートされていません。期待通りに動作しない可能性があります。",
-    "Show: %(instance)s rooms (%(server)s)": "表示：%(instance)s ルーム（%(server)s）",
     "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "このユーザーに関するシステムメッセージ（メンバーシップの変更、プロフィールの変更など）も削除したい場合は、チェックを外してください",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -814,8 +799,6 @@
         "other": "%(user)sによる%(count)s件のメッセージを削除しようとしています。これは会話に参加している全員からメッセージを永久に削除します。続行してよろしいですか？"
     },
     "Consult first": "初めに相談",
-    "We'll help you get connected.": "みんなと繋がる手助けをいたします。",
-    "Who will you chat to the most?": "誰と最もよく会話しますか？",
     "unknown": "不明",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "メッセージは削除されませんが、インデックスを再構成している間、検索のパフォーマンスが低下します",
     "Recent changes that have not yet been received": "まだ受信していない最近の変更",
@@ -836,7 +819,6 @@
     "Some results may be hidden": "いくつかの結果が表示されていない可能性があります",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "発生した問題を教えてください。または、問題を説明するGitHub issueを作成してください。",
-    "You're in": "始めましょう",
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
@@ -1406,7 +1388,13 @@
         "send_dm": "ダイレクトメッセージを送信",
         "explore_rooms": "公開ルームを探す",
         "create_room": "グループチャットを作成",
-        "create_account": "アカウントを作成"
+        "create_account": "アカウントを作成",
+        "use_case_heading1": "始めましょう",
+        "use_case_heading2": "誰と最もよく会話しますか？",
+        "use_case_heading3": "みんなと繋がる手助けをいたします。",
+        "use_case_personal_messaging": "友達と家族",
+        "use_case_work_messaging": "同僚とチーム",
+        "use_case_community_messaging": "オンラインコミュニティーのメンバー"
     },
     "settings": {
         "show_breadcrumbs": "ルームの一覧の上に、最近表示したルームのショートカットを表示",
@@ -4143,5 +4131,21 @@
     },
     "truncated_list_n_more": {
         "other": "他%(count)s人以上…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "サーバー名を入力",
+            "network_dropdown_available_valid": "問題ありません",
+            "network_dropdown_available_invalid_forbidden": "このサーバーのルームの一覧を閲覧する許可がありません",
+            "network_dropdown_available_invalid": "このサーバーまたはそのルーム一覧が見つかりません",
+            "network_dropdown_your_server_description": "あなたのサーバー",
+            "network_dropdown_remove_server_adornment": "サーバー“%(roomServer)s”を削除",
+            "network_dropdown_add_dialog_title": "新しいサーバーを追加",
+            "network_dropdown_add_dialog_description": "探したい新しいサーバーの名前を入力してください。",
+            "network_dropdown_add_dialog_placeholder": "サーバー名",
+            "network_dropdown_add_server_option": "新しいサーバーを追加…",
+            "network_dropdown_selected_label_instance": "表示：%(instance)s ルーム（%(server)s）",
+            "network_dropdown_selected_label": "表示：Matrixルーム"
+        }
     }
 }

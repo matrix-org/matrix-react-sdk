@@ -324,14 +324,7 @@
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
-    "Your server": "ເຊີບເວີຂອງທ່ານ",
-    "Can't find this server or its room list": "ບໍ່ສາມາດຊອກຫາເຊີບເວີນີ້ ຫຼື ລາຍຊື່ຫ້ອງຂອງມັນໄດ້",
-    "You are not allowed to view this server's rooms list": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງລາຍຊື່ຫ້ອງຂອງເຊີບເວີນີ້",
-    "Enter a server name": "ໃສ່ຊື່ເຊີບເວີ",
     "Add existing space": "ເພີ່ມພື້ນທີ່ທີ່ມີຢູ່",
-    "Server name": "ຊື່ເຊີບເວີ",
-    "Enter the name of a new server you want to explore.": "ໃສ່ຊື່ຂອງເຊີບເວີໃໝ່ທີ່ທ່ານຕ້ອງການສຳຫຼວດ.",
-    "Add a new server": "ເພີ່ມເຊີບເວີໃໝ່",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "one": "ກຳລັງເພີ່ມຫ້ອງ...",
         "other": "ກຳລັງເພີ່ມຫ້ອງ... (%(progress)s ຈາກທັງໝົດ %(count)s)"
@@ -775,7 +768,6 @@
     "%(featureName)s Beta feedback": "%(featureName)s ຄຳຕິຊົມເບຕ້າ",
     "Close dialog": "ປິດກ່ອງໂຕ້ຕອບ",
     "Not all selected were added": "ບໍ່ໄດ້ເລືອກທັງໝົດທີ່ຖືກເພີ່ມ",
-    "Looks good": "ດີ",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -3652,5 +3644,17 @@
     },
     "truncated_list_n_more": {
         "other": "ແລະ %(count)sອີກ..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "ໃສ່ຊື່ເຊີບເວີ",
+            "network_dropdown_available_valid": "ດີ",
+            "network_dropdown_available_invalid_forbidden": "ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງລາຍຊື່ຫ້ອງຂອງເຊີບເວີນີ້",
+            "network_dropdown_available_invalid": "ບໍ່ສາມາດຊອກຫາເຊີບເວີນີ້ ຫຼື ລາຍຊື່ຫ້ອງຂອງມັນໄດ້",
+            "network_dropdown_your_server_description": "ເຊີບເວີຂອງທ່ານ",
+            "network_dropdown_add_dialog_title": "ເພີ່ມເຊີບເວີໃໝ່",
+            "network_dropdown_add_dialog_description": "ໃສ່ຊື່ຂອງເຊີບເວີໃໝ່ທີ່ທ່ານຕ້ອງການສຳຫຼວດ.",
+            "network_dropdown_add_dialog_placeholder": "ຊື່ເຊີບເວີ"
+        }
     }
 }

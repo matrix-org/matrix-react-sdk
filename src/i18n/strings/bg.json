@@ -261,13 +261,6 @@
     },
     "%(name)s declined": "%(name)s отказа",
     "Submit logs": "Изпрати логове",
-    "Enter a server name": "Въведете име на сървър",
-    "Looks good": "Изглежда добре",
-    "Can't find this server or its room list": "Сървърът или списъка със стаи не може да бъде намерен",
-    "Your server": "Вашият сървър",
-    "Add a new server": "Добави нов сървър",
-    "Enter the name of a new server you want to explore.": "Въведете името на новия сървър, който искате да прегледате.",
-    "Server name": "Име на сървър",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Напомняне: браузърът ви не се поддържа, така че не всичко може да работи правилно.",
     "Destroy cross-signing keys?": "Унищожаване на ключовете за кръстосано-подписване?",
     "You signed in to a new session without verifying it:": "Влязохте в нова сесия без да я верифицирате:",
@@ -2420,5 +2413,16 @@
     },
     "truncated_list_n_more": {
         "other": "И %(count)s други..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Въведете име на сървър",
+            "network_dropdown_available_valid": "Изглежда добре",
+            "network_dropdown_available_invalid": "Сървърът или списъка със стаи не може да бъде намерен",
+            "network_dropdown_your_server_description": "Вашият сървър",
+            "network_dropdown_add_dialog_title": "Добави нов сървър",
+            "network_dropdown_add_dialog_description": "Въведете името на новия сървър, който искате да прегледате.",
+            "network_dropdown_add_dialog_placeholder": "Име на сървър"
+        }
     }
 }

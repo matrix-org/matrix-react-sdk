@@ -164,11 +164,6 @@
     "Deactivate account": "Dezaktywuj konto",
     "e.g. my-room": "np. mój-pokój",
     "Direct Messages": "Wiadomości prywatne",
-    "Looks good": "Wygląda dobrze",
-    "Your server": "Twój serwer",
-    "Add a new server": "Dodaj nowy serwer",
-    "Enter the name of a new server you want to explore.": "Wpisz nazwę nowego serwera, którego chcesz przeglądać.",
-    "Server name": "Nazwa serwera",
     "Recent Conversations": "Najnowsze rozmowy",
     "Upload files (%(current)s of %(total)s)": "Prześlij pliki (%(current)s z %(total)s)",
     "Upload files": "Prześlij pliki",
@@ -689,7 +684,6 @@
     "Only people invited will be able to find and join this space.": "Tylko osoby zaproszone będą mogły znaleźć i dołączyć do tej przestrzeni.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Każdy będzie mógł znaleźć i dołączyć do tej przestrzeni, nie tylko członkowie <SpaceName/>.",
     "Anyone in <SpaceName/> will be able to find and join.": "Każdy w <SpaceName/> będzie mógł znaleźć i dołączyć.",
-    "Online community members": "Członkowie społeczności online",
     "Clearing all data from this session is permanent. Encrypted messages will be lost unless their keys have been backed up.": "Wyczyszczenie wszystkich danych z tej sesji jest permanentne. Wiadomości szyfrowane zostaną utracone, jeśli nie zabezpieczono ich kluczy.",
     "Clear all data in this session?": "Wyczyścić wszystkie dane w tej sesji?",
     "Reason (optional)": "Powód (opcjonalne)",
@@ -706,7 +700,6 @@
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Przypomnienie: Twoja przeglądarka nie jest wspierana, więc Twoje doświadczenie może być nieprzewidywalne.",
     "Preparing to download logs": "Przygotowuję do pobrania dzienników",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Powiedz nam, co poszło nie tak, lub nawet lepiej - utwórz zgłoszenie na platformie GitHub, które opisuje problem.",
-    "You're in": "Wszedłeś",
     "To leave the beta, visit your settings.": "Aby wyjść z bety, odwiedź swoje ustawienia.",
     "Adding spaces has moved.": "Dodawanie przestrzeni zostało przeniesione.",
     "Search for rooms": "Szukaj pokoi",
@@ -717,17 +710,6 @@
     "Create a new space": "Utwórz nową przestrzeń",
     "Want to add a new space instead?": "Chcesz zamiast tego dodać nową przestrzeń?",
     "Add existing space": "Dodaj istniejącą przestrzeń",
-    "Show: Matrix rooms": "Pokaż: Pokoje Matrix",
-    "Show: %(instance)s rooms (%(server)s)": "Pokaż: Pokoje %(instance)s (%(server)s)",
-    "Add new server…": "Dodaj nowy serwer…",
-    "Remove server “%(roomServer)s”": "Usuń serwer “%(roomServer)s”",
-    "Can't find this server or its room list": "Nie można znaleźć serwera lub jego listy pokoi",
-    "We'll help you get connected.": "Pomożemy Ci pozostać w kontakcie.",
-    "You are not allowed to view this server's rooms list": "Nie możesz wyświetlić listy pokoi tego serwera",
-    "Enter a server name": "Wprowadź nazwę serwera",
-    "Coworkers and teams": "Współpracownicy i drużyny",
-    "Friends and family": "Przyjaciele i rodzina",
-    "Who will you chat to the most?": "Z kim będziesz najczęściej rozmawiał?",
     "Desktop app logo": "Logo aplikacji Desktop",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
@@ -1439,7 +1421,13 @@
         "send_dm": "Wyślij wiadomość prywatną",
         "explore_rooms": "Przeglądaj pokoje publiczne",
         "create_room": "Utwórz czat grupowy",
-        "create_account": "Utwórz konto"
+        "create_account": "Utwórz konto",
+        "use_case_heading1": "Wszedłeś",
+        "use_case_heading2": "Z kim będziesz najczęściej rozmawiał?",
+        "use_case_heading3": "Pomożemy Ci pozostać w kontakcie.",
+        "use_case_personal_messaging": "Przyjaciele i rodzina",
+        "use_case_work_messaging": "Współpracownicy i drużyny",
+        "use_case_community_messaging": "Członkowie społeczności online"
     },
     "settings": {
         "show_breadcrumbs": "Pokazuj skróty do ostatnio wyświetlonych pokojów nad listą pokojów",
@@ -4329,5 +4317,21 @@
     },
     "truncated_list_n_more": {
         "other": "I %(count)s więcej…"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Wprowadź nazwę serwera",
+            "network_dropdown_available_valid": "Wygląda dobrze",
+            "network_dropdown_available_invalid_forbidden": "Nie możesz wyświetlić listy pokoi tego serwera",
+            "network_dropdown_available_invalid": "Nie można znaleźć serwera lub jego listy pokoi",
+            "network_dropdown_your_server_description": "Twój serwer",
+            "network_dropdown_remove_server_adornment": "Usuń serwer “%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Dodaj nowy serwer",
+            "network_dropdown_add_dialog_description": "Wpisz nazwę nowego serwera, którego chcesz przeglądać.",
+            "network_dropdown_add_dialog_placeholder": "Nazwa serwera",
+            "network_dropdown_add_server_option": "Dodaj nowy serwer…",
+            "network_dropdown_selected_label_instance": "Pokaż: Pokoje %(instance)s (%(server)s)",
+            "network_dropdown_selected_label": "Pokaż: Pokoje Matrix"
+        }
     }
 }

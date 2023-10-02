@@ -97,7 +97,6 @@
     "Upload Error": "Įkėlimo klaida",
     "Email (optional)": "El. paštas (neprivaloma)",
     "Direct Messages": "Privačios žinutės",
-    "Can't find this server or its room list": "Negalime rasti šio serverio arba jo kambarių sąrašo",
     "Recently Direct Messaged": "Neseniai tiesiogiai susirašyta",
     "Command Help": "Komandų pagalba",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
@@ -107,9 +106,6 @@
     "%(name)s cancelled": "%(name)s atšauktas",
     "%(name)s wants to verify": "%(name)s nori patvirtinti",
     "e.g. my-room": "pvz.: mano-kambarys",
-    "Enter a server name": "Įveskite serverio pavadinimą",
-    "Enter the name of a new server you want to explore.": "Įveskite naujo, norimo žvalgyti serverio pavadinimą.",
-    "Server name": "Serverio pavadinimas",
     "Session name": "Seanso pavadinimas",
     "Session key": "Seanso raktas",
     "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
@@ -2854,5 +2850,13 @@
     },
     "truncated_list_n_more": {
         "other": "Ir dar %(count)s..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Įveskite serverio pavadinimą",
+            "network_dropdown_available_invalid": "Negalime rasti šio serverio arba jo kambarių sąrašo",
+            "network_dropdown_add_dialog_description": "Įveskite naujo, norimo žvalgyti serverio pavadinimą.",
+            "network_dropdown_add_dialog_placeholder": "Serverio pavadinimas"
+        }
     }
 }

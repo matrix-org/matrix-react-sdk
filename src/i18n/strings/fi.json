@@ -262,12 +262,6 @@
     "Not Trusted": "Ei luotettu",
     "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
-    "Enter a server name": "Syötä palvelimen nimi",
-    "Looks good": "Hyvältä näyttää",
-    "Can't find this server or its room list": "Tätä palvelinta tai sen huoneluetteloa ei löydy",
-    "Your server": "Palvelimesi",
-    "Add a new server": "Lisää uusi palvelin",
-    "Server name": "Palvelimen nimi",
     "Sign in with SSO": "Kirjaudu kertakirjautumista käyttäen",
     "Submit logs": "Lähetä lokit",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
@@ -283,7 +277,6 @@
     "IRC display name width": "IRC-näyttönimen leveys",
     "This backup is trusted because it has been restored on this session": "Tähän varmuuskopioon luotetaan, koska se on palautettu tässä istunnossa",
     "Encrypted by a deleted session": "Salattu poistetun istunnon toimesta",
-    "Enter the name of a new server you want to explore.": "Syötä sen uuden palvelimen nimi, jota haluat selata.",
     "Destroy cross-signing keys?": "Tuhoa ristiinvarmennuksen avaimet?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Ristiinvarmennuksen avainten tuhoamista ei voi kumota. Jokainen, jonka olet varmentanut, tulee näkemään turvallisuushälytyksiä. Et todennäköisesti halua tehdä tätä, ellet ole hukannut kaikkia laitteitasi, joista pystyit ristiinvarmentamaan.",
     "Clear cross-signing keys": "Tyhjennä ristiinvarmennuksen avaimet",
@@ -615,7 +608,6 @@
         "other": "Lisätään huoneita... (%(progress)s/%(count)s)"
     },
     "Not all selected were added": "Kaikkia valittuja ei lisätty",
-    "You are not allowed to view this server's rooms list": "Sinulla ei ole oikeuksia nähdä tämän palvelimen huoneluetteloa",
     "%(count)s people you know have already joined": {
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
@@ -765,17 +757,8 @@
         "other": "%(count)s jäsentä"
     },
     "Sections to show": "Näytettävät osiot",
-    "Show: Matrix rooms": "Näytä: Matrix-huoneet",
-    "Show: %(instance)s rooms (%(server)s)": "Näytä: %(instance)s-huoneet (%(server)s)",
-    "Add new server…": "Lisää uusi palvelin…",
-    "Remove server “%(roomServer)s”": "Poista palvelin ”%(roomServer)s”",
     "Moderation": "Moderointi",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s tai %(recoveryFile)s",
-    "Online community members": "Verkkoyhteisöjen jäsenet",
-    "Coworkers and teams": "Työkaverit ja tiimit",
-    "Friends and family": "Kaverit ja perhe",
-    "We'll help you get connected.": "Autamme sinua yhteyden muodostamisen kanssa.",
-    "Who will you chat to the most?": "Kenen kanssa keskustelet eniten?",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Search for": "Etsittävät kohteet",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
@@ -1347,7 +1330,12 @@
         "send_dm": "Lähetä yksityisviesti",
         "explore_rooms": "Selaa julkisia huoneita",
         "create_room": "Luo huone",
-        "create_account": "Luo tili"
+        "create_account": "Luo tili",
+        "use_case_heading2": "Kenen kanssa keskustelet eniten?",
+        "use_case_heading3": "Autamme sinua yhteyden muodostamisen kanssa.",
+        "use_case_personal_messaging": "Kaverit ja perhe",
+        "use_case_work_messaging": "Työkaverit ja tiimit",
+        "use_case_community_messaging": "Verkkoyhteisöjen jäsenet"
     },
     "settings": {
         "show_breadcrumbs": "Näytä oikotiet viimeksi katsottuihin huoneisiin huoneluettelon yläpuolella",
@@ -3941,5 +3929,21 @@
     },
     "truncated_list_n_more": {
         "other": "Ja %(count)s muuta..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "Syötä palvelimen nimi",
+            "network_dropdown_available_valid": "Hyvältä näyttää",
+            "network_dropdown_available_invalid_forbidden": "Sinulla ei ole oikeuksia nähdä tämän palvelimen huoneluetteloa",
+            "network_dropdown_available_invalid": "Tätä palvelinta tai sen huoneluetteloa ei löydy",
+            "network_dropdown_your_server_description": "Palvelimesi",
+            "network_dropdown_remove_server_adornment": "Poista palvelin ”%(roomServer)s”",
+            "network_dropdown_add_dialog_title": "Lisää uusi palvelin",
+            "network_dropdown_add_dialog_description": "Syötä sen uuden palvelimen nimi, jota haluat selata.",
+            "network_dropdown_add_dialog_placeholder": "Palvelimen nimi",
+            "network_dropdown_add_server_option": "Lisää uusi palvelin…",
+            "network_dropdown_selected_label_instance": "Näytä: %(instance)s-huoneet (%(server)s)",
+            "network_dropdown_selected_label": "Näytä: Matrix-huoneet"
+        }
     }
 }

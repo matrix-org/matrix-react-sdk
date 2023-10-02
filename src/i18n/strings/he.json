@@ -400,13 +400,6 @@
     "The following users may not exist": "המשתמשים הבאים עשויים שלא להתקיים",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. לנהל ב <settings>הגדרות</settings>.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "השתמש בשרת זהות כדי להזמין בדוא\"ל. <default> השתמש בברירת המחדל (%(defaultIdentityServerName)s) </default> או נהל ב <settings>הגדרות</settings>.",
-    "Server name": "שם השרת",
-    "Enter the name of a new server you want to explore.": "הזן את שם השרת החדש שתרצה לחקור.",
-    "Add a new server": "הוסף שרת חדש",
-    "Your server": "השרת שלכם",
-    "Can't find this server or its room list": "לא ניתן למצוא שרת זה או את רשימת החדרים שלו",
-    "Looks good": "נראה טוב",
-    "Enter a server name": "הכנס שם שרת",
     "Home": "הבית",
     "e.g. my-room": "כגון החדר-שלי",
     "collapse": "אחד",
@@ -629,7 +622,6 @@
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "Failed to end poll": "תקלה בסגירת הסקר",
     "Preserve system messages": "שמור את הודעות המערכת",
-    "Friends and family": "חברים ומשפחה",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "%(count)s Members": {
         "one": "%(count)s חברים"
@@ -2447,7 +2439,8 @@
         "send_dm": "שלח הודעה ישירה",
         "explore_rooms": "חקור חדרים ציבוריים",
         "create_room": "צור צ'אט קבוצתי",
-        "create_account": "חשבון משתמש חדש"
+        "create_account": "חשבון משתמש חדש",
+        "use_case_personal_messaging": "חברים ומשפחה"
     },
     "setting": {
         "help_about": {
@@ -3112,5 +3105,16 @@
     },
     "truncated_list_n_more": {
         "other": "ו%(count)s עוד..."
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_required_invalid": "הכנס שם שרת",
+            "network_dropdown_available_valid": "נראה טוב",
+            "network_dropdown_available_invalid": "לא ניתן למצוא שרת זה או את רשימת החדרים שלו",
+            "network_dropdown_your_server_description": "השרת שלכם",
+            "network_dropdown_add_dialog_title": "הוסף שרת חדש",
+            "network_dropdown_add_dialog_description": "הזן את שם השרת החדש שתרצה לחקור.",
+            "network_dropdown_add_dialog_placeholder": "שם השרת"
+        }
     }
 }
