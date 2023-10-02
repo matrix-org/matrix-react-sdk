@@ -46,14 +46,8 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "استخدم <a> تطبيق سطح المكتب </a> للبحث في الرسائل المشفرة",
     "Use the <a>Desktop app</a> to see all encrypted files": "استخدم <a> تطبيق سطح المكتب </a> لمشاهدة جميع الملفات المشفرة",
     "Cancel search": "إلغاء البحث",
-    "Can't load this message": "تعذر تحميل هذه الرسالة",
     "Submit logs": "إرسال السجلات",
     "edited": "عُدل",
-    "Edited at %(date)s. Click to view edits.": "عُدل في %(date)s. انقر لترى التعديلات.",
-    "Click to view edits": "انقر لترى التعديلات",
-    "Edited at %(date)s": "عدل في %(date)s",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "أنت على وشك الانتقال إلى موقع تابع لجهة خارجية حتى تتمكن من مصادقة حسابك لاستخدامه مع %(integrationsUrl)s. هل ترغب في الاستمرار؟",
-    "Add an Integration": "أضف تكاملاً",
     "%(name)s wants to verify": "%(name)s يريد التحقق",
     "%(name)s cancelled": "%(name)s رفض",
     "%(name)s declined": "%(name)s رفض",
@@ -804,7 +798,17 @@
         },
         "m.video": {
             "error_decrypting": "تعذر فك تشفير الفيديو"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "أضف تكاملاً",
+            "dialog_description": "أنت على وشك الانتقال إلى موقع تابع لجهة خارجية حتى تتمكن من مصادقة حسابك لاستخدامه مع %(integrationsUrl)s. هل ترغب في الاستمرار؟"
+        },
+        "edits": {
+            "tooltip_title": "عدل في %(date)s",
+            "tooltip_sub": "انقر لترى التعديلات",
+            "tooltip_label": "عُدل في %(date)s. انقر لترى التعديلات."
+        },
+        "error_rendering_message": "تعذر تحميل هذه الرسالة"
     },
     "slash_command": {
         "shrug": "ادخل احد الرموز ¯\\_(ツ)_/¯ قبل نص الرسالة",

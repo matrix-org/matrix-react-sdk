@@ -44,7 +44,6 @@
     },
     "Join Room": "Присъединяване към стаята",
     "not specified": "неопределен",
-    "Add an Integration": "Добавяне на интеграция",
     "Email address": "Имейл адрес",
     "Delete Widget": "Изтриване на приспособление",
     "Create new room": "Създай нова стая",
@@ -64,7 +63,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Моля, проверете своя имейл адрес и натиснете връзката, която той съдържа. След като направите това, натиснете продължи.",
     "This will allow you to reset your password and receive notifications.": "Това ще Ви позволи да възстановите Вашата парола и да получавате известия.",
     "Session ID": "Идентификатор на сесията",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "На път сте да бъдете отведени до друг сайт, където можете да удостоверите профила си за използване с %(integrationsUrl)s. Искате ли да продължите?",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
     "Sunday": "Неделя",
     "Today": "Днес",
@@ -216,7 +214,6 @@
     "edited": "редактирано",
     "Some characters not allowed": "Някои символи не са позволени",
     "Upload all": "Качи всички",
-    "Edited at %(date)s. Click to view edits.": "Редактирано на %(date)s. Кликнете за да видите редакциите.",
     "Message edits": "Редакции на съобщение",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Моля, кажете ни какво се обърка, или още по-добре - създайте проблем в GitHub обясняващ ситуацията.",
@@ -274,7 +271,6 @@
         "one": "%(count)s сесия"
     },
     "%(name)s declined": "%(name)s отказа",
-    "Can't load this message": "Съобщението не може да се зареди",
     "Submit logs": "Изпрати логове",
     "Enter a server name": "Въведете име на сървър",
     "Looks good": "Изглежда добре",
@@ -369,8 +365,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Тази версия на %(brand)s не поддържа преглеждането на някои шифровани файлове",
     "Use the <a>Desktop app</a> to search encrypted messages": "Използвайте <a>Desktop приложението</a> за да търсите в шифровани съобщения",
     "Use the <a>Desktop app</a> to see all encrypted files": "Използвайте <a>Desktop приложението</a> за да видите всички шифровани файлове",
-    "Click to view edits": "Кликнете за да видите редакциите",
-    "Edited at %(date)s": "Редактирано на %(date)s",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -1459,7 +1453,17 @@
         },
         "m.video": {
             "error_decrypting": "Грешка при разшифроване на видео"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Добавяне на интеграция",
+            "dialog_description": "На път сте да бъдете отведени до друг сайт, където можете да удостоверите профила си за използване с %(integrationsUrl)s. Искате ли да продължите?"
+        },
+        "edits": {
+            "tooltip_title": "Редактирано на %(date)s",
+            "tooltip_sub": "Кликнете за да видите редакциите",
+            "tooltip_label": "Редактирано на %(date)s. Кликнете за да видите редакциите."
+        },
+        "error_rendering_message": "Съобщението не може да се зареди"
     },
     "slash_command": {
         "spoiler": "Изпраща даденото съобщение като спойлер",

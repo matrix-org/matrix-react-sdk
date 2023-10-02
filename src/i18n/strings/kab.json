@@ -135,8 +135,6 @@
     "%(name)s declined": "%(name)s yettwagi",
     "%(name)s cancelled": "%(name)s yettwasefsex",
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
-    "Add an Integration": "Rnu asidef",
-    "Can't load this message": "Yegguma ad d-yali yizen-a",
     "Submit logs": "Azen iɣmisen",
     "Cancel search": "Sefsex anadi",
     "Power level": "Sagen aswir",
@@ -281,9 +279,6 @@
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
-    "Edited at %(date)s": "Yettwaẓreg deg %(date)s",
-    "Click to view edits": "Sit i wakken ad twaliḍ aseẓreg",
-    "Edited at %(date)s. Click to view edits.": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag.",
     "Invite anyway and never warn me again": "Ɣas akken nced-d yerna ur iyi-id-ttɛeggin ara akk",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Ttxil-k·m ini-aɣ-d acu ur nteddu ara akken ilaq neɣ, akken i igerrez, rnu ugur deg Github ara ad d-igelmen ugur.",
     "Preparing to download logs": "Aheyyi i usali n yiɣmisen",
@@ -309,7 +304,6 @@
     "Clear all data in this session?": "Sfeḍ akk isefka seg tɣimit-a?",
     "Incompatible Database": "Taffa n yisefka ur temada ara",
     "Recently Direct Messaged": "Izen usrid n melmi kan",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Aql-ak·akem ad tettuwellheḍ ɣer usmel n wis tlata i wakken ad tizmireḍ ad tsestbeḍ amiḍan-ik·im i useqdec d %(integrationsUrl)s. Tebɣiḍ ad tkemmleḍ?",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "D awezɣi ad d-naf imuɣna n yisulay Matrix i d-yettwabdaren ddaw - tebɣiḍ ad ten-id-tnecdeḍ ɣas akken?",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Asmekti: Iming-ik·im ur yettusefrak ara, ihi tarmit-ik·im yezmer ur d-tettili ara.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
@@ -1419,7 +1413,17 @@
         },
         "m.video": {
             "error_decrypting": "Tuccḍa deg uwgelhen n tvidyut"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Rnu asidef",
+            "dialog_description": "Aql-ak·akem ad tettuwellheḍ ɣer usmel n wis tlata i wakken ad tizmireḍ ad tsestbeḍ amiḍan-ik·im i useqdec d %(integrationsUrl)s. Tebɣiḍ ad tkemmleḍ?"
+        },
+        "edits": {
+            "tooltip_title": "Yettwaẓreg deg %(date)s",
+            "tooltip_sub": "Sit i wakken ad twaliḍ aseẓreg",
+            "tooltip_label": "Yettwaẓreg deg %(date)s. Sit i wakken ad twaliḍ iseẓrag."
+        },
+        "error_rendering_message": "Yegguma ad d-yali yizen-a"
     },
     "slash_command": {
         "shrug": "Yerna ¯\\_(ツ)_/¯ ɣer yizen n uḍris arewway",

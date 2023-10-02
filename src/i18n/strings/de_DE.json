@@ -38,9 +38,7 @@
     "Email address": "E-Mail-Adresse",
     "Confirm Removal": "Entfernen bestätigen",
     "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
-    "Add an Integration": "Eine Integration hinzufügen",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?",
     "Custom level": "Selbstdefiniertes Berechtigungslevel",
     "Create new room": "Neuer Raum",
     "Home": "Startseite",
@@ -245,8 +243,6 @@
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Versuche nach oben zu scrollen, um zu sehen ob sich dort frühere Nachrichten befinden.",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dies kann bei vielen Nachrichten einige Zeit dauern. Bitte lade die Anwendung in dieser Zeit nicht neu.",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
-    "Edited at %(date)s. Click to view edits.": "Am %(date)s geändert. Klicke, um Änderungen anzuzeigen.",
-    "Can't load this message": "Diese Nachricht kann nicht geladen werden",
     "Submit logs": "Protokolldateien senden",
     "Cancel search": "Suche abbrechen",
     "Language Dropdown": "Sprachauswahl",
@@ -339,8 +335,6 @@
     "Message preview": "Nachrichtenvorschau",
     "Looks good!": "Sieht gut aus!",
     "Wrong file type": "Falscher Dateityp",
-    "Edited at %(date)s": "Geändert am %(date)s",
-    "Click to view edits": "Klicke, um Änderungen anzuzeigen",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
     "Server isn't responding": "Server reagiert nicht",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Server reagiert auf einige deiner Anfragen nicht. Folgend sind einige der wahrscheinlichsten Gründe aufgeführt.",
@@ -701,7 +695,6 @@
     },
     "You are not allowed to view this server's rooms list": "Du darfst diese Raumliste nicht sehen",
     "Not all selected were added": "Nicht alle Ausgewählten konnten hinzugefügt werden",
-    "Add reaction": "Reaktion hinzufügen",
     "You may contact me if you have any follow up questions": "Kontaktiert mich, falls ihr weitere Fragen zu meiner Rückmeldung habt",
     "To leave the beta, visit your settings.": "Du kannst die Beta in den Einstellungen deaktivieren.",
     "Some suggestions may be hidden for privacy.": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein.",
@@ -796,7 +789,6 @@
     "toggle event": "Event umschalten",
     "This address had invalid server or is already in use": "Diese Adresse hat einen ungültigen Server oder wird bereits verwendet",
     "This address does not point at this room": "Diese Adresse verweist nicht auf diesen Raum",
-    "Location": "Standort",
     "Feedback sent! Thanks, we appreciate it!": "Rückmeldung gesendet! Danke, wir wissen es zu schätzen!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s und %(space2Name)s",
     "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
@@ -1038,7 +1030,8 @@
         "show_more": "Mehr zeigen",
         "joined": "Beigetreten",
         "avatar": "Avatar",
-        "are_you_sure": "Bist du sicher?"
+        "are_you_sure": "Bist du sicher?",
+        "location": "Standort"
     },
     "action": {
         "continue": "Fortfahren",
@@ -2469,7 +2462,8 @@
         },
         "reactions": {
             "label": "%(reactors)s hat mit %(content)s reagiert",
-            "tooltip": "<reactors/><reactedWith>hat mit %(shortName)s reagiert</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>hat mit %(shortName)s reagiert</reactedWith>",
+            "add_reaction_prompt": "Reaktion hinzufügen"
         },
         "m.room.create": {
             "continuation": "Dieser Raum ist eine Fortsetzung einer anderen Konversation.",
@@ -2577,7 +2571,17 @@
         },
         "m.video": {
             "error_decrypting": "Videoentschlüsselung fehlgeschlagen"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Eine Integration hinzufügen",
+            "dialog_description": "Um dein Konto für die Verwendung von %(integrationsUrl)s zu authentifizieren, wirst du jetzt auf die Website eines Drittanbieters weitergeleitet. Möchtest du fortfahren?"
+        },
+        "edits": {
+            "tooltip_title": "Geändert am %(date)s",
+            "tooltip_sub": "Klicke, um Änderungen anzuzeigen",
+            "tooltip_label": "Am %(date)s geändert. Klicke, um Änderungen anzuzeigen."
+        },
+        "error_rendering_message": "Diese Nachricht kann nicht geladen werden"
     },
     "slash_command": {
         "spoiler": "Die gegebene Nachricht als Spoiler senden",

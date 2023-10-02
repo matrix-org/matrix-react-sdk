@@ -236,7 +236,6 @@
     "Share Room Message": "Bendrinti Kambario Žinutę",
     "Share Room": "Bendrinti Kambarį",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Jūs būsite nukreipti į trečiosios šalies svetainę, kad galėtumėte patvirtinti savo paskyrą naudojimui su %(integrationsUrl)s. Ar norite tęsti?",
     "Join millions for free on the largest public server": "Prisijunkite prie milijonų didžiausiame viešame serveryje nemokamai",
     "Join Room": "Prisijungti prie kambario",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
@@ -294,11 +293,6 @@
     "Preparing to download logs": "Ruošiamasi parsiųsti žurnalus",
     "Server Options": "Serverio Parinktys",
     "edited": "pakeista",
-    "Edited at %(date)s. Click to view edits.": "Keista %(date)s. Spustelėkite kad peržiūrėti pakeitimus.",
-    "Edited at %(date)s": "Keista %(date)s",
-    "Click to view edits": "Spustelėkite kad peržiūrėti pakeitimus",
-    "Add an Integration": "Pridėti Integraciją",
-    "Add reaction": "Pridėti reakciją",
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Dideliam žinučių kiekiui tai gali užtrukti kurį laiką. Prašome neperkrauti savo kliento.",
     "No recent messages by %(user)s found": "Nerasta jokių naujesnių %(user)s žinučių",
     "Not encrypted": "Neužšifruota",
@@ -327,7 +321,6 @@
     "Belgium": "Belgija",
     "Bangladesh": "Bangladešas",
     "Cancel search": "Atšaukti paiešką",
-    "Can't load this message": "Nepavyko įkelti šios žinutės",
     "Submit logs": "Pateikti žurnalus",
     "Botswana": "Botsvana",
     "Bosnia": "Bosnija",
@@ -1556,7 +1549,8 @@
             "tooltip": "Žinutė buvo ištrinta %(date)s"
         },
         "reactions": {
-            "tooltip": "<reactors/><reactedWith>reagavo su %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reagavo su %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Pridėti reakciją"
         },
         "m.room.create": {
             "continuation": "Šis kambarys yra kito pokalbio pratęsimas.",
@@ -1635,7 +1629,17 @@
         },
         "m.audio": {
             "error_processing_voice_message": "Klaida apdorojant balso pranešimą"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Pridėti Integraciją",
+            "dialog_description": "Jūs būsite nukreipti į trečiosios šalies svetainę, kad galėtumėte patvirtinti savo paskyrą naudojimui su %(integrationsUrl)s. Ar norite tęsti?"
+        },
+        "edits": {
+            "tooltip_title": "Keista %(date)s",
+            "tooltip_sub": "Spustelėkite kad peržiūrėti pakeitimus",
+            "tooltip_label": "Keista %(date)s. Spustelėkite kad peržiūrėti pakeitimus."
+        },
+        "error_rendering_message": "Nepavyko įkelti šios žinutės"
     },
     "slash_command": {
         "shrug": "Prideda ¯\\_(ツ)_/¯ prie paprasto teksto žinutės",

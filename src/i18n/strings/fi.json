@@ -44,11 +44,9 @@
     "Oct": "loka",
     "Nov": "marras",
     "Dec": "joulu",
-    "Add an Integration": "Lisää integraatio",
     "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
     "Restricted": "Rajoitettu",
     "Unnamed room": "Nimetön huone",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?",
     "And %(count)s more...": {
         "other": "Ja %(count)s muuta..."
     },
@@ -215,7 +213,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
     "Notes": "Huomautukset",
-    "Edited at %(date)s. Click to view edits.": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset.",
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
     "Upload all": "Lähetä kaikki palvelimelle",
@@ -283,7 +280,6 @@
     "Add a new server": "Lisää uusi palvelin",
     "Server name": "Palvelimen nimi",
     "Sign in with SSO": "Kirjaudu kertakirjautumista käyttäen",
-    "Can't load this message": "Tätä viestiä ei voi ladata",
     "Submit logs": "Lähetä lokit",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
     "There was a problem communicating with the server. Please try again.": "Palvelinyhteydessä oli ongelma. Yritä uudelleen.",
@@ -327,8 +323,6 @@
     "Room address": "Huoneen osoite",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
     "Server isn't responding": "Palvelin ei vastaa",
-    "Click to view edits": "Napsauta nähdäksesi muokkaukset",
-    "Edited at %(date)s": "Muokattu %(date)s",
     "Decline All": "Kieltäydy kaikista",
     "Your area is experiencing difficulties connecting to the internet.": "Alueellasi on ongelmia internet-yhteyksissä.",
     "The server is offline.": "Palvelin ei ole verkossa.",
@@ -650,7 +644,6 @@
         "one": "Näytä yksi jäsen",
         "other": "Näytä kaikki %(count)s jäsentä"
     },
-    "Add reaction": "Lisää reaktio",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Search spaces": "Etsi avaruuksia",
     "You may contact me if you have any follow up questions": "Voitte olla yhteydessä minuun, jos teillä on lisäkysymyksiä",
@@ -721,7 +714,6 @@
     "End Poll": "Päätä kysely",
     "Sorry, the poll did not end. Please try again.": "Valitettavasti kysely ei päättynyt. Yritä uudelleen.",
     "Forget": "Unohda",
-    "Location": "Sijainti",
     "%(count)s votes": {
         "one": "%(count)s ääni",
         "other": "%(count)s ääntä"
@@ -971,7 +963,8 @@
         "show_more": "Näytä lisää",
         "joined": "Liitytty",
         "avatar": "Avatar",
-        "are_you_sure": "Oletko varma?"
+        "are_you_sure": "Oletko varma?",
+        "location": "Sijainti"
     },
     "action": {
         "continue": "Jatka",
@@ -2238,7 +2231,8 @@
             "tooltip": "Viesti poistettu %(date)s"
         },
         "reactions": {
-            "tooltip": "<reactors/><reactedWith>reagoi(vat) emojilla %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reagoi(vat) emojilla %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Lisää reaktio"
         },
         "m.room.create": {
             "continuation": "Tämä huone on jatkumo toisesta keskustelusta.",
@@ -2335,7 +2329,17 @@
         },
         "m.video": {
             "error_decrypting": "Virhe purettaessa videon salausta"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Lisää integraatio",
+            "dialog_description": "Sinut ohjataan kolmannen osapuolen sivustolle, jotta voit autentikoida tilisi käyttääksesi palvelua %(integrationsUrl)s. Haluatko jatkaa?"
+        },
+        "edits": {
+            "tooltip_title": "Muokattu %(date)s",
+            "tooltip_sub": "Napsauta nähdäksesi muokkaukset",
+            "tooltip_label": "Muokattu %(date)s. Napsauta nähdäksesi muokkaukset."
+        },
+        "error_rendering_message": "Tätä viestiä ei voi ladata"
     },
     "slash_command": {
         "spoiler": "Lähettää annetun viestin spoilerina",

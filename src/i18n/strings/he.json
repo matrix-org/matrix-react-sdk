@@ -469,14 +469,8 @@
     },
     "Encrypted by a deleted session": "הוצפן על ידי מושב שנמחק",
     "Cancel search": "בטל חיפוש",
-    "Can't load this message": "לא ניתן לטעון הודעה זו",
     "Submit logs": "הגש יומנים",
     "edited": "נערך",
-    "Edited at %(date)s. Click to view edits.": "נערך ב-%(date)s. לחץ לצפייה בעריכות.",
-    "Click to view edits": "לחץ לצפות בעריכות",
-    "Edited at %(date)s": "נערך ב-%(date)s",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "אתה עומד להועבר לאתר של צד שלישי כדי שתוכל לאמת את חשבונך לשימוש עם %(integrationsUrl)s. האם אתה מקווה להמשיך?",
-    "Add an Integration": "הוסף אינטגרציה",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
     "Deactivate account": "סגור חשבון",
     "Sign in with SSO": "היכנס באמצעות SSO",
@@ -693,7 +687,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
     "To leave the beta, visit your settings.": "כדי לעזוב את התכונה הניסיונית, כנסו להגדרות.",
-    "Location": "מיקום",
     "Close sidebar": "סגור סרגל צד",
     "common": {
         "about": "אודות",
@@ -794,7 +787,8 @@
         "setup_secure_messages": "הגדר הודעות מאובטחות",
         "unencrypted": "לא מוצפן",
         "show_more": "הצג יותר",
-        "are_you_sure": "האם אתם בטוחים?"
+        "are_you_sure": "האם אתם בטוחים?",
+        "location": "מיקום"
     },
     "action": {
         "continue": "המשך",
@@ -1804,7 +1798,17 @@
         },
         "m.video": {
             "error_decrypting": "שגיאה בפענוח וידאו"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "הוסף אינטגרציה",
+            "dialog_description": "אתה עומד להועבר לאתר של צד שלישי כדי שתוכל לאמת את חשבונך לשימוש עם %(integrationsUrl)s. האם אתה מקווה להמשיך?"
+        },
+        "edits": {
+            "tooltip_title": "נערך ב-%(date)s",
+            "tooltip_sub": "לחץ לצפות בעריכות",
+            "tooltip_label": "נערך ב-%(date)s. לחץ לצפייה בעריכות."
+        },
+        "error_rendering_message": "לא ניתן לטעון הודעה זו"
     },
     "slash_command": {
         "spoiler": "שולח הודעה ומסמן אותה כספוילר",

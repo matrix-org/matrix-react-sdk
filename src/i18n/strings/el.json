@@ -41,13 +41,11 @@
     },
     "Confirm Removal": "Επιβεβαίωση αφαίρεσης",
     "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
-    "Add an Integration": "Προσθήκη ενσωμάτωσης",
     "not specified": "μη καθορισμένο",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
     "Verification Pending": "Εκκρεμεί επιβεβαίωση",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Αν χρησιμοποιούσατε προηγουμένως μια πιο πρόσφατη έκδοση του %(brand)s, η συνεδρία σας ίσως είναι μη συμβατή με αυτήν την έκδοση. Κλείστε αυτό το παράθυρο και επιστρέψτε στην πιο πρόσφατη έκδοση.",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Θα μεταφερθείτε σε έναν ιστότοπου τρίτου για να πραγματοποιηθεί η πιστοποίηση του λογαριασμού σας με το %(integrationsUrl)s. Θα θέλατε να συνεχίσετε;",
     "This will allow you to reset your password and receive notifications.": "Αυτό θα σας επιτρέψει να επαναφέρετε τον κωδικό πρόσβαση σας και θα μπορείτε να λαμβάνετε ειδοποιήσεις.",
     "Sunday": "Κυριακή",
     "Today": "Σήμερα",
@@ -577,13 +575,7 @@
     "Only people invited will be able to find and join this space.": "Μόνο τα άτομα που έχουν προσκληθεί θα μπορούν να βρουν και να εγγραφούν σε αυτόν τον χώρο.",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Οποιοσδήποτε θα μπορεί να βρει και να εγγραφεί σε αυτόν τον χώρο, όχι μόνο μέλη του <SpaceName/>.",
     "Could not fetch location": "Δεν ήταν δυνατή η ανάκτηση της τοποθεσίας",
-    "Location": "Τοποθεσία",
-    "Can't load this message": "Δεν είναι δυνατή η φόρτωση αυτού του μηνύματος",
     "Submit logs": "Υποβολή αρχείων καταγραφής",
-    "Edited at %(date)s. Click to view edits.": "Επεξεργάστηκε στις %(date)s. Κάντε κλικ για να δείτε τις τροποποιήσεις.",
-    "Edited at %(date)s": "Τροποποιήθηκε στις %(date)s",
-    "Click to view edits": "Κάντε κλικ για να δείτε τις τροποποιήσεις",
-    "Add reaction": "Προσθέστε αντίδραση",
     "%(count)s votes": {
         "one": "%(count)s ψήφος",
         "other": "%(count)s ψήφοι"
@@ -956,7 +948,8 @@
         "show_more": "Δείτε περισσότερα",
         "joined": "Συνδέθηκε",
         "avatar": "Avatar",
-        "are_you_sure": "Είστε σίγουροι;"
+        "are_you_sure": "Είστε σίγουροι;",
+        "location": "Τοποθεσία"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -2054,7 +2047,8 @@
         },
         "reactions": {
             "label": "%(reactors)s αντέδρασαν με %(content)s",
-            "tooltip": "<reactors/><reactedWith>αντέδρασε με %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>αντέδρασε με %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Προσθέστε αντίδραση"
         },
         "m.room.create": {
             "continuation": "Αυτό το δωμάτιο είναι η συνέχεια μιας άλλης συνομιλίας.",
@@ -2139,7 +2133,17 @@
         },
         "m.video": {
             "error_decrypting": "Σφάλμα κατά την αποκρυπτογράφηση του βίντεο"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Προσθήκη ενσωμάτωσης",
+            "dialog_description": "Θα μεταφερθείτε σε έναν ιστότοπου τρίτου για να πραγματοποιηθεί η πιστοποίηση του λογαριασμού σας με το %(integrationsUrl)s. Θα θέλατε να συνεχίσετε;"
+        },
+        "edits": {
+            "tooltip_title": "Τροποποιήθηκε στις %(date)s",
+            "tooltip_sub": "Κάντε κλικ για να δείτε τις τροποποιήσεις",
+            "tooltip_label": "Επεξεργάστηκε στις %(date)s. Κάντε κλικ για να δείτε τις τροποποιήσεις."
+        },
+        "error_rendering_message": "Δεν είναι δυνατή η φόρτωση αυτού του μηνύματος"
     },
     "slash_command": {
         "spoiler": "Στέλνει το δοθέν μήνυμα ως spoiler",

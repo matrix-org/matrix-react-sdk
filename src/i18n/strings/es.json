@@ -72,8 +72,6 @@
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
     },
-    "Add an Integration": "Añadir una Integración",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Estás a punto de ir a un sitio externo para que puedas iniciar sesión con tu cuenta y usarla en %(integrationsUrl)s. ¿Quieres seguir?",
     "Delete Widget": "Eliminar accesorio",
     "collapse": "encoger",
     "expand": "desplegar",
@@ -294,9 +292,7 @@
     "%(name)s declined": "%(name)s declinó",
     "%(name)s cancelled": "%(name)s canceló",
     "%(name)s wants to verify": "%(name)s quiere verificar",
-    "Edited at %(date)s. Click to view edits.": "Última vez editado: %(date)s. Haz clic para ver los cambios.",
     "edited": "editado",
-    "Can't load this message": "No se ha podido cargar este mensaje",
     "Submit logs": "Enviar registros",
     "Cancel search": "Cancelar búsqueda",
     "Upload completed": "Subida completada",
@@ -329,8 +325,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "Edited at %(date)s": "Última vez editado: %(date)s",
-    "Click to view edits": "Haz clic para ver las ediciones",
     "Information": "Información",
     "Room address": "Dirección de la sala",
     "This address is available to use": "Esta dirección está disponible para usar",
@@ -702,7 +696,6 @@
     "You are not allowed to view this server's rooms list": "No tienes permiso para ver la lista de salas de este servidor",
     "You may contact me if you have any follow up questions": "Os podéis poner en contacto conmigo si tenéis alguna pregunta",
     "To leave the beta, visit your settings.": "Para salir de la beta, ve a tus ajustes.",
-    "Add reaction": "Reaccionar",
     "Or send invite link": "O envía un enlace de invitación",
     "Some suggestions may be hidden for privacy.": "Puede que algunas sugerencias no se muestren por motivos de privacidad.",
     "Search for rooms or people": "Busca salas o gente",
@@ -796,7 +789,6 @@
     "toggle event": "activar o desactivar el evento",
     "Feedback sent! Thanks, we appreciate it!": "¡Opinión enviada! Gracias, te lo agradecemos.",
     "Use <arrows/> to scroll": "Usa <arrows/> para desplazarte",
-    "Location": "Ubicación",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s y %(space2Name)s",
     "This address does not point at this room": "La dirección no apunta a esta sala",
     "Missing room name or separator e.g. (my-room:domain.org)": "Falta el nombre de la sala o el separador (ej.: mi-sala:dominio.org)",
@@ -1030,7 +1022,8 @@
         "show_more": "Ver más",
         "joined": "Te has unido",
         "avatar": "Imagen de perfil",
-        "are_you_sure": "¿Estás seguro?"
+        "are_you_sure": "¿Estás seguro?",
+        "location": "Ubicación"
     },
     "action": {
         "continue": "Continuar",
@@ -2364,7 +2357,8 @@
         },
         "reactions": {
             "label": "%(reactors)s han reaccionado con %(content)s",
-            "tooltip": "<reactors/><reactedWith> reaccionó con %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith> reaccionó con %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Reaccionar"
         },
         "m.room.create": {
             "continuation": "Esta sala es una continuación de otra.",
@@ -2464,7 +2458,17 @@
         },
         "m.video": {
             "error_decrypting": "Error al descifrar el vídeo"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Añadir una Integración",
+            "dialog_description": "Estás a punto de ir a un sitio externo para que puedas iniciar sesión con tu cuenta y usarla en %(integrationsUrl)s. ¿Quieres seguir?"
+        },
+        "edits": {
+            "tooltip_title": "Última vez editado: %(date)s",
+            "tooltip_sub": "Haz clic para ver las ediciones",
+            "tooltip_label": "Última vez editado: %(date)s. Haz clic para ver los cambios."
+        },
+        "error_rendering_message": "No se ha podido cargar este mensaje"
     },
     "slash_command": {
         "spoiler": "Envía el mensaje como un spoiler",

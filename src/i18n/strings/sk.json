@@ -37,8 +37,6 @@
     "Join Room": "Vstúpiť do miestnosti",
     "unknown error code": "neznámy kód chyby",
     "not specified": "nezadané",
-    "Add an Integration": "Pridať integráciu",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete presmerovaní na stránku tretej strany, aby ste mohli overiť svoj účet na použitie s %(integrationsUrl)s. Chcete pokračovať?",
     "Email address": "Emailová adresa",
     "Delete Widget": "Vymazať widget",
     "Create new room": "Vytvoriť novú miestnosť",
@@ -551,7 +549,6 @@
         "other": "Zobraziť všetkých %(count)s členov"
     },
     "Server isn't responding": "Server neodpovedá",
-    "Edited at %(date)s": "Upravené %(date)s",
     "Confirm to continue": "Potvrďte, ak chcete pokračovať",
     "Confirm account deactivation": "Potvrdiť deaktiváciu účtu",
     "Signature upload failed": "Nahrávanie podpisu zlyhalo",
@@ -562,8 +559,6 @@
     "Clear all data": "Vymazať všetky údaje",
     "edited": "upravené",
     "Message edits": "Úpravy správy",
-    "Edited at %(date)s. Click to view edits.": "Upravené %(date)s. Kliknutím zobrazíte úpravy.",
-    "Click to view edits": "Kliknutím zobrazíte úpravy",
     "Switch theme": "Prepnúť motív",
     "You may contact me if you have any follow up questions": "V prípade ďalších otázok ma môžete kontaktovať",
     "Recent searches": "Nedávne vyhľadávania",
@@ -606,7 +601,6 @@
     "You won't be able to rejoin unless you are re-invited.": "Nebudete sa môcť znova pripojiť, kým nebudete opätovne pozvaní.",
     "Approve widget permissions": "Schváliť oprávnenia widgetu",
     "Anyone will be able to find and join this space, not just members of <SpaceName/>.": "Ktokoľvek bude môcť nájsť tento priestor a pripojiť sa k nemu, nielen členovia <SpaceName/>.",
-    "Add reaction": "Pridať reakciu",
     "Adding spaces has moved.": "Pridávanie priestorov bolo presunuté.",
     "Adding rooms... (%(progress)s out of %(count)s)": {
         "other": "Pridávanie miestností... (%(progress)s z %(count)s)",
@@ -746,7 +740,6 @@
     "Reset event store": "Obnoviť úložisko udalostí",
     "You most likely do not want to reset your event index store": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
     "Reset event store?": "Obnoviť úložisko udalostí?",
-    "Can't load this message": "Nemožno načítať túto správu",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
     "Data on this screen is shared with %(widgetDomain)s": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s",
     "If they don't match, the security of your communication may be compromised.": "Ak sa nezhodujú, môže byť ohrozená bezpečnosť vašej komunikácie.",
@@ -764,7 +757,6 @@
     "You are not allowed to view this server's rooms list": "Nemáte povolené zobraziť zoznam miestností tohto servera",
     "Sections to show": "Sekcie na zobrazenie",
     "This address does not point at this room": "Táto adresa nesmeruje do tejto miestnosti",
-    "Location": "Poloha",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
@@ -1038,7 +1030,8 @@
         "show_more": "Zobraziť viac",
         "joined": "Ste pripojený",
         "avatar": "Obrázok",
-        "are_you_sure": "Ste si istí?"
+        "are_you_sure": "Ste si istí?",
+        "location": "Poloha"
     },
     "action": {
         "continue": "Pokračovať",
@@ -2468,7 +2461,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reagovali %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagoval %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reagoval %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Pridať reakciu"
         },
         "m.room.create": {
             "continuation": "Táto miestnosť je pokračovaním staršej konverzácii.",
@@ -2576,7 +2570,17 @@
         },
         "m.video": {
             "error_decrypting": "Chyba pri dešifrovaní videa"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Pridať integráciu",
+            "dialog_description": "Budete presmerovaní na stránku tretej strany, aby ste mohli overiť svoj účet na použitie s %(integrationsUrl)s. Chcete pokračovať?"
+        },
+        "edits": {
+            "tooltip_title": "Upravené %(date)s",
+            "tooltip_sub": "Kliknutím zobrazíte úpravy",
+            "tooltip_label": "Upravené %(date)s. Kliknutím zobrazíte úpravy."
+        },
+        "error_rendering_message": "Nemožno načítať túto správu"
     },
     "slash_command": {
         "spoiler": "Odošle danú správu ako spojler",

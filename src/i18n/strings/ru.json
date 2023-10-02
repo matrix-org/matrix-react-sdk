@@ -40,8 +40,6 @@
     "Confirm Removal": "Подтвердите удаление",
     "Unable to restore session": "Восстановление сеанса не удалось",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
-    "Add an Integration": "Добавить интеграцию",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?",
     "Create new room": "Создать комнату",
     "Home": "Главная",
     "(~%(count)s results)": {
@@ -215,7 +213,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
     "Some characters not allowed": "Некоторые символы не разрешены",
     "Join millions for free on the largest public server": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
-    "Edited at %(date)s. Click to view edits.": "Изменено %(date)s. Нажмите для посмотра истории изменений.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
     "Clear all data": "Очистить все данные",
@@ -288,9 +285,6 @@
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
-    "Edited at %(date)s": "Изменено %(date)s",
-    "Click to view edits": "Нажмите для просмотра правок",
-    "Can't load this message": "Не удалось загрузить это сообщение",
     "Submit logs": "Отправить логи",
     "Room address": "Адрес комнаты",
     "This address is available to use": "Этот адрес доступен",
@@ -738,7 +732,6 @@
         "other": "Просмотреть всех %(count)s участников"
     },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
-    "Add reaction": "Отреагировать",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -781,7 +774,6 @@
     "Missing domain separator e.g. (:domain.org)": "Отсутствует разделитель домена (:domain.org)",
     "Including you, %(commaSeparatedMembers)s": "Включая вас, %(commaSeparatedMembers)s",
     "Could not fetch location": "Не удалось получить местоположение",
-    "Location": "Местоположение",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -1012,7 +1004,8 @@
         "show_more": "Показать больше",
         "joined": "Присоединился",
         "avatar": "Аватар",
-        "are_you_sure": "Вы уверены?"
+        "are_you_sure": "Вы уверены?",
+        "location": "Местоположение"
     },
     "action": {
         "continue": "Продолжить",
@@ -2314,7 +2307,8 @@
         },
         "reactions": {
             "label": "%(reactors)s отреагировали %(content)s",
-            "tooltip": "<reactors/><reactedWith>отреагировал с %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>отреагировал с %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Отреагировать"
         },
         "m.room.create": {
             "continuation": "Эта комната является продолжением другого разговора.",
@@ -2411,7 +2405,17 @@
         },
         "m.video": {
             "error_decrypting": "Ошибка расшифровки видео"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Добавить интеграцию",
+            "dialog_description": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?"
+        },
+        "edits": {
+            "tooltip_title": "Изменено %(date)s",
+            "tooltip_sub": "Нажмите для просмотра правок",
+            "tooltip_label": "Изменено %(date)s. Нажмите для посмотра истории изменений."
+        },
+        "error_rendering_message": "Не удалось загрузить это сообщение"
     },
     "slash_command": {
         "spoiler": "Отправить данное сообщение под спойлером",

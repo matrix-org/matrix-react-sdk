@@ -39,8 +39,6 @@
     "Confirm Removal": "Confirmar Remoção",
     "Unable to restore session": "Não foi possível restaurar a sessão",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
-    "Add an Integration": "Adicionar uma integração",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
     "Custom level": "Nível personalizado",
     "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
@@ -568,6 +566,10 @@
         },
         "m.video": {
             "error_decrypting": "Erro ao descriptografar o vídeo"
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Adicionar uma integração",
+            "dialog_description": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?"
         }
     },
     "slash_command": {

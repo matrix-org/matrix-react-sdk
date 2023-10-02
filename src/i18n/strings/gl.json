@@ -44,8 +44,6 @@
     "Join Room": "Unirse a sala",
     "unknown error code": "código de fallo descoñecido",
     "not specified": "non indicado",
-    "Add an Integration": "Engadir unha integración",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vai ser redirixido a unha web de terceiros para poder autenticar a súa conta e así utilizar %(integrationsUrl)s. Quere continuar?",
     "Email address": "Enderezo de correo",
     "Delete Widget": "Eliminar widget",
     "Create new room": "Crear unha nova sala",
@@ -205,9 +203,7 @@
     "%(name)s declined": "%(name)s declinou",
     "%(name)s cancelled": "%(name)s cancelou",
     "%(name)s wants to verify": "%(name)s desexa verificar",
-    "Edited at %(date)s. Click to view edits.": "Editada o %(date)s. Preme para ver edicións.",
     "edited": "editada",
-    "Can't load this message": "Non se cargou a mensaxe",
     "Submit logs": "Enviar rexistro",
     "Cancel search": "Cancelar busca",
     "Language Dropdown": "Selector de idioma",
@@ -343,8 +339,6 @@
     "Security Key": "Chave de Seguridade",
     "Use your Security Key to continue.": "Usa a túa Chave de Seguridade para continuar.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
-    "Edited at %(date)s": "Editado o %(date)s",
-    "Click to view edits": "Preme para ver as edicións",
     "You're all caught up.": "Xa estás ó día.",
     "Server isn't responding": "O servidor non responde",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "O servidor non responde a algunhas peticións. Aquí tes algunha das razóns máis probables.",
@@ -703,7 +697,6 @@
     "You are not allowed to view this server's rooms list": "Non tes permiso para ver a lista de salas deste servidor",
     "You may contact me if you have any follow up questions": "Podes contactar conmigo se tes algunha outra suxestión",
     "To leave the beta, visit your settings.": "Para saír da beta, vai aos axustes.",
-    "Add reaction": "Engadir reacción",
     "Or send invite link": "Ou envía ligazón de convite",
     "Some suggestions may be hidden for privacy.": "Algunhas suxestións poderían estar agochadas por privacidade.",
     "Search for rooms or people": "Busca salas ou persoas",
@@ -787,7 +780,6 @@
     "The poll has ended. No votes were cast.": "Rematou a enquisa. Non houbo votos.",
     "Including you, %(commaSeparatedMembers)s": "Incluíndote a ti, %(commaSeparatedMembers)s",
     "Could not fetch location": "Non se obtivo a localización",
-    "Location": "Localización",
     "toggle event": "activar evento",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Verify other device": "Verificar outro dispositivo",
@@ -1003,7 +995,8 @@
         "show_more": "Mostrar máis",
         "joined": "Unícheste",
         "avatar": "Avatar",
-        "are_you_sure": "Está segura?"
+        "are_you_sure": "Está segura?",
+        "location": "Localización"
     },
     "action": {
         "continue": "Continuar",
@@ -2216,7 +2209,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reaccionou con %(content)s",
-            "tooltip": "<reactors/><reactedWith>reaccionaron con %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reaccionaron con %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Engadir reacción"
         },
         "m.room.create": {
             "continuation": "Esta sala é continuación doutra conversa.",
@@ -2307,7 +2301,17 @@
         },
         "m.video": {
             "error_decrypting": "Fallo descifrando vídeo"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Engadir unha integración",
+            "dialog_description": "Vai ser redirixido a unha web de terceiros para poder autenticar a súa conta e así utilizar %(integrationsUrl)s. Quere continuar?"
+        },
+        "edits": {
+            "tooltip_title": "Editado o %(date)s",
+            "tooltip_sub": "Preme para ver as edicións",
+            "tooltip_label": "Editada o %(date)s. Preme para ver edicións."
+        },
+        "error_rendering_message": "Non se cargou a mensaxe"
     },
     "slash_command": {
         "spoiler": "Envía a mensaxe dada como un spoiler",

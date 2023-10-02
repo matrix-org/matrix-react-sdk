@@ -64,9 +64,7 @@
     "%(name)s declined": "%(name)s keeldus",
     "%(name)s cancelled": "%(name)s tühistas",
     "%(name)s wants to verify": "%(name)s soovib verifitseerida",
-    "Edited at %(date)s. Click to view edits.": "Muudetud %(date)s. Klõpsi et näha varasemaid versioone.",
     "edited": "muudetud",
-    "Can't load this message": "Selle sõnumi laadimine ei õnnestu",
     "Submit logs": "Saada rakenduse logid",
     "Your server": "Sinu server",
     "Add a new server": "Lisa uus server",
@@ -274,8 +272,6 @@
         "other": "ja %(count)s muud...",
         "one": "ja üks muu..."
     },
-    "Add an Integration": "Lisa lõiming",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Sind juhatatakse kolmanda osapoole veebisaiti, kus sa saad autentida oma kontoga %(integrationsUrl)s kasutamiseks. Kas sa soovid jätkata?",
     "Power level": "Õiguste tase",
     "Custom level": "Kohandatud õigused",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "Ei ole võimalik laadida seda sündmust, millele vastus on tehtud - teda kas pole olemas või sul pole õigusi seda näha.",
@@ -336,8 +332,6 @@
         "other": "%(count)s sessiooni",
         "one": "%(count)s sessioon"
     },
-    "Edited at %(date)s": "Muutmise kuupäev %(date)s",
-    "Click to view edits": "Muudatuste nägemiseks klõpsi",
     "<a>In reply to</a> <pill>": "<a>Vastuseks kasutajale</a> <pill>",
     "This backup is trusted because it has been restored on this session": "See varukoopia on usaldusväärne, sest ta on taastatud sellest sessioonist",
     "Start using Key Backup": "Võta kasutusele krüptovõtmete varundamine",
@@ -703,7 +697,6 @@
     "You are not allowed to view this server's rooms list": "Sul puuduvad õigused selle serveri jututubade loendi vaatamiseks",
     "You may contact me if you have any follow up questions": "Kui sul on lisaküsimusi, siis vastan neile hea meelega",
     "To leave the beta, visit your settings.": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
-    "Add reaction": "Lisa reaktsioon",
     "Or send invite link": "Või saada kutse link",
     "Some suggestions may be hidden for privacy.": "Mõned soovitused võivad privaatsusseadistuste tõttu olla peidetud.",
     "Search for rooms or people": "Otsi jututubasid või inimesi",
@@ -796,7 +789,6 @@
     "Verify other device": "Verifitseeri oma teine seade",
     "Could not fetch location": "Asukoha tuvastamine ei õnnestunud",
     "This address does not point at this room": "Antud aadress ei viita sellele jututoale",
-    "Location": "Asukoht",
     "Use <arrows/> to scroll": "Kerimiseks kasuta <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Tagasiside on saadetud. Täname, sellest on loodetavasti kasu!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
@@ -1038,7 +1030,8 @@
         "show_more": "Näita rohkem",
         "joined": "Liitunud",
         "avatar": "Tunnuspilt",
-        "are_you_sure": "Kas sa oled kindel?"
+        "are_you_sure": "Kas sa oled kindel?",
+        "location": "Asukoht"
     },
     "action": {
         "continue": "Jätka",
@@ -2468,7 +2461,8 @@
         },
         "reactions": {
             "label": "%(reactors)s kasutajat reageeris järgnevalt: %(content)s",
-            "tooltip": "<reactors/><reactedWith>reageeris(id) %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reageeris(id) %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Lisa reaktsioon"
         },
         "m.room.create": {
             "continuation": "See jututuba on järg varasemale vestlusele.",
@@ -2576,7 +2570,17 @@
         },
         "m.video": {
             "error_decrypting": "Viga videovoo dekrüptimisel"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Lisa lõiming",
+            "dialog_description": "Sind juhatatakse kolmanda osapoole veebisaiti, kus sa saad autentida oma kontoga %(integrationsUrl)s kasutamiseks. Kas sa soovid jätkata?"
+        },
+        "edits": {
+            "tooltip_title": "Muutmise kuupäev %(date)s",
+            "tooltip_sub": "Muudatuste nägemiseks klõpsi",
+            "tooltip_label": "Muudetud %(date)s. Klõpsi et näha varasemaid versioone."
+        },
+        "error_rendering_message": "Selle sõnumi laadimine ei õnnestu"
     },
     "slash_command": {
         "spoiler": "Saadab selle sõnumi rõõmurikkujana",

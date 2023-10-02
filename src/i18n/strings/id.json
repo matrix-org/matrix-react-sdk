@@ -420,14 +420,7 @@
         "one": "%(count)s balasan",
         "other": "%(count)s balasan"
     },
-    "Can't load this message": "Tidak dapat memuat pesan ini",
     "Submit logs": "Kirim catatan",
-    "Edited at %(date)s. Click to view edits.": "Diedit di %(date)s. Klik untuk melihat editan.",
-    "Click to view edits": "Klik untuk melihat editan",
-    "Edited at %(date)s": "Diedit di %(date)s",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Anda akan dialihkan ke situs pihak ketiga sehingga Anda dapat mengautentikasi akun Anda untuk digunakan dengan %(integrationsUrl)s. Apakah Anda yakin untuk melanjutkan?",
-    "Add an Integration": "Tambahkan sebuah Integrasi",
-    "Add reaction": "Tambahkan reaksi",
     "%(name)s wants to verify": "%(name)s ingin memverifikasi",
     "%(name)s cancelled": "%(name)s membatalkan",
     "%(name)s declined": "%(name)s menolak",
@@ -796,7 +789,6 @@
     "Verify other device": "Verifikasi perangkat lain",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "This address does not point at this room": "Alamat ini tidak mengarah ke ruangan ini",
-    "Location": "Lokasi",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
     "Use <arrows/> to scroll": "Gunakan <arrows/> untuk menggulirkan",
     "Feedback sent! Thanks, we appreciate it!": "Masukan terkirim! Terima kasih, kami mengapresiasinya!",
@@ -1038,7 +1030,8 @@
         "show_more": "Tampilkan lebih banyak",
         "joined": "Tergabung",
         "avatar": "Avatar",
-        "are_you_sure": "Apakah Anda yakin?"
+        "are_you_sure": "Apakah Anda yakin?",
+        "location": "Lokasi"
     },
     "action": {
         "continue": "Lanjut",
@@ -2469,7 +2462,8 @@
         },
         "reactions": {
             "label": "%(reactors)s berekasi dengan %(content)s",
-            "tooltip": "<reactors/><reactedWith>bereaksi dengan %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>bereaksi dengan %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Tambahkan reaksi"
         },
         "m.room.create": {
             "continuation": "Ruangan ini adalah lanjutan dari obrolan sebelumnya.",
@@ -2577,7 +2571,17 @@
         },
         "m.video": {
             "error_decrypting": "Terjadi kesalahan mendekripsi video"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Tambahkan sebuah Integrasi",
+            "dialog_description": "Anda akan dialihkan ke situs pihak ketiga sehingga Anda dapat mengautentikasi akun Anda untuk digunakan dengan %(integrationsUrl)s. Apakah Anda yakin untuk melanjutkan?"
+        },
+        "edits": {
+            "tooltip_title": "Diedit di %(date)s",
+            "tooltip_sub": "Klik untuk melihat editan",
+            "tooltip_label": "Diedit di %(date)s. Klik untuk melihat editan."
+        },
+        "error_rendering_message": "Tidak dapat memuat pesan ini"
     },
     "slash_command": {
         "spoiler": "Mengirim pesan sebagai spoiler",

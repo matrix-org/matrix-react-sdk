@@ -45,8 +45,6 @@
     },
     "Join Room": "Entra nella stanza",
     "not specified": "non specificato",
-    "Add an Integration": "Aggiungi un'integrazione",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Stai per essere portato in un sito di terze parti per autenticare il tuo account da usare con %(integrationsUrl)s. Vuoi continuare?",
     "Email address": "Indirizzo email",
     "Delete Widget": "Elimina widget",
     "Home": "Pagina iniziale",
@@ -216,7 +214,6 @@
     "Upload Error": "Errore di invio",
     "Some characters not allowed": "Alcuni caratteri non sono permessi",
     "Upload all": "Invia tutto",
-    "Edited at %(date)s. Click to view edits.": "Modificato alle %(date)s. Clicca per vedere le modifiche.",
     "Message edits": "Modifiche del messaggio",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
@@ -313,7 +310,6 @@
     "Server did not require any authentication": "Il server non ha richiesto alcuna autenticazione",
     "Server did not return valid authentication information.": "Il server non ha restituito informazioni di autenticazione valide.",
     "There was a problem communicating with the server. Please try again.": "C'è stato un problema nella comunicazione con il server. Riprova.",
-    "Can't load this message": "Impossibile caricare questo messaggio",
     "Submit logs": "Invia registri",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Promemoria: il tuo browser non è supportato, perciò la tua esperienza può essere imprevedibile.",
     "Unable to upload": "Impossibile inviare",
@@ -343,8 +339,6 @@
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
     "Use your Security Key to continue.": "Usa la tua chiave di sicurezza per continuare.",
-    "Edited at %(date)s": "Modificato il %(date)s",
-    "Click to view edits": "Clicca per vedere le modifiche",
     "You're all caught up.": "Non hai nulla di nuovo da vedere.",
     "Server isn't responding": "Il server non risponde",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Il tuo server non sta rispondendo ad alcune tue richieste. Sotto trovi alcuni probabili motivi.",
@@ -703,7 +697,6 @@
     "You are not allowed to view this server's rooms list": "Non hai i permessi per vedere l'elenco di stanze del server",
     "You may contact me if you have any follow up questions": "Potete contattarmi se avete altre domande",
     "To leave the beta, visit your settings.": "Per abbandonare la beta, vai nelle impostazioni.",
-    "Add reaction": "Aggiungi reazione",
     "Or send invite link": "O manda un collegamento di invito",
     "Some suggestions may be hidden for privacy.": "Alcuni suggerimenti potrebbero essere nascosti per privacy.",
     "Search for rooms or people": "Cerca stanze o persone",
@@ -796,7 +789,6 @@
     "Verify other device": "Verifica altro dispositivo",
     "Could not fetch location": "Impossibile rilevare la posizione",
     "This address does not point at this room": "Questo indirizzo non punta a questa stanza",
-    "Location": "Posizione",
     "Use <arrows/> to scroll": "Usa <arrows/> per scorrere",
     "Feedback sent! Thanks, we appreciate it!": "Opinione inviata! Grazie, lo apprezziamo!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
@@ -1038,7 +1030,8 @@
         "show_more": "Mostra altro",
         "joined": "Entrato/a",
         "avatar": "Avatar",
-        "are_you_sure": "Sei sicuro?"
+        "are_you_sure": "Sei sicuro?",
+        "location": "Posizione"
     },
     "action": {
         "continue": "Continua",
@@ -2469,7 +2462,8 @@
         },
         "reactions": {
             "label": "%(reactors)s ha reagito con %(content)s",
-            "tooltip": "<reactors/><reactedWith>ha reagito con %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>ha reagito con %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Aggiungi reazione"
         },
         "m.room.create": {
             "continuation": "Questa stanza è la continuazione di un'altra conversazione.",
@@ -2577,7 +2571,17 @@
         },
         "m.video": {
             "error_decrypting": "Errore decifratura video"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Aggiungi un'integrazione",
+            "dialog_description": "Stai per essere portato in un sito di terze parti per autenticare il tuo account da usare con %(integrationsUrl)s. Vuoi continuare?"
+        },
+        "edits": {
+            "tooltip_title": "Modificato il %(date)s",
+            "tooltip_sub": "Clicca per vedere le modifiche",
+            "tooltip_label": "Modificato alle %(date)s. Clicca per vedere le modifiche."
+        },
+        "error_rendering_message": "Impossibile caricare questo messaggio"
     },
     "slash_command": {
         "spoiler": "Invia il messaggio come spoiler",

@@ -86,8 +86,6 @@
     "collapse": "fäll ihop",
     "expand": "fäll ut",
     "<a>In reply to</a> <pill>": "<a>Som svar på</a> <pill>",
-    "Add an Integration": "Lägg till integration",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?",
     "Share Room": "Dela rum",
     "Link to most recent message": "Länk till senaste meddelandet",
     "Share User": "Dela användare",
@@ -212,7 +210,6 @@
         "other": "Ta bort %(count)s meddelanden",
         "one": "Ta bort 1 meddelande"
     },
-    "Edited at %(date)s. Click to view edits.": "Redigerat vid %(date)s. Klicka för att visa redigeringar.",
     "edited": "redigerat",
     "Failed to connect to integration manager": "Kunde inte ansluta till integrationshanterare",
     "%(name)s accepted": "%(name)s accepterade",
@@ -265,9 +262,6 @@
         "one": "%(count)s session"
     },
     "%(name)s declined": "%(name)s avslog",
-    "Edited at %(date)s": "Redigerat vid %(date)s",
-    "Click to view edits": "Klicka för att visa redigeringar",
-    "Can't load this message": "Kan inte ladda det här meddelandet",
     "Submit logs": "Skicka loggar",
     "Information": "Information",
     "Room address": "Rumsadress",
@@ -702,7 +696,6 @@
     },
     "Not all selected were added": "Inte alla valda tillades",
     "You are not allowed to view this server's rooms list": "Du tillåts inte att se den här serverns rumslista",
-    "Add reaction": "Lägg till reaktion",
     "Or send invite link": "Eller skicka inbjudningslänk",
     "Some suggestions may be hidden for privacy.": "Vissa förslag kan vara dolda av sekretesskäl.",
     "Search for rooms or people": "Sök efter rum eller personer",
@@ -767,7 +760,6 @@
     "Recently viewed": "Nyligen sedda",
     "Including you, %(commaSeparatedMembers)s": "Inklusive dig, %(commaSeparatedMembers)s",
     "Could not fetch location": "Kunde inte hämta plats",
-    "Location": "Plats",
     "toggle event": "växla händelse",
     "%(count)s votes": {
         "one": "%(count)s röst",
@@ -1035,7 +1027,8 @@
         "show_more": "Visa mer",
         "joined": "Gick med",
         "avatar": "Avatar",
-        "are_you_sure": "Är du säker?"
+        "are_you_sure": "Är du säker?",
+        "location": "Plats"
     },
     "action": {
         "continue": "Fortsätt",
@@ -2423,7 +2416,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reagerade med %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagerade med %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reagerade med %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Lägg till reaktion"
         },
         "m.room.create": {
             "continuation": "Detta rum är en fortsättning på en annan konversation.",
@@ -2529,7 +2523,17 @@
         },
         "m.video": {
             "error_decrypting": "Fel vid avkryptering av video"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Lägg till integration",
+            "dialog_description": "Du kommer att skickas till en tredjepartswebbplats så att du kan autentisera ditt konto för användning med %(integrationsUrl)s. Vill du fortsätta?"
+        },
+        "edits": {
+            "tooltip_title": "Redigerat vid %(date)s",
+            "tooltip_sub": "Klicka för att visa redigeringar",
+            "tooltip_label": "Redigerat vid %(date)s. Klicka för att visa redigeringar."
+        },
+        "error_rendering_message": "Kan inte ladda det här meddelandet"
     },
     "slash_command": {
         "spoiler": "Skickar det angivna meddelandet som en spoiler",

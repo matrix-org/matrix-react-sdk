@@ -45,13 +45,11 @@
         "other": "(~%(count)s výsledků)",
         "one": "(~%(count)s výsledek)"
     },
-    "Add an Integration": "Přidat začlenění",
     "Restricted": "Omezené",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Budete přesměrováni na stránku třetí strany k ověření svého účtu pro používání s %(integrationsUrl)s. Chcete pokračovat?",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
     "And %(count)s more...": {
         "other": "A %(count)s dalších..."
@@ -238,7 +236,6 @@
     "%(name)s accepted": "%(name)s přijal(a)",
     "%(name)s cancelled": "%(name)s zrušil(a)",
     "%(name)s wants to verify": "%(name)s chce ověřit",
-    "Edited at %(date)s. Click to view edits.": "Upraveno v %(date)s. Klinutím zobrazíte změny.",
     "Cancel search": "Zrušit hledání",
     "e.g. my-room": "např. moje-mistnost",
     "Upload all": "Nahrát vše",
@@ -289,7 +286,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
     "You signed in to a new session without verifying it:": "Přihlásili jste se do nové relace, aniž byste ji ověřili:",
     "Verify your other session using one of the options below.": "Ověřte další relaci jedním z následujících způsobů.",
-    "Can't load this message": "Tuto zprávu nelze načíst",
     "Submit logs": "Odeslat záznamy o chybě",
     "Looks good": "To vypadá dobře",
     "Can't find this server or its room list": "Server nebo jeho seznam místností se nepovedlo nalézt",
@@ -307,8 +303,6 @@
     "Your homeserver has exceeded its user limit.": "Na vašem domovském serveru byl překročen limit počtu uživatelů.",
     "Your homeserver has exceeded one of its resource limits.": "Na vašem domovském serveru byl překročen limit systémových požadavků.",
     "Ok": "Ok",
-    "Edited at %(date)s": "Upraveno %(date)s",
-    "Click to view edits": "Klikněte pro zobrazení úprav",
     "Room address": "Adresa místnosti",
     "This address is available to use": "Tato adresa je dostupná",
     "This address is already in use": "Tato adresa je již používána",
@@ -702,7 +696,6 @@
     "You are not allowed to view this server's rooms list": "Namáte oprávnění zobrazit seznam místností tohoto serveru",
     "You may contact me if you have any follow up questions": "V případě dalších dotazů se na mě můžete obrátit",
     "To leave the beta, visit your settings.": "Chcete-li opustit beta verzi, jděte do nastavení.",
-    "Add reaction": "Přidat reakci",
     "Or send invite link": "Nebo pošlete pozvánku",
     "Some suggestions may be hidden for privacy.": "Některé návrhy mohou být z důvodu ochrany soukromí skryty.",
     "Search for rooms or people": "Hledat místnosti nebo osoby",
@@ -796,7 +789,6 @@
     "Verify other device": "Ověřit jiné zařízení",
     "Could not fetch location": "Nepodařilo se zjistit polohu",
     "This address does not point at this room": "Tato adresa neukazuje na tuto místnost",
-    "Location": "Poloha",
     "Use <arrows/> to scroll": "K pohybu použijte <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
@@ -1038,7 +1030,8 @@
         "show_more": "Více",
         "joined": "Připojeno",
         "avatar": "Avatar",
-        "are_you_sure": "Opravdu?"
+        "are_you_sure": "Opravdu?",
+        "location": "Poloha"
     },
     "action": {
         "continue": "Pokračovat",
@@ -2469,7 +2462,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reagoval(a) na %(content)s",
-            "tooltip": "<reactors/><reactedWith> reagoval(a) %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith> reagoval(a) %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Přidat reakci"
         },
         "m.room.create": {
             "continuation": "Tato místost je pokračováním jiné konverzace.",
@@ -2577,7 +2571,17 @@
         },
         "m.video": {
             "error_decrypting": "Chyba při dešifrování videa"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Přidat začlenění",
+            "dialog_description": "Budete přesměrováni na stránku třetí strany k ověření svého účtu pro používání s %(integrationsUrl)s. Chcete pokračovat?"
+        },
+        "edits": {
+            "tooltip_title": "Upraveno %(date)s",
+            "tooltip_sub": "Klikněte pro zobrazení úprav",
+            "tooltip_label": "Upraveno v %(date)s. Klinutím zobrazíte změny."
+        },
+        "error_rendering_message": "Tuto zprávu nelze načíst"
     },
     "slash_command": {
         "spoiler": "Odešle danou zprávu jako spoiler",

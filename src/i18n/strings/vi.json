@@ -364,15 +364,8 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để xem tất cả các tệp được mã hóa",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Không thể khởi chạy tìm kiếm tin nhắn, hãy kiểm tra cài đặt của bạn <a>your settings</a> để biết thêm thông tin",
     "Cancel search": "Hủy tìm kiếm",
-    "Can't load this message": "Không thể tải tin nhắn này",
     "Submit logs": "Gửi nhật ký",
     "edited": "đã chỉnh sửa",
-    "Edited at %(date)s. Click to view edits.": "Đã chỉnh sửa vào %(date)s. Bấm để xem các chỉnh sửa.",
-    "Click to view edits": "Nhấp để xem các chỉnh sửa",
-    "Edited at %(date)s": "Đã chỉnh sửa lúc %(date)s",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Bạn sắp được đưa đến trang web của bên thứ ba để bạn có thể xác thực tài khoản của mình để sử dụng với %(integrationsUrl)s. Bạn có muốn tiếp tục không?",
-    "Add an Integration": "Thêm tích hợp",
-    "Add reaction": "Thêm phản ứng",
     "%(name)s wants to verify": "%(name)s muốn xác thực",
     "%(name)s cancelled": "%(name)s đã bị hủy",
     "%(name)s declined": "%(name)s đã từ chối",
@@ -842,7 +835,6 @@
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "You will not be able to reactivate your account": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
     "You will no longer be able to log in": "Bạn sẽ không thể đăng nhập lại",
-    "Location": "Vị trí",
     "This address does not point at this room": "Địa chỉ này không trỏ đến phòng này",
     "Choose a locale": "Chọn vùng miền",
     "Coworkers and teams": "Đồng nghiệp và nhóm",
@@ -978,7 +970,8 @@
         "show_more": "Cho xem nhiều hơn",
         "joined": "Đã tham gia",
         "avatar": "Avatar",
-        "are_you_sure": "Bạn có chắc không?"
+        "are_you_sure": "Bạn có chắc không?",
+        "location": "Vị trí"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -2294,7 +2287,8 @@
         },
         "reactions": {
             "label": "%(reactors)s đã phản hồi với %(content)s",
-            "tooltip": "<reactors/><reactedWith>đã phản hồi với %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>đã phản hồi với %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Thêm phản ứng"
         },
         "m.room.create": {
             "continuation": "Căn phòng này là sự tiếp nối của một cuộc trò chuyện khác.",
@@ -2391,7 +2385,17 @@
         },
         "m.video": {
             "error_decrypting": "Lỗi khi giải mã video"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Thêm tích hợp",
+            "dialog_description": "Bạn sắp được đưa đến trang web của bên thứ ba để bạn có thể xác thực tài khoản của mình để sử dụng với %(integrationsUrl)s. Bạn có muốn tiếp tục không?"
+        },
+        "edits": {
+            "tooltip_title": "Đã chỉnh sửa lúc %(date)s",
+            "tooltip_sub": "Nhấp để xem các chỉnh sửa",
+            "tooltip_label": "Đã chỉnh sửa vào %(date)s. Bấm để xem các chỉnh sửa."
+        },
+        "error_rendering_message": "Không thể tải tin nhắn này"
     },
     "slash_command": {
         "spoiler": "Đánh dấu tin nhắn chỉ định thành một tin nhắn ẩn",

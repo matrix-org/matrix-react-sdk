@@ -39,7 +39,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Sprawdź swój e-mail i kliknij link w nim zawarty. Kiedy już to zrobisz, kliknij \"kontynuuj\".",
     "Session ID": "Identyfikator sesji",
     "Verification Pending": "Oczekiwanie weryfikacji",
-    "Add an Integration": "Dodaj integrację",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -50,7 +49,6 @@
     "Confirm Removal": "Potwierdź usunięcie",
     "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Za chwilę zostaniesz przekierowany/a na zewnętrzną stronę w celu powiązania Twojego konta z %(integrationsUrl)s. Czy chcesz kontynuować?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Restricted": "Ograniczony",
     "Send": "Wyślij",
@@ -174,7 +172,6 @@
     "e.g. my-room": "np. mój-pokój",
     "Some characters not allowed": "Niektóre znaki niedozwolone",
     "Direct Messages": "Wiadomości prywatne",
-    "Edited at %(date)s. Click to view edits.": "Edytowano w %(date)s. Kliknij, aby zobaczyć zmiany.",
     "Looks good": "Wygląda dobrze",
     "Your server": "Twój serwer",
     "Add a new server": "Dodaj nowy serwer",
@@ -567,7 +564,6 @@
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Invite to %(roomName)s": "Zaproś do %(roomName)s",
-    "Location": "Lokalizacja",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Usunięcie kluczy weryfikacji krzyżowej jest trwałe. Każdy, z kim dokonano weryfikacji, zobaczy alerty bezpieczeństwa. Prawie na pewno nie chcesz tego robić, chyba że straciłeś każde urządzenie, z którego możesz weryfikować.",
     "Destroy cross-signing keys?": "Zniszczyć klucze weryfikacji krzyżowej?",
@@ -628,11 +624,7 @@
     "You don't have permission to share locations": "Nie masz uprawnień do udostępniania lokalizacji",
     "Could not fetch location": "Nie udało się pobrać lokalizacji",
     "toggle event": "przełącz wydarzenie",
-    "Can't load this message": "Nie można wczytać tej wiadomości",
     "Submit logs": "Wyślij dzienniki",
-    "Click to view edits": "Kliknij, aby wyświetlić edycje",
-    "Edited at %(date)s": "Edytowano o %(date)s",
-    "Add reaction": "Dodaj reakcje",
     "%(name)s wants to verify": "%(name)s chce weryfikacji",
     "%(name)s cancelled": "%(name)s anulował",
     "Modal Widget": "Widżet modalny",
@@ -1037,7 +1029,8 @@
         "show_more": "Pokaż więcej",
         "joined": "Dołączono",
         "avatar": "Awatar",
-        "are_you_sure": "Czy jesteś pewien?"
+        "are_you_sure": "Czy jesteś pewien?",
+        "location": "Lokalizacja"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -2463,7 +2456,8 @@
         },
         "reactions": {
             "label": "%(reactors)s zareagował z %(content)s",
-            "tooltip": "<reactors/><reactedWith> zareagował z %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith> zareagował z %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Dodaj reakcje"
         },
         "m.room.create": {
             "continuation": "Ten pokój jest kontynuacją innej rozmowy.",
@@ -2571,7 +2565,17 @@
         },
         "m.video": {
             "error_decrypting": "Błąd deszyfrowania wideo"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Dodaj integrację",
+            "dialog_description": "Za chwilę zostaniesz przekierowany/a na zewnętrzną stronę w celu powiązania Twojego konta z %(integrationsUrl)s. Czy chcesz kontynuować?"
+        },
+        "edits": {
+            "tooltip_title": "Edytowano o %(date)s",
+            "tooltip_sub": "Kliknij, aby wyświetlić edycje",
+            "tooltip_label": "Edytowano w %(date)s. Kliknij, aby zobaczyć zmiany."
+        },
+        "error_rendering_message": "Nie można wczytać tej wiadomości"
     },
     "slash_command": {
         "spoiler": "Wysyła podaną wiadomość jako spoiler",

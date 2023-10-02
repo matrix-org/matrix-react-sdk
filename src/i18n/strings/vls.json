@@ -117,8 +117,6 @@
     "Saturday": "Zoaterdag",
     "Today": "Vandoage",
     "Yesterday": "Gistern",
-    "Add an Integration": "Voegt een integroasje toe",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?",
     "edited": "bewerkt",
     "Delete Widget": "Widget verwydern",
     "Create new room": "E nieuw gesprek anmoakn",
@@ -215,7 +213,6 @@
     "Email (optional)": "E-mailadresse (optioneel)",
     "Join millions for free on the largest public server": "Doe mee me miljoenen anderen ip de grotste publieke server",
     "Session ID": "Sessie-ID",
-    "Edited at %(date)s. Click to view edits.": "Bewerkt ip %(date)s. Klikt vo de bewerkiengn te bekykn.",
     "Message edits": "Berichtbewerkiengn",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
     "Upload all": "Alles iploadn",
@@ -704,6 +701,13 @@
         },
         "m.video": {
             "error_decrypting": "Foute by ’t ountsleutern van ’t filmtje"
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Voegt een integroasje toe",
+            "dialog_description": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?"
+        },
+        "edits": {
+            "tooltip_label": "Bewerkt ip %(date)s. Klikt vo de bewerkiengn te bekykn."
         }
     },
     "slash_command": {

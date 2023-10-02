@@ -180,7 +180,6 @@
     "You'll lose access to your encrypted messages": "Ви втратите доступ до ваших зашифрованих повідомлень",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
-    "Add an Integration": "Додати інтеграцію",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Підтвердьте деактивацію свого облікового запису через єдиний вхід, щоб підтвердити вашу особу.",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
@@ -441,8 +440,6 @@
     "Link to most recent message": "Посилання на останнє повідомлення",
     "Share Room": "Поділитись кімнатою",
     "edited": "змінено",
-    "Edited at %(date)s. Click to view edits.": "Змінено %(date)s. Натисніть, щоб переглянути зміни.",
-    "Edited at %(date)s": "Змінено %(date)s",
     "Language Dropdown": "Спадне меню мов",
     "Information": "Відомості",
     "collapse": "згорнути",
@@ -529,8 +526,6 @@
         "other": "%(count)s учасників"
     },
     "There was a problem communicating with the server. Please try again.": "Виникла проблема зв'язку з сервером. Повторіть спробу.",
-    "Can't load this message": "Не вдалося завантажити це повідомлення",
-    "Add reaction": "Додати реакцію",
     "Manually export keys": "Експорт ключів власноруч",
     "Don't leave any rooms": "Не виходити з будь-якої кімнати",
     "Updating %(brand)s": "Оновлення %(brand)s",
@@ -679,8 +674,6 @@
     "Use the <a>Desktop app</a> to see all encrypted files": "Скористайтеся <a>стільничним застосунком</a>, щоб переглянути всі зашифровані файли",
     "Message search initialisation failed, check <a>your settings</a> for more information": "Не вдалося почати пошук, перевірте <a>налаштування</a>, щоб дізнатися більше",
     "Submit logs": "Надіслати журнали",
-    "Click to view edits": "Натисніть, щоб переглянути зміни",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Ви будете спрямовані до стороннього сайту, щоб автентифікувати використання облікового запису в %(integrationsUrl)s. Продовжити?",
     "%(count)s votes": {
         "one": "%(count)s голос",
         "other": "%(count)s голосів"
@@ -796,7 +789,6 @@
     "Verify other device": "Звірити інший пристрій",
     "Could not fetch location": "Не вдалося отримати місцеперебування",
     "This address does not point at this room": "Ця адреса не вказує на цю кімнату",
-    "Location": "Місцеперебування",
     "Use <arrows/> to scroll": "Використовуйте <arrows/>, щоб прокручувати",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
@@ -1038,7 +1030,8 @@
         "show_more": "Розгорнути",
         "joined": "Приєднано",
         "avatar": "Аватар",
-        "are_you_sure": "Ви впевнені?"
+        "are_you_sure": "Ви впевнені?",
+        "location": "Місцеперебування"
     },
     "action": {
         "continue": "Продовжити",
@@ -2468,7 +2461,8 @@
         },
         "reactions": {
             "label": "%(reactors)s додає реакцію %(content)s",
-            "tooltip": "<reactors/><reactedWith>додає реакцію %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>додає реакцію %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Додати реакцію"
         },
         "m.room.create": {
             "continuation": "Ця кімната — продовження іншої розмови.",
@@ -2576,7 +2570,17 @@
         },
         "m.video": {
             "error_decrypting": "Помилка розшифрування відео"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Додати інтеграцію",
+            "dialog_description": "Ви будете спрямовані до стороннього сайту, щоб автентифікувати використання облікового запису в %(integrationsUrl)s. Продовжити?"
+        },
+        "edits": {
+            "tooltip_title": "Змінено %(date)s",
+            "tooltip_sub": "Натисніть, щоб переглянути зміни",
+            "tooltip_label": "Змінено %(date)s. Натисніть, щоб переглянути зміни."
+        },
+        "error_rendering_message": "Не вдалося завантажити це повідомлення"
     },
     "slash_command": {
         "spoiler": "Надсилає вказане повідомлення згорненим",

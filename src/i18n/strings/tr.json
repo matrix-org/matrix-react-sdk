@@ -46,8 +46,6 @@
     "Confirm Removal": "Kaldırma İşlemini Onayla",
     "Unable to restore session": "Oturum geri yüklenemiyor",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
-    "Add an Integration": "Entegrasyon ekleyin",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Today": "Bugün",
@@ -253,7 +251,6 @@
     "AM": "12:00",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeni oturuma doğrulamadan giriş yaptı:",
     "Ask this user to verify their session, or manually verify it below.": "Kullanıcıya oturumunu doğrulamasını söyle, ya da aşağıdan doğrula.",
-    "Edited at %(date)s. Click to view edits.": "%(date)s tarihinde düzenlendi. Düzenlemeleri görmek için tıkla.",
     "You signed in to a new session without verifying it:": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
     "Verify your other session using one of the options below.": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
     "Your homeserver has exceeded its user limit.": "Homeserver'ınız kullanıcı limitini aştı.",
@@ -492,8 +489,6 @@
     "Bahamas": "Bahamalar",
     "Azerbaijan": "Azerbaycan",
     "Austria": "Avusturya",
-    "Click to view edits": "Düzenlemeleri görmek için tıkla",
-    "Edited at %(date)s": "%(date)s tarihinde düzenlendi",
     "%(name)s declined": "%(name)s reddetti",
     "IRC display name width": "IRC görünen ad genişliği",
     "Australia": "Avustralya",
@@ -1384,6 +1379,15 @@
         },
         "m.video": {
             "error_decrypting": "Video şifre çözme hatası"
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Entegrasyon ekleyin",
+            "dialog_description": "Hesabınızı %(integrationsUrl)s ile kullanmak üzere doğrulayabilmeniz için üçüncü taraf bir siteye götürülmek üzeresiniz. Devam etmek istiyor musunuz ?"
+        },
+        "edits": {
+            "tooltip_title": "%(date)s tarihinde düzenlendi",
+            "tooltip_sub": "Düzenlemeleri görmek için tıkla",
+            "tooltip_label": "%(date)s tarihinde düzenlendi. Düzenlemeleri görmek için tıkla."
         }
     },
     "slash_command": {

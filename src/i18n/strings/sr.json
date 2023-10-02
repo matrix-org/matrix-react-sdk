@@ -44,8 +44,6 @@
     "Join Room": "Приступи соби",
     "unknown error code": "непознати код грешке",
     "not specified": "није наведено",
-    "Add an Integration": "Додај уградњу",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?",
     "Email address": "Мејл адреса",
     "Delete Widget": "Обриши виџет",
     "Create new room": "Направи нову собу",
@@ -985,6 +983,10 @@
         },
         "m.video": {
             "error_decrypting": "Грешка при дешифровању видеа"
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Додај уградњу",
+            "dialog_description": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?"
         }
     },
     "slash_command": {

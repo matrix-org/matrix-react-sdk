@@ -45,10 +45,8 @@
     },
     "Confirm Removal": "Törlés megerősítése",
     "Unable to restore session": "A munkamenetet nem lehet helyreállítani",
-    "Add an Integration": "Integráció hozzáadása",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Azonosítás céljából egy harmadik félhez leszel irányítva (%(integrationsUrl)s). Folytatod?",
     "AM": "de.",
     "PM": "du.",
     "Unnamed room": "Névtelen szoba",
@@ -216,7 +214,6 @@
     "Some characters not allowed": "Néhány karakter nem engedélyezett",
     "edited": "szerkesztve",
     "Upload all": "Összes feltöltése",
-    "Edited at %(date)s. Click to view edits.": "Szerkesztés ideje: %(date)s. Kattintson a szerkesztések megtekintéséhez.",
     "Message edits": "Üzenetszerkesztések",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "A szoba fejlesztéséhez be kell zárnia ezt a szobát, és egy újat kell létrehoznia helyette. Hogy a szoba tagjai számára a lehető legjobb legyen a felhasználói élmény, a következők lépések lesznek végrehajtva:",
     "Removing…": "Eltávolítás…",
@@ -311,7 +308,6 @@
     "Server did not return valid authentication information.": "A kiszolgáló nem küldött vissza érvényes hitelesítési információkat.",
     "There was a problem communicating with the server. Please try again.": "A szerverrel való kommunikációval probléma történt. Kérlek próbáld újra.",
     "Sign in with SSO": "Belépés SSO-val",
-    "Can't load this message": "Ezt az üzenetet nem sikerült betölteni",
     "Submit logs": "Napló elküldése",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Emlékeztető: A böngésződ nem támogatott, így az élmény kiszámíthatatlan lehet.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Erősítsd meg egyszeri bejelentkezéssel, hogy felfüggeszted ezt a fiókot.",
@@ -343,8 +339,6 @@
     "Security Phrase": "Biztonsági jelmondat",
     "Security Key": "Biztonsági kulcs",
     "Use your Security Key to continue.": "Használja a biztonsági kulcsot a folytatáshoz.",
-    "Edited at %(date)s": "Szerkesztve ekkor: %(date)s",
-    "Click to view edits": "A szerkesztések megtekintéséhez kattints",
     "You're all caught up.": "Mindennel naprakész.",
     "Server isn't responding": "A kiszolgáló nem válaszol",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "A kiszolgálója nem válaszol egyes kéréseire. Alább látható pár lehetséges ok.",
@@ -702,7 +696,6 @@
     "Not all selected were added": "Nem az összes kijelölt lett hozzáadva",
     "You are not allowed to view this server's rooms list": "Nincs joga ennek a szervernek a szobalistáját megnézni",
     "To leave the beta, visit your settings.": "A beállításokban tudja elhagyni a bétát.",
-    "Add reaction": "Reakció hozzáadása",
     "You may contact me if you have any follow up questions": "Ha további kérdés merülne fel, kapcsolatba léphetnek velem",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
     "Or send invite link": "Vagy meghívó link küldése",
@@ -796,7 +789,6 @@
     "toggle event": "esemény be/ki",
     "Could not fetch location": "Nem lehet elérni a földrajzi helyzetét",
     "This address does not point at this room": "Ez a cím nem erre a szobára mutat",
-    "Location": "Földrajzi helyzet",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
     "Use <arrows/> to scroll": "Görgetés ezekkel: <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
@@ -1033,7 +1025,8 @@
         "show_more": "Több megjelenítése",
         "joined": "Csatlakozott",
         "avatar": "Profilkép",
-        "are_you_sure": "Biztos?"
+        "are_you_sure": "Biztos?",
+        "location": "Földrajzi helyzet"
     },
     "action": {
         "continue": "Folytatás",
@@ -2407,7 +2400,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reagált: %(content)s",
-            "tooltip": "<reactors/><reactedWith>ezzel reagált: %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>ezzel reagált: %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Reakció hozzáadása"
         },
         "m.room.create": {
             "continuation": "Ez a szoba egy másik beszélgetés folytatása.",
@@ -2513,7 +2507,17 @@
         },
         "m.video": {
             "error_decrypting": "Hiba a videó visszafejtésénél"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Integráció hozzáadása",
+            "dialog_description": "Azonosítás céljából egy harmadik félhez leszel irányítva (%(integrationsUrl)s). Folytatod?"
+        },
+        "edits": {
+            "tooltip_title": "Szerkesztve ekkor: %(date)s",
+            "tooltip_sub": "A szerkesztések megtekintéséhez kattints",
+            "tooltip_label": "Szerkesztés ideje: %(date)s. Kattintson a szerkesztések megtekintéséhez."
+        },
+        "error_rendering_message": "Ezt az üzenetet nem sikerült betölteni"
     },
     "slash_command": {
         "spoiler": "A megadott üzenet elküldése kitakarva",

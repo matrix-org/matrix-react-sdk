@@ -46,8 +46,6 @@
     "Confirm Removal": "삭제 확인",
     "Unable to restore session": "세션을 복구할 수 없음",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "이전에 최근 버전의 %(brand)s을 썼다면, 세션이 이 버전과 맞지 않을 것입니다. 창을 닫고 최근 버전으로 돌아가세요.",
-    "Add an Integration": "통합 추가",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)s에서 쓸 수 있도록 계정을 인증하려고 다른 사이트로 이동하고 있습니다. 계속하겠습니까?",
     "This will allow you to reset your password and receive notifications.": "이렇게 하면 비밀번호를 다시 설정하고 알림을 받을 수 있습니다.",
     "Sunday": "일요일",
     "Today": "오늘",
@@ -165,7 +163,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "암호화된 메시지는 종단간 암호화로 보호됩니다. 오직 당신과 상대방만 이 메시지를 읽을 수 있는 키를 갖습니다.",
     "Start using Key Backup": "키 백업 시작",
     "Deactivate account": "계정 비활성화",
-    "Edited at %(date)s. Click to view edits.": "%(date)s에 편집함. 클릭해서 편집 보기.",
     "edited": "편집됨",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <default>기본 (%(defaultIdentityServerName)s)을(를) 사용하거나</default> <settings>설정</settings>에서 관리하세요.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <settings>설정</settings>에서 관리하세요.",
@@ -900,6 +897,13 @@
         },
         "m.video": {
             "error_decrypting": "영상 복호화 중 오류"
+        },
+        "scalar_starter_link": {
+            "dialog_title": "통합 추가",
+            "dialog_description": "%(integrationsUrl)s에서 쓸 수 있도록 계정을 인증하려고 다른 사이트로 이동하고 있습니다. 계속하겠습니까?"
+        },
+        "edits": {
+            "tooltip_label": "%(date)s에 편집함. 클릭해서 편집 보기."
         }
     },
     "slash_command": {

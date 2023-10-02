@@ -42,8 +42,6 @@
     "Confirm Removal": "Berretsi kentzea",
     "Unable to restore session": "Ezin izan da saioa berreskuratu",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
-    "Add an Integration": "Gehitu integrazioa",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
     "and %(count)s others...": {
         "other": "eta beste %(count)s…",
@@ -216,7 +214,6 @@
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Fitxategi batzuk <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
     "Upload all": "Igo denak",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du. Kideei esperientziarik onena emateko, hau egingo dugu:",
-    "Edited at %(date)s. Click to view edits.": "Edizio data: %(date)s. Sakatu edizioak ikusteko.",
     "Message edits": "Mezuaren edizioak",
     "Removing…": "Kentzen…",
     "Clear all data": "Garbitu datu guztiak",
@@ -311,7 +308,6 @@
     "Server did not require any authentication": "Zerbitzariak ez du autentifikaziorik eskatu",
     "Server did not return valid authentication information.": "Zerbitzariak ez du baliozko autentifikazio informaziorik itzuli.",
     "There was a problem communicating with the server. Please try again.": "Arazo bat egon da zerbitzariarekin komunikatzeko. Saiatu berriro.",
-    "Can't load this message": "Ezin izan da mezu hau kargatu",
     "Submit logs": "Bidali egunkariak",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
     "Unable to upload": "Ezin izan da igo",
@@ -336,7 +332,6 @@
     "This address is already in use": "Gelaren helbide hau erabilita dago",
     "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
     "Switch theme": "Aldatu azala",
-    "Click to view edits": "Klik egin edizioak ikusteko",
     "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
     "The server has denied your request.": "Zerbitzariak zure eskariari uko egin dio.",
     "Wrong file type": "Okerreko fitxategi-mota",
@@ -1098,7 +1093,16 @@
         },
         "m.video": {
             "error_decrypting": "Errorea bideoa deszifratzean"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Gehitu integrazioa",
+            "dialog_description": "Kanpo webgune batetara eramango zaizu zure kontua %(integrationsUrl)s helbidearekin erabiltzeko egiaztatzeko. Jarraitu nahi duzu?"
+        },
+        "edits": {
+            "tooltip_sub": "Klik egin edizioak ikusteko",
+            "tooltip_label": "Edizio data: %(date)s. Sakatu edizioak ikusteko."
+        },
+        "error_rendering_message": "Ezin izan da mezu hau kargatu"
     },
     "slash_command": {
         "shrug": "¯\\_(ツ)_/¯ jartzen du testu soileko mezu baten aurrean",

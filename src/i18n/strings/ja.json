@@ -62,8 +62,6 @@
     },
     "Join Room": "ルームに参加",
     "not specified": "指定なし",
-    "Add an Integration": "統合を追加",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "%(integrationsUrl)sで使用するアカウントを認証するため、外部サイトに移動します。続行してよろしいですか？",
     "Email address": "メールアドレス",
     "Delete Widget": "ウィジェットを削除",
     "Home": "ホーム",
@@ -111,7 +109,6 @@
     "Room Settings - %(roomName)s": "ルームの設定 - %(roomName)s",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
     "Start using Key Backup": "鍵のバックアップを使用開始",
-    "Edited at %(date)s. Click to view edits.": "%(date)sに編集済。クリックすると変更履歴を表示。",
     "edited": "編集済",
     "I don't want my encrypted messages": "暗号化されたメッセージは不要です",
     "Manually export keys": "手動で鍵をエクスポート",
@@ -540,10 +537,7 @@
         "other": "%(count)s個の投票"
     },
     "In reply to <a>this message</a>": "<a>このメッセージ</a>への返信",
-    "Location": "位置情報",
     "Submit logs": "ログを提出",
-    "Click to view edits": "クリックすると変更履歴を表示",
-    "Can't load this message": "このメッセージを読み込めません",
     "Notes": "メモ",
     "Search for rooms": "ルームを検索",
     "Create a new room": "新しいルームを作成",
@@ -551,8 +545,6 @@
     "Add existing rooms": "既存のルームを追加",
     "Want to add a new space instead?": "代わりに新しいスペースを追加しますか？",
     "Server Options": "サーバーのオプション",
-    "Add reaction": "リアクションを追加",
-    "Edited at %(date)s": "%(date)sに編集済",
     "Spaces you know that contain this space": "このスペースを含む参加済のスペース",
     "Spaces you know that contain this room": "このルームを含む参加済のスペース",
     "%(count)s members": {
@@ -1022,7 +1014,8 @@
         "show_more": "さらに表示",
         "joined": "参加済",
         "avatar": "アバター",
-        "are_you_sure": "よろしいですか？"
+        "are_you_sure": "よろしいですか？",
+        "location": "位置情報"
     },
     "action": {
         "continue": "続行",
@@ -2365,7 +2358,8 @@
         },
         "reactions": {
             "label": "%(reactors)sは%(content)sでリアクションしました",
-            "tooltip": "<reactors/><reactedWith>%(shortName)sでリアクションしました</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>%(shortName)sでリアクションしました</reactedWith>",
+            "add_reaction_prompt": "リアクションを追加"
         },
         "m.room.create": {
             "continuation": "このルームは別の会話の続きです。",
@@ -2467,7 +2461,17 @@
         },
         "m.video": {
             "error_decrypting": "動画を復号化する際にエラーが発生しました"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "統合を追加",
+            "dialog_description": "%(integrationsUrl)sで使用するアカウントを認証するため、外部サイトに移動します。続行してよろしいですか？"
+        },
+        "edits": {
+            "tooltip_title": "%(date)sに編集済",
+            "tooltip_sub": "クリックすると変更履歴を表示",
+            "tooltip_label": "%(date)sに編集済。クリックすると変更履歴を表示。"
+        },
+        "error_rendering_message": "このメッセージを読み込めません"
     },
     "slash_command": {
         "spoiler": "選択したメッセージをネタバレとして送信",

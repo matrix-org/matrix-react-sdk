@@ -27,7 +27,6 @@
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
     "Send": "Sendi",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vi estas direktota al ekstera retejo por aŭtentikigi vian konton por uzo kun %(integrationsUrl)s. Ĉu vi volas daŭrigi tion?",
     "and %(count)s others...": {
         "other": "kaj %(count)s aliaj…",
         "one": "kaj unu alia…"
@@ -44,7 +43,6 @@
     "Join Room": "Aliĝi al ĉambro",
     "unknown error code": "nekonata kodo de eraro",
     "not specified": "nespecifita",
-    "Add an Integration": "Aldoni kunigon",
     "Email address": "Retpoŝtadreso",
     "Delete Widget": "Forigi fenestraĵon",
     "Create new room": "Krei novan ĉambron",
@@ -187,7 +185,6 @@
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Join millions for free on the largest public server": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
-    "Edited at %(date)s. Click to view edits.": "Redaktita je %(date)s. Klaku por vidi redaktojn.",
     "The following users may not exist": "La jenaj uzantoj eble ne ekzistas",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Ne povas trovi profilojn de la ĉi-subaj Matrix-identigilojn – ĉu vi tamen volas inviti ilin?",
     "Invite anyway and never warn me again": "Tamen inviti kaj neniam min averti ree",
@@ -308,7 +305,6 @@
     "If they don't match, the security of your communication may be compromised.": "Se ili ne akordas, la sekureco de via komunikado eble estas rompita.",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
     "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
-    "Can't load this message": "Ne povas enlegi ĉi tiun mesaĝon",
     "Submit logs": "Alŝuti protokolon",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Rememorigo: via foliumilo ne estas subtenata, kaj via sperto do povas esti stranga.",
     "Server did not require any authentication": "Servilo bezonis nenian kontrolon de aŭtentiko",
@@ -343,8 +339,6 @@
     "Security Key": "Sekureca ŝlosilo",
     "Use your Security Key to continue.": "Uzu vian sekurecan ŝlosilon por daŭrigi.",
     "Switch theme": "Ŝalti haŭton",
-    "Edited at %(date)s": "Redaktita je %(date)s",
-    "Click to view edits": "Klaku por vidi redaktojn",
     "Server isn't responding": "Servilo ne respondas",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Via servilo ne respondas al iuj el viaj petoj. Vidu sube kelkon de la plej verŝajnaj kialoj.",
     "The server (%(serverName)s) took too long to respond.": "La servilo (%(serverName)s) tro longe ne respondis.",
@@ -692,7 +686,6 @@
     },
     "Not all selected were added": "Ne ĉiuj elektitoj aldoniĝis",
     "You are not allowed to view this server's rooms list": "Vi ne rajtas vidi liston de ĉambroj de tu ĉi servilo",
-    "Add reaction": "Aldoni reagon",
     "Modal Widget": "Reĝima fenestraĵo",
     "Consult first": "Unue konsulti",
     "Sending": "Sendante",
@@ -761,7 +754,6 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ne povis sendi vian lokon. Bonvolu reprovi poste.",
     "We couldn't send your location": "Ni ne povis sendi vian lokon",
     "Could not fetch location": "Loko ne eblis akiri",
-    "Location": "Loko",
     "Close sidebar": "Fermu la flanka kolumno",
     "Public rooms": "Publikajn ĉambrojn",
     "Developer": "Programisto",
@@ -867,7 +859,8 @@
         "unencrypted": "Neĉifrita",
         "show_more": "Montri pli",
         "avatar": "Profilbildo",
-        "are_you_sure": "Ĉu vi certas?"
+        "are_you_sure": "Ĉu vi certas?",
+        "location": "Loko"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1828,7 +1821,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reagis per %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagis per %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reagis per %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Aldoni reagon"
         },
         "m.room.create": {
             "continuation": "Ĉi tiu ĉambro estas daŭrigo de alia interparolo.",
@@ -1905,7 +1899,17 @@
         },
         "m.video": {
             "error_decrypting": "Malĉifro de filmo eraris"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Aldoni kunigon",
+            "dialog_description": "Vi estas direktota al ekstera retejo por aŭtentikigi vian konton por uzo kun %(integrationsUrl)s. Ĉu vi volas daŭrigi tion?"
+        },
+        "edits": {
+            "tooltip_title": "Redaktita je %(date)s",
+            "tooltip_sub": "Klaku por vidi redaktojn",
+            "tooltip_label": "Redaktita je %(date)s. Klaku por vidi redaktojn."
+        },
+        "error_rendering_message": "Ne povas enlegi ĉi tiun mesaĝon"
     },
     "slash_command": {
         "spoiler": "Sendas la donitan mesaĝon kiel malkaŝon de intrigo",

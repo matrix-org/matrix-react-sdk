@@ -416,7 +416,6 @@
     "Server name": "Heiti þjóns",
     "Looks good": "Lítur vel út",
     "Information": "Upplýsingar",
-    "Location": "Staðsetning",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -537,8 +536,6 @@
     "a new cross-signing key signature": "ný kross-undirritun undirritunarlykils",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s leyfir þér ekki að nota samþættingarstýringu til að gera þetta. Hafðu samband við kerfisstjóra.",
     "Integrations not allowed": "Samþættingar eru ekki leyfðar",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Verið er að beina þér á utanaðkomandi vefsvæði til að auðkenna aðganginn þinn til notkunar með %(integrationsUrl)s. Viltu halda áfram?",
-    "Add an Integration": "Bæta við samþættingu",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
     "Cancel search": "Hætta við leitina",
@@ -546,10 +543,6 @@
     "My live location": "Staðsetning mín í rauntíma",
     "My current location": "Núverandi staðsetning mín",
     "Could not fetch location": "Gat ekki náð í staðsetningu",
-    "Can't load this message": "Gat ekki hlaðið inn þessum skilaboðum",
-    "Click to view edits": "Smelltu hér til að skoða breytingar",
-    "Edited at %(date)s": "Breytt þann %(date)s",
-    "Add reaction": "Bæta við viðbrögðum",
     "Remove %(count)s messages": {
         "one": "Fjarlægja 1 skilaboð",
         "other": "Fjarlægja %(count)s skilaboð"
@@ -622,7 +615,6 @@
     "Clear all data in this session?": "Hreinsa öll gögn í þessari setu?",
     "%(displayName)s's live location": "Staðsetning fyrir %(displayName)s í rauntíma",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s gat ekki sent staðsetninguna þína. Reyndu aftur síðar.",
-    "Edited at %(date)s. Click to view edits.": "Breytt þann %(date)s. Smelltu hér til að skoða breytingar.",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -905,7 +897,8 @@
         "show_more": "Sýna meira",
         "joined": "Gekk í hópinn",
         "avatar": "Auðkennismynd",
-        "are_you_sure": "Ertu viss?"
+        "are_you_sure": "Ertu viss?",
+        "location": "Staðsetning"
     },
     "action": {
         "continue": "Halda áfram",
@@ -2124,7 +2117,8 @@
         },
         "reactions": {
             "label": "%(reactors)s brást við með %(content)s",
-            "tooltip": "<reactors/><reactedWith>brást við %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>brást við %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Bæta við viðbrögðum"
         },
         "m.room.create": {
             "continuation": "Þessi spjallrás er framhald af öðru samtali.",
@@ -2222,7 +2216,17 @@
         },
         "m.video": {
             "error_decrypting": "Villa við afkóðun myndskeiðs"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Bæta við samþættingu",
+            "dialog_description": "Verið er að beina þér á utanaðkomandi vefsvæði til að auðkenna aðganginn þinn til notkunar með %(integrationsUrl)s. Viltu halda áfram?"
+        },
+        "edits": {
+            "tooltip_title": "Breytt þann %(date)s",
+            "tooltip_sub": "Smelltu hér til að skoða breytingar",
+            "tooltip_label": "Breytt þann %(date)s. Smelltu hér til að skoða breytingar."
+        },
+        "error_rendering_message": "Gat ekki hlaðið inn þessum skilaboðum"
     },
     "slash_command": {
         "spoiler": "Sendir skilaboðin sem stríðni",

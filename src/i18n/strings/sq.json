@@ -57,7 +57,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Hyni në dhomë",
-    "Add an Integration": "Shtoni një Integrim",
     "Email address": "Adresë email",
     "Create new room": "Krijoni dhomë të re",
     "Home": "Kreu",
@@ -100,7 +99,6 @@
     "Put a link back to the old room at the start of the new room so people can see old messages": "Vendosni në krye të dhomës së re një lidhje për te dhoma e vjetër, që njerëzit të mund të shohin mesazhet e vjetër",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës.",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Ju ndan një hap nga shpënia te një sajt palë e tretë, që kështu të mund të mirëfilltësoni llogarinë tuaj me %(integrationsUrl)s. Doni të vazhdohet?",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "S’arrihet të ngarkohet akti të cilit iu përgjigj, ose nuk ekziston, ose s’keni leje ta shihni.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Më parë përdornit %(brand)s në %(host)s me <em>lazy loading</em> anëtarësh të aktivizuar. Në këtë version <em>lazy loading</em> është çaktivizuar. Ngaqë fshehtina vendore s’është e përputhshme mes këtyre dy rregullimeve, %(brand)s-i lyp të rinjëkohësohet llogaria juaj.",
     "Update any local room aliases to point to the new room": "Përditësoni çfarëdo aliasesh dhomash vendore që të shpien te dhoma e re",
@@ -213,7 +211,6 @@
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Këto kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Disa kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
     "Upload all": "Ngarkoji krejt",
-    "Edited at %(date)s. Click to view edits.": "Përpunuar më %(date)s. Klikoni që të shihni përpunimet.",
     "Message edits": "Përpunime mesazhi",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
@@ -313,7 +310,6 @@
     "You signed in to a new session without verifying it:": "Bëtë hyrjen në një sesion të ri pa e verifikuar:",
     "Verify your other session using one of the options below.": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
     "Lock": "Kyçje",
-    "Can't load this message": "S’ngarkohet dot ky mesazh",
     "Submit logs": "Parashtro regjistra",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Kujtesë: Shfletuesi juaj është i pambuluar, ndaj punimi juaj mund të jetë i paparashikueshëm.",
     "Unable to upload": "S’arrihet të ngarkohet",
@@ -342,8 +338,6 @@
     "Security Phrase": "Frazë Sigurie",
     "Security Key": "Kyç Sigurie",
     "Use your Security Key to continue.": "Që të vazhdohet përdorni Kyçin tuaj të Sigurisë.",
-    "Edited at %(date)s": "Përpunuar më %(date)s",
-    "Click to view edits": "Klikoni që të shihni përpunime",
     "Server isn't responding": "Shërbyesi s’po përgjigjet",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Shërbyesi juaj s’po u përgjigjet disa kërkesave nga ju. Më poshtë gjenden disa nga arsyet më të mundshme.",
     "The server (%(serverName)s) took too long to respond.": "Shërbyesi (%(serverName)s) e zgjati shumë përgjigjen.",
@@ -699,7 +693,6 @@
     },
     "Not all selected were added": "S’u shtuan të gjithë të përzgjedhurit",
     "You are not allowed to view this server's rooms list": "S’keni leje të shihni listën e dhomave të këtij shërbyesi",
-    "Add reaction": "Shtoni reagim",
     "Or send invite link": "Ose dërgoni një lidhje ftese",
     "Some suggestions may be hidden for privacy.": "Disa sugjerime mund të jenë fshehur, për arsye privatësie.",
     "Search for rooms or people": "Kërkoni për dhoma ose persona",
@@ -795,7 +788,6 @@
     "Verify other device": "Verifikoni pajisje tjetër",
     "Could not fetch location": "S’u pru dot vendndodhja",
     "This address does not point at this room": "Kjo adresë nuk shpie te kjo dhomë",
-    "Location": "Vendndodhje",
     "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
@@ -1031,7 +1023,8 @@
         "show_more": "Shfaq më tepër",
         "joined": "Hyri",
         "avatar": "Avatar",
-        "are_you_sure": "Jeni i sigurt?"
+        "are_you_sure": "Jeni i sigurt?",
+        "location": "Vendndodhje"
     },
     "action": {
         "continue": "Vazhdo",
@@ -2398,7 +2391,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reagoi me %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagoi me %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>reagoi me %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Shtoni reagim"
         },
         "m.room.create": {
             "continuation": "Kjo dhomë është një vazhdim i një bisede tjetër.",
@@ -2504,7 +2498,17 @@
         },
         "m.video": {
             "error_decrypting": "Gabim në shfshehtëzim videoje"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Shtoni një Integrim",
+            "dialog_description": "Ju ndan një hap nga shpënia te një sajt palë e tretë, që kështu të mund të mirëfilltësoni llogarinë tuaj me %(integrationsUrl)s. Doni të vazhdohet?"
+        },
+        "edits": {
+            "tooltip_title": "Përpunuar më %(date)s",
+            "tooltip_sub": "Klikoni që të shihni përpunime",
+            "tooltip_label": "Përpunuar më %(date)s. Klikoni që të shihni përpunimet."
+        },
+        "error_rendering_message": "S’ngarkohet dot ky mesazh"
     },
     "slash_command": {
         "spoiler": "E dërgon mesazhin e dhënë si <em>spoiler</em>",

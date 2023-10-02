@@ -865,6 +865,7 @@
         "encryption_enabled": "Encryption enabled",
         "image": "Image",
         "reactions": "Reactions",
+        "location": "Location",
         "qr_code": "QR Code",
         "homeserver": "Homeserver",
         "help": "Help",
@@ -1710,7 +1711,9 @@
             "error_decrypting": "Error decrypting video"
         },
         "reactions": {
+            "add_reaction_prompt": "Add reaction",
             "label": "%(reactors)s reacted with %(content)s",
+            "custom_reaction_fallback_label": "Custom reaction",
             "tooltip": "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>"
         },
         "redacted": {
@@ -1722,6 +1725,16 @@
             "unknown_predecessor": "Can't find the old version of this room (room ID: %(roomId)s), and we have not been provided with 'via_servers' to look for it.",
             "see_older_messages": "Click here to see older messages."
         },
+        "scalar_starter_link": {
+            "dialog_title": "Add an Integration",
+            "dialog_description": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?"
+        },
+        "edits": {
+            "tooltip_title": "Edited at %(date)s",
+            "tooltip_sub": "Click to view edits",
+            "tooltip_label": "Edited at %(date)s. Click to view edits."
+        },
+        "error_rendering_message": "Can't load this message",
         "summary": {
             "format": "%(nameList)s %(transitionList)s",
             "joined_multiple": {
@@ -3305,17 +3318,7 @@
         "notes": "Results are only revealed when you end the poll"
     },
     "edited": "edited",
-    "Add reaction": "Add reaction",
-    "Custom reaction": "Custom reaction",
-    "Add an Integration": "Add an Integration",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
-    "Edited at %(date)s": "Edited at %(date)s",
-    "Click to view edits": "Click to view edits",
-    "Edited at %(date)s. Click to view edits.": "Edited at %(date)s. Click to view edits.",
-    "Submit logs": "Submit logs",
-    "Can't load this message": "Can't load this message",
     "toggle event": "toggle event",
-    "Location": "Location",
     "Could not fetch location": "Could not fetch location",
     "You don't have permission to share locations": "You don't have permission to share locations",
     "You need to have the right permissions in order to share locations in this room.": "You need to have the right permissions in order to share locations in this room.",

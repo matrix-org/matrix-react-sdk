@@ -528,15 +528,8 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Use the <a>Desktop app</a> to see all encrypted files": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
     "Cancel search": "لغو جستجو",
-    "Can't load this message": "بارگیری این پیام امکان پذیر نیست",
     "Submit logs": "ارسال لاگ‌ها",
     "edited": "ویرایش شده",
-    "Edited at %(date)s. Click to view edits.": "ویرایش شده در %(date)s. برای مشاهده ویرایش ها کلیک کنید.",
-    "Click to view edits": "برای مشاهده ویرایش ها کلیک کنید",
-    "Edited at %(date)s": "ویرایش شده در %(date)s",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "شما در آستانه هدایت شدن به یک سایت ثالث هستید بنابراین می توانید حساب خود را برای استفاده با %(integrationsUrl)s احراز هویت کنید. آیا مایل هستید ادامه دهید؟",
-    "Add an Integration": "یکپارچه سازی اضافه کنید",
-    "Add reaction": "افزودن واکنش",
     "%(name)s wants to verify": "%(name)s می‌خواهد تأیید هویت کند",
     "%(name)s cancelled": "%(name)s لغو کرد",
     "%(name)s declined": "%(name)s رد کرد",
@@ -1672,7 +1665,8 @@
             "tooltip": "پیام در %(date)s حذف شد"
         },
         "reactions": {
-            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "افزودن واکنش"
         },
         "m.room.create": {
             "continuation": "این اتاق ادامه گفتگوی دیگر است.",
@@ -1732,7 +1726,17 @@
         },
         "m.audio": {
             "error_processing_voice_message": "خطا در پردازش پیام صوتی"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "یکپارچه سازی اضافه کنید",
+            "dialog_description": "شما در آستانه هدایت شدن به یک سایت ثالث هستید بنابراین می توانید حساب خود را برای استفاده با %(integrationsUrl)s احراز هویت کنید. آیا مایل هستید ادامه دهید؟"
+        },
+        "edits": {
+            "tooltip_title": "ویرایش شده در %(date)s",
+            "tooltip_sub": "برای مشاهده ویرایش ها کلیک کنید",
+            "tooltip_label": "ویرایش شده در %(date)s. برای مشاهده ویرایش ها کلیک کنید."
+        },
+        "error_rendering_message": "بارگیری این پیام امکان پذیر نیست"
     },
     "slash_command": {
         "spoiler": "پیام داده شده را به عنوان اسپویلر ارسال می کند",

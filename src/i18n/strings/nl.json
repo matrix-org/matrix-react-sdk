@@ -46,8 +46,6 @@
     "Confirm Removal": "Verwijdering bevestigen",
     "Unable to restore session": "Herstellen van sessie mislukt",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
-    "Add an Integration": "Voeg een integratie toe",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?",
     "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
     "AM": "AM",
     "PM": "PM",
@@ -216,7 +214,6 @@
     "edited": "bewerkt",
     "Some characters not allowed": "Sommige tekens zijn niet toegestaan",
     "Upload all": "Alles versturen",
-    "Edited at %(date)s. Click to view edits.": "Bewerkt op %(date)s. Klik om de bewerkingen te bekijken.",
     "Message edits": "Berichtbewerkingen",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Deze kamer bijwerken vereist dat je de huidige afsluit en in de plaats een nieuwe kamer aanmaakt. Om leden de best mogelijke ervaring te bieden, zullen we:",
     "Removing…": "Bezig met verwijderen…",
@@ -552,9 +549,6 @@
     "This version of %(brand)s does not support searching encrypted messages": "Deze versie van %(brand)s ondersteunt niet het doorzoeken van versleutelde berichten",
     "This version of %(brand)s does not support viewing some encrypted files": "Deze versie van %(brand)s ondersteunt niet de mogelijkheid sommige versleutelde bestanden te weergeven",
     "Use the <a>Desktop app</a> to search encrypted messages": "Gebruik de <a>Desktop-toepassing</a> om alle versleutelde berichten te zien",
-    "Can't load this message": "Dit bericht kan niet geladen worden",
-    "Click to view edits": "Klik om bewerkingen te zien",
-    "Edited at %(date)s": "Bewerkt op %(date)s",
     "Not encrypted": "Niet versleuteld",
     "The server has denied your request.": "De server heeft je verzoek afgewezen.",
     "The server is offline.": "De server is offline.",
@@ -702,7 +696,6 @@
     "You are not allowed to view this server's rooms list": "Je hebt geen toegang tot deze server zijn kamergids",
     "You may contact me if you have any follow up questions": "Je mag contact met mij opnemen als je nog vervolg vragen heeft",
     "To leave the beta, visit your settings.": "Om de beta te verlaten, ga naar je instellingen.",
-    "Add reaction": "Reactie toevoegen",
     "Or send invite link": "Of verstuur je uitnodigingslink",
     "Some suggestions may be hidden for privacy.": "Sommige suggesties kunnen om privacyredenen verborgen zijn.",
     "Search for rooms or people": "Zoek naar kamers of personen",
@@ -796,7 +789,6 @@
     "toggle event": "wissel gebeurtenis",
     "Could not fetch location": "Kan locatie niet ophalen",
     "This address does not point at this room": "Dit adres verwijst niet naar deze kamer",
-    "Location": "Locatie",
     "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
@@ -1007,7 +999,8 @@
         "show_more": "Meer tonen",
         "joined": "Toegetreden",
         "avatar": "Afbeelding",
-        "are_you_sure": "Weet je het zeker?"
+        "are_you_sure": "Weet je het zeker?",
+        "location": "Locatie"
     },
     "action": {
         "continue": "Doorgaan",
@@ -2251,7 +2244,8 @@
         },
         "reactions": {
             "label": "%(reactors)s reageerde met %(content)s",
-            "tooltip": "<reactors/><reactedWith>heeft gereageerd met %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>heeft gereageerd met %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Reactie toevoegen"
         },
         "m.room.create": {
             "continuation": "Deze kamer is een voortzetting van een ander gesprek.",
@@ -2342,7 +2336,17 @@
         },
         "m.video": {
             "error_decrypting": "Fout bij het ontsleutelen van de video"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Voeg een integratie toe",
+            "dialog_description": "Je wordt zo dadelijk naar een derdepartijwebsite gebracht zodat je de account kunt legitimeren voor gebruik met %(integrationsUrl)s. Wil je doorgaan?"
+        },
+        "edits": {
+            "tooltip_title": "Bewerkt op %(date)s",
+            "tooltip_sub": "Klik om bewerkingen te zien",
+            "tooltip_label": "Bewerkt op %(date)s. Klik om de bewerkingen te bekijken."
+        },
+        "error_rendering_message": "Dit bericht kan niet geladen worden"
     },
     "slash_command": {
         "spoiler": "Verstuurt het bericht als een spoiler",

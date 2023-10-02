@@ -44,7 +44,6 @@
     "Nov": "十一月",
     "Dec": "十二月",
     "Confirm Removal": "确认移除",
-    "Add an Integration": "添加集成",
     "This will allow you to reset your password and receive notifications.": "这将允许你重置你的密码和接收通知。",
     "Send": "发送",
     "Unnamed room": "未命名的房间",
@@ -79,7 +78,6 @@
     "Logs sent": "日志已发送",
     "Yesterday": "昨天",
     "Thank you!": "谢谢！",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "你将被带到一个第三方网站以便验证你的账户来使用 %(integrationsUrl)s 提供的集成。你希望继续吗？",
     "Unable to load event that was replied to, it either does not exist or you do not have permission to view it.": "无法加载被回复的事件，它可能不存在，也可能是你没有权限查看它。",
     "And %(count)s more...": {
         "other": "和 %(count)s 个其他…"
@@ -229,11 +227,7 @@
     "%(name)s declined": "%(name)s 拒绝了",
     "%(name)s cancelled": "%(name)s 取消了",
     "%(name)s wants to verify": "%(name)s 想要验证",
-    "Edited at %(date)s": "编辑于 %(date)s",
-    "Click to view edits": "点击查看编辑历史",
-    "Edited at %(date)s. Click to view edits.": "编辑于 %(date)s。点击以查看编辑历史。",
     "edited": "已编辑",
-    "Can't load this message": "无法加载此消息",
     "Submit logs": "提交日志",
     "Cancel search": "取消搜索",
     "Room address": "房间地址",
@@ -690,7 +684,6 @@
     },
     "Use the <a>Desktop app</a> to search encrypted messages": "使用<a>桌面端英语</a>来搜索加密消息",
     "Use the <a>Desktop app</a> to see all encrypted files": "使用<a>桌面端应用</a>来查看所有加密文件",
-    "Add reaction": "添加反应",
     "Failed to start livestream": "开始流直播失败",
     "Unable to start audio streaming.": "无法开始音频流媒体。",
     "Hold": "挂起",
@@ -804,7 +797,6 @@
     "%(featureName)s Beta feedback": "%(featureName)sBeta反馈",
     "Use <arrows/> to scroll": "用<arrows/>来滚动",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
-    "Location": "位置",
     "This address does not point at this room": "此地址不指向此房间",
     "Could not fetch location": "无法获取位置",
     "This address had invalid server or is already in use": "此地址的服务器无效或已被使用",
@@ -989,7 +981,8 @@
         "show_more": "显示更多",
         "joined": "已加入",
         "avatar": "头像",
-        "are_you_sure": "你确定吗？"
+        "are_you_sure": "你确定吗？",
+        "location": "位置"
     },
     "action": {
         "continue": "继续",
@@ -2236,7 +2229,8 @@
         },
         "reactions": {
             "label": "%(reactors)s做出了%(content)s的反应",
-            "tooltip": "<reactors/><reactedWith>回应了 %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>回应了 %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "添加反应"
         },
         "m.room.create": {
             "continuation": "此房间是另一个对话的延续之处。",
@@ -2327,7 +2321,17 @@
         },
         "m.video": {
             "error_decrypting": "解密视频时出错"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "添加集成",
+            "dialog_description": "你将被带到一个第三方网站以便验证你的账户来使用 %(integrationsUrl)s 提供的集成。你希望继续吗？"
+        },
+        "edits": {
+            "tooltip_title": "编辑于 %(date)s",
+            "tooltip_sub": "点击查看编辑历史",
+            "tooltip_label": "编辑于 %(date)s。点击以查看编辑历史。"
+        },
+        "error_rendering_message": "无法加载此消息"
     },
     "slash_command": {
         "spoiler": "此消息包含剧透",

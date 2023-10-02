@@ -186,8 +186,6 @@
         "other": "Slett %(count)s meldinger",
         "one": "Slett 1 melding"
     },
-    "Add an Integration": "Legg til en integrering",
-    "Can't load this message": "Klarte ikke å laste inn denne meldingen",
     "Room address": "Rommets adresse",
     "This address is available to use": "Denne adressen er allerede i bruk",
     "Failed to send logs: ": "Mislyktes i å sende loggbøker: ",
@@ -209,8 +207,6 @@
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
-    "Edited at %(date)s": "Redigert den %(date)s",
-    "Click to view edits": "Klikk for å vise redigeringer",
     "Confirm account deactivation": "Bekreft deaktivering av kontoen",
     "The server is offline.": "Denne tjeneren er offline.",
     "Wrong file type": "Feil filtype",
@@ -504,7 +500,6 @@
     "Sent": "Sendt",
     "Sending": "Sender",
     "MB": "MB",
-    "Add reaction": "Legg til reaksjon",
     "Corn": "Mais",
     "Cloud": "Sky",
     "St. Pierre & Miquelon": "Saint-Pierre og Miquelon",
@@ -1151,7 +1146,8 @@
             "tooltip": "Meldingen ble slettet den %(date)s"
         },
         "reactions": {
-            "tooltip": "<reactors/><reactedWith> reagerte med %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith> reagerte med %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Legg til reaksjon"
         },
         "m.room.create": {
             "see_older_messages": "Klikk for å se eldre meldinger."
@@ -1197,7 +1193,15 @@
         },
         "m.video": {
             "error_decrypting": "Feil under dekryptering av video"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Legg til en integrering"
+        },
+        "edits": {
+            "tooltip_title": "Redigert den %(date)s",
+            "tooltip_sub": "Klikk for å vise redigeringer"
+        },
+        "error_rendering_message": "Klarte ikke å laste inn denne meldingen"
     },
     "slash_command": {
         "shrug": "Føyer til ¯\\_(ツ)_/¯ på en råtekstmelding",

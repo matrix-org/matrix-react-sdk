@@ -610,16 +610,8 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້. ກະລຸນາລອງໃໝ່ໃນພາຍຫຼັງ.",
     "We couldn't send your location": "ພວກເຮົາບໍ່ສາມາດສົ່ງສະຖານທີ່ຂອງທ່ານໄດ້",
     "Could not fetch location": "ບໍ່ສາມາດດຶງຂໍ້ມູນສະຖານທີ່ໄດ້",
-    "Location": "ສະຖານທີ່",
     "toggle event": "ສະຫຼັບກິດຈະກຳ",
-    "Can't load this message": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມນີ້ໄດ້",
     "Submit logs": "ສົ່ງບັນທຶກ",
-    "Edited at %(date)s. Click to view edits.": "ແກ້ໄຂເມື່ອ %(date)s. ກົດເພື່ອເບິ່ງການແກ້ໄຂ.",
-    "Click to view edits": "ກົດເພື່ອເບິ່ງການແກ້ໄຂ",
-    "Edited at %(date)s": "ແກ້ໄຂເມື່ອ %(date)s",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "ທ່ານກໍາລັງຈະຖືກນໍາໄປຫາເວັບໄຊທ໌ພາກສ່ວນທີສາມເພື່ອໃຫ້ທ່ານສາມາດພິສູດຢືນຢັນບັນຊີຂອງທ່ານເພື່ອໃຊ້ກັບ %(integrationsUrl)s. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?",
-    "Add an Integration": "ເພີ່ມການປະສົມປະສານ",
-    "Add reaction": "ເພີ່ມການຕອບໂຕ້",
     "%(count)s votes": {
         "one": "%(count)s ລົງຄະແນນສຽງ",
         "other": "%(count)s ຄະແນນສຽງ"
@@ -959,7 +951,8 @@
         "show_more": "ສະແດງເພີ່ມເຕີມ",
         "joined": "ເຂົ້າຮ່ວມແລ້ວ",
         "avatar": "ຮູບແທນຕົວ",
-        "are_you_sure": "ທ່ານແນ່ໃຈບໍ່?"
+        "are_you_sure": "ທ່ານແນ່ໃຈບໍ່?",
+        "location": "ສະຖານທີ່"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -2047,7 +2040,8 @@
         },
         "reactions": {
             "label": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s",
-            "tooltip": "<reactors/><reactedWith>ປະຕິກິລິຍາດ້ວຍ %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>ປະຕິກິລິຍາດ້ວຍ %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "ເພີ່ມການຕອບໂຕ້"
         },
         "m.room.create": {
             "continuation": "ຫ້ອງນີ້ແມ່ນສືບຕໍ່ການສົນທະນາອື່ນ.",
@@ -2137,7 +2131,17 @@
         },
         "m.video": {
             "error_decrypting": "ການຖອດລະຫັດວິດີໂອຜິດພາດ"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "ເພີ່ມການປະສົມປະສານ",
+            "dialog_description": "ທ່ານກໍາລັງຈະຖືກນໍາໄປຫາເວັບໄຊທ໌ພາກສ່ວນທີສາມເພື່ອໃຫ້ທ່ານສາມາດພິສູດຢືນຢັນບັນຊີຂອງທ່ານເພື່ອໃຊ້ກັບ %(integrationsUrl)s. ທ່ານຕ້ອງການສືບຕໍ່ບໍ?"
+        },
+        "edits": {
+            "tooltip_title": "ແກ້ໄຂເມື່ອ %(date)s",
+            "tooltip_sub": "ກົດເພື່ອເບິ່ງການແກ້ໄຂ",
+            "tooltip_label": "ແກ້ໄຂເມື່ອ %(date)s. ກົດເພື່ອເບິ່ງການແກ້ໄຂ."
+        },
+        "error_rendering_message": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມນີ້ໄດ້"
     },
     "slash_command": {
         "spoiler": "ສົ່ງຂໍ້ຄວາມທີ່ກຳນົດເປັນ spoiler",

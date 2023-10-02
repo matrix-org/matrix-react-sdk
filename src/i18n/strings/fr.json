@@ -39,8 +39,6 @@
     "Confirm Removal": "Confirmer la suppression",
     "Unable to restore session": "Impossible de restaurer la session",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
-    "Add an Integration": "Ajouter une intégration",
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "Custom level": "Rang personnalisé",
     "Create new room": "Créer un nouveau salon",
     "(~%(count)s results)": {
@@ -216,7 +214,6 @@
     "edited": "modifié",
     "Some characters not allowed": "Certains caractères ne sont pas autorisés",
     "Upload all": "Tout envoyer",
-    "Edited at %(date)s. Click to view edits.": "Modifié le %(date)s. Cliquer pour voir les modifications.",
     "Message edits": "Modifications du message",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "La mise à niveau de ce salon nécessite de fermer l’instance actuelle du salon et de créer un nouveau salon à la place. Pour fournir la meilleure expérience possible aux utilisateurs, nous allons :",
     "Resend %(unsentCount)s reaction(s)": "Renvoyer %(unsentCount)s réaction(s)",
@@ -313,7 +310,6 @@
     "Server did not require any authentication": "Le serveur n’a pas demandé d’authentification",
     "Server did not return valid authentication information.": "Le serveur n’a pas renvoyé des informations d’authentification valides.",
     "There was a problem communicating with the server. Please try again.": "Un problème est survenu en essayant de communiquer avec le serveur. Veuillez réessayer.",
-    "Can't load this message": "Impossible de charger ce message",
     "Submit logs": "Envoyer les journaux",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Rappel : Votre navigateur n’est pas pris en charge donc votre expérience pourrait être aléatoire.",
     "Unable to upload": "Envoi impossible",
@@ -343,8 +339,6 @@
     "Security Phrase": "Phrase de sécurité",
     "Security Key": "Clé de sécurité",
     "Use your Security Key to continue.": "Utilisez votre clé de sécurité pour continuer.",
-    "Edited at %(date)s": "Modifié le %(date)s",
-    "Click to view edits": "Cliquez pour voir les modifications",
     "Backup version:": "Version de la sauvegarde :",
     "This version of %(brand)s does not support searching encrypted messages": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés",
     "This version of %(brand)s does not support viewing some encrypted files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
@@ -703,7 +697,6 @@
     "You are not allowed to view this server's rooms list": "Vous n’avez pas l’autorisation d’accéder à la liste des salons de ce serveur",
     "You may contact me if you have any follow up questions": "Vous pouvez me contacter si vous avez des questions par la suite",
     "To leave the beta, visit your settings.": "Pour quitter la bêta, consultez les paramètres.",
-    "Add reaction": "Ajouter une réaction",
     "Or send invite link": "Ou envoyer le lien d’invitation",
     "Some suggestions may be hidden for privacy.": "Certaines suggestions pourraient être masquées pour votre confidentialité.",
     "Search for rooms or people": "Rechercher des salons ou des gens",
@@ -796,7 +789,6 @@
     "toggle event": "Afficher/masquer l’évènement",
     "Could not fetch location": "Impossible de récupérer la position",
     "This address does not point at this room": "Cette adresse ne pointe pas vers ce salon",
-    "Location": "Position",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s et %(space2Name)s",
     "Drop a Pin": "Choisir sur la carte",
@@ -1038,7 +1030,8 @@
         "show_more": "En voir plus",
         "joined": "Rejoint",
         "avatar": "Avatar",
-        "are_you_sure": "Êtes-vous sûr ?"
+        "are_you_sure": "Êtes-vous sûr ?",
+        "location": "Position"
     },
     "action": {
         "continue": "Continuer",
@@ -2468,7 +2461,8 @@
         },
         "reactions": {
             "label": "%(reactors)s ont réagi avec %(content)s",
-            "tooltip": "<reactors/><reactedWith>ont réagi avec %(shortName)s</reactedWith>"
+            "tooltip": "<reactors/><reactedWith>ont réagi avec %(shortName)s</reactedWith>",
+            "add_reaction_prompt": "Ajouter une réaction"
         },
         "m.room.create": {
             "continuation": "Ce salon est la suite d’une autre discussion.",
@@ -2576,7 +2570,17 @@
         },
         "m.video": {
             "error_decrypting": "Erreur lors du déchiffrement de la vidéo"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Ajouter une intégration",
+            "dialog_description": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?"
+        },
+        "edits": {
+            "tooltip_title": "Modifié le %(date)s",
+            "tooltip_sub": "Cliquez pour voir les modifications",
+            "tooltip_label": "Modifié le %(date)s. Cliquer pour voir les modifications."
+        },
+        "error_rendering_message": "Impossible de charger ce message"
     },
     "slash_command": {
         "spoiler": "Envoie le message flouté",

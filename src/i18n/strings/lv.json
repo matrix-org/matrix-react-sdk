@@ -16,7 +16,6 @@
         "one": "(~%(count)s rezultāts)",
         "other": "(~%(count)s rezultāti)"
     },
-    "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Notiek Tevis novirzīšana uz ārēju trešās puses vietni. Tu vari atļaut savam kontam piekļuvi ar %(integrationsUrl)s. Vai vēlies turpināt?",
     "Session ID": "Sesijas ID",
     "unknown error code": "nezināms kļūdas kods",
     "Create new room": "Izveidot jaunu istabu",
@@ -44,7 +43,6 @@
     "Confirm Removal": "Apstipriniet dzēšanu",
     "Unable to restore session": "Neizdevās atjaunot sesiju",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
-    "Add an Integration": "Pievienot integrāciju",
     "and %(count)s others...": {
         "other": "un vēl %(count)s citi...",
         "one": "un vēl viens cits..."
@@ -185,8 +183,6 @@
     "Removing…": "Dzēš…",
     "Use the <a>Desktop app</a> to see all encrypted files": "Lietojiet <a>Desktop lietotni</a>, lai apskatītu visus šifrētos failus",
     "edited": "rediģēts",
-    "Edited at %(date)s. Click to view edits.": "Rediģēts %(date)s. Noklikšķiniet, lai skatītu redakcijas.",
-    "Edited at %(date)s": "Rediģēts %(date)s",
     "Remove %(count)s messages": {
         "one": "Dzēst 1 ziņu",
         "other": "Dzēst %(count)s ziņas"
@@ -438,7 +434,6 @@
     "Åland Islands": "Ālandu salas",
     "Cancel All": "Atcelt visu",
     "Sending": "Sūta",
-    "Can't load this message": "Nevar ielādēt šo ziņu",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Link to most recent message": "Saite uz jaunāko ziņu",
     "Share Room": "Dalīties ar istabu",
@@ -479,7 +474,6 @@
     "%(displayName)s's live location": "%(displayName)s reāllaika atrašanās vieta",
     "My live location": "Mana reāllaika atrašanās vieta",
     "My current location": "Mana atrašanās vieta",
-    "Location": "Atrašanās vieta",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
     "Information": "Informācija",
     "Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?": "Nevar atrast zemāk norādīto Matrix ID profilus - vai tomēr vēlaties tos uzaicināt?",
@@ -590,7 +584,8 @@
         "low_priority": "Zema prioritāte",
         "historical": "Bijušie",
         "show_more": "Rādīt vairāk",
-        "are_you_sure": "Vai tiešām to vēlaties?"
+        "are_you_sure": "Vai tiešām to vēlaties?",
+        "location": "Atrašanās vieta"
     },
     "action": {
         "continue": "Turpināt",
@@ -1273,7 +1268,16 @@
         },
         "m.audio": {
             "error_processing_voice_message": "Balss ziņas apstrādes kļūda"
-        }
+        },
+        "scalar_starter_link": {
+            "dialog_title": "Pievienot integrāciju",
+            "dialog_description": "Notiek Tevis novirzīšana uz ārēju trešās puses vietni. Tu vari atļaut savam kontam piekļuvi ar %(integrationsUrl)s. Vai vēlies turpināt?"
+        },
+        "edits": {
+            "tooltip_title": "Rediģēts %(date)s",
+            "tooltip_label": "Rediģēts %(date)s. Noklikšķiniet, lai skatītu redakcijas."
+        },
+        "error_rendering_message": "Nevar ielādēt šo ziņu"
     },
     "slash_command": {
         "spoiler": "Nosūta norādīto ziņu kā spoileri",
