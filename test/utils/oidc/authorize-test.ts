@@ -112,6 +112,13 @@ describe("OIDC authorization", () => {
                 tokenResponse,
                 homeserverUrl,
                 identityServerUrl,
+                idTokenClaims: {
+                    aud: "123",
+                    iss: issuer,
+                    sub: "123",
+                    exp: 123,
+                    iat: 456,
+                }
             });
         });
 
@@ -137,6 +144,7 @@ describe("OIDC authorization", () => {
                 identityServerUrl,
                 issuer,
                 clientId,
+                idTokenClaims: result.idTokenClaims,
             });
         });
     });
