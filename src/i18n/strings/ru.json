@@ -1,15 +1,8 @@
 {
-    "A new password must be entered.": "Введите новый пароль.",
-    "Are you sure you want to reject the invitation?": "Уверены, что хотите отклонить приглашение?",
-    "Failed to reject invitation": "Не удалось отклонить приглашение",
     "Moderator": "Модератор",
-    "New passwords must match each other.": "Новые пароли должны совпадать.",
-    "Return to login screen": "Вернуться к экрану входа",
     "unknown error code": "неизвестный код ошибки",
     "Verification Pending": "В ожидании подтверждения",
     "Warning!": "Внимание!",
-    "Connectivity to the server has been lost.": "Связь с сервером потеряна.",
-    "Sent messages will be stored until your connection has returned.": "Отправленные сообщения будут сохранены, пока соединение не восстановится.",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Sep": "Сен",
     "Jan": "Янв",
@@ -35,44 +28,21 @@
         "other": "и %(count)s других...",
         "one": "и ещё кто-то..."
     },
-    "Decrypt %(text)s": "Расшифровать %(text)s",
-    "Download %(text)s": "Скачать %(text)s",
-    "Failed to forget room %(errCode)s": "Не удалось забыть комнату: %(errCode)s",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "An error has occurred.": "Произошла ошибка.",
-    "Failed to load timeline position": "Не удалось загрузить метку из хронологии",
-    "Failed to reject invite": "Не удалось отклонить приглашение",
     "Join Room": "Войти в комнату",
     "not specified": "не задан",
-    "No more results": "Больше никаких результатов",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
-    "Reject invitation": "Отклонить приглашение",
-    "Search failed": "Поиск не удался",
-    "You seem to be uploading files, are you sure you want to quit?": "Похоже, вы сейчас отправляете файлы. Уверены, что хотите выйти?",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Are you sure you want to leave the room '%(roomName)s'?": "Уверены, что хотите покинуть '%(roomName)s'?",
     "Custom level": "Специальные права",
     "Email address": "Электронная почта",
-    "Error decrypting attachment": "Ошибка расшифровки вложения",
-    "Invalid file%(extra)s": "Недопустимый файл%(extra)s",
-    "Server may be unavailable, overloaded, or search timed out :(": "Сервер может быть недоступен, перегружен или поиск прекращен по тайм-ауту :(",
     "Session ID": "ID сеанса",
-    "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как у вас нет разрешений на просмотр.",
-    "Tried to load a specific point in this room's timeline, but was unable to find it.": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
-    "You seem to be in a call, are you sure you want to quit?": "Звонок не завершён. Уверены, что хотите выйти?",
     "Confirm Removal": "Подтвердите удаление",
     "Unable to restore session": "Восстановление сеанса не удалось",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
-    "Error decrypting image": "Ошибка расшифровки изображения",
-    "Error decrypting video": "Ошибка расшифровки видео",
     "Add an Integration": "Добавить интеграцию",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?",
     "Create new room": "Создать комнату",
-    "Uploading %(filename)s": "Отправка %(filename)s",
-    "Uploading %(filename)s and %(count)s others": {
-        "one": "Отправка %(filename)s и %(count)s другой",
-        "other": "Отправка %(filename)s и %(count)s других"
-    },
     "Home": "Главная",
     "(~%(count)s results)": {
         "other": "(~%(count)s результатов)",
@@ -95,7 +65,6 @@
     "collapse": "свернуть",
     "expand": "развернуть",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "This room is not public. You will not be able to rejoin without an invite.": "Эта комната не является публичной. Вы не сможете войти без приглашения.",
     "<a>In reply to</a> <pill>": "<a>В ответ на</a> <pill>",
     "Sunday": "Воскресенье",
     "Today": "Сегодня",
@@ -124,14 +93,11 @@
     "Share User": "Поделиться пользователем",
     "Link to selected message": "Ссылка на выбранное сообщение",
     "Share Room Message": "Поделиться сообщением",
-    "You can't send any messages until you review and agree to <consentLink>our terms and conditions</consentLink>.": "Вы не можете отправлять сообщения до тех пор, пока вы не примете <consentLink>наши правила и положения</consentLink>.",
     "Upgrade Room Version": "Обновление версии комнаты",
     "Create a new room with the same name, description and avatar": "Создадим новую комнату с тем же именем, описанием и аватаром",
     "Update any local room aliases to point to the new room": "Обновим локальные псевдонимы комнат",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
-    "Your message wasn't sent because this homeserver has hit its Monthly Active User Limit. Please <a>contact your service administrator</a> to continue using the service.": "Ваше сообщение не было отправлено, потому что этот домашний сервер превысил месячный лимит активных пользователей. <a>обратитесь к администратору службы</a>, чтобы продолжить использование службы.",
-    "Your message wasn't sent because this homeserver has exceeded a resource limit. Please <a>contact your service administrator</a> to continue using the service.": "Ваше сообщение не было отправлено, потому что этот домашний сервер превысил лимит ресурсов. <a>обратитесь к администратору службы</a>, чтобы продолжить использование службы.",
     "The following users may not exist": "Следующих пользователей может не существовать",
     "Invite anyway and never warn me again": "Пригласить и больше не предупреждать",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы.",
@@ -247,20 +213,8 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "This homeserver would like to make sure you are not a robot.": "Этот сервер хотел бы убедиться, что вы не робот.",
     "Some characters not allowed": "Некоторые символы не разрешены",
     "Join millions for free on the largest public server": "Присоединяйтесь бесплатно к миллионам на крупнейшем общедоступном сервере",
-    "Couldn't load page": "Невозможно загрузить страницу",
-    "Could not load user profile": "Не удалось загрузить профиль пользователя",
-    "Your password has been reset.": "Ваш пароль был сброшен.",
-    "Invalid homeserver discovery response": "Неверный ответ при попытке обнаружения домашнего сервера",
-    "Failed to get autodiscovery configuration from server": "Не удалось получить конфигурацию автообнаружения с сервера",
-    "Invalid base_url for m.homeserver": "Неверный base_url для m.homeserver",
-    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
-    "Invalid identity server discovery response": "Неверный ответ на запрос идентификации сервера",
-    "Invalid base_url for m.identity_server": "Неверный base_url для m.identity_server",
-    "Identity server URL does not appear to be a valid identity server": "URL-адрес сервера идентификации не является действительным сервером идентификации",
-    "General failure": "Общая ошибка",
     "Edited at %(date)s. Click to view edits.": "Изменено %(date)s. Нажмите для посмотра истории изменений.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Пожалуйста, расскажите нам что пошло не так, либо, ещё лучше, создайте отчёт в GitHub с описанием проблемы.",
     "Removing…": "Удаление…",
@@ -281,11 +235,9 @@
         "other": "Удалить %(count)s сообщения(-й)",
         "one": "Удалить 1 сообщение"
     },
-    "Show image": "Показать изображение",
     "e.g. my-room": "например, моя-комната",
     "Close dialog": "Закрыть диалог",
     "Command Help": "Помощь команды",
-    "This client does not support end-to-end encryption.": "Этот клиент не поддерживает сквозное шифрование.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. <default>Используйте значение по умолчанию (%(defaultIdentityServerName)s)</default> или управляйте в <settings>Настройках</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Используйте идентификационный сервер для приглашения по электронной почте. Управление в <settings>Настройки</settings>.",
     "Cancel search": "Отменить поиск",
@@ -299,40 +251,19 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
     "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
     "This backup is trusted because it has been restored on this session": "Эта резервная копия является доверенной, потому что она была восстановлена в этом сеансе",
-    "Verify by scanning": "Подтверждение сканированием",
-    "Ask %(displayName)s to scan your code:": "Попросите %(displayName)s отсканировать ваш код:",
-    "Verify by emoji": "Подтверждение с помощью смайлов",
-    "If you can't scan the code above, verify by comparing unique emoji.": "Если вы не можете отсканировать код выше, попробуйте сравнить уникальные смайлы.",
-    "Verify by comparing unique emoji.": "Подтверждение сравнением уникальных смайлов.",
-    "Verify all users in a room to ensure it's secure.": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
-    "You've successfully verified %(displayName)s!": "Вы успешно подтвердили %(displayName)s!",
     "Encrypted by a deleted session": "Зашифровано удалённым сеансом",
     "Failed to connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
     "%(count)s verified sessions": {
         "other": "Заверенных сеансов: %(count)s",
         "one": "1 заверенный сеанс"
     },
-    "Verification timed out.": "Таймаут подтверждения.",
-    "You cancelled verification.": "Вы отменили подтверждение.",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Подтвердите удаление учётной записи с помощью единой точки входа.",
     "Are you sure you want to deactivate your account? This is irreversible.": "Вы уверены, что хотите деактивировать свою учётную запись? Это необратимое действие.",
     "Confirm account deactivation": "Подтвердите деактивацию учётной записи",
-    "Almost there! Is %(displayName)s showing the same shield?": "Почти готово! Отображает ли %(displayName)s такой же щит?",
-    "You've successfully verified %(deviceName)s (%(deviceId)s)!": "Вы успешно подтвердили %(deviceName)s (%(deviceId)s)!",
-    "%(displayName)s cancelled verification.": "%(displayName)s отменил(а) подтверждение.",
-    "Encryption not enabled": "Шифрование не включено",
-    "The encryption used by this room isn't supported.": "Шифрование этой комнаты не поддерживается.",
-    "You verified %(name)s": "Вы подтвердили %(name)s",
-    "You cancelled verifying %(name)s": "Вы отменили подтверждение %(name)s",
-    "You accepted": "Вы приняли",
     "%(name)s accepted": "%(name)s принял(а)",
-    "You declined": "Вы отказали",
-    "You cancelled": "Вы отменили",
     "%(name)s declined": "%(name)s отказал(а)",
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
-    "You sent a verification request": "Вы отправили запрос подтверждения",
-    "%(name)s cancelled verifying": "%(name)s отменил(а) подтверждение",
     "Language Dropdown": "Список языков",
     "Enter a server name": "Введите имя сервера",
     "Looks good": "В порядке",
@@ -345,7 +276,6 @@
     "Session name": "Название сеанса",
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
-    "Start verification again from their profile.": "Начните подтверждение заново в профиле пользователя.",
     "Recent Conversations": "Недавние Диалоги",
     "a key signature": "отпечаток ключа",
     "Upload completed": "Отправка успешно завершена",
@@ -358,11 +288,6 @@
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
-    "Country Dropdown": "Выпадающий список стран",
-    "This room is public": "Это публичная комната",
-    "You've successfully verified your device!": "Вы успешно подтвердили это устройство!",
-    "Start verification again from the notification.": "Начните подтверждение заново с уведомления.",
-    "You have ignored this user, so their message is hidden. <a>Show anyways.</a>": "Вы заигнорировали этого пользователя, сообщение скрыто. <a>Показать</a>",
     "Edited at %(date)s": "Изменено %(date)s",
     "Click to view edits": "Нажмите для просмотра правок",
     "Can't load this message": "Не удалось загрузить это сообщение",
@@ -442,14 +367,8 @@
     "Use the <a>Desktop app</a> to search encrypted messages": "Используйте <a>настольное приложение</a> для поиска зашифрованных сообщений",
     "This version of %(brand)s does not support viewing some encrypted files": "Эта версия %(brand)s не поддерживает просмотр некоторых зашифрованных файлов",
     "This version of %(brand)s does not support searching encrypted messages": "Эта версия %(brand)s не поддерживает поиск зашифрованных сообщений",
-    "Join the conference at the top of this room": "Присоединяйтесь к конференции в верхней части этой комнаты",
-    "Join the conference from the room information card on the right": "Присоединяйтесь к конференции, используя информационную карточку комнаты справа",
-    "Video conference ended by %(senderName)s": "%(senderName)s завершил(а) видеоконференцию",
-    "Video conference updated by %(senderName)s": "%(senderName)s обновил(а) видеоконференцию",
-    "Video conference started by %(senderName)s": "%(senderName)s начал(а) видеоконференцию",
     "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
     "Modal Widget": "Модальный виджет",
-    "Ignored attempt to disable encryption": "Игнорируемая попытка отключить шифрование",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Пригласите кого-нибудь, используя его имя, адрес электронной почты, имя пользователя (например, <userId/>) или <a>поделитесь этой комнатой</a>.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "Начните разговор с кем-нибудь, используя его имя, адрес электронной почты или имя пользователя (например, <userId/>).",
     "Invite by email": "Пригласить по электронной почте",
@@ -713,7 +632,6 @@
     "Resume": "Возобновить",
     "Transfer": "Перевод",
     "A call can only be transferred to a single user.": "Вызов может быть передан только одному пользователю.",
-    "Open dial pad": "Открыть панель набора номера",
     "Dial pad": "Панель набора номера",
     "Allow this widget to verify your identity": "Разрешите этому виджету проверить ваш идентификатор",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>",
@@ -741,9 +659,6 @@
         "one": "%(count)s участник",
         "other": "%(count)s участников"
     },
-    "You don't have permission": "У вас нет разрешения",
-    "Are you sure you want to leave the space '%(spaceName)s'?": "Уверены, что хотите покинуть пространство \"%(spaceName)s\"?",
-    "This space is not public. You will not be able to rejoin without an invite.": "Это пространство не публично. Вы не сможете вновь войти без приглашения.",
     "Unable to start audio streaming.": "Невозможно запустить аудио трансляцию.",
     "Failed to start livestream": "Не удалось запустить прямую трансляцию",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Обычно это только влияет на то, как комната обрабатывается на сервере. Если у вас проблемы с вашим %(brand)s, сообщите об ошибке.",
@@ -752,24 +667,11 @@
     "Invite to %(roomName)s": "Пригласить в %(roomName)s",
     "Create a new room": "Создать новую комнату",
     "Space selection": "Выбор пространства",
-    "Edit devices": "Редактировать сеансы",
     "Leave space": "Покинуть пространство",
     "Create a space": "Создать пространство",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
-    "You may want to try a different search or check for typos.": "Вы можете попробовать другой поиск или проверить опечатки.",
     "No results found": "Результаты не найдены",
     "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором.",
-    "Search names and descriptions": "Искать имена и описания",
-    "You can select all or individual messages to retry or delete": "Вы можете выбрать все или отдельные сообщения для повторной попытки или удаления",
-    "Retry all": "Повторить все",
-    "Delete all": "Удалить все",
-    "Some of your messages have not been sent": "Некоторые из ваших сообщений не были отправлены",
-    "Unable to copy a link to the room to the clipboard.": "Не удалось скопировать ссылку на комнату в буфер обмена.",
-    "Unable to copy room link": "Не удалось скопировать ссылку на комнату",
-    "You are the only person here. If you leave, no one will be able to join in the future, including you.": "Вы здесь единственный человек. Если вы уйдете, никто не сможет присоединиться в будущем, включая вас.",
-    "Error downloading audio": "Ошибка загрузки аудио",
-    "Unnamed audio": "Безымянное аудио",
-    "Avatar": "Аватар",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
     "Only do this if you have no other device to complete verification with.": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
     "Reset everything": "Сбросить всё",
@@ -837,22 +739,6 @@
     },
     "Message search initialisation failed, check <a>your settings</a> for more information": "Инициализация поиска сообщений не удалась, проверьте <a>ваши настройки</a> для получения дополнительной информации",
     "Add reaction": "Отреагировать",
-    "Error processing voice message": "Ошибка при обработке голосового сообщения",
-    "Error processing audio message": "Ошибка обработки звукового сообщения",
-    "Decrypting": "Расшифровка",
-    "The call is in an unknown state!": "Вызов в неизвестном состоянии!",
-    "An unknown error occurred": "Произошла неизвестная ошибка",
-    "Their device couldn't start the camera or microphone": "Их устройство не может запустить камеру или микрофон",
-    "Connection failed": "Ошибка соединения",
-    "Could not connect media": "Не удалось подключиться к носителю",
-    "Missed call": "Пропущенный вызов",
-    "Call back": "Перезвонить",
-    "Call declined": "Вызов отклонён",
-    "Rooms and spaces": "Комнаты и пространства",
-    "Results": "Результаты",
-    "Some encryption parameters have been changed.": "Некоторые параметры шифрования были изменены.",
-    "Unknown failure: %(reason)s": "Неизвестная ошибка: %(reason)s",
-    "No answer": "Нет ответа",
     "Leave some rooms": "Покинуть несколько комнат",
     "Leave all rooms": "Покинуть все комнаты",
     "Don't leave any rooms": "Не покидать ни одну комнату",
@@ -861,20 +747,12 @@
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
     "MB": "Мб",
     "In reply to <a>this message</a>": "В ответ на <a>это сообщение</a>",
-    "Skip verification for now": "Пока пропустить проверку",
-    "Really reset verification keys?": "Действительно сбросить ключи подтверждения?",
-    "Downloading": "Загрузка",
     "%(count)s reply": {
         "one": "%(count)s ответ",
         "other": "%(count)s ответов"
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введите свою секретную фразу или <button> используйте секретный ключ </button> для продолжения.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Восстановите доступ к своей учетной записи и восстановите ключи шифрования, сохранённые в этом сеансе. Без них в любом сеансе вы не сможете прочитать все свои защищённые сообщения.",
-    "Device verified": "Сеанс заверен",
-    "Verify this device": "Заверьте этот сеанс",
-    "Unable to verify this device": "Невозможно заверить этот сеанс",
-    "Joining": "Присоединение",
-    "Wait!": "Подождите!",
     "Thread options": "Параметры обсуждения",
     "Forget": "Забыть",
     "Open in OpenStreetMap": "Открыть в OpenStreetMap",
@@ -909,30 +787,6 @@
         "one": "%(count)s голос",
         "other": "%(count)s голосов"
     },
-    "Based on %(count)s votes": {
-        "one": "На основании %(count)s голоса",
-        "other": "На основании %(count)s голосов"
-    },
-    "%(count)s votes cast. Vote to see the results": {
-        "one": "%(count)s голос. Проголосуйте, чтобы увидеть результаты",
-        "other": "%(count)s голосов. Проголосуйте, чтобы увидеть результаты"
-    },
-    "No votes cast": "Голосов нет",
-    "Final result based on %(count)s votes": {
-        "one": "Окончательный результат на основе %(count)s голоса",
-        "other": "Окончательный результат на основе %(count)s голосов"
-    },
-    "Sorry, your vote was not registered. Please try again.": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
-    "Vote not registered": "Голос не засчитан",
-    "Reply in thread": "Обсудить",
-    "Pick a date to jump to": "Выберите дату для перехода",
-    "Message pending moderation": "Сообщение ожидает модерации",
-    "Message pending moderation: %(reason)s": "Сообщение ожидает модерации: %(reason)s",
-    "Jump to date": "Перейти к дате",
-    "The beginning of the room": "Начало комнаты",
-    "You cancelled verification on your other device.": "Вы отменили проверку на другом устройстве.",
-    "In encrypted rooms, verify all users to ensure it's secure.": "В зашифрованных комнатах, проверьте всех пользователей, чтобы убедиться в их безопасности.",
-    "Almost there! Is your other device showing the same shield?": "Почти готово! Ваше другое устройство показывает такой же щит?",
     "Recently viewed": "Недавно просмотренные",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
@@ -953,21 +807,10 @@
     "My current location": "Моё текущее местоположение",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s не удаётся отправить ваше местоположение. Пожалуйста, повторите попытку позже.",
     "We couldn't send your location": "Мы не смогли отправить ваше местоположение",
-    "Results will be visible when the poll is ended": "Результаты будут видны после завершения опроса",
-    "Sorry, you can't edit a poll after votes have been cast.": "Вы не можете редактировать опрос после завершения голосования.",
-    "Can't edit poll": "Невозможно редактировать опрос",
-    "Click": "Нажать",
-    "Expand quotes": "Развернуть цитаты",
-    "Collapse quotes": "Свернуть цитаты",
-    "Can't create a thread from an event with an existing relation": "Невозможно создать обсуждение из события с существующей связью",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
     "%(members)s and %(last)s": "%(members)s и %(last)s",
     "%(members)s and more": "%(members)s и многие другие",
-    "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Вы вышли из всех устройств и больше не будете получать push-уведомления. Для повторного включения уведомлений снова войдите на каждом устройстве.",
-    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Если вы хотите сохранить доступ к истории общения в зашифрованных комнатах, настройте резервное копирование ключей или экспортируйте ключи сообщений с одного из других ваших устройств, прежде чем продолжить.",
-    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "При выходе из устройств удаляются хранящиеся на них ключи шифрования сообщений, что сделает зашифрованную историю чатов нечитаемой.",
-    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше сообщение не отправлено, поскольку домашний сервер заблокирован его администратором. <a>Обратитесь к администратору службы</a>, чтобы продолжить её использование.",
     "Unread email icon": "Значок непрочитанного электронного письма",
     "An error occurred while stopping your live location, please try again": "При остановки передачи информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
     "An error occurred whilst sharing your live location, please try again": "При передаче информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
@@ -1029,17 +872,13 @@
         "other": "%(count)s участников"
     },
     "Live location ended": "Трансляция местоположения завершена",
-    "View live location": "Посмотреть трансляцию местоположения",
     "Live location enabled": "Трансляция местоположения включена",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
     "Coworkers and teams": "Коллеги и команды",
     "Friends and family": "Друзья и семья",
-    "Messages in this chat will be end-to-end encrypted.": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
-    "Stop and close": "Остановить и закрыть",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
     "Saved Items": "Сохранённые объекты",
     "We'll help you get connected.": "Мы поможем вам подключиться.",
-    "We're creating a room with %(names)s": "Мы создаем комнату с %(names)s",
     "Online community members": "Участники сообщества в сети",
     "You're in": "Вы в",
     "Choose a locale": "Выберите регион",
@@ -1048,21 +887,11 @@
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
-    "The homeserver doesn't support signing in another device.": "Домашний сервер не поддерживает вход с другого устройства.",
-    "Check that the code below matches with your other device:": "Проверьте, чтобы код ниже совпадал с тем, что показан на другом устройстве:",
-    "An unexpected error occurred.": "Произошла неожиданная ошибка.",
-    "The request was cancelled.": "Запрос был отменён.",
     "<w>WARNING:</w> <description/>": "<w>ВНИМАНИЕ:</w> <description/>",
-    "Error downloading image": "Ошибка при скачивании изображения",
-    "Video call ended": "Видеозвонок завершён",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
-    "Active polls": "Активные опросы",
-    "There are no active polls in this room": "В этой комнате нет активных опросов",
-    "View poll in timeline": "Посмотреть опрос в ленте сообщений",
     "Message in %(room)s": "Сообщение в %(room)s",
     "Message from %(user)s": "Сообщение от %(user)s",
-    "Sign out of all devices": "Выйти из всех сеансов",
     "common": {
         "about": "О комнате",
         "analytics": "Аналитика",
@@ -1178,10 +1007,11 @@
         "historical": "Архив",
         "go_to_settings": "Перейти в настройки",
         "setup_secure_messages": "Настроить безопасные сообщения",
-        "unencrypted": "Не зашифровано",
         "view_message": "Посмотреть сообщение",
-        "joined": "Присоединился",
+        "unencrypted": "Не зашифровано",
         "show_more": "Показать больше",
+        "joined": "Присоединился",
+        "avatar": "Аватар",
         "are_you_sure": "Вы уверены?"
     },
     "action": {
@@ -1295,7 +1125,9 @@
         "new_room": "Новая комната",
         "new_video_room": "Новая видеокомната",
         "add_existing_room": "Добавить существующую комнату",
-        "explore_public_rooms": "Просмотреть публичные комнаты"
+        "explore_public_rooms": "Просмотреть публичные комнаты",
+        "reply_in_thread": "Обсудить",
+        "click": "Нажать"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -1487,17 +1319,16 @@
         "format_italics": "Курсив",
         "format_insert_link": "Вставить ссылку",
         "replying_title": "Отвечает",
-        "edit_composer_label": "Редактировать сообщение",
-        "send_voice_message": "Отправить голосовое сообщение",
         "stop_voice_message": "Остановить запись",
+        "send_voice_message": "Отправить голосовое сообщение",
         "link_modal": {
             "title_edit": "Изменить ссылку",
             "title_create": "Создать ссылку",
             "text_field_label": "Текст",
             "link_field_label": "Ссылка"
-        }
+        },
+        "edit_composer_label": "Редактировать сообщение"
     },
-    "Code": "Код",
     "power_level": {
         "default": "По умолчанию",
         "restricted": "Ограниченный пользователь",
@@ -2181,13 +2012,24 @@
     "timeline": {
         "m.call": {
             "video_call_started": "Видеовызов начался в %(roomName)s.",
-            "video_call_started_unsupported": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)"
+            "video_call_started_unsupported": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)",
+            "video_call_ended": "Видеозвонок завершён"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s сделал голосовой вызов.",
             "voice_call_unsupported": "%(senderName)s сделал голосовой вызов. (не поддерживается этим браузером)",
             "video_call": "%(senderName)s сделал видео вызов.",
-            "video_call_unsupported": "%(senderName)s сделал видео вызов. (не поддерживается этим браузером)"
+            "video_call_unsupported": "%(senderName)s сделал видео вызов. (не поддерживается этим браузером)",
+            "declined": "Вызов отклонён",
+            "call_back_prompt": "Перезвонить",
+            "missed_call": "Пропущенный вызов",
+            "no_answer": "Нет ответа",
+            "failed_connect_media": "Не удалось подключиться к носителю",
+            "failed_connection": "Ошибка соединения",
+            "failed_opponent_media": "Их устройство не может запустить камеру или микрофон",
+            "unknown_error": "Произошла неизвестная ошибка",
+            "unknown_failure": "Неизвестная ошибка: %(reason)s",
+            "unknown_state": "Вызов в неизвестном состоянии!"
         },
         "m.room.member": {
             "accepted_3pid_invite": "%(targetName)s принял(а) приглашение для %(displayName)s",
@@ -2238,7 +2080,6 @@
             "forbidden": "%(senderDisplayName)s запретил(а) гостям входить в комнату.",
             "unknown": "%(senderDisplayName)s изменил(а) гостевой доступ на \"%(rule)s\""
         },
-        "m.image": "%(senderDisplayName)s отправил(а) изображение.",
         "m.sticker": "%(senderDisplayName)s отправил(а) наклейку.",
         "m.room.server_acl": {
             "set": "%(senderDisplayName)s устанавливает серверные разрешения для этой комнаты.",
@@ -2282,7 +2123,12 @@
         "m.widget": {
             "modified": "Виджет %(widgetName)s был изменен %(senderName)s",
             "added": "Виджет %(widgetName)s был добавлен %(senderName)s",
-            "removed": "Виджет %(widgetName)s был удален %(senderName)s"
+            "removed": "Виджет %(widgetName)s был удален %(senderName)s",
+            "jitsi_join_top_prompt": "Присоединяйтесь к конференции в верхней части этой комнаты",
+            "jitsi_join_right_prompt": "Присоединяйтесь к конференции, используя информационную карточку комнаты справа",
+            "jitsi_ended": "%(senderName)s завершил(а) видеоконференцию",
+            "jitsi_updated": "%(senderName)s обновил(а) видеоконференцию",
+            "jitsi_started": "%(senderName)s начал(а) видеоконференцию"
         },
         "io.element.widgets.layout": "%(senderName)s обновил(а) макет комнаты",
         "m.location": {
@@ -2293,7 +2139,6 @@
         "self_redaction": "Сообщение удалено",
         "redaction": "Сообщение удалено %(name)s",
         "m.poll.start": "%(senderName)s начал(а) опрос — %(pollQuestion)s",
-        "m.poll.end": "%(senderName)s завершил(а) опрос",
         "typing_indicator": {
             "one_user": "%(displayName)s печатает…",
             "two_users": "%(names)s и %(lastPerson)s печатают…",
@@ -2457,7 +2302,8 @@
             "changed_rule_users": "%(senderName)s изменил(а) правило блокировки пользователей по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
             "changed_rule_rooms": "%(senderName)s изменил(а) правило блокировки комнат по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
             "changed_rule_servers": "%(senderName)s изменил(а) правило блокировки серверов по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
-            "changed_rule_glob": "%(senderName)s обновил(а) правило блокировки по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s"
+            "changed_rule_glob": "%(senderName)s обновил(а) правило блокировки по шаблону %(oldGlob)s на шаблон %(newGlob)s за %(reason)s",
+            "message_hidden": "Вы заигнорировали этого пользователя, сообщение скрыто. <a>Показать</a>"
         },
         "no_permission_messages_before_invite": "У вас нет разрешения на просмотр сообщений, полученных до того, как вы были приглашены.",
         "no_permission_messages_before_join": "У вас нет разрешения на просмотр сообщений, полученных до вашего присоединения.",
@@ -2500,15 +2346,71 @@
             "other": "Просмотрели %(count)s людей"
         },
         "read_receipts_label": "Отчёты о прочтении",
-        "thread_info_basic": "Из обсуждения",
-        "error_no_renderer": "Не удалось отобразить это событие",
         "undecryptable_tooltip": "Это сообщение не удалось расшифровать",
+        "thread_info_basic": "Из обсуждения",
         "send_state_sent": "Ваше сообщение было отправлено",
         "send_state_failed": "Не удалось отправить",
         "mab": {
             "label": "Сообщение действий",
             "view_in_room": "Просмотреть в комнате",
-            "copy_link_thread": "Копировать ссылку на обсуждение"
+            "copy_link_thread": "Копировать ссылку на обсуждение",
+            "collapse_reply_chain": "Свернуть цитаты",
+            "expand_reply_chain": "Развернуть цитаты"
+        },
+        "m.audio": {
+            "unnamed_audio": "Безымянное аудио",
+            "error_downloading_audio": "Ошибка загрузки аудио",
+            "error_processing_audio": "Ошибка обработки звукового сообщения",
+            "error_processing_voice_message": "Ошибка при обработке голосового сообщения"
+        },
+        "load_error": {
+            "no_permission": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как у вас нет разрешений на просмотр.",
+            "unable_to_find": "Попытка загрузить выбранный интервал истории чата этой комнаты не удалась, так как запрошенный элемент не найден.",
+            "title": "Не удалось загрузить метку из хронологии"
+        },
+        "error_no_renderer": "Не удалось отобразить это событие",
+        "download_action_downloading": "Загрузка",
+        "download_action_decrypting": "Расшифровка",
+        "m.room.encryption": {
+            "parameters_changed": "Некоторые параметры шифрования были изменены.",
+            "enabled_local": "Сообщения в этой переписке будут защищены сквозным шифрованием.",
+            "disable_attempt": "Игнорируемая попытка отключить шифрование",
+            "disabled": "Шифрование не включено",
+            "unsupported": "Шифрование этой комнаты не поддерживается."
+        },
+        "pending_moderation_reason": "Сообщение ожидает модерации: %(reason)s",
+        "pending_moderation": "Сообщение ожидает модерации",
+        "m.beacon_info": {
+            "view_live_location": "Посмотреть трансляцию местоположения"
+        },
+        "m.file": {
+            "download_label": "Скачать %(text)s",
+            "error_decrypting": "Ошибка расшифровки вложения",
+            "decrypt_label": "Расшифровать %(text)s",
+            "error_invalid": "Недопустимый файл%(extra)s"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s отправил(а) изображение.",
+            "error_decrypting": "Ошибка расшифровки изображения",
+            "error_downloading": "Ошибка при скачивании изображения",
+            "show_image": "Показать изображение"
+        },
+        "m.key.verification.done": "Вы подтвердили %(name)s",
+        "m.key.verification.cancel": {
+            "you_cancelled": "Вы отменили подтверждение %(name)s",
+            "user_cancelled": "%(name)s отменил(а) подтверждение"
+        },
+        "m.key.verification.request": {
+            "you_accepted": "Вы приняли",
+            "you_declined": "Вы отказали",
+            "you_cancelled": "Вы отменили",
+            "you_started": "Вы отправили запрос подтверждения"
+        },
+        "m.poll.end": {
+            "sender_ended": "%(senderName)s завершил(а) опрос"
+        },
+        "m.video": {
+            "error_decrypting": "Ошибка расшифровки видео"
         }
     },
     "slash_command": {
@@ -2609,7 +2511,6 @@
         "offline": "Не в сети",
         "away": "Отошёл(ла)"
     },
-    "Unknown": "Неизвестно",
     "event_preview": {
         "m.call.answer": {
             "you": "Вы присоединились к звонку",
@@ -2844,31 +2745,31 @@
             "leave_space": "Покинуть пространство",
             "aliases_section": "Адреса комнаты",
             "other_section": "Другие",
-            "error_updating_canonical_alias_title": "Ошибка обновления основного адреса",
-            "error_updating_canonical_alias_description": "При обновлении основного адреса комнаты произошла ошибка. Возможно, это не разрешено сервером или произошел временный сбой.",
-            "error_updating_alias_description": "Произошла ошибка при обновлении альтернативных адресов комнаты. Это может быть запрещено сервером или произошел временный сбой.",
-            "error_creating_alias_title": "Ошибка при создании адреса",
-            "error_creating_alias_description": "При создании этого адреса произошла ошибка. Это может быть запрещено сервером или произошел временный сбой.",
-            "error_deleting_alias_description_forbidden": "У вас нет прав для удаления этого адреса.",
-            "error_deleting_alias_description": "Произошла ошибка при удалении этого адреса. Возможно, он больше не существует или произошла временная ошибка.",
-            "error_deleting_alias_title": "Ошибка при удалении адреса",
-            "canonical_alias_field_label": "Главный адрес",
-            "no_aliases_space": "У этого пространства нет локальных адресов",
-            "no_aliases_room": "У этой комнаты нет адресов на вашем сервере",
-            "local_alias_field_label": "Локальный адрес",
+            "topic_field_label": "Тема комнаты",
             "published_aliases_section": "Публичные адреса",
             "published_aliases_explainer_space": "Опубликованные адреса могут быть использованы любым человеком на любом сервере для присоединения к вашему пространству.",
             "published_aliases_explainer_room": "Опубликованные адреса могут быть использованы любым человеком на любом сервере, чтобы присоединиться к вашей комнате.",
             "published_aliases_description": "Чтобы опубликовать адрес, его сначала нужно установить как локальный адрес.",
-            "aliases_items_label": "Прочие публичные адреса:",
-            "aliases_no_items_label": "Пока нет других публичных адресов, добавьте их ниже",
+            "no_aliases_space": "У этого пространства нет локальных адресов",
+            "no_aliases_room": "У этой комнаты нет адресов на вашем сервере",
             "new_alias_placeholder": "Новый публичный адрес (напр. #alias:server)",
+            "name_field_label": "Название комнаты",
             "local_aliases_section": "Локальные адреса",
             "local_aliases_explainer_space": "Установите адреса для этого пространства, чтобы пользователи могли найти это пространство через ваш домашний сервер (%(localDomain)s)",
             "local_aliases_explainer_room": "Установить адрес этой комнаты, чтобы пользователи могли найти ее на вашем сервере (%(localDomain)s)",
-            "name_field_label": "Название комнаты",
-            "topic_field_label": "Тема комнаты",
-            "avatar_field_label": "Аватар комнаты"
+            "local_alias_field_label": "Локальный адрес",
+            "error_updating_canonical_alias_title": "Ошибка обновления основного адреса",
+            "error_updating_canonical_alias_description": "При обновлении основного адреса комнаты произошла ошибка. Возможно, это не разрешено сервером или произошел временный сбой.",
+            "error_updating_alias_description": "Произошла ошибка при обновлении альтернативных адресов комнаты. Это может быть запрещено сервером или произошел временный сбой.",
+            "error_deleting_alias_title": "Ошибка при удалении адреса",
+            "error_deleting_alias_description_forbidden": "У вас нет прав для удаления этого адреса.",
+            "error_deleting_alias_description": "Произошла ошибка при удалении этого адреса. Возможно, он больше не существует или произошла временная ошибка.",
+            "error_creating_alias_title": "Ошибка при создании адреса",
+            "error_creating_alias_description": "При создании этого адреса произошла ошибка. Это может быть запрещено сервером или произошел временный сбой.",
+            "canonical_alias_field_label": "Главный адрес",
+            "avatar_field_label": "Аватар комнаты",
+            "aliases_no_items_label": "Пока нет других публичных адресов, добавьте их ниже",
+            "aliases_items_label": "Прочие публичные адреса:"
         },
         "advanced": {
             "unfederated": "Это комната недоступна из других серверов Matrix",
@@ -2960,11 +2861,36 @@
             "verification_skip_warning": "Без проверки вы не сможете получить доступ ко всем своим сообщениям и можете показаться другим людям недоверенным.",
             "verify_later": "Я заверю позже",
             "verify_reset_warning_1": "Сброс ключей проверки нельзя отменить. После сброса вы не сможете получить доступ к старым зашифрованным сообщениям, а друзья, которые ранее проверили вас, будут видеть предупреждения о безопасности, пока вы не пройдете повторную проверку.",
-            "self_verification_hint": "Чтобы продолжить, пожалуйста, примите запрос на сверку в другом сеансе.",
             "waiting_for_user_accept": "Ожидание принятия от %(displayName)s…",
-            "accepting": "Принятие…",
             "start_button": "Начать проверку",
-            "error_starting_title": "Ошибка при запуске подтверждения"
+            "self_verification_hint": "Чтобы продолжить, пожалуйста, примите запрос на сверку в другом сеансе.",
+            "error_starting_title": "Ошибка при запуске подтверждения",
+            "after_new_login": {
+                "unable_to_verify": "Невозможно заверить этот сеанс",
+                "verify_this_device": "Заверьте этот сеанс",
+                "device_verified": "Сеанс заверен",
+                "reset_confirmation": "Действительно сбросить ключи подтверждения?",
+                "skip_verification": "Пока пропустить проверку"
+            },
+            "accepting": "Принятие…",
+            "scan_qr": "Подтверждение сканированием",
+            "scan_qr_explainer": "Попросите %(displayName)s отсканировать ваш код:",
+            "verify_emoji_prompt_qr": "Если вы не можете отсканировать код выше, попробуйте сравнить уникальные смайлы.",
+            "verify_emoji_prompt": "Подтверждение сравнением уникальных смайлов.",
+            "verify_emoji": "Подтверждение с помощью смайлов",
+            "qr_reciprocate_same_shield_device": "Почти готово! Ваше другое устройство показывает такой же щит?",
+            "qr_reciprocate_same_shield_user": "Почти готово! Отображает ли %(displayName)s такой же щит?",
+            "prompt_encrypted": "Подтвердите всех пользователей в комнате, чтобы обеспечить безопасность.",
+            "prompt_unencrypted": "В зашифрованных комнатах, проверьте всех пользователей, чтобы убедиться в их безопасности.",
+            "successful_own_device": "Вы успешно подтвердили это устройство!",
+            "successful_device": "Вы успешно подтвердили %(deviceName)s (%(deviceId)s)!",
+            "successful_user": "Вы успешно подтвердили %(displayName)s!",
+            "prompt_self": "Начните подтверждение заново с уведомления.",
+            "prompt_user": "Начните подтверждение заново в профиле пользователя.",
+            "timed_out": "Таймаут подтверждения.",
+            "cancelled_self": "Вы отменили проверку на другом устройстве.",
+            "cancelled_user": "%(displayName)s отменил(а) подтверждение.",
+            "cancelled": "Вы отменили подтверждение."
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -3002,14 +2928,6 @@
             "explainer": "Перед выходом сохраните резервную копию ключей шифрования, чтобы не потерять их.",
             "title": "Настроить"
         },
-        "cross_signing_user_warning": "Этот пользователь не подтвердил все свои сеансы.",
-        "cross_signing_user_normal": "Вы не подтвердили этого пользователя.",
-        "cross_signing_user_verified": "Вы подтвердили этого пользователя. Пользователь подтвердил все свои сеансы.",
-        "cross_signing_room_warning": "Кто-то использует неизвестный сеанс",
-        "cross_signing_room_normal": "Эта комната зашифрована сквозным шифрованием",
-        "cross_signing_room_verified": "Все в этой комнате подтверждены",
-        "event_shield_reason_authenticity_not_guaranteed": "Подлинность этого зашифрованного сообщения не может быть гарантирована на этом устройстве.",
-        "event_shield_reason_mismatched_sender_key": "Зашифровано неподтверждённым сеансом",
         "messages_not_secure": {
             "title": "Ваши сообщения не защищены",
             "heading": "Что-то из этого может быть скомпрометировано:",
@@ -3017,7 +2935,16 @@
             "cause_2": "Домашний сервер пользователя, которого вы подтверждаете",
             "cause_3": "Ваше интернет-соединение или соединение других пользователей",
             "cause_4": "Ваши сеансы или сеансы других пользователей"
-        }
+        },
+        "event_shield_reason_mismatched_sender_key": "Зашифровано неподтверждённым сеансом",
+        "event_shield_reason_authenticity_not_guaranteed": "Подлинность этого зашифрованного сообщения не может быть гарантирована на этом устройстве.",
+        "cross_signing_user_warning": "Этот пользователь не подтвердил все свои сеансы.",
+        "cross_signing_user_verified": "Вы подтвердили этого пользователя. Пользователь подтвердил все свои сеансы.",
+        "cross_signing_user_normal": "Вы не подтвердили этого пользователя.",
+        "cross_signing_room_warning": "Кто-то использует неизвестный сеанс",
+        "cross_signing_room_verified": "Все в этой комнате подтверждены",
+        "cross_signing_room_normal": "Эта комната зашифрована сквозным шифрованием",
+        "unsupported": "Этот клиент не поддерживает сквозное шифрование."
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3150,7 +3077,8 @@
             "sso_failed": "Что-то пошло не так при вашей идентификации. Отмените последнее действие и попробуйте еще раз.",
             "fallback_button": "Начать аутентификацию",
             "sso_title": "Воспользуйтесь единой точкой входа для продолжения",
-            "sso_body": "Подтвердите добавление этого почтового адреса с помощью единой точки входа."
+            "sso_body": "Подтвердите добавление этого почтового адреса с помощью единой точки входа.",
+            "code": "Код"
         },
         "password_field_label": "Введите пароль",
         "password_field_strong_label": "Хороший, надежный пароль!",
@@ -3182,7 +3110,26 @@
         "create_account_title": "Создать учётную запись",
         "failed_soft_logout_homeserver": "Ошибка повторной аутентификации из-за проблем на сервере",
         "soft_logout_subheading": "Очистить персональные данные",
-        "forgot_password_send_email": "Отправить электронное письмо"
+        "forgot_password_send_email": "Отправить электронное письмо",
+        "reset_password": {
+            "other_devices_logout_warning_1": "При выходе из устройств удаляются хранящиеся на них ключи шифрования сообщений, что сделает зашифрованную историю чатов нечитаемой.",
+            "other_devices_logout_warning_2": "Если вы хотите сохранить доступ к истории общения в зашифрованных комнатах, настройте резервное копирование ключей или экспортируйте ключи сообщений с одного из других ваших устройств, прежде чем продолжить.",
+            "password_not_entered": "Введите новый пароль.",
+            "passwords_mismatch": "Новые пароли должны совпадать.",
+            "sign_out_other_devices": "Выйти из всех сеансов",
+            "reset_successful": "Ваш пароль был сброшен.",
+            "devices_logout_success": "Вы вышли из всех устройств и больше не будете получать push-уведомления. Для повторного включения уведомлений снова войдите на каждом устройстве.",
+            "return_to_login": "Вернуться к экрану входа"
+        },
+        "qr_code_login": {
+            "error_request_cancelled": "Запрос был отменён.",
+            "error_unexpected": "Произошла неожиданная ошибка.",
+            "error_homeserver_lacks_support": "Домашний сервер не поддерживает вход с другого устройства.",
+            "confirm_code_match": "Проверьте, чтобы код ниже совпадал с тем, что показан на другом устройстве:"
+        },
+        "country_dropdown": "Выпадающий список стран",
+        "common_failures": {},
+        "captcha_description": "Этот сервер хотел бы убедиться, что вы не робот."
     },
     "room_list": {
         "sort_unread_first": "Комнаты с непрочитанными сообщениями в начале",
@@ -3347,8 +3294,8 @@
         "unmaximise": "Развернуть",
         "popout": "Всплывающий виджет",
         "unpin_to_view_right_panel": "Открепите виджет, чтобы просмотреть его на этой панели",
-        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели",
-        "set_room_layout": "Установить мой макет комнаты для всех"
+        "set_room_layout": "Установить мой макет комнаты для всех",
+        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -3434,8 +3381,9 @@
         "empty_explainer": "Обсуждения помогают поддерживать и легко отслеживать тематику бесед.",
         "empty_tip": "<b>Совет:</b> Используйте “%(replyInThread)s” при наведении курсора на сообщение.",
         "empty_heading": "Организуйте обсуждения с помощью обсуждений",
+        "unable_to_decrypt": "Невозможно расшифровать сообщение",
         "open_thread": "Открыть ветку",
-        "unable_to_decrypt": "Невозможно расшифровать сообщение"
+        "error_start_thread_existing_relation": "Невозможно создать обсуждение из события с существующей связью"
     },
     "theme": {
         "light_high_contrast": "Контрастная светлая",
@@ -3463,7 +3411,13 @@
         "invite_link": "Поделиться ссылкой на приглашение",
         "invite": "Пригласить людей",
         "invite_description": "Пригласить по электронной почте или имени пользователя",
-        "invite_this_space": "Пригласить в это пространство"
+        "invite_this_space": "Пригласить в это пространство",
+        "user_lacks_permission": "У вас нет разрешения",
+        "title_when_query_unavailable": "Комнаты и пространства",
+        "title_when_query_available": "Результаты",
+        "search_placeholder": "Искать имена и описания",
+        "no_search_result_hint": "Вы можете попробовать другой поиск или проверить опечатки.",
+        "joining_space": "Присоединение"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -3486,7 +3440,8 @@
         "live_share_button": "Поделиться на %(duration)s",
         "click_move_pin": "Нажмите, чтобы переместить маркер",
         "click_drop_pin": "Нажмите, чтобы закрепить маркер",
-        "share_button": "Поделиться местоположением"
+        "share_button": "Поделиться местоположением",
+        "stop_and_close": "Остановить и закрыть"
     },
     "labs_mjolnir": {
         "room_name": "Мой список блокировки",
@@ -3625,7 +3580,8 @@
             "hide_widgets_button": "Скрыть виджеты",
             "show_widgets_button": "Показать виджеты",
             "close_call_button": "Закрыть звонок",
-            "video_room_view_chat_button": "Посмотреть ленту сообщений"
+            "video_room_view_chat_button": "Посмотреть ленту сообщений",
+            "room_is_public": "Это публичная комната"
         },
         "joining": "Присоединение…",
         "join_title": "Присоединяйтесь к комнате для участия",
@@ -3673,18 +3629,43 @@
         "join_failed_needs_invite": "Для просмотра %(roomName)s необходимо приглашение",
         "view_failed_enable_video_rooms": "Для просмотра сначала включите видеокомнаты в лаборатории",
         "join_failed_enable_video_rooms": "Чтобы присоединиться, сначала включите видеокомнаты в лаборатории",
-        "jump_to_bottom_button": "Перейти к последним сообщениям",
-        "show_labs_settings": "Показать настройки лаборатории",
-        "upgrade_warning_bar": "Обновление этой комнаты отключит текущий экземпляр комнаты и создаст обновлённую комнату с тем же названием.",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "Отправка %(filename)s и %(count)s другой",
+                "other": "Отправка %(filename)s и %(count)s других"
+            },
+            "uploading_single_file": "Отправка %(filename)s"
+        },
         "upgrade_warning_bar_upgraded": "Эта комната уже была обновлена.",
         "upgrade_warning_bar_unstable": "Версия этой комнаты — <roomVersion />, этот домашний сервер считает её <i>нестабильной</i>.",
         "upgrade_warning_bar_admins": "Только администраторы комнат увидят это предупреждение",
+        "upgrade_warning_bar": "Обновление этой комнаты отключит текущий экземпляр комнаты и создаст обновлённую комнату с тем же названием.",
+        "status_bar": {
+            "requires_consent_agreement": "Вы не можете отправлять сообщения до тех пор, пока вы не примете <consentLink>наши правила и положения</consentLink>.",
+            "monthly_user_limit_reached": "Ваше сообщение не было отправлено, потому что этот домашний сервер превысил месячный лимит активных пользователей. <a>обратитесь к администратору службы</a>, чтобы продолжить использование службы.",
+            "homeserver_blocked": "Ваше сообщение не отправлено, поскольку домашний сервер заблокирован его администратором. <a>Обратитесь к администратору службы</a>, чтобы продолжить её использование.",
+            "exceeded_resource_limit": "Ваше сообщение не было отправлено, потому что этот домашний сервер превысил лимит ресурсов. <a>обратитесь к администратору службы</a>, чтобы продолжить использование службы.",
+            "some_messages_not_sent": "Некоторые из ваших сообщений не были отправлены",
+            "delete_all": "Удалить все",
+            "retry_all": "Повторить все",
+            "select_messages_to_retry": "Вы можете выбрать все или отдельные сообщения для повторной попытки или удаления",
+            "server_connectivity_lost_title": "Связь с сервером потеряна.",
+            "server_connectivity_lost_description": "Отправленные сообщения будут сохранены, пока соединение не восстановится."
+        },
+        "show_labs_settings": "Показать настройки лаборатории",
         "search": {
             "this_room": "В этой комнате",
             "all_rooms": "Везде",
             "field_placeholder": "Поиск…"
         },
-        "jump_read_marker": "Перейти к первому непрочитанному сообщению."
+        "jump_to_bottom_button": "Перейти к последним сообщениям",
+        "jump_read_marker": "Перейти к первому непрочитанному сообщению.",
+        "inviter_unknown": "Неизвестно",
+        "failed_reject_invite": "Не удалось отклонить приглашение",
+        "creating_room_text": "Мы создаем комнату с %(names)s",
+        "jump_to_date_beginning": "Начало комнаты",
+        "jump_to_date": "Перейти к дате",
+        "jump_to_date_prompt": "Выберите дату для перехода"
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
@@ -3726,7 +3707,21 @@
         "options_placeholder": "Напишите вариант",
         "options_add_button": "Добавить вариант",
         "disclosed_notes": "Голосующие увидят результаты сразу после голосования",
-        "notes": "Результаты отображаются только после завершения опроса"
+        "notes": "Результаты отображаются только после завершения опроса",
+        "unable_edit_title": "Невозможно редактировать опрос",
+        "unable_edit_description": "Вы не можете редактировать опрос после завершения голосования.",
+        "error_voting_title": "Голос не засчитан",
+        "error_voting_description": "Извините, ваш голос не был засчитан. Пожалуйста, попробуйте еще раз.",
+        "total_not_ended": "Результаты будут видны после завершения опроса",
+        "total_no_votes": "Голосов нет",
+        "total_n_votes": {
+            "one": "%(count)s голос. Проголосуйте, чтобы увидеть результаты",
+            "other": "%(count)s голосов. Проголосуйте, чтобы увидеть результаты"
+        },
+        "total_n_votes_voted": {
+            "one": "На основании %(count)s голоса",
+            "other": "На основании %(count)s голосов"
+        }
     },
     "failed_load_async_component": "Не удалось загрузить! Проверьте подключение к сети и попробуйте снова.",
     "upload_failed_generic": "Файл '%(fileName)s' не был загружен.",
@@ -3896,10 +3891,6 @@
         "filter_placeholder": "Поиск по участникам",
         "power_label": "%(userName)s (уровень прав %(powerLevelNumber)s)"
     },
-    "stickers": {
-        "empty": "У вас ещё нет наклеек",
-        "empty_add_prompt": "Добавить сейчас"
-    },
     "user_info": {
         "error_revoke_3pid_invite_title": "Не удалось отменить приглашение",
         "error_revoke_3pid_invite_description": "Не удалось отозвать приглашение. Возможно, на сервере возникла вре́менная проблема или у вас недостаточно прав для отзыва приглашения.",
@@ -3949,7 +3940,12 @@
         "deactivate_confirm_description": "Деактивация этого пользователя приведет к его выходу из системы и запрету повторного входа. Кроме того, они оставит все комнаты, в которых он участник. Это действие безповоротно. Вы уверены, что хотите деактивировать этого пользователя?",
         "deactivate_confirm_action": "Деактивировать пользователя",
         "error_deactivate": "Не удалось деактивировать пользователя",
-        "role_label": "Роль в <RoomName/>"
+        "role_label": "Роль в <RoomName/>",
+        "edit_own_devices": "Редактировать сеансы"
+    },
+    "stickers": {
+        "empty": "У вас ещё нет наклеек",
+        "empty_add_prompt": "Добавить сейчас"
     },
     "right_panel": {
         "pinned_messages": {
@@ -3974,6 +3970,57 @@
         "pinned_messages_button": "Закреплено",
         "export_chat_button": "Экспорт чата",
         "share_button": "Поделиться комнатой",
-        "settings_button": "Настройки комнаты"
-    }
+        "settings_button": "Настройки комнаты",
+        "poll": {
+            "view_in_timeline": "Посмотреть опрос в ленте сообщений",
+            "active_heading": "Активные опросы",
+            "empty_active": "В этой комнате нет активных опросов",
+            "final_result": {
+                "one": "Окончательный результат на основе %(count)s голоса",
+                "other": "Окончательный результат на основе %(count)s голосов"
+            }
+        }
+    },
+    "reject_invitation_dialog": {
+        "title": "Отклонить приглашение",
+        "confirmation": "Уверены, что хотите отклонить приглашение?",
+        "failed": "Не удалось отклонить приглашение"
+    },
+    "quit_warning": {
+        "file_upload_in_progress": "Похоже, вы сейчас отправляете файлы. Уверены, что хотите выйти?",
+        "call_in_progress": "Звонок не завершён. Уверены, что хотите выйти?"
+    },
+    "no_more_results": "Больше никаких результатов",
+    "left_panel": {
+        "open_dial_pad": "Открыть панель набора номера"
+    },
+    "leave_room_dialog": {
+        "last_person_warning": "Вы здесь единственный человек. Если вы уйдете, никто не сможет присоединиться в будущем, включая вас.",
+        "space_rejoin_warning": "Это пространство не публично. Вы не сможете вновь войти без приглашения.",
+        "room_rejoin_warning": "Эта комната не является публичной. Вы не сможете войти без приглашения.",
+        "leave_space_question": "Уверены, что хотите покинуть пространство \"%(spaceName)s\"?",
+        "leave_room_question": "Уверены, что хотите покинуть '%(roomName)s'?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Не удалось забыть комнату: %(errCode)s",
+        "copy_room_link_failed": {
+            "title": "Не удалось скопировать ссылку на комнату",
+            "description": "Не удалось скопировать ссылку на комнату в буфер обмена."
+        },
+        "search_failed": {
+            "title": "Поиск не удался",
+            "server_unavailable": "Сервер может быть недоступен, перегружен или поиск прекращен по тайм-ауту :("
+        },
+        "error_loading_user_profile": "Не удалось загрузить профиль пользователя"
+    },
+    "console_wait": "Подождите!",
+    "cant_load_page": "Невозможно загрузить страницу",
+    "Invalid homeserver discovery response": "Неверный ответ при попытке обнаружения домашнего сервера",
+    "Failed to get autodiscovery configuration from server": "Не удалось получить конфигурацию автообнаружения с сервера",
+    "Invalid base_url for m.homeserver": "Неверный base_url для m.homeserver",
+    "Homeserver URL does not appear to be a valid Matrix homeserver": "URL-адрес домашнего сервера не является допустимым домашним сервером Matrix",
+    "Invalid identity server discovery response": "Неверный ответ на запрос идентификации сервера",
+    "Invalid base_url for m.identity_server": "Неверный base_url для m.identity_server",
+    "Identity server URL does not appear to be a valid identity server": "URL-адрес сервера идентификации не является действительным сервером идентификации",
+    "General failure": "Общая ошибка"
 }
