@@ -2,12 +2,12 @@
     "a11y": {
         "jump_first_invite": "Jump to first invite.",
         "n_unread_messages": {
-            "other": "%(count)s unread messages.",
-            "one": "1 unread message."
+            "one": "1 unread message.",
+            "other": "%(count)s unread messages."
         },
         "n_unread_messages_mentions": {
-            "other": "%(count)s unread messages including mentions.",
-            "one": "1 unread mention."
+            "one": "1 unread mention.",
+            "other": "%(count)s unread messages including mentions."
         },
         "room_name": "Room %(name)s",
         "unread_messages": "Unread messages.",
@@ -424,8 +424,8 @@
         "all_rooms": "All rooms",
         "analytics": "Analytics",
         "and_n_others": {
-            "other": "and %(count)s others...",
-            "one": "and one other..."
+            "one": "and one other...",
+            "other": "and %(count)s others..."
         },
         "android": "Android",
         "appearance": "Appearance",
@@ -483,16 +483,16 @@
         "modern": "Modern",
         "mute": "Mute",
         "n_members": {
-            "other": "%(count)s members",
-            "one": "%(count)s member"
+            "one": "%(count)s member",
+            "other": "%(count)s members"
         },
         "n_participants": {
-            "other": "%(count)s participants",
-            "one": "1 participant"
+            "one": "1 participant",
+            "other": "%(count)s participants"
         },
         "n_rooms": {
-            "other": "%(count)s rooms",
-            "one": "%(count)s room"
+            "one": "%(count)s room",
+            "other": "%(count)s rooms"
         },
         "name": "Name",
         "no_results": "No results",
@@ -779,8 +779,8 @@
         "settings_explorer": "Settings explorer",
         "show_hidden_events": "Show hidden events in timeline",
         "spaces": {
-            "other": "<%(count)s spaces>",
-            "one": "<space>"
+            "one": "<space>",
+            "other": "<%(count)s spaces>"
         },
         "state_key": "State Key",
         "thread_root_id": "Thread Root ID: %(threadRootId)s",
@@ -1114,21 +1114,21 @@
         "export_info": "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.",
         "export_successful": "Export successful!",
         "exported_n_events_in_time": {
-            "other": "Exported %(count)s events in %(seconds)s seconds",
-            "one": "Exported %(count)s event in %(seconds)s seconds"
+            "one": "Exported %(count)s event in %(seconds)s seconds",
+            "other": "Exported %(count)s events in %(seconds)s seconds"
         },
         "exporting_your_data": "Exporting your data",
         "fetched_n_events": {
-            "other": "Fetched %(count)s events so far",
-            "one": "Fetched %(count)s event so far"
+            "one": "Fetched %(count)s event so far",
+            "other": "Fetched %(count)s events so far"
         },
         "fetched_n_events_in_time": {
-            "other": "Fetched %(count)s events in %(seconds)ss",
-            "one": "Fetched %(count)s event in %(seconds)ss"
+            "one": "Fetched %(count)s event in %(seconds)ss",
+            "other": "Fetched %(count)s events in %(seconds)ss"
         },
         "fetched_n_events_with_total": {
-            "other": "Fetched %(count)s events out of %(total)s",
-            "one": "Fetched %(count)s event out of %(total)s"
+            "one": "Fetched %(count)s event out of %(total)s",
+            "other": "Fetched %(count)s events out of %(total)s"
         },
         "fetching_events": "Fetching events…",
         "file_attached": "File Attached",
@@ -1218,8 +1218,8 @@
     "in_space": "In %(spaceName)s.",
     "in_space1_and_space2": "In spaces %(space1Name)s and %(space2Name)s.",
     "in_space_and_n_other_spaces": {
-        "other": "In %(spaceName)s and %(count)s other spaces.",
-        "one": "In %(spaceName)s and one other space."
+        "one": "In %(spaceName)s and one other space.",
+        "other": "In %(spaceName)s and %(count)s other spaces."
     },
     "info_tooltip_title": "Information",
     "integration_manager": {
@@ -1293,12 +1293,12 @@
     },
     "inviting_user1_and_user2": "Inviting %(user1)s and %(user2)s",
     "inviting_user_and_n_others": {
-        "other": "Inviting %(user)s and %(count)s others",
-        "one": "Inviting %(user)s and one other"
+        "one": "Inviting %(user)s and one other",
+        "other": "Inviting %(user)s and %(count)s others"
     },
     "items_and_n_others": {
-        "other": "<Items/> and %(count)s others",
-        "one": "<Items/> and one other"
+        "one": "<Items/> and one other",
+        "other": "<Items/> and %(count)s others"
     },
     "keyboard": {
         "activate_button": "Activate selected button",
@@ -1648,8 +1648,8 @@
         "intro_welcome": "Welcome to %(appName)s",
         "no_avatar_label": "Add a photo so people know it's you.",
         "only_n_steps_to_go": {
-            "other": "Only %(count)s steps to go",
-            "one": "Only %(count)s step to go"
+            "one": "Only %(count)s step to go",
+            "other": "Only %(count)s steps to go"
         },
         "personal_messaging_action": "Start your first chat",
         "personal_messaging_title": "Secure messaging for friends and family",
@@ -1701,12 +1701,12 @@
         "topic_placeholder": "Write something…",
         "total_decryption_errors": "Due to decryption errors, some votes may not be counted",
         "total_n_votes": {
-            "other": "%(count)s votes cast. Vote to see the results",
-            "one": "%(count)s vote cast. Vote to see the results"
+            "one": "%(count)s vote cast. Vote to see the results",
+            "other": "%(count)s votes cast. Vote to see the results"
         },
         "total_n_votes_voted": {
-            "other": "Based on %(count)s votes",
-            "one": "Based on %(count)s vote"
+            "one": "Based on %(count)s vote",
+            "other": "Based on %(count)s votes"
         },
         "total_no_votes": "No votes cast",
         "total_not_ended": "Results will be visible when the poll is ended",
@@ -1825,18 +1825,18 @@
             "empty_active": "There are no active polls in this room",
             "empty_active_load_more": "There are no active polls. Load more polls to view polls for previous months",
             "empty_active_load_more_n_days": {
-                "other": "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months",
-                "one": "There are no active polls for the past day. Load more polls to view polls for previous months"
+                "one": "There are no active polls for the past day. Load more polls to view polls for previous months",
+                "other": "There are no active polls for the past %(count)s days. Load more polls to view polls for previous months"
             },
             "empty_past": "There are no past polls in this room",
             "empty_past_load_more": "There are no past polls. Load more polls to view polls for previous months",
             "empty_past_load_more_n_days": {
-                "other": "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months",
-                "one": "There are no past polls for the past day. Load more polls to view polls for previous months"
+                "one": "There are no past polls for the past day. Load more polls to view polls for previous months",
+                "other": "There are no past polls for the past %(count)s days. Load more polls to view polls for previous months"
             },
             "final_result": {
-                "other": "Final result based on %(count)s votes",
-                "one": "Final result based on %(count)s vote"
+                "one": "Final result based on %(count)s vote",
+                "other": "Final result based on %(count)s votes"
             },
             "load_more": "Load more polls",
             "loading": "Loading polls",
@@ -1907,12 +1907,12 @@
         "error_jump_to_date_send_logs_prompt": "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
         "error_jump_to_date_title": "Unable to find event at that date",
         "face_pile_summary": {
-            "other": "%(count)s people you know have already joined",
-            "one": "%(count)s person you know has already joined"
+            "one": "%(count)s person you know has already joined",
+            "other": "%(count)s people you know have already joined"
         },
         "face_pile_tooltip_label": {
-            "other": "View all %(count)s members",
-            "one": "View 1 member"
+            "one": "View 1 member",
+            "other": "View all %(count)s members"
         },
         "face_pile_tooltip_shortcut": "Including %(commaSeparatedMembers)s",
         "face_pile_tooltip_shortcut_joined": "Including you, %(commaSeparatedMembers)s",
@@ -1924,8 +1924,8 @@
             "forget_room_button": "Forget room",
             "hide_widgets_button": "Hide Widgets",
             "n_people_asking_to_join": {
-                "other": "%(count)s people asking to join",
-                "one": "Asking to join"
+                "one": "Asking to join",
+                "other": "%(count)s people asking to join"
             },
             "room_is_public": "This room is public",
             "show_widgets_button": "Show Widgets",
@@ -2014,8 +2014,8 @@
             "all_rooms_button": "Search all rooms",
             "field_placeholder": "Search…",
             "result_count": {
-                "other": "(~%(count)s results)",
-                "one": "(~%(count)s result)"
+                "one": "(~%(count)s result)",
+                "other": "(~%(count)s results)"
             },
             "this_room": "This Room",
             "this_room_button": "Search this room"
@@ -2035,8 +2035,8 @@
         },
         "unknown_status_code_for_timeline_jump": "unknown status code",
         "unread_notifications_predecessor": {
-            "other": "You have %(count)s unread notifications in a prior version of this room.",
-            "one": "You have %(count)s unread notification in a prior version of this room."
+            "one": "You have %(count)s unread notification in a prior version of this room.",
+            "other": "You have %(count)s unread notifications in a prior version of this room."
         },
         "upgrade_error_description": "Double check that your server supports the room version chosen and try again.",
         "upgrade_error_title": "Error upgrading room",
@@ -2046,8 +2046,8 @@
         "upgrade_warning_bar_upgraded": "This room has already been upgraded.",
         "upload": {
             "uploading_multiple_file": {
-                "other": "Uploading %(filename)s and %(count)s others",
-                "one": "Uploading %(filename)s and %(count)s other"
+                "one": "Uploading %(filename)s and %(count)s other",
+                "other": "Uploading %(filename)s and %(count)s others"
             },
             "uploading_single_file": "Uploading %(filename)s"
         },
@@ -2066,18 +2066,18 @@
         "home_menu_label": "Home options",
         "join_public_room_label": "Join public room",
         "joining_rooms_status": {
-            "other": "Currently joining %(count)s rooms",
-            "one": "Currently joining %(count)s room"
+            "one": "Currently joining %(count)s room",
+            "other": "Currently joining %(count)s rooms"
         },
         "notification_options": "Notification options",
         "redacting_messages_status": {
-            "other": "Currently removing messages in %(count)s rooms",
-            "one": "Currently removing messages in %(count)s room"
+            "one": "Currently removing messages in %(count)s room",
+            "other": "Currently removing messages in %(count)s rooms"
         },
         "show_less": "Show less",
         "show_n_more": {
-            "other": "Show %(count)s more",
-            "one": "Show %(count)s more"
+            "one": "Show %(count)s more",
+            "other": "Show %(count)s more"
         },
         "show_previews": "Show previews of messages",
         "sort_by": "Sort by",
@@ -2288,24 +2288,24 @@
             "join_rule_restricted_dialog_heading_unknown": "These are likely ones other room admins are a part of.",
             "join_rule_restricted_dialog_title": "Select spaces",
             "join_rule_restricted_n_more": {
-                "other": "& %(count)s more",
-                "one": "& %(count)s more"
+                "one": "& %(count)s more",
+                "other": "& %(count)s more"
             },
             "join_rule_restricted_summary": {
-                "other": "Currently, %(count)s spaces have access",
-                "one": "Currently, a space has access"
+                "one": "Currently, a space has access",
+                "other": "Currently, %(count)s spaces have access"
             },
             "join_rule_restricted_upgrade_description": "This upgrade will allow members of selected spaces access to this room without an invite.",
             "join_rule_restricted_upgrade_warning": "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.",
             "join_rule_upgrade_awaiting_room": "Loading new room",
             "join_rule_upgrade_required": "Upgrade required",
             "join_rule_upgrade_sending_invites": {
-                "other": "Sending invites... (%(progress)s out of %(count)s)",
-                "one": "Sending invite..."
+                "one": "Sending invite...",
+                "other": "Sending invites... (%(progress)s out of %(count)s)"
             },
             "join_rule_upgrade_updating_spaces": {
-                "other": "Updating spaces... (%(progress)s out of %(count)s)",
-                "one": "Updating space..."
+                "one": "Updating space...",
+                "other": "Updating spaces... (%(progress)s out of %(count)s)"
             },
             "join_rule_upgrade_upgrading_room": "Upgrading room",
             "public_without_alias_warning": "To link to this room, please add an address.",
@@ -2700,8 +2700,8 @@
             "message_search_disable_warning": "If disabled, messages from encrypted rooms won't appear in search results.",
             "message_search_disabled": "Securely cache encrypted messages locally for them to appear in search results.",
             "message_search_enabled": {
-                "other": "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms.",
-                "one": "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s room."
+                "one": "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s room.",
+                "other": "Securely cache encrypted messages locally for them to appear in search results, using %(size)s to store messages from %(rooms)s rooms."
             },
             "message_search_failed": "Message search initialisation failed",
             "message_search_indexed_messages": "Indexed messages:",
@@ -2732,20 +2732,20 @@
             "best_security_note": "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
             "browser": "Browser",
             "confirm_sign_out": {
-                "other": "Confirm signing out these devices",
-                "one": "Confirm signing out this device"
+                "one": "Confirm signing out this device",
+                "other": "Confirm signing out these devices"
             },
             "confirm_sign_out_body": {
-                "other": "Click the button below to confirm signing out these devices.",
-                "one": "Click the button below to confirm signing out this device."
+                "one": "Click the button below to confirm signing out this device.",
+                "other": "Click the button below to confirm signing out these devices."
             },
             "confirm_sign_out_continue": {
-                "other": "Sign out devices",
-                "one": "Sign out device"
+                "one": "Sign out device",
+                "other": "Sign out devices"
             },
             "confirm_sign_out_sso": {
-                "other": "Confirm logging out these devices by using Single Sign On to prove your identity.",
-                "one": "Confirm logging out this device by using Single Sign On to prove your identity."
+                "one": "Confirm logging out this device by using Single Sign On to prove your identity.",
+                "other": "Confirm logging out these devices by using Single Sign On to prove your identity."
             },
             "current_session": "Current session",
             "desktop_session": "Desktop session",
@@ -2772,8 +2772,8 @@
             "last_activity": "Last activity",
             "mobile_session": "Mobile session",
             "n_sessions_selected": {
-                "other": "%(count)s sessions selected",
-                "one": "%(count)s session selected"
+                "one": "%(count)s session selected",
+                "other": "%(count)s sessions selected"
             },
             "no_inactive_sessions": "No inactive sessions found.",
             "no_sessions": "No sessions found.",
@@ -2799,12 +2799,12 @@
             "sign_out": "Sign out of this session",
             "sign_out_all_other_sessions": "Sign out of all other sessions (%(otherSessionsCount)s)",
             "sign_out_confirm_description": {
-                "other": "Are you sure you want to sign out of %(count)s sessions?",
-                "one": "Are you sure you want to sign out of %(count)s session?"
+                "one": "Are you sure you want to sign out of %(count)s session?",
+                "other": "Are you sure you want to sign out of %(count)s sessions?"
             },
             "sign_out_n_sessions": {
-                "other": "Sign out of %(count)s sessions",
-                "one": "Sign out of %(count)s session"
+                "one": "Sign out of %(count)s session",
+                "other": "Sign out of %(count)s sessions"
             },
             "title": "Sessions",
             "unknown_session": "Unknown session type",
@@ -2986,8 +2986,8 @@
             "dm_heading": "Direct Messages",
             "error_heading": "Not all selected were added",
             "progress_text": {
-                "other": "Adding rooms... (%(progress)s out of %(count)s)",
-                "one": "Adding room..."
+                "one": "Adding room...",
+                "other": "Adding rooms... (%(progress)s out of %(count)s)"
             },
             "space_dropdown_label": "Space selection",
             "space_dropdown_title": "Add existing rooms",
@@ -3073,8 +3073,8 @@
         "cant_find_room_helpful_hint": "If you can't find the room you're looking for, ask for an invite or create a new room.",
         "copy_link_text": "Copy invite link",
         "count_of_members": {
-            "other": "%(count)s Members",
-            "one": "%(count)s Member"
+            "one": "%(count)s Member",
+            "other": "%(count)s Members"
         },
         "create_new_room_button": "Create new room",
         "failed_querying_public_rooms": "Failed to query public rooms",
@@ -3128,8 +3128,8 @@
         "all_threads": "All threads",
         "all_threads_description": "Shows all threads from current room",
         "count_of_reply": {
-            "other": "%(count)s replies",
-            "one": "%(count)s reply"
+            "one": "%(count)s reply",
+            "other": "%(count)s replies"
         },
         "empty_explainer": "Threads help keep your conversations on-topic and easy to track.",
         "empty_has_threads_tip": "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.",
@@ -3279,8 +3279,8 @@
         },
         "m.poll": {
             "count_of_votes": {
-                "other": "%(count)s votes",
-                "one": "%(count)s vote"
+                "one": "%(count)s vote",
+                "other": "%(count)s votes"
             }
         },
         "m.poll.end": {
@@ -3296,12 +3296,12 @@
         },
         "m.room.canonical_alias": {
             "alt_added": {
-                "other": "%(senderName)s added the alternative addresses %(addresses)s for this room.",
-                "one": "%(senderName)s added alternative address %(addresses)s for this room."
+                "one": "%(senderName)s added alternative address %(addresses)s for this room.",
+                "other": "%(senderName)s added the alternative addresses %(addresses)s for this room."
             },
             "alt_removed": {
-                "other": "%(senderName)s removed the alternative addresses %(addresses)s for this room.",
-                "one": "%(senderName)s removed alternative address %(addresses)s for this room."
+                "one": "%(senderName)s removed alternative address %(addresses)s for this room.",
+                "other": "%(senderName)s removed the alternative addresses %(addresses)s for this room."
             },
             "changed": "%(senderName)s changed the addresses for this room.",
             "changed_alternative": "%(senderName)s changed the alternative addresses for this room.",
@@ -3448,8 +3448,8 @@
             "tooltip": "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>"
         },
         "read_receipt_title": {
-            "other": "Seen by %(count)s people",
-            "one": "Seen by %(count)s person"
+            "one": "Seen by %(count)s person",
+            "other": "Seen by %(count)s people"
         },
         "read_receipts_label": "Read receipts",
         "redacted": {
@@ -3472,148 +3472,148 @@
         "send_state_sent": "Your message was sent",
         "summary": {
             "banned": {
-                "other": "was banned %(count)s times",
-                "one": "was banned"
+                "one": "was banned",
+                "other": "was banned %(count)s times"
             },
             "banned_multiple": {
-                "other": "were banned %(count)s times",
-                "one": "were banned"
+                "one": "were banned",
+                "other": "were banned %(count)s times"
             },
             "changed_avatar": {
-                "other": "%(oneUser)schanged their profile picture %(count)s times",
-                "one": "%(oneUser)schanged their profile picture"
+                "one": "%(oneUser)schanged their profile picture",
+                "other": "%(oneUser)schanged their profile picture %(count)s times"
             },
             "changed_avatar_multiple": {
-                "other": "%(severalUsers)schanged their profile picture %(count)s times",
-                "one": "%(severalUsers)schanged their profile picture"
+                "one": "%(severalUsers)schanged their profile picture",
+                "other": "%(severalUsers)schanged their profile picture %(count)s times"
             },
             "changed_name": {
-                "other": "%(oneUser)schanged their name %(count)s times",
-                "one": "%(oneUser)schanged their name"
+                "one": "%(oneUser)schanged their name",
+                "other": "%(oneUser)schanged their name %(count)s times"
             },
             "changed_name_multiple": {
-                "other": "%(severalUsers)schanged their name %(count)s times",
-                "one": "%(severalUsers)schanged their name"
+                "one": "%(severalUsers)schanged their name",
+                "other": "%(severalUsers)schanged their name %(count)s times"
             },
             "format": "%(nameList)s %(transitionList)s",
             "hidden_event": {
-                "other": "%(oneUser)ssent %(count)s hidden messages",
-                "one": "%(oneUser)ssent a hidden message"
+                "one": "%(oneUser)ssent a hidden message",
+                "other": "%(oneUser)ssent %(count)s hidden messages"
             },
             "hidden_event_multiple": {
-                "other": "%(severalUsers)ssent %(count)s hidden messages",
-                "one": "%(severalUsers)ssent a hidden message"
+                "one": "%(severalUsers)ssent a hidden message",
+                "other": "%(severalUsers)ssent %(count)s hidden messages"
             },
             "invite_withdrawn": {
-                "other": "%(oneUser)shad their invitation withdrawn %(count)s times",
-                "one": "%(oneUser)shad their invitation withdrawn"
+                "one": "%(oneUser)shad their invitation withdrawn",
+                "other": "%(oneUser)shad their invitation withdrawn %(count)s times"
             },
             "invite_withdrawn_multiple": {
-                "other": "%(severalUsers)shad their invitations withdrawn %(count)s times",
-                "one": "%(severalUsers)shad their invitations withdrawn"
+                "one": "%(severalUsers)shad their invitations withdrawn",
+                "other": "%(severalUsers)shad their invitations withdrawn %(count)s times"
             },
             "invited": {
-                "other": "was invited %(count)s times",
-                "one": "was invited"
+                "one": "was invited",
+                "other": "was invited %(count)s times"
             },
             "invited_multiple": {
-                "other": "were invited %(count)s times",
-                "one": "were invited"
+                "one": "were invited",
+                "other": "were invited %(count)s times"
             },
             "joined": {
-                "other": "%(oneUser)sjoined %(count)s times",
-                "one": "%(oneUser)sjoined"
+                "one": "%(oneUser)sjoined",
+                "other": "%(oneUser)sjoined %(count)s times"
             },
             "joined_and_left": {
-                "other": "%(oneUser)sjoined and left %(count)s times",
-                "one": "%(oneUser)sjoined and left"
+                "one": "%(oneUser)sjoined and left",
+                "other": "%(oneUser)sjoined and left %(count)s times"
             },
             "joined_and_left_multiple": {
-                "other": "%(severalUsers)sjoined and left %(count)s times",
-                "one": "%(severalUsers)sjoined and left"
+                "one": "%(severalUsers)sjoined and left",
+                "other": "%(severalUsers)sjoined and left %(count)s times"
             },
             "joined_multiple": {
-                "other": "%(severalUsers)sjoined %(count)s times",
-                "one": "%(severalUsers)sjoined"
+                "one": "%(severalUsers)sjoined",
+                "other": "%(severalUsers)sjoined %(count)s times"
             },
             "kicked": {
-                "other": "was removed %(count)s times",
-                "one": "was removed"
+                "one": "was removed",
+                "other": "was removed %(count)s times"
             },
             "kicked_multiple": {
-                "other": "were removed %(count)s times",
-                "one": "were removed"
+                "one": "were removed",
+                "other": "were removed %(count)s times"
             },
             "left": {
-                "other": "%(oneUser)sleft %(count)s times",
-                "one": "%(oneUser)sleft"
+                "one": "%(oneUser)sleft",
+                "other": "%(oneUser)sleft %(count)s times"
             },
             "left_multiple": {
-                "other": "%(severalUsers)sleft %(count)s times",
-                "one": "%(severalUsers)sleft"
+                "one": "%(severalUsers)sleft",
+                "other": "%(severalUsers)sleft %(count)s times"
             },
             "no_change": {
-                "other": "%(oneUser)smade no changes %(count)s times",
-                "one": "%(oneUser)smade no changes"
+                "one": "%(oneUser)smade no changes",
+                "other": "%(oneUser)smade no changes %(count)s times"
             },
             "no_change_multiple": {
-                "other": "%(severalUsers)smade no changes %(count)s times",
-                "one": "%(severalUsers)smade no changes"
+                "one": "%(severalUsers)smade no changes",
+                "other": "%(severalUsers)smade no changes %(count)s times"
             },
             "pinned_events": {
-                "other": "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times",
-                "one": "%(oneUser)schanged the <a>pinned messages</a> for the room"
+                "one": "%(oneUser)schanged the <a>pinned messages</a> for the room",
+                "other": "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times"
             },
             "pinned_events_multiple": {
-                "other": "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times",
-                "one": "%(severalUsers)schanged the <a>pinned messages</a> for the room"
+                "one": "%(severalUsers)schanged the <a>pinned messages</a> for the room",
+                "other": "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times"
             },
             "redacted": {
-                "other": "%(oneUser)sremoved %(count)s messages",
-                "one": "%(oneUser)sremoved a message"
+                "one": "%(oneUser)sremoved a message",
+                "other": "%(oneUser)sremoved %(count)s messages"
             },
             "redacted_multiple": {
-                "other": "%(severalUsers)sremoved %(count)s messages",
-                "one": "%(severalUsers)sremoved a message"
+                "one": "%(severalUsers)sremoved a message",
+                "other": "%(severalUsers)sremoved %(count)s messages"
             },
             "rejected_invite": {
-                "other": "%(oneUser)srejected their invitation %(count)s times",
-                "one": "%(oneUser)srejected their invitation"
+                "one": "%(oneUser)srejected their invitation",
+                "other": "%(oneUser)srejected their invitation %(count)s times"
             },
             "rejected_invite_multiple": {
-                "other": "%(severalUsers)srejected their invitations %(count)s times",
-                "one": "%(severalUsers)srejected their invitations"
+                "one": "%(severalUsers)srejected their invitations",
+                "other": "%(severalUsers)srejected their invitations %(count)s times"
             },
             "rejoined": {
-                "other": "%(oneUser)sleft and rejoined %(count)s times",
-                "one": "%(oneUser)sleft and rejoined"
+                "one": "%(oneUser)sleft and rejoined",
+                "other": "%(oneUser)sleft and rejoined %(count)s times"
             },
             "rejoined_multiple": {
-                "other": "%(severalUsers)sleft and rejoined %(count)s times",
-                "one": "%(severalUsers)sleft and rejoined"
+                "one": "%(severalUsers)sleft and rejoined",
+                "other": "%(severalUsers)sleft and rejoined %(count)s times"
             },
             "server_acls": {
-                "other": "%(oneUser)schanged the server ACLs %(count)s times",
-                "one": "%(oneUser)schanged the server ACLs"
+                "one": "%(oneUser)schanged the server ACLs",
+                "other": "%(oneUser)schanged the server ACLs %(count)s times"
             },
             "server_acls_multiple": {
-                "other": "%(severalUsers)schanged the server ACLs %(count)s times",
-                "one": "%(severalUsers)schanged the server ACLs"
+                "one": "%(severalUsers)schanged the server ACLs",
+                "other": "%(severalUsers)schanged the server ACLs %(count)s times"
             },
             "unbanned": {
-                "other": "was unbanned %(count)s times",
-                "one": "was unbanned"
+                "one": "was unbanned",
+                "other": "was unbanned %(count)s times"
             },
             "unbanned_multiple": {
-                "other": "were unbanned %(count)s times",
-                "one": "were unbanned"
+                "one": "were unbanned",
+                "other": "were unbanned %(count)s times"
             }
         },
         "thread_info_basic": "From a thread",
         "typing_indicator": {
             "more_users": {
-                "other": "%(names)s and %(count)s others are typing …",
-                "one": "%(names)s and one other is typing …"
+                "one": "%(names)s and one other is typing …",
+                "other": "%(names)s and %(count)s others are typing …"
             },
             "one_user": "%(displayName)s is typing …",
             "two_users": "%(names)s and %(lastPerson)s are typing …"
@@ -3622,8 +3622,8 @@
         "url_preview": {
             "close": "Close preview",
             "show_n_more": {
-                "other": "Show %(count)s other previews",
-                "one": "Show %(count)s other preview"
+                "one": "Show %(count)s other preview",
+                "other": "Show %(count)s other previews"
             }
         }
     },
@@ -3660,8 +3660,8 @@
         "title_progress": "Upload files (%(current)s of %(total)s)",
         "upload_all_button": "Upload all",
         "upload_n_others_button": {
-            "other": "Upload %(count)s other files",
-            "one": "Upload %(count)s other file"
+            "one": "Upload %(count)s other file",
+            "other": "Upload %(count)s other files"
         }
     },
     "user_info": {
@@ -3672,12 +3672,12 @@
         "ban_space_everything": "Ban them from everything I'm able to",
         "ban_space_specific": "Ban them from specific things I'm able to",
         "count_of_sessions": {
-            "other": "%(count)s sessions",
-            "one": "%(count)s session"
+            "one": "%(count)s session",
+            "other": "%(count)s sessions"
         },
         "count_of_verified_sessions": {
-            "other": "%(count)s verified sessions",
-            "one": "1 verified session"
+            "one": "1 verified session",
+            "other": "%(count)s verified sessions"
         },
         "deactivate_confirm_action": "Deactivate user",
         "deactivate_confirm_description": "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?",
@@ -3711,12 +3711,12 @@
         "promote_warning": "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.",
         "redact": {
             "confirm_button": {
-                "other": "Remove %(count)s messages",
-                "one": "Remove 1 message"
+                "one": "Remove 1 message",
+                "other": "Remove %(count)s messages"
             },
             "confirm_description_1": {
-                "other": "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?",
-                "one": "You are about to remove %(count)s message by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?"
+                "one": "You are about to remove %(count)s message by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?",
+                "other": "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?"
             },
             "confirm_description_2": "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.",
             "confirm_keep_state_explainer": "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)",
@@ -3833,8 +3833,8 @@
         "msisdn_lookup_failed_description": "There was an error looking up the phone number",
         "msisdn_transfer_failed": "Unable to transfer call",
         "n_people_joined": {
-            "other": "%(count)s people joined",
-            "one": "%(count)s person joined"
+            "one": "%(count)s person joined",
+            "other": "%(count)s people joined"
         },
         "no_audio_input_description": "We didn't find a microphone on your device. Please check your settings and try again.",
         "no_audio_input_title": "No microphone found",
