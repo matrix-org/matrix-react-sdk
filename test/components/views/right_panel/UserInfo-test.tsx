@@ -461,7 +461,9 @@ describe("<DeviceItem />", () => {
     };
 
     const setMockUserTrust = (isVerified = false) => {
-        mockClient.checkUserTrust.mockReturnValue({ isVerified: () => isVerified } as UserTrustLevel);
+        mockCrypto.getUserVerificationStatus.mockResolvedValue({
+            isVerified: () => isVerified,
+        } as UserVerificationStatus);
     };
     const setMockDeviceTrust = (isVerified = false, isCrossSigningVerified = false) => {
         mockCrypto.getDeviceVerificationStatus.mockResolvedValue({
@@ -479,7 +481,7 @@ describe("<DeviceItem />", () => {
 
     afterEach(() => {
         mockCrypto.getDeviceVerificationStatus.mockReset();
-        mockClient.checkUserTrust.mockReset();
+        mockCrypto.getUserVerificationStatus.mockReset();
         mockVerifyDevice.mockClear();
     });
 
