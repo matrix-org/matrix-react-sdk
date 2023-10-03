@@ -1,9 +1,7 @@
 {
     "Warning!": "Warnung!",
     "Moderator": "Moderator",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Bitte prüfe deinen E-Mail-Posteingang und klicke auf den in der E-Mail enthaltenen Link. Anschließend auf \"Fortsetzen\" klicken.",
     "unknown error code": "Unbekannter Fehlercode",
-    "Verification Pending": "Verifizierung ausstehend",
     "Sun": "So",
     "Mon": "Mo",
     "Tue": "Di",
@@ -33,13 +31,11 @@
     "not specified": "nicht angegeben",
     "%(items)s and %(lastItem)s": "%(items)s und %(lastItem)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
-    "Email address": "E-Mail-Adresse",
     "Home": "Startseite",
     "(~%(count)s results)": {
         "one": "(~%(count)s Ergebnis)",
         "other": "(~%(count)s Ergebnisse)"
     },
-    "This will allow you to reset your password and receive notifications.": "Dies ermöglicht es dir, dein Passwort zurückzusetzen und Benachrichtigungen zu empfangen.",
     "AM": "a. m.",
     "PM": "p. m.",
     "Unnamed room": "Unbenannter Raum",
@@ -63,11 +59,6 @@
     "Thursday": "Donnerstag",
     "Yesterday": "Gestern",
     "Send Logs": "Sende Protokoll",
-    "Share Room": "Raum teilen",
-    "Link to most recent message": "Link zur aktuellsten Nachricht",
-    "Share User": "Teile Benutzer",
-    "Share Room Message": "Raumnachricht teilen",
-    "Link to selected message": "Link zur ausgewählten Nachricht",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Bevor du Protokolldateien übermittelst, musst du <a>auf GitHub einen \"Issue\" erstellen</a> um dein Problem zu beschreiben.",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
@@ -137,15 +128,8 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Scissors": "Schere",
     "edited": "bearbeitet",
-    "Upload files": "Dateien hochladen",
-    "Upload all": "Alle hochladen",
-    "Cancel All": "Alle abbrechen",
-    "Upload Error": "Fehler beim Hochladen",
     "Deactivate account": "Benutzerkonto deaktivieren",
     "Lock": "Schloss",
-    "Command Help": "Befehl Hilfe",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) hat sich zu einer neuen Sitzung angemeldet, ohne sie zu verifizieren:",
     "%(count)s verified sessions": {
         "other": "%(count)s verifizierte Sitzungen",
         "one": "Eine verifizierte Sitzung"
@@ -161,10 +145,6 @@
     "This backup is trusted because it has been restored on this session": "Dieser Sicherung wird vertraut, da sie während dieser Sitzung wiederhergestellt wurde",
     "Encrypted by a deleted session": "Von einer gelöschten Sitzung verschlüsselt",
     "e.g. my-room": "z. B. mein-raum",
-    "Not Trusted": "Nicht vertraut",
-    "Ask this user to verify their session, or manually verify it below.": "Bitte diesen Nutzer, seine Sitzung zu verifizieren, oder verifiziere diese unten manuell.",
-    "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
-    "You signed in to a new session without verifying it:": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Submit logs": "Protokolldateien senden",
     "Destroy cross-signing keys?": "Cross-Signing-Schlüssel zerstören?",
@@ -173,18 +153,6 @@
     "a new cross-signing key signature": "Eine neue Cross-Signing-Schlüsselsignatur",
     "a device cross-signing signature": "Eine Geräte Schlüssel Signatur",
     "a key signature": "Eine Schlüssel Signatur",
-    "Missing session data": "Fehlende Sitzungsdaten",
-    "Your browser likely removed this data when running low on disk space.": "Dein Browser hat diese Daten wahrscheinlich entfernt als der Festplattenspeicher knapp wurde.",
-    "Find others by phone or email": "Finde Andere per Telefon oder E-Mail",
-    "Be found by phone or email": "Sei per Telefon oder E-Mail auffindbar",
-    "Upload files (%(current)s of %(total)s)": "Dateien hochladen (%(current)s von %(total)s)",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Die Datei ist <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s, aber diese Datei ist %(sizeOfThisFile)s groß.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Die Datei ist <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Einige Dateien sind <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "%(count)s andere Dateien hochladen",
-        "one": "%(count)s andere Datei hochladen"
-    },
     "Restoring keys from backup": "Schlüssel aus der Sicherung wiederherstellen",
     "%(completed)s of %(total)s keys restored": "%(completed)s von %(total)s Schlüsseln wiederhergestellt",
     "Keys restored": "Schlüssel wiederhergestellt",
@@ -193,7 +161,6 @@
     "Sign in with SSO": "Einmalanmeldung verwenden",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Einige Sitzungsdaten, einschließlich der Verschlüsselungsschlüssel, fehlen. Melde dich ab, wieder an und stelle die Schlüssel aus der Sicherung wieder her um dies zu beheben.",
     "Confirm encryption setup": "Bestätige die Einrichtung der Verschlüsselung",
     "Click the button below to confirm setting up encryption.": "Klick die Schaltfläche unten um die Einstellungen der Verschlüsselung zu bestätigen.",
     "IRC display name width": "Breite des IRC-Anzeigenamens",
@@ -518,10 +485,7 @@
         "other": "%(spaceName)s und %(count)s andere"
     },
     "Open in OpenStreetMap": "In OpenStreetMap öffnen",
-    "Sections to show": "Anzuzeigende Bereiche",
-    "Link to room": "Link zum Raum",
     "Messaging": "Kommunikation",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
     "toggle event": "Event umschalten",
     "Feedback sent! Thanks, we appreciate it!": "Rückmeldung gesendet! Danke, wir wissen es zu schätzen!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s und %(space2Name)s",
@@ -554,8 +518,6 @@
     "An error occurred while stopping your live location": "Ein Fehler ist während des Beendens deines Echtzeit-Standorts aufgetreten",
     "An error occurred while stopping your live location, please try again": "Ein Fehler ist während des Beendens deines Echtzeit-Standorts aufgetreten, bitte versuche es erneut",
     "Unread email icon": "Ungelesene E-Mail Symbol",
-    "Interactively verify by emoji": "Interaktiv per Emoji verifizieren",
-    "Manually verify by text": "Manuell per Text verifizieren",
     "Saved Items": "Gespeicherte Elemente",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
@@ -564,7 +526,6 @@
     "unknown": "unbekannt",
     "Loading live location…": "Lade Live-Standort …",
     "Fetching keys from server…": "Lade Schlüssel vom Server …",
-    "Checking…": "Überprüfe …",
     "Starting export process…": "Beginne Exportvorgang …",
     "Desktop app logo": "Desktop-App-Logo",
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
@@ -693,7 +654,8 @@
         "joined": "Beigetreten",
         "avatar": "Avatar",
         "are_you_sure": "Bist du sicher?",
-        "location": "Standort"
+        "location": "Standort",
+        "email_address": "E-Mail-Adresse"
     },
     "action": {
         "continue": "Fortfahren",
@@ -913,7 +875,8 @@
         "experimental_section": "Frühe Vorschauen",
         "experimental_description": "Experimentierfreudig? Probiere unsere neuesten, sich in Entwicklung befindlichen Ideen aus. Diese Funktionen sind nicht final; Sie könnten instabil sein, sich verändern oder sogar ganz entfernt werden. <a>Erfahre mehr</a>.",
         "beta_feedback_title": "Rückmeldung zur %(featureName)s-Beta",
-        "beta_feedback_leave_button": "Du kannst die Beta in den Einstellungen deaktivieren."
+        "beta_feedback_leave_button": "Du kannst die Beta in den Einstellungen deaktivieren.",
+        "sliding_sync_checking": "Überprüfe …"
     },
     "keyboard": {
         "home": "Startseite",
@@ -1080,7 +1043,8 @@
         "failed_send_logs": "Senden von Protokolldateien fehlgeschlagen: ",
         "preparing_download": "Bereite das Herunterladen der Protokolle vor",
         "unsupported_browser": "Warnung: Dein Browser wird nicht unterstützt. Die Anwendung kann instabil sein.",
-        "textarea_label": "Notizen"
+        "textarea_label": "Notizen",
+        "log_request": "Um uns zu helfen, dies in Zukunft zu vermeiden, <a>sende uns bitte die Protokolldateien</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s verbleibend",
@@ -2377,7 +2341,8 @@
         "verify_nop_warning_mismatch": "ACHTUNG: Sitzung bereits verifiziert, aber die Schlüssel PASSEN NICHT!",
         "verify_mismatch": "ACHTUNG: SCHLÜSSELVERIFIZIERUNG FEHLGESCHLAGEN! Der Signierschlüssel für %(userId)s und Sitzung %(deviceId)s ist \"%(fprint)s\", was nicht mit dem bereitgestellten Schlüssel \"%(fingerprint)s\" übereinstimmt. Das könnte bedeuten, dass deine Kommunikation abgehört wird!",
         "verify_success_title": "Verifizierter Schlüssel",
-        "verify_success_description": "Dein bereitgestellter Signaturschlüssel passt zum von der Sitzung %(deviceId)s von %(userId)s empfangendem Schlüssel. Sitzung wurde als verifiziert markiert."
+        "verify_success_description": "Dein bereitgestellter Signaturschlüssel passt zum von der Sitzung %(deviceId)s von %(userId)s empfangendem Schlüssel. Sitzung wurde als verifiziert markiert.",
+        "help_dialog_title": "Befehl Hilfe"
     },
     "presence": {
         "busy": "Beschäftigt",
@@ -2910,7 +2875,16 @@
         "key_signature_upload_cancelled": "Hochladen der Signatur abgebrochen",
         "key_signature_upload_failed": "Hochladen nicht möglich",
         "key_signature_upload_success_title": "Signatur erfolgreich hochgeladen",
-        "key_signature_upload_failed_title": "Hochladen der Signatur fehlgeschlagen"
+        "key_signature_upload_failed_title": "Hochladen der Signatur fehlgeschlagen",
+        "udd": {
+            "own_new_session_text": "Du hast dich in einer neuen Sitzung angemeldet ohne sie zu verifizieren:",
+            "own_ask_verify_text": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
+            "other_new_session_text": "%(name)s (%(userId)s) hat sich zu einer neuen Sitzung angemeldet, ohne sie zu verifizieren:",
+            "other_ask_verify_text": "Bitte diesen Nutzer, seine Sitzung zu verifizieren, oder verifiziere diese unten manuell.",
+            "title": "Nicht vertraut",
+            "manual_verification_button": "Manuell per Text verifizieren",
+            "interactive_verification_button": "Interaktiv per Emoji verifizieren"
+        }
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3168,6 +3142,11 @@
             "continue_without_email_title": "Ohne E-Mail fortfahren",
             "continue_without_email_description": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
             "continue_without_email_field_label": "E-Mail-Adresse (optional)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verifizierung ausstehend",
+            "verification_pending_description": "Bitte prüfe deinen E-Mail-Posteingang und klicke auf den in der E-Mail enthaltenen Link. Anschließend auf \"Fortsetzen\" klicken.",
+            "description": "Dies ermöglicht es dir, dein Passwort zurückzusetzen und Benachrichtigungen zu empfangen."
         }
     },
     "room_list": {
@@ -3520,7 +3499,11 @@
         "leave_dialog_option_none": "Keine Räume und Subspaces verlassen",
         "leave_dialog_option_all": "Alle Räume verlassen",
         "leave_dialog_option_specific": "Zu verlassende Räume auswählen",
-        "leave_dialog_action": "Space verlassen"
+        "leave_dialog_action": "Space verlassen",
+        "preferences": {
+            "sections_section": "Anzuzeigende Bereiche",
+            "show_people_in_space": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -3847,7 +3830,9 @@
         "identity_server_no_terms_title": "Der Identitäts-Server hat keine Nutzungsbedingungen",
         "identity_server_no_terms_description_1": "Diese Handlung erfordert es, auf den Standard-Identitäts-Server <server /> zuzugreifen, um eine E-Mail-Adresse oder Telefonnummer zu validieren, aber der Server hat keine Nutzungsbedingungen.",
         "identity_server_no_terms_description_2": "Fahre nur fort, wenn du den Server-Betreibenden vertraust.",
-        "inline_intro_text": "Akzeptiere <policyLink />, um fortzufahren:"
+        "inline_intro_text": "Akzeptiere <policyLink />, um fortzufahren:",
+        "summary_identity_server_1": "Finde Andere per Telefon oder E-Mail",
+        "summary_identity_server_2": "Sei per Telefon oder E-Mail auffindbar"
     },
     "space_settings": {
         "title": "Einstellungen - %(spaceName)s"
@@ -4013,7 +3998,10 @@
             "description_1": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
             "description_2": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
             "description_3": "Den Browser-Speicher zu löschen kann das Problem lösen, wird dich aber abmelden und verschlüsselte Nachrichten unlesbar machen."
-        }
+        },
+        "storage_evicted_title": "Fehlende Sitzungsdaten",
+        "storage_evicted_description_1": "Einige Sitzungsdaten, einschließlich der Verschlüsselungsschlüssel, fehlen. Melde dich ab, wieder an und stelle die Schlüssel aus der Sicherung wieder her um dies zu beheben.",
+        "storage_evicted_description_2": "Dein Browser hat diese Daten wahrscheinlich entfernt als der Festplattenspeicher knapp wurde."
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4390,5 +4378,27 @@
         "remove_filter": "Entferne Suchfilter für %(filter)s",
         "search_messages_hint": "Wenn du Nachrichten durchsuchen willst, klicke auf das <icon/> Icon oberhalb des Raumes",
         "keyboard_scroll_hint": "Benutze <arrows/> zum scrollen"
+    },
+    "share": {
+        "title_room": "Raum teilen",
+        "permalink_most_recent": "Link zur aktuellsten Nachricht",
+        "title_user": "Teile Benutzer",
+        "title_message": "Raumnachricht teilen",
+        "permalink_message": "Link zur ausgewählten Nachricht",
+        "link_title": "Link zum Raum"
+    },
+    "upload_file": {
+        "title_progress": "Dateien hochladen (%(current)s von %(total)s)",
+        "title": "Dateien hochladen",
+        "upload_all_button": "Alle hochladen",
+        "error_file_too_large": "Die Datei ist <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s, aber diese Datei ist %(sizeOfThisFile)s groß.",
+        "error_files_too_large": "Die Datei ist <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s.",
+        "error_some_files_too_large": "Einige Dateien sind <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s.",
+        "upload_n_others_button": {
+            "other": "%(count)s andere Dateien hochladen",
+            "one": "%(count)s andere Datei hochladen"
+        },
+        "cancel_all_button": "Alle abbrechen",
+        "error_title": "Fehler beim Hochladen"
     }
 }

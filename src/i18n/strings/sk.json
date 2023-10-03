@@ -37,13 +37,9 @@
     "Join Room": "Vstúpiť do miestnosti",
     "unknown error code": "neznámy kód chyby",
     "not specified": "nezadané",
-    "Email address": "Emailová adresa",
     "Delete Widget": "Vymazať widget",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
-    "Verification Pending": "Nedokončené overenie",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Prosím, skontrolujte si email a kliknite na odkaz v správe, ktorú sme vám poslali. Keď budete mať toto za sebou, kliknite na tlačidlo Pokračovať.",
-    "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnoviť si heslo a prijímať oznámenia emailom.",
     "Restricted": "Obmedzené",
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
@@ -63,11 +59,6 @@
     "Thursday": "Štvrtok",
     "Yesterday": "Včera",
     "Send Logs": "Odoslať záznamy",
-    "Share Room": "Zdieľať miestnosť",
-    "Link to most recent message": "Odkaz na najnovšiu správu",
-    "Share User": "Zdieľať používateľa",
-    "Link to selected message": "Odkaz na vybratú správu",
-    "Share Room Message": "Zdieľať správu z miestnosti",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
     "Unable to load backup status": "Nie je možné načítať stav zálohy",
     "Unable to restore backup": "Nie je možné obnoviť zo zálohy",
@@ -137,11 +128,6 @@
     "Folder": "Fascikel",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varovanie</b>: zálohovanie šifrovacích kľúčov by ste mali nastavovať na dôveryhodnom počítači.",
     "Deactivate account": "Deaktivovať účet",
-    "You signed in to a new session without verifying it:": "Prihlásili ste sa do novej relácie bez jej overenia:",
-    "Verify your other session using one of the options below.": "Overte svoje ostatné relácie pomocou jednej z nižšie uvedených možností.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) sa prihlásil do novej relácie bez jej overenia:",
-    "Ask this user to verify their session, or manually verify it below.": "Poproste tohto používateľa, aby si overil svoju reláciu alebo ju nižšie manuálne overte.",
-    "Not Trusted": "Nedôveryhodné",
     "Destroy cross-signing keys?": "Zničiť kľúče na krížové podpisovanie?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zmazanie kľúčov pre krížové podpisovanie je nenávratné. Každý, s kým ste sa overili, bude vidieť bezpečnostné upozornenia. Toto určite nechcete robiť, dokiaľ ste nestratili všetky zariadenia, s ktorými by ste mohli krížovo podpisovať.",
     "Clear cross-signing keys": "Vyčistiť kľúče na krížové podpisovanie",
@@ -413,8 +399,6 @@
     "Only do this if you have no other device to complete verification with.": "Urobte to len vtedy, ak nemáte iné zariadenie, pomocou ktorého by ste mohli dokončiť overenie.",
     "%(name)s declined": "%(name)s odmietol/a",
     "e.g. my-room": "napr. moja-miestnost",
-    "Upload all": "Nahrať všetko",
-    "Cancel All": "Zrušiť všetky",
     "Developer": "Vývojárske",
     "Experimental": "Experimentálne",
     "Backup version:": "Verzia zálohy:",
@@ -423,25 +407,12 @@
         "one": "%(count)s relácia",
         "other": "%(count)s relácie"
     },
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
-    "Upload %(count)s other files": {
-        "one": "Nahrať %(count)s ďalší súbor",
-        "other": "Nahrať %(count)s ďalších súborov"
-    },
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Niektoré súbory sú <b>príliš veľké</b> na to, aby sa dali nahrať. Limit veľkosti súboru je %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Tieto súbory sú <b>príliš veľké</b> na nahratie. Limit veľkosti súboru je %(limit)s.",
-    "Upload files (%(current)s of %(total)s)": "Nahrať súbory (%(current)s z %(total)s)",
-    "Upload files": "Nahrať súbory",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "edited": "upravené",
     "Switch theme": "Prepnúť motív",
     "Not encrypted": "Nie je zašifrované",
     "%(name)s cancelled": "%(name)s zrušil/a",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "Upload Error": "Chyba pri nahrávaní",
-    "Your browser likely removed this data when running low on disk space.": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Chýbajú niektoré údaje relácie vrátane zašifrovaných kľúčov správ. Odhláste sa a prihláste sa, aby ste to opravili a obnovili kľúče zo zálohy.",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Aby ste nám pomohli tomuto v budúcnosti zabrániť, pošlite nám prosím <a>záznamy o chybe</a>.",
     "Open in OpenStreetMap": "Otvoriť v OpenStreetMap",
     "Enter Security Key": "Zadajte bezpečnostný kľúč",
     "Enter Security Phrase": "Zadať bezpečnostnú frázu",
@@ -482,8 +453,6 @@
     "Keys restored": "Kľúče obnovené",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s obnovených kľúčov",
     "Restoring keys from backup": "Obnovenie kľúčov zo zálohy",
-    "Be found by phone or email": "Byť nájdený pomocou telefónu alebo e-mailu",
-    "Find others by phone or email": "Nájsť ostatných pomocou telefónu alebo e-mailu",
     "%(count)s votes": {
         "one": "%(count)s hlas",
         "other": "%(count)s hlasov"
@@ -500,9 +469,6 @@
         "other": "%(spaceName)s a %(count)s ďalší"
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
-    "Link to room": "Odkaz na miestnosť",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Týmto spôsobom zoskupíte svoje konverzácie s členmi tohto priestoru. Ak túto funkciu vypnete, tieto konverzácie sa skryjú z vášho zobrazenia %(spaceName)s.",
-    "Missing session data": "Chýbajú údaje relácie",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte prístup k svojmu účtu a obnovte šifrovacie kľúče uložené v tejto relácii. Bez nich nebudete môcť čítať všetky svoje zabezpečené správy v žiadnej relácii.",
     "Hold": "Podržať",
     "Resume": "Pokračovať",
@@ -515,7 +481,6 @@
     "Unable to set up keys": "Nie je možné nastaviť kľúče",
     "Use your Security Key to continue.": "Ak chcete pokračovať, použite bezpečnostný kľúč.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Ak všetko obnovíte, reštartujete bez dôveryhodných relácií, bez dôveryhodných používateľov a možno nebudete môcť vidieť predchádzajúce správy.",
-    "Sections to show": "Sekcie na zobrazenie",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
@@ -523,7 +488,6 @@
     "a key signature": "podpis kľúča",
     "a new master key signature": "nový podpis hlavného kľúča",
     "toggle event": "prepnúť udalosť",
-    "Command Help": "Pomocník príkazov",
     "Resend %(unsentCount)s reaction(s)": "Opätovné odoslanie %(unsentCount)s reakcií",
     "You are sharing your live location": "Zdieľate svoju polohu v reálnom čase",
     "Unsent": "Neodoslané",
@@ -555,8 +519,6 @@
     "Show rooms": "Zobraziť miestnosti",
     "Explore public spaces in the new search dialog": "Preskúmajte verejné priestory v novom okne vyhľadávania",
     "Saved Items": "Uložené položky",
-    "Interactively verify by emoji": "Interaktívne overte pomocou emotikonov",
-    "Manually verify by text": "Manuálne overte pomocou textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "neznáme",
     "Loading live location…": "Načítavanie polohy v reálnom čase…",
     "Fetching keys from server…": "Získavanie kľúčov zo servera…",
-    "Checking…": "Kontrolovanie…",
     "Starting export process…": "Spustenie procesu exportu…",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
@@ -693,7 +654,8 @@
         "joined": "Ste pripojený",
         "avatar": "Obrázok",
         "are_you_sure": "Ste si istí?",
-        "location": "Poloha"
+        "location": "Poloha",
+        "email_address": "Emailová adresa"
     },
     "action": {
         "continue": "Pokračovať",
@@ -912,7 +874,8 @@
         "experimental_section": "Predbežné ukážky",
         "experimental_description": "Chcete experimentovať? Vyskúšajte naše najnovšie nápady vo vývojovom štádiu. Tieto funkcie nie sú dokončené; môžu byť nestabilné, môžu sa zmeniť alebo môžu byť úplne zrušené. <a>Zistiť viac</a>.",
         "beta_feedback_title": "%(featureName)s Beta spätná väzba",
-        "beta_feedback_leave_button": "Ak chcete opustiť beta verziu, navštívte svoje nastavenia."
+        "beta_feedback_leave_button": "Ak chcete opustiť beta verziu, navštívte svoje nastavenia.",
+        "sliding_sync_checking": "Kontrolovanie…"
     },
     "keyboard": {
         "home": "Domov",
@@ -1079,7 +1042,8 @@
         "failed_send_logs": "Nepodarilo sa odoslať záznamy: ",
         "preparing_download": "Príprava na prevzatie záznamov",
         "unsupported_browser": "Pripomíname: Váš prehliadač nie je podporovaný, takže vaše skúsenosti môžu byť nepredvídateľné.",
-        "textarea_label": "Poznámky"
+        "textarea_label": "Poznámky",
+        "log_request": "Aby ste nám pomohli tomuto v budúcnosti zabrániť, pošlite nám prosím <a>záznamy o chybe</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "ostáva %(hours)sh %(minutes)sm %(seconds)ss",
@@ -2376,7 +2340,8 @@
         "verify_nop_warning_mismatch": "VAROVANIE: Relácia je už overená, ale kľúče sa NEZHODUJÚ!",
         "verify_mismatch": "VAROVANIE: OVERENIE KĽÚČOV ZLYHALO! Podpisový kľúč používateľa %(userId)s a relácia %(deviceId)s je \"%(fprint)s\" čo nezodpovedá zadanému kľúču \"%(fingerprint)s\". Môže to znamenať, že vaša komunikácia je odpočúvaná!",
         "verify_success_title": "Kľúč overený",
-        "verify_success_description": "Zadaný podpisový kľúč sa zhoduje s podpisovým kľúčom, ktorý ste dostali z relácie používateľa %(userId)s %(deviceId)s. Relácia označená ako overená."
+        "verify_success_description": "Zadaný podpisový kľúč sa zhoduje s podpisovým kľúčom, ktorý ste dostali z relácie používateľa %(userId)s %(deviceId)s. Relácia označená ako overená.",
+        "help_dialog_title": "Pomocník príkazov"
     },
     "presence": {
         "busy": "Obsadený/zaneprázdnený",
@@ -2903,7 +2868,16 @@
         "key_signature_upload_cancelled": "Zrušené nahrávanie podpisu",
         "key_signature_upload_failed": "Nie je možné nahrať",
         "key_signature_upload_success_title": "Úspešné nahratie podpisu",
-        "key_signature_upload_failed_title": "Nahrávanie podpisu zlyhalo"
+        "key_signature_upload_failed_title": "Nahrávanie podpisu zlyhalo",
+        "udd": {
+            "own_new_session_text": "Prihlásili ste sa do novej relácie bez jej overenia:",
+            "own_ask_verify_text": "Overte svoje ostatné relácie pomocou jednej z nižšie uvedených možností.",
+            "other_new_session_text": "%(name)s (%(userId)s) sa prihlásil do novej relácie bez jej overenia:",
+            "other_ask_verify_text": "Poproste tohto používateľa, aby si overil svoju reláciu alebo ju nižšie manuálne overte.",
+            "title": "Nedôveryhodné",
+            "manual_verification_button": "Manuálne overte pomocou textu",
+            "interactive_verification_button": "Interaktívne overte pomocou emotikonov"
+        }
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3161,6 +3135,11 @@
             "continue_without_email_title": "Pokračovanie bez e-mailu",
             "continue_without_email_description": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
             "continue_without_email_field_label": "Email (nepovinné)"
+        },
+        "set_email": {
+            "verification_pending_title": "Nedokončené overenie",
+            "verification_pending_description": "Prosím, skontrolujte si email a kliknite na odkaz v správe, ktorú sme vám poslali. Keď budete mať toto za sebou, kliknite na tlačidlo Pokračovať.",
+            "description": "Toto vám umožní obnoviť si heslo a prijímať oznámenia emailom."
         }
     },
     "room_list": {
@@ -3513,7 +3492,11 @@
         "leave_dialog_option_none": "Neopustiť žiadne miestnosti",
         "leave_dialog_option_all": "Opustiť všetky miestnosti",
         "leave_dialog_option_specific": "Opustiť niektoré miestnosti",
-        "leave_dialog_action": "Opustiť priestor"
+        "leave_dialog_action": "Opustiť priestor",
+        "preferences": {
+            "sections_section": "Sekcie na zobrazenie",
+            "show_people_in_space": "Týmto spôsobom zoskupíte svoje konverzácie s členmi tohto priestoru. Ak túto funkciu vypnete, tieto konverzácie sa skryjú z vášho zobrazenia %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -3840,7 +3823,9 @@
         "identity_server_no_terms_title": "Server totožností nemá žiadne podmienky poskytovania služieb",
         "identity_server_no_terms_description_1": "Táto akcia vyžaduje prístup k predvolenému serveru totožností <server /> na overenie emailovej adresy alebo telefónneho čísla, ale server nemá žiadne podmienky používania.",
         "identity_server_no_terms_description_2": "Pokračujte len v prípade, že dôverujete prevádzkovateľovi servera.",
-        "inline_intro_text": "Ak chcete pokračovať, musíte prijať <policyLink />:"
+        "inline_intro_text": "Ak chcete pokračovať, musíte prijať <policyLink />:",
+        "summary_identity_server_1": "Nájsť ostatných pomocou telefónu alebo e-mailu",
+        "summary_identity_server_2": "Byť nájdený pomocou telefónu alebo e-mailu"
     },
     "space_settings": {
         "title": "Nastavenia - %(spaceName)s"
@@ -4006,7 +3991,10 @@
             "description_1": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
             "description_2": "Ak ste predtým používali novšiu verziu %(brand)s, vaša relácia môže byť s touto verziou nekompatibilná. Zatvorte toto okno a vráťte sa k novšej verzii.",
             "description_3": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná."
-        }
+        },
+        "storage_evicted_title": "Chýbajú údaje relácie",
+        "storage_evicted_description_1": "Chýbajú niektoré údaje relácie vrátane zašifrovaných kľúčov správ. Odhláste sa a prihláste sa, aby ste to opravili a obnovili kľúče zo zálohy.",
+        "storage_evicted_description_2": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku."
     },
     "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4383,5 +4371,27 @@
         "remove_filter": "Odstrániť filter vyhľadávania pre %(filter)s",
         "search_messages_hint": "Ak chcete vyhľadávať správy, nájdite túto ikonu v hornej časti miestnosti <icon/>",
         "keyboard_scroll_hint": "Na posúvanie použite <arrows/>"
+    },
+    "share": {
+        "title_room": "Zdieľať miestnosť",
+        "permalink_most_recent": "Odkaz na najnovšiu správu",
+        "title_user": "Zdieľať používateľa",
+        "title_message": "Zdieľať správu z miestnosti",
+        "permalink_message": "Odkaz na vybratú správu",
+        "link_title": "Odkaz na miestnosť"
+    },
+    "upload_file": {
+        "title_progress": "Nahrať súbory (%(current)s z %(total)s)",
+        "title": "Nahrať súbory",
+        "upload_all_button": "Nahrať všetko",
+        "error_file_too_large": "Tento súbor je <b>príliš veľký</b> na odoslanie. Limit veľkosti súboru je %(limit)s, ale tento súbor má %(sizeOfThisFile)s.",
+        "error_files_too_large": "Tieto súbory sú <b>príliš veľké</b> na nahratie. Limit veľkosti súboru je %(limit)s.",
+        "error_some_files_too_large": "Niektoré súbory sú <b>príliš veľké</b> na to, aby sa dali nahrať. Limit veľkosti súboru je %(limit)s.",
+        "upload_n_others_button": {
+            "one": "Nahrať %(count)s ďalší súbor",
+            "other": "Nahrať %(count)s ďalších súborov"
+        },
+        "cancel_all_button": "Zrušiť všetky",
+        "error_title": "Chyba pri nahrávaní"
     }
 }

@@ -1,6 +1,5 @@
 {
     "unknown error code": "알 수 없는 오류 코드",
-    "Email address": "이메일 주소",
     "%(items)s and %(lastItem)s": "%(items)s님과 %(lastItem)s님",
     "and %(count)s others...": {
         "one": "외 한 명...",
@@ -10,8 +9,6 @@
     "Join Room": "방에 참가",
     "Moderator": "조정자",
     "not specified": "지정되지 않음",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "이메일을 확인하고 안의 링크를 클릭합니다. 모두 마치고 나서, 계속하기를 누르세요.",
-    "Verification Pending": "인증을 기다리는 중",
     "Warning!": "주의!",
     "Sun": "일",
     "Mon": "월",
@@ -39,7 +36,6 @@
         "one": "(~%(count)s개의 결과)",
         "other": "(~%(count)s개의 결과)"
     },
-    "This will allow you to reset your password and receive notifications.": "이렇게 하면 비밀번호를 다시 설정하고 알림을 받을 수 있습니다.",
     "Sunday": "일요일",
     "Today": "오늘",
     "Friday": "금요일",
@@ -62,12 +58,7 @@
     "Delete Widget": "위젯 삭제",
     "collapse": "접기",
     "expand": "펼치기",
-    "Share Room": "방 공유",
-    "Share User": "사용자 공유",
-    "Share Room Message": "방 메시지 공유",
-    "Link to selected message": "선택한 메시지로 연결",
     "Send Logs": "로그 보내기",
-    "Link to most recent message": "가장 최근 메시지로 연결",
     "Dog": "개",
     "Cat": "고양이",
     "Lion": "사자",
@@ -133,25 +124,6 @@
     "Deactivate account": "계정 비활성화",
     "edited": "편집됨",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "Command Help": "명령어 도움",
-    "To help us prevent this in future, please <a>send us logs</a>.": "앞으로 이를 방지할 수 있도록, <a>로그를 보내주세요</a>.",
-    "Missing session data": "누락된 세션 데이터",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "암호화된 메시지 키를 포함한 일부 세션 데이터가 누락되었습니다. 백업에서 키를 복구하면서 로그아웃하고 로그인하면 이를 고칠 수 있습니다.",
-    "Your browser likely removed this data when running low on disk space.": "디스크 공간이 부족한 경우 브라우저에서 이 데이터를 제거했을 수 있습니다.",
-    "Find others by phone or email": "전화번호 혹은 이메일로 상대방 찾기",
-    "Be found by phone or email": "전화번호 혹은 이메일로 찾음",
-    "Upload files (%(current)s of %(total)s)": "파일 업로드 (총 %(total)s개 중 %(current)s개)",
-    "Upload files": "파일 업로드",
-    "Upload all": "전부 업로드",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "이 파일은 업로드하기에 <b>너무 큽니다</b>. 파일 크기 한도는 %(limit)s이지만 이 파일은 %(sizeOfThisFile)s입니다.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "이 파일들은 업로드하기에 <b>너무 큽니다</b>. 파일 크기 한도는 %(limit)s입니다.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "일부 파일이 업로드하기에 <b>너무 큽니다</b>. 파일 크기 한도는 %(limit)s입니다.",
-    "Upload %(count)s other files": {
-        "other": "%(count)s개의 다른 파일 업로드",
-        "one": "%(count)s개의 다른 파일 업로드"
-    },
-    "Cancel All": "전부 취소",
-    "Upload Error": "업로드 오류",
     "Unable to load backup status": "백업 상태 불러올 수 없음",
     "Unable to restore backup": "백업을 복구할 수 없음",
     "No backup found!": "백업을 찾을 수 없습니다!",
@@ -255,7 +227,8 @@
         "go_to_settings": "설정으로 가기",
         "setup_secure_messages": "보안 메시지 설정",
         "show_more": "더 보기",
-        "are_you_sure": "확신합니까?"
+        "are_you_sure": "확신합니까?",
+        "email_address": "이메일 주소"
     },
     "action": {
         "continue": "계속하기",
@@ -401,7 +374,8 @@
         "logs_sent": "로그 보내짐",
         "thank_you": "감사합니다!",
         "failed_send_logs": "로그 보내기에 실패함: ",
-        "textarea_label": "참고"
+        "textarea_label": "참고",
+        "log_request": "앞으로 이를 방지할 수 있도록, <a>로그를 보내주세요</a>."
     },
     "time": {
         "n_minutes_ago": "%(num)s분 전",
@@ -874,7 +848,8 @@
         "verify_nop": "이미 검증된 세션입니다!",
         "verify_mismatch": "경고: 키 검증 실패! 제공된 키인 \"%(fingerprint)s\"가 사용자 %(userId)s와 %(deviceId)s 세션의 서명 키인 \"%(fprint)s\"와 일치하지 않습니다. 이는 통신이 탈취되고 있는 중일 수도 있다는 뜻입니다!",
         "verify_success_title": "인증한 열쇠",
-        "verify_success_description": "사용자 %(userId)s의 세션 %(deviceId)s에서 받은 서명 키와 당신이 제공한 서명 키가 일치합니다. 세션이 검증되었습니다."
+        "verify_success_description": "사용자 %(userId)s의 세션 %(deviceId)s에서 받은 서명 키와 당신이 제공한 서명 키가 일치합니다. 세션이 검증되었습니다.",
+        "help_dialog_title": "명령어 도움"
     },
     "presence": {
         "online_for": "%(duration)s 동안 온라인",
@@ -1179,6 +1154,11 @@
         },
         "registration": {
             "continue_without_email_field_label": "이메일 (선택)"
+        },
+        "set_email": {
+            "verification_pending_title": "인증을 기다리는 중",
+            "verification_pending_description": "이메일을 확인하고 안의 링크를 클릭합니다. 모두 마치고 나서, 계속하기를 누르세요.",
+            "description": "이렇게 하면 비밀번호를 다시 설정하고 알림을 받을 수 있습니다."
         }
     },
     "export_chat": {
@@ -1430,7 +1410,9 @@
         "identity_server_no_terms_title": "ID 서버에 서비스 약관이 없음",
         "identity_server_no_terms_description_1": "이 작업에는 이메일 주소 또는 전화번호를 확인하기 위해 기본 ID 서버 <server />에 접근해야 합니다. 하지만 서버가 서비스 약관을 갖고 있지 않습니다.",
         "identity_server_no_terms_description_2": "서버의 관리자를 신뢰하는 경우에만 계속하세요.",
-        "inline_intro_text": "계속하려면 <policyLink />을(를) 수락하세요:"
+        "inline_intro_text": "계속하려면 <policyLink />을(를) 수락하세요:",
+        "summary_identity_server_1": "전화번호 혹은 이메일로 상대방 찾기",
+        "summary_identity_server_2": "전화번호 혹은 이메일로 찾음"
     },
     "failed_load_async_component": "불러올 수 없습니다! 네트워크 연결 상태를 확인한 후 다시 시도하세요.",
     "upload_failed_generic": "'%(fileName)s' 파일 업로드에 실패했습니다.",
@@ -1513,7 +1495,10 @@
             "description_1": "이전 활동을 복구하는 중 에러가 발생했습니다.",
             "description_2": "이전에 최근 버전의 %(brand)s을 썼다면, 세션이 이 버전과 맞지 않을 것입니다. 창을 닫고 최근 버전으로 돌아가세요.",
             "description_3": "브라우저의 저장소를 청소한다면 문제가 해결될 수도 있지만, 암호화된 대화 기록을 읽을 수 없게 됩니다."
-        }
+        },
+        "storage_evicted_title": "누락된 세션 데이터",
+        "storage_evicted_description_1": "암호화된 메시지 키를 포함한 일부 세션 데이터가 누락되었습니다. 백업에서 키를 복구하면서 로그아웃하고 로그인하면 이를 고칠 수 있습니다.",
+        "storage_evicted_description_2": "디스크 공간이 부족한 경우 브라우저에서 이 데이터를 제거했을 수 있습니다."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1700,5 +1685,26 @@
         "cant_find_room_helpful_hint": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
         "create_new_room_button": "새 방 만들기",
         "recently_viewed_section_title": "최근에 확인한"
+    },
+    "share": {
+        "title_room": "방 공유",
+        "permalink_most_recent": "가장 최근 메시지로 연결",
+        "title_user": "사용자 공유",
+        "title_message": "방 메시지 공유",
+        "permalink_message": "선택한 메시지로 연결"
+    },
+    "upload_file": {
+        "title_progress": "파일 업로드 (총 %(total)s개 중 %(current)s개)",
+        "title": "파일 업로드",
+        "upload_all_button": "전부 업로드",
+        "error_file_too_large": "이 파일은 업로드하기에 <b>너무 큽니다</b>. 파일 크기 한도는 %(limit)s이지만 이 파일은 %(sizeOfThisFile)s입니다.",
+        "error_files_too_large": "이 파일들은 업로드하기에 <b>너무 큽니다</b>. 파일 크기 한도는 %(limit)s입니다.",
+        "error_some_files_too_large": "일부 파일이 업로드하기에 <b>너무 큽니다</b>. 파일 크기 한도는 %(limit)s입니다.",
+        "upload_n_others_button": {
+            "other": "%(count)s개의 다른 파일 업로드",
+            "one": "%(count)s개의 다른 파일 업로드"
+        },
+        "cancel_all_button": "전부 취소",
+        "error_title": "업로드 오류"
     }
 }

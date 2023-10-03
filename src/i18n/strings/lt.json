@@ -41,7 +41,6 @@
         "other": "(~%(count)s rezultatų(-ai))",
         "one": "(~%(count)s rezultatas)"
     },
-    "Email address": "El. pašto adresas",
     "Delete Widget": "Ištrinti valdiklį",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)s min",
@@ -58,31 +57,16 @@
     "Home": "Pradžia",
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
-    "This will allow you to reset your password and receive notifications.": "Tai jums leis iš naujo nustatyti slaptažodį ir gauti pranešimus.",
     "Unable to restore backup": "Nepavyko atkurti atsarginės kopijos",
     "No backup found!": "Nerasta jokios atsarginės kopijos!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
     "%(items)s and %(lastItem)s": "%(items)s ir %(lastItem)s",
-    "Upload files (%(current)s of %(total)s)": "Įkelti failus (%(current)s iš %(total)s)",
-    "Upload files": "Įkelti failus",
-    "Upload all": "Įkelti visus",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis failas yra <b>per didelis</b> įkėlimui. Failų dydžio limitas yra %(limit)s, bet šis failas užima %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Šie failai yra <b>per dideli</b> įkėlimui. Failų dydžio limitas yra %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Kai kurie failai yra <b>per dideli</b> įkėlimui. Failų dydžio limitas yra %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Įkelti %(count)s kitus failus",
-        "one": "Įkelti %(count)s kitą failą"
-    },
-    "Cancel All": "Atšaukti visus",
-    "Upload Error": "Įkėlimo klaida",
-    "Command Help": "Komandų pagalba",
     "%(name)s accepted": "%(name)s priimtas",
     "%(name)s declined": "%(name)s atmestas",
     "%(name)s cancelled": "%(name)s atšauktas",
     "%(name)s wants to verify": "%(name)s nori patvirtinti",
     "e.g. my-room": "pvz.: mano-kambarys",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Įspėjimas</b>: atsarginę raktų kopiją sukurkite tik iš patikimo kompiuterio.",
-    "Verify your other session using one of the options below.": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
     "%(count)s verified sessions": {
         "other": "%(count)s patvirtintų seansų",
         "one": "1 patvirtintas seansas"
@@ -161,28 +145,18 @@
     "a new cross-signing key signature": "naujas kryžminio pasirašymo rakto parašas",
     "a device cross-signing signature": "įrenginio kryžminio pasirašymo parašas",
     "IRC display name width": "IRC rodomo vardo plotis",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
-    "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "Confirm encryption setup": "Patvirtinti šifravimo sąranką",
     "Click the button below to confirm setting up encryption.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
     "Deactivate account": "Deaktyvuoti paskyrą",
     "This backup is trusted because it has been restored on this session": "Ši atsarginė kopija yra patikima, nes buvo atkurta šiame seanse",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Trūksta kai kurių seanso duomenų, įskaitant šifruotų žinučių raktus. Atsijunkite ir prisijunkite, kad tai išspręstumėte, atkurdami raktus iš atsarginės kopijos.",
     "Restoring keys from backup": "Raktų atkūrimas iš atsarginės kopijos",
     "Your homeserver has exceeded its user limit.": "Jūsų serveris pasiekė savo vartotojų limitą.",
     "Your homeserver has exceeded one of its resource limits.": "Jūsų serveris pasiekė vieną iš savo resursų limitų.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Norėdami pranešti apie su Matrix susijusią saugos problemą, perskaitykite Matrix.org <a>Saugumo Atskleidimo Poliiką</a>.",
     "Failed to connect to integration manager": "Nepavyko prisijungti prie integracijų tvarkytuvo",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Prieš pateikiant žurnalus jūs turite <a>sukurti GitHub problemą</a>, kad apibūdintumėte savo problemą.",
-    "Link to most recent message": "Nuoroda į naujausią žinutę",
-    "Share Room Message": "Bendrinti Kambario Žinutę",
-    "Share Room": "Bendrinti Kambarį",
     "Join Room": "Prisijungti prie kambario",
-    "You signed in to a new session without verifying it:": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
     "Ok": "Gerai",
-    "Not Trusted": "Nepatikimas",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
-    "Your browser likely removed this data when running low on disk space.": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
     "Backup version:": "Atsarginės kopijos versija:",
     "Security Phrase": "Slaptafrazė",
     "Azerbaijan": "Azerbaidžanas",
@@ -203,7 +177,6 @@
     "Afghanistan": "Afganistanas",
     "United States": "Jungtinės Amerikos Valstijos",
     "United Kingdom": "Jungtinė Karalystė",
-    "Missing session data": "Trūksta seanso duomenų",
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "edited": "pakeista",
     "Not encrypted": "Neužšifruota",
@@ -274,12 +247,6 @@
     "Wrong Security Key": "Netinkamas Saugumo Raktas",
     "Looks good!": "Atrodo gerai!",
     "Wrong file type": "Netinkamas failo tipas",
-    "Be found by phone or email": "Tapkite randami telefonu arba el. paštu",
-    "Find others by phone or email": "Ieškokite kitų telefonu arba el. paštu",
-    "Link to selected message": "Nuoroda į pasirinktą pranešimą",
-    "Share User": "Dalintis Vartotoju",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Patikrinkite savo el. laišką ir spustelėkite jame esančią nuorodą. Kai tai padarysite, spauskite tęsti.",
-    "Verification Pending": "Laukiama Patikrinimo",
     "%(brand)s encountered an error during upload of:": "%(brand)s aptiko klaidą įkeliant:",
     "a key signature": "rakto parašas",
     "a new master key signature": "naujas pagrindinio rakto parašas",
@@ -438,7 +405,8 @@
         "unencrypted": "Neužšifruota",
         "show_more": "Rodyti daugiau",
         "joined": "Prisijungta",
-        "are_you_sure": "Ar tikrai?"
+        "are_you_sure": "Ar tikrai?",
+        "email_address": "El. pašto adresas"
     },
     "action": {
         "continue": "Tęsti",
@@ -686,7 +654,8 @@
         "failed_send_logs": "Nepavyko išsiųsti žurnalų: ",
         "preparing_download": "Ruošiamasi parsiųsti žurnalus",
         "unsupported_browser": "Primename: Jūsų naršyklė yra nepalaikoma, todėl jūsų patirtis gali būti nenuspėjama.",
-        "textarea_label": "Pastabos"
+        "textarea_label": "Pastabos",
+        "log_request": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>."
     },
     "time": {
         "seconds_left": "%(seconds)ss liko",
@@ -1548,7 +1517,8 @@
         "verify_nop": "Seansas jau patvirtintas!",
         "verify_mismatch": "ĮSPĖJIMAS: RAKTŲ PATIKRINIMAS NEPAVYKO! Pasirašymo raktas vartotojui %(userId)s ir seansui %(deviceId)s yra \"%(fprint)s\", kuris nesutampa su pateiktu raktu \"%(fingerprint)s\". Tai gali reikšti, kad jūsų komunikacijos yra perimamos!",
         "verify_success_title": "Patvirtintas raktas",
-        "verify_success_description": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas."
+        "verify_success_description": "Jūsų pateiktas pasirašymo raktas sutampa su pasirašymo raktu, gautu iš vartotojo %(userId)s seanso %(deviceId)s. Seansas pažymėtas kaip patikrintas.",
+        "help_dialog_title": "Komandų pagalba"
     },
     "presence": {
         "busy": "Užsiėmęs",
@@ -1978,7 +1948,14 @@
         "key_signature_upload_cancelled": "Atšauktas parašo įkėlimas",
         "key_signature_upload_failed": "Nepavyksta įkelti",
         "key_signature_upload_success_title": "Parašo įkėlimas sėkmingas",
-        "key_signature_upload_failed_title": "Parašo įkėlimas nepavyko"
+        "key_signature_upload_failed_title": "Parašo įkėlimas nepavyko",
+        "udd": {
+            "own_new_session_text": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
+            "own_ask_verify_text": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
+            "other_new_session_text": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
+            "other_ask_verify_text": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
+            "title": "Nepatikimas"
+        }
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2128,6 +2105,11 @@
             "continue_without_email_title": "Tęsiama be el. pašto",
             "continue_without_email_description": "Įspėjame, kad nepridėję el. pašto ir pamiršę slaptažodį galite <b>visam laikui prarasti prieigą prie savo paskyros</b>.",
             "continue_without_email_field_label": "El. paštas (neprivaloma)"
+        },
+        "set_email": {
+            "verification_pending_title": "Laukiama Patikrinimo",
+            "verification_pending_description": "Patikrinkite savo el. laišką ir spustelėkite jame esančią nuorodą. Kai tai padarysite, spauskite tęsti.",
+            "description": "Tai jums leis iš naujo nustatyti slaptažodį ir gauti pranešimus."
         }
     },
     "room_list": {
@@ -2523,7 +2505,9 @@
         "identity_server_no_terms_title": "Tapatybės serveris neturi paslaugų teikimo sąlygų",
         "identity_server_no_terms_description_1": "Šiam veiksmui reikalinga pasiekti numatytąjį tapatybės serverį <server />, kad patvirtinti el. pašto adresą arba telefono numerį, bet serveris neturi jokių paslaugos teikimo sąlygų.",
         "identity_server_no_terms_description_2": "Tęskite tik tuo atveju, jei pasitikite serverio savininku.",
-        "inline_intro_text": "Sutikite su <policyLink />, kad tęstumėte:"
+        "inline_intro_text": "Sutikite su <policyLink />, kad tęstumėte:",
+        "summary_identity_server_1": "Ieškokite kitų telefonu arba el. paštu",
+        "summary_identity_server_2": "Tapkite randami telefonu arba el. paštu"
     },
     "failed_load_async_component": "Nepavyko įkelti! Patikrinkite savo tinklo ryšį ir bandykite dar kartą.",
     "upload_failed_generic": "Failo '%(fileName)s' nepavyko įkelti.",
@@ -2608,7 +2592,10 @@
             "description_1": "Bandant atkurti ankstesnį seansą įvyko klaida.",
             "description_2": "Jei anksčiau naudojote naujesnę %(brand)s versiją, jūsų seansas gali būti nesuderinamas su šia versija. Uždarykite šį langą ir grįžkite į naujesnę versiją.",
             "description_3": "Išvalius naršyklės saugyklą, problema gali būti išspręsta, tačiau jus atjungs ir užšifruotų pokalbių istorija taps neperskaitoma."
-        }
+        },
+        "storage_evicted_title": "Trūksta seanso duomenų",
+        "storage_evicted_description_1": "Trūksta kai kurių seanso duomenų, įskaitant šifruotų žinučių raktus. Atsijunkite ir prisijunkite, kad tai išspręstumėte, atkurdami raktus iš atsarginės kopijos.",
+        "storage_evicted_description_2": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2886,5 +2873,26 @@
         "heading_without_query": "Ieškoti",
         "create_new_room_button": "Sukurti naują kambarį",
         "recently_viewed_section_title": "Neseniai peržiūrėti"
+    },
+    "share": {
+        "title_room": "Bendrinti Kambarį",
+        "permalink_most_recent": "Nuoroda į naujausią žinutę",
+        "title_user": "Dalintis Vartotoju",
+        "title_message": "Bendrinti Kambario Žinutę",
+        "permalink_message": "Nuoroda į pasirinktą pranešimą"
+    },
+    "upload_file": {
+        "title_progress": "Įkelti failus (%(current)s iš %(total)s)",
+        "title": "Įkelti failus",
+        "upload_all_button": "Įkelti visus",
+        "error_file_too_large": "Šis failas yra <b>per didelis</b> įkėlimui. Failų dydžio limitas yra %(limit)s, bet šis failas užima %(sizeOfThisFile)s.",
+        "error_files_too_large": "Šie failai yra <b>per dideli</b> įkėlimui. Failų dydžio limitas yra %(limit)s.",
+        "error_some_files_too_large": "Kai kurie failai yra <b>per dideli</b> įkėlimui. Failų dydžio limitas yra %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Įkelti %(count)s kitus failus",
+            "one": "Įkelti %(count)s kitą failą"
+        },
+        "cancel_all_button": "Atšaukti visus",
+        "error_title": "Įkėlimo klaida"
     }
 }

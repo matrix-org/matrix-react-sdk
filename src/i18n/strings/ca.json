@@ -43,15 +43,11 @@
     },
     "Join Room": "Entra a la sala",
     "not specified": "sense especificar",
-    "Email address": "Correu electrònic",
     "Delete Widget": "Suprimeix el giny",
     "Home": "Inici",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
-    "Verification Pending": "Verificació pendent",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Reviseu el vostre correu electrònic i feu clic a l'enllaç que conté. Un cop fet això, feu clic a Continua.",
-    "This will allow you to reset your password and receive notifications.": "Això us permetrà restablir la vostra contrasenya i rebre notificacions.",
     "Sunday": "Diumenge",
     "Today": "Avui",
     "Friday": "Divendres",
@@ -62,7 +58,6 @@
     "Wednesday": "Dimecres",
     "Thursday": "Dijous",
     "Yesterday": "Ahir",
-    "Upload Error": "Error de pujada",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
     "e.g. my-room": "p.e. la-meva-sala",
     "common": {
@@ -100,7 +95,8 @@
         "low_priority": "Baixa prioritat",
         "historical": "Històric",
         "go_to_settings": "Ves a Configuració",
-        "are_you_sure": "Estàs segur?"
+        "are_you_sure": "Estàs segur?",
+        "email_address": "Correu electrònic"
     },
     "action": {
         "continue": "Continua",
@@ -595,7 +591,12 @@
         "identifier_label": "Inicieu sessió amb",
         "reset_password_email_not_found_title": "Aquesta adreça de correu electrònic no s'ha trobat",
         "autodiscovery_unexpected_error_hs": "Error inesperat resolent la configuració del servidor local",
-        "autodiscovery_unexpected_error_is": "Error inesperat resolent la configuració del servidor d'identitat"
+        "autodiscovery_unexpected_error_is": "Error inesperat resolent la configuració del servidor d'identitat",
+        "set_email": {
+            "verification_pending_title": "Verificació pendent",
+            "verification_pending_description": "Reviseu el vostre correu electrònic i feu clic a l'enllaç que conté. Un cop fet això, feu clic a Continua.",
+            "description": "Això us permetrà restablir la vostra contrasenya i rebre notificacions."
+        }
     },
     "export_chat": {
         "messages": "Missatges"
@@ -874,5 +875,8 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "Crea una sala nova"
+    },
+    "upload_file": {
+        "error_title": "Error de pujada"
     }
 }

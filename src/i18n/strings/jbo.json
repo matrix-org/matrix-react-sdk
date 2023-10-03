@@ -28,7 +28,6 @@
     "Moderator": "vlipa so'o da",
     "Changes your display nickname": "",
     "Warning!": ".i ju'i",
-    "You signed in to a new session without verifying it:": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
     "Dog": "gerku",
     "Cat": "mlatu",
     "Lion": "cinfo",
@@ -95,9 +94,6 @@
     "Today": "cabdei",
     "Yesterday": "prulamdei",
     "Switch theme": "nu basti fi le ka jvinu",
-    "Verify your other session using one of the options below.": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
-    "Ask this user to verify their session, or manually verify it below.": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
-    "Not Trusted": "na se lacri",
     "Ok": "je'e",
     "%(count)s verified sessions": {
         "other": ".i lacri %(count)s se samtcise'u",
@@ -109,12 +105,6 @@
     },
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
-    "Upload %(count)s other files": {
-        "one": "nu kibdu'a %(count)s vreji poi na du"
-    },
-    "Share Room": "nu jungau fi le du'u ve zilbe'i",
-    "Share User": "nu jungau fi le du'u pilno",
-    "Share Room Message": "nu jungau fi le du'u notci",
     "common": {
         "analytics": "lanli datni",
         "error": "nabmi",
@@ -428,7 +418,13 @@
         "verify_toast_title": "nu co'a lacri le se samtcise'u",
         "verify_toast_description": ".i la'a na pa na du be do cu lacri",
         "cross_signing_room_verified": ".i do lacri ro pagbu be le se zilbe'i",
-        "cross_signing_room_normal": ".i ro zilbe'i be fo le cei'i cu mifra"
+        "cross_signing_room_normal": ".i ro zilbe'i be fo le cei'i cu mifra",
+        "udd": {
+            "own_new_session_text": ".i fe le di'e se samtcise'u pu co'a jaspu vau je za'o na lacri",
+            "own_ask_verify_text": ".i ko cuxna da le di'e cei'i le ka tadji lo nu do co'a lacri",
+            "other_ask_verify_text": ".i ko cpedu le ka co'a lacri le se samtcise'u kei le pilno vau ja pilno le di'e cei'i le ka co'a lacri",
+            "title": "na se lacri"
+        }
     },
     "export_chat": {
         "messages": "notci"
@@ -553,5 +549,15 @@
     },
     "report_content": {
         "other_label": "drata"
+    },
+    "share": {
+        "title_room": "nu jungau fi le du'u ve zilbe'i",
+        "title_user": "nu jungau fi le du'u pilno",
+        "title_message": "nu jungau fi le du'u notci"
+    },
+    "upload_file": {
+        "upload_n_others_button": {
+            "one": "nu kibdu'a %(count)s vreji poi na du"
+        }
     }
 }

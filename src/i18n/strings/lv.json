@@ -1,12 +1,9 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s un %(lastItem)s",
-    "Email address": "Epasta adrese",
     "Home": "Mājup",
     "Join Room": "Pievienoties istabai",
     "Moderator": "Moderators",
     "not specified": "nav noteikts",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Lūdzu, pārbaudi savu epastu un noklikšķini tajā esošo saiti. Tiklīdz tas ir izdarīts, klikšķini \"turpināt\".",
-    "This will allow you to reset your password and receive notifications.": "Tas atļaus Tev atiestatīt paroli un saņemt paziņojumus.",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -15,7 +12,6 @@
         "other": "(~%(count)s rezultāti)"
     },
     "unknown error code": "nezināms kļūdas kods",
-    "Verification Pending": "Gaida verifikāciju",
     "Warning!": "Brīdinājums!",
     "Sun": "Sv.",
     "Mon": "P.",
@@ -66,9 +62,7 @@
         "one": "1 verificēta sesija",
         "other": "%(count)s verificētas sesijas"
     },
-    "Verify your other session using one of the options below.": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
     "Philippines": "Filipīnas",
-    "Not Trusted": "Neuzticama",
     "%(count)s sessions": {
         "one": "%(count)s sesija",
         "other": "%(count)s sesijas"
@@ -107,8 +101,6 @@
     "Luxembourg": "Luksemburga",
     "Lithuania": "Lietuva",
     "Latvia": "Latvija",
-    "Link to selected message": "Saite uz izvēlēto ziņu",
-    "Share Room Message": "Dalīties ar istabas ziņu",
     "%(name)s wants to verify": "%(name)s vēlas veikt verifikāciju",
     "%(name)s declined": "%(name)s noraidīja",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
@@ -116,17 +108,13 @@
         "one": "%(count)s istaba",
         "other": "%(count)s istabas"
     },
-    "Missing session data": "Trūkst sesijas datu",
     "%(name)s cancelled": "%(name)s atcēla",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) pierakstījās jaunā sesijā, neveicot tās verifikāciju:",
     "Denmark": "Dānija",
     "American Samoa": "Amerikāņu Samoa",
     "Algeria": "Alžīrija",
-    "Share User": "Dalīties ar lietotāja kontaktdatiem",
     "edited": "rediģēts",
-    "You signed in to a new session without verifying it:": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
     "%(count)s people you know have already joined": {
         "other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
         "one": "%(count)s pazīstama persona ir jau pievienojusies"
@@ -135,9 +123,6 @@
         "one": "%(count)s dalībnieks",
         "other": "%(count)s dalībnieki"
     },
-    "Upload files": "Failu augšupielāde",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Šie faili <b>pārsniedz</b> augšupielādes izmēra ierobežojumu %(limit)s.",
-    "Upload files (%(current)s of %(total)s)": "Failu augšupielāde (%(current)s no %(total)s)",
     "Zimbabwe": "Zimbabve",
     "Zambia": "Zambija",
     "Yemen": "Jemena",
@@ -370,10 +355,7 @@
     "Angola": "Angola",
     "Andorra": "Andora",
     "Åland Islands": "Ālandu salas",
-    "Cancel All": "Atcelt visu",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
-    "Link to most recent message": "Saite uz jaunāko ziņu",
-    "Share Room": "Dalīties ar istabu",
     "Corn": "Kukurūza",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
     "An error occurred whilst sharing your live location, please try again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
@@ -385,12 +367,6 @@
     "Live location enabled": "Reāllaika atrašanās vietas kopīgošana iespējota",
     "Live location error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
     "Live location ended": "Reāllaika atrašanās vietas kopīgošana pārtraukta",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
-    "Upload %(count)s other files": {
-        "one": "Augšupielādēt %(count)s citu failu",
-        "other": "Augšupielādēt %(count)s citus failus"
-    },
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
     "common": {
         "about": "Par",
@@ -458,7 +434,8 @@
         "historical": "Bijušie",
         "show_more": "Rādīt vairāk",
         "are_you_sure": "Vai tiešām to vēlaties?",
-        "location": "Atrašanās vieta"
+        "location": "Atrašanās vieta",
+        "email_address": "Epasta adrese"
     },
     "action": {
         "continue": "Turpināt",
@@ -1466,7 +1443,13 @@
         "event_shield_reason_authenticity_not_guaranteed": "Šīs šifrētās ziņas autentiskums nevar tikt garantēts šajā ierīcē.",
         "cross_signing_room_normal": "Šajā istabā tiek veikta pilnīga šifrēšana",
         "incompatible_database_sign_out_description": "Lai nezaudētu čata vēsturi, pirms izrakstīšanās no konta jums ir jāeksportē istabas atslēgas. Lai to izdarītu, jums būs jāatgriežas jaunākajā %(brand)s versijā",
-        "incompatible_database_disable": "Turpināt ar atspējotu šifrēšanu"
+        "incompatible_database_disable": "Turpināt ar atspējotu šifrēšanu",
+        "udd": {
+            "own_new_session_text": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
+            "own_ask_verify_text": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
+            "other_new_session_text": "%(name)s (%(userId)s) pierakstījās jaunā sesijā, neveicot tās verifikāciju:",
+            "title": "Neuzticama"
+        }
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",
@@ -1593,6 +1576,11 @@
         },
         "registration": {
             "continue_without_email_field_label": "Epasts (izvēles)"
+        },
+        "set_email": {
+            "verification_pending_title": "Gaida verifikāciju",
+            "verification_pending_description": "Lūdzu, pārbaudi savu epastu un noklikšķini tajā esošo saiti. Tiklīdz tas ir izdarīts, klikšķini \"turpināt\".",
+            "description": "Tas atļaus Tev atiestatīt paroli un saņemt paziņojumus."
         }
     },
     "room_list": {
@@ -1977,7 +1965,8 @@
             "title": "Neizdevās atjaunot sesiju",
             "description_2": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
             "description_3": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt."
-        }
+        },
+        "storage_evicted_title": "Trūkst sesijas datu"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2164,5 +2153,24 @@
         "remove_filter": "Noņemt meklēšanas filtru %(filter)s",
         "search_messages_hint": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
         "keyboard_scroll_hint": "Lietojiet <arrows/> ritināšanai"
+    },
+    "share": {
+        "title_room": "Dalīties ar istabu",
+        "permalink_most_recent": "Saite uz jaunāko ziņu",
+        "title_user": "Dalīties ar lietotāja kontaktdatiem",
+        "title_message": "Dalīties ar istabas ziņu",
+        "permalink_message": "Saite uz izvēlēto ziņu"
+    },
+    "upload_file": {
+        "title_progress": "Failu augšupielāde (%(current)s no %(total)s)",
+        "title": "Failu augšupielāde",
+        "error_file_too_large": "Šis fails ir <b>pārlieku liels</b>, lai to augšupielādētu. Faila izmēra ierobežojums ir %(limit)s, bet šis fails ir %(sizeOfThisFile)s.",
+        "error_files_too_large": "Šie faili <b>pārsniedz</b> augšupielādes izmēra ierobežojumu %(limit)s.",
+        "error_some_files_too_large": "Daži faili ir <b>pārlieku lieli</b>, lai tos augšupielādētu. Faila izmēra ierobežojums ir %(limit)s.",
+        "upload_n_others_button": {
+            "one": "Augšupielādēt %(count)s citu failu",
+            "other": "Augšupielādēt %(count)s citus failus"
+        },
+        "cancel_all_button": "Atcelt visu"
     }
 }

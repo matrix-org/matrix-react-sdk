@@ -5,7 +5,6 @@
         "one": "και ένας ακόμα...",
         "other": "και %(count)s άλλοι..."
     },
-    "Email address": "Ηλεκτρονική διεύθυνση",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
     "Home": "Αρχική",
@@ -36,10 +35,7 @@
         "other": "(~%(count)s αποτελέσματα)"
     },
     "not specified": "μη καθορισμένο",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
-    "Verification Pending": "Εκκρεμεί επιβεβαίωση",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "This will allow you to reset your password and receive notifications.": "Αυτό θα σας επιτρέψει να επαναφέρετε τον κωδικό πρόσβαση σας και θα μπορείτε να λαμβάνετε ειδοποιήσεις.",
     "Sunday": "Κυριακή",
     "Today": "Σήμερα",
     "Friday": "Παρασκευή",
@@ -60,10 +56,6 @@
     "%(duration)sd": "%(duration)sμ",
     "Ok": "Εντάξει",
     "Your homeserver has exceeded its user limit.": "Ο διακομιστής σας ξεπέρασε το όριο χρηστών.",
-    "Ask this user to verify their session, or manually verify it below.": "Ζητήστε από αυτόν τον χρήστη να επιβεβαιώσει την συνεδρία του, ή επιβεβαιώστε την χειροκίνητα παρακάτω.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "Ο %(name)s (%(userId)s) συνδέθηκε σε μία νέα συνεδρία χωρίς να την επιβεβαιώσει:",
-    "Verify your other session using one of the options below.": "Επιβεβαιώστε την άλλη σας συνεδρία χρησιμοποιώντας μία από τις παρακάτω επιλογές.",
-    "You signed in to a new session without verifying it:": "Συνδεθήκατε σε μια νέα συνεδρία χωρίς να την επιβεβαιώσετε:",
     "Zimbabwe": "Ζιμπάμπουε",
     "Zambia": "Ζαμπία",
     "Yemen": "Υεμένη",
@@ -246,7 +238,6 @@
     "Afghanistan": "Αφγανιστάν",
     "United States": "Ηνωμένες Πολιτείες",
     "United Kingdom": "Ηνωμένο Βασίλειο",
-    "Not Trusted": "Μη Έμπιστο",
     "Wallis & Futuna": "Ουώλλις και Φουτούνα",
     "Vanuatu": "Βανουάτου",
     "U.S. Virgin Islands": "Αμερικανικές Παρθένοι Νήσο",
@@ -438,29 +429,6 @@
     "Wrong Security Key": "Λάθος Κλειδί Ασφαλείας",
     "Looks good!": "Φαίνεται καλό!",
     "Wrong file type": "Λάθος τύπος αρχείου",
-    "Upload Error": "Σφάλμα μεταφόρτωσης",
-    "Cancel All": "Ακύρωση Όλων",
-    "Upload %(count)s other files": {
-        "one": "Μεταφόρτωση %(count)s άλλου αρχείου",
-        "other": "Μεταφόρτωση %(count)s άλλων αρχείων"
-    },
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Ορισμένα αρχεία είναι <b>πολύ μεγάλα</b> για να μεταφορτωθούν. Το όριο μεγέθους αρχείου είναι %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Αυτά τα αρχεία είναι <b>πολύ μεγάλα</b> για μεταφόρτωση. Το όριο μεγέθους αρχείου είναι %(limit)s.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Αυτό το αρχείο είναι <b>πολύ μεγάλο</b> για μεταφόρτωση. Το όριο μεγέθους αρχείου είναι %(limit)s αλλά αυτό το αρχείο είναι %(sizeOfThisFile)s.",
-    "Upload all": "Μεταφόρτωση όλων",
-    "Upload files": "Μεταφόρτωση αρχείων",
-    "Upload files (%(current)s of %(total)s)": "Μεταφόρτωση αρχείων %(current)s από %(total)s",
-    "Find others by phone or email": "Βρείτε άλλους μέσω τηλεφώνου ή email",
-    "Your browser likely removed this data when running low on disk space.": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε.",
-    "Missing session data": "Λείπουν δεδομένα της συνεδρίας (session)",
-    "Sections to show": "Ενότητες προς εμφάνιση",
-    "Command Help": "Βοήθεια Εντολών",
-    "Link to room": "Σύνδεσμος στο δωμάτιο",
-    "Link to selected message": "Σύνδεσμος στο επιλεγμένο μήνυμα",
-    "Share Room Message": "Κοινή χρήση Μηνύματος Δωματίου",
-    "Share User": "Κοινή χρήση Χρήστη",
-    "Link to most recent message": "Σύνδεσμος προς το πιο πρόσφατο μήνυμα",
-    "Share Room": "Κοινή χρήση Δωματίου",
     "Send Logs": "Αποστολή Αρχείων καταγραφής",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
@@ -503,7 +471,6 @@
     "Unsent": "Μη απεσταλμένα",
     "No results found": "Δε βρέθηκαν αποτελέσματα",
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Για να μας βοηθήσετε να το αποτρέψουμε αυτό στο μέλλον, <a>στείλτε μας τα αρχεία καταγραφής</a>.",
     "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
@@ -521,9 +488,6 @@
     "Clear cross-signing keys": "Διαγράψτε τα κλειδιά διασταυρούμενης υπογραφής",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Η διαγραφή κλειδιών διασταυρούμενης υπογραφής είναι μόνιμη. Οποιοσδήποτε με τον οποίο έχετε επαληθευτεί θα λάβει ειδοποιήσεις ασφαλείας. Πιθανότατα δεν θέλετε να το κάνετε αυτό, εκτός και αν έχετε χάσει όλες τις συσκευές από τις οποίες μπορείτε να υπογράψετε.",
     "Destroy cross-signing keys?": "Να καταστραφούν τα κλειδιά διασταυρούμενης υπογραφής;",
-    "Be found by phone or email": "Να βρεθεί μέσω τηλεφώνου ή email",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Ορισμένα δεδομένα συνεδρίας, συμπεριλαμβανομένων των κρυπτογραφημένων κλειδιών μηνυμάτων, λείπουν. Αποσυνδεθείτε και συνδεθείτε για να το διορθώσετε, επαναφέροντας τα κλειδιά από το αντίγραφο ασφαλείας.",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Αυτό ομαδοποιεί τις συνομιλίες σας με μέλη αυτού του χώρου. Η απενεργοποίηση του θα αποκρύψει αυτές τις συνομιλίες από την προβολή του %(spaceName)s.",
     "Hold": "Αναμονή",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
@@ -648,7 +612,8 @@
         "joined": "Συνδέθηκε",
         "avatar": "Avatar",
         "are_you_sure": "Είστε σίγουροι;",
-        "location": "Τοποθεσία"
+        "location": "Τοποθεσία",
+        "email_address": "Ηλεκτρονική διεύθυνση"
     },
     "action": {
         "continue": "Συνέχεια",
@@ -960,7 +925,8 @@
         "failed_send_logs": "Αποτυχία αποστολής αρχείων καταγραφής: ",
         "preparing_download": "Προετοιμασία λήψης αρχείων καταγραφής",
         "unsupported_browser": "Υπενθύμιση: Το πρόγραμμα περιήγησής σας δεν υποστηρίζεται, επομένως η εμπειρία σας μπορεί να είναι απρόβλεπτη.",
-        "textarea_label": "Σημειώσεις"
+        "textarea_label": "Σημειώσεις",
+        "log_request": "Για να μας βοηθήσετε να το αποτρέψουμε αυτό στο μέλλον, <a>στείλτε μας τα αρχεία καταγραφής</a>."
     },
     "time": {
         "seconds_left": "%(seconds)ss απομένουν",
@@ -1956,7 +1922,8 @@
         "verify_nop": "Η συνεδρία έχει ήδη επιβεβαιωθεί!",
         "verify_mismatch": "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Η ΕΠΑΛΗΘΕΥΣΗ ΚΛΕΙΔΙΟΥ ΑΠΕΤΥΧΕ! Το κλειδί σύνδεσης για %(userId)s και συνεδρίας %(deviceId)s είναι \"%(fprint)s\" που δεν ταιριάζει με το παρεχόμενο κλειδί\"%(fingerprint)s\". Αυτό μπορεί να σημαίνει ότι υπάρχει υποκλοπή στις επικοινωνίες σας!",
         "verify_success_title": "Επιβεβαιωμένο κλειδί",
-        "verify_success_description": "Το κλειδί υπογραφής που παρείχατε ταιριάζει με το κλειδί που λάβατε από την συνεδρία %(userId)s's %(deviceId)s. Η συνεδρία σημειώνεται ως επιβεβαιωμένη."
+        "verify_success_description": "Το κλειδί υπογραφής που παρείχατε ταιριάζει με το κλειδί που λάβατε από την συνεδρία %(userId)s's %(deviceId)s. Η συνεδρία σημειώνεται ως επιβεβαιωμένη.",
+        "help_dialog_title": "Βοήθεια Εντολών"
     },
     "presence": {
         "busy": "Απασχολημένος",
@@ -2428,7 +2395,14 @@
         "key_signature_upload_cancelled": "Ακυρώθηκε η μεταφόρτωση υπογραφής",
         "key_signature_upload_failed": "Αδυναμία μεταφόρτωσης",
         "key_signature_upload_success_title": "Επιτυχία μεταφόρτωσης υπογραφής",
-        "key_signature_upload_failed_title": "Αποτυχία μεταφόρτωσης υπογραφής"
+        "key_signature_upload_failed_title": "Αποτυχία μεταφόρτωσης υπογραφής",
+        "udd": {
+            "own_new_session_text": "Συνδεθήκατε σε μια νέα συνεδρία χωρίς να την επιβεβαιώσετε:",
+            "own_ask_verify_text": "Επιβεβαιώστε την άλλη σας συνεδρία χρησιμοποιώντας μία από τις παρακάτω επιλογές.",
+            "other_new_session_text": "Ο %(name)s (%(userId)s) συνδέθηκε σε μία νέα συνεδρία χωρίς να την επιβεβαιώσει:",
+            "other_ask_verify_text": "Ζητήστε από αυτόν τον χρήστη να επιβεβαιώσει την συνεδρία του, ή επιβεβαιώστε την χειροκίνητα παρακάτω.",
+            "title": "Μη Έμπιστο"
+        }
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -2624,6 +2598,11 @@
             "continue_without_email_title": "Συνέχεια χωρίς email",
             "continue_without_email_description": "Μια προειδοποίηση, αν δεν προσθέσετε ένα email και ξεχάσετε τον κωδικό πρόσβασης, ενδέχεται να <b>χάσετε οριστικά την πρόσβαση στον λογαριασμό σας</b>.",
             "continue_without_email_field_label": "Email (προαιρετικό)"
+        },
+        "set_email": {
+            "verification_pending_title": "Εκκρεμεί επιβεβαίωση",
+            "verification_pending_description": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
+            "description": "Αυτό θα σας επιτρέψει να επαναφέρετε τον κωδικό πρόσβαση σας και θα μπορείτε να λαμβάνετε ειδοποιήσεις."
         }
     },
     "room_list": {
@@ -2943,7 +2922,11 @@
         "leave_dialog_option_none": "Μην αφήνετε κανένα δωμάτιο",
         "leave_dialog_option_all": "Αποχώρηση από όλα τα δωμάτια",
         "leave_dialog_option_specific": "Αποχώρηση από κάποια δωμάτια",
-        "leave_dialog_action": "Αποχώρηση από τον χώρο"
+        "leave_dialog_action": "Αποχώρηση από τον χώρο",
+        "preferences": {
+            "sections_section": "Ενότητες προς εμφάνιση",
+            "show_people_in_space": "Αυτό ομαδοποιεί τις συνομιλίες σας με μέλη αυτού του χώρου. Η απενεργοποίηση του θα αποκρύψει αυτές τις συνομιλίες από την προβολή του %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",
@@ -3210,7 +3193,9 @@
         "identity_server_no_terms_title": "Ο διακομιστής ταυτοποίησης δεν έχει όρους χρήσης",
         "identity_server_no_terms_description_1": "Αυτή η δράση απαιτεί την πρόσβαση στο προκαθορισμένο διακομιστή ταυτοποίησης <server /> για να επιβεβαιώσει μια διεύθυνση ηλ. ταχυδρομείου ή αριθμό τηλεφώνου, αλλά ο διακομιστής δεν έχει όρους χρήσης.",
         "identity_server_no_terms_description_2": "Συνεχίστε μόνο εάν εμπιστεύεστε τον ιδιοκτήτη του διακομιστή.",
-        "inline_intro_text": "Αποδεχτείτε το <policyLink /> για να συνεχίσετε:"
+        "inline_intro_text": "Αποδεχτείτε το <policyLink /> για να συνεχίσετε:",
+        "summary_identity_server_1": "Βρείτε άλλους μέσω τηλεφώνου ή email",
+        "summary_identity_server_2": "Να βρεθεί μέσω τηλεφώνου ή email"
     },
     "space_settings": {
         "title": "Ρυθμίσεις - %(spaceName)s"
@@ -3347,7 +3332,10 @@
             "description_1": "Αντιμετωπίσαμε ένα σφάλμα κατά την επαναφορά της προηγούμενης συνεδρίας σας.",
             "description_2": "Αν χρησιμοποιούσατε προηγουμένως μια πιο πρόσφατη έκδοση του %(brand)s, η συνεδρία σας ίσως είναι μη συμβατή με αυτήν την έκδοση. Κλείστε αυτό το παράθυρο και επιστρέψτε στην πιο πρόσφατη έκδοση.",
             "description_3": "Η εκκαθάριση του αποθηκευτικού χώρου του προγράμματος περιήγησής σας μπορεί να διορθώσει το πρόβλημα, αλλά θα αποσυνδεθείτε και θα κάνει τυχόν κρυπτογραφημένο ιστορικό συνομιλιών να μην είναι αναγνώσιμο."
-        }
+        },
+        "storage_evicted_title": "Λείπουν δεδομένα της συνεδρίας (session)",
+        "storage_evicted_description_1": "Ορισμένα δεδομένα συνεδρίας, συμπεριλαμβανομένων των κρυπτογραφημένων κλειδιών μηνυμάτων, λείπουν. Αποσυνδεθείτε και συνδεθείτε για να το διορθώσετε, επαναφέροντας τα κλειδιά από το αντίγραφο ασφαλείας.",
+        "storage_evicted_description_2": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -3668,5 +3656,27 @@
         "search_dialog": "Παράθυρο Αναζήτησης",
         "search_messages_hint": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
         "keyboard_scroll_hint": "Χρησιμοποιήστε τα <arrows/> για κύλιση"
+    },
+    "share": {
+        "title_room": "Κοινή χρήση Δωματίου",
+        "permalink_most_recent": "Σύνδεσμος προς το πιο πρόσφατο μήνυμα",
+        "title_user": "Κοινή χρήση Χρήστη",
+        "title_message": "Κοινή χρήση Μηνύματος Δωματίου",
+        "permalink_message": "Σύνδεσμος στο επιλεγμένο μήνυμα",
+        "link_title": "Σύνδεσμος στο δωμάτιο"
+    },
+    "upload_file": {
+        "title_progress": "Μεταφόρτωση αρχείων %(current)s από %(total)s",
+        "title": "Μεταφόρτωση αρχείων",
+        "upload_all_button": "Μεταφόρτωση όλων",
+        "error_file_too_large": "Αυτό το αρχείο είναι <b>πολύ μεγάλο</b> για μεταφόρτωση. Το όριο μεγέθους αρχείου είναι %(limit)s αλλά αυτό το αρχείο είναι %(sizeOfThisFile)s.",
+        "error_files_too_large": "Αυτά τα αρχεία είναι <b>πολύ μεγάλα</b> για μεταφόρτωση. Το όριο μεγέθους αρχείου είναι %(limit)s.",
+        "error_some_files_too_large": "Ορισμένα αρχεία είναι <b>πολύ μεγάλα</b> για να μεταφορτωθούν. Το όριο μεγέθους αρχείου είναι %(limit)s.",
+        "upload_n_others_button": {
+            "one": "Μεταφόρτωση %(count)s άλλου αρχείου",
+            "other": "Μεταφόρτωση %(count)s άλλων αρχείων"
+        },
+        "cancel_all_button": "Ακύρωση Όλων",
+        "error_title": "Σφάλμα μεταφόρτωσης"
     }
 }

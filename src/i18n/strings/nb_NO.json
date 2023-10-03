@@ -71,9 +71,6 @@
     "collapse": "skjul",
     "expand": "utvid",
     "Filter results": "Filtrerresultater",
-    "Email address": "E-postadresse",
-    "Share Room Message": "Del rommelding",
-    "Cancel All": "Avbryt alt",
     "Home": "Hjem",
     "Lion": "Løve",
     "Pig": "Gris",
@@ -107,11 +104,7 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "Upload files": "Last opp filer",
-    "Upload all": "Last opp alle",
-    "Upload Error": "Opplastingsfeil",
     "No backup found!": "Ingen sikkerhetskopier ble funnet!",
-    "Not Trusted": "Ikke betrodd",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Warning!": "Advarsel!",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
@@ -135,21 +128,11 @@
     },
     "a key signature": "en nøkkelsignatur",
     "Send Logs": "Send loggbøker",
-    "Command Help": "Kommandohjelp",
-    "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "Verification Pending": "Avventer verifisering",
-    "Share Room": "Del rommet",
-    "Share User": "Del brukeren",
-    "Upload %(count)s other files": {
-        "other": "Last opp %(count)s andre filer",
-        "one": "Last opp %(count)s annen fil"
-    },
     "Keys restored": "Nøklene ble gjenopprettet",
     "Switch theme": "Bytt tema",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
-    "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
     "Wrong file type": "Feil filtype",
     "Looks good!": "Ser bra ut!",
@@ -516,7 +499,8 @@
         "unencrypted": "Ukryptert",
         "show_more": "Vis mer",
         "avatar": "Profilbilde",
-        "are_you_sure": "Er du sikker?"
+        "are_you_sure": "Er du sikker?",
+        "email_address": "E-postadresse"
     },
     "action": {
         "continue": "Fortsett",
@@ -700,7 +684,8 @@
         "logs_sent": "Loggbøkene ble sendt",
         "thank_you": "Tusen takk!",
         "failed_send_logs": "Mislyktes i å sende loggbøker: ",
-        "textarea_label": "Merknader"
+        "textarea_label": "Merknader",
+        "log_request": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>."
     },
     "time": {
         "date_at_time": "%(date)s klokken %(time)s",
@@ -1179,7 +1164,8 @@
         "unignore_dialog_title": "Uignorert bruker",
         "unignore_dialog_description": "%(userId)s blir ikke lengre ignorert",
         "verify_nop": "Økten er allerede verifisert!",
-        "verify_success_title": "Verifisert nøkkel"
+        "verify_success_title": "Verifisert nøkkel",
+        "help_dialog_title": "Kommandohjelp"
     },
     "presence": {
         "online_for": "På nett i %(duration)s",
@@ -1382,7 +1368,11 @@
         "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten.",
         "incompatible_database_title": "Inkompatibel database",
         "key_signature_upload_completed": "Opplasting fullført",
-        "key_signature_upload_failed": "Mislyktes i å laste opp"
+        "key_signature_upload_failed": "Mislyktes i å laste opp",
+        "udd": {
+            "own_ask_verify_text": "Verifiser den andre økten din med en av metodene nedenfor.",
+            "title": "Ikke betrodd"
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1481,6 +1471,9 @@
         "registration": {
             "continue_without_email_title": "Fortsetter uten E-post",
             "continue_without_email_field_label": "E-post (valgfritt)"
+        },
+        "set_email": {
+            "verification_pending_title": "Avventer verifisering"
         }
     },
     "room_list": {
@@ -1901,5 +1894,20 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "Opprett et nytt rom"
+    },
+    "share": {
+        "title_room": "Del rommet",
+        "title_user": "Del brukeren",
+        "title_message": "Del rommelding"
+    },
+    "upload_file": {
+        "title": "Last opp filer",
+        "upload_all_button": "Last opp alle",
+        "upload_n_others_button": {
+            "other": "Last opp %(count)s andre filer",
+            "one": "Last opp %(count)s annen fil"
+        },
+        "cancel_all_button": "Avbryt alt",
+        "error_title": "Opplastingsfeil"
     }
 }

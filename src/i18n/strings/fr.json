@@ -8,9 +8,6 @@
     "Moderator": "Modérateur",
     "not specified": "non spécifié",
     "unknown error code": "code d’erreur inconnu",
-    "Email address": "Adresse e-mail",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Veuillez consulter vos e-mails et cliquer sur le lien que vous avez reçu. Puis cliquez sur continuer.",
-    "Verification Pending": "Vérification en attente",
     "Warning!": "Attention !",
     "Sun": "Dim",
     "Mon": "Lun",
@@ -39,7 +36,6 @@
         "other": "(~%(count)s résultats)"
     },
     "Home": "Accueil",
-    "This will allow you to reset your password and receive notifications.": "Ceci vous permettra de réinitialiser votre mot de passe et de recevoir des notifications.",
     "AM": "AM",
     "PM": "PM",
     "Unnamed room": "Salon sans nom",
@@ -63,11 +59,6 @@
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
     "Send Logs": "Envoyer les journaux",
-    "Share Room": "Partager le salon",
-    "Link to most recent message": "Lien vers le message le plus récent",
-    "Share User": "Partager l’utilisateur",
-    "Share Room Message": "Partager le message du salon",
-    "Link to selected message": "Lien vers le message sélectionné",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Avant de soumettre vos journaux, vous devez <a>créer une « issue » sur GitHub</a> pour décrire votre problème.",
     "Unable to load backup status": "Impossible de récupérer l’état de la sauvegarde",
     "Unable to restore backup": "Impossible de restaurer la sauvegarde",
@@ -136,28 +127,9 @@
     "Folder": "Dossier",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attention</b> : vous ne devriez configurer la sauvegarde des clés que depuis un ordinateur de confiance.",
     "Scissors": "Ciseaux",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Pour nous aider à éviter cela dans le futur, veuillez <a>nous envoyer les journaux</a>.",
-    "Missing session data": "Données de la session manquantes",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Des données de la session, dont les clés des messages chiffrés, sont manquantes. Déconnectez-vous et reconnectez-vous pour régler ce problème, en restaurant les clés depuis la sauvegarde.",
-    "Your browser likely removed this data when running low on disk space.": "Votre navigateur a sûrement supprimé ces données car il restait peu d’espace sur le disque.",
-    "Upload files (%(current)s of %(total)s)": "Envoi des fichiers (%(current)s sur %(total)s)",
-    "Upload files": "Envoyer les fichiers",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Le fichier est <b>trop lourd</b> pour être envoyé. La taille limite est de %(limit)s mais la taille de ce fichier est de %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Ces fichiers sont <b>trop lourds</b> pour être envoyés. La taille limite des fichiers est de %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Certains fichiers sont <b>trop lourds</b> pour être envoyés. La taille limite des fichiers est de %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Envoyer %(count)s autres fichiers",
-        "one": "Envoyer %(count)s autre fichier"
-    },
-    "Cancel All": "Tout annuler",
-    "Upload Error": "Erreur d’envoi",
     "edited": "modifié",
-    "Upload all": "Tout envoyer",
     "Resend %(unsentCount)s reaction(s)": "Renvoyer %(unsentCount)s réaction(s)",
-    "Find others by phone or email": "Trouver d’autres personnes par téléphone ou e-mail",
-    "Be found by phone or email": "Être trouvé par téléphone ou e-mail",
     "Deactivate account": "Désactiver le compte",
-    "Command Help": "Aide aux commandes",
     "e.g. my-room": "par ex. mon-salon",
     "%(name)s accepted": "%(name)s a accepté",
     "%(name)s cancelled": "%(name)s a annulé",
@@ -177,9 +149,6 @@
     "Destroy cross-signing keys?": "Détruire les clés de signature croisée ?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La suppression des clés de signature croisée est permanente. Tous ceux que vous avez vérifié vont voir des alertes de sécurité. Il est peu probable que ce soit ce que vous voulez faire, sauf si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
     "Clear cross-signing keys": "Vider les clés de signature croisée",
-    "Not Trusted": "Non fiable",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) s’est connecté à une nouvelle session sans la vérifier :",
-    "Ask this user to verify their session, or manually verify it below.": "Demandez à cet utilisateur de vérifier sa session, ou vérifiez-la manuellement ci-dessous.",
     "%(name)s declined": "%(name)s a refusé",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pour signaler un problème de sécurité lié à Matrix, consultez <a>la politique de divulgation de sécurité</a> de Matrix.org.",
     "a new master key signature": "une nouvelle signature de clé principale",
@@ -193,8 +162,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s clés sur %(total)s restaurées",
     "Keys restored": "Clés restaurées",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s clés ont été restaurées avec succès",
-    "You signed in to a new session without verifying it:": "Vous vous êtes connecté à une nouvelle session sans la vérifier :",
-    "Verify your other session using one of the options below.": "Vérifiez votre autre session en utilisant une des options ci-dessous.",
     "Confirm encryption setup": "Confirmer la configuration du chiffrement",
     "Click the button below to confirm setting up encryption.": "Cliquez sur le bouton ci-dessous pour confirmer la configuration du chiffrement.",
     "IRC display name width": "Largeur du nom d’affichage IRC",
@@ -518,9 +485,6 @@
         "one": "%(spaceName)s et %(count)s autre",
         "other": "%(spaceName)s et %(count)s autres"
     },
-    "Link to room": "Lien vers le salon",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s.",
-    "Sections to show": "Sections à afficher",
     "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
     "toggle event": "Afficher/masquer l’évènement",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
@@ -555,8 +519,6 @@
     "Show rooms": "Afficher les salons",
     "Explore public spaces in the new search dialog": "Explorer les espaces publics dans la nouvelle fenêtre de recherche",
     "Saved Items": "Éléments sauvegardés",
-    "Interactively verify by emoji": "Vérifier de façon interactive avec des émojis",
-    "Manually verify by text": "Vérifier manuellement avec un texte",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s a démarré un appel vidéo",
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "inconnu",
     "Loading live location…": "Chargement de la position en direct…",
     "Fetching keys from server…": "Récupération des clés depuis le serveur…",
-    "Checking…": "Vérification…",
     "Starting export process…": "Démarrage du processus d’export…",
     "Desktop app logo": "Logo de l’application de bureau",
     "Requires your server to support the stable version of MSC3827": "Requiert la prise en charge par le serveur de la version stable du MSC3827",
@@ -693,7 +654,8 @@
         "joined": "Rejoint",
         "avatar": "Avatar",
         "are_you_sure": "Êtes-vous sûr ?",
-        "location": "Position"
+        "location": "Position",
+        "email_address": "Adresse e-mail"
     },
     "action": {
         "continue": "Continuer",
@@ -912,7 +874,8 @@
         "experimental_section": "Avant-premières",
         "experimental_description": "Envie d’expériences ? Essayez nos dernières idées en développement. Ces fonctionnalités ne sont pas terminées ; elles peuvent changer, être instables, ou être complètement abandonnées. <a>En savoir plus</a>.",
         "beta_feedback_title": "Commentaires sur la bêta de %(featureName)s",
-        "beta_feedback_leave_button": "Pour quitter la bêta, consultez les paramètres."
+        "beta_feedback_leave_button": "Pour quitter la bêta, consultez les paramètres.",
+        "sliding_sync_checking": "Vérification…"
     },
     "keyboard": {
         "home": "Accueil",
@@ -1079,7 +1042,8 @@
         "failed_send_logs": "Échec lors de l’envoi des journaux : ",
         "preparing_download": "Préparation du téléchargement des journaux",
         "unsupported_browser": "Rappel : Votre navigateur n’est pas pris en charge donc votre expérience pourrait être aléatoire.",
-        "textarea_label": "Notes"
+        "textarea_label": "Notes",
+        "log_request": "Pour nous aider à éviter cela dans le futur, veuillez <a>nous envoyer les journaux</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -2376,7 +2340,8 @@
         "verify_nop_warning_mismatch": "ATTENTION : session déjà vérifiée, mais les clés ne CORRESPONDENT PAS !",
         "verify_mismatch": "ATTENTION : ÉCHEC DE LA VÉRIFICATION DE CLÉ ! La clé de signature pour %(userId)s et la session %(deviceId)s est « %(fprint)s  ce qui ne correspond pas à la clé fournie « %(fingerprint)s ». Cela pourrait signifier que vos communications sont interceptées !",
         "verify_success_title": "Clé vérifiée",
-        "verify_success_description": "La clé de signature que vous avez fournie correspond à celle que vous avez reçue de la session %(deviceId)s de %(userId)s. Session marquée comme vérifiée."
+        "verify_success_description": "La clé de signature que vous avez fournie correspond à celle que vous avez reçue de la session %(deviceId)s de %(userId)s. Session marquée comme vérifiée.",
+        "help_dialog_title": "Aide aux commandes"
     },
     "presence": {
         "busy": "Occupé",
@@ -2903,7 +2868,16 @@
         "key_signature_upload_cancelled": "Envoi de signature annulé",
         "key_signature_upload_failed": "Envoi impossible",
         "key_signature_upload_success_title": "Succès de l’envoi de signature",
-        "key_signature_upload_failed_title": "Échec de l’envoi de signature"
+        "key_signature_upload_failed_title": "Échec de l’envoi de signature",
+        "udd": {
+            "own_new_session_text": "Vous vous êtes connecté à une nouvelle session sans la vérifier :",
+            "own_ask_verify_text": "Vérifiez votre autre session en utilisant une des options ci-dessous.",
+            "other_new_session_text": "%(name)s (%(userId)s) s’est connecté à une nouvelle session sans la vérifier :",
+            "other_ask_verify_text": "Demandez à cet utilisateur de vérifier sa session, ou vérifiez-la manuellement ci-dessous.",
+            "title": "Non fiable",
+            "manual_verification_button": "Vérifier manuellement avec un texte",
+            "interactive_verification_button": "Vérifier de façon interactive avec des émojis"
+        }
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",
@@ -3161,6 +3135,11 @@
             "continue_without_email_title": "Continuer sans e-mail",
             "continue_without_email_description": "Juste une remarque, si vous n'ajoutez pas d’e-mail et que vous oubliez votre mot de passe, vous pourriez <b>perdre définitivement l’accès à votre compte</b>.",
             "continue_without_email_field_label": "E-mail (facultatif)"
+        },
+        "set_email": {
+            "verification_pending_title": "Vérification en attente",
+            "verification_pending_description": "Veuillez consulter vos e-mails et cliquer sur le lien que vous avez reçu. Puis cliquez sur continuer.",
+            "description": "Ceci vous permettra de réinitialiser votre mot de passe et de recevoir des notifications."
         }
     },
     "room_list": {
@@ -3513,7 +3492,11 @@
         "leave_dialog_option_none": "Ne quitter aucun salon",
         "leave_dialog_option_all": "Quitter tous les salons",
         "leave_dialog_option_specific": "Quitter certains salons",
-        "leave_dialog_action": "Quitter l’espace"
+        "leave_dialog_action": "Quitter l’espace",
+        "preferences": {
+            "sections_section": "Sections à afficher",
+            "show_people_in_space": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -3840,7 +3823,9 @@
         "identity_server_no_terms_title": "Le serveur d’identité n’a pas de conditions de service",
         "identity_server_no_terms_description_1": "Cette action nécessite l’accès au serveur d’identité par défaut <server /> afin de valider une adresse e-mail ou un numéro de téléphone, mais le serveur n’a aucune condition de service.",
         "identity_server_no_terms_description_2": "Continuez seulement si vous faites confiance au propriétaire du serveur.",
-        "inline_intro_text": "Acceptez <policyLink /> pour continuer :"
+        "inline_intro_text": "Acceptez <policyLink /> pour continuer :",
+        "summary_identity_server_1": "Trouver d’autres personnes par téléphone ou e-mail",
+        "summary_identity_server_2": "Être trouvé par téléphone ou e-mail"
     },
     "space_settings": {
         "title": "Paramètres - %(spaceName)s"
@@ -4006,7 +3991,10 @@
             "description_1": "Une erreur est survenue lors de la restauration de la dernière session.",
             "description_2": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
             "description_3": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles."
-        }
+        },
+        "storage_evicted_title": "Données de la session manquantes",
+        "storage_evicted_description_1": "Des données de la session, dont les clés des messages chiffrés, sont manquantes. Déconnectez-vous et reconnectez-vous pour régler ce problème, en restaurant les clés depuis la sauvegarde.",
+        "storage_evicted_description_2": "Votre navigateur a sûrement supprimé ces données car il restait peu d’espace sur le disque."
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4383,5 +4371,27 @@
         "remove_filter": "Supprimer le filtre de recherche pour %(filter)s",
         "search_messages_hint": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
         "keyboard_scroll_hint": "Utilisez <arrows/> pour faire défiler"
+    },
+    "share": {
+        "title_room": "Partager le salon",
+        "permalink_most_recent": "Lien vers le message le plus récent",
+        "title_user": "Partager l’utilisateur",
+        "title_message": "Partager le message du salon",
+        "permalink_message": "Lien vers le message sélectionné",
+        "link_title": "Lien vers le salon"
+    },
+    "upload_file": {
+        "title_progress": "Envoi des fichiers (%(current)s sur %(total)s)",
+        "title": "Envoyer les fichiers",
+        "upload_all_button": "Tout envoyer",
+        "error_file_too_large": "Le fichier est <b>trop lourd</b> pour être envoyé. La taille limite est de %(limit)s mais la taille de ce fichier est de %(sizeOfThisFile)s.",
+        "error_files_too_large": "Ces fichiers sont <b>trop lourds</b> pour être envoyés. La taille limite des fichiers est de %(limit)s.",
+        "error_some_files_too_large": "Certains fichiers sont <b>trop lourds</b> pour être envoyés. La taille limite des fichiers est de %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Envoyer %(count)s autres fichiers",
+            "one": "Envoyer %(count)s autre fichier"
+        },
+        "cancel_all_button": "Tout annuler",
+        "error_title": "Erreur d’envoi"
     }
 }

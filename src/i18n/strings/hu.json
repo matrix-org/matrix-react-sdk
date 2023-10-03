@@ -5,13 +5,10 @@
         "other": "és még: %(count)s ...",
         "one": "és még egy..."
     },
-    "Email address": "E-mail-cím",
     "Home": "Kezdőlap",
     "Join Room": "Belépés a szobába",
     "Moderator": "Moderátor",
     "not specified": "nincs meghatározva",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
-    "Verification Pending": "Ellenőrzés függőben",
     "Warning!": "Figyelmeztetés!",
     "Sun": "Vas",
     "Mon": "Hé",
@@ -39,7 +36,6 @@
         "one": "(~%(count)s db eredmény)",
         "other": "(~%(count)s db eredmény)"
     },
-    "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
     "AM": "de.",
     "PM": "du.",
     "Unnamed room": "Névtelen szoba",
@@ -63,11 +59,6 @@
     "Yesterday": "Tegnap",
     "Wednesday": "Szerda",
     "Send Logs": "Naplók küldése",
-    "Share Room": "Szoba megosztása",
-    "Link to most recent message": "Hivatkozás a legfrissebb üzenethez",
-    "Share User": "Felhasználó megosztása",
-    "Share Room Message": "Szoba üzenetének megosztása",
-    "Link to selected message": "Hivatkozás a kijelölt üzenethez",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Mielőtt a naplót elküldöd, egy <a>Github jegyet kell nyitni</a> amiben leírod a problémádat.",
     "Unable to load backup status": "A mentés állapotát nem lehet lekérdezni",
     "Unable to restore backup": "A mentést nem lehet helyreállítani",
@@ -136,28 +127,9 @@
     "Folder": "Dosszié",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Figyelmeztetés</b>: csak biztonságos számítógépről állítson be kulcsmentést.",
     "Scissors": "Olló",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>.",
-    "Missing session data": "A munkamenetadatok hiányzik",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Néhány kapcsolati adat hiányzik, beleértve a titkosított üzenetek kulcsait. A hiba javításához lépjen ki és jelentkezzen be újra, így a mentésből helyreállítva a kulcsokat.",
-    "Your browser likely removed this data when running low on disk space.": "A böngésző valószínűleg törölte ezeket az adatokat, amikor lecsökkent a szabad lemezterület.",
-    "Upload files (%(current)s of %(total)s)": "Fájlok feltöltése (%(current)s / %(total)s)",
-    "Upload files": "Fájlok feltöltése",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Ez a fájl <b>túl nagy</b>, hogy fel lehessen tölteni. A fájlméret korlátja %(limit)s, de a fájl %(sizeOfThisFile)s méretű.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "A fájl <b>túl nagy</b> a feltöltéshez. A fájlméret korlátja %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Néhány fájl <b>túl nagy</b>, hogy fel lehessen tölteni. A fájlméret korlátja %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "%(count)s másik fájlt feltöltése",
-        "one": "%(count)s másik fájl feltöltése"
-    },
-    "Cancel All": "Összes megszakítása",
-    "Upload Error": "Feltöltési hiba",
     "edited": "szerkesztve",
-    "Upload all": "Összes feltöltése",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reakció újraküldése",
-    "Find others by phone or email": "Keressen meg másokat telefonszám vagy e-mail-cím alapján",
-    "Be found by phone or email": "Találják meg telefonszám vagy e-mail-cím alapján",
     "Deactivate account": "Fiók zárolása",
-    "Command Help": "Parancsok súgója",
     "e.g. my-room": "pl.: szobam",
     "%(name)s accepted": "%(name)s elfogadta",
     "%(name)s cancelled": "%(name)s megszakította",
@@ -174,9 +146,6 @@
         "other": "%(count)s munkamenet",
         "one": "%(count)s munkamenet"
     },
-    "Not Trusted": "Nem megbízható",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) új munkamenetbe lépett be, anélkül, hogy ellenőrizte volna:",
-    "Ask this user to verify their session, or manually verify it below.": "Kérje meg a felhasználót, hogy hitelesítse a munkamenetét, vagy ellenőrizze kézzel lentebb.",
     "Destroy cross-signing keys?": "Megsemmisíted az eszközök közti hitelesítés kulcsait?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Eszközök közti hitelesítési kulcsok törlése végleges. Mindenki akit ezzel hitelesítettél biztonsági figyelmeztetéseket fog látni. Hacsak nem vesztetted el az összes eszközödet amivel eszközök közti hitelesítést tudsz végezni, nem valószínű, hogy ezt szeretnéd tenni.",
     "Clear cross-signing keys": "Eszközök közti hitelesítési kulcsok törlése",
@@ -193,8 +162,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s kulcs helyreállítva",
     "Keys restored": "Kulcsok helyreállítva",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s kulcs sikeresen helyreállítva",
-    "You signed in to a new session without verifying it:": "Ellenőrzés nélkül jelentkezett be egy új munkamenetbe:",
-    "Verify your other session using one of the options below.": "Ellenőrizze a másik munkamenetét a lenti lehetőségek egyikével.",
     "Confirm encryption setup": "Erősítsd meg a titkosítási beállításokat",
     "Click the button below to confirm setting up encryption.": "Az alábbi gomb megnyomásával erősítsd meg, hogy megadod a titkosítási beállításokat.",
     "IRC display name width": "IRC-n megjelenítendő név szélessége",
@@ -519,9 +486,6 @@
     "Moderation": "Moderálás",
     "Messaging": "Üzenetküldés",
     "Open in OpenStreetMap": "Megnyitás az OpenStreetMapen",
-    "Sections to show": "Megjelenítendő részek",
-    "Link to room": "Hivatkozás a szobához",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből.",
     "toggle event": "esemény be/ki",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
@@ -555,8 +519,6 @@
     "Show rooms": "Szobák megjelenítése",
     "Explore public spaces in the new search dialog": "Nyilvános terek felderítése az új keresőben",
     "Saved Items": "Mentett elemek",
-    "Interactively verify by emoji": "Interaktív ellenőrzés emodzsikkal",
-    "Manually verify by text": "Kézi szöveges ellenőrzés",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s vagy %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s videóhívást indított",
     "Thread root ID: %(threadRootId)s": "Üzenetszál gyökerének azonosítója: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "ismeretlen",
     "Loading live location…": "Élő földrajzi helyzet meghatározás betöltése…",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
-    "Checking…": "Ellenőrzés…",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Desktop app logo": "Asztali alkalmazás profilkép",
     "Requires your server to support the stable version of MSC3827": "A Matrix-kiszolgálónak támogatnia kell az MSC3827 stabil verzióját",
@@ -693,7 +654,8 @@
         "joined": "Csatlakozott",
         "avatar": "Profilkép",
         "are_you_sure": "Biztos?",
-        "location": "Földrajzi helyzet"
+        "location": "Földrajzi helyzet",
+        "email_address": "E-mail-cím"
     },
     "action": {
         "continue": "Folytatás",
@@ -904,7 +866,8 @@
         "experimental_section": "Lehetőségek korai megjelenítése",
         "experimental_description": "Kísérletező kedvében van? Próbálja ki a legújabb fejlesztési ötleteinket. Ezek nincsenek befejezve; lehet, hogy instabilak, megváltozhatnak vagy el is tűnhetnek. <a>Tudjon meg többet</a>.",
         "beta_feedback_title": "%(featureName)s béta visszajelzés",
-        "beta_feedback_leave_button": "A beállításokban tudja elhagyni a bétát."
+        "beta_feedback_leave_button": "A beállításokban tudja elhagyni a bétát.",
+        "sliding_sync_checking": "Ellenőrzés…"
     },
     "keyboard": {
         "home": "Kezdőlap",
@@ -1071,7 +1034,8 @@
         "failed_send_logs": "Hiba a napló küldésénél: ",
         "preparing_download": "Napló előkészítése feltöltéshez",
         "unsupported_browser": "Emlékeztető: A böngésződ nem támogatott, így az élmény kiszámíthatatlan lehet.",
-        "textarea_label": "Megjegyzések"
+        "textarea_label": "Megjegyzések",
+        "log_request": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s ó %(minutes)s p %(seconds)s mp van hátra",
@@ -2315,7 +2279,8 @@
         "verify_nop_warning_mismatch": "FIGYELEM: a munkamenet már ellenőrizve van, de a kulcsok NEM EGYEZNEK.",
         "verify_mismatch": "FIGYELEM: A KULCSELLENŐRZÉS SIKERTELEN! %(userId)s aláírási kulcsa és a(z) %(deviceId)s munkamenet ujjlenyomata „%(fprint)s”, amely nem egyezik meg a megadott ujjlenyomattal: „%(fingerprint)s”. Ez azt is jelentheti, hogy a kommunikációt lehallgatják.",
         "verify_success_title": "Ellenőrzött kulcs",
-        "verify_success_description": "A megadott aláírási kulcs megegyezik %(userId)s felhasználótól kapott aláírási kulccsal ebben a munkamenetben: %(deviceId)s. A munkamenet ellenőrzöttnek lett jelölve."
+        "verify_success_description": "A megadott aláírási kulcs megegyezik %(userId)s felhasználótól kapott aláírási kulccsal ebben a munkamenetben: %(deviceId)s. A munkamenet ellenőrzöttnek lett jelölve.",
+        "help_dialog_title": "Parancsok súgója"
     },
     "presence": {
         "busy": "Foglalt",
@@ -2835,7 +2800,16 @@
         "key_signature_upload_cancelled": "Az aláírás feltöltése megszakítva",
         "key_signature_upload_failed": "Nem lehet feltölteni",
         "key_signature_upload_success_title": "Az aláírások feltöltése sikeres",
-        "key_signature_upload_failed_title": "Az aláírások feltöltése sikertelen"
+        "key_signature_upload_failed_title": "Az aláírások feltöltése sikertelen",
+        "udd": {
+            "own_new_session_text": "Ellenőrzés nélkül jelentkezett be egy új munkamenetbe:",
+            "own_ask_verify_text": "Ellenőrizze a másik munkamenetét a lenti lehetőségek egyikével.",
+            "other_new_session_text": "%(name)s (%(userId)s) új munkamenetbe lépett be, anélkül, hogy ellenőrizte volna:",
+            "other_ask_verify_text": "Kérje meg a felhasználót, hogy hitelesítse a munkamenetét, vagy ellenőrizze kézzel lentebb.",
+            "title": "Nem megbízható",
+            "manual_verification_button": "Kézi szöveges ellenőrzés",
+            "interactive_verification_button": "Interaktív ellenőrzés emodzsikkal"
+        }
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",
@@ -3090,6 +3064,11 @@
             "continue_without_email_title": "Folytatás e-mail-cím nélkül",
             "continue_without_email_description": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
             "continue_without_email_field_label": "E-mail (nem kötelező)"
+        },
+        "set_email": {
+            "verification_pending_title": "Ellenőrzés függőben",
+            "verification_pending_description": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
+            "description": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon."
         }
     },
     "room_list": {
@@ -3439,7 +3418,11 @@
         "leave_dialog_option_none": "Ne lépjen ki egy szobából sem",
         "leave_dialog_option_all": "Kilépés minden szobából",
         "leave_dialog_option_specific": "Kilépés néhány szobából",
-        "leave_dialog_action": "Tér elhagyása"
+        "leave_dialog_action": "Tér elhagyása",
+        "preferences": {
+            "sections_section": "Megjelenítendő részek",
+            "show_people_in_space": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
@@ -3753,7 +3736,9 @@
         "identity_server_no_terms_title": "Az azonosítási kiszolgálónak nincsenek felhasználási feltételei",
         "identity_server_no_terms_description_1": "Ez a művelet az e-mail-cím vagy telefonszám ellenőrzése miatt hozzáférést igényel a(z) <server /> alapértelmezett azonosítási kiszolgálójához, de a kiszolgálónak nincsenek felhasználási feltételei.",
         "identity_server_no_terms_description_2": "Csak akkor lépjen tovább, ha megbízik a kiszolgáló tulajdonosában.",
-        "inline_intro_text": "<policyLink /> elfogadása a továbblépéshez:"
+        "inline_intro_text": "<policyLink /> elfogadása a továbblépéshez:",
+        "summary_identity_server_1": "Keressen meg másokat telefonszám vagy e-mail-cím alapján",
+        "summary_identity_server_2": "Találják meg telefonszám vagy e-mail-cím alapján"
     },
     "space_settings": {
         "title": "Beállítások – %(spaceName)s"
@@ -3915,7 +3900,10 @@
             "description_1": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
             "description_2": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
             "description_3": "A böngésző tárolójának törlése megoldhatja a problémát, de ezzel kijelentkezik és a titkosított beszélgetéseinek előzményei olvashatatlanná válnak."
-        }
+        },
+        "storage_evicted_title": "A munkamenetadatok hiányzik",
+        "storage_evicted_description_1": "Néhány kapcsolati adat hiányzik, beleértve a titkosított üzenetek kulcsait. A hiba javításához lépjen ki és jelentkezzen be újra, így a mentésből helyreállítva a kulcsokat.",
+        "storage_evicted_description_2": "A böngésző valószínűleg törölte ezeket az adatokat, amikor lecsökkent a szabad lemezterület."
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4287,5 +4275,27 @@
         "remove_filter": "Keresési szűrő eltávolítása innen: %(filter)s",
         "search_messages_hint": "Az üzenetek kereséséhez keresse ezt az ikont a szoba tetején: <icon/>",
         "keyboard_scroll_hint": "Görgetés ezekkel: <arrows/>"
+    },
+    "share": {
+        "title_room": "Szoba megosztása",
+        "permalink_most_recent": "Hivatkozás a legfrissebb üzenethez",
+        "title_user": "Felhasználó megosztása",
+        "title_message": "Szoba üzenetének megosztása",
+        "permalink_message": "Hivatkozás a kijelölt üzenethez",
+        "link_title": "Hivatkozás a szobához"
+    },
+    "upload_file": {
+        "title_progress": "Fájlok feltöltése (%(current)s / %(total)s)",
+        "title": "Fájlok feltöltése",
+        "upload_all_button": "Összes feltöltése",
+        "error_file_too_large": "Ez a fájl <b>túl nagy</b>, hogy fel lehessen tölteni. A fájlméret korlátja %(limit)s, de a fájl %(sizeOfThisFile)s méretű.",
+        "error_files_too_large": "A fájl <b>túl nagy</b> a feltöltéshez. A fájlméret korlátja %(limit)s.",
+        "error_some_files_too_large": "Néhány fájl <b>túl nagy</b>, hogy fel lehessen tölteni. A fájlméret korlátja %(limit)s.",
+        "upload_n_others_button": {
+            "other": "%(count)s másik fájlt feltöltése",
+            "one": "%(count)s másik fájl feltöltése"
+        },
+        "cancel_all_button": "Összes megszakítása",
+        "error_title": "Feltöltési hiba"
     }
 }

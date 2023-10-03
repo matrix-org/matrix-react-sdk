@@ -508,7 +508,7 @@ const SpaceSetupPrivateInvite: React.FC<{
                 key={name}
                 name={name}
                 type="text"
-                label={_t("Email address")}
+                label={_t("common|email_address")}
                 placeholder={_t("auth|email_field_label")}
                 value={emailAddresses[i]}
                 onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setEmailAddress(i, ev.target.value)}

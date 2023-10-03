@@ -40,14 +40,11 @@
     "Saturday": "Laugardagur",
     "Today": "Í dag",
     "Yesterday": "Í gær",
-    "Email address": "Tölvupóstfang",
     "Home": "Forsíða",
     "collapse": "fella saman",
     "expand": "fletta út",
     "Filter results": "Sía niðurstöður",
     "Send Logs": "Senda atvikaskrár",
-    "Verification Pending": "Sannvottun í bið",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
     "Delete Widget": "Eyða viðmótshluta",
     "Finland": "Finnland",
     "Norway": "Noreg",
@@ -348,13 +345,6 @@
     "Hold": "Bíða",
     "Resume": "Halda áfram",
     "Looks good!": "Lítur vel út!",
-    "Upload Error": "Villa við innsendingu",
-    "Cancel All": "Hætta við allt",
-    "Upload all": "Senda allt inn",
-    "Upload files": "Hlaða inn skrám",
-    "Link to room": "Tengill á spjallrás",
-    "Share Room Message": "Deila skilaboðum spjallrásar",
-    "Share Room": "Deila spjallrás",
     "%(count)s rooms": {
         "one": "%(count)s spjallrás",
         "other": "%(count)s spjallrásir"
@@ -388,7 +378,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Reset everything": "Frumstilla allt",
-    "Not Trusted": "Ekki treyst",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -426,9 +415,6 @@
     "Security Key": "Öryggislykill",
     "Invalid Security Key": "Ógildur öryggislykill",
     "Wrong Security Key": "Rangur öryggislykill",
-    "Ask this user to verify their session, or manually verify it below.": "Biddu þennan notanda að sannreyna setuna sína, eða sannreyndu hana handvirkt hér fyrir neðan.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) skráði sig inn í nýja setu án þess að sannvotta hana:",
-    "You signed in to a new session without verifying it:": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
@@ -441,7 +427,6 @@
         "one": "%(count)s seta",
         "other": "%(count)s setur"
     },
-    "Share User": "Deila notanda",
     "%(count)s members": {
         "one": "%(count)s þátttakandi",
         "other": "%(count)s þátttakendur"
@@ -456,7 +441,6 @@
     "Enter Security Phrase": "Settu inn öryggisfrasa",
     "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
     "Confirm encryption setup": "Staðfestu uppsetningu dulritunar",
-    "Command Help": "Hjálp við skipun",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -468,7 +452,6 @@
     "Security Phrase": "Öryggisfrasi",
     "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
-    "Find others by phone or email": "Finndu aðra með símanúmeri eða tölvupóstfangi",
     "toggle event": "víxla atburði af/á",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
     "You are sharing your live location": "Þú ert að deila staðsetninu þinni í rauntíma",
@@ -477,28 +460,18 @@
     "Unsent": "Ósent",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
     "Wrong file type": "Röng skráartegund",
-    "Be found by phone or email": "Láttu finna þig með símanúmeri eða tölvupóstfangi",
     "Submit logs": "Senda inn atvikaskrár",
     "Keys restored": "Dulritunarlyklar endurheimtir",
     "No backup found!": "Ekkert öryggisafrit fannst!",
     "Incorrect Security Phrase": "Rangur öryggisfrasi",
-    "Missing session data": "Vantar setugögn",
-    "Link to selected message": "Tengill í valin skilaboð",
-    "Link to most recent message": "Tengill í nýjustu skilaboðin",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
     "Unable to load backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
     "%(completed)s of %(total)s keys restored": "%(completed)s af %(total)s lyklum endurheimtir",
     "Restoring keys from backup": "Endurheimti lykla úr öryggisafriti",
     "Unable to set up keys": "Tókst ekki að setja upp lykla",
-    "Upload files (%(current)s of %(total)s)": "Senda inn skrár (%(current)s oaf %(total)s)",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
-    "Upload %(count)s other files": {
-        "one": "Senda inn %(count)s skrá til viðbótar",
-        "other": "Senda inn %(count)s skrár til viðbótar"
-    },
-    "Sections to show": "Hlutar sem á að sýna",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
     "View List": "Skoða lista",
@@ -520,8 +493,6 @@
     "No live locations": "Engar staðsetningar í rauntíma",
     "Live location error": "Villa í rauntímastaðsetningu",
     "Live location ended": "Staðsetningu í rauntíma lauk",
-    "Interactively verify by emoji": "Sannprófa gagnvirkt með táknmyndum",
-    "Manually verify by text": "Sannreyna handvirkt með texta",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
@@ -646,7 +617,8 @@
         "joined": "Gekk í hópinn",
         "avatar": "Auðkennismynd",
         "are_you_sure": "Ertu viss?",
-        "location": "Staðsetning"
+        "location": "Staðsetning",
+        "email_address": "Tölvupóstfang"
     },
     "action": {
         "continue": "Halda áfram",
@@ -2085,7 +2057,8 @@
         "verify_nop": "Seta er þegar sannreynd!",
         "verify_mismatch": "AÐVÖRUN: SANNVOTTUN LYKILS MISTÓKST! Undirritunarlykillinn fyrir %(userId)s og setuna %(deviceId)s er \"%(fprint)s\" sem samsvarar ekki uppgefna lyklinum \"%(fingerprint)s\". Þetta gæti þýtt að einhver hafi komist inn í samskiptin þín!",
         "verify_success_title": "Staðfestur dulritunarlykill",
-        "verify_success_description": "Undirritunarlykillinn sem þú gafst upp samsvarar lyklinum sem þú fékkst frá %(userId)s og setunni %(deviceId)s. Setan er því merkt sem sannreynd."
+        "verify_success_description": "Undirritunarlykillinn sem þú gafst upp samsvarar lyklinum sem þú fékkst frá %(userId)s og setunni %(deviceId)s. Setan er því merkt sem sannreynd.",
+        "help_dialog_title": "Hjálp við skipun"
     },
     "presence": {
         "busy": "Upptekinn",
@@ -2527,7 +2500,15 @@
         "incompatible_database_title": "Ósamhæfður gagnagrunnur",
         "incompatible_database_disable": "Halda áfram með dulritun óvirka",
         "key_signature_upload_completed": "Innsendingu er lokið",
-        "key_signature_upload_failed": "Ekki tókst að senda inn"
+        "key_signature_upload_failed": "Ekki tókst að senda inn",
+        "udd": {
+            "own_new_session_text": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
+            "other_new_session_text": "%(name)s (%(userId)s) skráði sig inn í nýja setu án þess að sannvotta hana:",
+            "other_ask_verify_text": "Biddu þennan notanda að sannreyna setuna sína, eða sannreyndu hana handvirkt hér fyrir neðan.",
+            "title": "Ekki treyst",
+            "manual_verification_button": "Sannreyna handvirkt með texta",
+            "interactive_verification_button": "Sannprófa gagnvirkt með táknmyndum"
+        }
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -2734,6 +2715,10 @@
             "continue_without_email_title": "Halda áfram án tölvupósts",
             "continue_without_email_description": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
             "continue_without_email_field_label": "Tölvupóstfang (valfrjálst)"
+        },
+        "set_email": {
+            "verification_pending_title": "Sannvottun í bið",
+            "verification_pending_description": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram."
         }
     },
     "room_list": {
@@ -3051,7 +3036,10 @@
         "leave_dialog_option_none": "Ekki yfirgefa neinar spjallrásir",
         "leave_dialog_option_all": "Yfirgefa allar spjallrásir",
         "leave_dialog_option_specific": "Yfirgefa sumar spjallrásir",
-        "leave_dialog_action": "Yfirgefa svæði"
+        "leave_dialog_action": "Yfirgefa svæði",
+        "preferences": {
+            "sections_section": "Hlutar sem á að sýna"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3311,7 +3299,9 @@
         "identity_server_no_terms_title": "Auðkennisþjónninn er ekki með neina þjónustuskilmála",
         "identity_server_no_terms_description_1": "Þessi aðgerð krefst þess að til að fá aðgang að sjálfgefna auðkennisþjóninum <server /> þurfi að sannreyna tölvupóstfang eða símanúmer, en netþjónninn er hins vegar ekki með neina þjónustuskilmála.",
         "identity_server_no_terms_description_2": "Ekki halda áfram nema þú treystir eiganda netþjónsins.",
-        "inline_intro_text": "Samþykktu <policyLink /> til að halda áfram:"
+        "inline_intro_text": "Samþykktu <policyLink /> til að halda áfram:",
+        "summary_identity_server_1": "Finndu aðra með símanúmeri eða tölvupóstfangi",
+        "summary_identity_server_2": "Láttu finna þig með símanúmeri eða tölvupóstfangi"
     },
     "space_settings": {
         "title": "Stillingar - %(spaceName)s"
@@ -3453,7 +3443,8 @@
             "title": "Tókst ekki að endurheimta setu",
             "description_1": "Villa kom upp þegar reynt var að endurheimta fyrri setuna þína.",
             "description_3": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur."
-        }
+        },
+        "storage_evicted_title": "Vantar setugögn"
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3765,5 +3756,24 @@
         "recently_viewed_section_title": "Nýlega skoðað",
         "search_dialog": "Leitargluggi",
         "keyboard_scroll_hint": "Notaðu <arrows/> til að skruna"
+    },
+    "share": {
+        "title_room": "Deila spjallrás",
+        "permalink_most_recent": "Tengill í nýjustu skilaboðin",
+        "title_user": "Deila notanda",
+        "title_message": "Deila skilaboðum spjallrásar",
+        "permalink_message": "Tengill í valin skilaboð",
+        "link_title": "Tengill á spjallrás"
+    },
+    "upload_file": {
+        "title_progress": "Senda inn skrár (%(current)s oaf %(total)s)",
+        "title": "Hlaða inn skrám",
+        "upload_all_button": "Senda allt inn",
+        "upload_n_others_button": {
+            "one": "Senda inn %(count)s skrá til viðbótar",
+            "other": "Senda inn %(count)s skrár til viðbótar"
+        },
+        "cancel_all_button": "Hætta við allt",
+        "error_title": "Villa við innsendingu"
     }
 }

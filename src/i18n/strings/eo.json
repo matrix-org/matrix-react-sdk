@@ -42,15 +42,11 @@
     "Join Room": "Aliĝi al ĉambro",
     "unknown error code": "nekonata kodo de eraro",
     "not specified": "nespecifita",
-    "Email address": "Retpoŝtadreso",
     "Delete Widget": "Forigi fenestraĵon",
     "Home": "Hejmo",
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
-    "Verification Pending": "Atendante kontrolon",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Bonvolu kontroli vian retpoŝton, kaj klaki la ligilon enhavatan en la sendita mesaĝo. Farinte tion, klaku je «daŭrigi».",
-    "This will allow you to reset your password and receive notifications.": "Tio ĉi permesos al vi restarigi vian pasvorton kaj ricevi sciigojn.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Sunday": "Dimanĉo",
     "Today": "Hodiaŭ",
@@ -121,52 +117,25 @@
     "Anchor": "Ankro",
     "Headphones": "Kapaŭdilo",
     "Folder": "Dosierujo",
-    "Share Room": "Kunhavigi ĉambron",
-    "Share User": "Kunhavigi uzanton",
-    "Share Room Message": "Kunhavigi ĉambran mesaĝon",
     "Santa": "Kristnaska viro",
     "Thumbs up": "Dikfingro supren",
     "Paperclip": "Paperkuntenilo",
     "edited": "redaktita",
     "Send Logs": "Sendi protokolon",
-    "Link to most recent message": "Ligi al plej freŝa mesaĝo",
-    "Link to selected message": "Ligi al elektita mesaĝo",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Por malhelpi tion ose, bonvolu <a>sendi al ni protokolon</a>.",
-    "Upload files (%(current)s of %(total)s)": "Alŝuti dosierojn (%(current)s el %(total)s)",
-    "Upload files": "Alŝuti dosierojn",
-    "Upload all": "Alŝuti ĉiujn",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Ĉi tiu dosiero <b>tro grandas</b> por alŝuto. La grandolimo estas %(limit)s sed la dosiero grandas %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Ĉi tiuj dosieroj <b>tro grandas</b> por alŝuto. La grandolimo estas %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Iuj dosieroj <b>tro grandas</b> por alŝuto. La grandolimo estas %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Alŝuti %(count)s aliajn dosierojn",
-        "one": "Alŝuti %(count)s alian dosieron"
-    },
-    "Cancel All": "Nuligi ĉion",
-    "Upload Error": "Alŝuto eraris",
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Missing session data": "Mankas datumoj de salutaĵo",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Iuj datumoj de salutaĵo, inkluzive viajn ĉifrajn ŝlosilojn, mankas. Por tion korekti, resalutu, kaj rehavu la ŝlosilojn el savkopio.",
-    "Your browser likely removed this data when running low on disk space.": "Via foliumilo verŝajne forigos ĉi tiujn datumojn kiam al ĝi mankos spaco sur disko.",
     "Unable to restore backup": "Ne povas rehavi savkopion",
     "Failed to decrypt %(failedCount)s sessions!": "Malsukcesis malĉifri%(failedCount)s salutaĵojn!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Averto</b>: vi agordu ŝlosilan savkopion nur per fidata komputilo.",
     "Resend %(unsentCount)s reaction(s)": "Resendi %(unsentCount)s reago(j)n",
-    "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
-    "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
     "Deactivate account": "Malaktivigi konton",
     "%(name)s accepted": "%(name)s akceptis",
     "%(name)s cancelled": "%(name)s nuligis",
     "%(name)s wants to verify": "%(name)s volas kontroli",
     "e.g. my-room": "ekzemple mia-chambro",
-    "Command Help": "Helpo pri komando",
     "Lock": "Seruro",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
-    "Not Trusted": "Nefidata",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
-    "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
@@ -187,8 +156,6 @@
     "a device cross-signing signature": "delega subskribo de aparato",
     "a key signature": "ŝlosila subskribo",
     "%(brand)s encountered an error during upload of:": "%(brand)s eraris dum alŝuto de:",
-    "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
-    "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
     "Submit logs": "Alŝuti protokolon",
     "Restoring keys from backup": "Rehavo de ŝlosiloj el savkopio",
     "%(completed)s of %(total)s keys restored": "%(completed)s el %(total)s ŝlosiloj rehaviĝis",
@@ -607,7 +574,8 @@
         "show_more": "Montri pli",
         "avatar": "Profilbildo",
         "are_you_sure": "Ĉu vi certas?",
-        "location": "Loko"
+        "location": "Loko",
+        "email_address": "Retpoŝtadreso"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -884,7 +852,8 @@
         "failed_send_logs": "Malsukcesis sendi protokolon: ",
         "preparing_download": "Preparante elŝuton de protokolo",
         "unsupported_browser": "Rememorigo: via foliumilo ne estas subtenata, kaj via sperto do povas esti stranga.",
-        "textarea_label": "Notoj"
+        "textarea_label": "Notoj",
+        "log_request": "Por malhelpi tion ose, bonvolu <a>sendi al ni protokolon</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh. %(minutes)sm. %(seconds)ss. restas",
@@ -1764,7 +1733,8 @@
         "verify_nop_warning_mismatch": "AVERTO: Salutaĵo jam estas kontrolita, sed la ŝlosiloj NE AKORDAS!",
         "verify_mismatch": "AVERTO: MALSUKCESIS KONTROLO DE ŜLOSILOJ! La subskriba ŝlosilo de %(userId)s kaj session %(deviceId)s estas «%(fprint)s», kiu ne akordas la donitan ŝlosilon «%(fingerprint)s». Tio povus signifi, ke via komunikado estas spionata!",
         "verify_success_title": "Kontrolita ŝlosilo",
-        "verify_success_description": "La subskriba ŝlosilo, kiun vi donis, akordas la subskribas ŝlosilon, kinu vi ricevis de la salutaĵo %(deviceId)s de la uzanto %(userId)s. Salutaĵo estis markita kontrolita."
+        "verify_success_description": "La subskriba ŝlosilo, kiun vi donis, akordas la subskribas ŝlosilon, kinu vi ricevis de la salutaĵo %(deviceId)s de la uzanto %(userId)s. Salutaĵo estis markita kontrolita.",
+        "help_dialog_title": "Helpo pri komando"
     },
     "presence": {
         "online_for": "Enreta jam je %(duration)s",
@@ -2205,7 +2175,14 @@
         "key_signature_upload_cancelled": "Alŝuto de subskribo nuliĝis",
         "key_signature_upload_failed": "Ne povas alŝuti",
         "key_signature_upload_success_title": "Alŝuto de subskribo sukcesis",
-        "key_signature_upload_failed_title": "Alŝuto de subskribo malsukcesis"
+        "key_signature_upload_failed_title": "Alŝuto de subskribo malsukcesis",
+        "udd": {
+            "own_new_session_text": "Vi salutis novan salutaĵon sen kontrolo:",
+            "own_ask_verify_text": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
+            "other_new_session_text": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
+            "other_ask_verify_text": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
+            "title": "Nefidata"
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -2401,6 +2378,11 @@
             "continue_without_email_title": "Daŭrigante sen retpoŝtadreso",
             "continue_without_email_description": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
             "continue_without_email_field_label": "Retpoŝto (malnepra)"
+        },
+        "set_email": {
+            "verification_pending_title": "Atendante kontrolon",
+            "verification_pending_description": "Bonvolu kontroli vian retpoŝton, kaj klaki la ligilon enhavatan en la sendita mesaĝo. Farinte tion, klaku je «daŭrigi».",
+            "description": "Tio ĉi permesos al vi restarigi vian pasvorton kaj ricevi sciigojn."
         }
     },
     "room_list": {
@@ -2943,7 +2925,9 @@
         "identity_server_no_terms_title": "Identiga servilo havas neniujn uzkondiĉojn",
         "identity_server_no_terms_description_1": "Ĉi tiu ago bezonas atingi la norman identigan servilon <server /> por kontroli retpoŝtadreson aŭ telefonnumeron, sed la servilo ne havas uzokondiĉojn.",
         "identity_server_no_terms_description_2": "Nur daŭrigu se vi fidas al la posedanto de la servilo.",
-        "inline_intro_text": "Akceptu <policyLink /> por daŭrigi:"
+        "inline_intro_text": "Akceptu <policyLink /> por daŭrigi:",
+        "summary_identity_server_1": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
+        "summary_identity_server_2": "Troviĝu per telefonnumero aŭ retpoŝtadreso"
     },
     "space_settings": {
         "title": "Agordoj – %(spaceName)s"
@@ -3075,7 +3059,10 @@
             "description_1": "Ni renkontis eraron provante rehavi vian antaŭan salutaĵon.",
             "description_2": "Se vi antaŭe uzis pli novan version de %(brand)s, via salutaĵo eble ne akordos kun ĉi tiu versio. Fermu ĉi tiun fenestron kaj revenu al la pli nova versio.",
             "description_3": "Vakigo de la memoro de via foliumilo eble korektos la problemon, sed adiaŭigos vin, kaj malebligos legadon de historio de ĉifritaj babiloj."
-        }
+        },
+        "storage_evicted_title": "Mankas datumoj de salutaĵo",
+        "storage_evicted_description_1": "Iuj datumoj de salutaĵo, inkluzive viajn ĉifrajn ŝlosilojn, mankas. Por tion korekti, resalutu, kaj rehavu la ŝlosilojn el savkopio.",
+        "storage_evicted_description_2": "Via foliumilo verŝajne forigos ĉi tiujn datumojn kiam al ĝi mankos spaco sur disko."
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3336,5 +3323,26 @@
     "spotlight_dialog": {
         "public_rooms_label": "Publikajn ĉambrojn",
         "create_new_room_button": "Krei novan ĉambron"
+    },
+    "share": {
+        "title_room": "Kunhavigi ĉambron",
+        "permalink_most_recent": "Ligi al plej freŝa mesaĝo",
+        "title_user": "Kunhavigi uzanton",
+        "title_message": "Kunhavigi ĉambran mesaĝon",
+        "permalink_message": "Ligi al elektita mesaĝo"
+    },
+    "upload_file": {
+        "title_progress": "Alŝuti dosierojn (%(current)s el %(total)s)",
+        "title": "Alŝuti dosierojn",
+        "upload_all_button": "Alŝuti ĉiujn",
+        "error_file_too_large": "Ĉi tiu dosiero <b>tro grandas</b> por alŝuto. La grandolimo estas %(limit)s sed la dosiero grandas %(sizeOfThisFile)s.",
+        "error_files_too_large": "Ĉi tiuj dosieroj <b>tro grandas</b> por alŝuto. La grandolimo estas %(limit)s.",
+        "error_some_files_too_large": "Iuj dosieroj <b>tro grandas</b> por alŝuto. La grandolimo estas %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Alŝuti %(count)s aliajn dosierojn",
+            "one": "Alŝuti %(count)s alian dosieron"
+        },
+        "cancel_all_button": "Nuligi ĉion",
+        "error_title": "Alŝuto eraris"
     }
 }

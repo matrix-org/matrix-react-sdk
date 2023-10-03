@@ -121,30 +121,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
     "Send Logs": "Logboek verstuurn",
-    "Verification Pending": "Verificoasje in afwachtienge",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekyk jen e-mails en klikt ip de koppelienge derin. Klikt van zodra da je da gedoan èt ip ‘Verdergoan’.",
-    "Email address": "E-mailadresse",
-    "This will allow you to reset your password and receive notifications.": "Hierdoor goa je je paswoord kunn herinstell en meldiengn ountvangn.",
-    "Share Room": "Gesprek deeln",
-    "Link to most recent message": "Koppelienge noa ’t recentste bericht",
-    "Share User": "Gebruuker deeln",
-    "Share Room Message": "Bericht uut gesprek deeln",
-    "Link to selected message": "Koppelienge noa geselecteerd bericht",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Gelieve <a>uus logboekn te stuurn</a> vo dit in de toekomst t’helpn voorkomn.",
-    "Missing session data": "Sessiegegeevns ountbreekn",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Sommige sessiegegeevns, inclusief sleuters vo versleuterde berichtn, ountbreekn. Meldt jen af en were an vo dit ip te lossn, en herstelt de sleuters uut den back-up.",
-    "Your browser likely removed this data when running low on disk space.": "Je browser èt deze gegeevns meugliks verwyderd toen da de beschikboare ipslagruumte vul was.",
-    "Upload files (%(current)s of %(total)s)": "Bestandn wordn ipgeloadn (%(current)s van %(total)s)",
-    "Upload files": "Bestandn iploadn",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Dit bestand is <b>te groot</b> vo te kunn iploadn. De bestandsgroottelimiet is %(limit)s, ma dit bestand is %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Deze bestandn zyn <b>te groot</b> vo te kunn iploadn. De bestandsgroottelimiet is %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Sommige bestandn zyn <b>te groot</b> vo te kunn iploadn. De bestandsgroottelimiet is %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "%(count)s overige bestandn iploadn",
-        "one": "%(count)s overig bestand iploadn"
-    },
-    "Cancel All": "Alles annuleern",
-    "Upload Error": "Iploadfout",
     "Unable to load backup status": "Kostege back-upstatus nie loadn",
     "Unable to restore backup": "Kostege back-up nie herstelln",
     "No backup found!": "Geen back-up gevoundn!",
@@ -152,12 +128,8 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer.",
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
-    "Upload all": "Alles iploadn",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) herverstuurn",
-    "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
-    "Be found by phone or email": "Wor gevoundn via je telefongnumero of e-mailadresse",
     "Deactivate account": "Account deactiveern",
-    "Command Help": "Hulp by ipdrachtn",
     "common": {
         "analytics": "Statistische gegeevns",
         "error": "Foute",
@@ -209,7 +181,8 @@
         "historical": "Historisch",
         "go_to_settings": "Goa noa d’instelliengn",
         "setup_secure_messages": "Beveiligde berichtn instelln",
-        "are_you_sure": "Zy je zeker?"
+        "are_you_sure": "Zy je zeker?",
+        "email_address": "E-mailadresse"
     },
     "action": {
         "continue": "Verdergoan",
@@ -319,7 +292,8 @@
         "logs_sent": "Logboekn verstuurd",
         "thank_you": "Merci!",
         "failed_send_logs": "Verstuurn van logboekn mislukt: ",
-        "textarea_label": "Ipmerkiengn"
+        "textarea_label": "Ipmerkiengn",
+        "log_request": "Gelieve <a>uus logboekn te stuurn</a> vo dit in de toekomst t’helpn voorkomn."
     },
     "settings": {
         "use_12_hour_format": "Tyd in 12-uursformoat weregeevn (bv. 2:30pm)",
@@ -692,7 +666,8 @@
         "ignore_dialog_description": "Je negeert nu %(userId)s",
         "unignore_dialog_title": "Oungenegeerde gebruuker",
         "unignore_dialog_description": "Je negeert %(userId)s nie mi",
-        "verify_success_title": "Geverifieerde sleuter"
+        "verify_success_title": "Geverifieerde sleuter",
+        "help_dialog_title": "Hulp by ipdrachtn"
     },
     "presence": {
         "online_for": "Online vo %(duration)s",
@@ -941,6 +916,11 @@
         },
         "registration": {
             "continue_without_email_field_label": "E-mailadresse (optioneel)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verificoasje in afwachtienge",
+            "verification_pending_description": "Bekyk jen e-mails en klikt ip de koppelienge derin. Klikt van zodra da je da gedoan èt ip ‘Verdergoan’.",
+            "description": "Hierdoor goa je je paswoord kunn herinstell en meldiengn ountvangn."
         }
     },
     "export_chat": {
@@ -1083,7 +1063,9 @@
         "tac_description": "Vo de %(homeserverDomain)s-thuusserver te bluuvn gebruukn, goa je de gebruuksvoorwoardn moetn leezn en anveirdn.",
         "tac_button": "Gebruuksvoorwoardn leezn",
         "identity_server_no_terms_title": "Den identiteitsserver èt geen dienstvoorwoardn",
-        "identity_server_no_terms_description_2": "Goat alleene mo verder o je den eigenoar van de server betrouwt."
+        "identity_server_no_terms_description_2": "Goat alleene mo verder o je den eigenoar van de server betrouwt.",
+        "summary_identity_server_1": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
+        "summary_identity_server_2": "Wor gevoundn via je telefongnumero of e-mailadresse"
     },
     "labs_mjolnir": {
         "title": "Genegeerde gebruukers"
@@ -1155,7 +1137,10 @@
             "description_1": "’t Is e foute ipgetreedn by ’t herstelln van je vorige sessie.",
             "description_2": "A j’al e ki gebruuk gemakt èt van e recentere versie van %(brand)s, is je sessie meugliks ounverenigboar me deze versie. Sluut deze veinster en goa were noa de recentere versie.",
             "description_3": "’t Legen van den ipslag van je browser goa ’t probleem misschiens verhelpn, mo goa joun ook afmeldn en gans je versleuterde gespreksgeschiedenisse ounleesboar moakn."
-        }
+        },
+        "storage_evicted_title": "Sessiegegeevns ountbreekn",
+        "storage_evicted_description_1": "Sommige sessiegegeevns, inclusief sleuters vo versleuterde berichtn, ountbreekn. Meldt jen af en were an vo dit ip te lossn, en herstelt de sleuters uut den back-up.",
+        "storage_evicted_description_2": "Je browser èt deze gegeevns meugliks verwyderd toen da de beschikboare ipslagruumte vul was."
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",
@@ -1265,5 +1250,26 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "E nieuw gesprek anmoakn"
+    },
+    "share": {
+        "title_room": "Gesprek deeln",
+        "permalink_most_recent": "Koppelienge noa ’t recentste bericht",
+        "title_user": "Gebruuker deeln",
+        "title_message": "Bericht uut gesprek deeln",
+        "permalink_message": "Koppelienge noa geselecteerd bericht"
+    },
+    "upload_file": {
+        "title_progress": "Bestandn wordn ipgeloadn (%(current)s van %(total)s)",
+        "title": "Bestandn iploadn",
+        "upload_all_button": "Alles iploadn",
+        "error_file_too_large": "Dit bestand is <b>te groot</b> vo te kunn iploadn. De bestandsgroottelimiet is %(limit)s, ma dit bestand is %(sizeOfThisFile)s.",
+        "error_files_too_large": "Deze bestandn zyn <b>te groot</b> vo te kunn iploadn. De bestandsgroottelimiet is %(limit)s.",
+        "error_some_files_too_large": "Sommige bestandn zyn <b>te groot</b> vo te kunn iploadn. De bestandsgroottelimiet is %(limit)s.",
+        "upload_n_others_button": {
+            "other": "%(count)s overige bestandn iploadn",
+            "one": "%(count)s overig bestand iploadn"
+        },
+        "cancel_all_button": "Alles annuleern",
+        "error_title": "Iploadfout"
     }
 }

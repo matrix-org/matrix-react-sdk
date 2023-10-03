@@ -14,7 +14,6 @@
     "PM": "PL",
     "AM": "EL",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Ask this user to verify their session, or manually verify it below.": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
     "Sunday": "Pühapäev",
     "Monday": "Esmaspäev",
     "Tuesday": "Teisipäev",
@@ -26,30 +25,10 @@
     "Yesterday": "Eile",
     "collapse": "ahenda",
     "expand": "laienda",
-    "Upload files (%(current)s of %(total)s)": "Laadin faile üles (%(current)s / %(total)s)",
-    "Upload files": "Laadi failid üles",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Need failid on üleslaadimiseks <b>liiga suured</b>. Failisuuruse piir on %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Mõned failid on üleslaadimiseks <b>liiga suured</b>. Failisuuruse piir on %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Laadi üles %(count)s muud faili",
-        "one": "Laadi üles %(count)s muu fail"
-    },
     "Resend %(unsentCount)s reaction(s)": "Saada uuesti %(unsentCount)s reaktsioon(i)",
     "Home": "Avaleht",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Kui soovid teatada Matrix'iga seotud turvaveast, siis palun tutvu enne Matrix.org <a>Turvalisuse avalikustamise juhendiga</a>.",
     "Filter results": "Filtreeri tulemusi",
-    "Share Room": "Jaga jututuba",
-    "Link to most recent message": "Viide kõige viimasele sõnumile",
-    "Share User": "Jaga viidet kasutaja kohta",
-    "Share Room Message": "Jaga jututoa sõnumit",
-    "Link to selected message": "Viide valitud sõnumile",
-    "Command Help": "Abiteave käskude kohta",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Tagamaks et sama ei juhtuks tulevikus, palun <a>saada meile salvestatud logid</a>.",
-    "Missing session data": "Sessiooni andmed on puudu",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Osa sessiooniandmetest, sealhulgas sõnumi krüptovõtmed, on puudu. Vea parandamiseks logi välja ja sisse, vajadusel taasta võtmed varundusest.",
-    "Your browser likely removed this data when running low on disk space.": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu.",
-    "Find others by phone or email": "Leia teisi kasutajaid telefoninumbri või e-posti aadressi alusel",
-    "Be found by phone or email": "Ole leitav telefoninumbri või e-posti aadressi alusel",
     "%(name)s accepted": "%(name)s nõustus",
     "%(name)s declined": "%(name)s keeldus",
     "%(name)s cancelled": "%(name)s tühistas",
@@ -145,8 +124,6 @@
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
     "not specified": "määratlemata",
     "unknown error code": "tundmatu veakood",
-    "Cancel All": "Tühista kõik",
-    "Upload Error": "Üleslaadimise viga",
     "Unable to restore backup": "Varukoopiast taastamine ei õnnestu",
     "No backup found!": "Varukoopiat ei leidunud!",
     "Keys restored": "Krüptimise võtmed on taastatud",
@@ -154,22 +131,15 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s sessiooni võtme taastamine õnnestus",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Hoiatus</b>: sa peaksid võtmete varunduse seadistama vaid usaldusväärsest arvutist.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Enne logide saatmist sa peaksid <a>GitHub'is looma veateate</a> ja kirjeldama seal tekkinud probleemi.",
-    "You signed in to a new session without verifying it:": "Sa logisid sisse uude sessiooni ilma seda verifitseerimata:",
-    "Verify your other session using one of the options below.": "Verifitseeri oma teine sessioon kasutades üht alljärgnevatest võimalustest.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) logis sisse uude sessiooni ilma seda verifitseerimata:",
-    "Not Trusted": "Ei ole usaldusväärne",
     "Looks good!": "Tundub õige!",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
     "Send Logs": "Saada logikirjed",
-    "Verification Pending": "Verifikatsioon on ootel",
     "a new master key signature": "uus üldvõtme allkiri",
     "a new cross-signing key signature": "uus risttunnustamise võtme allkiri",
     "a device cross-signing signature": "seadme risttunnustamise allkiri",
     "a key signature": "võtme allkiri",
     "%(brand)s encountered an error during upload of:": "%(brand)s'is tekkis viga järgneva üleslaadimisel:",
     "Sign in with SSO": "Logi sisse kasutades SSO'd ehk ühekordset autentimist",
-    "Upload all": "Laadi kõik üles",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
     "Switch theme": "Vaheta teemat",
     "Restricted": "Piiratud õigustega kasutaja",
     "Moderator": "Moderaator",
@@ -185,9 +155,6 @@
     "Destroy cross-signing keys?": "Kas hävitame risttunnustamise võtmed?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Risttunnustamise võtmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kõik sinu verifitseeritud vestluskaaslased näevad seejärel turvateateid. Kui sa just pole kaotanud ligipääsu kõikidele oma seadmetele, kust sa risttunnustamist oled teinud, siis sa ilmselgelt ei peaks kustutamist ette võtma.",
     "Clear cross-signing keys": "Eemalda risttunnustamise võtmed",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Palun vaata oma e-kirju ning klõpsi meie saadetud kirjas leiduvat linki. Kui see on tehtud, siis vajuta Jätka-nuppu.",
-    "Email address": "E-posti aadress",
-    "This will allow you to reset your password and receive notifications.": "See võimaldab sul luua uue salasõna ning saada teavitusi.",
     "Wrong file type": "Vale failitüüp",
     "Security Phrase": "Turvafraas",
     "Security Key": "Turvavõti",
@@ -518,9 +485,6 @@
     "Themes": "Teemad",
     "Messaging": "Sõnumisuhtlus",
     "Moderation": "Modereerimine",
-    "Link to room": "Link jututoale",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Sellega rühmitad selle kogukonna liikmetega peetavaid vestlusi. Kui seadistus pole kasutusel, siis on neid vestlusi %(spaceName)s kogukonna vaates ei kuvata.",
-    "Sections to show": "Näidatavad valikud",
     "Open in OpenStreetMap": "Ava OpenStreetMap'is",
     "toggle event": "lülita sündmus sisse/välja",
     "Feedback sent! Thanks, we appreciate it!": "Tagasiside on saadetud. Täname, sellest on loodetavasti kasu!",
@@ -555,8 +519,6 @@
     "Show rooms": "Näita jututubasid",
     "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet",
     "Saved Items": "Salvestatud failid",
-    "Interactively verify by emoji": "Verifitseeri interaktiivselt emoji abil",
-    "Manually verify by text": "Verifitseeri käsitsi etteantud teksti abil",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s või %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s algatas videokõne",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "teadmata",
     "Loading live location…": "Reaalajas asukoht on laadimisel…",
     "Fetching keys from server…": "Laadin serverist võtmeid…",
-    "Checking…": "Kontrollin…",
     "Starting export process…": "Alustame eksportimist…",
     "Desktop app logo": "Töölauarakenduse logo",
     "Requires your server to support the stable version of MSC3827": "Eeldab, et sinu koduserver toetab MSC3827 stabiilset versiooni",
@@ -693,7 +654,8 @@
         "joined": "Liitunud",
         "avatar": "Tunnuspilt",
         "are_you_sure": "Kas sa oled kindel?",
-        "location": "Asukoht"
+        "location": "Asukoht",
+        "email_address": "E-posti aadress"
     },
     "action": {
         "continue": "Jätka",
@@ -912,7 +874,8 @@
         "experimental_section": "Varased arendusjärgud",
         "experimental_description": "Soovid katsetada? Proovi meie uusimaid arendusmõtteid. Need funktsionaalsused pole üldsegi veel valmis, nad võivad toimida puudulikult, võivad muutuda või sootuks lõpetamata jääda. <a>Lisateavet leiad siit</a>.",
         "beta_feedback_title": "%(featureName)s beetaversiooni tagasiside",
-        "beta_feedback_leave_button": "Beetaversiooni saad välja lülitada rakenduse seadistustest."
+        "beta_feedback_leave_button": "Beetaversiooni saad välja lülitada rakenduse seadistustest.",
+        "sliding_sync_checking": "Kontrollin…"
     },
     "keyboard": {
         "home": "Avaleht",
@@ -1079,7 +1042,8 @@
         "failed_send_logs": "Logikirjete saatmine ei õnnestunud: ",
         "preparing_download": "Valmistun logikirjete allalaadimiseks",
         "unsupported_browser": "Meeldetuletus: sinu brauser ei ole toetatud ja seega rakenduse kasutuskogemus võib olla ennustamatu.",
-        "textarea_label": "Märkused"
+        "textarea_label": "Märkused",
+        "log_request": "Tagamaks et sama ei juhtuks tulevikus, palun <a>saada meile salvestatud logid</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "jäänud on %(hours)st %(minutes)sm %(seconds)ss",
@@ -2376,7 +2340,8 @@
         "verify_nop_warning_mismatch": "HOIATUS: Sessioon on juba verifitseeritud, aga võtmed ei klapi!",
         "verify_mismatch": "HOIATUS: VÕTMETE VERIFITSEERIMINE EI ÕNNESTUNUD! Kasutaja %(userId)s ja sessiooni %(deviceId)s allkirjastamise võti on „%(fprint)s“, aga see ei vasta antud sõrmejäljele „%(fingerprint)s“. See võib tähendada, et sinu kasutatavad ühendused võivad olla kolmanda osapoole poolt vahelt lõigatud!",
         "verify_success_title": "Verifitseeritud võti",
-        "verify_success_description": "Sinu antud allkirjavõti vastab allkirjavõtmele, mille sa said kasutaja %(userId)s sessioonist %(deviceId)s. Sessioon on märgitud verifitseerituks."
+        "verify_success_description": "Sinu antud allkirjavõti vastab allkirjavõtmele, mille sa said kasutaja %(userId)s sessioonist %(deviceId)s. Sessioon on märgitud verifitseerituks.",
+        "help_dialog_title": "Abiteave käskude kohta"
     },
     "presence": {
         "busy": "Hõivatud",
@@ -2903,7 +2868,16 @@
         "key_signature_upload_cancelled": "Allkirja üleslaadimine on tühistatud",
         "key_signature_upload_failed": "Üleslaadimine ei õnnestu",
         "key_signature_upload_success_title": "Allkirja üleslaadimine õnnestus",
-        "key_signature_upload_failed_title": "Allkirja üleslaadimine ei õnnestunud"
+        "key_signature_upload_failed_title": "Allkirja üleslaadimine ei õnnestunud",
+        "udd": {
+            "own_new_session_text": "Sa logisid sisse uude sessiooni ilma seda verifitseerimata:",
+            "own_ask_verify_text": "Verifitseeri oma teine sessioon kasutades üht alljärgnevatest võimalustest.",
+            "other_new_session_text": "%(name)s (%(userId)s) logis sisse uude sessiooni ilma seda verifitseerimata:",
+            "other_ask_verify_text": "Palu nimetatud kasutajal verifitseerida see sessioon või tee seda alljärgnevaga käsitsi.",
+            "title": "Ei ole usaldusväärne",
+            "manual_verification_button": "Verifitseeri käsitsi etteantud teksti abil",
+            "interactive_verification_button": "Verifitseeri interaktiivselt emoji abil"
+        }
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3161,6 +3135,11 @@
             "continue_without_email_title": "Jätka ilma e-posti aadressi seadistamiseta",
             "continue_without_email_description": "Lihtsalt hoiatame, et kui sa ei lisa e-posti aadressi ning unustad oma konto salasõna, siis sa võid <b>püsivalt kaotada ligipääsu oma kontole</b>.",
             "continue_without_email_field_label": "E-posti aadress (kui soovid)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verifikatsioon on ootel",
+            "verification_pending_description": "Palun vaata oma e-kirju ning klõpsi meie saadetud kirjas leiduvat linki. Kui see on tehtud, siis vajuta Jätka-nuppu.",
+            "description": "See võimaldab sul luua uue salasõna ning saada teavitusi."
         }
     },
     "room_list": {
@@ -3513,7 +3492,11 @@
         "leave_dialog_option_none": "Ära lahku ühestki jututoast",
         "leave_dialog_option_all": "Lahku kõikidest jututubadest",
         "leave_dialog_option_specific": "Lahku mõnedest jututubadest",
-        "leave_dialog_action": "Lahku kogukonnakeskusest"
+        "leave_dialog_action": "Lahku kogukonnakeskusest",
+        "preferences": {
+            "sections_section": "Näidatavad valikud",
+            "show_people_in_space": "Sellega rühmitad selle kogukonna liikmetega peetavaid vestlusi. Kui seadistus pole kasutusel, siis on neid vestlusi %(spaceName)s kogukonna vaates ei kuvata."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -3840,7 +3823,9 @@
         "identity_server_no_terms_title": "Isikutuvastusserveril puuduvad kasutustingimused",
         "identity_server_no_terms_description_1": "E-posti aadressi või telefoninumbri kontrolliks see tegevus eeldab päringut vaikimisi isikutuvastusserverisse <server />, aga sellel serveril puuduvad kasutustingimused.",
         "identity_server_no_terms_description_2": "Jätka vaid siis, kui sa usaldad serveri omanikku.",
-        "inline_intro_text": "Jätkamiseks nõustu <policyLink />'ga:"
+        "inline_intro_text": "Jätkamiseks nõustu <policyLink />'ga:",
+        "summary_identity_server_1": "Leia teisi kasutajaid telefoninumbri või e-posti aadressi alusel",
+        "summary_identity_server_2": "Ole leitav telefoninumbri või e-posti aadressi alusel"
     },
     "space_settings": {
         "title": "Seadistused - %(spaceName)s"
@@ -4006,7 +3991,10 @@
             "description_1": "Meil tekkis eelmise sessiooni taastamisel viga.",
             "description_2": "Kui sa varem oled kasutanud uuemat %(brand)s'i versiooni, siis sinu pragune sessioon ei pruugi olla sellega ühilduv. Sulge see aken ja jätka selle uuema versiooni kasutamist.",
             "description_3": "Brauseri andmeruumi tühjendamine võib selle vea lahendada, kui samas logid sa ka välja ning kogu krüptitud vestlusajalugu muutub loetamatuks."
-        }
+        },
+        "storage_evicted_title": "Sessiooni andmed on puudu",
+        "storage_evicted_description_1": "Osa sessiooniandmetest, sealhulgas sõnumi krüptovõtmed, on puudu. Vea parandamiseks logi välja ja sisse, vajadusel taasta võtmed varundusest.",
+        "storage_evicted_description_2": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu."
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4383,5 +4371,27 @@
         "remove_filter": "Eemalda otsingufilter „%(filter)s“",
         "search_messages_hint": "Sõnumite otsimiseks klõpsi <icon/> ikooni jututoa ülaosas",
         "keyboard_scroll_hint": "Kerimiseks kasuta <arrows/>"
+    },
+    "share": {
+        "title_room": "Jaga jututuba",
+        "permalink_most_recent": "Viide kõige viimasele sõnumile",
+        "title_user": "Jaga viidet kasutaja kohta",
+        "title_message": "Jaga jututoa sõnumit",
+        "permalink_message": "Viide valitud sõnumile",
+        "link_title": "Link jututoale"
+    },
+    "upload_file": {
+        "title_progress": "Laadin faile üles (%(current)s / %(total)s)",
+        "title": "Laadi failid üles",
+        "upload_all_button": "Laadi kõik üles",
+        "error_file_too_large": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
+        "error_files_too_large": "Need failid on üleslaadimiseks <b>liiga suured</b>. Failisuuruse piir on %(limit)s.",
+        "error_some_files_too_large": "Mõned failid on üleslaadimiseks <b>liiga suured</b>. Failisuuruse piir on %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Laadi üles %(count)s muud faili",
+            "one": "Laadi üles %(count)s muu fail"
+        },
+        "cancel_all_button": "Tühista kõik",
+        "error_title": "Üleslaadimise viga"
     }
 }

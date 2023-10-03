@@ -11,7 +11,6 @@
     "Thursday": "پنج‌شنبه",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
-    "Email address": "آدرس ایمیل",
     "Home": "خانه",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s.%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s.%(day)s.%(fullYear)s",
@@ -290,26 +289,17 @@
     "United States": "ایالات متحده",
     "United Kingdom": "انگلستان",
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
-    "Be found by phone or email": "از طریق تلفن یا ایمیل پیدا شوید",
-    "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
     "Not a valid Security Key": "کلید امنیتی معتبری نیست",
     "Unable to set up keys": "تنظیم کلیدها امکان پذیر نیست",
     "%(completed)s of %(total)s keys restored": "%(completed)s از %(total)s کلید بازیابی شدند",
     "a new cross-signing key signature": "یک کلید امضای متقابل جدید",
     "a new master key signature": "یک شاه‌کلید جدید",
-    "Upload files (%(current)s of %(total)s)": "بارگذاری فایل‌ها (%(current)s از %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "رمزگشایی %(failedCount)s نشست موفقیت‌آمیز نبود!",
     "Unable to load backup status": "بارگیری و نمایش وضعیت نسخه‌ی پشتیبان امکان‌پذیر نیست",
-    "Link to most recent message": "پیوند به آخرین پیام",
     "Successfully restored %(sessionCount)s keys": "کلیدهای %(sessionCount)s با موفقیت بازیابی شدند",
     "Restoring keys from backup": "بازیابی کلیدها از نسخه پشتیبان",
     "a device cross-signing signature": "کلید امضای متقابل یک دستگاه",
-    "Upload %(count)s other files": {
-        "one": "بارگذاری %(count)s فایل دیگر",
-        "other": "بارگذاری %(count)s فایل دیگر"
-    },
     "Unable to restore backup": "بازیابی نسخه پشتیبان امکان پذیر نیست",
-    "Link to selected message": "پیوند به پیام انتخاب شده",
     "Enter Security Key": "کلید امنیتی را وارد کنید",
     "Enter Security Phrase": "عبارت امنیتی را وارد کنید",
     "Incorrect Security Phrase": "عبارت امنیتی نادرست است",
@@ -320,22 +310,12 @@
     "Clear cross-signing keys": "کلیدهای امضای متقابل را پاک کن",
     "Destroy cross-signing keys?": "کلیدهای امضای متقابل نابود شود؟",
     "Resend %(unsentCount)s reaction(s)": "بازارسال %(unsentCount)s واکنش",
-    "Missing session data": "داده‌های نشست از دست رفته است",
     "No backup found!": "نسخه پشتیبان یافت نشد!",
-    "Share Room Message": "به اشتراک گذاشتن پیام اتاق",
     "Reset everything": "همه چیز را بازراه‌اندازی (reset) کنید",
     "Looks good!": "به نظر خوب میاد!",
     "Security Key": "کلید امنیتی",
     "Security Phrase": "عبارت امنیتی",
     "Keys restored": "کلیدها بازیابی شدند",
-    "Not Trusted": "قابل اعتماد نیست",
-    "Command Help": "راهنمای دستور",
-    "Upload all": "بارگذاری همه",
-    "Upload Error": "خطای بارگذاری",
-    "Cancel All": "لغو همه",
-    "Upload files": "بارگذاری فایل‌ها",
-    "Share User": "به اشتراک‌گذاری کاربر",
-    "Share Room": "به اشتراک‌گذاری اتاق",
     "Send Logs": "ارسال گزارش ها",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
     "Wrong file type": "نوع فایل اشتباه است",
@@ -479,21 +459,8 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "همه روش‌های بازیابی را فراموش کرده یا از دست داده‌اید؟ <a>بازراه‌اندازی (reset) همه</a>",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "اگر عبارت امنیتی خود را فراموش کرده اید، می توانید <button1>از کلید امنیتی خود استفاده کنید</button1> یا <button2>تنظیمات پشتیانی‌گیری را مجددا انجام دهید</button2>",
     "This looks like a valid Security Key!": "به نظر می رسد این یک کلید امنیتی معتبر است!",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "برخی از فایل‌ها برای بارگذاری <b>بیش از حد بزرگ هستند</b>. محدودیت اندازه فایل %(limit)s است.",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "با وارد کردن کلید امنیتی خود به تاریخچه‌ی پیام‌‌های رمز شده خود دسترسی پیدا کرده و پیام امن ارسال کنید.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "این فایل‌ها برای بارگذاری <b>بیش از حد بزرگ</b> هستند. محدودیت اندازه فایل %(limit)s است.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "اگر کلید امنیتی خود را فراموش کرده‌اید ، می توانید <button>تنظیمات مجددا تنظیمات پشتیبان‌گیری را انجام دهید</button>",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "این فایل برای بارگذاری <b>بسیار بزرگ است</b>. محدودیت اندازه‌ی فایل برابر %(limit)s است اما حجم این فایل %(sizeOfThisFile)s.",
-    "Ask this user to verify their session, or manually verify it below.": "از این کاربر بخواهید نشست خود را تأیید کرده و یا آن را به صورت دستی تأیید کنید.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) وارد یک نشست جدید شد بدون اینکه آن را تائید کند:",
-    "Verify your other session using one of the options below.": "نست دیگر خود را با استفاده از یکی از راهکارهای زیر تأیید کنید.",
-    "You signed in to a new session without verifying it:": "شما وارد یک نشست جدید شده‌اید بدون اینکه آن را تائید کنید:",
-    "Your browser likely removed this data when running low on disk space.": "هنگام کمبود فضای دیسک ، مرورگر شما این داده ها را حذف می کند.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "برخی از داده‌های نشست ، از جمله کلیدهای رمزنگاری پیام‌ها موجود نیست. برای برطرف کردن این مشکل از برنامه خارج شده و مجددا وارد شوید و از کلیدها را از نسخه‌ی پشتیبان بازیابی نمائيد.",
-    "To help us prevent this in future, please <a>send us logs</a>.": "برای کمک به ما در جلوگیری از این امر در آینده ، لطفا <a>لاگ‌ها را برای ما ارسال کنید</a>.",
-    "This will allow you to reset your password and receive notifications.": "با این کار می‌توانید گذرواژه خود را تغییر داده و اعلان‌ها را دریافت کنید.",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "لطفاً ایمیل خود را بررسی کرده و روی لینکی که برایتان ارسال شده، کلیک کنید. پس از انجام این کار، روی ادامه کلیک کنید.",
-    "Verification Pending": "در انتظار تائید",
     "%(brand)s encountered an error during upload of:": "%(brand)s در حین بارگذاری این دچار مشکل شد:",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
@@ -601,7 +568,8 @@
         "unencrypted": "رمزگذاری نشده",
         "show_more": "نمایش بیشتر",
         "avatar": "نمایه",
-        "are_you_sure": "مطمئنی؟"
+        "are_you_sure": "مطمئنی؟",
+        "email_address": "آدرس ایمیل"
     },
     "action": {
         "continue": "ادامه",
@@ -870,7 +838,8 @@
         "failed_send_logs": "ارسال گزارش با خطا مواجه شد: ",
         "preparing_download": "در حال آماده سازی برای بارگیری گزارش ها",
         "unsupported_browser": "یادآوری: مرورگر شما پشتیبانی نمی شود ، بنابراین ممکن است تجربه شما غیرقابل پیش بینی باشد.",
-        "textarea_label": "یادداشت‌ها"
+        "textarea_label": "یادداشت‌ها",
+        "log_request": "برای کمک به ما در جلوگیری از این امر در آینده ، لطفا <a>لاگ‌ها را برای ما ارسال کنید</a>."
     },
     "time": {
         "seconds_left": "%(seconds)s ثانیه باقی‌مانده",
@@ -1641,7 +1610,8 @@
         "verify_nop": "نشست پیش از این تائید شده‌است!",
         "verify_mismatch": "هشدار: تایید کلید ناموفق بود! کلید امضا کننده %(userId)s در نشست %(deviceId)s برابر %(fprint)s است که با کلید %(fingerprint)s تطابق ندارد. این می تواند به معنی رهگیری ارتباطات شما باشد!",
         "verify_success_title": "کلید تأیید شده",
-        "verify_success_description": "کلید امضای ارائه شده با کلید امضای دریافت شده از جلسه %(deviceId)s کاربر %(userId)s مطابقت دارد. نشست به عنوان تأیید شده علامت گذاری شد."
+        "verify_success_description": "کلید امضای ارائه شده با کلید امضای دریافت شده از جلسه %(deviceId)s کاربر %(userId)s مطابقت دارد. نشست به عنوان تأیید شده علامت گذاری شد.",
+        "help_dialog_title": "راهنمای دستور"
     },
     "presence": {
         "online_for": "آنلاین برای مدت %(duration)s",
@@ -1975,7 +1945,14 @@
         "key_signature_upload_cancelled": "بارگذاری امضا لغو شد",
         "key_signature_upload_failed": "بارگذاری امکان پذیر نیست",
         "key_signature_upload_success_title": "موفقیت در بارگذاری امضا",
-        "key_signature_upload_failed_title": "بارگذاری امضا انجام نشد"
+        "key_signature_upload_failed_title": "بارگذاری امضا انجام نشد",
+        "udd": {
+            "own_new_session_text": "شما وارد یک نشست جدید شده‌اید بدون اینکه آن را تائید کنید:",
+            "own_ask_verify_text": "نست دیگر خود را با استفاده از یکی از راهکارهای زیر تأیید کنید.",
+            "other_new_session_text": "%(name)s (%(userId)s) وارد یک نشست جدید شد بدون اینکه آن را تائید کند:",
+            "other_ask_verify_text": "از این کاربر بخواهید نشست خود را تأیید کرده و یا آن را به صورت دستی تأیید کنید.",
+            "title": "قابل اعتماد نیست"
+        }
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2157,6 +2134,11 @@
             "continue_without_email_title": "ادامه بدون ایمیل",
             "continue_without_email_description": "حواستان را جمع کنید، اگر ایمیلی اضافه نکرده و گذرواژه‌ی خود را فراموش کنید ، ممکن است <b>دسترسی به حساب کاربری خود را برای همیشه از دست دهید</b>.",
             "continue_without_email_field_label": "ایمیل (اختیاری)"
+        },
+        "set_email": {
+            "verification_pending_title": "در انتظار تائید",
+            "verification_pending_description": "لطفاً ایمیل خود را بررسی کرده و روی لینکی که برایتان ارسال شده، کلیک کنید. پس از انجام این کار، روی ادامه کلیک کنید.",
+            "description": "با این کار می‌توانید گذرواژه خود را تغییر داده و اعلان‌ها را دریافت کنید."
         }
     },
     "room_list": {
@@ -2634,7 +2616,9 @@
         "identity_server_no_terms_title": "سرور هویت هیچگونه شرایط خدمات ندارد",
         "identity_server_no_terms_description_1": "این اقدام نیاز به دسترسی به سرور هویت‌سنجی پیش‌فرض <server /> برای تایید آدرس ایمیل یا شماره تماس دارد، اما کارگزار هیچ گونه شرایط خدماتی (terms of service) ندارد.",
         "identity_server_no_terms_description_2": "تنها در صورتی که به صاحب سرور اطمینان دارید، ادامه دهید.",
-        "inline_intro_text": "برای ادامه <policyLink /> را بپذیرید:"
+        "inline_intro_text": "برای ادامه <policyLink /> را بپذیرید:",
+        "summary_identity_server_1": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
+        "summary_identity_server_2": "از طریق تلفن یا ایمیل پیدا شوید"
     },
     "poll": {
         "failed_send_poll_title": "ارسال نظرسنجی انجام نشد",
@@ -2749,7 +2733,10 @@
             "description_1": "هنگام تلاش برای بازیابی نشست قبلی شما، با خطایی روبرو شدیم.",
             "description_2": "اگر در گذشته از نسخه جدیدتر %(brand)s استفاده کرده‌اید ، نشست شما ممکن است با این نسخه ناسازگار باشد. این پنجره را بسته و به نسخه جدیدتر برگردید.",
             "description_3": "پاک کردن فضای ذخیره‌سازی مرورگر ممکن است این مشکل را برطرف کند ، اما شما را از برنامه خارج کرده و باعث می‌شود هرگونه سابقه گفتگوی رمزشده غیرقابل خواندن باشد."
-        }
+        },
+        "storage_evicted_title": "داده‌های نشست از دست رفته است",
+        "storage_evicted_description_1": "برخی از داده‌های نشست ، از جمله کلیدهای رمزنگاری پیام‌ها موجود نیست. برای برطرف کردن این مشکل از برنامه خارج شده و مجددا وارد شوید و از کلیدها را از نسخه‌ی پشتیبان بازیابی نمائيد.",
+        "storage_evicted_description_2": "هنگام کمبود فضای دیسک ، مرورگر شما این داده ها را حذف می کند."
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2992,5 +2979,26 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "ایجاد اتاق جدید"
+    },
+    "share": {
+        "title_room": "به اشتراک‌گذاری اتاق",
+        "permalink_most_recent": "پیوند به آخرین پیام",
+        "title_user": "به اشتراک‌گذاری کاربر",
+        "title_message": "به اشتراک گذاشتن پیام اتاق",
+        "permalink_message": "پیوند به پیام انتخاب شده"
+    },
+    "upload_file": {
+        "title_progress": "بارگذاری فایل‌ها (%(current)s از %(total)s)",
+        "title": "بارگذاری فایل‌ها",
+        "upload_all_button": "بارگذاری همه",
+        "error_file_too_large": "این فایل برای بارگذاری <b>بسیار بزرگ است</b>. محدودیت اندازه‌ی فایل برابر %(limit)s است اما حجم این فایل %(sizeOfThisFile)s.",
+        "error_files_too_large": "این فایل‌ها برای بارگذاری <b>بیش از حد بزرگ</b> هستند. محدودیت اندازه فایل %(limit)s است.",
+        "error_some_files_too_large": "برخی از فایل‌ها برای بارگذاری <b>بیش از حد بزرگ هستند</b>. محدودیت اندازه فایل %(limit)s است.",
+        "upload_n_others_button": {
+            "one": "بارگذاری %(count)s فایل دیگر",
+            "other": "بارگذاری %(count)s فایل دیگر"
+        },
+        "cancel_all_button": "لغو همه",
+        "error_title": "خطای بارگذاری"
     }
 }

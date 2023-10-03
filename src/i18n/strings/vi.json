@@ -78,7 +78,6 @@
     "a new master key signature": "một chữ ký khóa chính mới",
     "<inviter/> invites you": "<inviter /> mời bạn",
     "No results found": "không tim được kêt quả",
-    "Email address": "Địa chỉ thư điện tử",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
     "Use your Security Key to continue.": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
@@ -94,34 +93,6 @@
     "Wrong Security Key": "Khóa bảo mật sai",
     "Looks good!": "Có vẻ tốt!",
     "Wrong file type": "Loại tệp sai",
-    "Upload Error": "Lỗi tải lên",
-    "Cancel All": "Hủy bỏ tất cả",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Một số tệp <b> quá lớn </b> không thể tải lên được. Giới hạn kích thước tệp là %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Các tệp này <b>too large</b> quá lớn để tải lên. Giới hạn kích thước tệp là %(limit)s.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tệp này <b>too large</b> để tải lên. Giới hạn kích thước tệp là %(limit)s nhưng tệp này là %(sizeOfThisFile)s.",
-    "Upload all": "Tải lên tất cả",
-    "Upload files": "Tải tệp lên",
-    "Upload files (%(current)s of %(total)s)": "Tải lên tệp (%(current)s of %(total)s)",
-    "Not Trusted": "Không tin cậy",
-    "Ask this user to verify their session, or manually verify it below.": "Yêu cầu người dùng này xác thực phiên của họ hoặc xác minh theo cách thủ công bên dưới.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) đã đăng nhập vào một phiên mới mà không xác thực:",
-    "Verify your other session using one of the options below.": "Xác minh phiên khác của bạn bằng một trong các tùy chọn bên dưới.",
-    "You signed in to a new session without verifying it:": "Bạn đã đăng nhập vào một phiên mới mà không xác thực nó:",
-    "Be found by phone or email": "Được tìm thấy qua điện thoại hoặc địa chỉ thư điện tử",
-    "Find others by phone or email": "Tìm người khác qua điện thoại hoặc địa chỉ thư điện tử",
-    "Your browser likely removed this data when running low on disk space.": "Trình duyệt của bạn có thể đã xóa dữ liệu này khi sắp hết dung lượng đĩa.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Một số dữ liệu phiên, bao gồm cả khóa tin nhắn được mã hóa, bị thiếu. Đăng xuất và đăng nhập để khắc phục sự cố này, khôi phục khóa từ bản sao lưu.",
-    "Missing session data": "Thiếu dữ liệu phiên",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Để giúp chúng tôi ngăn chặn điều này trong tương lai, vui lòng gửi nhật ký cho chúng tôi <a>send us logs</a>.",
-    "Command Help": "Lệnh Trợ giúp",
-    "Link to selected message": "Liên kết đến tin nhắn đã chọn",
-    "Share Room Message": "Chia sẻ tin nhắn trong phòng",
-    "Share User": "Chia sẻ người dùng",
-    "Link to most recent message": "Liên kết đến tin nhắn gần đây nhất",
-    "Share Room": "Phòng chia sẻ",
-    "This will allow you to reset your password and receive notifications.": "Điều này sẽ cho phép bạn đặt lại mật khẩu của mình và nhận thông báo.",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Vui lòng kiểm tra hòm thư và bấm vào liên kết trong đó. Khi nào xong, hãy bấm tiếp tục.",
-    "Verification Pending": "Chờ xác thực",
     "Send Logs": "Gửi những bản ghi",
     "%(count)s people you know have already joined": {
         "one": "%(count)s người bạn đã biết vừa tham gia",
@@ -501,10 +472,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Lấy lại quyền truy cập vào tài khoản của bạn và khôi phục các khóa mã hóa được lưu trữ trong phiên này. Nếu không có chúng, bạn sẽ không thể đọc tất cả các tin nhắn an toàn của mình trong bất kỳ phiên nào.",
     "Thread options": "Tùy chọn theo chủ đề",
     "Forget": "Quên",
-    "Upload %(count)s other files": {
-        "one": "Tải lên %(count)s tệp khác",
-        "other": "Tải lên %(count)s tệp khác"
-    },
     "%(count)s votes": {
         "one": "%(count)s phiếu bầu",
         "other": "%(count)s phiếu bầu"
@@ -519,9 +486,6 @@
         "other": "%(spaceName)s và %(count)s khác"
     },
     "Open in OpenStreetMap": "Mở trong OpenStreetMap",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Điều này nhóm các cuộc trò chuyện của bạn với các thành viên trong Space này. Tắt tính năng này sẽ ẩn các cuộc trò chuyện đó khỏi %(spaceName)s.",
-    "Sections to show": "Các phần để hiển thị",
-    "Link to room": "Liên kết đến phòng",
     "toggle event": "chuyển đổi sự kiện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
@@ -540,9 +504,7 @@
     " in <strong>%(room)s</strong>": " ở <strong>%(room)s</strong>",
     "Input devices": "Thiết bị đầu vào",
     "Output devices": "Thiết bị đầu ra",
-    "Manually verify by text": "Xác thực thủ công bằng văn bản",
     "Show rooms": "Hiện phòng",
-    "Interactively verify by emoji": "Xác thực có tương tác bằng biểu tượng cảm xúc",
     "Show spaces": "Hiện spaces",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
     "Cameras": "Máy quay",
@@ -670,7 +632,8 @@
         "joined": "Đã tham gia",
         "avatar": "Avatar",
         "are_you_sure": "Bạn có chắc không?",
-        "location": "Vị trí"
+        "location": "Vị trí",
+        "email_address": "Địa chỉ thư điện tử"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1028,7 +991,8 @@
         "failed_send_logs": "Không gửi được nhật ký: ",
         "preparing_download": "Chuẩn bị tải nhật ký xuống",
         "unsupported_browser": "Nhắc nhở: Trình duyệt của bạn không được hỗ trợ, vì vậy trải nghiệm của bạn có thể không thể đoán trước được.",
-        "textarea_label": "Ghi chú"
+        "textarea_label": "Ghi chú",
+        "log_request": "Để giúp chúng tôi ngăn chặn điều này trong tương lai, vui lòng gửi nhật ký cho chúng tôi <a>send us logs</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "Còn lại %(hours)s giờ %(minutes)s phút %(seconds)s giây",
@@ -2221,7 +2185,8 @@
         "verify_nop_warning_mismatch": "CẢNH BÁO: phiên đã được xác thực, nhưng các khóa KHÔNG KHỚP!",
         "verify_mismatch": "CẢNH BÁO: XÁC THỰC KHÓA THẤT BẠI! Khóa đăng nhập cho %(userId)s và thiết bị %(deviceId)s là \"%(fprint)s\" không khớp với khóa được cung cấp \"%(fingerprint)s\". Điều này có nghĩa là các thông tin liên lạc của bạn đang bị chặn!",
         "verify_success_title": "Khóa được xác thực",
-        "verify_success_description": "Khóa đăng nhập bạn cung cấp khớp với khóa đăng nhập bạn nhận từ thiết bị %(deviceId)s của %(userId)s. Thiết bị được đánh dấu là đã được xác minh."
+        "verify_success_description": "Khóa đăng nhập bạn cung cấp khớp với khóa đăng nhập bạn nhận từ thiết bị %(deviceId)s của %(userId)s. Thiết bị được đánh dấu là đã được xác minh.",
+        "help_dialog_title": "Lệnh Trợ giúp"
     },
     "presence": {
         "busy": "Bận",
@@ -2746,7 +2711,16 @@
         "key_signature_upload_cancelled": "Đã hủy tải lên chữ ký",
         "key_signature_upload_failed": "Không thể tải lên",
         "key_signature_upload_success_title": "Tải lên chữ ký thành công",
-        "key_signature_upload_failed_title": "Tải lên chữ ký không thành công"
+        "key_signature_upload_failed_title": "Tải lên chữ ký không thành công",
+        "udd": {
+            "own_new_session_text": "Bạn đã đăng nhập vào một phiên mới mà không xác thực nó:",
+            "own_ask_verify_text": "Xác minh phiên khác của bạn bằng một trong các tùy chọn bên dưới.",
+            "other_new_session_text": "%(name)s (%(userId)s) đã đăng nhập vào một phiên mới mà không xác thực:",
+            "other_ask_verify_text": "Yêu cầu người dùng này xác thực phiên của họ hoặc xác minh theo cách thủ công bên dưới.",
+            "title": "Không tin cậy",
+            "manual_verification_button": "Xác thực thủ công bằng văn bản",
+            "interactive_verification_button": "Xác thực có tương tác bằng biểu tượng cảm xúc"
+        }
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -2963,6 +2937,11 @@
             "continue_without_email_title": "Tiếp tục mà không cần địa chỉ thư điện tử",
             "continue_without_email_description": "Lưu ý là nếu bạn không thêm địa chỉ thư điện tử và quên mật khẩu, bạn có thể <b>vĩnh viễn mất quyền truy cập vào tài khoản của mình</b>.",
             "continue_without_email_field_label": "Địa chỉ thư điện tử (tùy chọn)"
+        },
+        "set_email": {
+            "verification_pending_title": "Chờ xác thực",
+            "verification_pending_description": "Vui lòng kiểm tra hòm thư và bấm vào liên kết trong đó. Khi nào xong, hãy bấm tiếp tục.",
+            "description": "Điều này sẽ cho phép bạn đặt lại mật khẩu của mình và nhận thông báo."
         }
     },
     "room_list": {
@@ -3304,7 +3283,11 @@
         "leave_dialog_option_none": "Không rời bất kỳ phòng nào",
         "leave_dialog_option_all": "Rời tất cả phòng",
         "leave_dialog_option_specific": "Rời một vài phòng",
-        "leave_dialog_action": "Rời space"
+        "leave_dialog_action": "Rời space",
+        "preferences": {
+            "sections_section": "Các phần để hiển thị",
+            "show_people_in_space": "Điều này nhóm các cuộc trò chuyện của bạn với các thành viên trong Space này. Tắt tính năng này sẽ ẩn các cuộc trò chuyện đó khỏi %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -3583,7 +3566,9 @@
         "identity_server_no_terms_title": "Máy chủ định danh này không có điều khoản dịch vụ",
         "identity_server_no_terms_description_1": "Hành động này yêu cầu truy cập máy chủ định danh mặc định <server /> để xác thực địa chỉ thư điện tử hoặc số điện thoại, nhưng máy chủ không có bất kỳ điều khoản dịch vụ nào.",
         "identity_server_no_terms_description_2": "Chỉ tiếp tục nếu bạn tin tưởng chủ sở hữu máy chủ.",
-        "inline_intro_text": "Chấp nhận <policyLink /> để tiếp tục:"
+        "inline_intro_text": "Chấp nhận <policyLink /> để tiếp tục:",
+        "summary_identity_server_1": "Tìm người khác qua điện thoại hoặc địa chỉ thư điện tử",
+        "summary_identity_server_2": "Được tìm thấy qua điện thoại hoặc địa chỉ thư điện tử"
     },
     "space_settings": {
         "title": "Cài đặt - %(spaceName)s"
@@ -3740,7 +3725,10 @@
             "description_1": "Chúng tôi đã gặp lỗi khi cố gắng khôi phục phiên trước đó của bạn.",
             "description_2": "Nếu trước đây bạn đã sử dụng phiên bản %(brand)s mới hơn, thì phiên của bạn có thể không tương thích với phiên bản này. Đóng cửa sổ này và quay lại phiên bản mới hơn.",
             "description_3": "Xóa bộ nhớ của trình duyệt có thể khắc phục được sự cố nhưng sẽ khiến bạn đăng xuất và khiến mọi lịch sử trò chuyện được mã hóa trở nên không thể đọc được."
-        }
+        },
+        "storage_evicted_title": "Thiếu dữ liệu phiên",
+        "storage_evicted_description_1": "Một số dữ liệu phiên, bao gồm cả khóa tin nhắn được mã hóa, bị thiếu. Đăng xuất và đăng nhập để khắc phục sự cố này, khôi phục khóa từ bản sao lưu.",
+        "storage_evicted_description_2": "Trình duyệt của bạn có thể đã xóa dữ liệu này khi sắp hết dung lượng đĩa."
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4082,5 +4070,27 @@
         "recently_viewed_section_title": "Được xem gần đây",
         "search_messages_hint": "Để tìm các tin nhắn, hãy tìm biểu tượng này ở đầu phòng <icon/>",
         "keyboard_scroll_hint": "Dùng <arrows/> để cuộn"
+    },
+    "share": {
+        "title_room": "Phòng chia sẻ",
+        "permalink_most_recent": "Liên kết đến tin nhắn gần đây nhất",
+        "title_user": "Chia sẻ người dùng",
+        "title_message": "Chia sẻ tin nhắn trong phòng",
+        "permalink_message": "Liên kết đến tin nhắn đã chọn",
+        "link_title": "Liên kết đến phòng"
+    },
+    "upload_file": {
+        "title_progress": "Tải lên tệp (%(current)s of %(total)s)",
+        "title": "Tải tệp lên",
+        "upload_all_button": "Tải lên tất cả",
+        "error_file_too_large": "Tệp này <b>too large</b> để tải lên. Giới hạn kích thước tệp là %(limit)s nhưng tệp này là %(sizeOfThisFile)s.",
+        "error_files_too_large": "Các tệp này <b>too large</b> quá lớn để tải lên. Giới hạn kích thước tệp là %(limit)s.",
+        "error_some_files_too_large": "Một số tệp <b> quá lớn </b> không thể tải lên được. Giới hạn kích thước tệp là %(limit)s.",
+        "upload_n_others_button": {
+            "one": "Tải lên %(count)s tệp khác",
+            "other": "Tải lên %(count)s tệp khác"
+        },
+        "cancel_all_button": "Hủy bỏ tất cả",
+        "error_title": "Lỗi tải lên"
     }
 }

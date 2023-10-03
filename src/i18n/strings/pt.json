@@ -1,8 +1,6 @@
 {
     "Moderator": "Moderador/a",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
     "unknown error code": "código de erro desconhecido",
-    "Verification Pending": "Verificação pendente",
     "Sun": "Dom",
     "Mon": "Seg",
     "Tue": "Ter",
@@ -32,7 +30,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Join Room": "Ingressar na sala",
     "not specified": "não especificado",
-    "Email address": "Endereço de email",
     "Warning!": "Atenção!",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
@@ -41,7 +38,6 @@
     "Home": "Início",
     "AM": "AM",
     "PM": "PM",
-    "This will allow you to reset your password and receive notifications.": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações.",
     "Sunday": "Domingo",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
@@ -335,7 +331,8 @@
         "rooms": "Salas",
         "low_priority": "Baixa prioridade",
         "historical": "Histórico",
-        "are_you_sure": "Você tem certeza?"
+        "are_you_sure": "Você tem certeza?",
+        "email_address": "Endereço de email"
     },
     "action": {
         "continue": "Continuar",
@@ -699,6 +696,11 @@
         "server_picker_description_matrix.org": "Junte-se a milhões gratuitamente no maior servidor público",
         "registration": {
             "continue_without_email_description": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>."
+        },
+        "set_email": {
+            "verification_pending_title": "Verificação pendente",
+            "verification_pending_description": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
+            "description": "Isto irá permitir-lhe redefinir a sua palavra-passe e receber notificações."
         }
     },
     "export_chat": {

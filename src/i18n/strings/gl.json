@@ -43,15 +43,11 @@
     "Join Room": "Unirse a sala",
     "unknown error code": "código de fallo descoñecido",
     "not specified": "non indicado",
-    "Email address": "Enderezo de correo",
     "Delete Widget": "Eliminar widget",
     "Home": "Inicio",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
-    "Verification Pending": "Verificación pendente",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Comprobe o seu correo electrónico e pulse na ligazón que contén. Unha vez feito iso prema continuar.",
-    "This will allow you to reset your password and receive notifications.": "Isto permitiralle restablecer o seu contrasinal e recibir notificacións.",
     "Sunday": "Domingo",
     "Today": "Hoxe",
     "Friday": "Venres",
@@ -63,21 +59,9 @@
     "Thursday": "Xoves",
     "Yesterday": "Onte",
     "Send Logs": "Enviar informes",
-    "Share Room": "Compartir sala",
-    "Link to most recent message": "Ligazón ás mensaxes máis recentes",
-    "Share User": "Compartir usuaria",
-    "Share Room Message": "Compartir unha mensaxe da sala",
-    "Link to selected message": "Ligazón á mensaxe escollida",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Deactivate account": "Desactivar conta",
-    "Command Help": "Comando Axuda",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
-    "You signed in to a new session without verifying it:": "Conectácheste nunha nova sesión sen verificala:",
-    "Verify your other session using one of the options below.": "Verifica a túa outra sesión usando unha das opcións inferiores.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) conectouse a unha nova sesión sen verificala:",
-    "Ask this user to verify their session, or manually verify it below.": "Pídelle a usuaria que verifique a súa sesión, ou verificaa manualmente aquí.",
-    "Not Trusted": "Non confiable",
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
     "Your homeserver has exceeded one of its resource limits.": "O teu servidor superou un dous seus límites de recursos.",
     "Ok": "Ok",
@@ -172,23 +156,6 @@
     "a device cross-signing signature": "unha sinatura sinatura-cruzada de dispositivo",
     "a key signature": "unha chave de sinatura",
     "%(brand)s encountered an error during upload of:": "%(brand)s atopou un fallo ao subir:",
-    "Missing session data": "Faltan datos da sesión",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Faltan algúns datos da sesión, incluíndo chaves de mensaxes cifradas. Sae e volve a entrar para arranxalo, restaurando as chaves desde a copia.",
-    "Your browser likely removed this data when running low on disk space.": "O navegador probablemente eliminou estos datos ao quedar con pouco espazo de disco.",
-    "Find others by phone or email": "Atopa a outras por teléfono ou email",
-    "Be found by phone or email": "Permite ser atopada polo email ou teléfono",
-    "Upload files (%(current)s of %(total)s)": "Subir ficheiros (%(current)s de %(total)s)",
-    "Upload files": "Subir ficheiros",
-    "Upload all": "Subir todo",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Este ficheiro é <b>demasiado grande</b> para subilo. O límite é %(limit)s mais o ficheiro é %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Estes ficheiros son <b>demasiado grandes</b> para subilos. O límite é %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Algúns ficheiros son <b>demasiado grandes</b> para subilos. O límite é %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Subir outros %(count)s ficheiros",
-        "one": "Subir %(count)s ficheiro máis"
-    },
-    "Cancel All": "Cancelar todo",
-    "Upload Error": "Fallo ao subir",
     "Restoring keys from backup": "Restablecendo chaves desde a copia",
     "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restablecidas",
     "Unable to load backup status": "Non cargou o estado da copia",
@@ -518,11 +485,8 @@
     "Themes": "Decorados",
     "Moderation": "Moderación",
     "Messaging": "Conversando",
-    "Link to room": "Ligazón á sala",
     "toggle event": "activar evento",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Esto agrupa os teus chats cos membros deste espazo. Apagandoo ocultará estos chats da túa vista de %(spaceName)s.",
-    "Sections to show": "Seccións a mostrar",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
     "You are sharing your live location": "Vas compartir en directo a túa localización",
@@ -555,8 +519,6 @@
     "Show rooms": "Mostrar salas",
     "Explore public spaces in the new search dialog": "Explorar espazos públicos no novo diálogo de busca",
     "Saved Items": "Elementos gardados",
-    "Interactively verify by emoji": "Verificar interactivamente usando emoji",
-    "Manually verify by text": "Verificar manualmente con texto",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "common": {
         "about": "Acerca de",
@@ -675,7 +637,8 @@
         "joined": "Unícheste",
         "avatar": "Avatar",
         "are_you_sure": "Está segura?",
-        "location": "Localización"
+        "location": "Localización",
+        "email_address": "Enderezo de correo"
     },
     "action": {
         "continue": "Continuar",
@@ -1005,7 +968,8 @@
         "failed_send_logs": "Fallo ao enviar os informes: ",
         "preparing_download": "Preparándose para descargar rexistro",
         "unsupported_browser": "Lembra: o teu navegador non está soportado, polo que poderían acontecer situacións non agardadas.",
-        "textarea_label": "Notas"
+        "textarea_label": "Notas",
+        "log_request": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -2116,7 +2080,8 @@
         "verify_nop": "A sesión xa está verificada!",
         "verify_mismatch": "AVISO: FALLOU A VERIFICACIÓN DAS CHAVES! A chave de firma para %(userId)s na sesión %(deviceId)s é \"%(fprint)s\" que non concordan coa chave proporcionada \"%(fingerprint)s\". Esto podería significar que as túas comunicacións foron interceptadas!",
         "verify_success_title": "Chave verificada",
-        "verify_success_description": "A chave de firma proporcionada concorda coa chave de firma recibida desde a sesión %(deviceId)s de %(userId)s. Sesión marcada como verificada."
+        "verify_success_description": "A chave de firma proporcionada concorda coa chave de firma recibida desde a sesión %(deviceId)s de %(userId)s. Sesión marcada como verificada.",
+        "help_dialog_title": "Comando Axuda"
     },
     "presence": {
         "busy": "Ocupado",
@@ -2595,7 +2560,16 @@
         "key_signature_upload_cancelled": "Cancelada a subida da sinatura",
         "key_signature_upload_failed": "Non foi posible a subida",
         "key_signature_upload_success_title": "Subeuse correctamente a sinatura",
-        "key_signature_upload_failed_title": "Fallou a subida da sinatura"
+        "key_signature_upload_failed_title": "Fallou a subida da sinatura",
+        "udd": {
+            "own_new_session_text": "Conectácheste nunha nova sesión sen verificala:",
+            "own_ask_verify_text": "Verifica a túa outra sesión usando unha das opcións inferiores.",
+            "other_new_session_text": "%(name)s (%(userId)s) conectouse a unha nova sesión sen verificala:",
+            "other_ask_verify_text": "Pídelle a usuaria que verifique a súa sesión, ou verificaa manualmente aquí.",
+            "title": "Non confiable",
+            "manual_verification_button": "Verificar manualmente con texto",
+            "interactive_verification_button": "Verificar interactivamente usando emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -2800,6 +2774,11 @@
             "continue_without_email_title": "Continuando sen email",
             "continue_without_email_description": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
             "continue_without_email_field_label": "Email (optativo)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verificación pendente",
+            "verification_pending_description": "Comprobe o seu correo electrónico e pulse na ligazón que contén. Unha vez feito iso prema continuar.",
+            "description": "Isto permitiralle restablecer o seu contrasinal e recibir notificacións."
         }
     },
     "room_list": {
@@ -3113,7 +3092,11 @@
         "leave_dialog_option_none": "Non saír de ningunha sala",
         "leave_dialog_option_all": "Saír de tódalas salas",
         "leave_dialog_option_specific": "Saír de algunhas salas",
-        "leave_dialog_action": "Saír do espazo"
+        "leave_dialog_action": "Saír do espazo",
+        "preferences": {
+            "sections_section": "Seccións a mostrar",
+            "show_people_in_space": "Esto agrupa os teus chats cos membros deste espazo. Apagandoo ocultará estos chats da túa vista de %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3397,7 +3380,9 @@
         "identity_server_no_terms_title": "O servidor de identidade non ten termos dos servizo",
         "identity_server_no_terms_description_1": "Esta acción precisa acceder ao servidor de indentidade <server /> para validar o enderezo de email ou o número de teléfono, pero o servidor non publica os seus termos do servizo.",
         "identity_server_no_terms_description_2": "Continúa se realmente confías no dono do servidor.",
-        "inline_intro_text": "Acepta <policyLink /> para continuar:"
+        "inline_intro_text": "Acepta <policyLink /> para continuar:",
+        "summary_identity_server_1": "Atopa a outras por teléfono ou email",
+        "summary_identity_server_2": "Permite ser atopada polo email ou teléfono"
     },
     "space_settings": {
         "title": "Axustes - %(spaceName)s"
@@ -3550,7 +3535,10 @@
             "description_1": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
             "description_2": "Se anteriormente utilizaches unha versión máis recente de %(brand)s, a túa sesión podería non ser compatible con esta versión. Pecha esta ventá e volve á versión máis recente.",
             "description_3": "Limpando o almacenamento do navegador podería resolver o problema, pero sairás da sesión e non poderás ler o historial cifrado da conversa."
-        }
+        },
+        "storage_evicted_title": "Faltan datos da sesión",
+        "storage_evicted_description_1": "Faltan algúns datos da sesión, incluíndo chaves de mensaxes cifradas. Sae e volve a entrar para arranxalo, restaurando as chaves desde a copia.",
+        "storage_evicted_description_2": "O navegador probablemente eliminou estos datos ao quedar con pouco espazo de disco."
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3885,5 +3873,27 @@
         "remove_filter": "Elimina o filtro de busca de %(filter)s",
         "search_messages_hint": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
         "keyboard_scroll_hint": "Usa <arrows/> para desprazarte"
+    },
+    "share": {
+        "title_room": "Compartir sala",
+        "permalink_most_recent": "Ligazón ás mensaxes máis recentes",
+        "title_user": "Compartir usuaria",
+        "title_message": "Compartir unha mensaxe da sala",
+        "permalink_message": "Ligazón á mensaxe escollida",
+        "link_title": "Ligazón á sala"
+    },
+    "upload_file": {
+        "title_progress": "Subir ficheiros (%(current)s de %(total)s)",
+        "title": "Subir ficheiros",
+        "upload_all_button": "Subir todo",
+        "error_file_too_large": "Este ficheiro é <b>demasiado grande</b> para subilo. O límite é %(limit)s mais o ficheiro é %(sizeOfThisFile)s.",
+        "error_files_too_large": "Estes ficheiros son <b>demasiado grandes</b> para subilos. O límite é %(limit)s.",
+        "error_some_files_too_large": "Algúns ficheiros son <b>demasiado grandes</b> para subilos. O límite é %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Subir outros %(count)s ficheiros",
+            "one": "Subir %(count)s ficheiro máis"
+        },
+        "cancel_all_button": "Cancelar todo",
+        "error_title": "Fallo ao subir"
     }
 }

@@ -2,10 +2,7 @@
     "unknown error code": "errore kode ezezaguna",
     "Home": "Hasiera",
     "Join Room": "Elkartu gelara",
-    "Email address": "E-mail helbidea",
     "Warning!": "Abisua!",
-    "Verification Pending": "Egiaztaketa egiteke",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
     "Moderator": "Moderatzailea",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
     "not specified": "zehaztu gabe",
@@ -35,7 +32,6 @@
         "one": "(~%(count)s emaitza)",
         "other": "(~%(count)s emaitza)"
     },
-    "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
     "and %(count)s others...": {
         "other": "eta beste %(count)s…",
         "one": "eta beste bat…"
@@ -63,11 +59,6 @@
     "Thursday": "Osteguna",
     "Yesterday": "Atzo",
     "Send Logs": "Bidali egunkariak",
-    "Share Room": "Partekatu gela",
-    "Link to most recent message": "Esteka azken mezura",
-    "Share User": "Partekatu erabiltzailea",
-    "Share Room Message": "Partekatu gelako mezua",
-    "Link to selected message": "Esteka hautatutako mezura",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko.",
     "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
@@ -137,27 +128,8 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
     "edited": "editatua",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Etorkizunean hau ekiditeko, <a>bidali guri egunkariak</a>.",
-    "Missing session data": "Saioaren datuak falta dira",
-    "Upload files (%(current)s of %(total)s)": "Igo fitxategiak (%(current)s / %(total)s)",
-    "Upload files": "Igo fitxategiak",
-    "Upload %(count)s other files": {
-        "other": "Igo beste %(count)s fitxategiak",
-        "one": "Igo beste fitxategi %(count)s"
-    },
-    "Cancel All": "Ezeztatu dena",
-    "Upload Error": "Igoera errorea",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Saioaren datu batzuk, zifratutako mezuen gakoak barne, falta dira. Amaitu saioa eta hasi saioa berriro hau konpontzeko, gakoak babes-kopiatik berreskuratuz.",
-    "Your browser likely removed this data when running low on disk space.": "Ziur asko zure nabigatzaileak kendu ditu datu hauek diskoan leku gutxi zuelako.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Fitxategi hau <b>handiegia da</b> igo ahal izateko. Fitxategiaren tamaina-muga %(limit)s da, baina fitxategi honen tamaina %(sizeOfThisFile)s da.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Fitxategi hauek <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Fitxategi batzuk <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
-    "Upload all": "Igo denak",
     "Resend %(unsentCount)s reaction(s)": "Birbidali %(unsentCount)s erreakzio",
-    "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
-    "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
     "Deactivate account": "Desaktibatu kontua",
-    "Command Help": "Aginduen laguntza",
     "e.g. my-room": "adib. nire-gela",
     "%(name)s accepted": "%(name)s onartuta",
     "%(name)s cancelled": "%(name)s utzita",
@@ -174,9 +146,6 @@
         "other": "%(count)s saio",
         "one": "saio %(count)s"
     },
-    "Not Trusted": "Ez konfiantzazkoa",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
-    "Ask this user to verify their session, or manually verify it below.": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
     "%(name)s declined": "%(name)s erabiltzaileak ukatu du",
     "Destroy cross-signing keys?": "Suntsitu zeharkako sinatzerako gakoak?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
@@ -189,8 +158,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)sek errorea aurkitu du hau igotzean:",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
     "Submit logs": "Bidali egunkariak",
-    "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
-    "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
     "Restoring keys from backup": "Gakoak babes-kopiatik berrezartzen",
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s gako berreskuratuta",
@@ -276,7 +243,8 @@
         "setup_secure_messages": "Ezarri mezu seguruak",
         "unencrypted": "Zifratu gabe",
         "show_more": "Erakutsi gehiago",
-        "are_you_sure": "Ziur zaude?"
+        "are_you_sure": "Ziur zaude?",
+        "email_address": "E-mail helbidea"
     },
     "action": {
         "continue": "Jarraitu",
@@ -473,7 +441,8 @@
         "thank_you": "Eskerrik asko!",
         "failed_send_logs": "Huts egin du egunkariak bidaltzean: ",
         "unsupported_browser": "Oroigarria: Ez dugu zure nabigatzailearentzako euskarririk, ezin da zure esperientzia nolakoa izango den aurreikusi.",
-        "textarea_label": "Oharrak"
+        "textarea_label": "Oharrak",
+        "log_request": "Etorkizunean hau ekiditeko, <a>bidali guri egunkariak</a>."
     },
     "time": {
         "few_seconds_ago": "duela segundo batzuk",
@@ -1050,7 +1019,8 @@
         "verify_nop": "Saioa jada egiaztatu da!",
         "verify_mismatch": "ABISUA: GAKO EGIAZTAKETAK HUTS EGIN DU! %(userId)s eta %(deviceId)s saioaren sinatze gakoa %(fprint)s da, eta ez dator bat emandako %(fingerprint)s gakoarekin. Honek esan nahi lezake norbaitek zure komunikazioan esku sartzen ari dela!",
         "verify_success_title": "Egiaztatutako gakoa",
-        "verify_success_description": "Eman duzun sinatze gakoa bat dator %(userId)s eta %(deviceId)s saioarentzat jaso duzun sinatze-gakoarekin. Saioa egiaztatu gisa markatu da."
+        "verify_success_description": "Eman duzun sinatze gakoa bat dator %(userId)s eta %(deviceId)s saioarentzat jaso duzun sinatze-gakoarekin. Saioa egiaztatu gisa markatu da.",
+        "help_dialog_title": "Aginduen laguntza"
     },
     "presence": {
         "online_for": "Konektatua %(duration)s",
@@ -1308,7 +1278,14 @@
         "key_signature_upload_cancelled": "Sinadura igoera ezeztatuta",
         "key_signature_upload_failed": "Ezin izan da igo",
         "key_signature_upload_success_title": "Sinaduren igoera ongi burutu da",
-        "key_signature_upload_failed_title": "Sinaduren igoerak huts egin du"
+        "key_signature_upload_failed_title": "Sinaduren igoerak huts egin du",
+        "udd": {
+            "own_new_session_text": "Saio berria hasi duzu hau egiaztatu gabe:",
+            "own_ask_verify_text": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
+            "other_new_session_text": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
+            "other_ask_verify_text": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
+            "title": "Ez konfiantzazkoa"
+        }
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1436,6 +1413,11 @@
         },
         "registration": {
             "continue_without_email_field_label": "E-mail (aukerakoa)"
+        },
+        "set_email": {
+            "verification_pending_title": "Egiaztaketa egiteke",
+            "verification_pending_description": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
+            "description": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu."
         }
     },
     "export_chat": {
@@ -1661,7 +1643,9 @@
         "identity_server_no_terms_title": "Identitate-zerbitzariak ez du erabilera baldintzarik",
         "identity_server_no_terms_description_1": "Ekintza honek lehenetsitako <server /> identitate-zerbitzaria atzitzea eskatzen du, e-mail helbidea edo telefono zenbakia balioztatzeko, baina zerbitzariak ez du erabilera baldintzarik.",
         "identity_server_no_terms_description_2": "Jarraitu soilik zerbitzariaren jabea fidagarritzat jotzen baduzu.",
-        "inline_intro_text": "Onartu <policyLink /> jarraitzeko:"
+        "inline_intro_text": "Onartu <policyLink /> jarraitzeko:",
+        "summary_identity_server_1": "Aurkitu besteak telefonoa edo e-maila erabiliz",
+        "summary_identity_server_2": "Izan telefonoa edo e-maila erabiliz aurkigarria"
     },
     "failed_load_async_component": "Ezin da kargatu! Egiaztatu sare konexioa eta saiatu berriro.",
     "upload_failed_generic": "Huts egin du '%(fileName)s' fitxategia igotzean.",
@@ -1749,7 +1733,10 @@
             "description_1": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
             "description_2": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
             "description_3": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri."
-        }
+        },
+        "storage_evicted_title": "Saioaren datuak falta dira",
+        "storage_evicted_description_1": "Saioaren datu batzuk, zifratutako mezuen gakoak barne, falta dira. Amaitu saioa eta hasi saioa berriro hau konpontzeko, gakoak babes-kopiatik berreskuratuz.",
+        "storage_evicted_description_2": "Ziur asko zure nabigatzaileak kendu ditu datu hauek diskoan leku gutxi zuelako."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1936,5 +1923,26 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "Sortu gela berria"
+    },
+    "share": {
+        "title_room": "Partekatu gela",
+        "permalink_most_recent": "Esteka azken mezura",
+        "title_user": "Partekatu erabiltzailea",
+        "title_message": "Partekatu gelako mezua",
+        "permalink_message": "Esteka hautatutako mezura"
+    },
+    "upload_file": {
+        "title_progress": "Igo fitxategiak (%(current)s / %(total)s)",
+        "title": "Igo fitxategiak",
+        "upload_all_button": "Igo denak",
+        "error_file_too_large": "Fitxategi hau <b>handiegia da</b> igo ahal izateko. Fitxategiaren tamaina-muga %(limit)s da, baina fitxategi honen tamaina %(sizeOfThisFile)s da.",
+        "error_files_too_large": "Fitxategi hauek <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
+        "error_some_files_too_large": "Fitxategi batzuk <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
+        "upload_n_others_button": {
+            "other": "Igo beste %(count)s fitxategiak",
+            "one": "Igo beste fitxategi %(count)s"
+        },
+        "cancel_all_button": "Ezeztatu dena",
+        "error_title": "Igoera errorea"
     }
 }

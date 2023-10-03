@@ -1,6 +1,5 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
-    "Email address": "電子郵件地址",
     "Join Room": "加入聊天室",
     "Sun": "週日",
     "Mon": "週一",
@@ -9,8 +8,6 @@
     "Home": "首頁",
     "Moderator": "版主",
     "not specified": "未指定",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "請收信並點擊信中的連結。完成後，再點擊「繼續」。",
-    "Verification Pending": "等待驗證",
     "Warning!": "警告！",
     "Wed": "週三",
     "Thu": "週四",
@@ -35,7 +32,6 @@
         "one": "（~%(count)s 結果）",
         "other": "（~%(count)s 結果）"
     },
-    "This will allow you to reset your password and receive notifications.": "這讓您可以重設您的密碼與接收通知。",
     "and %(count)s others...": {
         "other": "與另 %(count)s 個人…",
         "one": "與另 1 個人…"
@@ -63,11 +59,6 @@
     "Yesterday": "昨天",
     "Wednesday": "星期三",
     "Send Logs": "傳送紀錄檔",
-    "Share Room": "分享聊天室",
-    "Link to most recent message": "連結到最近的訊息",
-    "Share User": "分享使用者",
-    "Share Room Message": "分享聊天室訊息",
-    "Link to selected message": "連結到選定的訊息",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在遞交紀錄檔前，您必須<a>建立 GitHub 議題</a>以描述您的問題。",
     "Unable to load backup status": "無法載入備份狀態",
     "Unable to restore backup": "無法復原備份",
@@ -136,27 +127,8 @@
     "Folder": "資料夾",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
-    "To help us prevent this in future, please <a>send us logs</a>.": "要協助我們讓這個問題不再發生，請<a>將紀錄檔傳送給我們</a>。",
-    "Missing session data": "遺失工作階段資料",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "某些工作階段資料遺失了，其中包含加密訊息金鑰。登出再登入並從備份中復原金鑰可以修復這個問題。",
-    "Your browser likely removed this data when running low on disk space.": "當硬碟空間不足時，您的瀏覽器可能會移除這些資料。",
-    "Upload files (%(current)s of %(total)s)": "上傳檔案 (%(total)s 中的 %(current)s)",
-    "Upload files": "上傳檔案",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "這個檔案<b>太大了</b>，沒辦法上傳。檔案大小限制為 %(limit)s 但這個檔案大小是 %(sizeOfThisFile)s。",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "這些檔案<b>太大了</b>，沒辦法上傳。檔案大小限制為 %(limit)s。",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "某些檔案<b>太大了</b>，沒辦法上傳。檔案大小限制為 %(limit)s。",
-    "Upload %(count)s other files": {
-        "other": "上傳 %(count)s 個其他檔案",
-        "one": "上傳 %(count)s 個其他檔案"
-    },
-    "Cancel All": "全部取消",
-    "Upload Error": "上傳錯誤",
     "edited": "已編輯",
-    "Upload all": "上傳全部",
     "Resend %(unsentCount)s reaction(s)": "重新傳送 %(unsentCount)s 反應",
-    "Find others by phone or email": "透過電話或電子郵件尋找其他人",
-    "Be found by phone or email": "透過電話或電子郵件找到",
-    "Command Help": "指令說明",
     "Deactivate account": "停用帳號",
     "e.g. my-room": "例如：my-room",
     "%(name)s accepted": "%(name)s 已接受",
@@ -177,9 +149,6 @@
     "Destroy cross-signing keys?": "摧毀交叉簽署金鑰？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
     "Clear cross-signing keys": "清除交叉簽署金鑰",
-    "Not Trusted": "未受信任",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s （%(userId)s）登入到未驗證的新工作階段：",
-    "Ask this user to verify their session, or manually verify it below.": "要求此使用者驗證他們的工作階段，或在下方手動驗證。",
     "%(name)s declined": "%(name)s 拒絕了",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要回報與 Matrix 有關的安全性問題，請閱讀 Matrix.org 的<a>安全性揭露政策</a>。",
     "a new master key signature": "新的主金鑰簽署",
@@ -193,8 +162,6 @@
     "%(completed)s of %(total)s keys restored": "%(total)s 中的 %(completed)s 金鑰已復原",
     "Keys restored": "金鑰已復原",
     "Successfully restored %(sessionCount)s keys": "成功復原 %(sessionCount)s 金鑰",
-    "You signed in to a new session without verifying it:": "您已登入新的工作階段但未驗證：",
-    "Verify your other session using one of the options below.": "使用下方的其中一個選項來驗證您其他工作階段。",
     "Confirm encryption setup": "確認加密設定",
     "Click the button below to confirm setting up encryption.": "點擊下方按鈕以確認設定加密。",
     "IRC display name width": "IRC 顯示名稱寬度",
@@ -518,9 +485,6 @@
     "Themes": "主題",
     "Moderation": "審核",
     "Messaging": "訊息傳遞",
-    "Link to room": "連結到聊天室",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。",
-    "Sections to show": "要顯示的部份",
     "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
     "toggle event": "切換事件",
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
@@ -555,8 +519,6 @@
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
     "Saved Items": "已儲存的項目",
-    "Interactively verify by emoji": "透過表情符號互動來驗證",
-    "Manually verify by text": "透過文字手動驗證",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s 開始了視訊通話",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "未知",
     "Loading live location…": "正在載入即時位置…",
     "Fetching keys from server…": "正在取得來自伺服器的金鑰…",
-    "Checking…": "正在檢查…",
     "Starting export process…": "正在開始匯出流程…",
     "Desktop app logo": "桌面應用程式標誌",
     "Requires your server to support the stable version of MSC3827": "您的伺服器必須支援穩定版本的 MSC3827",
@@ -693,7 +654,8 @@
         "joined": "已加入",
         "avatar": "大頭照",
         "are_you_sure": "您確定嗎？",
-        "location": "位置"
+        "location": "位置",
+        "email_address": "電子郵件地址"
     },
     "action": {
         "continue": "繼續",
@@ -912,7 +874,8 @@
         "experimental_section": "提早預覽",
         "experimental_description": "想要做點實驗？歡迎測試我們開發中的最新創意功能。這些功能尚未完成設計；可能不穩定、可能會變動，也可能會被完全捨棄。<a>取得更多資訊</a>。",
         "beta_feedback_title": "%(featureName)s Beta 測試回饋",
-        "beta_feedback_leave_button": "請到設定頁面離開 Beta 測試版。"
+        "beta_feedback_leave_button": "請到設定頁面離開 Beta 測試版。",
+        "sliding_sync_checking": "正在檢查…"
     },
     "keyboard": {
         "home": "首頁",
@@ -1079,7 +1042,8 @@
         "failed_send_logs": "無法傳送除錯訊息： ",
         "preparing_download": "正在準備下載紀錄檔",
         "unsupported_browser": "提醒：您的瀏覽器不受支援，所以您的使用體驗可能無法預測。",
-        "textarea_label": "註記"
+        "textarea_label": "註記",
+        "log_request": "要協助我們讓這個問題不再發生，請<a>將紀錄檔傳送給我們</a>。"
     },
     "time": {
         "hours_minutes_seconds_left": "剩餘 %(hours)s 小時 %(minutes)s 分鐘 %(seconds)s 秒",
@@ -2376,7 +2340,8 @@
         "verify_nop_warning_mismatch": "警告：工作階段已驗證，但金鑰不相符！",
         "verify_mismatch": "警告：無法驗證金鑰！%(userId)s 與工作階段 %(deviceId)s 簽署的金鑰是「%(fprint)s」，並不符合提供的金鑰「%(fingerprint)s」。這可能代表您的通訊已被攔截！",
         "verify_success_title": "已驗證的金鑰",
-        "verify_success_description": "您提供的簽署金鑰符合您從 %(userId)s 的工作階段收到的簽署金鑰 %(deviceId)s。工作階段標記為已驗證。"
+        "verify_success_description": "您提供的簽署金鑰符合您從 %(userId)s 的工作階段收到的簽署金鑰 %(deviceId)s。工作階段標記為已驗證。",
+        "help_dialog_title": "指令說明"
     },
     "presence": {
         "busy": "忙碌",
@@ -2903,7 +2868,16 @@
         "key_signature_upload_cancelled": "已取消簽章上傳",
         "key_signature_upload_failed": "無法上傳",
         "key_signature_upload_success_title": "簽章上傳成功",
-        "key_signature_upload_failed_title": "無上傳簽章"
+        "key_signature_upload_failed_title": "無上傳簽章",
+        "udd": {
+            "own_new_session_text": "您已登入新的工作階段但未驗證：",
+            "own_ask_verify_text": "使用下方的其中一個選項來驗證您其他工作階段。",
+            "other_new_session_text": "%(name)s （%(userId)s）登入到未驗證的新工作階段：",
+            "other_ask_verify_text": "要求此使用者驗證他們的工作階段，或在下方手動驗證。",
+            "title": "未受信任",
+            "manual_verification_button": "透過文字手動驗證",
+            "interactive_verification_button": "透過表情符號互動來驗證"
+        }
     },
     "emoji": {
         "category_frequently_used": "經常使用",
@@ -3161,6 +3135,11 @@
             "continue_without_email_title": "不使用電子郵件來繼續",
             "continue_without_email_description": "請注意，如果您不新增電子郵件且忘記密碼，您將<b>永遠失去對您帳號的存取權</b>。",
             "continue_without_email_field_label": "電子郵件（選擇性）"
+        },
+        "set_email": {
+            "verification_pending_title": "等待驗證",
+            "verification_pending_description": "請收信並點擊信中的連結。完成後，再點擊「繼續」。",
+            "description": "這讓您可以重設您的密碼與接收通知。"
         }
     },
     "room_list": {
@@ -3513,7 +3492,11 @@
         "leave_dialog_option_none": "不要離開任何聊天室",
         "leave_dialog_option_all": "離開所有聊天室",
         "leave_dialog_option_specific": "離開部份聊天室",
-        "leave_dialog_action": "離開聊天空間"
+        "leave_dialog_action": "離開聊天空間",
+        "preferences": {
+            "sections_section": "要顯示的部份",
+            "show_people_in_space": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -3840,7 +3823,9 @@
         "identity_server_no_terms_title": "身分伺服器無使用條款",
         "identity_server_no_terms_description_1": "此動作需要存取預設的身分伺服器 <server /> 以驗證電子郵件或電話號碼，但伺服器沒有任何服務條款。",
         "identity_server_no_terms_description_2": "僅在您信任伺服器擁有者時才繼續。",
-        "inline_intro_text": "接受 <policyLink /> 以繼續："
+        "inline_intro_text": "接受 <policyLink /> 以繼續：",
+        "summary_identity_server_1": "透過電話或電子郵件尋找其他人",
+        "summary_identity_server_2": "透過電話或電子郵件找到"
     },
     "space_settings": {
         "title": "設定 - %(spaceName)s"
@@ -4006,7 +3991,10 @@
             "description_1": "我們在嘗試復原您先前的工作階段時遇到了一點錯誤。",
             "description_2": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
             "description_3": "清除您瀏覽器的儲存的東西也許可以修復問題，但會將您登出並造成任何已加密的聊天都無法讀取。"
-        }
+        },
+        "storage_evicted_title": "遺失工作階段資料",
+        "storage_evicted_description_1": "某些工作階段資料遺失了，其中包含加密訊息金鑰。登出再登入並從備份中復原金鑰可以修復這個問題。",
+        "storage_evicted_description_2": "當硬碟空間不足時，您的瀏覽器可能會移除這些資料。"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4383,5 +4371,27 @@
         "remove_filter": "移除 %(filter)s 的搜尋過濾條件",
         "search_messages_hint": "要搜尋訊息，請在聊天室頂部尋找此圖示 <icon/>",
         "keyboard_scroll_hint": "使用 <arrows/> 捲動"
+    },
+    "share": {
+        "title_room": "分享聊天室",
+        "permalink_most_recent": "連結到最近的訊息",
+        "title_user": "分享使用者",
+        "title_message": "分享聊天室訊息",
+        "permalink_message": "連結到選定的訊息",
+        "link_title": "連結到聊天室"
+    },
+    "upload_file": {
+        "title_progress": "上傳檔案 (%(total)s 中的 %(current)s)",
+        "title": "上傳檔案",
+        "upload_all_button": "上傳全部",
+        "error_file_too_large": "這個檔案<b>太大了</b>，沒辦法上傳。檔案大小限制為 %(limit)s 但這個檔案大小是 %(sizeOfThisFile)s。",
+        "error_files_too_large": "這些檔案<b>太大了</b>，沒辦法上傳。檔案大小限制為 %(limit)s。",
+        "error_some_files_too_large": "某些檔案<b>太大了</b>，沒辦法上傳。檔案大小限制為 %(limit)s。",
+        "upload_n_others_button": {
+            "other": "上傳 %(count)s 個其他檔案",
+            "one": "上傳 %(count)s 個其他檔案"
+        },
+        "cancel_all_button": "全部取消",
+        "error_title": "上傳錯誤"
     }
 }

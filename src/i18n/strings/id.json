@@ -1,7 +1,5 @@
 {
-    "Email address": "Alamat email",
     "unknown error code": "kode kesalahan tidak diketahui",
-    "Verification Pending": "Verifikasi Menunggu",
     "Warning!": "Peringatan!",
     "Sun": "Min",
     "Mon": "Sen",
@@ -362,14 +360,8 @@
     "Cat": "Kucing",
     "Dog": "Anjing",
     "Deactivate account": "Nonaktifkan akun",
-    "Upload Error": "Kesalahan saat Mengunggah",
-    "Cancel All": "Batalkan Semua",
-    "Upload all": "Unggah semua",
-    "Upload files": "Unggah file",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
-    "Share User": "Bagikan Pengguna",
-    "Share Room": "Bagikan Ruangan",
     "Send Logs": "Kirim Catatan",
     "Filter results": "Saring hasil",
     "Delete Widget": "Hapus Widget",
@@ -467,31 +459,6 @@
     "Looks good!": "Kelihatannya bagus!",
     "Wrong file type": "Tipe file salah",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Dapatkan kembali akses ke akun Anda dan pulihkan kunci enkripsi yang disimpan dalam sesi ini. Tanpa mereka, Anda tidak akan dapat membaca semua pesan aman Anda di sesi mana saja.",
-    "Upload %(count)s other files": {
-        "one": "Unggah %(count)s file lainnya",
-        "other": "Unggah %(count)s file lainnya"
-    },
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Beberapa file <b>terlalu besar</b> untuk diunggah. Batas ukuran unggahan file adalah %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "File-file ini <b>terlalu besar</b> untuk diunggah. Batas ukuran unggahan file adalah %(limit)s.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "File ini <b>terlalu besar</b> untuk diunggah. Batas ukuran unggahan file adalah %(limit)s tetapi file ini %(sizeOfThisFile)s.",
-    "Upload files (%(current)s of %(total)s)": "Mengunggah file (%(current)s dari %(total)s)",
-    "Not Trusted": "Tidak Dipercayai",
-    "Ask this user to verify their session, or manually verify it below.": "Tanyakan pengguna ini untuk memverifikasi sesinya, atau verifikasi secara manual di bawah.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) masuk ke sesi yang baru tanpa memverifikasinya:",
-    "Verify your other session using one of the options below.": "Verifikasi sesi Anda lainnya dengan menggunakan salah satu pilihan di bawah.",
-    "You signed in to a new session without verifying it:": "Anda masuk ke sesi baru tanpa memverifikasinya:",
-    "Be found by phone or email": "Temukan oleh lainnya melalui ponsel atau email",
-    "Find others by phone or email": "Temukan lainnya melalui ponsel atau email",
-    "Your browser likely removed this data when running low on disk space.": "Kemungkinan browser Anda menghapus datanya ketika ruang disk rendah.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Beberapa data sesi, termasuk kunci pesan terenkripsi, hilang. Keluar dan masuk lagi untuk memperbaikinya, memulihkan kunci-kunci dari cadangan.",
-    "Missing session data": "Data sesi hilang",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Untuk membantu kami mencegahnya di masa mendatang, silakan <a>kirimkan kami catatan</a>.",
-    "Command Help": "Bantuan Perintah",
-    "Link to selected message": "Tautan ke pesan yang dipilih",
-    "Share Room Message": "Bagikan Pesan Ruangan",
-    "Link to most recent message": "Tautan ke pesan terkini",
-    "This will allow you to reset your password and receive notifications.": "Ini akan mengizinkan Anda untuk mengatur ulang kata sandi Anda dan menerima notifikasi.",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Mohon periksa email Anda dan klik tautannya. Setelah itu, klik lanjut.",
     "%(count)s rooms": {
         "one": "%(count)s ruangan",
         "other": "%(count)s ruangan"
@@ -518,9 +485,6 @@
     "Themes": "Tema",
     "Moderation": "Moderasi",
     "Messaging": "Perpesanan",
-    "Link to room": "Tautan ke ruangan",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ini mengelompokkan obrolan Anda dengan anggota space ini. Menonaktifkan ini akan menyembunyikan obrolan dari tampilan %(spaceName)s Anda.",
-    "Sections to show": "Bagian untuk ditampilkan",
     "Open in OpenStreetMap": "Buka di OpenStreetMap",
     "toggle event": "alih peristiwa",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
@@ -555,8 +519,6 @@
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
     "Saved Items": "Item yang Tersimpan",
-    "Interactively verify by emoji": "Verifikasi secara interaktif sengan emoji",
-    "Manually verify by text": "Verifikasi secara manual dengan teks",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "tidak diketahui",
     "Loading live location…": "Memuat lokasi langsung…",
     "Fetching keys from server…": "Mendapatkan kunci- dari server…",
-    "Checking…": "Memeriksa…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Desktop app logo": "Logo aplikasi desktop",
     "Requires your server to support the stable version of MSC3827": "Mengharuslkan server Anda mendukung versi MSC3827 yang stabil",
@@ -693,7 +654,8 @@
         "joined": "Tergabung",
         "avatar": "Avatar",
         "are_you_sure": "Apakah Anda yakin?",
-        "location": "Lokasi"
+        "location": "Lokasi",
+        "email_address": "Alamat email"
     },
     "action": {
         "continue": "Lanjut",
@@ -913,7 +875,8 @@
         "experimental_section": "Pratinjau awal",
         "experimental_description": "Merasa eksperimental? Coba ide terkini kami dalam pengembangan. Fitur ini belum selesai; mereka mungkin tidak stabil, mungkin berubah, atau dihapus sama sekali. <a>Pelajari lebih lanjut</a>.",
         "beta_feedback_title": "Masukan %(featureName)s Beta",
-        "beta_feedback_leave_button": "Untuk keluar dari beta, pergi ke pengaturan Anda."
+        "beta_feedback_leave_button": "Untuk keluar dari beta, pergi ke pengaturan Anda.",
+        "sliding_sync_checking": "Memeriksa…"
     },
     "keyboard": {
         "home": "Beranda",
@@ -1080,7 +1043,8 @@
         "failed_send_logs": "Gagal untuk mengirimkan catatan: ",
         "preparing_download": "Mempersiapkan untuk mengunduh catatan",
         "unsupported_browser": "Ingat: Browser Anda tidak didukung, jadi pengalaman Anda mungkin tidak dapat diprediksi.",
-        "textarea_label": "Nota"
+        "textarea_label": "Nota",
+        "log_request": "Untuk membantu kami mencegahnya di masa mendatang, silakan <a>kirimkan kami catatan</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "Sisa %(hours)sj %(minutes)sm %(seconds)sd",
@@ -2377,7 +2341,8 @@
         "verify_nop_warning_mismatch": "PERINGATAN: sesi telah diverifikasi, tetapi kuncinya TIDAK COCOK!",
         "verify_mismatch": "PERINGATAN: VERIFIKASI KUNCI GAGAL! Kunci penandatanganan untuk %(userId)s dan sesi %(deviceId)s adalah \"%(fprint)s\" yang tidak cocok dengan kunci \"%(fingerprint)s\" yang disediakan. Ini bisa saja berarti komunikasi Anda sedang disadap!",
         "verify_success_title": "Kunci terverifikasi",
-        "verify_success_description": "Kunci penandatanganan yang Anda sediakan cocok dengan kunci penandatanganan yang Anda terima dari sesi %(userId)s %(deviceId)s. Sesi ditandai sebagai terverifikasi."
+        "verify_success_description": "Kunci penandatanganan yang Anda sediakan cocok dengan kunci penandatanganan yang Anda terima dari sesi %(userId)s %(deviceId)s. Sesi ditandai sebagai terverifikasi.",
+        "help_dialog_title": "Bantuan Perintah"
     },
     "presence": {
         "busy": "Sibuk",
@@ -2910,7 +2875,16 @@
         "key_signature_upload_cancelled": "Unggahan tandatangan dibatalkan",
         "key_signature_upload_failed": "Tidak dapat mengunggah",
         "key_signature_upload_success_title": "Unggahan tandatangan berhasil",
-        "key_signature_upload_failed_title": "Unggahan tandatangan gagal"
+        "key_signature_upload_failed_title": "Unggahan tandatangan gagal",
+        "udd": {
+            "own_new_session_text": "Anda masuk ke sesi baru tanpa memverifikasinya:",
+            "own_ask_verify_text": "Verifikasi sesi Anda lainnya dengan menggunakan salah satu pilihan di bawah.",
+            "other_new_session_text": "%(name)s (%(userId)s) masuk ke sesi yang baru tanpa memverifikasinya:",
+            "other_ask_verify_text": "Tanyakan pengguna ini untuk memverifikasi sesinya, atau verifikasi secara manual di bawah.",
+            "title": "Tidak Dipercayai",
+            "manual_verification_button": "Verifikasi secara manual dengan teks",
+            "interactive_verification_button": "Verifikasi secara interaktif sengan emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3168,6 +3142,11 @@
             "continue_without_email_title": "Melanjutkan tanpa email",
             "continue_without_email_description": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
             "continue_without_email_field_label": "Email (opsional)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verifikasi Menunggu",
+            "verification_pending_description": "Mohon periksa email Anda dan klik tautannya. Setelah itu, klik lanjut.",
+            "description": "Ini akan mengizinkan Anda untuk mengatur ulang kata sandi Anda dan menerima notifikasi."
         }
     },
     "room_list": {
@@ -3520,7 +3499,11 @@
         "leave_dialog_option_none": "Jangan tinggalkan ruangan apa pun",
         "leave_dialog_option_all": "Tinggalkan semua ruangan",
         "leave_dialog_option_specific": "Tinggalkan beberapa ruangan",
-        "leave_dialog_action": "Tinggalkan space"
+        "leave_dialog_action": "Tinggalkan space",
+        "preferences": {
+            "sections_section": "Bagian untuk ditampilkan",
+            "show_people_in_space": "Ini mengelompokkan obrolan Anda dengan anggota space ini. Menonaktifkan ini akan menyembunyikan obrolan dari tampilan %(spaceName)s Anda."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -3847,7 +3830,9 @@
         "identity_server_no_terms_title": "Identitas server ini tidak memiliki syarat layanan",
         "identity_server_no_terms_description_1": "Aksi ini memerlukan mengakses server identitas bawaan <server /> untuk memvalidasi sebuah alamat email atau nomor telepon, tetapi server ini tidak memiliki syarat layanan apa pun.",
         "identity_server_no_terms_description_2": "Hanya lanjutkan jika Anda mempercayai pemilik server ini.",
-        "inline_intro_text": "Terima <policyLink /> untuk melanjutkan:"
+        "inline_intro_text": "Terima <policyLink /> untuk melanjutkan:",
+        "summary_identity_server_1": "Temukan lainnya melalui ponsel atau email",
+        "summary_identity_server_2": "Temukan oleh lainnya melalui ponsel atau email"
     },
     "space_settings": {
         "title": "Pengaturan — %(spaceName)s"
@@ -4013,7 +3998,10 @@
             "description_1": "Kami mengalami sebuah kesalahan saat memulihkan sesi Anda sebelumnya.",
             "description_2": "Jika Anda sebelumnya menggunakan versi %(brand)s yang lebih baru, sesi Anda mungkin tidak kompatibel dengan versi ini. Tutup jendela ini dan kembali ke versi yang lebih baru.",
             "description_3": "Menghapus penyimpanan browser Anda mungkin memperbaiki masalahnya, tetapi akan mengeluarkan Anda dan membuat riwayat obrolan tidak dapat dibaca."
-        }
+        },
+        "storage_evicted_title": "Data sesi hilang",
+        "storage_evicted_description_1": "Beberapa data sesi, termasuk kunci pesan terenkripsi, hilang. Keluar dan masuk lagi untuk memperbaikinya, memulihkan kunci-kunci dari cadangan.",
+        "storage_evicted_description_2": "Kemungkinan browser Anda menghapus datanya ketika ruang disk rendah."
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4390,5 +4378,27 @@
         "remove_filter": "Hapus saringan pencarian untuk %(filter)s",
         "search_messages_hint": "Untuk mencari pesan-pesan, lihat ikon ini di atas ruangan <icon/>",
         "keyboard_scroll_hint": "Gunakan <arrows/> untuk menggulirkan"
+    },
+    "share": {
+        "title_room": "Bagikan Ruangan",
+        "permalink_most_recent": "Tautan ke pesan terkini",
+        "title_user": "Bagikan Pengguna",
+        "title_message": "Bagikan Pesan Ruangan",
+        "permalink_message": "Tautan ke pesan yang dipilih",
+        "link_title": "Tautan ke ruangan"
+    },
+    "upload_file": {
+        "title_progress": "Mengunggah file (%(current)s dari %(total)s)",
+        "title": "Unggah file",
+        "upload_all_button": "Unggah semua",
+        "error_file_too_large": "File ini <b>terlalu besar</b> untuk diunggah. Batas ukuran unggahan file adalah %(limit)s tetapi file ini %(sizeOfThisFile)s.",
+        "error_files_too_large": "File-file ini <b>terlalu besar</b> untuk diunggah. Batas ukuran unggahan file adalah %(limit)s.",
+        "error_some_files_too_large": "Beberapa file <b>terlalu besar</b> untuk diunggah. Batas ukuran unggahan file adalah %(limit)s.",
+        "upload_n_others_button": {
+            "one": "Unggah %(count)s file lainnya",
+            "other": "Unggah %(count)s file lainnya"
+        },
+        "cancel_all_button": "Batalkan Semua",
+        "error_title": "Kesalahan saat Mengunggah"
     }
 }

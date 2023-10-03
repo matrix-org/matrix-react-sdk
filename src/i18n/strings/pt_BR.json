@@ -1,8 +1,6 @@
 {
     "Moderator": "Moderador/a",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, confirme o seu e-mail e clique no link enviado. Feito isso, clique em continuar.",
     "unknown error code": "código de erro desconhecido",
-    "Verification Pending": "Confirmação pendente",
     "Sun": "Dom",
     "Mon": "Seg",
     "Tue": "Ter",
@@ -32,14 +30,12 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Join Room": "Ingressar na sala",
     "not specified": "não especificado",
-    "Email address": "Endereço de e-mail",
     "Warning!": "Atenção!",
     "Home": "Home",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
     },
-    "This will allow you to reset your password and receive notifications.": "Isso permitirá que você redefina sua senha e receba notificações.",
     "Restricted": "Restrito",
     "PM": "PM",
     "AM": "AM",
@@ -63,11 +59,6 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os relatórios, você deve <a>criar um bilhete de erro no GitHub</a> para descrever seu problema.",
-    "Share Room": "Compartilhar sala",
-    "Link to most recent message": "Link da mensagem mais recente",
-    "Share User": "Compartilhar usuário",
-    "Share Room Message": "Compartilhar Mensagem da Sala",
-    "Link to selected message": "Link da mensagem selecionada",
     "Unable to load backup status": "Não foi possível carregar o status do backup",
     "Unable to restore backup": "Não foi possível restaurar o backup",
     "No backup found!": "Nenhum backup encontrado!",
@@ -135,11 +126,6 @@
     "Anchor": "Âncora",
     "Headphones": "Fones de ouvido",
     "Folder": "Pasta",
-    "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
-    "Verify your other session using one of the options below.": "Confirme suas outras sessões usando uma das opções abaixo.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
-    "Ask this user to verify their session, or manually verify it below.": "Peça a este usuário para confirmar a sessão dele, ou confirme-a manualmente abaixo.",
-    "Not Trusted": "Não confiável",
     "Your homeserver has exceeded its user limit.": "Seu servidor ultrapassou seu limite de usuárias(os).",
     "Your homeserver has exceeded one of its resource limits.": "Seu servidor local excedeu um de seus limites de recursos.",
     "Ok": "Ok",
@@ -151,7 +137,6 @@
     "a new master key signature": "uma nova chave mestra de assinatura",
     "a new cross-signing key signature": "uma nova chave de autoverificação",
     "a key signature": "uma assinatura de chave",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Alguns dados de sessão, incluindo chaves de mensagens criptografadas, estão faltando. Desconecte-se e entre novamente para resolver isso, o que restaurará as chaves do backup.",
     "Security Key": "Chave de Segurança",
     "Use your Security Key to continue.": "Use sua Chave de Segurança para continuar.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Atenção</b>: você só deve configurar o backup de chave em um computador de sua confiança.",
@@ -176,26 +161,8 @@
         "one": "%(count)s sessão"
     },
     "Destroy cross-signing keys?": "Destruir chaves autoverificadas?",
-    "Command Help": "Ajuda com Comandos",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Para nos ajudar a evitar isso no futuro, <a>envie-nos os relatórios</a>.",
-    "Your browser likely removed this data when running low on disk space.": "O seu navegador provavelmente removeu esses dados quando o espaço de armazenamento ficou insuficiente.",
-    "Find others by phone or email": "Encontre outras pessoas por telefone ou e-mail",
-    "Upload files (%(current)s of %(total)s)": "Enviar arquivos (%(current)s de %(total)s)",
-    "Upload files": "Enviar arquivos",
-    "Upload all": "Enviar tudo",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Este arquivo é <b>muito grande</b> para ser enviado. O limite do tamanho de arquivos é %(limit)s, enquanto que o tamanho desse arquivo é %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Esses arquivos são <b>muito grandes</b> para serem enviados. O limite do tamanho de arquivos é %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Alguns arquivos são <b>muito grandes</b> para serem enviados. O limite do tamanho de arquivos é %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Enviar %(count)s outros arquivos",
-        "one": "Enviar %(count)s outros arquivos"
-    },
-    "Cancel All": "Cancelar tudo",
-    "Upload Error": "Erro no envio",
     "Wrong file type": "Tipo errado de arquivo",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
-    "Missing session data": "Dados de sessão ausentes",
-    "Be found by phone or email": "Seja encontrada/o por número de celular ou por e-mail",
     "Looks good!": "Muito bem!",
     "Security Phrase": "Frase de segurança",
     "Restoring keys from backup": "Restaurando chaves do backup",
@@ -619,7 +586,8 @@
         "view_message": "Ver mensagem",
         "unencrypted": "Descriptografada",
         "show_more": "Mostrar mais",
-        "are_you_sure": "Você tem certeza?"
+        "are_you_sure": "Você tem certeza?",
+        "email_address": "Endereço de e-mail"
     },
     "action": {
         "continue": "Continuar",
@@ -889,7 +857,8 @@
         "failed_send_logs": "Falha ao enviar os relatórios:· ",
         "preparing_download": "Preparando os relatórios para download",
         "unsupported_browser": "Lembrete: seu navegador não é compatível; portanto, sua experiência pode ser imprevisível.",
-        "textarea_label": "Notas"
+        "textarea_label": "Notas",
+        "log_request": "Para nos ajudar a evitar isso no futuro, <a>envie-nos os relatórios</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)sh %(minutes)sm %(seconds)ss restantes",
@@ -1811,7 +1780,8 @@
         "verify_nop": "Sessão já confirmada!",
         "verify_mismatch": "ATENÇÃO: A CONFIRMAÇÃO DA CHAVE FALHOU! A chave de assinatura para %(userId)s e sessão %(deviceId)s é \"%(fprint)s\", o que não corresponde à chave fornecida \"%(fingerprint)s\". Isso pode significar que suas comunicações estejam sendo interceptadas por terceiros!",
         "verify_success_title": "Chave confirmada",
-        "verify_success_description": "A chave de assinatura que você forneceu corresponde à chave de assinatura que você recebeu da sessão %(deviceId)s do usuário %(userId)s. Esta sessão foi marcada como confirmada."
+        "verify_success_description": "A chave de assinatura que você forneceu corresponde à chave de assinatura que você recebeu da sessão %(deviceId)s do usuário %(userId)s. Esta sessão foi marcada como confirmada.",
+        "help_dialog_title": "Ajuda com Comandos"
     },
     "presence": {
         "online_for": "Online há %(duration)s",
@@ -2244,7 +2214,14 @@
         "key_signature_upload_cancelled": "Envio cancelado da assinatura",
         "key_signature_upload_failed": "Falha no envio",
         "key_signature_upload_success_title": "Envio bem-sucedido da assinatura",
-        "key_signature_upload_failed_title": "O envio da assinatura falhou"
+        "key_signature_upload_failed_title": "O envio da assinatura falhou",
+        "udd": {
+            "own_new_session_text": "Você entrou em uma nova sessão sem confirmá-la:",
+            "own_ask_verify_text": "Confirme suas outras sessões usando uma das opções abaixo.",
+            "other_new_session_text": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
+            "other_ask_verify_text": "Peça a este usuário para confirmar a sessão dele, ou confirme-a manualmente abaixo.",
+            "title": "Não confiável"
+        }
     },
     "emoji": {
         "category_frequently_used": "Mais usados",
@@ -2426,6 +2403,11 @@
             "continue_without_email_title": "Continuar sem e-mail",
             "continue_without_email_description": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
             "continue_without_email_field_label": "E-mail (opcional)"
+        },
+        "set_email": {
+            "verification_pending_title": "Confirmação pendente",
+            "verification_pending_description": "Por favor, confirme o seu e-mail e clique no link enviado. Feito isso, clique em continuar.",
+            "description": "Isso permitirá que você redefina sua senha e receba notificações."
         }
     },
     "room_list": {
@@ -2887,7 +2869,9 @@
         "identity_server_no_terms_title": "O servidor de identidade não tem termos de serviço",
         "identity_server_no_terms_description_1": "Esta ação requer acesso ao servidor de identidade padrão <server /> para poder validar um endereço de e-mail ou número de telefone, mas este servidor não tem nenhum termo de uso.",
         "identity_server_no_terms_description_2": "Continue apenas se você confia em quem possui este servidor.",
-        "inline_intro_text": "Aceitar <policyLink /> para continuar:"
+        "inline_intro_text": "Aceitar <policyLink /> para continuar:",
+        "summary_identity_server_1": "Encontre outras pessoas por telefone ou e-mail",
+        "summary_identity_server_2": "Seja encontrada/o por número de celular ou por e-mail"
     },
     "poll": {
         "create_poll_title": "Criar enquete",
@@ -3003,7 +2987,10 @@
             "description_1": "Encontramos um erro ao tentar restaurar sua sessão anterior.",
             "description_2": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
             "description_3": "Limpar o armazenamento do seu navegador pode resolver o problema, mas você será deslogado e isso fará que qualquer histórico de bate-papo criptografado fique ilegível."
-        }
+        },
+        "storage_evicted_title": "Dados de sessão ausentes",
+        "storage_evicted_description_1": "Alguns dados de sessão, incluindo chaves de mensagens criptografadas, estão faltando. Desconecte-se e entre novamente para resolver isso, o que restaurará as chaves do backup.",
+        "storage_evicted_description_2": "O seu navegador provavelmente removeu esses dados quando o espaço de armazenamento ficou insuficiente."
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3283,5 +3270,26 @@
         "public_rooms_label": "Salas públicas",
         "create_new_room_button": "Criar nova sala",
         "recently_viewed_section_title": "Visualizado recentemente"
+    },
+    "share": {
+        "title_room": "Compartilhar sala",
+        "permalink_most_recent": "Link da mensagem mais recente",
+        "title_user": "Compartilhar usuário",
+        "title_message": "Compartilhar Mensagem da Sala",
+        "permalink_message": "Link da mensagem selecionada"
+    },
+    "upload_file": {
+        "title_progress": "Enviar arquivos (%(current)s de %(total)s)",
+        "title": "Enviar arquivos",
+        "upload_all_button": "Enviar tudo",
+        "error_file_too_large": "Este arquivo é <b>muito grande</b> para ser enviado. O limite do tamanho de arquivos é %(limit)s, enquanto que o tamanho desse arquivo é %(sizeOfThisFile)s.",
+        "error_files_too_large": "Esses arquivos são <b>muito grandes</b> para serem enviados. O limite do tamanho de arquivos é %(limit)s.",
+        "error_some_files_too_large": "Alguns arquivos são <b>muito grandes</b> para serem enviados. O limite do tamanho de arquivos é %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Enviar %(count)s outros arquivos",
+            "one": "Enviar %(count)s outros arquivos"
+        },
+        "cancel_all_button": "Cancelar tudo",
+        "error_title": "Erro no envio"
     }
 }

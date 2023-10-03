@@ -51,7 +51,6 @@
     "Saturday": "laurdag",
     "Today": "i dag",
     "Yesterday": "i går",
-    "Email address": "Epostadresse",
     "Delete Widget": "Slett Widgeten",
     "Home": "Heim",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
@@ -59,18 +58,8 @@
     "expand": "Utvid",
     "not specified": "Ikkje spesifisert",
     "Send Logs": "Send Loggar",
-    "Verification Pending": "Ventar på verifikasjon",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Ver venleg og sjekk eposten din og klikk på lenkja du har fått. Når det er gjort, klikk gå fram.",
-    "This will allow you to reset your password and receive notifications.": "Dette tillèt deg å attendestilla passordet ditt og å få varsel.",
-    "Share Room": "Del Rom",
-    "Link to most recent message": "Lenk til den nyaste meldinga",
-    "Share User": "Del Brukar",
-    "Share Room Message": "Del Rommelding",
-    "Link to selected message": "Lenk til den valde meldinga",
     "Filter results": "Filtrer resultat",
     "Invalid theme schema.": "",
-    "Command Help": "Kommandohjelp",
-    "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
     "Norway": "Noreg",
@@ -153,7 +142,8 @@
         "go_to_settings": "Gå til innstillingar",
         "setup_secure_messages": "Sett opp sikre meldingar (Secure Messages)",
         "show_more": "Vis meir",
-        "are_you_sure": "Er du sikker?"
+        "are_you_sure": "Er du sikker?",
+        "email_address": "Epostadresse"
     },
     "action": {
         "continue": "Fortset",
@@ -276,7 +266,8 @@
         "preparing_logs": "Førebur loggsending",
         "logs_sent": "Loggar sende",
         "thank_you": "Takk skal du ha!",
-        "failed_send_logs": "Fekk ikkje til å senda loggar: "
+        "failed_send_logs": "Fekk ikkje til å senda loggar: ",
+        "log_request": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss att",
@@ -751,7 +742,8 @@
         "verify_nop": "Sesjon er tidligare verifisert!",
         "verify_mismatch": "ÅTVARING: NØKKELVERIFIKASJON FEILA! Signeringsnøkkel for %(userId)s og økt %(deviceId)s er \"%(fprint)s\" stemmer ikkje med innsendt nøkkel \"%(fingerprint)s\". Dette kan vere teikn på at kommunikasjonen er avlytta!",
         "verify_success_title": "Godkjend nøkkel",
-        "verify_success_description": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert."
+        "verify_success_description": "Innsendt signeringsnøkkel er lik nøkkelen du mottok frå %(userId)s med økt %(deviceId)s. Sesjonen no er verifisert.",
+        "help_dialog_title": "Kommandohjelp"
     },
     "presence": {
         "online_for": "tilkopla i %(duration)s",
@@ -967,6 +959,11 @@
             "setup_secure_backup_description_1": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
             "skip_key_backup": "Eg treng ikkje mine krypterte meldingar",
             "setup_key_backup_title": "Du vil miste tilgangen til dine krypterte meldingar"
+        },
+        "set_email": {
+            "verification_pending_title": "Ventar på verifikasjon",
+            "verification_pending_description": "Ver venleg og sjekk eposten din og klikk på lenkja du har fått. Når det er gjort, klikk gå fram.",
+            "description": "Dette tillèt deg å attendestilla passordet ditt og å få varsel."
         }
     },
     "export_chat": {
@@ -1366,5 +1363,12 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "Lag nytt rom"
+    },
+    "share": {
+        "title_room": "Del Rom",
+        "permalink_most_recent": "Lenk til den nyaste meldinga",
+        "title_user": "Del Brukar",
+        "title_message": "Del Rommelding",
+        "permalink_message": "Lenk til den valde meldinga"
     }
 }

@@ -49,8 +49,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Email address": "Adreça de corrièl",
-    "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
     "common": {
         "mute": "Copar lo son",
@@ -100,7 +98,8 @@
         "historical": "Istoric",
         "unencrypted": "Pas chifrat",
         "show_more": "Ne veire mai",
-        "are_you_sure": "O volètz vertadièrament ?"
+        "are_you_sure": "O volètz vertadièrament ?",
+        "email_address": "Adreça de corrièl"
     },
     "action": {
         "continue": "Contunhar",
@@ -442,5 +441,8 @@
     },
     "report_content": {
         "other_label": "Autre"
+    },
+    "upload_file": {
+        "title": "Mandar de fichièrs"
     }
 }

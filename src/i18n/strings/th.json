@@ -5,11 +5,9 @@
         "one": "และอีกหนึ่งผู้ใช้...",
         "other": "และอีก %(count)s ผู้ใช้..."
     },
-    "Email address": "ที่อยู่อีเมล",
     "Join Room": "เข้าร่วมห้อง",
     "Moderator": "ผู้ช่วยดูแล",
     "not specified": "ไม่ได้ระบุ",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ",
     "Warning!": "คำเตือน!",
     "Sun": "อา.",
     "Mon": "จ.",
@@ -38,7 +36,6 @@
         "one": "(~%(count)s ผลลัพท์)",
         "other": "(~%(count)s ผลลัพท์)"
     },
-    "Verification Pending": "รอการตรวจสอบ",
     "Sunday": "วันอาทิตย์",
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
@@ -115,7 +112,8 @@
         "rooms": "ห้องสนทนา",
         "low_priority": "ความสำคัญต่ำ",
         "historical": "ประวัติแชทเก่า",
-        "are_you_sure": "คุณแน่ใจหรือไม่?"
+        "are_you_sure": "คุณแน่ใจหรือไม่?",
+        "email_address": "ที่อยู่อีเมล"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -437,7 +435,11 @@
             "passwords_mismatch": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
             "return_to_login": "กลับไปยังหน้าลงชื่อเข้าใช้"
         },
-        "common_failures": {}
+        "common_failures": {},
+        "set_email": {
+            "verification_pending_title": "รอการตรวจสอบ",
+            "verification_pending_description": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ"
+        }
     },
     "setting": {
         "help_about": {

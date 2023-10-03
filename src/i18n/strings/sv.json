@@ -4,12 +4,10 @@
         "other": "och %(count)s andra…",
         "one": "och en annan…"
     },
-    "Email address": "E-postadress",
     "Home": "Hem",
     "Join Room": "Gå med i rum",
     "Moderator": "Moderator",
     "not specified": "inte specificerad",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
     "unknown error code": "okänd felkod",
     "AM": "FM",
     "PM": "EM",
@@ -53,8 +51,6 @@
         "other": "(~%(count)s resultat)",
         "one": "(~%(count)s resultat)"
     },
-    "Verification Pending": "Avvaktar verifiering",
-    "This will allow you to reset your password and receive notifications.": "Det här låter dig återställa lösenordet och ta emot aviseringar.",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -63,11 +59,6 @@
     "Send Logs": "Skicka loggar",
     "collapse": "fäll ihop",
     "expand": "fäll ut",
-    "Share Room": "Dela rum",
-    "Link to most recent message": "Länk till senaste meddelandet",
-    "Share User": "Dela användare",
-    "Share Room Message": "Dela rumsmeddelande",
-    "Link to selected message": "Länk till valt meddelande",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Innan du skickar in loggar måste du <a>skapa ett GitHub-ärende</a> för att beskriva problemet.",
     "Dog": "Hund",
     "Cat": "Katt",
@@ -132,21 +123,6 @@
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "To help us prevent this in future, please <a>send us logs</a>.": "För att hjälpa oss att förhindra detta i framtiden, vänligen <a>skicka oss loggar</a>.",
-    "Missing session data": "Sessionsdata saknas",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Vissa sessionsdata, inklusive krypteringsnycklar för meddelanden, saknas. Logga ut och logga in för att åtgärda detta genom återställning av nycklarna från säkerhetskopia.",
-    "Your browser likely removed this data when running low on disk space.": "Din webbläsare har troligen tagit bort dessa data när det blev ont om diskutrymme.",
-    "Upload files (%(current)s of %(total)s)": "Ladda upp filer (%(current)s av %(total)s)",
-    "Upload files": "Ladda upp filer",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Den här filen är <b>för stor</b> för att ladda upp. Filstorleksgränsen är %(limit)s men den här filen är %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Dessa filer är <b>för stora</b> för att laddas upp. Filstorleksgränsen är %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Vissa filer är <b>för stora</b> för att laddas upp. Filstorleksgränsen är %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Ladda upp %(count)s andra filer",
-        "one": "Ladda upp %(count)s annan fil"
-    },
-    "Cancel All": "Avbryt alla",
-    "Upload Error": "Uppladdningsfel",
     "Deactivate account": "Inaktivera konto",
     "edited": "redigerat",
     "Failed to connect to integration manager": "Kunde inte ansluta till integrationshanterare",
@@ -154,13 +130,6 @@
     "%(name)s cancelled": "%(name)s avbröt",
     "%(name)s wants to verify": "%(name)s vill verifiera",
     "e.g. my-room": "t.ex. mitt-rum",
-    "Find others by phone or email": "Hitta andra via telefon eller e-post",
-    "Be found by phone or email": "Bli hittad via telefon eller e-post",
-    "You signed in to a new session without verifying it:": "Du loggade in i en ny session utan att verifiera den:",
-    "Verify your other session using one of the options below.": "Verifiera din andra session med ett av alternativen nedan.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) loggade in i en ny session utan att verifiera den:",
-    "Ask this user to verify their session, or manually verify it below.": "Be den här användaren att verifiera sin session, eller verifiera den manuellt nedan.",
-    "Not Trusted": "Inte betrodd",
     "Your homeserver has exceeded its user limit.": "Din hemserver har överskridit sin användargräns.",
     "Your homeserver has exceeded one of its resource limits.": "Din hemserver har överskridit en av sina resursgränser.",
     "Ok": "OK",
@@ -187,8 +156,6 @@
     "a device cross-signing signature": "en enhets korssigneringssignatur",
     "a key signature": "en nyckelsignatur",
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "Command Help": "Kommandohjälp",
-    "Upload all": "Ladda upp alla",
     "Wrong file type": "Fel filtyp",
     "Looks good!": "Ser bra ut!",
     "Security Phrase": "Säkerhetsfras",
@@ -518,9 +485,6 @@
         "one": "%(count)s röst",
         "other": "%(count)s röster"
     },
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Det här grupperar dina chattar med medlemmar i det här utrymmet. Att stänga av det kommer att dölja dessa chattar från din vy av %(spaceName)s.",
-    "Sections to show": "Sektioner att visa",
-    "Link to room": "Länk till rum",
     "Forget": "Glöm",
     "Open in OpenStreetMap": "Öppna i OpenStreetMap",
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
@@ -556,15 +520,12 @@
     "Explore public spaces in the new search dialog": "Utforska offentliga utrymmen i den nya sökdialogen",
     "Saved Items": "Sparade föremål",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
-    "Interactively verify by emoji": "Verifiera interaktivt med emoji",
-    "Manually verify by text": "Verifiera manuellt med text",
     "%(name)s started a video call": "%(name)s startade ett videosamtal",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
     "unknown": "okänd",
     "Loading live location…": "Laddar realtidsposition …",
     "Fetching keys from server…": "Hämtar nycklar från server …",
-    "Checking…": "Kontrollerar …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
     "unavailable": "otillgänglig",
@@ -693,7 +654,8 @@
         "joined": "Gick med",
         "avatar": "Avatar",
         "are_you_sure": "Är du säker?",
-        "location": "Plats"
+        "location": "Plats",
+        "email_address": "E-postadress"
     },
     "action": {
         "continue": "Fortsätt",
@@ -911,7 +873,8 @@
         "experimental_section": "Tidiga förhandstittar",
         "experimental_description": "Känner du dig äventyrlig? Pröva våra senaste idéer under utveckling. Dessa funktioner är inte slutförda; de kan vara instabila, kan ändras, eller kan tas bort helt. <a>Läs mer</a>.",
         "beta_feedback_title": "%(featureName)s Betaåterkoppling",
-        "beta_feedback_leave_button": "För att lämna betan, besök dina inställningar."
+        "beta_feedback_leave_button": "För att lämna betan, besök dina inställningar.",
+        "sliding_sync_checking": "Kontrollerar …"
     },
     "keyboard": {
         "home": "Hem",
@@ -1078,7 +1041,8 @@
         "failed_send_logs": "Misslyckades att skicka loggar: ",
         "preparing_download": "Förbereder nedladdning av loggar",
         "unsupported_browser": "Påminnelse: Din webbläsare stöds inte, så din upplevelse kan vara oförutsägbar.",
-        "textarea_label": "Anteckningar"
+        "textarea_label": "Anteckningar",
+        "log_request": "För att hjälpa oss att förhindra detta i framtiden, vänligen <a>skicka oss loggar</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)st %(minutes)sm %(seconds)ss kvar",
@@ -2331,7 +2295,8 @@
         "verify_nop_warning_mismatch": "VARNING: sessionen är redan verifierad, men nycklarna MATCHAR INTE!",
         "verify_mismatch": "VARNING: NYCKELVERIFIERING MISSLYCKADES! Den signerade nyckeln för %(userId)s och sessionen %(deviceId)s är \"%(fprint)s\" vilket inte matchar den givna nyckeln \"%(fingerprint)s\". Detta kan betyda att kommunikationen är övervakad!",
         "verify_success_title": "Verifierade nyckeln",
-        "verify_success_description": "Signeringsnyckeln du gav matchar signeringsnyckeln du fick av %(userId)ss session %(deviceId)s. Sessionen markerades som verifierad."
+        "verify_success_description": "Signeringsnyckeln du gav matchar signeringsnyckeln du fick av %(userId)ss session %(deviceId)s. Sessionen markerades som verifierad.",
+        "help_dialog_title": "Kommandohjälp"
     },
     "presence": {
         "busy": "Upptagen",
@@ -2856,7 +2821,16 @@
         "key_signature_upload_cancelled": "Avbröt signaturuppladdning",
         "key_signature_upload_failed": "Kunde inte ladda upp",
         "key_signature_upload_success_title": "Signaturuppladdning lyckades",
-        "key_signature_upload_failed_title": "Signaturuppladdning misslyckades"
+        "key_signature_upload_failed_title": "Signaturuppladdning misslyckades",
+        "udd": {
+            "own_new_session_text": "Du loggade in i en ny session utan att verifiera den:",
+            "own_ask_verify_text": "Verifiera din andra session med ett av alternativen nedan.",
+            "other_new_session_text": "%(name)s (%(userId)s) loggade in i en ny session utan att verifiera den:",
+            "other_ask_verify_text": "Be den här användaren att verifiera sin session, eller verifiera den manuellt nedan.",
+            "title": "Inte betrodd",
+            "manual_verification_button": "Verifiera manuellt med text",
+            "interactive_verification_button": "Verifiera interaktivt med emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -3113,6 +3087,11 @@
             "continue_without_email_title": "Fortsätter utan e-post",
             "continue_without_email_description": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
             "continue_without_email_field_label": "E-post (valfritt)"
+        },
+        "set_email": {
+            "verification_pending_title": "Avvaktar verifiering",
+            "verification_pending_description": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
+            "description": "Det här låter dig återställa lösenordet och ta emot aviseringar."
         }
     },
     "room_list": {
@@ -3464,7 +3443,11 @@
         "leave_dialog_option_none": "Lämna inga rum",
         "leave_dialog_option_all": "Lämna alla rum",
         "leave_dialog_option_specific": "Lämna vissa rum",
-        "leave_dialog_action": "Lämna utrymmet"
+        "leave_dialog_action": "Lämna utrymmet",
+        "preferences": {
+            "sections_section": "Sektioner att visa",
+            "show_people_in_space": "Det här grupperar dina chattar med medlemmar i det här utrymmet. Att stänga av det kommer att dölja dessa chattar från din vy av %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -3782,7 +3765,9 @@
         "identity_server_no_terms_title": "Identitetsservern har inga användarvillkor",
         "identity_server_no_terms_description_1": "Den här åtgärden kräver åtkomst till standardidentitetsservern <server /> för att validera en e-postadress eller ett telefonnummer, men servern har inga användarvillkor.",
         "identity_server_no_terms_description_2": "Fortsätt endast om du litar på serverns ägare.",
-        "inline_intro_text": "Acceptera <policyLink /> för att fortsätta:"
+        "inline_intro_text": "Acceptera <policyLink /> för att fortsätta:",
+        "summary_identity_server_1": "Hitta andra via telefon eller e-post",
+        "summary_identity_server_2": "Bli hittad via telefon eller e-post"
     },
     "space_settings": {
         "title": "Inställningar - %(spaceName)s"
@@ -3948,7 +3933,10 @@
             "description_1": "Ett fel uppstod vid återställning av din tidigare session.",
             "description_2": "Om du nyligen har använt en senare version av %(brand)s kan din session vara inkompatibel med den här versionen. Stäng det här fönstret och använd senare versionen istället.",
             "description_3": "Att rensa webbläsarens lagring kan lösa problemet, men då loggas du ut och krypterad chatthistorik blir oläslig."
-        }
+        },
+        "storage_evicted_title": "Sessionsdata saknas",
+        "storage_evicted_description_1": "Vissa sessionsdata, inklusive krypteringsnycklar för meddelanden, saknas. Logga ut och logga in för att åtgärda detta genom återställning av nycklarna från säkerhetskopia.",
+        "storage_evicted_description_2": "Din webbläsare har troligen tagit bort dessa data när det blev ont om diskutrymme."
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4323,5 +4311,27 @@
         "remove_filter": "Ta bort sökfilter för %(filter)s",
         "search_messages_hint": "För att söka efter meddelanden, leta efter den här ikonen på toppen av ett rum <icon/>",
         "keyboard_scroll_hint": "Använd <arrows/> för att skrolla"
+    },
+    "share": {
+        "title_room": "Dela rum",
+        "permalink_most_recent": "Länk till senaste meddelandet",
+        "title_user": "Dela användare",
+        "title_message": "Dela rumsmeddelande",
+        "permalink_message": "Länk till valt meddelande",
+        "link_title": "Länk till rum"
+    },
+    "upload_file": {
+        "title_progress": "Ladda upp filer (%(current)s av %(total)s)",
+        "title": "Ladda upp filer",
+        "upload_all_button": "Ladda upp alla",
+        "error_file_too_large": "Den här filen är <b>för stor</b> för att ladda upp. Filstorleksgränsen är %(limit)s men den här filen är %(sizeOfThisFile)s.",
+        "error_files_too_large": "Dessa filer är <b>för stora</b> för att laddas upp. Filstorleksgränsen är %(limit)s.",
+        "error_some_files_too_large": "Vissa filer är <b>för stora</b> för att laddas upp. Filstorleksgränsen är %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Ladda upp %(count)s andra filer",
+            "one": "Ladda upp %(count)s annan fil"
+        },
+        "cancel_all_button": "Avbryt alla",
+        "error_title": "Uppladdningsfel"
     }
 }

@@ -1,5 +1,4 @@
 {
-    "This will allow you to reset your password and receive notifications.": "To pozwoli Ci zresetować Twoje hasło i otrzymać powiadomienia.",
     "Jan": "Sty",
     "Feb": "Lut",
     "Mar": "Mar",
@@ -26,15 +25,12 @@
         "other": "i %(count)s innych...",
         "one": "i jeden inny..."
     },
-    "Email address": "Adres e-mail",
     "Home": "Strona główna",
     "Join Room": "Dołącz do pokoju",
     "Moderator": "Moderator",
     "not specified": "nieokreślony",
     "AM": "AM",
     "PM": "PM",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Sprawdź swój e-mail i kliknij link w nim zawarty. Kiedy już to zrobisz, kliknij \"kontynuuj\".",
-    "Verification Pending": "Oczekiwanie weryfikacji",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -63,11 +59,6 @@
     "collapse": "Zwiń",
     "expand": "Rozwiń",
     "Send Logs": "Wyślij dzienniki",
-    "Share Room": "Udostępnij pokój",
-    "Link to most recent message": "Link do najnowszej wiadomości",
-    "Share User": "Udostępnij użytkownika",
-    "Share Room Message": "Udostępnij wiadomość w pokoju",
-    "Link to selected message": "Link do zaznaczonej wiadomości",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Dog": "Pies",
     "Cat": "Kot",
@@ -135,10 +126,6 @@
     "Ball": "Piłka",
     "Deactivate account": "Dezaktywuj konto",
     "e.g. my-room": "np. mój-pokój",
-    "Upload files (%(current)s of %(total)s)": "Prześlij pliki (%(current)s z %(total)s)",
-    "Upload files": "Prześlij pliki",
-    "Upload all": "Prześlij wszystko",
-    "Cancel All": "Anuluj wszystko",
     "%(count)s verified sessions": {
         "other": "%(count)s zweryfikowanych sesji",
         "one": "1 zweryfikowana sesja"
@@ -146,10 +133,6 @@
     "%(count)s sessions": {
         "other": "%(count)s sesji",
         "one": "%(count)s sesja"
-    },
-    "Upload %(count)s other files": {
-        "other": "Prześlij %(count)s innych plików",
-        "one": "Prześlij %(count)s inny plik"
     },
     "Switch theme": "Przełącz motyw",
     "Sign in with SSO": "Zaloguj się z SSO",
@@ -291,7 +274,6 @@
     "Kazakhstan": "Kazachstan",
     "Jordan": "Jordania",
     "Jersey": "Jersey",
-    "Upload Error": "Błąd wysyłania",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Jemen",
@@ -401,21 +383,10 @@
     "Mauritius": "Mauritius",
     "Mauritania": "Mauretania",
     "Martinique": "Martynika",
-    "Not Trusted": "Nie zaufany",
-    "Ask this user to verify their session, or manually verify it below.": "Poproś go/ją o zweryfikowanie tej sesji bądź zweryfikuj ją osobiście poniżej.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s zalogował się do nowej sesji bez zweryfikowania jej:",
-    "Verify your other session using one of the options below.": "Zweryfikuj swoje pozostałe sesje używając jednej z opcji poniżej.",
-    "You signed in to a new session without verifying it:": "Zalogowałeś się do nowej sesji bez jej zweryfikowania:",
     "Japan": "Japonia",
     "Jamaica": "Jamajka",
     "Italy": "Włochy",
-    "Find others by phone or email": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Przed wysłaniem logów, <a>zgłoś problem na GitHubie</a> opisujący twój problem.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Niektóre pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Te pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Ten plik jest <b>zbyt duży</b>, aby został wysłany. Ograniczenie wielkości plików to %(limit)s, a ten plik waży %(sizeOfThisFile)s.",
-    "Your browser likely removed this data when running low on disk space.": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca.",
-    "Missing session data": "Brakujące dane sesji",
     "Failed to decrypt %(failedCount)s sessions!": "Nie udało się odszyfrować %(failedCount)s sesji!",
     "Unable to load backup status": "Nie udało się załadować stanu kopii zapasowej",
     "Backup version:": "Wersja kopii zapasowej:",
@@ -467,7 +438,6 @@
     "Wrong Security Key": "Niewłaściwy klucz bezpieczeństwa",
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "Kopia zapasowa nie mogła zostać rozszyfrowana za pomocą tego Klucza: upewnij się, że wprowadzono prawidłowy Klucz bezpieczeństwa.",
     "Restoring keys from backup": "Przywracanie kluczy z kopii zapasowej",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Brakuje niektórych danych sesji, w tym zaszyfrowanych kluczy wiadomości. Wyloguj się i zaloguj, aby to naprawić, przywracając klucze z kopii zapasowej.",
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
     "Unsent": "Niewysłane",
@@ -526,15 +496,6 @@
     "You cannot search for rooms that are neither a room nor a space": "Nie możesz szukać pokojów, które nie pokojem, ani przestrzenią",
     "Show spaces": "Pokaż przestrzenie",
     "Show rooms": "Pokaż pokoje",
-    "Interactively verify by emoji": "Zweryfikuj interaktywnie za pomocą emoji",
-    "Manually verify by text": "Zweryfikuj ręcznie za pomocą tekstu",
-    "Be found by phone or email": "Zostań znaleziony przez numer telefonu lub adres e-mail",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Aby uniknąć tego problemu w przyszłości, <a>wyślij nam dzienniki</a>.",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ta funkcja grupuje Twoje czaty z członkami tej przestrzeni. Wyłączenie jej, ukryje następujące czaty %(spaceName)s.",
-    "Sections to show": "Sekcje do pokazania",
-    "Checking…": "Sprawdzanie…",
-    "Command Help": "Komenda pomocy",
-    "Link to room": "Link do pokoju",
     "Unread email icon": "Ikona nieprzeczytanych wiadomości e-mail",
     "An error occurred while stopping your live location, please try again": "Wystąpił błąd podczas zatrzymywania Twojej lokalizacji na żywo, spróbuj ponownie",
     "An error occurred whilst sharing your live location, please try again": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo, spróbuj ponownie",
@@ -693,7 +654,8 @@
         "joined": "Dołączono",
         "avatar": "Awatar",
         "are_you_sure": "Czy jesteś pewien?",
-        "location": "Lokalizacja"
+        "location": "Lokalizacja",
+        "email_address": "Adres e-mail"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -912,7 +874,8 @@
         "experimental_section": "Wczesny podgląd",
         "experimental_description": "Chcesz poeksperymentować? Wypróbuj nasze najnowsze pomysły w trakcie rozwoju. Przedstawione funkcje nie zostały w pełni ukończone; mogą być niestabilne; mogą się zmienić lub zostać kompletnie porzucone. <a>Dowiedz się więcej</a>.",
         "beta_feedback_title": "%(featureName)s opinia Beta",
-        "beta_feedback_leave_button": "Aby wyjść z bety, odwiedź swoje ustawienia."
+        "beta_feedback_leave_button": "Aby wyjść z bety, odwiedź swoje ustawienia.",
+        "sliding_sync_checking": "Sprawdzanie…"
     },
     "keyboard": {
         "home": "Strona główna",
@@ -1079,7 +1042,8 @@
         "failed_send_logs": "Nie udało się wysłać dzienników: ",
         "preparing_download": "Przygotowuję do pobrania dzienników",
         "unsupported_browser": "Przypomnienie: Twoja przeglądarka nie jest wspierana, więc Twoje doświadczenie może być nieprzewidywalne.",
-        "textarea_label": "Notatki"
+        "textarea_label": "Notatki",
+        "log_request": "Aby uniknąć tego problemu w przyszłości, <a>wyślij nam dzienniki</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "pozostało %(hours)s godz. %(minutes)s min. %(seconds)ss",
@@ -2372,7 +2336,8 @@
         "verify_nop_warning_mismatch": "OSTRZEŻENIE: sesja została już zweryfikowana, ale klucze NIE PASUJĄ!",
         "verify_mismatch": "OSTRZEŻENIE: WERYFIKACJA KLUCZY NIE POWIODŁA SIĘ! Klucz podpisujący dla %(userId)s oraz sesji %(deviceId)s to \"%(fprint)s\", nie pasuje on do podanego klucza \"%(fingerprint)s\". To może oznaczać że Twoja komunikacja jest przechwytywana!",
         "verify_success_title": "Zweryfikowany klucz",
-        "verify_success_description": "Klucz podpisujący, który podano jest taki sam jak klucz podpisujący otrzymany od %(userId)s oraz sesji %(deviceId)s. Sesja została oznaczona jako zweryfikowana."
+        "verify_success_description": "Klucz podpisujący, który podano jest taki sam jak klucz podpisujący otrzymany od %(userId)s oraz sesji %(deviceId)s. Sesja została oznaczona jako zweryfikowana.",
+        "help_dialog_title": "Komenda pomocy"
     },
     "presence": {
         "busy": "Zajęty",
@@ -2899,7 +2864,16 @@
         "key_signature_upload_cancelled": "Przesyłanie sygnatury zostało anulowane",
         "key_signature_upload_failed": "Nie można wysłać",
         "key_signature_upload_success_title": "Wysłanie podpisu udało się",
-        "key_signature_upload_failed_title": "Wysłanie podpisu nie powiodło się"
+        "key_signature_upload_failed_title": "Wysłanie podpisu nie powiodło się",
+        "udd": {
+            "own_new_session_text": "Zalogowałeś się do nowej sesji bez jej zweryfikowania:",
+            "own_ask_verify_text": "Zweryfikuj swoje pozostałe sesje używając jednej z opcji poniżej.",
+            "other_new_session_text": "%(name)s%(userId)s zalogował się do nowej sesji bez zweryfikowania jej:",
+            "other_ask_verify_text": "Poproś go/ją o zweryfikowanie tej sesji bądź zweryfikuj ją osobiście poniżej.",
+            "title": "Nie zaufany",
+            "manual_verification_button": "Zweryfikuj ręcznie za pomocą tekstu",
+            "interactive_verification_button": "Zweryfikuj interaktywnie za pomocą emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3156,6 +3130,11 @@
             "continue_without_email_title": "Kontynuowanie bez adresu e-mail",
             "continue_without_email_description": "Mała uwaga, jeśli nie dodasz adresu e-mail i stracisz swoje hasło, możesz <b>permanentnie stracić dostęp do swojego konta</b>.",
             "continue_without_email_field_label": "Adres e-mail (opcjonalnie)"
+        },
+        "set_email": {
+            "verification_pending_title": "Oczekiwanie weryfikacji",
+            "verification_pending_description": "Sprawdź swój e-mail i kliknij link w nim zawarty. Kiedy już to zrobisz, kliknij \"kontynuuj\".",
+            "description": "To pozwoli Ci zresetować Twoje hasło i otrzymać powiadomienia."
         }
     },
     "room_list": {
@@ -3508,7 +3487,11 @@
         "leave_dialog_option_none": "Nie opuszczaj żadnych pokoi",
         "leave_dialog_option_all": "Opuść wszystkie pokoje",
         "leave_dialog_option_specific": "Opuść niektóre pokoje",
-        "leave_dialog_action": "Opuść przestrzeń"
+        "leave_dialog_action": "Opuść przestrzeń",
+        "preferences": {
+            "sections_section": "Sekcje do pokazania",
+            "show_people_in_space": "Ta funkcja grupuje Twoje czaty z członkami tej przestrzeni. Wyłączenie jej, ukryje następujące czaty %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -3825,7 +3808,9 @@
         "identity_server_no_terms_title": "Serwer tożsamości nie posiada warunków użytkowania",
         "identity_server_no_terms_description_1": "Ta czynność wymaga dostępu do domyślnego serwera tożsamości <server /> do walidacji adresu e-mail, czy numeru telefonu, ale serwer nie określa warunków korzystania z usługi.",
         "identity_server_no_terms_description_2": "Kontynuj tylko wtedy, gdy ufasz właścicielowi serwera.",
-        "inline_intro_text": "Zaakceptuj <policyLink /> aby kontynuować:"
+        "inline_intro_text": "Zaakceptuj <policyLink /> aby kontynuować:",
+        "summary_identity_server_1": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
+        "summary_identity_server_2": "Zostań znaleziony przez numer telefonu lub adres e-mail"
     },
     "space_settings": {
         "title": "Ustawienia - %(spaceName)s"
@@ -3989,7 +3974,10 @@
             "description_1": "Napotkaliśmy błąd podczas przywracania poprzedniej sesji.",
             "description_2": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
             "description_3": "Wyczyszczenie pamięci przeglądarki może rozwiązać problem, ale wyloguje Cię i spowoduje, że jakakolwiek zaszyfrowana historia czatu stanie się nieczytelna."
-        }
+        },
+        "storage_evicted_title": "Brakujące dane sesji",
+        "storage_evicted_description_1": "Brakuje niektórych danych sesji, w tym zaszyfrowanych kluczy wiadomości. Wyloguj się i zaloguj, aby to naprawić, przywracając klucze z kopii zapasowej.",
+        "storage_evicted_description_2": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca."
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4365,5 +4353,27 @@
         "remove_filter": "Usuń filtr wyszukiwania dla %(filter)s",
         "search_messages_hint": "Aby szukać wiadomości, poszukaj tej ikony na górze pokoju <icon/>",
         "keyboard_scroll_hint": "Użyj <arrows/>, aby przewijać"
+    },
+    "share": {
+        "title_room": "Udostępnij pokój",
+        "permalink_most_recent": "Link do najnowszej wiadomości",
+        "title_user": "Udostępnij użytkownika",
+        "title_message": "Udostępnij wiadomość w pokoju",
+        "permalink_message": "Link do zaznaczonej wiadomości",
+        "link_title": "Link do pokoju"
+    },
+    "upload_file": {
+        "title_progress": "Prześlij pliki (%(current)s z %(total)s)",
+        "title": "Prześlij pliki",
+        "upload_all_button": "Prześlij wszystko",
+        "error_file_too_large": "Ten plik jest <b>zbyt duży</b>, aby został wysłany. Ograniczenie wielkości plików to %(limit)s, a ten plik waży %(sizeOfThisFile)s.",
+        "error_files_too_large": "Te pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
+        "error_some_files_too_large": "Niektóre pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Prześlij %(count)s innych plików",
+            "one": "Prześlij %(count)s inny plik"
+        },
+        "cancel_all_button": "Anuluj wszystko",
+        "error_title": "Błąd wysyłania"
     }
 }

@@ -4,14 +4,11 @@
         "one": "ve bir diğeri...",
         "other": "ve %(count)s diğerleri..."
     },
-    "Email address": "E-posta Adresi",
     "Home": "Ev",
     "Join Room": "Odaya Katıl",
     "Moderator": "Moderatör",
     "not specified": "Belirtilmemiş",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Lütfen e-postanızı kontrol edin ve içerdiği bağlantıya tıklayın . Bu işlem tamamlandıktan sonra , 'devam et' e tıklayın .",
     "unknown error code": "bilinmeyen hata kodu",
-    "Verification Pending": "Bekleyen doğrulama",
     "Warning!": "Uyarı!",
     "Sun": "Pzt",
     "Mon": "Pazartesi",
@@ -39,7 +36,6 @@
         "one": "(~%(count)s sonuç)",
         "other": "(~%(count)s sonuçlar)"
     },
-    "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Today": "Bugün",
     "Friday": "Cuma",
@@ -56,19 +52,6 @@
     "e.g. my-room": "örn. odam",
     "Filter results": "Sonuçları filtrele",
     "Send Logs": "Logları Gönder",
-    "Share Room": "Oda Paylaş",
-    "Link to most recent message": "En son mesaja bağlantı",
-    "Share User": "Kullanıcı Paylaş",
-    "Share Room Message": "Oda Mesajı Paylaş",
-    "Link to selected message": "Seçili mesaja bağlantı",
-    "Command Help": "Komut Yardımı",
-    "Missing session data": "Kayıp oturum verisi",
-    "Find others by phone or email": "Kişileri telefon yada e-posta ile bul",
-    "Be found by phone or email": "Telefon veya e-posta ile bulunun",
-    "Upload files": "Dosyaları yükle",
-    "Upload all": "Hepsini yükle",
-    "Cancel All": "Hepsi İptal",
-    "Upload Error": "Yükleme Hatası",
     "Unable to load backup status": "Yedek durumu yüklenemiyor",
     "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
     "No backup found!": "Yedek bulunamadı!",
@@ -146,11 +129,6 @@
     "Deactivate account": "Hesabı pasifleştir",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
-    "Upload %(count)s other files": {
-        "other": "%(count)s diğer dosyaları yükle",
-        "one": "%(count)s dosyayı sağla"
-    },
-    "Not Trusted": "Güvenilmiyor",
     "%(count)s sessions": {
         "other": "%(count)s oturum",
         "one": "%(count)s oturum"
@@ -160,20 +138,12 @@
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>.",
-    "Upload files (%(current)s of %(total)s)": "Dosyaları yükle (%(current)s / %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s adet oturum çözümlenemedi!",
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
     "a key signature": "bir anahtar imzası",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Bu dosyalar yükleme için <b>çok büyük</b>. Dosya boyut limiti %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Bazı dosyalar yükleme için <b>çok büyük</b>. Dosya boyutu limiti %(limit)s.",
     "PM": "24:00",
     "AM": "12:00",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeni oturuma doğrulamadan giriş yaptı:",
-    "Ask this user to verify their session, or manually verify it below.": "Kullanıcıya oturumunu doğrulamasını söyle, ya da aşağıdan doğrula.",
-    "You signed in to a new session without verifying it:": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
-    "Verify your other session using one of the options below.": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
     "Your homeserver has exceeded its user limit.": "Homeserver'ınız kullanıcı limitini aştı.",
     "Your homeserver has exceeded one of its resource limits.": "Homeserver'ınız kaynaklarından birisinin sınırını aştı.",
     "Ok": "Tamam",
@@ -522,7 +492,8 @@
         "view_message": "Mesajı görüntüle",
         "unencrypted": "Şifrelenmemiş",
         "show_more": "Daha fazla göster",
-        "are_you_sure": "Emin misiniz ?"
+        "are_you_sure": "Emin misiniz ?",
+        "email_address": "E-posta Adresi"
     },
     "action": {
         "continue": "Devam Et",
@@ -719,7 +690,8 @@
         "failed_send_logs": "Logların gönderilmesi başarısız: ",
         "preparing_download": "Loglar indirilmeye hazırlanıyor",
         "unsupported_browser": "Hatırlatma:Tarayıcınız desteklenmiyor, deneyiminiz öngörülemiyor.",
-        "textarea_label": "Notlar"
+        "textarea_label": "Notlar",
+        "log_request": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>."
     },
     "time": {
         "seconds_left": "%(seconds)s saniye kaldı",
@@ -1375,7 +1347,8 @@
         "verify_nop": "Oturum zaten doğrulanmış!",
         "verify_mismatch": "UYARI: ANAHTAR DOĞRULAMASI BAŞARISIZ! %(userld)s'nin/nın %(deviceId)s oturumu için imza anahtarı \"%(fprint)s\" verilen anahtar ile uyuşmuyor \"%(fingerprint)s\". Bu iletişiminizin engellendiği anlamına gelebilir!",
         "verify_success_title": "Doğrulama anahtarı",
-        "verify_success_description": "Verilen imza anahtarı %(userld)s'nin/nın %(deviceld)s oturumundan gelen anahtar ile uyumlu. Oturum doğrulanmış olarak işaretlendi."
+        "verify_success_description": "Verilen imza anahtarı %(userld)s'nin/nın %(deviceld)s oturumundan gelen anahtar ile uyumlu. Oturum doğrulanmış olarak işaretlendi.",
+        "help_dialog_title": "Komut Yardımı"
     },
     "presence": {
         "online_for": "%(duration)s süresince çevrimiçi",
@@ -1646,7 +1619,14 @@
         "key_signature_upload_completed": "Yükleme tamamlandı",
         "key_signature_upload_cancelled": "anahtar yükleme iptal edildi",
         "key_signature_upload_success_title": "Anahtar yükleme başarılı",
-        "key_signature_upload_failed_title": "İmza yükleme başarısız"
+        "key_signature_upload_failed_title": "İmza yükleme başarısız",
+        "udd": {
+            "own_new_session_text": "Yeni bir oturuma, doğrulamadan oturum açtınız:",
+            "own_ask_verify_text": "Diğer oturumunuzu aşağıdaki seçeneklerden birini kullanarak doğrulayın.",
+            "other_new_session_text": "%(name)s (%(userId)s) yeni oturuma doğrulamadan giriş yaptı:",
+            "other_ask_verify_text": "Kullanıcıya oturumunu doğrulamasını söyle, ya da aşağıdan doğrula.",
+            "title": "Güvenilmiyor"
+        }
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -1776,6 +1756,11 @@
         },
         "registration": {
             "continue_without_email_field_label": "E-posta (opsiyonel)"
+        },
+        "set_email": {
+            "verification_pending_title": "Bekleyen doğrulama",
+            "verification_pending_description": "Lütfen e-postanızı kontrol edin ve içerdiği bağlantıya tıklayın . Bu işlem tamamlandıktan sonra , 'devam et' e tıklayın .",
+            "description": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak."
         }
     },
     "room_list": {
@@ -2095,7 +2080,9 @@
         "identity_server_no_terms_title": "Kimlik sunucusu hizmet kurallarına sahip değil",
         "identity_server_no_terms_description_1": "Bu eylem, bir e-posta adresini veya telefon numarasını doğrulamak için varsayılan kimlik sunucusuna <server /> erişilmesini gerektirir, ancak sunucunun herhangi bir hizmet şartı yoktur.",
         "identity_server_no_terms_description_2": "Sadece sunucunun sahibine güveniyorsanız devam edin.",
-        "inline_intro_text": "Devam etmek için <policyLink /> i kabul ediniz:"
+        "inline_intro_text": "Devam etmek için <policyLink /> i kabul ediniz:",
+        "summary_identity_server_1": "Kişileri telefon yada e-posta ile bul",
+        "summary_identity_server_2": "Telefon veya e-posta ile bulunun"
     },
     "failed_load_async_component": "Yüklenemiyor! Ağ bağlantınızı kontrol edin ve yeniden deneyin.",
     "upload_failed_generic": "%(fileName)s dosyası için yükleme başarısız.",
@@ -2161,7 +2148,8 @@
             "title": "Oturum geri yüklenemiyor",
             "description_1": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
             "description_2": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün."
-        }
+        },
+        "storage_evicted_title": "Kayıp oturum verisi"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2352,5 +2340,25 @@
     "message_edit_dialog_title": "Mesajları düzenle",
     "spotlight_dialog": {
         "create_new_room_button": "Yeni Oda Oluştur"
+    },
+    "share": {
+        "title_room": "Oda Paylaş",
+        "permalink_most_recent": "En son mesaja bağlantı",
+        "title_user": "Kullanıcı Paylaş",
+        "title_message": "Oda Mesajı Paylaş",
+        "permalink_message": "Seçili mesaja bağlantı"
+    },
+    "upload_file": {
+        "title_progress": "Dosyaları yükle (%(current)s / %(total)s)",
+        "title": "Dosyaları yükle",
+        "upload_all_button": "Hepsini yükle",
+        "error_files_too_large": "Bu dosyalar yükleme için <b>çok büyük</b>. Dosya boyut limiti %(limit)s.",
+        "error_some_files_too_large": "Bazı dosyalar yükleme için <b>çok büyük</b>. Dosya boyutu limiti %(limit)s.",
+        "upload_n_others_button": {
+            "other": "%(count)s diğer dosyaları yükle",
+            "one": "%(count)s dosyayı sağla"
+        },
+        "cancel_all_button": "Hepsi İptal",
+        "error_title": "Yükleme Hatası"
     }
 }

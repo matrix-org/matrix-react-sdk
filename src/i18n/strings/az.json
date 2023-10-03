@@ -31,8 +31,6 @@
     "Today": "Bu gün",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
-    "Verification Pending": "Gözləmə təsdiq etmələr",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Öz elektron poçtunu yoxlayın və olan istinadı basın. Bundan sonra düyməni Davam etməyə basın.",
     "PM": "24:00",
     "AM": "12:00",
     "Restricted": "Məhduddur",
@@ -256,6 +254,10 @@
             "password_not_entered": "Yeni parolu daxil edin.",
             "passwords_mismatch": "Yeni şifrələr uyğun olmalıdır.",
             "return_to_login": "Girişin ekranına qayıtmaq"
+        },
+        "set_email": {
+            "verification_pending_title": "Gözləmə təsdiq etmələr",
+            "verification_pending_description": "Öz elektron poçtunu yoxlayın və olan istinadı basın. Bundan sonra düyməni Davam etməyə basın."
         }
     },
     "update": {

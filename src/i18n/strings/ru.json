@@ -1,7 +1,6 @@
 {
     "Moderator": "Модератор",
     "unknown error code": "неизвестный код ошибки",
-    "Verification Pending": "В ожидании подтверждения",
     "Warning!": "Внимание!",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Sep": "Сен",
@@ -31,15 +30,12 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "Join Room": "Войти в комнату",
     "not specified": "не задан",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "Email address": "Электронная почта",
     "Home": "Главная",
     "(~%(count)s results)": {
         "other": "(~%(count)s результатов)",
         "one": "(~%(count)s результат)"
     },
-    "This will allow you to reset your password and receive notifications.": "Это позволит при необходимости сбросить пароль и получать уведомления.",
     "AM": "ДП",
     "PM": "ПП",
     "Unnamed room": "Комната без названия",
@@ -63,11 +59,6 @@
     "Yesterday": "Вчера",
     "Wednesday": "Среда",
     "Send Logs": "Отправить логи",
-    "Share Room": "Поделиться комнатой",
-    "Link to most recent message": "Ссылка на последнее сообщение",
-    "Share User": "Поделиться пользователем",
-    "Link to selected message": "Ссылка на выбранное сообщение",
-    "Share Room Message": "Поделиться сообщением",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы.",
     "Unable to load backup status": "Невозможно загрузить статус резервной копии",
     "Unable to restore backup": "Невозможно восстановить резервную копию",
@@ -135,38 +126,16 @@
     "Folder": "Папка",
     "Scissors": "Ножницы",
     "edited": "изменено",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Чтобы помочь нам предотвратить это в будущем, пожалуйста, <a>отправьте нам логи</a>.",
-    "Missing session data": "Отсутствуют данные сеанса",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Отсутствуют некоторые данные сеанса, в том числе ключи шифрования сообщений. Выйдите и войдите снова, чтобы восстановить ключи из резервной копии.",
-    "Your browser likely removed this data when running low on disk space.": "Вероятно, ваш браузер удалил эти данные, когда на дисковом пространстве оставалось мало места.",
-    "Upload files (%(current)s of %(total)s)": "Загрузка файлов (%(current)s из %(total)s)",
-    "Upload files": "Загрузка файлов",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Этот файл <b>слишком большой</b> для загрузки. Лимит размера файла составляет %(limit)s но этот файл %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Эти файлы <b>слишком большие</b> для загрузки. Лимит размера файла составляет %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Некоторые файлы имеют <b>слишком большой размер</b>, чтобы их можно было загрузить. Лимит размера файла составляет %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Загрузка %(count)s других файлов",
-        "one": "Загрузка %(count)s другого файла"
-    },
-    "Cancel All": "Отменить все",
-    "Upload Error": "Ошибка загрузки",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Find others by phone or email": "Найти других по номеру телефона или email",
-    "Be found by phone or email": "Будут найдены по номеру телефона или email",
-    "Upload all": "Загрузить всё",
     "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
     "Deactivate account": "Деактивировать учётную запись",
     "e.g. my-room": "например, моя-комната",
-    "Command Help": "Помощь команды",
     "%(count)s sessions": {
         "other": "Сеансов: %(count)s",
         "one": "%(count)s сеанс"
     },
     "Lock": "Заблокировать",
-    "Not Trusted": "Недоверенное",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
-    "Ask this user to verify their session, or manually verify it below.": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
     "This backup is trusted because it has been restored on this session": "Эта резервная копия является доверенной, потому что она была восстановлена в этом сеансе",
     "Encrypted by a deleted session": "Зашифровано удалённым сеансом",
     "Failed to connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
@@ -182,8 +151,6 @@
     "Clear cross-signing keys": "Очистить ключи кросс-подписи",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "a key signature": "отпечаток ключа",
-    "You signed in to a new session without verifying it:": "Вы вошли в новый сеанс, не подтвердив его:",
-    "Verify your other session using one of the options below.": "Подтвердите ваш другой сеанс, используя один из вариантов ниже.",
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
@@ -506,9 +473,6 @@
     "Thread options": "Параметры обсуждения",
     "Forget": "Забыть",
     "Open in OpenStreetMap": "Открыть в OpenStreetMap",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Это сгруппирует ваши чаты с участниками этого пространства. Выключение, скроет эти чаты от вашего просмотра в %(spaceName)s.",
-    "Sections to show": "Разделы для показа",
-    "Link to room": "Ссылка на комнату",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -555,8 +519,6 @@
     "Live location ended": "Трансляция местоположения завершена",
     "Live location enabled": "Трансляция местоположения включена",
     "Saved Items": "Сохранённые объекты",
-    "Manually verify by text": "Ручная сверка по тексту",
-    "Interactively verify by emoji": "Интерактивная сверка по смайлам",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
@@ -681,7 +643,8 @@
         "joined": "Присоединился",
         "avatar": "Аватар",
         "are_you_sure": "Вы уверены?",
-        "location": "Местоположение"
+        "location": "Местоположение",
+        "email_address": "Электронная почта"
     },
     "action": {
         "continue": "Продолжить",
@@ -1035,7 +998,8 @@
         "failed_send_logs": "Не удалось отправить журналы: ",
         "preparing_download": "Подготовка к загрузке журналов",
         "unsupported_browser": "Напоминание: ваш браузер не поддерживается, возможны непредвиденные проблемы.",
-        "textarea_label": "Заметка"
+        "textarea_label": "Заметка",
+        "log_request": "Чтобы помочь нам предотвратить это в будущем, пожалуйста, <a>отправьте нам логи</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "Осталось %(hours)sч %(minutes)sм %(seconds)sс",
@@ -2219,7 +2183,8 @@
         "verify_nop_warning_mismatch": "ВНИМАНИЕ: сеанс уже заверен, но ключи НЕ СОВПАДАЮТ!",
         "verify_mismatch": "ВНИМАНИЕ: ПРОВЕРКА КЛЮЧА НЕ ПРОШЛА! Ключом подписи для %(userId)s и сеанса %(deviceId)s является \"%(fprint)s\", что не соответствует указанному ключу \"%(fingerprint)s\". Это может означать, что ваши сообщения перехватываются!",
         "verify_success_title": "Ключ проверен",
-        "verify_success_description": "Ключ подписи, который вы предоставили, соответствует ключу подписи, который вы получили от пользователя %(userId)s через сеанс %(deviceId)s. Сеанс отмечен как подтверждённый."
+        "verify_success_description": "Ключ подписи, который вы предоставили, соответствует ключу подписи, который вы получили от пользователя %(userId)s через сеанс %(deviceId)s. Сеанс отмечен как подтверждённый.",
+        "help_dialog_title": "Помощь команды"
     },
     "presence": {
         "busy": "Занят(а)",
@@ -2723,7 +2688,16 @@
         "key_signature_upload_cancelled": "Отправка отпечатка отменена",
         "key_signature_upload_failed": "Невозможно отправить",
         "key_signature_upload_success_title": "Отпечаток успешно отправлен",
-        "key_signature_upload_failed_title": "Сбой отправки отпечатка"
+        "key_signature_upload_failed_title": "Сбой отправки отпечатка",
+        "udd": {
+            "own_new_session_text": "Вы вошли в новый сеанс, не подтвердив его:",
+            "own_ask_verify_text": "Подтвердите ваш другой сеанс, используя один из вариантов ниже.",
+            "other_new_session_text": "%(name)s (%(userId)s) произвел(а) вход через новый сеанс без подтверждения:",
+            "other_ask_verify_text": "Попросите этого пользователя подтвердить сеанс или подтвердите его вручную ниже.",
+            "title": "Недоверенное",
+            "manual_verification_button": "Ручная сверка по тексту",
+            "interactive_verification_button": "Интерактивная сверка по смайлам"
+        }
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -2940,6 +2914,11 @@
             "continue_without_email_title": "Продолжить без электронной почты",
             "continue_without_email_description": "Предупреждаем: если вы не добавите адрес электронной почты и забудете пароль, вы можете <b>навсегда потерять доступ к своей учётной записи</b>.",
             "continue_without_email_field_label": "Адрес электронной почты (не обязательно)"
+        },
+        "set_email": {
+            "verification_pending_title": "В ожидании подтверждения",
+            "verification_pending_description": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
+            "description": "Это позволит при необходимости сбросить пароль и получать уведомления."
         }
     },
     "room_list": {
@@ -3276,7 +3255,11 @@
         "leave_dialog_option_none": "Не покидать ни одну комнату",
         "leave_dialog_option_all": "Покинуть все комнаты",
         "leave_dialog_option_specific": "Покинуть несколько комнат",
-        "leave_dialog_action": "Покинуть пространство"
+        "leave_dialog_action": "Покинуть пространство",
+        "preferences": {
+            "sections_section": "Разделы для показа",
+            "show_people_in_space": "Это сгруппирует ваши чаты с участниками этого пространства. Выключение, скроет эти чаты от вашего просмотра в %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -3569,7 +3552,9 @@
         "identity_server_no_terms_title": "Сервер идентификации не имеет условий предоставления услуг",
         "identity_server_no_terms_description_1": "Это действие требует по умолчанию доступа к серверу идентификации <server/> для подтверждения адреса электронной почты или номера телефона, но у сервера нет никакого пользовательского соглашения.",
         "identity_server_no_terms_description_2": "Продолжайте, только если доверяете владельцу сервера.",
-        "inline_intro_text": "Примите <policyLink /> для продолжения:"
+        "inline_intro_text": "Примите <policyLink /> для продолжения:",
+        "summary_identity_server_1": "Найти других по номеру телефона или email",
+        "summary_identity_server_2": "Будут найдены по номеру телефона или email"
     },
     "space_settings": {
         "title": "Настройки — %(spaceName)s"
@@ -3720,7 +3705,10 @@
             "description_1": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
             "description_2": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
             "description_3": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой."
-        }
+        },
+        "storage_evicted_title": "Отсутствуют данные сеанса",
+        "storage_evicted_description_1": "Отсутствуют некоторые данные сеанса, в том числе ключи шифрования сообщений. Выйдите и войдите снова, чтобы восстановить ключи из резервной копии.",
+        "storage_evicted_description_2": "Вероятно, ваш браузер удалил эти данные, когда на дисковом пространстве оставалось мало места."
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4068,5 +4056,27 @@
         "remove_filter": "Удалить фильтр поиска для %(filter)s",
         "search_messages_hint": "Для поиска сообщений найдите этот значок <icon/> в верхней части комнаты",
         "keyboard_scroll_hint": "Используйте <arrows/> для прокрутки"
+    },
+    "share": {
+        "title_room": "Поделиться комнатой",
+        "permalink_most_recent": "Ссылка на последнее сообщение",
+        "title_user": "Поделиться пользователем",
+        "title_message": "Поделиться сообщением",
+        "permalink_message": "Ссылка на выбранное сообщение",
+        "link_title": "Ссылка на комнату"
+    },
+    "upload_file": {
+        "title_progress": "Загрузка файлов (%(current)s из %(total)s)",
+        "title": "Загрузка файлов",
+        "upload_all_button": "Загрузить всё",
+        "error_file_too_large": "Этот файл <b>слишком большой</b> для загрузки. Лимит размера файла составляет %(limit)s но этот файл %(sizeOfThisFile)s.",
+        "error_files_too_large": "Эти файлы <b>слишком большие</b> для загрузки. Лимит размера файла составляет %(limit)s.",
+        "error_some_files_too_large": "Некоторые файлы имеют <b>слишком большой размер</b>, чтобы их можно было загрузить. Лимит размера файла составляет %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Загрузка %(count)s других файлов",
+            "one": "Загрузка %(count)s другого файла"
+        },
+        "cancel_all_button": "Отменить все",
+        "error_title": "Ошибка загрузки"
     }
 }

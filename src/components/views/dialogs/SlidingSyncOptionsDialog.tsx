@@ -77,7 +77,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
 
     let nativeSupport: string;
     if (hasNativeSupport === null) {
-        nativeSupport = _t("Checking…");
+        nativeSupport = _t("labs|sliding_sync_checking");
     } else {
         nativeSupport = hasNativeSupport
             ? _t("labs|sliding_sync_server_support")

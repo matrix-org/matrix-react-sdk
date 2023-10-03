@@ -5,7 +5,6 @@
         "one": "і інше...",
         "other": "та %(count)s інші..."
     },
-    "Email address": "Адреса е-пошти",
     "Sunday": "Неділя",
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
@@ -45,24 +44,7 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Обмежено",
     "Moderator": "Модератор",
-    "Verification Pending": "Очікується перевірка",
-    "Upload files (%(current)s of %(total)s)": "Вивантажити файли (%(current)s з %(total)s)",
-    "Upload files": "Вивантажити файли",
-    "Upload all": "Вивантажити всі",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Файл <b>є надто великим</b> для відвантаження. Допустимий розмір файлів — %(limit)s, але цей файл займає %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Ці файли є <b>надто великими</b> для відвантаження. Допустимий розмір файлів — %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Деякі файли є <b>надто великими</b> для відвантаження. Допустимий розмір файлів — %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Вивантажити %(count)s інших файлів",
-        "one": "Вивантажити %(count)s інший файл"
-    },
-    "Upload Error": "Помилка вивантаження",
     "Deactivate account": "Деактивувати обліковий запис",
-    "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
-    "Verify your other session using one of the options below.": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
-    "Ask this user to verify their session, or manually verify it below.": "Попросіть цього користувача звірити сеанс, або звірте його власноруч унизу.",
-    "Not Trusted": "Не довірений",
     "Your homeserver has exceeded its user limit.": "Ваш домашній сервер перевищив свій ліміт користувачів.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашній сервер перевищив одне із своїх обмежень ресурсів.",
     "Ok": "Гаразд",
@@ -130,11 +112,9 @@
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
     "Lock": "Замок",
-    "Share Room Message": "Поділитися повідомленням кімнати",
     "expand": "розгорнути",
     "IRC display name width": "Ширина псевдоніма IRC",
     "Encrypted by a deleted session": "Зашифроване видаленим сеансом",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
     "Comoros": "Коморські Острови",
     "Colombia": "Колумбія",
@@ -388,11 +368,8 @@
     "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
     "Confirm encryption setup": "Підтвердити налаштування шифрування",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
-    "Link to most recent message": "Посилання на останнє повідомлення",
-    "Share Room": "Поділитись кімнатою",
     "edited": "змінено",
     "collapse": "згорнути",
-    "Share User": "Поділитися користувачем",
     "Home": "Домівка",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Delete Widget": "Видалити віджет",
@@ -402,7 +379,6 @@
     "<inviter/> invites you": "<inviter/> запрошує вас",
     "No results found": "Нічого не знайдено",
     "Backup version:": "Версія резервної копії:",
-    "Cancel All": "Скасувати все",
     "Send Logs": "Надіслати журнали",
     "%(count)s rooms": {
         "one": "%(count)s кімната",
@@ -459,18 +435,8 @@
     "Experimental": "Експериментально",
     "Themes": "Теми",
     "Messaging": "Спілкування",
-    "Link to room": "Посилання на кімнату",
-    "Command Help": "Допомога команди",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
-    "Link to selected message": "Посилання на вибране повідомлення",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Щоб уникнути цього в майбутньому просимо <a>надіслати нам журнал</a>.",
-    "Missing session data": "Відсутні дані сеансу",
-    "Your browser likely removed this data when running low on disk space.": "Схоже, що ваш браузер вилучив ці дані через брак простору на диску.",
-    "Be found by phone or email": "Бути знайденим за номером телефону або е-поштою",
-    "Find others by phone or email": "Шукати інших за номером телефону або е-поштою",
-    "This will allow you to reset your password and receive notifications.": "Це дозволить вам скинути пароль і отримувати сповіщення.",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Перейдіть до своєї е-пошти й натисніть на отримане посилання. Після цього натисніть «Продовжити».",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
     "Submit logs": "Надіслати журнали",
@@ -516,11 +482,9 @@
     "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
     "Failed to start livestream": "Не вдалося почати живу трансляцію",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
-    "Sections to show": "Показувані розділи",
     "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
     "a key signature": "відбиток ключа",
     "a device cross-signing signature": "підпис перехресного підписування пристрою",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
     "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
@@ -555,8 +519,6 @@
     "Show rooms": "Показати кімнати",
     "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
     "Saved Items": "Збережені елементи",
-    "Interactively verify by emoji": "Звірити інтерактивно за допомогою емоджі",
-    "Manually verify by text": "Звірити вручну за допомогою тексту",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "невідомо",
     "Loading live location…": "Завантаження місця перебування наживо…",
     "Fetching keys from server…": "Отримання ключів із сервера…",
-    "Checking…": "Перевірка…",
     "Starting export process…": "Початок процесу експорту…",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
@@ -693,7 +654,8 @@
         "joined": "Приєднано",
         "avatar": "Аватар",
         "are_you_sure": "Ви впевнені?",
-        "location": "Місцеперебування"
+        "location": "Місцеперебування",
+        "email_address": "Адреса е-пошти"
     },
     "action": {
         "continue": "Продовжити",
@@ -912,7 +874,8 @@
         "experimental_section": "Ранній огляд",
         "experimental_description": "Відчуваєте себе експериментатором? Спробуйте наші новітні задуми в розробці. Ці функції не остаточні; вони можуть бути нестабільними, можуть змінюватися або взагалі можуть бути відкинуті. <a>Докладніше</a>.",
         "beta_feedback_title": "%(featureName)s — відгук про бетаверсію",
-        "beta_feedback_leave_button": "Щоб вийти з бета-тестування, перейдіть до налаштувань."
+        "beta_feedback_leave_button": "Щоб вийти з бета-тестування, перейдіть до налаштувань.",
+        "sliding_sync_checking": "Перевірка…"
     },
     "keyboard": {
         "home": "Домівка",
@@ -1079,7 +1042,8 @@
         "failed_send_logs": "Не вдалося надіслати журнали: ",
         "preparing_download": "Приготування до завантаження журналів",
         "unsupported_browser": "Нагадуємо, що ваш браузер не підтримується, тож деякі функції можуть не працювати.",
-        "textarea_label": "Примітки"
+        "textarea_label": "Примітки",
+        "log_request": "Щоб уникнути цього в майбутньому просимо <a>надіслати нам журнал</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "Залишилося %(hours)sгод %(minutes)sхв %(seconds)sс",
@@ -2376,7 +2340,8 @@
         "verify_nop_warning_mismatch": "ПОПЕРЕДЖЕННЯ: сеанс вже звірено, але ключі НЕ ЗБІГАЮТЬСЯ!",
         "verify_mismatch": "УВАГА: НЕ ВДАЛОСЯ ЗВІРИТИ КЛЮЧ! Ключем для %(userId)s та сеансу %(deviceId)s є «%(fprint)s», що не збігається з наданим ключем «%(fingerprint)s». Це може означати, що ваші повідомлення перехоплюють!",
         "verify_success_title": "Звірений ключ",
-        "verify_success_description": "Наданий вами ключ підпису збігається з ключем підпису, що ви отримали від сеансу %(deviceId)s %(userId)s. Сеанс позначено звіреним."
+        "verify_success_description": "Наданий вами ключ підпису збігається з ключем підпису, що ви отримали від сеансу %(deviceId)s %(userId)s. Сеанс позначено звіреним.",
+        "help_dialog_title": "Допомога команди"
     },
     "presence": {
         "busy": "Зайнятий",
@@ -2903,7 +2868,16 @@
         "key_signature_upload_cancelled": "Вивантаження підпису скасовано",
         "key_signature_upload_failed": "Не вдалося вивантажити",
         "key_signature_upload_success_title": "Підпис успішно вивантажено",
-        "key_signature_upload_failed_title": "Не вдалося вивантажити підпис"
+        "key_signature_upload_failed_title": "Не вдалося вивантажити підпис",
+        "udd": {
+            "own_new_session_text": "Ви увійшли в новий сеанс, не звіривши його:",
+            "own_ask_verify_text": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
+            "other_new_session_text": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
+            "other_ask_verify_text": "Попросіть цього користувача звірити сеанс, або звірте його власноруч унизу.",
+            "title": "Не довірений",
+            "manual_verification_button": "Звірити вручну за допомогою тексту",
+            "interactive_verification_button": "Звірити інтерактивно за допомогою емоджі"
+        }
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3161,6 +3135,11 @@
             "continue_without_email_title": "Продовження без е-пошти",
             "continue_without_email_description": "Зауважте, якщо ви не додасте пошту й забудете пароль, то можете <b>назавжди втратити доступ до свого облікового запису</b>.",
             "continue_without_email_field_label": "Е-пошта (необов'язково)"
+        },
+        "set_email": {
+            "verification_pending_title": "Очікується перевірка",
+            "verification_pending_description": "Перейдіть до своєї е-пошти й натисніть на отримане посилання. Після цього натисніть «Продовжити».",
+            "description": "Це дозволить вам скинути пароль і отримувати сповіщення."
         }
     },
     "room_list": {
@@ -3513,7 +3492,11 @@
         "leave_dialog_option_none": "Не виходити з будь-якої кімнати",
         "leave_dialog_option_all": "Вийти з кімнати",
         "leave_dialog_option_specific": "Вийте з кількох кімнат",
-        "leave_dialog_action": "Вийти з простору"
+        "leave_dialog_action": "Вийти з простору",
+        "preferences": {
+            "sections_section": "Показувані розділи",
+            "show_people_in_space": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -3840,7 +3823,9 @@
         "identity_server_no_terms_title": "Сервер ідентифікації не має умов надання послуг",
         "identity_server_no_terms_description_1": "Щоб підтвердити адресу е-пошти або телефон ця дія потребує доступу до типового серверу ідентифікації <server />, але сервер не має жодних умов надання послуг.",
         "identity_server_no_terms_description_2": "Продовжуйте лише якщо довіряєте власнику сервера.",
-        "inline_intro_text": "Погодьтеся з <policyLink /> для продовження:"
+        "inline_intro_text": "Погодьтеся з <policyLink /> для продовження:",
+        "summary_identity_server_1": "Шукати інших за номером телефону або е-поштою",
+        "summary_identity_server_2": "Бути знайденим за номером телефону або е-поштою"
     },
     "space_settings": {
         "title": "Налаштування — %(spaceName)s"
@@ -4006,7 +3991,10 @@
             "description_1": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
             "description_2": "Якщо ви досі користувались новішою версією %(brand)s, ваш сеанс може бути несумісним із цією версією. Закрийте це вікно й поверніться до новішої версії.",
             "description_3": "Очищення сховища вашого браузера може усунути проблему, але ви вийдете з системи та зробить історію вашого зашифрованого спілкування непрочитною."
-        }
+        },
+        "storage_evicted_title": "Відсутні дані сеансу",
+        "storage_evicted_description_1": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
+        "storage_evicted_description_2": "Схоже, що ваш браузер вилучив ці дані через брак простору на диску."
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4383,5 +4371,27 @@
         "remove_filter": "Вилучити фільтр пошуку для %(filter)s",
         "search_messages_hint": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
         "keyboard_scroll_hint": "Використовуйте <arrows/>, щоб прокручувати"
+    },
+    "share": {
+        "title_room": "Поділитись кімнатою",
+        "permalink_most_recent": "Посилання на останнє повідомлення",
+        "title_user": "Поділитися користувачем",
+        "title_message": "Поділитися повідомленням кімнати",
+        "permalink_message": "Посилання на вибране повідомлення",
+        "link_title": "Посилання на кімнату"
+    },
+    "upload_file": {
+        "title_progress": "Вивантажити файли (%(current)s з %(total)s)",
+        "title": "Вивантажити файли",
+        "upload_all_button": "Вивантажити всі",
+        "error_file_too_large": "Файл <b>є надто великим</b> для відвантаження. Допустимий розмір файлів — %(limit)s, але цей файл займає %(sizeOfThisFile)s.",
+        "error_files_too_large": "Ці файли є <b>надто великими</b> для відвантаження. Допустимий розмір файлів — %(limit)s.",
+        "error_some_files_too_large": "Деякі файли є <b>надто великими</b> для відвантаження. Допустимий розмір файлів — %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Вивантажити %(count)s інших файлів",
+            "one": "Вивантажити %(count)s інший файл"
+        },
+        "cancel_all_button": "Скасувати все",
+        "error_title": "Помилка вивантаження"
     }
 }

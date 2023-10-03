@@ -49,25 +49,17 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Hyni në dhomë",
-    "Email address": "Adresë email",
     "Home": "Kreu",
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
     "collapse": "tkurre",
     "expand": "zgjeroje",
-    "Verification Pending": "Verifikim Në Pritje të Miratimit",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
     "(~%(count)s results)": {
         "other": "(~%(count)s përfundime)",
         "one": "(~%(count)s përfundim)"
     },
     "Delete Widget": "Fshije Widget-in",
     "Send Logs": "Dërgo regjistra",
-    "Link to most recent message": "Lidhje për te mesazhet më të freskët",
-    "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
-    "Share Room": "Ndani Dhomë Me të Tjerë",
-    "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
-    "This will allow you to reset your password and receive notifications.": "Kjo do t’ju lejojë të ricaktoni fjalëkalimin tuaj dhe të merrni njoftime.",
     "Unable to load backup status": "S’arrihet të ngarkohet gjendje kopjeruajtjeje",
     "Unable to restore backup": "S’arrihet të rikthehet kopjeruajtje",
     "No backup found!": "S’u gjet kopjeruajtje!",
@@ -134,28 +126,8 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
     "Scissors": "Gërshërë",
     "edited": "e përpunuar",
-    "Missing session data": "Mungojnë të dhëna sesioni",
-    "Upload files": "Ngarko kartela",
-    "Upload %(count)s other files": {
-        "other": "Ngarkoni %(count)s kartela të tjera",
-        "one": "Ngarkoni %(count)s kartelë tjetër"
-    },
-    "Cancel All": "Anuloji Krejt",
-    "Upload Error": "Gabim Ngarkimi",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Për të na ndihmuar ta parandalojmë këtë në të ardhmen, ju lutemi, <a>dërgonani regjistra</a>.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
-    "Your browser likely removed this data when running low on disk space.": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk.",
-    "Upload files (%(current)s of %(total)s)": "Ngarkim kartelash (%(current)s nga %(total)s) gjithsej",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Kjo kartelë është <b>shumë e madhe</b> për ngarkim. Caku për madhësi kartelash është %(limit)s, ndërsa kjo kartelë është %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Këto kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Disa kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
-    "Upload all": "Ngarkoji krejt",
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
     "Deactivate account": "Çaktivizoje llogarinë",
-    "Share User": "Ndani Përdorues",
-    "Command Help": "Ndihmë Urdhri",
-    "Find others by phone or email": "Gjeni të tjerë përmes telefoni ose email-i",
-    "Be found by phone or email": "Bëhuni i gjetshëm përmes telefoni ose email-i",
     "Spanner": "Çelës",
     "e.g. my-room": "p.sh., dhoma-ime",
     "%(name)s accepted": "%(name)s pranoi",
@@ -175,9 +147,6 @@
     "Destroy cross-signing keys?": "Të shkatërrohen kyçet <em>cross-signing</em>?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Fshirja e kyçeve <em>cross-signing</em> është e përhershme. Cilido që keni verifikuar me to, do të shohë një sinjalizim sigurie. Thuajse e sigurt që s’keni pse ta bëni një gjë të tillë, veç në paçi humbur çdo pajisje prej nga mund të bëni <em>cross-sign</em>.",
     "Clear cross-signing keys": "Spastro kyçe <em>cross-signing</em>",
-    "Not Trusted": "Jo e Besuar",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) bëri hyrjen në një sesion të ri pa e verifikuar:",
-    "Ask this user to verify their session, or manually verify it below.": "Kërkojini këtij përdoruesi të verifikojë sesionin e vet, ose ta verifikojë më poshtë dorazi.",
     "%(name)s declined": "%(name)s hodhi poshtë",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
     "a new master key signature": "një nënshkrim i ri kyçi të përgjithshëm",
@@ -186,8 +155,6 @@
     "a key signature": "një nënshkrim kyçi",
     "%(brand)s encountered an error during upload of:": "%(brand)s-i hasi një gabim gjatë ngarkimit të:",
     "Sign in with SSO": "Hyni me HNj",
-    "You signed in to a new session without verifying it:": "Bëtë hyrjen në një sesion të ri pa e verifikuar:",
-    "Verify your other session using one of the options below.": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
     "Lock": "Kyçje",
     "Submit logs": "Parashtro regjistra",
     "Restoring keys from backup": "Po rikthehen kyçesh nga kopjeruajtje",
@@ -518,10 +485,7 @@
     "Themes": "Tema",
     "Moderation": "Moderim",
     "Messaging": "Shkëmbim mesazhes",
-    "Link to room": "Lidhje për te dhoma",
     "Open in OpenStreetMap": "Hape në OpenStreetMap",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Kjo grupon fjalosjet tuaja me anëtarë në këtë hapësirë. Çaktivizimi i kësaj do t’i fshehë këto fjalosje prej pamjes tuaj për %(spaceName)s.",
-    "Sections to show": "Ndarje për t’u shfaqur",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
     "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
@@ -551,8 +515,6 @@
     "You cannot search for rooms that are neither a room nor a space": "S’mund të kërkoni për dhoma që s’janë as dhomë, as hapësirë",
     "Saved Items": "Zëra të Ruajtur",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
-    "Interactively verify by emoji": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh",
-    "Manually verify by text": "Verifikojeni dorazi përmes teksti",
     "View List": "Shihni Listën",
     "View list": "Shihni listën",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ose %(recoveryFile)s",
@@ -563,7 +525,6 @@
     "unknown": "e panjohur",
     "Loading live location…": "Po ngarkohet vendndodhje “live”…",
     "Fetching keys from server…": "Po sillen kyçet prej shërbyesi…",
-    "Checking…": "Po kontrollohet…",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Desktop app logo": "Stemë aplikacioni Desktop",
     "Requires your server to support the stable version of MSC3827": "Lyp që shërbyesi juaj të mbulojë versionin e qëndrueshëm të MSC3827",
@@ -691,7 +652,8 @@
         "joined": "Hyri",
         "avatar": "Avatar",
         "are_you_sure": "Jeni i sigurt?",
-        "location": "Vendndodhje"
+        "location": "Vendndodhje",
+        "email_address": "Adresë email"
     },
     "action": {
         "continue": "Vazhdo",
@@ -899,7 +861,8 @@
         "experimental_section": "Paraparje të hershme",
         "experimental_description": "Ndiheni eksperimentues? Provoni idetë tona më të reja në zhvillim. Këto veçori s’janë të përfunduara; mund të jenë të paqëndrueshme, mund të ndryshojnë, ose mund të braktisen faqe. <a>Mësoni më tepër</a>.",
         "beta_feedback_title": "Përshtypje për %(featureName)s Beta",
-        "beta_feedback_leave_button": "Që të braktisni beta-n, vizitoni rregullimet tuaja."
+        "beta_feedback_leave_button": "Që të braktisni beta-n, vizitoni rregullimet tuaja.",
+        "sliding_sync_checking": "Po kontrollohet…"
     },
     "keyboard": {
         "home": "Kreu",
@@ -1066,7 +1029,8 @@
         "failed_send_logs": "S’u arrit të dërgoheshin regjistra: ",
         "preparing_download": "Po bëhet gati për shkarkim regjistrash",
         "unsupported_browser": "Kujtesë: Shfletuesi juaj është i pambuluar, ndaj punimi juaj mund të jetë i paparashikueshëm.",
-        "textarea_label": "Shënime"
+        "textarea_label": "Shënime",
+        "log_request": "Për të na ndihmuar ta parandalojmë këtë në të ardhmen, ju lutemi, <a>dërgonani regjistra</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "Edhe %(hours)sh %(minutes)sm %(seconds)ss",
@@ -2306,7 +2270,8 @@
         "verify_nop_warning_mismatch": "KUJDES: sesion tashmë i verifikuar, por kyçet NUK PËRPUTHEN!",
         "verify_mismatch": "KUJDES: VERIFIKIMI I KYÇIT DËSHTOI! Kyçi i nënshkrimit për %(userId)s dhe sesionin %(deviceId)s është \"%(fprint)s\", që nuk përputhet me kyçin e dhënë \"%(fingerprint)s\". Kjo mund të jetë shenjë se komunikimet tuaja po përgjohen!",
         "verify_success_title": "Kyç i verifikuar",
-        "verify_success_description": "Kyçi i nënshkrimit që dhatë përputhet me kyçin e nënshkrimit që morët nga sesioni i %(userId)s %(deviceId)s. Sesionit iu vu shenjë si i verifikuar."
+        "verify_success_description": "Kyçi i nënshkrimit që dhatë përputhet me kyçin e nënshkrimit që morët nga sesioni i %(userId)s %(deviceId)s. Sesionit iu vu shenjë si i verifikuar.",
+        "help_dialog_title": "Ndihmë Urdhri"
     },
     "presence": {
         "busy": "I zënë",
@@ -2825,7 +2790,16 @@
         "key_signature_upload_cancelled": "Ngarkim i anuluar nënshkrimi",
         "key_signature_upload_failed": "S’arrihet të ngarkohet",
         "key_signature_upload_success_title": "Sukses ngarkimi nënshkrimi",
-        "key_signature_upload_failed_title": "Ngarkimi i nënshkrimit dështoi"
+        "key_signature_upload_failed_title": "Ngarkimi i nënshkrimit dështoi",
+        "udd": {
+            "own_new_session_text": "Bëtë hyrjen në një sesion të ri pa e verifikuar:",
+            "own_ask_verify_text": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
+            "other_new_session_text": "%(name)s (%(userId)s) bëri hyrjen në një sesion të ri pa e verifikuar:",
+            "other_ask_verify_text": "Kërkojini këtij përdoruesi të verifikojë sesionin e vet, ose ta verifikojë më poshtë dorazi.",
+            "title": "Jo e Besuar",
+            "manual_verification_button": "Verifikojeni dorazi përmes teksti",
+            "interactive_verification_button": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh"
+        }
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",
@@ -3080,6 +3054,11 @@
             "continue_without_email_title": "Vazhdim pa email",
             "continue_without_email_description": "Që mos thoni nuk e dinim, nëse s’shtoni një email dhe harroni fjalëkalimin tuaj, mund <b>të humbi përgjithmonë hyrjen në llogarinë tuaj</b>.",
             "continue_without_email_field_label": "Email (në daçi)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verifikim Në Pritje të Miratimit",
+            "verification_pending_description": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
+            "description": "Kjo do t’ju lejojë të ricaktoni fjalëkalimin tuaj dhe të merrni njoftime."
         }
     },
     "room_list": {
@@ -3427,7 +3406,11 @@
         "leave_dialog_option_none": "Mos braktis ndonjë dhomë",
         "leave_dialog_option_all": "Braktisi krejt dhomat",
         "leave_dialog_option_specific": "Braktis disa dhoma",
-        "leave_dialog_action": "Braktiseni hapësirën"
+        "leave_dialog_action": "Braktiseni hapësirën",
+        "preferences": {
+            "sections_section": "Ndarje për t’u shfaqur",
+            "show_people_in_space": "Kjo grupon fjalosjet tuaja me anëtarë në këtë hapësirë. Çaktivizimi i kësaj do t’i fshehë këto fjalosje prej pamjes tuaj për %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
@@ -3741,7 +3724,9 @@
         "identity_server_no_terms_title": "Shërbyesi i identiteteve s’ka kushte shërbimi",
         "identity_server_no_terms_description_1": "Ky veprim lyp hyrje te shërbyesi parazgjedhje i identiteteve <server /> për të vlerësuar një adresë email ose një numër telefoni, por shërbyesi nuk ka ndonjë kusht shërbimesh.",
         "identity_server_no_terms_description_2": "Vazhdoni vetëm nëse i besoni të zotit të shërbyesit.",
-        "inline_intro_text": "Që të vazhdohet, pranoni <policyLink />:"
+        "inline_intro_text": "Që të vazhdohet, pranoni <policyLink />:",
+        "summary_identity_server_1": "Gjeni të tjerë përmes telefoni ose email-i",
+        "summary_identity_server_2": "Bëhuni i gjetshëm përmes telefoni ose email-i"
     },
     "space_settings": {
         "title": "Rregullime - %(spaceName)s"
@@ -3903,7 +3888,10 @@
             "description_1": "Hasëm një gabim teksa provohej të rikthehej sesioni juaj i dikurshëm.",
             "description_2": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
             "description_3": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës."
-        }
+        },
+        "storage_evicted_title": "Mungojnë të dhëna sesioni",
+        "storage_evicted_description_1": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
+        "storage_evicted_description_2": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk."
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4276,5 +4264,27 @@
         "remove_filter": "Hiq filtër kërkimesh për %(filter)s",
         "search_messages_hint": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
         "keyboard_scroll_hint": "Përdorni <arrows/> për rrëshqitje"
+    },
+    "share": {
+        "title_room": "Ndani Dhomë Me të Tjerë",
+        "permalink_most_recent": "Lidhje për te mesazhet më të freskët",
+        "title_user": "Ndani Përdorues",
+        "title_message": "Ndani Me të Tjerë Mesazh Dhome",
+        "permalink_message": "Lidhje për te mesazhi i përzgjedhur",
+        "link_title": "Lidhje për te dhoma"
+    },
+    "upload_file": {
+        "title_progress": "Ngarkim kartelash (%(current)s nga %(total)s) gjithsej",
+        "title": "Ngarko kartela",
+        "upload_all_button": "Ngarkoji krejt",
+        "error_file_too_large": "Kjo kartelë është <b>shumë e madhe</b> për ngarkim. Caku për madhësi kartelash është %(limit)s, ndërsa kjo kartelë është %(sizeOfThisFile)s.",
+        "error_files_too_large": "Këto kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
+        "error_some_files_too_large": "Disa kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Ngarkoni %(count)s kartela të tjera",
+            "one": "Ngarkoni %(count)s kartelë tjetër"
+        },
+        "cancel_all_button": "Anuloji Krejt",
+        "error_title": "Gabim Ngarkimi"
     }
 }

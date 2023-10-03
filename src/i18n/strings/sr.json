@@ -43,15 +43,11 @@
     "Join Room": "Приступи соби",
     "unknown error code": "непознати код грешке",
     "not specified": "није наведено",
-    "Email address": "Мејл адреса",
     "Delete Widget": "Обриши виџет",
     "Home": "Почетна",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
-    "Verification Pending": "Чека се на проверу",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверите ваш мејл и кликните на везу унутар њега. Када ово урадите, кликните на дугме „настави“.",
-    "This will allow you to reset your password and receive notifications.": "Ово омогућава поновно постављање лозинке и примање обавештења.",
     "Sunday": "Недеља",
     "Today": "Данас",
     "Friday": "Петак",
@@ -63,11 +59,6 @@
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
     "Send Logs": "Пошаљи записнике",
-    "Share Room": "Подели собу",
-    "Link to most recent message": "Веза ка најновијој поруци",
-    "Share User": "Подели корисника",
-    "Share Room Message": "Подели поруку у соби",
-    "Link to selected message": "Веза ка изабраној поруци",
     "%(count)s verified sessions": {
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
@@ -392,11 +383,6 @@
     "Kosovo": "/",
     "End": "",
     "Deactivate account": "Деактивирај налог",
-    "Not Trusted": "Није поуздано",
-    "Ask this user to verify their session, or manually verify it below.": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
-    "Verify your other session using one of the options below.": "Потврдите другу сесију помоћу једних од опција у испод.",
-    "You signed in to a new session without verifying it:": "Пријавили сте се у нову сесију без потврђивања:",
     "Réunion": "Реунион",
     "common": {
         "about": "О програму",
@@ -458,7 +444,8 @@
         "historical": "Историја",
         "go_to_settings": "Идите на подешавања",
         "show_more": "Прикажи више",
-        "are_you_sure": "Да ли сте сигурни?"
+        "are_you_sure": "Да ли сте сигурни?",
+        "email_address": "Мејл адреса"
     },
     "action": {
         "continue": "Настави",
@@ -1143,7 +1130,14 @@
         "messages_not_secure": {
             "cause_1": "Ваш домаћи сервер"
         },
-        "event_shield_reason_mismatched_sender_key": "Шифровано од стране непотврђене сесије"
+        "event_shield_reason_mismatched_sender_key": "Шифровано од стране непотврђене сесије",
+        "udd": {
+            "own_new_session_text": "Пријавили сте се у нову сесију без потврђивања:",
+            "own_ask_verify_text": "Потврдите другу сесију помоћу једних од опција у испод.",
+            "other_new_session_text": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
+            "other_ask_verify_text": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
+            "title": "Није поуздано"
+        }
     },
     "emoji": {
         "category_smileys_people": "Смешци и особе",
@@ -1232,6 +1226,11 @@
         },
         "registration": {
             "continue_without_email_field_label": "Мејл (изборно)"
+        },
+        "set_email": {
+            "verification_pending_title": "Чека се на проверу",
+            "verification_pending_description": "Проверите ваш мејл и кликните на везу унутар њега. Када ово урадите, кликните на дугме „настави“.",
+            "description": "Ово омогућава поновно постављање лозинке и примање обавештења."
         }
     },
     "export_chat": {
@@ -1600,5 +1599,12 @@
     },
     "spotlight_dialog": {
         "create_new_room_button": "Направи нову собу"
+    },
+    "share": {
+        "title_room": "Подели собу",
+        "permalink_most_recent": "Веза ка најновијој поруци",
+        "title_user": "Подели корисника",
+        "title_message": "Подели поруку у соби",
+        "permalink_message": "Веза ка изабраној поруци"
     }
 }

@@ -6,13 +6,10 @@
         "other": "and %(count)s others...",
         "one": "and one other..."
     },
-    "Email address": "Email address",
     "Join Room": "Join Room",
     "Moderator": "Moderator",
     "not specified": "not specified",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
     "unknown error code": "unknown error code",
-    "Verification Pending": "Verification Pending",
     "Warning!": "Warning!",
     "Sun": "Sun",
     "Mon": "Mon",
@@ -41,7 +38,6 @@
         "one": "(~%(count)s result)",
         "other": "(~%(count)s results)"
     },
-    "This will allow you to reset your password and receive notifications.": "This will allow you to reset your password and receive notifications.",
     "Sunday": "Sunday",
     "Today": "Today",
     "Friday": "Friday",
@@ -88,7 +84,8 @@
         "rooms": "Rooms",
         "low_priority": "Low priority",
         "historical": "Historical",
-        "are_you_sure": "Are you sure?"
+        "are_you_sure": "Are you sure?",
+        "email_address": "Email address"
     },
     "action": {
         "continue": "Continue",
@@ -422,6 +419,11 @@
             "password_not_entered": "A new password must be entered.",
             "passwords_mismatch": "New passwords must match each other.",
             "return_to_login": "Return to login screen"
+        },
+        "set_email": {
+            "verification_pending_title": "Verification Pending",
+            "verification_pending_description": "Please check your email and click on the link it contains. Once this is done, click continue.",
+            "description": "This will allow you to reset your password and receive notifications."
         }
     },
     "export_chat": {

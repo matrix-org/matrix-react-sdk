@@ -284,11 +284,6 @@
     "Vietnam": "וייטנאם",
     "Venezuela": "ונצואלה",
     "Vatican City": "ותיקן",
-    "Not Trusted": "לא אמין",
-    "Ask this user to verify their session, or manually verify it below.": "בקש ממשתמש זה לאמת את ההתחברות שלו, או לאמת אותה באופן ידני למטה.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s %(userId)s נכנס דרך התחברות חדשה מבלי לאמת אותה:",
-    "Verify your other session using one of the options below.": "אמתו את ההתחברות האחרת שלכם דרך אחת מהאפשרויות למטה.",
-    "You signed in to a new session without verifying it:": "נכנסתם דרך התחברות חדשה מבלי לאמת אותה:",
     "Backup version:": "גירסת גיבוי:",
     "This backup is trusted because it has been restored on this session": "ניתן לסמוך על גיבוי זה מכיוון שהוא שוחזר בהפעלה זו",
     "Folder": "תקיה",
@@ -362,7 +357,6 @@
     "Ok": "בסדר",
     "Your homeserver has exceeded one of its resource limits.": "השרת שלכם חרג מאחד או יותר משאבים אשר הוקצו לו.",
     "Your homeserver has exceeded its user limit.": "השרת שלכם חרג ממגבלות מספר המשתמשים שלו.",
-    "Email address": "כתובת דוא\"ל",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "לפני שמגישים יומנים, עליכם <a> ליצור בעיה של GitHub </a> כדי לתאר את הבעיה שלכם.",
     "Home": "הבית",
     "e.g. my-room": "כגון החדר-שלי",
@@ -426,33 +420,6 @@
     "Security Phrase": "ביטוי אבטחה",
     "Looks good!": "נראה טוב!",
     "Wrong file type": "סוג קובץ שגוי",
-    "Upload Error": "שגיאת העלאה",
-    "Cancel All": "בטל הכל",
-    "Upload %(count)s other files": {
-        "one": "העלה %(count)s של קובץ אחר",
-        "other": "העלה %(count)s של קבצים אחרים"
-    },
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "חלק מהקבצים <b> גדולים מדי </b> כדי להעלות אותם. מגבלת גודל הקובץ היא %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "קבצים אלה <b> גדולים מדי </b> להעלאה. מגבלת גודל הקובץ היא %(limit)s.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "קובץ זה <b> גדול מדי </b> להעלאה. מגבלת גודל הקובץ היא %(limit)s אך קובץ זה הוא %(sizeOfThisFile)s.",
-    "Upload all": "מעלה הכל",
-    "Upload files (%(current)s of %(total)s)": "מעלה קבצים (%(current)s מ %(total)s)",
-    "Upload files": "מעלה קבצים",
-    "Be found by phone or email": "להימצא בטלפון או בדוא\"ל",
-    "Find others by phone or email": "מצא אחרים בטלפון או בדוא\"ל",
-    "Your browser likely removed this data when running low on disk space.": "סביר להניח שהדפדפן שלך הסיר נתונים אלה כאשר שטח הדיסק שלהם נמוך.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "חלק מנתוני ההפעלה, כולל מפתחות הודעות מוצפנים, חסרים. צא והיכנס כדי לתקן זאת, ושחזר את המפתחות מהגיבוי.",
-    "Missing session data": "חסרים נתוני הפעלות",
-    "To help us prevent this in future, please <a>send us logs</a>.": "כדי לעזור לנו למנוע זאת בעתיד, אנא <a> שלחו לנו יומנים </a>.",
-    "Command Help": "עזרה לפיקוד",
-    "Link to selected message": "קישור להודעה שנבחרה",
-    "Share Room Message": "שתף הודעה בחדר",
-    "Share User": "שתף משתמש",
-    "Link to most recent message": "קישור להודעה האחרונה",
-    "Share Room": "שתף חדר",
-    "This will allow you to reset your password and receive notifications.": "זה יאפשר לך לאפס את הסיסמה שלך ולקבל התראות.",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "אנא בדוק את הדוא\"ל שלך ולחץ על הקישור שהוא מכיל. לאחר שתסיים, לחץ על המשך.",
-    "Verification Pending": "אימות בהמתנה",
     "Send Logs": "שלח יומנים",
     "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
     "a key signature": "חתימת מפתח",
@@ -591,7 +558,8 @@
         "unencrypted": "לא מוצפן",
         "show_more": "הצג יותר",
         "are_you_sure": "האם אתם בטוחים?",
-        "location": "מיקום"
+        "location": "מיקום",
+        "email_address": "כתובת דוא\"ל"
     },
     "action": {
         "continue": "המשך",
@@ -865,7 +833,8 @@
         "failed_send_logs": "כשל במשלוח יומנים: ",
         "preparing_download": "מתכונן להורדת יומנים",
         "unsupported_browser": "תזכורת: הדפדפן שלך אינו נתמך, כך שהחוויה שלך עשויה להיות בלתי צפויה.",
-        "textarea_label": "הערות"
+        "textarea_label": "הערות",
+        "log_request": "כדי לעזור לנו למנוע זאת בעתיד, אנא <a> שלחו לנו יומנים </a>."
     },
     "time": {
         "hours_minutes_seconds_left": "נשארו %(hours)s שעות, %(minutes)s דקות ו-%(seconds)s שניות",
@@ -1716,7 +1685,8 @@
         "verify_nop": "ההתחברות כבר אושרה!",
         "verify_mismatch": "אזהרה: אימות מפתח נכשל! חתימת המפתח של %(userId)s ושל ההתחברות של מכשיר %(deviceId)s הינו \"%(fprint)s\" אשר אינו תואם למפתח הנתון \"%(fingerprint)s\". דבר זה יכול להעיר על כך שישנו נסיון להאזין לתקשורת שלכם!",
         "verify_success_title": "מפתח מאושר",
-        "verify_success_description": "המפתח החתום שנתתם תואם את המפתח שקבלתם מ %(userId)s מהתחברות %(deviceId)s. ההתחברות סומנה כמאושרת."
+        "verify_success_description": "המפתח החתום שנתתם תואם את המפתח שקבלתם מ %(userId)s מהתחברות %(deviceId)s. ההתחברות סומנה כמאושרת.",
+        "help_dialog_title": "עזרה לפיקוד"
     },
     "presence": {
         "online_for": "מחובר %(duration)s",
@@ -2120,7 +2090,14 @@
         "key_signature_upload_cancelled": "העלאת החתימה בוטלה",
         "key_signature_upload_failed": "לא ניתן להעלות",
         "key_signature_upload_success_title": "הצלחה בהעלאת חתימה",
-        "key_signature_upload_failed_title": "העלאת החתימה נכשלה"
+        "key_signature_upload_failed_title": "העלאת החתימה נכשלה",
+        "udd": {
+            "own_new_session_text": "נכנסתם דרך התחברות חדשה מבלי לאמת אותה:",
+            "own_ask_verify_text": "אמתו את ההתחברות האחרת שלכם דרך אחת מהאפשרויות למטה.",
+            "other_new_session_text": "%(name)s %(userId)s נכנס דרך התחברות חדשה מבלי לאמת אותה:",
+            "other_ask_verify_text": "בקש ממשתמש זה לאמת את ההתחברות שלו, או לאמת אותה באופן ידני למטה.",
+            "title": "לא אמין"
+        }
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2308,6 +2285,11 @@
             "continue_without_email_title": "ממשיך ללא דוא\"ל",
             "continue_without_email_description": "שים לב, אם לא תשייך כתובת דואר אלקטרוני ותשכח את הסיסמה שלך, אתה תאבד <b>לצמיתות</b> את הגישה לחשבונך.",
             "continue_without_email_field_label": "דוא\"ל (לא חובה)"
+        },
+        "set_email": {
+            "verification_pending_title": "אימות בהמתנה",
+            "verification_pending_description": "אנא בדוק את הדוא\"ל שלך ולחץ על הקישור שהוא מכיל. לאחר שתסיים, לחץ על המשך.",
+            "description": "זה יאפשר לך לאפס את הסיסמה שלך ולקבל התראות."
         }
     },
     "room_list": {
@@ -2766,7 +2748,9 @@
         "identity_server_no_terms_title": "לשרת הזיהוי אין כללי שרות",
         "identity_server_no_terms_description_1": "פעולה זו דורשת להכנס אל שרת הזיהוי <server /> לאשר מייל או טלפון, אבל לשרת אין כללי שרות.",
         "identity_server_no_terms_description_2": "המשיכו רק אם הנכם בוטחים בבעלים של השרת.",
-        "inline_intro_text": "קבל <policyLink /> להמשך:"
+        "inline_intro_text": "קבל <policyLink /> להמשך:",
+        "summary_identity_server_1": "מצא אחרים בטלפון או בדוא\"ל",
+        "summary_identity_server_2": "להימצא בטלפון או בדוא\"ל"
     },
     "poll": {
         "create_poll_title": "צרו סקר",
@@ -2878,7 +2862,10 @@
             "description_1": "נתקלנו בשגיאה בניסיון לשחזר את ההפעלה הקודמת שלך.",
             "description_2": "אם השתמשת בעבר בגרסה עדכנית יותר של %(brand)s, ייתכן שההפעלה שלך אינה תואמת לגרסה זו. סגרו חלון זה וחזרו לגרסה העדכנית יותר.",
             "description_3": "ניקוי שטח האחסון של הדפדפן עשוי לפתור את הבעיה, אך ינתק אתכם ויגרום לכל היסטוריית צ'אט מוצפנת להיות בלתי קריאה."
-        }
+        },
+        "storage_evicted_title": "חסרים נתוני הפעלות",
+        "storage_evicted_description_1": "חלק מנתוני ההפעלה, כולל מפתחות הודעות מוצפנים, חסרים. צא והיכנס כדי לתקן זאת, ושחזר את המפתחות מהגיבוי.",
+        "storage_evicted_description_2": "סביר להניח שהדפדפן שלך הסיר נתונים אלה כאשר שטח הדיסק שלהם נמוך."
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3146,5 +3133,26 @@
             "one": "%(count)s חברים"
         },
         "create_new_room_button": "צור חדר חדש"
+    },
+    "share": {
+        "title_room": "שתף חדר",
+        "permalink_most_recent": "קישור להודעה האחרונה",
+        "title_user": "שתף משתמש",
+        "title_message": "שתף הודעה בחדר",
+        "permalink_message": "קישור להודעה שנבחרה"
+    },
+    "upload_file": {
+        "title_progress": "מעלה קבצים (%(current)s מ %(total)s)",
+        "title": "מעלה קבצים",
+        "upload_all_button": "מעלה הכל",
+        "error_file_too_large": "קובץ זה <b> גדול מדי </b> להעלאה. מגבלת גודל הקובץ היא %(limit)s אך קובץ זה הוא %(sizeOfThisFile)s.",
+        "error_files_too_large": "קבצים אלה <b> גדולים מדי </b> להעלאה. מגבלת גודל הקובץ היא %(limit)s.",
+        "error_some_files_too_large": "חלק מהקבצים <b> גדולים מדי </b> כדי להעלות אותם. מגבלת גודל הקובץ היא %(limit)s.",
+        "upload_n_others_button": {
+            "one": "העלה %(count)s של קובץ אחר",
+            "other": "העלה %(count)s של קבצים אחרים"
+        },
+        "cancel_all_button": "בטל הכל",
+        "error_title": "שגיאת העלאה"
     }
 }

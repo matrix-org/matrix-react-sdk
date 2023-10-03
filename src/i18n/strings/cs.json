@@ -20,7 +20,6 @@
     "Nov": "Lis",
     "Dec": "Pro",
     "unknown error code": "neznámý kód chyby",
-    "Email address": "E-mailová adresa",
     "and %(count)s others...": {
         "other": "a %(count)s další...",
         "one": "a někdo další..."
@@ -31,7 +30,6 @@
     "AM": "dop.",
     "PM": "odp.",
     "Warning!": "Upozornění!",
-    "Verification Pending": "Čeká na ověření",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
@@ -47,8 +45,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
-    "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnovit si heslo a přijímat oznámení e-mailem.",
     "collapse": "sbalit",
     "expand": "rozbalit",
     "Sunday": "Neděle",
@@ -63,11 +59,6 @@
     "Wednesday": "Středa",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Send Logs": "Odeslat záznamy",
-    "Share Room": "Sdílet místnost",
-    "Link to most recent message": "Odkaz na nejnovější zprávu",
-    "Share User": "Sdílet uživatele",
-    "Share Room Message": "Sdílet zprávu z místnosti",
-    "Link to selected message": "Odkaz na vybranou zprávu",
     "Dog": "Pes",
     "Cat": "Kočka",
     "Lion": "Lev",
@@ -137,30 +128,11 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Uporoznění</b>: záloha by měla být prováděna na důvěryhodném počítači.",
     "Scissors": "Nůžky",
     "edited": "upraveno",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Abychom tomu mohli pro příště předejít, <a>pošlete nám prosím záznamy</a>.",
-    "Missing session data": "Chybějící data relace",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Některá data sezení, například klíče od šifrovaných zpráv, nám chybí. Přihlaste se prosím znovu a obnovte si klíče ze zálohy.",
-    "Your browser likely removed this data when running low on disk space.": "Prohlížeč data možná smazal aby ušetřil místo na disku.",
-    "Upload files (%(current)s of %(total)s)": "Nahrát soubory (%(current)s z %(total)s)",
-    "Upload files": "Nahrát soubory",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tento soubor je <b>příliš velký</b>. Limit na velikost je %(limit)s, ale soubor má %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Tyto soubory jsou <b>příliš velké</b>. Limit je %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Některé soubory <b>jsou příliš velké</b>. Limit je %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Nahrát %(count)s ostatních souborů",
-        "one": "Nahrát %(count)s další soubor"
-    },
-    "Cancel All": "Zrušit vše",
-    "Upload Error": "Chyba při nahrávání",
     "Deactivate account": "Deaktivace účtu",
-    "Command Help": "Nápověda příkazu",
-    "Find others by phone or email": "Najít ostatní pomocí e-mailu nebo telefonu",
-    "Be found by phone or email": "Umožnit ostatním mě nalézt pomocí e-mailu nebo telefonu",
     "%(name)s accepted": "%(name)s přijal(a)",
     "%(name)s cancelled": "%(name)s zrušil(a)",
     "%(name)s wants to verify": "%(name)s chce ověřit",
     "e.g. my-room": "např. moje-mistnost",
-    "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
     "Failed to connect to integration manager": "Nepovedlo se připojit ke správci integrací",
     "%(count)s verified sessions": {
@@ -177,13 +149,8 @@
     "Destroy cross-signing keys?": "Nenávratně smazat klíče pro křížové podepisování?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Smazání klíčů pro křížové podepisování je definitivní. Každý, kdo vás ověřil, teď uvidí bezpečnostní varování. Pokud jste zrovna neztratili všechna zařízení, ze kterých se můžete ověřit, tak to asi nechcete udělat.",
     "Clear cross-signing keys": "Smazat klíče pro křížové podepisování",
-    "Not Trusted": "Nedůvěryhodné",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) se přihlásil(a) do nové relace bez ověření:",
-    "Ask this user to verify their session, or manually verify it below.": "Požádejte tohoto uživatele, aby ověřil svou relaci, nebo jí níže můžete ověřit manuálně.",
     "%(name)s declined": "%(name)s odmítl(a)",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
-    "You signed in to a new session without verifying it:": "Přihlásili jste se do nové relace, aniž byste ji ověřili:",
-    "Verify your other session using one of the options below.": "Ověřte další relaci jedním z následujících způsobů.",
     "Submit logs": "Odeslat záznamy o chybě",
     "IRC display name width": "šířka zobrazovného IRC jména",
     "Your homeserver has exceeded its user limit.": "Na vašem domovském serveru byl překročen limit počtu uživatelů.",
@@ -518,9 +485,6 @@
     "Themes": "Motivy vzhledu",
     "Moderation": "Moderování",
     "Messaging": "Zprávy",
-    "Link to room": "Odkaz na místnost",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Vaše konverzace s členy tohoto prostoru se seskupí. Vypnutím této funkce se tyto chaty skryjí z vašeho pohledu na %(spaceName)s.",
-    "Sections to show": "Sekce pro zobrazení",
     "Open in OpenStreetMap": "Otevřít v OpenStreetMap",
     "toggle event": "přepnout událost",
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
@@ -555,8 +519,6 @@
     "Show rooms": "Zobrazit místnosti",
     "Explore public spaces in the new search dialog": "Prozkoumejte veřejné prostory v novém dialogu vyhledávání",
     "Saved Items": "Uložené položky",
-    "Interactively verify by emoji": "Interaktivní ověření pomocí emoji",
-    "Manually verify by text": "Ruční ověření pomocí textu",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "neznámé",
     "Loading live location…": "Načítání polohy živě…",
     "Fetching keys from server…": "Načítání klíčů ze serveru…",
-    "Checking…": "Kontrola…",
     "Starting export process…": "Zahájení procesu exportu…",
     "Desktop app logo": "Logo desktopové aplikace",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilní verzi MSC3827",
@@ -693,7 +654,8 @@
         "joined": "Připojeno",
         "avatar": "Avatar",
         "are_you_sure": "Opravdu?",
-        "location": "Poloha"
+        "location": "Poloha",
+        "email_address": "E-mailová adresa"
     },
     "action": {
         "continue": "Pokračovat",
@@ -913,7 +875,8 @@
         "experimental_section": "Předběžné ukázky",
         "experimental_description": "Rádi experimentujete? Vyzkoušejte naše nejnovější nápady ve vývoji. Tyto funkce nejsou dokončeny; mohou být nestabilní, mohou se změnit nebo mohou být zcela vypuštěny. <a>Zjistěte více</a>.",
         "beta_feedback_title": "Zpětná vazba beta funkce %(featureName)s",
-        "beta_feedback_leave_button": "Chcete-li opustit beta verzi, jděte do nastavení."
+        "beta_feedback_leave_button": "Chcete-li opustit beta verzi, jděte do nastavení.",
+        "sliding_sync_checking": "Kontrola…"
     },
     "keyboard": {
         "home": "Domov",
@@ -1080,7 +1043,8 @@
         "failed_send_logs": "Nepodařilo se odeslat záznamy: ",
         "preparing_download": "Příprava na stažení záznamů",
         "unsupported_browser": "Připomínka: váš prohlížeč není podporován, takže vaše zkušenost může být nepředvídatelná.",
-        "textarea_label": "Poznámky"
+        "textarea_label": "Poznámky",
+        "log_request": "Abychom tomu mohli pro příště předejít, <a>pošlete nám prosím záznamy</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "zbývá %(hours)sh %(minutes)sm %(seconds)ss",
@@ -2377,7 +2341,8 @@
         "verify_nop_warning_mismatch": "VAROVÁNÍ: relace již byla ověřena, ale klíče se NESHODUJÍ!",
         "verify_mismatch": "VAROVÁNÍ: OVĚŘENÍ KLÍČE SE NEZDAŘILO! Podpisový klíč pro uživatele %(userId)s a relaci %(deviceId)s je „%(fprint)s“, což neodpovídá klíči „%(fingerprint)s“. To by mohlo znamenat, že vaše komunikace je zachycována!",
         "verify_success_title": "Ověřený klíč",
-        "verify_success_description": "Zadaný podpisový klíč odpovídá klíči relace %(deviceId)s od uživatele %(userId)s. Relace byla označena jako ověřená."
+        "verify_success_description": "Zadaný podpisový klíč odpovídá klíči relace %(deviceId)s od uživatele %(userId)s. Relace byla označena jako ověřená.",
+        "help_dialog_title": "Nápověda příkazu"
     },
     "presence": {
         "busy": "Zaneprázdněný",
@@ -2910,7 +2875,16 @@
         "key_signature_upload_cancelled": "Nahrávání podpisu zrušeno",
         "key_signature_upload_failed": "Nelze nahrát",
         "key_signature_upload_success_title": "Podpis úspěšně nahrán",
-        "key_signature_upload_failed_title": "Podpis se nepodařilo nahrát"
+        "key_signature_upload_failed_title": "Podpis se nepodařilo nahrát",
+        "udd": {
+            "own_new_session_text": "Přihlásili jste se do nové relace, aniž byste ji ověřili:",
+            "own_ask_verify_text": "Ověřte další relaci jedním z následujících způsobů.",
+            "other_new_session_text": "%(name)s (%(userId)s) se přihlásil(a) do nové relace bez ověření:",
+            "other_ask_verify_text": "Požádejte tohoto uživatele, aby ověřil svou relaci, nebo jí níže můžete ověřit manuálně.",
+            "title": "Nedůvěryhodné",
+            "manual_verification_button": "Ruční ověření pomocí textu",
+            "interactive_verification_button": "Interaktivní ověření pomocí emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3168,6 +3142,11 @@
             "continue_without_email_title": "Pokračuje se bez e-mailu",
             "continue_without_email_description": "Jen upozornění, pokud nepřidáte e-mail a zapomenete heslo, můžete <b>trvale ztratit přístup ke svému účtu</b>.",
             "continue_without_email_field_label": "E-mail (nepovinné)"
+        },
+        "set_email": {
+            "verification_pending_title": "Čeká na ověření",
+            "verification_pending_description": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
+            "description": "Toto vám umožní obnovit si heslo a přijímat oznámení e-mailem."
         }
     },
     "room_list": {
@@ -3520,7 +3499,11 @@
         "leave_dialog_option_none": "Neodcházet z žádné místnosti",
         "leave_dialog_option_all": "Odejít ze všech místností",
         "leave_dialog_option_specific": "Odejít z některých místností",
-        "leave_dialog_action": "Opusit prostor"
+        "leave_dialog_action": "Opusit prostor",
+        "preferences": {
+            "sections_section": "Sekce pro zobrazení",
+            "show_people_in_space": "Vaše konverzace s členy tohoto prostoru se seskupí. Vypnutím této funkce se tyto chaty skryjí z vašeho pohledu na %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",
@@ -3847,7 +3830,9 @@
         "identity_server_no_terms_title": "Server identit nemá žádné podmínky použití",
         "identity_server_no_terms_description_1": "Tato akce vyžaduje přístup k výchozímu serveru identity <server /> aby šlo ověřit e-mail a telefon, ale server nemá podmínky použití.",
         "identity_server_no_terms_description_2": "Pokračujte pouze pokud věříte provozovateli serveru.",
-        "inline_intro_text": "Pro pokračování odsouhlaste <policyLink />:"
+        "inline_intro_text": "Pro pokračování odsouhlaste <policyLink />:",
+        "summary_identity_server_1": "Najít ostatní pomocí e-mailu nebo telefonu",
+        "summary_identity_server_2": "Umožnit ostatním mě nalézt pomocí e-mailu nebo telefonu"
     },
     "space_settings": {
         "title": "Nastavení - %(spaceName)s"
@@ -4013,7 +3998,10 @@
             "description_1": "V průběhu obnovování Vaší minulé relace nastala chyba.",
             "description_2": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
             "description_3": "Vymazání úložiště prohlížeče možná váš problém opraví, zároveň se tím ale odhlásíte a můžete přijít o historii svých šifrovaných konverzací."
-        }
+        },
+        "storage_evicted_title": "Chybějící data relace",
+        "storage_evicted_description_1": "Některá data sezení, například klíče od šifrovaných zpráv, nám chybí. Přihlaste se prosím znovu a obnovte si klíče ze zálohy.",
+        "storage_evicted_description_2": "Prohlížeč data možná smazal aby ušetřil místo na disku."
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4390,5 +4378,27 @@
         "remove_filter": "Odstranit filtr vyhledávání pro %(filter)s",
         "search_messages_hint": "Pro vyhledávání zpráv hledejte tuto ikonu v horní části místnosti <icon/>",
         "keyboard_scroll_hint": "K pohybu použijte <arrows/>"
+    },
+    "share": {
+        "title_room": "Sdílet místnost",
+        "permalink_most_recent": "Odkaz na nejnovější zprávu",
+        "title_user": "Sdílet uživatele",
+        "title_message": "Sdílet zprávu z místnosti",
+        "permalink_message": "Odkaz na vybranou zprávu",
+        "link_title": "Odkaz na místnost"
+    },
+    "upload_file": {
+        "title_progress": "Nahrát soubory (%(current)s z %(total)s)",
+        "title": "Nahrát soubory",
+        "upload_all_button": "Nahrát vše",
+        "error_file_too_large": "Tento soubor je <b>příliš velký</b>. Limit na velikost je %(limit)s, ale soubor má %(sizeOfThisFile)s.",
+        "error_files_too_large": "Tyto soubory jsou <b>příliš velké</b>. Limit je %(limit)s.",
+        "error_some_files_too_large": "Některé soubory <b>jsou příliš velké</b>. Limit je %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Nahrát %(count)s ostatních souborů",
+            "one": "Nahrát %(count)s další soubor"
+        },
+        "cancel_all_button": "Zrušit vše",
+        "error_title": "Chyba při nahrávání"
     }
 }

@@ -43,15 +43,11 @@
     },
     "Join Room": "Entra nella stanza",
     "not specified": "non specificato",
-    "Email address": "Indirizzo email",
     "Delete Widget": "Elimina widget",
     "Home": "Pagina iniziale",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
     "expand": "espandi",
-    "Verification Pending": "In attesa di verifica",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Controlla la tua email e clicca il link contenuto. Una volta fatto, clicca continua.",
-    "This will allow you to reset your password and receive notifications.": "Ciò ti permetterà di reimpostare la tua password e ricevere notifiche.",
     "Sunday": "Domenica",
     "Today": "Oggi",
     "Friday": "Venerdì",
@@ -63,11 +59,6 @@
     "Thursday": "Giovedì",
     "Yesterday": "Ieri",
     "Send Logs": "Invia i log",
-    "Share Room": "Condividi stanza",
-    "Link to most recent message": "Link al messaggio più recente",
-    "Share User": "Condividi utente",
-    "Share Room Message": "Condividi messaggio stanza",
-    "Link to selected message": "Link al messaggio selezionato",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Prima di inviare i log, devi <a>creare una segnalazione su GitHub</a> per descrivere il tuo problema.",
     "Unable to load backup status": "Impossibile caricare lo stato del backup",
     "Unable to restore backup": "Impossibile ripristinare il backup",
@@ -137,27 +128,8 @@
     "Folder": "Cartella",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
     "edited": "modificato",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Per aiutarci a prevenire questa cosa in futuro, <a>inviaci i log</a>.",
-    "Missing session data": "Dati di sessione mancanti",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Alcuni dati di sessione, incluse le chiavi dei messaggi cifrati, sono mancanti. Esci e riaccedi per risolvere, ripristinando le chiavi da un backup.",
-    "Your browser likely removed this data when running low on disk space.": "Probabilmente il tuo browser ha rimosso questi dati per mancanza di spazio su disco.",
-    "Upload files (%(current)s of %(total)s)": "Invio dei file (%(current)s di %(total)s)",
-    "Upload files": "Invia i file",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Questo file è <b>troppo grande</b> da inviare. Il limite di dimensione è %(limit)s ma questo file è di %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Questi file sono <b>troppo grandi</b> da inviare. Il limite di dimensione è %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Alcuni file sono <b>troppo grandi</b> da inviare. Il limite di dimensione è %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Invia altri %(count)s file",
-        "one": "Invia %(count)s altro file"
-    },
-    "Cancel All": "Annulla tutto",
-    "Upload Error": "Errore di invio",
-    "Upload all": "Invia tutto",
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
-    "Find others by phone or email": "Trova altri per telefono o email",
-    "Be found by phone or email": "Trovato per telefono o email",
     "Deactivate account": "Disattiva account",
-    "Command Help": "Aiuto comando",
     "e.g. my-room": "es. mia-stanza",
     "%(name)s accepted": "%(name)s ha accettato",
     "%(name)s cancelled": "%(name)s ha annullato",
@@ -174,9 +146,6 @@
         "other": "%(count)s sessioni",
         "one": "%(count)s sessione"
     },
-    "Not Trusted": "Non fidato",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) ha fatto l'accesso con una nuova sessione senza verificarla:",
-    "Ask this user to verify their session, or manually verify it below.": "Chiedi a questo utente di verificare la sua sessione o verificala manualmente sotto.",
     "Destroy cross-signing keys?": "Distruggere le chiavi di firma incrociata?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "L'eliminazione delle chiavi di firma incrociata è permanente. Chiunque si sia verificato con te vedrà avvisi di sicurezza. Quasi sicuramente non vuoi fare questa cosa, a meno che tu non abbia perso tutti i dispositivi da cui puoi fare l'accesso.",
     "Clear cross-signing keys": "Elimina chiavi di firma incrociata",
@@ -193,8 +162,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s di %(total)s chiavi ripristinate",
     "Keys restored": "Chiavi ripristinate",
     "Successfully restored %(sessionCount)s keys": "Ripristinate %(sessionCount)s chiavi correttamente",
-    "You signed in to a new session without verifying it:": "Hai fatto l'accesso ad una nuova sessione senza verificarla:",
-    "Verify your other session using one of the options below.": "Verifica la tua altra sessione usando una delle opzioni sotto.",
     "Confirm encryption setup": "Conferma impostazione crittografia",
     "Click the button below to confirm setting up encryption.": "Clicca il pulsante sotto per confermare l'impostazione della crittografia.",
     "IRC display name width": "Larghezza nome di IRC",
@@ -518,9 +485,6 @@
     "Messaging": "Messaggi",
     "Themes": "Temi",
     "Moderation": "Moderazione",
-    "Link to room": "Collegamento alla stanza",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ciò raggruppa le tue chat con i membri di questo spazio. Se lo disattivi le chat verranno nascoste dalla tua vista di %(spaceName)s.",
-    "Sections to show": "Sezioni da mostrare",
     "Open in OpenStreetMap": "Apri in OpenStreetMap",
     "toggle event": "commuta evento",
     "Feedback sent! Thanks, we appreciate it!": "Opinione inviata! Grazie, lo apprezziamo!",
@@ -555,8 +519,6 @@
     "Show rooms": "Mostra stanze",
     "Explore public spaces in the new search dialog": "Esplora gli spazi pubblici nella nuova finestra di ricerca",
     "Saved Items": "Elementi salvati",
-    "Interactively verify by emoji": "Verifica interattivamente con emoji",
-    "Manually verify by text": "Verifica manualmente con testo",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s ha iniziato una videochiamata",
     "Thread root ID: %(threadRootId)s": "ID root del thread: %(threadRootId)s",
@@ -564,7 +526,6 @@
     "unknown": "sconosciuto",
     "Loading live location…": "Caricamento posizione in tempo reale…",
     "Fetching keys from server…": "Ricezione delle chiavi dal server…",
-    "Checking…": "Controllo…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Desktop app logo": "Logo app desktop",
     "Requires your server to support the stable version of MSC3827": "Richiede che il tuo server supporti la versione stabile di MSC3827",
@@ -693,7 +654,8 @@
         "joined": "Entrato/a",
         "avatar": "Avatar",
         "are_you_sure": "Sei sicuro?",
-        "location": "Posizione"
+        "location": "Posizione",
+        "email_address": "Indirizzo email"
     },
     "action": {
         "continue": "Continua",
@@ -913,7 +875,8 @@
         "experimental_section": "Anteprime",
         "experimental_description": "Ti senti di sperimentare? Prova le nostre ultime idee in sviluppo. Queste funzioni non sono complete; potrebbero essere instabili, cambiare o essere scartate. <a>Maggiori informazioni</a>.",
         "beta_feedback_title": "Feedback %(featureName)s beta",
-        "beta_feedback_leave_button": "Per abbandonare la beta, vai nelle impostazioni."
+        "beta_feedback_leave_button": "Per abbandonare la beta, vai nelle impostazioni.",
+        "sliding_sync_checking": "Controllo…"
     },
     "keyboard": {
         "home": "Pagina iniziale",
@@ -1080,7 +1043,8 @@
         "failed_send_logs": "Invio dei log fallito: ",
         "preparing_download": "Preparazione al download dei log",
         "unsupported_browser": "Promemoria: il tuo browser non è supportato, perciò la tua esperienza può essere imprevedibile.",
-        "textarea_label": "Note"
+        "textarea_label": "Note",
+        "log_request": "Per aiutarci a prevenire questa cosa in futuro, <a>inviaci i log</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)so %(minutes)sm %(seconds)ss rimasti",
@@ -2377,7 +2341,8 @@
         "verify_nop_warning_mismatch": "ATTENZIONE: sessione già verificata, ma le chiavi NON CORRISPONDONO!",
         "verify_mismatch": "ATTENZIONE: VERIFICA CHIAVI FALLITA! La chiave per %(userId)s e per la sessione %(deviceId)s è \"%(fprint)s\" la quale non corriponde con la chiave \"%(fingerprint)s\" fornita. Ciò può significare che le comunicazioni vengono intercettate!",
         "verify_success_title": "Chiave verificata",
-        "verify_success_description": "La chiave che hai fornito corrisponde alla chiave che hai ricevuto dalla sessione di %(userId)s %(deviceId)s. Sessione contrassegnata come verificata."
+        "verify_success_description": "La chiave che hai fornito corrisponde alla chiave che hai ricevuto dalla sessione di %(userId)s %(deviceId)s. Sessione contrassegnata come verificata.",
+        "help_dialog_title": "Aiuto comando"
     },
     "presence": {
         "busy": "Occupato",
@@ -2910,7 +2875,16 @@
         "key_signature_upload_cancelled": "Invio della firma annullato",
         "key_signature_upload_failed": "Impossibile inviare",
         "key_signature_upload_success_title": "Firma inviata correttamente",
-        "key_signature_upload_failed_title": "Invio della firma fallito"
+        "key_signature_upload_failed_title": "Invio della firma fallito",
+        "udd": {
+            "own_new_session_text": "Hai fatto l'accesso ad una nuova sessione senza verificarla:",
+            "own_ask_verify_text": "Verifica la tua altra sessione usando una delle opzioni sotto.",
+            "other_new_session_text": "%(name)s (%(userId)s) ha fatto l'accesso con una nuova sessione senza verificarla:",
+            "other_ask_verify_text": "Chiedi a questo utente di verificare la sua sessione o verificala manualmente sotto.",
+            "title": "Non fidato",
+            "manual_verification_button": "Verifica manualmente con testo",
+            "interactive_verification_button": "Verifica interattivamente con emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",
@@ -3168,6 +3142,11 @@
             "continue_without_email_title": "Continuando senza email",
             "continue_without_email_description": "Solo un avviso, se non aggiungi un'email e dimentichi la password, potresti <b>perdere permanentemente l'accesso al tuo account</b>.",
             "continue_without_email_field_label": "Email (facoltativa)"
+        },
+        "set_email": {
+            "verification_pending_title": "In attesa di verifica",
+            "verification_pending_description": "Controlla la tua email e clicca il link contenuto. Una volta fatto, clicca continua.",
+            "description": "Ciò ti permetterà di reimpostare la tua password e ricevere notifiche."
         }
     },
     "room_list": {
@@ -3520,7 +3499,11 @@
         "leave_dialog_option_none": "Non uscire da alcuna stanza",
         "leave_dialog_option_all": "Esci da tutte le stanze",
         "leave_dialog_option_specific": "Esci da alcune stanze",
-        "leave_dialog_action": "Esci dallo spazio"
+        "leave_dialog_action": "Esci dallo spazio",
+        "preferences": {
+            "sections_section": "Sezioni da mostrare",
+            "show_people_in_space": "Ciò raggruppa le tue chat con i membri di questo spazio. Se lo disattivi le chat verranno nascoste dalla tua vista di %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -3847,7 +3830,9 @@
         "identity_server_no_terms_title": "Il server di identità non ha condizioni di servizio",
         "identity_server_no_terms_description_1": "Questa azione richiede l'accesso al server di identità predefinito <server /> per verificare un indirizzo email o numero di telefono, ma il server non ha termini di servizio.",
         "identity_server_no_terms_description_2": "Continua solo se ti fidi del proprietario del server.",
-        "inline_intro_text": "Accetta la <policyLink /> per continuare:"
+        "inline_intro_text": "Accetta la <policyLink /> per continuare:",
+        "summary_identity_server_1": "Trova altri per telefono o email",
+        "summary_identity_server_2": "Trovato per telefono o email"
     },
     "space_settings": {
         "title": "Impostazioni - %(spaceName)s"
@@ -4013,7 +3998,10 @@
             "description_1": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
             "description_2": "Se hai usato precedentemente una versione più recente di %(brand)s, la tua sessione potrebbe essere incompatibile con questa versione. Chiudi questa finestra e torna alla versione più recente.",
             "description_3": "Eliminare l'archiviazione del browser potrebbe risolvere il problema, ma verrai disconnesso e la cronologia delle chat criptate sarà illeggibile."
-        }
+        },
+        "storage_evicted_title": "Dati di sessione mancanti",
+        "storage_evicted_description_1": "Alcuni dati di sessione, incluse le chiavi dei messaggi cifrati, sono mancanti. Esci e riaccedi per risolvere, ripristinando le chiavi da un backup.",
+        "storage_evicted_description_2": "Probabilmente il tuo browser ha rimosso questi dati per mancanza di spazio su disco."
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4390,5 +4378,27 @@
         "remove_filter": "Rimuovi filtro di ricerca per %(filter)s",
         "search_messages_hint": "Per cercare messaggi, trova questa icona in cima ad una stanza <icon/>",
         "keyboard_scroll_hint": "Usa <arrows/> per scorrere"
+    },
+    "share": {
+        "title_room": "Condividi stanza",
+        "permalink_most_recent": "Link al messaggio più recente",
+        "title_user": "Condividi utente",
+        "title_message": "Condividi messaggio stanza",
+        "permalink_message": "Link al messaggio selezionato",
+        "link_title": "Collegamento alla stanza"
+    },
+    "upload_file": {
+        "title_progress": "Invio dei file (%(current)s di %(total)s)",
+        "title": "Invia i file",
+        "upload_all_button": "Invia tutto",
+        "error_file_too_large": "Questo file è <b>troppo grande</b> da inviare. Il limite di dimensione è %(limit)s ma questo file è di %(sizeOfThisFile)s.",
+        "error_files_too_large": "Questi file sono <b>troppo grandi</b> da inviare. Il limite di dimensione è %(limit)s.",
+        "error_some_files_too_large": "Alcuni file sono <b>troppo grandi</b> da inviare. Il limite di dimensione è %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Invia altri %(count)s file",
+            "one": "Invia %(count)s altro file"
+        },
+        "cancel_all_button": "Annulla tutto",
+        "error_title": "Errore di invio"
     }
 }

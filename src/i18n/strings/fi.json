@@ -5,7 +5,6 @@
         "other": "ja %(count)s muuta...",
         "one": "ja yksi muu..."
     },
-    "Email address": "Sähköpostiosoite",
     "Join Room": "Liity huoneeseen",
     "Moderator": "Valvoja",
     "not specified": "ei määritetty",
@@ -24,8 +23,6 @@
         "one": "(~%(count)s tulos)",
         "other": "(~%(count)s tulosta)"
     },
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
-    "Verification Pending": "Varmennus odottaa",
     "Jan": "tammi",
     "Feb": "helmi",
     "Mar": "maalis",
@@ -38,7 +35,6 @@
     "Oct": "loka",
     "Nov": "marras",
     "Dec": "joulu",
-    "This will allow you to reset your password and receive notifications.": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia.",
     "Restricted": "Rajoitettu",
     "Unnamed room": "Nimetön huone",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -120,44 +116,20 @@
     "Anchor": "Ankkuri",
     "Headphones": "Kuulokkeet",
     "Folder": "Kansio",
-    "Share Room": "Jaa huone",
-    "Link to most recent message": "Linkitä viimeisimpään viestiin",
     "No backup found!": "Varmuuskopiota ei löytynyt!",
     "Unable to restore backup": "Varmuuskopion palauttaminen ei onnistu",
-    "Link to selected message": "Linkitä valittuun viestiin",
     "Send Logs": "Lähetä lokit",
     "Elephant": "Norsu",
     "Thumbs up": "Peukut ylös",
-    "Share User": "Jaa käyttäjä",
-    "Share Room Message": "Jaa huoneviesti",
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
     "Unable to load backup status": "Varmuuskopioinnin tilan lataaminen epäonnistui",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s istunnon purkaminen epäonnistui!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
-    "Missing session data": "Istunnon dataa puuttuu",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
-    "Your browser likely removed this data when running low on disk space.": "Selaimesi luultavasti poisti tämän datan, kun levytila oli vähissä.",
-    "Upload files (%(current)s of %(total)s)": "Lähettää tiedostoa (%(current)s / %(total)s)",
-    "Upload files": "Lähetä tiedostot",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Tiedostot ovat <b>liian isoja</b> lähetettäväksi. Tiedoston kokoraja on %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Osa tiedostoista on <b>liian isoja</b> lähetettäväksi. Tiedoston kokoraja on %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "Lähetä %(count)s muuta tiedostoa",
-        "one": "Lähetä %(count)s muu tiedosto"
-    },
-    "Cancel All": "Peruuta kaikki",
-    "Upload Error": "Lähetysvirhe",
     "edited": "muokattu",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
-    "Upload all": "Lähetä kaikki palvelimelle",
     "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
-    "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
-    "Be found by phone or email": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella",
     "Deactivate account": "Poista tili pysyvästi",
-    "Command Help": "Komento-ohje",
     "e.g. my-room": "esim. oma-huone",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
     "%(name)s accepted": "%(name)s hyväksyi",
@@ -174,13 +146,8 @@
     },
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
     "%(name)s declined": "%(name)s kieltäytyi",
-    "Not Trusted": "Ei luotettu",
-    "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
     "Sign in with SSO": "Kirjaudu kertakirjautumista käyttäen",
     "Submit logs": "Lähetä lokit",
-    "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
-    "Verify your other session using one of the options below.": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
     "Restoring keys from backup": "Palautetaan avaimia varmuuskopiosta",
     "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s avainta palautettu",
     "Keys restored": "Avaimet palautettu",
@@ -479,7 +446,6 @@
     },
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Tämä ryhmittelee yksityisviestisi avaruuden jäsenten kanssa. Tämän poistaminen päältä piilottaa kyseiset keskustelut sinun näkymästäsi avaruudessa %(spaceName)s.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -493,7 +459,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
-    "Link to room": "Linkitä huoneeseen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
     "%(count)s participants": {
         "one": "1 osallistuja",
@@ -523,7 +488,6 @@
     "You cannot search for rooms that are neither a room nor a space": "Et voi etsiä huoneita, jotka eivät ole huoneita tai avaruuksia",
     "Show spaces": "Näytä avaruudet",
     "Show rooms": "Näytä huoneet",
-    "Sections to show": "Näytettävät osiot",
     "Moderation": "Moderointi",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s tai %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
@@ -531,13 +495,10 @@
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
     "View List": "Näytä luettelo",
     "View list": "Näytä luettelo",
-    "Interactively verify by emoji": "Vahvista vuorovaikutteisesti emojilla",
-    "Manually verify by text": "Vahvista manuaalisesti tekstillä",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Fetching keys from server…": "Noudetaan avaimia palvelimelta…",
-    "Checking…": "Tarkistetaan…",
     "unavailable": "ei saatavilla",
     "unknown status code": "tuntematon tilakoodi",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
@@ -664,7 +625,8 @@
         "joined": "Liitytty",
         "avatar": "Avatar",
         "are_you_sure": "Oletko varma?",
-        "location": "Sijainti"
+        "location": "Sijainti",
+        "email_address": "Sähköpostiosoite"
     },
     "action": {
         "continue": "Jatka",
@@ -857,7 +819,8 @@
         "beta_section": "Tulevat ominaisuudet",
         "experimental_section": "Ennakot",
         "beta_feedback_title": "Ominaisuuden %(featureName)s beetapalaute",
-        "beta_feedback_leave_button": "Poistu beetasta asetuksista."
+        "beta_feedback_leave_button": "Poistu beetasta asetuksista.",
+        "sliding_sync_checking": "Tarkistetaan…"
     },
     "keyboard": {
         "home": "Etusivu",
@@ -1020,7 +983,8 @@
         "failed_send_logs": "Lokien lähettäminen epäonnistui: ",
         "preparing_download": "Valmistellaan lokien lataamista",
         "unsupported_browser": "Muistutus: Selaintasi ei tueta, joten voit kohdata yllätyksiä.",
-        "textarea_label": "Huomautukset"
+        "textarea_label": "Huomautukset",
+        "log_request": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>."
     },
     "time": {
         "hours_minutes_seconds_left": "%(hours)s h %(minutes)s m %(seconds)s s jäljellä",
@@ -2166,7 +2130,8 @@
         "verify_nop_warning_mismatch": "VAROITUS: istunto on jo vahvistettu, mutta avaimet EIVÄT TÄSMÄÄ!",
         "verify_mismatch": "VAROITUS: AVAIMEN VARMENTAMINEN EPÄONNISTUI! Käyttäjän %(userId)s ja laitteen %(deviceId)s istunnon allekirjoitusavain on ”%(fprint)s”, mikä ei täsmää annettuun avaimeen ”%(fingerprint)s”. Tämä voi tarkoittaa, että viestintäänne siepataan!",
         "verify_success_title": "Varmennettu avain",
-        "verify_success_description": "Antamasi allekirjoitusavain täsmää käyttäjältä %(userId)s saamaasi istunnon %(deviceId)s allekirjoitusavaimeen. Istunto on varmennettu."
+        "verify_success_description": "Antamasi allekirjoitusavain täsmää käyttäjältä %(userId)s saamaasi istunnon %(deviceId)s allekirjoitusavaimeen. Istunto on varmennettu.",
+        "help_dialog_title": "Komento-ohje"
     },
     "presence": {
         "busy": "Varattu",
@@ -2650,7 +2615,16 @@
         "key_signature_upload_cancelled": "Allekirjoituksen lähetys peruutettu",
         "key_signature_upload_failed": "Lähettäminen ei ole mahdollista",
         "key_signature_upload_success_title": "Allekirjoituksen lähettäminen onnistui",
-        "key_signature_upload_failed_title": "Allekirjoituksen lähettäminen epäonnistui"
+        "key_signature_upload_failed_title": "Allekirjoituksen lähettäminen epäonnistui",
+        "udd": {
+            "own_new_session_text": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
+            "own_ask_verify_text": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
+            "other_new_session_text": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
+            "other_ask_verify_text": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
+            "title": "Ei luotettu",
+            "manual_verification_button": "Vahvista manuaalisesti tekstillä",
+            "interactive_verification_button": "Vahvista vuorovaikutteisesti emojilla"
+        }
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",
@@ -2885,6 +2859,11 @@
             "continue_without_email_title": "Jatka ilman sähköpostia",
             "continue_without_email_description": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
             "continue_without_email_field_label": "Sähköposti (valinnainen)"
+        },
+        "set_email": {
+            "verification_pending_title": "Varmennus odottaa",
+            "verification_pending_description": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
+            "description": "Tämä sallii sinun uudelleenalustaa salasanasi ja vastaanottaa ilmoituksia."
         }
     },
     "room_list": {
@@ -3186,7 +3165,11 @@
         "leave_dialog_option_none": "Älä poistu mistään huoneesta",
         "leave_dialog_option_all": "Poistu kaikista huoneista",
         "leave_dialog_option_specific": "Poistu joistakin huoneista",
-        "leave_dialog_action": "Poistu avaruudesta"
+        "leave_dialog_action": "Poistu avaruudesta",
+        "preferences": {
+            "sections_section": "Näytettävät osiot",
+            "show_people_in_space": "Tämä ryhmittelee yksityisviestisi avaruuden jäsenten kanssa. Tämän poistaminen päältä piilottaa kyseiset keskustelut sinun näkymästäsi avaruudessa %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3473,7 +3456,9 @@
         "identity_server_no_terms_title": "Identiteettipalvelimella ei ole käyttöehtoja",
         "identity_server_no_terms_description_1": "Tämä toiminto vaatii oletusidentiteettipalvelimen <server /> käyttämistä sähköpostiosoitteen tai puhelinnumeron validointiin, mutta palvelimella ei ole käyttöehtoja.",
         "identity_server_no_terms_description_2": "Jatka vain, jos luotat palvelimen omistajaan.",
-        "inline_intro_text": "Hyväksy <policyLink /> jatkaaksesi:"
+        "inline_intro_text": "Hyväksy <policyLink /> jatkaaksesi:",
+        "summary_identity_server_1": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
+        "summary_identity_server_2": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella"
     },
     "space_settings": {
         "title": "Asetukset - %(spaceName)s"
@@ -3628,7 +3613,10 @@
             "description_1": "Törmäsimme ongelmaan yrittäessämme palauttaa edellistä istuntoasi.",
             "description_2": "Jos olet aikaisemmin käyttänyt uudempaa versiota %(brand)sista, istuntosi voi olla epäyhteensopiva tämän version kanssa. Sulje tämä ikkuna ja yritä uudemman version kanssa.",
             "description_3": "Selaimen varaston tyhjentäminen saattaa korjata ongelman, mutta kirjaa sinut samalla ulos ja estää sinua lukemasta salattuja keskusteluita."
-        }
+        },
+        "storage_evicted_title": "Istunnon dataa puuttuu",
+        "storage_evicted_description_1": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
+        "storage_evicted_description_2": "Selaimesi luultavasti poisti tämän datan, kun levytila oli vähissä."
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3975,5 +3963,27 @@
         "recently_viewed_section_title": "Äskettäin katsottu",
         "search_messages_hint": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
         "keyboard_scroll_hint": "Käytä <arrows/> vierittääksesi"
+    },
+    "share": {
+        "title_room": "Jaa huone",
+        "permalink_most_recent": "Linkitä viimeisimpään viestiin",
+        "title_user": "Jaa käyttäjä",
+        "title_message": "Jaa huoneviesti",
+        "permalink_message": "Linkitä valittuun viestiin",
+        "link_title": "Linkitä huoneeseen"
+    },
+    "upload_file": {
+        "title_progress": "Lähettää tiedostoa (%(current)s / %(total)s)",
+        "title": "Lähetä tiedostot",
+        "upload_all_button": "Lähetä kaikki palvelimelle",
+        "error_file_too_large": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
+        "error_files_too_large": "Tiedostot ovat <b>liian isoja</b> lähetettäväksi. Tiedoston kokoraja on %(limit)s.",
+        "error_some_files_too_large": "Osa tiedostoista on <b>liian isoja</b> lähetettäväksi. Tiedoston kokoraja on %(limit)s.",
+        "upload_n_others_button": {
+            "other": "Lähetä %(count)s muuta tiedostoa",
+            "one": "Lähetä %(count)s muu tiedosto"
+        },
+        "cancel_all_button": "Peruuta kaikki",
+        "error_title": "Lähetysvirhe"
     }
 }

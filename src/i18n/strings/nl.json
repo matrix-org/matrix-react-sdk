@@ -29,17 +29,13 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s, %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s, %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s, %(time)s",
-    "Email address": "E-mailadres",
     "Home": "Home",
     "Join Room": "Kamer toetreden",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
-    "Verification Pending": "Verificatie in afwachting",
     "Warning!": "Let op!",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultaat)",
         "other": "(~%(count)s resultaten)"
     },
-    "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
     "AM": "AM",
     "PM": "PM",
     "Delete Widget": "Widget verwijderen",
@@ -63,11 +59,6 @@
     "Yesterday": "Gisteren",
     "Wednesday": "Woensdag",
     "Send Logs": "Logs versturen",
-    "Share Room": "Kamer delen",
-    "Link to most recent message": "Koppeling naar meest recente bericht",
-    "Share User": "Persoon delen",
-    "Share Room Message": "Bericht uit kamer delen",
-    "Link to selected message": "Koppeling naar geselecteerd bericht",
     "Dog": "Hond",
     "Cat": "Kat",
     "Lion": "Leeuw",
@@ -136,36 +127,14 @@
     "No backup found!": "Geen back-up gevonden!",
     "Failed to decrypt %(failedCount)s sessions!": "Ontsleutelen van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
-    "To help us prevent this in future, please <a>send us logs</a>.": "<a>Stuur ons jouw logs</a> om dit in de toekomst te helpen voorkomen.",
-    "Missing session data": "Sessiegegevens ontbreken",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Sommige sessiegegevens, waaronder sleutels voor versleutelde berichten, ontbreken. Herstel de sleutels uit je back-up door je af- en weer aan te melden.",
-    "Your browser likely removed this data when running low on disk space.": "Jouw browser heeft deze gegevens wellicht verwijderd toen de beschikbare opslagSpace vol was.",
-    "Upload files (%(current)s of %(total)s)": "Bestanden versturen (%(current)s van %(total)s)",
-    "Upload files": "Bestanden versturen",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Dit bestand is <b>te groot</b> om te versturen. Het limiet is %(limit)s en dit bestand is %(sizeOfThisFile)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Deze bestanden zijn <b>te groot</b> om te versturen. De bestandsgroottelimiet is %(limit)s.",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Sommige bestanden zijn <b>te groot</b> om te versturen. De bestandsgroottelimiet is %(limit)s.",
-    "Upload %(count)s other files": {
-        "other": "%(count)s overige bestanden versturen",
-        "one": "%(count)s overig bestand versturen"
-    },
-    "Cancel All": "Alles annuleren",
-    "Upload Error": "Fout bij versturen van bestand",
     "edited": "bewerkt",
-    "Upload all": "Alles versturen",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
-    "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
-    "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
     "Deactivate account": "Account sluiten",
-    "Command Help": "Hulp bij opdrachten",
     "e.g. my-room": "bv. mijn-kamer",
     "Lock": "Hangslot",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
     "Failed to connect to integration manager": "Verbinding met integratiebeheerder is mislukt",
-    "Not Trusted": "Niet vertrouwd",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s heeft zich aangemeld bij een nieuwe sessie zonder deze te verifiëren:",
-    "Ask this user to verify their session, or manually verify it below.": "Vraag deze persoon de sessie te verifiëren, of verifieer het handmatig hieronder.",
     "%(count)s verified sessions": {
         "other": "%(count)s geverifieerde sessies",
         "one": "1 geverifieerde sessie"
@@ -182,8 +151,6 @@
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
-    "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
-    "Verify your other session using one of the options below.": "Verifieer je andere sessie op een van onderstaande wijzen.",
     "Your homeserver has exceeded its user limit.": "Jouw homeserver heeft het maximaal aantal personen overschreden.",
     "Your homeserver has exceeded one of its resource limits.": "Jouw homeserver heeft een van zijn limieten overschreden.",
     "Ok": "Oké",
@@ -519,9 +486,6 @@
     "Moderation": "Moderatie",
     "Messaging": "Messaging",
     "Open in OpenStreetMap": "In OpenStreetMap openen",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Dit groepeert jouw chats met leden van deze space. Als je dit uitschakelt, worden deze chats verborgen voor %(spaceName)s.",
-    "Sections to show": "Te tonen secties",
-    "Link to room": "Link naar kamer",
     "toggle event": "wissel gebeurtenis",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
@@ -555,8 +519,6 @@
     "Show rooms": "Toon kamers",
     "Explore public spaces in the new search dialog": "Ontdek openbare ruimtes in het nieuwe zoekvenster",
     "Saved Items": "Opgeslagen items",
-    "Interactively verify by emoji": "Interactief verifiëren door emoji",
-    "Manually verify by text": "Handmatig verifiëren via tekst",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s of %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s is een videogesprek gestart",
     "common": {
@@ -679,7 +641,8 @@
         "joined": "Toegetreden",
         "avatar": "Afbeelding",
         "are_you_sure": "Weet je het zeker?",
-        "location": "Locatie"
+        "location": "Locatie",
+        "email_address": "E-mailadres"
     },
     "action": {
         "continue": "Doorgaan",
@@ -1013,7 +976,8 @@
         "failed_send_logs": "Versturen van logs mislukt: ",
         "preparing_download": "Klaarmaken om logs te downloaden",
         "unsupported_browser": "Herinnering: Jouw browser wordt niet ondersteund. Dit kan een negatieve impact hebben op je ervaring.",
-        "textarea_label": "Opmerkingen"
+        "textarea_label": "Opmerkingen",
+        "log_request": "<a>Stuur ons jouw logs</a> om dit in de toekomst te helpen voorkomen."
     },
     "time": {
         "seconds_left": "%(seconds)s's over",
@@ -2151,7 +2115,8 @@
         "verify_nop": "Sessie al geverifieerd!",
         "verify_mismatch": "PAS OP: sleutelverificatie MISLUKT! De combinatie %(userId)s + sessie %(deviceId)s is ondertekend met ‘%(fprint)s’ - maar de opgegeven sleutel is ‘%(fingerprint)s’.  Wellicht worden jouw berichten onderschept!",
         "verify_success_title": "Geverifieerde sleutel",
-        "verify_success_description": "De door jou verschafte sleutel en de van %(userId)ss sessie %(deviceId)s verkregen sleutels komen overeen. De sessie is daarmee geverifieerd."
+        "verify_success_description": "De door jou verschafte sleutel en de van %(userId)ss sessie %(deviceId)s verkregen sleutels komen overeen. De sessie is daarmee geverifieerd.",
+        "help_dialog_title": "Hulp bij opdrachten"
     },
     "presence": {
         "busy": "Bezet",
@@ -2647,7 +2612,16 @@
         "key_signature_upload_cancelled": "Geannuleerde ondertekening upload",
         "key_signature_upload_failed": "Versturen niet mogelijk",
         "key_signature_upload_success_title": "Ondertekening succesvol verstuurd",
-        "key_signature_upload_failed_title": "Versturen van ondertekening mislukt"
+        "key_signature_upload_failed_title": "Versturen van ondertekening mislukt",
+        "udd": {
+            "own_new_session_text": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
+            "own_ask_verify_text": "Verifieer je andere sessie op een van onderstaande wijzen.",
+            "other_new_session_text": "%(name)s%(userId)s heeft zich aangemeld bij een nieuwe sessie zonder deze te verifiëren:",
+            "other_ask_verify_text": "Vraag deze persoon de sessie te verifiëren, of verifieer het handmatig hieronder.",
+            "title": "Niet vertrouwd",
+            "manual_verification_button": "Handmatig verifiëren via tekst",
+            "interactive_verification_button": "Interactief verifiëren door emoji"
+        }
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",
@@ -2872,6 +2846,11 @@
             "continue_without_email_title": "Doorgaan zonder e-mail",
             "continue_without_email_description": "Let op, wanneer je geen e-mailadres toevoegt en je jouw wachtwoord vergeet, kan je <b>toegang tot je account permanent verliezen</b>.",
             "continue_without_email_field_label": "E-mailadres (optioneel)"
+        },
+        "set_email": {
+            "verification_pending_title": "Verificatie in afwachting",
+            "verification_pending_description": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
+            "description": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen."
         }
     },
     "room_list": {
@@ -3200,7 +3179,11 @@
         "leave_dialog_option_none": "Geen kamers verlaten",
         "leave_dialog_option_all": "Alle kamers verlaten",
         "leave_dialog_option_specific": "Sommige kamers verlaten",
-        "leave_dialog_action": "Space verlaten"
+        "leave_dialog_action": "Space verlaten",
+        "preferences": {
+            "sections_section": "Te tonen secties",
+            "show_people_in_space": "Dit groepeert jouw chats met leden van deze space. Als je dit uitschakelt, worden deze chats verborgen voor %(spaceName)s."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
@@ -3490,7 +3473,9 @@
         "identity_server_no_terms_title": "De identiteitsserver heeft geen dienstvoorwaarden",
         "identity_server_no_terms_description_1": "Dit vergt validatie van een e-mailadres of telefoonnummer middels de standaard identiteitsserver <server />, maar die server heeft geen gebruiksvoorwaarden.",
         "identity_server_no_terms_description_2": "Ga enkel verder indien je de eigenaar van de server vertrouwt.",
-        "inline_intro_text": "Aanvaard <policyLink /> om door te gaan:"
+        "inline_intro_text": "Aanvaard <policyLink /> om door te gaan:",
+        "summary_identity_server_1": "Vind anderen via telefoonnummer of e-mailadres",
+        "summary_identity_server_2": "Wees vindbaar via telefoonnummer of e-mailadres"
     },
     "space_settings": {
         "title": "Instellingen - %(spaceName)s"
@@ -3638,7 +3623,10 @@
             "description_1": "Het herstel van je vorige sessie is mislukt.",
             "description_2": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
             "description_3": "Het wissen van de browseropslag zal het probleem misschien verhelpen, maar zal je ook uitloggen en je gehele versleutelde kamergeschiedenis onleesbaar maken."
-        }
+        },
+        "storage_evicted_title": "Sessiegegevens ontbreken",
+        "storage_evicted_description_1": "Sommige sessiegegevens, waaronder sleutels voor versleutelde berichten, ontbreken. Herstel de sleutels uit je back-up door je af- en weer aan te melden.",
+        "storage_evicted_description_2": "Jouw browser heeft deze gegevens wellicht verwijderd toen de beschikbare opslagSpace vol was."
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3976,5 +3964,27 @@
         "remove_filter": "Verwijder zoekfilter voor %(filter)s",
         "search_messages_hint": "Om berichten te zoeken, zoek naar dit icoon bovenaan een kamer <icon/>",
         "keyboard_scroll_hint": "Gebruik <arrows/> om te scrollen"
+    },
+    "share": {
+        "title_room": "Kamer delen",
+        "permalink_most_recent": "Koppeling naar meest recente bericht",
+        "title_user": "Persoon delen",
+        "title_message": "Bericht uit kamer delen",
+        "permalink_message": "Koppeling naar geselecteerd bericht",
+        "link_title": "Link naar kamer"
+    },
+    "upload_file": {
+        "title_progress": "Bestanden versturen (%(current)s van %(total)s)",
+        "title": "Bestanden versturen",
+        "upload_all_button": "Alles versturen",
+        "error_file_too_large": "Dit bestand is <b>te groot</b> om te versturen. Het limiet is %(limit)s en dit bestand is %(sizeOfThisFile)s.",
+        "error_files_too_large": "Deze bestanden zijn <b>te groot</b> om te versturen. De bestandsgroottelimiet is %(limit)s.",
+        "error_some_files_too_large": "Sommige bestanden zijn <b>te groot</b> om te versturen. De bestandsgroottelimiet is %(limit)s.",
+        "upload_n_others_button": {
+            "other": "%(count)s overige bestanden versturen",
+            "one": "%(count)s overig bestand versturen"
+        },
+        "cancel_all_button": "Alles annuleren",
+        "error_title": "Fout bij versturen van bestand"
     }
 }

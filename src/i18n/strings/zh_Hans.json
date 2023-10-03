@@ -1,5 +1,4 @@
 {
-    "Email address": "邮箱地址",
     "Join Room": "加入房间",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "and %(count)s others...": {
@@ -11,10 +10,8 @@
     "not specified": "未指定",
     "unknown error code": "未知错误代码",
     "Warning!": "警告！",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
-    "Verification Pending": "验证等待中",
     "(~%(count)s results)": {
         "one": "（~%(count)s 个结果）",
         "other": "（~%(count)s 个结果）"
@@ -38,7 +35,6 @@
     "Oct": "十月",
     "Nov": "十一月",
     "Dec": "十二月",
-    "This will allow you to reset your password and receive notifications.": "这将允许你重置你的密码和接收通知。",
     "Unnamed room": "未命名的房间",
     "Delete Widget": "删除挂件",
     "collapse": "折叠",
@@ -63,11 +59,6 @@
     "Thursday": "星期四",
     "Yesterday": "昨天",
     "Send Logs": "发送日志",
-    "Share Room Message": "分享房间消息",
-    "Share User": "分享用户",
-    "Share Room": "分享房间",
-    "Link to most recent message": "最新消息的链接",
-    "Link to selected message": "选中消息的链接",
     "No backup found!": "找不到备份！",
     "Unable to restore backup": "无法还原备份",
     "Unable to load backup status": "无法获取备份状态",
@@ -136,11 +127,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s 个会话解密失败！",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：你应此只在受信任的电脑上设置密钥备份。",
-    "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
-    "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s(%(userId)s)登录到未验证的新会话：",
-    "Ask this user to verify their session, or manually verify it below.": "要求此用户验证其会话，或在下面手动进行验证。",
-    "Not Trusted": "不可信任",
     "Your homeserver has exceeded its user limit.": "你的家服务器已超过用户限制。",
     "Your homeserver has exceeded one of its resource limits.": "你的家服务器已超过某项资源限制。",
     "Ok": "确定",
@@ -172,25 +158,6 @@
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
     "a key signature": "一个密钥签名",
-    "Command Help": "命令帮助",
-    "To help us prevent this in future, please <a>send us logs</a>.": "要帮助我们防止其以后发生，请<a>给我们发送日志</a>。",
-    "Missing session data": "缺失会话数据",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "一些会话数据，包括加密消息密钥，已缺失。要修复此问题，登出并重新登录，然后从备份恢复密钥。",
-    "Your browser likely removed this data when running low on disk space.": "你的浏览器可能在磁盘空间不足时删除了此数据。",
-    "Find others by phone or email": "通过电话或邮箱寻找别人",
-    "Be found by phone or email": "通过电话或邮箱被寻找",
-    "Upload files (%(current)s of %(total)s)": "上传文件（%(total)s 中之 %(current)s）",
-    "Upload files": "上传文件",
-    "Upload all": "全部上传",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "此文件<b>过大</b>而不能上传。文件大小限制是 %(limit)s 但此文件为 %(sizeOfThisFile)s。",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "这些文件<b>过大</b>而不能上传。文件大小限制为 %(limit)s。",
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "一些文件<b>过大</b>而不能上传。文件大小限制为 %(limit)s。",
-    "Upload %(count)s other files": {
-        "other": "上传 %(count)s 个别的文件",
-        "one": "上传 %(count)s 个别的文件"
-    },
-    "Cancel All": "全部取消",
-    "Upload Error": "上传错误",
     "Wrong file type": "错误文件类型",
     "Looks good!": "看着不错！",
     "Security Phrase": "安全短语",
@@ -518,9 +485,6 @@
     "Themes": "主题",
     "Moderation": "审核",
     "Messaging": "消息传递",
-    "Link to room": "房间链接",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
-    "Sections to show": "要显示的部分",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "%(count)s participants": {
@@ -556,8 +520,6 @@
     "An error occurred whilst sharing your live location": "分享实时位置时出错",
     "An error occurred while stopping your live location": "停止实时位置时出错",
     "Close sidebar": "关闭侧边栏",
-    "Manually verify by text": "用文本手动验证",
-    "Interactively verify by emoji": "用表情符号交互式验证",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "common": {
         "about": "关于",
@@ -674,7 +636,8 @@
         "joined": "已加入",
         "avatar": "头像",
         "are_you_sure": "你确定吗？",
-        "location": "位置"
+        "location": "位置",
+        "email_address": "邮箱地址"
     },
     "action": {
         "continue": "继续",
@@ -1021,7 +984,8 @@
         "failed_send_logs": "无法发送日志： ",
         "preparing_download": "正在准备下载日志",
         "unsupported_browser": "提醒：你的浏览器不被支持，所以你的体验可能不可预料。",
-        "textarea_label": "提示"
+        "textarea_label": "提示",
+        "log_request": "要帮助我们防止其以后发生，请<a>给我们发送日志</a>。"
     },
     "time": {
         "hours_minutes_seconds_left": "剩余%(hours)s小时%(minutes)s分钟%(seconds)s秒",
@@ -2144,7 +2108,8 @@
         "verify_nop_warning_mismatch": "警告：会话已验证，然而密钥不匹配！",
         "verify_mismatch": "警告：密钥验证失败！%(userId)s 的会话 %(deviceId)s 的签名密钥为 %(fprint)s，与提供的密钥 %(fingerprint)s 不符。这可能表示你的通讯已被截获！",
         "verify_success_title": "已验证的密钥",
-        "verify_success_description": "你提供的签名密钥与你从 %(userId)s 的会话 %(deviceId)s 获取的一致。此会话被标为已验证。"
+        "verify_success_description": "你提供的签名密钥与你从 %(userId)s 的会话 %(deviceId)s 获取的一致。此会话被标为已验证。",
+        "help_dialog_title": "命令帮助"
     },
     "presence": {
         "busy": "忙",
@@ -2646,7 +2611,16 @@
         "key_signature_upload_cancelled": "已取消签名上传",
         "key_signature_upload_failed": "无法上传",
         "key_signature_upload_success_title": "签名上传成功",
-        "key_signature_upload_failed_title": "签名上传失败"
+        "key_signature_upload_failed_title": "签名上传失败",
+        "udd": {
+            "own_new_session_text": "你登录了未经过验证的新会话：",
+            "own_ask_verify_text": "使用以下选项之一验证你的其他会话。",
+            "other_new_session_text": "%(name)s(%(userId)s)登录到未验证的新会话：",
+            "other_ask_verify_text": "要求此用户验证其会话，或在下面手动进行验证。",
+            "title": "不可信任",
+            "manual_verification_button": "用文本手动验证",
+            "interactive_verification_button": "用表情符号交互式验证"
+        }
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -2852,6 +2826,11 @@
             "continue_without_email_title": "不使用电子邮箱并继续",
             "continue_without_email_description": "请注意，如果你不添加电子邮箱并且忘记密码，你将<b>永远失去对你账户的访问权</b>。",
             "continue_without_email_field_label": "电子邮箱（可选）"
+        },
+        "set_email": {
+            "verification_pending_title": "验证等待中",
+            "verification_pending_description": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
+            "description": "这将允许你重置你的密码和接收通知。"
         }
     },
     "room_list": {
@@ -3186,7 +3165,11 @@
         "leave_dialog_option_none": "不离开任何房间",
         "leave_dialog_option_all": "离开所有房间",
         "leave_dialog_option_specific": "离开一些房间",
-        "leave_dialog_action": "离开空间"
+        "leave_dialog_action": "离开空间",
+        "preferences": {
+            "sections_section": "要显示的部分",
+            "show_people_in_space": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。"
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3471,7 +3454,9 @@
         "identity_server_no_terms_title": "身份服务器无服务条款",
         "identity_server_no_terms_description_1": "此操作需要访问默认的身份服务器 <server /> 以验证邮箱或电话号码，但此服务器无任何服务条款。",
         "identity_server_no_terms_description_2": "只有在你信任服务器所有者后才能继续。",
-        "inline_intro_text": "接受 <policyLink /> 以继续："
+        "inline_intro_text": "接受 <policyLink /> 以继续：",
+        "summary_identity_server_1": "通过电话或邮箱寻找别人",
+        "summary_identity_server_2": "通过电话或邮箱被寻找"
     },
     "space_settings": {
         "title": "设置 - %(spaceName)s"
@@ -3626,7 +3611,10 @@
             "description_1": "我们在尝试恢复你先前的会话时遇到了错误。",
             "description_2": "如果你之前使用过较新版本的 %(brand)s，则你的会话可能与当前版本不兼容。请关闭此窗口并使用最新版本。",
             "description_3": "清除本页储存在你浏览器上的数据或许能修复此问题，但也会导致你退出登录并无法读取任何已加密的聊天记录。"
-        }
+        },
+        "storage_evicted_title": "缺失会话数据",
+        "storage_evicted_description_1": "一些会话数据，包括加密消息密钥，已缺失。要修复此问题，登出并重新登录，然后从备份恢复密钥。",
+        "storage_evicted_description_2": "你的浏览器可能在磁盘空间不足时删除了此数据。"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3958,5 +3946,27 @@
         "remove_filter": "移除%(filter)s搜索过滤条件",
         "search_messages_hint": "要搜索消息，请在房间顶部查找此图标<icon/>",
         "keyboard_scroll_hint": "用<arrows/>来滚动"
+    },
+    "share": {
+        "title_room": "分享房间",
+        "permalink_most_recent": "最新消息的链接",
+        "title_user": "分享用户",
+        "title_message": "分享房间消息",
+        "permalink_message": "选中消息的链接",
+        "link_title": "房间链接"
+    },
+    "upload_file": {
+        "title_progress": "上传文件（%(total)s 中之 %(current)s）",
+        "title": "上传文件",
+        "upload_all_button": "全部上传",
+        "error_file_too_large": "此文件<b>过大</b>而不能上传。文件大小限制是 %(limit)s 但此文件为 %(sizeOfThisFile)s。",
+        "error_files_too_large": "这些文件<b>过大</b>而不能上传。文件大小限制为 %(limit)s。",
+        "error_some_files_too_large": "一些文件<b>过大</b>而不能上传。文件大小限制为 %(limit)s。",
+        "upload_n_others_button": {
+            "other": "上传 %(count)s 个别的文件",
+            "one": "上传 %(count)s 个别的文件"
+        },
+        "cancel_all_button": "全部取消",
+        "error_title": "上传错误"
     }
 }

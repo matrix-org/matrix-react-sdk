@@ -322,12 +322,6 @@
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "Send Logs": "ສົ່ງບັນທຶກ",
-    "Link to most recent message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມຫຼ້າສຸດ",
-    "Share Room": "ແບ່ງປັນຫ້ອງ",
-    "This will allow you to reset your password and receive notifications.": "ນີ້ຈະຊ່ວຍໃຫ້ທ່ານສາມາດປັບລະຫັດຜ່ານຂອງທ່ານ ແລະ ໄດ້ຮັບການແຈ້ງເຕືອນ.",
-    "Email address": "ທີ່ຢູ່ອີເມວ",
-    "Please check your email and click on the link it contains. Once this is done, click continue.": "ກະລຸນາກວດເບິ່ງອີເມວຂອງທ່ານ ແລະ ກົດໃສ່ການເຊື່ອມຕໍ່. ເມື່ອສຳເລັດແລ້ວ, ກົດສືບຕໍ່.",
-    "Verification Pending": "ຢູ່ລະຫວ່າງການຢັ້ງຢືນ",
     "Not encrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
     "e.g. my-room": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ",
@@ -399,32 +393,6 @@
     "Wrong Security Key": "ກະແຈຄວາມປອດໄພບໍ່ຖຶກຕ້ອງ",
     "Looks good!": "ດີ!",
     "Wrong file type": "ປະເພດໄຟລ໌ບໍ່ຖຶກຕ້ອງ",
-    "Upload Error": "ອັບໂຫຼດຜິດພາດ",
-    "Cancel All": "ຍົກເລີກທັງໝົດ",
-    "Upload %(count)s other files": {
-        "one": "ອັບໂຫຼດ %(count)s ໄຟລ໌ອື່ນ",
-        "other": "ອັບໂຫຼດ %(count)s ໄຟລ໌ອື່ນໆ"
-    },
-    "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "ບາງໄຟລ໌ <b>ໃຫຍ່ເກີນໄປ</b> ທີ່ຈະອັບໂຫລດໄດ້. ຂີດຈຳກັດຂະໜາດໄຟລ໌ແມ່ນ %(limit)s.",
-    "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "ໄຟລ໌ເຫຼົ່ານີ້ <b>ໃຫຍ່ເກີນໄປ</b> ທີ່ຈະອັບໂຫລດ. ຂີດຈຳກັດຂະໜາດໄຟລ໌ແມ່ນ %(limit)s.",
-    "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "ໄຟລ໌ນີ້ <b>ໃຫຍ່ເກີນໄປ</b> ທີ່ຈະອັບໂຫລດໄດ້. ຂະໜາດໄຟລ໌ຈຳກັດ%(limit)s ແຕ່ໄຟລ໌ນີ້ແມ່ນ %(sizeOfThisFile)s.",
-    "Upload all": "ອັບໂຫຼດທັງໝົດ",
-    "Upload files": "ອັບໂຫຼດໄຟລ໌",
-    "Upload files (%(current)s of %(total)s)": "ອັບໂຫຼດໄຟລ໌%(current)sຂອງ%(total)s",
-    "Not Trusted": "ເຊື່ອຖືບໍ່ໄດ້",
-    "Ask this user to verify their session, or manually verify it below.": "ຂໍໃຫ້ຜູ້ໃຊ້ນີ້ກວດສອບລະບົບຂອງເຂົາເຈົ້າ, ຫຼື ຢືນຢັນດ້ວຍຕົນເອງຂ້າງລຸ່ມນີ້.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) ເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
-    "Verify your other session using one of the options below.": "ຢືນຢັນລະບົບອື່ນຂອງທ່ານໂດຍໃຊ້ໜຶ່ງໃນຕົວເລືອກຂ້າງລຸ່ມນີ້.",
-    "You signed in to a new session without verifying it:": "ທ່ານເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
-    "Be found by phone or email": "ພົບເຫັນທາງໂທລະສັບ ຫຼື ອີເມລ໌",
-    "Find others by phone or email": "ຊອກຫາຄົນອື່ນທາງໂທລະສັບ ຫຼື ອີເມລ໌",
-    "Your browser likely removed this data when running low on disk space.": "ບຣາວເຊີຂອງທ່ານອາດຈະລຶບຂໍ້ມູນນີ້ອອກເມື່ອພື້ນທີ່ດິສກ໌ເຫຼືອໜ້ອຍ.",
-    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "ບາງຂໍ້ມູນໃນລະບົບ, ລວມທັງກະແຈຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ, ຫາຍໄປ. ອອກຈາກລະບົບ ແລະ ເຂົ້າສູ່ລະບົບເພື່ອແກ້ໄຂສິ່ງນີ້, ການກູ້ຄືນກະແຈຈາກການສໍາຮອງຂໍ້ມູນ.",
-    "Missing session data": "ບໍ່ມີຂໍ້ມູນໃນລະບົບ",
-    "To help us prevent this in future, please <a>send us logs</a>.": "ເພື່ອຊ່ວຍພວກເຮົາປ້ອງກັນສິ່ງນີ້ໃນອະນາຄົດ, ກະລຸນາ <a>ສົ່ງບັນທຶກໃຫ້ພວກເຮົາ</a>.",
-    "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "ຈັດກຸ່ມການສົນທະນາຂອງທ່ານກັບສະມາຊິກຂອງຊ່ອງນີ້. ການປິດອັນນີ້ຈະເຊື່ອງການສົນທະນາເຫຼົ່ານັ້ນຈາກການເບິ່ງເຫັນ %(spaceName)s ຂອງທ່ານ.",
-    "Sections to show": "ພາກສ່ວນທີ່ຈະສະແດງ",
-    "Command Help": "ຄໍາສັ່ງຊ່ວຍເຫຼືອ",
     "a new master key signature": "ລາຍເຊັນຫຼັກອັນໃໝ່",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
     "An error occurred while stopping your live location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
@@ -521,10 +489,6 @@
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
-    "Link to room": "ເຊື່ອມຕໍ່ທີ່ຫ້ອງ",
-    "Link to selected message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມທີ່ເລືອກ",
-    "Share Room Message": "ແບ່ງປັນຂໍ້ຄວາມໃນຫ້ອງ",
-    "Share User": "ແບ່ງປັນຜູ້ໃຊ້",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -658,7 +622,8 @@
         "joined": "ເຂົ້າຮ່ວມແລ້ວ",
         "avatar": "ຮູບແທນຕົວ",
         "are_you_sure": "ທ່ານແນ່ໃຈບໍ່?",
-        "location": "ສະຖານທີ່"
+        "location": "ສະຖານທີ່",
+        "email_address": "ທີ່ຢູ່ອີເມວ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -963,7 +928,8 @@
         "failed_send_logs": "ສົ່ງບັນທຶກບໍ່ສຳເລັດ: ",
         "preparing_download": "ກຳລັງກະກຽມດາວໂຫຼດບັນທຶກ",
         "unsupported_browser": "ແຈ້ງເຕືອນ: ບຼາວເຊີຂອງທ່ານບໍ່ຮອງຮັບ, ດັ່ງນັ້ນປະສົບການຂອງທ່ານຈຶ່ງຄາດເດົາບໍ່ໄດ້.",
-        "textarea_label": "ບັນທຶກ"
+        "textarea_label": "ບັນທຶກ",
+        "log_request": "ເພື່ອຊ່ວຍພວກເຮົາປ້ອງກັນສິ່ງນີ້ໃນອະນາຄົດ, ກະລຸນາ <a>ສົ່ງບັນທຶກໃຫ້ພວກເຮົາ</a>."
     },
     "time": {
         "seconds_left": "ຍັງເຫຼືອ %(seconds)s",
@@ -1965,7 +1931,8 @@
         "verify_nop": "ການຢັ້ງຢືນລະບົບແລ້ວ!",
         "verify_mismatch": "ຄຳເຕືອນ: ການຢືນຢັນບໍ່ສຳເລັັດ! ປຸ່ມເຊັນຊື່ສຳລັບ %(userId)s ແລະ ລະບົບ %(deviceId)s ແມ່ນ \"%(fprint)s\" ບໍ່ກົງກັບລະຫັດທີ່ລະບຸໄວ້ \"%(fingerprint)s\". ນີ້ອາດຈະຫມາຍຄວາມວ່າການສື່ສານຂອງທ່ານຖືກຂັດຂວາງ!",
         "verify_success_title": "ກະແຈທີ່ຢືນຢັນແລ້ວ",
-        "verify_success_description": "ກະແຈໄຂລະຫັດທີ່ທ່ານໃຊ້ກົງກັບກະແຈໄຂລະຫັດທີ່ທ່ານໄດ້ຮັບຈາກ %(userId)s ເທິງອຸປະກອນ %(deviceId)s. ລະບົບຢັ້ງຢືນສຳເລັດແລ້ວ."
+        "verify_success_description": "ກະແຈໄຂລະຫັດທີ່ທ່ານໃຊ້ກົງກັບກະແຈໄຂລະຫັດທີ່ທ່ານໄດ້ຮັບຈາກ %(userId)s ເທິງອຸປະກອນ %(deviceId)s. ລະບົບຢັ້ງຢືນສຳເລັດແລ້ວ.",
+        "help_dialog_title": "ຄໍາສັ່ງຊ່ວຍເຫຼືອ"
     },
     "presence": {
         "busy": "ບໍ່ຫວ່າງ",
@@ -2441,7 +2408,14 @@
         "key_signature_upload_cancelled": "ຍົກເລີກການອັບໂຫລດລາຍເຊັນແລ້ວ",
         "key_signature_upload_failed": "ບໍ່ສາມາດອັບໂຫລດໄດ້",
         "key_signature_upload_success_title": "ສຳເລັດການອັບໂຫລດລາຍເຊັນ",
-        "key_signature_upload_failed_title": "ການອັບໂຫລດລາຍເຊັນບໍ່ສຳເລັດ"
+        "key_signature_upload_failed_title": "ການອັບໂຫລດລາຍເຊັນບໍ່ສຳເລັດ",
+        "udd": {
+            "own_new_session_text": "ທ່ານເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
+            "own_ask_verify_text": "ຢືນຢັນລະບົບອື່ນຂອງທ່ານໂດຍໃຊ້ໜຶ່ງໃນຕົວເລືອກຂ້າງລຸ່ມນີ້.",
+            "other_new_session_text": "%(name)s (%(userId)s) ເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
+            "other_ask_verify_text": "ຂໍໃຫ້ຜູ້ໃຊ້ນີ້ກວດສອບລະບົບຂອງເຂົາເຈົ້າ, ຫຼື ຢືນຢັນດ້ວຍຕົນເອງຂ້າງລຸ່ມນີ້.",
+            "title": "ເຊື່ອຖືບໍ່ໄດ້"
+        }
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -2645,6 +2619,11 @@
             "continue_without_email_title": "ສືບຕໍ່ໂດຍບໍ່ມີອີເມວ",
             "continue_without_email_description": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
             "continue_without_email_field_label": "ອີເມວ (ທາງເລືອກ)"
+        },
+        "set_email": {
+            "verification_pending_title": "ຢູ່ລະຫວ່າງການຢັ້ງຢືນ",
+            "verification_pending_description": "ກະລຸນາກວດເບິ່ງອີເມວຂອງທ່ານ ແລະ ກົດໃສ່ການເຊື່ອມຕໍ່. ເມື່ອສຳເລັດແລ້ວ, ກົດສືບຕໍ່.",
+            "description": "ນີ້ຈະຊ່ວຍໃຫ້ທ່ານສາມາດປັບລະຫັດຜ່ານຂອງທ່ານ ແລະ ໄດ້ຮັບການແຈ້ງເຕືອນ."
         }
     },
     "room_list": {
@@ -2965,7 +2944,11 @@
         "leave_dialog_option_none": "ຢ່າອອກຈາກຫ້ອງ",
         "leave_dialog_option_all": "ອອກຈາກຫ້ອງທັງຫມົດ",
         "leave_dialog_option_specific": "ອອກຈາກບາງຫ້ອງ",
-        "leave_dialog_action": "ອອກຈາກພື້ນທີ່"
+        "leave_dialog_action": "ອອກຈາກພື້ນທີ່",
+        "preferences": {
+            "sections_section": "ພາກສ່ວນທີ່ຈະສະແດງ",
+            "show_people_in_space": "ຈັດກຸ່ມການສົນທະນາຂອງທ່ານກັບສະມາຊິກຂອງຊ່ອງນີ້. ການປິດອັນນີ້ຈະເຊື່ອງການສົນທະນາເຫຼົ່ານັ້ນຈາກການເບິ່ງເຫັນ %(spaceName)s ຂອງທ່ານ."
+        }
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3237,7 +3220,9 @@
         "identity_server_no_terms_title": "ຂໍ້ມູນເຊີບເວີ ບໍ່ມີໃຫ້ບໍລິການ",
         "identity_server_no_terms_description_1": "ການດຳເນິນການນີ້ຕ້ອງໄດ້ມີການເຂົ້າເຖິງຂໍ້ມູນການຢັ້ງຢືນຕົວຕົນທີ່ <server /> ເພື່ອກວດສອບອີເມວ ຫຼື ເບີໂທລະສັບ, ແຕ່ເຊີບເວີບໍ່ມີເງື່ອນໄຂໃນບໍລິການໃດໆ.",
         "identity_server_no_terms_description_2": "ຖ້າທ່ານໄວ້ວາງໃຈເຈົ້າຂອງເຊີບເວີດັ່ງກ່າວແລ້ວ ໃຫ້ສືບຕໍ່.",
-        "inline_intro_text": "ຍອມຮັບ <policyLink /> ເພື່ອສືບຕໍ່:"
+        "inline_intro_text": "ຍອມຮັບ <policyLink /> ເພື່ອສືບຕໍ່:",
+        "summary_identity_server_1": "ຊອກຫາຄົນອື່ນທາງໂທລະສັບ ຫຼື ອີເມລ໌",
+        "summary_identity_server_2": "ພົບເຫັນທາງໂທລະສັບ ຫຼື ອີເມລ໌"
     },
     "space_settings": {
         "title": "ການຕັ້ງຄ່າ - %(spaceName)s"
@@ -3374,7 +3359,10 @@
             "description_1": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
             "description_2": "ຖ້າຫາກວ່າທ່ານເຄິຍໃຊ້ເວີຊັ້ນທີ່ໃໝ່ກວ່າຂອງ %(brand)s,ລະບົບຂອງທ່ານອາດຈະບໍ່ສອດຄ່ອງກັນໄດ້ກັບເວີຊັ້ນນີ້. ປິດໜ້າຕ່າງນີ້ແລ້ວກັບຄືນໄປຫາເວີຊັ້ນຫຼ້າສຸດ.",
             "description_3": "ການລຶບລ້າງພື້ນທີ່ຈັດເກັບຂໍ້ມູນຂອງບຣາວເຊີຂອງທ່ານອາດຈະແກ້ໄຂບັນຫາໄດ້, ແຕ່ຈະເຮັດໃຫ້ທ່ານອອກຈາກລະບົບ ແລະ ເຮັດໃຫ້ປະຫວັດການສົນທະນາທີ່ເຂົ້າລະຫັດໄວ້ນັ້ນບໍ່ສາມາດອ່ານໄດ້."
-        }
+        },
+        "storage_evicted_title": "ບໍ່ມີຂໍ້ມູນໃນລະບົບ",
+        "storage_evicted_description_1": "ບາງຂໍ້ມູນໃນລະບົບ, ລວມທັງກະແຈຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ, ຫາຍໄປ. ອອກຈາກລະບົບ ແລະ ເຂົ້າສູ່ລະບົບເພື່ອແກ້ໄຂສິ່ງນີ້, ການກູ້ຄືນກະແຈຈາກການສໍາຮອງຂໍ້ມູນ.",
+        "storage_evicted_description_2": "ບຣາວເຊີຂອງທ່ານອາດຈະລຶບຂໍ້ມູນນີ້ອອກເມື່ອພື້ນທີ່ດິສກ໌ເຫຼືອໜ້ອຍ."
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3686,5 +3674,27 @@
         "search_dialog": "ຊອກຫາ ກ່ອງໂຕ້ຕອບ",
         "search_messages_hint": "ເພື່ອຊອກຫາຂໍ້ຄວາມ, ຊອກຫາໄອຄອນນີ້ຢູ່ເທິງສຸດຂອງຫ້ອງ <icon/>",
         "keyboard_scroll_hint": "ໃຊ້ <arrows/> ເພື່ອເລື່ອນ"
+    },
+    "share": {
+        "title_room": "ແບ່ງປັນຫ້ອງ",
+        "permalink_most_recent": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມຫຼ້າສຸດ",
+        "title_user": "ແບ່ງປັນຜູ້ໃຊ້",
+        "title_message": "ແບ່ງປັນຂໍ້ຄວາມໃນຫ້ອງ",
+        "permalink_message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມທີ່ເລືອກ",
+        "link_title": "ເຊື່ອມຕໍ່ທີ່ຫ້ອງ"
+    },
+    "upload_file": {
+        "title_progress": "ອັບໂຫຼດໄຟລ໌%(current)sຂອງ%(total)s",
+        "title": "ອັບໂຫຼດໄຟລ໌",
+        "upload_all_button": "ອັບໂຫຼດທັງໝົດ",
+        "error_file_too_large": "ໄຟລ໌ນີ້ <b>ໃຫຍ່ເກີນໄປ</b> ທີ່ຈະອັບໂຫລດໄດ້. ຂະໜາດໄຟລ໌ຈຳກັດ%(limit)s ແຕ່ໄຟລ໌ນີ້ແມ່ນ %(sizeOfThisFile)s.",
+        "error_files_too_large": "ໄຟລ໌ເຫຼົ່ານີ້ <b>ໃຫຍ່ເກີນໄປ</b> ທີ່ຈະອັບໂຫລດ. ຂີດຈຳກັດຂະໜາດໄຟລ໌ແມ່ນ %(limit)s.",
+        "error_some_files_too_large": "ບາງໄຟລ໌ <b>ໃຫຍ່ເກີນໄປ</b> ທີ່ຈະອັບໂຫລດໄດ້. ຂີດຈຳກັດຂະໜາດໄຟລ໌ແມ່ນ %(limit)s.",
+        "upload_n_others_button": {
+            "one": "ອັບໂຫຼດ %(count)s ໄຟລ໌ອື່ນ",
+            "other": "ອັບໂຫຼດ %(count)s ໄຟລ໌ອື່ນໆ"
+        },
+        "cancel_all_button": "ຍົກເລີກທັງໝົດ",
+        "error_title": "ອັບໂຫຼດຜິດພາດ"
     }
 }

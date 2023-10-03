@@ -26,11 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s، ‏%(day)s %(monthName)s %(fullYear)s ‏%(time)s",
     "Restricted": "مقيد",
     "Moderator": "مشرف",
-    "You signed in to a new session without verifying it:": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
-    "Verify your other session using one of the options below.": "أكِّد جلستك الأخرى باستخدام أحد الخيارات أدناه.",
-    "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
-    "Ask this user to verify their session, or manually verify it below.": "اطلب من هذا المستخدم التحقُّق من جلسته أو تحقَّق منها يدويًّا أدناه.",
-    "Not Trusted": "غير موثوقة",
     "expand": "توسيع",
     "collapse": "تضييق",
     "Submit logs": "إرسال السجلات",
@@ -1095,7 +1090,14 @@
         "cross_signing_room_warning": "شخص ما يستخدم اتصالاً غير معروف",
         "cross_signing_room_verified": "تم التحقق من جميع من في هذه الغرفة",
         "cross_signing_room_normal": "هذه الغرفة مشفرة من طرف إلى طرف",
-        "unsupported": "لا يدعم هذا العميل التشفير من طرف إلى طرف."
+        "unsupported": "لا يدعم هذا العميل التشفير من طرف إلى طرف.",
+        "udd": {
+            "own_new_session_text": "قمت بتسجيل الدخول لجلسة جديدة من غير التحقق منها:",
+            "own_ask_verify_text": "أكِّد جلستك الأخرى باستخدام أحد الخيارات أدناه.",
+            "other_new_session_text": "%(name)s%(userId)s تم تسجيل الدخول لجلسة جديدة من غير التحقق منها:",
+            "other_ask_verify_text": "اطلب من هذا المستخدم التحقُّق من جلسته أو تحقَّق منها يدويًّا أدناه.",
+            "title": "غير موثوقة"
+        }
     },
     "emoji": {
         "category_frequently_used": "كثيرة الاستعمال",
