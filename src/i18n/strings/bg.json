@@ -59,10 +59,6 @@
     "Yesterday": "Вчера",
     "Send Logs": "Изпрати логове",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Преди да изпратите логове, трябва да <a>отворите доклад за проблем в Github</a>.",
-    "Unable to load backup status": "Неуспешно зареждане на състоянието на резервното копие",
-    "Unable to restore backup": "Неуспешно възстановяване на резервно копие",
-    "No backup found!": "Не е открито резервно копие!",
-    "Failed to decrypt %(failedCount)s sessions!": "Неуспешно разшифроване на %(failedCount)s сесии!",
     "Dog": "Куче",
     "Cat": "Котка",
     "Lion": "Лъв",
@@ -124,7 +120,6 @@
     "Anchor": "Котва",
     "Headphones": "Слушалки",
     "Folder": "Папка",
-    "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
     "edited": "редактирано",
     "Deactivate account": "Деактивиране на акаунт",
@@ -161,8 +156,6 @@
     "Ok": "Добре",
     "Restoring keys from backup": "Възстановяване на ключове от резервно копие",
     "%(completed)s of %(total)s keys restored": "%(completed)s от %(total)s ключа са възстановени",
-    "Keys restored": "Ключовете бяха възстановени",
-    "Successfully restored %(sessionCount)s keys": "Успешно бяха възстановени %(sessionCount)s ключа",
     "Sign in with SSO": "Влезте със SSO",
     "Switch theme": "Смени темата",
     "Confirm encryption setup": "Потвърждение на настройки за шифроване",
@@ -2458,5 +2451,14 @@
         },
         "cancel_all_button": "Откажи всички",
         "error_title": "Грешка при качване"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Неуспешно зареждане на състоянието на резервното копие",
+        "restore_failed_error": "Неуспешно възстановяване на резервно копие",
+        "no_backup_error": "Не е открито резервно копие!",
+        "keys_restored_title": "Ключовете бяха възстановени",
+        "count_of_decryption_failures": "Неуспешно разшифроване на %(failedCount)s сесии!",
+        "count_of_successfully_restored_keys": "Успешно бяха възстановени %(sessionCount)s ключа",
+        "key_backup_warning": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър."
     }
 }

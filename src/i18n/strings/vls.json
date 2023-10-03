@@ -120,11 +120,6 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Send Logs": "Logboek verstuurn",
-    "Unable to load backup status": "Kostege back-upstatus nie loadn",
-    "Unable to restore backup": "Kostege back-up nie herstelln",
-    "No backup found!": "Geen back-up gevoundn!",
-    "Failed to decrypt %(failedCount)s sessions!": "Ountsleutern van %(failedCount)s sessies is mislukt!",
-    "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer.",
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
     "Deactivate account": "Account deactiveern",
@@ -1271,5 +1266,12 @@
         },
         "cancel_all_button": "Alles annuleern",
         "error_title": "Iploadfout"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Kostege back-upstatus nie loadn",
+        "restore_failed_error": "Kostege back-up nie herstelln",
+        "no_backup_error": "Geen back-up gevoundn!",
+        "count_of_decryption_failures": "Ountsleutern van %(failedCount)s sessies is mislukt!",
+        "key_backup_warning": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer."
     }
 }

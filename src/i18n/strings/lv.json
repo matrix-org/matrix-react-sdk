@@ -67,13 +67,10 @@
         "other": "%(count)s sesijas"
     },
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
-    "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
-    "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
     "Banana": "Banāns",
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
-    "Incorrect Security Phrase": "Nepareiza slepenā frāze",
     "Security Phrase": "Slepenā frāze",
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
@@ -84,8 +81,6 @@
     "e.g. my-room": "piem., mana-istaba",
     "Flag": "Karogs",
     "Use your Security Key to continue.": "Izmantojiet savu drošības atslēgu, lai turpinātu.",
-    "Enter Security Key": "Ievadiet drošības atslēgu",
-    "Security Key mismatch": "Drošības atslēgas atšķiras",
     "Invalid Security Key": "Kļūdaina drošības atslēga",
     "Wrong Security Key": "Nepareiza drošības atslēga",
     "Security Key": "Drošības atslēga",
@@ -2172,5 +2167,12 @@
             "other": "Augšupielādēt %(count)s citus failus"
         },
         "cancel_all_button": "Atcelt visu"
+    },
+    "restore_key_backup_dialog": {
+        "recovery_key_mismatch_title": "Drošības atslēgas atšķiras",
+        "incorrect_security_phrase_title": "Nepareiza slepenā frāze",
+        "phrase_forgotten_text": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
+        "enter_key_title": "Ievadiet drošības atslēgu",
+        "key_forgotten_text": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>"
     }
 }

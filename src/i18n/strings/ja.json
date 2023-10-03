@@ -415,12 +415,6 @@
         "one": "%(count)s人",
         "other": "%(count)s人"
     },
-    "Enter Security Key": "セキュリティーキーを入力",
-    "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：信頼済のコンピューターからのみ鍵のバックアップを設定してください。",
-    "Successfully restored %(sessionCount)s keys": "%(sessionCount)s個の鍵が復元されました",
-    "Keys restored": "鍵が復元されました",
-    "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "このセキュリティーキーではバックアップを復号化できませんでした。正しいセキュリティーキーを入力したことを確認してください。",
-    "Security Key mismatch": "セキュリティーキーが一致しません",
     "%(completed)s of %(total)s keys restored": "計%(total)s個のうち%(completed)s個の鍵が復元されました",
     "Restoring keys from backup": "バックアップから鍵を復元",
     "Unable to set up keys": "鍵を設定できません",
@@ -439,16 +433,8 @@
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
     },
-    "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Messaging": "メッセージ",
-    "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s個のセッションの復号化に失敗しました！",
-    "No backup found!": "バックアップがありません！",
-    "Unable to restore backup": "バックアップを復元できません",
-    "Unable to load backup status": "バックアップの状態を読み込めません",
     "Forget": "消去",
-    "Not a valid Security Key": "セキュリティーキーが正しくありません",
-    "This looks like a valid Security Key!": "正しいセキュリティーキーです！",
-    "Enter Security Phrase": "セキュリティーフレーズを入力",
     "Click the button below to confirm setting up encryption.": "以下のボタンをクリックして、暗号化の設定を承認してください。",
     "Confirm encryption setup": "暗号化の設定を承認してください",
     "Security Phrase": "セキュリティーフレーズ",
@@ -463,17 +449,12 @@
         "other": "%(count)s件の返信",
         "one": "%(count)s件の返信"
     },
-    "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
-    "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます",
     "Wrong file type": "正しくないファイルの種類",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "機密ストレージにアクセスできません。正しいセキュリティーフレーズを入力したことを確認してください。",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "toggle event": "イベントを切り替える",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "アカウントにアクセスし、このセッションに保存されている暗号鍵を復元してください。暗号鍵がなければ、どのセッションの暗号化されたメッセージも読めなくなります。",
     "a new master key signature": "新しいマスターキーの署名",
-    "Access your secure message history and set up secure messaging by entering your Security Key.": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーキーを入力してください。",
-    "Access your secure message history and set up secure messaging by entering your Security Phrase.": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーフレーズを入力してください。",
-    "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "セキュリティーフレーズを紛失した場合は、<button1>セキュリティーキーを使用</button1>するか、<button2>新しい復旧用の手段</button2>を設定することができます",
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
         "other": "%(count)s人の知人が既に参加しています"
@@ -498,7 +479,6 @@
     "%(members)s and more": "%(members)s人とその他のメンバー",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong>内で",
     "You cannot search for rooms that are neither a room nor a space": "ルームまたはスペースではないルームを探すことはできません",
-    "Fetching keys from server…": "鍵をサーバーから取得しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "common": {
         "about": "概要",
@@ -4191,5 +4171,27 @@
         },
         "cancel_all_button": "全てキャンセル",
         "error_title": "アップロードエラー"
+    },
+    "restore_key_backup_dialog": {
+        "key_fetch_in_progress": "鍵をサーバーから取得しています…",
+        "load_error_content": "バックアップの状態を読み込めません",
+        "recovery_key_mismatch_title": "セキュリティーキーが一致しません",
+        "recovery_key_mismatch_description": "このセキュリティーキーではバックアップを復号化できませんでした。正しいセキュリティーキーを入力したことを確認してください。",
+        "incorrect_security_phrase_title": "セキュリティーフレーズが正しくありません",
+        "incorrect_security_phrase_dialog": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
+        "restore_failed_error": "バックアップを復元できません",
+        "no_backup_error": "バックアップがありません！",
+        "keys_restored_title": "鍵が復元されました",
+        "count_of_decryption_failures": "%(failedCount)s個のセッションの復号化に失敗しました！",
+        "count_of_successfully_restored_keys": "%(sessionCount)s個の鍵が復元されました",
+        "enter_phrase_title": "セキュリティーフレーズを入力",
+        "key_backup_warning": "<b>警告</b>：信頼済のコンピューターからのみ鍵のバックアップを設定してください。",
+        "enter_phrase_description": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーフレーズを入力してください。",
+        "phrase_forgotten_text": "セキュリティーフレーズを紛失した場合は、<button1>セキュリティーキーを使用</button1>するか、<button2>新しい復旧用の手段</button2>を設定することができます",
+        "enter_key_title": "セキュリティーキーを入力",
+        "key_is_valid": "正しいセキュリティーキーです！",
+        "key_is_invalid": "セキュリティーキーが正しくありません",
+        "enter_key_description": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーキーを入力してください。",
+        "key_forgotten_text": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます"
     }
 }

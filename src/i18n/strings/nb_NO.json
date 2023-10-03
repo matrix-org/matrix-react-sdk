@@ -103,7 +103,6 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "No backup found!": "Ingen sikkerhetskopier ble funnet!",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Warning!": "Advarsel!",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
@@ -129,7 +128,6 @@
     "Send Logs": "Send loggbøker",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "Keys restored": "Nøklene ble gjenopprettet",
     "Switch theme": "Bytt tema",
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "Lock": "Lås",
@@ -146,9 +144,6 @@
     "Indonesia": "Indonesia",
     "Iran": "Iran",
     "India": "India",
-    "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "Sikkerhetskopien kunne ikke dekrypteres med denne sikkerhetsnøkkelen: Vennligst verifiser at du tastet korrekt sikkerhetsnøkkel.",
-    "Security Key mismatch": "Sikkerhetsnøkkel uoverensstemmelse",
-    "Unable to load backup status": "Klarte ikke å laste sikkerhetskopi-status",
     "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nøkler gjenopprettet",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
@@ -196,12 +191,10 @@
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du kjenner har allerede blitt med"
     },
-    "Enter Security Key": "Skriv inn sikkerhetsnøkkel",
     "Germany": "Tyskland",
     "Malta": "Malta",
     "Uruguay": "Uruguay",
     "Security Phrase": "Sikkerhetsfrase",
-    "Enter Security Phrase": "Skriv inn sikkerhetsfrase",
     "Security Key": "Sikkerhetsnøkkel",
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
@@ -1909,5 +1902,14 @@
         },
         "cancel_all_button": "Avbryt alt",
         "error_title": "Opplastingsfeil"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Klarte ikke å laste sikkerhetskopi-status",
+        "recovery_key_mismatch_title": "Sikkerhetsnøkkel uoverensstemmelse",
+        "recovery_key_mismatch_description": "Sikkerhetskopien kunne ikke dekrypteres med denne sikkerhetsnøkkelen: Vennligst verifiser at du tastet korrekt sikkerhetsnøkkel.",
+        "no_backup_error": "Ingen sikkerhetskopier ble funnet!",
+        "keys_restored_title": "Nøklene ble gjenopprettet",
+        "enter_phrase_title": "Skriv inn sikkerhetsfrase",
+        "enter_key_title": "Skriv inn sikkerhetsnøkkel"
     }
 }

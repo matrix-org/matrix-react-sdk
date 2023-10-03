@@ -111,8 +111,6 @@
     "e.g. my-room": "e.g. taxxamt-inu",
     "Send Logs": "Azen iɣmisen",
     "Use your Security Key to continue.": "Seqdec tasarut-ik·im n tɣellist akken ad tkemmleḍ.",
-    "Unable to restore backup": "Tiririt n uḥraz tugi ad teddu",
-    "Keys restored": "Tisura ttwaskelsent",
     "Sign in with SSO": "Anekcum s SSO",
     "Switch theme": "Abeddel n usentel",
     "Unicorn": "Azara",
@@ -156,17 +154,12 @@
     "Security Phrase": "Tafyirt n tɣellist",
     "Restoring keys from backup": "Tiririt n tsura seg uḥraz",
     "%(completed)s of %(total)s keys restored": "%(completed)s n %(total)s tsura i yettwarran",
-    "Unable to load backup status": "Yegguma ad d-yali waddad n uḥraz",
-    "No backup found!": "Ulac aḥraz yettwafen!",
-    "Failed to decrypt %(failedCount)s sessions!": "Tukksa n uwgelhen n tɣimiyin %(failedCount)s ur yeddi ara!",
-    "Successfully restored %(sessionCount)s keys": "Tiririt n tsura n %(sessionCount)s yedda akken iwata",
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
     "Failed to connect to integration manager": "Tuqqna ɣer umsefrak n umsidef ur yeddi ara",
     "Wrong file type": "Anaw n yifuyla d arameɣtu",
     "Looks good!": "Yettban igerrez!",
-    "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
@@ -2328,5 +2321,14 @@
         },
         "cancel_all_button": "Sefsex kullec",
         "error_title": "Tuccḍa deg usali"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Yegguma ad d-yali waddad n uḥraz",
+        "restore_failed_error": "Tiririt n uḥraz tugi ad teddu",
+        "no_backup_error": "Ulac aḥraz yettwafen!",
+        "keys_restored_title": "Tisura ttwaskelsent",
+        "count_of_decryption_failures": "Tukksa n uwgelhen n tɣimiyin %(failedCount)s ur yeddi ara!",
+        "count_of_successfully_restored_keys": "Tiririt n tsura n %(sessionCount)s yedda akken iwata",
+        "key_backup_warning": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ."
     }
 }

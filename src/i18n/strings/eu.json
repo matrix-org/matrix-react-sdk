@@ -59,10 +59,6 @@
     "Yesterday": "Atzo",
     "Send Logs": "Bidali egunkariak",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko.",
-    "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
-    "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
-    "No backup found!": "Ez da babes-kopiarik aurkitu!",
-    "Failed to decrypt %(failedCount)s sessions!": "Ezin izan dira %(failedCount)s saio deszifratu!",
     "Dog": "Txakurra",
     "Cat": "Katua",
     "Lion": "Lehoia",
@@ -124,7 +120,6 @@
     "Thumbs up": "Ederto",
     "Hourglass": "Harea-erlojua",
     "Paperclip": "Klipa",
-    "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
     "edited": "editatua",
     "Deactivate account": "Desaktibatu kontua",
@@ -159,8 +154,6 @@
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
     "Restoring keys from backup": "Gakoak babes-kopiatik berrezartzen",
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s gako berreskuratuta",
-    "Keys restored": "Gakoak berreskuratuta",
-    "Successfully restored %(sessionCount)s keys": "%(sessionCount)s gako ongi berreskuratuta",
     "Confirm encryption setup": "Berretsi zifratze ezarpena",
     "Click the button below to confirm setting up encryption.": "Sakatu azpiko botoia zifratze-ezarpena berresteko.",
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
@@ -1944,5 +1937,14 @@
         },
         "cancel_all_button": "Ezeztatu dena",
         "error_title": "Igoera errorea"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Ezin izan da babes-kopiaren egoera kargatu",
+        "restore_failed_error": "Ezin izan da babes-kopia berrezarri",
+        "no_backup_error": "Ez da babes-kopiarik aurkitu!",
+        "keys_restored_title": "Gakoak berreskuratuta",
+        "count_of_decryption_failures": "Ezin izan dira %(failedCount)s saio deszifratu!",
+        "count_of_successfully_restored_keys": "%(sessionCount)s gako ongi berreskuratuta",
+        "key_backup_warning": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti."
     }
 }

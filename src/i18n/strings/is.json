@@ -403,10 +403,6 @@
     "Strawberry": "Jarðarber",
     "Spanner": "Skrúflykill",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
-    "Not a valid Security Key": "Ekki gildur öryggislykill",
-    "This looks like a valid Security Key!": "Þetta lítur út eins og gildur öryggislykill!",
-    "Enter Security Key": "Settu inn öryggislykil",
-    "Security Key mismatch": "Misræmi í öryggislyklum",
     "Use your Security Key to continue.": "Notaðu öryggislykilinn þinn til að halda áfram.",
     "Security Key": "Öryggislykill",
     "Invalid Security Key": "Ógildur öryggislykill",
@@ -433,7 +429,6 @@
         "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
     },
     "<inviter/> invites you": "<inviter/> býður þér",
-    "Enter Security Phrase": "Settu inn öryggisfrasa",
     "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
     "Confirm encryption setup": "Staðfestu uppsetningu dulritunar",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
@@ -445,22 +440,16 @@
         "other": "%(count)s svör"
     },
     "Security Phrase": "Öryggisfrasi",
-    "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
     "toggle event": "víxla atburði af/á",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
     "Wrong file type": "Röng skráartegund",
     "Submit logs": "Senda inn atvikaskrár",
-    "Keys restored": "Dulritunarlyklar endurheimtir",
-    "No backup found!": "Ekkert öryggisafrit fannst!",
-    "Incorrect Security Phrase": "Rangur öryggisfrasi",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
-    "Unable to load backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
     "%(completed)s of %(total)s keys restored": "%(completed)s af %(total)s lyklum endurheimtir",
     "Restoring keys from backup": "Endurheimti lykla úr öryggisafriti",
     "Unable to set up keys": "Tókst ekki að setja upp lykla",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
-    "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "View List": "Skoða lista",
     "%(count)s participants": {
         "one": "1 þáttakandi",
@@ -3777,5 +3766,18 @@
         },
         "cancel_all_button": "Hætta við allt",
         "error_title": "Villa við innsendingu"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
+        "recovery_key_mismatch_title": "Misræmi í öryggislyklum",
+        "incorrect_security_phrase_title": "Rangur öryggisfrasi",
+        "restore_failed_error": "Tekst ekki að endurheimta öryggisafrit",
+        "no_backup_error": "Ekkert öryggisafrit fannst!",
+        "keys_restored_title": "Dulritunarlyklar endurheimtir",
+        "count_of_decryption_failures": "Mistókst að afkóða %(failedCount)s setur!",
+        "enter_phrase_title": "Settu inn öryggisfrasa",
+        "enter_key_title": "Settu inn öryggislykil",
+        "key_is_valid": "Þetta lítur út eins og gildur öryggislykill!",
+        "key_is_invalid": "Ekki gildur öryggislykill"
     }
 }

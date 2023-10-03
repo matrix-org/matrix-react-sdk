@@ -51,9 +51,6 @@
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
     "Send Logs": "Logları Gönder",
-    "Unable to load backup status": "Yedek durumu yüklenemiyor",
-    "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
-    "No backup found!": "Yedek bulunamadı!",
     "Robot": "Robot",
     "Hat": "Şapka",
     "Glasses": "Gözlük",
@@ -137,7 +134,6 @@
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s adet oturum çözümlenemedi!",
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
     "a key signature": "bir anahtar imzası",
@@ -406,7 +402,6 @@
     "Looks good!": "İyi görünüyor!",
     "Security Key": "Güvenlik anahtarı",
     "Switch theme": "Temayı değiştir",
-    "Keys restored": "Anahtarlar geri yüklendi",
     "Submit logs": "Günlükleri kaydet",
     "common": {
         "about": "Hakkında",
@@ -2360,5 +2355,12 @@
         },
         "cancel_all_button": "Hepsi İptal",
         "error_title": "Yükleme Hatası"
+    },
+    "restore_key_backup_dialog": {
+        "load_error_content": "Yedek durumu yüklenemiyor",
+        "restore_failed_error": "Yedek geri dönüşü yapılamıyor",
+        "no_backup_error": "Yedek bulunamadı!",
+        "keys_restored_title": "Anahtarlar geri yüklendi",
+        "count_of_decryption_failures": "%(failedCount)s adet oturum çözümlenemedi!"
     }
 }
