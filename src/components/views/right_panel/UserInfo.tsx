@@ -246,7 +246,11 @@ function DevicesSection({
     loading: boolean;
 }): JSX.Element {
     const cli = useContext(MatrixClientContext);
-    const userTrust = cli.checkUserTrust(userId);
+
+    const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
+        async () => cli.getCrypto()?.getUserVerificationStatus(userId),
+        [userId],
+    );
 
     const [isExpanded, setExpanded] = useState(false);
 
@@ -269,7 +273,7 @@ function DevicesSection({
     let expandHideCaption;
     let expandIconClasses = "mx_E2EIcon";
 
-    if (userTrust.isVerified()) {
+    if (userTrust?.isVerified()) {
         for (let i = 0; i < devices.length; ++i) {
             const device = devices[i];
             const deviceTrust = deviceTrusts[i];
