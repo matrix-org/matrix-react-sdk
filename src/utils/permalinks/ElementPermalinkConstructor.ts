@@ -31,23 +31,32 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
         }
     }
 
-    public forEvent(roomId: string, eventId: string, serverCandidates: string[]): string {
+    public forEvent(roomId: string, eventId: string, serverCandidates: string[], ispill = false): string {
+        if(ispill) {
+            return `https://matrix.to/#/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
+        }
         return `${this.elementUrl}/#/room/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
-    public forRoom(roomIdOrAlias: string, serverCandidates?: string[]): string {
+    public forRoom(roomIdOrAlias: string, serverCandidates?: string[], ispill = false): string {
+        if(ispill) {
+            return `https://matrix.to/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
+        }
         return `${this.elementUrl}/#/room/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
-    public forUser(userId: string): string {
+    public forUser(userId: string, ispill = false): string {
+        if(ispill) {
+            return `https://matrix.to/#/${userId}`;
+        }
         return `${this.elementUrl}/#/user/${userId}`;
     }
 
-    public forEntity(entityId: string): string {
+    public forEntity(entityId: string, ispill = false): string {
         if (entityId[0] === "!" || entityId[0] === "#") {
-            return this.forRoom(entityId);
+            return this.forRoom(entityId, [], ispill);
         } else if (entityId[0] === "@") {
-            return this.forUser(entityId);
+            return this.forUser(entityId, ispill);
         } else throw new Error("Unrecognized entity");
     }
 

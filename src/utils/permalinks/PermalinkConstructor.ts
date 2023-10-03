@@ -19,19 +19,19 @@ limitations under the License.
  * TODO: Convert this to a real TypeScript interface
  */
 export default class PermalinkConstructor {
-    public forEvent(roomId: string, eventId: string, serverCandidates: string[] = []): string {
+    public forEvent(roomId: string, eventId: string, serverCandidates: string[] = [], ispill = false): string {
         throw new Error("Not implemented");
     }
 
-    public forRoom(roomIdOrAlias: string, serverCandidates: string[] = []): string {
+    public forRoom(roomIdOrAlias: string, serverCandidates: string[] = [], ispill = false): string {
         throw new Error("Not implemented");
     }
 
-    public forUser(userId: string): string {
+    public forUser(userId: string, ispill = false): string {
         throw new Error("Not implemented");
     }
 
-    public forEntity(entityId: string): string {
+    public forEntity(entityId: string, ispill = false): string {
         throw new Error("Not implemented");
     }
 

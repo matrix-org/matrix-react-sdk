@@ -269,26 +269,26 @@ export class RoomPermalinkCreator {
     };
 }
 
-export function makeGenericPermalink(entityId: string): string {
-    return getPermalinkConstructor().forEntity(entityId);
+export function makeGenericPermalink(entityId: string, ispill = false): string {
+    return getPermalinkConstructor().forEntity(entityId, ispill);
 }
 
-export function makeUserPermalink(userId: string): string {
+export function makeUserPermalink(userId: string, ispill = false): string {
     return getPermalinkConstructor().forUser(userId);
 }
 
-export function makeRoomPermalink(matrixClient: MatrixClient, roomId: string): string {
+export function makeRoomPermalink(matrixClient: MatrixClient, roomId: string, ispill = false): string {
     if (!roomId) {
         throw new Error("can't permalink a falsy roomId");
     }
 
     // If the roomId isn't actually a room ID, don't try to list the servers.
     // Aliases are already routable, and don't need extra information.
-    if (roomId[0] !== "!") return getPermalinkConstructor().forRoom(roomId, []);
+    if (roomId[0] !== "!") return getPermalinkConstructor().forRoom(roomId, [], ispill);
 
     const room = matrixClient.getRoom(roomId);
     if (!room) {
-        return getPermalinkConstructor().forRoom(roomId, []);
+        return getPermalinkConstructor().forRoom(roomId, [], ispill);
     }
     const permalinkCreator = new RoomPermalinkCreator(room);
     permalinkCreator.load();
