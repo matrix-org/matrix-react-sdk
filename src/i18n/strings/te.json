@@ -22,7 +22,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "unknown error code": "తెలియని కోడ్ లోపం",
-    "Unable to restore session": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు",
     "Create new room": "క్రొత్త గది సృష్టించండి",
     "Sunday": "ఆదివారం",
     "Today": "ఈ రోజు",
@@ -174,7 +173,10 @@
     },
     "error": {
         "tls": "గృహనిర్వాహకులకు కనెక్ట్ చేయలేరు - దయచేసి మీ కనెక్టివిటీని తనిఖీ చేయండి, మీ <a> 1 హోమరుసు యొక్క ఎస్ఎస్ఎల్ సర్టిఫికేట్ </a> 2 ని విశ్వసనీయపరుచుకొని, బ్రౌజర్ పొడిగింపు అభ్యర్థనలను నిరోధించబడదని నిర్ధారించుకోండి.",
-        "dialog_description_default": "ఒక లోపము సంభవించినది."
+        "dialog_description_default": "ఒక లోపము సంభవించినది.",
+        "session_restore": {
+            "title": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు"
+        }
     },
     "notifications": {
         "enable_prompt_toast_title": "ప్రకటనలు",

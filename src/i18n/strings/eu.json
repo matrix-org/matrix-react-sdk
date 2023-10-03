@@ -36,8 +36,6 @@
         "one": "(~%(count)s emaitza)",
         "other": "(~%(count)s emaitza)"
     },
-    "Unable to restore session": "Ezin izan da saioa berreskuratu",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
     "This will allow you to reset your password and receive notifications.": "Honek zure pasahitza berrezarri eta jakinarazpenak jasotzea ahalbidetuko dizu.",
     "and %(count)s others...": {
         "other": "eta beste %(count)s…",
@@ -66,9 +64,6 @@
     "Thursday": "Osteguna",
     "Yesterday": "Atzo",
     "Send Logs": "Bidali egunkariak",
-    "Clear Storage and Sign Out": "Garbitu biltegiratzea eta amaitu saioa",
-    "We encountered an error trying to restore your previous session.": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri.",
     "Share Room": "Partekatu gela",
     "Link to most recent message": "Esteka azken mezura",
     "Share User": "Partekatu erabiltzailea",
@@ -144,7 +139,6 @@
     "Scissors": "Artaziak",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
     "edited": "editatua",
-    "Sign out and remove encryption keys?": "Amaitu saioa eta kendu zifratze gakoak?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Etorkizunean hau ekiditeko, <a>bidali guri egunkariak</a>.",
     "Missing session data": "Saioaren datuak falta dira",
     "Upload files (%(current)s of %(total)s)": "Igo fitxategiak (%(current)s / %(total)s)",
@@ -211,8 +205,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
     "Switch theme": "Aldatu azala",
-    "The server is offline.": "Zerbitzaria lineaz kanpo dago.",
-    "The server has denied your request.": "Zerbitzariak zure eskariari uko egin dio.",
     "Wrong file type": "Okerreko fitxategi-mota",
     "Looks good!": "Itxura ona du!",
     "common": {
@@ -1748,7 +1740,15 @@
         "update_power_level": "Huts egin du botere maila aldatzean",
         "unknown": "Errore ezezaguna",
         "dialog_description_default": "Errore bat gertatu da.",
-        "edit_history_unsupported": "Antza zure hasiera-zerbitzariak ez du ezaugarri hau onartzen."
+        "edit_history_unsupported": "Antza zure hasiera-zerbitzariak ez du ezaugarri hau onartzen.",
+        "session_restore": {
+            "clear_storage_description": "Amaitu saioa eta kendu zifratze gakoak?",
+            "clear_storage_button": "Garbitu biltegiratzea eta amaitu saioa",
+            "title": "Ezin izan da saioa berreskuratu",
+            "description_1": "Errore bat aurkitu dugu zure aurreko saioa berrezartzen saiatzean.",
+            "description_2": "Aurretik %(brand)s bertsio berriago bat erabili baduzu, zure saioa bertsio honekin bateraezina izan daiteke. Itxi leiho hau eta itzuli bertsio berriagora.",
+            "description_3": "Zure nabigatzailearen biltegiratzea garbitzeak arazoa konpon lezake, baina saioa amaituko da eta zifratutako txaten historiala ezin izango da berriro irakurri."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1928,5 +1928,9 @@
         "resync_description": "%(brand)s-ek orain 3-5 aldiz memoria gutxiago darabil, beste erabiltzaileen informazioa behar denean besterik ez kargatzen. Itxaron zerbitzariarekin sinkronizatzen garen bitartean!",
         "resync_title": "%(brand)s eguneratzen"
     },
-    "message_edit_dialog_title": "Mezuaren edizioak"
+    "message_edit_dialog_title": "Mezuaren edizioak",
+    "server_offline": {
+        "description_4": "Zerbitzaria lineaz kanpo dago.",
+        "description_5": "Zerbitzariak zure eskariari uko egin dio."
+    }
 }

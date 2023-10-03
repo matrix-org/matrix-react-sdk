@@ -34,8 +34,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Unable to restore session": "Impossible de restaurer la session",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
     "Create new room": "Créer un nouveau salon",
     "(~%(count)s results)": {
         "one": "(~%(count)s résultat)",
@@ -66,9 +64,6 @@
     "Thursday": "Jeudi",
     "Yesterday": "Hier",
     "Send Logs": "Envoyer les journaux",
-    "Clear Storage and Sign Out": "Effacer le stockage et se déconnecter",
-    "We encountered an error trying to restore your previous session.": "Une erreur est survenue lors de la restauration de la dernière session.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles.",
     "Share Room": "Partager le salon",
     "Link to most recent message": "Lien vers le message le plus récent",
     "Share User": "Partager l’utilisateur",
@@ -143,7 +138,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attention</b> : vous ne devriez configurer la sauvegarde des clés que depuis un ordinateur de confiance.",
     "Scissors": "Ciseaux",
     "Remember my selection for this widget": "Se souvenir de mon choix pour ce widget",
-    "Sign out and remove encryption keys?": "Se déconnecter et supprimer les clés de chiffrement ?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Pour nous aider à éviter cela dans le futur, veuillez <a>nous envoyer les journaux</a>.",
     "Missing session data": "Données de la session manquantes",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Des données de la session, dont les clés des messages chiffrés, sont manquantes. Déconnectez-vous et reconnectez-vous pour régler ce problème, en restaurant les clés depuis la sauvegarde.",
@@ -219,18 +213,6 @@
     "Backup version:": "Version de la sauvegarde :",
     "Not encrypted": "Non-chiffré",
     "Unable to set up keys": "Impossible de configurer les clés",
-    "Recent changes that have not yet been received": "Changements récents qui n’ont pas encore été reçus",
-    "The server is not configured to indicate what the problem is (CORS).": "Le serveur n’est pas configuré pour indiquer quel est le problème (CORS).",
-    "A connection error occurred while trying to contact the server.": "Une erreur de connexion est survenue en essayant de contacter le serveur.",
-    "Your area is experiencing difficulties connecting to the internet.": "Votre secteur connaît des difficultés à se connecter à Internet.",
-    "The server has denied your request.": "Le serveur a refusé votre requête.",
-    "The server is offline.": "Le serveur est éteint.",
-    "A browser extension is preventing the request.": "Une extension du navigateur bloque la requête.",
-    "Your firewall or anti-virus is blocking the request.": "Votre pare-feu ou votre antivirus bloque la requête.",
-    "The server (%(serverName)s) took too long to respond.": "Le serveur (%(serverName)s) met trop de temps à répondre.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Votre serveur ne répond pas à certaines requêtes. Vous trouverez ci-dessus quelles en sont les raisons probables.",
-    "Server isn't responding": "Le serveur ne répond pas",
-    "You're all caught up.": "Vous êtes à jour.",
     "Algeria": "Algérie",
     "Albania": "Albanie",
     "Åland Islands": "Îles Åland",
@@ -515,9 +497,6 @@
         "one": "%(count)s salon",
         "other": "%(count)s salons"
     },
-    "Reset event store": "Réinitialiser le magasin d’évènements",
-    "You most likely do not want to reset your event index store": "Il est probable que vous ne vouliez pas réinitialiser votre magasin d’index d’évènements",
-    "Reset event store?": "Réinitialiser le magasin d’évènements ?",
     "%(count)s people you know have already joined": {
         "one": "%(count)s personne que vous connaissez en fait déjà partie",
         "other": "%(count)s personnes que vous connaissez en font déjà partie"
@@ -526,7 +505,6 @@
     "Only do this if you have no other device to complete verification with.": "Poursuivez seulement si vous n’avez aucun autre appareil avec lequel procéder à la vérification.",
     "Reset everything": "Tout réinitialiser",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Vous avez perdu ou oublié tous vos moyens de récupération ? <a>Tout réinitialiser</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
     "To join a space you'll need an invite.": "Vous avez besoin d’une invitation pour rejoindre un espace.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
@@ -4042,7 +4020,15 @@
         "update_power_level": "Échec du changement de rang",
         "unknown": "Erreur inconnue",
         "dialog_description_default": "Une erreur est survenue.",
-        "edit_history_unsupported": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité."
+        "edit_history_unsupported": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité.",
+        "session_restore": {
+            "clear_storage_description": "Se déconnecter et supprimer les clés de chiffrement ?",
+            "clear_storage_button": "Effacer le stockage et se déconnecter",
+            "title": "Impossible de restaurer la session",
+            "description_1": "Une erreur est survenue lors de la restauration de la dernière session.",
+            "description_2": "Si vous avez utilisé une version plus récente de %(brand)s précédemment, votre session risque d’être incompatible avec cette version. Fermez cette fenêtre et retournez à la version plus récente.",
+            "description_3": "Effacer le stockage de votre navigateur peut résoudre le problème. Ceci vous déconnectera et tous les historiques de conversations chiffrées seront illisibles."
+        }
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4316,7 +4302,11 @@
         "warning_kind_files_app": "Utilisez une <a>Application de bureau</a> pour voir tous les fichiers chiffrés",
         "warning_kind_search_app": "Utilisez une <a>Application de bureau</a> pour rechercher dans tous les messages chiffrés",
         "warning_kind_files": "Cette version de %(brand)s ne prend pas en charge l’affichage de certains fichiers chiffrés",
-        "warning_kind_search": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés"
+        "warning_kind_search": "Cette version de %(brand)s ne prend pas en charge la recherche dans les messages chiffrés",
+        "reset_title": "Réinitialiser le magasin d’évènements ?",
+        "reset_description": "Il est probable que vous ne vouliez pas réinitialiser votre magasin d’index d’évènements",
+        "reset_explainer": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
+        "reset_button": "Réinitialiser le magasin d’évènements"
     },
     "truncated_list_n_more": {
         "other": "Et %(count)s autres…"
@@ -4373,5 +4363,19 @@
         "resync_description": "%(brand)s utilise maintenant 3 à 5 fois moins de mémoire, en ne chargeant les informations des autres utilisateurs que quand elles sont nécessaires. Veuillez patienter pendant que l’on se resynchronise avec le serveur !",
         "resync_title": "Mise à jour de %(brand)s"
     },
-    "message_edit_dialog_title": "Modifications du message"
+    "message_edit_dialog_title": "Modifications du message",
+    "server_offline": {
+        "empty_timeline": "Vous êtes à jour.",
+        "title": "Le serveur ne répond pas",
+        "description": "Votre serveur ne répond pas à certaines requêtes. Vous trouverez ci-dessus quelles en sont les raisons probables.",
+        "description_1": "Le serveur (%(serverName)s) met trop de temps à répondre.",
+        "description_2": "Votre pare-feu ou votre antivirus bloque la requête.",
+        "description_3": "Une extension du navigateur bloque la requête.",
+        "description_4": "Le serveur est éteint.",
+        "description_5": "Le serveur a refusé votre requête.",
+        "description_6": "Votre secteur connaît des difficultés à se connecter à Internet.",
+        "description_7": "Une erreur de connexion est survenue en essayant de contacter le serveur.",
+        "description_8": "Le serveur n’est pas configuré pour indiquer quel est le problème (CORS).",
+        "recent_changes_heading": "Changements récents qui n’ont pas encore été reçus"
+    }
 }

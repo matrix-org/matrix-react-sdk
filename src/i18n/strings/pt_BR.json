@@ -34,8 +34,6 @@
     "not specified": "não especificado",
     "Email address": "Endereço de e-mail",
     "Warning!": "Atenção!",
-    "Unable to restore session": "Não foi possível restaurar a sessão",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
     "Home": "Home",
     "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
@@ -66,9 +64,6 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os relatórios, você deve <a>criar um bilhete de erro no GitHub</a> para descrever seu problema.",
-    "Clear Storage and Sign Out": "Limpar armazenamento e sair",
-    "We encountered an error trying to restore your previous session.": "Encontramos um erro ao tentar restaurar sua sessão anterior.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Limpar o armazenamento do seu navegador pode resolver o problema, mas você será deslogado e isso fará que qualquer histórico de bate-papo criptografado fique ilegível.",
     "Share Room": "Compartilhar sala",
     "Link to most recent message": "Link da mensagem mais recente",
     "Share User": "Compartilhar usuário",
@@ -157,7 +152,6 @@
     "a new master key signature": "uma nova chave mestra de assinatura",
     "a new cross-signing key signature": "uma nova chave de autoverificação",
     "a key signature": "uma assinatura de chave",
-    "Sign out and remove encryption keys?": "Fazer logout e remover as chaves de criptografia?",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Alguns dados de sessão, incluindo chaves de mensagens criptografadas, estão faltando. Desconecte-se e entre novamente para resolver isso, o que restaurará as chaves do backup.",
     "Security Key": "Chave de Segurança",
     "Use your Security Key to continue.": "Use sua Chave de Segurança para continuar.",
@@ -203,13 +197,6 @@
     "Remember my selection for this widget": "Lembrar minha escolha para este widget",
     "Wrong file type": "Tipo errado de arquivo",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
-    "Server isn't responding": "O servidor não está respondendo",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Seu servidor não está respondendo a algumas de suas solicitações. Abaixo estão alguns dos motivos mais prováveis.",
-    "The server (%(serverName)s) took too long to respond.": "O servidor (%(serverName)s) demorou muito para responder.",
-    "Your firewall or anti-virus is blocking the request.": "Seu firewall ou o antivírus está bloqueando a solicitação.",
-    "The server is offline.": "O servidor está fora do ar.",
-    "The server is not configured to indicate what the problem is (CORS).": "O servidor não está configurado para indicar qual é o problema (CORS).",
-    "Recent changes that have not yet been received": "Alterações recentes que ainda não foram recebidas",
     "Missing session data": "Dados de sessão ausentes",
     "Be found by phone or email": "Seja encontrada/o por número de celular ou por e-mail",
     "Looks good!": "Muito bem!",
@@ -223,13 +210,8 @@
     "Clear cross-signing keys": "Limpar chaves autoverificadas",
     "a device cross-signing signature": "um aparelho autoverificado",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
-    "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
-    "The server has denied your request.": "O servidor recusou a sua solicitação.",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "You're all caught up.": "Tudo em dia.",
-    "Your area is experiencing difficulties connecting to the internet.": "A sua região está com dificuldade de acesso à internet.",
-    "A connection error occurred while trying to contact the server.": "Um erro ocorreu na conexão do Element com o servidor.",
     "Unable to set up keys": "Não foi possível configurar as chaves",
     "Jordan": "Jordânia",
     "Japan": "Japão",
@@ -3012,7 +2994,15 @@
         "update_power_level": "Não foi possível alterar o nível de permissão",
         "unknown": "Erro desconhecido",
         "dialog_description_default": "Ocorreu um erro.",
-        "edit_history_unsupported": "O seu servidor local não parece suportar este recurso."
+        "edit_history_unsupported": "O seu servidor local não parece suportar este recurso.",
+        "session_restore": {
+            "clear_storage_description": "Fazer logout e remover as chaves de criptografia?",
+            "clear_storage_button": "Limpar armazenamento e sair",
+            "title": "Não foi possível restaurar a sessão",
+            "description_1": "Encontramos um erro ao tentar restaurar sua sessão anterior.",
+            "description_2": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
+            "description_3": "Limpar o armazenamento do seu navegador pode resolver o problema, mas você será deslogado e isso fará que qualquer histórico de bate-papo criptografado fique ilegível."
+        }
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3273,5 +3263,19 @@
         "resync_description": "%(brand)s agora usa de 3 a 5 vezes menos memória, pois carrega as informações dos outros usuários apenas quando for necessário. Por favor, aguarde enquanto ressincronizamos com o servidor!",
         "resync_title": "Atualizando o %(brand)s"
     },
-    "message_edit_dialog_title": "Edições na mensagem"
+    "message_edit_dialog_title": "Edições na mensagem",
+    "server_offline": {
+        "empty_timeline": "Tudo em dia.",
+        "title": "O servidor não está respondendo",
+        "description": "Seu servidor não está respondendo a algumas de suas solicitações. Abaixo estão alguns dos motivos mais prováveis.",
+        "description_1": "O servidor (%(serverName)s) demorou muito para responder.",
+        "description_2": "Seu firewall ou o antivírus está bloqueando a solicitação.",
+        "description_3": "Uma extensão do navegador está impedindo a solicitação.",
+        "description_4": "O servidor está fora do ar.",
+        "description_5": "O servidor recusou a sua solicitação.",
+        "description_6": "A sua região está com dificuldade de acesso à internet.",
+        "description_7": "Um erro ocorreu na conexão do Element com o servidor.",
+        "description_8": "O servidor não está configurado para indicar qual é o problema (CORS).",
+        "recent_changes_heading": "Alterações recentes que ainda não foram recebidas"
+    }
 }

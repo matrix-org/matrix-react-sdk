@@ -59,12 +59,7 @@
     "collapse": "Slå saman",
     "expand": "Utvid",
     "not specified": "Ikkje spesifisert",
-    "Clear Storage and Sign Out": "Tøm Lager og Logg Ut",
     "Send Logs": "Send Loggar",
-    "Unable to restore session": "Kunne ikkje henta øykta fram att",
-    "We encountered an error trying to restore your previous session.": "Noko gjekk gale med framhentinga av den førre øykta di.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Viss du har tidligare brukt ein nyare versjon av %(brand)s, kan økts-data vere inkompatibel med denne versjonen. Lukk dette vindauget og bytt til ein nyare versjon.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Det kan henda at å tømma nettlesarlageret rettar opp i det, men det loggar deg ut og kan gjera den krypterte pratehistoria uleseleg.",
     "Verification Pending": "Ventar på verifikasjon",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ver venleg og sjekk eposten din og klikk på lenkja du har fått. Når det er gjort, klikk gå fram.",
     "This will allow you to reset your password and receive notifications.": "Dette tillèt deg å attendestilla passordet ditt og å få varsel.",
@@ -1225,7 +1220,14 @@
         "something_went_wrong": "Noko gjekk gale!",
         "update_power_level": "Fekk ikkje til å endra tilgangsnivået",
         "unknown": "Noko ukjend gjekk galt",
-        "dialog_description_default": "Noko gjekk gale."
+        "dialog_description_default": "Noko gjekk gale.",
+        "session_restore": {
+            "clear_storage_button": "Tøm Lager og Logg Ut",
+            "title": "Kunne ikkje henta øykta fram att",
+            "description_1": "Noko gjekk gale med framhentinga av den førre øykta di.",
+            "description_2": "Viss du har tidligare brukt ein nyare versjon av %(brand)s, kan økts-data vere inkompatibel med denne versjonen. Lukk dette vindauget og bytt til ein nyare versjon.",
+            "description_3": "Det kan henda at å tømma nettlesarlageret rettar opp i det, men det loggar deg ut og kan gjera den krypterte pratehistoria uleseleg."
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s til",

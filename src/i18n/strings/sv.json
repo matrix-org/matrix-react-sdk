@@ -61,12 +61,7 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Delete Widget": "Radera widget",
-    "Clear Storage and Sign Out": "Rensa lagring och logga ut",
     "Send Logs": "Skicka loggar",
-    "Unable to restore session": "Kunde inte återställa sessionen",
-    "We encountered an error trying to restore your previous session.": "Ett fel uppstod vid återställning av din tidigare session.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Om du nyligen har använt en senare version av %(brand)s kan din session vara inkompatibel med den här versionen. Stäng det här fönstret och använd senare versionen istället.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Att rensa webbläsarens lagring kan lösa problemet, men då loggas du ut och krypterad chatthistorik blir oläslig.",
     "collapse": "fäll ihop",
     "expand": "fäll ut",
     "Share Room": "Dela rum",
@@ -139,7 +134,6 @@
     "Folder": "Mapp",
     "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "Sign out and remove encryption keys?": "Logga ut och ta bort krypteringsnycklar?",
     "To help us prevent this in future, please <a>send us logs</a>.": "För att hjälpa oss att förhindra detta i framtiden, vänligen <a>skicka oss loggar</a>.",
     "Missing session data": "Sessionsdata saknas",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Vissa sessionsdata, inklusive krypteringsnycklar för meddelanden, saknas. Logga ut och logga in för att åtgärda detta genom återställning av nycklarna från säkerhetskopia.",
@@ -195,18 +189,6 @@
     "a device cross-signing signature": "en enhets korssigneringssignatur",
     "a key signature": "en nyckelsignatur",
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "You're all caught up.": "Du är ikapp.",
-    "Server isn't responding": "Servern svarar inte",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Din server svarar inte på vissa av dina förfrågningar. Nedan är några av de troligaste anledningarna.",
-    "The server (%(serverName)s) took too long to respond.": "Servern (%(serverName)s) tog för lång tid att svara.",
-    "Your firewall or anti-virus is blocking the request.": "Din brandvägg eller ditt anti-virus blockerar förfrågan.",
-    "A browser extension is preventing the request.": "Ett webbläsartillägg förhindrar förfrågan.",
-    "The server is offline.": "Servern är offline.",
-    "The server has denied your request.": "Servern nekade din förfrågan.",
-    "Your area is experiencing difficulties connecting to the internet.": "Ditt område upplever störningar i internetuppkopplingen.",
-    "A connection error occurred while trying to contact the server.": "Ett fel inträffade vid försök att kontakta servern.",
-    "The server is not configured to indicate what the problem is (CORS).": "Servern är inte inställd på att indikera vad problemet är (CORS).",
-    "Recent changes that have not yet been received": "Nyliga ändringar har inte mottagits än",
     "Command Help": "Kommandohjälp",
     "Upload all": "Ladda upp alla",
     "Verification Request": "Verifikationsförfrågan",
@@ -519,14 +501,10 @@
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
     },
-    "Reset event store": "Återställ händelselagring",
-    "Reset event store?": "Återställ händelselagring?",
-    "You most likely do not want to reset your event index store": "Du vill troligen inte återställa din händelseregisterlagring",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Om du återställer allt så kommer du att börja om utan betrodda sessioner eller betrodda användare, och kommer kanske inte kunna se gamla meddelanden.",
     "Only do this if you have no other device to complete verification with.": "Gör detta endast om du inte har någon annan enhet att slutföra verifikationen med.",
     "Reset everything": "Återställ allt",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "%(count)s reply": {
         "one": "%(count)s svar",
@@ -3983,7 +3961,15 @@
         "update_power_level": "Misslyckades att ändra behörighetsnivå",
         "unknown": "Okänt fel",
         "dialog_description_default": "Ett fel har inträffat.",
-        "edit_history_unsupported": "Din hemserver verkar inte stödja den här funktionen."
+        "edit_history_unsupported": "Din hemserver verkar inte stödja den här funktionen.",
+        "session_restore": {
+            "clear_storage_description": "Logga ut och ta bort krypteringsnycklar?",
+            "clear_storage_button": "Rensa lagring och logga ut",
+            "title": "Kunde inte återställa sessionen",
+            "description_1": "Ett fel uppstod vid återställning av din tidigare session.",
+            "description_2": "Om du nyligen har använt en senare version av %(brand)s kan din session vara inkompatibel med den här versionen. Stäng det här fönstret och använd senare versionen istället.",
+            "description_3": "Att rensa webbläsarens lagring kan lösa problemet, men då loggas du ut och krypterad chatthistorik blir oläslig."
+        }
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4256,7 +4242,11 @@
         "warning_kind_files_app": "Använd <a>skrivbordsappen</a> för att se alla krypterade filer",
         "warning_kind_search_app": "Använd <a>skrivbordsappen</a> söka bland krypterade meddelanden",
         "warning_kind_files": "Den här versionen av %(brand)s stöder inte visning av vissa krypterade filer",
-        "warning_kind_search": "Den här versionen av %(brand)s stöder inte sökning bland krypterade meddelanden"
+        "warning_kind_search": "Den här versionen av %(brand)s stöder inte sökning bland krypterade meddelanden",
+        "reset_title": "Återställ händelselagring?",
+        "reset_description": "Du vill troligen inte återställa din händelseregisterlagring",
+        "reset_explainer": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
+        "reset_button": "Återställ händelselagring"
     },
     "truncated_list_n_more": {
         "other": "Och %(count)s till…"
@@ -4313,5 +4303,19 @@
         "resync_description": "%(brand)s använder nu 3-5 gånger mindre minne, genom att bara ladda information om andra användare när det behövs. Vänta medan vi återsynkroniserar med servern!",
         "resync_title": "Uppdaterar %(brand)s"
     },
-    "message_edit_dialog_title": "Meddelanderedigeringar"
+    "message_edit_dialog_title": "Meddelanderedigeringar",
+    "server_offline": {
+        "empty_timeline": "Du är ikapp.",
+        "title": "Servern svarar inte",
+        "description": "Din server svarar inte på vissa av dina förfrågningar. Nedan är några av de troligaste anledningarna.",
+        "description_1": "Servern (%(serverName)s) tog för lång tid att svara.",
+        "description_2": "Din brandvägg eller ditt anti-virus blockerar förfrågan.",
+        "description_3": "Ett webbläsartillägg förhindrar förfrågan.",
+        "description_4": "Servern är offline.",
+        "description_5": "Servern nekade din förfrågan.",
+        "description_6": "Ditt område upplever störningar i internetuppkopplingen.",
+        "description_7": "Ett fel inträffade vid försök att kontakta servern.",
+        "description_8": "Servern är inte inställd på att indikera vad problemet är (CORS).",
+        "recent_changes_heading": "Nyliga ändringar har inte mottagits än"
+    }
 }

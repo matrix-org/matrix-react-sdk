@@ -34,8 +34,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Email address": "Электронная почта",
-    "Unable to restore session": "Восстановление сеанса не удалось",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
     "Create new room": "Создать комнату",
     "Home": "Главная",
     "(~%(count)s results)": {
@@ -66,9 +64,6 @@
     "Yesterday": "Вчера",
     "Wednesday": "Среда",
     "Send Logs": "Отправить логи",
-    "Clear Storage and Sign Out": "Очистить хранилище и выйти",
-    "We encountered an error trying to restore your previous session.": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой.",
     "Share Room": "Поделиться комнатой",
     "Link to most recent message": "Ссылка на последнее сообщение",
     "Share User": "Поделиться пользователем",
@@ -141,7 +136,6 @@
     "Folder": "Папка",
     "Scissors": "Ножницы",
     "edited": "изменено",
-    "Sign out and remove encryption keys?": "Выйти и удалить ключи шифрования?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Чтобы помочь нам предотвратить это в будущем, пожалуйста, <a>отправьте нам логи</a>.",
     "Missing session data": "Отсутствуют данные сеанса",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Отсутствуют некоторые данные сеанса, в том числе ключи шифрования сообщений. Выйдите и войдите снова, чтобы восстановить ключи из резервной копии.",
@@ -202,18 +196,6 @@
     "a new cross-signing key signature": "новый ключ подписи для кросс-подписи",
     "a device cross-signing signature": "подпись устройства для кросс-подписи",
     "%(brand)s encountered an error during upload of:": "%(brand)s обнаружил ошибку при загрузке файла:",
-    "You're all caught up.": "Нет непрочитанных сообщений.",
-    "Server isn't responding": "Сервер не отвечает",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Ваш сервер не отвечает на некоторые ваши запросы. Ниже приведены вероятные причины.",
-    "The server (%(serverName)s) took too long to respond.": "Сервер (%(serverName)s) слишком долго не отвечал.",
-    "Your firewall or anti-virus is blocking the request.": "Ваш брандмауэр или антивирус блокирует запрос.",
-    "A browser extension is preventing the request.": "Расширение браузера блокирует запрос.",
-    "The server is offline.": "Сервер оффлайн.",
-    "The server has denied your request.": "Сервер отклонил ваш запрос.",
-    "Your area is experiencing difficulties connecting to the internet.": "Ваше подключение к Интернету нестабильно или отсутствует.",
-    "A connection error occurred while trying to contact the server.": "Произошла ошибка при подключении к серверу.",
-    "The server is not configured to indicate what the problem is (CORS).": "Сервер не настроен должным образом, чтобы определить проблему (CORS).",
-    "Recent changes that have not yet been received": "Последние изменения, которые еще не были получены",
     "Verification Request": "Запрос на сверку",
     "Wrong file type": "Неправильный тип файла",
     "Looks good!": "Выглядит неплохо!",
@@ -519,10 +501,6 @@
     "Only do this if you have no other device to complete verification with.": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
     "Reset everything": "Сбросить всё",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забыли или потеряли все варианты восстановления? <a>Сбросить всё</a>",
-    "Reset event store": "Сброс хранилища событий",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Если вы это сделаете, обратите внимание, что ни одно из ваших сообщений не будет удалено, но работа поиска может быть ухудшена на несколько мгновений, пока индекс не будет воссоздан",
-    "You most likely do not want to reset your event index store": "Скорее всего, вы не захотите сбрасывать индексное хранилище событий",
-    "Reset event store?": "Сбросить хранилище событий?",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -3755,7 +3733,15 @@
         "update_power_level": "Не удалось изменить уровень прав",
         "unknown": "Неизвестная ошибка",
         "dialog_description_default": "Произошла ошибка.",
-        "edit_history_unsupported": "Ваш сервер, похоже, не поддерживает эту возможность."
+        "edit_history_unsupported": "Ваш сервер, похоже, не поддерживает эту возможность.",
+        "session_restore": {
+            "clear_storage_description": "Выйти и удалить ключи шифрования?",
+            "clear_storage_button": "Очистить хранилище и выйти",
+            "title": "Восстановление сеанса не удалось",
+            "description_1": "Произошла ошибка при попытке восстановить предыдущий сеанс.",
+            "description_2": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
+            "description_3": "Очистка хранилища вашего браузера может устранить проблему, но при этом ваш сеанс будет завершён, и зашифрованная история чата станет нечитаемой."
+        }
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4008,7 +3994,11 @@
         "warning_kind_files_app": "Используйте <a>настольное приложение</a>, чтобы просмотреть все зашифрованные файлы",
         "warning_kind_search_app": "Используйте <a>настольное приложение</a> для поиска зашифрованных сообщений",
         "warning_kind_files": "Эта версия %(brand)s не поддерживает просмотр некоторых зашифрованных файлов",
-        "warning_kind_search": "Эта версия %(brand)s не поддерживает поиск зашифрованных сообщений"
+        "warning_kind_search": "Эта версия %(brand)s не поддерживает поиск зашифрованных сообщений",
+        "reset_title": "Сбросить хранилище событий?",
+        "reset_description": "Скорее всего, вы не захотите сбрасывать индексное хранилище событий",
+        "reset_explainer": "Если вы это сделаете, обратите внимание, что ни одно из ваших сообщений не будет удалено, но работа поиска может быть ухудшена на несколько мгновений, пока индекс не будет воссоздан",
+        "reset_button": "Сброс хранилища событий"
     },
     "truncated_list_n_more": {
         "other": "Еще %(count)s…"
@@ -4058,5 +4048,19 @@
         "resync_description": "%(brand)s теперь использует в 3-5 раз меньше памяти, загружая информацию о других пользователях только когда это необходимо. Пожалуйста, подождите, пока мы ресинхронизируемся с сервером!",
         "resync_title": "Обновление %(brand)s"
     },
-    "message_edit_dialog_title": "Правки сообщения"
+    "message_edit_dialog_title": "Правки сообщения",
+    "server_offline": {
+        "empty_timeline": "Нет непрочитанных сообщений.",
+        "title": "Сервер не отвечает",
+        "description": "Ваш сервер не отвечает на некоторые ваши запросы. Ниже приведены вероятные причины.",
+        "description_1": "Сервер (%(serverName)s) слишком долго не отвечал.",
+        "description_2": "Ваш брандмауэр или антивирус блокирует запрос.",
+        "description_3": "Расширение браузера блокирует запрос.",
+        "description_4": "Сервер оффлайн.",
+        "description_5": "Сервер отклонил ваш запрос.",
+        "description_6": "Ваше подключение к Интернету нестабильно или отсутствует.",
+        "description_7": "Произошла ошибка при подключении к серверу.",
+        "description_8": "Сервер не настроен должным образом, чтобы определить проблему (CORS).",
+        "recent_changes_heading": "Последние изменения, которые еще не были получены"
+    }
 }

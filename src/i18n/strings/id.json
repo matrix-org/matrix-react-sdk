@@ -418,18 +418,6 @@
         "one": "%(count)s orang yang Anda tahu telah bergabung",
         "other": "%(count)s orang yang Anda tahu telah bergabung"
     },
-    "Recent changes that have not yet been received": "Perubahan terbaru yang belum diterima",
-    "The server is not configured to indicate what the problem is (CORS).": "Server tidak diatur untuk menandakan apa masalahnya (CORS).",
-    "A connection error occurred while trying to contact the server.": "Sebuah kesalahan koneksi terjadi ketika mencoba untuk menghubungi server.",
-    "Your area is experiencing difficulties connecting to the internet.": "Area Anda mengalami kesulitan menghubung ke internet.",
-    "The server has denied your request.": "Server menolak permintaan Anda.",
-    "The server is offline.": "Server sedang luring.",
-    "A browser extension is preventing the request.": "Sebuah ekstensi browser mencegah permintaannya.",
-    "Your firewall or anti-virus is blocking the request.": "Tembok api atau antivirus memblokir permintaannya.",
-    "The server (%(serverName)s) took too long to respond.": "Server (%(serverName)s) terlalu lama untuk merespon.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Server Anda tidak merespon dengan beberapa permintaan Anda. Berikut ini adalah beberapa alasan yang paling mungkin terjadi.",
-    "Server isn't responding": "Server tidak merespon",
-    "You're all caught up.": "Anda selesai.",
     "Switch theme": "Ubah tema",
     "<inviter/> invites you": "<inviter/> mengundang Anda",
     "No results found": "Tidak ada hasil yang ditemukan",
@@ -513,16 +501,6 @@
     "Link to most recent message": "Tautan ke pesan terkini",
     "This will allow you to reset your password and receive notifications.": "Ini akan mengizinkan Anda untuk mengatur ulang kata sandi Anda dan menerima notifikasi.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Mohon periksa email Anda dan klik tautannya. Setelah itu, klik lanjut.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Menghapus penyimpanan browser Anda mungkin memperbaiki masalahnya, tetapi akan mengeluarkan Anda dan membuat riwayat obrolan tidak dapat dibaca.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jika Anda sebelumnya menggunakan versi %(brand)s yang lebih baru, sesi Anda mungkin tidak kompatibel dengan versi ini. Tutup jendela ini dan kembali ke versi yang lebih baru.",
-    "We encountered an error trying to restore your previous session.": "Kami mengalami sebuah kesalahan saat memulihkan sesi Anda sebelumnya.",
-    "Unable to restore session": "Tidak dapat memulihkan sesi",
-    "Clear Storage and Sign Out": "Hapus Penyimpanan dan Keluar",
-    "Sign out and remove encryption keys?": "Keluar dan hapus kunci-kunci enkripsi?",
-    "Reset event store": "Atur ulang penyimpanan peristiwa",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jika Anda ingin, dicatat bahwa pesan-pesan Anda tidak dihapus, tetapi pengalaman pencarian mungkin terdegradasi untuk beberapa saat indeksnya sedang dibuat ulang",
-    "You most likely do not want to reset your event index store": "Kemungkinan besar Anda tidak ingin mengatur ulang penyimpanan indeks peristiwa Anda",
-    "Reset event store?": "Atur ulang penyimanan peristiwa?",
     "%(count)s rooms": {
         "one": "%(count)s ruangan",
         "other": "%(count)s ruangan"
@@ -4049,7 +4027,15 @@
         "update_power_level": "Gagal untuk mengubah tingkat daya",
         "unknown": "Kesalahan tidak diketahui",
         "dialog_description_default": "Telah terjadi kesalahan.",
-        "edit_history_unsupported": "Homeserver Anda sepertinya tidak mendukung fitur ini."
+        "edit_history_unsupported": "Homeserver Anda sepertinya tidak mendukung fitur ini.",
+        "session_restore": {
+            "clear_storage_description": "Keluar dan hapus kunci-kunci enkripsi?",
+            "clear_storage_button": "Hapus Penyimpanan dan Keluar",
+            "title": "Tidak dapat memulihkan sesi",
+            "description_1": "Kami mengalami sebuah kesalahan saat memulihkan sesi Anda sebelumnya.",
+            "description_2": "Jika Anda sebelumnya menggunakan versi %(brand)s yang lebih baru, sesi Anda mungkin tidak kompatibel dengan versi ini. Tutup jendela ini dan kembali ke versi yang lebih baru.",
+            "description_3": "Menghapus penyimpanan browser Anda mungkin memperbaiki masalahnya, tetapi akan mengeluarkan Anda dan membuat riwayat obrolan tidak dapat dibaca."
+        }
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4323,7 +4309,11 @@
         "warning_kind_files_app": "Gunakan <a>aplikasi desktop</a> untuk melihat semua file terenkripsi",
         "warning_kind_search_app": "Gunakan <a>aplikasi desktop</a> untuk mencari pesan-pesan terenkripsi",
         "warning_kind_files": "Versi %(brand)s ini tidak mendukung penampilan beberapa file terenkripsi",
-        "warning_kind_search": "Versi %(brand)s ini tidak mendukung pencarian pesan terenkripsi"
+        "warning_kind_search": "Versi %(brand)s ini tidak mendukung pencarian pesan terenkripsi",
+        "reset_title": "Atur ulang penyimanan peristiwa?",
+        "reset_description": "Kemungkinan besar Anda tidak ingin mengatur ulang penyimpanan indeks peristiwa Anda",
+        "reset_explainer": "Jika Anda ingin, dicatat bahwa pesan-pesan Anda tidak dihapus, tetapi pengalaman pencarian mungkin terdegradasi untuk beberapa saat indeksnya sedang dibuat ulang",
+        "reset_button": "Atur ulang penyimpanan peristiwa"
     },
     "truncated_list_n_more": {
         "other": "Dan %(count)s lagi..."
@@ -4380,5 +4370,19 @@
         "resync_description": "%(brand)s sekarang menggunakan memori 3-5x kecil dari sebelumnya dengan hanya memuat informasi tentang pengguna lain jika dibutuhkan. Mohon tunggu selagi kita mengsinkronisasi ulang dengan servernya!",
         "resync_title": "Memperbarui %(brand)s"
     },
-    "message_edit_dialog_title": "Editan pesan"
+    "message_edit_dialog_title": "Editan pesan",
+    "server_offline": {
+        "empty_timeline": "Anda selesai.",
+        "title": "Server tidak merespon",
+        "description": "Server Anda tidak merespon dengan beberapa permintaan Anda. Berikut ini adalah beberapa alasan yang paling mungkin terjadi.",
+        "description_1": "Server (%(serverName)s) terlalu lama untuk merespon.",
+        "description_2": "Tembok api atau antivirus memblokir permintaannya.",
+        "description_3": "Sebuah ekstensi browser mencegah permintaannya.",
+        "description_4": "Server sedang luring.",
+        "description_5": "Server menolak permintaan Anda.",
+        "description_6": "Area Anda mengalami kesulitan menghubung ke internet.",
+        "description_7": "Sebuah kesalahan koneksi terjadi ketika mencoba untuk menghubungi server.",
+        "description_8": "Server tidak diatur untuk menandakan apa masalahnya (CORS).",
+        "recent_changes_heading": "Perubahan terbaru yang belum diterima"
+    }
 }

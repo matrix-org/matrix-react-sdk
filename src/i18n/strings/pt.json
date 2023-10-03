@@ -34,8 +34,6 @@
     "not specified": "não especificado",
     "Email address": "Endereço de email",
     "Warning!": "Atenção!",
-    "Unable to restore session": "Não foi possível restaurar a sessão",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente.",
     "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
@@ -898,7 +896,11 @@
         "something_went_wrong": "Algo deu errado!",
         "update_power_level": "Não foi possível mudar o nível de permissões",
         "unknown": "Erro desconhecido",
-        "dialog_description_default": "Ocorreu um erro."
+        "dialog_description_default": "Ocorreu um erro.",
+        "session_restore": {
+            "title": "Não foi possível restaurar a sessão",
+            "description_2": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente."
+        }
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificações",

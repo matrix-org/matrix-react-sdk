@@ -40,8 +40,6 @@
         "one": "(~%(count)s resultaat)",
         "other": "(~%(count)s resultaten)"
     },
-    "Unable to restore session": "Herstellen van sessie mislukt",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
     "This will allow you to reset your password and receive notifications.": "Zo kan je een nieuw wachtwoord instellen en meldingen ontvangen.",
     "AM": "AM",
     "PM": "PM",
@@ -65,10 +63,7 @@
     "Thursday": "Donderdag",
     "Yesterday": "Gisteren",
     "Wednesday": "Woensdag",
-    "Clear Storage and Sign Out": "Opslag wissen en uitloggen",
     "Send Logs": "Logs versturen",
-    "We encountered an error trying to restore your previous session.": "Het herstel van je vorige sessie is mislukt.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Het wissen van de browseropslag zal het probleem misschien verhelpen, maar zal je ook uitloggen en je gehele versleutelde kamergeschiedenis onleesbaar maken.",
     "Share Room": "Kamer delen",
     "Link to most recent message": "Koppeling naar meest recente bericht",
     "Share User": "Persoon delen",
@@ -143,7 +138,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Ontsleutelen van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
     "Remember my selection for this widget": "Onthoud mijn keuze voor deze widget",
-    "Sign out and remove encryption keys?": "Uitloggen en versleutelingssleutels verwijderen?",
     "To help us prevent this in future, please <a>send us logs</a>.": "<a>Stuur ons jouw logs</a> om dit in de toekomst te helpen voorkomen.",
     "Missing session data": "Sessiegegevens ontbreken",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Sommige sessiegegevens, waaronder sleutels voor versleutelde berichten, ontbreken. Herstel de sleutels uit je back-up door je af- en weer aan te melden.",
@@ -437,12 +431,6 @@
     "Taiwan": "Taiwan",
     "Backup version:": "Versie reservekopie:",
     "Not encrypted": "Niet versleuteld",
-    "The server has denied your request.": "De server heeft je verzoek afgewezen.",
-    "The server is offline.": "De server is offline.",
-    "A browser extension is preventing the request.": "Een invoertoepassing van je browser verhindert de aanvraag.",
-    "The server (%(serverName)s) took too long to respond.": "De server (%(serverName)s) deed er te lang over om te antwoorden.",
-    "Server isn't responding": "Server reageert niet",
-    "You're all caught up.": "Je bent helemaal bij.",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -453,7 +441,6 @@
     "St. Lucia": "Sint Lucia",
     "South Sudan": "Zuid-Soedan",
     "Oman": "Oman",
-    "Your firewall or anti-virus is blocking the request.": "Jouw firewall of antivirussoftware blokkeert de aanvraag.",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Geen toegang tot geheime opslag. Controleer of u het juiste veiligheidswachtwoord hebt ingevoerd.",
     "Switch theme": "Thema wisselen",
     "Sign in with SSO": "Inloggen met SSO",
@@ -491,11 +478,6 @@
     "Decline All": "Alles weigeren",
     "This widget would like to:": "Deze widget zou willen:",
     "Approve widget permissions": "Machtigingen voor widgets goedkeuren",
-    "Recent changes that have not yet been received": "Recente wijzigingen die nog niet zijn ontvangen",
-    "The server is not configured to indicate what the problem is (CORS).": "De server is niet geconfigureerd om aan te geven wat het probleem is (CORS).",
-    "A connection error occurred while trying to contact the server.": "Er is een verbindingsfout opgetreden tijdens het contact maken met de server.",
-    "Your area is experiencing difficulties connecting to the internet.": "Jouw regio ondervindt problemen bij de verbinding met het internet.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jouw server reageert niet op sommige van je verzoeken. Hieronder staan enkele van de meest waarschijnlijke redenen.",
     "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
     "a key signature": "een sleutel ondertekening",
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
@@ -515,9 +497,6 @@
         "one": "%(count)s kamer",
         "other": "%(count)s kamers"
     },
-    "You most likely do not want to reset your event index store": "Je wilt waarschijnlijk niet jouw gebeurtenisopslag-index resetten",
-    "Reset event store?": "Gebeurtenisopslag resetten?",
-    "Reset event store": "Gebeurtenisopslag resetten",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persoon die je kent is al geregistreerd",
         "other": "%(count)s personen die je kent hebben zich al geregistreerd"
@@ -526,7 +505,6 @@
     "Only do this if you have no other device to complete verification with.": "Doe dit alleen als u geen ander apparaat hebt om de verificatie mee uit te voeren.",
     "Reset everything": "Alles opnieuw instellen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
@@ -3673,7 +3651,15 @@
         "update_power_level": "Wijzigen van machtsniveau is mislukt",
         "unknown": "Onbekende fout",
         "dialog_description_default": "Er is een fout opgetreden.",
-        "edit_history_unsupported": "Jouw homeserver biedt geen ondersteuning voor deze functie."
+        "edit_history_unsupported": "Jouw homeserver biedt geen ondersteuning voor deze functie.",
+        "session_restore": {
+            "clear_storage_description": "Uitloggen en versleutelingssleutels verwijderen?",
+            "clear_storage_button": "Opslag wissen en uitloggen",
+            "title": "Herstellen van sessie mislukt",
+            "description_1": "Het herstel van je vorige sessie is mislukt.",
+            "description_2": "Als je een recentere versie van %(brand)s hebt gebruikt is je sessie mogelijk niet geschikt voor deze versie. Sluit dit venster en ga terug naar die recentere versie.",
+            "description_3": "Het wissen van de browseropslag zal het probleem misschien verhelpen, maar zal je ook uitloggen en je gehele versleutelde kamergeschiedenis onleesbaar maken."
+        }
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3916,7 +3902,11 @@
         "warning_kind_files_app": "Gebruik de <a>Desktop-app</a> om alle versleutelde bestanden te zien",
         "warning_kind_search_app": "Gebruik de <a>Desktop-toepassing</a> om alle versleutelde berichten te zien",
         "warning_kind_files": "Deze versie van %(brand)s ondersteunt niet de mogelijkheid sommige versleutelde bestanden te weergeven",
-        "warning_kind_search": "Deze versie van %(brand)s ondersteunt niet het doorzoeken van versleutelde berichten"
+        "warning_kind_search": "Deze versie van %(brand)s ondersteunt niet het doorzoeken van versleutelde berichten",
+        "reset_title": "Gebeurtenisopslag resetten?",
+        "reset_description": "Je wilt waarschijnlijk niet jouw gebeurtenisopslag-index resetten",
+        "reset_explainer": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
+        "reset_button": "Gebeurtenisopslag resetten"
     },
     "truncated_list_n_more": {
         "other": "En %(count)s meer…"
@@ -3966,5 +3956,19 @@
         "resync_description": "%(brand)s verbruikt nu 3-5x minder geheugen, door informatie over andere personen enkel te laden wanneer nodig. Even geduld, we synchroniseren met de server!",
         "resync_title": "%(brand)s wordt bijgewerkt"
     },
-    "message_edit_dialog_title": "Berichtbewerkingen"
+    "message_edit_dialog_title": "Berichtbewerkingen",
+    "server_offline": {
+        "empty_timeline": "Je bent helemaal bij.",
+        "title": "Server reageert niet",
+        "description": "Jouw server reageert niet op sommige van je verzoeken. Hieronder staan enkele van de meest waarschijnlijke redenen.",
+        "description_1": "De server (%(serverName)s) deed er te lang over om te antwoorden.",
+        "description_2": "Jouw firewall of antivirussoftware blokkeert de aanvraag.",
+        "description_3": "Een invoertoepassing van je browser verhindert de aanvraag.",
+        "description_4": "De server is offline.",
+        "description_5": "De server heeft je verzoek afgewezen.",
+        "description_6": "Jouw regio ondervindt problemen bij de verbinding met het internet.",
+        "description_7": "Er is een verbindingsfout opgetreden tijdens het contact maken met de server.",
+        "description_8": "De server is niet geconfigureerd om aan te geven wat het probleem is (CORS).",
+        "recent_changes_heading": "Recente wijzigingen die nog niet zijn ontvangen"
+    }
 }

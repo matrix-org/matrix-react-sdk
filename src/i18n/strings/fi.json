@@ -25,7 +25,6 @@
         "one": "(~%(count)s tulos)",
         "other": "(~%(count)s tulosta)"
     },
-    "Unable to restore session": "Istunnon palautus epäonnistui",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ole hyvä ja tarkista sähköpostisi ja seuraa sen sisältämää linkkiä. Kun olet valmis, napsauta Jatka.",
     "Verification Pending": "Varmennus odottaa",
     "Jan": "tammi",
@@ -129,21 +128,16 @@
     "Link to selected message": "Linkitä valittuun viestiin",
     "Send Logs": "Lähetä lokit",
     "Elephant": "Norsu",
-    "We encountered an error trying to restore your previous session.": "Törmäsimme ongelmaan yrittäessämme palauttaa edellistä istuntoasi.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jos olet aikaisemmin käyttänyt uudempaa versiota %(brand)sista, istuntosi voi olla epäyhteensopiva tämän version kanssa. Sulje tämä ikkuna ja yritä uudemman version kanssa.",
     "Thumbs up": "Peukut ylös",
     "Share User": "Jaa käyttäjä",
     "Share Room Message": "Jaa huoneviesti",
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "Clear Storage and Sign Out": "Tyhjennä varasto ja kirjaudu ulos",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Selaimen varaston tyhjentäminen saattaa korjata ongelman, mutta kirjaa sinut samalla ulos ja estää sinua lukemasta salattuja keskusteluita.",
     "Unable to load backup status": "Varmuuskopioinnin tilan lataaminen epäonnistui",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s istunnon purkaminen epäonnistui!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
     "Remember my selection for this widget": "Muista valintani tälle sovelmalle",
-    "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
     "Missing session data": "Istunnon dataa puuttuu",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
     "Your browser likely removed this data when running low on disk space.": "Selaimesi luultavasti poisti tämän datan, kun levytila oli vähissä.",
@@ -207,13 +201,7 @@
     "Switch theme": "Vaihda teemaa",
     "Looks good!": "Hyvältä näyttää!",
     "Wrong file type": "Väärä tiedostotyyppi",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
-    "Server isn't responding": "Palvelin ei vastaa",
     "Decline All": "Kieltäydy kaikista",
-    "Your area is experiencing difficulties connecting to the internet.": "Alueellasi on ongelmia internet-yhteyksissä.",
-    "The server is offline.": "Palvelin ei ole verkossa.",
-    "Your firewall or anti-virus is blocking the request.": "Palomuurisi tai virustentorjuntaohjelmasi estää pyynnön.",
-    "The server (%(serverName)s) took too long to respond.": "Palvelin (%(serverName)s) ei vastannut ajoissa.",
     "Comoros": "Komorit",
     "Colombia": "Kolumbia",
     "Cocos (Keeling) Islands": "Kookossaaret",
@@ -467,20 +455,15 @@
     "Mongolia": "Mongolia",
     "Monaco": "Monaco",
     "Not encrypted": "Ei salattu",
-    "You're all caught up.": "Olet ajan tasalla.",
     "This widget would like to:": "Tämä sovelma haluaa:",
-    "The server has denied your request.": "Palvelin eväsi pyyntösi.",
-    "A connection error occurred while trying to contact the server.": "Yhteysvirhe yritettäessä ottaa yhteyttä palvelimeen.",
     "Confirm encryption setup": "Vahvista salauksen asetukset",
     "a key signature": "avaimen allekirjoitus",
     "Security Phrase": "Turvalause",
     "Security Key": "Turva-avain",
     "Hold": "Pidä",
     "Resume": "Jatka",
-    "A browser extension is preventing the request.": "Selainlaajennus estää pyynnön.",
     "Approve widget permissions": "Hyväksy sovelman käyttöoikeudet",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
-    "Recent changes that have not yet been received": "Tuoreet muutokset, joita ei ole vielä otettu vastaan",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
     "No results found": "Tuloksia ei löytynyt",
     "%(count)s rooms": {
@@ -492,7 +475,6 @@
         "other": "%(count)s jäsentä"
     },
     "Remember this": "Muista tämä",
-    "The server is not configured to indicate what the problem is (CORS).": "Palvelinta ei ole säädetty ilmoittamaan, mikä ongelma on kyseessä (CORS).",
     "%(count)s people you know have already joined": {
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
@@ -3657,7 +3639,15 @@
         "update_power_level": "Oikeustason muuttaminen epäonnistui",
         "unknown": "Tuntematon virhe",
         "dialog_description_default": "Tapahtui virhe.",
-        "edit_history_unsupported": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta."
+        "edit_history_unsupported": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta.",
+        "session_restore": {
+            "clear_storage_description": "Kirjaudu ulos ja poista salausavaimet?",
+            "clear_storage_button": "Tyhjennä varasto ja kirjaudu ulos",
+            "title": "Istunnon palautus epäonnistui",
+            "description_1": "Törmäsimme ongelmaan yrittäessämme palauttaa edellistä istuntoasi.",
+            "description_2": "Jos olet aikaisemmin käyttänyt uudempaa versiota %(brand)sista, istuntosi voi olla epäyhteensopiva tämän version kanssa. Sulje tämä ikkuna ja yritä uudemman version kanssa.",
+            "description_3": "Selaimen varaston tyhjentäminen saattaa korjata ongelman, mutta kirjaa sinut samalla ulos ja estää sinua lukemasta salattuja keskusteluita."
+        }
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3965,5 +3955,19 @@
         "resync_description": "%(brand)s käyttää nyt 3-5 kertaa vähemmän muistia, koska se lataa tietoa muista käyttäjistä vain tarvittaessa. Odotathan, kun haemme tarvittavat tiedot palvelimelta!",
         "resync_title": "Päivitetään %(brand)s"
     },
-    "message_edit_dialog_title": "Viestin muokkaukset"
+    "message_edit_dialog_title": "Viestin muokkaukset",
+    "server_offline": {
+        "empty_timeline": "Olet ajan tasalla.",
+        "title": "Palvelin ei vastaa",
+        "description": "Palvelimesi ei vastaa joihinkin pyynnöistäsi. Alla on joitakin todennäköisimpiä syitä.",
+        "description_1": "Palvelin (%(serverName)s) ei vastannut ajoissa.",
+        "description_2": "Palomuurisi tai virustentorjuntaohjelmasi estää pyynnön.",
+        "description_3": "Selainlaajennus estää pyynnön.",
+        "description_4": "Palvelin ei ole verkossa.",
+        "description_5": "Palvelin eväsi pyyntösi.",
+        "description_6": "Alueellasi on ongelmia internet-yhteyksissä.",
+        "description_7": "Yhteysvirhe yritettäessä ottaa yhteyttä palvelimeen.",
+        "description_8": "Palvelinta ei ole säädetty ilmoittamaan, mikä ongelma on kyseessä (CORS).",
+        "recent_changes_heading": "Tuoreet muutokset, joita ei ole vielä otettu vastaan"
+    }
 }

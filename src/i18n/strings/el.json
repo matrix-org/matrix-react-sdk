@@ -36,12 +36,10 @@
         "one": "(~%(count)s αποτέλεσμα)",
         "other": "(~%(count)s αποτελέσματα)"
     },
-    "Unable to restore session": "Αδυναμία επαναφοράς συνεδρίας",
     "not specified": "μη καθορισμένο",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Παρακαλούμε ελέγξτε την ηλεκτρονική σας αλληλογραφία και κάντε κλικ στον σύνδεσμο που περιέχει. Μόλις γίνει αυτό, κάντε κλίκ στο κουμπί συνέχεια.",
     "Verification Pending": "Εκκρεμεί επιβεβαίωση",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Αν χρησιμοποιούσατε προηγουμένως μια πιο πρόσφατη έκδοση του %(brand)s, η συνεδρία σας ίσως είναι μη συμβατή με αυτήν την έκδοση. Κλείστε αυτό το παράθυρο και επιστρέψτε στην πιο πρόσφατη έκδοση.",
     "This will allow you to reset your password and receive notifications.": "Αυτό θα σας επιτρέψει να επαναφέρετε τον κωδικό πρόσβαση σας και θα μπορείτε να λαμβάνετε ειδοποιήσεις.",
     "Sunday": "Κυριακή",
     "Today": "Σήμερα",
@@ -406,15 +404,6 @@
     },
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
-    "A connection error occurred while trying to contact the server.": "Παρουσιάστηκε σφάλμα σύνδεσης κατά την προσπάθεια επικοινωνίας με τον διακομιστή.",
-    "Your area is experiencing difficulties connecting to the internet.": "Η περιοχή σας αντιμετωπίζει δυσκολίες σύνδεσης στο διαδίκτυο.",
-    "The server has denied your request.": "Ο διακομιστής απέρριψε το αίτημά σας.",
-    "The server is offline.": "Ο διακομιστής είναι εκτός σύνδεσης.",
-    "A browser extension is preventing the request.": "Μια επέκταση προγράμματος περιήγησης αποτρέπει το αίτημα.",
-    "Your firewall or anti-virus is blocking the request.": "Το τείχος προστασίας ή το πρόγραμμα προστασίας από ιούς μπλοκάρει το αίτημα.",
-    "The server (%(serverName)s) took too long to respond.": "Ο διακομιστής (%(serverName)s) έκανε πολύ χρόνο να ανταποκριθεί.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Ο διακομιστής σας δεν ανταποκρίνεται σε ορισμένα από τα αιτήματά σας. Παρακάτω είναι μερικοί από τους πιο πιθανούς λόγους.",
-    "Server isn't responding": "Ο διακομιστής δεν ανταποκρίνεται",
     "Delete Widget": "Διαγραφή Μικροεφαρμογής",
     "Sign in with SSO": "Συνδεθείτε με SSO",
     "Unable to start audio streaming.": "Δεν είναι δυνατή η έναρξη ροής ήχου.",
@@ -485,10 +474,7 @@
     "Share User": "Κοινή χρήση Χρήστη",
     "Link to most recent message": "Σύνδεσμος προς το πιο πρόσφατο μήνυμα",
     "Share Room": "Κοινή χρήση Δωματίου",
-    "We encountered an error trying to restore your previous session.": "Αντιμετωπίσαμε ένα σφάλμα κατά την επαναφορά της προηγούμενης συνεδρίας σας.",
     "Send Logs": "Αποστολή Αρχείων καταγραφής",
-    "Clear Storage and Sign Out": "Εκκαθάριση Χώρου αποθήκευσης και Αποσύνδεση",
-    "Sign out and remove encryption keys?": "Αποσύνδεση και κατάργηση κλειδιών κρυπτογράφησης;",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
     "%(name)s wants to verify": "%(name)s θέλει να επαληθεύσει",
@@ -532,10 +518,6 @@
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
     "To help us prevent this in future, please <a>send us logs</a>.": "Για να μας βοηθήσετε να το αποτρέψουμε αυτό στο μέλλον, <a>στείλτε μας τα αρχεία καταγραφής</a>.",
     "To search messages, look for this icon at the top of a room <icon/>": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Η εκκαθάριση του αποθηκευτικού χώρου του προγράμματος περιήγησής σας μπορεί να διορθώσει το πρόβλημα, αλλά θα αποσυνδεθείτε και θα κάνει τυχόν κρυπτογραφημένο ιστορικό συνομιλιών να μην είναι αναγνώσιμο.",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Εάν το κάνετε, σημειώστε ότι κανένα από τα μηνύματά σας δε θα διαγραφεί, αλλά η εμπειρία αναζήτησης ενδέχεται να υποβαθμιστεί για λίγα λεπτά κατά τη δημιουργία του ευρετηρίου",
-    "Recent changes that have not yet been received": "Πρόσφατες αλλαγές που δεν έχουν ληφθεί ακόμη",
-    "The server is not configured to indicate what the problem is (CORS).": "Ο διακομιστής δεν έχει ρυθμιστεί για να υποδεικνύει ποιο είναι το πρόβλημα (CORS).",
     "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
@@ -563,10 +545,6 @@
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Ορισμένα δεδομένα συνεδρίας, συμπεριλαμβανομένων των κρυπτογραφημένων κλειδιών μηνυμάτων, λείπουν. Αποσυνδεθείτε και συνδεθείτε για να το διορθώσετε, επαναφέροντας τα κλειδιά από το αντίγραφο ασφαλείας.",
     "Use \"%(query)s\" to search": "Χρησιμοποιήστε το \"%(query)s\" για αναζήτηση",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Αυτό ομαδοποιεί τις συνομιλίες σας με μέλη αυτού του χώρου. Η απενεργοποίηση του θα αποκρύψει αυτές τις συνομιλίες από την προβολή του %(spaceName)s.",
-    "Reset event store": "Επαναφορά καταστήματος συμβάντων",
-    "Reset event store?": "Eπαναφoρά στο κατάστημα συμβάντων;",
-    "You most likely do not want to reset your event index store": "Πιθανότατα δεν θέλετε να επαναφέρετε το κατάστημα ευρετηρίου συμβάντων",
-    "You're all caught up.": "Είστε πλήρως ενημερωμένοι.",
     "Hold": "Αναμονή",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
@@ -3380,7 +3358,15 @@
         "update_power_level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
         "unknown": "Άγνωστο σφάλμα",
         "dialog_description_default": "Παρουσιάστηκε ένα σφάλμα.",
-        "edit_history_unsupported": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα."
+        "edit_history_unsupported": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
+        "session_restore": {
+            "clear_storage_description": "Αποσύνδεση και κατάργηση κλειδιών κρυπτογράφησης;",
+            "clear_storage_button": "Εκκαθάριση Χώρου αποθήκευσης και Αποσύνδεση",
+            "title": "Αδυναμία επαναφοράς συνεδρίας",
+            "description_1": "Αντιμετωπίσαμε ένα σφάλμα κατά την επαναφορά της προηγούμενης συνεδρίας σας.",
+            "description_2": "Αν χρησιμοποιούσατε προηγουμένως μια πιο πρόσφατη έκδοση του %(brand)s, η συνεδρία σας ίσως είναι μη συμβατή με αυτήν την έκδοση. Κλείστε αυτό το παράθυρο και επιστρέψτε στην πιο πρόσφατη έκδοση.",
+            "description_3": "Η εκκαθάριση του αποθηκευτικού χώρου του προγράμματος περιήγησής σας μπορεί να διορθώσει το πρόβλημα, αλλά θα αποσυνδεθείτε και θα κάνει τυχόν κρυπτογραφημένο ιστορικό συνομιλιών να μην είναι αναγνώσιμο."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -3612,7 +3598,11 @@
         "warning_kind_files_app": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα αρχεία",
         "warning_kind_search_app": "Χρησιμοποιήστε την <a>εφαρμογή για υπολογιστή</a> για να δείτε όλα τα κρυπτογραφημένα μηνύματα",
         "warning_kind_files": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την προβολή ορισμένων κρυπτογραφημένων αρχείων",
-        "warning_kind_search": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την αναζήτηση κρυπτογραφημένων μηνυμάτων"
+        "warning_kind_search": "Αυτή η έκδοση του %(brand)s δεν υποστηρίζει την αναζήτηση κρυπτογραφημένων μηνυμάτων",
+        "reset_title": "Eπαναφoρά στο κατάστημα συμβάντων;",
+        "reset_description": "Πιθανότατα δεν θέλετε να επαναφέρετε το κατάστημα ευρετηρίου συμβάντων",
+        "reset_explainer": "Εάν το κάνετε, σημειώστε ότι κανένα από τα μηνύματά σας δε θα διαγραφεί, αλλά η εμπειρία αναζήτησης ενδέχεται να υποβαθμιστεί για λίγα λεπτά κατά τη δημιουργία του ευρετηρίου",
+        "reset_button": "Επαναφορά καταστήματος συμβάντων"
     },
     "truncated_list_n_more": {
         "other": "Και %(count)s ακόμα..."
@@ -3658,5 +3648,19 @@
         "resync_description": "Το %(brand)s χρησιμοποιεί πλέον 3-5 φορές λιγότερη μνήμη, φορτώνοντας πληροφορίες για άλλους χρήστες μόνο όταν χρειάζεται. Περιμένετε όσο γίνεται εκ νέου συγχρονισμός με τον διακομιστή!",
         "resync_title": "Ενημέρωση %(brand)s"
     },
-    "message_edit_dialog_title": "Επεξεργασίες μηνυμάτων"
+    "message_edit_dialog_title": "Επεξεργασίες μηνυμάτων",
+    "server_offline": {
+        "empty_timeline": "Είστε πλήρως ενημερωμένοι.",
+        "title": "Ο διακομιστής δεν ανταποκρίνεται",
+        "description": "Ο διακομιστής σας δεν ανταποκρίνεται σε ορισμένα από τα αιτήματά σας. Παρακάτω είναι μερικοί από τους πιο πιθανούς λόγους.",
+        "description_1": "Ο διακομιστής (%(serverName)s) έκανε πολύ χρόνο να ανταποκριθεί.",
+        "description_2": "Το τείχος προστασίας ή το πρόγραμμα προστασίας από ιούς μπλοκάρει το αίτημα.",
+        "description_3": "Μια επέκταση προγράμματος περιήγησης αποτρέπει το αίτημα.",
+        "description_4": "Ο διακομιστής είναι εκτός σύνδεσης.",
+        "description_5": "Ο διακομιστής απέρριψε το αίτημά σας.",
+        "description_6": "Η περιοχή σας αντιμετωπίζει δυσκολίες σύνδεσης στο διαδίκτυο.",
+        "description_7": "Παρουσιάστηκε σφάλμα σύνδεσης κατά την προσπάθεια επικοινωνίας με τον διακομιστή.",
+        "description_8": "Ο διακομιστής δεν έχει ρυθμιστεί για να υποδεικνύει ποιο είναι το πρόβλημα (CORS).",
+        "recent_changes_heading": "Πρόσφατες αλλαγές που δεν έχουν ληφθεί ακόμη"
+    }
 }

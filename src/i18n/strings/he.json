@@ -459,25 +459,7 @@
     "This will allow you to reset your password and receive notifications.": "זה יאפשר לך לאפס את הסיסמה שלך ולקבל התראות.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "אנא בדוק את הדוא\"ל שלך ולחץ על הקישור שהוא מכיל. לאחר שתסיים, לחץ על המשך.",
     "Verification Pending": "אימות בהמתנה",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "ניקוי שטח האחסון של הדפדפן עשוי לפתור את הבעיה, אך ינתק אתכם ויגרום לכל היסטוריית צ'אט מוצפנת להיות בלתי קריאה.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "אם השתמשת בעבר בגרסה עדכנית יותר של %(brand)s, ייתכן שההפעלה שלך אינה תואמת לגרסה זו. סגרו חלון זה וחזרו לגרסה העדכנית יותר.",
-    "We encountered an error trying to restore your previous session.": "נתקלנו בשגיאה בניסיון לשחזר את ההפעלה הקודמת שלך.",
-    "Unable to restore session": "לא ניתן לשחזר את ההפעלה",
     "Send Logs": "שלח יומנים",
-    "Clear Storage and Sign Out": "נקה אחסון והתנתק",
-    "Sign out and remove encryption keys?": "להתנתק ולהסיר מפתחות הצפנה?",
-    "Recent changes that have not yet been received": "שינויים אחרונים שטרם התקבלו",
-    "The server is not configured to indicate what the problem is (CORS).": "השרת אינו מוגדר לציין מהי הבעיה (CORS).",
-    "A connection error occurred while trying to contact the server.": "אירעה שגיאת חיבור בעת ניסיון ליצור קשר עם השרת.",
-    "Your area is experiencing difficulties connecting to the internet.": "האזור שלך חווה קשיים בחיבור לאינטרנט.",
-    "The server has denied your request.": "השרת דחה את בקשתך.",
-    "The server is offline.": "השרת לא מקוון.",
-    "A browser extension is preventing the request.": "סיומת דפדפן מונעת את הבקשה.",
-    "Your firewall or anti-virus is blocking the request.": "חומת האש או האנטי-וירוס שלך חוסמים את הבקשה.",
-    "The server (%(serverName)s) took too long to respond.": "לשרת (%(serverName)s) לקח יותר מדי זמן להגיב.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "השרת שלך לא מגיב לחלק מהבקשות שלך. להלן כמה מהסיבות הסבירות ביותר.",
-    "Server isn't responding": "השרת לא מגיב",
-    "You're all caught up.": "כולכם נתפסתם.",
     "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
     "a key signature": "חתימת מפתח",
     "a new cross-signing key signature": "חתימת מפתח צולבת חדשה",
@@ -2888,7 +2870,15 @@
         "update_power_level": "שינוי דרגת מנהל נכשל",
         "unknown": "שגיאה לא ידועה",
         "dialog_description_default": "קרתה שגיאה.",
-        "edit_history_unsupported": "נראה ששרת הבית שלך אינו תומך בתכונה זו."
+        "edit_history_unsupported": "נראה ששרת הבית שלך אינו תומך בתכונה זו.",
+        "session_restore": {
+            "clear_storage_description": "להתנתק ולהסיר מפתחות הצפנה?",
+            "clear_storage_button": "נקה אחסון והתנתק",
+            "title": "לא ניתן לשחזר את ההפעלה",
+            "description_1": "נתקלנו בשגיאה בניסיון לשחזר את ההפעלה הקודמת שלך.",
+            "description_2": "אם השתמשת בעבר בגרסה עדכנית יותר של %(brand)s, ייתכן שההפעלה שלך אינה תואמת לגרסה זו. סגרו חלון זה וחזרו לגרסה העדכנית יותר.",
+            "description_3": "ניקוי שטח האחסון של הדפדפן עשוי לפתור את הבעיה, אך ינתק אתכם ויגרום לכל היסטוריית צ'אט מוצפנת להיות בלתי קריאה."
+        }
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3136,5 +3126,19 @@
         "resync_description": "%(brand)s משתמש כעת בזכרון פחות פי 3-5, על ידי טעינת מידע רק על משתמשים אחרים בעת הצורך. אנא המתן בזמן שאנחנו מסתנכרנים מחדש עם השרת!",
         "resync_title": "מעדכן %(brand)s"
     },
-    "message_edit_dialog_title": "עריכת הודעות"
+    "message_edit_dialog_title": "עריכת הודעות",
+    "server_offline": {
+        "empty_timeline": "כולכם נתפסתם.",
+        "title": "השרת לא מגיב",
+        "description": "השרת שלך לא מגיב לחלק מהבקשות שלך. להלן כמה מהסיבות הסבירות ביותר.",
+        "description_1": "לשרת (%(serverName)s) לקח יותר מדי זמן להגיב.",
+        "description_2": "חומת האש או האנטי-וירוס שלך חוסמים את הבקשה.",
+        "description_3": "סיומת דפדפן מונעת את הבקשה.",
+        "description_4": "השרת לא מקוון.",
+        "description_5": "השרת דחה את בקשתך.",
+        "description_6": "האזור שלך חווה קשיים בחיבור לאינטרנט.",
+        "description_7": "אירעה שגיאת חיבור בעת ניסיון ליצור קשר עם השרת.",
+        "description_8": "השרת אינו מוגדר לציין מהי הבעיה (CORS).",
+        "recent_changes_heading": "שינויים אחרונים שטרם התקבלו"
+    }
 }

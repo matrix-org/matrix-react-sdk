@@ -50,8 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "richiudi",
     "expand": "espandi",
-    "Unable to restore session": "Impossibile ripristinare la sessione",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se hai usato precedentemente una versione più recente di %(brand)s, la tua sessione potrebbe essere incompatibile con questa versione. Chiudi questa finestra e torna alla versione più recente.",
     "Verification Pending": "In attesa di verifica",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Controlla la tua email e clicca il link contenuto. Una volta fatto, clicca continua.",
     "This will allow you to reset your password and receive notifications.": "Ciò ti permetterà di reimpostare la tua password e ricevere notifiche.",
@@ -65,10 +63,7 @@
     "Wednesday": "Mercoledì",
     "Thursday": "Giovedì",
     "Yesterday": "Ieri",
-    "We encountered an error trying to restore your previous session.": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
-    "Clear Storage and Sign Out": "Elimina l'archiviazione e disconnetti",
     "Send Logs": "Invia i log",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Eliminare l'archiviazione del browser potrebbe risolvere il problema, ma verrai disconnesso e la cronologia delle chat criptate sarà illeggibile.",
     "Share Room": "Condividi stanza",
     "Link to most recent message": "Link al messaggio più recente",
     "Share User": "Condividi utente",
@@ -144,7 +139,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
     "edited": "modificato",
-    "Sign out and remove encryption keys?": "Disconnettere e rimuovere le chiavi di crittografia?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Per aiutarci a prevenire questa cosa in futuro, <a>inviaci i log</a>.",
     "Missing session data": "Dati di sessione mancanti",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Alcuni dati di sessione, incluse le chiavi dei messaggi cifrati, sono mancanti. Esci e riaccedi per risolvere, ripristinando le chiavi da un backup.",
@@ -216,18 +210,6 @@
     "Security Phrase": "Frase di sicurezza",
     "Security Key": "Chiave di sicurezza",
     "Use your Security Key to continue.": "Usa la tua chiave di sicurezza per continuare.",
-    "You're all caught up.": "Non hai nulla di nuovo da vedere.",
-    "Server isn't responding": "Il server non risponde",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Il tuo server non sta rispondendo ad alcune tue richieste. Sotto trovi alcuni probabili motivi.",
-    "The server (%(serverName)s) took too long to respond.": "Il server (%(serverName)s) ha impiegato troppo tempo per rispondere.",
-    "Your firewall or anti-virus is blocking the request.": "Il tuo firewall o antivirus sta bloccando la richiesta.",
-    "A browser extension is preventing the request.": "Un'estensione del browser sta impedendo la richiesta.",
-    "The server is offline.": "Il server è offline.",
-    "The server has denied your request.": "Il server ha negato la tua richiesta.",
-    "Your area is experiencing difficulties connecting to the internet.": "La tua area sta riscontrando difficoltà di connessione a internet.",
-    "A connection error occurred while trying to contact the server.": "Si è verificato un errore di connessione tentando di contattare il server.",
-    "The server is not configured to indicate what the problem is (CORS).": "Il server non è configurato per indicare qual è il problema (CORS).",
-    "Recent changes that have not yet been received": "Modifiche recenti che non sono ancora state ricevute",
     "Backup version:": "Versione backup:",
     "Not encrypted": "Non cifrato",
     "Unable to set up keys": "Impossibile impostare le chiavi",
@@ -519,14 +501,10 @@
         "other": "%(count)s persone che conosci sono già entrate",
         "one": "%(count)s persona che conosci è già entrata"
     },
-    "You most likely do not want to reset your event index store": "Probabilmente non hai bisogno di reinizializzare il tuo archivio indice degli eventi",
-    "Reset event store?": "Reinizializzare l'archivio eventi?",
-    "Reset event store": "Reinizializza archivio eventi",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se reimposti tutto, ricomincerai senza sessioni fidate, senza utenti fidati e potresti non riuscire a vedere i messaggi passati.",
     "Only do this if you have no other device to complete verification with.": "Fallo solo se non hai altri dispositivi con cui completare la verifica.",
     "Reset everything": "Reimposta tutto",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hai dimenticato o perso tutti i metodi di recupero? <a>Reimposta tutto</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
     "To join a space you'll need an invite.": "Per entrare in uno spazio ti serve un invito.",
     "%(count)s reply": {
         "one": "%(count)s risposta",
@@ -4049,7 +4027,15 @@
         "update_power_level": "Cambio di livello poteri fallito",
         "unknown": "Errore sconosciuto",
         "dialog_description_default": "Si è verificato un errore.",
-        "edit_history_unsupported": "Il tuo homeserver non sembra supportare questa funzione."
+        "edit_history_unsupported": "Il tuo homeserver non sembra supportare questa funzione.",
+        "session_restore": {
+            "clear_storage_description": "Disconnettere e rimuovere le chiavi di crittografia?",
+            "clear_storage_button": "Elimina l'archiviazione e disconnetti",
+            "title": "Impossibile ripristinare la sessione",
+            "description_1": "Abbiamo riscontrato un errore tentando di ripristinare la tua sessione precedente.",
+            "description_2": "Se hai usato precedentemente una versione più recente di %(brand)s, la tua sessione potrebbe essere incompatibile con questa versione. Chiudi questa finestra e torna alla versione più recente.",
+            "description_3": "Eliminare l'archiviazione del browser potrebbe risolvere il problema, ma verrai disconnesso e la cronologia delle chat criptate sarà illeggibile."
+        }
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4323,7 +4309,11 @@
         "warning_kind_files_app": "Usa <a>l'app desktop</a> per vedere tutti i file cifrati",
         "warning_kind_search_app": "Usa <a>l'app desktop</a> per cercare i messaggi cifrati",
         "warning_kind_files": "Questa versione di %(brand)s non supporta la visualizzazione di alcuni file cifrati",
-        "warning_kind_search": "Questa versione di %(brand)s non supporta la ricerca di messaggi cifrati"
+        "warning_kind_search": "Questa versione di %(brand)s non supporta la ricerca di messaggi cifrati",
+        "reset_title": "Reinizializzare l'archivio eventi?",
+        "reset_description": "Probabilmente non hai bisogno di reinizializzare il tuo archivio indice degli eventi",
+        "reset_explainer": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
+        "reset_button": "Reinizializza archivio eventi"
     },
     "truncated_list_n_more": {
         "other": "E altri %(count)s ..."
@@ -4380,5 +4370,19 @@
         "resync_description": "%(brand)s ora usa da 3 a 5 volte meno memoria, caricando le informazioni degli altri utenti solo quando serve. Si prega di attendere mentre ci risincronizziamo con il server!",
         "resync_title": "Aggiornamento di %(brand)s"
     },
-    "message_edit_dialog_title": "Modifiche del messaggio"
+    "message_edit_dialog_title": "Modifiche del messaggio",
+    "server_offline": {
+        "empty_timeline": "Non hai nulla di nuovo da vedere.",
+        "title": "Il server non risponde",
+        "description": "Il tuo server non sta rispondendo ad alcune tue richieste. Sotto trovi alcuni probabili motivi.",
+        "description_1": "Il server (%(serverName)s) ha impiegato troppo tempo per rispondere.",
+        "description_2": "Il tuo firewall o antivirus sta bloccando la richiesta.",
+        "description_3": "Un'estensione del browser sta impedendo la richiesta.",
+        "description_4": "Il server è offline.",
+        "description_5": "Il server ha negato la tua richiesta.",
+        "description_6": "La tua area sta riscontrando difficoltà di connessione a internet.",
+        "description_7": "Si è verificato un errore di connessione tentando di contattare il server.",
+        "description_8": "Il server non è configurato per indicare qual è il problema (CORS).",
+        "recent_changes_heading": "Modifiche recenti che non sono ancora state ricevute"
+    }
 }

@@ -56,23 +56,18 @@
     "collapse": "tkurre",
     "expand": "zgjeroje",
     "Verification Pending": "Verifikim Në Pritje të Miratimit",
-    "Unable to restore session": "S’arrihet të rikthehet sesioni",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
     "(~%(count)s results)": {
         "other": "(~%(count)s përfundime)",
         "one": "(~%(count)s përfundim)"
     },
     "Delete Widget": "Fshije Widget-in",
-    "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
     "Send Logs": "Dërgo regjistra",
     "Link to most recent message": "Lidhje për te mesazhet më të freskët",
     "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës.",
-    "We encountered an error trying to restore your previous session.": "Hasëm një gabim teksa provohej të rikthehej sesioni juaj i dikurshëm.",
     "This will allow you to reset your password and receive notifications.": "Kjo do t’ju lejojë të ricaktoni fjalëkalimin tuaj dhe të merrni njoftime.",
     "Unable to load backup status": "S’arrihet të ngarkohet gjendje kopjeruajtjeje",
     "Unable to restore backup": "S’arrihet të rikthehet kopjeruajtje",
@@ -140,7 +135,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
     "Scissors": "Gërshërë",
     "edited": "e përpunuar",
-    "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
     "Missing session data": "Mungojnë të dhëna sesioni",
     "Upload files": "Ngarko kartela",
     "Upload %(count)s other files": {
@@ -215,17 +209,6 @@
     "Security Phrase": "Frazë Sigurie",
     "Security Key": "Kyç Sigurie",
     "Use your Security Key to continue.": "Që të vazhdohet përdorni Kyçin tuaj të Sigurisë.",
-    "Server isn't responding": "Shërbyesi s’po përgjigjet",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Shërbyesi juaj s’po u përgjigjet disa kërkesave nga ju. Më poshtë gjenden disa nga arsyet më të mundshme.",
-    "The server (%(serverName)s) took too long to respond.": "Shërbyesi (%(serverName)s) e zgjati shumë përgjigjen.",
-    "Your firewall or anti-virus is blocking the request.": "Kërkesën po e bllokon firewall-i ose anti-virus-i juaj.",
-    "A browser extension is preventing the request.": "Kërkesën po e pengon një zgjerim i shfletuesit.",
-    "The server is offline.": "Shërbyesi është jashtë funksionimi.",
-    "The server has denied your request.": "Shërbyesi e ka hedhur poshtë kërkesën tuaj.",
-    "Your area is experiencing difficulties connecting to the internet.": "Zona juaj po ka probleme lidhjeje në internet.",
-    "A connection error occurred while trying to contact the server.": "Ndodhi një gabim teksa provohej lidhja me shërbyesin.",
-    "The server is not configured to indicate what the problem is (CORS).": "Shërbyesi s’është formësuar të tregojë se cili është problemi (CORS).",
-    "Recent changes that have not yet been received": "Ndryshime tani së fundi që s’janë marrë ende",
     "Not encrypted": "Jo e fshehtëzuar",
     "Backup version:": "Version kopjeruajtjeje:",
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
@@ -513,7 +496,6 @@
         "other": "%(count)s dhoma"
     },
     "Failed to start livestream": "S’u arrit të nisej transmetim i drejtpërdrejtë",
-    "You're all caught up.": "Jeni në rregull.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s person që e njihni është bërë pjesë tashmë",
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
@@ -522,7 +504,6 @@
     "Only do this if you have no other device to complete verification with.": "Bëjeni këtë vetëm nëse s’keni pajisje tjetër me të cilën të plotësoni verifikimin.",
     "Reset everything": "Kthe gjithçka te parazgjedhjet",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "%(count)s reply": {
@@ -533,9 +514,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
     "Thread options": "Mundësi rrjedhe",
     "Forget": "Harroje",
-    "Reset event store": "Riktheje te parazgjedhjet arkivin e akteve",
-    "You most likely do not want to reset your event index store": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
-    "Reset event store?": "Të rikthehet te parazgjedhjet arkivi i akteve?",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
@@ -3938,7 +3916,15 @@
         "update_power_level": "S’u arrit të ndryshohej shkalla e pushtetit",
         "unknown": "Gabim i panjohur",
         "dialog_description_default": "Ndodhi një gabim.",
-        "edit_history_unsupported": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori."
+        "edit_history_unsupported": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori.",
+        "session_restore": {
+            "clear_storage_description": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
+            "clear_storage_button": "Spastro Depon dhe Dil",
+            "title": "S’arrihet të rikthehet sesioni",
+            "description_1": "Hasëm një gabim teksa provohej të rikthehej sesioni juaj i dikurshëm.",
+            "description_2": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
+            "description_3": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës."
+        }
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4211,7 +4197,11 @@
         "warning_kind_files_app": "Që të shihni krejt kartelat e fshehtëzuara, përdorni <a>aplikacionin për Desktop</a>",
         "warning_kind_search_app": "Që të kërkoni te mesazhe të fshehtëzuar, përdorni <a>aplikacionin për Desktop</a>",
         "warning_kind_files": "Ky version i %(brand)s nuk mbulon parjen për disa kartela të fshehtëzuara",
-        "warning_kind_search": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar"
+        "warning_kind_search": "Ky version i %(brand)s nuk mbulon kërkimin në mesazhe të fshehtëzuar",
+        "reset_title": "Të rikthehet te parazgjedhjet arkivi i akteve?",
+        "reset_description": "Gjasat janë të mos doni të riktheni te parazgjedhjet arkivin e indeksimit të akteve",
+        "reset_explainer": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
+        "reset_button": "Riktheje te parazgjedhjet arkivin e akteve"
     },
     "truncated_list_n_more": {
         "other": "Dhe %(count)s të tjerë…"
@@ -4266,5 +4256,19 @@
         "resync_description": "%(brand)s-i tani përdor 3 deri 5 herë më pak kujtesë, duke ngarkuar të dhëna mbi përdorues të tjerë vetëm kur duhen. Ju lutemi, prisni, teksa njëkohësojmë të dhënat me shërbyesin!",
         "resync_title": "%(brand)s-i po përditësohet"
     },
-    "message_edit_dialog_title": "Përpunime mesazhi"
+    "message_edit_dialog_title": "Përpunime mesazhi",
+    "server_offline": {
+        "empty_timeline": "Jeni në rregull.",
+        "title": "Shërbyesi s’po përgjigjet",
+        "description": "Shërbyesi juaj s’po u përgjigjet disa kërkesave nga ju. Më poshtë gjenden disa nga arsyet më të mundshme.",
+        "description_1": "Shërbyesi (%(serverName)s) e zgjati shumë përgjigjen.",
+        "description_2": "Kërkesën po e bllokon firewall-i ose anti-virus-i juaj.",
+        "description_3": "Kërkesën po e pengon një zgjerim i shfletuesit.",
+        "description_4": "Shërbyesi është jashtë funksionimi.",
+        "description_5": "Shërbyesi e ka hedhur poshtë kërkesën tuaj.",
+        "description_6": "Zona juaj po ka probleme lidhjeje në internet.",
+        "description_7": "Ndodhi një gabim teksa provohej lidhja me shërbyesin.",
+        "description_8": "Shërbyesi s’është formësuar të tregojë se cili është problemi (CORS).",
+        "recent_changes_heading": "Ndryshime tani së fundi që s’janë marrë ende"
+    }
 }

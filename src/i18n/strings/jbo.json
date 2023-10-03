@@ -109,7 +109,6 @@
     },
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
-    "Sign out and remove encryption keys?": ".i xu do djica lo nu co'u jaspu do je lo nu tolmo'i le du'u mifra ckiku",
     "Upload %(count)s other files": {
         "one": "nu kibdu'a %(count)s vreji poi na du"
     },
@@ -508,7 +507,10 @@
     "error": {
         "mau": ".i le samtcise'u cu bancu lo masti jimte be ri bei lo ni ca'o pilno",
         "resource_limits": ".i le samtcise'u cu bancu pa lo jimte be ri",
-        "update_power_level": ".i pu fliba lo nu gafygau lo ni vlipa"
+        "update_power_level": ".i pu fliba lo nu gafygau lo ni vlipa",
+        "session_restore": {
+            "clear_storage_description": ".i xu do djica lo nu co'u jaspu do je lo nu tolmo'i le du'u mifra ckiku"
+        }
     },
     "room": {
         "error_join_incompatible_version_2": ".i .e'o ko tavla lo admine be le samtcise'u",

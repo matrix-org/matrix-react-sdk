@@ -49,8 +49,6 @@
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
     "expand": "etendi",
-    "Unable to restore session": "Salutaĵo ne rehaveblas",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se vi antaŭe uzis pli novan version de %(brand)s, via salutaĵo eble ne akordos kun ĉi tiu versio. Fermu ĉi tiun fenestron kaj revenu al la pli nova versio.",
     "Verification Pending": "Atendante kontrolon",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bonvolu kontroli vian retpoŝton, kaj klaki la ligilon enhavatan en la sendita mesaĝo. Farinte tion, klaku je «daŭrigi».",
     "This will allow you to reset your password and receive notifications.": "Tio ĉi permesos al vi restarigi vian pasvorton kaj ricevi sciigojn.",
@@ -131,7 +129,6 @@
     "Thumbs up": "Dikfingro supren",
     "Paperclip": "Paperkuntenilo",
     "edited": "redaktita",
-    "Sign out and remove encryption keys?": "Ĉu adiaŭi kaj forigi ĉifrajn ŝlosilojn?",
     "Send Logs": "Sendi protokolon",
     "Link to most recent message": "Ligi al plej freŝa mesaĝo",
     "Link to selected message": "Ligi al elektita mesaĝo",
@@ -152,9 +149,6 @@
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Clear Storage and Sign Out": "Vakigi memoron kaj adiaŭi",
-    "We encountered an error trying to restore your previous session.": "Ni renkontis eraron provante rehavi vian antaŭan salutaĵon.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vakigo de la memoro de via foliumilo eble korektos la problemon, sed adiaŭigos vin, kaj malebligos legadon de historio de ĉifritaj babiloj.",
     "Missing session data": "Mankas datumoj de salutaĵo",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Iuj datumoj de salutaĵo, inkluzive viajn ĉifrajn ŝlosilojn, mankas. Por tion korekti, resalutu, kaj rehavu la ŝlosilojn el savkopio.",
     "Your browser likely removed this data when running low on disk space.": "Via foliumilo verŝajne forigos ĉi tiujn datumojn kiam al ĝi mankos spaco sur disko.",
@@ -216,19 +210,7 @@
     "Security Key": "Sekureca ŝlosilo",
     "Use your Security Key to continue.": "Uzu vian sekurecan ŝlosilon por daŭrigi.",
     "Switch theme": "Ŝalti haŭton",
-    "Server isn't responding": "Servilo ne respondas",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Via servilo ne respondas al iuj el viaj petoj. Vidu sube kelkon de la plej verŝajnaj kialoj.",
-    "The server (%(serverName)s) took too long to respond.": "La servilo (%(serverName)s) tro longe ne respondis.",
-    "Your firewall or anti-virus is blocking the request.": "Via fajroŝirmilo aŭ kontraŭvirusilo blokas la peton.",
-    "A browser extension is preventing the request.": "Kromprogramo de la foliumilo malhelpas la peton.",
-    "The server is offline.": "La servilo estas eksterreta.",
-    "The server has denied your request.": "La servilo rifuzis vian peton.",
-    "Your area is experiencing difficulties connecting to the internet.": "Via loko nun havas problemojn pri interreta konekto.",
-    "A connection error occurred while trying to contact the server.": "Eraris konekto dum provo kontakti la servilon.",
-    "The server is not configured to indicate what the problem is (CORS).": "La servilo ne estas agordita por indiki la problemon (CORS).",
-    "Recent changes that have not yet been received": "Freŝaj ŝanĝoj ankoraŭ ne ricevitaj",
     "Unable to set up keys": "Ne povas agordi ŝlosilojn",
-    "You're all caught up.": "Sen sciigoj.",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
     "Uzbekistan": "Uzbekujo",
@@ -523,10 +505,6 @@
     "Only do this if you have no other device to complete verification with.": "Faru tion ĉi nur se vi ne havas alian aparaton, per kiu vi kontrolus ceterajn.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Ĉu vi forgesis aŭ perdis ĉiujn manierojn de rehavo? <a>Restarigu ĉion</a>",
     "Reset everything": "Restarigi ĉion",
-    "Reset event store": "Restarigi deponejon de okazoj",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se vi tamen tion faras, sciu ke neniu el viaj mesaĝoj foriĝos, sed via sperto pri serĉado povas malboniĝi momente, dum la indekso estas refarata",
-    "You most likely do not want to reset your event index store": "Plej verŝajne, vi ne volas restarigi vian deponejon de indeksoj de okazoj",
-    "Reset event store?": "Ĉu restarigi deponejon de okazoj?",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
@@ -3087,7 +3065,15 @@
         "update_power_level": "Malsukcesis ŝanĝi povnivelon",
         "unknown": "Nekonata eraro",
         "dialog_description_default": "Okazis eraro.",
-        "edit_history_unsupported": "Via hejmservilo ŝajne ne subtenas ĉi tiun funkcion."
+        "edit_history_unsupported": "Via hejmservilo ŝajne ne subtenas ĉi tiun funkcion.",
+        "session_restore": {
+            "clear_storage_description": "Ĉu adiaŭi kaj forigi ĉifrajn ŝlosilojn?",
+            "clear_storage_button": "Vakigi memoron kaj adiaŭi",
+            "title": "Salutaĵo ne rehaveblas",
+            "description_1": "Ni renkontis eraron provante rehavi vian antaŭan salutaĵon.",
+            "description_2": "Se vi antaŭe uzis pli novan version de %(brand)s, via salutaĵo eble ne akordos kun ĉi tiu versio. Fermu ĉi tiun fenestron kaj revenu al la pli nova versio.",
+            "description_3": "Vakigo de la memoro de via foliumilo eble korektos la problemon, sed adiaŭigos vin, kaj malebligos legadon de historio de ĉifritaj babiloj."
+        }
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3281,7 +3267,11 @@
         "warning_kind_files_app": "Uzu la <a>labortablan aplikaĵon</a> por vidi ĉiujn ĉifritajn dosierojn",
         "warning_kind_search_app": "Uzu la <a>labortablan aplikaĵon</a> por serĉi ĉifritajn mesaĝojn",
         "warning_kind_files": "Ĉi tiu versio de %(brand)s ne subtenas montradon de iuj ĉifritaj dosieroj",
-        "warning_kind_search": "Ĉi tiu versio de %(brand)s ne subtenas serĉadon de ĉifritaj mesaĝoj"
+        "warning_kind_search": "Ĉi tiu versio de %(brand)s ne subtenas serĉadon de ĉifritaj mesaĝoj",
+        "reset_title": "Ĉu restarigi deponejon de okazoj?",
+        "reset_description": "Plej verŝajne, vi ne volas restarigi vian deponejon de indeksoj de okazoj",
+        "reset_explainer": "Se vi tamen tion faras, sciu ke neniu el viaj mesaĝoj foriĝos, sed via sperto pri serĉado povas malboniĝi momente, dum la indekso estas refarata",
+        "reset_button": "Restarigi deponejon de okazoj"
     },
     "truncated_list_n_more": {
         "other": "Kaj %(count)s pliaj…"
@@ -3326,5 +3316,19 @@
         "resync_description": "%(brand)s nun uzas 3–5-oble malpli da memoro, ĉar ĝi enlegas informojn pri aliaj uzantoj nur tiam, kiam ĝi bezonas. Bonvolu atendi ĝis ni respegulos la servilon!",
         "resync_title": "Ĝisdatigante %(brand)s"
     },
-    "message_edit_dialog_title": "Redaktoj de mesaĝoj"
+    "message_edit_dialog_title": "Redaktoj de mesaĝoj",
+    "server_offline": {
+        "empty_timeline": "Sen sciigoj.",
+        "title": "Servilo ne respondas",
+        "description": "Via servilo ne respondas al iuj el viaj petoj. Vidu sube kelkon de la plej verŝajnaj kialoj.",
+        "description_1": "La servilo (%(serverName)s) tro longe ne respondis.",
+        "description_2": "Via fajroŝirmilo aŭ kontraŭvirusilo blokas la peton.",
+        "description_3": "Kromprogramo de la foliumilo malhelpas la peton.",
+        "description_4": "La servilo estas eksterreta.",
+        "description_5": "La servilo rifuzis vian peton.",
+        "description_6": "Via loko nun havas problemojn pri interreta konekto.",
+        "description_7": "Eraris konekto dum provo kontakti la servilon.",
+        "description_8": "La servilo ne estas agordita por indiki la problemon (CORS).",
+        "recent_changes_heading": "Freŝaj ŝanĝoj ankoraŭ ne ricevitaj"
+    }
 }

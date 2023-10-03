@@ -43,8 +43,6 @@
         "one": "(~%(count)s wynik)",
         "other": "(~%(count)s wyników)"
     },
-    "Unable to restore session": "Przywrócenie sesji jest niemożliwe",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Restricted": "Ograniczony",
     "Unnamed room": "Pokój bez nazwy",
@@ -65,10 +63,7 @@
     "Delete Widget": "Usuń widżet",
     "collapse": "Zwiń",
     "expand": "Rozwiń",
-    "Clear Storage and Sign Out": "Wyczyść pamięć i wyloguj się",
     "Send Logs": "Wyślij dzienniki",
-    "We encountered an error trying to restore your previous session.": "Napotkaliśmy błąd podczas przywracania poprzedniej sesji.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Wyczyszczenie pamięci przeglądarki może rozwiązać problem, ale wyloguje Cię i spowoduje, że jakakolwiek zaszyfrowana historia czatu stanie się nieczytelna.",
     "Share Room": "Udostępnij pokój",
     "Link to most recent message": "Link do najnowszej wiadomości",
     "Share User": "Udostępnij użytkownika",
@@ -424,7 +419,6 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Ten plik jest <b>zbyt duży</b>, aby został wysłany. Ograniczenie wielkości plików to %(limit)s, a ten plik waży %(sizeOfThisFile)s.",
     "Your browser likely removed this data when running low on disk space.": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca.",
     "Missing session data": "Brakujące dane sesji",
-    "Sign out and remove encryption keys?": "Wylogować się i usunąć klucze szyfrowania?",
     "Failed to decrypt %(failedCount)s sessions!": "Nie udało się odszyfrować %(failedCount)s sesji!",
     "Unable to load backup status": "Nie udało się załadować stanu kopii zapasowej",
     "Backup version:": "Wersja kopii zapasowej:",
@@ -522,7 +516,6 @@
         "other": "%(count)s osób, które znasz, już dołączyło"
     },
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
-    "You're all caught up.": "Jesteś na bieżąco.",
     "Fetching keys from server…": "Pobieranie kluczy z serwera…",
     "Unable to set up keys": "Nie można ustawić kluczy",
     "Confirm encryption setup": "Potwierdź ustawienie szyfrowania",
@@ -576,21 +569,6 @@
     "Checking…": "Sprawdzanie…",
     "Command Help": "Komenda pomocy",
     "Link to room": "Link do pokoju",
-    "Reset event store": "Resetuj bank wydarzeń",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jeśli kontynuujesz, żadne wiadomości nie zostaną usunięte, lecz jakość wyszukiwania może się obniżyć na kilka miesięcy, w których indeks się zregeneruje",
-    "You most likely do not want to reset your event index store": "Najprawdopodobniej nie chcesz zresetować swojego indeksu banku wydarzeń",
-    "Reset event store?": "Zresetować bank wydarzeń?",
-    "Recent changes that have not yet been received": "Najnowsze zmiany nie zostały jeszcze wprowadzone",
-    "The server is not configured to indicate what the problem is (CORS).": "Serwer nie został skonfigurowany, aby wskazać co jest problemem (CORS).",
-    "A connection error occurred while trying to contact the server.": "Wystąpił błąd połączenia podczas próby skontaktowania się z serwerem.",
-    "Your area is experiencing difficulties connecting to the internet.": "Twoja okolica ma problemy z połączeniem do internetu.",
-    "The server has denied your request.": "Serwer odrzucił Twoje żądanie.",
-    "The server is offline.": "Serwer jest offline.",
-    "A browser extension is preventing the request.": "Rozszerzenie w przeglądarce blokuje żądanie.",
-    "Your firewall or anti-virus is blocking the request.": "Twoja zapora ogniowa lub antywirus blokują żądanie.",
-    "The server (%(serverName)s) took too long to respond.": "Serwer (%(serverName)s) zajął zbyt dużo czasu na odpowiedź.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Serwer nie odpowiada na niektóre z Twoich żądań. Poniżej przedstawiamy niektóre z prawdopodobnych powodów.",
-    "Server isn't responding": "Serwer nie odpowiada",
     "Unread email icon": "Ikona nieprzeczytanych wiadomości e-mail",
     "An error occurred while stopping your live location, please try again": "Wystąpił błąd podczas zatrzymywania Twojej lokalizacji na żywo, spróbuj ponownie",
     "An error occurred whilst sharing your live location, please try again": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo, spróbuj ponownie",
@@ -4024,7 +4002,15 @@
         "update_power_level": "Nie udało się zmienić poziomu mocy",
         "unknown": "Nieznany błąd",
         "dialog_description_default": "Wystąpił błąd.",
-        "edit_history_unsupported": "Wygląda na to, że Twój serwer domowy nie wspiera tej funkcji."
+        "edit_history_unsupported": "Wygląda na to, że Twój serwer domowy nie wspiera tej funkcji.",
+        "session_restore": {
+            "clear_storage_description": "Wylogować się i usunąć klucze szyfrowania?",
+            "clear_storage_button": "Wyczyść pamięć i wyloguj się",
+            "title": "Przywrócenie sesji jest niemożliwe",
+            "description_1": "Napotkaliśmy błąd podczas przywracania poprzedniej sesji.",
+            "description_2": "Jeśli wcześniej używałeś/aś nowszej wersji %(brand)s, Twoja sesja może być niekompatybilna z tą wersją. Zamknij to okno i powróć do nowszej wersji.",
+            "description_3": "Wyczyszczenie pamięci przeglądarki może rozwiązać problem, ale wyloguje Cię i spowoduje, że jakakolwiek zaszyfrowana historia czatu stanie się nieczytelna."
+        }
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4298,7 +4284,11 @@
         "warning_kind_files_app": "Użyj <a>aplikacji desktopowej</a>, aby zobaczyć wszystkie szyfrowane pliki",
         "warning_kind_search_app": "Używaj <a>Aplikacji desktopowej</a>, aby wyszukiwać zaszyfrowane wiadomości",
         "warning_kind_files": "Ta wersja %(brand)s nie wspiera wyświetlania niektórych plików szyfrowanych",
-        "warning_kind_search": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości"
+        "warning_kind_search": "Ta wersja %(brand)s nie obsługuje wyszukiwania zabezpieczonych wiadomości",
+        "reset_title": "Zresetować bank wydarzeń?",
+        "reset_description": "Najprawdopodobniej nie chcesz zresetować swojego indeksu banku wydarzeń",
+        "reset_explainer": "Jeśli kontynuujesz, żadne wiadomości nie zostaną usunięte, lecz jakość wyszukiwania może się obniżyć na kilka miesięcy, w których indeks się zregeneruje",
+        "reset_button": "Resetuj bank wydarzeń"
     },
     "truncated_list_n_more": {
         "other": "I %(count)s więcej…"
@@ -4355,5 +4345,19 @@
         "resync_description": "%(brand)s używa teraz 3-5x mniej pamięci, ładując informacje o innych użytkownikach tylko wtedy, gdy jest to konieczne. Poczekaj, aż ponownie zsynchronizujemy się z serwerem!",
         "resync_title": "Aktualizowanie %(brand)s"
     },
-    "message_edit_dialog_title": "Edycje wiadomości"
+    "message_edit_dialog_title": "Edycje wiadomości",
+    "server_offline": {
+        "empty_timeline": "Jesteś na bieżąco.",
+        "title": "Serwer nie odpowiada",
+        "description": "Serwer nie odpowiada na niektóre z Twoich żądań. Poniżej przedstawiamy niektóre z prawdopodobnych powodów.",
+        "description_1": "Serwer (%(serverName)s) zajął zbyt dużo czasu na odpowiedź.",
+        "description_2": "Twoja zapora ogniowa lub antywirus blokują żądanie.",
+        "description_3": "Rozszerzenie w przeglądarce blokuje żądanie.",
+        "description_4": "Serwer jest offline.",
+        "description_5": "Serwer odrzucił Twoje żądanie.",
+        "description_6": "Twoja okolica ma problemy z połączeniem do internetu.",
+        "description_7": "Wystąpił błąd połączenia podczas próby skontaktowania się z serwerem.",
+        "description_8": "Serwer nie został skonfigurowany, aby wskazać co jest problemem (CORS).",
+        "recent_changes_heading": "Najnowsze zmiany nie zostały jeszcze wprowadzone"
+    }
 }

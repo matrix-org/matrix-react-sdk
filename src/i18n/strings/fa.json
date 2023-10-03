@@ -289,11 +289,9 @@
     "Afghanistan": "افغانستان",
     "United States": "ایالات متحده",
     "United Kingdom": "انگلستان",
-    "The server has denied your request.": "سرور درخواست شما را رد کرده است.",
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
     "Be found by phone or email": "از طریق تلفن یا ایمیل پیدا شوید",
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
-    "Sign out and remove encryption keys?": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
     "Remember my selection for this widget": "انتخاب من برای این ابزارک را بخاطر بسپار",
     "Not a valid Security Key": "کلید امنیتی معتبری نیست",
     "This widget would like to:": "این ابزارک تمایل دارد:",
@@ -305,9 +303,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "رمزگشایی %(failedCount)s نشست موفقیت‌آمیز نبود!",
     "Unable to load backup status": "بارگیری و نمایش وضعیت نسخه‌ی پشتیبان امکان‌پذیر نیست",
     "Link to most recent message": "پیوند به آخرین پیام",
-    "Clear Storage and Sign Out": "فضای ذخیره‌سازی را پاک کرده و از حساب کاربری خارج شوید",
-    "The server is offline.": "سرور آفلاین است.",
-    "You're all caught up.": "همه‌ی کارها را انجام دادید.",
     "Successfully restored %(sessionCount)s keys": "کلیدهای %(sessionCount)s با موفقیت بازیابی شدند",
     "Restoring keys from backup": "بازیابی کلیدها از نسخه پشتیبان",
     "a device cross-signing signature": "کلید امضای متقابل یک دستگاه",
@@ -317,9 +312,6 @@
     },
     "Unable to restore backup": "بازیابی نسخه پشتیبان امکان پذیر نیست",
     "Link to selected message": "پیوند به پیام انتخاب شده",
-    "Unable to restore session": "امکان بازیابی نشست وجود ندارد",
-    "Reset event store": "پاک‌کردن مخزن رخداد",
-    "Reset event store?": "پاک‌کردن مخزن رخداد؟",
     "Enter Security Key": "کلید امنیتی را وارد کنید",
     "Enter Security Phrase": "عبارت امنیتی را وارد کنید",
     "Incorrect Security Phrase": "عبارت امنیتی نادرست است",
@@ -327,7 +319,6 @@
     "Invalid Security Key": "کلید امنیتی نامعتبر است",
     "Wrong Security Key": "کلید امنیتی اشتباه است",
     "Approve widget permissions": "دسترسی‌های ابزارک را تائید کنید",
-    "Server isn't responding": "سرور پاسخ نمی دهد",
     "a key signature": "یک امضای کلیدی",
     "Clear cross-signing keys": "کلیدهای امضای متقابل را پاک کن",
     "Destroy cross-signing keys?": "کلیدهای امضای متقابل نابود شود؟",
@@ -483,7 +474,6 @@
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "اگر این کار را انجام می‌دهید، لطفاً توجه داشته باشید که هیچ یک از پیام‌های شما حذف نمی‌شوند ، با این حال چون پیام‌ها مجددا ایندکس می‌شوند، ممکن است برای چند لحظه قابلیت جستجو با مشکل مواجه شود",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "حذف کلیدهای امضای متقابل دائمی است. هرکسی که او را تائید کرده‌باشید، هشدارهای امنیتی را مشاهده خواهد کرد. به احتمال زیاد نمی‌خواهید این کار را انجام دهید ، مگر هیچ دستگاهی برای امضاء متقابل از طریق آن نداشته باشید.",
     "Click the button below to confirm setting up encryption.": "برای تأیید و فعال‌سازی رمزگذاری ، روی دکمه زیر کلیک کنید.",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "دسترسی به حافظه نهان امکان‌پذیر نیست. لطفاً تأیید کنید که عبارت امنیتی صحیح را وارد کرده‌اید.",
@@ -513,18 +503,6 @@
     "This will allow you to reset your password and receive notifications.": "با این کار می‌توانید گذرواژه خود را تغییر داده و اعلان‌ها را دریافت کنید.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "لطفاً ایمیل خود را بررسی کرده و روی لینکی که برایتان ارسال شده، کلیک کنید. پس از انجام این کار، روی ادامه کلیک کنید.",
     "Verification Pending": "در انتظار تائید",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "پاک کردن فضای ذخیره‌سازی مرورگر ممکن است این مشکل را برطرف کند ، اما شما را از برنامه خارج کرده و باعث می‌شود هرگونه سابقه گفتگوی رمزشده غیرقابل خواندن باشد.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "اگر در گذشته از نسخه جدیدتر %(brand)s استفاده کرده‌اید ، نشست شما ممکن است با این نسخه ناسازگار باشد. این پنجره را بسته و به نسخه جدیدتر برگردید.",
-    "We encountered an error trying to restore your previous session.": "هنگام تلاش برای بازیابی نشست قبلی شما، با خطایی روبرو شدیم.",
-    "You most likely do not want to reset your event index store": "به احتمال زیاد نمی‌خواهید مخزن فهرست رویدادهای خود را حذف کنید",
-    "Recent changes that have not yet been received": "تغییرات اخیری که هنوز دریافت نشده‌اند",
-    "The server is not configured to indicate what the problem is (CORS).": "سرور طوری پیکربندی نشده تا نشان دهد مشکل چیست (CORS).",
-    "A connection error occurred while trying to contact the server.": "هنگام تلاش برای اتصال به سرور خطایی رخ داده است.",
-    "Your area is experiencing difficulties connecting to the internet.": "منطقه شما در اتصال به اینترنت با مشکل روبرو است.",
-    "A browser extension is preventing the request.": "پلاگینی در مرورگر مانع از ارسال درخواست می‌گردد.",
-    "Your firewall or anti-virus is blocking the request.": "دیوار آتش یا آنتی‌ویروس شما مانع از ارسال درخواست می‌شود.",
-    "The server (%(serverName)s) took too long to respond.": "زمان پاسخگویی سرور (%(serverName)s) بسیار طولانی شده‌است.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "سرور شما به برخی از درخواست‌ها پاسخ نمی‌دهد. در ادامه برخی از دلایل محتمل آن ذکر شده است.",
     "%(brand)s encountered an error during upload of:": "%(brand)s در حین بارگذاری این دچار مشکل شد:",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
@@ -2760,7 +2738,15 @@
         "update_power_level": "تغییر سطح قدرت انجام نشد",
         "unknown": "خطای ناشناخته",
         "dialog_description_default": "خطایی رخ داده است.",
-        "edit_history_unsupported": "به نظر نمی‌رسد که سرور شما از این قابلیت پشتیبانی کند."
+        "edit_history_unsupported": "به نظر نمی‌رسد که سرور شما از این قابلیت پشتیبانی کند.",
+        "session_restore": {
+            "clear_storage_description": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
+            "clear_storage_button": "فضای ذخیره‌سازی را پاک کرده و از حساب کاربری خارج شوید",
+            "title": "امکان بازیابی نشست وجود ندارد",
+            "description_1": "هنگام تلاش برای بازیابی نشست قبلی شما، با خطایی روبرو شدیم.",
+            "description_2": "اگر در گذشته از نسخه جدیدتر %(brand)s استفاده کرده‌اید ، نشست شما ممکن است با این نسخه ناسازگار باشد. این پنجره را بسته و به نسخه جدیدتر برگردید.",
+            "description_3": "پاک کردن فضای ذخیره‌سازی مرورگر ممکن است این مشکل را برطرف کند ، اما شما را از برنامه خارج کرده و باعث می‌شود هرگونه سابقه گفتگوی رمزشده غیرقابل خواندن باشد."
+        }
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2941,7 +2927,11 @@
         "warning_kind_files_app": "برای مشاهده همه پرونده های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
         "warning_kind_search_app": "برای جستجوی میان پیام‌های رمز شده از <a>نسخه دسکتاپ</a> استفاده کنید",
         "warning_kind_files": "این نسخه از %(brand)s از مشاهده برخی از پرونده های رمزگذاری شده پشتیبانی نمی کند",
-        "warning_kind_search": "این نسخه از %(brand)s از جستجوی پیام های رمزگذاری شده پشتیبانی نمی کند"
+        "warning_kind_search": "این نسخه از %(brand)s از جستجوی پیام های رمزگذاری شده پشتیبانی نمی کند",
+        "reset_title": "پاک‌کردن مخزن رخداد؟",
+        "reset_description": "به احتمال زیاد نمی‌خواهید مخزن فهرست رویدادهای خود را حذف کنید",
+        "reset_explainer": "اگر این کار را انجام می‌دهید، لطفاً توجه داشته باشید که هیچ یک از پیام‌های شما حذف نمی‌شوند ، با این حال چون پیام‌ها مجددا ایندکس می‌شوند، ممکن است برای چند لحظه قابلیت جستجو با مشکل مواجه شود",
+        "reset_button": "پاک‌کردن مخزن رخداد"
     },
     "truncated_list_n_more": {
         "other": "و %(count)s مورد بیشتر ..."
@@ -2982,5 +2972,19 @@
         "resync_description": "هم‌اکنون %(brand)s از طریق بارگیری و نمایش اطلاعات کاربران تنها در زمان‌هایی که نیاز است، حدود ۳ تا ۵ مرتبه حافظه‌ی کمتری استفاده می‌کند. لطفا تا همگام‌سازی با سرور منتظر بمانید!",
         "resync_title": "به‌روزرسانی %(brand)s"
     },
-    "message_edit_dialog_title": "ویرایش پیام"
+    "message_edit_dialog_title": "ویرایش پیام",
+    "server_offline": {
+        "empty_timeline": "همه‌ی کارها را انجام دادید.",
+        "title": "سرور پاسخ نمی دهد",
+        "description": "سرور شما به برخی از درخواست‌ها پاسخ نمی‌دهد. در ادامه برخی از دلایل محتمل آن ذکر شده است.",
+        "description_1": "زمان پاسخگویی سرور (%(serverName)s) بسیار طولانی شده‌است.",
+        "description_2": "دیوار آتش یا آنتی‌ویروس شما مانع از ارسال درخواست می‌شود.",
+        "description_3": "پلاگینی در مرورگر مانع از ارسال درخواست می‌گردد.",
+        "description_4": "سرور آفلاین است.",
+        "description_5": "سرور درخواست شما را رد کرده است.",
+        "description_6": "منطقه شما در اتصال به اینترنت با مشکل روبرو است.",
+        "description_7": "هنگام تلاش برای اتصال به سرور خطایی رخ داده است.",
+        "description_8": "سرور طوری پیکربندی نشده تا نشان دهد مشکل چیست (CORS).",
+        "recent_changes_heading": "تغییرات اخیری که هنوز دریافت نشده‌اند"
+    }
 }

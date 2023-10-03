@@ -50,12 +50,6 @@
     "Wednesday": "วันพุธ",
     "Thursday": "วันพฤหัสบดี",
     "Yesterday": "เมื่อวานนี้",
-    "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
-    "Reset event store?": "รีเซ็ตที่เก็บกิจกรรม?",
-    "The server is not configured to indicate what the problem is (CORS).": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS).",
-    "A connection error occurred while trying to contact the server.": "เกิดข้อผิดพลาดในการเชื่อมต่อขณะพยายามติดต่อกับเซิร์ฟเวอร์.",
-    "Your area is experiencing difficulties connecting to the internet.": "พื้นที่ของคุณประสบปัญหาในการเชื่อมต่ออินเทอร์เน็ต.",
-    "The server has denied your request.": "เซิร์ฟเวอร์ปฏิเสธคำขอของคุณ.",
     "Barbados": "บาร์เบโดส",
     "Bangladesh": "บังคลาเทศ",
     "Bahrain": "บาห์เรน",
@@ -641,5 +635,15 @@
     },
     "forward": {
         "send_label": "ส่ง"
+    },
+    "server_offline": {
+        "description_5": "เซิร์ฟเวอร์ปฏิเสธคำขอของคุณ.",
+        "description_6": "พื้นที่ของคุณประสบปัญหาในการเชื่อมต่ออินเทอร์เน็ต.",
+        "description_7": "เกิดข้อผิดพลาดในการเชื่อมต่อขณะพยายามติดต่อกับเซิร์ฟเวอร์.",
+        "description_8": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS)."
+    },
+    "seshat": {
+        "reset_title": "รีเซ็ตที่เก็บกิจกรรม?",
+        "reset_description": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ"
     }
 }

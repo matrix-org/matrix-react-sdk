@@ -321,17 +321,13 @@
     "Hold": "ຖື",
     "Resume": "ປະຫວັດຫຍໍ້",
     "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
-    "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
     "Send Logs": "ສົ່ງບັນທຶກ",
-    "Clear Storage and Sign Out": "ລຶບບ່ອນຈັດເກັບຂໍ້ມູນ ແລະ ອອກຈາກລະບົບ",
-    "Sign out and remove encryption keys?": "ອອກຈາກລະບົບ ແລະ ລຶບລະຫັດການເຂົ້າລະຫັດອອກບໍ?",
     "Link to most recent message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມຫຼ້າສຸດ",
     "Share Room": "ແບ່ງປັນຫ້ອງ",
     "This will allow you to reset your password and receive notifications.": "ນີ້ຈະຊ່ວຍໃຫ້ທ່ານສາມາດປັບລະຫັດຜ່ານຂອງທ່ານ ແລະ ໄດ້ຮັບການແຈ້ງເຕືອນ.",
     "Email address": "ທີ່ຢູ່ອີເມວ",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "ກະລຸນາກວດເບິ່ງອີເມວຂອງທ່ານ ແລະ ກົດໃສ່ການເຊື່ອມຕໍ່. ເມື່ອສຳເລັດແລ້ວ, ກົດສືບຕໍ່.",
     "Verification Pending": "ຢູ່ລະຫວ່າງການຢັ້ງຢືນ",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "ການລຶບລ້າງພື້ນທີ່ຈັດເກັບຂໍ້ມູນຂອງບຣາວເຊີຂອງທ່ານອາດຈະແກ້ໄຂບັນຫາໄດ້, ແຕ່ຈະເຮັດໃຫ້ທ່ານອອກຈາກລະບົບ ແລະ ເຮັດໃຫ້ປະຫວັດການສົນທະນາທີ່ເຂົ້າລະຫັດໄວ້ນັ້ນບໍ່ສາມາດອ່ານໄດ້.",
     "Not encrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
     "e.g. my-room": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ",
@@ -357,10 +353,6 @@
         "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
     },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
-    "Reset event store": "ກູ້ຄືນທີ່ຈັດເກັບ",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "ຖ້າທ່ານດຳເນິນການ, ກະລຸນາຮັບຊາບວ່າຂໍ້ຄວາມຂອງທ່ານຈະບໍ່ຖືກລຶບ, ແຕ່ການຊອກຫາອາດຈະຖືກຫຼຸດໜ້ອຍລົງເປັນເວລາສອງສາມນາທີໃນຂະນະທີ່ດັດສະນີຈະຖືກສ້າງໃໝ່",
-    "You most likely do not want to reset your event index store": "ສ່ວນຫຼາຍແລ້ວທ່ານບໍ່ຢາກຈະກູ້ຄືນດັດສະນີຂອງທ່ານ",
-    "Reset event store?": "ກູ້ຄືນການຕັ້ງຄ່າບໍ?",
     "Sign in with SSO": "ເຂົ້າສູ່ລະບົບດ້ວຍປະຕຸດຽວ ( SSO)",
     "An error occurred while stopping your live location, please try again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
     "Live until %(expiryTime)s": "ຢູ່ຈົນກ່ວາ %(expiryTime)s",
@@ -545,18 +537,6 @@
     "Butterfly": "ແມງກະເບື້ອ",
     "Octopus": "ປາຫມຶກ",
     "Deactivate account": "ປິດການນຳໃຊ້ບັນຊີ",
-    "Recent changes that have not yet been received": "ການປ່ຽນແປງຫຼ້າສຸດທີ່ຍັງບໍ່ທັນໄດ້ຮັບ",
-    "The server is not configured to indicate what the problem is (CORS).": "ເຊີບເວີບໍ່ໄດ້ຖືກຕັ້ງຄ່າເພື່ອຊີ້ບອກວ່າບັນຫາແມ່ນຫຍັງ (CORS).",
-    "A connection error occurred while trying to contact the server.": "ເກີດຄວາມຜິດພາດໃນການເຊື່ອມຕໍ່ໃນຂະນະທີ່ພະຍາຍາມຕິດຕໍ່ກັບເຊີບເວີ.",
-    "Your area is experiencing difficulties connecting to the internet.": "ພື້ນທີ່ຂອງທ່ານປະສົບກັບຄວາມຫຍຸ້ງຍາກໃນການເຊື່ອມຕໍ່ອິນເຕີເນັດ.",
-    "The server has denied your request.": "ເຊີບເວີໄດ້ປະຕິເສດຄຳຮ້ອງຂໍຂອງທ່ານ.",
-    "The server is offline.": "ເຊີບເວີອອບລາຍ.",
-    "A browser extension is preventing the request.": "ສ່ວນຂະຫຍາຍຂອງບຣາວເຊີກໍາລັງປ້ອງກັນການຮ້ອງຂໍ.",
-    "Your firewall or anti-virus is blocking the request.": "Firewall ຫຼື ໂປຣແກມປ້ອງກັນໄວຣັດ ຂອງທ່ານກຳລັງບັລອກການຮ້ອງຂໍ.",
-    "The server (%(serverName)s) took too long to respond.": "ເຊີບເວີ (%(serverName)s) ໃຊ້ເວລາດົນເກີນໄປທີ່ຈະຕອບສະໜອງ.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງຕໍ່ບາງຄຳຮ້ອງຂໍຂອງທ່ານ. ຂ້າງລຸ່ມນີ້ແມ່ນສາເຫດທີ່ເປັນໄປໄດ້ທີ່ສຸດ.",
-    "Server isn't responding": "ເຊີບເວີບໍ່ຕອບສະໜອງ",
-    "You're all caught up.": "ຕາມທັນທັງໝົດ.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "ເພື່ອລາຍງານບັນຫາຄວາມປອດໄພທີ່ກ່ຽວຂ້ອງກັບ Matrix, ກະລຸນາອ່ານ <a>ນະໂຍບາຍການເປີດເຜີຍຄວາມປອດໄພ</a> Matrix.org.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ກ່ອນທີ່ຈະສົ່ງບັນທຶກ, ທ່ານຕ້ອງ <a>ສ້າງບັນຫາ GitHub</a> ເພື່ອອະທິບາຍບັນຫາຂອງທ່ານ.",
     "a key signature": "ລາຍເຊັນຫຼັກ",
@@ -566,8 +546,6 @@
     "Link to selected message": "ເຊື່ອມຕໍ່ກັບຂໍ້ຄວາມທີ່ເລືອກ",
     "Share Room Message": "ແບ່ງປັນຂໍ້ຄວາມໃນຫ້ອງ",
     "Share User": "ແບ່ງປັນຜູ້ໃຊ້",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "ຖ້າຫາກວ່າທ່ານເຄິຍໃຊ້ເວີຊັ້ນທີ່ໃໝ່ກວ່າຂອງ %(brand)s,ລະບົບຂອງທ່ານອາດຈະບໍ່ສອດຄ່ອງກັນໄດ້ກັບເວີຊັ້ນນີ້. ປິດໜ້າຕ່າງນີ້ແລ້ວກັບຄືນໄປຫາເວີຊັ້ນຫຼ້າສຸດ.",
-    "Unable to restore session": "ບໍ່ສາມາດກູ້ລະບົບໄດ້",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -3396,7 +3374,15 @@
         "update_power_level": "ການປ່ຽນແປງລະດັບພະລັງງານບໍ່ສຳເລັດ",
         "unknown": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
         "dialog_description_default": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
-        "edit_history_unsupported": "ເບິ່ງຄືວ່າ homeserver ຂອງທ່ານບໍ່ຮອງຮັບຄຸນສົມບັດນີ້."
+        "edit_history_unsupported": "ເບິ່ງຄືວ່າ homeserver ຂອງທ່ານບໍ່ຮອງຮັບຄຸນສົມບັດນີ້.",
+        "session_restore": {
+            "clear_storage_description": "ອອກຈາກລະບົບ ແລະ ລຶບລະຫັດການເຂົ້າລະຫັດອອກບໍ?",
+            "clear_storage_button": "ລຶບບ່ອນຈັດເກັບຂໍ້ມູນ ແລະ ອອກຈາກລະບົບ",
+            "title": "ບໍ່ສາມາດກູ້ລະບົບໄດ້",
+            "description_1": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ.",
+            "description_2": "ຖ້າຫາກວ່າທ່ານເຄິຍໃຊ້ເວີຊັ້ນທີ່ໃໝ່ກວ່າຂອງ %(brand)s,ລະບົບຂອງທ່ານອາດຈະບໍ່ສອດຄ່ອງກັນໄດ້ກັບເວີຊັ້ນນີ້. ປິດໜ້າຕ່າງນີ້ແລ້ວກັບຄືນໄປຫາເວີຊັ້ນຫຼ້າສຸດ.",
+            "description_3": "ການລຶບລ້າງພື້ນທີ່ຈັດເກັບຂໍ້ມູນຂອງບຣາວເຊີຂອງທ່ານອາດຈະແກ້ໄຂບັນຫາໄດ້, ແຕ່ຈະເຮັດໃຫ້ທ່ານອອກຈາກລະບົບ ແລະ ເຮັດໃຫ້ປະຫວັດການສົນທະນາທີ່ເຂົ້າລະຫັດໄວ້ນັ້ນບໍ່ສາມາດອ່ານໄດ້."
+        }
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3630,7 +3616,11 @@
         "warning_kind_files_app": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອເບິ່ງໄຟລ໌ທີ່ຖືກເຂົ້າລະຫັດທັງໝົດ",
         "warning_kind_search_app": "ໃຊ້ <a>ແອັບເດັສທັອບ</a> ເພື່ອຊອກຫາຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້",
         "warning_kind_files": "%(brand)s ລຸ້ນນີ້ບໍ່ຮອງຮັບການເບິ່ງບາງໄຟລ໌ທີ່ເຂົ້າລະຫັດໄວ້",
-        "warning_kind_search": "ເວີຊັ້ນຂອງ %(brand)s ບໍ່ຮອງຮັບການຊອກຫາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ"
+        "warning_kind_search": "ເວີຊັ້ນຂອງ %(brand)s ບໍ່ຮອງຮັບການຊອກຫາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ",
+        "reset_title": "ກູ້ຄືນການຕັ້ງຄ່າບໍ?",
+        "reset_description": "ສ່ວນຫຼາຍແລ້ວທ່ານບໍ່ຢາກຈະກູ້ຄືນດັດສະນີຂອງທ່ານ",
+        "reset_explainer": "ຖ້າທ່ານດຳເນິນການ, ກະລຸນາຮັບຊາບວ່າຂໍ້ຄວາມຂອງທ່ານຈະບໍ່ຖືກລຶບ, ແຕ່ການຊອກຫາອາດຈະຖືກຫຼຸດໜ້ອຍລົງເປັນເວລາສອງສາມນາທີໃນຂະນະທີ່ດັດສະນີຈະຖືກສ້າງໃໝ່",
+        "reset_button": "ກູ້ຄືນທີ່ຈັດເກັບ"
     },
     "truncated_list_n_more": {
         "other": "ແລະ %(count)sອີກ..."
@@ -3676,5 +3666,19 @@
         "resync_description": "ຕອນນີ້ %(brand)s ໃຊ້ຄວາມຈຳໜ້ອຍກວ່າ 3-5x, ໂດຍການໂຫຼດຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້ອື່ນເມື່ອຕ້ອງການເທົ່ານັ້ນ. ກະລຸນາລໍຖ້າໃນຂະນະທີ່ພວກເຮົາ synchronise ກັບເຊີບເວີ!",
         "resync_title": "ກຳລັງອັບເດດ %(brand)s"
     },
-    "message_edit_dialog_title": "ແກ້ໄຂຂໍ້ຄວາມ"
+    "message_edit_dialog_title": "ແກ້ໄຂຂໍ້ຄວາມ",
+    "server_offline": {
+        "empty_timeline": "ຕາມທັນທັງໝົດ.",
+        "title": "ເຊີບເວີບໍ່ຕອບສະໜອງ",
+        "description": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງຕໍ່ບາງຄຳຮ້ອງຂໍຂອງທ່ານ. ຂ້າງລຸ່ມນີ້ແມ່ນສາເຫດທີ່ເປັນໄປໄດ້ທີ່ສຸດ.",
+        "description_1": "ເຊີບເວີ (%(serverName)s) ໃຊ້ເວລາດົນເກີນໄປທີ່ຈະຕອບສະໜອງ.",
+        "description_2": "Firewall ຫຼື ໂປຣແກມປ້ອງກັນໄວຣັດ ຂອງທ່ານກຳລັງບັລອກການຮ້ອງຂໍ.",
+        "description_3": "ສ່ວນຂະຫຍາຍຂອງບຣາວເຊີກໍາລັງປ້ອງກັນການຮ້ອງຂໍ.",
+        "description_4": "ເຊີບເວີອອບລາຍ.",
+        "description_5": "ເຊີບເວີໄດ້ປະຕິເສດຄຳຮ້ອງຂໍຂອງທ່ານ.",
+        "description_6": "ພື້ນທີ່ຂອງທ່ານປະສົບກັບຄວາມຫຍຸ້ງຍາກໃນການເຊື່ອມຕໍ່ອິນເຕີເນັດ.",
+        "description_7": "ເກີດຄວາມຜິດພາດໃນການເຊື່ອມຕໍ່ໃນຂະນະທີ່ພະຍາຍາມຕິດຕໍ່ກັບເຊີບເວີ.",
+        "description_8": "ເຊີບເວີບໍ່ໄດ້ຖືກຕັ້ງຄ່າເພື່ອຊີ້ບອກວ່າບັນຫາແມ່ນຫຍັງ (CORS).",
+        "recent_changes_heading": "ການປ່ຽນແປງຫຼ້າສຸດທີ່ຍັງບໍ່ທັນໄດ້ຮັບ"
+    }
 }

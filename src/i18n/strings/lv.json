@@ -37,8 +37,6 @@
     "Oct": "Okt.",
     "Nov": "Nov.",
     "Dec": "Dec.",
-    "Unable to restore session": "Neizdevās atjaunot sesiju",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
     "and %(count)s others...": {
         "other": "un vēl %(count)s citi...",
         "one": "un vēl viens cits..."
@@ -77,7 +75,6 @@
         "other": "%(count)s sesijas"
     },
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
-    "The server is offline.": "Serveris bezsaistē.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Ja ir aizmirsta slepenā frāze, jūs varat <button1>izmantot drošības atslēgu</button1> vai<button2>iestatīt jaunus atkopšanas veidus</button2>",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ja ir aizmirsta drošības atslēga, jūs varat <button>iestatīt jaunus atkopšanas veidus</button>",
     "Banana": "Banāns",
@@ -398,8 +395,6 @@
         "other": "Augšupielādēt %(count)s citus failus"
     },
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
-    "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
     "Recent searches": "Nesenie meklējumi",
     "To search messages, look for this icon at the top of a room <icon/>": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
     "Other searches": "Citi meklējumi",
@@ -1991,7 +1986,13 @@
         "something_went_wrong": "Kaut kas nogāja greizi!",
         "update_power_level": "Neizdevās nomainīt statusa līmeni",
         "unknown": "Nezināma kļūda",
-        "dialog_description_default": "Notikusi kļūda."
+        "dialog_description_default": "Notikusi kļūda.",
+        "session_restore": {
+            "clear_storage_button": "Iztīrīt krātuvi un izrakstīties",
+            "title": "Neizdevās atjaunot sesiju",
+            "description_2": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
+            "description_3": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2156,5 +2157,8 @@
     },
     "lazy_loading": {
         "disabled_action": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt"
+    },
+    "server_offline": {
+        "description_4": "Serveris bezsaistē."
     }
 }

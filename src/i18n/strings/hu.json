@@ -40,9 +40,7 @@
         "one": "(~%(count)s db eredmény)",
         "other": "(~%(count)s db eredmény)"
     },
-    "Unable to restore session": "A munkamenetet nem lehet helyreállítani",
     "This will allow you to reset your password and receive notifications.": "Ez lehetővé teszi, hogy vissza tudja állítani a jelszavát, és értesítéseket fogadjon.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
     "AM": "de.",
     "PM": "du.",
     "Unnamed room": "Névtelen szoba",
@@ -66,9 +64,6 @@
     "Yesterday": "Tegnap",
     "Wednesday": "Szerda",
     "Send Logs": "Naplók küldése",
-    "Clear Storage and Sign Out": "Tárhely törlése és kijelentkezés",
-    "We encountered an error trying to restore your previous session.": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "A böngésző tárolójának törlése megoldhatja a problémát, de ezzel kijelentkezik és a titkosított beszélgetéseinek előzményei olvashatatlanná válnak.",
     "Share Room": "Szoba megosztása",
     "Link to most recent message": "Hivatkozás a legfrissebb üzenethez",
     "Share User": "Felhasználó megosztása",
@@ -143,7 +138,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Figyelmeztetés</b>: csak biztonságos számítógépről állítson be kulcsmentést.",
     "Scissors": "Olló",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
-    "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>.",
     "Missing session data": "A munkamenetadatok hiányzik",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Néhány kapcsolati adat hiányzik, beleértve a titkosított üzenetek kulcsait. A hiba javításához lépjen ki és jelentkezzen be újra, így a mentésből helyreállítva a kulcsokat.",
@@ -216,18 +210,6 @@
     "Security Phrase": "Biztonsági jelmondat",
     "Security Key": "Biztonsági kulcs",
     "Use your Security Key to continue.": "Használja a biztonsági kulcsot a folytatáshoz.",
-    "You're all caught up.": "Mindennel naprakész.",
-    "Server isn't responding": "A kiszolgáló nem válaszol",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "A kiszolgálója nem válaszol egyes kéréseire. Alább látható pár lehetséges ok.",
-    "The server (%(serverName)s) took too long to respond.": "A kiszolgálónak (%(serverName)s) túl sokáig tartott, hogy válaszoljon.",
-    "Your firewall or anti-virus is blocking the request.": "A tűzfala vagy víruskeresője blokkolja a kérést.",
-    "A browser extension is preventing the request.": "Egy böngészőkiegészítő megakadályozza a kérést.",
-    "The server is offline.": "A kiszolgáló nem működik.",
-    "The server has denied your request.": "A kiszolgáló elutasította a kérést.",
-    "Your area is experiencing difficulties connecting to the internet.": "A területe nehézségeket tapasztal az internetkapcsolatában.",
-    "A connection error occurred while trying to contact the server.": "Kapcsolati hiba történt a kiszolgáló elérése során.",
-    "The server is not configured to indicate what the problem is (CORS).": "A kiszolgáló nem úgy van beállítva, hogy megjelenítse a probléma forrását (CORS).",
-    "Recent changes that have not yet been received": "A legutóbbi változások, amelyek még nem érkeztek meg",
     "Not encrypted": "Nem titkosított",
     "Backup version:": "Mentés verziója:",
     "Unable to set up keys": "Nem sikerült a kulcsok beállítása",
@@ -515,9 +497,6 @@
         "one": "%(count)s szoba",
         "other": "%(count)s szoba"
     },
-    "Reset event store": "Az eseménytároló alaphelyzetbe állítása",
-    "You most likely do not want to reset your event index store": "Az eseményindex-tárolót nagy valószínűséggel nem szeretné alaphelyzetbe állítani",
-    "Reset event store?": "Alaphelyzetbe állítja az eseménytárolót?",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ismerős már csatlakozott",
         "other": "%(count)s ismerős már csatlakozott"
@@ -526,7 +505,6 @@
     "Only do this if you have no other device to complete verification with.": "Csak akkor tegye meg, ha egyetlen másik eszköze sincs az ellenőrzés elvégzéséhez.",
     "Reset everything": "Minden alaphelyzetbe állítása",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
     "%(count)s reply": {
         "one": "%(count)s válasz",
@@ -3950,7 +3928,15 @@
         "update_power_level": "A hozzáférési szint megváltoztatása sikertelen",
         "unknown": "Ismeretlen hiba",
         "dialog_description_default": "Hiba történt.",
-        "edit_history_unsupported": "Úgy tűnik, hogy a Matrix-kiszolgálója nem támogatja ezt a szolgáltatást."
+        "edit_history_unsupported": "Úgy tűnik, hogy a Matrix-kiszolgálója nem támogatja ezt a szolgáltatást.",
+        "session_restore": {
+            "clear_storage_description": "Kilépés és a titkosítási kulcsok törlése?",
+            "clear_storage_button": "Tárhely törlése és kijelentkezés",
+            "title": "A munkamenetet nem lehet helyreállítani",
+            "description_1": "Hiba történt az előző munkamenet helyreállítási kísérlete során.",
+            "description_2": "Ha egy újabb %(brand)s verziót használt, akkor valószínűleg ez a munkamenet nem lesz kompatibilis vele. Zárja be az ablakot és térjen vissza az újabb verzióhoz.",
+            "description_3": "A böngésző tárolójának törlése megoldhatja a problémát, de ezzel kijelentkezik és a titkosított beszélgetéseinek előzményei olvashatatlanná válnak."
+        }
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4222,7 +4208,11 @@
         "warning_kind_files_app": "Ahhoz, hogy elérd az összes titkosított fájlt, használd az <a>Asztali alkalmazást</a>",
         "warning_kind_search_app": "A titkosított üzenetek kereséséhez használd az <a>Asztali alkalmazást</a>",
         "warning_kind_files": "%(brand)s ezen verziója nem minden titkosított fájl megjelenítését támogatja",
-        "warning_kind_search": "%(brand)s ezen verziója nem támogatja a keresést a titkosított üzenetekben"
+        "warning_kind_search": "%(brand)s ezen verziója nem támogatja a keresést a titkosított üzenetekben",
+        "reset_title": "Alaphelyzetbe állítja az eseménytárolót?",
+        "reset_description": "Az eseményindex-tárolót nagy valószínűséggel nem szeretné alaphelyzetbe állítani",
+        "reset_explainer": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
+        "reset_button": "Az eseménytároló alaphelyzetbe állítása"
     },
     "truncated_list_n_more": {
         "other": "És még %(count)s..."
@@ -4277,5 +4267,19 @@
         "resync_description": "Az %(brand)s harmad-ötöd annyi memóriát használ azáltal, hogy csak akkor tölti be a felhasználók információit, amikor az szükséges. Kis türelmet, amíg megtörténik az újbóli szinkronizálás a kiszolgálóval.",
         "resync_title": "%(brand)s frissítése"
     },
-    "message_edit_dialog_title": "Üzenetszerkesztések"
+    "message_edit_dialog_title": "Üzenetszerkesztések",
+    "server_offline": {
+        "empty_timeline": "Mindennel naprakész.",
+        "title": "A kiszolgáló nem válaszol",
+        "description": "A kiszolgálója nem válaszol egyes kéréseire. Alább látható pár lehetséges ok.",
+        "description_1": "A kiszolgálónak (%(serverName)s) túl sokáig tartott, hogy válaszoljon.",
+        "description_2": "A tűzfala vagy víruskeresője blokkolja a kérést.",
+        "description_3": "Egy böngészőkiegészítő megakadályozza a kérést.",
+        "description_4": "A kiszolgáló nem működik.",
+        "description_5": "A kiszolgáló elutasította a kérést.",
+        "description_6": "A területe nehézségeket tapasztal az internetkapcsolatában.",
+        "description_7": "Kapcsolati hiba történt a kiszolgáló elérése során.",
+        "description_8": "A kiszolgáló nem úgy van beállítva, hogy megjelenítse a probléma forrását (CORS).",
+        "recent_changes_heading": "A legutóbbi változások, amelyek még nem érkeztek meg"
+    }
 }

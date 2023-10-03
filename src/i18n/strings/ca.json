@@ -50,11 +50,9 @@
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
     "collapse": "col·lapsa",
     "expand": "expandeix",
-    "Unable to restore session": "No s'ha pogut restaurar la sessió",
     "Verification Pending": "Verificació pendent",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Reviseu el vostre correu electrònic i feu clic a l'enllaç que conté. Un cop fet això, feu clic a Continua.",
     "This will allow you to reset your password and receive notifications.": "Això us permetrà restablir la vostra contrasenya i rebre notificacions.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si anteriorment heu utilitzat un versió de %(brand)s més recent, la vostra sessió podría ser incompatible amb aquesta versió. Tanqueu aquesta finestra i torneu a la versió més recent.",
     "Sunday": "Diumenge",
     "Today": "Avui",
     "Friday": "Divendres",
@@ -65,9 +63,7 @@
     "Wednesday": "Dimecres",
     "Thursday": "Dijous",
     "Yesterday": "Ahir",
-    "We encountered an error trying to restore your previous session.": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
     "Upload Error": "Error de pujada",
-    "A connection error occurred while trying to contact the server.": "S'ha produït un error de connexió mentre s'intentava connectar al servidor.",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
     "e.g. my-room": "p.e. la-meva-sala",
     "common": {
@@ -786,7 +782,12 @@
         "something_went_wrong": "Alguna cosa ha anat malament!",
         "update_power_level": "No s'ha pogut canviar el nivell d'autoritat",
         "unknown": "Error desconegut",
-        "dialog_description_default": "S'ha produït un error."
+        "dialog_description_default": "S'ha produït un error.",
+        "session_restore": {
+            "title": "No s'ha pogut restaurar la sessió",
+            "description_1": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
+            "description_2": "Si anteriorment heu utilitzat un versió de %(brand)s més recent, la vostra sessió podría ser incompatible amb aquesta versió. Tanqueu aquesta finestra i torneu a la versió més recent."
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> i %(count)s altres",
@@ -868,5 +869,8 @@
     },
     "report_content": {
         "other_label": "Altres"
+    },
+    "server_offline": {
+        "description_7": "S'ha produït un error de connexió mentre s'intentava connectar al servidor."
     }
 }

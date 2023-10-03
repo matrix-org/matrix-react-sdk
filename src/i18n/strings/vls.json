@@ -121,13 +121,7 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
-    "Sign out and remove encryption keys?": "Afmeldn en versleuteriengssleuters verwydern?",
-    "Clear Storage and Sign Out": "Ipslag wissn en afmeldn",
     "Send Logs": "Logboek verstuurn",
-    "Unable to restore session": "’t En is nie meuglik van de sessie t’herstelln",
-    "We encountered an error trying to restore your previous session.": "’t Is e foute ipgetreedn by ’t herstelln van je vorige sessie.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "A j’al e ki gebruuk gemakt èt van e recentere versie van %(brand)s, is je sessie meugliks ounverenigboar me deze versie. Sluut deze veinster en goa were noa de recentere versie.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "’t Legen van den ipslag van je browser goa ’t probleem misschiens verhelpn, mo goa joun ook afmeldn en gans je versleuterde gespreksgeschiedenisse ounleesboar moakn.",
     "Verification Pending": "Verificoasje in afwachtienge",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekyk jen e-mails en klikt ip de koppelienge derin. Klikt van zodra da je da gedoan èt ip ‘Verdergoan’.",
     "Email address": "E-mailadresse",
@@ -1152,7 +1146,15 @@
         "update_power_level": "Wyzign van ’t machtsniveau es mislukt",
         "unknown": "Ounbekende foute",
         "dialog_description_default": "’t Is e foute ipgetreedn.",
-        "edit_history_unsupported": "Je thuusserver biedt geen oundersteunienge vo deze functie."
+        "edit_history_unsupported": "Je thuusserver biedt geen oundersteunienge vo deze functie.",
+        "session_restore": {
+            "clear_storage_description": "Afmeldn en versleuteriengssleuters verwydern?",
+            "clear_storage_button": "Ipslag wissn en afmeldn",
+            "title": "’t En is nie meuglik van de sessie t’herstelln",
+            "description_1": "’t Is e foute ipgetreedn by ’t herstelln van je vorige sessie.",
+            "description_2": "A j’al e ki gebruuk gemakt èt van e recentere versie van %(brand)s, is je sessie meugliks ounverenigboar me deze versie. Sluut deze veinster en goa were noa de recentere versie.",
+            "description_3": "’t Legen van den ipslag van je browser goa ’t probleem misschiens verhelpn, mo goa joun ook afmeldn en gans je versleuterde gespreksgeschiedenisse ounleesboar moakn."
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",

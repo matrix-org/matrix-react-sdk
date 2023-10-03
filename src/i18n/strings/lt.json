@@ -51,7 +51,6 @@
     "collapse": "suskleisti",
     "expand": "išskleisti",
     "Send Logs": "Siųsti žurnalus",
-    "Unable to restore session": "Nepavyko atkurti seanso",
     "and %(count)s others...": {
         "other": "ir %(count)s kitų...",
         "one": "ir dar vienas..."
@@ -165,7 +164,6 @@
     "IRC display name width": "IRC rodomo vardo plotis",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-    "Sign out and remove encryption keys?": "Atsijungti ir pašalinti šifravimo raktus?",
     "Confirm encryption setup": "Patvirtinti šifravimo sąranką",
     "Click the button below to confirm setting up encryption.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
     "Deactivate account": "Deaktyvuoti paskyrą",
@@ -187,8 +185,6 @@
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) prisijungė prie naujo seanso jo nepatvirtinę:",
     "Your browser likely removed this data when running low on disk space.": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
     "Backup version:": "Atsarginės kopijos versija:",
-    "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
     "Security Phrase": "Slaptafrazė",
     "Azerbaijan": "Azerbaidžanas",
     "Austria": "Austrija",
@@ -208,8 +204,6 @@
     "Afghanistan": "Afganistanas",
     "United States": "Jungtinės Amerikos Valstijos",
     "United Kingdom": "Jungtinė Karalystė",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jei anksčiau naudojote naujesnę %(brand)s versiją, jūsų seansas gali būti nesuderinamas su šia versija. Uždarykite šį langą ir grįžkite į naujesnę versiją.",
-    "We encountered an error trying to restore your previous session.": "Bandant atkurti ankstesnį seansą įvyko klaida.",
     "Missing session data": "Trūksta seanso duomenų",
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "edited": "pakeista",
@@ -295,22 +289,6 @@
     "Share User": "Dalintis Vartotoju",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Patikrinkite savo el. laišką ir spustelėkite jame esančią nuorodą. Kai tai padarysite, spauskite tęsti.",
     "Verification Pending": "Laukiama Patikrinimo",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Išvalius naršyklės saugyklą, problema gali būti išspręsta, tačiau jus atjungs ir užšifruotų pokalbių istorija taps neperskaitoma.",
-    "Clear Storage and Sign Out": "Išvalyti Saugyklą ir Atsijungti",
-    "Reset event store": "Iš naujo nustatyti įvykių saugyklą",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jei to norite, atkreipkite dėmesį, kad nė viena iš jūsų žinučių nebus ištrinta, tačiau keletą akimirkų, kol bus atkurtas indeksas, gali sutrikti paieška",
-    "You most likely do not want to reset your event index store": "Tikriausiai nenorite iš naujo nustatyti įvykių indekso saugyklos",
-    "Reset event store?": "Iš naujo nustatyti įvykių saugyklą?",
-    "Recent changes that have not yet been received": "Naujausi pakeitimai, kurie dar nebuvo gauti",
-    "The server is not configured to indicate what the problem is (CORS).": "Serveris nėra sukonfigūruotas taip, kad būtų galima nurodyti, kokia yra problema (CORS).",
-    "A connection error occurred while trying to contact the server.": "Bandant susisiekti su serveriu įvyko ryšio klaida.",
-    "The server has denied your request.": "Serveris atmetė jūsų užklausą.",
-    "The server is offline.": "Serveris yra išjungtas.",
-    "A browser extension is preventing the request.": "Naršyklės plėtinys užkerta kelią užklausai.",
-    "Your firewall or anti-virus is blocking the request.": "Jūsų užkarda arba antivirusinė programa blokuoja užklausą.",
-    "The server (%(serverName)s) took too long to respond.": "Serveris (%(serverName)s) užtruko per ilgai atsakydamas.",
-    "Server isn't responding": "Serveris neatsako",
-    "You're all caught up.": "Jūs jau viską pasivijote.",
     "%(brand)s encountered an error during upload of:": "%(brand)s aptiko klaidą įkeliant:",
     "a key signature": "rakto parašas",
     "a new master key signature": "naujas pagrindinio rakto parašas",
@@ -2622,7 +2600,15 @@
         "update_power_level": "Nepavyko pakeisti galios lygio",
         "unknown": "Nežinoma klaida",
         "dialog_description_default": "Įvyko klaida.",
-        "edit_history_unsupported": "Panašu, kad jūsų namų serveris nepalaiko šios galimybės."
+        "edit_history_unsupported": "Panašu, kad jūsų namų serveris nepalaiko šios galimybės.",
+        "session_restore": {
+            "clear_storage_description": "Atsijungti ir pašalinti šifravimo raktus?",
+            "clear_storage_button": "Išvalyti Saugyklą ir Atsijungti",
+            "title": "Nepavyko atkurti seanso",
+            "description_1": "Bandant atkurti ankstesnį seansą įvyko klaida.",
+            "description_2": "Jei anksčiau naudojote naujesnę %(brand)s versiją, jūsų seansas gali būti nesuderinamas su šia versija. Uždarykite šį langą ir grįžkite į naujesnę versiją.",
+            "description_3": "Išvalius naršyklės saugyklą, problema gali būti išspręsta, tačiau jus atjungs ir užšifruotų pokalbių istorija taps neperskaitoma."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2835,7 +2821,11 @@
     "seshat": {
         "warning_kind_files_app": "Naudokite <a>Kompiuterio programą</a> kad matytumėte visus užšifruotus failus",
         "warning_kind_search_app": "Naudokite <a>Kompiuterio programą</a> kad ieškoti užšifruotų žinučių",
-        "warning_kind_files": "Ši %(brand)s versija nepalaiko kai kurių užšifruotų failų peržiūros"
+        "warning_kind_files": "Ši %(brand)s versija nepalaiko kai kurių užšifruotų failų peržiūros",
+        "reset_title": "Iš naujo nustatyti įvykių saugyklą?",
+        "reset_description": "Tikriausiai nenorite iš naujo nustatyti įvykių indekso saugyklos",
+        "reset_explainer": "Jei to norite, atkreipkite dėmesį, kad nė viena iš jūsų žinučių nebus ištrinta, tačiau keletą akimirkų, kol bus atkurtas indeksas, gali sutrikti paieška",
+        "reset_button": "Iš naujo nustatyti įvykių saugyklą"
     },
     "truncated_list_n_more": {
         "other": "Ir dar %(count)s..."
@@ -2876,5 +2866,19 @@
         "resync_description": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
         "resync_title": "Atnaujinama %(brand)s"
     },
-    "message_edit_dialog_title": "Žinutės redagavimai"
+    "message_edit_dialog_title": "Žinutės redagavimai",
+    "server_offline": {
+        "empty_timeline": "Jūs jau viską pasivijote.",
+        "title": "Serveris neatsako",
+        "description": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
+        "description_1": "Serveris (%(serverName)s) užtruko per ilgai atsakydamas.",
+        "description_2": "Jūsų užkarda arba antivirusinė programa blokuoja užklausą.",
+        "description_3": "Naršyklės plėtinys užkerta kelią užklausai.",
+        "description_4": "Serveris yra išjungtas.",
+        "description_5": "Serveris atmetė jūsų užklausą.",
+        "description_6": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
+        "description_7": "Bandant susisiekti su serveriu įvyko ryšio klaida.",
+        "description_8": "Serveris nėra sukonfigūruotas taip, kad būtų galima nurodyti, kokia yra problema (CORS).",
+        "recent_changes_heading": "Naujausi pakeitimai, kurie dar nebuvo gauti"
+    }
 }

@@ -40,8 +40,6 @@
         "other": "(~%(count)s sonuçlar)"
     },
     "Create new room": "Yeni Oda Oluştur",
-    "Unable to restore session": "Oturum geri yüklenemiyor",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Today": "Bugün",
@@ -58,8 +56,6 @@
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
     "Filter results": "Sonuçları filtrele",
-    "Sign out and remove encryption keys?": "Oturumu kapat ve şifreleme anahtarlarını sil?",
-    "Clear Storage and Sign Out": "Depolamayı temizle ve Oturumu Kapat",
     "Send Logs": "Logları Gönder",
     "Share Room": "Oda Paylaş",
     "Link to most recent message": "En son mesaja bağlantı",
@@ -167,7 +163,6 @@
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "We encountered an error trying to restore your previous session.": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>.",
     "Upload files (%(current)s of %(total)s)": "Dosyaları yükle (%(current)s / %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s adet oturum çözümlenemedi!",
@@ -2158,7 +2153,14 @@
         "update_power_level": "Güç seviyesini değiştirme başarısız oldu",
         "unknown": "Bilinmeyen Hata",
         "dialog_description_default": "Bir hata oluştu.",
-        "edit_history_unsupported": "Ana sunucunuz bu özelliği desteklemiyor gözüküyor."
+        "edit_history_unsupported": "Ana sunucunuz bu özelliği desteklemiyor gözüküyor.",
+        "session_restore": {
+            "clear_storage_description": "Oturumu kapat ve şifreleme anahtarlarını sil?",
+            "clear_storage_button": "Depolamayı temizle ve Oturumu Kapat",
+            "title": "Oturum geri yüklenemiyor",
+            "description_1": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
+            "description_2": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

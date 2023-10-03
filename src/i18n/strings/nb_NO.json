@@ -153,7 +153,6 @@
     "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å hjelpe oss med å forhindre dette i fremtiden, vennligst <a>send oss loggfiler</a>.",
     "Lock": "Lås",
-    "The server is offline.": "Denne tjeneren er offline.",
     "Wrong file type": "Feil filtype",
     "Looks good!": "Ser bra ut!",
     "Encrypted by a deleted session": "Kryptert av en slettet sesjon",
@@ -1893,5 +1892,8 @@
     "message_edit_dialog_title": "Meldingsredigeringer",
     "report_content": {
         "other_label": "Andre"
+    },
+    "server_offline": {
+        "description_4": "Denne tjeneren er offline."
     }
 }

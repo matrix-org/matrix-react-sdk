@@ -12,7 +12,6 @@
     "Create new room": "创建新房间",
     "unknown error code": "未知错误代码",
     "Warning!": "警告！",
-    "Unable to restore session": "无法恢复会话",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
     "AM": "上午",
     "PM": "下午",
@@ -54,7 +53,6 @@
     "%(duration)sm": "%(duration)s 分钟",
     "%(duration)sh": "%(duration)s 小时",
     "%(duration)sd": "%(duration)s 天",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "如果你之前使用过较新版本的 %(brand)s，则你的会话可能与当前版本不兼容。请关闭此窗口并使用最新版本。",
     "Sunday": "星期日",
     "Today": "今天",
     "Friday": "星期五",
@@ -65,13 +63,10 @@
     "Wednesday": "星期三",
     "Thursday": "星期四",
     "Yesterday": "昨天",
-    "Clear Storage and Sign Out": "清除存储并登出",
     "Send Logs": "发送日志",
     "Share Room Message": "分享房间消息",
     "Share User": "分享用户",
     "Share Room": "分享房间",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "清除本页储存在你浏览器上的数据或许能修复此问题，但也会导致你退出登录并无法读取任何已加密的聊天记录。",
-    "We encountered an error trying to restore your previous session.": "我们在尝试恢复你先前的会话时遇到了错误。",
     "Link to most recent message": "最新消息的链接",
     "Link to selected message": "选中消息的链接",
     "No backup found!": "找不到备份！",
@@ -179,18 +174,6 @@
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
     "a key signature": "一个密钥签名",
-    "You're all caught up.": "全数阅毕。",
-    "Server isn't responding": "服务器未响应",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "你的服务器未响应你的一些请求。下方是一些最可能的原因。",
-    "The server (%(serverName)s) took too long to respond.": "服务器（%(serverName)s）花了太长时间响应。",
-    "Your firewall or anti-virus is blocking the request.": "你的防火墙或防病毒软件阻止了此请求。",
-    "A browser extension is preventing the request.": "一个浏览器扩展阻止了此请求。",
-    "The server is offline.": "此服务器为离线状态。",
-    "The server has denied your request.": "此服务器拒绝了你的请求。",
-    "Your area is experiencing difficulties connecting to the internet.": "你的区域难以连接上互联网。",
-    "A connection error occurred while trying to contact the server.": "尝试联系服务器时出现连接错误。",
-    "Recent changes that have not yet been received": "尚未被接受的最近更改",
-    "Sign out and remove encryption keys?": "登出并删除加密密钥？",
     "Command Help": "命令帮助",
     "To help us prevent this in future, please <a>send us logs</a>.": "要帮助我们防止其以后发生，请<a>给我们发送日志</a>。",
     "Missing session data": "缺失会话数据",
@@ -227,7 +210,6 @@
     "Click the button below to confirm setting up encryption.": "点击下方按钮以确认设置加密。",
     "IRC display name width": "IRC 显示名称宽度",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
-    "The server is not configured to indicate what the problem is (CORS).": "服务器没有配置为提示错误是什么（CORS）。",
     "Backup version:": "备份版本：",
     "Hong Kong": "香港",
     "Cook Islands": "库克群岛",
@@ -507,10 +489,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘记或丢失了所有恢复方式？<a>全部重置</a>",
     "Remember this": "记住",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "挂件将会验证你的用户 ID，但将无法为你执行动作：",
-    "Reset event store": "重置活动存储",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果这样做，请注意你的消息并不会被删除，但在重新建立索引时，搜索体验可能会降低片刻",
-    "You most likely do not want to reset your event index store": "你大概率不想重置你的活动缩影存储",
-    "Reset event store?": "重置活动存储？",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -3661,7 +3639,15 @@
         "update_power_level": "权力级别修改失败",
         "unknown": "未知错误",
         "dialog_description_default": "发生了一个错误。",
-        "edit_history_unsupported": "你的家服务器似乎不支持此功能。"
+        "edit_history_unsupported": "你的家服务器似乎不支持此功能。",
+        "session_restore": {
+            "clear_storage_description": "登出并删除加密密钥？",
+            "clear_storage_button": "清除存储并登出",
+            "title": "无法恢复会话",
+            "description_1": "我们在尝试恢复你先前的会话时遇到了错误。",
+            "description_2": "如果你之前使用过较新版本的 %(brand)s，则你的会话可能与当前版本不兼容。请关闭此窗口并使用最新版本。",
+            "description_3": "清除本页储存在你浏览器上的数据或许能修复此问题，但也会导致你退出登录并无法读取任何已加密的聊天记录。"
+        }
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3898,7 +3884,11 @@
         "warning_kind_files_app": "使用<a>桌面端应用</a>来查看所有加密文件",
         "warning_kind_search_app": "使用<a>桌面端英语</a>来搜索加密消息",
         "warning_kind_files": "当前版本的 %(brand)s 不支持查看某些加密文件",
-        "warning_kind_search": "当前版本的 %(brand)s 不支持搜索加密消息"
+        "warning_kind_search": "当前版本的 %(brand)s 不支持搜索加密消息",
+        "reset_title": "重置活动存储？",
+        "reset_description": "你大概率不想重置你的活动缩影存储",
+        "reset_explainer": "如果这样做，请注意你的消息并不会被删除，但在重新建立索引时，搜索体验可能会降低片刻",
+        "reset_button": "重置活动存储"
     },
     "truncated_list_n_more": {
         "other": "和 %(count)s 个其他…"
@@ -3948,5 +3938,19 @@
         "resync_description": "通过仅在需要时加载其他用户的信息，%(brand)s 现在使用的内存减少到了原来的三分之一至五分之一。 请等待与服务器重新同步！",
         "resync_title": "正在更新 %(brand)s"
     },
-    "message_edit_dialog_title": "消息编辑历史"
+    "message_edit_dialog_title": "消息编辑历史",
+    "server_offline": {
+        "empty_timeline": "全数阅毕。",
+        "title": "服务器未响应",
+        "description": "你的服务器未响应你的一些请求。下方是一些最可能的原因。",
+        "description_1": "服务器（%(serverName)s）花了太长时间响应。",
+        "description_2": "你的防火墙或防病毒软件阻止了此请求。",
+        "description_3": "一个浏览器扩展阻止了此请求。",
+        "description_4": "此服务器为离线状态。",
+        "description_5": "此服务器拒绝了你的请求。",
+        "description_6": "你的区域难以连接上互联网。",
+        "description_7": "尝试联系服务器时出现连接错误。",
+        "description_8": "服务器没有配置为提示错误是什么（CORS）。",
+        "recent_changes_heading": "尚未被接受的最近更改"
+    }
 }

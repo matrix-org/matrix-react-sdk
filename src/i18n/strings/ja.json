@@ -61,12 +61,7 @@
     "collapse": "折りたたむ",
     "expand": "展開",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
-    "Clear Storage and Sign Out": "ストレージをクリアし、サインアウト",
     "Send Logs": "ログを送信",
-    "Unable to restore session": "セッションを復元できません",
-    "We encountered an error trying to restore your previous session.": "以前のセッションを復元する際にエラーが発生しました。",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "以前に%(brand)sの最新バージョンを使用していた場合、セッションはこのバージョンと互換性がない可能性があります。このウィンドウを閉じて、最新のバージョンに戻ってください。",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "ブラウザーのストレージを消去すると問題は解決するかもしれません。ただし、サインアウトを行うため、暗号化されたチャットの履歴を読むことができなくなります。",
     "Verification Pending": "認証の保留中",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "電子メールを確認して、本文中のURLをクリックしてください。完了したら「続行」をクリックしてください。",
     "This will allow you to reset your password and receive notifications.": "パスワードをリセットして通知を受け取れるようになります。",
@@ -78,7 +73,6 @@
     "edited": "編集済",
     "Destroy cross-signing keys?": "クロス署名鍵を破棄してよろしいですか？",
     "Clear cross-signing keys": "クロス署名鍵を削除",
-    "Sign out and remove encryption keys?": "サインアウトして、暗号鍵を削除しますか？",
     "Not Trusted": "信頼されていません",
     "%(count)s verified sessions": {
         "other": "%(count)s件の認証済のセッション",
@@ -479,7 +473,6 @@
     "Experimental": "実験的",
     "Open in OpenStreetMap": "OpenStreetMapで開く",
     "Verification Request": "認証の要求",
-    "The server is offline.": "サーバーはオフラインです。",
     "%(count)s rooms": {
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
@@ -513,8 +506,6 @@
     "Cancel All": "全てキャンセル",
     "a new cross-signing key signature": "新しいクロス署名鍵の署名",
     "a device cross-signing signature": "端末のクロス署名",
-    "A connection error occurred while trying to contact the server.": "サーバーに接続する際にエラーが発生しました。",
-    "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。",
     "Only do this if you have no other device to complete verification with.": "認証を行える端末がない場合のみ行ってください。",
     "%(count)s reply": {
         "other": "%(count)s件の返信",
@@ -527,9 +518,6 @@
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます",
     "Wrong file type": "正しくないファイルの種類",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "機密ストレージにアクセスできません。正しいセキュリティーフレーズを入力したことを確認してください。",
-    "The server has denied your request.": "サーバーがリクエストを拒否しました。",
-    "Server isn't responding": "サーバーが応答していません",
-    "You're all caught up.": "未読はありません。",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "toggle event": "イベントを切り替える",
     "Other searches": "その他の検索",
@@ -581,8 +569,6 @@
     "Cameras": "カメラ",
     "Unread email icon": "未読メールアイコン",
     "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
-    "Reset event store?": "イベントストアをリセットしますか？",
-    "Your firewall or anti-virus is blocking the request.": "ファイアーウォールまたはアンチウイルスソフトがリクエストをブロックしています。",
     "Close sidebar": "サイドバーを閉じる",
     "You are sharing your live location": "位置情報（ライブ）を共有しています",
     "Saved Items": "保存済み項目",
@@ -600,12 +586,6 @@
     "%(brand)s encountered an error during upload of:": "以下のアップロードの際に%(brand)sでエラーが発生しました：",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "unknown": "不明",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "メッセージは削除されませんが、インデックスを再構成している間、検索のパフォーマンスが低下します",
-    "Recent changes that have not yet been received": "まだ受信していない最近の変更",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "サーバーはいくつかのリクエストに応答していません。以下に考えられる理由を表示します。",
-    "The server is not configured to indicate what the problem is (CORS).": "サーバーは問題を特定するように設定されていません（CORS）。",
-    "Your area is experiencing difficulties connecting to the internet.": "インターネットに接続できません。",
-    "The server (%(serverName)s) took too long to respond.": "サーバー（%(serverName)s）が時間内に応答しませんでした。",
     "%(members)s and more": "%(members)s人とその他のメンバー",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong>内で",
     "Some results may be hidden for privacy": "プライバシーの観点から表示していない結果があります",
@@ -616,8 +596,6 @@
     "Remove search filter for %(filter)s": "%(filter)sの検索フィルターを削除",
     "Some results may be hidden": "いくつかの結果が表示されていない可能性があります",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
-    "Reset event store": "イベントストアをリセット",
-    "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Loading live location…": "位置情報（ライブ）を読み込んでいます…",
     "Fetching keys from server…": "鍵をサーバーから取得しています…",
     "Checking…": "確認しています…",
@@ -3864,7 +3842,15 @@
         "update_power_level": "権限レベルの変更に失敗しました",
         "unknown": "不明なエラー",
         "dialog_description_default": "エラーが発生しました。",
-        "edit_history_unsupported": "ホームサーバーはこの機能をサポートしていません。"
+        "edit_history_unsupported": "ホームサーバーはこの機能をサポートしていません。",
+        "session_restore": {
+            "clear_storage_description": "サインアウトして、暗号鍵を削除しますか？",
+            "clear_storage_button": "ストレージをクリアし、サインアウト",
+            "title": "セッションを復元できません",
+            "description_1": "以前のセッションを復元する際にエラーが発生しました。",
+            "description_2": "以前に%(brand)sの最新バージョンを使用していた場合、セッションはこのバージョンと互換性がない可能性があります。このウィンドウを閉じて、最新のバージョンに戻ってください。",
+            "description_3": "ブラウザーのストレージを消去すると問題は解決するかもしれません。ただし、サインアウトを行うため、暗号化されたチャットの履歴を読むことができなくなります。"
+        }
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -4114,7 +4100,11 @@
         "warning_kind_files_app": "全ての暗号化されたファイルを表示するには<a>デスクトップ用のアプリ</a>を使用してください",
         "warning_kind_search_app": "<a>デスクトップアプリ</a>を使用すると暗号化されたメッセージを検索できます",
         "warning_kind_files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
-        "warning_kind_search": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません"
+        "warning_kind_search": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
+        "reset_title": "イベントストアをリセットしますか？",
+        "reset_description": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
+        "reset_explainer": "メッセージは削除されませんが、インデックスを再構成している間、検索のパフォーマンスが低下します",
+        "reset_button": "イベントストアをリセット"
     },
     "truncated_list_n_more": {
         "other": "他%(count)s人以上…"
@@ -4169,5 +4159,19 @@
         "resync_description": "%(brand)sは、必要なときだけに他のユーザーに関する情報を読み込むようにすることで、メモリの使用量を3〜5倍減らしました。サーバーと再同期するのを待ってください！",
         "resync_title": "%(brand)sを更新しています"
     },
-    "message_edit_dialog_title": "メッセージの編集履歴"
+    "message_edit_dialog_title": "メッセージの編集履歴",
+    "server_offline": {
+        "empty_timeline": "未読はありません。",
+        "title": "サーバーが応答していません",
+        "description": "サーバーはいくつかのリクエストに応答していません。以下に考えられる理由を表示します。",
+        "description_1": "サーバー（%(serverName)s）が時間内に応答しませんでした。",
+        "description_2": "ファイアーウォールまたはアンチウイルスソフトがリクエストをブロックしています。",
+        "description_3": "ブラウザーの拡張機能がリクエストを妨げています。",
+        "description_4": "サーバーはオフラインです。",
+        "description_5": "サーバーがリクエストを拒否しました。",
+        "description_6": "インターネットに接続できません。",
+        "description_7": "サーバーに接続する際にエラーが発生しました。",
+        "description_8": "サーバーは問題を特定するように設定されていません（CORS）。",
+        "recent_changes_heading": "まだ受信していない最近の変更"
+    }
 }

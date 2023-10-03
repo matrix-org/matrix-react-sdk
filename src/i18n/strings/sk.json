@@ -42,7 +42,6 @@
     "Create new room": "Vytvoriť novú miestnosť",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
-    "Unable to restore session": "Nie je možné obnoviť reláciu",
     "Verification Pending": "Nedokončené overenie",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Prosím, skontrolujte si email a kliknite na odkaz v správe, ktorú sme vám poslali. Keď budete mať toto za sebou, kliknite na tlačidlo Pokračovať.",
     "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnoviť si heslo a prijímať oznámenia emailom.",
@@ -65,9 +64,6 @@
     "Thursday": "Štvrtok",
     "Yesterday": "Včera",
     "Send Logs": "Odoslať záznamy",
-    "Clear Storage and Sign Out": "Vymazať úložisko a odhlásiť sa",
-    "We encountered an error trying to restore your previous session.": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná.",
     "Share Room": "Zdieľať miestnosť",
     "Link to most recent message": "Odkaz na najnovšiu správu",
     "Share User": "Zdieľať používateľa",
@@ -414,9 +410,7 @@
         "one": "1 overená relácia",
         "other": "%(count)s overených relácií"
     },
-    "Sign out and remove encryption keys?": "Odhlásiť sa a odstrániť šifrovacie kľúče?",
     "Looks good!": "Vyzerá to super!",
-    "You're all caught up.": "Všetko ste už stihli.",
     "Allow this widget to verify your identity": "Umožniť tomuto widgetu overiť vašu totožnosť",
     "Only do this if you have no other device to complete verification with.": "Urobte to len vtedy, ak nemáte iné zariadenie, pomocou ktorého by ste mohli dokončiť overenie.",
     "%(name)s declined": "%(name)s odmietol/a",
@@ -443,7 +437,6 @@
     "Upload files (%(current)s of %(total)s)": "Nahrať súbory (%(current)s z %(total)s)",
     "Upload files": "Nahrať súbory",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
-    "Server isn't responding": "Server neodpovedá",
     "edited": "upravené",
     "Switch theme": "Prepnúť motív",
     "Recent searches": "Nedávne vyhľadávania",
@@ -453,7 +446,6 @@
     "Not encrypted": "Nie je zašifrované",
     "%(name)s cancelled": "%(name)s zrušil/a",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "Your firewall or anti-virus is blocking the request.": "Požiadavku blokuje váš firewall alebo antivírus.",
     "Approve widget permissions": "Schváliť oprávnenia widgetu",
     "Upload Error": "Chyba pri nahrávaní",
     "Your browser likely removed this data when running low on disk space.": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
@@ -540,25 +532,11 @@
     "Use your Security Key to continue.": "Ak chcete pokračovať, použite bezpečnostný kľúč.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Ak všetko obnovíte, reštartujete bez dôveryhodných relácií, bez dôveryhodných používateľov a možno nebudete môcť vidieť predchádzajúce správy.",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Widget overí vaše ID používateľa, ale nebude môcť vykonávať akcie za vás:",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ak tak urobíte, upozorňujeme, že žiadna z vašich správ nebude vymazaná, ale vyhľadávanie môže byť na niekoľko okamihov zhoršené, kým sa index znovu vytvorí",
-    "Reset event store": "Obnoviť úložisko udalostí",
-    "You most likely do not want to reset your event index store": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
-    "Reset event store?": "Obnoviť úložisko udalostí?",
     "Sections to show": "Sekcie na zobrazenie",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
     "This widget would like to:": "Tento widget by chcel:",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ak ste predtým používali novšiu verziu %(brand)s, vaša relácia môže byť s touto verziou nekompatibilná. Zatvorte toto okno a vráťte sa k novšej verzii.",
-    "Recent changes that have not yet been received": "Nedávne zmeny, ktoré ešte neboli prijaté",
-    "The server is not configured to indicate what the problem is (CORS).": "Server nie je nastavený tak, aby informoval v čom je problém (CORS).",
-    "A connection error occurred while trying to contact the server.": "Pri pokuse o kontaktovanie servera došlo k chybe pripojenia.",
-    "Your area is experiencing difficulties connecting to the internet.": "Vaša oblasť má problémy s pripojením na internet.",
-    "The server has denied your request.": "Server zamietol vašu požiadavku.",
-    "The server is offline.": "Server je vypnutý.",
-    "A browser extension is preventing the request.": "Požiadavke bráni rozšírenie prehliadača.",
-    "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo príliš dlho, kým odpovedal.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
     "Search Dialog": "Vyhľadávacie dialógové okno",
     "Join %(roomAddress)s": "Pripojiť sa k %(roomAddress)s",
@@ -4042,7 +4020,15 @@
         "update_power_level": "Nepodarilo sa zmeniť úroveň oprávnenia",
         "unknown": "Neznáma chyba",
         "dialog_description_default": "Vyskytla sa chyba.",
-        "edit_history_unsupported": "Zdá sa, že váš domovský server túto funkciu nepodporuje."
+        "edit_history_unsupported": "Zdá sa, že váš domovský server túto funkciu nepodporuje.",
+        "session_restore": {
+            "clear_storage_description": "Odhlásiť sa a odstrániť šifrovacie kľúče?",
+            "clear_storage_button": "Vymazať úložisko a odhlásiť sa",
+            "title": "Nie je možné obnoviť reláciu",
+            "description_1": "Počas obnovovania vašej predchádzajúcej relácie sa vyskytla chyba.",
+            "description_2": "Ak ste predtým používali novšiu verziu %(brand)s, vaša relácia môže byť s touto verziou nekompatibilná. Zatvorte toto okno a vráťte sa k novšej verzii.",
+            "description_3": "Vymazaním úložiska prehliadača možno opravíte váš problém, no zároveň sa týmto odhlásite a história vašich šifrovaných konverzácií sa pre vás môže stať nečitateľná."
+        }
     },
     "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4316,7 +4302,11 @@
         "warning_kind_files_app": "Použite <a>desktopovú aplikáciu</a> na zobrazenie všetkých zašifrovaných súborov",
         "warning_kind_search_app": "Použite <a>Desktop aplikáciu</a> na vyhľadávanie zašifrovaných správ",
         "warning_kind_files": "Táto verzia aplikácie %(brand)s nepodporuje zobrazovanie niektorých zašifrovaných súborov",
-        "warning_kind_search": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ"
+        "warning_kind_search": "Táto verzia aplikácie %(brand)s nepodporuje vyhľadávanie zašifrovaných správ",
+        "reset_title": "Obnoviť úložisko udalostí?",
+        "reset_description": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
+        "reset_explainer": "Ak tak urobíte, upozorňujeme, že žiadna z vašich správ nebude vymazaná, ale vyhľadávanie môže byť na niekoľko okamihov zhoršené, kým sa index znovu vytvorí",
+        "reset_button": "Obnoviť úložisko udalostí"
     },
     "truncated_list_n_more": {
         "other": "A %(count)s ďalších…"
@@ -4373,5 +4363,19 @@
         "resync_description": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
         "resync_title": "Prebieha aktualizácia %(brand)s"
     },
-    "message_edit_dialog_title": "Úpravy správy"
+    "message_edit_dialog_title": "Úpravy správy",
+    "server_offline": {
+        "empty_timeline": "Všetko ste už stihli.",
+        "title": "Server neodpovedá",
+        "description": "Váš server neodpovedá na niektoré vaše požiadavky. Nižšie sú uvedené niektoré z najpravdepodobnejších dôvodov.",
+        "description_1": "Serveru (%(serverName)s) trvalo príliš dlho, kým odpovedal.",
+        "description_2": "Požiadavku blokuje váš firewall alebo antivírus.",
+        "description_3": "Požiadavke bráni rozšírenie prehliadača.",
+        "description_4": "Server je vypnutý.",
+        "description_5": "Server zamietol vašu požiadavku.",
+        "description_6": "Vaša oblasť má problémy s pripojením na internet.",
+        "description_7": "Pri pokuse o kontaktovanie servera došlo k chybe pripojenia.",
+        "description_8": "Server nie je nastavený tak, aby informoval v čom je problém (CORS).",
+        "recent_changes_heading": "Nedávne zmeny, ktoré ešte neboli prijaté"
+    }
 }

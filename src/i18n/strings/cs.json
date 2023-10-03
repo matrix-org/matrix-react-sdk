@@ -48,8 +48,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "%(items)s and %(lastItem)s": "%(items)s a také %(lastItem)s",
-    "Unable to restore session": "Nelze obnovit relaci",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Zkontrolujte svou e-mailovou schránku a klepněte na odkaz ve zprávě, kterou jsme vám poslali. V případě, že jste to už udělali, klepněte na tlačítko Pokračovat.",
     "This will allow you to reset your password and receive notifications.": "Toto vám umožní obnovit si heslo a přijímat oznámení e-mailem.",
     "collapse": "sbalit",
@@ -65,10 +63,7 @@
     "Yesterday": "Včera",
     "Wednesday": "Středa",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Clear Storage and Sign Out": "Vymazat uložiště a odhlásit se",
     "Send Logs": "Odeslat záznamy",
-    "We encountered an error trying to restore your previous session.": "V průběhu obnovování Vaší minulé relace nastala chyba.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vymazání úložiště prohlížeče možná váš problém opraví, zároveň se tím ale odhlásíte a můžete přijít o historii svých šifrovaných konverzací.",
     "Share Room": "Sdílet místnost",
     "Link to most recent message": "Odkaz na nejnovější zprávu",
     "Share User": "Sdílet uživatele",
@@ -143,7 +138,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Uporoznění</b>: záloha by měla být prováděna na důvěryhodném počítači.",
     "Scissors": "Nůžky",
     "edited": "upraveno",
-    "Sign out and remove encryption keys?": "Odhlásit a odstranit šifrovací klíče?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Abychom tomu mohli pro příště předejít, <a>pošlete nám prosím záznamy</a>.",
     "Missing session data": "Chybějící data relace",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Některá data sezení, například klíče od šifrovaných zpráv, nám chybí. Přihlaste se prosím znovu a obnovte si klíče ze zálohy.",
@@ -202,7 +196,6 @@
     "a new cross-signing key signature": "nový klíč pro křížový podpis",
     "a key signature": "podpis klíče",
     "%(brand)s encountered an error during upload of:": "%(brand)s narazil na chybu při nahrávání:",
-    "Server isn't responding": "Server neodpovídá",
     "Czech Republic": "Česká republika",
     "Algeria": "Alžírsko",
     "Albania": "Albánie",
@@ -214,15 +207,12 @@
     "Switch theme": "Přepnout téma",
     "Looks good!": "To vypadá dobře!",
     "Wrong file type": "Špatný typ souboru",
-    "The server has denied your request.": "Server odmítl váš požadavek.",
-    "The server is offline.": "Server je offline.",
     "Decline All": "Odmítnout vše",
     "Sign in with SSO": "Přihlásit pomocí SSO",
     "Hold": "Podržet",
     "Resume": "Pokračovat",
     "Successfully restored %(sessionCount)s keys": "Úspěšně obnoveno %(sessionCount)s klíčů",
     "Keys restored": "Klíče byly obnoveny",
-    "You're all caught up.": "Vše vyřízeno.",
     "Madagascar": "Madagaskar",
     "Macedonia": "Makedonie",
     "Macau": "Macao",
@@ -473,16 +463,8 @@
     "Nauru": "Nauru",
     "Namibia": "Namibie",
     "Security Phrase": "Bezpečnostní fráze",
-    "Your area is experiencing difficulties connecting to the internet.": "Ve vaší oblasti dochází k problémům s připojením k internetu.",
-    "A connection error occurred while trying to contact the server.": "Při pokusu o kontakt se serverem došlo k chybě připojení.",
-    "The server is not configured to indicate what the problem is (CORS).": "Server není nakonfigurován tak, aby indikoval, v čem je problém (CORS).",
-    "Recent changes that have not yet been received": "Nedávné změny, které dosud nebyly přijaty",
     "Restoring keys from backup": "Obnovení klíčů ze zálohy",
     "%(completed)s of %(total)s keys restored": "Obnoveno %(completed)s z %(total)s klíčů",
-    "A browser extension is preventing the request.": "Rozšíření prohlížeče brání požadavku.",
-    "Your firewall or anti-virus is blocking the request.": "Váš firewall nebo antivirový program blokuje požadavek.",
-    "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo příliš dlouho, než odpověděl.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovídá na některé vaše požadavky. Níže jsou některé z nejpravděpodobnějších důvodů.",
     "a device cross-signing signature": "zařízení používající křížový podpis",
     "This widget would like to:": "Tento widget by chtěl:",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Pokud jste zapomněli bezpečnostní klíč, můžete <button>nastavit nové možnosti obnovení</button>",
@@ -519,14 +501,10 @@
         "one": "%(count)s osoba, kterou znáte, se již připojila",
         "other": "%(count)s lidí, které znáte, se již připojili"
     },
-    "You most likely do not want to reset your event index store": "Pravděpodobně nechcete resetovat úložiště indexů událostí",
-    "Reset event store": "Resetovat úložiště událostí",
-    "Reset event store?": "Resetovat úložiště událostí?",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Pokud vše resetujete, začnete bez důvěryhodných relací, bez důvěryhodných uživatelů a možná nebudete moci zobrazit minulé zprávy.",
     "Only do this if you have no other device to complete verification with.": "Udělejte to, pouze pokud nemáte žádné jiné zařízení, se kterým byste mohli dokončit ověření.",
     "Reset everything": "Resetovat vše",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
@@ -4049,7 +4027,15 @@
         "update_power_level": "Nepodařilo se změnit úroveň oprávnění",
         "unknown": "Neznámá chyba",
         "dialog_description_default": "Nastala chyba.",
-        "edit_history_unsupported": "Váš domovský server asi tuto funkci nepodporuje."
+        "edit_history_unsupported": "Váš domovský server asi tuto funkci nepodporuje.",
+        "session_restore": {
+            "clear_storage_description": "Odhlásit a odstranit šifrovací klíče?",
+            "clear_storage_button": "Vymazat uložiště a odhlásit se",
+            "title": "Nelze obnovit relaci",
+            "description_1": "V průběhu obnovování Vaší minulé relace nastala chyba.",
+            "description_2": "Pokud jste se v minulosti již přihlásili s novější verzi programu %(brand)s, vaše relace nemusí být kompatibilní s touto verzí. Zavřete prosím toto okno a přihlaste se znovu pomocí nové verze.",
+            "description_3": "Vymazání úložiště prohlížeče možná váš problém opraví, zároveň se tím ale odhlásíte a můžete přijít o historii svých šifrovaných konverzací."
+        }
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4323,7 +4309,11 @@
         "warning_kind_files_app": "Pro zobrazení všech šifrovaných souborů použijte <a>desktopovou aplikaci</a>",
         "warning_kind_search_app": "K prohledávání šifrovaných zpráv použijte <a>aplikaci pro stolní počítače</a>",
         "warning_kind_files": "Tato verze %(brand)s nepodporuje zobrazení některých šifrovaných souborů",
-        "warning_kind_search": "Tato verze %(brand)s nepodporuje hledání v šifrovaných zprávách"
+        "warning_kind_search": "Tato verze %(brand)s nepodporuje hledání v šifrovaných zprávách",
+        "reset_title": "Resetovat úložiště událostí?",
+        "reset_description": "Pravděpodobně nechcete resetovat úložiště indexů událostí",
+        "reset_explainer": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
+        "reset_button": "Resetovat úložiště událostí"
     },
     "truncated_list_n_more": {
         "other": "A %(count)s dalších..."
@@ -4380,5 +4370,19 @@
         "resync_description": "%(brand)s teď používá 3-5× méně paměti, protože si informace o ostatních uživatelích načítá až když je potřebuje. Prosím počkejte na dokončení synchronizace se serverem!",
         "resync_title": "Aktualizujeme %(brand)s"
     },
-    "message_edit_dialog_title": "Úpravy zpráv"
+    "message_edit_dialog_title": "Úpravy zpráv",
+    "server_offline": {
+        "empty_timeline": "Vše vyřízeno.",
+        "title": "Server neodpovídá",
+        "description": "Váš server neodpovídá na některé vaše požadavky. Níže jsou některé z nejpravděpodobnějších důvodů.",
+        "description_1": "Serveru (%(serverName)s) trvalo příliš dlouho, než odpověděl.",
+        "description_2": "Váš firewall nebo antivirový program blokuje požadavek.",
+        "description_3": "Rozšíření prohlížeče brání požadavku.",
+        "description_4": "Server je offline.",
+        "description_5": "Server odmítl váš požadavek.",
+        "description_6": "Ve vaší oblasti dochází k problémům s připojením k internetu.",
+        "description_7": "Při pokusu o kontakt se serverem došlo k chybě připojení.",
+        "description_8": "Server není nakonfigurován tak, aby indikoval, v čem je problém (CORS).",
+        "recent_changes_heading": "Nedávné změny, které dosud nebyly přijaty"
+    }
 }

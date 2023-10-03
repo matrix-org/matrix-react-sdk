@@ -8,7 +8,6 @@
     "Join Room": "Unirme a la sala",
     "Home": "Inicio",
     "Create new room": "Crear una nueva sala",
-    "Unable to restore session": "No se puede recuperar la sesión",
     "Moderator": "Moderador",
     "not specified": "sin especificar",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, consulta tu correo electrónico y haz clic en el enlace que contiene. Una vez hecho esto, haz clic en continuar.",
@@ -64,11 +63,7 @@
     "Delete Widget": "Eliminar accesorio",
     "collapse": "encoger",
     "expand": "desplegar",
-    "Clear Storage and Sign Out": "Borrar almacenamiento y cerrar sesión",
     "Send Logs": "Enviar Registros",
-    "We encountered an error trying to restore your previous session.": "Encontramos un error al intentar restaurar su sesión anterior.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si ha usado anteriormente una versión más reciente de %(brand)s, su sesión puede ser incompatible con ésta. Cierre la ventana y vuelva a la versión más reciente.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Limpiando el almacenamiento del navegador puede arreglar el problema, pero le desconectará y cualquier historial de conversación cifrado se volverá ilegible.",
     "Share Room": "Compartir la sala",
     "Link to most recent message": "Enlazar al mensaje más reciente",
     "Share User": "Compartir usuario",
@@ -138,7 +133,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema.",
     "Scissors": "Tijeras",
     "Lock": "Bloquear",
-    "Sign out and remove encryption keys?": "¿Salir y borrar las claves de cifrado?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para ayudarnos a prevenir esto en el futuro, por favor, <a>envíanos logs</a>.",
     "Missing session data": "Faltan datos de sesión",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Algunos datos de sesión, incluyendo claves de mensajes cifrados, no se encuentran. Desconéctate y vuelve a conectarte para solucionarlo, restableciendo las claves desde la copia de seguridad.",
@@ -210,18 +204,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "You're all caught up.": "Estás al día.",
-    "Server isn't responding": "El servidor no está respondiendo",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Tu servidor no responde a algunas de tus solicitudes. A continuación se presentan algunas de las razones más probables.",
-    "The server (%(serverName)s) took too long to respond.": "El servidor (%(serverName)s) tardó demasiado en responder.",
-    "Your firewall or anti-virus is blocking the request.": "Tu firewall o antivirus está bloqueando la solicitud.",
-    "A browser extension is preventing the request.": "Una extensión del navegador está impidiendo la solicitud.",
-    "The server is offline.": "El servidor está desconectado.",
-    "The server has denied your request.": "El servidor ha rechazado la solicitud.",
-    "Your area is experiencing difficulties connecting to the internet.": "Su área está experimentando dificultades para conectarse a Internet.",
-    "A connection error occurred while trying to contact the server.": "Se produjo un error de conexión al intentar contactar con el servidor.",
-    "The server is not configured to indicate what the problem is (CORS).": "El servidor no está configurado para indicar cuál es el problema (CORS).",
-    "Recent changes that have not yet been received": "Cambios recientes que aún no se han recibido",
     "Wrong file type": "Tipo de archivo incorrecto",
     "Looks good!": "¡Se ve bien!",
     "Security Phrase": "Frase de seguridad",
@@ -519,14 +501,10 @@
         "one": "%(count)s persona que ya conoces se ha unido",
         "other": "%(count)s personas que ya conoces se han unido"
     },
-    "Reset event store?": "¿Restablecer almacenamiento de eventos?",
-    "You most likely do not want to reset your event index store": "Lo más probable es que no quieras restablecer tu almacenamiento de índice de ecentos",
-    "Reset event store": "Restablecer el almacenamiento de eventos",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "¿Has olvidado o perdido todos los métodos de recuperación? <a>Restablecer todo</a>",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Si restableces todo, volverás a empezar sin sesiones ni usuarios de confianza, y puede que no puedas ver mensajes anteriores.",
     "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
     "Reset everything": "Restablecer todo",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
@@ -3861,7 +3839,15 @@
         "update_power_level": "Fallo al cambiar de nivel de acceso",
         "unknown": "Error desconocido",
         "dialog_description_default": "Un error ha ocurrido.",
-        "edit_history_unsupported": "Tu servidor base no parece soportar esta funcionalidad."
+        "edit_history_unsupported": "Tu servidor base no parece soportar esta funcionalidad.",
+        "session_restore": {
+            "clear_storage_description": "¿Salir y borrar las claves de cifrado?",
+            "clear_storage_button": "Borrar almacenamiento y cerrar sesión",
+            "title": "No se puede recuperar la sesión",
+            "description_1": "Encontramos un error al intentar restaurar su sesión anterior.",
+            "description_2": "Si ha usado anteriormente una versión más reciente de %(brand)s, su sesión puede ser incompatible con ésta. Cierre la ventana y vuelva a la versión más reciente.",
+            "description_3": "Limpiando el almacenamiento del navegador puede arreglar el problema, pero le desconectará y cualquier historial de conversación cifrado se volverá ilegible."
+        }
     },
     "in_space1_and_space2": "En los espacios %(space1Name)s y %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4121,7 +4107,11 @@
         "warning_kind_files_app": "Usa la <a>aplicación de escritorio</a> para ver todos los archivos cifrados",
         "warning_kind_search_app": "Usa la <a>aplicación de escritorio</a> para buscar en los mensajes cifrados",
         "warning_kind_files": "Esta versión de %(brand)s no permite ver algunos archivos cifrados",
-        "warning_kind_search": "Esta versión de %(brand)s no puede buscar mensajes cifrados"
+        "warning_kind_search": "Esta versión de %(brand)s no puede buscar mensajes cifrados",
+        "reset_title": "¿Restablecer almacenamiento de eventos?",
+        "reset_description": "Lo más probable es que no quieras restablecer tu almacenamiento de índice de ecentos",
+        "reset_explainer": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
+        "reset_button": "Restablecer el almacenamiento de eventos"
     },
     "truncated_list_n_more": {
         "other": "Y %(count)s más…"
@@ -4175,5 +4165,19 @@
         "resync_description": "%(brand)s ahora utiliza de 3 a 5 veces menos memoria, porque solo carga información sobre otros usuarios cuando es necesario. Por favor, ¡aguarda mientras volvemos a sincronizar con el servidor!",
         "resync_title": "Actualizando %(brand)s"
     },
-    "message_edit_dialog_title": "Ediciones del mensaje"
+    "message_edit_dialog_title": "Ediciones del mensaje",
+    "server_offline": {
+        "empty_timeline": "Estás al día.",
+        "title": "El servidor no está respondiendo",
+        "description": "Tu servidor no responde a algunas de tus solicitudes. A continuación se presentan algunas de las razones más probables.",
+        "description_1": "El servidor (%(serverName)s) tardó demasiado en responder.",
+        "description_2": "Tu firewall o antivirus está bloqueando la solicitud.",
+        "description_3": "Una extensión del navegador está impidiendo la solicitud.",
+        "description_4": "El servidor está desconectado.",
+        "description_5": "El servidor ha rechazado la solicitud.",
+        "description_6": "Su área está experimentando dificultades para conectarse a Internet.",
+        "description_7": "Se produjo un error de conexión al intentar contactar con el servidor.",
+        "description_8": "El servidor no está configurado para indicar cuál es el problema (CORS).",
+        "recent_changes_heading": "Cambios recientes que aún no se han recibido"
+    }
 }

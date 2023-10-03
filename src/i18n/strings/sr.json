@@ -50,8 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
     "expand": "рашири",
-    "Unable to restore session": "Не могу да повратим сесију",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако сте претходно користили новије издање апликације %(brand)s, ваша сесија може бити некомпатибилна са овим издањем. Затворите овај прозор и вратите се на новије издање.",
     "Verification Pending": "Чека се на проверу",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверите ваш мејл и кликните на везу унутар њега. Када ово урадите, кликните на дугме „настави“.",
     "This will allow you to reset your password and receive notifications.": "Ово омогућава поновно постављање лозинке и примање обавештења.",
@@ -66,9 +64,6 @@
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
     "Send Logs": "Пошаљи записнике",
-    "Clear Storage and Sign Out": "Очисти складиште и одјави ме",
-    "We encountered an error trying to restore your previous session.": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим.",
     "Share Room": "Подели собу",
     "Link to most recent message": "Веза ка најновијој поруци",
     "Share User": "Подели корисника",
@@ -1489,7 +1484,14 @@
         "something_went_wrong": "Нешто је пошло наопако!",
         "update_power_level": "Не могу да изменим ниво снаге",
         "unknown": "Непозната грешка",
-        "dialog_description_default": "Догодила се грешка."
+        "dialog_description_default": "Догодила се грешка.",
+        "session_restore": {
+            "clear_storage_button": "Очисти складиште и одјави ме",
+            "title": "Не могу да повратим сесију",
+            "description_1": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
+            "description_2": "Ако сте претходно користили новије издање апликације %(brand)s, ваша сесија може бити некомпатибилна са овим издањем. Затворите овај прозор и вратите се на новије издање.",
+            "description_3": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим."
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> и %(count)s других",

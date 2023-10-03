@@ -290,8 +290,6 @@
     "Tue": "Mái",
     "Mon": "Lua",
     "Sun": "Doṁ",
-    "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
-    "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
     "Unnamed room": "Seomra gan ainm",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -883,7 +881,11 @@
         "mixed_content": "Ní féidir ceangal leis an bhfreastalaí baile trí HTTP nuair a bhíonn URL HTTPS i mbarra do bhrabhsálaí. Bain úsáid as HTTPS nó <a> scripteanna neamhshábháilte a chumasú </a>.",
         "tls": "Ní féidir ceangal leis an bhfreastalaí baile - seiceáil do nascacht le do thoil, déan cinnte go bhfuil muinín i dteastas <a>SSL do fhreastalaí baile</a>, agus nach bhfuil síneadh brabhsálaí ag cur bac ar iarratais.",
         "update_power_level": "Níor éiríodh leis an leibhéal cumhachta a hathrú",
-        "dialog_description_default": "D’imigh earráid éigin."
+        "dialog_description_default": "D’imigh earráid éigin.",
+        "session_restore": {
+            "clear_storage_description": "Sínigh amach agus scrios eochracha criptiúcháin?",
+            "clear_storage_button": "Scrios Stóras agus Sínigh Amach"
+        }
     },
     "notifications": {
         "enable_prompt_toast_title": "Fógraí",

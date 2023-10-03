@@ -2084,7 +2084,15 @@
         "unknown": "Unknown error",
         "something_went_wrong": "Something went wrong!",
         "dialog_description_default": "An error has occurred.",
-        "edit_history_unsupported": "Your homeserver doesn't seem to support this feature."
+        "edit_history_unsupported": "Your homeserver doesn't seem to support this feature.",
+        "session_restore": {
+            "clear_storage_description": "Sign out and remove encryption keys?",
+            "clear_storage_button": "Clear Storage and Sign Out",
+            "title": "Unable to restore session",
+            "description_1": "We encountered an error trying to restore your previous session.",
+            "description_2": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
+            "description_3": "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable."
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> and %(count)s others",
@@ -3677,7 +3685,11 @@
         "warning_kind_files_app": "Use the <a>Desktop app</a> to see all encrypted files",
         "warning_kind_search_app": "Use the <a>Desktop app</a> to search encrypted messages",
         "warning_kind_files": "This version of %(brand)s does not support viewing some encrypted files",
-        "warning_kind_search": "This version of %(brand)s does not support searching encrypted messages"
+        "warning_kind_search": "This version of %(brand)s does not support searching encrypted messages",
+        "reset_title": "Reset event store?",
+        "reset_description": "You most likely do not want to reset your event index store",
+        "reset_explainer": "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated",
+        "reset_button": "Reset event store"
     },
     "truncated_list_n_more": {
         "other": "And %(count)s more..."
@@ -3776,28 +3788,20 @@
         "report_content_to_homeserver": "Report Content to Your Homeserver Administrator",
         "description": "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images."
     },
-    "You're all caught up.": "You're all caught up.",
-    "Server isn't responding": "Server isn't responding",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Your server isn't responding to some of your requests. Below are some of the most likely reasons.",
-    "The server (%(serverName)s) took too long to respond.": "The server (%(serverName)s) took too long to respond.",
-    "Your firewall or anti-virus is blocking the request.": "Your firewall or anti-virus is blocking the request.",
-    "A browser extension is preventing the request.": "A browser extension is preventing the request.",
-    "The server is offline.": "The server is offline.",
-    "The server has denied your request.": "The server has denied your request.",
-    "Your area is experiencing difficulties connecting to the internet.": "Your area is experiencing difficulties connecting to the internet.",
-    "A connection error occurred while trying to contact the server.": "A connection error occurred while trying to contact the server.",
-    "The server is not configured to indicate what the problem is (CORS).": "The server is not configured to indicate what the problem is (CORS).",
-    "Recent changes that have not yet been received": "Recent changes that have not yet been received",
-    "Reset event store?": "Reset event store?",
-    "You most likely do not want to reset your event index store": "You most likely do not want to reset your event index store",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated",
-    "Reset event store": "Reset event store",
-    "Sign out and remove encryption keys?": "Sign out and remove encryption keys?",
-    "Clear Storage and Sign Out": "Clear Storage and Sign Out",
-    "Unable to restore session": "Unable to restore session",
-    "We encountered an error trying to restore your previous session.": "We encountered an error trying to restore your previous session.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.",
+    "server_offline": {
+        "empty_timeline": "You're all caught up.",
+        "title": "Server isn't responding",
+        "description": "Your server isn't responding to some of your requests. Below are some of the most likely reasons.",
+        "description_1": "The server (%(serverName)s) took too long to respond.",
+        "description_2": "Your firewall or anti-virus is blocking the request.",
+        "description_3": "A browser extension is preventing the request.",
+        "description_4": "The server is offline.",
+        "description_5": "The server has denied your request.",
+        "description_6": "Your area is experiencing difficulties connecting to the internet.",
+        "description_7": "A connection error occurred while trying to contact the server.",
+        "description_8": "The server is not configured to indicate what the problem is (CORS).",
+        "recent_changes_heading": "Recent changes that have not yet been received"
+    },
     "Verification Pending": "Verification Pending",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
     "Email address": "Email address",

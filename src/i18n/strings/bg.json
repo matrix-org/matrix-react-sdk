@@ -51,10 +51,8 @@
     "collapse": "свий",
     "expand": "разшири",
     "Verification Pending": "Очакване на потвърждение",
-    "Unable to restore session": "Неуспешно възстановяване на сесията",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Моля, проверете своя имейл адрес и натиснете връзката, която той съдържа. След като направите това, натиснете продължи.",
     "This will allow you to reset your password and receive notifications.": "Това ще Ви позволи да възстановите Вашата парола и да получавате известия.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
     "Sunday": "Неделя",
     "Today": "Днес",
     "Friday": "Петък",
@@ -65,10 +63,7 @@
     "Wednesday": "Сряда",
     "Thursday": "Четвъртък",
     "Yesterday": "Вчера",
-    "Clear Storage and Sign Out": "Изчисти запазените данни и излез",
     "Send Logs": "Изпрати логове",
-    "We encountered an error trying to restore your previous session.": "Възникна грешка при възстановяване на предишната Ви сесия.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Изчистване на запазените данни в браузъра може да поправи проблема, но ще Ви изкара от профила и ще направи шифрованите съобщения нечетими.",
     "Share Room": "Споделяне на стая",
     "Link to most recent message": "Създай връзка към най-новото съобщение",
     "Share User": "Споделяне на потребител",
@@ -142,7 +137,6 @@
     "Folder": "Папка",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
-    "Sign out and remove encryption keys?": "Излизане и премахване на ключовете за шифроване?",
     "To help us prevent this in future, please <a>send us logs</a>.": "За да ни помогнете да предотвратим това в бъдеще, моля <a>изпратете логове</a>.",
     "Missing session data": "Липсват данни за сесията",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Липсват данни за сесията, като например ключове за шифровани съобщения. За да поправите това, излезте и влезте отново, възстановявайки ключовете от резервно копие.",
@@ -217,18 +211,6 @@
     "Security Phrase": "Защитна фраза",
     "Looks good!": "Изглежда добре!",
     "Wrong file type": "Грешен тип файл",
-    "Recent changes that have not yet been received": "Скорошни промени, които още не са били получени",
-    "The server is not configured to indicate what the problem is (CORS).": "Сървърът не е конфигуриран да укаже какъв е проблемът (CORS).",
-    "A connection error occurred while trying to contact the server.": "Възникнал е проблем с връзката при свързване към сървъра.",
-    "Your area is experiencing difficulties connecting to the internet.": "В районът ви има проблеми с връзката с интернет.",
-    "The server has denied your request.": "Сървърът е забранил заявката ви.",
-    "The server is offline.": "Сървърът е офлайн.",
-    "A browser extension is preventing the request.": "Разширение на браузъра блокира заявката.",
-    "Your firewall or anti-virus is blocking the request.": "Защитната ви стена (firewall) или антивирусен софтуер блокират заявката.",
-    "The server (%(serverName)s) took too long to respond.": "Сървърът %(serverName)s отне твърде дълго да отговори.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Сървърът ви не отговаря на някой от заявките ви. По-долу са някои от най-вероятните причини.",
-    "Server isn't responding": "Сървърът не отговаря",
-    "You're all caught up.": "Наваксали сте с всичко.",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -2239,7 +2221,15 @@
         "update_power_level": "Неуспешна промяна на нивото на достъп",
         "unknown": "Неизвестна грешка",
         "dialog_description_default": "Възникна грешка.",
-        "edit_history_unsupported": "Не изглежда сървърът ви да поддържа тази функция."
+        "edit_history_unsupported": "Не изглежда сървърът ви да поддържа тази функция.",
+        "session_restore": {
+            "clear_storage_description": "Излизане и премахване на ключовете за шифроване?",
+            "clear_storage_button": "Изчисти запазените данни и излез",
+            "title": "Неуспешно възстановяване на сесията",
+            "description_1": "Възникна грешка при възстановяване на предишната Ви сесия.",
+            "description_2": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
+            "description_3": "Изчистване на запазените данни в браузъра може да поправи проблема, но ще Ви изкара от профила и ще направи шифрованите съобщения нечетими."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2442,5 +2432,19 @@
         "resync_description": "%(brand)s вече използва 3-5 пъти по-малко памет, като зарежда информация за потребители само когато е нужна. Моля, изчакайте докато ресинхронизираме със сървъра!",
         "resync_title": "Обновяване на %(brand)s"
     },
-    "message_edit_dialog_title": "Редакции на съобщение"
+    "message_edit_dialog_title": "Редакции на съобщение",
+    "server_offline": {
+        "empty_timeline": "Наваксали сте с всичко.",
+        "title": "Сървърът не отговаря",
+        "description": "Сървърът ви не отговаря на някой от заявките ви. По-долу са някои от най-вероятните причини.",
+        "description_1": "Сървърът %(serverName)s отне твърде дълго да отговори.",
+        "description_2": "Защитната ви стена (firewall) или антивирусен софтуер блокират заявката.",
+        "description_3": "Разширение на браузъра блокира заявката.",
+        "description_4": "Сървърът е офлайн.",
+        "description_5": "Сървърът е забранил заявката ви.",
+        "description_6": "В районът ви има проблеми с връзката с интернет.",
+        "description_7": "Възникнал е проблем с връзката при свързване към сървъра.",
+        "description_8": "Сървърът не е конфигуриран да укаже какъв е проблемът (CORS).",
+        "recent_changes_heading": "Скорошни промени, които още не са били получени"
+    }
 }

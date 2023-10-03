@@ -50,8 +50,6 @@
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
     "expand": "despregar",
-    "Unable to restore session": "Non se puido restaurar a sesión",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Se anteriormente utilizaches unha versión máis recente de %(brand)s, a túa sesión podería non ser compatible con esta versión. Pecha esta ventá e volve á versión máis recente.",
     "Verification Pending": "Verificación pendente",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Comprobe o seu correo electrónico e pulse na ligazón que contén. Unha vez feito iso prema continuar.",
     "This will allow you to reset your password and receive notifications.": "Isto permitiralle restablecer o seu contrasinal e recibir notificacións.",
@@ -66,16 +64,12 @@
     "Thursday": "Xoves",
     "Yesterday": "Onte",
     "Send Logs": "Enviar informes",
-    "Clear Storage and Sign Out": "Limpar o almacenamento e Saír",
-    "We encountered an error trying to restore your previous session.": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Limpando o almacenamento do navegador podería resolver o problema, pero sairás da sesión e non poderás ler o historial cifrado da conversa.",
     "Share Room": "Compartir sala",
     "Link to most recent message": "Ligazón ás mensaxes máis recentes",
     "Share User": "Compartir usuaria",
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
-    "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Deactivate account": "Desactivar conta",
     "Command Help": "Comando Axuda",
@@ -216,18 +210,6 @@
     "Security Phrase": "Frase de seguridade",
     "Security Key": "Chave de Seguridade",
     "Use your Security Key to continue.": "Usa a túa Chave de Seguridade para continuar.",
-    "You're all caught up.": "Xa estás ó día.",
-    "Server isn't responding": "O servidor non responde",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "O servidor non responde a algunhas peticións. Aquí tes algunha das razóns máis probables.",
-    "The server (%(serverName)s) took too long to respond.": "O servidor (%(serverName)s) tardou moito en responder.",
-    "Your firewall or anti-virus is blocking the request.": "O cortalumes ou antivirus está bloqueando a solicitude.",
-    "A browser extension is preventing the request.": "Unha extensión do navegador está evitando a solicitude.",
-    "The server is offline.": "O servidor está apagado.",
-    "The server has denied your request.": "O servidor rexeitou a solicitude.",
-    "Your area is experiencing difficulties connecting to the internet.": "Hai problemas de conexión a internet na túa localidade.",
-    "A connection error occurred while trying to contact the server.": "Aconteceu un fallo de conexión ó intentar contactar co servidor.",
-    "The server is not configured to indicate what the problem is (CORS).": "O servidor non está configurado para sinalar cal é o problema (CORS).",
-    "Recent changes that have not yet been received": "Cambios recentes que aínda non foron recibidos",
     "Not encrypted": "Sen cifrar",
     "Backup version:": "Versión da copia:",
     "Unable to set up keys": "Non se puideron configurar as chaves",
@@ -515,18 +497,14 @@
         "one": "%(count)s sala",
         "other": "%(count)s salas"
     },
-    "Reset event store?": "Restablecer almacenaxe do evento?",
-    "You most likely do not want to reset your event index store": "Probablemente non queiras restablecer o índice de almacenaxe do evento",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persoas que coñeces xa se uniron",
         "one": "%(count)s persoa que coñeces xa se uniu"
     },
-    "Reset event store": "Restablecer almacenaxe de eventos",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se restableces todo, volverás a comezar sen sesións verificadas, usuarias de confianza, e poderías non poder ver as mensaxes anteriores.",
     "Only do this if you have no other device to complete verification with.": "Fai isto únicamente se non tes outro dispositivo co que completar a verificación.",
     "Reset everything": "Restablecer todo",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "%(count)s reply": {
         "one": "%(count)s resposta",
@@ -3585,7 +3563,15 @@
         "update_power_level": "Fallo ao cambiar o nivel de permisos",
         "unknown": "Fallo descoñecido",
         "dialog_description_default": "Algo fallou.",
-        "edit_history_unsupported": "O servidor non semella soportar esta característica."
+        "edit_history_unsupported": "O servidor non semella soportar esta característica.",
+        "session_restore": {
+            "clear_storage_description": "Saír e eliminar as chaves de cifrado?",
+            "clear_storage_button": "Limpar o almacenamento e Saír",
+            "title": "Non se puido restaurar a sesión",
+            "description_1": "Atopamos un fallo intentando restablecer a súa sesión anterior.",
+            "description_2": "Se anteriormente utilizaches unha versión máis recente de %(brand)s, a túa sesión podería non ser compatible con esta versión. Pecha esta ventá e volve á versión máis recente.",
+            "description_3": "Limpando o almacenamento do navegador podería resolver o problema, pero sairás da sesión e non poderás ler o historial cifrado da conversa."
+        }
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3825,7 +3811,11 @@
         "warning_kind_files_app": "Usa a <a>app de Escritorio</a> para ver todos os ficheiros cifrados",
         "warning_kind_search_app": "Usa a <a>app de Escritorio</a> para buscar mensaxes cifradas",
         "warning_kind_files": "Esta versión de %(brand)s non soporta o visionado dalgúns ficheiros cifrados",
-        "warning_kind_search": "Esta versión de %(brand)s non soporta a busca de mensaxes cifradas"
+        "warning_kind_search": "Esta versión de %(brand)s non soporta a busca de mensaxes cifradas",
+        "reset_title": "Restablecer almacenaxe do evento?",
+        "reset_description": "Probablemente non queiras restablecer o índice de almacenaxe do evento",
+        "reset_explainer": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
+        "reset_button": "Restablecer almacenaxe de eventos"
     },
     "truncated_list_n_more": {
         "other": "E %(count)s máis..."
@@ -3875,5 +3865,19 @@
         "resync_description": "%(brand)s utiliza agora entre 3 e 5 veces menos memoria, cargando só información sobre as usuarias cando é preciso. Agarda mentras se sincroniza co servidor!",
         "resync_title": "Actualizando %(brand)s"
     },
-    "message_edit_dialog_title": "Edicións da mensaxe"
+    "message_edit_dialog_title": "Edicións da mensaxe",
+    "server_offline": {
+        "empty_timeline": "Xa estás ó día.",
+        "title": "O servidor non responde",
+        "description": "O servidor non responde a algunhas peticións. Aquí tes algunha das razóns máis probables.",
+        "description_1": "O servidor (%(serverName)s) tardou moito en responder.",
+        "description_2": "O cortalumes ou antivirus está bloqueando a solicitude.",
+        "description_3": "Unha extensión do navegador está evitando a solicitude.",
+        "description_4": "O servidor está apagado.",
+        "description_5": "O servidor rexeitou a solicitude.",
+        "description_6": "Hai problemas de conexión a internet na túa localidade.",
+        "description_7": "Aconteceu un fallo de conexión ó intentar contactar co servidor.",
+        "description_8": "O servidor non está configurado para sinalar cal é o problema (CORS).",
+        "recent_changes_heading": "Cambios recentes que aínda non foron recibidos"
+    }
 }

@@ -46,9 +46,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Обмежено",
     "Moderator": "Модератор",
-    "Sign out and remove encryption keys?": "Вийти та видалити ключі шифрування?",
-    "Clear Storage and Sign Out": "Очистити сховище та вийти",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очищення сховища вашого браузера може усунути проблему, але ви вийдете з системи та зробить історію вашого зашифрованого спілкування непрочитною.",
     "Verification Pending": "Очікується перевірка",
     "Upload files (%(current)s of %(total)s)": "Вивантажити файли (%(current)s з %(total)s)",
     "Upload files": "Вивантажити файли",
@@ -62,8 +59,6 @@
     },
     "Upload Error": "Помилка вивантаження",
     "Deactivate account": "Деактивувати обліковий запис",
-    "Unable to restore session": "Не вдалося відновити сеанс",
-    "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
     "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
     "Verify your other session using one of the options below.": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
@@ -391,7 +386,6 @@
     "Finland": "Фінляндія",
     "Fiji": "Фіджі",
     "Faroe Islands": "Фарерські Острови",
-    "You're all caught up.": "Все готово.",
     "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
     "Confirm encryption setup": "Підтвердити налаштування шифрування",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
@@ -458,7 +452,6 @@
     "Forget": "Забути",
     "Only do this if you have no other device to complete verification with.": "Робіть це лише якщо у вас немає іншого пристрою для виконання перевірки.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Видалення ключів перехресного підписування безповоротне. Усі, з ким ви звірили сеанси, бачитимуть сповіщення системи безпеки. Ви майже напевно не захочете цього робити, якщо тільки ви не втратили всі пристрої, з яких можна виконувати перехресне підписування.",
-    "The server is offline.": "Сервер вимкнено.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s і %(count)s інших",
         "other": "%(spaceName)s і %(count)s інших"
@@ -480,13 +473,7 @@
     "Be found by phone or email": "Бути знайденим за номером телефону або е-поштою",
     "Find others by phone or email": "Шукати інших за номером телефону або е-поштою",
     "This will allow you to reset your password and receive notifications.": "Це дозволить вам скинути пароль і отримувати сповіщення.",
-    "Reset event store?": "Очистити сховище подій?",
-    "The server has denied your request.": "Сервер відхилив ваш запит.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Перейдіть до своєї е-пошти й натисніть на отримане посилання. Після цього натисніть «Продовжити».",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Якщо ви досі користувались новішою версією %(brand)s, ваш сеанс може бути несумісним із цією версією. Закрийте це вікно й поверніться до новішої версії.",
-    "Reset event store": "Очистити сховище подій",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Якщо таки бажаєте, зауважте, що жодні ваші повідомлення не видаляться, проте пошук сповільниться, поки індекс буде перестворюватись",
-    "You most likely do not want to reset your event index store": "Сумніваємось, що ви бажаєте очистити своє сховище подій",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
     "Spaces you're in": "Ваші простори",
@@ -546,16 +533,7 @@
     "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
     "Failed to start livestream": "Не вдалося почати живу трансляцію",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
-    "The server is not configured to indicate what the problem is (CORS).": "Сервер не налаштований на деталізацію суті проблеми (CORS).",
-    "A connection error occurred while trying to contact the server.": "Стався збій при спробі зв'язку з сервером.",
-    "Your area is experiencing difficulties connecting to the internet.": "У вашій місцевості зараз проблеми з інтернет-зв'язком.",
-    "A browser extension is preventing the request.": "Розширення браузера заблокувало запит.",
-    "Your firewall or anti-virus is blocking the request.": "Ваш файрвол чи антивірус заблокував запит.",
-    "The server (%(serverName)s) took too long to respond.": "Сервер (%(serverName)s) не відповів у прийнятний термін.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Не вдалося отримати відповідь на деякі запити до вашого сервера. Ось деякі можливі причини.",
-    "Server isn't responding": "Сервер не відповідає",
     "Sections to show": "Показувані розділи",
-    "Recent changes that have not yet been received": "Останні зміни, котрі ще не отримано",
     "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
     "a key signature": "відбиток ключа",
     "a device cross-signing signature": "підпис перехресного підписування пристрою",
@@ -4042,7 +4020,15 @@
         "update_power_level": "Не вдалося змінити рівень повноважень",
         "unknown": "Невідома помилка",
         "dialog_description_default": "Сталася помилка.",
-        "edit_history_unsupported": "Схоже, що ваш домашній сервер не підтримує цю властивість."
+        "edit_history_unsupported": "Схоже, що ваш домашній сервер не підтримує цю властивість.",
+        "session_restore": {
+            "clear_storage_description": "Вийти та видалити ключі шифрування?",
+            "clear_storage_button": "Очистити сховище та вийти",
+            "title": "Не вдалося відновити сеанс",
+            "description_1": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
+            "description_2": "Якщо ви досі користувались новішою версією %(brand)s, ваш сеанс може бути несумісним із цією версією. Закрийте це вікно й поверніться до новішої версії.",
+            "description_3": "Очищення сховища вашого браузера може усунути проблему, але ви вийдете з системи та зробить історію вашого зашифрованого спілкування непрочитною."
+        }
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4316,7 +4302,11 @@
         "warning_kind_files_app": "Скористайтеся <a>стільничним застосунком</a>, щоб переглянути всі зашифровані файли",
         "warning_kind_search_app": "Скористайтеся <a>стільничним застосунком</a>, щоб пошукати серед зашифрованих повідомлень",
         "warning_kind_files": "Ця версія %(brand)s не підтримує перегляд деяких зашифрованих файлів",
-        "warning_kind_search": "Ця версія %(brand)s не підтримує пошук зашифрованих повідомлень"
+        "warning_kind_search": "Ця версія %(brand)s не підтримує пошук зашифрованих повідомлень",
+        "reset_title": "Очистити сховище подій?",
+        "reset_description": "Сумніваємось, що ви бажаєте очистити своє сховище подій",
+        "reset_explainer": "Якщо таки бажаєте, зауважте, що жодні ваші повідомлення не видаляться, проте пошук сповільниться, поки індекс буде перестворюватись",
+        "reset_button": "Очистити сховище подій"
     },
     "truncated_list_n_more": {
         "other": "І ще %(count)s..."
@@ -4373,5 +4363,19 @@
         "resync_description": "%(brand)s тепер використовує в 3-5 разів менше пам'яті, звантажуючи дані про інших користувачів лише за потреби. Зачекайте, поки ми синхронізуємося з сервером!",
         "resync_title": "Оновлення %(brand)s"
     },
-    "message_edit_dialog_title": "Редагування повідомлення"
+    "message_edit_dialog_title": "Редагування повідомлення",
+    "server_offline": {
+        "empty_timeline": "Все готово.",
+        "title": "Сервер не відповідає",
+        "description": "Не вдалося отримати відповідь на деякі запити до вашого сервера. Ось деякі можливі причини.",
+        "description_1": "Сервер (%(serverName)s) не відповів у прийнятний термін.",
+        "description_2": "Ваш файрвол чи антивірус заблокував запит.",
+        "description_3": "Розширення браузера заблокувало запит.",
+        "description_4": "Сервер вимкнено.",
+        "description_5": "Сервер відхилив ваш запит.",
+        "description_6": "У вашій місцевості зараз проблеми з інтернет-зв'язком.",
+        "description_7": "Стався збій при спробі зв'язку з сервером.",
+        "description_8": "Сервер не налаштований на деталізацію суті проблеми (CORS).",
+        "recent_changes_heading": "Останні зміни, котрі ще не отримано"
+    }
 }

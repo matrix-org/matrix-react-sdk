@@ -63,18 +63,6 @@
     "Clear cross-signing keys": "Xóa các khóa ký chéo",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Xóa khóa ký chéo là vĩnh viễn. Bất kỳ ai mà bạn đã xác thực đều sẽ thấy cảnh báo bảo mật. Bạn gần như chắc chắn không muốn làm điều này, trừ khi bạn bị mất mọi thiết bị mà bạn có thể đăng nhập chéo.",
     "Destroy cross-signing keys?": "Hủy khóa xác thực chéo?",
-    "Recent changes that have not yet been received": "Những thay đổi gần đây chưa được nhận",
-    "The server is not configured to indicate what the problem is (CORS).": "Máy chủ không được định cấu hình để cho biết sự cố là gì (CORS).",
-    "A connection error occurred while trying to contact the server.": "Đã xảy ra lỗi kết nối khi cố gắng kết nối với máy chủ.",
-    "Your area is experiencing difficulties connecting to the internet.": "Khu vực của bạn đang gặp khó khăn khi kết nối Internet.",
-    "The server has denied your request.": "Máy chủ đã từ chối yêu cầu của bạn.",
-    "The server is offline.": "Máy chủ đang ngoại tuyến.",
-    "A browser extension is preventing the request.": "Một tiện ích mở rộng của trình duyệt đang ngăn chặn yêu cầu.",
-    "Your firewall or anti-virus is blocking the request.": "Tường lửa hoặc chương trình chống vi-rút của bạn đang chặn yêu cầu.",
-    "The server (%(serverName)s) took too long to respond.": "Máy chủ (%(serverName)s) mất quá nhiều thời gian để phản hồi.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Máy chủ của bạn không phản hồi một số yêu cầu của bạn. Dưới đây là một số lý do có thể xảy ra nhất.",
-    "Server isn't responding": "Máy chủ không phản hồi",
-    "You're all caught up.": "Bạn đã bắt kịp tất cả.",
     "%(count)s rooms": {
         "one": "%(count)s phòng",
         "other": "%(count)s phòng"
@@ -142,17 +130,7 @@
     "This will allow you to reset your password and receive notifications.": "Điều này sẽ cho phép bạn đặt lại mật khẩu của mình và nhận thông báo.",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Vui lòng kiểm tra hòm thư và bấm vào liên kết trong đó. Khi nào xong, hãy bấm tiếp tục.",
     "Verification Pending": "Chờ xác thực",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Xóa bộ nhớ của trình duyệt có thể khắc phục được sự cố nhưng sẽ khiến bạn đăng xuất và khiến mọi lịch sử trò chuyện được mã hóa trở nên không thể đọc được.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Nếu trước đây bạn đã sử dụng phiên bản %(brand)s mới hơn, thì phiên của bạn có thể không tương thích với phiên bản này. Đóng cửa sổ này và quay lại phiên bản mới hơn.",
-    "We encountered an error trying to restore your previous session.": "Chúng tôi đã gặp lỗi khi cố gắng khôi phục phiên trước đó của bạn.",
-    "Unable to restore session": "Không thể khôi phục phiên",
     "Send Logs": "Gửi những bản ghi",
-    "Clear Storage and Sign Out": "Xóa bộ nhớ và Đăng xuất",
-    "Sign out and remove encryption keys?": "Đăng xuất và xóa khóa mã hóa?",
-    "Reset event store": "Đặt lại cửa hàng sự kiện",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nếu bạn làm vậy, xin lưu ý rằng không có thư nào của bạn sẽ bị xóa, nhưng trải nghiệm tìm kiếm có thể bị giảm sút trong một vài phút trong khi chỉ mục được tạo lại",
-    "You most likely do not want to reset your event index store": "Rất có thể bạn không muốn đặt lại kho chỉ mục sự kiện của mình",
-    "Reset event store?": "Đặt lại kho sự kiện?",
     "%(count)s people you know have already joined": {
         "one": "%(count)s người bạn đã biết vừa tham gia",
         "other": "%(count)s người bạn đã biết vừa tham gia"
@@ -3772,7 +3750,15 @@
         "update_power_level": "Không thay đổi được mức công suất",
         "unknown": "Lỗi không thể nhận biết",
         "dialog_description_default": "Một lỗi đã xảy ra.",
-        "edit_history_unsupported": "Máy chủ nhà của bạn dường như không hỗ trợ tính năng này."
+        "edit_history_unsupported": "Máy chủ nhà của bạn dường như không hỗ trợ tính năng này.",
+        "session_restore": {
+            "clear_storage_description": "Đăng xuất và xóa khóa mã hóa?",
+            "clear_storage_button": "Xóa bộ nhớ và Đăng xuất",
+            "title": "Không thể khôi phục phiên",
+            "description_1": "Chúng tôi đã gặp lỗi khi cố gắng khôi phục phiên trước đó của bạn.",
+            "description_2": "Nếu trước đây bạn đã sử dụng phiên bản %(brand)s mới hơn, thì phiên của bạn có thể không tương thích với phiên bản này. Đóng cửa sổ này và quay lại phiên bản mới hơn.",
+            "description_3": "Xóa bộ nhớ của trình duyệt có thể khắc phục được sự cố nhưng sẽ khiến bạn đăng xuất và khiến mọi lịch sử trò chuyện được mã hóa trở nên không thể đọc được."
+        }
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4024,7 +4010,11 @@
         "warning_kind_files_app": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để xem tất cả các tệp được mã hóa",
         "warning_kind_search_app": "Sử dụng ứng dụng Máy tính để bàn <a>Desktop app</a> để tìm kiếm tin nhắn được mã hóa",
         "warning_kind_files": "Phiên bản %(brand)s này không hỗ trợ xem một số tệp được mã hóa",
-        "warning_kind_search": "Phiên bản %(brand)s này không hỗ trợ tìm kiếm tin nhắn được mã hóa"
+        "warning_kind_search": "Phiên bản %(brand)s này không hỗ trợ tìm kiếm tin nhắn được mã hóa",
+        "reset_title": "Đặt lại kho sự kiện?",
+        "reset_description": "Rất có thể bạn không muốn đặt lại kho chỉ mục sự kiện của mình",
+        "reset_explainer": "Nếu bạn làm vậy, xin lưu ý rằng không có thư nào của bạn sẽ bị xóa, nhưng trải nghiệm tìm kiếm có thể bị giảm sút trong một vài phút trong khi chỉ mục được tạo lại",
+        "reset_button": "Đặt lại cửa hàng sự kiện"
     },
     "truncated_list_n_more": {
         "other": "Và %(count)s thêm…"
@@ -4072,5 +4062,19 @@
         "resync_description": "%(brand)s hiện sử dụng bộ nhớ ít hơn 3-5 lần, bằng cách chỉ tải thông tin về những người dùng khác khi cần thiết. Vui lòng đợi trong khi chúng tôi đồng bộ hóa lại với máy chủ!",
         "resync_title": "Đang cập nhật %(brand)s"
     },
-    "message_edit_dialog_title": "Chỉnh sửa tin nhắn"
+    "message_edit_dialog_title": "Chỉnh sửa tin nhắn",
+    "server_offline": {
+        "empty_timeline": "Bạn đã bắt kịp tất cả.",
+        "title": "Máy chủ không phản hồi",
+        "description": "Máy chủ của bạn không phản hồi một số yêu cầu của bạn. Dưới đây là một số lý do có thể xảy ra nhất.",
+        "description_1": "Máy chủ (%(serverName)s) mất quá nhiều thời gian để phản hồi.",
+        "description_2": "Tường lửa hoặc chương trình chống vi-rút của bạn đang chặn yêu cầu.",
+        "description_3": "Một tiện ích mở rộng của trình duyệt đang ngăn chặn yêu cầu.",
+        "description_4": "Máy chủ đang ngoại tuyến.",
+        "description_5": "Máy chủ đã từ chối yêu cầu của bạn.",
+        "description_6": "Khu vực của bạn đang gặp khó khăn khi kết nối Internet.",
+        "description_7": "Đã xảy ra lỗi kết nối khi cố gắng kết nối với máy chủ.",
+        "description_8": "Máy chủ không được định cấu hình để cho biết sự cố là gì (CORS).",
+        "recent_changes_heading": "Những thay đổi gần đây chưa được nhận"
+    }
 }

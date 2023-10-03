@@ -34,8 +34,6 @@
     "%(items)s and %(lastItem)s": "%(items)s und %(lastItem)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
     "Email address": "E-Mail-Adresse",
-    "Unable to restore session": "Sitzungswiederherstellung fehlgeschlagen",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
     "Create new room": "Neuer Raum",
     "Home": "Startseite",
     "(~%(count)s results)": {
@@ -66,9 +64,6 @@
     "Thursday": "Donnerstag",
     "Yesterday": "Gestern",
     "Send Logs": "Sende Protokoll",
-    "Clear Storage and Sign Out": "Speicher leeren und abmelden",
-    "We encountered an error trying to restore your previous session.": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Den Browser-Speicher zu löschen kann das Problem lösen, wird dich aber abmelden und verschlüsselte Nachrichten unlesbar machen.",
     "Share Room": "Raum teilen",
     "Link to most recent message": "Link zur aktuellsten Nachricht",
     "Share User": "Teile Benutzer",
@@ -164,7 +159,6 @@
     "%(name)s declined": "%(name)s hat abgelehnt",
     "%(name)s cancelled": "%(name)s hat abgebrochen",
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
-    "Sign out and remove encryption keys?": "Abmelden und Verschlüsselungsschlüssel entfernen?",
     "This backup is trusted because it has been restored on this session": "Dieser Sicherung wird vertraut, da sie während dieser Sitzung wiederhergestellt wurde",
     "Encrypted by a deleted session": "Von einer gelöschten Sitzung verschlüsselt",
     "e.g. my-room": "z. B. mein-raum",
@@ -213,18 +207,6 @@
     "Looks good!": "Sieht gut aus!",
     "Wrong file type": "Falscher Dateityp",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
-    "Server isn't responding": "Server reagiert nicht",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Server reagiert auf einige deiner Anfragen nicht. Folgend sind einige der wahrscheinlichsten Gründe aufgeführt.",
-    "The server (%(serverName)s) took too long to respond.": "Die Reaktionszeit des Servers (%(serverName)s) war zu hoch.",
-    "Your firewall or anti-virus is blocking the request.": "Deine Firewall oder Anti-Virus-Programm blockiert die Anfrage.",
-    "A browser extension is preventing the request.": "Eine Browser-Erweiterung verhindert die Anfrage.",
-    "The server is offline.": "Der Server ist außer Betrieb.",
-    "The server has denied your request.": "Der Server hat deine Anfrage abgewiesen.",
-    "Your area is experiencing difficulties connecting to the internet.": "Deine Region hat Schwierigkeiten, eine Verbindung zum Internet herzustellen.",
-    "A connection error occurred while trying to contact the server.": "Beim Versuch, den Server zu kontaktieren, ist ein Verbindungsfehler aufgetreten.",
-    "You're all caught up.": "Du bist auf dem neuesten Stand.",
-    "The server is not configured to indicate what the problem is (CORS).": "Der Server ist nicht dafür konfiguriert, das Problem anzuzeigen (CORS).",
-    "Recent changes that have not yet been received": "Letzte Änderungen, die noch nicht eingegangen sind",
     "Security Phrase": "Sicherheitsphrase",
     "Security Key": "Sicherheitsschlüssel",
     "Use your Security Key to continue.": "Benutze deinen Sicherheitsschlüssel um fortzufahren.",
@@ -519,14 +501,10 @@
         "one": "%(count)s Person, die du kennst, ist schon beigetreten",
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
     },
-    "Reset event store?": "Ereignisspeicher zurück setzen?",
-    "You most likely do not want to reset your event index store": "Es ist wahrscheinlich, dass du den Ereignis-Indexspeicher nicht zurück setzen möchtest",
-    "Reset event store": "Ereignisspeicher zurück setzen",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, beginnst du ohne verifizierte Sitzungen und Benutzende von Neuem und siehst eventuell keine alten Nachrichten.",
     "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
     "%(count)s reply": {
         "one": "%(count)s Antwort",
@@ -4049,7 +4027,15 @@
         "update_power_level": "Ändern der Berechtigungsstufe fehlgeschlagen",
         "unknown": "Unbekannter Fehler",
         "dialog_description_default": "Ein Fehler ist aufgetreten.",
-        "edit_history_unsupported": "Dein Heim-Server scheint diese Funktion nicht zu unterstützen."
+        "edit_history_unsupported": "Dein Heim-Server scheint diese Funktion nicht zu unterstützen.",
+        "session_restore": {
+            "clear_storage_description": "Abmelden und Verschlüsselungsschlüssel entfernen?",
+            "clear_storage_button": "Speicher leeren und abmelden",
+            "title": "Sitzungswiederherstellung fehlgeschlagen",
+            "description_1": "Wir haben ein Problem beim Wiederherstellen deiner vorherigen Sitzung festgestellt.",
+            "description_2": "Wenn du zuvor eine aktuellere Version von %(brand)s verwendet hast, ist deine Sitzung eventuell inkompatibel mit dieser Version. Bitte schließe dieses Fenster und kehre zur aktuelleren Version zurück.",
+            "description_3": "Den Browser-Speicher zu löschen kann das Problem lösen, wird dich aber abmelden und verschlüsselte Nachrichten unlesbar machen."
+        }
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4323,7 +4309,11 @@
         "warning_kind_files_app": "Nutze die <a>Desktop-App</a> um alle verschlüsselten Dateien zu sehen",
         "warning_kind_search_app": "Nutze die <a>Desktop-App</a> um verschlüsselte Nachrichten zu durchsuchen",
         "warning_kind_files": "Diese Version von %(brand)s kann nicht alle verschlüsselten Dateien anzuzeigen",
-        "warning_kind_search": "Diese Version von %(brand)s kann verschlüsselte Nachrichten nicht durchsuchen"
+        "warning_kind_search": "Diese Version von %(brand)s kann verschlüsselte Nachrichten nicht durchsuchen",
+        "reset_title": "Ereignisspeicher zurück setzen?",
+        "reset_description": "Es ist wahrscheinlich, dass du den Ereignis-Indexspeicher nicht zurück setzen möchtest",
+        "reset_explainer": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
+        "reset_button": "Ereignisspeicher zurück setzen"
     },
     "truncated_list_n_more": {
         "other": "Und %(count)s weitere …"
@@ -4380,5 +4370,19 @@
         "resync_description": "%(brand)s benutzt nun 3 bis 5 Mal weniger Arbeitsspeicher, indem Informationen über andere Nutzer erst bei Bedarf geladen werden. Bitte warte, während die Daten erneut mit dem Server abgeglichen werden!",
         "resync_title": "Aktualisiere %(brand)s"
     },
-    "message_edit_dialog_title": "Nachrichtenänderungen"
+    "message_edit_dialog_title": "Nachrichtenänderungen",
+    "server_offline": {
+        "empty_timeline": "Du bist auf dem neuesten Stand.",
+        "title": "Server reagiert nicht",
+        "description": "Server reagiert auf einige deiner Anfragen nicht. Folgend sind einige der wahrscheinlichsten Gründe aufgeführt.",
+        "description_1": "Die Reaktionszeit des Servers (%(serverName)s) war zu hoch.",
+        "description_2": "Deine Firewall oder Anti-Virus-Programm blockiert die Anfrage.",
+        "description_3": "Eine Browser-Erweiterung verhindert die Anfrage.",
+        "description_4": "Der Server ist außer Betrieb.",
+        "description_5": "Der Server hat deine Anfrage abgewiesen.",
+        "description_6": "Deine Region hat Schwierigkeiten, eine Verbindung zum Internet herzustellen.",
+        "description_7": "Beim Versuch, den Server zu kontaktieren, ist ein Verbindungsfehler aufgetreten.",
+        "description_8": "Der Server ist nicht dafür konfiguriert, das Problem anzuzeigen (CORS).",
+        "recent_changes_heading": "Letzte Änderungen, die noch nicht eingegangen sind"
+    }
 }

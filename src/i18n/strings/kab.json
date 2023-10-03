@@ -115,11 +115,7 @@
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
     "Filter results": "Igmaḍ n usizdeg",
-    "Server isn't responding": "Ulac tiririt sɣur aqeddac",
-    "The server is offline.": "Aqeddac ha-t-an beṛṛa n tuqqna.",
-    "Clear Storage and Sign Out": "Sfeḍ aklas syen ffeɣ seg tuqqna",
     "Send Logs": "Azen iɣmisen",
-    "Unable to restore session": "D awezɣi ad d-tuɣal texxamt",
     "Verification Pending": "Asenqed yettṛaǧu",
     "Share User": "Bḍu aseqdac",
     "Link to selected message": "Aseɣwen n yizen i yettwafernen",
@@ -167,13 +163,6 @@
     "Unnamed room": "Taxxamt war isem",
     "Create new room": "Rnu taxxamt tamaynut",
     "unknown error code": "tangalt n tuccḍa tarussint",
-    "You're all caught up.": "Tessawḍeḍ ad tqeḍɛeḍ kullec.",
-    "The server has denied your request.": "Aqeddac yugi asuter-ik·im.",
-    "Your area is experiencing difficulties connecting to the internet.": "Tamnaḍt-ik·im temlal-d uguren n tuqqna ɣer internet.",
-    "A connection error occurred while trying to contact the server.": "Tuccḍa deg tuqqna lawan n uneɛruḍ ad nnermes aqeddac.",
-    "The server is not configured to indicate what the problem is (CORS).": "Aqeddac ur yettusesteb ara i wakken ad d-imel anida-t wugur (CORPS).",
-    "Recent changes that have not yet been received": "Isnifal imaynuten ur d-newwiḍ ara akka ar tura",
-    "Sign out and remove encryption keys?": "Ffeɣ syen kkes tisura tiwgelhanin?",
     "Share Room": "Bḍu taxxamt",
     "Link to most recent message": "Aseɣwen n yizen akk aneggaru",
     "Share Room Message": "Bḍu izen n texxamt",
@@ -217,13 +206,6 @@
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Tukksa n tsura n uzmul anmidag ad yili i lebda. Yal amdan i tesneqdeḍ ad iwali ilɣa n tɣellist. Maca ur tebɣiḍ ara ad txedmeḍ aya, ala ma yella tesruḥeḍ ibenkan akk ara ak·akem-yeǧǧen ad tkecmeḍ seg-s.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n yisutar-ik·im. Ha-tent-a kra n ssebbat i izemren ad ilint.",
-    "The server (%(serverName)s) took too long to respond.": "Aqeddac (%(serverName)s) yeṭṭef aṭas n wakud i wakken ad d-yerr.",
-    "Your firewall or anti-virus is blocking the request.": "Aɣrab n tmes neɣ amgelavirus inek·inem yessewḥal isutar.",
-    "A browser extension is preventing the request.": "Asiɣzef n yiminig tessewḥel asuter.",
-    "We encountered an error trying to restore your previous session.": "Nemlal-d tuccḍa mi ara d-nettarra tiɣimit-ik·im yezrin.",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ma yella tesqedceḍ yakan lqem n melmi kan n %(brand)s, tiɣimit-ik·im tezmer ur tettemṣada ara d lqem-a. Mdel afaylu-a syen uɣal ɣer lqem n melmi kan.",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Asfaḍ n uklas n yiminig-ik·im yezmer ad iṣeggem ugur, maca aya ad ak·akem-isuffeɣ seg tuqqna rnu akk imazrayen n udiwenni yettwawgelhen ur d-ttbanen.",
     "To help us prevent this in future, please <a>send us logs</a>.": "I wakken ad aɣ-tɛiwneḍ ur d-iḍerru ara waya ɣer sdat, ttxil-k·m <a>azen-aɣ-d iɣmisen</a>.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Kra n yisefka n tɣimit, daɣen tisura n yiznan yettwawgelhen, ttwakksen. Ffeɣ syen ales anekcum i wakken ad tṣeggmeḍ aya, err-d tisura seg uḥraz.",
     "Your browser likely removed this data when running low on disk space.": "Yezmer iminig-ik·im yekkes isefka-a mi t-txuṣṣ tallunt ɣef uḍebsi.",
@@ -2129,7 +2111,15 @@
         "update_power_level": "Asnifel n uswir afellay ur yeddi ara",
         "unknown": "Tuccḍa tarussint",
         "dialog_description_default": "Tella-d tuccḍa.",
-        "edit_history_unsupported": "Aqeddac-ik·im agejdan ur yettban ara yessefrak tamahilt-a."
+        "edit_history_unsupported": "Aqeddac-ik·im agejdan ur yettban ara yessefrak tamahilt-a.",
+        "session_restore": {
+            "clear_storage_description": "Ffeɣ syen kkes tisura tiwgelhanin?",
+            "clear_storage_button": "Sfeḍ aklas syen ffeɣ seg tuqqna",
+            "title": "D awezɣi ad d-tuɣal texxamt",
+            "description_1": "Nemlal-d tuccḍa mi ara d-nettarra tiɣimit-ik·im yezrin.",
+            "description_2": "Ma yella tesqedceḍ yakan lqem n melmi kan n %(brand)s, tiɣimit-ik·im tezmer ur tettemṣada ara d lqem-a. Mdel afaylu-a syen uɣal ɣer lqem n melmi kan.",
+            "description_3": "Asfaḍ n uklas n yiminig-ik·im yezmer ad iṣeggem ugur, maca aya ad ak·akem-isuffeɣ seg tuqqna rnu akk imazrayen n udiwenni yettwawgelhen ur d-ttbanen."
+        }
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2312,5 +2302,19 @@
         "resync_description": "%(brand)s tura isseqdac drus n tkatut seg 3 ɣer 5 n tikkal, s usali n talɣut n yiseqdac-nniḍen ma yili tettusra. Ttxil-k·m rǧu s leɛqel alamma nules amtawi d useqdac!",
         "resync_title": "Leqqem %(brand)s"
     },
-    "message_edit_dialog_title": "Tiẓrigin n yizen"
+    "message_edit_dialog_title": "Tiẓrigin n yizen",
+    "server_offline": {
+        "empty_timeline": "Tessawḍeḍ ad tqeḍɛeḍ kullec.",
+        "title": "Ulac tiririt sɣur aqeddac",
+        "description": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n yisutar-ik·im. Ha-tent-a kra n ssebbat i izemren ad ilint.",
+        "description_1": "Aqeddac (%(serverName)s) yeṭṭef aṭas n wakud i wakken ad d-yerr.",
+        "description_2": "Aɣrab n tmes neɣ amgelavirus inek·inem yessewḥal isutar.",
+        "description_3": "Asiɣzef n yiminig tessewḥel asuter.",
+        "description_4": "Aqeddac ha-t-an beṛṛa n tuqqna.",
+        "description_5": "Aqeddac yugi asuter-ik·im.",
+        "description_6": "Tamnaḍt-ik·im temlal-d uguren n tuqqna ɣer internet.",
+        "description_7": "Tuccḍa deg tuqqna lawan n uneɛruḍ ad nnermes aqeddac.",
+        "description_8": "Aqeddac ur yettusesteb ara i wakken ad d-imel anida-t wugur (CORPS).",
+        "recent_changes_heading": "Isnifal imaynuten ur d-newwiḍ ara akka ar tura"
+    }
 }

@@ -50,15 +50,12 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
     "Delete Widget": "Eyða viðmótshluta",
     "Create new room": "Búa til nýja spjallrás",
-    "Clear Storage and Sign Out": "Hreinsa gagnageymslu og skrá út",
-    "Unable to restore session": "Tókst ekki að endurheimta setu",
     "Finland": "Finnland",
     "Norway": "Noreg",
     "Denmark": "Danmörk",
     "Iceland": "Ísland",
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
@@ -453,8 +450,6 @@
         "other": "%(count)s setur"
     },
     "Share User": "Deila notanda",
-    "Server isn't responding": "Netþjónninn er ekki að svara",
-    "You're all caught up.": "Þú hefur klárað að lesa allt.",
     "%(count)s members": {
         "one": "%(count)s þátttakandi",
         "other": "%(count)s þátttakendur"
@@ -515,8 +510,6 @@
     "Allow this widget to verify your identity": "Leyfa þessum viðmótshluta að sannreyna auðkennin þín",
     "Remember my selection for this widget": "Muna val mitt fyrir þennan viðmótshluta",
     "Upload files (%(current)s of %(total)s)": "Senda inn skrár (%(current)s oaf %(total)s)",
-    "We encountered an error trying to restore your previous session.": "Villa kom upp þegar reynt var að endurheimta fyrri setuna þína.",
-    "A connection error occurred while trying to contact the server.": "Villa kom upp þegar reynt var að tengjast þjóninum.",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "Upload %(count)s other files": {
@@ -525,14 +518,6 @@
     },
     "Use \"%(query)s\" to search": "Notaðu \"%(query)s\" til að leita",
     "Sections to show": "Hlutar sem á að sýna",
-    "The server has denied your request.": "Þjóninum hefur hafnað beiðninni þinni.",
-    "The server is offline.": "Netþjónninn er ekki tengdur.",
-    "A browser extension is preventing the request.": "Vafraviðbót kemur í veg fyrir beiðnina.",
-    "Your firewall or anti-virus is blocking the request.": "Eldveggur eða vírusvarnarforrit kemur í veg fyrir beiðnina.",
-    "The server (%(serverName)s) took too long to respond.": "Þjónninn (%(serverName)s) var of lengi að svara.",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Netþjónninn þinn er ekki að svara sumum beiðnum frá þér. Hér fyrir neðan eru sumar líklegustu ástæðurnar.",
-    "Your area is experiencing difficulties connecting to the internet.": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
-    "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
     "View List": "Skoða lista",
@@ -3480,7 +3465,14 @@
         "update_power_level": "Mistókst að breyta valdastigi",
         "unknown": "Óþekkt villa",
         "dialog_description_default": "Villa kom upp.",
-        "edit_history_unsupported": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika."
+        "edit_history_unsupported": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
+        "session_restore": {
+            "clear_storage_description": "Skrá út og fjarlægja dulritunarlykla?",
+            "clear_storage_button": "Hreinsa gagnageymslu og skrá út",
+            "title": "Tókst ekki að endurheimta setu",
+            "description_1": "Villa kom upp þegar reynt var að endurheimta fyrri setuna þína.",
+            "description_3": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur."
+        }
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3755,5 +3747,17 @@
         "disabled_action": "Hreinsa skyndiminni og endursamstilla",
         "resync_title": "Uppfæri %(brand)s"
     },
-    "message_edit_dialog_title": "Breytingar á skilaboðum"
+    "message_edit_dialog_title": "Breytingar á skilaboðum",
+    "server_offline": {
+        "empty_timeline": "Þú hefur klárað að lesa allt.",
+        "title": "Netþjónninn er ekki að svara",
+        "description": "Netþjónninn þinn er ekki að svara sumum beiðnum frá þér. Hér fyrir neðan eru sumar líklegustu ástæðurnar.",
+        "description_1": "Þjónninn (%(serverName)s) var of lengi að svara.",
+        "description_2": "Eldveggur eða vírusvarnarforrit kemur í veg fyrir beiðnina.",
+        "description_3": "Vafraviðbót kemur í veg fyrir beiðnina.",
+        "description_4": "Netþjónninn er ekki tengdur.",
+        "description_5": "Þjóninum hefur hafnað beiðninni þinni.",
+        "description_6": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
+        "description_7": "Villa kom upp þegar reynt var að tengjast þjóninum."
+    }
 }

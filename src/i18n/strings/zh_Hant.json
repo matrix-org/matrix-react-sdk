@@ -36,8 +36,6 @@
         "one": "（~%(count)s 結果）",
         "other": "（~%(count)s 結果）"
     },
-    "Unable to restore session": "無法復原工作階段",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
     "This will allow you to reset your password and receive notifications.": "這讓您可以重設您的密碼與接收通知。",
     "and %(count)s others...": {
         "other": "與另 %(count)s 個人…",
@@ -66,9 +64,6 @@
     "Yesterday": "昨天",
     "Wednesday": "星期三",
     "Send Logs": "傳送紀錄檔",
-    "Clear Storage and Sign Out": "清除儲存的東西並登出",
-    "We encountered an error trying to restore your previous session.": "我們在嘗試復原您先前的工作階段時遇到了一點錯誤。",
-    "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "清除您瀏覽器的儲存的東西也許可以修復問題，但會將您登出並造成任何已加密的聊天都無法讀取。",
     "Share Room": "分享聊天室",
     "Link to most recent message": "連結到最近的訊息",
     "Share User": "分享使用者",
@@ -143,7 +138,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
     "Remember my selection for this widget": "記住我對這個小工具的選擇",
-    "Sign out and remove encryption keys?": "登出並移除加密金鑰？",
     "To help us prevent this in future, please <a>send us logs</a>.": "要協助我們讓這個問題不再發生，請<a>將紀錄檔傳送給我們</a>。",
     "Missing session data": "遺失工作階段資料",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "某些工作階段資料遺失了，其中包含加密訊息金鑰。登出再登入並從備份中復原金鑰可以修復這個問題。",
@@ -216,18 +210,6 @@
     "Security Phrase": "安全密語",
     "Security Key": "安全金鑰",
     "Use your Security Key to continue.": "使用您的安全金鑰以繼續。",
-    "You're all caught up.": "您已完成。",
-    "Server isn't responding": "伺服器沒有回應",
-    "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "您的伺服器未對您的某些請求回應。下列是可能的原因。",
-    "The server (%(serverName)s) took too long to respond.": "伺服器 (%(serverName)s) 花了太長的時間來回應。",
-    "Your firewall or anti-virus is blocking the request.": "您的防火牆或防毒軟體阻擋了請求。",
-    "A browser extension is preventing the request.": "瀏覽器擴充套件阻擋了請求。",
-    "The server is offline.": "伺服器離線。",
-    "The server has denied your request.": "伺服器拒絕了您的請求。",
-    "Your area is experiencing difficulties connecting to the internet.": "您所在區域可能遇到一些網際網路連線的問題。",
-    "A connection error occurred while trying to contact the server.": "在試圖與伺服器溝通時遇到連線錯誤。",
-    "The server is not configured to indicate what the problem is (CORS).": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
-    "Recent changes that have not yet been received": "尚未收到最新變更",
     "Not encrypted": "未加密",
     "Backup version:": "備份版本：",
     "Unable to set up keys": "無法設定金鑰",
@@ -519,14 +501,10 @@
         "other": "%(count)s 個您認識的人已加入",
         "one": "%(count)s 個您認識的人已加入"
     },
-    "Reset event store?": "重設活動儲存？",
-    "You most likely do not want to reset your event index store": "您很可能不想重設您的活動索引儲存",
-    "Reset event store": "重設活動儲存",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "如果您重設所有東西，您將會在沒有受信任的工作階段、沒有受信任的使用者的情況下重新啟動，且可能會看不到過去的訊息。",
     "Only do this if you have no other device to complete verification with.": "當您沒有其他裝置可以完成驗證時，才執行此動作。",
     "Reset everything": "重設所有東西",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘記或遺失了所有復原方法？<a>重設全部</a>",
-    "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
@@ -4042,7 +4020,15 @@
         "update_power_level": "無法變更權限等級",
         "unknown": "未知的錯誤",
         "dialog_description_default": "出現一個錯誤。",
-        "edit_history_unsupported": "您的家伺服器似乎並不支援此功能。"
+        "edit_history_unsupported": "您的家伺服器似乎並不支援此功能。",
+        "session_restore": {
+            "clear_storage_description": "登出並移除加密金鑰？",
+            "clear_storage_button": "清除儲存的東西並登出",
+            "title": "無法復原工作階段",
+            "description_1": "我們在嘗試復原您先前的工作階段時遇到了一點錯誤。",
+            "description_2": "若您先前使用過較新版本的 %(brand)s，您的工作階段可能與此版本不相容。關閉此視窗並回到較新的版本。",
+            "description_3": "清除您瀏覽器的儲存的東西也許可以修復問題，但會將您登出並造成任何已加密的聊天都無法讀取。"
+        }
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4316,7 +4302,11 @@
         "warning_kind_files_app": "使用<a>桌面應用程式</a>以檢視所有加密的檔案",
         "warning_kind_search_app": "使用<a>桌面應用程式</a>搜尋加密訊息",
         "warning_kind_files": "此版本的 %(brand)s 不支援檢視某些加密檔案",
-        "warning_kind_search": "此版本的 %(brand)s 不支援搜尋加密訊息"
+        "warning_kind_search": "此版本的 %(brand)s 不支援搜尋加密訊息",
+        "reset_title": "重設活動儲存？",
+        "reset_description": "您很可能不想重設您的活動索引儲存",
+        "reset_explainer": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
+        "reset_button": "重設活動儲存"
     },
     "truncated_list_n_more": {
         "other": "與更多 %(count)s 個…"
@@ -4373,5 +4363,19 @@
         "resync_description": "%(brand)s 現在僅使用低於原本3-5倍的記憶體，僅在需要時才會載入其他使用者的資訊。請等待我們與伺服器重新同步！",
         "resync_title": "正在更新 %(brand)s"
     },
-    "message_edit_dialog_title": "訊息編輯紀錄"
+    "message_edit_dialog_title": "訊息編輯紀錄",
+    "server_offline": {
+        "empty_timeline": "您已完成。",
+        "title": "伺服器沒有回應",
+        "description": "您的伺服器未對您的某些請求回應。下列是可能的原因。",
+        "description_1": "伺服器 (%(serverName)s) 花了太長的時間來回應。",
+        "description_2": "您的防火牆或防毒軟體阻擋了請求。",
+        "description_3": "瀏覽器擴充套件阻擋了請求。",
+        "description_4": "伺服器離線。",
+        "description_5": "伺服器拒絕了您的請求。",
+        "description_6": "您所在區域可能遇到一些網際網路連線的問題。",
+        "description_7": "在試圖與伺服器溝通時遇到連線錯誤。",
+        "description_8": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
+        "recent_changes_heading": "尚未收到最新變更"
+    }
 }

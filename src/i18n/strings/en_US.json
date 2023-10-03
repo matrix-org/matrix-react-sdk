@@ -36,8 +36,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Unable to restore session": "Unable to restore session",
-    "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
     "Create new room": "Create new room",
     "Home": "Home",
     "(~%(count)s results)": {
@@ -589,7 +587,11 @@
         "something_went_wrong": "Something went wrong!",
         "update_power_level": "Failed to change power level",
         "unknown": "Unknown error",
-        "dialog_description_default": "An error has occurred."
+        "dialog_description_default": "An error has occurred.",
+        "session_restore": {
+            "title": "Unable to restore session",
+            "description_2": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version."
+        }
     },
     "notifications": {
         "enable_prompt_toast_title": "Notifications",
