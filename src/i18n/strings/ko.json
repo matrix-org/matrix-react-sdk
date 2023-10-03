@@ -1,5 +1,4 @@
 {
-    "Create new room": "새 방 만들기",
     "unknown error code": "알 수 없는 오류 코드",
     "An error has occurred.": "오류가 발생했습니다.",
     "Email address": "이메일 주소",
@@ -219,7 +218,6 @@
     },
     "Cancel All": "전부 취소",
     "Upload Error": "업로드 오류",
-    "Remember my selection for this widget": "이 위젯에 대해 내 선택 기억하기",
     "Unable to load backup status": "백업 상태 불러올 수 없음",
     "Unable to restore backup": "백업을 복구할 수 없음",
     "No backup found!": "백업을 찾을 수 없습니다!",
@@ -243,13 +241,10 @@
     "%(name)s accepted": "%(name)s님이 수락했습니다",
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
     "%(name)s wants to verify": "%(name)s님이 확인을 요청합니다",
-    "Search for": "검색 기준",
     "Search for rooms or people": "방 또는 사람 검색",
     "Search for rooms": "방 검색",
     "Search for spaces": "스페이스 검색",
     "Recently Direct Messaged": "최근 다이렉트 메세지",
-    "Recently viewed": "최근에 확인한",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
     "Private space (invite only)": "비공개 스페이스 (초대 필요)",
     "Leave all rooms": "모든 방에서 떠나기",
     "Create a new space": "새로운 스페이스 만들기",
@@ -1489,7 +1484,10 @@
         "shared_data_warning": "이 위젯을 사용하면 <helpIcon /> %(widgetDomain)s와(과) 데이터를 공유합니다.",
         "added_by": "위젯을 추가했습니다",
         "cookie_warning": "이 위젯은 쿠키를 사용합니다.",
-        "popout": "위젯 팝업"
+        "popout": "위젯 팝업",
+        "capabilities_dialog": {
+            "remember_Selection": "이 위젯에 대해 내 선택 기억하기"
+        }
     },
     "scalar": {
         "error_create": "위젯을 만들지 못합니다.",
@@ -1668,5 +1666,11 @@
     "Invalid identity server discovery response": "잘못된 ID 서버 검색 응답",
     "Invalid base_url for m.identity_server": "잘못된 m.identity_server 용 base_url",
     "Identity server URL does not appear to be a valid identity server": "ID 서버 URL이 올바른 ID 서버가 아님",
-    "General failure": "일반적인 실패"
+    "General failure": "일반적인 실패",
+    "spotlight_dialog": {
+        "heading_without_query": "검색 기준",
+        "cant_find_room_helpful_hint": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
+        "create_new_room_button": "새 방 만들기",
+        "recently_viewed_section_title": "최근에 확인한"
+    }
 }

@@ -42,7 +42,6 @@
     "Add an Integration": "Adicionar uma integração",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será levado agora a um site de terceiros para poder autenticar a sua conta para uso com o serviço %(integrationsUrl)s. Você quer continuar?",
     "Custom level": "Nível personalizado",
-    "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
@@ -942,5 +941,8 @@
             "title": "Busca falhou",
             "server_unavailable": "O servidor pode estar indisponível, sobrecarregado, ou a busca ultrapassou o tempo limite :("
         }
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Criar nova sala"
     }
 }

@@ -29,7 +29,6 @@
     "Sunday": "Bazar",
     "Friday": "Cümə",
     "Today": "Bu gün",
-    "Create new room": "Otağı yaratmaq",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
     "An error has occurred.": "Səhv oldu.",
@@ -371,5 +370,8 @@
     "no_more_results": "Daha çox nəticə yoxdur",
     "error_dialog": {
         "forget_room_failed": "Otağı unutmağı bacarmadı: %(errCode)s"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Otağı yaratmaq"
     }
 }

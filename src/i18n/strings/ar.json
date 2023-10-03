@@ -1,5 +1,4 @@
 {
-    "Create new room": "إنشاء غرفة جديدة",
     "Send": "إرسال",
     "Unavailable": "غير متوفر",
     "Changelog": "سِجل التغييرات",
@@ -1565,5 +1564,8 @@
         "add_integrations": "إضافة عناصر الواجهة والجسور والروبوتات",
         "share_button": "شارك الغرفة",
         "settings_button": "إعدادات الغرفة"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "إنشاء غرفة جديدة"
     }
 }

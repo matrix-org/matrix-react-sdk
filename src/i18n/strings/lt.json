@@ -53,7 +53,6 @@
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
     "%(duration)sd": "%(duration)s d",
-    "Create new room": "Sukurti naują kambarį",
     "collapse": "suskleisti",
     "expand": "išskleisti",
     "Logs sent": "Žurnalai išsiųsti",
@@ -371,14 +370,6 @@
     "Wrong Security Key": "Netinkamas Saugumo Raktas",
     "Looks good!": "Atrodo gerai!",
     "Wrong file type": "Netinkamas failo tipas",
-    "Remember this": "Prisiminkite tai",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Šis valdiklis patvirtins jūsų vartotojo ID, bet negalės už jus atlikti veiksmų:",
-    "Allow this widget to verify your identity": "Leiskite šiam valdikliui patvirtinti jūsų tapatybę",
-    "Remember my selection for this widget": "Prisiminti mano pasirinkimą šiam valdikliui",
-    "Decline All": "Atmesti Visus",
-    "This widget would like to:": "Šis valdiklis norėtų:",
-    "Approve widget permissions": "Patvirtinti valdiklio leidimus",
-    "Verification Request": "Patikrinimo Užklausa",
     "Be found by phone or email": "Tapkite randami telefonu arba el. paštu",
     "Find others by phone or email": "Ieškokite kitų telefonu arba el. paštu",
     "Link to selected message": "Nuoroda į pasirinktą pranešimą",
@@ -510,14 +501,11 @@
         "one": "%(count)s narys",
         "other": "%(count)s nariai"
     },
-    "Recently viewed": "Neseniai peržiūrėti",
     "%(members)s and %(last)s": "%(members)s ir %(last)s",
     "%(members)s and more": "%(members)s ir daugiau",
     "Latvia": "Latvija",
     "Japan": "Japonija",
     "Italy": "Italija",
-    "Public rooms": "Vieši kambariai",
-    "Search for": "Ieškoti",
     "common": {
         "about": "Apie",
         "analytics": "Analitika",
@@ -2042,7 +2030,8 @@
             "timed_out": "Pasibaigė laikas patikrinimui.",
             "cancelled_self": "Atšaukėte patvirtinimą kitame įrenginyje.",
             "cancelled_user": "%(displayName)s atšaukė patvirtinimą.",
-            "cancelled": "Jūs atšaukėte patvirtinimą."
+            "cancelled": "Jūs atšaukėte patvirtinimą.",
+            "verification_dialog_title_user": "Patikrinimo Užklausa"
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2331,7 +2320,18 @@
         "popout": "Iššokti valdiklį",
         "unpin_to_view_right_panel": "Atsekite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
         "set_room_layout": "Nustatyti savo kambario išdėstymą visiems",
-        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje"
+        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
+        "capabilities_dialog": {
+            "title": "Patvirtinti valdiklio leidimus",
+            "content_starting_text": "Šis valdiklis norėtų:",
+            "decline_all_permission": "Atmesti Visus",
+            "remember_Selection": "Prisiminti mano pasirinkimą šiam valdikliui"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Leiskite šiam valdikliui patvirtinti jūsų tapatybę",
+            "starting_text": "Šis valdiklis patvirtins jūsų vartotojo ID, bet negalės už jus atlikti veiksmų:",
+            "remember_selection": "Prisiminkite tai"
+        }
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2846,5 +2846,11 @@
     "Homeserver URL does not appear to be a valid Matrix homeserver": "Serverio adresas neatrodo esantis tinkamas Matrix serveris",
     "Invalid identity server discovery response": "Klaidingas tapatybės serverio radimo atsakas",
     "Identity server URL does not appear to be a valid identity server": "Tapatybės serverio URL neatrodo kaip tinkamas tapatybės serveris",
-    "General failure": "Bendras triktis"
+    "General failure": "Bendras triktis",
+    "spotlight_dialog": {
+        "public_rooms_label": "Vieši kambariai",
+        "heading_without_query": "Ieškoti",
+        "create_new_room_button": "Sukurti naują kambarį",
+        "recently_viewed_section_title": "Neseniai peržiūrėti"
+    }
 }

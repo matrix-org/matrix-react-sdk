@@ -1,5 +1,4 @@
 {
-    "Create new room": "新しいルームを作成",
     "unknown error code": "不明なエラーコード",
     "Unnamed room": "名前のないルーム",
     "Thursday": "木曜日",
@@ -526,12 +525,6 @@
     "Or send invite link": "もしくはリンクを送信",
     "If you can't see who you're looking for, send them your invite link below.": "探している相手が見つからなければ、以下のリンクを送信してください。",
     "Some suggestions may be hidden for privacy.": "プライバシーの観点から表示していない候補があります。",
-    "Use <arrows/> to scroll": "<arrows/>でスクロール",
-    "Public rooms": "公開ルーム",
-    "Use \"%(query)s\" to search": "「%(query)s」のキーワードで検索",
-    "Join %(roomAddress)s": "%(roomAddress)sに参加",
-    "Other rooms in %(spaceName)s": "%(spaceName)sの他のルーム",
-    "Spaces you're in": "参加しているスペース",
     "Command Help": "コマンドヘルプ",
     "Link to room": "ルームへのリンク",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "このスペースのメンバーとの会話をまとめます。無効にすると、それらの会話は%(spaceName)sの表示画面に表示されなくなります。",
@@ -596,7 +589,6 @@
     "Information": "情報",
     "Search for spaces": "スペースを検索",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
-    "Search Dialog": "検索ダイアログ",
     "Upload %(count)s other files": {
         "one": "あと%(count)s個のファイルをアップロード",
         "other": "あと%(count)s個のファイルをアップロード"
@@ -618,7 +610,6 @@
     "Message preview": "メッセージのプレビュー",
     "Sent": "送信済",
     "You don't have permission to do this": "これを行う権限がありません",
-    "Verification Request": "認証の要求",
     "The server is offline.": "サーバーはオフラインです。",
     "%(count)s rooms": {
         "one": "%(count)s個のルーム",
@@ -652,7 +643,6 @@
     "Unable to restore backup": "バックアップを復元できません",
     "Unable to load backup status": "バックアップの状態を読み込めません",
     "Continue With Encryption Disabled": "暗号化を無効にして続行",
-    "Recently viewed": "最近表示したルーム",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
     "Forget": "消去",
@@ -664,9 +654,6 @@
     "Security Phrase": "セキュリティーフレーズ",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "全てをリセットすると、履歴とメッセージが消去され、信頼済の端末、信頼済のユーザーが取り消されます。また、過去のメッセージを表示できなくなる可能性があります。",
     "Reset everything": "全てリセット",
-    "Decline All": "全て拒否",
-    "Approve widget permissions": "ウィジェットの権限を承認",
-    "Verify other device": "他の端末を認証",
     "Upload Error": "アップロードエラー",
     "Thread options": "スレッドの設定",
     "Invited people will be able to read old messages.": "招待したユーザーは、以前のメッセージを閲覧できるようになります。",
@@ -728,8 +715,6 @@
     "Signature upload failed": "署名のアップロードに失敗しました",
     "toggle event": "イベントを切り替える",
     "Search spaces": "スペースを検索",
-    "Other searches": "その他の検索",
-    "To search messages, look for this icon at the top of a room <icon/>": "メッセージを検索する場合は、ルームの上に表示されるアイコン<icon/>をクリックしてください。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "アカウントにアクセスし、このセッションに保存されている暗号鍵を復元してください。暗号鍵がなければ、どのセッションの暗号化されたメッセージも読めなくなります。",
     "Other spaces or rooms you might not know": "知らないかもしれない他のスペースやルーム",
     "You're removing all spaces. Access will default to invite only": "全てのスペースを削除しようとしています。招待者しかアクセスできなくなります",
@@ -746,11 +731,9 @@
     "Server did not return valid authentication information.": "サーバーは正しい認証情報を返しませんでした。",
     "Server did not require any authentication": "サーバーは認証を要求しませんでした",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "暗号化されたメッセージの鍵を含むセッションのデータが見つかりません。サインアウトして改めてサインインすると、バックアップから鍵を回復します。",
-    "Recent searches": "最近の検索",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーキーを入力してください。",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーフレーズを入力してください。",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "セキュリティーフレーズを紛失した場合は、<button1>セキュリティーキーを使用</button1>するか、<button2>新しい復旧用の手段</button2>を設定することができます",
-    "Remember this": "これを記憶",
     "Message search initialisation failed, check <a>your settings</a> for more information": "メッセージの検索の初期化に失敗しました。<a>設定</a>から詳細を確認してください",
     "%(count)s people you know have already joined": {
         "one": "%(count)s人の知人が既に参加しています",
@@ -790,12 +773,8 @@
     "No live locations": "位置情報（ライブ）がありません",
     "View list": "一覧を表示",
     "View List": "一覧を表示",
-    "Remember my selection for this widget": "このウィジェットに関する選択を記憶",
     "Unable to load commit detail: %(msg)s": "コミットの詳細を読み込めません：%(msg)s",
     "Explore public spaces in the new search dialog": "新しい検索ダイアログで公開スペースを探す",
-    "Start a group chat": "グループチャットを開始",
-    "Other options": "その他のオプション",
-    "Copy invite link": "招待リンクをコピー",
     "Show spaces": "スペースを表示",
     "Show rooms": "ルームを表示",
     "Interactively verify by emoji": "絵文字で認証",
@@ -804,10 +783,6 @@
     "You will no longer be able to log in": "ログインできなくなります",
     "Friends and family": "友達と家族",
     "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
-    "%(count)s Members": {
-        "other": "%(count)s人の参加者",
-        "one": "%(count)s人の参加者"
-    },
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)sまたは%(recoveryFile)s",
     "Input devices": "入力装置",
     "Output devices": "出力装置",
@@ -840,9 +815,6 @@
     "Online community members": "オンラインコミュニティーのメンバー",
     "Preserve system messages": "システムメッセージを保存",
     "<w>WARNING:</w> <description/>": "<w>警告：</w><description/>",
-    "Search for": "検索",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
-    "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
     "To continue, please enter your account password:": "続行するには、アカウントのパスワードを入力してください：",
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "あなたのユーザー名（MXID）は、あなた自身を含めて誰も再利用することができなくなります",
     "You will leave all rooms and DMs that you are in": "全てのルームとダイレクトメッセージから退出します",
@@ -881,14 +853,8 @@
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "あなたの情報はIDサーバーから削除されます。あなたの友達は、電子メールまたは電話番号であなたを検索することができなくなります",
     "%(members)s and more": "%(members)s人とその他のメンバー",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong>内で",
-    "Some results may be hidden for privacy": "プライバシーの観点から表示していない結果があります",
     "You cannot search for rooms that are neither a room nor a space": "ルームまたはスペースではないルームを探すことはできません",
-    "Allow this widget to verify your identity": "このウィジェットに本人確認を許可",
-    "This widget would like to:": "ウィジェットによる要求：",
     "To help us prevent this in future, please <a>send us logs</a>.": "今後これが起こらないようにするために、<a>ログを送信</a>してください。",
-    "Remove search filter for %(filter)s": "%(filter)sの検索フィルターを削除",
-    "Some results may be hidden": "いくつかの結果が表示されていない可能性があります",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "発生した問題を教えてください。または、問題を説明するGitHub issueを作成してください。",
     "You're in": "始めましょう",
     "Reset event store": "イベントストアをリセット",
@@ -2949,7 +2915,9 @@
             "timed_out": "認証がタイムアウトしました。",
             "cancelled_self": "他の端末で認証がキャンセルされました。",
             "cancelled_user": "%(displayName)sが認証をキャンセルしました。",
-            "cancelled": "認証をキャンセルしました。"
+            "cancelled": "認証をキャンセルしました。",
+            "verification_dialog_title_device": "他の端末を認証",
+            "verification_dialog_title_user": "認証の要求"
         },
         "old_version_detected_title": "古い暗号化データが検出されました",
         "old_version_detected_description": "%(brand)sの古いバージョンのデータを検出しました。これにより、古いバージョンではエンドツーエンドの暗号化が機能しなくなります。古いバージョンを使用している間に最近交換されたエンドツーエンドの暗号化されたメッセージは、このバージョンでは復号化できません。また、このバージョンで交換されたメッセージが失敗することもあります。問題が発生した場合は、ログアウトして再度ログインしてください。メッセージ履歴を保持するには、鍵をエクスポートして再インポートしてください。",
@@ -3388,7 +3356,18 @@
         "popout": "ウィジェットをポップアウト",
         "unpin_to_view_right_panel": "ウィジェットの固定を解除して、このパネルに表示",
         "set_room_layout": "このルームのレイアウトを参加者全体に設定",
-        "close_to_view_right_panel": "ウィジェットを閉じて、このパネルに表示"
+        "close_to_view_right_panel": "ウィジェットを閉じて、このパネルに表示",
+        "capabilities_dialog": {
+            "title": "ウィジェットの権限を承認",
+            "content_starting_text": "ウィジェットによる要求：",
+            "decline_all_permission": "全て拒否",
+            "remember_Selection": "このウィジェットに関する選択を記憶"
+        },
+        "open_id_permissions_dialog": {
+            "title": "このウィジェットに本人確認を許可",
+            "starting_text": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
+            "remember_selection": "これを記憶"
+        }
     },
     "feedback": {
         "sent": "フィードバックを送信しました",
@@ -4133,5 +4112,32 @@
     "Invalid identity server discovery response": "IDサーバーのディスカバリー（発見）に関する不正な応答です",
     "Invalid base_url for m.identity_server": "m.identity_serverの不正なbase_url",
     "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
-    "General failure": "一般エラー"
+    "General failure": "一般エラー",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "other": "%(count)s人の参加者",
+            "one": "%(count)s人の参加者"
+        },
+        "public_rooms_label": "公開ルーム",
+        "heading_with_query": "「%(query)s」のキーワードで検索",
+        "heading_without_query": "検索",
+        "spaces_title": "参加しているスペース",
+        "other_rooms_in_space": "%(spaceName)sの他のルーム",
+        "join_button_text": "%(roomAddress)sに参加",
+        "result_may_be_hidden_privacy_warning": "プライバシーの観点から表示していない結果があります",
+        "cant_find_person_helpful_hint": "探している相手が見つからなければ、招待リンクを送信してください。",
+        "copy_link_text": "招待リンクをコピー",
+        "result_may_be_hidden_warning": "いくつかの結果が表示されていない可能性があります",
+        "cant_find_room_helpful_hint": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
+        "create_new_room_button": "新しいルームを作成",
+        "group_chat_section_title": "その他のオプション",
+        "start_group_chat_button": "グループチャットを開始",
+        "message_search_section_title": "その他の検索",
+        "recent_searches_section_title": "最近の検索",
+        "recently_viewed_section_title": "最近表示したルーム",
+        "search_dialog": "検索ダイアログ",
+        "remove_filter": "%(filter)sの検索フィルターを削除",
+        "search_messages_hint": "メッセージを検索する場合は、ルームの上に表示されるアイコン<icon/>をクリックしてください。",
+        "keyboard_scroll_hint": "<arrows/>でスクロール"
+    }
 }

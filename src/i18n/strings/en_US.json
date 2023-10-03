@@ -44,7 +44,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
     "Add an Integration": "Add an Integration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?",
-    "Create new room": "Create new room",
     "Home": "Home",
     "(~%(count)s results)": {
         "one": "(~%(count)s result)",
@@ -628,5 +627,8 @@
             "title": "Search failed",
             "server_unavailable": "Server may be unavailable, overloaded, or search timed out :("
         }
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Create new room"
     }
 }

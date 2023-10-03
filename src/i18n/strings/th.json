@@ -11,7 +11,6 @@
     "Moderator": "ผู้ช่วยดูแล",
     "not specified": "ไม่ได้ระบุ",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ",
-    "Create new room": "สร้างห้องใหม่",
     "Warning!": "คำเตือน!",
     "Sun": "อา.",
     "Mon": "จ.",
@@ -635,5 +634,8 @@
             "server_unavailable": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :("
         }
     },
-    "General failure": "ข้อผิดพลาดทั่วไป"
+    "General failure": "ข้อผิดพลาดทั่วไป",
+    "spotlight_dialog": {
+        "create_new_room_button": "สร้างห้องใหม่"
+    }
 }

@@ -43,7 +43,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Você será redirecionado para um site de terceiros para poder autenticar a sua conta, tendo em vista usar o serviço %(integrationsUrl)s. Deseja prosseguir?",
     "Custom level": "Nível personalizado",
     "Home": "Home",
-    "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
@@ -305,8 +304,6 @@
     },
     "Cancel All": "Cancelar tudo",
     "Upload Error": "Erro no envio",
-    "Verification Request": "Solicitação de confirmação",
-    "Remember my selection for this widget": "Lembrar minha escolha para este widget",
     "Wrong file type": "Tipo errado de arquivo",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
     "Incoming Verification Request": "Recebendo solicitação de confirmação",
@@ -621,9 +618,6 @@
     "Vatican City": "Cidade do Vaticano",
     "Vanuatu": "Vanuatu",
     "Uzbekistan": "Uzbequistão",
-    "Decline All": "Recusar tudo",
-    "This widget would like to:": "Este widget gostaria de:",
-    "Approve widget permissions": "Autorizar as permissões do widget",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Continuing without email": "Continuar sem e-mail",
     "Server Options": "Opções do servidor",
@@ -648,9 +642,6 @@
     "Transfer": "Transferir",
     "A call can only be transferred to a single user.": "Uma chamada só pode ser transferida para um único usuário.",
     "Dial pad": "Teclado de discagem",
-    "Remember this": "Lembre-se disso",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
-    "Allow this widget to verify your identity": "Permitir que este widget verifique a sua identidade",
     "%(count)s members": {
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
@@ -712,7 +703,6 @@
         "one": "%(count)s voto",
         "other": "%(count)s votos"
     },
-    "Recently viewed": "Visualizado recentemente",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -721,7 +711,6 @@
     "Leave some rooms": "Sair de algumas salas",
     "Leave all rooms": "Sair de todas as salas",
     "Don't leave any rooms": "Não saia de nenhuma sala",
-    "Public rooms": "Salas públicas",
     "Add new server…": "Adicionar um novo servidor…",
     "%(count)s participants": {
         "other": "%(count)s participantes",
@@ -2336,7 +2325,8 @@
             "prompt_user": "Iniciar a confirmação novamente, a partir do perfil deste usuário.",
             "timed_out": "O tempo de confirmação se esgotou.",
             "cancelled_user": "%(displayName)s cancelou a confirmação.",
-            "cancelled": "Você cancelou a confirmação."
+            "cancelled": "Você cancelou a confirmação.",
+            "verification_dialog_title_user": "Solicitação de confirmação"
         },
         "old_version_detected_title": "Dados de criptografia antigos foram detectados",
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
@@ -2686,7 +2676,18 @@
         "popout": "Widget Popout",
         "unpin_to_view_right_panel": "Solte este widget para visualizá-lo neste painel",
         "set_room_layout": "Definir a minha aparência da sala para todos",
-        "close_to_view_right_panel": "Feche este widget para visualizá-lo neste painel"
+        "close_to_view_right_panel": "Feche este widget para visualizá-lo neste painel",
+        "capabilities_dialog": {
+            "title": "Autorizar as permissões do widget",
+            "content_starting_text": "Este widget gostaria de:",
+            "decline_all_permission": "Recusar tudo",
+            "remember_Selection": "Lembrar minha escolha para este widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Permitir que este widget verifique a sua identidade",
+            "starting_text": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
+            "remember_selection": "Lembre-se disso"
+        }
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3239,5 +3240,10 @@
     "Invalid identity server discovery response": "Resposta de descoberta do servidor de identidade inválida",
     "Invalid base_url for m.identity_server": "base_url inválido para m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "O endereço do servidor de identidade não parece indicar um servidor de identidade válido",
-    "General failure": "Falha geral"
+    "General failure": "Falha geral",
+    "spotlight_dialog": {
+        "public_rooms_label": "Salas públicas",
+        "create_new_room_button": "Criar nova sala",
+        "recently_viewed_section_title": "Visualizado recentemente"
+    }
 }

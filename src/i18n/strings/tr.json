@@ -42,7 +42,6 @@
         "one": "(~%(count)s sonuç)",
         "other": "(~%(count)s sonuçlar)"
     },
-    "Create new room": "Yeni Oda Oluştur",
     "Confirm Removal": "Kaldırma İşlemini Onayla",
     "Unable to restore session": "Oturum geri yüklenemiyor",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün.",
@@ -118,7 +117,6 @@
     "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
     "No backup found!": "Yedek bulunamadı!",
     "Email (optional)": "E-posta (opsiyonel)",
-    "Verification Request": "Doğrulama Talebi",
     "Robot": "Robot",
     "Hat": "Şapka",
     "Glasses": "Gözlük",
@@ -213,7 +211,6 @@
         "other": "%(count)s diğer dosyaları yükle",
         "one": "%(count)s dosyayı sağla"
     },
-    "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
     "Direct Messages": "Doğrudan Mesajlar",
     "Not Trusted": "Güvenilmiyor",
     "%(count)s sessions": {
@@ -1665,7 +1662,8 @@
             "successful_user": "%(displayName)s başarıyla doğruladınız!",
             "timed_out": "Doğrulama zaman aşımına uğradı.",
             "cancelled_user": "%(displayName)s doğrulamayı iptal etti.",
-            "cancelled": "Doğrulamayı iptal ettiniz."
+            "cancelled": "Doğrulamayı iptal ettiniz.",
+            "verification_dialog_title_user": "Doğrulama Talebi"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1935,7 +1933,10 @@
         "shared_data_room_id": "Oda ID",
         "shared_data_widget_id": "Görsel Bileşen ID si",
         "popout": "Görsel bileşeni göster",
-        "set_room_layout": "Oda düzenimi herkes için ayarla"
+        "set_room_layout": "Oda düzenimi herkes için ayarla",
+        "capabilities_dialog": {
+            "remember_Selection": "Bu görsel bileşen işin seçimimi hatırla"
+        }
     },
     "zxcvbn": {
         "suggestions": {
@@ -2318,5 +2319,8 @@
     "Invalid identity server discovery response": "Geçersiz kimlik sunucu keşfi yanıtı",
     "Invalid base_url for m.identity_server": "m.kimlik_sunucu için geçersiz base_url",
     "Identity server URL does not appear to be a valid identity server": "Kimlik sunucu adresi geçerli bir kimlik sunucu adresi gibi gözükmüyor",
-    "General failure": "Genel başarısızlık"
+    "General failure": "Genel başarısızlık",
+    "spotlight_dialog": {
+        "create_new_room_button": "Yeni Oda Oluştur"
+    }
 }

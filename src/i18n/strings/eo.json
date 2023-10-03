@@ -47,7 +47,6 @@
     "Add an Integration": "Aldoni kunigon",
     "Email address": "Retpoŝtadreso",
     "Delete Widget": "Forigi fenestraĵon",
-    "Create new room": "Krei novan ĉambron",
     "Home": "Hejmo",
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
@@ -183,7 +182,6 @@
     },
     "Cancel All": "Nuligi ĉion",
     "Upload Error": "Alŝuto eraris",
-    "Remember my selection for this widget": "Memoru mian elekton por tiu ĉi fenestraĵo",
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Join millions for free on the largest public server": "Senpage aliĝu al milionoj sur la plej granda publika servilo",
     "Start using Key Backup": "Ekuzi Savkopiadon de ŝlosiloj",
@@ -286,7 +284,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Gradaltigo de ĉambro estas altnivela ago kaj estas kutime rekomendata kiam ĉambro estas malstabila pro eraroj, mankantaj funkcioj, aŭ malsekuraĵoj.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Ĉi tio kutime influas nur traktadon de la ĉambro de la servilo. Se vi spertas problemojn pri %(brand)s, bonvolu <a>raporti problemon</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vi gradaltigos ĉi tiun ĉambron de <oldVersion /> al <newVersion />.",
-    "Verification Request": "Kontrolpeto",
     "Enter a server name": "Enigu nomon de servilo",
     "Looks good": "Ŝajnas en ordo",
     "Can't find this server or its room list": "Ne povas trovi ĉi tiun servilon aŭ ĝian liston de ĉambroj",
@@ -638,12 +635,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Ne povas akiri sekretandeponejon. Bonvolu kontroli, ĉu vi enigis la ĝustan Sekurecan frazon.",
     "Invalid Security Key": "Nevalida Sekureca ŝlosilo",
     "Wrong Security Key": "Malĝusta Sekureca ŝlosilo",
-    "Remember this": "Memoru ĉi tion",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Ĉi tiu fenestraĵo kontrolos vian identigilon de uzanto, sed ne povos fari agojn por vi:",
-    "Allow this widget to verify your identity": "Permesu al ĉi tiu fenestraĵo kontroli vian identecon",
-    "Decline All": "Rifuzi ĉion",
-    "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
-    "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
     "Continuing without email": "Daŭrigante sen retpoŝtadreso",
     "Transfer": "Transdoni",
@@ -763,7 +754,6 @@
     "Could not fetch location": "Loko ne eblis akiri",
     "Location": "Loko",
     "Close sidebar": "Fermu la flanka kolumno",
-    "Public rooms": "Publikajn ĉambrojn",
     "Developer": "Programisto",
     "unknown": "nekonata",
     "common": {
@@ -2331,7 +2321,8 @@
             "prompt_user": "Rekomencu kontroladon el ĝia profilo.",
             "timed_out": "Kontrolo atingis tempolimon.",
             "cancelled_user": "%(displayName)s nuligis kontrolon.",
-            "cancelled": "Vi nuligis kontrolon."
+            "cancelled": "Vi nuligis kontrolon.",
+            "verification_dialog_title_user": "Kontrolpeto"
         },
         "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
         "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
@@ -2709,7 +2700,18 @@
         "error_loading": "Eraris enlegado de fenestraĵo",
         "error_mixed_content": "Eraris – Miksita enhavo",
         "popout": "Fenestrigi fenestraĵon",
-        "set_room_layout": "Agordi al ĉiuj mian aranĝon de ĉambro"
+        "set_room_layout": "Agordi al ĉiuj mian aranĝon de ĉambro",
+        "capabilities_dialog": {
+            "title": "Aprobi rajtojn de fenestraĵo",
+            "content_starting_text": "Ĉi tiu fenestraĵo volas:",
+            "decline_all_permission": "Rifuzi ĉion",
+            "remember_Selection": "Memoru mian elekton por tiu ĉi fenestraĵo"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Permesu al ĉi tiu fenestraĵo kontroli vian identecon",
+            "starting_text": "Ĉi tiu fenestraĵo kontrolos vian identigilon de uzanto, sed ne povos fari agojn por vi:",
+            "remember_selection": "Memoru ĉi tion"
+        }
     },
     "feedback": {
         "sent": "Prikomentoj sendiĝis",
@@ -3292,5 +3294,9 @@
     "Invalid identity server discovery response": "Nevalida eltrova respondo de identiga servilo",
     "Invalid base_url for m.identity_server": "Nevalida base_url por m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL por identiga servilo ŝajne ne ligas al valida identiga servilo",
-    "General failure": "Ĝenerala fiasko"
+    "General failure": "Ĝenerala fiasko",
+    "spotlight_dialog": {
+        "public_rooms_label": "Publikajn ĉambrojn",
+        "create_new_room_button": "Krei novan ĉambron"
+    }
 }

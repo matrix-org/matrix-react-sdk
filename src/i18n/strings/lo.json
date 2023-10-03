@@ -387,7 +387,6 @@
     "This address does not point at this room": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ຊີ້ໄປທີ່ຫ້ອງນີ້",
     "Switch theme": "ສະຫຼັບຫົວຂໍ້",
     "<inviter/> invites you": "<inviter/> ເຊີນທ່ານ",
-    "Create new room": "ສ້າງຫ້ອງໃຫມ່",
     "%(count)s sessions": {
         "one": "%(count)s ລະບົບ",
         "other": "%(count)ssessions"
@@ -458,15 +457,6 @@
     "Wrong Security Key": "ກະແຈຄວາມປອດໄພບໍ່ຖຶກຕ້ອງ",
     "Looks good!": "ດີ!",
     "Wrong file type": "ປະເພດໄຟລ໌ບໍ່ຖຶກຕ້ອງ",
-    "Remember this": "ຈື່ສິ່ງນີ້",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "widget ຈະກວດສອບ ID ຜູ້ໃຊ້ຂອງທ່ານ, ແຕ່ຈະບໍ່ສາມາດດໍາເນີນການສໍາລັບທ່ານ:",
-    "Allow this widget to verify your identity": "ອະນຸຍາດໃຫ້ widget ນີ້ຢືນຢັນຕົວຕົນຂອງທ່ານ",
-    "Remember my selection for this widget": "ຈື່ການເລືອກຂອງຂ້ອຍສໍາລັບ widget ນີ້",
-    "Decline All": "ປະຕິເສດທັງໝົດ",
-    "This widget would like to:": "widget ນີ້ຕ້ອງການ:",
-    "Approve widget permissions": "ອະນຸມັດການອະນຸຍາດ widget",
-    "Verification Request": "ການຮ້ອງຂໍການຢັ້ງຢືນ",
-    "Verify other device": "ຢືນຢັນອຸປະກອນອື່ນ",
     "Upload Error": "ອັບໂຫຼດຜິດພາດ",
     "Cancel All": "ຍົກເລີກທັງໝົດ",
     "Upload %(count)s other files": {
@@ -490,16 +480,6 @@
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "ບາງຂໍ້ມູນໃນລະບົບ, ລວມທັງກະແຈຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ, ຫາຍໄປ. ອອກຈາກລະບົບ ແລະ ເຂົ້າສູ່ລະບົບເພື່ອແກ້ໄຂສິ່ງນີ້, ການກູ້ຄືນກະແຈຈາກການສໍາຮອງຂໍ້ມູນ.",
     "Missing session data": "ບໍ່ມີຂໍ້ມູນໃນລະບົບ",
     "To help us prevent this in future, please <a>send us logs</a>.": "ເພື່ອຊ່ວຍພວກເຮົາປ້ອງກັນສິ່ງນີ້ໃນອະນາຄົດ, ກະລຸນາ <a>ສົ່ງບັນທຶກໃຫ້ພວກເຮົາ</a>.",
-    "Search Dialog": "ຊອກຫາ ກ່ອງໂຕ້ຕອບ",
-    "Use <arrows/> to scroll": "ໃຊ້ <arrows/> ເພື່ອເລື່ອນ",
-    "Recent searches": "ການຄົ້ນຫາທີ່ຜ່ານມາ",
-    "To search messages, look for this icon at the top of a room <icon/>": "ເພື່ອຊອກຫາຂໍ້ຄວາມ, ຊອກຫາໄອຄອນນີ້ຢູ່ເທິງສຸດຂອງຫ້ອງ <icon/>",
-    "Other searches": "ການຄົ້ນຫາອື່ນໆ",
-    "Public rooms": "ຫ້ອງສາທາລະນະ",
-    "Use \"%(query)s\" to search": "ໃຊ້ \"%(query)s\" ເພື່ອຊອກຫາ",
-    "Join %(roomAddress)s": "ເຂົ້າຮ່ວມ %(roomAddress)s",
-    "Other rooms in %(spaceName)s": "ຫ້ອງອື່ນໆ%(spaceName)s",
-    "Spaces you're in": "ຊ່ອງທີ່ທ່ານຢູ່",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "ຈັດກຸ່ມການສົນທະນາຂອງທ່ານກັບສະມາຊິກຂອງຊ່ອງນີ້. ການປິດອັນນີ້ຈະເຊື່ອງການສົນທະນາເຫຼົ່ານັ້ນຈາກການເບິ່ງເຫັນ %(spaceName)s ຂອງທ່ານ.",
     "Sections to show": "ພາກສ່ວນທີ່ຈະສະແດງ",
     "Command Help": "ຄໍາສັ່ງຊ່ວຍເຫຼືອ",
@@ -601,7 +581,6 @@
     "Experimental": "ທົດລອງ",
     "Themes": "ຫົວຂໍ້",
     "Moderation": "ປານກາງ",
-    "Recently viewed": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
     "What location type do you want to share?": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?",
     "Drop a Pin": "ປັກໝຸດ",
     "My live location": "ສະຖານທີ່ຂອງຂ້ອຍ",
@@ -2586,7 +2565,9 @@
             "timed_out": "ການຢັ້ງຢືນໝົດເວລາ.",
             "cancelled_self": "ທ່ານໄດ້ຍົກເລີກການຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ.",
             "cancelled_user": "%(displayName)s ຍົກເລີກການຢັ້ງຢືນ.",
-            "cancelled": "ທ່ານໄດ້ຍົກເລີກການຢັ້ງຢືນແລ້ວ."
+            "cancelled": "ທ່ານໄດ້ຍົກເລີກການຢັ້ງຢືນແລ້ວ.",
+            "verification_dialog_title_device": "ຢືນຢັນອຸປະກອນອື່ນ",
+            "verification_dialog_title_user": "ການຮ້ອງຂໍການຢັ້ງຢືນ"
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -2985,7 +2966,18 @@
         "popout": "ວິດເຈັດ popout",
         "unpin_to_view_right_panel": "ຖອນປັກໝຸດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
         "set_room_layout": "ກໍານົດຮູບແບບຫ້ອງຂອງຂ້ອຍສໍາລັບທຸກຄົນ",
-        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້"
+        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
+        "capabilities_dialog": {
+            "title": "ອະນຸມັດການອະນຸຍາດ widget",
+            "content_starting_text": "widget ນີ້ຕ້ອງການ:",
+            "decline_all_permission": "ປະຕິເສດທັງໝົດ",
+            "remember_Selection": "ຈື່ການເລືອກຂອງຂ້ອຍສໍາລັບ widget ນີ້"
+        },
+        "open_id_permissions_dialog": {
+            "title": "ອະນຸຍາດໃຫ້ widget ນີ້ຢືນຢັນຕົວຕົນຂອງທ່ານ",
+            "starting_text": "widget ຈະກວດສອບ ID ຜູ້ໃຊ້ຂອງທ່ານ, ແຕ່ຈະບໍ່ສາມາດດໍາເນີນການສໍາລັບທ່ານ:",
+            "remember_selection": "ຈື່ສິ່ງນີ້"
+        }
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3642,5 +3634,19 @@
     "Invalid identity server discovery response": "ການຕອບສະໜອງ ການຄົ້ນພົບຕົວຕົນຂອງເຊີບເວີບໍ່ຖືກຕ້ອງ",
     "Invalid base_url for m.identity_server": "base_url ບໍ່ຖືກຕ້ອງສໍາລັບ m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL ເຊີບເວີປາກົດວ່າບໍ່ຖືກຕ້ອງ",
-    "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ"
+    "General failure": "ຄວາມບໍ່ສຳເລັດທົ່ວໄປ",
+    "spotlight_dialog": {
+        "public_rooms_label": "ຫ້ອງສາທາລະນະ",
+        "heading_with_query": "ໃຊ້ \"%(query)s\" ເພື່ອຊອກຫາ",
+        "spaces_title": "ຊ່ອງທີ່ທ່ານຢູ່",
+        "other_rooms_in_space": "ຫ້ອງອື່ນໆ%(spaceName)s",
+        "join_button_text": "ເຂົ້າຮ່ວມ %(roomAddress)s",
+        "create_new_room_button": "ສ້າງຫ້ອງໃຫມ່",
+        "message_search_section_title": "ການຄົ້ນຫາອື່ນໆ",
+        "recent_searches_section_title": "ການຄົ້ນຫາທີ່ຜ່ານມາ",
+        "recently_viewed_section_title": "ເບິ່ງເມື່ອບໍ່ດົນມານີ້",
+        "search_dialog": "ຊອກຫາ ກ່ອງໂຕ້ຕອບ",
+        "search_messages_hint": "ເພື່ອຊອກຫາຂໍ້ຄວາມ, ຊອກຫາໄອຄອນນີ້ຢູ່ເທິງສຸດຂອງຫ້ອງ <icon/>",
+        "keyboard_scroll_hint": "ໃຊ້ <arrows/> ເພື່ອເລື່ອນ"
+    }
 }

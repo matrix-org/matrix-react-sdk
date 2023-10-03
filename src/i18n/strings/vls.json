@@ -121,7 +121,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Je goa sebiet noar en derdepartywebsite gebracht wordn zoda je den account ku legitimeern vo gebruuk me %(integrationsUrl)s. Wil je verdergoan?",
     "edited": "bewerkt",
     "Delete Widget": "Widget verwydern",
-    "Create new room": "E nieuw gesprek anmoakn",
     "collapse": "toeklappn",
     "expand": "uutklappn",
     "Power level": "Machtsniveau",
@@ -202,7 +201,6 @@
     },
     "Cancel All": "Alles annuleern",
     "Upload Error": "Iploadfout",
-    "Remember my selection for this widget": "Onthoudt myn keuze vo deze widget",
     "Unable to load backup status": "Kostege back-upstatus nie loadn",
     "Unable to restore backup": "Kostege back-up nie herstelln",
     "No backup found!": "Geen back-up gevoundn!",
@@ -1123,7 +1121,10 @@
             "delete": "Widget verwydern",
             "delete_warning": "E widget verwydern doet da voor alle gebruukers in dit gesprek. Zy je zeker da je deze widget wil verwydern?"
         },
-        "popout": "Widget in e nieuwe veinster openn"
+        "popout": "Widget in e nieuwe veinster openn",
+        "capabilities_dialog": {
+            "remember_Selection": "Onthoudt myn keuze vo deze widget"
+        }
     },
     "scalar": {
         "error_create": "Kostege de widget nie anmoakn.",
@@ -1239,5 +1240,8 @@
     "Invalid identity server discovery response": "Oungeldig identiteitsserverountdekkiengsantwoord",
     "Invalid base_url for m.identity_server": "Oungeldige base_url vo m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "De identiteitsserver-URL lykt geen geldige identiteitsserver te zyn",
-    "General failure": "Algemene foute"
+    "General failure": "Algemene foute",
+    "spotlight_dialog": {
+        "create_new_room_button": "E nieuw gesprek anmoakn"
+    }
 }

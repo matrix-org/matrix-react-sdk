@@ -1,5 +1,4 @@
 {
-    "Create new room": "Luo uusi huone",
     "unknown error code": "tuntematon virhekoodi",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
     "An error has occurred.": "Tapahtui virhe.",
@@ -195,7 +194,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s istunnon purkaminen epäonnistui!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
     "Join millions for free on the largest public server": "Liity ilmaiseksi miljoonien joukkoon suurimmalla julkisella palvelimella",
-    "Remember my selection for this widget": "Muista valintani tälle sovelmalle",
     "Sign out and remove encryption keys?": "Kirjaudu ulos ja poista salausavaimet?",
     "Missing session data": "Istunnon dataa puuttuu",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
@@ -247,7 +245,6 @@
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
     "Integrations are disabled": "Integraatiot ovat pois käytöstä",
     "Integrations not allowed": "Integraatioiden käyttö on kielletty",
-    "Verification Request": "Varmennuspyyntö",
     "%(count)s verified sessions": {
         "other": "%(count)s varmennettua istuntoa",
         "one": "1 varmennettu istunto"
@@ -329,7 +326,6 @@
     "Server isn't responding": "Palvelin ei vastaa",
     "Click to view edits": "Napsauta nähdäksesi muokkaukset",
     "Edited at %(date)s": "Muokattu %(date)s",
-    "Decline All": "Kieltäydy kaikista",
     "Your area is experiencing difficulties connecting to the internet.": "Alueellasi on ongelmia internet-yhteyksissä.",
     "The server is offline.": "Palvelin ei ole verkossa.",
     "Your firewall or anti-virus is blocking the request.": "Palomuurisi tai virustentorjuntaohjelmasi estää pyynnön.",
@@ -595,7 +591,6 @@
     "This version of %(brand)s does not support viewing some encrypted files": "Tämä %(brand)s-versio ei tue joidenkin salattujen tiedostojen katselua",
     "Use the <a>Desktop app</a> to see all encrypted files": "Voit tarkastella kaikkia salattuja tiedostoja <a>työpöytäsovelluksella</a>",
     "Use the <a>Desktop app</a> to search encrypted messages": "Käytä salattuja viestejä <a>työpöytäsovelluksella</a>",
-    "This widget would like to:": "Tämä sovelma haluaa:",
     "The server has denied your request.": "Palvelin eväsi pyyntösi.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
     "A connection error occurred while trying to contact the server.": "Yhteysvirhe yritettäessä ottaa yhteyttä palvelimeen.",
@@ -612,7 +607,6 @@
     "Are you sure you want to deactivate your account? This is irreversible.": "Haluatko varmasti poistaa tilisi pysyvästi?",
     "Data on this screen is shared with %(widgetDomain)s": "Tällä näytöllä olevaa tietoa jaetaan verkkotunnuksen %(widgetDomain)s kanssa",
     "A browser extension is preventing the request.": "Selainlaajennus estää pyynnön.",
-    "Approve widget permissions": "Hyväksy sovelman käyttöoikeudet",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
     "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
     "Dial pad": "Näppäimistö",
@@ -627,7 +621,6 @@
         "one": "%(count)s jäsen",
         "other": "%(count)s jäsentä"
     },
-    "Remember this": "Muista tämä",
     "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "Create a new room": "Luo uusi huone",
     "Sending": "Lähetetään",
@@ -696,8 +689,6 @@
     },
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
-    "Other rooms in %(spaceName)s": "Muut huoneet avaruudessa %(spaceName)s",
-    "Spaces you're in": "Avaruudet, joissa olet",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Tämä ryhmittelee yksityisviestisi avaruuden jäsenten kanssa. Tämän poistaminen päältä piilottaa kyseiset keskustelut sinun näkymästäsi avaruudessa %(spaceName)s.",
     "Other spaces or rooms you might not know": "Muut avaruudet tai huoneet, joita et ehkä tunne",
     "Spaces you know that contain this space": "Tuntemasi avaruudet, jotka sisältävät tämän avaruuden",
@@ -730,9 +721,6 @@
     "My current location": "Tämänhetkinen sijaintini",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
     "Could not fetch location": "Sijaintia ei voitu noutaa",
-    "Recent searches": "Viimeaikaiset haut",
-    "Other searches": "Muut haut",
-    "Public rooms": "Julkiset huoneet",
     "The poll has ended. Top answer: %(topAnswer)s": "Kysely on päättynyt. Suosituin vastaus: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Kysely on päättynyt. Ääniä ei annettu.",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?": {
@@ -746,9 +734,6 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
     "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
-    "Verify other device": "Vahvista toinen laite",
-    "Use <arrows/> to scroll": "Käytä <arrows/> vierittääksesi",
-    "Join %(roomAddress)s": "Liity %(roomAddress)s",
     "Link to room": "Linkitä huoneeseen",
     "Automatically invite members from this room to the new one": "Kutsu jäsenet tästä huoneesta automaattisesti uuteen huoneeseen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
@@ -780,7 +765,6 @@
     "Open room": "Avaa huone",
     "You will not be able to reactivate your account": "Et voi ottaa tiliäsi uudelleen käyttöön",
     "Confirm that you would like to deactivate your account. If you proceed:": "Vahvista, että haluat deaktivoida eli poistaa tilisi. Jos jatkat:",
-    "Recently viewed": "Äskettäin katsottu",
     "%(members)s and more": "%(members)s ja enemmän",
     "Messaging": "Viestintä",
     "Enter Security Phrase": "Kirjoita turvalause",
@@ -794,20 +778,9 @@
     "Wrong Security Key": "Väärä turva-avain",
     "Confirm your account deactivation by using Single Sign On to prove your identity.": "Vahvista tilin deaktivointi todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
     "Thread options": "Ketjun valinnat",
-    "Start a group chat": "Aloita ryhmäkeskustelu",
-    "Other options": "Muut vaihtoehdot",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jos et löydä etsimääsi huonetta, pyydä kutsu tai luo uusi huone.",
-    "Some results may be hidden": "Jotkin tulokset saatetaan piilottaa",
-    "Copy invite link": "Kopioi kutsulinkki",
-    "If you can't see who you're looking for, send them your invite link.": "Jos et löydä etsimääsi henkilöä, lähetä hänelle kutsulinkki.",
-    "Some results may be hidden for privacy": "Jotkin tulokset saatetaan piilottaa tietosuojan takia",
     "You cannot search for rooms that are neither a room nor a space": "Et voi etsiä huoneita, jotka eivät ole huoneita tai avaruuksia",
     "Show spaces": "Näytä avaruudet",
     "Show rooms": "Näytä huoneet",
-    "%(count)s Members": {
-        "one": "%(count)s jäsen",
-        "other": "%(count)s jäsentä"
-    },
     "Sections to show": "Näytettävät osiot",
     "Show: Matrix rooms": "Näytä: Matrix-huoneet",
     "Show: %(instance)s rooms (%(server)s)": "Näytä: %(instance)s-huoneet (%(server)s)",
@@ -823,11 +796,8 @@
     "Choose a locale": "Valitse maa-asetusto",
     "You don't have permission to share locations": "Sinulla ei ole oikeutta jakaa sijainteja",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
-    "Search for": "Etsittävät kohteet",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
-    "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
-    "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
     "Saved Items": "Tallennetut kohteet",
     "This address had invalid server or is already in use": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
     "Drop a Pin": "Sijoita karttaneula",
@@ -2806,7 +2776,9 @@
             "prompt_user": "Aloita varmennus uudelleen hänen profiilista.",
             "timed_out": "Varmennuksessa kesti liikaa.",
             "cancelled_user": "%(displayName)s peruutti varmennuksen.",
-            "cancelled": "Peruutit varmennuksen."
+            "cancelled": "Peruutit varmennuksen.",
+            "verification_dialog_title_device": "Vahvista toinen laite",
+            "verification_dialog_title_user": "Varmennuspyyntö"
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -3201,7 +3173,16 @@
         "popout": "Avaa sovelma omassa ikkunassaan",
         "unpin_to_view_right_panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
         "set_room_layout": "Aseta minun huoneen asettelu kaikille",
-        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa"
+        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa",
+        "capabilities_dialog": {
+            "title": "Hyväksy sovelman käyttöoikeudet",
+            "content_starting_text": "Tämä sovelma haluaa:",
+            "decline_all_permission": "Kieltäydy kaikista",
+            "remember_Selection": "Muista valintani tälle sovelmalle"
+        },
+        "open_id_permissions_dialog": {
+            "remember_selection": "Muista tämä"
+        }
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3929,5 +3910,30 @@
     "Invalid identity server discovery response": "Epäkelpo identiteettipalvelimen etsinnän vastaus",
     "Invalid base_url for m.identity_server": "Epäkelpo base_url palvelimelle m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Identiteettipalvelimen osoite ei näytä olevan kelvollinen identiteettipalvelin",
-    "General failure": "Yleinen virhe"
+    "General failure": "Yleinen virhe",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s jäsen",
+            "other": "%(count)s jäsentä"
+        },
+        "public_rooms_label": "Julkiset huoneet",
+        "heading_with_query": "Etsitään \"%(query)s\"",
+        "heading_without_query": "Etsittävät kohteet",
+        "spaces_title": "Avaruudet, joissa olet",
+        "other_rooms_in_space": "Muut huoneet avaruudessa %(spaceName)s",
+        "join_button_text": "Liity %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Jotkin tulokset saatetaan piilottaa tietosuojan takia",
+        "cant_find_person_helpful_hint": "Jos et löydä etsimääsi henkilöä, lähetä hänelle kutsulinkki.",
+        "copy_link_text": "Kopioi kutsulinkki",
+        "result_may_be_hidden_warning": "Jotkin tulokset saatetaan piilottaa",
+        "cant_find_room_helpful_hint": "Jos et löydä etsimääsi huonetta, pyydä kutsu tai luo uusi huone.",
+        "create_new_room_button": "Luo uusi huone",
+        "group_chat_section_title": "Muut vaihtoehdot",
+        "start_group_chat_button": "Aloita ryhmäkeskustelu",
+        "message_search_section_title": "Muut haut",
+        "recent_searches_section_title": "Viimeaikaiset haut",
+        "recently_viewed_section_title": "Äskettäin katsottu",
+        "search_messages_hint": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
+        "keyboard_scroll_hint": "Käytä <arrows/> vierittääksesi"
+    }
 }

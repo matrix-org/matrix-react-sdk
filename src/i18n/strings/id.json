@@ -410,7 +410,6 @@
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Untuk melaporkan masalah keamanan yang berkaitan dengan Matrix, mohon baca <a>Kebijakan Penyingkapan Keamanan</a> Matrix.org.",
     "Failed to connect to integration manager": "Gagal untuk menghubung ke manajer integrasi",
-    "Create new room": "Buat ruangan baru",
     "and %(count)s others...": {
         "one": "dan satu lainnya...",
         "other": "dan %(count)s lainnya..."
@@ -621,14 +620,6 @@
     "Wrong Security Key": "Kunci Keamanan salah",
     "Looks good!": "Kelihatannya bagus!",
     "Wrong file type": "Tipe file salah",
-    "Remember this": "Ingat ini",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Widget ini akan memverifikasi ID pengguna Anda, tetapi tidak dapat melakukan aksi untuk Anda:",
-    "Allow this widget to verify your identity": "Izinkan widget ini untuk memverifikasi identitas Anda",
-    "Remember my selection for this widget": "Ingat pilihan saya untuk widget ini",
-    "Decline All": "Tolak Semua",
-    "This widget would like to:": "Widget ini ingin:",
-    "Approve widget permissions": "Setujui izin widget",
-    "Verification Request": "Permintaan Verifikasi",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Dapatkan kembali akses ke akun Anda dan pulihkan kunci enkripsi yang disimpan dalam sesi ini. Tanpa mereka, Anda tidak akan dapat membaca semua pesan aman Anda di sesi mana saja.",
     "Upload %(count)s other files": {
         "one": "Unggah %(count)s file lainnya",
@@ -770,7 +761,6 @@
     "Moderation": "Moderasi",
     "Messaging": "Perpesanan",
     "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
-    "Recently viewed": "Baru saja dilihat",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Apakah Anda yakin untuk mengakhiri poll ini? Ini akan menampilkan hasil akhir dari poll dan orang-orang tidak dapat memberikan suara lagi.",
     "End Poll": "Akhiri Poll",
     "Sorry, the poll did not end. Please try again.": "Maaf, poll tidak berakhir. Silakan coba lagi.",
@@ -778,13 +768,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "Poll telah berakhir. Jawaban teratas: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Poll telah berakhir. Tidak ada yang memberi suara.",
     "Link to room": "Tautan ke ruangan",
-    "Recent searches": "Pencarian terkini",
-    "To search messages, look for this icon at the top of a room <icon/>": "Untuk mencari pesan-pesan, lihat ikon ini di atas ruangan <icon/>",
-    "Other searches": "Pencarian lainnya",
-    "Public rooms": "Ruangan publik",
-    "Use \"%(query)s\" to search": "Gunakan \"%(query)s\" untuk mencari",
-    "Other rooms in %(spaceName)s": "Ruangan lainnya di %(spaceName)s",
-    "Spaces you're in": "Space yang Anda berada",
     "Including you, %(commaSeparatedMembers)s": "Termasuk Anda, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ini mengelompokkan obrolan Anda dengan anggota space ini. Menonaktifkan ini akan menyembunyikan obrolan dari tampilan %(spaceName)s Anda.",
     "Sections to show": "Bagian untuk ditampilkan",
@@ -793,15 +776,11 @@
     "Missing room name or separator e.g. (my-room:domain.org)": "Kurang nama ruangan atau pemisah mis. (ruangan-saya:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Kurang pemisah domain mis. (:domain.org)",
     "This address had invalid server or is already in use": "Alamat ini memiliki server yang tidak absah atau telah digunakan",
-    "Verify other device": "Verifikasi perangkat lain",
     "Could not fetch location": "Tidak dapat mendapatkan lokasi",
     "This address does not point at this room": "Alamat ini tidak mengarah ke ruangan ini",
     "Location": "Lokasi",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
-    "Use <arrows/> to scroll": "Gunakan <arrows/> untuk menggulirkan",
     "Feedback sent! Thanks, we appreciate it!": "Masukan terkirim! Terima kasih, kami mengapresiasinya!",
-    "Join %(roomAddress)s": "Bergabung dengan %(roomAddress)s",
-    "Search Dialog": "Dialog Pencarian",
     "What location type do you want to share?": "Tipe lokasi apa yang Anda ingin bagikan?",
     "Drop a Pin": "Drop sebuah Pin",
     "My live location": "Lokasi langsung saya",
@@ -853,19 +832,6 @@
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
     "Unread email icon": "Ikon email belum dibaca",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
-    "Remove search filter for %(filter)s": "Hapus saringan pencarian untuk %(filter)s",
-    "Start a group chat": "Mulai sebuah grup obrolan",
-    "Other options": "Opsi lain",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jika Anda tidak dapat menemukan ruangan yang Anda cari, minta sebuah undangan atau buat sebuah ruangan baru.",
-    "Some results may be hidden": "Beberapa hasil mungkin tersembunyi",
-    "Copy invite link": "Salin tautan undangan",
-    "If you can't see who you're looking for, send them your invite link.": "Jika Anda tidak dapat menemukan siapa yang Anda mencari, kirimkan tautan undangan Anda.",
-    "Some results may be hidden for privacy": "Beberapa hasil mungkin disembunyikan untuk privasi",
-    "Search for": "Cari",
-    "%(count)s Members": {
-        "one": "%(count)s Anggota",
-        "other": "%(count)s Anggota"
-    },
     "Show: Matrix rooms": "Tampilkan: ruangan Matrix",
     "Show: %(instance)s rooms (%(server)s)": "Tampilkan: %(instance)s ruangan (%(server)s)",
     "Add new server…": "Tambahkan server baru…",
@@ -915,7 +881,6 @@
     "Note that removing room changes like this could undo the change.": "Diingat bahwa menghilangkan perubahan ruangan dapat mengurungkan perubahannya.",
     "Upgrade room": "Tingkatkan ruangan",
     "Other spaces you know": "Space lainnya yang Anda tahu",
-    "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
     "common": {
         "about": "Tentang",
         "analytics": "Analitik",
@@ -3088,7 +3053,9 @@
             "timed_out": "Waktu habis untuk memverifikasi.",
             "cancelled_self": "Anda membatalkan verifikasi di perangkat Anda yang lain.",
             "cancelled_user": "%(displayName)s membatalkan verifikasi.",
-            "cancelled": "Anda membatalkan verifikasi."
+            "cancelled": "Anda membatalkan verifikasi.",
+            "verification_dialog_title_device": "Verifikasi perangkat lain",
+            "verification_dialog_title_user": "Permintaan Verifikasi"
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3541,7 +3508,18 @@
         "popout": "Widget popout",
         "unpin_to_view_right_panel": "Lepaskan pin widget ini untuk menampilkanya di panel ini",
         "set_room_layout": "Tetapkan tata letak ruangan saya untuk semuanya",
-        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini"
+        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini",
+        "capabilities_dialog": {
+            "title": "Setujui izin widget",
+            "content_starting_text": "Widget ini ingin:",
+            "decline_all_permission": "Tolak Semua",
+            "remember_Selection": "Ingat pilihan saya untuk widget ini"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Izinkan widget ini untuk memverifikasi identitas Anda",
+            "starting_text": "Widget ini akan memverifikasi ID pengguna Anda, tetapi tidak dapat melakukan aksi untuk Anda:",
+            "remember_selection": "Ingat ini"
+        }
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -4342,5 +4320,33 @@
     "Invalid identity server discovery response": "Respons penemuan server identitas tidak absah",
     "Invalid base_url for m.identity_server": "base_url tidak absah untuk m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL server identitas terlihat bukan sebagai server identitas yang absah",
-    "General failure": "Kesalahan umum"
+    "General failure": "Kesalahan umum",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Anggota",
+            "other": "%(count)s Anggota"
+        },
+        "public_rooms_label": "Ruangan publik",
+        "heading_with_query": "Gunakan \"%(query)s\" untuk mencari",
+        "heading_without_query": "Cari",
+        "spaces_title": "Space yang Anda berada",
+        "failed_querying_public_rooms": "Gagal melakukan kueri ruangan publik",
+        "other_rooms_in_space": "Ruangan lainnya di %(spaceName)s",
+        "join_button_text": "Bergabung dengan %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Beberapa hasil mungkin disembunyikan untuk privasi",
+        "cant_find_person_helpful_hint": "Jika Anda tidak dapat menemukan siapa yang Anda mencari, kirimkan tautan undangan Anda.",
+        "copy_link_text": "Salin tautan undangan",
+        "result_may_be_hidden_warning": "Beberapa hasil mungkin tersembunyi",
+        "cant_find_room_helpful_hint": "Jika Anda tidak dapat menemukan ruangan yang Anda cari, minta sebuah undangan atau buat sebuah ruangan baru.",
+        "create_new_room_button": "Buat ruangan baru",
+        "group_chat_section_title": "Opsi lain",
+        "start_group_chat_button": "Mulai sebuah grup obrolan",
+        "message_search_section_title": "Pencarian lainnya",
+        "recent_searches_section_title": "Pencarian terkini",
+        "recently_viewed_section_title": "Baru saja dilihat",
+        "search_dialog": "Dialog Pencarian",
+        "remove_filter": "Hapus saringan pencarian untuk %(filter)s",
+        "search_messages_hint": "Untuk mencari pesan-pesan, lihat ikon ini di atas ruangan <icon/>",
+        "keyboard_scroll_hint": "Gunakan <arrows/> untuk menggulirkan"
+    }
 }

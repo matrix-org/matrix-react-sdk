@@ -42,7 +42,6 @@
     "Add an Integration": "Ajouter une intégration",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Vous êtes sur le point d’accéder à un site tiers afin de pouvoir vous identifier pour utiliser %(integrationsUrl)s. Voulez-vous continuer ?",
     "Custom level": "Rang personnalisé",
-    "Create new room": "Créer un nouveau salon",
     "(~%(count)s results)": {
         "one": "(~%(count)s résultat)",
         "other": "(~%(count)s résultats)"
@@ -195,7 +194,6 @@
     "Scissors": "Ciseaux",
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
     "Power level": "Rang",
-    "Remember my selection for this widget": "Se souvenir de mon choix pour ce widget",
     "Notes": "Notes",
     "Sign out and remove encryption keys?": "Se déconnecter et supprimer les clés de chiffrement ?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Pour nous aider à éviter cela dans le futur, veuillez <a>nous envoyer les journaux</a>.",
@@ -247,7 +245,6 @@
     "Failed to connect to integration manager": "Échec de la connexion au gestionnaire d’intégrations",
     "Integrations are disabled": "Les intégrations sont désactivées",
     "Integrations not allowed": "Les intégrations ne sont pas autorisées",
-    "Verification Request": "Demande de vérification",
     "Upgrade private room": "Mettre à niveau le salon privé",
     "Upgrade public room": "Mettre à niveau le salon public",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "La mise à niveau d’un salon est une action avancée et qui est généralement recommandée quand un salon est instable à cause d’anomalies, de fonctionnalités manquantes ou de failles de sécurité.",
@@ -645,12 +642,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Impossible d’accéder à l’espace de stockage sécurisé. Merci de vérifier que vous avez saisi la bonne phrase secrète.",
     "Invalid Security Key": "Clé de Sécurité invalide",
     "Wrong Security Key": "Mauvaise Clé de Sécurité",
-    "Remember this": "Mémoriser ceci",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Ce widget vérifiera votre identifiant d’utilisateur, mais ne pourra pas effectuer des actions en votre nom :",
-    "Allow this widget to verify your identity": "Autoriser ce widget à vérifier votre identité",
-    "Decline All": "Tout refuser",
-    "This widget would like to:": "Le widget voudrait :",
-    "Approve widget permissions": "Approuver les permissions du widget",
     "Dial pad": "Pavé de numérotation",
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Invitez quelqu’un grâce à son nom, adresse e-mail, nom d’utilisateur (tel que <userId/>) ou <a>partagez cet espace</a>.",
@@ -761,7 +752,6 @@
         "one": "%(count)s vote",
         "other": "%(count)s votes"
     },
-    "Recently viewed": "Affiché récemment",
     "Developer": "Développeur",
     "Experimental": "Expérimental",
     "Themes": "Thèmes",
@@ -778,18 +768,10 @@
     "Failed to end poll": "Impossible de terminer le sondage",
     "The poll has ended. Top answer: %(topAnswer)s": "Le sondage est terminé. Meilleure réponse : %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Le sondage est terminé. Aucun vote n’a été exprimé.",
-    "Recent searches": "Recherches récentes",
-    "To search messages, look for this icon at the top of a room <icon/>": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
-    "Other searches": "Autres recherches",
-    "Public rooms": "Salons public",
-    "Use \"%(query)s\" to search": "Utilisez « %(query)s » pour rechercher",
-    "Other rooms in %(spaceName)s": "Autres salons dans %(spaceName)s",
-    "Spaces you're in": "Espaces où vous êtes",
     "Including you, %(commaSeparatedMembers)s": "Dont vous, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Cela rassemble vos conversations privées avec les membres de cet espace. Le désactiver masquera ces conversations de votre vue de %(spaceName)s.",
     "Sections to show": "Sections à afficher",
     "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
-    "Verify other device": "Vérifier un autre appareil",
     "This address had invalid server or is already in use": "Cette adresse a un serveur invalide ou est déjà utilisée",
     "Missing room name or separator e.g. (my-room:domain.org)": "Nom de salon ou séparateur manquant, par exemple (mon-salon:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Séparateur de domaine manquant, par exemple (:domain.org)",
@@ -803,9 +785,6 @@
     "What location type do you want to share?": "Quel type de localisation voulez-vous partager ?",
     "My live location": "Ma position en continu",
     "My current location": "Ma position actuelle",
-    "Search Dialog": "Fenêtre de recherche",
-    "Use <arrows/> to scroll": "Utilisez <arrows/> pour faire défiler",
-    "Join %(roomAddress)s": "Rejoindre %(roomAddress)s",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s n'a pas pu envoyer votre position. Veuillez réessayer plus tard.",
     "We couldn't send your location": "Nous n'avons pas pu envoyer votre position",
     "You are sharing your live location": "Vous partagez votre position en direct",
@@ -852,19 +831,6 @@
     "Unread email icon": "Icone d’e-mail non lu",
     "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
     "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
-    "Remove search filter for %(filter)s": "Supprimer le filtre de recherche pour %(filter)s",
-    "Start a group chat": "Démarrer une conversation de groupe",
-    "Other options": "Autres options",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Si vous ne trouvez pas le salon que vous cherchez, demandez une invitation ou créez un nouveau salon.",
-    "Some results may be hidden": "Certains résultats peuvent être cachés",
-    "Copy invite link": "Copier le lien d’invitation",
-    "If you can't see who you're looking for, send them your invite link.": "Si vous ne trouvez pas la personne que vous cherchez, envoyez-lui le lien d’invitation.",
-    "Some results may be hidden for privacy": "Certains résultats pourraient être masqués pour des raisons de confidentialité",
-    "Search for": "Recherche de",
-    "%(count)s Members": {
-        "one": "%(count)s membre",
-        "other": "%(count)s membres"
-    },
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Quand vous vous déconnectez, ces clés seront supprimées de cet appareil, et vous ne pourrez plus lire les messages chiffrés à moins d’avoir les clés de ces messages sur vos autres appareils, ou de les avoir sauvegardées sur le serveur.",
     "Show: Matrix rooms": "Afficher : Salons Matrix",
     "Show: %(instance)s rooms (%(server)s)": "Afficher : %(instance)s salons (%(server)s)",
@@ -915,7 +881,6 @@
     "Are you sure you wish to remove (delete) this event?": "Êtes-vous sûr de vouloir supprimer cet évènement ?",
     "Upgrade room": "Mettre à niveau le salon",
     "Other spaces you know": "Autres espaces que vous connaissez",
-    "Failed to query public rooms": "Impossible d’interroger les salons publics",
     "common": {
         "about": "À propos",
         "analytics": "Collecte de données",
@@ -3081,7 +3046,9 @@
             "timed_out": "La vérification a expiré.",
             "cancelled_self": "Vous avez annulé la vérification dans votre autre appareil.",
             "cancelled_user": "%(displayName)s a annulé la vérification.",
-            "cancelled": "Vous avez annulé la vérification."
+            "cancelled": "Vous avez annulé la vérification.",
+            "verification_dialog_title_device": "Vérifier un autre appareil",
+            "verification_dialog_title_user": "Demande de vérification"
         },
         "old_version_detected_title": "Anciennes données de chiffrement détectées",
         "old_version_detected_description": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
@@ -3534,7 +3501,18 @@
         "popout": "Détacher le widget",
         "unpin_to_view_right_panel": "Désépinglez ce widget pour l’afficher dans ce panneau",
         "set_room_layout": "Définir ma disposition de salon pour tout le monde",
-        "close_to_view_right_panel": "Fermer ce widget pour l’afficher dans ce panneau"
+        "close_to_view_right_panel": "Fermer ce widget pour l’afficher dans ce panneau",
+        "capabilities_dialog": {
+            "title": "Approuver les permissions du widget",
+            "content_starting_text": "Le widget voudrait :",
+            "decline_all_permission": "Tout refuser",
+            "remember_Selection": "Se souvenir de mon choix pour ce widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Autoriser ce widget à vérifier votre identité",
+            "starting_text": "Ce widget vérifiera votre identifiant d’utilisateur, mais ne pourra pas effectuer des actions en votre nom :",
+            "remember_selection": "Mémoriser ceci"
+        }
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -4335,5 +4313,33 @@
     "Invalid identity server discovery response": "Réponse non valide lors de la découverte du serveur d'identité",
     "Invalid base_url for m.identity_server": "base_url pour m.identity_server non valide",
     "Identity server URL does not appear to be a valid identity server": "L’URL du serveur d’identité ne semble pas être un serveur d’identité valide",
-    "General failure": "Erreur générale"
+    "General failure": "Erreur générale",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s membre",
+            "other": "%(count)s membres"
+        },
+        "public_rooms_label": "Salons public",
+        "heading_with_query": "Utilisez « %(query)s » pour rechercher",
+        "heading_without_query": "Recherche de",
+        "spaces_title": "Espaces où vous êtes",
+        "failed_querying_public_rooms": "Impossible d’interroger les salons publics",
+        "other_rooms_in_space": "Autres salons dans %(spaceName)s",
+        "join_button_text": "Rejoindre %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Certains résultats pourraient être masqués pour des raisons de confidentialité",
+        "cant_find_person_helpful_hint": "Si vous ne trouvez pas la personne que vous cherchez, envoyez-lui le lien d’invitation.",
+        "copy_link_text": "Copier le lien d’invitation",
+        "result_may_be_hidden_warning": "Certains résultats peuvent être cachés",
+        "cant_find_room_helpful_hint": "Si vous ne trouvez pas le salon que vous cherchez, demandez une invitation ou créez un nouveau salon.",
+        "create_new_room_button": "Créer un nouveau salon",
+        "group_chat_section_title": "Autres options",
+        "start_group_chat_button": "Démarrer une conversation de groupe",
+        "message_search_section_title": "Autres recherches",
+        "recent_searches_section_title": "Recherches récentes",
+        "recently_viewed_section_title": "Affiché récemment",
+        "search_dialog": "Fenêtre de recherche",
+        "remove_filter": "Supprimer le filtre de recherche pour %(filter)s",
+        "search_messages_hint": "Pour chercher des messages, repérez cette icône en haut à droite d'un salon <icon/>",
+        "keyboard_scroll_hint": "Utilisez <arrows/> pour faire défiler"
+    }
 }

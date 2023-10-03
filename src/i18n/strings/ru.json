@@ -42,7 +42,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
     "Add an Integration": "Добавить интеграцию",
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Вы будете перенаправлены на внешний сайт, чтобы войти в свою учётную запись для использования с %(integrationsUrl)s. Продолжить?",
-    "Create new room": "Создать комнату",
     "Home": "Главная",
     "(~%(count)s results)": {
         "other": "(~%(count)s результатов)",
@@ -210,7 +209,6 @@
     },
     "Cancel All": "Отменить все",
     "Upload Error": "Ошибка загрузки",
-    "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
     "Some characters not allowed": "Некоторые символы не разрешены",
@@ -342,7 +340,6 @@
     "A connection error occurred while trying to contact the server.": "Произошла ошибка при подключении к серверу.",
     "The server is not configured to indicate what the problem is (CORS).": "Сервер не настроен должным образом, чтобы определить проблему (CORS).",
     "Recent changes that have not yet been received": "Последние изменения, которые еще не были получены",
-    "Verification Request": "Запрос на сверку",
     "Wrong file type": "Неправильный тип файла",
     "Looks good!": "Выглядит неплохо!",
     "Security Phrase": "Мнемоническая фраза",
@@ -375,8 +372,6 @@
     "Continuing without email": "Продолжить без электронной почты",
     "Reason (optional)": "Причина (необязательно)",
     "Server Options": "Параметры сервера",
-    "Decline All": "Отклонить все",
-    "Approve widget permissions": "Одобрить разрешения виджета",
     "Zimbabwe": "Зимбабве",
     "Zambia": "Замбия",
     "Yemen": "Йемен",
@@ -626,14 +621,12 @@
     "Afghanistan": "Афганистан",
     "United States": "Соединенные Штаты Америки",
     "United Kingdom": "Великобритания",
-    "This widget would like to:": "Этому виджету хотелось бы:",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Предупреждаем: если вы не добавите адрес электронной почты и забудете пароль, вы можете <b>навсегда потерять доступ к своей учётной записи</b>.",
     "Hold": "Удерживать",
     "Resume": "Возобновить",
     "Transfer": "Перевод",
     "A call can only be transferred to a single user.": "Вызов может быть передан только одному пользователю.",
     "Dial pad": "Панель набора номера",
-    "Allow this widget to verify your identity": "Разрешите этому виджету проверить ваш идентификатор",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Получите доступ к своей истории защищенных сообщений и настройте безопасный обмен сообщениями, введя ключ безопасности.",
     "Not a valid Security Key": "Неправильный ключ безопасности",
@@ -649,8 +642,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Невозможно получить доступ к секретному хранилищу. Убедитесь, что вы ввели правильную секретную фразу.",
     "Invalid Security Key": "Неверный ключ безопасности",
     "Wrong Security Key": "Неправильный ключ безопасности",
-    "Remember this": "Запомнить это",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Виджет проверит ваш идентификатор пользователя, но не сможет выполнять за вас действия:",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -756,14 +747,6 @@
     "Thread options": "Параметры обсуждения",
     "Forget": "Забыть",
     "Open in OpenStreetMap": "Открыть в OpenStreetMap",
-    "Verify other device": "Проверить другое устройство",
-    "Recent searches": "Недавние поиски",
-    "To search messages, look for this icon at the top of a room <icon/>": "Для поиска сообщений найдите этот значок <icon/> в верхней части комнаты",
-    "Other searches": "Другие поиски",
-    "Public rooms": "Публичные комнаты",
-    "Use \"%(query)s\" to search": "Используйте \"%(query)s\" для поиска",
-    "Other rooms in %(spaceName)s": "Прочие комнаты в %(spaceName)s",
-    "Spaces you're in": "Ваши пространства",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Это сгруппирует ваши чаты с участниками этого пространства. Выключение, скроет эти чаты от вашего просмотра в %(spaceName)s.",
     "Sections to show": "Разделы для показа",
     "Link to room": "Ссылка на комнату",
@@ -787,7 +770,6 @@
         "one": "%(count)s голос",
         "other": "%(count)s голосов"
     },
-    "Recently viewed": "Недавно просмотренные",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
     "Themes": "Темы",
@@ -797,9 +779,6 @@
         "one": "%(spaceName)s и %(count)s другой",
         "other": "%(spaceName)s и %(count)s других"
     },
-    "Search Dialog": "Окно поиска",
-    "Use <arrows/> to scroll": "Используйте <arrows/> для прокрутки",
-    "Join %(roomAddress)s": "Присоединиться к %(roomAddress)s",
     "Feedback sent! Thanks, we appreciate it!": "Отзыв отправлен! Спасибо, мы ценим это!",
     "What location type do you want to share?": "Каким типом местоположения вы хотите поделиться?",
     "Drop a Pin": "Маркер на карте",
@@ -828,21 +807,9 @@
     "Output devices": "Устройства вывода",
     "Input devices": "Устройства ввода",
     "Unsent": "Не отправлено",
-    "Remove search filter for %(filter)s": "Удалить фильтр поиска для %(filter)s",
-    "Start a group chat": "Начать групповой чат",
-    "Other options": "Другие опции",
-    "Some results may be hidden": "Некоторые результаты могут быть скрыты",
-    "Copy invite link": "Копировать ссылку приглашения",
-    "If you can't see who you're looking for, send them your invite link.": "Если вы не видите того, кто вам нужен, отправьте ему свою ссылку приглашения.",
-    "Some results may be hidden for privacy": "Некоторые результаты могут быть скрыты из-за конфиденциальности",
     "You cannot search for rooms that are neither a room nor a space": "Вы не можете искать комнаты, которые не являются ни комнатой, ни пространством",
     "Show spaces": "Показать пространства",
     "Show rooms": "Показать комнаты",
-    "Search for": "Поиск",
-    "%(count)s Members": {
-        "one": "%(count)s участник",
-        "other": "%(count)s участников"
-    },
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "При выходе эти ключи будут удалены с данного устройства и вы больше не сможете прочитать зашифрованные сообщения, если у вас нет ключей для них на других устройствах или резервной копии на сервере.",
     "Open room": "Открыть комнату",
     "Hide my messages from new joiners": "Скрыть мои сообщения от новых участников",
@@ -873,7 +840,6 @@
     },
     "Live location ended": "Трансляция местоположения завершена",
     "Live location enabled": "Трансляция местоположения включена",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
     "Coworkers and teams": "Коллеги и команды",
     "Friends and family": "Друзья и семья",
     "Who will you chat to the most?": "С кем вы будете общаться чаще всего?",
@@ -2890,7 +2856,9 @@
             "timed_out": "Таймаут подтверждения.",
             "cancelled_self": "Вы отменили проверку на другом устройстве.",
             "cancelled_user": "%(displayName)s отменил(а) подтверждение.",
-            "cancelled": "Вы отменили подтверждение."
+            "cancelled": "Вы отменили подтверждение.",
+            "verification_dialog_title_device": "Проверить другое устройство",
+            "verification_dialog_title_user": "Запрос на сверку"
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -3295,7 +3263,18 @@
         "popout": "Всплывающий виджет",
         "unpin_to_view_right_panel": "Открепите виджет, чтобы просмотреть его на этой панели",
         "set_room_layout": "Установить мой макет комнаты для всех",
-        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели"
+        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели",
+        "capabilities_dialog": {
+            "title": "Одобрить разрешения виджета",
+            "content_starting_text": "Этому виджету хотелось бы:",
+            "decline_all_permission": "Отклонить все",
+            "remember_Selection": "Запомнить мой выбор для этого виджета"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Разрешите этому виджету проверить ваш идентификатор",
+            "starting_text": "Виджет проверит ваш идентификатор пользователя, но не сможет выполнять за вас действия:",
+            "remember_selection": "Запомнить это"
+        }
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -4022,5 +4001,32 @@
     "Invalid identity server discovery response": "Неверный ответ на запрос идентификации сервера",
     "Invalid base_url for m.identity_server": "Неверный base_url для m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL-адрес сервера идентификации не является действительным сервером идентификации",
-    "General failure": "Общая ошибка"
+    "General failure": "Общая ошибка",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s участник",
+            "other": "%(count)s участников"
+        },
+        "public_rooms_label": "Публичные комнаты",
+        "heading_with_query": "Используйте \"%(query)s\" для поиска",
+        "heading_without_query": "Поиск",
+        "spaces_title": "Ваши пространства",
+        "other_rooms_in_space": "Прочие комнаты в %(spaceName)s",
+        "join_button_text": "Присоединиться к %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Некоторые результаты могут быть скрыты из-за конфиденциальности",
+        "cant_find_person_helpful_hint": "Если вы не видите того, кто вам нужен, отправьте ему свою ссылку приглашения.",
+        "copy_link_text": "Копировать ссылку приглашения",
+        "result_may_be_hidden_warning": "Некоторые результаты могут быть скрыты",
+        "cant_find_room_helpful_hint": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
+        "create_new_room_button": "Создать комнату",
+        "group_chat_section_title": "Другие опции",
+        "start_group_chat_button": "Начать групповой чат",
+        "message_search_section_title": "Другие поиски",
+        "recent_searches_section_title": "Недавние поиски",
+        "recently_viewed_section_title": "Недавно просмотренные",
+        "search_dialog": "Окно поиска",
+        "remove_filter": "Удалить фильтр поиска для %(filter)s",
+        "search_messages_hint": "Для поиска сообщений найдите этот значок <icon/> в верхней части комнаты",
+        "keyboard_scroll_hint": "Используйте <arrows/> для прокрутки"
+    }
 }

@@ -298,14 +298,6 @@
     "Wrong Security Key": "Khóa bảo mật sai",
     "Looks good!": "Có vẻ tốt!",
     "Wrong file type": "Loại tệp sai",
-    "Remember this": "Nhớ điều này",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Tiện ích widget sẽ xác minh ID người dùng của bạn, nhưng không thể thay bạn thực hiện các hành động:",
-    "Allow this widget to verify your identity": "Cho phép tiện ích widget này xác thực danh tính của bạn",
-    "Remember my selection for this widget": "Hãy nhớ lựa chọn của tôi cho tiện ích này",
-    "Decline All": "Từ chối tất cả",
-    "This widget would like to:": "Tiện ích widget này muốn:",
-    "Approve widget permissions": "Phê duyệt quyền của tiện ích widget",
-    "Verification Request": "Yêu cầu xác thực",
     "Upload Error": "Lỗi tải lên",
     "Cancel All": "Hủy bỏ tất cả",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Một số tệp <b> quá lớn </b> không thể tải lên được. Giới hạn kích thước tệp là %(limit)s.",
@@ -396,7 +388,6 @@
     "not specified": "không được chỉ định",
     "Failed to connect to integration manager": "Không kết nối được với trình quản lý tích hợp",
     "unknown error code": "mã lỗi không xác định",
-    "Create new room": "Tạo phòng mới",
     "Join Room": "Vào phòng",
     "(~%(count)s results)": {
         "one": "(~%(count)s kết quả)",
@@ -761,7 +752,6 @@
         "one": "%(count)s phiếu bầu",
         "other": "%(count)s phiếu bầu"
     },
-    "Recently viewed": "Được xem gần đây",
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
     "Themes": "Chủ đề",
@@ -772,14 +762,6 @@
         "other": "%(spaceName)s và %(count)s khác"
     },
     "Open in OpenStreetMap": "Mở trong OpenStreetMap",
-    "Verify other device": "Xác thực thiết bị khác",
-    "Recent searches": "Các tìm kiếm gần đây",
-    "To search messages, look for this icon at the top of a room <icon/>": "Để tìm các tin nhắn, hãy tìm biểu tượng này ở đầu phòng <icon/>",
-    "Other searches": "Các tìm kiếm khác",
-    "Public rooms": "Các phòng công cộng",
-    "Use \"%(query)s\" to search": "Sử dụng \"%(query)s\" để tìm kiếm",
-    "Other rooms in %(spaceName)s": "Các phòng khác trong %(spaceName)s",
-    "Spaces you're in": "Các Space bạn đang trong đó",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Điều này nhóm các cuộc trò chuyện của bạn với các thành viên trong Space này. Tắt tính năng này sẽ ẩn các cuộc trò chuyện đó khỏi %(spaceName)s.",
     "Sections to show": "Các phần để hiển thị",
     "Link to room": "Liên kết đến phòng",
@@ -800,8 +782,6 @@
     "Starting export process…": "Bắt đầu trích xuất…",
     "Unsent": "Chưa gửi",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
-    "Some results may be hidden for privacy": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "%(members)s and more": "%(members)s và nhiều người khác",
@@ -813,27 +793,16 @@
     "Open room": "Mở phòng",
     "%(members)s and %(last)s": "%(members)s và %(last)s",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Khi bạn đăng xuất, các khóa sẽ được xóa khỏi thiết bị này, tức là bạn không thể đọc các tin nhắn được mã hóa trừ khi bạn có khóa cho chúng trong thiết bị khác, hoặc sao lưu chúng lên máy chủ.",
-    "Join %(roomAddress)s": "Tham gia %(roomAddress)s",
     "Start DM anyway": "Cứ tạo phòng nhắn tin riêng",
     " in <strong>%(room)s</strong>": " ở <strong>%(room)s</strong>",
-    "Search for": "Tìm",
-    "Use <arrows/> to scroll": "Dùng <arrows/> để cuộn",
     "Start DM anyway and never warn me again": "Cứ tạo phòng nhắn tin riêng và đừng cảnh báo tôi nữa",
-    "Some results may be hidden": "Một số kết quả có thể bị ẩn",
     "Waiting for partner to confirm…": "Đang đợi bên kia xác nhận…",
     "Enable '%(manageIntegrations)s' in Settings to do this.": "Bật '%(manageIntegrations)s' trong cài đặt để thực hiện.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Không thể tìm hồ sơ cho định danh Matrix được liệt kê - bạn có muốn tiếp tục tạo phòng nhắn tin riêng?",
-    "Other options": "Lựa chọn khác",
     "Input devices": "Thiết bị đầu vào",
     "Output devices": "Thiết bị đầu ra",
-    "%(count)s Members": {
-        "one": "%(count)s thành viên",
-        "other": "%(count)s thành viên"
-    },
     "Manually verify by text": "Xác thực thủ công bằng văn bản",
     "Show rooms": "Hiện phòng",
-    "Start a group chat": "Bắt đầu cuộc trò chuyện nhóm",
-    "Copy invite link": "Sao chép liên kết mời",
     "Interactively verify by emoji": "Xác thực có tương tác bằng biểu tượng cảm xúc",
     "Show spaces": "Hiện spaces",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
@@ -2896,7 +2865,9 @@
             "timed_out": "Đã hết thời gian xác thực.",
             "cancelled_self": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
             "cancelled_user": "%(displayName)s đã hủy xác thực.",
-            "cancelled": "Bạn đã hủy xác thực."
+            "cancelled": "Bạn đã hủy xác thực.",
+            "verification_dialog_title_device": "Xác thực thiết bị khác",
+            "verification_dialog_title_user": "Yêu cầu xác thực"
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -3304,7 +3275,18 @@
         "popout": "Tiện ích bật ra",
         "unpin_to_view_right_panel": "Bỏ ghim widget này để xem nó trong bảng điều khiển này",
         "set_room_layout": "Đặt bố cục phòng của tôi cho mọi người",
-        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này"
+        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này",
+        "capabilities_dialog": {
+            "title": "Phê duyệt quyền của tiện ích widget",
+            "content_starting_text": "Tiện ích widget này muốn:",
+            "decline_all_permission": "Từ chối tất cả",
+            "remember_Selection": "Hãy nhớ lựa chọn của tôi cho tiện ích này"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Cho phép tiện ích widget này xác thực danh tính của bạn",
+            "starting_text": "Tiện ích widget sẽ xác minh ID người dùng của bạn, nhưng không thể thay bạn thực hiện các hành động:",
+            "remember_selection": "Nhớ điều này"
+        }
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -4036,5 +4018,29 @@
     "Invalid identity server discovery response": "Phản hồi phát hiện máy chủ nhận dạng không hợp lệ",
     "Invalid base_url for m.identity_server": "Base_url không hợp lệ cho m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL máy chủ nhận dạng dường như không phải là máy chủ nhận dạng hợp lệ",
-    "General failure": "Thất bại chung"
+    "General failure": "Thất bại chung",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s thành viên",
+            "other": "%(count)s thành viên"
+        },
+        "public_rooms_label": "Các phòng công cộng",
+        "heading_with_query": "Sử dụng \"%(query)s\" để tìm kiếm",
+        "heading_without_query": "Tìm",
+        "spaces_title": "Các Space bạn đang trong đó",
+        "other_rooms_in_space": "Các phòng khác trong %(spaceName)s",
+        "join_button_text": "Tham gia %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Một số kết quả có thể bị ẩn để đảm bảo quyền riêng tư",
+        "copy_link_text": "Sao chép liên kết mời",
+        "result_may_be_hidden_warning": "Một số kết quả có thể bị ẩn",
+        "cant_find_room_helpful_hint": "Nếu bạn không tìm được phòng bạn muốn, yêu cầu lời mời hay tạo phòng mới.",
+        "create_new_room_button": "Tạo phòng mới",
+        "group_chat_section_title": "Lựa chọn khác",
+        "start_group_chat_button": "Bắt đầu cuộc trò chuyện nhóm",
+        "message_search_section_title": "Các tìm kiếm khác",
+        "recent_searches_section_title": "Các tìm kiếm gần đây",
+        "recently_viewed_section_title": "Được xem gần đây",
+        "search_messages_hint": "Để tìm các tin nhắn, hãy tìm biểu tượng này ở đầu phòng <icon/>",
+        "keyboard_scroll_hint": "Dùng <arrows/> để cuộn"
+    }
 }

@@ -10,7 +10,6 @@
     "Email address": "Ηλεκτρονική διεύθυνση",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
-    "Create new room": "Δημιουργία νέου δωματίου",
     "Home": "Αρχική",
     "Session ID": "Αναγνωριστικό συνεδρίας",
     "Warning!": "Προειδοποίηση!",
@@ -416,7 +415,6 @@
         "other": "Αφαίρεση %(count)s μηνυμάτων",
         "one": "Αφαίρεση 1 μηνύματος"
     },
-    "Recently viewed": "Προβλήθηκε πρόσφατα",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
     "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
@@ -511,9 +509,6 @@
     "Wrong Security Key": "Λάθος Κλειδί Ασφαλείας",
     "Looks good!": "Φαίνεται καλό!",
     "Wrong file type": "Λάθος τύπος αρχείου",
-    "Decline All": "Απόρριψη όλων",
-    "Verification Request": "Αίτημα επαλήθευσης",
-    "Verify other device": "Επαλήθευση άλλης συσκευής",
     "Upload Error": "Σφάλμα μεταφόρτωσης",
     "Cancel All": "Ακύρωση Όλων",
     "Upload %(count)s other files": {
@@ -529,14 +524,6 @@
     "Find others by phone or email": "Βρείτε άλλους μέσω τηλεφώνου ή email",
     "Your browser likely removed this data when running low on disk space.": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε.",
     "Missing session data": "Λείπουν δεδομένα της συνεδρίας (session)",
-    "Search Dialog": "Παράθυρο Αναζήτησης",
-    "Use <arrows/> to scroll": "Χρησιμοποιήστε τα <arrows/> για κύλιση",
-    "Recent searches": "Πρόσφατες αναζητήσεις",
-    "Other searches": "'Άλλες αναζητήσεις",
-    "Public rooms": "Δημόσια δωμάτια",
-    "Join %(roomAddress)s": "Συμμετοχή στο %(roomAddress)s",
-    "Other rooms in %(spaceName)s": "Άλλα δωμάτιο στο %(spaceName)s",
-    "Spaces you're in": "Χώροι που ανήκετε",
     "Sections to show": "Ενότητες προς εμφάνιση",
     "Command Help": "Βοήθεια Εντολών",
     "Link to room": "Σύνδεσμος στο δωμάτιο",
@@ -734,7 +721,6 @@
     "No results found": "Δε βρέθηκαν αποτελέσματα",
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
     "To help us prevent this in future, please <a>send us logs</a>.": "Για να μας βοηθήσετε να το αποτρέψουμε αυτό στο μέλλον, <a>στείλτε μας τα αρχεία καταγραφής</a>.",
-    "To search messages, look for this icon at the top of a room <icon/>": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Η εκκαθάριση του αποθηκευτικού χώρου του προγράμματος περιήγησής σας μπορεί να διορθώσει το πρόβλημα, αλλά θα αποσυνδεθείτε και θα κάνει τυχόν κρυπτογραφημένο ιστορικό συνομιλιών να μην είναι αναγνώσιμο.",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Εάν το κάνετε, σημειώστε ότι κανένα από τα μηνύματά σας δε θα διαγραφεί, αλλά η εμπειρία αναζήτησης ενδέχεται να υποβαθμιστεί για λίγα λεπτά κατά τη δημιουργία του ευρετηρίου",
     "Recent changes that have not yet been received": "Πρόσφατες αλλαγές που δεν έχουν ληφθεί ακόμη",
@@ -776,11 +762,6 @@
     "The poll has ended. Top answer: %(topAnswer)s": "Η δημοσκόπηση έληξε. Κορυφαία απάντηση: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "Η δημοσκόπηση έληξε. Δεν υπάρχουν ψήφοι.",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
-    "Allow this widget to verify your identity": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
-    "Remember my selection for this widget": "Να θυμάστε την επιλογή μου για αυτήν τη μικροεφαρμογή",
-    "This widget would like to:": "Αυτή η μικροεφαρμογή θα ήθελε να:",
-    "Approve widget permissions": "Έγκριση αδειών μικροεφαρμογών",
     "You're removing all spaces. Access will default to invite only": "Καταργείτε όλους τους χώρους. Η πρόσβαση θα είναι προεπιλεγμένη μόνο για πρόσκληση",
     "Start using Key Backup": "Ξεκινήστε να χρησιμοποιείτε το αντίγραφο ασφαλείας κλειδιού",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "Το %(brand)s χρησιμοποιεί πλέον 3-5 φορές λιγότερη μνήμη, φορτώνοντας πληροφορίες για άλλους χρήστες μόνο όταν χρειάζεται. Περιμένετε όσο γίνεται εκ νέου συγχρονισμός με τον διακομιστή!",
@@ -801,10 +782,8 @@
     "Clear cross-signing keys": "Διαγράψτε τα κλειδιά διασταυρούμενης υπογραφής",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Η διαγραφή κλειδιών διασταυρούμενης υπογραφής είναι μόνιμη. Οποιοσδήποτε με τον οποίο έχετε επαληθευτεί θα λάβει ειδοποιήσεις ασφαλείας. Πιθανότατα δεν θέλετε να το κάνετε αυτό, εκτός και αν έχετε χάσει όλες τις συσκευές από τις οποίες μπορείτε να υπογράψετε.",
     "Destroy cross-signing keys?": "Να καταστραφούν τα κλειδιά διασταυρούμενης υπογραφής;",
-    "Remember this": "Να το θυμάσαι αυτό",
     "Be found by phone or email": "Να βρεθεί μέσω τηλεφώνου ή email",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Ορισμένα δεδομένα συνεδρίας, συμπεριλαμβανομένων των κρυπτογραφημένων κλειδιών μηνυμάτων, λείπουν. Αποσυνδεθείτε και συνδεθείτε για να το διορθώσετε, επαναφέροντας τα κλειδιά από το αντίγραφο ασφαλείας.",
-    "Use \"%(query)s\" to search": "Χρησιμοποιήστε το \"%(query)s\" για αναζήτηση",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Αυτό ομαδοποιεί τις συνομιλίες σας με μέλη αυτού του χώρου. Η απενεργοποίηση του θα αποκρύψει αυτές τις συνομιλίες από την προβολή του %(spaceName)s.",
     "Reset event store": "Επαναφορά καταστήματος συμβάντων",
     "Reset event store?": "Eπαναφoρά στο κατάστημα συμβάντων;",
@@ -827,17 +806,6 @@
     "Input devices": "Συσκευές εισόδου",
     "To continue, please enter your account password:": "Για να συνεχίσετε παρακαλώ εισάγετε τον κωδικό σας:",
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
-    "Start a group chat": "Ξεκινήστε μια ομαδική συνομιλία",
-    "Other options": "Αλλες επιλογές",
-    "Some results may be hidden": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυμμένα",
-    "Copy invite link": "Αντιγραφή συνδέσμου πρόσκλησης",
-    "If you can't see who you're looking for, send them your invite link.": "Εάν δεν εμφανίζεται το άτομο που αναζητάτε, στείλτε τους τον σύνδεσμο πρόσκλησης.",
-    "Some results may be hidden for privacy": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυφά για λόγους απορρήτου",
-    "Search for": "Αναζήτηση για",
-    "%(count)s Members": {
-        "one": "%(count)s Μέλος",
-        "other": "%(count)s Μέλη"
-    },
     "You will leave all rooms and DMs that you are in": "Θα αποχωρήσετε από όλα τα δωμάτια και τις συνομιλίες σας",
     "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Κανείς δε θα μπορεί να επαναχρησιμοποιήσει το όνομα χρήστη σας (MXID), συμπεριλαμβανομένου εσάς: αυτό το όνομα χρήστη θα παραμείνει μη διαθέσιμο",
     "You will not be able to reactivate your account": "Δεν θα μπορείτε να ενεργοποιήσετε ξανά τον λογαριασμό σας",
@@ -2584,7 +2552,9 @@
             "timed_out": "Η επαλήθευση έληξε.",
             "cancelled_self": "Ακυρώσατε την επαλήθευση στην άλλη συσκευή σας.",
             "cancelled_user": "%(displayName)s ακύρωσε την επαλύθευση.",
-            "cancelled": "Ακυρώσατε την επαλήθευση."
+            "cancelled": "Ακυρώσατε την επαλήθευση.",
+            "verification_dialog_title_device": "Επαλήθευση άλλης συσκευής",
+            "verification_dialog_title_user": "Αίτημα επαλήθευσης"
         },
         "old_version_detected_title": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
         "old_version_detected_description": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
@@ -2975,7 +2945,18 @@
         "popout": "Αναδυόμενη μικροεφαρμογή",
         "unpin_to_view_right_panel": "Ξεκαρφιτσώστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα",
         "set_room_layout": "Ορίστε τη διάταξη του δωματίου μου για όλους",
-        "close_to_view_right_panel": "Κλείστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα"
+        "close_to_view_right_panel": "Κλείστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα",
+        "capabilities_dialog": {
+            "title": "Έγκριση αδειών μικροεφαρμογών",
+            "content_starting_text": "Αυτή η μικροεφαρμογή θα ήθελε να:",
+            "decline_all_permission": "Απόρριψη όλων",
+            "remember_Selection": "Να θυμάστε την επιλογή μου για αυτήν τη μικροεφαρμογή"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
+            "starting_text": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
+            "remember_selection": "Να το θυμάσαι αυτό"
+        }
     },
     "feedback": {
         "sent": "Τα σχόλια στάλθηκαν",
@@ -3624,5 +3605,30 @@
     "Invalid identity server discovery response": "Μη έγκυρη απόκριση εντοπισμού διακομιστή ταυτότητας",
     "Invalid base_url for m.identity_server": "Μη έγκυρο base_url για m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Η διεύθυνση URL διακομιστή ταυτοποίησης δε φαίνεται να είναι έγκυρη",
-    "General failure": "Γενική αποτυχία"
+    "General failure": "Γενική αποτυχία",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Μέλος",
+            "other": "%(count)s Μέλη"
+        },
+        "public_rooms_label": "Δημόσια δωμάτια",
+        "heading_with_query": "Χρησιμοποιήστε το \"%(query)s\" για αναζήτηση",
+        "heading_without_query": "Αναζήτηση για",
+        "spaces_title": "Χώροι που ανήκετε",
+        "other_rooms_in_space": "Άλλα δωμάτιο στο %(spaceName)s",
+        "join_button_text": "Συμμετοχή στο %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυφά για λόγους απορρήτου",
+        "cant_find_person_helpful_hint": "Εάν δεν εμφανίζεται το άτομο που αναζητάτε, στείλτε τους τον σύνδεσμο πρόσκλησης.",
+        "copy_link_text": "Αντιγραφή συνδέσμου πρόσκλησης",
+        "result_may_be_hidden_warning": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυμμένα",
+        "create_new_room_button": "Δημιουργία νέου δωματίου",
+        "group_chat_section_title": "Αλλες επιλογές",
+        "start_group_chat_button": "Ξεκινήστε μια ομαδική συνομιλία",
+        "message_search_section_title": "'Άλλες αναζητήσεις",
+        "recent_searches_section_title": "Πρόσφατες αναζητήσεις",
+        "recently_viewed_section_title": "Προβλήθηκε πρόσφατα",
+        "search_dialog": "Παράθυρο Αναζήτησης",
+        "search_messages_hint": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
+        "keyboard_scroll_hint": "Χρησιμοποιήστε τα <arrows/> για κύλιση"
+    }
 }

@@ -47,7 +47,6 @@
     "Add an Integration": "Добавяне на интеграция",
     "Email address": "Имейл адрес",
     "Delete Widget": "Изтриване на приспособление",
-    "Create new room": "Създай нова стая",
     "Home": "Начална страница",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "свий",
@@ -212,7 +211,6 @@
     },
     "Cancel All": "Откажи всички",
     "Upload Error": "Грешка при качване",
-    "Remember my selection for this widget": "Запомни избора ми за това приспособление",
     "edited": "редактирано",
     "Some characters not allowed": "Някои символи не са позволени",
     "Upload all": "Качи всички",
@@ -257,7 +255,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Обновяването на стая е действие за напреднали и обикновено се препоръчва когато стаята е нестабилна поради бъгове, липсващи функции или проблеми със сигурността.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Това обикновено влия само на това как стаята се обработва на сървъра. Ако имате проблеми с %(brand)s, <a>съобщете за проблем</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Ще обновите стаята от <oldVersion /> до <newVersion />.",
-    "Verification Request": "Заявка за потвърждение",
     "Recent Conversations": "Скорошни разговори",
     "Direct Messages": "Директни съобщения",
     "Failed to find the following users": "Неуспешно откриване на следните потребители",
@@ -1745,7 +1742,8 @@
             "prompt_user": "Започнете верифициране отново от профила им.",
             "timed_out": "Изтече времето за верификация.",
             "cancelled_user": "%(displayName)s отказа верификацията.",
-            "cancelled": "Отказахте верификацията."
+            "cancelled": "Отказахте верификацията.",
+            "verification_dialog_title_user": "Заявка за потвърждение"
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
@@ -2231,7 +2229,10 @@
         "unencrypted_warning": "Приспособленията не използваш шифроване на съобщенията.",
         "added_by": "Приспособлението е добавено от",
         "cookie_warning": "Това приспособление може да използва бисквитки.",
-        "popout": "Изкарай в нов прозорец"
+        "popout": "Изкарай в нов прозорец",
+        "capabilities_dialog": {
+            "remember_Selection": "Запомни избора ми за това приспособление"
+        }
     },
     "scalar": {
         "error_create": "Неуспешно създаване на приспособление.",
@@ -2410,5 +2411,8 @@
     "Invalid identity server discovery response": "Невалиден отговор по време на откриването на конфигурацията за сървъра за самоличност",
     "Invalid base_url for m.identity_server": "Невалиден base_url в m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Адресът на сървърът за самоличност не изглежда да е валиден сървър за самоличност",
-    "General failure": "Обща грешка"
+    "General failure": "Обща грешка",
+    "spotlight_dialog": {
+        "create_new_room_button": "Създай нова стая"
+    }
 }

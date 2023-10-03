@@ -180,7 +180,6 @@
     "Missing session data": "Isefka n tɣimit xuṣṣen",
     "Upload all": "Sali-d kullec",
     "Cancel All": "Sefsex kullec",
-    "Verification Request": "Asuter n usenqed",
     "Use your Security Key to continue.": "Seqdec tasarut-ik·im n tɣellist akken ad tkemmleḍ.",
     "Unable to restore backup": "Tiririt n uḥraz tugi ad teddu",
     "Keys restored": "Tisura ttwaskelsent",
@@ -237,7 +236,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Taxxamt war isem",
-    "Create new room": "Rnu taxxamt tamaynut",
     "unknown error code": "tangalt n tuccḍa tarussint",
     "You're all caught up.": "Tessawḍeḍ ad tqeḍɛeḍ kullec.",
     "The server has denied your request.": "Aqeddac yugi asuter-ik·im.",
@@ -296,7 +294,6 @@
         "one": "Sali-d %(count)s afaylu-nniḍen"
     },
     "Upload Error": "Tuccḍa deg usali",
-    "Remember my selection for this widget": "Cfu ɣef tefrant-inu i uwiǧit-a",
     "Wrong file type": "Anaw n yifuyla d arameɣtu",
     "Looks good!": "Yettban igerrez!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
@@ -1685,7 +1682,8 @@
             "prompt_user": "Bdu asenqed daɣen seg umaɣnu-nsen.",
             "timed_out": "Yemmed wakud n usenqed.",
             "cancelled_user": "%(displayName)s isefsex asenqed.",
-            "cancelled": "Tesfesxeḍ asenqed."
+            "cancelled": "Tesfesxeḍ asenqed.",
+            "verification_dialog_title_user": "Asuter n usenqed"
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
@@ -1915,7 +1913,10 @@
         "unencrypted_warning": "Iwiǧiten ur seqdacen ara awgelhen n yiznan.",
         "added_by": "Awiǧit yettwarna sɣur",
         "cookie_warning": "Awiǧit-a yezmer ad iseqdec inagan n tuqqna.",
-        "popout": "Awiǧit attalan"
+        "popout": "Awiǧit attalan",
+        "capabilities_dialog": {
+            "remember_Selection": "Cfu ɣef tefrant-inu i uwiǧit-a"
+        }
     },
     "feedback": {
         "comment_label": "Awennit",
@@ -2282,5 +2283,8 @@
     "Invalid identity server discovery response": "Tiririt n usnirem n uqeddac n timagitn d tarameɣtut",
     "Invalid base_url for m.identity_server": "D arameɣtu base_url i m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "URL n uqeddac n timagit ur yettban ara d aqeddac n timagit ameɣtu",
-    "General failure": "Tuccḍa tamatut"
+    "General failure": "Tuccḍa tamatut",
+    "spotlight_dialog": {
+        "create_new_room_button": "Rnu taxxamt tamaynut"
+    }
 }

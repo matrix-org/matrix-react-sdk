@@ -48,7 +48,6 @@
     "You are about to be taken to a third-party site so you can authenticate your account for use with %(integrationsUrl)s. Do you wish to continue?": "Бићете пребачени на сајт треће стране да бисте се идентификовали са својим налогом зарад коришћења уградње %(integrationsUrl)s. Да ли желите да наставите?",
     "Email address": "Мејл адреса",
     "Delete Widget": "Обриши виџет",
-    "Create new room": "Направи нову собу",
     "Home": "Почетна",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "скупи",
@@ -1570,5 +1569,8 @@
         }
     },
     "cant_load_page": "Учитавање странице није успело",
-    "General failure": "Општа грешка"
+    "General failure": "Општа грешка",
+    "spotlight_dialog": {
+        "create_new_room_button": "Направи нову собу"
+    }
 }

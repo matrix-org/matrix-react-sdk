@@ -1,5 +1,4 @@
 {
-    "Create new room": "Створити нову кімнату",
     "unknown error code": "невідомий код помилки",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
     "and %(count)s others...": {
@@ -456,7 +455,6 @@
     "Remove recent messages by %(user)s": "Вилучити останні повідомлення від %(user)s",
     "Home": "Домівка",
     "Server Options": "Опції сервера",
-    "Allow this widget to verify your identity": "Дозволити цьому віджету перевіряти вашу особу",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Click the button below to confirm your identity.": "Клацніть на кнопку внизу, щоб підтвердити свою особу.",
     "Confirm to continue": "Підтвердьте, щоб продовжити",
@@ -543,7 +541,6 @@
     "Upload completed": "Вивантаження виконано",
     "Leave some rooms": "Вийте з кількох кімнат",
     "Leave all rooms": "Вийти з кімнати",
-    "Verification Request": "Запит підтвердження",
     "Leave space": "Вийти з простору",
     "Sent": "Надіслано",
     "Sending": "Надсилання",
@@ -667,13 +664,6 @@
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
     "Or send invite link": "Або надішліть запрошувальне посилання",
-    "Spaces you're in": "Ваші простори",
-    "Other rooms in %(spaceName)s": "Інші кімнати в %(spaceName)s",
-    "Use \"%(query)s\" to search": "У якому контексті шукати \"%(query)s\"",
-    "Public rooms": "Загальнодоступні кімнати",
-    "Other searches": "Інші пошуки",
-    "To search messages, look for this icon at the top of a room <icon/>": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
-    "Recent searches": "Недавні пошуки",
     "This version of %(brand)s does not support viewing some encrypted files": "Ця версія %(brand)s не підтримує перегляд деяких зашифрованих файлів",
     "Use the <a>Desktop app</a> to search encrypted messages": "Скористайтеся <a>стільничним застосунком</a>, щоб пошукати серед зашифрованих повідомлень",
     "Use the <a>Desktop app</a> to see all encrypted files": "Скористайтеся <a>стільничним застосунком</a>, щоб переглянути всі зашифровані файли",
@@ -696,7 +686,6 @@
     "For a large amount of messages, this might take some time. Please don't refresh your client in the meantime.": "Залежно від кількості повідомлень, це може тривати довго. Не перезавантажуйте клієнт, поки це триває.",
     "Try scrolling up in the timeline to see if there are any earlier ones.": "Гортайте стрічку вище, щоб побачити, чи були такі раніше.",
     "No recent messages by %(user)s found": "Не знайдено недавніх повідомлень %(user)s",
-    "Recently viewed": "Недавно переглянуті",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
     "Reminder: Your browser is unsupported, so your experience may be unpredictable.": "Нагадуємо, що ваш браузер не підтримується, тож деякі функції можуть не працювати.",
     "Please tell us what went wrong or, better, create a GitHub issue that describes the problem.": "Будь ласка, повідомте нам, що пішло не так; а ще краще створіть обговорення на GitHub із описом проблеми.",
@@ -732,12 +721,6 @@
     "Invalid Security Key": "Хибний ключ безпеки",
     "Wrong Security Key": "Ключ безпеки не збігається",
     "Wrong file type": "Тип файлу не підтримується",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Віджет звірить ваш ID користувача, але не зможе виконувати такі дії від вашого імені:",
-    "Remember this": "Запам'ятати це",
-    "Remember my selection for this widget": "Запам'ятати мій вибір для цього віджета",
-    "Decline All": "Відхилити все",
-    "This widget would like to:": "Віджет бажає:",
-    "Approve widget permissions": "Підтвердьте дозволи віджета",
     "Looks good!": "Виглядає файно!",
     "Hold": "Утримувати",
     "Resume": "Продовжити",
@@ -793,15 +776,11 @@
     "This address had invalid server or is already in use": "Ця адреса містить хибний сервер чи вже використовується",
     "Missing room name or separator e.g. (my-room:domain.org)": "Бракує назви кімнати чи розділювача (my-room:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Бракує розділювача домену (:domain.org)",
-    "Verify other device": "Звірити інший пристрій",
     "Could not fetch location": "Не вдалося отримати місцеперебування",
     "This address does not point at this room": "Ця адреса не вказує на цю кімнату",
     "Location": "Місцеперебування",
-    "Use <arrows/> to scroll": "Використовуйте <arrows/>, щоб прокручувати",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
-    "Join %(roomAddress)s": "Приєднатися до %(roomAddress)s",
-    "Search Dialog": "Вікно пошуку",
     "What location type do you want to share?": "Який вид місцеперебування поширити?",
     "Drop a Pin": "Маркер на карті",
     "My live location": "Змінне місцеперебування наживо",
@@ -853,19 +832,6 @@
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
     "Unread email icon": "Піктограма непрочитаного електронного листа",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
-    "Remove search filter for %(filter)s": "Вилучити фільтр пошуку для %(filter)s",
-    "Start a group chat": "Розпочати нову бесіду",
-    "Other options": "Інші опції",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Якщо ви не можете знайти кімнату, яку шукаєте, попросіть запросити вас або створіть нову кімнату.",
-    "Some results may be hidden": "Деякі результати можуть бути приховані",
-    "Copy invite link": "Копіювати запрошувальне посилання",
-    "If you can't see who you're looking for, send them your invite link.": "Якщо ви не знаходите тих, кого шукаєте, надішліть їм своє запрошення.",
-    "Some results may be hidden for privacy": "Деякі результати можуть бути приховані через приватність",
-    "Search for": "Пошук",
-    "%(count)s Members": {
-        "one": "%(count)s учасник",
-        "other": "%(count)s учасників"
-    },
     "Show: Matrix rooms": "Показати: кімнати Matrix",
     "Show: %(instance)s rooms (%(server)s)": "Показати: кімнати %(instance)s (%(server)s)",
     "Add new server…": "Додати новий сервер…",
@@ -915,7 +881,6 @@
     "Upgrade room": "Поліпшити кімнату",
     "Note that removing room changes like this could undo the change.": "Зауважте, що вилучення таких змін у кімнаті може призвести до їхнього скасування.",
     "Other spaces you know": "Інші відомі вам простори",
-    "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
     "common": {
         "about": "Відомості",
         "analytics": "Аналітика",
@@ -3081,7 +3046,9 @@
             "timed_out": "Термін дії звірки завершився.",
             "cancelled_self": "Ви скасували звірення на іншому пристрої.",
             "cancelled_user": "%(displayName)s скасовує звірку.",
-            "cancelled": "Ви скасували звірку."
+            "cancelled": "Ви скасували звірку.",
+            "verification_dialog_title_device": "Звірити інший пристрій",
+            "verification_dialog_title_user": "Запит підтвердження"
         },
         "old_version_detected_title": "Виявлено старі криптографічні дані",
         "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
@@ -3534,7 +3501,18 @@
         "popout": "Спливний віджет",
         "unpin_to_view_right_panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
         "set_room_layout": "Встановити мій вигляд кімнати всім",
-        "close_to_view_right_panel": "Закрийте віджет, щоб він зʼявився на цій панелі"
+        "close_to_view_right_panel": "Закрийте віджет, щоб він зʼявився на цій панелі",
+        "capabilities_dialog": {
+            "title": "Підтвердьте дозволи віджета",
+            "content_starting_text": "Віджет бажає:",
+            "decline_all_permission": "Відхилити все",
+            "remember_Selection": "Запам'ятати мій вибір для цього віджета"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Дозволити цьому віджету перевіряти вашу особу",
+            "starting_text": "Віджет звірить ваш ID користувача, але не зможе виконувати такі дії від вашого імені:",
+            "remember_selection": "Запам'ятати це"
+        }
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4335,5 +4313,33 @@
     "Invalid identity server discovery response": "Хибна відповідь самоналаштування сервера ідентифікації",
     "Invalid base_url for m.identity_server": "Хибний base_url у m.identity_server",
     "Identity server URL does not appear to be a valid identity server": "Сервер за URL-адресою не виглядає дійсним сервером ідентифікації Matrix",
-    "General failure": "Загальний збій"
+    "General failure": "Загальний збій",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s учасник",
+            "other": "%(count)s учасників"
+        },
+        "public_rooms_label": "Загальнодоступні кімнати",
+        "heading_with_query": "У якому контексті шукати \"%(query)s\"",
+        "heading_without_query": "Пошук",
+        "spaces_title": "Ваші простори",
+        "failed_querying_public_rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
+        "other_rooms_in_space": "Інші кімнати в %(spaceName)s",
+        "join_button_text": "Приєднатися до %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Деякі результати можуть бути приховані через приватність",
+        "cant_find_person_helpful_hint": "Якщо ви не знаходите тих, кого шукаєте, надішліть їм своє запрошення.",
+        "copy_link_text": "Копіювати запрошувальне посилання",
+        "result_may_be_hidden_warning": "Деякі результати можуть бути приховані",
+        "cant_find_room_helpful_hint": "Якщо ви не можете знайти кімнату, яку шукаєте, попросіть запросити вас або створіть нову кімнату.",
+        "create_new_room_button": "Створити нову кімнату",
+        "group_chat_section_title": "Інші опції",
+        "start_group_chat_button": "Розпочати нову бесіду",
+        "message_search_section_title": "Інші пошуки",
+        "recent_searches_section_title": "Недавні пошуки",
+        "recently_viewed_section_title": "Недавно переглянуті",
+        "search_dialog": "Вікно пошуку",
+        "remove_filter": "Вилучити фільтр пошуку для %(filter)s",
+        "search_messages_hint": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
+        "keyboard_scroll_hint": "Використовуйте <arrows/>, щоб прокручувати"
+    }
 }

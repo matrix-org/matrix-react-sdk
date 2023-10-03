@@ -1,5 +1,4 @@
 {
-    "Create new room": "Crea una sala nova",
     "unknown error code": "codi d'error desconegut",
     "Warning!": "Avís!",
     "Sun": "dg.",
@@ -852,5 +851,8 @@
             "title": "No s'ha pogut cercar",
             "server_unavailable": "Pot ser que el servidor no estigui disponible, que estigui sobrecarregat o que s'ha esgotat el temps de cerca :("
         }
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Crea una sala nova"
     }
 }

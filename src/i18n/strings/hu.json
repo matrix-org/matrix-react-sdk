@@ -1,6 +1,5 @@
 {
     "unknown error code": "ismeretlen hibakód",
-    "Create new room": "Új szoba létrehozása",
     "%(items)s and %(lastItem)s": "%(items)s és %(lastItem)s",
     "and %(count)s others...": {
         "other": "és még: %(count)s ...",
@@ -195,7 +194,6 @@
     "Scissors": "Olló",
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
     "Power level": "Hozzáférési szint",
-    "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
     "Notes": "Megjegyzések",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>.",
@@ -247,7 +245,6 @@
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
     "Integrations are disabled": "Az integrációk le vannak tiltva",
     "Integrations not allowed": "Az integrációk nem engedélyezettek",
-    "Verification Request": "Ellenőrzési kérés",
     "Upgrade private room": "Privát szoba fejlesztése",
     "Upgrade public room": "Nyilvános szoba fejlesztése",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "A szoba frissítése nem egyszerű művelet, általában a szoba hibás működése, hiányzó funkció vagy biztonsági sérülékenység esetén javasolt.",
@@ -624,9 +621,6 @@
     "Gibraltar": "Gibraltár",
     "Hold": "Várakoztatás",
     "Resume": "Folytatás",
-    "Decline All": "Összes elutasítása",
-    "This widget would like to:": "A kisalkalmazás ezeket szeretné:",
-    "Approve widget permissions": "Kisalkalmazás-engedélyek elfogadása",
     "Continuing without email": "Folytatás e-mail-cím nélkül",
     "Reason (optional)": "Ok (opcionális)",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
@@ -649,9 +643,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "A biztonsági tárolóhoz nem lehet hozzáférni. Kérjük ellenőrizze, hogy jó Biztonsági jelmondatot adott-e meg.",
     "Invalid Security Key": "Érvénytelen biztonsági kulcs",
     "Wrong Security Key": "Hibás biztonsági kulcs",
-    "Remember this": "Emlékezzen erre",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
-    "Allow this widget to verify your identity": "A kisalkalmazás ellenőrizheti a személyazonosságát",
     "%(count)s members": {
         "one": "%(count)s tag",
         "other": "%(count)s tag"
@@ -770,7 +761,6 @@
     "Moderation": "Moderálás",
     "Messaging": "Üzenetküldés",
     "Spaces you know that contain this space": "Terek melyről tudja, hogy ezt a teret tartalmazzák",
-    "Recently viewed": "Nemrég megtekintett",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Biztosan lezárod ezt a szavazást? Ez megszünteti az új szavazatok leadásának lehetőségét, és kijelzi a végeredményt.",
     "End Poll": "Szavazás lezárása",
     "Sorry, the poll did not end. Please try again.": "Sajnáljuk, a szavazás nem lett lezárva. Kérjük, próbáld újra.",
@@ -778,18 +768,10 @@
     "The poll has ended. Top answer: %(topAnswer)s": "A szavazás le lett zárva. Nyertes válasz: %(topAnswer)s",
     "The poll has ended. No votes were cast.": "A szavazás le lett zárva. Nem lettek leadva szavazatok.",
     "Open in OpenStreetMap": "Megnyitás az OpenStreetMapen",
-    "Recent searches": "Keresési előzmények",
-    "To search messages, look for this icon at the top of a room <icon/>": "Az üzenetek kereséséhez keresse ezt az ikont a szoba tetején: <icon/>",
-    "Other searches": "Más keresések",
-    "Public rooms": "Nyilvános szobák",
-    "Use \"%(query)s\" to search": "Keresés erre a kifejezésre: „%(query)s”",
-    "Other rooms in %(spaceName)s": "Más szobák itt: %(spaceName)s",
-    "Spaces you're in": "Terek, amelynek tagja",
     "Sections to show": "Megjelenítendő részek",
     "Link to room": "Hivatkozás a szobához",
     "Including you, %(commaSeparatedMembers)s": "Önt is beleértve, %(commaSeparatedMembers)s",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Ez csoportosítja a tér tagjaival folytatott közvetlen beszélgetéseit. A kikapcsolása elrejti ezeket a beszélgetéseket a(z) %(spaceName)s nézetéből.",
-    "Verify other device": "Másik eszköz ellenőrzése",
     "This address had invalid server or is already in use": "Ez a cím érvénytelen szervert tartalmaz vagy már használatban van",
     "Missing room name or separator e.g. (my-room:domain.org)": "Szoba név vagy elválasztó hiányzik, pl.: (szobam:domain.org)",
     "Missing domain separator e.g. (:domain.org)": "Domain elválasztás hiányzik, pl.: (:domain.org)",
@@ -798,10 +780,7 @@
     "This address does not point at this room": "Ez a cím nem erre a szobára mutat",
     "Location": "Földrajzi helyzet",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
-    "Use <arrows/> to scroll": "Görgetés ezekkel: <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
-    "Join %(roomAddress)s": "Belépés ide: %(roomAddress)s",
-    "Search Dialog": "Keresési párbeszédablak",
     "What location type do you want to share?": "Milyen jellegű földrajzi helyzetet szeretne megosztani?",
     "Drop a Pin": "Hely kijelölése",
     "My live location": "Folyamatos saját földrajzi helyzet",
@@ -853,22 +832,9 @@
     "Input devices": "Beviteli eszközök",
     "Open room": "Szoba megnyitása",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
-    "Remove search filter for %(filter)s": "Keresési szűrő eltávolítása innen: %(filter)s",
-    "Start a group chat": "Csoportos csevegés indítása",
-    "Other options": "További lehetőségek",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ha nem található a szoba amit keresett, kérjen egy meghívót vagy készítsen egy új szobát.",
-    "Some results may be hidden": "Néhány találat rejtve lehet",
-    "Copy invite link": "Meghívó hivatkozás másolása",
-    "If you can't see who you're looking for, send them your invite link.": "Ha nem találja, akit kerese, küldje el a meghívó hivatkozást.",
-    "Some results may be hidden for privacy": "Adatvédelmi okokból néhány találat rejtve lehet",
     "You cannot search for rooms that are neither a room nor a space": "Nem lehet olyan szobákat keresni, amelyeket se nem szobák, se nem terek",
     "Show spaces": "Terek megjelenítése",
     "Show rooms": "Szobák megjelenítése",
-    "Search for": "Keresés:",
-    "%(count)s Members": {
-        "one": "%(count)s tag",
-        "other": "%(count)s tag"
-    },
     "Show: Matrix rooms": "Megjelenít: Matrix szobák",
     "Show: %(instance)s rooms (%(server)s)": "Megjelenít: %(instance)s szoba (%(server)s)",
     "Add new server…": "Új szerver hozzáadása…",
@@ -3010,7 +2976,9 @@
             "timed_out": "Az ellenőrzés időtúllépés miatt megszakadt.",
             "cancelled_self": "Az ellenőrzést megszakította a másik eszközön.",
             "cancelled_user": "%(displayName)s megszakította az ellenőrzést.",
-            "cancelled": "Megszakítottad az ellenőrzést."
+            "cancelled": "Megszakítottad az ellenőrzést.",
+            "verification_dialog_title_device": "Másik eszköz ellenőrzése",
+            "verification_dialog_title_user": "Ellenőrzési kérés"
         },
         "old_version_detected_title": "Régi titkosítási adatot találhatók",
         "old_version_detected_description": "Régebbi %(brand)s verzióból származó adatok találhatók. Ezek hibás működéshez vezethettek a végpontok közti titkosításban a régebbi verzióknál. A nemrég küldött/fogadott titkosított üzenetek, ha a régi adatokat használták, lehetséges, hogy nem lesznek visszafejthetők ebben a verzióban. Ha problémákba ütközik, akkor jelentkezzen ki és be. A régi üzenetek elérésének biztosításához exportálja a kulcsokat, és importálja be újra.",
@@ -3457,7 +3425,18 @@
         "popout": "Kiugró kisalkalmazás",
         "unpin_to_view_right_panel": "Kisalkalmazás rögzítésének megszüntetése az ezen a panelen való megjelenítéshez",
         "set_room_layout": "A szoba megjelenésének beállítása mindenki számára",
-        "close_to_view_right_panel": "Kisalkalmazás bezárása ezen a panelen való megjelenítéshez"
+        "close_to_view_right_panel": "Kisalkalmazás bezárása ezen a panelen való megjelenítéshez",
+        "capabilities_dialog": {
+            "title": "Kisalkalmazás-engedélyek elfogadása",
+            "content_starting_text": "A kisalkalmazás ezeket szeretné:",
+            "decline_all_permission": "Összes elutasítása",
+            "remember_Selection": "A döntés megjegyzése ehhez a kisalkalmazáshoz"
+        },
+        "open_id_permissions_dialog": {
+            "title": "A kisalkalmazás ellenőrizheti a személyazonosságát",
+            "starting_text": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
+            "remember_selection": "Emlékezzen erre"
+        }
     },
     "feedback": {
         "sent": "Visszajelzés elküldve",
@@ -4239,5 +4218,32 @@
     "Invalid identity server discovery response": "Az azonosítási kiszolgáló felderítésére érkezett válasz érvénytelen",
     "Invalid base_url for m.identity_server": "Érvénytelen base_url az m.identity_server -hez",
     "Identity server URL does not appear to be a valid identity server": "Az azonosítási kiszolgáló webcíme nem tűnik érvényesnek",
-    "General failure": "Általános hiba"
+    "General failure": "Általános hiba",
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s tag",
+            "other": "%(count)s tag"
+        },
+        "public_rooms_label": "Nyilvános szobák",
+        "heading_with_query": "Keresés erre a kifejezésre: „%(query)s”",
+        "heading_without_query": "Keresés:",
+        "spaces_title": "Terek, amelynek tagja",
+        "other_rooms_in_space": "Más szobák itt: %(spaceName)s",
+        "join_button_text": "Belépés ide: %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Adatvédelmi okokból néhány találat rejtve lehet",
+        "cant_find_person_helpful_hint": "Ha nem találja, akit kerese, küldje el a meghívó hivatkozást.",
+        "copy_link_text": "Meghívó hivatkozás másolása",
+        "result_may_be_hidden_warning": "Néhány találat rejtve lehet",
+        "cant_find_room_helpful_hint": "Ha nem található a szoba amit keresett, kérjen egy meghívót vagy készítsen egy új szobát.",
+        "create_new_room_button": "Új szoba létrehozása",
+        "group_chat_section_title": "További lehetőségek",
+        "start_group_chat_button": "Csoportos csevegés indítása",
+        "message_search_section_title": "Más keresések",
+        "recent_searches_section_title": "Keresési előzmények",
+        "recently_viewed_section_title": "Nemrég megtekintett",
+        "search_dialog": "Keresési párbeszédablak",
+        "remove_filter": "Keresési szűrő eltávolítása innen: %(filter)s",
+        "search_messages_hint": "Az üzenetek kereséséhez keresse ezt az ikont a szoba tetején: <icon/>",
+        "keyboard_scroll_hint": "Görgetés ezekkel: <arrows/>"
+    }
 }
