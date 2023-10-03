@@ -26,22 +26,12 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Limigita",
     "Moderator": "Ĉambrestro",
-    "and %(count)s others...": {
-        "other": "kaj %(count)s aliaj…",
-        "one": "kaj unu alia…"
-    },
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)st",
     "Unnamed room": "Sennoma ĉambro",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s rezultoj)",
-        "one": "(~%(count)s rezulto)"
-    },
     "Join Room": "Aliĝi al ĉambro",
-    "unknown error code": "nekonata kodo de eraro",
-    "not specified": "nespecifita",
     "Delete Widget": "Forigi fenestraĵon",
     "Home": "Hejmo",
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
@@ -119,35 +109,15 @@
     "Santa": "Kristnaska viro",
     "Thumbs up": "Dikfingro supren",
     "Paperclip": "Paperkuntenilo",
-    "edited": "redaktita",
     "Send Logs": "Sendi protokolon",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
     "Deactivate account": "Malaktivigi konton",
-    "%(name)s accepted": "%(name)s akceptis",
-    "%(name)s cancelled": "%(name)s nuligis",
-    "%(name)s wants to verify": "%(name)s volas kontroli",
-    "e.g. my-room": "ekzemple mia-chambro",
     "Lock": "Seruro",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
     "This backup is trusted because it has been restored on this session": "Ĉi tiu savkopio estas fidata, ĉar ĝi estis rehavita en ĉi tiu salutaĵo",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Por raparto de sekureca problemo rilata al Matrix, bonvolu legi la <a>Eldiran Politikon pri Sekureco</a> de Matrix.org.",
     "Encrypted by a deleted session": "Ĉifrita de forigita salutaĵo",
-    "%(count)s verified sessions": {
-        "other": "%(count)s kontrolitaj salutaĵoj",
-        "one": "1 kontrolita salutaĵo"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s salutaĵoj",
-        "one": "%(count)s salutaĵo"
-    },
-    "%(name)s declined": "%(name)s rifuzis",
-    "a new master key signature": "nova ĉefŝlosila subskribo",
-    "a new cross-signing key signature": "nova subskribo de delega ŝlosilo",
-    "a device cross-signing signature": "delega subskribo de aparato",
-    "a key signature": "ŝlosila subskribo",
-    "%(brand)s encountered an error during upload of:": "%(brand)s eraris dum alŝuto de:",
     "Submit logs": "Alŝuti protokolon",
-    "%(completed)s of %(total)s keys restored": "%(completed)s el %(total)s ŝlosiloj rehaviĝis",
     "Sign in with SSO": "Saluti per ununura saluto",
     "IRC display name width": "Larĝo de vidiga nomo de IRC",
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
@@ -405,19 +375,6 @@
     "Curaçao": "Kuracao",
     "Cocos (Keeling) Islands": "Kokosinsuloj",
     "Cayman Islands": "Kajmaninsuloj",
-    "<inviter/> invites you": "<inviter/> invitas vin",
-    "%(count)s rooms": {
-        "one": "%(count)s ĉambro",
-        "other": "%(count)s ĉambroj"
-    },
-    "%(count)s members": {
-        "one": "%(count)s ano",
-        "other": "%(count)s anoj"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s persono, kiun vi konas, jam aliĝis",
-        "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
-    },
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
@@ -531,7 +488,20 @@
         "location": "Loko",
         "email_address": "Retpoŝtadreso",
         "filter_results": "Filtri rezultojn",
-        "no_results_found": "Neniuj rezultoj troviĝis"
+        "no_results_found": "Neniuj rezultoj troviĝis",
+        "and_n_others": {
+            "other": "kaj %(count)s aliaj…",
+            "one": "kaj unu alia…"
+        },
+        "n_members": {
+            "one": "%(count)s ano",
+            "other": "%(count)s anoj"
+        },
+        "edited": "redaktita",
+        "n_rooms": {
+            "one": "%(count)s ĉambro",
+            "other": "%(count)s ĉambroj"
+        }
     },
     "action": {
         "continue": "Daŭrigi",
@@ -1585,7 +1555,11 @@
             "you_accepted": "Vi akceptis",
             "you_declined": "Vi rifuzis",
             "you_cancelled": "Vi nuligis",
-            "you_started": "Vi sendis peton de kontrolo"
+            "you_started": "Vi sendis peton de kontrolo",
+            "user_accepted": "%(name)s akceptis",
+            "user_declined": "%(name)s rifuzis",
+            "user_cancelled": "%(name)s nuligis",
+            "user_wants_to_verify": "%(name)s volas kontroli"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s finis balotenketon"
@@ -1952,7 +1926,8 @@
             "alias_field_safe_localpart_invalid": "Iuj signoj ne estas permesitaj",
             "alias_field_required_invalid": "Bonvolu doni adreson",
             "alias_field_taken_valid": "Ĉi tiu adreso estas uzebla",
-            "alias_field_taken_invalid_domain": "Ĉi tiu adreso jam estas uzata"
+            "alias_field_taken_invalid_domain": "Ĉi tiu adreso jam estas uzata",
+            "alias_field_placeholder_default": "ekzemple mia-chambro"
         },
         "advanced": {
             "unfederated": "Ĉi tiu ĉambro ne atingeblas por foraj serviloj de Matrix",
@@ -2010,7 +1985,8 @@
             "custom_sound_prompt": "Agordi novan propran sonon",
             "browse_button": "Foliumi"
         },
-        "title": "Agordoj de ĉambro – %(roomName)s"
+        "title": "Agordoj de ĉambro – %(roomName)s",
+        "alias_not_specified": "nespecifita"
     },
     "encryption": {
         "verification": {
@@ -2166,7 +2142,12 @@
         },
         "confirm_encryption_setup_title": "Konfirmi agordon de ĉifrado",
         "confirm_encryption_setup_body": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
-        "unable_to_setup_keys_error": "Ne povas agordi ŝlosilojn"
+        "unable_to_setup_keys_error": "Ne povas agordi ŝlosilojn",
+        "key_signature_upload_failed_master_key_signature": "nova ĉefŝlosila subskribo",
+        "key_signature_upload_failed_cross_signing_key_signature": "nova subskribo de delega ŝlosilo",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "delega subskribo de aparato",
+        "key_signature_upload_failed_key_signature": "ŝlosila subskribo",
+        "key_signature_upload_failed_body": "%(brand)s eraris dum alŝuto de:"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -2881,7 +2862,11 @@
         "search": {
             "this_room": "Ĉi tiu ĉambro",
             "all_rooms": "Ĉiuj ĉambroj",
-            "field_placeholder": "Serĉi…"
+            "field_placeholder": "Serĉi…",
+            "result_count": {
+                "other": "(~%(count)s rezultoj)",
+                "one": "(~%(count)s rezulto)"
+            }
         },
         "jump_to_bottom_button": "Rulumi al plej freŝaj mesaĝoj",
         "jump_read_marker": "Salti al unua nelegita mesaĝo.",
@@ -2891,7 +2876,12 @@
             "one": "Montri 1 anon",
             "other": "Montri ĉiujn %(count)s anojn"
         },
-        "face_pile_tooltip_shortcut": "Inkluzive je %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Inkluzive je %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> invitas vin",
+        "face_pile_summary": {
+            "one": "%(count)s persono, kiun vi konas, jam aliĝis",
+            "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
+        }
     },
     "file_panel": {
         "guest_note": "Vi devas <a>registriĝî</a> por uzi tiun ĉi funkcion",
@@ -3049,7 +3039,8 @@
         },
         "storage_evicted_title": "Mankas datumoj de salutaĵo",
         "storage_evicted_description_1": "Iuj datumoj de salutaĵo, inkluzive viajn ĉifrajn ŝlosilojn, mankas. Por tion korekti, resalutu, kaj rehavu la ŝlosilojn el savkopio.",
-        "storage_evicted_description_2": "Via foliumilo verŝajne forigos ĉi tiujn datumojn kiam al ĝi mankos spaco sur disko."
+        "storage_evicted_description_2": "Via foliumilo verŝajne forigos ĉi tiujn datumojn kiam al ĝi mankos spaco sur disko.",
+        "unknown_error_code": "nekonata kodo de eraro"
     },
     "in_space1_and_space2": "En aroj %(space1Name)s kaj %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3176,6 +3167,14 @@
                 "other": "Forigi %(count)s mesaĝojn",
                 "one": "Forigi 1 mesaĝon"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s kontrolitaj salutaĵoj",
+            "one": "1 kontrolita salutaĵo"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s salutaĵoj",
+            "one": "%(count)s salutaĵo"
         }
     },
     "stickers": {
@@ -3351,6 +3350,7 @@
         "key_is_valid": "Tio ĉi ŝajnas esti valida Sekureca ŝlosilo!",
         "key_is_invalid": "Tio ne estas valida Sekureca ŝlosilo",
         "enter_key_description": "Aliru vian historion de sekuraj mesaĝoj kaj agordu sekurajn mesaĝojn per enigo de via Sekureca ŝlosio.",
-        "key_forgotten_text": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>"
+        "key_forgotten_text": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>",
+        "load_keys_progress": "%(completed)s el %(total)s ŝlosiloj rehaviĝis"
     }
 }

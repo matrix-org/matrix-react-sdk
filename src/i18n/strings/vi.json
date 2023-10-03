@@ -31,36 +31,11 @@
     "Switch theme": "Chuyển đổi chủ đề",
     "Sign in with SSO": "Đăng nhập bằng SSO",
     "Delete Widget": "Xóa Widget",
-    "%(completed)s of %(total)s keys restored": "Đã khôi phục%(completed)s trong số %(total)s khóa",
-    "%(count)s rooms": {
-        "one": "%(count)s phòng",
-        "other": "%(count)s phòng"
-    },
-    "%(count)s members": {
-        "one": "%(count)s thành viên",
-        "other": "%(count)s thành viên"
-    },
-    "%(brand)s encountered an error during upload of:": "%(brand)s đã gặp lỗi khi tải lên:",
-    "a key signature": "một chữ ký chính",
-    "a device cross-signing signature": "một chữ ký được xác thực chéo trên thiết bị",
-    "a new cross-signing key signature": "một chữ ký khóa xác thực chéo mới",
-    "a new master key signature": "một chữ ký khóa chính mới",
-    "<inviter/> invites you": "<inviter /> mời bạn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
-    "e.g. my-room": "ví dụ: phòng của tôi my-room",
     "Send Logs": "Gửi những bản ghi",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s người bạn đã biết vừa tham gia",
-        "other": "%(count)s người bạn đã biết vừa tham gia"
-    },
     "expand": "mở rộng",
     "collapse": "thu hẹp",
     "Submit logs": "Gửi nhật ký",
-    "edited": "đã chỉnh sửa",
-    "%(name)s wants to verify": "%(name)s muốn xác thực",
-    "%(name)s cancelled": "%(name)s đã bị hủy",
-    "%(name)s declined": "%(name)s đã từ chối",
-    "%(name)s accepted": "%(name)s được chấp nhận",
     "Yesterday": "Hôm qua",
     "Today": "Hôm nay",
     "Saturday": "Thứ bảy",
@@ -70,14 +45,8 @@
     "Tuesday": "Thứ ba",
     "Monday": "Thứ hai",
     "Sunday": "Chủ nhật",
-    "not specified": "không được chỉ định",
     "Failed to connect to integration manager": "Không kết nối được với trình quản lý tích hợp",
-    "unknown error code": "mã lỗi không xác định",
     "Join Room": "Vào phòng",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s kết quả)",
-        "other": "(~%(count)s kết quả)"
-    },
     "Unnamed room": "Phòng không tên",
     "%(duration)sd": "%(duration)sd",
     "%(duration)sh": "%(duration)sh",
@@ -85,14 +54,6 @@
     "%(duration)ss": "%(duration)ss",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Để báo cáo sự cố bảo mật liên quan đến Matrix, vui lòng đọc Chính sách tiết lộ bảo mật của Matrix.org <a>Security Disclosure Policy</a>.",
     "Deactivate account": "Vô hiệu hoá tài khoản",
-    "%(count)s sessions": {
-        "one": "%(count)s phiên",
-        "other": "%(count)s phiên"
-    },
-    "%(count)s verified sessions": {
-        "one": "1 phiên đã xác thực",
-        "other": "%(count)s phiên đã xác thực"
-    },
     "Not encrypted": "Không được mã hóa",
     "Backup version:": "Phiên bản dự phòng:",
     "This backup is trusted because it has been restored on this session": "Bản sao lưu này đáng tin cậy vì nó đã được khôi phục trong phiên này",
@@ -161,15 +122,7 @@
     "Lion": "Sư tử",
     "Cat": "Con mèo",
     "Dog": "Chó",
-    "and %(count)s others...": {
-        "one": "và một cái khác…",
-        "other": "và %(count)s khác…"
-    },
     "Encrypted by a deleted session": "Được mã hóa bởi một phiên đã xóa",
-    "%(count)s reply": {
-        "one": "%(count)s trả lời",
-        "other": "%(count)s trả lời"
-    },
     "IRC display name width": "Chiều rộng tên hiển thị IRC",
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "Máy chủ của bạn đã vượt quá một trong các giới hạn tài nguyên của nó.",
@@ -425,10 +378,6 @@
     "United Kingdom": "Vương quốc Anh",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Lấy lại quyền truy cập vào tài khoản của bạn và khôi phục các khóa mã hóa được lưu trữ trong phiên này. Nếu không có chúng, bạn sẽ không thể đọc tất cả các tin nhắn an toàn của mình trong bất kỳ phiên nào.",
     "Forget": "Quên",
-    "%(count)s votes": {
-        "one": "%(count)s phiếu bầu",
-        "other": "%(count)s phiếu bầu"
-    },
     "Developer": "Nhà phát triển",
     "Experimental": "Thử nghiệm",
     "Themes": "Chủ đề",
@@ -438,7 +387,6 @@
         "one": "%(spaceName)s và %(count)s khác",
         "other": "%(spaceName)s và %(count)s khác"
     },
-    "toggle event": "chuyển đổi sự kiện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "unknown": "không rõ",
@@ -446,16 +394,9 @@
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
     "%(members)s and more": "%(members)s và nhiều người khác",
-    "%(count)s participants": {
-        "one": "1 người tham gia",
-        "other": "%(count)s người tham gia"
-    },
     "%(members)s and %(last)s": "%(members)s và %(last)s",
-    " in <strong>%(room)s</strong>": " ở <strong>%(room)s</strong>",
     "Show rooms": "Hiện phòng",
     "Show spaces": "Hiện spaces",
-    "unavailable": "không có sẵn",
-    "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "<w>WARNING:</w> <description/>": "",
     "Shared their location: ": "",
     "common": {
@@ -583,7 +524,25 @@
         "filter_results": "Lọc kết quả",
         "no_results_found": "không tim được kêt quả",
         "unsent": "Chưa gửi",
-        "cameras": "Máy quay"
+        "cameras": "Máy quay",
+        "n_participants": {
+            "one": "1 người tham gia",
+            "other": "%(count)s người tham gia"
+        },
+        "and_n_others": {
+            "one": "và một cái khác…",
+            "other": "và %(count)s khác…"
+        },
+        "n_members": {
+            "one": "%(count)s thành viên",
+            "other": "%(count)s thành viên"
+        },
+        "unavailable": "không có sẵn",
+        "edited": "đã chỉnh sửa",
+        "n_rooms": {
+            "one": "%(count)s phòng",
+            "other": "%(count)s phòng"
+        }
     },
     "action": {
         "continue": "Tiếp tục",
@@ -1543,7 +1502,8 @@
         "developer_mode": "Chế độ nhà phát triển",
         "view_source_decrypted_event_source": "Nguồn sự kiện được giải mã",
         "view_source_decrypted_event_source_unavailable": "Nguồn được giải mã không khả dụng",
-        "original_event_source": "Nguồn sự kiện ban đầu"
+        "original_event_source": "Nguồn sự kiện ban đầu",
+        "toggle_event": "chuyển đổi sự kiện"
     },
     "export_chat": {
         "html": "HTML",
@@ -1635,7 +1595,8 @@
         "m.call": {
             "video_call_started": "Cuộc gọi truyền hình đã bắt đầu trong %(roomName)s.",
             "video_call_started_unsupported": "Cuộc gọi truyền hình đã được bắt đầu ở %(roomName)s. (không được trình duyệt này hỗ trợ)",
-            "video_call_ended": "Cuộc gọi truyền hình đã kết thúc"
+            "video_call_ended": "Cuộc gọi truyền hình đã kết thúc",
+            "video_call_started_text": "%(name)s đã bắt đầu một cuộc gọi truyền hình"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s đã thực hiện một cuộc gọi thoại.",
@@ -2025,7 +1986,11 @@
             "you_declined": "Bạn đã từ chối",
             "you_cancelled": "Bạn đã hủy bỏ",
             "declining": "Đang từ chối…",
-            "you_started": "Bạn đã gửi một yêu cầu xác thực"
+            "you_started": "Bạn đã gửi một yêu cầu xác thực",
+            "user_accepted": "%(name)s được chấp nhận",
+            "user_declined": "%(name)s đã từ chối",
+            "user_cancelled": "%(name)s đã bị hủy",
+            "user_wants_to_verify": "%(name)s muốn xác thực"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s vừa kết thúc một cuộc bình chọn"
@@ -2047,6 +2012,13 @@
             "error_loading": "Không thể tải sự kiện đã được trả lời, sự kiện đó không tồn tại hoặc bạn không có quyền xem sự kiện đó.",
             "in_reply_to": "Trả lời <a>In reply to</a> <pill>",
             "in_reply_to_for_export": "Để trả lời <a>tin nhắn này</a>"
+        },
+        "in_room_name": " ở <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s phiếu bầu",
+                "other": "%(count)s phiếu bầu"
+            }
         }
     },
     "slash_command": {
@@ -2442,7 +2414,8 @@
             "alias_field_matches_invalid": "Địa chỉ này không trỏ đến phòng này",
             "alias_field_taken_valid": "Địa chỉ này có sẵn để sử dụng",
             "alias_field_taken_invalid_domain": "Địa chỉ này đã được sử dụng",
-            "alias_field_taken_invalid": "Địa chỉ này có máy chủ không hợp lệ hoặc đã được sử dụng"
+            "alias_field_taken_invalid": "Địa chỉ này có máy chủ không hợp lệ hoặc đã được sử dụng",
+            "alias_field_placeholder_default": "ví dụ: phòng của tôi my-room"
         },
         "advanced": {
             "unfederated": "Phòng này không thể truy cập từ xa bằng máy chủ Matrix",
@@ -2513,7 +2486,8 @@
             "enable_element_call_no_permissions_tooltip": "Bạn không có đủ quyền để thay đổi cái này.",
             "call_type_section": "Loại cuộc gọi"
         },
-        "title": "Cài đặt Phòng - %(roomName)s"
+        "title": "Cài đặt Phòng - %(roomName)s",
+        "alias_not_specified": "không được chỉ định"
     },
     "encryption": {
         "verification": {
@@ -2703,7 +2677,12 @@
         },
         "confirm_encryption_setup_title": "Xác nhận thiết lập mã hóa",
         "confirm_encryption_setup_body": "Nhấp vào nút bên dưới để xác nhận thiết lập mã hóa.",
-        "unable_to_setup_keys_error": "Không thể thiết lập khóa"
+        "unable_to_setup_keys_error": "Không thể thiết lập khóa",
+        "key_signature_upload_failed_master_key_signature": "một chữ ký khóa chính mới",
+        "key_signature_upload_failed_cross_signing_key_signature": "một chữ ký khóa xác thực chéo mới",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "một chữ ký được xác thực chéo trên thiết bị",
+        "key_signature_upload_failed_key_signature": "một chữ ký chính",
+        "key_signature_upload_failed_body": "%(brand)s đã gặp lỗi khi tải lên:"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3205,7 +3184,11 @@
         "show_thread_filter": "Hiển thị:",
         "show_all_threads": "Hiển thị tất cả chủ đề",
         "empty_heading": "Giữ các cuộc thảo luận được tổ chức với các chủ đề này",
-        "unable_to_decrypt": "Không thể giải mã tin nhắn"
+        "unable_to_decrypt": "Không thể giải mã tin nhắn",
+        "count_of_reply": {
+            "one": "%(count)s trả lời",
+            "other": "%(count)s trả lời"
+        }
     },
     "theme": {
         "light_high_contrast": "Độ tương phản ánh sáng cao",
@@ -3516,7 +3499,11 @@
             "all_rooms": "Tất cả các phòng",
             "field_placeholder": "Tìm kiếm…",
             "this_room_button": "Tìm trong phòng này",
-            "all_rooms_button": "Tìm tất cả phòng"
+            "all_rooms_button": "Tìm tất cả phòng",
+            "result_count": {
+                "one": "(~%(count)s kết quả)",
+                "other": "(~%(count)s kết quả)"
+            }
         },
         "jump_to_bottom_button": "Di chuyển đến các tin nhắn gần đây nhất",
         "jump_read_marker": "Chuyển đến tin nhắn chưa đọc đầu tiên.",
@@ -3530,7 +3517,12 @@
             "other": "Xem tất cả %(count)s thành viên"
         },
         "face_pile_tooltip_shortcut_joined": "Bao gồm bạn, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Bao gồm %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Bao gồm %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter /> mời bạn",
+        "face_pile_summary": {
+            "one": "%(count)s người bạn đã biết vừa tham gia",
+            "other": "%(count)s người bạn đã biết vừa tham gia"
+        }
     },
     "file_panel": {
         "guest_note": "Bạn phải đăng ký <a>register</a> để sử dụng chức năng này",
@@ -3713,7 +3705,8 @@
         },
         "storage_evicted_title": "Thiếu dữ liệu phiên",
         "storage_evicted_description_1": "Một số dữ liệu phiên, bao gồm cả khóa tin nhắn được mã hóa, bị thiếu. Đăng xuất và đăng nhập để khắc phục sự cố này, khôi phục khóa từ bản sao lưu.",
-        "storage_evicted_description_2": "Trình duyệt của bạn có thể đã xóa dữ liệu này khi sắp hết dung lượng đĩa."
+        "storage_evicted_description_2": "Trình duyệt của bạn có thể đã xóa dữ liệu này khi sắp hết dung lượng đĩa.",
+        "unknown_error_code": "mã lỗi không xác định"
     },
     "in_space1_and_space2": "Trong các space %(space1Name)s và %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3877,6 +3870,14 @@
                 "one": "Bỏ một tin nhắn",
                 "other": "Bỏ %(count)s tin nhắn"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 phiên đã xác thực",
+            "other": "%(count)s phiên đã xác thực"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s phiên",
+            "other": "%(count)s phiên"
         }
     },
     "stickers": {
@@ -4101,6 +4102,7 @@
         "key_is_valid": "Đây có vẻ như là một Khóa bảo mật hợp lệ!",
         "key_is_invalid": "Không phải là khóa bảo mật hợp lệ",
         "enter_key_description": "Truy cập lịch sử tin nhắn an toàn của bạn và thiết lập nhắn tin an toàn bằng cách nhập Khóa bảo mật của bạn.",
-        "key_forgotten_text": "Nếu bạn quên Khóa bảo mật của mình, bạn có thể thiết lập các tùy chọn khôi phục mới <button>set up new recovery options</button>"
+        "key_forgotten_text": "Nếu bạn quên Khóa bảo mật của mình, bạn có thể thiết lập các tùy chọn khôi phục mới <button>set up new recovery options</button>",
+        "load_keys_progress": "Đã khôi phục%(completed)s trong số %(total)s khóa"
     }
 }

@@ -1,12 +1,6 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s en %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "en %(count)s anderen…",
-        "one": "en één andere…"
-    },
-    "unknown error code": "onbekende foutcode",
     "Moderator": "Moderator",
-    "not specified": "niet opgegeven",
     "Sun": "Zo",
     "Mon": "Ma",
     "Tue": "Di",
@@ -32,10 +26,6 @@
     "Home": "Home",
     "Join Room": "Kamer toetreden",
     "Warning!": "Let op!",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s resultaat)",
-        "other": "(~%(count)s resultaten)"
-    },
     "AM": "AM",
     "PM": "PM",
     "Delete Widget": "Widget verwijderen",
@@ -121,25 +111,11 @@
     "Headphones": "Koptelefoon",
     "Folder": "Map",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
-    "edited": "bewerkt",
     "Deactivate account": "Account sluiten",
-    "e.g. my-room": "bv. mijn-kamer",
     "Lock": "Hangslot",
     "This backup is trusted because it has been restored on this session": "Deze back-up is vertrouwd omdat hij hersteld is naar deze sessie",
     "Encrypted by a deleted session": "Versleuteld door een verwijderde sessie",
     "Failed to connect to integration manager": "Verbinding met integratiebeheerder is mislukt",
-    "%(count)s verified sessions": {
-        "other": "%(count)s geverifieerde sessies",
-        "one": "1 geverifieerde sessie"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sessies",
-        "one": "%(count)s sessie"
-    },
-    "%(name)s accepted": "%(name)s heeft aanvaard",
-    "%(name)s declined": "%(name)s heeft geweigerd",
-    "%(name)s cancelled": "%(name)s heeft geannuleerd",
-    "%(name)s wants to verify": "%(name)s wil verifiëren",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "Your homeserver has exceeded its user limit.": "Jouw homeserver heeft het maximaal aantal personen overschreden.",
     "Your homeserver has exceeded one of its resource limits.": "Jouw homeserver heeft een van zijn limieten overschreden.",
@@ -397,37 +373,10 @@
     "Oman": "Oman",
     "Switch theme": "Thema wisselen",
     "Sign in with SSO": "Inloggen met SSO",
-    "%(completed)s of %(total)s keys restored": "%(completed)s van %(total)s sleutels hersteld",
-    "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
-    "a key signature": "een sleutel ondertekening",
-    "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
-    "a new cross-signing key signature": "een nieuwe kruiselings ondertekenen ondertekening",
-    "a new master key signature": "een nieuwe hoofdsleutel ondertekening",
     "Submit logs": "Logs versturen",
     "IRC display name width": "Breedte IRC-weergavenaam",
-    "%(count)s members": {
-        "other": "%(count)s personen",
-        "one": "%(count)s persoon"
-    },
-    "<inviter/> invites you": "<inviter/> nodigt je uit",
-    "%(count)s rooms": {
-        "one": "%(count)s kamer",
-        "other": "%(count)s kamers"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s persoon die je kent is al geregistreerd",
-        "other": "%(count)s personen die je kent hebben zich al geregistreerd"
-    },
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
-    "%(count)s reply": {
-        "one": "%(count)s reactie",
-        "other": "%(count)s reacties"
-    },
     "Forget": "Vergeet",
-    "%(count)s votes": {
-        "one": "%(count)s stem",
-        "other": "%(count)s stemmen"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s en %(count)s andere",
         "other": "%(spaceName)s en %(count)s andere"
@@ -438,13 +387,8 @@
     "Themes": "Thema's",
     "Moderation": "Moderatie",
     "Messaging": "Messaging",
-    "toggle event": "wissel gebeurtenis",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 deelnemer",
-        "other": "%(count)s deelnemers"
-    },
     "View List": "Toon Lijst",
     "%(members)s and %(last)s": "%(members)s en %(last)s",
     "%(members)s and more": "%(members)s en meer",
@@ -454,7 +398,6 @@
     "Show rooms": "Toon kamers",
     "Explore public spaces in the new search dialog": "Ontdek openbare ruimtes in het nieuwe zoekvenster",
     "Saved Items": "Opgeslagen items",
-    "%(name)s started a video call": "%(name)s is een videogesprek gestart",
     "common": {
         "about": "Over",
         "analytics": "Gebruiksgegevens",
@@ -580,7 +523,24 @@
         "filter_results": "Resultaten filteren",
         "no_results_found": "Geen resultaten gevonden",
         "unsent": "niet verstuurd",
-        "cameras": "Camera's"
+        "cameras": "Camera's",
+        "n_participants": {
+            "one": "1 deelnemer",
+            "other": "%(count)s deelnemers"
+        },
+        "and_n_others": {
+            "other": "en %(count)s anderen…",
+            "one": "en één andere…"
+        },
+        "n_members": {
+            "other": "%(count)s personen",
+            "one": "%(count)s persoon"
+        },
+        "edited": "bewerkt",
+        "n_rooms": {
+            "one": "%(count)s kamer",
+            "other": "%(count)s kamers"
+        }
     },
     "action": {
         "continue": "Doorgaan",
@@ -1479,7 +1439,8 @@
         "show_hidden_events": "Verborgen gebeurtenissen op de tijdslijn weergeven",
         "developer_mode": "Ontwikkelaar mode",
         "view_source_decrypted_event_source": "Ontsleutel de gebeurtenisbron",
-        "original_event_source": "Originele gebeurtenisbron"
+        "original_event_source": "Originele gebeurtenisbron",
+        "toggle_event": "wissel gebeurtenis"
     },
     "export_chat": {
         "html": "HTML",
@@ -1564,7 +1525,8 @@
         "m.call": {
             "video_call_started": "Videogesprek gestart in %(roomName)s.",
             "video_call_started_unsupported": "Videogesprek gestart in %(roomName)s. (niet ondersteund door deze browser)",
-            "video_call_ended": "Video oproep beëindigd"
+            "video_call_ended": "Video oproep beëindigd",
+            "video_call_started_text": "%(name)s is een videogesprek gestart"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s probeert je te bellen.",
@@ -1951,7 +1913,11 @@
             "you_accepted": "Je hebt aanvaard",
             "you_declined": "Je hebt geweigerd",
             "you_cancelled": "Je hebt geannuleerd",
-            "you_started": "Je hebt een verificatieverzoek verstuurd"
+            "you_started": "Je hebt een verificatieverzoek verstuurd",
+            "user_accepted": "%(name)s heeft aanvaard",
+            "user_declined": "%(name)s heeft geweigerd",
+            "user_cancelled": "%(name)s heeft geannuleerd",
+            "user_wants_to_verify": "%(name)s wil verifiëren"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s heeft een poll beëindigd"
@@ -1973,6 +1939,12 @@
             "error_loading": "Kan de gebeurtenis waarop gereageerd was niet laden. Wellicht bestaat die niet, of je hebt geen toestemming die te bekijken.",
             "in_reply_to": "<a>Als antwoord op</a> <pill>",
             "in_reply_to_for_export": "In antwoord op <a>dit bericht</a>"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s stem",
+                "other": "%(count)s stemmen"
+            }
         }
     },
     "slash_command": {
@@ -2342,7 +2314,8 @@
             "alias_field_matches_invalid": "Dit adres verwijst niet naar deze kamer",
             "alias_field_taken_valid": "Dit adres kan worden gebruikt",
             "alias_field_taken_invalid_domain": "Dit adres is al in gebruik",
-            "alias_field_taken_invalid": "Dit adres heeft een ongeldige server of is al in gebruik"
+            "alias_field_taken_invalid": "Dit adres heeft een ongeldige server of is al in gebruik",
+            "alias_field_placeholder_default": "bv. mijn-kamer"
         },
         "advanced": {
             "unfederated": "Deze kamer is niet toegankelijk vanaf externe Matrix-servers",
@@ -2411,7 +2384,8 @@
             "enable_element_call_no_permissions_tooltip": "U heeft niet voldoende rechten om dit te wijzigen.",
             "call_type_section": "Oproeptype"
         },
-        "title": "Kamerinstellingen - %(roomName)s"
+        "title": "Kamerinstellingen - %(roomName)s",
+        "alias_not_specified": "niet opgegeven"
     },
     "encryption": {
         "verification": {
@@ -2593,7 +2567,12 @@
         },
         "confirm_encryption_setup_title": "Bevestig versleuting instelling",
         "confirm_encryption_setup_body": "Klik op de knop hieronder om het instellen van de versleuting te bevestigen.",
-        "unable_to_setup_keys_error": "Kan geen sleutels instellen"
+        "unable_to_setup_keys_error": "Kan geen sleutels instellen",
+        "key_signature_upload_failed_master_key_signature": "een nieuwe hoofdsleutel ondertekening",
+        "key_signature_upload_failed_cross_signing_key_signature": "een nieuwe kruiselings ondertekenen ondertekening",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "een apparaat kruiselings ondertekenen ondertekening",
+        "key_signature_upload_failed_key_signature": "een sleutel ondertekening",
+        "key_signature_upload_failed_body": "%(brand)s is een fout tegengekomen tijdens het uploaden van:"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",
@@ -3089,7 +3068,11 @@
         "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
         "empty_heading": "Houd threads georganiseerd",
         "open_thread": "Open discussie",
-        "error_start_thread_existing_relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie"
+        "error_start_thread_existing_relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
+        "count_of_reply": {
+            "one": "%(count)s reactie",
+            "other": "%(count)s reacties"
+        }
     },
     "theme": {
         "light_high_contrast": "Lichte hoog contrast",
@@ -3423,7 +3406,11 @@
         "search": {
             "this_room": "Deze kamer",
             "all_rooms": "Alle kamers",
-            "field_placeholder": "Zoeken…"
+            "field_placeholder": "Zoeken…",
+            "result_count": {
+                "one": "(~%(count)s resultaat)",
+                "other": "(~%(count)s resultaten)"
+            }
         },
         "jump_to_bottom_button": "Spring naar meest recente bericht",
         "jump_read_marker": "Spring naar het eerste ongelezen bericht.",
@@ -3438,7 +3425,12 @@
             "other": "Bekijk alle %(count)s personen"
         },
         "face_pile_tooltip_shortcut_joined": "Inclusief jij, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Inclusief %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Inclusief %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> nodigt je uit",
+        "face_pile_summary": {
+            "one": "%(count)s persoon die je kent is al geregistreerd",
+            "other": "%(count)s personen die je kent hebben zich al geregistreerd"
+        }
     },
     "file_panel": {
         "guest_note": "Je dient je te <a>registreren</a> om deze functie te gebruiken",
@@ -3612,7 +3604,8 @@
         },
         "storage_evicted_title": "Sessiegegevens ontbreken",
         "storage_evicted_description_1": "Sommige sessiegegevens, waaronder sleutels voor versleutelde berichten, ontbreken. Herstel de sleutels uit je back-up door je af- en weer aan te melden.",
-        "storage_evicted_description_2": "Jouw browser heeft deze gegevens wellicht verwijderd toen de beschikbare opslagSpace vol was."
+        "storage_evicted_description_2": "Jouw browser heeft deze gegevens wellicht verwijderd toen de beschikbare opslagSpace vol was.",
+        "unknown_error_code": "onbekende foutcode"
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3774,6 +3767,14 @@
                 "other": "%(count)s berichten verwijderen",
                 "one": "1 bericht verwijderen"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s geverifieerde sessies",
+            "one": "1 geverifieerde sessie"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sessies",
+            "one": "%(count)s sessie"
         }
     },
     "stickers": {
@@ -3995,6 +3996,7 @@
         "key_is_valid": "Dit lijkt op een geldige veiligheidssleutel!",
         "key_is_invalid": "Geen geldige veiligheidssleutel",
         "enter_key_description": "Ga naar uw veilige berichtengeschiedenis en stel veilige berichten in door uw veiligheidssleutel in te voeren.",
-        "key_forgotten_text": "Als u uw veiligheidssleutel bent vergeten, kunt u <button>nieuwe herstelopties instellen</button>"
+        "key_forgotten_text": "Als u uw veiligheidssleutel bent vergeten, kunt u <button>nieuwe herstelopties instellen</button>",
+        "load_keys_progress": "%(completed)s van %(total)s sleutels hersteld"
     }
 }

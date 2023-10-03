@@ -21,7 +21,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s ,%(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "unknown error code": "తెలియని కోడ్ లోపం",
     "Sunday": "ఆదివారం",
     "Today": "ఈ రోజు",
     "Friday": "శుక్రువారం",
@@ -175,7 +174,8 @@
         "dialog_description_default": "ఒక లోపము సంభవించినది.",
         "session_restore": {
             "title": "సెషన్ను పునరుద్ధరించడానికి సాధ్యపడలేదు"
-        }
+        },
+        "unknown_error_code": "తెలియని కోడ్ లోపం"
     },
     "notifications": {
         "enable_prompt_toast_title": "ప్రకటనలు",

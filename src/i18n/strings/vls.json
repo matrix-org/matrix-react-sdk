@@ -90,21 +90,12 @@
     "Headphones": "Koptelefong",
     "Folder": "Mappe",
     "Warning!": "Let ip!",
-    "and %(count)s others...": {
-        "other": "en %(count)s anderen…",
-        "one": "en één andere…"
-    },
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)su",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Noamloos gesprek",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultoatn)",
-        "one": "(~%(count)s resultoat)"
-    },
     "Join Room": "Gesprek toetreedn",
-    "not specified": "nie ingegeevn",
     "Sunday": "Zundag",
     "Monday": "Moandag",
     "Tuesday": "Diesndag",
@@ -114,13 +105,11 @@
     "Saturday": "Zoaterdag",
     "Today": "Vandoage",
     "Yesterday": "Gistern",
-    "edited": "bewerkt",
     "Delete Widget": "Widget verwydern",
     "collapse": "toeklappn",
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Send Logs": "Logboek verstuurn",
-    "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
     "Deactivate account": "Account deactiveern",
     "common": {
@@ -176,7 +165,12 @@
         "setup_secure_messages": "Beveiligde berichtn instelln",
         "are_you_sure": "Zy je zeker?",
         "email_address": "E-mailadresse",
-        "filter_results": "Resultoatn filtern"
+        "filter_results": "Resultoatn filtern",
+        "and_n_others": {
+            "other": "en %(count)s anderen…",
+            "one": "en één andere…"
+        },
+        "edited": "bewerkt"
     },
     "action": {
         "continue": "Verdergoan",
@@ -773,7 +767,8 @@
             "custom_sound_prompt": "Stelt e nieuw angepast geluud in",
             "browse_button": "Bloadern"
         },
-        "title": "Gespreksinstelliengn - %(roomName)s"
+        "title": "Gespreksinstelliengn - %(roomName)s",
+        "alias_not_specified": "nie ingegeevn"
     },
     "encryption": {
         "verification": {
@@ -1034,7 +1029,11 @@
         "search": {
             "this_room": "Dit gesprek",
             "all_rooms": "Alle gesprekkn",
-            "field_placeholder": "Zoekn…"
+            "field_placeholder": "Zoekn…",
+            "result_count": {
+                "other": "(~%(count)s resultoatn)",
+                "one": "(~%(count)s resultoat)"
+            }
         },
         "jump_read_marker": "Spriengt noa ’t eeste oungeleezn bericht.",
         "inviter_unknown": "Ounbekend",
@@ -1135,7 +1134,8 @@
         },
         "storage_evicted_title": "Sessiegegeevns ountbreekn",
         "storage_evicted_description_1": "Sommige sessiegegeevns, inclusief sleuters vo versleuterde berichtn, ountbreekn. Meldt jen af en were an vo dit ip te lossn, en herstelt de sleuters uut den back-up.",
-        "storage_evicted_description_2": "Je browser èt deze gegeevns meugliks verwyderd toen da de beschikboare ipslagruumte vul was."
+        "storage_evicted_description_2": "Je browser èt deze gegeevns meugliks verwyderd toen da de beschikboare ipslagruumte vul was.",
+        "unknown_error_code": "ounbekende foutcode"
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",

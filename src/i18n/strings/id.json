@@ -1,5 +1,4 @@
 {
-    "unknown error code": "kode kesalahan tidak diketahui",
     "Warning!": "Peringatan!",
     "Sun": "Min",
     "Mon": "Sen",
@@ -300,7 +299,6 @@
     "Folder": "Map",
     "Scissors": "Gunting",
     "Ok": "Ok",
-    "edited": "diedit",
     "Headphones": "Headphone",
     "Anchor": "Jangkar",
     "Bell": "Lonceng",
@@ -363,11 +361,6 @@
     "Thumbs up": "Jempol",
     "Send Logs": "Kirim Catatan",
     "Delete Widget": "Hapus Widget",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s hasil)",
-        "other": "(~%(count)s hasil)"
-    },
-    "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
@@ -377,58 +370,14 @@
     "Your homeserver has exceeded its user limit.": "Homeserver Anda telah melebihi batas penggunanya.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Untuk melaporkan masalah keamanan yang berkaitan dengan Matrix, mohon baca <a>Kebijakan Penyingkapan Keamanan</a> Matrix.org.",
     "Failed to connect to integration manager": "Gagal untuk menghubung ke manajer integrasi",
-    "and %(count)s others...": {
-        "one": "dan satu lainnya...",
-        "other": "dan %(count)s lainnya..."
-    },
     "Encrypted by a deleted session": "Terenkripsi oleh sesi yang terhapus",
-    "%(count)s reply": {
-        "one": "%(count)s balasan",
-        "other": "%(count)s balasan"
-    },
     "Submit logs": "Kirim catatan",
-    "%(name)s wants to verify": "%(name)s ingin memverifikasi",
-    "%(name)s cancelled": "%(name)s membatalkan",
-    "%(name)s declined": "%(name)s menolak",
-    "%(name)s accepted": "%(name)s menerima",
-    "%(count)s sessions": {
-        "one": "%(count)s sesi",
-        "other": "%(count)s sesi"
-    },
-    "%(count)s verified sessions": {
-        "one": "1 sesi terverifikasi",
-        "other": "%(count)s sesi terverifikasi"
-    },
     "Not encrypted": "Tidak terenkripsi",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Sebelum mengirimkan catatan, Anda harus <a>membuat sebuah issue GitHub</a> untuk menjelaskan masalah Anda.",
-    "e.g. my-room": "mis. ruangan-saya",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s orang yang Anda tahu telah bergabung",
-        "other": "%(count)s orang yang Anda tahu telah bergabung"
-    },
     "Switch theme": "Ubah tema",
-    "<inviter/> invites you": "<inviter/> mengundang Anda",
     "Sign in with SSO": "Masuk dengan SSO",
     "Forget": "Lupakan",
-    "%(completed)s of %(total)s keys restored": "%(completed)s dari %(total)s kunci dipulihkan",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Dapatkan kembali akses ke akun Anda dan pulihkan kunci enkripsi yang disimpan dalam sesi ini. Tanpa mereka, Anda tidak akan dapat membaca semua pesan aman Anda di sesi mana saja.",
-    "%(count)s rooms": {
-        "one": "%(count)s ruangan",
-        "other": "%(count)s ruangan"
-    },
-    "%(count)s members": {
-        "one": "%(count)s anggota",
-        "other": "%(count)s anggota"
-    },
-    "%(brand)s encountered an error during upload of:": "%(brand)s mengalami sebuah kesalahan ketika mengunggah unggahan:",
-    "a key signature": "sebuah tandatangan kunci",
-    "a device cross-signing signature": "sebuah tandatangan penandatanganan silang perangkat",
-    "a new cross-signing key signature": "sebuah tandatangan kunci penandatanganan silang baru",
-    "a new master key signature": "sebuah tandatangan kunci utama baru",
-    "%(count)s votes": {
-        "one": "%(count)s suara",
-        "other": "%(count)s suara"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dan %(count)s lainnya",
         "other": "%(spaceName)s dan %(count)s lainnya"
@@ -438,13 +387,8 @@
     "Themes": "Tema",
     "Moderation": "Moderasi",
     "Messaging": "Perpesanan",
-    "toggle event": "alih peristiwa",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
     "Feedback sent! Thanks, we appreciate it!": "Masukan terkirim! Terima kasih, kami mengapresiasinya!",
-    "%(count)s participants": {
-        "one": "1 perserta",
-        "other": "%(count)s perserta"
-    },
     "View List": "Tampilkan Daftar",
     "%(members)s and %(last)s": "%(members)s dan %(last)s",
     "%(members)s and more": "%(members)s dan lainnya",
@@ -454,15 +398,11 @@
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
     "Saved Items": "Item yang Tersimpan",
-    "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "unknown": "tidak diketahui",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Desktop app logo": "Logo aplikasi desktop",
     "Requires your server to support the stable version of MSC3827": "Mengharuslkan server Anda mendukung versi MSC3827 yang stabil",
-    "unavailable": "tidak tersedia",
-    "unknown status code": "kode keadaan tidak diketahui",
     "common": {
         "about": "Tentang",
         "analytics": "Analitik",
@@ -591,7 +531,25 @@
         "filter_results": "Saring hasil",
         "no_results_found": "Tidak ada hasil yang ditemukan",
         "unsent": "Belum dikirim",
-        "cameras": "Kamera"
+        "cameras": "Kamera",
+        "n_participants": {
+            "one": "1 perserta",
+            "other": "%(count)s perserta"
+        },
+        "and_n_others": {
+            "one": "dan satu lainnya...",
+            "other": "dan %(count)s lainnya..."
+        },
+        "n_members": {
+            "one": "%(count)s anggota",
+            "other": "%(count)s anggota"
+        },
+        "unavailable": "tidak tersedia",
+        "edited": "diedit",
+        "n_rooms": {
+            "one": "%(count)s ruangan",
+            "other": "%(count)s ruangan"
+        }
     },
     "action": {
         "continue": "Lanjut",
@@ -1659,7 +1617,8 @@
         "developer_mode": "Mode pengembang",
         "view_source_decrypted_event_source": "Sumber peristiwa terdekripsi",
         "view_source_decrypted_event_source_unavailable": "Sumber terdekripsi tidak tersedia",
-        "original_event_source": "Sumber peristiwa asli"
+        "original_event_source": "Sumber peristiwa asli",
+        "toggle_event": "alih peristiwa"
     },
     "export_chat": {
         "html": "HTML",
@@ -1753,7 +1712,8 @@
         "m.call": {
             "video_call_started": "Panggilan video dimulai di %(roomName)s.",
             "video_call_started_unsupported": "Panggilan video dimulai di %(roomName)s. (tidak didukung oleh peramban ini)",
-            "video_call_ended": "Panggilan video berakhir"
+            "video_call_ended": "Panggilan video berakhir",
+            "video_call_started_text": "%(name)s memulai sebuah panggilan video"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s melakukan panggilan video.",
@@ -2167,7 +2127,11 @@
             "you_declined": "Anda menolak",
             "you_cancelled": "Anda membatalkan",
             "declining": "Menolak…",
-            "you_started": "Anda mengirim sebuah permintaan verifikasi"
+            "you_started": "Anda mengirim sebuah permintaan verifikasi",
+            "user_accepted": "%(name)s menerima",
+            "user_declined": "%(name)s menolak",
+            "user_cancelled": "%(name)s membatalkan",
+            "user_wants_to_verify": "%(name)s ingin memverifikasi"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s telah mengakhiri sebuah poll",
@@ -2190,6 +2154,13 @@
             "error_loading": "Tidak dapat memuat peristiwa yang dibalas, karena tidak ada atau Anda tidak memiliki izin untuk menampilkannya.",
             "in_reply_to": "<a>Membalas ke</a> <pill>",
             "in_reply_to_for_export": "Membalas ke <a>pesan ini</a>"
+        },
+        "in_room_name": " di <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s suara",
+                "other": "%(count)s suara"
+            }
         }
     },
     "slash_command": {
@@ -2586,7 +2557,8 @@
             "alias_field_matches_invalid": "Alamat ini tidak mengarah ke ruangan ini",
             "alias_field_taken_valid": "Alamat ini dapat digunakan",
             "alias_field_taken_invalid_domain": "Alamat ini sudah digunakan",
-            "alias_field_taken_invalid": "Alamat ini memiliki server yang tidak absah atau telah digunakan"
+            "alias_field_taken_invalid": "Alamat ini memiliki server yang tidak absah atau telah digunakan",
+            "alias_field_placeholder_default": "mis. ruangan-saya"
         },
         "advanced": {
             "unfederated": "Ruangan ini tidak dapat diakses oleh pengguna Matrix jarak jauh",
@@ -2664,7 +2636,8 @@
             "enable_element_call_no_permissions_tooltip": "Anda tidak memiliki izin untuk mengubah ini.",
             "call_type_section": "Jenis panggilan"
         },
-        "title": "Pengaturan Ruangan — %(roomName)s"
+        "title": "Pengaturan Ruangan — %(roomName)s",
+        "alias_not_specified": "tidak ditentukan"
     },
     "encryption": {
         "verification": {
@@ -2854,7 +2827,12 @@
         },
         "confirm_encryption_setup_title": "Konfirmasi pengaturan enkripsi",
         "confirm_encryption_setup_body": "Klik tombol di bawah untuk mengkonfirmasi menyiapkan enkripsi.",
-        "unable_to_setup_keys_error": "Tidak dapat mengatur kunci-kunci"
+        "unable_to_setup_keys_error": "Tidak dapat mengatur kunci-kunci",
+        "key_signature_upload_failed_master_key_signature": "sebuah tandatangan kunci utama baru",
+        "key_signature_upload_failed_cross_signing_key_signature": "sebuah tandatangan kunci penandatanganan silang baru",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "sebuah tandatangan penandatanganan silang perangkat",
+        "key_signature_upload_failed_key_signature": "sebuah tandatangan kunci",
+        "key_signature_upload_failed_body": "%(brand)s mengalami sebuah kesalahan ketika mengunggah unggahan:"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3407,7 +3385,11 @@
         "empty_heading": "Buat diskusi tetap teratur dengan utasan",
         "unable_to_decrypt": "Tidak dapat mendekripsi pesan",
         "open_thread": "Buka utasan",
-        "error_start_thread_existing_relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada"
+        "error_start_thread_existing_relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada",
+        "count_of_reply": {
+            "one": "%(count)s balasan",
+            "other": "%(count)s balasan"
+        }
     },
     "theme": {
         "light_high_contrast": "Kontras tinggi terang",
@@ -3773,7 +3755,11 @@
             "all_rooms": "Semua Ruangan",
             "field_placeholder": "Cari…",
             "this_room_button": "Cari ruangan ini",
-            "all_rooms_button": "Cari semua ruangan"
+            "all_rooms_button": "Cari semua ruangan",
+            "result_count": {
+                "one": "(~%(count)s hasil)",
+                "other": "(~%(count)s hasil)"
+            }
         },
         "jump_to_bottom_button": "Gulir ke pesan yang terbaru",
         "jump_read_marker": "Pergi ke pesan pertama yang belum dibaca.",
@@ -3794,7 +3780,13 @@
             "other": "Tampilkan semua %(count)s anggota"
         },
         "face_pile_tooltip_shortcut_joined": "Termasuk Anda, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Termasuk %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Termasuk %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> mengundang Anda",
+        "unknown_status_code_for_timeline_jump": "kode keadaan tidak diketahui",
+        "face_pile_summary": {
+            "one": "%(count)s orang yang Anda tahu telah bergabung",
+            "other": "%(count)s orang yang Anda tahu telah bergabung"
+        }
     },
     "file_panel": {
         "guest_note": "Anda harus <a>mendaftar</a> untuk menggunakan kegunaan ini",
@@ -3986,7 +3978,8 @@
         },
         "storage_evicted_title": "Data sesi hilang",
         "storage_evicted_description_1": "Beberapa data sesi, termasuk kunci pesan terenkripsi, hilang. Keluar dan masuk lagi untuk memperbaikinya, memulihkan kunci-kunci dari cadangan.",
-        "storage_evicted_description_2": "Kemungkinan browser Anda menghapus datanya ketika ruang disk rendah."
+        "storage_evicted_description_2": "Kemungkinan browser Anda menghapus datanya ketika ruang disk rendah.",
+        "unknown_error_code": "kode kesalahan tidak diketahui"
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4156,6 +4149,14 @@
                 "one": "Hapus 1 pesan",
                 "other": "Hapus %(count)s pesan"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 sesi terverifikasi",
+            "other": "%(count)s sesi terverifikasi"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s sesi",
+            "other": "%(count)s sesi"
         }
     },
     "stickers": {
@@ -4409,6 +4410,7 @@
         "key_is_valid": "Ini sepertinya Kunci Keamanan yang absah!",
         "key_is_invalid": "Bukan Kunci Keamanan yang absah",
         "enter_key_description": "Akses riwayat pesan aman Anda dan siapkan perpesanan aman dengan memasukkan Kunci Keamanan Anda.",
-        "key_forgotten_text": "Jika Anda lupa Kunci Keamanan, Anda dapat <button>menyiapkan opsi pemulihan baru</button>"
+        "key_forgotten_text": "Jika Anda lupa Kunci Keamanan, Anda dapat <button>menyiapkan opsi pemulihan baru</button>",
+        "load_keys_progress": "%(completed)s dari %(total)s kunci dipulihkan"
     }
 }

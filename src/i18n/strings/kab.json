@@ -48,7 +48,6 @@
     "Saturday": "Sed",
     "Today": "Ass-a",
     "Yesterday": "Iḍelli",
-    "edited": "yettwaẓreg",
     "collapse": "fneẓ",
     "Home": "Agejdan",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -86,26 +85,8 @@
     "Light bulb": "Taftilt",
     "Deactivate account": "Sens amiḍan",
     "Encrypted by a deleted session": "Yettuwgelhen s texxamt yettwakksen",
-    "and %(count)s others...": {
-        "other": "d %(count)s wiyaḍ...",
-        "one": "d wayeḍ-nniḍen..."
-    },
-    "(~%(count)s results)": {
-        "one": "(~%(count)s igmaḍ)",
-        "other": "(~%(count)s igmaḍ)"
-    },
     "Join Room": "Rnu ɣer texxamt",
-    "not specified": "ur iban ara",
-    "%(count)s sessions": {
-        "other": "Tiɣimiyin n %(count)s",
-        "one": "Tiɣimit n %(count)s"
-    },
-    "%(name)s accepted": "%(name)s yettwaqbel",
-    "%(name)s declined": "%(name)s yettwagi",
-    "%(name)s cancelled": "%(name)s yettwasefsex",
-    "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
-    "e.g. my-room": "e.g. taxxamt-inu",
     "Send Logs": "Azen iɣmisen",
     "Sign in with SSO": "Anekcum s SSO",
     "Switch theme": "Abeddel n usentel",
@@ -127,10 +108,6 @@
     "Bell": "Anayna",
     "Delete Widget": "Kkes awiǧit",
     "expand": "snefli",
-    "%(count)s verified sessions": {
-        "other": "%(count)s isenqed tiɣimiyin",
-        "one": "1 n tɣimit i yettwasneqden"
-    },
     "Your homeserver has exceeded its user limit.": "Aqeddac-inek·inem agejdan yewweḍ ɣer talast n useqdac.",
     "Your homeserver has exceeded one of its resource limits.": "Aqeddac-inek·inem agejdan iɛedda yiwet seg tlisa-ines tiɣbula.",
     "%(duration)ss": "%(duration)ss",
@@ -138,16 +115,9 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Taxxamt war isem",
-    "unknown error code": "tangalt n tuccḍa tarussint",
-    "a new master key signature": "tasarut tusligt tagejdant tamaynut",
-    "a new cross-signing key signature": "azmul amaynut n tsarut n uzmul amdigan",
-    "a device cross-signing signature": "azmul n uzmul amdigan n yibenk",
-    "a key signature": "azmul n tsarut",
-    "%(brand)s encountered an error during upload of:": "%(brand)s yemlal-d d tuccḍa mi ara d-yessalay:",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Thumbs up": "Adebbuz d asawen",
     "This backup is trusted because it has been restored on this session": "Aḥraz yettwaḍman acku yuɣal-d seg tɣimit-a",
-    "%(completed)s of %(total)s keys restored": "%(completed)s n %(total)s tsura i yettwarran",
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
@@ -483,7 +453,12 @@
         "show_more": "Sken-d ugar",
         "are_you_sure": "Tebɣiḍ s tidet?",
         "email_address": "Tansa n yimayl",
-        "filter_results": "Igmaḍ n usizdeg"
+        "filter_results": "Igmaḍ n usizdeg",
+        "and_n_others": {
+            "other": "d %(count)s wiyaḍ...",
+            "one": "d wayeḍ-nniḍen..."
+        },
+        "edited": "yettwaẓreg"
     },
     "action": {
         "continue": "Kemmel",
@@ -1230,7 +1205,11 @@
             "you_accepted": "Tqebleḍ",
             "you_declined": "Tugiḍ",
             "you_cancelled": "Tesfesxeḍ",
-            "you_started": "Tuzneḍ asuter n usenqed"
+            "you_started": "Tuzneḍ asuter n usenqed",
+            "user_accepted": "%(name)s yettwaqbel",
+            "user_declined": "%(name)s yettwagi",
+            "user_cancelled": "%(name)s yettwasefsex",
+            "user_wants_to_verify": "%(name)s yebɣa ad isenqed"
         },
         "m.video": {
             "error_decrypting": "Tuccḍa deg uwgelhen n tvidyut"
@@ -1458,7 +1437,8 @@
             "alias_heading": "Tansa n texxamt",
             "alias_field_safe_localpart_invalid": "Kra n yisekkilen ur ttusirgen ara",
             "alias_field_taken_valid": "Tansa-a tella i useqdec",
-            "alias_field_taken_invalid_domain": "Tansa-a ha-tt-an yakan deg useqdec"
+            "alias_field_taken_invalid_domain": "Tansa-a ha-tt-an yakan deg useqdec",
+            "alias_field_placeholder_default": "e.g. taxxamt-inu"
         },
         "advanced": {
             "unfederated": "Anekcum er texxamt-a ulamek s yiqeddacen n Matrix inmeggagen",
@@ -1494,7 +1474,8 @@
             "custom_sound_prompt": "Sbadu ameslaw udmawan amaynut",
             "browse_button": "Inig"
         },
-        "title": "Iɣewwaren n texxamt - %(roomName)s"
+        "title": "Iɣewwaren n texxamt - %(roomName)s",
+        "alias_not_specified": "ur iban ara"
     },
     "encryption": {
         "verification": {
@@ -1625,7 +1606,12 @@
             "primary_button_text": "Sfeḍ tisura n uzmul anmidag"
         },
         "confirm_encryption_setup_title": "Sentem asebded n uwgelhen",
-        "confirm_encryption_setup_body": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen."
+        "confirm_encryption_setup_body": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen.",
+        "key_signature_upload_failed_master_key_signature": "tasarut tusligt tagejdant tamaynut",
+        "key_signature_upload_failed_cross_signing_key_signature": "azmul amaynut n tsarut n uzmul amdigan",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "azmul n uzmul amdigan n yibenk",
+        "key_signature_upload_failed_key_signature": "azmul n tsarut",
+        "key_signature_upload_failed_body": "%(brand)s yemlal-d d tuccḍa mi ara d-yessalay:"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2002,7 +1988,11 @@
         "search": {
             "this_room": "Taxxamt-a",
             "all_rooms": "Akk tixxamin",
-            "field_placeholder": "Nadi…"
+            "field_placeholder": "Nadi…",
+            "result_count": {
+                "one": "(~%(count)s igmaḍ)",
+                "other": "(~%(count)s igmaḍ)"
+            }
         },
         "jump_to_bottom_button": "Drurem ɣer yiznan akk n melmi kan",
         "jump_read_marker": "Ɛeddi ɣer yizen amezwaru ur nettwaɣra ara.",
@@ -2106,7 +2096,8 @@
         },
         "storage_evicted_title": "Isefka n tɣimit xuṣṣen",
         "storage_evicted_description_1": "Kra n yisefka n tɣimit, daɣen tisura n yiznan yettwawgelhen, ttwakksen. Ffeɣ syen ales anekcum i wakken ad tṣeggmeḍ aya, err-d tisura seg uḥraz.",
-        "storage_evicted_description_2": "Yezmer iminig-ik·im yekkes isefka-a mi t-txuṣṣ tallunt ɣef uḍebsi."
+        "storage_evicted_description_2": "Yezmer iminig-ik·im yekkes isefka-a mi t-txuṣṣ tallunt ɣef uḍebsi.",
+        "unknown_error_code": "tangalt n tuccḍa tarussint"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2213,6 +2204,14 @@
                 "one": "Kkes 1 izen",
                 "other": "Kkes iznan n %(count)s"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s isenqed tiɣimiyin",
+            "one": "1 n tɣimit i yettwasneqden"
+        },
+        "count_of_sessions": {
+            "other": "Tiɣimiyin n %(count)s",
+            "one": "Tiɣimit n %(count)s"
         }
     },
     "stickers": {
@@ -2335,6 +2334,7 @@
         "keys_restored_title": "Tisura ttwaskelsent",
         "count_of_decryption_failures": "Tukksa n uwgelhen n tɣimiyin %(failedCount)s ur yeddi ara!",
         "count_of_successfully_restored_keys": "Tiririt n tsura n %(sessionCount)s yedda akken iwata",
-        "key_backup_warning": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ."
+        "key_backup_warning": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
+        "load_keys_progress": "%(completed)s n %(total)s tsura i yettwarran"
     }
 }

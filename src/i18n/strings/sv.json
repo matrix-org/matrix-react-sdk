@@ -1,14 +1,8 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s och %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "och %(count)s andra…",
-        "one": "och en annan…"
-    },
     "Home": "Hem",
     "Join Room": "Gå med i rum",
     "Moderator": "Moderator",
-    "not specified": "inte specificerad",
-    "unknown error code": "okänd felkod",
     "AM": "FM",
     "PM": "EM",
     "Unnamed room": "Namnlöst rum",
@@ -46,10 +40,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultat)",
-        "one": "(~%(count)s resultat)"
-    },
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
@@ -122,12 +112,7 @@
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
     "Deactivate account": "Inaktivera konto",
-    "edited": "redigerat",
     "Failed to connect to integration manager": "Kunde inte ansluta till integrationshanterare",
-    "%(name)s accepted": "%(name)s accepterade",
-    "%(name)s cancelled": "%(name)s avbröt",
-    "%(name)s wants to verify": "%(name)s vill verifiera",
-    "e.g. my-room": "t.ex. mitt-rum",
     "Your homeserver has exceeded its user limit.": "Din hemserver har överskridit sin användargräns.",
     "Your homeserver has exceeded one of its resource limits.": "Din hemserver har överskridit en av sina resursgränser.",
     "Ok": "OK",
@@ -136,22 +121,7 @@
     "This backup is trusted because it has been restored on this session": "Den här säkerhetskopian är betrodd för att den har återställts på den här sessionen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
     "Encrypted by a deleted session": "Krypterat av en raderad session",
-    "%(count)s verified sessions": {
-        "other": "%(count)s verifierade sessioner",
-        "one": "1 verifierad session"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sessioner",
-        "one": "%(count)s session"
-    },
-    "%(name)s declined": "%(name)s avslog",
     "Submit logs": "Skicka loggar",
-    "a new master key signature": "en ny huvudnyckelsignatur",
-    "a new cross-signing key signature": "en ny korssigneringssignatur",
-    "a device cross-signing signature": "en enhets korssigneringssignatur",
-    "a key signature": "en nyckelsignatur",
-    "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nycklar återställda",
     "Sign in with SSO": "Logga in med SSO",
     "Switch theme": "Byt tema",
     "Not encrypted": "Inte krypterad",
@@ -405,24 +375,7 @@
     "Cayman Islands": "Caymanöarna",
     "Caribbean Netherlands": "Karibiska Nederländerna",
     "Cape Verde": "Kap Verde",
-    "%(count)s members": {
-        "one": "%(count)s medlem",
-        "other": "%(count)s medlemmar"
-    },
-    "<inviter/> invites you": "<inviter/> bjuder in dig",
-    "%(count)s rooms": {
-        "one": "%(count)s rum",
-        "other": "%(count)s rum"
-    },
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s personer du känner har redan gått med",
-        "one": "%(count)s person du känner har redan gått med"
-    },
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
-    "%(count)s reply": {
-        "one": "%(count)s svar",
-        "other": "%(count)s svar"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
@@ -433,18 +386,9 @@
     "Themes": "Teman",
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
-    "toggle event": "växla händelse",
-    "%(count)s votes": {
-        "one": "%(count)s röst",
-        "other": "%(count)s röster"
-    },
     "Forget": "Glöm",
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s och %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 deltagare",
-        "other": "%(count)s deltagare"
-    },
     "View List": "Se lista",
     "%(members)s and %(last)s": "%(members)s och %(last)s",
     "%(members)s and more": "%(members)s och fler",
@@ -454,14 +398,10 @@
     "Show rooms": "Visa rum",
     "Explore public spaces in the new search dialog": "Utforska offentliga utrymmen i den nya sökdialogen",
     "Saved Items": "Sparade föremål",
-    "%(name)s started a video call": "%(name)s startade ett videosamtal",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
     "unknown": "okänd",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
-    "unavailable": "otillgänglig",
-    "unknown status code": "okänd statuskod",
     "Desktop app logo": "Skrivbordsappslogga",
     "common": {
         "about": "Om",
@@ -591,7 +531,25 @@
         "filter_results": "Filtrera resultaten",
         "no_results_found": "Inga resultat funna",
         "unsent": "Ej skickat",
-        "cameras": "Kameror"
+        "cameras": "Kameror",
+        "n_participants": {
+            "one": "1 deltagare",
+            "other": "%(count)s deltagare"
+        },
+        "and_n_others": {
+            "other": "och %(count)s andra…",
+            "one": "och en annan…"
+        },
+        "n_members": {
+            "one": "%(count)s medlem",
+            "other": "%(count)s medlemmar"
+        },
+        "unavailable": "otillgänglig",
+        "edited": "redigerat",
+        "n_rooms": {
+            "one": "%(count)s rum",
+            "other": "%(count)s rum"
+        }
     },
     "action": {
         "continue": "Fortsätt",
@@ -1625,7 +1583,8 @@
         "developer_mode": "Utvecklarläge",
         "view_source_decrypted_event_source": "Avkrypterad händelsekällkod",
         "view_source_decrypted_event_source_unavailable": "Avkrypterad källa otillgänglig",
-        "original_event_source": "Ursprunglig händelsekällkod"
+        "original_event_source": "Ursprunglig händelsekällkod",
+        "toggle_event": "växla händelse"
     },
     "export_chat": {
         "html": "HTML",
@@ -1718,7 +1677,8 @@
         "m.call": {
             "video_call_started": "Videosamtal startade i %(roomName)s.",
             "video_call_started_unsupported": "Videosamtal startade i %(roomName)s. (stöds inte av den här webbläsaren)",
-            "video_call_ended": "Videosamtal avslutades"
+            "video_call_ended": "Videosamtal avslutades",
+            "video_call_started_text": "%(name)s startade ett videosamtal"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s ringde ett röstsamtal.",
@@ -2122,7 +2082,11 @@
             "you_declined": "Du avslog",
             "you_cancelled": "Du avbröt",
             "declining": "Nekar…",
-            "you_started": "Du skickade en verifieringsbegäran"
+            "you_started": "Du skickade en verifieringsbegäran",
+            "user_accepted": "%(name)s accepterade",
+            "user_declined": "%(name)s avslog",
+            "user_cancelled": "%(name)s avbröt",
+            "user_wants_to_verify": "%(name)s vill verifiera"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s har avslutat en omröstning",
@@ -2145,6 +2109,13 @@
             "error_loading": "Kunde inte ladda händelsen som svarades på, antingen så finns den inte eller så har du inte behörighet att se den.",
             "in_reply_to": "<a>Som svar på</a> <pill>",
             "in_reply_to_for_export": "Som svar på <a>detta meddelande</a>"
+        },
+        "in_room_name": " i <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s röst",
+                "other": "%(count)s röster"
+            }
         }
     },
     "slash_command": {
@@ -2539,7 +2510,8 @@
             "alias_field_matches_invalid": "Den här adressen pekar inte på någon rum",
             "alias_field_taken_valid": "Adressen är tillgänglig",
             "alias_field_taken_invalid_domain": "Adressen är upptagen",
-            "alias_field_taken_invalid": "Den adressen hade en ogiltig server eller användes redan"
+            "alias_field_taken_invalid": "Den adressen hade en ogiltig server eller användes redan",
+            "alias_field_placeholder_default": "t.ex. mitt-rum"
         },
         "advanced": {
             "unfederated": "Detta rum är inte tillgängligt för externa Matrix-servrar",
@@ -2610,7 +2582,8 @@
             "enable_element_call_no_permissions_tooltip": "Du är inte behörig att ändra detta.",
             "call_type_section": "Samtalstyp"
         },
-        "title": "Rumsinställningar - %(roomName)s"
+        "title": "Rumsinställningar - %(roomName)s",
+        "alias_not_specified": "inte specificerad"
     },
     "encryption": {
         "verification": {
@@ -2800,7 +2773,12 @@
         },
         "confirm_encryption_setup_title": "Bekräfta krypteringsinställning",
         "confirm_encryption_setup_body": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
-        "unable_to_setup_keys_error": "Kunde inte ställa in nycklar"
+        "unable_to_setup_keys_error": "Kunde inte ställa in nycklar",
+        "key_signature_upload_failed_master_key_signature": "en ny huvudnyckelsignatur",
+        "key_signature_upload_failed_cross_signing_key_signature": "en ny korssigneringssignatur",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "en enhets korssigneringssignatur",
+        "key_signature_upload_failed_key_signature": "en nyckelsignatur",
+        "key_signature_upload_failed_body": "%(brand)s stötte på ett fel vid uppladdning av:"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -3351,7 +3329,11 @@
         "empty_heading": "Håll diskussioner organiserade med trådar",
         "unable_to_decrypt": "Kunde inte avkryptera meddelande",
         "open_thread": "Öppna tråd",
-        "error_start_thread_existing_relation": "Kan inte skapa tråd från en händelse med en existerande relation"
+        "error_start_thread_existing_relation": "Kan inte skapa tråd från en händelse med en existerande relation",
+        "count_of_reply": {
+            "one": "%(count)s svar",
+            "other": "%(count)s svar"
+        }
     },
     "theme": {
         "light_high_contrast": "Ljust högkontrast",
@@ -3708,7 +3690,11 @@
             "all_rooms": "Alla rum",
             "field_placeholder": "Sök…",
             "this_room_button": "Sök i det här rummet",
-            "all_rooms_button": "Sök i alla rum"
+            "all_rooms_button": "Sök i alla rum",
+            "result_count": {
+                "other": "(~%(count)s resultat)",
+                "one": "(~%(count)s resultat)"
+            }
         },
         "jump_to_bottom_button": "Skrolla till de senaste meddelandena",
         "jump_read_marker": "Hoppa till första olästa meddelandet.",
@@ -3729,7 +3715,13 @@
             "other": "Visa alla %(count)s medlemmar"
         },
         "face_pile_tooltip_shortcut_joined": "Inklusive dig, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Inklusive %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Inklusive %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> bjuder in dig",
+        "unknown_status_code_for_timeline_jump": "okänd statuskod",
+        "face_pile_summary": {
+            "other": "%(count)s personer du känner har redan gått med",
+            "one": "%(count)s person du känner har redan gått med"
+        }
     },
     "file_panel": {
         "guest_note": "Du måste <a>registrera dig</a> för att använda den här funktionaliteten",
@@ -3921,7 +3913,8 @@
         },
         "storage_evicted_title": "Sessionsdata saknas",
         "storage_evicted_description_1": "Vissa sessionsdata, inklusive krypteringsnycklar för meddelanden, saknas. Logga ut och logga in för att åtgärda detta genom återställning av nycklarna från säkerhetskopia.",
-        "storage_evicted_description_2": "Din webbläsare har troligen tagit bort dessa data när det blev ont om diskutrymme."
+        "storage_evicted_description_2": "Din webbläsare har troligen tagit bort dessa data när det blev ont om diskutrymme.",
+        "unknown_error_code": "okänd felkod"
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4090,6 +4083,14 @@
                 "other": "Ta bort %(count)s meddelanden",
                 "one": "Ta bort 1 meddelande"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s verifierade sessioner",
+            "one": "1 verifierad session"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sessioner",
+            "one": "%(count)s session"
         }
     },
     "stickers": {
@@ -4342,6 +4343,7 @@
         "key_is_valid": "Det här ser ut som en giltig säkerhetsnyckel!",
         "key_is_invalid": "Inte en giltig säkerhetsnyckel",
         "enter_key_description": "Kom åt din säkre meddelandehistorik och ställ in säker meddelandehantering genom att ange din säkerhetsnyckel.",
-        "key_forgotten_text": "Om du har glömt din säkerhetsnyckel så kan du <button>ställa in nya återställningsalternativ</button>"
+        "key_forgotten_text": "Om du har glömt din säkerhetsnyckel så kan du <button>ställa in nya återställningsalternativ</button>",
+        "load_keys_progress": "%(completed)s av %(total)s nycklar återställda"
     }
 }

@@ -1,10 +1,5 @@
 {
-    "unknown error code": "άγνωστος κωδικός σφάλματος",
     "%(items)s and %(lastItem)s": "%(items)s και %(lastItem)s",
-    "and %(count)s others...": {
-        "one": "και ένας ακόμα...",
-        "other": "και %(count)s άλλοι..."
-    },
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
     "Home": "Αρχική",
@@ -30,11 +25,6 @@
     "Dec": "Δεκ",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s αποτέλεσμα)",
-        "other": "(~%(count)s αποτελέσματα)"
-    },
-    "not specified": "μη καθορισμένο",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Sunday": "Κυριακή",
     "Today": "Σήμερα",
@@ -383,70 +373,24 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
-    "%(count)s rooms": {
-        "one": "%(count)s δωμάτιο",
-        "other": "%(count)s δωμάτια"
-    },
-    "%(count)s members": {
-        "one": "%(count)s μέλος",
-        "other": "%(count)s μέλη"
-    },
     "Moderation": "Συντονισμός",
     "Delete Widget": "Διαγραφή Μικροεφαρμογής",
     "Sign in with SSO": "Συνδεθείτε με SSO",
-    "%(completed)s of %(total)s keys restored": "%(completed)s από %(total)s κλειδιά ανακτήθηκαν",
     "Send Logs": "Αποστολή Αρχείων καταγραφής",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
-    "%(name)s wants to verify": "%(name)s θέλει να επαληθεύσει",
-    "%(name)s cancelled": "%(name)s ακύρωσε",
-    "%(name)s declined": "%(name)s αρνήθηκε",
-    "%(name)s accepted": "Ο/η %(name)s αποδέχθηκε",
-    "%(count)s reply": {
-        "one": "%(count)s απάντηση",
-        "other": "%(count)s απαντήσεις"
-    },
     "Submit logs": "Υποβολή αρχείων καταγραφής",
-    "%(count)s votes": {
-        "one": "%(count)s ψήφος",
-        "other": "%(count)s ψήφοι"
-    },
-    "edited": "επεξεργάστηκε",
-    "%(count)s sessions": {
-        "one": "%(count)s συνεδρία",
-        "other": "%(count)s συνεδρίες"
-    },
-    "%(count)s verified sessions": {
-        "one": "1 επαληθευμένη συνεδρία",
-        "other": "%(count)s επαληθευμένες συνεδρίες"
-    },
     "Not encrypted": "Μη κρυπτογραφημένο",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Προτού υποβάλετε αρχεία καταγραφής, πρέπει να <a>δημιουργήσετε ένα ζήτημα GitHub</a> για να περιγράψετε το πρόβλημά σας.",
-    "e.g. my-room": "π.χ. my-room",
     "Spanner": "Γερμανικό κλειδί",
     "Switch theme": "Αλλαγή θέματος",
-    "<inviter/> invites you": "<inviter/> σας προσκαλεί",
-    "toggle event": "μεταβολή συμβάντος",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
-        "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
-    "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
-    "a key signature": "μια υπογραφή κλειδιού",
-    "a device cross-signing signature": "μια υπογραφή διασταυρούμενης υπογραφής συσκευής",
-    "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
-    "a new master key signature": "μια νέα υπογραφή κύριου κλειδιού",
     "Forget": "Ξεχάστε",
     "Thumbs up": "Μπράβο",
     "View List": "Προβολή Λίστας",
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
-    "%(count)s participants": {
-        "one": "1 συμμετέχων",
-        "other": "%(count)s συμμετέχοντες"
-    },
     "common": {
         "about": "Σχετικά με",
         "analytics": "Αναλυτικά δεδομένα",
@@ -561,7 +505,24 @@
         "filter_results": "Φιλτράρισμα αποτελεσμάτων",
         "no_results_found": "Δε βρέθηκαν αποτελέσματα",
         "unsent": "Μη απεσταλμένα",
-        "cameras": "Κάμερες"
+        "cameras": "Κάμερες",
+        "n_participants": {
+            "one": "1 συμμετέχων",
+            "other": "%(count)s συμμετέχοντες"
+        },
+        "and_n_others": {
+            "one": "και ένας ακόμα...",
+            "other": "και %(count)s άλλοι..."
+        },
+        "n_members": {
+            "one": "%(count)s μέλος",
+            "other": "%(count)s μέλη"
+        },
+        "edited": "επεξεργάστηκε",
+        "n_rooms": {
+            "one": "%(count)s δωμάτιο",
+            "other": "%(count)s δωμάτια"
+        }
     },
     "action": {
         "continue": "Συνέχεια",
@@ -1309,7 +1270,8 @@
         "show_hidden_events": "Εμφάνιση κρυφών συμβάντων στη γραμμή χρόνου",
         "developer_mode": "Λειτουργία για προγραμματιστές",
         "view_source_decrypted_event_source": "Αποκρυπτογραφημένη πηγή συμβάντος",
-        "original_event_source": "Αρχική πηγή συμβάντος"
+        "original_event_source": "Αρχική πηγή συμβάντος",
+        "toggle_event": "μεταβολή συμβάντος"
     },
     "export_chat": {
         "html": "HTML",
@@ -1769,7 +1731,11 @@
             "you_accepted": "Αποδεχθήκατε",
             "you_declined": "Αρνηθήκατε",
             "you_cancelled": "Ακυρώσατε",
-            "you_started": "Στείλατε ένα αίτημα επαλήθευσης"
+            "you_started": "Στείλατε ένα αίτημα επαλήθευσης",
+            "user_accepted": "Ο/η %(name)s αποδέχθηκε",
+            "user_declined": "%(name)s αρνήθηκε",
+            "user_cancelled": "%(name)s ακύρωσε",
+            "user_wants_to_verify": "%(name)s θέλει να επαληθεύσει"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s τερμάτισε μία δημοσκόπηση"
@@ -1791,6 +1757,12 @@
             "error_loading": "Αδυναμία φόρτωσης του συμβάντος στο οποίο δόθηκε απάντηση, είτε δεν υπάρχει είτε δεν έχετε άδεια να το προβάλετε.",
             "in_reply_to": "<a>Ως απαντηση σε</a> <pill>",
             "in_reply_to_for_export": "Ως απαντηση σε<a>αυτό το μήνυμα</a>"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s ψήφος",
+                "other": "%(count)s ψήφοι"
+            }
         }
     },
     "slash_command": {
@@ -2142,7 +2114,8 @@
             "alias_field_matches_invalid": "Αυτή η διεύθυνση δεν οδηγεί σε αυτό το δωμάτιο",
             "alias_field_taken_valid": "Αυτή η διεύθυνση είναι διαθέσιμη για χρήση",
             "alias_field_taken_invalid_domain": "Αυτή η διεύθυνση χρησιμοποιείται ήδη",
-            "alias_field_taken_invalid": "Αυτή η διεύθυνση έχει μη έγκυρο διακομιστή ή χρησιμοποιείται ήδη"
+            "alias_field_taken_invalid": "Αυτή η διεύθυνση έχει μη έγκυρο διακομιστή ή χρησιμοποιείται ήδη",
+            "alias_field_placeholder_default": "π.χ. my-room"
         },
         "advanced": {
             "unfederated": "Αυτό το δωμάτιο δεν είναι προσβάσιμο από απομακρυσμένους διακομιστές Matrix",
@@ -2205,7 +2178,8 @@
             "custom_sound_prompt": "Ορίστε έναν νέο προσαρμοσμένο ήχο",
             "browse_button": "Εξερεύνηση"
         },
-        "title": "Ρυθμίσεις Δωματίου - %(roomName)s"
+        "title": "Ρυθμίσεις Δωματίου - %(roomName)s",
+        "alias_not_specified": "μη καθορισμένο"
     },
     "encryption": {
         "verification": {
@@ -2383,7 +2357,12 @@
         },
         "confirm_encryption_setup_title": "Επιβεβαιώστε τη ρύθμιση κρυπτογράφησης",
         "confirm_encryption_setup_body": "Κάντε κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε τη ρύθμιση της κρυπτογράφησης.",
-        "unable_to_setup_keys_error": "Δεν είναι δυνατή η ρύθμιση των κλειδιών"
+        "unable_to_setup_keys_error": "Δεν είναι δυνατή η ρύθμιση των κλειδιών",
+        "key_signature_upload_failed_master_key_signature": "μια νέα υπογραφή κύριου κλειδιού",
+        "key_signature_upload_failed_cross_signing_key_signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "μια υπογραφή διασταυρούμενης υπογραφής συσκευής",
+        "key_signature_upload_failed_key_signature": "μια υπογραφή κλειδιού",
+        "key_signature_upload_failed_body": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -2841,7 +2820,11 @@
         "empty_explainer": "Τα νήματα σας βοηθούν να οργανώνετε και να παρακολουθείτε καλύτερα τις συνομιλίες σας.",
         "empty_heading": "Διατηρήστε τις συζητήσεις οργανωμένες με νήματα",
         "open_thread": "Άνοιγμα νήματος",
-        "error_start_thread_existing_relation": "Δεν είναι δυνατή η δημιουργία νήματος από ένα συμβάν με μια υπάρχουσα σχέση"
+        "error_start_thread_existing_relation": "Δεν είναι δυνατή η δημιουργία νήματος από ένα συμβάν με μια υπάρχουσα σχέση",
+        "count_of_reply": {
+            "one": "%(count)s απάντηση",
+            "other": "%(count)s απαντήσεις"
+        }
     },
     "theme": {
         "light_high_contrast": "Ελαφριά υψηλή αντίθεση",
@@ -3144,7 +3127,11 @@
         "search": {
             "this_room": "Στο δωμάτιο",
             "all_rooms": "Όλα τα δωμάτια",
-            "field_placeholder": "Αναζήτηση…"
+            "field_placeholder": "Αναζήτηση…",
+            "result_count": {
+                "one": "(~%(count)s αποτέλεσμα)",
+                "other": "(~%(count)s αποτελέσματα)"
+            }
         },
         "jump_to_bottom_button": "Κύλιση στα πιο πρόσφατα μηνύματα",
         "jump_read_marker": "Πηγαίνετε στο πρώτο μη αναγνωσμένο μήνυμα.",
@@ -3158,7 +3145,12 @@
             "other": "Προβολή όλων των %(count)s μελών"
         },
         "face_pile_tooltip_shortcut_joined": "Συμπεριλαμβανομένου σας, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Συμπεριλαμβανομένου %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Συμπεριλαμβανομένου %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> σας προσκαλεί",
+        "face_pile_summary": {
+            "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
+            "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
+        }
     },
     "file_panel": {
         "guest_note": "Πρέπει να <a>εγγραφείτε</a> για να χρησιμοποιήσετε αυτή την λειτουργία",
@@ -3321,7 +3313,8 @@
         },
         "storage_evicted_title": "Λείπουν δεδομένα της συνεδρίας (session)",
         "storage_evicted_description_1": "Ορισμένα δεδομένα συνεδρίας, συμπεριλαμβανομένων των κρυπτογραφημένων κλειδιών μηνυμάτων, λείπουν. Αποσυνδεθείτε και συνδεθείτε για να το διορθώσετε, επαναφέροντας τα κλειδιά από το αντίγραφο ασφαλείας.",
-        "storage_evicted_description_2": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε."
+        "storage_evicted_description_2": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε.",
+        "unknown_error_code": "άγνωστος κωδικός σφάλματος"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -3475,6 +3468,14 @@
                 "other": "Αφαίρεση %(count)s μηνυμάτων",
                 "one": "Αφαίρεση 1 μηνύματος"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 επαληθευμένη συνεδρία",
+            "other": "%(count)s επαληθευμένες συνεδρίες"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s συνεδρία",
+            "other": "%(count)s συνεδρίες"
         }
     },
     "stickers": {
@@ -3687,6 +3688,7 @@
         "key_is_valid": "Αυτό φαίνεται να είναι ένα έγκυρο Κλειδί Ασφαλείας!",
         "key_is_invalid": "Μη έγκυρο Κλειδί Ασφαλείας",
         "enter_key_description": "Αποκτήστε πρόσβαση στο ιστορικό ασφαλών μηνυμάτων σας και ρυθμίστε την ασφαλή ανταλλαγή μηνυμάτων εισάγοντας το Κλειδί ασφαλείας σας.",
-        "key_forgotten_text": "Εάν έχετε ξεχάσει το κλειδί ασφαλείας σας, μπορείτε να <button>ρυθμίσετε νέες επιλογές ανάκτησης</button>"
+        "key_forgotten_text": "Εάν έχετε ξεχάσει το κλειδί ασφαλείας σας, μπορείτε να <button>ρυθμίσετε νέες επιλογές ανάκτησης</button>",
+        "load_keys_progress": "%(completed)s από %(total)s κλειδιά ανακτήθηκαν"
     }
 }

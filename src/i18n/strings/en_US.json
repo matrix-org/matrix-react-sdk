@@ -2,14 +2,8 @@
     "AM": "AM",
     "PM": "PM",
     "%(items)s and %(lastItem)s": "%(items)s and %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "and %(count)s others...",
-        "one": "and one other..."
-    },
     "Join Room": "Join Room",
     "Moderator": "Moderator",
-    "not specified": "not specified",
-    "unknown error code": "unknown error code",
     "Warning!": "Warning!",
     "Sun": "Sun",
     "Mon": "Mon",
@@ -34,10 +28,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Home": "Home",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s result)",
-        "other": "(~%(count)s results)"
-    },
     "Sunday": "Sunday",
     "Today": "Today",
     "Friday": "Friday",
@@ -85,7 +75,11 @@
         "low_priority": "Low priority",
         "historical": "Historical",
         "are_you_sure": "Are you sure?",
-        "email_address": "Email address"
+        "email_address": "Email address",
+        "and_n_others": {
+            "other": "and %(count)s others...",
+            "one": "and one other..."
+        }
     },
     "action": {
         "continue": "Continue",
@@ -488,7 +482,11 @@
         "search": {
             "this_room": "This Room",
             "all_rooms": "All Rooms",
-            "field_placeholder": "Search…"
+            "field_placeholder": "Search…",
+            "result_count": {
+                "one": "(~%(count)s result)",
+                "other": "(~%(count)s results)"
+            }
         },
         "jump_read_marker": "Jump to first unread message.",
         "failed_reject_invite": "Failed to reject invite"
@@ -527,7 +525,8 @@
         "advanced": {
             "unfederated": "This room is not accessible by remote Matrix servers"
         },
-        "upload_avatar_label": "Upload avatar"
+        "upload_avatar_label": "Upload avatar",
+        "alias_not_specified": "not specified"
     },
     "failed_load_async_component": "Unable to load! Check your network connectivity and try again.",
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
@@ -592,7 +591,8 @@
         "session_restore": {
             "title": "Unable to restore session",
             "description_2": "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version."
-        }
+        },
+        "unknown_error_code": "unknown error code"
     },
     "notifications": {
         "enable_prompt_toast_title": "Notifications",

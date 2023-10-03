@@ -1,14 +1,8 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s y %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "y %(count)s más…",
-        "one": "y otro más…"
-    },
     "Join Room": "Unirme a la sala",
     "Home": "Inicio",
     "Moderator": "Moderador",
-    "not specified": "sin especificar",
-    "unknown error code": "Código de error desconocido",
     "Warning!": "¡Advertencia!",
     "AM": "AM",
     "PM": "PM",
@@ -50,10 +44,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultados)",
-        "one": "(~%(count)s resultado)"
-    },
     "Delete Widget": "Eliminar accesorio",
     "collapse": "encoger",
     "expand": "desplegar",
@@ -125,29 +115,9 @@
     "Deactivate account": "Desactivar cuenta",
     "This backup is trusted because it has been restored on this session": "Esta copia de seguridad es de confianza porque ha sido restaurada en esta sesión",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
-    "e.g. my-room": "p.ej. mi-sala",
-    "a new master key signature": "una nueva firma de llave maestra",
-    "a new cross-signing key signature": "una nueva firma de código de firma cruzada",
-    "a device cross-signing signature": "una firma para la firma cruzada de dispositivos",
-    "a key signature": "un firma de clave",
-    "%(brand)s encountered an error during upload of:": "%(brand)s encontró un error durante la carga de:",
     "Encrypted by a deleted session": "Cifrado por una sesión eliminada",
     "Failed to connect to integration manager": "Error al conectarse con el administrador de integración",
-    "%(count)s verified sessions": {
-        "other": "%(count)s sesiones verificadas",
-        "one": "1 sesión verificada"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sesiones",
-        "one": "%(count)s sesión"
-    },
-    "%(name)s accepted": "%(name)s aceptó",
-    "%(name)s declined": "%(name)s declinó",
-    "%(name)s cancelled": "%(name)s canceló",
-    "%(name)s wants to verify": "%(name)s quiere verificar",
-    "edited": "editado",
     "Submit logs": "Enviar registros",
-    "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s llaves restauradas",
     "Sign in with SSO": "Ingrese con SSO",
     "Ok": "Ok",
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
@@ -405,29 +375,8 @@
     "Afghanistan": "Afganistán",
     "United States": "Estados Unidos",
     "United Kingdom": "Reino Unido",
-    "%(count)s members": {
-        "one": "%(count)s miembro",
-        "other": "%(count)s miembros"
-    },
-    "<inviter/> invites you": "<inviter/> te ha invitado",
-    "%(count)s rooms": {
-        "one": "%(count)s sala",
-        "other": "%(count)s salas"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s persona que ya conoces se ha unido",
-        "other": "%(count)s personas que ya conoces se han unido"
-    },
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
-    "%(count)s reply": {
-        "one": "%(count)s respuesta",
-        "other": "%(count)s respuestas"
-    },
     "Forget": "Olvidar",
-    "%(count)s votes": {
-        "one": "%(count)s voto",
-        "other": "%(count)s votos"
-    },
     "%(spaceName)s and %(count)s others": {
         "other": "%(spaceName)s y %(count)s más",
         "one": "%(spaceName)s y %(count)s más"
@@ -438,13 +387,8 @@
     "Themes": "Temas",
     "Moderation": "Moderación",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera acceso a tu cuenta y a las claves de cifrado almacenadas en esta sesión. Sin ellas, no podrás leer todos tus mensajes seguros en ninguna sesión.",
-    "toggle event": "activar o desactivar el evento",
     "Feedback sent! Thanks, we appreciate it!": "¡Opinión enviada! Gracias, te lo agradecemos.",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s y %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 participante",
-        "other": "%(count)s participantes"
-    },
     "View List": "Ver lista",
     "%(members)s and %(last)s": "%(members)s y %(last)s",
     "%(members)s and more": "%(members)s y más",
@@ -454,11 +398,7 @@
     "Show spaces": "Ver espacios",
     "Show rooms": "Ver salas",
     "Saved Items": "Elementos guardados",
-    "%(name)s started a video call": "%(name)s comenzó una videollamada",
     "Thread root ID: %(threadRootId)s": "ID del hilo raíz: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
-    "unavailable": "no disponible",
-    "unknown status code": "error de estado desconocido",
     "unknown": "desconocido",
     "Starting export process…": "Iniciando el proceso de exportación…",
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
@@ -592,7 +532,25 @@
         "filter_results": "Filtrar resultados",
         "no_results_found": "Ningún resultado",
         "unsent": "No enviado",
-        "cameras": "Cámaras"
+        "cameras": "Cámaras",
+        "n_participants": {
+            "one": "1 participante",
+            "other": "%(count)s participantes"
+        },
+        "and_n_others": {
+            "other": "y %(count)s más…",
+            "one": "y otro más…"
+        },
+        "n_members": {
+            "one": "%(count)s miembro",
+            "other": "%(count)s miembros"
+        },
+        "unavailable": "no disponible",
+        "edited": "editado",
+        "n_rooms": {
+            "one": "%(count)s sala",
+            "other": "%(count)s salas"
+        }
     },
     "action": {
         "continue": "Continuar",
@@ -1576,7 +1534,8 @@
         "low_bandwidth_mode": "Modo de bajo ancho de banda",
         "developer_mode": "Modo de desarrollo",
         "view_source_decrypted_event_source": "Descifrar fuente del evento",
-        "original_event_source": "Fuente original del evento"
+        "original_event_source": "Fuente original del evento",
+        "toggle_event": "activar o desactivar el evento"
     },
     "export_chat": {
         "html": "HTML",
@@ -1666,7 +1625,8 @@
         "m.call": {
             "video_call_started": "Videollamada empezada en %(roomName)s.",
             "video_call_started_unsupported": "Videollamada empezada en %(roomName)s. (no compatible con este navegador)",
-            "video_call_ended": "Videollamada terminada"
+            "video_call_ended": "Videollamada terminada",
+            "video_call_started_text": "%(name)s comenzó una videollamada"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hizo una llamada de voz.",
@@ -2063,7 +2023,11 @@
             "you_declined": "Declinaste",
             "you_cancelled": "Cancelaste",
             "declining": "Rechazando…",
-            "you_started": "Has enviado solicitud de verificación"
+            "you_started": "Has enviado solicitud de verificación",
+            "user_accepted": "%(name)s aceptó",
+            "user_declined": "%(name)s declinó",
+            "user_cancelled": "%(name)s canceló",
+            "user_wants_to_verify": "%(name)s quiere verificar"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s ha terminado una encuesta",
@@ -2086,6 +2050,13 @@
             "error_loading": "No se pudo cargar el evento al que se respondió, bien porque no existe o no tiene permiso para verlo.",
             "in_reply_to": "<a>Respondiendo a </a> <pill>",
             "in_reply_to_for_export": "En respuesta a <a>este mensaje</a>"
+        },
+        "in_room_name": " en <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s voto",
+                "other": "%(count)s votos"
+            }
         }
     },
     "slash_command": {
@@ -2469,7 +2440,8 @@
             "alias_field_matches_invalid": "La dirección no apunta a esta sala",
             "alias_field_taken_valid": "Esta dirección está disponible para usar",
             "alias_field_taken_invalid_domain": "Esta dirección ya está en uso",
-            "alias_field_taken_invalid": "Esta dirección tiene un servidor no válido o ya está siendo usada"
+            "alias_field_taken_invalid": "Esta dirección tiene un servidor no válido o ya está siendo usada",
+            "alias_field_placeholder_default": "p.ej. mi-sala"
         },
         "advanced": {
             "unfederated": "Esta sala no es accesible desde otros servidores de Matrix",
@@ -2539,7 +2511,8 @@
             "enable_element_call_no_permissions_tooltip": "No tienes suficientes permisos para cambiar esto.",
             "call_type_section": "Tipo de llamada"
         },
-        "title": "Configuración de la sala - %(roomName)s"
+        "title": "Configuración de la sala - %(roomName)s",
+        "alias_not_specified": "sin especificar"
     },
     "encryption": {
         "verification": {
@@ -2728,7 +2701,12 @@
         },
         "confirm_encryption_setup_title": "Confirmar la configuración de cifrado",
         "confirm_encryption_setup_body": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
-        "unable_to_setup_keys_error": "No se han podido configurar las claves"
+        "unable_to_setup_keys_error": "No se han podido configurar las claves",
+        "key_signature_upload_failed_master_key_signature": "una nueva firma de llave maestra",
+        "key_signature_upload_failed_cross_signing_key_signature": "una nueva firma de código de firma cruzada",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "una firma para la firma cruzada de dispositivos",
+        "key_signature_upload_failed_key_signature": "un firma de clave",
+        "key_signature_upload_failed_body": "%(brand)s encontró un error durante la carga de:"
     },
     "emoji": {
         "category_frequently_used": "Frecuente",
@@ -3252,7 +3230,11 @@
         "empty_heading": "Organiza los temas de conversación en hilos",
         "unable_to_decrypt": "No se ha podido descifrar el mensaje",
         "open_thread": "Abrir hilo",
-        "error_start_thread_existing_relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente"
+        "error_start_thread_existing_relation": "No ha sido posible crear un hilo a partir de un evento con una relación existente",
+        "count_of_reply": {
+            "one": "%(count)s respuesta",
+            "other": "%(count)s respuestas"
+        }
     },
     "theme": {
         "light_high_contrast": "Claro con contraste alto",
@@ -3602,7 +3584,11 @@
             "all_rooms": "Todas las salas",
             "field_placeholder": "Buscar…",
             "this_room_button": "Buscar en esta sala",
-            "all_rooms_button": "Buscar en todas las salas"
+            "all_rooms_button": "Buscar en todas las salas",
+            "result_count": {
+                "other": "(~%(count)s resultados)",
+                "one": "(~%(count)s resultado)"
+            }
         },
         "jump_to_bottom_button": "Ir a los mensajes más recientes",
         "jump_read_marker": "Ir al primer mensaje no leído.",
@@ -3619,7 +3605,13 @@
             "other": "Ver los %(count)s miembros"
         },
         "face_pile_tooltip_shortcut_joined": "Además de ti, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Incluyendo %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Incluyendo %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> te ha invitado",
+        "unknown_status_code_for_timeline_jump": "error de estado desconocido",
+        "face_pile_summary": {
+            "one": "%(count)s persona que ya conoces se ha unido",
+            "other": "%(count)s personas que ya conoces se han unido"
+        }
     },
     "file_panel": {
         "guest_note": "<a>Regístrate</a> para usar esta funcionalidad",
@@ -3799,7 +3791,8 @@
         },
         "storage_evicted_title": "Faltan datos de sesión",
         "storage_evicted_description_1": "Algunos datos de sesión, incluyendo claves de mensajes cifrados, no se encuentran. Desconéctate y vuelve a conectarte para solucionarlo, restableciendo las claves desde la copia de seguridad.",
-        "storage_evicted_description_2": "Tu navegador probablemente borró estos datos cuando tenía poco espacio de disco."
+        "storage_evicted_description_2": "Tu navegador probablemente borró estos datos cuando tenía poco espacio de disco.",
+        "unknown_error_code": "Código de error desconocido"
     },
     "in_space1_and_space2": "En los espacios %(space1Name)s y %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3966,6 +3959,14 @@
                 "other": "Eliminar %(count)s mensajes",
                 "one": "Eliminar 1 mensaje"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s sesiones verificadas",
+            "one": "1 sesión verificada"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sesiones",
+            "one": "%(count)s sesión"
         }
     },
     "stickers": {
@@ -4204,6 +4205,7 @@
         "key_is_valid": "¡Parece que es una clave de seguridad válida!",
         "key_is_invalid": "No es una clave de seguridad válida",
         "enter_key_description": "Accede a tu historial de mensajes seguros y configúralos introduciendo tu clave de seguridad.",
-        "key_forgotten_text": "Si te has olvidado de tu clave de seguridad puedes <button>configurar nuevos métodos de recuperación</button>"
+        "key_forgotten_text": "Si te has olvidado de tu clave de seguridad puedes <button>configurar nuevos métodos de recuperación</button>",
+        "load_keys_progress": "%(completed)s de %(total)s llaves restauradas"
     }
 }

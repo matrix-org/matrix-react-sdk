@@ -1,13 +1,7 @@
 {
-    "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
     "%(items)s and %(lastItem)s": "%(items)s และ %(lastItem)s",
-    "and %(count)s others...": {
-        "one": "และอีกหนึ่งผู้ใช้...",
-        "other": "และอีก %(count)s ผู้ใช้..."
-    },
     "Join Room": "เข้าร่วมห้อง",
     "Moderator": "ผู้ช่วยดูแล",
-    "not specified": "ไม่ได้ระบุ",
     "Warning!": "คำเตือน!",
     "Sun": "อา.",
     "Mon": "จ.",
@@ -32,10 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Home": "เมนูหลัก",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s ผลลัพท์)",
-        "other": "(~%(count)s ผลลัพท์)"
-    },
     "Sunday": "วันอาทิตย์",
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
@@ -68,10 +58,6 @@
     "Afghanistan": "อัฟกานิสถาน",
     "United States": "สหรัฐอเมริกา",
     "United Kingdom": "สหราชอาณาจักร",
-    "%(count)s reply": {
-        "one": "%(count)s ตอบ",
-        "other": "%(count)s ตอบกลับ"
-    },
     "Failed to connect to integration manager": "ไม่สามารถเชื่อมต่อกับตัวจัดการการรวม",
     "collapse": "ยุบ",
     "common": {
@@ -113,7 +99,11 @@
         "low_priority": "ความสำคัญต่ำ",
         "historical": "ประวัติแชทเก่า",
         "are_you_sure": "คุณแน่ใจหรือไม่?",
-        "email_address": "ที่อยู่อีเมล"
+        "email_address": "ที่อยู่อีเมล",
+        "and_n_others": {
+            "one": "และอีกหนึ่งผู้ใช้...",
+            "other": "และอีก %(count)s ผู้ใช้..."
+        }
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -498,7 +488,8 @@
             "error_creating_alias_title": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
             "error_creating_alias_description": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
             "canonical_alias_field_label": "ที่อยู่หลัก"
-        }
+        },
+        "alias_not_specified": "ไม่ได้ระบุ"
     },
     "room": {
         "intro": {
@@ -523,7 +514,11 @@
         "search": {
             "this_room": "ห้องนี้",
             "all_rooms": "ทุกห้อง",
-            "field_placeholder": "ค้นหา…"
+            "field_placeholder": "ค้นหา…",
+            "result_count": {
+                "one": "(~%(count)s ผลลัพท์)",
+                "other": "(~%(count)s ผลลัพท์)"
+            }
         },
         "jump_read_marker": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
         "failed_reject_invite": "การปฏิเสธคำเชิญล้มเหลว"
@@ -569,7 +564,8 @@
         "tls": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่",
         "update_power_level": "การเปลี่ยนระดับอำนาจล้มเหลว",
         "unknown": "ข้อผิดพลาดที่ไม่รู้จัก",
-        "dialog_description_default": "เกิดข้อผิดพลาด"
+        "dialog_description_default": "เกิดข้อผิดพลาด",
+        "unknown_error_code": "รหัสข้อผิดพลาดที่ไม่รู้จัก"
     },
     "notifications": {
         "enable_prompt_toast_title": "การแจ้งเตือน",
@@ -607,7 +603,11 @@
         "deactivate_confirm_action": "ปิดใช้งานผู้ใช้"
     },
     "threads": {
-        "open_thread": "เปิดกระทู้"
+        "open_thread": "เปิดกระทู้",
+        "count_of_reply": {
+            "one": "%(count)s ตอบ",
+            "other": "%(count)s ตอบกลับ"
+        }
     },
     "stickers": {
         "empty": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",

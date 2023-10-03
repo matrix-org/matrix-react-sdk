@@ -1,6 +1,5 @@
 {
     "Moderator": "Moderador/a",
-    "unknown error code": "código de erro desconhecido",
     "Sun": "Dom",
     "Mon": "Seg",
     "Tue": "Ter",
@@ -23,19 +22,10 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s às %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s às %(time)s",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
-    "and %(count)s others...": {
-        "one": "e um outro...",
-        "other": "e %(count)s outros..."
-    },
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Join Room": "Ingressar na sala",
-    "not specified": "não especificado",
     "Warning!": "Atenção!",
     "Home": "Home",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s resultado)",
-        "other": "(~%(count)s resultados)"
-    },
     "Restricted": "Restrito",
     "PM": "PM",
     "AM": "AM",
@@ -128,32 +118,12 @@
     "Lock": "Cadeado",
     "This backup is trusted because it has been restored on this session": "Este backup é confiável, pois foi restaurado nesta sessão",
     "Encrypted by a deleted session": "Criptografada por uma sessão já apagada",
-    "%(name)s wants to verify": "%(name)s solicita confirmação",
-    "a new master key signature": "uma nova chave mestra de assinatura",
-    "a new cross-signing key signature": "uma nova chave de autoverificação",
-    "a key signature": "uma assinatura de chave",
-    "%(name)s accepted": "%(name)s aceitou",
-    "%(name)s declined": "%(name)s recusou",
-    "%(name)s cancelled": "%(name)s cancelou",
-    "edited": "editado",
     "Submit logs": "Enviar relatórios",
-    "e.g. my-room": "por exemplo: minha-sala",
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
-    "%(count)s verified sessions": {
-        "other": "%(count)s sessões confirmadas",
-        "one": "1 sessão confirmada"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sessões",
-        "one": "%(count)s sessão"
-    },
     "Sign in with SSO": "Faça login com SSO (Login Único)",
-    "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restauradas",
     "Switch theme": "Escolha um tema",
-    "a device cross-signing signature": "um aparelho autoverificado",
-    "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
     "Jordan": "Jordânia",
@@ -405,15 +375,7 @@
     "Vatican City": "Cidade do Vaticano",
     "Vanuatu": "Vanuatu",
     "Uzbekistan": "Uzbequistão",
-    "%(count)s members": {
-        "one": "%(count)s integrante",
-        "other": "%(count)s integrantes"
-    },
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s pessoa que você conhece já entrou",
-        "other": "%(count)s pessoas que você conhece já entraram"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e %(count)s outros"
@@ -423,19 +385,7 @@
     "Moderation": "Moderação",
     "Developer": "Desenvolvedor",
     "Messaging": "Mensagens",
-    "%(count)s votes": {
-        "one": "%(count)s voto",
-        "other": "%(count)s votos"
-    },
-    "%(count)s reply": {
-        "one": "%(count)s resposta",
-        "other": "%(count)s respostas"
-    },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "%(count)s participants": {
-        "other": "%(count)s participantes",
-        "one": "1 participante"
-    },
     "Saved Items": "Itens salvos",
     "Remove messages sent by me": "",
     "common": {
@@ -550,7 +500,20 @@
         "show_more": "Mostrar mais",
         "are_you_sure": "Você tem certeza?",
         "email_address": "Endereço de e-mail",
-        "filter_results": "Filtrar resultados"
+        "filter_results": "Filtrar resultados",
+        "n_participants": {
+            "other": "%(count)s participantes",
+            "one": "1 participante"
+        },
+        "and_n_others": {
+            "one": "e um outro...",
+            "other": "e %(count)s outros..."
+        },
+        "n_members": {
+            "one": "%(count)s integrante",
+            "other": "%(count)s integrantes"
+        },
+        "edited": "editado"
     },
     "action": {
         "continue": "Continuar",
@@ -1639,7 +1602,11 @@
             "you_accepted": "Você aceitou",
             "you_declined": "Você recusou",
             "you_cancelled": "Você cancelou",
-            "you_started": "Você enviou uma solicitação de confirmação"
+            "you_started": "Você enviou uma solicitação de confirmação",
+            "user_accepted": "%(name)s aceitou",
+            "user_declined": "%(name)s recusou",
+            "user_cancelled": "%(name)s cancelou",
+            "user_wants_to_verify": "%(name)s solicita confirmação"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s encerrou uma enquete"
@@ -1661,6 +1628,12 @@
             "error_loading": "Não é possível carregar o evento que foi respondido, ele não existe ou você não tem permissão para visualizá-lo.",
             "in_reply_to": "<a>Em resposta a</a> <pill>",
             "in_reply_to_for_export": "Em resposta a <a>esta mensagem</a>"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s voto",
+                "other": "%(count)s votos"
+            }
         }
     },
     "slash_command": {
@@ -2006,7 +1979,8 @@
             "alias_field_safe_localpart_invalid": "Alguns caracteres não são permitidos",
             "alias_field_required_invalid": "Por favor, digite um endereço",
             "alias_field_taken_valid": "Este endereço está disponível para uso",
-            "alias_field_taken_invalid_domain": "Este endereço já está em uso"
+            "alias_field_taken_invalid_domain": "Este endereço já está em uso",
+            "alias_field_placeholder_default": "por exemplo: minha-sala"
         },
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos",
@@ -2063,7 +2037,8 @@
             "custom_sound_prompt": "Definir um novo som personalizado",
             "browse_button": "Buscar"
         },
-        "title": "Configurações da sala - %(roomName)s"
+        "title": "Configurações da sala - %(roomName)s",
+        "alias_not_specified": "não especificado"
     },
     "encryption": {
         "verification": {
@@ -2208,7 +2183,12 @@
         },
         "confirm_encryption_setup_title": "Confirmar a configuração de criptografia",
         "confirm_encryption_setup_body": "Clique no botão abaixo para confirmar a configuração da criptografia.",
-        "unable_to_setup_keys_error": "Não foi possível configurar as chaves"
+        "unable_to_setup_keys_error": "Não foi possível configurar as chaves",
+        "key_signature_upload_failed_master_key_signature": "uma nova chave mestra de assinatura",
+        "key_signature_upload_failed_cross_signing_key_signature": "uma nova chave de autoverificação",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "um aparelho autoverificado",
+        "key_signature_upload_failed_key_signature": "uma assinatura de chave",
+        "key_signature_upload_failed_body": "%(brand)s encontrou um erro durante o envio de:"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",
@@ -2626,7 +2606,11 @@
         "changelog": "Registro de alterações"
     },
     "threads": {
-        "show_thread_filter": "Exibir:"
+        "show_thread_filter": "Exibir:",
+        "count_of_reply": {
+            "one": "%(count)s resposta",
+            "other": "%(count)s respostas"
+        }
     },
     "theme": {
         "light_high_contrast": "Claro (alto contraste)"
@@ -2823,7 +2807,11 @@
         "search": {
             "this_room": "Esta sala",
             "all_rooms": "Todas as salas",
-            "field_placeholder": "Buscar…"
+            "field_placeholder": "Buscar…",
+            "result_count": {
+                "one": "(~%(count)s resultado)",
+                "other": "(~%(count)s resultados)"
+            }
         },
         "jump_to_bottom_button": "Ir para as mensagens recentes",
         "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas.",
@@ -2835,7 +2823,11 @@
             "other": "Ver todos os %(count)s membros"
         },
         "face_pile_tooltip_shortcut_joined": "Incluindo você, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Incluindo %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Incluindo %(commaSeparatedMembers)s",
+        "face_pile_summary": {
+            "one": "%(count)s pessoa que você conhece já entrou",
+            "other": "%(count)s pessoas que você conhece já entraram"
+        }
     },
     "file_panel": {
         "guest_note": "Você deve <a>se registrar</a> para usar este recurso",
@@ -2977,7 +2969,8 @@
         },
         "storage_evicted_title": "Dados de sessão ausentes",
         "storage_evicted_description_1": "Alguns dados de sessão, incluindo chaves de mensagens criptografadas, estão faltando. Desconecte-se e entre novamente para resolver isso, o que restaurará as chaves do backup.",
-        "storage_evicted_description_2": "O seu navegador provavelmente removeu esses dados quando o espaço de armazenamento ficou insuficiente."
+        "storage_evicted_description_2": "O seu navegador provavelmente removeu esses dados quando o espaço de armazenamento ficou insuficiente.",
+        "unknown_error_code": "código de erro desconhecido"
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3118,6 +3111,14 @@
                 "other": "Apagar %(count)s mensagens para todos",
                 "one": "Remover 1 mensagem"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s sessões confirmadas",
+            "one": "1 sessão confirmada"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sessões",
+            "one": "%(count)s sessão"
         }
     },
     "stickers": {
@@ -3298,6 +3299,7 @@
         "key_is_valid": "Essa Chave de Segurança é válida!",
         "key_is_invalid": "Chave de Segurança inválida",
         "enter_key_description": "Acesse o seu histórico de mensagens seguras e configure as mensagens seguras, ao inserir a sua Chave de Segurança.",
-        "key_forgotten_text": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>"
+        "key_forgotten_text": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
+        "load_keys_progress": "%(completed)s de %(total)s chaves restauradas"
     }
 }

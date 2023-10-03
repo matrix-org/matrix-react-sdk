@@ -69,7 +69,7 @@ const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFA
             size="28px"
             overflow={members.length > numShown}
             tooltipLabel={
-                props.onClick ? _t("room|face_pile_tooltip_label", { count }) : _t("%(count)s members", { count })
+                props.onClick ? _t("room|face_pile_tooltip_label", { count }) : _t("common|n_members", { count })
             }
             tooltipShortcut={
                 isJoined
@@ -79,9 +79,7 @@ const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFA
             {...props}
         >
             {onlyKnownUsers && (
-                <span className="mx_FacePile_summary">
-                    {_t("%(count)s people you know have already joined", { count: members.length })}
-                </span>
+                <span className="mx_FacePile_summary">{_t("room|face_pile_summary", { count: members.length })}</span>
             )}
         </FacePile>
     );

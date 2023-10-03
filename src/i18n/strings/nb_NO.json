@@ -6,7 +6,6 @@
     "Unnamed room": "Rom uten navn",
     "Monday": "Mandag",
     "Wednesday": "Onsdag",
-    "unknown error code": "ukjent feilkode",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
     "Saturday": "Lørdag",
@@ -99,32 +98,12 @@
     "%(duration)sh": "%(duration)st",
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Bli med i rommet",
-    "not specified": "ikke spesifisert",
-    "edited": "redigert",
     "Delete Widget": "Slett modul",
-    "e.g. my-room": "f.eks. mitt-rom",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Warning!": "Advarsel!",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
-    "%(count)s verified sessions": {
-        "one": "1 verifisert økt",
-        "other": "%(count)s verifiserte økter"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s økter",
-        "one": "%(count)s økt"
-    },
-    "%(name)s accepted": "%(name)s aksepterte",
-    "%(name)s declined": "%(name)s avslo",
-    "%(name)s cancelled": "%(name)s avbrøt",
-    "%(name)s wants to verify": "%(name)s ønsker å verifisere",
     "Submit logs": "Send inn loggføringer",
     "Aeroplane": "Fly",
-    "and %(count)s others...": {
-        "other": "og %(count)s andre …",
-        "one": "og én annen …"
-    },
-    "a key signature": "en nøkkelsignatur",
     "Send Logs": "Send loggbøker",
     "Ok": "OK",
     "Santa": "Julenisse",
@@ -141,7 +120,6 @@
     "Indonesia": "Indonesia",
     "Iran": "Iran",
     "India": "India",
-    "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nøkler gjenopprettet",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
@@ -177,17 +155,6 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "%(count)s members": {
-        "one": "%(count)s medlem",
-        "other": "%(count)s medlemmer"
-    },
-    "%(count)s rooms": {
-        "other": "%(count)s rom",
-        "one": "%(count)s rom"
-    },
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s personer du kjenner har allerede blitt med"
-    },
     "Germany": "Tyskland",
     "Malta": "Malta",
     "Uruguay": "Uruguay",
@@ -484,7 +451,20 @@
         "are_you_sure": "Er du sikker?",
         "email_address": "E-postadresse",
         "filter_results": "Filtrerresultater",
-        "no_results_found": "Ingen resultater ble funnet"
+        "no_results_found": "Ingen resultater ble funnet",
+        "and_n_others": {
+            "other": "og %(count)s andre …",
+            "one": "og én annen …"
+        },
+        "n_members": {
+            "one": "%(count)s medlem",
+            "other": "%(count)s medlemmer"
+        },
+        "edited": "redigert",
+        "n_rooms": {
+            "other": "%(count)s rom",
+            "one": "%(count)s rom"
+        }
     },
     "action": {
         "continue": "Fortsett",
@@ -1089,7 +1069,11 @@
             "you_accepted": "Du aksepterte",
             "you_declined": "Du avslo",
             "you_cancelled": "Du avbrøt",
-            "you_started": "Du sendte en verifiseringsforespørsel"
+            "you_started": "Du sendte en verifiseringsforespørsel",
+            "user_accepted": "%(name)s aksepterte",
+            "user_declined": "%(name)s avslo",
+            "user_cancelled": "%(name)s avbrøt",
+            "user_wants_to_verify": "%(name)s ønsker å verifisere"
         },
         "m.video": {
             "error_decrypting": "Feil under dekryptering av video"
@@ -1277,7 +1261,8 @@
             "alias_heading": "Rommets adresse",
             "alias_field_safe_localpart_invalid": "Noen tegn er ikke tillatt",
             "alias_field_taken_valid": "Denne adressen er allerede i bruk",
-            "alias_field_taken_invalid_domain": "Denne adressen er allerede i bruk"
+            "alias_field_taken_invalid_domain": "Denne adressen er allerede i bruk",
+            "alias_field_placeholder_default": "f.eks. mitt-rom"
         },
         "advanced": {
             "room_version_section": "Romversjon",
@@ -1304,7 +1289,8 @@
             "custom_sound_prompt": "Velg en ny selvvalgt lyd",
             "browse_button": "Bla"
         },
-        "title": "Rominnstillinger - %(roomName)s"
+        "title": "Rominnstillinger - %(roomName)s",
+        "alias_not_specified": "ikke spesifisert"
     },
     "encryption": {
         "verification": {
@@ -1369,7 +1355,8 @@
             "security_phrase_title": "Sikkerhetsfrase",
             "security_key_title": "Sikkerhetsnøkkel"
         },
-        "confirm_encryption_setup_title": "Bekreft krypteringsoppsett"
+        "confirm_encryption_setup_title": "Bekreft krypteringsoppsett",
+        "key_signature_upload_failed_key_signature": "en nøkkelsignatur"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1678,7 +1665,10 @@
             "field_placeholder": "Søk …"
         },
         "jump_to_bottom_button": "Hopp bort til de nyeste meldingene",
-        "inviter_unknown": "Ukjent"
+        "inviter_unknown": "Ukjent",
+        "face_pile_summary": {
+            "other": "%(count)s personer du kjenner har allerede blitt med"
+        }
     },
     "file_panel": {
         "peek_note": "Du må bli med i rommet for å se filene dens"
@@ -1759,7 +1749,8 @@
         "failed_copy": "Mislyktes i å kopiere",
         "something_went_wrong": "Noe gikk galt!",
         "unknown": "Ukjent feil",
-        "dialog_description_default": "En feil har oppstått."
+        "dialog_description_default": "En feil har oppstått.",
+        "unknown_error_code": "ukjent feilkode"
     },
     "lightbox": {
         "rotate_left": "Roter til venstre",
@@ -1815,6 +1806,14 @@
                 "other": "Slett %(count)s meldinger",
                 "one": "Slett 1 melding"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 verifisert økt",
+            "other": "%(count)s verifiserte økter"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s økter",
+            "one": "%(count)s økt"
         }
     },
     "stickers": {
@@ -1914,6 +1913,7 @@
         "no_backup_error": "Ingen sikkerhetskopier ble funnet!",
         "keys_restored_title": "Nøklene ble gjenopprettet",
         "enter_phrase_title": "Skriv inn sikkerhetsfrase",
-        "enter_key_title": "Skriv inn sikkerhetsnøkkel"
+        "enter_key_title": "Skriv inn sikkerhetsnøkkel",
+        "load_keys_progress": "%(completed)s av %(total)s nøkler gjenopprettet"
     }
 }

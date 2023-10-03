@@ -1,14 +1,8 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s ve %(lastItem)s",
-    "and %(count)s others...": {
-        "one": "ve bir diğeri...",
-        "other": "ve %(count)s diğerleri..."
-    },
     "Home": "Ev",
     "Join Room": "Odaya Katıl",
     "Moderator": "Moderatör",
-    "not specified": "Belirtilmemiş",
-    "unknown error code": "bilinmeyen hata kodu",
     "Warning!": "Uyarı!",
     "Sun": "Pzt",
     "Mon": "Pazartesi",
@@ -32,10 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s , %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "Hafta - %(weekDayName)s , %(day)s -%(monthName)s -%(fullYear)s , %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s sonuç)",
-        "other": "(~%(count)s sonuçlar)"
-    },
     "Sunday": "Pazar",
     "Today": "Bugün",
     "Friday": "Cuma",
@@ -49,7 +39,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s%(monthName)s%(day)s%(fullYear)s",
     "Restricted": "Sınırlı",
     "expand": "genişlet",
-    "e.g. my-room": "örn. odam",
     "Send Logs": "Logları Gönder",
     "Robot": "Robot",
     "Hat": "Şapka",
@@ -114,27 +103,12 @@
     "%(duration)sh": "%(duration)ssa",
     "%(duration)sd": "%(duration)sgün",
     "Failed to connect to integration manager": "Entegrasyon yöneticisine bağlanma başarısız",
-    "%(count)s verified sessions": {
-        "other": "%(count)s doğrulanmış oturum",
-        "one": "1 doğrulanmış oturum"
-    },
-    "%(name)s accepted": "%(name)s kabul etti",
-    "%(name)s cancelled": "%(name)s iptal etti",
-    "%(name)s wants to verify": "%(name)s doğrulamak istiyor",
-    "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
-    "%(count)s sessions": {
-        "other": "%(count)s oturum",
-        "one": "%(count)s oturum"
-    },
     "Delete Widget": "Görsel Bileşen Sil",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "a new master key signature": "yeni bir master anahtar imzası",
-    "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
-    "a key signature": "bir anahtar imzası",
     "PM": "24:00",
     "AM": "12:00",
     "Your homeserver has exceeded its user limit.": "Homeserver'ınız kullanıcı limitini aştı.",
@@ -373,7 +347,6 @@
     "Bahamas": "Bahamalar",
     "Azerbaijan": "Azerbaycan",
     "Austria": "Avusturya",
-    "%(name)s declined": "%(name)s reddetti",
     "IRC display name width": "IRC görünen ad genişliği",
     "Australia": "Avustralya",
     "Aruba": "Aruba",
@@ -482,7 +455,12 @@
         "show_more": "Daha fazla göster",
         "are_you_sure": "Emin misiniz ?",
         "email_address": "E-posta Adresi",
-        "filter_results": "Sonuçları filtrele"
+        "filter_results": "Sonuçları filtrele",
+        "and_n_others": {
+            "one": "ve bir diğeri...",
+            "other": "ve %(count)s diğerleri..."
+        },
+        "edited": "düzenlendi"
     },
     "action": {
         "continue": "Devam Et",
@@ -1254,7 +1232,11 @@
             "you_accepted": "Kabul ettiniz",
             "you_declined": "Reddettiniz",
             "you_cancelled": "İptal ettiniz",
-            "you_started": "Doğrulama isteği gönderdiniz"
+            "you_started": "Doğrulama isteği gönderdiniz",
+            "user_accepted": "%(name)s kabul etti",
+            "user_declined": "%(name)s reddetti",
+            "user_cancelled": "%(name)s iptal etti",
+            "user_wants_to_verify": "%(name)s doğrulamak istiyor"
         },
         "m.video": {
             "error_decrypting": "Video şifre çözme hatası"
@@ -1491,7 +1473,8 @@
             "avatar_field_label": "Oda avatarı",
             "aliases_no_items_label": "Henüz yayınlanmış başka adres yok, aşağıdan bir tane ekle",
             "aliases_items_label": "Diğer yayınlanmış adresler:",
-            "alias_field_safe_localpart_invalid": "Bazı karakterlere izin verilmiyor"
+            "alias_field_safe_localpart_invalid": "Bazı karakterlere izin verilmiyor",
+            "alias_field_placeholder_default": "örn. odam"
         },
         "advanced": {
             "unfederated": "Bu oda uzak Matrix Sunucuları tarafından erişilebilir değil",
@@ -1523,7 +1506,8 @@
             "custom_sound_prompt": "Özel bir ses ayarla",
             "browse_button": "Gözat"
         },
-        "title": "Oda Ayarları - %(roomName)s"
+        "title": "Oda Ayarları - %(roomName)s",
+        "alias_not_specified": "Belirtilmemiş"
     },
     "encryption": {
         "verification": {
@@ -1627,7 +1611,10 @@
         "destroy_cross_signing_dialog": {
             "title": "Çarpraz-imzalama anahtarlarını imha et?",
             "primary_button_text": "Çapraz-imzalama anahtarlarını temizle"
-        }
+        },
+        "key_signature_upload_failed_master_key_signature": "yeni bir master anahtar imzası",
+        "key_signature_upload_failed_cross_signing_key_signature": "yeni bir çapraz-imzalama anahtarı imzası",
+        "key_signature_upload_failed_key_signature": "bir anahtar imzası"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -2046,7 +2033,11 @@
         "search": {
             "this_room": "Bu Oda",
             "all_rooms": "Tüm Odalar",
-            "field_placeholder": "Arama…"
+            "field_placeholder": "Arama…",
+            "result_count": {
+                "one": "(~%(count)s sonuç)",
+                "other": "(~%(count)s sonuçlar)"
+            }
         },
         "jump_to_bottom_button": "En son mesajlara git",
         "jump_read_marker": "İlk okunmamış iletiye atla.",
@@ -2150,7 +2141,8 @@
             "description_1": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
             "description_2": "Eğer daha önce %(brand)s'un daha yeni bir versiyonunu kullandıysanız , oturumunuz bu sürümle uyumsuz olabilir . Bu pencereyi kapatın ve daha yeni sürüme geri dönün."
         },
-        "storage_evicted_title": "Kayıp oturum verisi"
+        "storage_evicted_title": "Kayıp oturum verisi",
+        "unknown_error_code": "bilinmeyen hata kodu"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2263,6 +2255,14 @@
                 "other": "%(count)s mesajı sil",
                 "one": "1 mesajı sil"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s doğrulanmış oturum",
+            "one": "1 doğrulanmış oturum"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s oturum",
+            "one": "%(count)s oturum"
         }
     },
     "stickers": {

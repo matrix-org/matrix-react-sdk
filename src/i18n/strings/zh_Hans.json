@@ -1,21 +1,11 @@
 {
     "Join Room": "加入房间",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "和其他%(count)s个人……",
-        "one": "和其它一个..."
-    },
     "Home": "主页",
     "Moderator": "协管员",
-    "not specified": "未指定",
-    "unknown error code": "未知错误代码",
     "Warning!": "警告！",
     "AM": "上午",
     "PM": "下午",
-    "(~%(count)s results)": {
-        "one": "（~%(count)s 个结果）",
-        "other": "（~%(count)s 个结果）"
-    },
     "Sun": "周日",
     "Mon": "周一",
     "Tue": "周二",
@@ -130,30 +120,10 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要报告 Matrix 相关的安全问题，请阅读 Matrix.org 的<a>安全公开策略</a>。",
     "Encrypted by a deleted session": "由已删除的会话加密",
     "Failed to connect to integration manager": "连接至集成管理器失败",
-    "%(count)s verified sessions": {
-        "other": "%(count)s 个已验证的会话",
-        "one": "1 个已验证的会话"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s 个会话",
-        "one": "%(count)s 个会话"
-    },
-    "%(name)s accepted": "%(name)s 接受了",
-    "%(name)s declined": "%(name)s 拒绝了",
-    "%(name)s cancelled": "%(name)s 取消了",
-    "%(name)s wants to verify": "%(name)s 想要验证",
-    "edited": "已编辑",
     "Submit logs": "提交日志",
-    "e.g. my-room": "例如 my-room",
-    "a new master key signature": "一个新的主密钥签名",
-    "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
-    "a device cross-signing signature": "一个设备的交叉签名的签名",
-    "a key signature": "一个密钥签名",
-    "%(completed)s of %(total)s keys restored": "%(total)s 个密钥中之 %(completed)s 个已恢复",
     "Sign in with SSO": "使用单点登录",
     "Switch theme": "切换主题",
     "IRC display name width": "IRC 显示名称宽度",
-    "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "Backup version:": "备份版本：",
     "Hong Kong": "香港",
     "Cook Islands": "库克群岛",
@@ -212,10 +182,6 @@
     "Afghanistan": "阿富汗",
     "United States": "美国",
     "United Kingdom": "英国",
-    "%(count)s members": {
-        "one": "%(count)s 位成员",
-        "other": "%(count)s 位成员"
-    },
     "Not encrypted": "未加密",
     "Pakistan": "巴基斯坦",
     "United Arab Emirates": "阿拉伯联合酋长国",
@@ -296,11 +262,6 @@
     "Cuba": "古巴",
     "Croatia": "克罗地亚",
     "Costa Rica": "哥斯达黎加",
-    "<inviter/> invites you": "<inviter/> 邀请了你",
-    "%(count)s rooms": {
-        "one": "%(count)s 个房间",
-        "other": "%(count)s 个房间"
-    },
     "Zimbabwe": "津巴布韦",
     "Zambia": "赞比亚",
     "Western Sahara": "西撒哈拉",
@@ -414,24 +375,12 @@
     "Guinea-Bissau": "几内亚比绍",
     "Guinea": "几内亚",
     "Guernsey": "根西岛",
-    "%(count)s people you know have already joined": {
-        "one": "已有你所认识的 %(count)s 个人加入",
-        "other": "已有你所认识的 %(count)s 个人加入"
-    },
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
-    "%(count)s reply": {
-        "one": "%(count)s 条回复",
-        "other": "%(count)s 条回复"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
     "Forget": "忘记",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s 和其他 %(count)s 个空间",
         "other": "%(spaceName)s 和其他 %(count)s 个空间"
-    },
-    "%(count)s votes": {
-        "one": "%(count)s 票",
-        "other": "%(count)s 票"
     },
     "Developer": "开发者",
     "Experimental": "实验性",
@@ -439,16 +388,11 @@
     "Moderation": "审核",
     "Messaging": "消息传递",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
-    "%(count)s participants": {
-        "other": "%(count)s 名参与者",
-        "one": "一名参与者"
-    },
     "Saved Items": "已保存的项目",
     "%(members)s and %(last)s": "%(members)s和%(last)s",
     "%(members)s and more": "%(members)s和更多",
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
-    "toggle event": "切换事件",
     "Show rooms": "显示房间",
     "Show spaces": "显示空间",
     "You cannot search for rooms that are neither a room nor a space": "你无法搜索既不是房间也不是空间的房间",
@@ -576,7 +520,24 @@
         "filter_results": "过滤结果",
         "no_results_found": "找不到结果",
         "unsent": "未发送",
-        "cameras": "相机"
+        "cameras": "相机",
+        "n_participants": {
+            "other": "%(count)s 名参与者",
+            "one": "一名参与者"
+        },
+        "and_n_others": {
+            "other": "和其他%(count)s个人……",
+            "one": "和其它一个..."
+        },
+        "n_members": {
+            "one": "%(count)s 位成员",
+            "other": "%(count)s 位成员"
+        },
+        "edited": "已编辑",
+        "n_rooms": {
+            "one": "%(count)s 个房间",
+            "other": "%(count)s 个房间"
+        }
     },
     "action": {
         "continue": "继续",
@@ -1469,7 +1430,8 @@
         "low_bandwidth_mode": "低带宽模式",
         "developer_mode": "开发者模式",
         "view_source_decrypted_event_source": "解密的事件源码",
-        "original_event_source": "原始事件源码"
+        "original_event_source": "原始事件源码",
+        "toggle_event": "切换事件"
     },
     "export_chat": {
         "html": "HTML",
@@ -1941,7 +1903,11 @@
             "you_accepted": "你接受了",
             "you_declined": "你拒绝了",
             "you_cancelled": "你取消了",
-            "you_started": "你发送了一个验证请求"
+            "you_started": "你发送了一个验证请求",
+            "user_accepted": "%(name)s 接受了",
+            "user_declined": "%(name)s 拒绝了",
+            "user_cancelled": "%(name)s 取消了",
+            "user_wants_to_verify": "%(name)s 想要验证"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s 结束了投票"
@@ -1963,6 +1929,12 @@
             "error_loading": "无法加载被回复的事件，它可能不存在，也可能是你没有权限查看它。",
             "in_reply_to": "<a>答复</a> <pill>",
             "in_reply_to_for_export": "答复<a>此消息</a>"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s 票",
+                "other": "%(count)s 票"
+            }
         }
     },
     "slash_command": {
@@ -2341,7 +2313,8 @@
             "alias_field_matches_invalid": "此地址不指向此房间",
             "alias_field_taken_valid": "此地址可用",
             "alias_field_taken_invalid_domain": "此地址已被使用",
-            "alias_field_taken_invalid": "此地址的服务器无效或已被使用"
+            "alias_field_taken_invalid": "此地址的服务器无效或已被使用",
+            "alias_field_placeholder_default": "例如 my-room"
         },
         "advanced": {
             "unfederated": "此房间无法被远程 Matrix 服务器访问",
@@ -2410,7 +2383,8 @@
             "enable_element_call_no_permissions_tooltip": "你没有足够的权限更改这个。",
             "call_type_section": "通话类型"
         },
-        "title": "房间设置 - %(roomName)s"
+        "title": "房间设置 - %(roomName)s",
+        "alias_not_specified": "未指定"
     },
     "encryption": {
         "verification": {
@@ -2593,7 +2567,12 @@
         },
         "confirm_encryption_setup_title": "确认加密设置",
         "confirm_encryption_setup_body": "点击下方按钮以确认设置加密。",
-        "unable_to_setup_keys_error": "无法设置密钥"
+        "unable_to_setup_keys_error": "无法设置密钥",
+        "key_signature_upload_failed_master_key_signature": "一个新的主密钥签名",
+        "key_signature_upload_failed_cross_signing_key_signature": "一个新的交叉签名密钥的签名",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "一个设备的交叉签名的签名",
+        "key_signature_upload_failed_key_signature": "一个密钥签名",
+        "key_signature_upload_failed_body": "%(brand)s 在上传此文件时出错："
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3076,7 +3055,11 @@
         "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
         "empty_heading": "用消息列使讨论井然有序",
         "open_thread": "打开消息列",
-        "error_start_thread_existing_relation": "无法从既有关系的事件创建消息列"
+        "error_start_thread_existing_relation": "无法从既有关系的事件创建消息列",
+        "count_of_reply": {
+            "one": "%(count)s 条回复",
+            "other": "%(count)s 条回复"
+        }
     },
     "theme": {
         "light_high_contrast": "浅色高对比",
@@ -3404,7 +3387,11 @@
         "search": {
             "this_room": "此房间",
             "all_rooms": "全部房间",
-            "field_placeholder": "搜索…"
+            "field_placeholder": "搜索…",
+            "result_count": {
+                "one": "（~%(count)s 个结果）",
+                "other": "（~%(count)s 个结果）"
+            }
         },
         "jump_to_bottom_button": "滚动到最近的消息",
         "jump_read_marker": "跳到第一条未读消息。",
@@ -3419,7 +3406,12 @@
             "other": "查看全部 %(count)s 位成员"
         },
         "face_pile_tooltip_shortcut_joined": "包括你，%(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "包括 %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "包括 %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> 邀请了你",
+        "face_pile_summary": {
+            "one": "已有你所认识的 %(count)s 个人加入",
+            "other": "已有你所认识的 %(count)s 个人加入"
+        }
     },
     "file_panel": {
         "guest_note": "你必须 <a>注册</a> 以使用此功能",
@@ -3600,7 +3592,8 @@
         },
         "storage_evicted_title": "缺失会话数据",
         "storage_evicted_description_1": "一些会话数据，包括加密消息密钥，已缺失。要修复此问题，登出并重新登录，然后从备份恢复密钥。",
-        "storage_evicted_description_2": "你的浏览器可能在磁盘空间不足时删除了此数据。"
+        "storage_evicted_description_2": "你的浏览器可能在磁盘空间不足时删除了此数据。",
+        "unknown_error_code": "未知错误代码"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {
@@ -3756,6 +3749,14 @@
                 "other": "删除 %(count)s 条消息",
                 "one": "删除 1 条消息"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s 个已验证的会话",
+            "one": "1 个已验证的会话"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s 个会话",
+            "one": "%(count)s 个会话"
         }
     },
     "stickers": {
@@ -3977,6 +3978,7 @@
         "key_is_valid": "看起来是有效的安全密钥！",
         "key_is_invalid": "安全密钥无效",
         "enter_key_description": "通过输入你的安全密钥来访问你的安全消息历史记录并设置安全通信。",
-        "key_forgotten_text": "如果你忘记了你的安全密钥，你可以<button>设置新的恢复选项</button>"
+        "key_forgotten_text": "如果你忘记了你的安全密钥，你可以<button>设置新的恢复选项</button>",
+        "load_keys_progress": "%(total)s 个密钥中之 %(completed)s 个已恢复"
     }
 }

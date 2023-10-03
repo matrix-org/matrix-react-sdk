@@ -1,6 +1,5 @@
 {
     "Moderator": "Модератор",
-    "unknown error code": "неизвестный код ошибки",
     "Warning!": "Внимание!",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "Sep": "Сен",
@@ -23,19 +22,10 @@
     "Thu": "Чт",
     "Fri": "Пт",
     "Sat": "Сб",
-    "and %(count)s others...": {
-        "other": "и %(count)s других...",
-        "one": "и ещё кто-то..."
-    },
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "Join Room": "Войти в комнату",
-    "not specified": "не задан",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Home": "Главная",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s результатов)",
-        "one": "(~%(count)s результат)"
-    },
     "AM": "ДП",
     "PM": "ПП",
     "Unnamed room": "Комната без названия",
@@ -121,37 +111,17 @@
     "Headphones": "Наушники",
     "Folder": "Папка",
     "Scissors": "Ножницы",
-    "edited": "изменено",
     "Deactivate account": "Деактивировать учётную запись",
-    "e.g. my-room": "например, моя-комната",
-    "%(count)s sessions": {
-        "other": "Сеансов: %(count)s",
-        "one": "%(count)s сеанс"
-    },
     "Lock": "Заблокировать",
     "This backup is trusted because it has been restored on this session": "Эта резервная копия является доверенной, потому что она была восстановлена в этом сеансе",
     "Encrypted by a deleted session": "Зашифровано удалённым сеансом",
     "Failed to connect to integration manager": "Не удалось подключиться к менеджеру интеграций",
-    "%(count)s verified sessions": {
-        "other": "Заверенных сеансов: %(count)s",
-        "one": "1 заверенный сеанс"
-    },
-    "%(name)s accepted": "%(name)s принял(а)",
-    "%(name)s declined": "%(name)s отказал(а)",
-    "%(name)s cancelled": "%(name)s отменил(а)",
-    "%(name)s wants to verify": "%(name)s желает подтвердить",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
-    "a key signature": "отпечаток ключа",
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашний сервер превысил один из своих лимитов ресурсов.",
     "Ok": "Хорошо",
     "Submit logs": "Отправить логи",
     "IRC display name width": "Ширина отображаемого имени IRC",
-    "a new master key signature": "новая подпись мастер-ключа",
-    "a new cross-signing key signature": "новый ключ подписи для кросс-подписи",
-    "a device cross-signing signature": "подпись устройства для кросс-подписи",
-    "%(brand)s encountered an error during upload of:": "%(brand)s обнаружил ошибку при загрузке файла:",
-    "%(completed)s of %(total)s keys restored": "%(completed)s из %(total)s ключей восстановлено",
     "Sign in with SSO": "Вход с помощью SSO",
     "Switch theme": "Сменить тему",
     "Not encrypted": "Не зашифровано",
@@ -405,31 +375,9 @@
     "Afghanistan": "Афганистан",
     "United States": "Соединенные Штаты Америки",
     "United Kingdom": "Великобритания",
-    "%(count)s rooms": {
-        "one": "%(count)s комната",
-        "other": "%(count)s комнат"
-    },
-    "%(count)s members": {
-        "one": "%(count)s участник",
-        "other": "%(count)s участников"
-    },
-    "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s человек, которого вы знаете, уже присоединился",
-        "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
-    },
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
-    "%(count)s reply": {
-        "one": "%(count)s ответ",
-        "other": "%(count)s ответов"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Восстановите доступ к своей учетной записи и восстановите ключи шифрования, сохранённые в этом сеансе. Без них в любом сеансе вы не сможете прочитать все свои защищённые сообщения.",
     "Forget": "Забыть",
-    "toggle event": "переключить событие",
-    "%(count)s votes": {
-        "one": "%(count)s голос",
-        "other": "%(count)s голосов"
-    },
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
     "Themes": "Темы",
@@ -449,13 +397,7 @@
     "You cannot search for rooms that are neither a room nor a space": "Вы не можете искать комнаты, которые не являются ни комнатой, ни пространством",
     "Show spaces": "Показать пространства",
     "Show rooms": "Показать комнаты",
-    "%(count)s participants": {
-        "one": "1 участник",
-        "other": "%(count)s участников"
-    },
     "Saved Items": "Сохранённые объекты",
-    "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
-    " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "common": {
         "about": "О комнате",
         "analytics": "Аналитика",
@@ -582,7 +524,24 @@
         "filter_results": "Фильтрация результатов",
         "no_results_found": "Результаты не найдены",
         "unsent": "Не отправлено",
-        "cameras": "Камеры"
+        "cameras": "Камеры",
+        "n_participants": {
+            "one": "1 участник",
+            "other": "%(count)s участников"
+        },
+        "and_n_others": {
+            "other": "и %(count)s других...",
+            "one": "и ещё кто-то..."
+        },
+        "n_members": {
+            "one": "%(count)s участник",
+            "other": "%(count)s участников"
+        },
+        "edited": "изменено",
+        "n_rooms": {
+            "one": "%(count)s комната",
+            "other": "%(count)s комнат"
+        }
     },
     "action": {
         "continue": "Продолжить",
@@ -1539,7 +1498,8 @@
         "low_bandwidth_mode_description": "Требуется совместимый сервер.",
         "developer_mode": "Режим разработчика",
         "view_source_decrypted_event_source": "Расшифрованный исходный код",
-        "original_event_source": "Оригинальный исходный код"
+        "original_event_source": "Оригинальный исходный код",
+        "toggle_event": "переключить событие"
     },
     "export_chat": {
         "html": "HTML",
@@ -1624,7 +1584,8 @@
         "m.call": {
             "video_call_started": "Видеовызов начался в %(roomName)s.",
             "video_call_started_unsupported": "Видеовызов начался в %(roomName)s. (не поддерживается этим браузером)",
-            "video_call_ended": "Видеозвонок завершён"
+            "video_call_ended": "Видеозвонок завершён",
+            "video_call_started_text": "%(name)s начал(а) видеозвонок"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s сделал голосовой вызов.",
@@ -2018,7 +1979,11 @@
             "you_accepted": "Вы приняли",
             "you_declined": "Вы отказали",
             "you_cancelled": "Вы отменили",
-            "you_started": "Вы отправили запрос подтверждения"
+            "you_started": "Вы отправили запрос подтверждения",
+            "user_accepted": "%(name)s принял(а)",
+            "user_declined": "%(name)s отказал(а)",
+            "user_cancelled": "%(name)s отменил(а)",
+            "user_wants_to_verify": "%(name)s желает подтвердить"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s завершил(а) опрос"
@@ -2040,6 +2005,13 @@
             "error_loading": "Не удается загрузить событие, на которое был дан ответ. Либо оно не существует, либо у вас нет разрешения на его просмотр.",
             "in_reply_to": "<a>В ответ на</a> <pill>",
             "in_reply_to_for_export": "В ответ на <a>это сообщение</a>"
+        },
+        "in_room_name": " в <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s голос",
+                "other": "%(count)s голосов"
+            }
         }
     },
     "slash_command": {
@@ -2418,7 +2390,8 @@
             "alias_field_matches_invalid": "Этот адрес не указывает на эту комнату",
             "alias_field_taken_valid": "Этот адрес доступен",
             "alias_field_taken_invalid_domain": "Этот адрес уже используется",
-            "alias_field_taken_invalid": "Этот адрес имеет недопустимый сервер или уже используется"
+            "alias_field_taken_invalid": "Этот адрес имеет недопустимый сервер или уже используется",
+            "alias_field_placeholder_default": "например, моя-комната"
         },
         "advanced": {
             "unfederated": "Это комната недоступна из других серверов Matrix",
@@ -2484,7 +2457,8 @@
         "voip": {
             "call_type_section": "Тип звонка"
         },
-        "title": "Настройки комнаты — %(roomName)s"
+        "title": "Настройки комнаты — %(roomName)s",
+        "alias_not_specified": "не задан"
     },
     "encryption": {
         "verification": {
@@ -2669,7 +2643,12 @@
         },
         "confirm_encryption_setup_title": "Подтвердите настройку шифрования",
         "confirm_encryption_setup_body": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
-        "unable_to_setup_keys_error": "Невозможно настроить ключи"
+        "unable_to_setup_keys_error": "Невозможно настроить ключи",
+        "key_signature_upload_failed_master_key_signature": "новая подпись мастер-ключа",
+        "key_signature_upload_failed_cross_signing_key_signature": "новый ключ подписи для кросс-подписи",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "подпись устройства для кросс-подписи",
+        "key_signature_upload_failed_key_signature": "отпечаток ключа",
+        "key_signature_upload_failed_body": "%(brand)s обнаружил ошибку при загрузке файла:"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3165,7 +3144,11 @@
         "empty_heading": "Организуйте обсуждения с помощью обсуждений",
         "unable_to_decrypt": "Невозможно расшифровать сообщение",
         "open_thread": "Открыть ветку",
-        "error_start_thread_existing_relation": "Невозможно создать обсуждение из события с существующей связью"
+        "error_start_thread_existing_relation": "Невозможно создать обсуждение из события с существующей связью",
+        "count_of_reply": {
+            "one": "%(count)s ответ",
+            "other": "%(count)s ответов"
+        }
     },
     "theme": {
         "light_high_contrast": "Контрастная светлая",
@@ -3502,7 +3485,11 @@
         "search": {
             "this_room": "В этой комнате",
             "all_rooms": "Везде",
-            "field_placeholder": "Поиск…"
+            "field_placeholder": "Поиск…",
+            "result_count": {
+                "other": "(~%(count)s результатов)",
+                "one": "(~%(count)s результат)"
+            }
         },
         "jump_to_bottom_button": "Перейти к последним сообщениям",
         "jump_read_marker": "Перейти к первому непрочитанному сообщению.",
@@ -3517,7 +3504,12 @@
             "other": "Просмотреть всех %(count)s участников"
         },
         "face_pile_tooltip_shortcut_joined": "Включая вас, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Включая %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Включая %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> пригласил(а) тебя",
+        "face_pile_summary": {
+            "one": "%(count)s человек, которого вы знаете, уже присоединился",
+            "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
+        }
     },
     "file_panel": {
         "guest_note": "Вы должны <a>зарегистрироваться</a>, чтобы использовать эту функцию",
@@ -3694,7 +3686,8 @@
         },
         "storage_evicted_title": "Отсутствуют данные сеанса",
         "storage_evicted_description_1": "Отсутствуют некоторые данные сеанса, в том числе ключи шифрования сообщений. Выйдите и войдите снова, чтобы восстановить ключи из резервной копии.",
-        "storage_evicted_description_2": "Вероятно, ваш браузер удалил эти данные, когда на дисковом пространстве оставалось мало места."
+        "storage_evicted_description_2": "Вероятно, ваш браузер удалил эти данные, когда на дисковом пространстве оставалось мало места.",
+        "unknown_error_code": "неизвестный код ошибки"
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3858,6 +3851,14 @@
                 "other": "Удалить %(count)s сообщения(-й)",
                 "one": "Удалить 1 сообщение"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "Заверенных сеансов: %(count)s",
+            "one": "1 заверенный сеанс"
+        },
+        "count_of_sessions": {
+            "other": "Сеансов: %(count)s",
+            "one": "%(count)s сеанс"
         }
     },
     "stickers": {
@@ -4087,6 +4088,7 @@
         "key_is_valid": "Похоже, это правильный ключ безопасности!",
         "key_is_invalid": "Неправильный ключ безопасности",
         "enter_key_description": "Получите доступ к своей истории защищенных сообщений и настройте безопасный обмен сообщениями, введя ключ безопасности.",
-        "key_forgotten_text": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>"
+        "key_forgotten_text": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>",
+        "load_keys_progress": "%(completed)s из %(total)s ключей восстановлено"
     }
 }

@@ -898,9 +898,21 @@
         "select_all": "Select all",
         "emoji": "Emoji",
         "unencrypted": "Not encrypted",
+        "n_participants": {
+            "other": "%(count)s participants",
+            "one": "1 participant"
+        },
+        "and_n_others": {
+            "other": "and %(count)s others...",
+            "one": "and one other..."
+        },
         "sticker": "Sticker",
         "view_message": "View message",
         "public_room": "Public room",
+        "n_members": {
+            "other": "%(count)s members",
+            "one": "%(count)s member"
+        },
         "video_room": "Video room",
         "public_space": "Public space",
         "private_space": "Private space",
@@ -923,8 +935,10 @@
         "are_you_sure": "Are you sure?",
         "security": "Security",
         "verification_cancelled": "Verification cancelled",
+        "unavailable": "unavailable",
         "encryption_enabled": "Encryption enabled",
         "image": "Image",
+        "edited": "edited",
         "reactions": "Reactions",
         "location": "Location",
         "qr_code": "QR Code",
@@ -938,6 +952,10 @@
         "report_a_bug": "Report a bug",
         "forward_message": "Forward message",
         "suggestions": "Suggestions",
+        "n_rooms": {
+            "other": "%(count)s rooms",
+            "one": "%(count)s room"
+        },
         "email_address": "Email address",
         "labs": "Labs",
         "filter_results": "Filter results",
@@ -1483,6 +1501,11 @@
         "incompatible_database_description": "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.",
         "incompatible_database_title": "Incompatible Database",
         "incompatible_database_disable": "Continue With Encryption Disabled",
+        "key_signature_upload_failed_master_key_signature": "a new master key signature",
+        "key_signature_upload_failed_cross_signing_key_signature": "a new cross-signing key signature",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "a device cross-signing signature",
+        "key_signature_upload_failed_key_signature": "a key signature",
+        "key_signature_upload_failed_body": "%(brand)s encountered an error during upload of:",
         "key_signature_upload_completed": "Upload completed",
         "key_signature_upload_cancelled": "Cancelled signature upload",
         "key_signature_upload_failed": "Unable to upload",
@@ -1637,6 +1660,7 @@
         "m.call": {
             "video_call_started": "Video call started in %(roomName)s.",
             "video_call_started_unsupported": "Video call started in %(roomName)s. (not supported by this browser)",
+            "video_call_started_text": "%(name)s started a video call",
             "video_call_ended": "Video call ended"
         },
         "m.call.invite": {
@@ -1817,6 +1841,7 @@
         },
         "thread_info_basic": "From a thread",
         "error_no_renderer": "This event could not be displayed",
+        "in_room_name": " in <strong>%(room)s</strong>",
         "undecryptable_tooltip": "This message could not be decrypted",
         "send_state_sending": "Sending your message…",
         "send_state_encrypting": "Encrypting your message…",
@@ -1844,6 +1869,12 @@
             "copy_link_thread": "Copy link to thread",
             "collapse_reply_chain": "Collapse quotes",
             "expand_reply_chain": "Expand quotes"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "other": "%(count)s votes",
+                "one": "%(count)s vote"
+            }
         },
         "decryption_failure_blocked": "The sender has blocked you from receiving this message",
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
@@ -1882,9 +1913,13 @@
         },
         "m.key.verification.request": {
             "you_accepted": "You accepted",
+            "user_accepted": "%(name)s accepted",
             "you_declined": "You declined",
             "you_cancelled": "You cancelled",
+            "user_declined": "%(name)s declined",
+            "user_cancelled": "%(name)s cancelled",
             "declining": "Declining…",
+            "user_wants_to_verify": "%(name)s wants to verify",
             "you_started": "You sent a verification request"
         },
         "m.video": {
@@ -2154,6 +2189,7 @@
         "failed_copy": "Failed to copy",
         "update_power_level": "Failed to change power level",
         "unknown": "Unknown error",
+        "unknown_error_code": "unknown error code",
         "something_went_wrong": "Something went wrong!",
         "dialog_description_default": "An error has occurred.",
         "edit_history_unsupported": "Your homeserver doesn't seem to support this feature.",
@@ -2209,6 +2245,10 @@
             "show_widgets_button": "Show Widgets",
             "close_call_button": "Close call",
             "video_room_view_chat_button": "View chat timeline",
+            "n_people_asking_to_join": {
+                "other": "%(count)s people asking to join",
+                "one": "Asking to join"
+            },
             "room_is_public": "This room is public"
         },
         "context_menu": {
@@ -2222,6 +2262,17 @@
             "mark_read": "Mark as read",
             "notifications_default": "Match default setting",
             "notifications_mute": "Mute room"
+        },
+        "search": {
+            "result_count": {
+                "other": "(~%(count)s results)",
+                "one": "(~%(count)s result)"
+            },
+            "this_room": "This Room",
+            "all_rooms": "All Rooms",
+            "field_placeholder": "Search…",
+            "this_room_button": "Search this room",
+            "all_rooms_button": "Search all rooms"
         },
         "invite_this_room": "Invite to this room",
         "intro": {
@@ -2299,6 +2350,7 @@
         "knock_sent": "Request to join sent",
         "knock_sent_subtitle": "Your request to join is pending.",
         "knock_cancel_action": "Cancel request",
+        "invites_you_text": "<inviter/> invites you",
         "join_failed_needs_invite": "To view %(roomName)s, you need an invite",
         "view_failed_enable_video_rooms": "To view, please enable video rooms in Labs first",
         "join_failed_enable_video_rooms": "To join, please enable video rooms in Labs first",
@@ -2307,17 +2359,11 @@
         "upgrade_warning_bar_upgraded": "This room has already been upgraded.",
         "upgrade_warning_bar_unstable": "This room is running room version <roomVersion />, which this homeserver has marked as <i>unstable</i>.",
         "upgrade_warning_bar_admins": "Only room administrators will see this warning",
-        "search": {
-            "this_room": "This Room",
-            "all_rooms": "All Rooms",
-            "field_placeholder": "Search…",
-            "this_room_button": "Search this room",
-            "all_rooms_button": "Search all rooms"
-        },
         "jump_read_marker": "Jump to first unread message.",
         "error_jump_to_date_connection": "A network error occurred while trying to find and jump to the given date. Your homeserver might be down or there was just a temporary problem with your internet connection. Please try again. If this continues, please contact your homeserver administrator.",
         "error_jump_to_date_not_found": "We were unable to find an event looking forwards from %(dateString)s. Try choosing an earlier date.",
         "error_jump_to_date": "Server returned %(statusCode)s with error code %(errorCode)s",
+        "unknown_status_code_for_timeline_jump": "unknown status code",
         "error_jump_to_date_send_logs_prompt": "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us track down the problem.",
         "error_jump_to_date_title": "Unable to find event at that date",
         "error_jump_to_date_details": "Error details",
@@ -2330,6 +2376,10 @@
         },
         "face_pile_tooltip_shortcut_joined": "Including you, %(commaSeparatedMembers)s",
         "face_pile_tooltip_shortcut": "Including %(commaSeparatedMembers)s",
+        "face_pile_summary": {
+            "other": "%(count)s people you know have already joined",
+            "one": "%(count)s person you know has already joined"
+        },
         "edit_topic": "Edit topic",
         "read_topic": "Click to read topic",
         "drop_file_prompt": "Drop file here to upload",
@@ -2834,6 +2884,7 @@
             "url_preview_explainer": "When someone puts a URL in their message, a URL preview can be shown to give more information about that link such as the title, description, and an image from the website.",
             "url_previews_section": "URL Previews",
             "alias_heading": "Room address",
+            "alias_field_placeholder_default": "e.g. my-room",
             "alias_field_has_domain_invalid": "Missing domain separator e.g. (:domain.org)",
             "alias_field_has_localpart_invalid": "Missing room name or separator e.g. (my-room:domain.org)",
             "alias_field_safe_localpart_invalid": "Some characters not allowed",
@@ -2967,6 +3018,7 @@
             "enable_element_call_no_permissions_tooltip": "You do not have sufficient permissions to change this.",
             "call_type_section": "Call type"
         },
+        "alias_not_specified": "not specified",
         "title": "Room Settings - %(roomName)s"
     },
     "devtools": {
@@ -2976,6 +3028,7 @@
         "low_bandwidth_mode_description": "Requires compatible homeserver.",
         "developer_mode": "Developer mode",
         "title": "Developer tools",
+        "toggle_event": "toggle event",
         "category_room": "Room",
         "category_other": "Other",
         "send_custom_timeline_event": "Send custom timeline event",
@@ -3385,19 +3438,6 @@
             "user_a11y": "User Autocomplete"
         }
     },
-    " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s results)",
-        "one": "(~%(count)s result)"
-    },
-    "%(count)s participants": {
-        "other": "%(count)s participants",
-        "one": "1 participant"
-    },
-    "and %(count)s others...": {
-        "other": "and %(count)s others...",
-        "one": "and one other..."
-    },
     "member_list": {
         "invite_button_no_perms_tooltip": "You do not have permission to invite users",
         "invited_list_heading": "Invited",
@@ -3416,8 +3456,6 @@
         "unknown": "Unknown",
         "away": "Away"
     },
-    "%(members)s and more": "%(members)s and more",
-    "%(members)s and %(last)s": "%(members)s and %(last)s",
     "room_list": {
         "breadcrumbs_label": "Recently visited rooms",
         "breadcrumbs_empty": "No recently visited rooms",
@@ -3451,22 +3489,12 @@
         "failed_remove_tag": "Failed to remove tag %(tagName)s from room",
         "failed_add_tag": "Failed to add tag %(tagName)s to room"
     },
-    "%(count)s members": {
-        "other": "%(count)s members",
-        "one": "%(count)s member"
-    },
-    "%(count)s people asking to join": {
-        "other": "%(count)s people asking to join",
-        "one": "Asking to join"
-    },
     "spaces": {
         "error_no_permission_invite": "You do not have permissions to invite people to this space",
         "error_no_permission_create_room": "You do not have permissions to create new rooms in this space",
         "error_no_permission_add_room": "You do not have permissions to add rooms to this space",
         "error_no_permission_add_space": "You do not have permissions to add spaces to this space"
     },
-    "unknown error code": "unknown error code",
-    "<inviter/> invites you": "<inviter/> invites you",
     "stickers": {
         "empty": "You don't currently have any stickerpacks enabled",
         "empty_add_prompt": "Add some now"
@@ -3483,7 +3511,15 @@
         "room_unencrypted_detail": "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
         "verify_button": "Verify User",
         "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices.",
+        "count_of_verified_sessions": {
+            "other": "%(count)s verified sessions",
+            "one": "1 verified session"
+        },
         "hide_verified_sessions": "Hide verified sessions",
+        "count_of_sessions": {
+            "other": "%(count)s sessions",
+            "one": "%(count)s session"
+        },
         "hide_sessions": "Hide sessions",
         "ignore_confirm_title": "Ignore %(user)s",
         "ignore_confirm_description": "All messages and invites from this user will be hidden. Are you sure you want to ignore them?",
@@ -3541,11 +3577,11 @@
             }
         }
     },
-    "%(count)s reply": {
-        "other": "%(count)s replies",
-        "one": "%(count)s reply"
-    },
     "threads": {
+        "count_of_reply": {
+            "other": "%(count)s replies",
+            "one": "%(count)s reply"
+        },
         "open_thread": "Open thread",
         "unable_to_decrypt": "Unable to decrypt message",
         "error_start_thread_existing_relation": "Can't create a thread from an event with an existing relation",
@@ -3560,7 +3596,6 @@
         "empty_tip": "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.",
         "empty_heading": "Keep discussions organised with threads"
     },
-    "not specified": "not specified",
     "right_panel": {
         "pinned_messages": {
             "title": "Pinned messages",
@@ -3614,25 +3649,6 @@
             "context_menu_label": "Thread options"
         }
     },
-    "%(count)s verified sessions": {
-        "other": "%(count)s verified sessions",
-        "one": "1 verified session"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sessions",
-        "one": "%(count)s session"
-    },
-    "%(count)s votes": {
-        "other": "%(count)s votes",
-        "one": "%(count)s vote"
-    },
-    "%(name)s started a video call": "%(name)s started a video call",
-    "unknown status code": "unknown status code",
-    "unavailable": "unavailable",
-    "%(name)s accepted": "%(name)s accepted",
-    "%(name)s declined": "%(name)s declined",
-    "%(name)s cancelled": "%(name)s cancelled",
-    "%(name)s wants to verify": "%(name)s wants to verify",
     "poll": {
         "unable_edit_title": "Can't edit poll",
         "unable_edit_description": "Sorry, you can't edit a poll after votes have been cast.",
@@ -3673,8 +3689,6 @@
         "end_title": "End Poll",
         "end_description": "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote."
     },
-    "edited": "edited",
-    "toggle event": "toggle event",
     "emoji": {
         "category_frequently_used": "Frequently Used",
         "category_smileys_people": "Smileys & People",
@@ -3772,11 +3786,6 @@
         "permalink_other_room": "Message in %(room)s",
         "permalink_this_room": "Message from %(user)s"
     },
-    "e.g. my-room": "e.g. my-room",
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s people you know have already joined",
-        "one": "%(count)s person you know has already joined"
-    },
     "seshat": {
         "error_initialising": "Message search initialisation failed, check <a>your settings</a> for more information",
         "warning_kind_files_app": "Use the <a>Desktop app</a> to see all encrypted files",
@@ -3845,11 +3854,6 @@
         "impossible_dialog_title": "Integrations not allowed",
         "impossible_dialog_description": "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin."
     },
-    "a new master key signature": "a new master key signature",
-    "a new cross-signing key signature": "a new cross-signing key signature",
-    "a device cross-signing signature": "a device cross-signing signature",
-    "a key signature": "a key signature",
-    "%(brand)s encountered an error during upload of:": "%(brand)s encountered an error during upload of:",
     "lazy_loading": {
         "disabled_description1": "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.",
         "disabled_description2": "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.",
@@ -3857,10 +3861,6 @@
         "disabled_action": "Clear cache and resync",
         "resync_description": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!",
         "resync_title": "Updating %(brand)s"
-    },
-    "%(count)s rooms": {
-        "other": "%(count)s rooms",
-        "one": "%(count)s room"
     },
     "message_edit_dialog_title": "Message edits",
     "report_content": {
@@ -3956,6 +3956,7 @@
     },
     "restore_key_backup_dialog": {
         "key_fetch_in_progress": "Fetching keys from server…",
+        "load_keys_progress": "%(completed)s of %(total)s keys restored",
         "load_error_content": "Unable to load backup status",
         "recovery_key_mismatch_title": "Security Key mismatch",
         "recovery_key_mismatch_description": "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.",
@@ -3976,7 +3977,6 @@
         "enter_key_description": "Access your secure message history and set up secure messaging by entering your Security Key.",
         "key_forgotten_text": "If you've forgotten your Security Key you can <button>set up new recovery options</button>"
     },
-    "%(completed)s of %(total)s keys restored": "%(completed)s of %(total)s keys restored",
     "cant_load_page": "Couldn't load page",
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",

@@ -256,7 +256,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
 
     const [truncateAt, setTruncateAt] = useState(20);
     function overflowTile(overflowCount: number, totalCount: number): JSX.Element {
-        const text = _t("and %(count)s others...", { count: overflowCount });
+        const text = _t("common|and_n_others", { count: overflowCount });
         return (
             <EntityTile
                 className="mx_EntityTile_ellipsis"

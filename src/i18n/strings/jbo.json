@@ -95,14 +95,6 @@
     "Yesterday": "prulamdei",
     "Switch theme": "nu basti fi le ka jvinu",
     "Ok": "je'e",
-    "%(count)s verified sessions": {
-        "other": ".i lacri %(count)s se samtcise'u",
-        "one": ".i lacri pa se samtcise'u"
-    },
-    "%(count)s sessions": {
-        "other": ".i samtcise'u %(count)s da",
-        "one": ".i samtcise'u %(count)s da"
-    },
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
     "common": {
@@ -528,7 +520,15 @@
         "room_unencrypted": ".i na pa zilbe'i be fo le cei'i cu mifra",
         "hide_verified_sessions": "nu ro se samtcise'u poi se lacri cu zilmipri",
         "hide_sessions": "nu ro se samtcise'u cu zilmipri",
-        "share_button": "nu jungau pa pilno le du'u judri"
+        "share_button": "nu jungau pa pilno le du'u judri",
+        "count_of_verified_sessions": {
+            "other": ".i lacri %(count)s se samtcise'u",
+            "one": ".i lacri pa se samtcise'u"
+        },
+        "count_of_sessions": {
+            "other": ".i samtcise'u %(count)s da",
+            "one": ".i samtcise'u %(count)s da"
+        }
     },
     "right_panel": {
         "share_button": "nu jungau fi le du'u ve zilbe'i"

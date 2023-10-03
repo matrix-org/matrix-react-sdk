@@ -29,8 +29,6 @@
     "Moderator": "Umsjónarmaður",
     "Unnamed room": "Nafnlaus spjallrás",
     "Join Room": "Taka þátt í spjallrás",
-    "unknown error code": "óþekktur villukóði",
-    "not specified": "ekki tilgreint",
     "Sunday": "Sunnudagur",
     "Monday": "Mánudagur",
     "Tuesday": "Þriðjudagur",
@@ -51,11 +49,6 @@
     "Iceland": "Ísland",
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
-    "%(count)s verified sessions": {
-        "one": "1 sannreynd seta",
-        "other": "%(count)s sannreyndar setur"
-    },
-    "edited": "breytti",
     "Banana": "Banani",
     "Fire": "Eldur",
     "Cloud": "Ský",
@@ -340,14 +333,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s og %(space2Name)s",
     "Forget": "Gleyma",
-    "%(count)s rooms": {
-        "one": "%(count)s spjallrás",
-        "other": "%(count)s spjallrásir"
-    },
-    "%(count)s votes": {
-        "one": "%(count)s atkvæði",
-        "other": "%(count)s atkvæði"
-    },
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Folder": "Mappa",
     "Headphones": "Heyrnartól",
@@ -372,14 +357,6 @@
     "Feedback sent! Thanks, we appreciate it!": "Umsögn send! Takk, við kunnum að meta þetta!",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s niðurstaða)",
-        "other": "(~%(count)s niðurstöður)"
-    },
-    "and %(count)s others...": {
-        "one": "og einn í viðbót...",
-        "other": "og %(count)s til viðbótar..."
-    },
     "Guitar": "Gítar",
     "Ball": "Bolti",
     "Trophy": "Verðlaun",
@@ -403,53 +380,19 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
-    "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
-    "a new cross-signing key signature": "ný kross-undirritun undirritunarlykils",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
-    "%(count)s sessions": {
-        "one": "%(count)s seta",
-        "other": "%(count)s setur"
-    },
-    "%(count)s members": {
-        "one": "%(count)s þátttakandi",
-        "other": "%(count)s þátttakendur"
-    },
-    "e.g. my-room": "t.d. mín-spjallrás",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
-        "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
-    },
-    "<inviter/> invites you": "<inviter/> býður þér",
-    "%(name)s wants to verify": "%(name)s vill sannreyna",
-    "%(name)s cancelled": "%(name)s hætti við",
-    "%(name)s declined": "%(name)s hafnaði",
-    "%(name)s accepted": "%(name)s samþykkti",
-    "%(count)s reply": {
-        "one": "%(count)s svar",
-        "other": "%(count)s svör"
-    },
-    "toggle event": "víxla atburði af/á",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
     "Submit logs": "Senda inn atvikaskrár",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
-    "%(completed)s of %(total)s keys restored": "%(completed)s af %(total)s lyklum endurheimtir",
-    "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "View List": "Skoða lista",
-    "%(count)s participants": {
-        "one": "1 þáttakandi",
-        "other": "%(count)s þátttakendur"
-    },
     "%(members)s and more": "%(members)s og fleiri",
     "%(members)s and %(last)s": "%(members)s og %(last)s",
-    "a key signature": "Fingrafar lykils",
     "Saved Items": "Vistuð atriði",
     "Show spaces": "Sýna svæði",
     "Show rooms": "Sýna spjallrásir",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
-    "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
-    " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
         "analytics": "Greiningar",
@@ -575,7 +518,24 @@
         "filter_results": "Sía niðurstöður",
         "no_results_found": "Engar niðurstöður fundust",
         "unsent": "Ósent",
-        "cameras": "Myndavélar"
+        "cameras": "Myndavélar",
+        "n_participants": {
+            "one": "1 þáttakandi",
+            "other": "%(count)s þátttakendur"
+        },
+        "and_n_others": {
+            "one": "og einn í viðbót...",
+            "other": "og %(count)s til viðbótar..."
+        },
+        "n_members": {
+            "one": "%(count)s þátttakandi",
+            "other": "%(count)s þátttakendur"
+        },
+        "edited": "breytti",
+        "n_rooms": {
+            "one": "%(count)s spjallrás",
+            "other": "%(count)s spjallrásir"
+        }
     },
     "action": {
         "continue": "Halda áfram",
@@ -1464,7 +1424,8 @@
         "show_hidden_events": "Birta falda atburði í tímalínu",
         "low_bandwidth_mode_description": "Krefst samhæfðs heimaþjóns.",
         "low_bandwidth_mode": "Hamur fyrir litla bandbreidd",
-        "developer_mode": "Forritarahamur"
+        "developer_mode": "Forritarahamur",
+        "toggle_event": "víxla atburði af/á"
     },
     "export_chat": {
         "html": "HTML",
@@ -1539,7 +1500,8 @@
         "m.call": {
             "video_call_started": "Myndsamtal er byrjað í %(roomName)s.",
             "video_call_started_unsupported": "Myndsamtal er byrjað í %(roomName)s. (Ekki stutt af þessum vafra)",
-            "video_call_ended": "Mynddsímtali lauk"
+            "video_call_ended": "Mynddsímtali lauk",
+            "video_call_started_text": "%(name)s hóf myndsímtal"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hringdi raddsímtal.",
@@ -1915,7 +1877,11 @@
             "you_accepted": "Þú samþykktir",
             "you_declined": "Þú hafnaðir",
             "you_cancelled": "Þú hættir við",
-            "you_started": "Þú sendir beiðni um sannvottun"
+            "you_started": "Þú sendir beiðni um sannvottun",
+            "user_accepted": "%(name)s samþykkti",
+            "user_declined": "%(name)s hafnaði",
+            "user_cancelled": "%(name)s hætti við",
+            "user_wants_to_verify": "%(name)s vill sannreyna"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s hefur lokið könnun"
@@ -1936,6 +1902,13 @@
         "reply": {
             "in_reply_to": "<a>Sem svar til</a> <pill>",
             "in_reply_to_for_export": "Sem svar við <a>þessum skilaboðum</a>"
+        },
+        "in_room_name": " í <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s atkvæði",
+                "other": "%(count)s atkvæði"
+            }
         }
     },
     "slash_command": {
@@ -2291,7 +2264,8 @@
             "alias_field_matches_invalid": "Vistfangið beinir ekki á þessa spjallrás",
             "alias_field_taken_valid": "Þetta vistfang er tiltækt til notkunar",
             "alias_field_taken_invalid_domain": "Þetta vistfang er nú þegar í notkun",
-            "alias_field_taken_invalid": "Þetta vistfang er með ógildan netþjón eða er nú þegar í notkun"
+            "alias_field_taken_invalid": "Þetta vistfang er með ógildan netþjón eða er nú þegar í notkun",
+            "alias_field_placeholder_default": "t.d. mín-spjallrás"
         },
         "advanced": {
             "unfederated": "Þessi spjallrás er ekki aðgengileg fjartengdum Matrix-netþjónum",
@@ -2346,7 +2320,8 @@
         "voip": {
             "call_type_section": "Tegund samtals"
         },
-        "title": "Stillingar spjallrásar - %(roomName)s"
+        "title": "Stillingar spjallrásar - %(roomName)s",
+        "alias_not_specified": "ekki tilgreint"
     },
     "encryption": {
         "verification": {
@@ -2494,7 +2469,11 @@
         },
         "confirm_encryption_setup_title": "Staðfestu uppsetningu dulritunar",
         "confirm_encryption_setup_body": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
-        "unable_to_setup_keys_error": "Tókst ekki að setja upp lykla"
+        "unable_to_setup_keys_error": "Tókst ekki að setja upp lykla",
+        "key_signature_upload_failed_cross_signing_key_signature": "ný kross-undirritun undirritunarlykils",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "kross-undirritun undirritunarlykils tækis",
+        "key_signature_upload_failed_key_signature": "Fingrafar lykils",
+        "key_signature_upload_failed_body": "%(brand)s rakst á villu við innsendingu á:"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -2965,7 +2944,11 @@
         "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
         "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum",
         "unable_to_decrypt": "Tókst ekki að afkóða skilaboð",
-        "open_thread": "Opna spjallþráð"
+        "open_thread": "Opna spjallþráð",
+        "count_of_reply": {
+            "one": "%(count)s svar",
+            "other": "%(count)s svör"
+        }
     },
     "theme": {
         "light_high_contrast": "Ljóst með mikil birtuskil",
@@ -3258,7 +3241,11 @@
         "search": {
             "this_room": "Þessi spjallrás",
             "all_rooms": "Allar spjallrásir",
-            "field_placeholder": "Leita…"
+            "field_placeholder": "Leita…",
+            "result_count": {
+                "one": "(~%(count)s niðurstaða)",
+                "other": "(~%(count)s niðurstöður)"
+            }
         },
         "jump_to_bottom_button": "Skruna að nýjustu skilaboðunum",
         "jump_read_marker": "Fara í fyrstu ólesnu skilaboðin.",
@@ -3272,7 +3259,12 @@
             "other": "Sjá alla %(count)s meðlimina"
         },
         "face_pile_tooltip_shortcut_joined": "Að þér meðtöldum, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Þar með taldir %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Þar með taldir %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> býður þér",
+        "face_pile_summary": {
+            "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
+            "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
+        }
     },
     "file_panel": {
         "guest_note": "Þú verður að <a>skrá þig</a> til að geta notað þennan eiginleika",
@@ -3438,7 +3430,8 @@
             "description_1": "Villa kom upp þegar reynt var að endurheimta fyrri setuna þína.",
             "description_3": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur."
         },
-        "storage_evicted_title": "Vantar setugögn"
+        "storage_evicted_title": "Vantar setugögn",
+        "unknown_error_code": "óþekktur villukóði"
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3589,6 +3582,14 @@
                 "one": "Fjarlægja 1 skilaboð",
                 "other": "Fjarlægja %(count)s skilaboð"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 sannreynd seta",
+            "other": "%(count)s sannreyndar setur"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s seta",
+            "other": "%(count)s setur"
         }
     },
     "stickers": {
@@ -3784,6 +3785,7 @@
         "enter_phrase_title": "Settu inn öryggisfrasa",
         "enter_key_title": "Settu inn öryggislykil",
         "key_is_valid": "Þetta lítur út eins og gildur öryggislykill!",
-        "key_is_invalid": "Ekki gildur öryggislykill"
+        "key_is_invalid": "Ekki gildur öryggislykill",
+        "load_keys_progress": "%(completed)s af %(total)s lyklum endurheimtir"
     }
 }

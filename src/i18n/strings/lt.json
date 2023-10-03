@@ -7,7 +7,6 @@
     "Saturday": "Šeštadienis",
     "Monday": "Pirmadienis",
     "Wednesday": "Trečiadienis",
-    "unknown error code": "nežinomas klaidos kodas",
     "Thursday": "Ketvirtadienis",
     "Yesterday": "Vakar",
     "Sun": "Sek",
@@ -36,10 +35,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(fullYear)s %(monthName)s %(day)s %(time)s",
     "Warning!": "Įspėjimas!",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s rezultatų(-ai))",
-        "one": "(~%(count)s rezultatas)"
-    },
     "Delete Widget": "Ištrinti valdiklį",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)s min",
@@ -48,28 +43,10 @@
     "collapse": "suskleisti",
     "expand": "išskleisti",
     "Send Logs": "Siųsti žurnalus",
-    "and %(count)s others...": {
-        "other": "ir %(count)s kitų...",
-        "one": "ir dar vienas..."
-    },
-    "not specified": "nenurodyta",
     "Home": "Pradžia",
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
     "%(items)s and %(lastItem)s": "%(items)s ir %(lastItem)s",
-    "%(name)s accepted": "%(name)s priimtas",
-    "%(name)s declined": "%(name)s atmestas",
-    "%(name)s cancelled": "%(name)s atšauktas",
-    "%(name)s wants to verify": "%(name)s nori patvirtinti",
-    "e.g. my-room": "pvz.: mano-kambarys",
-    "%(count)s verified sessions": {
-        "other": "%(count)s patvirtintų seansų",
-        "one": "1 patvirtintas seansas"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s seansai(-ų)",
-        "one": "%(count)s seansas"
-    },
     "Dog": "Šuo",
     "Cat": "Katė",
     "Lion": "Liūtas",
@@ -134,8 +111,6 @@
     "Headphones": "Ausinės",
     "Folder": "Aplankas",
     "Encrypted by a deleted session": "Užšifruota ištrinto seanso",
-    "a new cross-signing key signature": "naujas kryžminio pasirašymo rakto parašas",
-    "a device cross-signing signature": "įrenginio kryžminio pasirašymo parašas",
     "IRC display name width": "IRC rodomo vardo plotis",
     "Deactivate account": "Deaktyvuoti paskyrą",
     "This backup is trusted because it has been restored on this session": "Ši atsarginė kopija yra patikima, nes buvo atkurta šiame seanse",
@@ -165,7 +140,6 @@
     "Afghanistan": "Afganistanas",
     "United States": "Jungtinės Amerikos Valstijos",
     "United Kingdom": "Jungtinė Karalystė",
-    "edited": "pakeista",
     "Not encrypted": "Neužšifruota",
     "Mexico": "Meksika",
     "Malaysia": "Malaizija",
@@ -202,10 +176,6 @@
     "Belarus": "Baltarusija",
     "Barbados": "Barbadosas",
     "Bahrain": "Bahreinas",
-    "%(completed)s of %(total)s keys restored": "%(completed)s iš %(total)s raktų atkurta",
-    "%(brand)s encountered an error during upload of:": "%(brand)s aptiko klaidą įkeliant:",
-    "a key signature": "rakto parašas",
-    "a new master key signature": "naujas pagrindinio rakto parašas",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
     "South Korea": "Pietų Korėja",
@@ -230,15 +200,6 @@
     "Myanmar": "Mianmaras",
     "Mozambique": "Mozambikas",
     "Bahamas": "Bahamų salos",
-    "%(count)s reply": {
-        "one": "%(count)s atsakymas",
-        "other": "%(count)s atsakymai"
-    },
-    "%(count)s participants": {
-        "one": "1 dalyvis",
-        "other": "%(count)s dalyviai"
-    },
-    "<inviter/> invites you": "<inviter/> kviečia jus",
     "Explore public spaces in the new search dialog": "Tyrinėkite viešas erdves naujajame paieškos lange",
     "Developer": "Kūrėjas",
     "Experimental": "Eksperimentinis",
@@ -254,10 +215,6 @@
     "Poland": "Lenkija",
     "Lithuania": "Lietuva",
     "Saved Items": "Išsaugoti daiktai",
-    "%(count)s members": {
-        "one": "%(count)s narys",
-        "other": "%(count)s nariai"
-    },
     "%(members)s and %(last)s": "%(members)s ir %(last)s",
     "%(members)s and more": "%(members)s ir daugiau",
     "Latvia": "Latvija",
@@ -363,7 +320,20 @@
         "joined": "Prisijungta",
         "are_you_sure": "Ar tikrai?",
         "email_address": "El. pašto adresas",
-        "filter_results": "Išfiltruoti rezultatus"
+        "filter_results": "Išfiltruoti rezultatus",
+        "n_participants": {
+            "one": "1 dalyvis",
+            "other": "%(count)s dalyviai"
+        },
+        "and_n_others": {
+            "other": "ir %(count)s kitų...",
+            "one": "ir dar vienas..."
+        },
+        "n_members": {
+            "one": "%(count)s narys",
+            "other": "%(count)s nariai"
+        },
+        "edited": "pakeista"
     },
     "action": {
         "continue": "Tęsti",
@@ -1394,7 +1364,11 @@
             "you_accepted": "Jūs priėmėte",
             "you_declined": "Jūs atsisakėte",
             "you_cancelled": "Jūs atšaukėte",
-            "you_started": "Jūs išsiuntėte patvirtinimo užklausą"
+            "you_started": "Jūs išsiuntėte patvirtinimo užklausą",
+            "user_accepted": "%(name)s priimtas",
+            "user_declined": "%(name)s atmestas",
+            "user_cancelled": "%(name)s atšauktas",
+            "user_wants_to_verify": "%(name)s nori patvirtinti"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s užbaigė apklausą"
@@ -1724,7 +1698,8 @@
             "canonical_alias_field_label": "Pagrindinis adresas",
             "avatar_field_label": "Kambario pseudoportretas",
             "aliases_no_items_label": "Kol kas nėra kitų paskelbtų adresų, pridėkite vieną žemiau",
-            "aliases_items_label": "Kiti paskelbti adresai:"
+            "aliases_items_label": "Kiti paskelbti adresai:",
+            "alias_field_placeholder_default": "pvz.: mano-kambarys"
         },
         "advanced": {
             "unfederated": "Šis kambarys nėra pasiekiamas nuotoliniams Matrix serveriams",
@@ -1785,7 +1760,8 @@
             "custom_sound_prompt": "Nustatyti naują pasirinktinį garsą",
             "browse_button": "Naršyti"
         },
-        "title": "Kambario nustatymai - %(roomName)s"
+        "title": "Kambario nustatymai - %(roomName)s",
+        "alias_not_specified": "nenurodyta"
     },
     "encryption": {
         "verification": {
@@ -1940,7 +1916,12 @@
         },
         "confirm_encryption_setup_title": "Patvirtinti šifravimo sąranką",
         "confirm_encryption_setup_body": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
-        "unable_to_setup_keys_error": "Nepavyksta nustatyti raktų"
+        "unable_to_setup_keys_error": "Nepavyksta nustatyti raktų",
+        "key_signature_upload_failed_master_key_signature": "naujas pagrindinio rakto parašas",
+        "key_signature_upload_failed_cross_signing_key_signature": "naujas kryžminio pasirašymo rakto parašas",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "įrenginio kryžminio pasirašymo parašas",
+        "key_signature_upload_failed_key_signature": "rakto parašas",
+        "key_signature_upload_failed_body": "%(brand)s aptiko klaidą įkeliant:"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2452,7 +2433,11 @@
         "search": {
             "this_room": "Šis pokalbių kambarys",
             "all_rooms": "Visi pokalbių kambariai",
-            "field_placeholder": "Paieška…"
+            "field_placeholder": "Paieška…",
+            "result_count": {
+                "other": "(~%(count)s rezultatų(-ai))",
+                "one": "(~%(count)s rezultatas)"
+            }
         },
         "jump_to_bottom_button": "Slinkite prie naujausių žinučių",
         "jump_read_marker": "Pereiti prie pirmos neperskaitytos žinutės.",
@@ -2460,7 +2445,8 @@
         "failed_reject_invite": "Nepavyko atmesti pakvietimo",
         "jump_to_date_beginning": "Kambario pradžia",
         "jump_to_date": "Peršokti į datą",
-        "jump_to_date_prompt": "Pasirinkite datą, į kurią norite pereiti"
+        "jump_to_date_prompt": "Pasirinkite datą, į kurią norite pereiti",
+        "invites_you_text": "<inviter/> kviečia jus"
     },
     "file_panel": {
         "peek_note": "Norėdami pamatyti jo failus, turite prisijungti prie kambario"
@@ -2582,7 +2568,8 @@
         },
         "storage_evicted_title": "Trūksta seanso duomenų",
         "storage_evicted_description_1": "Trūksta kai kurių seanso duomenų, įskaitant šifruotų žinučių raktus. Atsijunkite ir prisijunkite, kad tai išspręstumėte, atkurdami raktus iš atsarginės kopijos.",
-        "storage_evicted_description_2": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske."
+        "storage_evicted_description_2": "Jūsų naršyklė greičiausiai pašalino šiuos duomenis pritrūkus vietos diske.",
+        "unknown_error_code": "nežinomas klaidos kodas"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2733,10 +2720,22 @@
                 "one": "Pašalinti 1 žinutę",
                 "other": "Pašalinti %(count)s žinutes(-ų)"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s patvirtintų seansų",
+            "one": "1 patvirtintas seansas"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s seansai(-ų)",
+            "one": "%(count)s seansas"
         }
     },
     "threads": {
-        "open_thread": "Atidaryti temą"
+        "open_thread": "Atidaryti temą",
+        "count_of_reply": {
+            "one": "%(count)s atsakymas",
+            "other": "%(count)s atsakymai"
+        }
     },
     "stickers": {
         "empty": "Jūs šiuo metu neturite jokių įjungtų lipdukų paketų",
@@ -2901,6 +2900,7 @@
         "key_is_valid": "Atrodo, kad tai tinkamas Saugumo Raktas!",
         "key_is_invalid": "Netinkamas Saugumo Raktas",
         "enter_key_description": "Prieikite prie savo saugių žinučių istorijos ir nustatykite saugių žinučių siuntimą įvesdami Saugumo Raktą.",
-        "key_forgotten_text": "Jei pamiršote Saugumo Raktą, galite <button>nustatyti naujas atkūrimo parinktis</button>"
+        "key_forgotten_text": "Jei pamiršote Saugumo Raktą, galite <button>nustatyti naujas atkūrimo parinktis</button>",
+        "load_keys_progress": "%(completed)s iš %(total)s raktų atkurta"
     }
 }

@@ -7,7 +7,6 @@
     "Saturday": "شنبه",
     "Monday": "دوشنبه",
     "Wednesday": "چهارشنبه",
-    "unknown error code": "کد خطای ناشناخته",
     "Thursday": "پنج‌شنبه",
     "Yesterday": "دیروز",
     "Ok": "تأیید",
@@ -288,61 +287,21 @@
     "Afghanistan": "افغانستان",
     "United States": "ایالات متحده",
     "United Kingdom": "انگلستان",
-    "%(completed)s of %(total)s keys restored": "%(completed)s از %(total)s کلید بازیابی شدند",
-    "a new cross-signing key signature": "یک کلید امضای متقابل جدید",
-    "a new master key signature": "یک شاه‌کلید جدید",
-    "a device cross-signing signature": "کلید امضای متقابل یک دستگاه",
-    "a key signature": "یک امضای کلیدی",
     "Send Logs": "ارسال گزارش ها",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
-    "e.g. my-room": "به عنوان مثال، my-room",
-    "%(count)s members": {
-        "other": "%(count)s عضو",
-        "one": "%(count)s عضو"
-    },
-    "%(count)s rooms": {
-        "other": "%(count)s اتاق",
-        "one": "%(count)s اتاق"
-    },
-    "%(count)s sessions": {
-        "one": "%(count)s نشست",
-        "other": "%(count)s نشست"
-    },
-    "%(count)s verified sessions": {
-        "one": "1 نشست تأیید شده",
-        "other": "%(count)s نشست تایید شده"
-    },
     "Not encrypted": "رمزگذاری نشده",
     "Join Room": "به اتاق بپیوندید",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s نتیجه)",
-        "other": "(~%(count)s نتیجه)"
-    },
     "%(duration)sd": "%(duration)s روز",
     "%(duration)sh": "%(duration)s ساعت",
     "%(duration)sm": "%(duration)s دقیقه",
     "%(duration)ss": "%(duration)s ثانیه",
-    "and %(count)s others...": {
-        "one": "و یکی دیگر ...",
-        "other": "و %(count)s مورد دیگر ..."
-    },
     "Encrypted by a deleted session": "با یک نشست حذف شده رمزگذاری شده است",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s نفر از افرادی که می شناسید قبلاً پیوسته‌اند",
-        "other": "%(count)s نفر از افرادی که می شناسید قبلاً به آن پیوسته‌اند"
-    },
     "expand": "گشودن",
     "collapse": "بستن",
     "Submit logs": "ارسال لاگ‌ها",
-    "edited": "ویرایش شده",
-    "%(name)s wants to verify": "%(name)s می‌خواهد تأیید هویت کند",
-    "%(name)s cancelled": "%(name)s لغو کرد",
-    "%(name)s declined": "%(name)s رد کرد",
-    "%(name)s accepted": "%(name)s پذیرفت",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "برای گزارش مشکلات امنیتی مربوط به ماتریکس، لطفا سایت Matrix.org بخش <a>Security Disclosure Policy</a> را مطالعه فرمائید.",
     "Backup version:": "نسخه‌ی پشتیبان:",
     "This backup is trusted because it has been restored on this session": "این نسخه‌ی پشتیبان قابل اعتماد است چرا که بر روی این نشست بازیابی شد",
-    "not specified": "مشخص نشده",
     "Failed to connect to integration manager": "اتصال به سیستم مدیریت ادغام انجام نشد",
     "Folder": "پوشه",
     "Headphones": "هدفون",
@@ -409,14 +368,12 @@
     "Dog": "سگ",
     "IRC display name width": "عرض نمایش نام‌های IRC",
     "Switch theme": "تعویض پوسته",
-    "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
     "Warning!": "هشدار!",
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
     "Delete Widget": "حذف ویجت",
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
-    "%(brand)s encountered an error during upload of:": "%(brand)s در حین بارگذاری این دچار مشکل شد:",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
         "other": "%(spaceName)s و %(count)s دیگران"
@@ -524,7 +481,20 @@
         "are_you_sure": "مطمئنی؟",
         "email_address": "آدرس ایمیل",
         "filter_results": "پالایش نتایج",
-        "no_results_found": "نتیجه‌ای یافت نشد"
+        "no_results_found": "نتیجه‌ای یافت نشد",
+        "and_n_others": {
+            "one": "و یکی دیگر ...",
+            "other": "و %(count)s مورد دیگر ..."
+        },
+        "n_members": {
+            "other": "%(count)s عضو",
+            "one": "%(count)s عضو"
+        },
+        "edited": "ویرایش شده",
+        "n_rooms": {
+            "other": "%(count)s اتاق",
+            "one": "%(count)s اتاق"
+        }
     },
     "action": {
         "continue": "ادامه",
@@ -1459,7 +1429,11 @@
             "you_accepted": "پذیرفتید",
             "you_declined": "شما رد کردید",
             "you_cancelled": "شما لغو کردید",
-            "you_started": "شما یک درخواست تأیید هویت ارسال کرده‌اید"
+            "you_started": "شما یک درخواست تأیید هویت ارسال کرده‌اید",
+            "user_accepted": "%(name)s پذیرفت",
+            "user_declined": "%(name)s رد کرد",
+            "user_cancelled": "%(name)s لغو کرد",
+            "user_wants_to_verify": "%(name)s می‌خواهد تأیید هویت کند"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s به نظر سنجی پایان داد"
@@ -1753,7 +1727,8 @@
             "alias_heading": "آدرس اتاق",
             "alias_field_safe_localpart_invalid": "برخی از کاراکترها مجاز نیستند",
             "alias_field_taken_valid": "این آدرس برای استفاده در دسترس است",
-            "alias_field_taken_invalid_domain": "این آدرس قبلاً استفاده شده‌است"
+            "alias_field_taken_invalid_domain": "این آدرس قبلاً استفاده شده‌است",
+            "alias_field_placeholder_default": "به عنوان مثال، my-room"
         },
         "advanced": {
             "unfederated": "این اتاق توسط سرورهای ماتریکس در دسترس نیست",
@@ -1790,7 +1765,8 @@
             "custom_sound_prompt": "تنظیم صدای دلخواه جدید",
             "browse_button": "جستجو"
         },
-        "title": "تنظیمات اتاق - %(roomName)s"
+        "title": "تنظیمات اتاق - %(roomName)s",
+        "alias_not_specified": "مشخص نشده"
     },
     "encryption": {
         "verification": {
@@ -1936,7 +1912,12 @@
         },
         "confirm_encryption_setup_title": "راه‌اندازی رمزگذاری را تأیید کنید",
         "confirm_encryption_setup_body": "برای تأیید و فعال‌سازی رمزگذاری ، روی دکمه زیر کلیک کنید.",
-        "unable_to_setup_keys_error": "تنظیم کلیدها امکان پذیر نیست"
+        "unable_to_setup_keys_error": "تنظیم کلیدها امکان پذیر نیست",
+        "key_signature_upload_failed_master_key_signature": "یک شاه‌کلید جدید",
+        "key_signature_upload_failed_cross_signing_key_signature": "یک کلید امضای متقابل جدید",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "کلید امضای متقابل یک دستگاه",
+        "key_signature_upload_failed_key_signature": "یک امضای کلیدی",
+        "key_signature_upload_failed_body": "%(brand)s در حین بارگذاری این دچار مشکل شد:"
     },
     "emoji": {
         "category_frequently_used": "متداول",
@@ -2572,7 +2553,11 @@
         "search": {
             "this_room": "این گپ",
             "all_rooms": "همه‌ی گپ‌ها",
-            "field_placeholder": "جستجو…"
+            "field_placeholder": "جستجو…",
+            "result_count": {
+                "one": "(~%(count)s نتیجه)",
+                "other": "(~%(count)s نتیجه)"
+            }
         },
         "jump_to_bottom_button": "به جدیدترین پیام‌ها بروید",
         "jump_read_marker": "رفتن به اولین پیام خوانده نشده.",
@@ -2582,7 +2567,12 @@
             "one": "نمایش ۱ عضو",
             "other": "نمایش همه %(count)s عضو"
         },
-        "face_pile_tooltip_shortcut": "شامل %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "شامل %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> شما را دعوت کرد",
+        "face_pile_summary": {
+            "one": "%(count)s نفر از افرادی که می شناسید قبلاً پیوسته‌اند",
+            "other": "%(count)s نفر از افرادی که می شناسید قبلاً به آن پیوسته‌اند"
+        }
     },
     "file_panel": {
         "guest_note": "برای استفاده از این قابلیت باید <a>ثبت نام</a> کنید",
@@ -2723,7 +2713,8 @@
         },
         "storage_evicted_title": "داده‌های نشست از دست رفته است",
         "storage_evicted_description_1": "برخی از داده‌های نشست ، از جمله کلیدهای رمزنگاری پیام‌ها موجود نیست. برای برطرف کردن این مشکل از برنامه خارج شده و مجددا وارد شوید و از کلیدها را از نسخه‌ی پشتیبان بازیابی نمائيد.",
-        "storage_evicted_description_2": "هنگام کمبود فضای دیسک ، مرورگر شما این داده ها را حذف می کند."
+        "storage_evicted_description_2": "هنگام کمبود فضای دیسک ، مرورگر شما این داده ها را حذف می کند.",
+        "unknown_error_code": "کد خطای ناشناخته"
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2847,6 +2838,14 @@
                 "one": "حذف ۱ پیام",
                 "other": "حذف %(count)s پیام"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 نشست تأیید شده",
+            "other": "%(count)s نشست تایید شده"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s نشست",
+            "other": "%(count)s نشست"
         }
     },
     "stickers": {
@@ -3007,6 +3006,7 @@
         "key_is_valid": "به نظر می رسد این یک کلید امنیتی معتبر است!",
         "key_is_invalid": "کلید امنیتی معتبری نیست",
         "enter_key_description": "با وارد کردن کلید امنیتی خود به تاریخچه‌ی پیام‌‌های رمز شده خود دسترسی پیدا کرده و پیام امن ارسال کنید.",
-        "key_forgotten_text": "اگر کلید امنیتی خود را فراموش کرده‌اید ، می توانید <button>تنظیمات مجددا تنظیمات پشتیبان‌گیری را انجام دهید</button>"
+        "key_forgotten_text": "اگر کلید امنیتی خود را فراموش کرده‌اید ، می توانید <button>تنظیمات مجددا تنظیمات پشتیبان‌گیری را انجام دهید</button>",
+        "load_keys_progress": "%(completed)s از %(total)s کلید بازیابی شدند"
     }
 }

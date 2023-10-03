@@ -43,10 +43,10 @@ const Entry: React.FC<{
 
     let description;
     if (localRoom) {
-        description = _t("%(count)s members", { count: room.getJoinedMemberCount() });
+        description = _t("common|n_members", { count: room.getJoinedMemberCount() });
         const numChildRooms = SpaceStore.instance.getChildRooms(room.roomId).length;
         if (numChildRooms > 0) {
-            description += " · " + _t("%(count)s rooms", { count: numChildRooms });
+            description += " · " + _t("common|n_rooms", { count: numChildRooms });
         }
     }
 

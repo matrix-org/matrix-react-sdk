@@ -27,10 +27,6 @@
     "Restricted": "वर्जित",
     "Moderator": "मध्यस्थ",
     "Warning!": "चेतावनी!",
-    "and %(count)s others...": {
-        "other": "और %(count)s अन्य ...",
-        "one": "और एक अन्य..."
-    },
     "%(duration)ss": "%(duration)s सेकंड",
     "%(duration)sm": "%(duration)s मिनट",
     "%(duration)sh": "%(duration)s घंटा",
@@ -275,7 +271,11 @@
         "display_name": "प्रदर्शित होने वाला नाम",
         "user_avatar": "प्रोफ़ाइल फोटो",
         "authentication": "प्रमाणीकरण",
-        "are_you_sure": "क्या आपको यकीन है?"
+        "are_you_sure": "क्या आपको यकीन है?",
+        "and_n_others": {
+            "other": "और %(count)s अन्य ...",
+            "one": "और एक अन्य..."
+        }
     },
     "action": {
         "continue": "आगे बढ़ें",

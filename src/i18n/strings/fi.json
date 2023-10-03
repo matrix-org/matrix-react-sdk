@@ -1,13 +1,7 @@
 {
-    "unknown error code": "tuntematon virhekoodi",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "ja %(count)s muuta...",
-        "one": "ja yksi muu..."
-    },
     "Join Room": "Liity huoneeseen",
     "Moderator": "Valvoja",
-    "not specified": "ei määritetty",
     "AM": "ap.",
     "PM": "ip.",
     "Home": "Etusivu",
@@ -19,10 +13,6 @@
     "Thu": "to",
     "Fri": "pe",
     "Sat": "la",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s tulos)",
-        "other": "(~%(count)s tulosta)"
-    },
     "Jan": "tammi",
     "Feb": "helmi",
     "Mar": "maalis",
@@ -121,31 +111,15 @@
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "edited": "muokattu",
     "Deactivate account": "Poista tili pysyvästi",
-    "e.g. my-room": "esim. oma-huone",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
-    "%(name)s accepted": "%(name)s hyväksyi",
-    "%(name)s cancelled": "%(name)s peruutti",
-    "%(name)s wants to verify": "%(name)s haluaa varmentaa",
-    "%(count)s verified sessions": {
-        "other": "%(count)s varmennettua istuntoa",
-        "one": "1 varmennettu istunto"
-    },
     "Lock": "Lukko",
-    "%(count)s sessions": {
-        "other": "%(count)s istuntoa",
-        "one": "%(count)s istunto"
-    },
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
-    "%(name)s declined": "%(name)s kieltäytyi",
     "Sign in with SSO": "Kirjaudu kertakirjautumista käyttäen",
     "Submit logs": "Lähetä lokit",
-    "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s avainta palautettu",
     "IRC display name width": "IRC-näyttönimen leveys",
     "This backup is trusted because it has been restored on this session": "Tähän varmuuskopioon luotetaan, koska se on palautettu tässä istunnossa",
     "Encrypted by a deleted session": "Salattu poistetun istunnon toimesta",
-    "%(brand)s encountered an error during upload of:": "%(brand)s kohtasi virheen lähettäessään:",
     "Your homeserver has exceeded its user limit.": "Kotipalvelimesi on ylittänyt käyttäjärajansa.",
     "Your homeserver has exceeded one of its resource limits.": "Kotipalvelimesi on ylittänyt jonkin resurssirajansa.",
     "Ok": "OK",
@@ -297,8 +271,6 @@
     "Eritrea": "Eritrea",
     "Equatorial Guinea": "Päiväntasaajan Guinea",
     "Moldova": "Moldova",
-    "a device cross-signing signature": "laitteen ristiinvarmennuksen allekirjoitus",
-    "a new cross-signing key signature": "Uusi ristiinvarmennuksen allekirjoitus",
     "Backup version:": "Varmuuskopiointiversio:",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Sambia",
@@ -403,44 +375,17 @@
     "Mongolia": "Mongolia",
     "Monaco": "Monaco",
     "Not encrypted": "Ei salattu",
-    "a key signature": "avaimen allekirjoitus",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
-    "<inviter/> invites you": "<inviter/> kutsuu sinut",
-    "%(count)s rooms": {
-        "one": "%(count)s huone",
-        "other": "%(count)s huonetta"
-    },
-    "%(count)s members": {
-        "one": "%(count)s jäsen",
-        "other": "%(count)s jäsentä"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s tuntemasi henkilö on jo liittynyt",
-        "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
-    },
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
-    "%(count)s reply": {
-        "one": "%(count)s vastaus",
-        "other": "%(count)s vastausta"
-    },
     "Experimental": "Kokeellinen",
     "Themes": "Teemat",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
     },
-    "a new master key signature": "uusi pääsalasanan avaintunnus",
     "Forget": "Unohda",
-    "%(count)s votes": {
-        "one": "%(count)s ääni",
-        "other": "%(count)s ääntä"
-    },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
-    "%(count)s participants": {
-        "one": "1 osallistuja",
-        "other": "%(count)s osallistujaa"
-    },
     "%(members)s and %(last)s": "%(members)s ja %(last)s",
     "Developer": "Kehittäjä",
     "%(members)s and more": "%(members)s ja enemmän",
@@ -449,15 +394,11 @@
     "Show spaces": "Näytä avaruudet",
     "Show rooms": "Näytä huoneet",
     "Moderation": "Moderointi",
-    "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Saved Items": "Tallennetut kohteet",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
     "View List": "Näytä luettelo",
-    " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
-    "unavailable": "ei saatavilla",
-    "unknown status code": "tuntematon tilakoodi",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
     "common": {
         "about": "Tietoa",
@@ -586,7 +527,25 @@
         "email_address": "Sähköpostiosoite",
         "filter_results": "Suodata tuloksia",
         "no_results_found": "Tuloksia ei löytynyt",
-        "cameras": "Kamerat"
+        "cameras": "Kamerat",
+        "n_participants": {
+            "one": "1 osallistuja",
+            "other": "%(count)s osallistujaa"
+        },
+        "and_n_others": {
+            "other": "ja %(count)s muuta...",
+            "one": "ja yksi muu..."
+        },
+        "n_members": {
+            "one": "%(count)s jäsen",
+            "other": "%(count)s jäsentä"
+        },
+        "unavailable": "ei saatavilla",
+        "edited": "muokattu",
+        "n_rooms": {
+            "one": "%(count)s huone",
+            "other": "%(count)s huonetta"
+        }
     },
     "action": {
         "continue": "Jatka",
@@ -1600,7 +1559,8 @@
         "m.call": {
             "video_call_started": "Videopuhelu alkoi huoneessa %(roomName)s.",
             "video_call_started_unsupported": "Videopuhelu alkoi huoneessa %(roomName)s. (ei tuettu selaimesi toimesta)",
-            "video_call_ended": "Videopuhelu päättyi"
+            "video_call_ended": "Videopuhelu päättyi",
+            "video_call_started_text": "%(name)s aloitti videopuhelun"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s soitti äänipuhelun.",
@@ -1986,7 +1946,11 @@
             "you_accepted": "Hyväksyit",
             "you_declined": "Kieltäydyit",
             "you_cancelled": "Peruutit",
-            "you_started": "Lähetit varmennuspyynnön"
+            "you_started": "Lähetit varmennuspyynnön",
+            "user_accepted": "%(name)s hyväksyi",
+            "user_declined": "%(name)s kieltäytyi",
+            "user_cancelled": "%(name)s peruutti",
+            "user_wants_to_verify": "%(name)s haluaa varmentaa"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s on lopettanut kyselyn"
@@ -2008,6 +1972,13 @@
             "error_loading": "Tapahtuman, johon oli vastattu, lataaminen epäonnistui. Se joko ei ole olemassa tai sinulla ei ole oikeutta katsoa sitä.",
             "in_reply_to": "<a>Vastauksena käyttäjälle</a> <pill>",
             "in_reply_to_for_export": "Vastauksena <a>tähän viestiin</a>"
+        },
+        "in_room_name": " huoneessa <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s ääni",
+                "other": "%(count)s ääntä"
+            }
         }
     },
     "slash_command": {
@@ -2380,7 +2351,8 @@
             "alias_field_matches_invalid": "Tämä osoite ei osoita tähän huoneeseen",
             "alias_field_taken_valid": "Tämä osoite on käytettävissä",
             "alias_field_taken_invalid_domain": "Tämä osoite on jo käytössä",
-            "alias_field_taken_invalid": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä"
+            "alias_field_taken_invalid": "Tässä osoitteessa on virheellinen palvelin tai se on jo käytössä",
+            "alias_field_placeholder_default": "esim. oma-huone"
         },
         "advanced": {
             "unfederated": "Tähän huoneeseen ei pääse ulkopuolisilta Matrix-palvelimilta",
@@ -2448,7 +2420,8 @@
             "enable_element_call_no_permissions_tooltip": "Oikeutesi eivät riitä tämän muuttamiseen.",
             "call_type_section": "Puhelun tyyppi"
         },
-        "title": "Huoneen asetukset — %(roomName)s"
+        "title": "Huoneen asetukset — %(roomName)s",
+        "alias_not_specified": "ei määritetty"
     },
     "encryption": {
         "verification": {
@@ -2613,7 +2586,12 @@
             "primary_button_text": "Tyhjennä ristiinvarmennuksen avaimet"
         },
         "confirm_encryption_setup_title": "Vahvista salauksen asetukset",
-        "confirm_encryption_setup_body": "Napsauta alla olevaa painiketta vahvistaaksesi salauksen asettamisen."
+        "confirm_encryption_setup_body": "Napsauta alla olevaa painiketta vahvistaaksesi salauksen asettamisen.",
+        "key_signature_upload_failed_master_key_signature": "uusi pääsalasanan avaintunnus",
+        "key_signature_upload_failed_cross_signing_key_signature": "Uusi ristiinvarmennuksen allekirjoitus",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "laitteen ristiinvarmennuksen allekirjoitus",
+        "key_signature_upload_failed_key_signature": "avaimen allekirjoitus",
+        "key_signature_upload_failed_body": "%(brand)s kohtasi virheen lähettäessään:"
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",
@@ -3092,7 +3070,11 @@
         "empty_explainer": "Ketjut auttavat pitämään keskustelut asiayhteyteen sopivina ja helposti seurattavina.",
         "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa",
         "unable_to_decrypt": "Viestin salauksen purkaminen ei onnistu",
-        "open_thread": "Avaa ketju"
+        "open_thread": "Avaa ketju",
+        "count_of_reply": {
+            "one": "%(count)s vastaus",
+            "other": "%(count)s vastausta"
+        }
     },
     "theme": {
         "light_high_contrast": "Vaalea, suuri kontrasti"
@@ -3411,7 +3393,11 @@
         "search": {
             "this_room": "Tämä huone",
             "all_rooms": "Kaikki huoneet",
-            "field_placeholder": "Haku…"
+            "field_placeholder": "Haku…",
+            "result_count": {
+                "one": "(~%(count)s tulos)",
+                "other": "(~%(count)s tulosta)"
+            }
         },
         "jump_to_bottom_button": "Vieritä tuoreimpiin viesteihin",
         "jump_read_marker": "Hyppää ensimmäiseen lukemattomaan viestiin.",
@@ -3427,7 +3413,13 @@
             "other": "Näytä kaikki %(count)s jäsentä"
         },
         "face_pile_tooltip_shortcut_joined": "Mukaan lukien sinä, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Mukaan lukien %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Mukaan lukien %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> kutsuu sinut",
+        "unknown_status_code_for_timeline_jump": "tuntematon tilakoodi",
+        "face_pile_summary": {
+            "one": "%(count)s tuntemasi henkilö on jo liittynyt",
+            "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
+        }
     },
     "file_panel": {
         "guest_note": "Sinun pitää <a>rekisteröityä</a> käyttääksesi tätä toiminnallisuutta",
@@ -3608,7 +3600,8 @@
         },
         "storage_evicted_title": "Istunnon dataa puuttuu",
         "storage_evicted_description_1": "Istunnon dataa, mukaan lukien salausavaimia, puuttuu. Kirjaudu ulos ja sisään, jolloin avaimet palautetaan varmuuskopiosta.",
-        "storage_evicted_description_2": "Selaimesi luultavasti poisti tämän datan, kun levytila oli vähissä."
+        "storage_evicted_description_2": "Selaimesi luultavasti poisti tämän datan, kun levytila oli vähissä.",
+        "unknown_error_code": "tuntematon virhekoodi"
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3763,6 +3756,14 @@
                 "other": "Poista %(count)s viestiä",
                 "one": "Poista yksi viesti"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s varmennettua istuntoa",
+            "one": "1 varmennettu istunto"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s istuntoa",
+            "one": "%(count)s istunto"
         }
     },
     "stickers": {
@@ -3994,6 +3995,7 @@
         "key_backup_warning": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
         "enter_key_title": "Anna turva-avain",
         "key_is_valid": "Tämä vaikuttaa kelvolliselta turva-avaimelta!",
-        "key_is_invalid": "Ei kelvollinen turva-avain"
+        "key_is_invalid": "Ei kelvollinen turva-avain",
+        "load_keys_progress": "%(completed)s / %(total)s avainta palautettu"
     }
 }

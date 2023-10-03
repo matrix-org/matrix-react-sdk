@@ -1,6 +1,5 @@
 {
     "Moderator": "Moderador/a",
-    "unknown error code": "código de erro desconhecido",
     "Sun": "Dom",
     "Mon": "Seg",
     "Tue": "Ter",
@@ -23,18 +22,9 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s às %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s às %(time)s",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "e %(count)s outros...",
-        "one": "e um outro..."
-    },
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de %(monthName)s de %(fullYear)s às %(time)s",
     "Join Room": "Ingressar na sala",
-    "not specified": "não especificado",
     "Warning!": "Atenção!",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultados)",
-        "one": "(~%(count)s resultado)"
-    },
     "Home": "Início",
     "AM": "AM",
     "PM": "PM",
@@ -332,7 +322,11 @@
         "historical": "Histórico",
         "are_you_sure": "Você tem certeza?",
         "email_address": "Endereço de email",
-        "filter_results": "Filtrar resultados"
+        "filter_results": "Filtrar resultados",
+        "and_n_others": {
+            "other": "e %(count)s outros...",
+            "one": "e um outro..."
+        }
     },
     "action": {
         "continue": "Continuar",
@@ -767,7 +761,11 @@
         "search": {
             "this_room": "Esta sala",
             "all_rooms": "Todas as salas",
-            "field_placeholder": "Pesquisar…"
+            "field_placeholder": "Pesquisar…",
+            "result_count": {
+                "other": "(~%(count)s resultados)",
+                "one": "(~%(count)s resultado)"
+            }
         },
         "jump_read_marker": "Ir diretamente para a primeira das mensagens não lidas.",
         "inviter_unknown": "Desconhecido",
@@ -808,7 +806,8 @@
         "advanced": {
             "unfederated": "Esta sala não é acessível para servidores Matrix remotos"
         },
-        "upload_avatar_label": "Enviar icone de perfil de usuário"
+        "upload_avatar_label": "Enviar icone de perfil de usuário",
+        "alias_not_specified": "não especificado"
     },
     "failed_load_async_component": "Impossível carregar! Verifique a sua ligação de rede e tente novamente.",
     "upload_failed_generic": "O carregamento do ficheiro '%(fileName)s' falhou.",
@@ -901,7 +900,8 @@
         "session_restore": {
             "title": "Não foi possível restaurar a sessão",
             "description_2": "Se você já usou antes uma versão mais recente do %(brand)s, a sua sessão pode ser incompatível com esta versão. Feche esta janela e tente abrir com a versão mais recente."
-        }
+        },
+        "unknown_error_code": "código de erro desconhecido"
     },
     "notifications": {
         "enable_prompt_toast_title": "Notificações",

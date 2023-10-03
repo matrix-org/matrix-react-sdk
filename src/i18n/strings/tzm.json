@@ -40,7 +40,6 @@
     "Algeria": "Dzayer",
     "Albania": "Albanya",
     "Afghanistan": "Afɣanistan",
-    "edited": "infel",
     "Home": "Asnubeg",
     "%(duration)sd": "%(duration)sas",
     "Folder": "Asdaw",
@@ -87,7 +86,8 @@
         "emoji": "Imuji",
         "space": "Space",
         "copied": "inɣel!",
-        "profile": "Ifres"
+        "profile": "Ifres",
+        "edited": "infel"
     },
     "action": {
         "continue": "Kemmel",

@@ -23,9 +23,7 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Moderator": "Moderator",
-    "not specified": "qeyd edilmədi",
     "Join Room": "Otağa girmək",
-    "unknown error code": "naməlum səhv kodu",
     "Sunday": "Bazar",
     "Friday": "Cümə",
     "Today": "Bu gün",
@@ -291,7 +289,8 @@
         "upload_avatar_label": "Avatar-ı yükləmək",
         "general": {
             "other_section": "Digər"
-        }
+        },
+        "alias_not_specified": "qeyd edilmədi"
     },
     "failed_load_async_component": "Yükləmək olmur! Şəbəkə bağlantınızı yoxlayın və yenidən cəhd edin.",
     "upload_failed_generic": "'%(fileName)s' faylı yüklənə bilmədi.",
@@ -352,7 +351,8 @@
     },
     "error": {
         "update_power_level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı",
-        "dialog_description_default": "Səhv oldu."
+        "dialog_description_default": "Səhv oldu.",
+        "unknown_error_code": "naməlum səhv kodu"
     },
     "member_list": {
         "invited_list_heading": "Dəvət edilmişdir",

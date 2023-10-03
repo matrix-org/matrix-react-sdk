@@ -3,15 +3,9 @@
     "Home": "Mājup",
     "Join Room": "Pievienoties istabai",
     "Moderator": "Moderators",
-    "not specified": "nav noteikts",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s rezultāts)",
-        "other": "(~%(count)s rezultāti)"
-    },
-    "unknown error code": "nezināms kļūdas kods",
     "Warning!": "Brīdinājums!",
     "Sun": "Sv.",
     "Mon": "P.",
@@ -32,10 +26,6 @@
     "Oct": "Okt.",
     "Nov": "Nov.",
     "Dec": "Dec.",
-    "and %(count)s others...": {
-        "other": "un vēl %(count)s citi...",
-        "one": "un vēl viens cits..."
-    },
     "AM": "AM",
     "PM": "PM",
     "Unnamed room": "Nenosaukta istaba",
@@ -57,15 +47,7 @@
     "Wednesday": "Trešdiena",
     "Thursday": "Ceturtdiena",
     "Yesterday": "Vakardien",
-    "%(count)s verified sessions": {
-        "one": "1 verificēta sesija",
-        "other": "%(count)s verificētas sesijas"
-    },
     "Philippines": "Filipīnas",
-    "%(count)s sessions": {
-        "one": "%(count)s sesija",
-        "other": "%(count)s sesijas"
-    },
     "Encrypted by a deleted session": "Šifrēts ar dzēstu sesiju",
     "Banana": "Banāns",
     "Lebanon": "Libāna",
@@ -74,10 +56,8 @@
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
-    "%(name)s accepted": "%(name)s akceptēja",
     "IRC display name width": "IRC parādāmā vārda platums",
     "Deactivate account": "Deaktivizēt kontu",
-    "e.g. my-room": "piem., mana-istaba",
     "Flag": "Karogs",
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
     "Ok": "Labi",
@@ -90,28 +70,11 @@
     "Luxembourg": "Luksemburga",
     "Lithuania": "Lietuva",
     "Latvia": "Latvija",
-    "%(name)s wants to verify": "%(name)s vēlas veikt verifikāciju",
-    "%(name)s declined": "%(name)s noraidīja",
-    "<inviter/> invites you": "<inviter/> uzaicina jūs",
-    "%(count)s rooms": {
-        "one": "%(count)s istaba",
-        "other": "%(count)s istabas"
-    },
-    "%(name)s cancelled": "%(name)s atcēla",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
     "Denmark": "Dānija",
     "American Samoa": "Amerikāņu Samoa",
     "Algeria": "Alžīrija",
-    "edited": "rediģēts",
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
-        "one": "%(count)s pazīstama persona ir jau pievienojusies"
-    },
-    "%(count)s members": {
-        "one": "%(count)s dalībnieks",
-        "other": "%(count)s dalībnieki"
-    },
     "Zimbabwe": "Zimbabve",
     "Zambia": "Zambija",
     "Yemen": "Jemena",
@@ -414,7 +377,20 @@
         "are_you_sure": "Vai tiešām to vēlaties?",
         "location": "Atrašanās vieta",
         "email_address": "Epasta adrese",
-        "filter_results": "Filtrēt rezultātus"
+        "filter_results": "Filtrēt rezultātus",
+        "and_n_others": {
+            "other": "un vēl %(count)s citi...",
+            "one": "un vēl viens cits..."
+        },
+        "n_members": {
+            "one": "%(count)s dalībnieks",
+            "other": "%(count)s dalībnieki"
+        },
+        "edited": "rediģēts",
+        "n_rooms": {
+            "one": "%(count)s istaba",
+            "other": "%(count)s istabas"
+        }
     },
     "action": {
         "continue": "Turpināt",
@@ -1096,7 +1072,11 @@
             "you_accepted": "Jūs akceptējāt",
             "you_declined": "Jūs noraidījāt",
             "you_cancelled": "Jūs atcēlāt",
-            "you_started": "Jūs nosūtījāt verifikācijas pieprasījumu"
+            "you_started": "Jūs nosūtījāt verifikācijas pieprasījumu",
+            "user_accepted": "%(name)s akceptēja",
+            "user_declined": "%(name)s noraidīja",
+            "user_cancelled": "%(name)s atcēla",
+            "user_wants_to_verify": "%(name)s vēlas veikt verifikāciju"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s pārtrauca aptauju"
@@ -1334,7 +1314,8 @@
             "aliases_items_label": "Citas publiskotās adreses:",
             "alias_heading": "Istabas adrese",
             "alias_field_taken_valid": "Šī adrese ir pieejama",
-            "alias_field_taken_invalid_domain": "Šī adrese jau tiek izmantota"
+            "alias_field_taken_invalid_domain": "Šī adrese jau tiek izmantota",
+            "alias_field_placeholder_default": "piem., mana-istaba"
         },
         "advanced": {
             "unfederated": "Šī istaba nav pieejama no citiem Matrix serveriem",
@@ -1364,7 +1345,8 @@
             "custom_sound_prompt": "Iestatīt jaunu pielāgotu skaņas signālu",
             "browse_button": "Pārlūkot"
         },
-        "title": "Istabas iestatījumi - %(roomName)s"
+        "title": "Istabas iestatījumi - %(roomName)s",
+        "alias_not_specified": "nav noteikts"
     },
     "encryption": {
         "verification": {
@@ -1854,12 +1836,21 @@
         "search": {
             "this_room": "Šajā istabā",
             "all_rooms": "Visās istabās",
-            "field_placeholder": "Meklēt…"
+            "field_placeholder": "Meklēt…",
+            "result_count": {
+                "one": "(~%(count)s rezultāts)",
+                "other": "(~%(count)s rezultāti)"
+            }
         },
         "jump_to_bottom_button": "Ritināt uz jaunākajām ziņām",
         "jump_read_marker": "Pāriet uz pirmo neizlasīto ziņu.",
         "inviter_unknown": "Neskaidrs statuss",
-        "failed_reject_invite": "Neizdevās noraidīt uzaicinājumu"
+        "failed_reject_invite": "Neizdevās noraidīt uzaicinājumu",
+        "invites_you_text": "<inviter/> uzaicina jūs",
+        "face_pile_summary": {
+            "other": "%(count)s pazīstami cilvēki ir jau pievienojusies",
+            "one": "%(count)s pazīstama persona ir jau pievienojusies"
+        }
     },
     "file_panel": {
         "guest_note": "Lai izmantotu šo funkcionalitāti, Tev ir <a>jāreģistrējas</a>",
@@ -1965,7 +1956,8 @@
             "description_2": "Ja iepriekš izmantojāt jaunāku %(brand)s versiju, jūsu sesija var nebūt saderīga ar šo versiju. Aizveriet šo logu un atgriezieties jaunākajā versijā.",
             "description_3": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt."
         },
-        "storage_evicted_title": "Trūkst sesijas datu"
+        "storage_evicted_title": "Trūkst sesijas datu",
+        "unknown_error_code": "nezināms kļūdas kods"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2042,6 +2034,14 @@
                 "one": "Dzēst 1 ziņu",
                 "other": "Dzēst %(count)s ziņas"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 verificēta sesija",
+            "other": "%(count)s verificētas sesijas"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s sesija",
+            "other": "%(count)s sesijas"
         }
     },
     "stickers": {

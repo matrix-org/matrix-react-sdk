@@ -1,5 +1,4 @@
 {
-    "unknown error code": "தெரியாத பிழை குறி",
     "Unnamed room": "பெயரிடப்படாத அறை",
     "Sunday": "ஞாயிறு",
     "Monday": "திங்கள்",
@@ -201,5 +200,8 @@
     },
     "forward": {
         "send_label": "அனுப்பு"
+    },
+    "error": {
+        "unknown_error_code": "தெரியாத பிழை குறி"
     }
 }

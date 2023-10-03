@@ -19,25 +19,15 @@
     "Sat": "Sob",
     "Sun": "Nd",
     "Warning!": "Uwaga!",
-    "unknown error code": "nieznany kod błędu",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "i %(count)s innych...",
-        "one": "i jeden inny..."
-    },
     "Home": "Strona główna",
     "Join Room": "Dołącz do pokoju",
     "Moderator": "Moderator",
-    "not specified": "nieokreślony",
     "AM": "AM",
     "PM": "PM",
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s wynik)",
-        "other": "(~%(count)s wyników)"
-    },
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Restricted": "Ograniczony",
     "Unnamed room": "Pokój bez nazwy",
@@ -118,19 +108,9 @@
     "Santa": "Mikołaj",
     "Gift": "Prezent",
     "Hammer": "Młotek",
-    "edited": "edytowane",
     "Thumbs up": "Kciuk w górę",
     "Ball": "Piłka",
     "Deactivate account": "Dezaktywuj konto",
-    "e.g. my-room": "np. mój-pokój",
-    "%(count)s verified sessions": {
-        "other": "%(count)s zweryfikowanych sesji",
-        "one": "1 zweryfikowana sesja"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sesji",
-        "one": "%(count)s sesja"
-    },
     "Switch theme": "Przełącz motyw",
     "Sign in with SSO": "Zaloguj się z SSO",
     "Ok": "OK",
@@ -389,14 +369,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
-    "%(count)s rooms": {
-        "one": "%(count)s pokój",
-        "other": "%(count)s pokojów"
-    },
-    "%(count)s members": {
-        "one": "%(count)s członek",
-        "other": "%(count)s członkowie"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s i %(count)s pozostała",
         "other": "%(spaceName)s i %(count)s pozostałych"
@@ -410,49 +382,18 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s i %(space2Name)s",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
-    "a device cross-signing signature": "sygnatura weryfikacji krzyżowej urządzenia",
-    "a new cross-signing key signature": "nowa sygnatura kluczu weryfikacji krzyżowej",
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
-    "%(count)s participants": {
-        "one": "1 uczestnik",
-        "other": "%(count)s uczestników"
-    },
     "Encrypted by a deleted session": "Zaszyfrowano przez usuniętą sesję",
-    " in <strong>%(room)s</strong>": " w <strong>%(room)s</strong>",
-    "<inviter/> invites you": "<inviter/> zaprasza cię",
     "Saved Items": "Przedmioty zapisane",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
     "%(members)s and more": "%(members)s i więcej",
     "Failed to connect to integration manager": "Nie udało się połączyć z menedżerem integracji",
-    "%(count)s reply": {
-        "one": "%(count)s odpowiedź",
-        "other": "%(count)s odpowiedzi"
-    },
-    "%(name)s accepted": "%(name)s zaakceptował",
-    "%(name)s declined": "%(name)s odrzucił",
-    "unavailable": "niedostępne",
-    "unknown status code": "nieznany kod statusu",
-    "%(name)s started a video call": "%(name)s rozpoczął rozmowę wideo",
-    "%(count)s votes": {
-        "one": "%(count)s głos",
-        "other": "%(count)s głosów"
-    },
     "Not encrypted": "Nie szyfrowane",
-    "toggle event": "przełącz wydarzenie",
     "Submit logs": "Wyślij dzienniki",
-    "%(name)s wants to verify": "%(name)s chce weryfikacji",
-    "%(name)s cancelled": "%(name)s anulował",
-    "%(brand)s encountered an error during upload of:": "%(brand)s napotkał błąd podczas wysyłania:",
-    "a key signature": "sygnatura klucza",
-    "a new master key signature": "nowa główna sygnatura klucza",
     "Desktop app logo": "Logo aplikacji Desktop",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s osoba, którą znasz, już dołączyła",
-        "other": "%(count)s osób, które znasz, już dołączyło"
-    },
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
     "You cannot search for rooms that are neither a room nor a space": "Nie możesz szukać pokojów, które nie pokojem, ani przestrzenią",
     "Show spaces": "Pokaż przestrzenie",
@@ -462,7 +403,6 @@
     "Forget": "Zapomnij",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Thread root ID: %(threadRootId)s": "ID root wątku: %(threadRootId)s",
-    "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono",
     "common": {
         "about": "Informacje",
         "analytics": "Analityka",
@@ -591,7 +531,25 @@
         "filter_results": "Filtruj wyniki",
         "no_results_found": "Nie znaleziono wyników",
         "unsent": "Niewysłane",
-        "cameras": "Kamery"
+        "cameras": "Kamery",
+        "n_participants": {
+            "one": "1 uczestnik",
+            "other": "%(count)s uczestników"
+        },
+        "and_n_others": {
+            "other": "i %(count)s innych...",
+            "one": "i jeden inny..."
+        },
+        "n_members": {
+            "one": "%(count)s członek",
+            "other": "%(count)s członkowie"
+        },
+        "unavailable": "niedostępne",
+        "edited": "edytowane",
+        "n_rooms": {
+            "one": "%(count)s pokój",
+            "other": "%(count)s pokojów"
+        }
     },
     "action": {
         "continue": "Kontynuuj",
@@ -1656,7 +1614,8 @@
         "developer_mode": "Tryb programisty",
         "view_source_decrypted_event_source": "Rozszyfrowane wydarzenie źródłowe",
         "view_source_decrypted_event_source_unavailable": "Rozszyfrowane źródło niedostępne",
-        "original_event_source": "Oryginalne źródło wydarzenia"
+        "original_event_source": "Oryginalne źródło wydarzenia",
+        "toggle_event": "przełącz wydarzenie"
     },
     "export_chat": {
         "html": "HTML",
@@ -1750,7 +1709,8 @@
         "m.call": {
             "video_call_started": "Rozmowa wideo rozpoczęta w %(roomName)s.",
             "video_call_started_unsupported": "Rozmowa wideo rozpoczęła się w %(roomName)s. (brak wsparcia w tej przeglądarce)",
-            "video_call_ended": "Rozmowa wideo została zakończona"
+            "video_call_ended": "Rozmowa wideo została zakończona",
+            "video_call_started_text": "%(name)s rozpoczął rozmowę wideo"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s wykonał połączenie głosowe.",
@@ -2162,7 +2122,11 @@
             "you_declined": "Odrzuciłeś",
             "you_cancelled": "Anulowałeś",
             "declining": "Odrzucanie…",
-            "you_started": "Wysłałeś żądanie weryfikacji"
+            "you_started": "Wysłałeś żądanie weryfikacji",
+            "user_accepted": "%(name)s zaakceptował",
+            "user_declined": "%(name)s odrzucił",
+            "user_cancelled": "%(name)s anulował",
+            "user_wants_to_verify": "%(name)s chce weryfikacji"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s zakończył ankietę",
@@ -2185,6 +2149,13 @@
             "error_loading": "Nie zdołano wczytać zdarzenia, na które odpowiedziano, może ono nie istnieć lub nie masz uprawnienia, by je zobaczyć.",
             "in_reply_to": "<a>W odpowiedzi do</a> <pill>",
             "in_reply_to_for_export": "W odpowiedzi do <a>tej wiadomości</a>"
+        },
+        "in_room_name": " w <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s głos",
+                "other": "%(count)s głosów"
+            }
         }
     },
     "slash_command": {
@@ -2581,7 +2552,8 @@
             "alias_field_matches_invalid": "Ten adres nie wskazuje na ten pokój",
             "alias_field_taken_valid": "Można użyć tego adresu",
             "alias_field_taken_invalid_domain": "Ten adres jest już w użyciu",
-            "alias_field_taken_invalid": "Ten adres posiadał nieprawidłowy serwer lub jest już w użyciu"
+            "alias_field_taken_invalid": "Ten adres posiadał nieprawidłowy serwer lub jest już w użyciu",
+            "alias_field_placeholder_default": "np. mój-pokój"
         },
         "advanced": {
             "unfederated": "Ten pokój nie jest dostępny na zdalnych serwerach Matrix",
@@ -2653,7 +2625,8 @@
             "enable_element_call_no_permissions_tooltip": "Nie posiadasz wymaganych uprawnień, aby to zmienić.",
             "call_type_section": "Typ połączenia"
         },
-        "title": "Ustawienia pokoju - %(roomName)s"
+        "title": "Ustawienia pokoju - %(roomName)s",
+        "alias_not_specified": "nieokreślony"
     },
     "encryption": {
         "verification": {
@@ -2843,7 +2816,12 @@
         },
         "confirm_encryption_setup_title": "Potwierdź ustawienie szyfrowania",
         "confirm_encryption_setup_body": "Kliknij przycisk poniżej, aby potwierdzić ustawienie szyfrowania.",
-        "unable_to_setup_keys_error": "Nie można ustawić kluczy"
+        "unable_to_setup_keys_error": "Nie można ustawić kluczy",
+        "key_signature_upload_failed_master_key_signature": "nowa główna sygnatura klucza",
+        "key_signature_upload_failed_cross_signing_key_signature": "nowa sygnatura kluczu weryfikacji krzyżowej",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "sygnatura weryfikacji krzyżowej urządzenia",
+        "key_signature_upload_failed_key_signature": "sygnatura klucza",
+        "key_signature_upload_failed_body": "%(brand)s napotkał błąd podczas wysyłania:"
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3395,7 +3373,11 @@
         "empty_heading": "Organizuj dyskusje za pomocą wątków",
         "unable_to_decrypt": "Nie można rozszyfrować wiadomości",
         "open_thread": "Otwórz wątek",
-        "error_start_thread_existing_relation": "Nie można utworzyć wątku z wydarzenia z istniejącą relacją"
+        "error_start_thread_existing_relation": "Nie można utworzyć wątku z wydarzenia z istniejącą relacją",
+        "count_of_reply": {
+            "one": "%(count)s odpowiedź",
+            "other": "%(count)s odpowiedzi"
+        }
     },
     "theme": {
         "light_high_contrast": "Jasny z wysokim kontrastem",
@@ -3751,7 +3733,11 @@
             "all_rooms": "Wszystkie pokoje",
             "field_placeholder": "Szukaj…",
             "this_room_button": "Wyszukaj ten pokój",
-            "all_rooms_button": "Wyszukaj wszystkie pokoje"
+            "all_rooms_button": "Wyszukaj wszystkie pokoje",
+            "result_count": {
+                "one": "(~%(count)s wynik)",
+                "other": "(~%(count)s wyników)"
+            }
         },
         "jump_to_bottom_button": "Przewiń do najnowszych wiadomości",
         "jump_read_marker": "Przeskocz do pierwszej nieprzeczytanej wiadomości.",
@@ -3772,7 +3758,13 @@
             "other": "Wyświetl wszystkich %(count)s członków"
         },
         "face_pile_tooltip_shortcut_joined": "Włączając Ciebie, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Włączając %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Włączając %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> zaprasza cię",
+        "unknown_status_code_for_timeline_jump": "nieznany kod statusu",
+        "face_pile_summary": {
+            "one": "%(count)s osoba, którą znasz, już dołączyła",
+            "other": "%(count)s osób, które znasz, już dołączyło"
+        }
     },
     "file_panel": {
         "guest_note": "Musisz się <a>zarejestrować</a> aby móc używać tej funkcji",
@@ -3962,7 +3954,8 @@
         },
         "storage_evicted_title": "Brakujące dane sesji",
         "storage_evicted_description_1": "Brakuje niektórych danych sesji, w tym zaszyfrowanych kluczy wiadomości. Wyloguj się i zaloguj, aby to naprawić, przywracając klucze z kopii zapasowej.",
-        "storage_evicted_description_2": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca."
+        "storage_evicted_description_2": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca.",
+        "unknown_error_code": "nieznany kod błędu"
     },
     "in_space1_and_space2": "W przestrzeniach %(space1Name)s i %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4132,6 +4125,14 @@
                 "other": "Usuń %(count)s wiadomości",
                 "one": "Usuń 1 wiadomość"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s zweryfikowanych sesji",
+            "one": "1 zweryfikowana sesja"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sesji",
+            "one": "%(count)s sesja"
         }
     },
     "stickers": {
@@ -4384,6 +4385,7 @@
         "key_is_valid": "Wygląda to na prawidłowy klucz bezpieczeństwa!",
         "key_is_invalid": "Nieprawidłowy klucz bezpieczeństwa",
         "enter_key_description": "Uzyskaj dostęp do historii bezpiecznych wiadomości i skonfiguruj bezpieczne wiadomości, wprowadzając swój klucz bezpieczeństwa.",
-        "key_forgotten_text": "Jeśli zapomniałeś swojego klucza bezpieczeństwa, możesz <button>skonfigurować nowe opcje odzyskiwania</button>"
+        "key_forgotten_text": "Jeśli zapomniałeś swojego klucza bezpieczeństwa, możesz <button>skonfigurować nowe opcje odzyskiwania</button>",
+        "load_keys_progress": "%(completed)s z %(total)s kluczy przywrócono"
     }
 }

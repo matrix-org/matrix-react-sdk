@@ -535,7 +535,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 title={_t("timeline|edits|tooltip_label", { date: dateString })}
                 tooltip={tooltip}
             >
-                <span>{`(${_t("edited")})`}</span>
+                <span>{`(${_t("common|edited")})`}</span>
             </AccessibleTooltipButton>
         );
     }

@@ -21,7 +21,6 @@
     "Dec": "דצמבר",
     "PM": "PM",
     "AM": "AM",
-    "unknown error code": "קוד שגיאה לא מוכר",
     "Unnamed room": "חדר ללא שם",
     "Sunday": "ראשון",
     "Today": "היום",
@@ -358,59 +357,27 @@
     "Your homeserver has exceeded its user limit.": "השרת שלכם חרג ממגבלות מספר המשתמשים שלו.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "לפני שמגישים יומנים, עליכם <a> ליצור בעיה של GitHub </a> כדי לתאר את הבעיה שלכם.",
     "Home": "הבית",
-    "e.g. my-room": "כגון החדר-שלי",
     "collapse": "אחד",
     "expand": "הרחב",
-    "%(name)s wants to verify": "%(name)s רוצה לאמת",
-    "%(name)s cancelled": "%(name)s ביטל",
-    "%(name)s declined": "%(name)s סרב",
-    "%(name)s accepted": "%(name)s אישרו",
-    "%(count)s sessions": {
-        "one": "%(count)s מושבים",
-        "other": "%(count)s מושבים"
-    },
-    "%(count)s verified sessions": {
-        "one": "1 מושב מאומת",
-        "other": "%(count)s מושבים מאומתים"
-    },
     "Not encrypted": "לא מוצפן",
-    "not specified": "לא מוגדר",
     "Failed to connect to integration manager": "ההתחברות למנהל האינטגרציה נכשלה",
     "Join Room": "הצטרף אל חדר",
-    "(~%(count)s results)": {
-        "one": "(תוצאת %(count)s)",
-        "other": "(תוצאת %(count)s)"
-    },
     "%(duration)sd": "%(duration)s (ימים)",
     "%(duration)sh": "%(duration)s (שעות)",
     "%(duration)sm": "%(duration)s (דקות)",
     "%(duration)ss": "(שניות) %(duration)s",
-    "and %(count)s others...": {
-        "one": "ועוד אחד אחר...",
-        "other": "ו %(count)s אחרים..."
-    },
     "Encrypted by a deleted session": "הוצפן על ידי מושב שנמחק",
     "Submit logs": "הגש יומנים",
-    "edited": "נערך",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "כדי לדווח על בעיית אבטחה , אנא קראו את <a> מדיניות גילוי האבטחה של Matrix.org </a>.",
     "Deactivate account": "סגור חשבון",
     "Sign in with SSO": "היכנס באמצעות SSO",
     "Delete Widget": "מחק ישומון",
-    "%(completed)s of %(total)s keys restored": "%(completed)s שניות מתוך %(total)s מפתחות שוחזרו",
     "Send Logs": "שלח יומנים",
-    "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
-    "a key signature": "חתימת מפתח",
-    "a new cross-signing key signature": "חתימת מפתח צולבת חדשה",
-    "a device cross-signing signature": "חתימה צולבת של התקן",
-    "a new master key signature": "חתימת מפתח ראשית חדשה",
     "Switch theme": "שנה ערכת נושא",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
-    "%(count)s rooms": {
-        "other": "%(count)s חדרים"
-    },
     "Feedback sent! Thanks, we appreciate it!": "משוב נשלח! תודה, אנחנו מודים לכם",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
     "Explore public spaces in the new search dialog": "חיקרו מרחבי עבודה ציבוריים בתיבת הדו-שיח החדשה של החיפוש",
@@ -521,7 +488,15 @@
         "are_you_sure": "האם אתם בטוחים?",
         "location": "מיקום",
         "email_address": "כתובת דוא\"ל",
-        "filter_results": "סנן התוצאות"
+        "filter_results": "סנן התוצאות",
+        "and_n_others": {
+            "one": "ועוד אחד אחר...",
+            "other": "ו %(count)s אחרים..."
+        },
+        "edited": "נערך",
+        "n_rooms": {
+            "other": "%(count)s חדרים"
+        }
     },
     "action": {
         "continue": "המשך",
@@ -1547,7 +1522,11 @@
             "you_accepted": "אשרתם",
             "you_declined": "דחיתם",
             "you_cancelled": "ביטלתם",
-            "you_started": "שלחתם בקשה לקוד אימות"
+            "you_started": "שלחתם בקשה לקוד אימות",
+            "user_accepted": "%(name)s אישרו",
+            "user_declined": "%(name)s סרב",
+            "user_cancelled": "%(name)s ביטל",
+            "user_wants_to_verify": "%(name)s רוצה לאמת"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)sסיים סקר"
@@ -1879,7 +1858,8 @@
             "alias_heading": "כתובת חדר",
             "alias_field_safe_localpart_invalid": "חלק מהתווים אינם מורשים",
             "alias_field_taken_valid": "כתובת זו זמינה לשימוש",
-            "alias_field_taken_invalid_domain": "כתובת זו נמצאת בשימוש"
+            "alias_field_taken_invalid_domain": "כתובת זו נמצאת בשימוש",
+            "alias_field_placeholder_default": "כגון החדר-שלי"
         },
         "advanced": {
             "unfederated": "לא ניתן לגשת לחדר זה באמצעות שרתי מטריקס מרוחקים",
@@ -1936,7 +1916,8 @@
             "custom_sound_prompt": "הגדר צליל מותאם אישי",
             "browse_button": "דפדף"
         },
-        "title": "הגדרות חדר - %(roomName)s"
+        "title": "הגדרות חדר - %(roomName)s",
+        "alias_not_specified": "לא מוגדר"
     },
     "encryption": {
         "verification": {
@@ -2083,7 +2064,12 @@
         },
         "confirm_encryption_setup_title": "אשר את הגדרת ההצפנה",
         "confirm_encryption_setup_body": "לחץ על הלחצן למטה כדי לאשר את הגדרת ההצפנה.",
-        "unable_to_setup_keys_error": "לא ניתן להגדיר מקשים"
+        "unable_to_setup_keys_error": "לא ניתן להגדיר מקשים",
+        "key_signature_upload_failed_master_key_signature": "חתימת מפתח ראשית חדשה",
+        "key_signature_upload_failed_cross_signing_key_signature": "חתימת מפתח צולבת חדשה",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "חתימה צולבת של התקן",
+        "key_signature_upload_failed_key_signature": "חתימת מפתח",
+        "key_signature_upload_failed_body": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -2708,7 +2694,11 @@
         "search": {
             "this_room": "החדר הזה",
             "all_rooms": "כל החדרים",
-            "field_placeholder": "חפש…"
+            "field_placeholder": "חפש…",
+            "result_count": {
+                "one": "(תוצאת %(count)s)",
+                "other": "(תוצאת %(count)s)"
+            }
         },
         "jump_to_bottom_button": "גלול להודעות האחרונות",
         "jump_read_marker": "קפצו להודעה הראשונה שלא נקראה.",
@@ -2853,7 +2843,8 @@
         },
         "storage_evicted_title": "חסרים נתוני הפעלות",
         "storage_evicted_description_1": "חלק מנתוני ההפעלה, כולל מפתחות הודעות מוצפנים, חסרים. צא והיכנס כדי לתקן זאת, ושחזר את המפתחות מהגיבוי.",
-        "storage_evicted_description_2": "סביר להניח שהדפדפן שלך הסיר נתונים אלה כאשר שטח הדיסק שלהם נמוך."
+        "storage_evicted_description_2": "סביר להניח שהדפדפן שלך הסיר נתונים אלה כאשר שטח הדיסק שלהם נמוך.",
+        "unknown_error_code": "קוד שגיאה לא מוכר"
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -2994,6 +2985,14 @@
                 "one": "הסר הודעה 1",
                 "other": "הסר %(count)s הודעות"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 מושב מאומת",
+            "other": "%(count)s מושבים מאומתים"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s מושבים",
+            "other": "%(count)s מושבים"
         }
     },
     "stickers": {
@@ -3163,6 +3162,7 @@
         "enter_key_title": "הזן מפתח אבטחה",
         "key_is_invalid": "מפתח האבטחה לא חוקי",
         "enter_key_description": "גש להיסטוריית ההודעות המאובטחות שלך והגדר הודעות מאובטחות על ידי הזנת מפתח האבטחה שלך.",
-        "key_forgotten_text": "אם שכחת את מפתח האבטחה שלך תוכל <button> להגדיר אפשרויות שחזור חדשות</button>"
+        "key_forgotten_text": "אם שכחת את מפתח האבטחה שלך תוכל <button> להגדיר אפשרויות שחזור חדשות</button>",
+        "load_keys_progress": "%(completed)s שניות מתוך %(total)s מפתחות שוחזרו"
     }
 }

@@ -27,22 +27,12 @@
     "Restricted": "Ограничено",
     "Moderator": "Модератор",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "and %(count)s others...": {
-        "other": "и %(count)s других...",
-        "one": "и још један други..."
-    },
     "%(duration)ss": "%(duration)sс",
     "%(duration)sm": "%(duration)sм",
     "%(duration)sh": "%(duration)sч",
     "%(duration)sd": "%(duration)sд",
     "Unnamed room": "Неименована соба",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s резултата)",
-        "one": "(~%(count)s резултат)"
-    },
     "Join Room": "Приступи соби",
-    "unknown error code": "непознати код грешке",
-    "not specified": "није наведено",
     "Delete Widget": "Обриши виџет",
     "Home": "Почетна",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
@@ -58,10 +48,6 @@
     "Thursday": "Четвртак",
     "Yesterday": "Јуче",
     "Send Logs": "Пошаљи записнике",
-    "%(count)s verified sessions": {
-        "other": "потврђених сесија: %(count)s",
-        "one": "1 потврђена сесија"
-    },
     "Light bulb": "сијалица",
     "Switch theme": "Промени тему",
     "Zimbabwe": "Зимбабве",
@@ -443,7 +429,11 @@
         "show_more": "Прикажи више",
         "are_you_sure": "Да ли сте сигурни?",
         "email_address": "Мејл адреса",
-        "filter_results": "Филтрирај резултате"
+        "filter_results": "Филтрирај резултате",
+        "and_n_others": {
+            "other": "и %(count)s других...",
+            "one": "и још један други..."
+        }
     },
     "action": {
         "continue": "Настави",
@@ -1094,7 +1084,8 @@
         "notifications": {
             "browse_button": "Прегледајте"
         },
-        "title": "Подешавања собе - %(roomName)s"
+        "title": "Подешавања собе - %(roomName)s",
+        "alias_not_specified": "није наведено"
     },
     "encryption": {
         "verification": {
@@ -1411,7 +1402,11 @@
         "search": {
             "this_room": "Ова соба",
             "all_rooms": "Све собе",
-            "field_placeholder": "Претрага…"
+            "field_placeholder": "Претрага…",
+            "result_count": {
+                "other": "(~%(count)s резултата)",
+                "one": "(~%(count)s резултат)"
+            }
         },
         "jump_to_bottom_button": "Пребаци на најновије поруке",
         "jump_read_marker": "Скочи на прву непрочитану поруку.",
@@ -1493,7 +1488,8 @@
             "description_1": "Наишли смо на грешку приликом повраћаја ваше претходне сесије.",
             "description_2": "Ако сте претходно користили новије издање апликације %(brand)s, ваша сесија може бити некомпатибилна са овим издањем. Затворите овај прозор и вратите се на новије издање.",
             "description_3": "Чишћење складишта вашег прегледача може решити проблем али ће вас то одјавити и учинити шифровани историјат ћаскања нечитљивим."
-        }
+        },
+        "unknown_error_code": "непознати код грешке"
     },
     "items_and_n_others": {
         "other": "<Items/> и %(count)s других",
@@ -1538,6 +1534,10 @@
         "promote_warning": "Нећете моћи да опозовете ову измену јер унапређујете корисника тако да има исти ниво снаге као и ви.",
         "redact": {
             "confirm_title": "Уклони недавне поруке корисника %(user)s"
+        },
+        "count_of_verified_sessions": {
+            "other": "потврђених сесија: %(count)s",
+            "one": "1 потврђена сесија"
         }
     },
     "stickers": {

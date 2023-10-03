@@ -1,5 +1,4 @@
 {
-    "unknown error code": "codi d'error desconegut",
     "Warning!": "Avís!",
     "Sun": "dg.",
     "Mon": "dl.",
@@ -28,21 +27,12 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s de/d' %(monthName)s de %(fullYear)s %(time)s",
     "Restricted": "Restringit",
     "Moderator": "Moderador",
-    "and %(count)s others...": {
-        "other": "i %(count)s altres...",
-        "one": "i un altre..."
-    },
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Sala sense nom",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultats)",
-        "one": "(~%(count)s resultat)"
-    },
     "Join Room": "Entra a la sala",
-    "not specified": "sense especificar",
     "Delete Widget": "Suprimeix el giny",
     "Home": "Inici",
     "%(items)s and %(lastItem)s": "%(items)s i %(lastItem)s",
@@ -57,8 +47,6 @@
     "Wednesday": "Dimecres",
     "Thursday": "Dijous",
     "Yesterday": "Ahir",
-    "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
-    "e.g. my-room": "p.e. la-meva-sala",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -96,7 +84,11 @@
         "go_to_settings": "Ves a Configuració",
         "are_you_sure": "Estàs segur?",
         "email_address": "Correu electrònic",
-        "filter_results": "Resultats del filtre"
+        "filter_results": "Resultats del filtre",
+        "and_n_others": {
+            "other": "i %(count)s altres...",
+            "one": "i un altre..."
+        }
     },
     "action": {
         "continue": "Continua",
@@ -550,13 +542,15 @@
             "error_deleting_alias_title": "Error eliminant adreça",
             "error_deleting_alias_description": "S'ha produït un error en eliminar l'adreça. Pot ser que ja no existeixi o que s'hagi produït un error temporal.",
             "error_creating_alias_title": "Error creant adreça",
-            "error_creating_alias_description": "S'ha produït un error en crear l'adreça. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal."
+            "error_creating_alias_description": "S'ha produït un error en crear l'adreça. Pot ser que el servidor no ho permeti o que s'hagi produït un error temporal.",
+            "alias_field_placeholder_default": "p.e. la-meva-sala"
         },
         "advanced": {
             "unfederated": "Aquesta sala no és accessible per a servidors de Matrix remots"
         },
         "upload_avatar_label": "Puja l'avatar",
-        "title": "Configuració de sala - %(roomName)s"
+        "title": "Configuració de sala - %(roomName)s",
+        "alias_not_specified": "sense especificar"
     },
     "auth": {
         "sign_in_with_sso": "Inicia sessió mitjançant la inscripció única (SSO)",
@@ -683,7 +677,11 @@
         "search": {
             "this_room": "Aquesta sala",
             "all_rooms": "Totes les sales",
-            "field_placeholder": "Cerca…"
+            "field_placeholder": "Cerca…",
+            "result_count": {
+                "other": "(~%(count)s resultats)",
+                "one": "(~%(count)s resultat)"
+            }
         },
         "jump_read_marker": "Salta al primer missatge no llegit.",
         "inviter_unknown": "Desconegut",
@@ -717,7 +715,8 @@
             "manual_device_verification_self_text": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
             "manual_device_verification_user_text": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
             "manual_device_verification_device_id_label": "ID de la sessió"
-        }
+        },
+        "key_signature_upload_failed_body": "%(brand)s ha trobat un error durant la pujada de:"
     },
     "labs_mjolnir": {
         "error_adding_ignore": "Error afegint usuari/servidor ignorat",
@@ -787,7 +786,8 @@
             "title": "No s'ha pogut restaurar la sessió",
             "description_1": "Hem trobat un error en intentar recuperar la teva sessió prèvia.",
             "description_2": "Si anteriorment heu utilitzat un versió de %(brand)s més recent, la vostra sessió podría ser incompatible amb aquesta versió. Tanqueu aquesta finestra i torneu a la versió més recent."
-        }
+        },
+        "unknown_error_code": "codi d'error desconegut"
     },
     "items_and_n_others": {
         "other": "<Items/> i %(count)s altres",

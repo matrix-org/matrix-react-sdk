@@ -1,14 +1,8 @@
 {
-    "unknown error code": "ismeretlen hibakód",
     "%(items)s and %(lastItem)s": "%(items)s és %(lastItem)s",
-    "and %(count)s others...": {
-        "other": "és még: %(count)s ...",
-        "one": "és még egy..."
-    },
     "Home": "Kezdőlap",
     "Join Room": "Belépés a szobába",
     "Moderator": "Moderátor",
-    "not specified": "nincs meghatározva",
     "Warning!": "Figyelmeztetés!",
     "Sun": "Vas",
     "Mon": "Hé",
@@ -32,10 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(monthName)s %(day)s, %(weekDayName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(fullYear)s. %(monthName)s %(day)s., %(weekDayName)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s db eredmény)",
-        "other": "(~%(count)s db eredmény)"
-    },
     "AM": "de.",
     "PM": "du.",
     "Unnamed room": "Névtelen szoba",
@@ -121,34 +111,14 @@
     "Headphones": "Fejhallgató",
     "Folder": "Dosszié",
     "Scissors": "Olló",
-    "edited": "szerkesztve",
     "Deactivate account": "Fiók zárolása",
-    "e.g. my-room": "pl.: szobam",
-    "%(name)s accepted": "%(name)s elfogadta",
-    "%(name)s cancelled": "%(name)s megszakította",
-    "%(name)s wants to verify": "%(name)s ellenőrizni szeretné",
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
-    "%(count)s verified sessions": {
-        "other": "%(count)s ellenőrzött munkamenet",
-        "one": "1 ellenőrzött munkamenet"
-    },
     "Lock": "Lakat",
     "This backup is trusted because it has been restored on this session": "Ez a mentés megbízható, mert ebben a munkamenetben lett helyreállítva",
     "Encrypted by a deleted session": "Törölt munkamenet által lett titkosítva",
-    "%(count)s sessions": {
-        "other": "%(count)s munkamenet",
-        "one": "%(count)s munkamenet"
-    },
-    "%(name)s declined": "%(name)s elutasította",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "A Matrixszal kapcsolatos biztonsági hibák jelentésével kapcsolatban olvassa el a Matrix.org <a>biztonsági hibák közzétételi házirendjét</a>.",
-    "a new master key signature": "az új mester kulcs aláírás",
-    "a new cross-signing key signature": "az új eszközök közötti kulcs aláírása",
-    "a device cross-signing signature": "az eszköz eszközök közötti aláírása",
-    "a key signature": "kulcs aláírás",
-    "%(brand)s encountered an error during upload of:": "%(brand)s hibába ütközött a feltöltés közben:",
     "Sign in with SSO": "Belépés SSO-val",
     "Submit logs": "Napló elküldése",
-    "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s kulcs helyreállítva",
     "IRC display name width": "IRC-n megjelenítendő név szélessége",
     "Your homeserver has exceeded its user limit.": "A Matrix-kiszolgálója túllépte a felhasználói szám korlátját.",
     "Your homeserver has exceeded one of its resource limits.": "A Matrix-kiszolgálója túllépte valamelyik erőforráskorlátját.",
@@ -405,30 +375,9 @@
     "Greenland": "Grönland",
     "Greece": "Görögország",
     "Gibraltar": "Gibraltár",
-    "%(count)s members": {
-        "one": "%(count)s tag",
-        "other": "%(count)s tag"
-    },
-    "<inviter/> invites you": "<inviter/> meghívta",
-    "%(count)s rooms": {
-        "one": "%(count)s szoba",
-        "other": "%(count)s szoba"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s ismerős már csatlakozott",
-        "other": "%(count)s ismerős már csatlakozott"
-    },
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
-    "%(count)s reply": {
-        "one": "%(count)s válasz",
-        "other": "%(count)s válasz"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
     "Forget": "Elfelejtés",
-    "%(count)s votes": {
-        "one": "%(count)s szavazat",
-        "other": "%(count)s szavazat"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s és még %(count)s másik",
         "other": "%(spaceName)s és még %(count)s másik"
@@ -438,14 +387,9 @@
     "Themes": "Témák",
     "Moderation": "Moderálás",
     "Messaging": "Üzenetküldés",
-    "toggle event": "esemény be/ki",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
     "View List": "Lista megjelenítése",
-    "%(count)s participants": {
-        "one": "1 résztvevő",
-        "other": "%(count)s résztvevő"
-    },
     "%(members)s and %(last)s": "%(members)s és %(last)s",
     "%(members)s and more": "%(members)s és mások",
     "Unread email icon": "Olvasatlan e-mail ikon",
@@ -454,15 +398,11 @@
     "Show rooms": "Szobák megjelenítése",
     "Explore public spaces in the new search dialog": "Nyilvános terek felderítése az új keresőben",
     "Saved Items": "Mentett elemek",
-    "%(name)s started a video call": "%(name)s videóhívást indított",
     "Thread root ID: %(threadRootId)s": "Üzenetszál gyökerének azonosítója: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
     "unknown": "ismeretlen",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Desktop app logo": "Asztali alkalmazás profilkép",
     "Requires your server to support the stable version of MSC3827": "A Matrix-kiszolgálónak támogatnia kell az MSC3827 stabil verzióját",
-    "unavailable": "nem érhető el",
-    "unknown status code": "ismeretlen állapotkód",
     "common": {
         "about": "Névjegy",
         "analytics": "Analitika",
@@ -591,7 +531,25 @@
         "filter_results": "Találatok szűrése",
         "no_results_found": "Nincs találat",
         "unsent": "Elküldetlen",
-        "cameras": "Kamerák"
+        "cameras": "Kamerák",
+        "n_participants": {
+            "one": "1 résztvevő",
+            "other": "%(count)s résztvevő"
+        },
+        "and_n_others": {
+            "other": "és még: %(count)s ...",
+            "one": "és még egy..."
+        },
+        "n_members": {
+            "one": "%(count)s tag",
+            "other": "%(count)s tag"
+        },
+        "unavailable": "nem érhető el",
+        "edited": "szerkesztve",
+        "n_rooms": {
+            "one": "%(count)s szoba",
+            "other": "%(count)s szoba"
+        }
     },
     "action": {
         "continue": "Folytatás",
@@ -1615,7 +1573,8 @@
         "developer_mode": "Fejlesztői mód",
         "view_source_decrypted_event_source": "Visszafejtett esemény forráskód",
         "view_source_decrypted_event_source_unavailable": "A visszafejtett forrás nem érhető el",
-        "original_event_source": "Eredeti esemény forráskód"
+        "original_event_source": "Eredeti esemény forráskód",
+        "toggle_event": "esemény be/ki"
     },
     "export_chat": {
         "html": "HTML",
@@ -1705,7 +1664,8 @@
         "m.call": {
             "video_call_started": "Videóhívás indult itt: %(roomName)s.",
             "video_call_started_unsupported": "Videóhívás indult itt: %(roomName)s. (ebben a böngészőben ez nem támogatott)",
-            "video_call_ended": "Videó hívás befejeződött"
+            "video_call_ended": "Videó hívás befejeződött",
+            "video_call_started_text": "%(name)s videóhívást indított"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s hanghívást indított.",
@@ -2108,7 +2068,11 @@
             "you_declined": "Elutasítottad",
             "you_cancelled": "Megszakítottad",
             "declining": "Elutasítás…",
-            "you_started": "Ellenőrzési kérést küldtél"
+            "you_started": "Ellenőrzési kérést küldtél",
+            "user_accepted": "%(name)s elfogadta",
+            "user_declined": "%(name)s elutasította",
+            "user_cancelled": "%(name)s megszakította",
+            "user_wants_to_verify": "%(name)s ellenőrizni szeretné"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s lezárta a szavazást",
@@ -2131,6 +2095,13 @@
             "error_loading": "Nem lehet betölteni azt az eseményt amire válaszoltál, mert vagy nem létezik, vagy nincs jogod megnézni.",
             "in_reply_to": "<a>Válasz neki</a> <pill>",
             "in_reply_to_for_export": "Válasz erre az <a>üzenetre</a>"
+        },
+        "in_room_name": " itt: <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s szavazat",
+                "other": "%(count)s szavazat"
+            }
         }
     },
     "slash_command": {
@@ -2518,7 +2489,8 @@
             "alias_field_matches_invalid": "Ez a cím nem erre a szobára mutat",
             "alias_field_taken_valid": "Ez a cím használható",
             "alias_field_taken_invalid_domain": "Ez a cím már használatban van",
-            "alias_field_taken_invalid": "Ez a cím érvénytelen szervert tartalmaz vagy már használatban van"
+            "alias_field_taken_invalid": "Ez a cím érvénytelen szervert tartalmaz vagy már használatban van",
+            "alias_field_placeholder_default": "pl.: szobam"
         },
         "advanced": {
             "unfederated": "Ez a szoba távoli Matrix-kiszolgálóról nem érhető el",
@@ -2589,7 +2561,8 @@
             "enable_element_call_no_permissions_tooltip": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
             "call_type_section": "Hívás típusa"
         },
-        "title": "Szoba beállításai – %(roomName)s"
+        "title": "Szoba beállításai – %(roomName)s",
+        "alias_not_specified": "nincs meghatározva"
     },
     "encryption": {
         "verification": {
@@ -2779,7 +2752,12 @@
         },
         "confirm_encryption_setup_title": "Erősítsd meg a titkosítási beállításokat",
         "confirm_encryption_setup_body": "Az alábbi gomb megnyomásával erősítsd meg, hogy megadod a titkosítási beállításokat.",
-        "unable_to_setup_keys_error": "Nem sikerült a kulcsok beállítása"
+        "unable_to_setup_keys_error": "Nem sikerült a kulcsok beállítása",
+        "key_signature_upload_failed_master_key_signature": "az új mester kulcs aláírás",
+        "key_signature_upload_failed_cross_signing_key_signature": "az új eszközök közötti kulcs aláírása",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "az eszköz eszközök közötti aláírása",
+        "key_signature_upload_failed_key_signature": "kulcs aláírás",
+        "key_signature_upload_failed_body": "%(brand)s hibába ütközött a feltöltés közben:"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",
@@ -3326,7 +3304,11 @@
         "empty_heading": "Beszélgetések üzenetszálakba rendezése",
         "unable_to_decrypt": "Üzenet visszafejtése sikertelen",
         "open_thread": "Üzenetszál megnyitása",
-        "error_start_thread_existing_relation": "Nem lehet üzenetszálat indítani olyan eseményről ami már rendelkezik kapcsolattal"
+        "error_start_thread_existing_relation": "Nem lehet üzenetszálat indítani olyan eseményről ami már rendelkezik kapcsolattal",
+        "count_of_reply": {
+            "one": "%(count)s válasz",
+            "other": "%(count)s válasz"
+        }
     },
     "theme": {
         "light_high_contrast": "Világos, nagy kontrasztú",
@@ -3679,7 +3661,11 @@
             "all_rooms": "Minden szobában",
             "field_placeholder": "Keresés…",
             "this_room_button": "Keresés ebben a szobában",
-            "all_rooms_button": "Keresés az összes szobában"
+            "all_rooms_button": "Keresés az összes szobában",
+            "result_count": {
+                "one": "(~%(count)s db eredmény)",
+                "other": "(~%(count)s db eredmény)"
+            }
         },
         "jump_to_bottom_button": "A legfrissebb üzenethez görget",
         "jump_read_marker": "Ugrás az első olvasatlan üzenetre.",
@@ -3700,7 +3686,13 @@
             "other": "Az összes %(count)s résztvevő megmutatása"
         },
         "face_pile_tooltip_shortcut_joined": "Önt is beleértve, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Beleértve: %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Beleértve: %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> meghívta",
+        "unknown_status_code_for_timeline_jump": "ismeretlen állapotkód",
+        "face_pile_summary": {
+            "one": "%(count)s ismerős már csatlakozott",
+            "other": "%(count)s ismerős már csatlakozott"
+        }
     },
     "file_panel": {
         "guest_note": "<a>Regisztrálnod kell</a> hogy ezt használhasd",
@@ -3888,7 +3880,8 @@
         },
         "storage_evicted_title": "A munkamenetadatok hiányzik",
         "storage_evicted_description_1": "Néhány kapcsolati adat hiányzik, beleértve a titkosított üzenetek kulcsait. A hiba javításához lépjen ki és jelentkezzen be újra, így a mentésből helyreállítva a kulcsokat.",
-        "storage_evicted_description_2": "A böngésző valószínűleg törölte ezeket az adatokat, amikor lecsökkent a szabad lemezterület."
+        "storage_evicted_description_2": "A böngésző valószínűleg törölte ezeket az adatokat, amikor lecsökkent a szabad lemezterület.",
+        "unknown_error_code": "ismeretlen hibakód"
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4056,6 +4049,14 @@
                 "other": "%(count)s db üzenet törlése",
                 "one": "1 üzenet törlése"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s ellenőrzött munkamenet",
+            "one": "1 ellenőrzött munkamenet"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s munkamenet",
+            "one": "%(count)s munkamenet"
         }
     },
     "stickers": {
@@ -4306,6 +4307,7 @@
         "key_is_valid": "Ez érvényes biztonsági kulcsnak tűnik.",
         "key_is_invalid": "Érvénytelen biztonsági kulcs",
         "enter_key_description": "A biztonsági kulcs megadásával hozzáférhet a régi biztonságos üzeneteihez és beállíthatja a biztonságos üzenetküldést.",
-        "key_forgotten_text": "Ha elfelejtette a biztonsági kulcsot, <button>állítson be új helyreállítási lehetőséget</button>"
+        "key_forgotten_text": "Ha elfelejtette a biztonsági kulcsot, <button>állítson be új helyreállítási lehetőséget</button>",
+        "load_keys_progress": "%(completed)s/%(total)s kulcs helyreállítva"
     }
 }

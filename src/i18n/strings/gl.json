@@ -27,22 +27,12 @@
     "Restricted": "Restrinxido",
     "Moderator": "Moderador",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "and %(count)s others...": {
-        "other": "e %(count)s outras...",
-        "one": "e outra máis..."
-    },
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Sala sen nome",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultados)",
-        "one": "(~%(count)s resultado)"
-    },
     "Join Room": "Unirse a sala",
-    "unknown error code": "código de fallo descoñecido",
-    "not specified": "non indicado",
     "Delete Widget": "Eliminar widget",
     "Home": "Inicio",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
@@ -131,28 +121,8 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Failed to connect to integration manager": "Fallou a conexión co xestor de integracións",
-    "%(count)s verified sessions": {
-        "other": "%(count)s sesións verificadas",
-        "one": "1 sesión verificada"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sesións",
-        "one": "%(count)s sesión"
-    },
-    "%(name)s accepted": "%(name)s aceptou",
-    "%(name)s declined": "%(name)s declinou",
-    "%(name)s cancelled": "%(name)s cancelou",
-    "%(name)s wants to verify": "%(name)s desexa verificar",
-    "edited": "editada",
     "Submit logs": "Enviar rexistro",
-    "e.g. my-room": "ex. a-miña-sala",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema.",
-    "a new master key signature": "unha nova firma con chave mestra",
-    "a new cross-signing key signature": "unha nova firma con chave de sinatura-cruzada",
-    "a device cross-signing signature": "unha sinatura sinatura-cruzada de dispositivo",
-    "a key signature": "unha chave de sinatura",
-    "%(brand)s encountered an error during upload of:": "%(brand)s atopou un fallo ao subir:",
-    "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restablecidas",
     "Switch theme": "Cambiar decorado",
     "Not encrypted": "Sen cifrar",
     "Backup version:": "Versión da copia:",
@@ -405,30 +375,9 @@
     "Equatorial Guinea": "Guinea Ecuatorial",
     "El Salvador": "O Salvador",
     "Egypt": "Exipto",
-    "%(count)s members": {
-        "one": "%(count)s participante",
-        "other": "%(count)s participantes"
-    },
-    "<inviter/> invites you": "<inviter/> convídate",
-    "%(count)s rooms": {
-        "one": "%(count)s sala",
-        "other": "%(count)s salas"
-    },
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s persoas que coñeces xa se uniron",
-        "one": "%(count)s persoa que coñeces xa se uniu"
-    },
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
-    "%(count)s reply": {
-        "one": "%(count)s resposta",
-        "other": "%(count)s respostas"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
     "Forget": "Esquecer",
-    "%(count)s votes": {
-        "one": "%(count)s voto",
-        "other": "%(count)s votos"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s e %(count)s outro",
         "other": "%(spaceName)s e outros %(count)s"
@@ -438,13 +387,8 @@
     "Themes": "Decorados",
     "Moderation": "Moderación",
     "Messaging": "Conversando",
-    "toggle event": "activar evento",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 participante",
-        "other": "%(count)s participantes"
-    },
     "View List": "Ver lista",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e máis",
@@ -576,7 +520,24 @@
         "filter_results": "Filtrar resultados",
         "no_results_found": "Sen resultados",
         "unsent": "Sen enviar",
-        "cameras": "Cámaras"
+        "cameras": "Cámaras",
+        "n_participants": {
+            "one": "1 participante",
+            "other": "%(count)s participantes"
+        },
+        "and_n_others": {
+            "other": "e %(count)s outras...",
+            "one": "e outra máis..."
+        },
+        "n_members": {
+            "one": "%(count)s participante",
+            "other": "%(count)s participantes"
+        },
+        "edited": "editada",
+        "n_rooms": {
+            "one": "%(count)s sala",
+            "other": "%(count)s salas"
+        }
     },
     "action": {
         "continue": "Continuar",
@@ -1445,7 +1406,8 @@
         "show_hidden_events": "Mostrar na cronoloxía eventos ocultos",
         "developer_mode": "Modo desenvolvemento",
         "view_source_decrypted_event_source": "Fonte descifrada do evento",
-        "original_event_source": "Fonte orixinal do evento"
+        "original_event_source": "Fonte orixinal do evento",
+        "toggle_event": "activar evento"
     },
     "export_chat": {
         "html": "HTML",
@@ -1916,7 +1878,11 @@
             "you_accepted": "Aceptaches",
             "you_declined": "Declinaches",
             "you_cancelled": "Cancelaches",
-            "you_started": "Enviaches unha solicitude de verificación"
+            "you_started": "Enviaches unha solicitude de verificación",
+            "user_accepted": "%(name)s aceptou",
+            "user_declined": "%(name)s declinou",
+            "user_cancelled": "%(name)s cancelou",
+            "user_wants_to_verify": "%(name)s desexa verificar"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s finalizou a enquisa"
@@ -1938,6 +1904,12 @@
             "error_loading": "Non se cargou o evento ao que respondía, ou non existe ou non ten permiso para velo.",
             "in_reply_to": "<a>En resposta a</a> <pill>",
             "in_reply_to_for_export": "En resposta a <a>esta mensaxe</a>"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s voto",
+                "other": "%(count)s votos"
+            }
         }
     },
     "slash_command": {
@@ -2296,7 +2268,8 @@
             "alias_field_matches_invalid": "Este enderezo non dirixe a esta sala",
             "alias_field_taken_valid": "Este enderezo está dispoñible",
             "alias_field_taken_invalid_domain": "Este enderezo xa se está a utilizar",
-            "alias_field_taken_invalid": "Este enderezo ten un servidor non válido ou xa está en uso"
+            "alias_field_taken_invalid": "Este enderezo ten un servidor non válido ou xa está en uso",
+            "alias_field_placeholder_default": "ex. a-miña-sala"
         },
         "advanced": {
             "unfederated": "Esta sala non é accesible por servidores Matrix remotos",
@@ -2359,7 +2332,8 @@
             "custom_sound_prompt": "Establecer novo ton personalizado",
             "browse_button": "Buscar"
         },
-        "title": "Axustes da sala - %(roomName)s"
+        "title": "Axustes da sala - %(roomName)s",
+        "alias_not_specified": "non indicado"
     },
     "encryption": {
         "verification": {
@@ -2541,7 +2515,12 @@
         },
         "confirm_encryption_setup_title": "Confirma os axustes de cifrado",
         "confirm_encryption_setup_body": "Preme no botón inferior para confirmar os axustes do cifrado.",
-        "unable_to_setup_keys_error": "Non se puideron configurar as chaves"
+        "unable_to_setup_keys_error": "Non se puideron configurar as chaves",
+        "key_signature_upload_failed_master_key_signature": "unha nova firma con chave mestra",
+        "key_signature_upload_failed_cross_signing_key_signature": "unha nova firma con chave de sinatura-cruzada",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "unha sinatura sinatura-cruzada de dispositivo",
+        "key_signature_upload_failed_key_signature": "unha chave de sinatura",
+        "key_signature_upload_failed_body": "%(brand)s atopou un fallo ao subir:"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -3002,7 +2981,11 @@
         "empty_tip": "<b>Truco:</b> Usa \"%(replyInThread)s\" ao poñerte enriba dunha mensaxe.",
         "empty_heading": "Manter as conversas organizadas con fíos",
         "open_thread": "Abrir fío",
-        "error_start_thread_existing_relation": "Non se pode crear un tema con unha relación existente desde un evento"
+        "error_start_thread_existing_relation": "Non se pode crear un tema con unha relación existente desde un evento",
+        "count_of_reply": {
+            "one": "%(count)s resposta",
+            "other": "%(count)s respostas"
+        }
     },
     "theme": {
         "light_high_contrast": "Alto contraste claro",
@@ -3330,7 +3313,11 @@
         "search": {
             "this_room": "Esta sala",
             "all_rooms": "Todas as Salas",
-            "field_placeholder": "Buscar…"
+            "field_placeholder": "Buscar…",
+            "result_count": {
+                "other": "(~%(count)s resultados)",
+                "one": "(~%(count)s resultado)"
+            }
         },
         "jump_to_bottom_button": "Ir ás mensaxes máis recentes",
         "jump_read_marker": "Ir a primeira mensaxe non lida.",
@@ -3345,7 +3332,12 @@
             "other": "Ver tódolos %(count)s membros"
         },
         "face_pile_tooltip_shortcut_joined": "Incluíndote a ti, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Incluíndo a %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Incluíndo a %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> convídate",
+        "face_pile_summary": {
+            "other": "%(count)s persoas que coñeces xa se uniron",
+            "one": "%(count)s persoa que coñeces xa se uniu"
+        }
     },
     "file_panel": {
         "guest_note": "Debe <a>rexistrarse</a> para utilizar esta función",
@@ -3524,7 +3516,8 @@
         },
         "storage_evicted_title": "Faltan datos da sesión",
         "storage_evicted_description_1": "Faltan algúns datos da sesión, incluíndo chaves de mensaxes cifradas. Sae e volve a entrar para arranxalo, restaurando as chaves desde a copia.",
-        "storage_evicted_description_2": "O navegador probablemente eliminou estos datos ao quedar con pouco espazo de disco."
+        "storage_evicted_description_2": "O navegador probablemente eliminou estos datos ao quedar con pouco espazo de disco.",
+        "unknown_error_code": "código de fallo descoñecido"
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -3686,6 +3679,14 @@
                 "other": "Eliminar %(count)s mensaxes",
                 "one": "Eliminar 1 mensaxe"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s sesións verificadas",
+            "one": "1 sesión verificada"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sesións",
+            "one": "%(count)s sesión"
         }
     },
     "stickers": {
@@ -3904,6 +3905,7 @@
         "key_is_valid": "Semella unha Chave de Seguridade válida!",
         "key_is_invalid": "Chave de Seguridade non válida",
         "enter_key_description": "Accede ao teu historial de mensaxes seguras e asegura a comunicación escribindo a Chave de Seguridade.",
-        "key_forgotten_text": "Se esqueceches a túa Chave de Seguridade podes <button>establecer novas opcións de recuperación</button>"
+        "key_forgotten_text": "Se esqueceches a túa Chave de Seguridade podes <button>establecer novas opcións de recuperación</button>",
+        "load_keys_progress": "%(completed)s de %(total)s chaves restablecidas"
     }
 }

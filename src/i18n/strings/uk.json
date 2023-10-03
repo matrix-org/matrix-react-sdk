@@ -1,10 +1,5 @@
 {
-    "unknown error code": "невідомий код помилки",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
-    "and %(count)s others...": {
-        "one": "і інше...",
-        "other": "та %(count)s інші..."
-    },
     "Sunday": "Неділя",
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
@@ -365,51 +360,19 @@
     "Fiji": "Фіджі",
     "Faroe Islands": "Фарерські Острови",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
-    "edited": "змінено",
     "collapse": "згорнути",
     "Home": "Домівка",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Delete Widget": "Видалити віджет",
-    "e.g. my-room": "наприклад, моя-кімната",
     "Switch theme": "Змінити тему",
-    "<inviter/> invites you": "<inviter/> запрошує вас",
     "Backup version:": "Версія резервної копії:",
     "Send Logs": "Надіслати журнали",
-    "%(count)s rooms": {
-        "one": "%(count)s кімната",
-        "other": "%(count)s кімнат"
-    },
-    "%(count)s members": {
-        "one": "%(count)s учасник",
-        "other": "%(count)s учасників"
-    },
-    "%(count)s sessions": {
-        "one": "%(count)s сеанс",
-        "other": "Сеансів: %(count)s"
-    },
-    "%(count)s verified sessions": {
-        "one": "1 звірений сеанс",
-        "other": "Довірених сеансів: %(count)s"
-    },
     "Not encrypted": "Не зашифровано",
-    "not specified": "не вказано",
     "Join Room": "Приєднатися до кімнати",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s результат)",
-        "other": "(~%(count)s результатів)"
-    },
     "%(duration)sd": "%(duration)s дн",
     "%(duration)sh": "%(duration)s год",
     "%(duration)sm": "%(duration)s хв",
     "%(duration)ss": "%(duration)s с",
-    "%(count)s reply": {
-        "one": "%(count)s відповідь",
-        "other": "%(count)s відповідей"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s осіб, яких ви знаєте, уже приєдналися",
-        "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
-    },
     "Forget": "Забути",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s і %(count)s інших",
@@ -421,30 +384,11 @@
     "Themes": "Теми",
     "Messaging": "Спілкування",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
-    "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
-    "a new master key signature": "новий підпис головного ключа",
     "Submit logs": "Надіслати журнали",
-    "%(count)s votes": {
-        "one": "%(count)s голос",
-        "other": "%(count)s голосів"
-    },
-    "%(name)s wants to verify": "%(name)s бажає звірити",
-    "%(name)s cancelled": "%(name)s скасовує",
-    "%(name)s declined": "%(name)s відхиляє",
-    "%(name)s accepted": "%(name)s погоджується",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
-    "%(completed)s of %(total)s keys restored": "%(completed)s із %(total)s ключів відновлено",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
-    "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
-    "a key signature": "відбиток ключа",
-    "a device cross-signing signature": "підпис перехресного підписування пристрою",
-    "toggle event": "перемкнути подію",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 учасник",
-        "other": "%(count)s учасників"
-    },
     "View List": "Переглянути список",
     "%(members)s and %(last)s": "%(members)s і %(last)s",
     "%(members)s and more": "%(members)s та інші",
@@ -454,15 +398,11 @@
     "Show rooms": "Показати кімнати",
     "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
     "Saved Items": "Збережені елементи",
-    "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "unknown": "невідомо",
     "Starting export process…": "Початок процесу експорту…",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
-    "unavailable": "недоступний",
-    "unknown status code": "невідомий код стану",
     "common": {
         "about": "Відомості",
         "analytics": "Аналітика",
@@ -591,7 +531,25 @@
         "filter_results": "Відфільтрувати результати",
         "no_results_found": "Нічого не знайдено",
         "unsent": "Не надіслано",
-        "cameras": "Камери"
+        "cameras": "Камери",
+        "n_participants": {
+            "one": "1 учасник",
+            "other": "%(count)s учасників"
+        },
+        "and_n_others": {
+            "one": "і інше...",
+            "other": "та %(count)s інші..."
+        },
+        "n_members": {
+            "one": "%(count)s учасник",
+            "other": "%(count)s учасників"
+        },
+        "unavailable": "недоступний",
+        "edited": "змінено",
+        "n_rooms": {
+            "one": "%(count)s кімната",
+            "other": "%(count)s кімнат"
+        }
     },
     "action": {
         "continue": "Продовжити",
@@ -1658,7 +1616,8 @@
         "developer_mode": "Режим розробника",
         "view_source_decrypted_event_source": "Розшифрований початковий код події",
         "view_source_decrypted_event_source_unavailable": "Розшифроване джерело недоступне",
-        "original_event_source": "Оригінальний початковий код"
+        "original_event_source": "Оригінальний початковий код",
+        "toggle_event": "перемкнути подію"
     },
     "export_chat": {
         "html": "HTML",
@@ -1752,7 +1711,8 @@
         "m.call": {
             "video_call_started": "Відеовиклик розпочато о %(roomName)s.",
             "video_call_started_unsupported": "Відеовиклик розпочато о %(roomName)s. (не підтримується цим браузером)",
-            "video_call_ended": "Відеовиклик завершено"
+            "video_call_ended": "Відеовиклик завершено",
+            "video_call_started_text": "%(name)s розпочинає відеовиклик"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s розпочинає голосовий виклик.",
@@ -2166,7 +2126,11 @@
             "you_declined": "Ви відхилили",
             "you_cancelled": "Ви скасували",
             "declining": "Відхилення…",
-            "you_started": "Ви надіслали запит перевірки"
+            "you_started": "Ви надіслали запит перевірки",
+            "user_accepted": "%(name)s погоджується",
+            "user_declined": "%(name)s відхиляє",
+            "user_cancelled": "%(name)s скасовує",
+            "user_wants_to_verify": "%(name)s бажає звірити"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s завершує опитування",
@@ -2189,6 +2153,13 @@
             "error_loading": "Не вдалося завантажити подію, на яку було надано відповідь, її або не існує, або у вас немає дозволу на її перегляд.",
             "in_reply_to": "<a>У відповідь на</a> <pill>",
             "in_reply_to_for_export": "У відповідь на <a>це повідомлення</a>"
+        },
+        "in_room_name": " в <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s голос",
+                "other": "%(count)s голосів"
+            }
         }
     },
     "slash_command": {
@@ -2585,7 +2556,8 @@
             "alias_field_matches_invalid": "Ця адреса не вказує на цю кімнату",
             "alias_field_taken_valid": "Ця адреса доступна",
             "alias_field_taken_invalid_domain": "Ця адреса вже використовується",
-            "alias_field_taken_invalid": "Ця адреса містить хибний сервер чи вже використовується"
+            "alias_field_taken_invalid": "Ця адреса містить хибний сервер чи вже використовується",
+            "alias_field_placeholder_default": "наприклад, моя-кімната"
         },
         "advanced": {
             "unfederated": "Ця кімната недоступна для віддалених серверів Matrix",
@@ -2657,7 +2629,8 @@
             "enable_element_call_no_permissions_tooltip": "Ви не маєте достатніх повноважень, щоб змінити це.",
             "call_type_section": "Тип викликів"
         },
-        "title": "Налаштування кімнати - %(roomName)s"
+        "title": "Налаштування кімнати - %(roomName)s",
+        "alias_not_specified": "не вказано"
     },
     "encryption": {
         "verification": {
@@ -2847,7 +2820,12 @@
         },
         "confirm_encryption_setup_title": "Підтвердити налаштування шифрування",
         "confirm_encryption_setup_body": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
-        "unable_to_setup_keys_error": "Не вдалося налаштувати ключі"
+        "unable_to_setup_keys_error": "Не вдалося налаштувати ключі",
+        "key_signature_upload_failed_master_key_signature": "новий підпис головного ключа",
+        "key_signature_upload_failed_cross_signing_key_signature": "новий підпис ключа перехресного підписування",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "підпис перехресного підписування пристрою",
+        "key_signature_upload_failed_key_signature": "відбиток ключа",
+        "key_signature_upload_failed_body": "%(brand)s зіткнувся з помилкою під час вивантаження:"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3400,7 +3378,11 @@
         "empty_heading": "Упорядкуйте обговорення за допомогою гілок",
         "unable_to_decrypt": "Не вдалося розшифрувати повідомлення",
         "open_thread": "Відкрити гілку",
-        "error_start_thread_existing_relation": "Неможливо створити гілку з події з наявним відношенням"
+        "error_start_thread_existing_relation": "Неможливо створити гілку з події з наявним відношенням",
+        "count_of_reply": {
+            "one": "%(count)s відповідь",
+            "other": "%(count)s відповідей"
+        }
     },
     "theme": {
         "light_high_contrast": "Контрастна світла",
@@ -3766,7 +3748,11 @@
             "all_rooms": "Усі кімнати",
             "field_placeholder": "Пошук…",
             "this_room_button": "Шукати цю кімнату",
-            "all_rooms_button": "Вибрати всі кімнати"
+            "all_rooms_button": "Вибрати всі кімнати",
+            "result_count": {
+                "one": "(~%(count)s результат)",
+                "other": "(~%(count)s результатів)"
+            }
         },
         "jump_to_bottom_button": "Перейти до найновіших повідомлень",
         "jump_read_marker": "Перейти до першого непрочитаного повідомлення.",
@@ -3787,7 +3773,13 @@
             "other": "Переглянути усіх %(count)s учасників"
         },
         "face_pile_tooltip_shortcut_joined": "Включно з вами, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Включно з %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Включно з %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> запрошує вас",
+        "unknown_status_code_for_timeline_jump": "невідомий код стану",
+        "face_pile_summary": {
+            "one": "%(count)s осіб, яких ви знаєте, уже приєдналися",
+            "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
+        }
     },
     "file_panel": {
         "guest_note": "<a>Зареєструйтеся</a>, щоб скористатись цим функціоналом",
@@ -3979,7 +3971,8 @@
         },
         "storage_evicted_title": "Відсутні дані сеансу",
         "storage_evicted_description_1": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
-        "storage_evicted_description_2": "Схоже, що ваш браузер вилучив ці дані через брак простору на диску."
+        "storage_evicted_description_2": "Схоже, що ваш браузер вилучив ці дані через брак простору на диску.",
+        "unknown_error_code": "невідомий код помилки"
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4149,6 +4142,14 @@
                 "one": "Видалити 1 повідомлення",
                 "other": "Видалити %(count)s повідомлень"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 звірений сеанс",
+            "other": "Довірених сеансів: %(count)s"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s сеанс",
+            "other": "Сеансів: %(count)s"
         }
     },
     "stickers": {
@@ -4402,6 +4403,7 @@
         "key_is_valid": "Це схоже на дійсний ключ безпеки!",
         "key_is_invalid": "Хибний ключ безпеки",
         "enter_key_description": "Отримайте історію своїх зашифрованих повідомлень і налаштуйте безпечне листування, ввівши свій ключ безпеки.",
-        "key_forgotten_text": "Якщо ви забули ключ безпеки, <button>налаштуйте нові параметри відновлення</button>"
+        "key_forgotten_text": "Якщо ви забули ключ безпеки, <button>налаштуйте нові параметри відновлення</button>",
+        "load_keys_progress": "%(completed)s із %(total)s ключів відновлено"
     }
 }

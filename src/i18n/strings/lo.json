@@ -310,33 +310,11 @@
     "Send Logs": "ສົ່ງບັນທຶກ",
     "Not encrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
-    "e.g. my-room": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ",
     "Switch theme": "ສະຫຼັບຫົວຂໍ້",
-    "<inviter/> invites you": "<inviter/> ເຊີນທ່ານ",
-    "%(count)s sessions": {
-        "one": "%(count)s ລະບົບ",
-        "other": "%(count)ssessions"
-    },
-    "%(count)s verified sessions": {
-        "one": "ຢືນຢັນ 1 session ແລ້ວ",
-        "other": "%(count)sລະບົບຢືນຢັນແລ້ວ"
-    },
-    "not specified": "ບໍ່ໄດ້ລະບຸ",
-    "%(count)s reply": {
-        "one": "%(count)s ຕອບກັບ",
-        "other": "%(count)s ຕອບກັບ"
-    },
     "Failed to connect to integration manager": "ການເຊື່ອມຕໍ່ຕົວຈັດການການເຊື່ອມໂຍງບໍ່ສຳເລັດ",
-    "%(count)s participants": {
-        "one": "ຜູ້ເຂົ້າຮ່ວມ 1ຄົນ",
-        "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Sign in with SSO": "ເຂົ້າສູ່ລະບົບດ້ວຍປະຕຸດຽວ ( SSO)",
-    "%(completed)s of %(total)s keys restored": "ກູ້ລະຫັດ %(completed)s ຂອງ %(total)sຄືນແລ້ວ",
-    "a new master key signature": "ລາຍເຊັນຫຼັກອັນໃໝ່",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
-    "%(name)s accepted": "ຍອມຮັບ %(name)s",
     "expand": "ຂະຫຍາຍ",
     "collapse": "ບໍ່ສຳເລັດ",
     "IRC display name width": "ຄວາມກວ້າງຂອງຊື່ສະແດງ IRC",
@@ -344,16 +322,7 @@
     "Experimental": "ທົດລອງ",
     "Themes": "ຫົວຂໍ້",
     "Moderation": "ປານກາງ",
-    "toggle event": "ສະຫຼັບກິດຈະກຳ",
     "Submit logs": "ສົ່ງບັນທຶກ",
-    "%(count)s votes": {
-        "one": "%(count)s ລົງຄະແນນສຽງ",
-        "other": "%(count)s ຄະແນນສຽງ"
-    },
-    "edited": "ດັດແກ້",
-    "%(name)s wants to verify": "%(name)s ຕ້ອງການກວດສອບ",
-    "%(name)s cancelled": "%(name)s ຖືກຍົກເລີກ",
-    "%(name)s declined": "%(name)s ປະຕິເສດ",
     "Home": "ໜ້າຫຼັກ",
     "Ok": "ຕົກລົງ",
     "Your homeserver has exceeded one of its resource limits.": "homeserver ຂອງທ່ານເກີນຂີດຈຳກັດຊັບພະຍາກອນແລ້ວ.",
@@ -370,17 +339,7 @@
     "Monday": "ວັນຈັນ",
     "Sunday": "ວັນອາທິດ",
     "%(duration)sd": "%(duration)sd",
-    "unknown error code": "ລະຫັດຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
-    "%(brand)s encountered an error during upload of:": "%(brand)s ພົບຂໍ້ຜິດພາດໃນລະຫວ່າງການອັບໂຫລດ:",
     "Wednesday": "ວັນພຸດ",
-    "%(count)s rooms": {
-        "one": "%(count)s ຫ້ອງ",
-        "other": "%(count)s ຫ້ອງ"
-    },
-    "%(count)s members": {
-        "one": "ສະມາຊິກ %(count)s",
-        "other": "ສະມາຊິກ %(count)s"
-    },
     "Backup version:": "ເວີຊັ້ນສໍາຮອງຂໍ້ມູນ:",
     "This backup is trusted because it has been restored on this session": "ການສຳຮອງຂໍ້ມູນນີ້ແມ່ນເຊື່ອຖືໄດ້ເນື່ອງຈາກຖືກກູ້ຄືນໃນລະບົບນີ້",
     "Fish": "ປາ",
@@ -426,25 +385,10 @@
     "Deactivate account": "ປິດການນຳໃຊ້ບັນຊີ",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "ເພື່ອລາຍງານບັນຫາຄວາມປອດໄພທີ່ກ່ຽວຂ້ອງກັບ Matrix, ກະລຸນາອ່ານ <a>ນະໂຍບາຍການເປີດເຜີຍຄວາມປອດໄພ</a> Matrix.org.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ກ່ອນທີ່ຈະສົ່ງບັນທຶກ, ທ່ານຕ້ອງ <a>ສ້າງບັນຫາ GitHub</a> ເພື່ອອະທິບາຍບັນຫາຂອງທ່ານ.",
-    "a key signature": "ລາຍເຊັນຫຼັກ",
-    "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
-    "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
-        "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
-    },
     "Join Room": "ເຂົ້າຮ່ວມຫ້ອງ",
-    "(~%(count)s results)": {
-        "one": "(~%(count)sຜົນຮັບ)",
-        "other": "(~%(count)sຜົນຮັບ)"
-    },
     "%(duration)sh": "%(duration)sh",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)s",
-    "and %(count)s others...": {
-        "one": "ແລະ ອີກອັນນຶ່ງ...",
-        "other": "ແລະ %(count)s ຜູ້ອຶ່ນ..."
-    },
     "%(members)s and %(last)s": "%(members)s ແລະ %(last)s",
     "%(members)s and more": "%(members)s ແລະອື່ນໆ",
     "Unread email icon": "ໄອຄັອນເມວທີ່ຍັງບໍ່ໄດ້ຖືກອ່ານ",
@@ -562,7 +506,24 @@
         "filter_results": "ການກັ່ນຕອງຜົນຮັບ",
         "no_results_found": "ບໍ່ພົບຜົນການຊອກຫາ",
         "unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
-        "cameras": "ກ້ອງ"
+        "cameras": "ກ້ອງ",
+        "n_participants": {
+            "one": "ຜູ້ເຂົ້າຮ່ວມ 1ຄົນ",
+            "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
+        },
+        "and_n_others": {
+            "one": "ແລະ ອີກອັນນຶ່ງ...",
+            "other": "ແລະ %(count)s ຜູ້ອຶ່ນ..."
+        },
+        "n_members": {
+            "one": "ສະມາຊິກ %(count)s",
+            "other": "ສະມາຊິກ %(count)s"
+        },
+        "edited": "ດັດແກ້",
+        "n_rooms": {
+            "one": "%(count)s ຫ້ອງ",
+            "other": "%(count)s ຫ້ອງ"
+        }
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -1304,7 +1265,8 @@
         "show_hidden_events": "ສະແດງເຫດການທີ່ເຊື່ອງໄວ້ໃນທາມລາຍ",
         "developer_mode": "ຮູບແບບນັກພັດທະນາ",
         "view_source_decrypted_event_source": "ບ່ອນທີ່ຖືກຖອດລະຫັດໄວ້",
-        "original_event_source": "ແຫຼ່ງຕົ້ນສະບັບ"
+        "original_event_source": "ແຫຼ່ງຕົ້ນສະບັບ",
+        "toggle_event": "ສະຫຼັບກິດຈະກຳ"
     },
     "export_chat": {
         "html": "HTML",
@@ -1769,7 +1731,11 @@
             "you_accepted": "ທ່ານຍອມຮັບ",
             "you_declined": "ທ່ານປະຕິເສດ",
             "you_cancelled": "ທ່ານໄດ້ຍົກເລີກ",
-            "you_started": "ທ່ານໄດ້ສົ່ງຄໍາຮ້ອງຂໍການຢັ້ງຢືນ"
+            "you_started": "ທ່ານໄດ້ສົ່ງຄໍາຮ້ອງຂໍການຢັ້ງຢືນ",
+            "user_accepted": "ຍອມຮັບ %(name)s",
+            "user_declined": "%(name)s ປະຕິເສດ",
+            "user_cancelled": "%(name)s ຖືກຍົກເລີກ",
+            "user_wants_to_verify": "%(name)s ຕ້ອງການກວດສອບ"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)sໄດ້ສິ້ນສຸດການສໍາຫຼວດ"
@@ -1791,6 +1757,12 @@
             "error_loading": "ບໍ່ສາມາດໂຫຼດກິດຈະກຳທີ່ຕອບກັບມາໄດ້, ມັນບໍ່ຢູ່ ຫຼື ທ່ານບໍ່ໄດ້ຮັບອະນຸຍາດໃຫ້ເບິ່ງມັນ.",
             "in_reply_to": "<a>ຕອບກັບ</a> <pill>",
             "in_reply_to_for_export": "ໃນການຕອບກັບ <a>ຂໍ້ຄວາມນີ້</a>"
+        },
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s ລົງຄະແນນສຽງ",
+                "other": "%(count)s ຄະແນນສຽງ"
+            }
         }
     },
     "slash_command": {
@@ -2146,7 +2118,8 @@
             "alias_field_matches_invalid": "ທີ່ຢູ່ນີ້ບໍ່ໄດ້ຊີ້ໄປທີ່ຫ້ອງນີ້",
             "alias_field_taken_valid": "ທີ່ຢູ່ນີ້ສາມາດໃຊ້ໄດ້",
             "alias_field_taken_invalid_domain": "ທີ່ຢູ່ນີ້ຖືກໃຊ້ແລ້ວ",
-            "alias_field_taken_invalid": "ທີ່ຢູ່ນີ້ມີເຊີບເວີທີ່ບໍ່ຖືກຕ້ອງ ຫຼື ຖືກໃຊ້ງານຢູ່ແລ້ວ"
+            "alias_field_taken_invalid": "ທີ່ຢູ່ນີ້ມີເຊີບເວີທີ່ບໍ່ຖືກຕ້ອງ ຫຼື ຖືກໃຊ້ງານຢູ່ແລ້ວ",
+            "alias_field_placeholder_default": "ຕົວຢ່າງ: ຫ້ອງຂອງຂ້ອຍ"
         },
         "advanced": {
             "unfederated": "ຫ້ອງນີ້ບໍ່ສາມາດເຂົ້າເຖິງໄດ້ໂດຍເຊີບເວີ Matrix ໄລຍະໄກ",
@@ -2209,7 +2182,8 @@
             "custom_sound_prompt": "ຕັ້ງສຽງແບບກຳນົດເອງ",
             "browse_button": "ຄົ້ນຫາ"
         },
-        "title": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s"
+        "title": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
+        "alias_not_specified": "ບໍ່ໄດ້ລະບຸ"
     },
     "encryption": {
         "verification": {
@@ -2387,7 +2361,12 @@
         },
         "confirm_encryption_setup_title": "ຢືນຢັນການຕັ້ງຄ່າການເຂົ້າລະຫັດ",
         "confirm_encryption_setup_body": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການຕັ້ງຄ່າການເຂົ້າລະຫັດ.",
-        "unable_to_setup_keys_error": "ບໍ່ສາມາດຕັ້ງຄ່າກະແຈໄດ້"
+        "unable_to_setup_keys_error": "ບໍ່ສາມາດຕັ້ງຄ່າກະແຈໄດ້",
+        "key_signature_upload_failed_master_key_signature": "ລາຍເຊັນຫຼັກອັນໃໝ່",
+        "key_signature_upload_failed_cross_signing_key_signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "ການ cross-signing ອຸປະກອນ",
+        "key_signature_upload_failed_key_signature": "ລາຍເຊັນຫຼັກ",
+        "key_signature_upload_failed_body": "%(brand)s ພົບຂໍ້ຜິດພາດໃນລະຫວ່າງການອັບໂຫລດ:"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -2854,7 +2833,11 @@
         "empty_tip": "<b>ເຄັດລັບ:</b> ໃຊ້ “%(replyInThread)s” ເມື່ອເລື່ອນໃສ່ຂໍ້ຄວາມ.",
         "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ",
         "open_thread": "ເປີດກະທູ້",
-        "error_start_thread_existing_relation": "ບໍ່ສາມາດສ້າງກະທູ້ຈາກເຫດການທີ່ມີຄວາມສໍາພັນທີ່ມີຢູ່ແລ້ວ"
+        "error_start_thread_existing_relation": "ບໍ່ສາມາດສ້າງກະທູ້ຈາກເຫດການທີ່ມີຄວາມສໍາພັນທີ່ມີຢູ່ແລ້ວ",
+        "count_of_reply": {
+            "one": "%(count)s ຕອບກັບ",
+            "other": "%(count)s ຕອບກັບ"
+        }
     },
     "theme": {
         "light_high_contrast": "ແສງສະຫວ່າງຄວາມຄົມຊັດສູງ",
@@ -3171,7 +3154,11 @@
         "search": {
             "this_room": "ຫ້ອງນີ້",
             "all_rooms": "ຫ້ອງທັງໝົດ",
-            "field_placeholder": "ຊອກຫາ…"
+            "field_placeholder": "ຊອກຫາ…",
+            "result_count": {
+                "one": "(~%(count)sຜົນຮັບ)",
+                "other": "(~%(count)sຜົນຮັບ)"
+            }
         },
         "jump_to_bottom_button": "ເລື່ອນໄປຫາຂໍ້ຄວາມຫຼ້າສຸດ",
         "jump_read_marker": "ຂ້າມໄປຫາຂໍ້ຄວາມທຳອິດທີ່ຍັງບໍ່ໄດ້ອ່ານ.",
@@ -3185,7 +3172,12 @@
             "other": "ເບິ່ງສະມາຊິກ %(count)s ທັງໝົດ"
         },
         "face_pile_tooltip_shortcut_joined": "ລວມທັງທ່ານ, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "ລວມທັງ %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "ລວມທັງ %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> ເຊີນທ່ານ",
+        "face_pile_summary": {
+            "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
+            "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
+        }
     },
     "file_panel": {
         "guest_note": "ທ່ານຕ້ອງ <a>ລົງທະບຽນ</a> ເພື່ອໃຊ້ຟັງຊັນນີ້",
@@ -3348,7 +3340,8 @@
         },
         "storage_evicted_title": "ບໍ່ມີຂໍ້ມູນໃນລະບົບ",
         "storage_evicted_description_1": "ບາງຂໍ້ມູນໃນລະບົບ, ລວມທັງກະແຈຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດ, ຫາຍໄປ. ອອກຈາກລະບົບ ແລະ ເຂົ້າສູ່ລະບົບເພື່ອແກ້ໄຂສິ່ງນີ້, ການກູ້ຄືນກະແຈຈາກການສໍາຮອງຂໍ້ມູນ.",
-        "storage_evicted_description_2": "ບຣາວເຊີຂອງທ່ານອາດຈະລຶບຂໍ້ມູນນີ້ອອກເມື່ອພື້ນທີ່ດິສກ໌ເຫຼືອໜ້ອຍ."
+        "storage_evicted_description_2": "ບຣາວເຊີຂອງທ່ານອາດຈະລຶບຂໍ້ມູນນີ້ອອກເມື່ອພື້ນທີ່ດິສກ໌ເຫຼືອໜ້ອຍ.",
+        "unknown_error_code": "ລະຫັດຜິດພາດທີ່ບໍ່ຮູ້ຈັກ"
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {
@@ -3504,6 +3497,14 @@
                 "one": "ລຶບອອກ 1 ຂໍ້ຄວາມ",
                 "other": "ເອົາ %(count)s ຂໍ້ຄວາມອອກ"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "ຢືນຢັນ 1 session ແລ້ວ",
+            "other": "%(count)sລະບົບຢືນຢັນແລ້ວ"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s ລະບົບ",
+            "other": "%(count)ssessions"
         }
     },
     "stickers": {
@@ -3705,6 +3706,7 @@
         "key_is_valid": "ກະແຈຄວາມປອດໄພທີ່ຖືກຕ້ອງ!",
         "key_is_invalid": "ກະແຈຄວາມປອດໄພບໍ່ຖືກຕ້ອງ",
         "enter_key_description": "ເຂົ້າເຖິງປະຫວັດຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານ ແລະ ຕັ້ງຄ່າການສົ່ງຂໍ້ຄວາມທີ່ປອດໄພໂດຍການໃສ່ກະແຈຄວາມປອດໄພຂອງທ່ານ.",
-        "key_forgotten_text": "ຖ້າທ່ານລືມກະແຈຄວາມປອດໄພຂອງທ່ານ ທ່ານສາມາດ <button>ຕັ້ງຄ່າຕົວເລືອກການຟື້ນຕົວໃຫມ່</button>"
+        "key_forgotten_text": "ຖ້າທ່ານລືມກະແຈຄວາມປອດໄພຂອງທ່ານ ທ່ານສາມາດ <button>ຕັ້ງຄ່າຕົວເລືອກການຟື້ນຕົວໃຫມ່</button>",
+        "load_keys_progress": "ກູ້ລະຫັດ %(completed)s ຂອງ %(total)sຄືນແລ້ວ"
     }
 }

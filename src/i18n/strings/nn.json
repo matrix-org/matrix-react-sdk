@@ -27,21 +27,12 @@
     "Restricted": "Avgrensa",
     "Moderator": "Moderator",
     "Warning!": "Åtvaring!",
-    "and %(count)s others...": {
-        "other": "og %(count)s andre...",
-        "one": "og ein annan..."
-    },
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)st",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Rom utan namn",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s resultat)",
-        "one": "(~%(count)s resultat)"
-    },
     "Join Room": "Bli med i rom",
-    "unknown error code": "ukjend feilkode",
     "Sunday": "søndag",
     "Monday": "måndag",
     "Tuesday": "tysdag",
@@ -56,7 +47,6 @@
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "collapse": "Slå saman",
     "expand": "Utvid",
-    "not specified": "Ikkje spesifisert",
     "Send Logs": "Send Loggar",
     "Invalid theme schema.": "",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
@@ -142,7 +132,11 @@
         "show_more": "Vis meir",
         "are_you_sure": "Er du sikker?",
         "email_address": "Epostadresse",
-        "filter_results": "Filtrer resultat"
+        "filter_results": "Filtrer resultat",
+        "and_n_others": {
+            "other": "og %(count)s andre...",
+            "one": "og ein annan..."
+        }
     },
     "action": {
         "continue": "Fortset",
@@ -877,7 +871,8 @@
             "custom_sound_prompt": "Set ein ny tilpassa lyd",
             "browse_button": "Bla gjennom"
         },
-        "title": "Rominnstillingar - %(roomName)s"
+        "title": "Rominnstillingar - %(roomName)s",
+        "alias_not_specified": "Ikkje spesifisert"
     },
     "auth": {
         "sign_in_with_sso": "Logg på med Single-Sign-On",
@@ -1089,7 +1084,11 @@
         "search": {
             "this_room": "Dette rommet",
             "all_rooms": "Alle rom",
-            "field_placeholder": "Søk…"
+            "field_placeholder": "Søk…",
+            "result_count": {
+                "other": "(~%(count)s resultat)",
+                "one": "(~%(count)s resultat)"
+            }
         },
         "jump_to_bottom_button": "Gå til dei nyaste meldingane",
         "jump_read_marker": "Hopp til den fyrste uleste meldinga.",
@@ -1223,7 +1222,8 @@
             "description_1": "Noko gjekk gale med framhentinga av den førre øykta di.",
             "description_2": "Viss du har tidligare brukt ein nyare versjon av %(brand)s, kan økts-data vere inkompatibel med denne versjonen. Lukk dette vindauget og bytt til ein nyare versjon.",
             "description_3": "Det kan henda at å tømma nettlesarlageret rettar opp i det, men det loggar deg ut og kan gjera den krypterte pratehistoria uleseleg."
-        }
+        },
+        "unknown_error_code": "ukjend feilkode"
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s til",

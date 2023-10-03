@@ -324,7 +324,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                 details = _t("restore_key_backup_dialog|key_fetch_in_progress");
             } else if (this.state.progress.stage === ProgressState.LoadKeys) {
                 const { total, successes, failures } = this.state.progress;
-                details = _t("%(completed)s of %(total)s keys restored", {
+                details = _t("restore_key_backup_dialog|load_keys_progress", {
                     total,
                     completed: (successes ?? 0) + (failures ?? 0),
                 });

@@ -4,10 +4,8 @@
     "Sun": "週日",
     "Mon": "週一",
     "Tue": "週二",
-    "unknown error code": "未知的錯誤代碼",
     "Home": "首頁",
     "Moderator": "版主",
-    "not specified": "未指定",
     "Warning!": "警告！",
     "Wed": "週三",
     "Thu": "週四",
@@ -28,14 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s，%(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s，%(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "（~%(count)s 結果）",
-        "other": "（~%(count)s 結果）"
-    },
-    "and %(count)s others...": {
-        "other": "與另 %(count)s 個人…",
-        "one": "與另 1 個人…"
-    },
     "AM": "上午",
     "PM": "下午",
     "Restricted": "已限制",
@@ -121,34 +111,14 @@
     "Headphones": "耳機",
     "Folder": "資料夾",
     "Scissors": "剪刀",
-    "edited": "已編輯",
     "Deactivate account": "停用帳號",
-    "e.g. my-room": "例如：my-room",
-    "%(name)s accepted": "%(name)s 已接受",
-    "%(name)s cancelled": "%(name)s 已取消",
-    "%(name)s wants to verify": "%(name)s 想要驗證",
     "Failed to connect to integration manager": "無法連線到整合服務伺服器",
-    "%(count)s verified sessions": {
-        "other": "%(count)s 個已驗證的工作階段",
-        "one": "1 個已驗證的工作階段"
-    },
     "Lock": "鎖定",
     "This backup is trusted because it has been restored on this session": "此備份已受信任，因為它已在此工作階段上復原",
     "Encrypted by a deleted session": "被已刪除的工作階段加密",
-    "%(count)s sessions": {
-        "other": "%(count)s 個工作階段",
-        "one": "%(count)s 個工作階段"
-    },
-    "%(name)s declined": "%(name)s 拒絕了",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要回報與 Matrix 有關的安全性問題，請閱讀 Matrix.org 的<a>安全性揭露政策</a>。",
-    "a new master key signature": "新的主金鑰簽署",
-    "a new cross-signing key signature": "新交叉簽署金鑰的簽章",
-    "a device cross-signing signature": "裝置交叉簽署",
-    "a key signature": "金鑰簽章",
-    "%(brand)s encountered an error during upload of:": "%(brand)s 在上傳以下內容時遇到錯誤：",
     "Sign in with SSO": "使用 SSO 登入",
     "Submit logs": "遞交紀錄檔",
-    "%(completed)s of %(total)s keys restored": "%(total)s 中的 %(completed)s 金鑰已復原",
     "IRC display name width": "IRC 顯示名稱寬度",
     "Your homeserver has exceeded its user limit.": "您的家伺服器已超過使用者限制。",
     "Your homeserver has exceeded one of its resource limits.": "您的家伺服器已超過其中一種資源限制。",
@@ -405,30 +375,9 @@
     "Afghanistan": "阿富汗",
     "United States": "美國",
     "United Kingdom": "英國",
-    "%(count)s members": {
-        "one": "%(count)s 位成員",
-        "other": "%(count)s 位成員"
-    },
-    "<inviter/> invites you": "<inviter/> 邀請您",
-    "%(count)s rooms": {
-        "one": "%(count)s 個聊天室",
-        "other": "%(count)s 個聊天室"
-    },
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s 個您認識的人已加入",
-        "one": "%(count)s 個您認識的人已加入"
-    },
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
-    "%(count)s reply": {
-        "one": "%(count)s 回覆",
-        "other": "%(count)s 回覆"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新存取您的帳號並復原儲存在此工作階段中的加密金鑰。沒有它們，您將無法在任何工作階段中閱讀所有安全訊息。",
     "Forget": "忘記",
-    "%(count)s votes": {
-        "one": "%(count)s 個投票",
-        "other": "%(count)s 個投票"
-    },
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s 與 %(count)s 個其他的",
         "other": "%(spaceName)s 與 %(count)s 個其他的"
@@ -438,13 +387,8 @@
     "Themes": "主題",
     "Moderation": "審核",
     "Messaging": "訊息傳遞",
-    "toggle event": "切換事件",
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 與 %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 位成員",
-        "other": "%(count)s 個參與者"
-    },
     "View List": "檢視清單",
     "%(members)s and %(last)s": "%(members)s 與 %(last)s",
     "%(members)s and more": "%(members)s 與更多",
@@ -454,15 +398,11 @@
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
     "Saved Items": "已儲存的項目",
-    "%(name)s started a video call": "%(name)s 開始了視訊通話",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
-    " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
     "unknown": "未知",
     "Starting export process…": "正在開始匯出流程…",
     "Desktop app logo": "桌面應用程式標誌",
     "Requires your server to support the stable version of MSC3827": "您的伺服器必須支援穩定版本的 MSC3827",
-    "unavailable": "無法使用",
-    "unknown status code": "未知狀態代碼",
     "common": {
         "about": "關於",
         "analytics": "分析",
@@ -591,7 +531,25 @@
         "filter_results": "過濾結果",
         "no_results_found": "找不到結果",
         "unsent": "未傳送",
-        "cameras": "相機"
+        "cameras": "相機",
+        "n_participants": {
+            "one": "1 位成員",
+            "other": "%(count)s 個參與者"
+        },
+        "and_n_others": {
+            "other": "與另 %(count)s 個人…",
+            "one": "與另 1 個人…"
+        },
+        "n_members": {
+            "one": "%(count)s 位成員",
+            "other": "%(count)s 位成員"
+        },
+        "unavailable": "無法使用",
+        "edited": "已編輯",
+        "n_rooms": {
+            "one": "%(count)s 個聊天室",
+            "other": "%(count)s 個聊天室"
+        }
     },
     "action": {
         "continue": "繼續",
@@ -1658,7 +1616,8 @@
         "developer_mode": "開發者模式",
         "view_source_decrypted_event_source": "解密活動來源",
         "view_source_decrypted_event_source_unavailable": "已解密的來源不可用",
-        "original_event_source": "原始活動來源"
+        "original_event_source": "原始活動來源",
+        "toggle_event": "切換事件"
     },
     "export_chat": {
         "html": "HTML",
@@ -1752,7 +1711,8 @@
         "m.call": {
             "video_call_started": "視訊通話在 %(roomName)s 開始。",
             "video_call_started_unsupported": "視訊通話在 %(roomName)s 開始。（此瀏覽器不支援）",
-            "video_call_ended": "視訊通話已結束"
+            "video_call_ended": "視訊通話已結束",
+            "video_call_started_text": "%(name)s 開始了視訊通話"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s 撥打了語音通話。",
@@ -2166,7 +2126,11 @@
             "you_declined": "您拒絕了",
             "you_cancelled": "您已取消",
             "declining": "正在拒絕…",
-            "you_started": "您已傳送了驗證請求"
+            "you_started": "您已傳送了驗證請求",
+            "user_accepted": "%(name)s 已接受",
+            "user_declined": "%(name)s 拒絕了",
+            "user_cancelled": "%(name)s 已取消",
+            "user_wants_to_verify": "%(name)s 想要驗證"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s 結束了投票",
@@ -2189,6 +2153,13 @@
             "error_loading": "無法載入要回覆的活動，它可能不存在或是您沒有權限檢視它。",
             "in_reply_to": "<a>回覆給</a> <pill>",
             "in_reply_to_for_export": "回覆<a>此訊息</a>"
+        },
+        "in_room_name": " 在 <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s 個投票",
+                "other": "%(count)s 個投票"
+            }
         }
     },
     "slash_command": {
@@ -2585,7 +2556,8 @@
             "alias_field_matches_invalid": "此位址並未指向此聊天室",
             "alias_field_taken_valid": "此位址可用",
             "alias_field_taken_invalid_domain": "此位址已被使用",
-            "alias_field_taken_invalid": "此位址的伺服器無效或已被使用"
+            "alias_field_taken_invalid": "此位址的伺服器無效或已被使用",
+            "alias_field_placeholder_default": "例如：my-room"
         },
         "advanced": {
             "unfederated": "此聊天室無法被遠端的 Matrix 伺服器存取",
@@ -2657,7 +2629,8 @@
             "enable_element_call_no_permissions_tooltip": "您沒有足夠的權限來變更此設定。",
             "call_type_section": "通話類型"
         },
-        "title": "聊天室設定 - %(roomName)s"
+        "title": "聊天室設定 - %(roomName)s",
+        "alias_not_specified": "未指定"
     },
     "encryption": {
         "verification": {
@@ -2847,7 +2820,12 @@
         },
         "confirm_encryption_setup_title": "確認加密設定",
         "confirm_encryption_setup_body": "點擊下方按鈕以確認設定加密。",
-        "unable_to_setup_keys_error": "無法設定金鑰"
+        "unable_to_setup_keys_error": "無法設定金鑰",
+        "key_signature_upload_failed_master_key_signature": "新的主金鑰簽署",
+        "key_signature_upload_failed_cross_signing_key_signature": "新交叉簽署金鑰的簽章",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "裝置交叉簽署",
+        "key_signature_upload_failed_key_signature": "金鑰簽章",
+        "key_signature_upload_failed_body": "%(brand)s 在上傳以下內容時遇到錯誤："
     },
     "emoji": {
         "category_frequently_used": "經常使用",
@@ -3400,7 +3378,11 @@
         "empty_heading": "使用「討論串」功能，讓討論保持有條不紊",
         "unable_to_decrypt": "無法解密訊息",
         "open_thread": "開啟討論串",
-        "error_start_thread_existing_relation": "無法從討論串既有的關係建立活動"
+        "error_start_thread_existing_relation": "無法從討論串既有的關係建立活動",
+        "count_of_reply": {
+            "one": "%(count)s 回覆",
+            "other": "%(count)s 回覆"
+        }
     },
     "theme": {
         "light_high_contrast": "亮色高對比",
@@ -3766,7 +3748,11 @@
             "all_rooms": "所有聊天室",
             "field_placeholder": "搜尋…",
             "this_room_button": "搜尋此聊天室",
-            "all_rooms_button": "搜尋所有聊天室"
+            "all_rooms_button": "搜尋所有聊天室",
+            "result_count": {
+                "one": "（~%(count)s 結果）",
+                "other": "（~%(count)s 結果）"
+            }
         },
         "jump_to_bottom_button": "捲動到最新訊息",
         "jump_read_marker": "跳到第一則未讀訊息。",
@@ -3787,7 +3773,13 @@
             "other": "檢視全部 %(count)s 個成員"
         },
         "face_pile_tooltip_shortcut_joined": "包含您，%(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "包含 %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "包含 %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> 邀請您",
+        "unknown_status_code_for_timeline_jump": "未知狀態代碼",
+        "face_pile_summary": {
+            "other": "%(count)s 個您認識的人已加入",
+            "one": "%(count)s 個您認識的人已加入"
+        }
     },
     "file_panel": {
         "guest_note": "您必須<a>註冊</a>以使用此功能",
@@ -3979,7 +3971,8 @@
         },
         "storage_evicted_title": "遺失工作階段資料",
         "storage_evicted_description_1": "某些工作階段資料遺失了，其中包含加密訊息金鑰。登出再登入並從備份中復原金鑰可以修復這個問題。",
-        "storage_evicted_description_2": "當硬碟空間不足時，您的瀏覽器可能會移除這些資料。"
+        "storage_evicted_description_2": "當硬碟空間不足時，您的瀏覽器可能會移除這些資料。",
+        "unknown_error_code": "未知的錯誤代碼"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {
@@ -4149,6 +4142,14 @@
                 "other": "移除 %(count)s 則訊息",
                 "one": "移除 1 則訊息"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s 個已驗證的工作階段",
+            "one": "1 個已驗證的工作階段"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s 個工作階段",
+            "one": "%(count)s 個工作階段"
         }
     },
     "stickers": {
@@ -4402,6 +4403,7 @@
         "key_is_valid": "這看起來是有效的安全金鑰！",
         "key_is_invalid": "不是有效的安全金鑰",
         "enter_key_description": "透過輸入您的安全金鑰來存取您的安全訊息歷史並設定安全訊息。",
-        "key_forgotten_text": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>"
+        "key_forgotten_text": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>",
+        "load_keys_progress": "%(total)s 中的 %(completed)s 金鑰已復原"
     }
 }

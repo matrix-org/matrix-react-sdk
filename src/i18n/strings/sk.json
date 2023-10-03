@@ -25,18 +25,8 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Moderator": "Moderátor",
-    "and %(count)s others...": {
-        "other": "a ďalších %(count)s…",
-        "one": "a jeden ďalší…"
-    },
     "Unnamed room": "Nepomenovaná miestnosť",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s výsledkov)",
-        "one": "(~%(count)s výsledok)"
-    },
     "Join Room": "Vstúpiť do miestnosti",
-    "unknown error code": "neznámy kód chyby",
-    "not specified": "nezadané",
     "Delete Widget": "Vymazať widget",
     "Home": "Domov",
     "%(items)s and %(lastItem)s": "%(items)s a tiež %(lastItem)s",
@@ -122,8 +112,6 @@
     "Headphones": "Slúchadlá",
     "Folder": "Fascikel",
     "Deactivate account": "Deaktivovať účet",
-    "a new cross-signing key signature": "nový podpis kľúča pre krížové podpisovanie",
-    "a device cross-signing signature": "krížový podpis zariadenia",
     "IRC display name width": "Šírka zobrazovaného mena IRC",
     "Lock": "Zámka",
     "This backup is trusted because it has been restored on this session": "Táto záloha je dôveryhodná, lebo už bola načítaná v tejto relácii",
@@ -381,51 +369,15 @@
     "United States": "Spojené Štáty",
     "United Kingdom": "Spojené Kráľovstvo",
     "Encrypted by a deleted session": "Šifrované odstránenou reláciou",
-    "%(name)s wants to verify": "%(name)s chce overiť",
-    "%(count)s verified sessions": {
-        "one": "1 overená relácia",
-        "other": "%(count)s overených relácií"
-    },
-    "%(name)s declined": "%(name)s odmietol/a",
-    "e.g. my-room": "napr. moja-miestnost",
     "Developer": "Vývojárske",
     "Experimental": "Experimentálne",
     "Backup version:": "Verzia zálohy:",
     "To join a space you'll need an invite.": "Ak sa chcete pripojiť k priestoru, budete potrebovať pozvánku.",
-    "%(count)s sessions": {
-        "one": "%(count)s relácia",
-        "other": "%(count)s relácie"
-    },
-    "edited": "upravené",
     "Switch theme": "Prepnúť motív",
     "Not encrypted": "Nie je zašifrované",
-    "%(name)s cancelled": "%(name)s zrušil/a",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "%(count)s reply": {
-        "one": "%(count)s odpoveď",
-        "other": "%(count)s odpovedí"
-    },
     "Submit logs": "Odoslať záznamy",
-    "%(name)s accepted": "%(name)s prijal",
     "Forget": "Zabudnúť",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s človek, ktorého poznáte, sa už pripojil",
-        "other": "%(count)s ľudí, ktorých poznáte, sa už pripojilo"
-    },
-    "<inviter/> invites you": "<inviter/> vás pozýva",
-    "%(count)s rooms": {
-        "one": "%(count)s miestnosť",
-        "other": "%(count)s miestností"
-    },
-    "%(count)s members": {
-        "one": "%(count)s člen",
-        "other": "%(count)s členov"
-    },
-    "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s obnovených kľúčov",
-    "%(count)s votes": {
-        "one": "%(count)s hlas",
-        "other": "%(count)s hlasov"
-    },
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
     "Messaging": "Posielanie správ",
@@ -437,14 +389,6 @@
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
-    "%(brand)s encountered an error during upload of:": "%(brand)s zaznamenal chybu pri nahrávaní:",
-    "a key signature": "podpis kľúča",
-    "a new master key signature": "nový podpis hlavného kľúča",
-    "toggle event": "prepnúť udalosť",
-    "%(count)s participants": {
-        "one": "1 účastník",
-        "other": "%(count)s účastníkov"
-    },
     "View List": "Zobraziť zoznam",
     "%(members)s and %(last)s": "%(members)s a %(last)s",
     "%(members)s and more": "%(members)s a ďalší",
@@ -454,15 +398,11 @@
     "Show rooms": "Zobraziť miestnosti",
     "Explore public spaces in the new search dialog": "Preskúmajte verejné priestory v novom okne vyhľadávania",
     "Saved Items": "Uložené položky",
-    "%(name)s started a video call": "%(name)s začal/a videohovor",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "unknown": "neznáme",
     "Starting export process…": "Spustenie procesu exportu…",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
-    "unavailable": "nedostupný",
-    "unknown status code": "neznámy kód stavu",
     "common": {
         "about": "Informácie",
         "analytics": "Analytické údaje",
@@ -591,7 +531,25 @@
         "filter_results": "Filtrovať výsledky",
         "no_results_found": "Nenašli sa žiadne výsledky",
         "unsent": "Neodoslané",
-        "cameras": "Kamery"
+        "cameras": "Kamery",
+        "n_participants": {
+            "one": "1 účastník",
+            "other": "%(count)s účastníkov"
+        },
+        "and_n_others": {
+            "other": "a ďalších %(count)s…",
+            "one": "a jeden ďalší…"
+        },
+        "n_members": {
+            "one": "%(count)s člen",
+            "other": "%(count)s členov"
+        },
+        "unavailable": "nedostupný",
+        "edited": "upravené",
+        "n_rooms": {
+            "one": "%(count)s miestnosť",
+            "other": "%(count)s miestností"
+        }
     },
     "action": {
         "continue": "Pokračovať",
@@ -1658,7 +1616,8 @@
         "developer_mode": "Režim pre vývojárov",
         "view_source_decrypted_event_source": "Zdroj dešifrovanej udalosti",
         "view_source_decrypted_event_source_unavailable": "Dešifrovaný zdroj nie je dostupný",
-        "original_event_source": "Pôvodný zdroj udalosti"
+        "original_event_source": "Pôvodný zdroj udalosti",
+        "toggle_event": "prepnúť udalosť"
     },
     "export_chat": {
         "html": "HTML",
@@ -1752,7 +1711,8 @@
         "m.call": {
             "video_call_started": "Videohovor sa začal v %(roomName)s.",
             "video_call_started_unsupported": "Videohovor sa začal v %(roomName)s. (nie je podporované v tomto prehliadači)",
-            "video_call_ended": "Videohovor ukončený"
+            "video_call_ended": "Videohovor ukončený",
+            "video_call_started_text": "%(name)s začal/a videohovor"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s uskutočnil telefonát.",
@@ -2166,7 +2126,11 @@
             "you_declined": "Zamietli ste overenie",
             "you_cancelled": "Zrušili ste overenie",
             "declining": "Odmietanie …",
-            "you_started": "Odoslali ste žiadosť o overenie"
+            "you_started": "Odoslali ste žiadosť o overenie",
+            "user_accepted": "%(name)s prijal",
+            "user_declined": "%(name)s odmietol/a",
+            "user_cancelled": "%(name)s zrušil/a",
+            "user_wants_to_verify": "%(name)s chce overiť"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s ukončil anketu",
@@ -2189,6 +2153,13 @@
             "error_loading": "Nie je možné načítať udalosť odkazovanú v odpovedi. Takáto udalosť buď neexistuje alebo nemáte povolenie na jej zobrazenie.",
             "in_reply_to": "<a>Odpoveď na</a> <pill>",
             "in_reply_to_for_export": "V odpovedi na <a>túto správu</a>"
+        },
+        "in_room_name": " v <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s hlas",
+                "other": "%(count)s hlasov"
+            }
         }
     },
     "slash_command": {
@@ -2585,7 +2556,8 @@
             "alias_field_matches_invalid": "Táto adresa nesmeruje do tejto miestnosti",
             "alias_field_taken_valid": "Túto adresu je možné použiť",
             "alias_field_taken_invalid_domain": "Táto adresa sa už používa",
-            "alias_field_taken_invalid": "Táto adresa mala neplatný server alebo sa už používa"
+            "alias_field_taken_invalid": "Táto adresa mala neplatný server alebo sa už používa",
+            "alias_field_placeholder_default": "napr. moja-miestnost"
         },
         "advanced": {
             "unfederated": "Táto miestnosť nie je prístupná zo vzdialených Matrix serverov",
@@ -2657,7 +2629,8 @@
             "enable_element_call_no_permissions_tooltip": "Nemáte dostatočné oprávnenia na to, aby ste toto mohli zmeniť.",
             "call_type_section": "Typ hovoru"
         },
-        "title": "Nastavenia miestnosti - %(roomName)s"
+        "title": "Nastavenia miestnosti - %(roomName)s",
+        "alias_not_specified": "nezadané"
     },
     "encryption": {
         "verification": {
@@ -2847,7 +2820,12 @@
         },
         "confirm_encryption_setup_title": "Potvrdiť nastavenie šifrovania",
         "confirm_encryption_setup_body": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
-        "unable_to_setup_keys_error": "Nie je možné nastaviť kľúče"
+        "unable_to_setup_keys_error": "Nie je možné nastaviť kľúče",
+        "key_signature_upload_failed_master_key_signature": "nový podpis hlavného kľúča",
+        "key_signature_upload_failed_cross_signing_key_signature": "nový podpis kľúča pre krížové podpisovanie",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "krížový podpis zariadenia",
+        "key_signature_upload_failed_key_signature": "podpis kľúča",
+        "key_signature_upload_failed_body": "%(brand)s zaznamenal chybu pri nahrávaní:"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3400,7 +3378,11 @@
         "empty_heading": "Udržujte diskusie organizované pomocou vlákien",
         "unable_to_decrypt": "Nie je možné dešifrovať správu",
         "open_thread": "Otvoriť vlákno",
-        "error_start_thread_existing_relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom"
+        "error_start_thread_existing_relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom",
+        "count_of_reply": {
+            "one": "%(count)s odpoveď",
+            "other": "%(count)s odpovedí"
+        }
     },
     "theme": {
         "light_high_contrast": "Ľahký vysoký kontrast",
@@ -3766,7 +3748,11 @@
             "all_rooms": "Vo všetkých miestnostiach",
             "field_placeholder": "Hľadať…",
             "this_room_button": "Vyhľadávať v tejto miestnosti",
-            "all_rooms_button": "Vyhľadávať vo všetkých miestnostiach"
+            "all_rooms_button": "Vyhľadávať vo všetkých miestnostiach",
+            "result_count": {
+                "other": "(~%(count)s výsledkov)",
+                "one": "(~%(count)s výsledok)"
+            }
         },
         "jump_to_bottom_button": "Prejsť na najnovšie správy",
         "jump_read_marker": "Preskočiť na prvú neprečítanú správu.",
@@ -3787,7 +3773,13 @@
             "other": "Zobraziť všetkých %(count)s členov"
         },
         "face_pile_tooltip_shortcut_joined": "Vrátane vás, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Vrátane %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Vrátane %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> vás pozýva",
+        "unknown_status_code_for_timeline_jump": "neznámy kód stavu",
+        "face_pile_summary": {
+            "one": "%(count)s človek, ktorého poznáte, sa už pripojil",
+            "other": "%(count)s ľudí, ktorých poznáte, sa už pripojilo"
+        }
     },
     "file_panel": {
         "guest_note": "Aby ste mohli použiť túto vlastnosť, musíte byť <a>zaregistrovaný</a>",
@@ -3979,7 +3971,8 @@
         },
         "storage_evicted_title": "Chýbajú údaje relácie",
         "storage_evicted_description_1": "Chýbajú niektoré údaje relácie vrátane zašifrovaných kľúčov správ. Odhláste sa a prihláste sa, aby ste to opravili a obnovili kľúče zo zálohy.",
-        "storage_evicted_description_2": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku."
+        "storage_evicted_description_2": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
+        "unknown_error_code": "neznámy kód chyby"
     },
     "in_space1_and_space2": "V priestoroch %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4149,6 +4142,14 @@
                 "other": "Odstrániť %(count)s správ",
                 "one": "Odstrániť 1 správu"
             }
+        },
+        "count_of_verified_sessions": {
+            "one": "1 overená relácia",
+            "other": "%(count)s overených relácií"
+        },
+        "count_of_sessions": {
+            "one": "%(count)s relácia",
+            "other": "%(count)s relácie"
         }
     },
     "stickers": {
@@ -4402,6 +4403,7 @@
         "key_is_valid": "Toto vyzerá ako platný bezpečnostný kľúč!",
         "key_is_invalid": "Neplatný bezpečnostný kľúč",
         "enter_key_description": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
-        "key_forgotten_text": "Ak ste zabudli bezpečnostný kľúč, môžete <button>nastaviť nové možnosti obnovenia</button>"
+        "key_forgotten_text": "Ak ste zabudli bezpečnostný kľúč, môžete <button>nastaviť nové možnosti obnovenia</button>",
+        "load_keys_progress": "%(completed)s z %(total)s obnovených kľúčov"
     }
 }

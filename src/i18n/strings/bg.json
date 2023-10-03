@@ -22,27 +22,17 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(day)s %(monthName)s %(fullYear)s, %(weekDayName)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
-    "unknown error code": "неизвестен код за грешка",
     "Unnamed room": "Стая без име",
     "Warning!": "Внимание!",
     "PM": "PM",
     "AM": "AM",
     "Restricted": "Ограничен",
     "Moderator": "Модератор",
-    "and %(count)s others...": {
-        "other": "и %(count)s други...",
-        "one": "и още един..."
-    },
     "%(duration)ss": "%(duration)sсек",
     "%(duration)sm": "%(duration)sмин",
     "%(duration)sh": "%(duration)sч",
     "%(duration)sd": "%(duration)sд",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s резултати)",
-        "one": "(~%(count)s резултат)"
-    },
     "Join Room": "Присъединяване към стаята",
-    "not specified": "неопределен",
     "Delete Widget": "Изтриване на приспособление",
     "Home": "Начална страница",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
@@ -121,37 +111,17 @@
     "Headphones": "Слушалки",
     "Folder": "Папка",
     "Scissors": "Ножици",
-    "edited": "редактирано",
     "Deactivate account": "Деактивиране на акаунт",
-    "e.g. my-room": "например my-room",
-    "%(name)s accepted": "%(name)s прие",
-    "%(name)s cancelled": "%(name)s отказа",
-    "%(name)s wants to verify": "%(name)s иска да извърши потвърждение",
     "Failed to connect to integration manager": "Неуспешна връзка с мениджъра на интеграции",
-    "%(count)s verified sessions": {
-        "other": "%(count)s потвърдени сесии",
-        "one": "1 потвърдена сесия"
-    },
     "Lock": "Заключи",
     "This backup is trusted because it has been restored on this session": "Това резервно копие е доверено, защото е било възстановено в текущата сесия",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "За да съобщените за проблем със сигурността свързан с Matrix, прочетете <a>Политиката за споделяне на проблеми със сигурността</a> на Matrix.org.",
     "Encrypted by a deleted session": "Шифровано от изтрита сесия",
-    "%(count)s sessions": {
-        "other": "%(count)s сесии",
-        "one": "%(count)s сесия"
-    },
-    "%(name)s declined": "%(name)s отказа",
     "Submit logs": "Изпрати логове",
     "IRC display name width": "Ширина на IRC името",
-    "a new master key signature": "нов подпис на основния ключ",
-    "a new cross-signing key signature": "нов подпис на ключа за кръстосано-подписване",
-    "a device cross-signing signature": "подпис за кръстосано-подписване на устройства",
-    "a key signature": "подпис на ключ",
-    "%(brand)s encountered an error during upload of:": "%(brand)s срещна проблем при качването на:",
     "Your homeserver has exceeded its user limit.": "Надвишен е лимитът за потребители на сървъра ви.",
     "Your homeserver has exceeded one of its resource limits.": "Беше надвишен някой от лимитите на сървъра.",
     "Ok": "Добре",
-    "%(completed)s of %(total)s keys restored": "%(completed)s от %(total)s ключа са възстановени",
     "Sign in with SSO": "Влезте със SSO",
     "Switch theme": "Смени темата",
     "Not encrypted": "Не е шифровано",
@@ -488,7 +458,12 @@
         "show_more": "Покажи повече",
         "are_you_sure": "Сигурни ли сте?",
         "email_address": "Имейл адрес",
-        "filter_results": "Филтриране на резултати"
+        "filter_results": "Филтриране на резултати",
+        "and_n_others": {
+            "other": "и %(count)s други...",
+            "one": "и още един..."
+        },
+        "edited": "редактирано"
     },
     "action": {
         "continue": "Продължи",
@@ -1255,7 +1230,11 @@
             "you_accepted": "Приехте",
             "you_declined": "Отказахте",
             "you_cancelled": "Отказахте потвърждаването",
-            "you_started": "Изпратихте заявка за потвърждение"
+            "you_started": "Изпратихте заявка за потвърждение",
+            "user_accepted": "%(name)s прие",
+            "user_declined": "%(name)s отказа",
+            "user_cancelled": "%(name)s отказа",
+            "user_wants_to_verify": "%(name)s иска да извърши потвърждение"
         },
         "m.video": {
             "error_decrypting": "Грешка при разшифроване на видео"
@@ -1501,7 +1480,8 @@
             "alias_heading": "Адрес на стаята",
             "alias_field_safe_localpart_invalid": "Някои символи не са позволени",
             "alias_field_taken_valid": "Адресът е наличен за ползване",
-            "alias_field_taken_invalid_domain": "Адресът вече се използва"
+            "alias_field_taken_invalid_domain": "Адресът вече се използва",
+            "alias_field_placeholder_default": "например my-room"
         },
         "advanced": {
             "unfederated": "Тази стая не е достъпна за отдалечени Matrix сървъри",
@@ -1537,7 +1517,8 @@
             "custom_sound_prompt": "Настрой нов собствен звук",
             "browse_button": "Избор"
         },
-        "title": "Настройки на стая - %(roomName)s"
+        "title": "Настройки на стая - %(roomName)s",
+        "alias_not_specified": "неопределен"
     },
     "encryption": {
         "verification": {
@@ -1673,7 +1654,12 @@
         },
         "confirm_encryption_setup_title": "Потвърждение на настройки за шифроване",
         "confirm_encryption_setup_body": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
-        "unable_to_setup_keys_error": "Неуспешна настройка на ключовете"
+        "unable_to_setup_keys_error": "Неуспешна настройка на ключовете",
+        "key_signature_upload_failed_master_key_signature": "нов подпис на основния ключ",
+        "key_signature_upload_failed_cross_signing_key_signature": "нов подпис на ключа за кръстосано-подписване",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "подпис за кръстосано-подписване на устройства",
+        "key_signature_upload_failed_key_signature": "подпис на ключ",
+        "key_signature_upload_failed_body": "%(brand)s срещна проблем при качването на:"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -2052,7 +2038,11 @@
         "search": {
             "this_room": "В тази стая",
             "all_rooms": "Във всички стаи",
-            "field_placeholder": "Търсене…"
+            "field_placeholder": "Търсене…",
+            "result_count": {
+                "other": "(~%(count)s резултати)",
+                "one": "(~%(count)s резултат)"
+            }
         },
         "jump_to_bottom_button": "Отиди до най-скорошните съобщения",
         "jump_read_marker": "Отиди до първото непрочетено съобщение.",
@@ -2216,7 +2206,8 @@
         },
         "storage_evicted_title": "Липсват данни за сесията",
         "storage_evicted_description_1": "Липсват данни за сесията, като например ключове за шифровани съобщения. За да поправите това, излезте и влезте отново, възстановявайки ключовете от резервно копие.",
-        "storage_evicted_description_2": "Най-вероятно браузърът Ви е премахнал тези данни поради липса на дисково пространство."
+        "storage_evicted_description_2": "Най-вероятно браузърът Ви е премахнал тези данни поради липса на дисково пространство.",
+        "unknown_error_code": "неизвестен код за грешка"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -2329,6 +2320,14 @@
                 "other": "Премахни %(count)s съобщения",
                 "one": "Премахни 1 съобщение"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s потвърдени сесии",
+            "one": "1 потвърдена сесия"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s сесии",
+            "one": "%(count)s сесия"
         }
     },
     "stickers": {
@@ -2465,6 +2464,7 @@
         "keys_restored_title": "Ключовете бяха възстановени",
         "count_of_decryption_failures": "Неуспешно разшифроване на %(failedCount)s сесии!",
         "count_of_successfully_restored_keys": "Успешно бяха възстановени %(sessionCount)s ключа",
-        "key_backup_warning": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър."
+        "key_backup_warning": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
+        "load_keys_progress": "%(completed)s от %(total)s ключа са възстановени"
     }
 }

@@ -88,7 +88,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                 postfixComponent={postfix}
                 ref={this.fieldRef}
                 onValidate={this.onValidate}
-                placeholder={this.props.placeholder || _t("e.g. my-room")}
+                placeholder={this.props.placeholder || _t("room_settings|general|alias_field_placeholder_default")}
                 onChange={this.onChange}
                 value={value}
                 maxLength={maxlength}

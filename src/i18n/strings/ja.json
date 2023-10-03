@@ -1,5 +1,4 @@
 {
-    "unknown error code": "不明なエラーコード",
     "Unnamed room": "名前のないルーム",
     "Thursday": "木曜日",
     "Sunday": "日曜日",
@@ -38,20 +37,11 @@
     "Restricted": "制限",
     "Moderator": "モデレーター",
     "Warning!": "警告！",
-    "and %(count)s others...": {
-        "other": "他%(count)s人…",
-        "one": "他1人…"
-    },
     "%(duration)ss": "%(duration)s秒",
     "%(duration)sm": "%(duration)s分",
     "%(duration)sh": "%(duration)s時",
     "%(duration)sd": "%(duration)s日",
-    "(~%(count)s results)": {
-        "other": "（〜%(count)s件）",
-        "one": "（〜%(count)s件）"
-    },
     "Join Room": "ルームに参加",
-    "not specified": "指定なし",
     "Delete Widget": "ウィジェットを削除",
     "Home": "ホーム",
     "%(items)s and %(lastItem)s": "%(items)s, %(lastItem)s",
@@ -59,22 +49,11 @@
     "expand": "展開",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
     "Send Logs": "ログを送信",
-    "edited": "編集済",
-    "%(count)s verified sessions": {
-        "other": "%(count)s件の認証済のセッション",
-        "one": "1件の認証済のセッション"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s個のセッション",
-        "one": "%(count)s個のセッション"
-    },
     "Deactivate account": "アカウントを無効化",
     "This backup is trusted because it has been restored on this session": "このバックアップは、このセッションで復元されたため信頼されています",
     "Switch theme": "テーマを切り替える",
     "Failed to connect to integration manager": "インテグレーションマネージャーへの接続に失敗しました",
     "Encrypted by a deleted session": "削除済のセッションによる暗号化",
-    "%(name)s wants to verify": "%(name)sが認証を要求しています",
-    "e.g. my-room": "例：my-room",
     "Backup version:": "バックアップのバージョン：",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix関連のセキュリティー問題を報告するには、Matrix.orgの<a>Security Disclosure Policy</a>をご覧ください。",
     "Folder": "フォルダー",
@@ -393,9 +372,6 @@
     "Ok": "OK",
     "Your homeserver has exceeded one of its resource limits.": "あなたのホームサーバーはリソースの上限に達しました。",
     "Your homeserver has exceeded its user limit.": "あなたのホームサーバーはユーザー数の上限に達しました。",
-    "%(name)s accepted": "%(name)sは受け付けました",
-    "%(name)s cancelled": "%(name)sは中止しました",
-    "%(name)s declined": "%(name)sは拒否しました",
     "Not encrypted": "暗号化されていません",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "%(spaceName)s and %(count)s others": {
@@ -403,60 +379,26 @@
         "other": "%(spaceName)sと他%(count)s個"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sと%(space2Name)s",
-    "%(count)s votes": {
-        "one": "%(count)s個の投票",
-        "other": "%(count)s個の投票"
-    },
     "Submit logs": "ログを提出",
-    "%(count)s members": {
-        "one": "%(count)s人",
-        "other": "%(count)s人"
-    },
-    "%(completed)s of %(total)s keys restored": "計%(total)s個のうち%(completed)s個の鍵が復元されました",
-    "a key signature": "鍵の署名",
     "Sign in with SSO": "シングルサインオンでサインイン",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
     "Themes": "テーマ",
     "Developer": "開発者",
     "Experimental": "実験的",
-    "%(count)s rooms": {
-        "one": "%(count)s個のルーム",
-        "other": "%(count)s個のルーム"
-    },
     "Messaging": "メッセージ",
     "Forget": "消去",
     "Moderation": "モデレート",
-    "a new cross-signing key signature": "新しいクロス署名鍵の署名",
-    "a device cross-signing signature": "端末のクロス署名",
-    "%(count)s reply": {
-        "other": "%(count)s件の返信",
-        "one": "%(count)s件の返信"
-    },
-    "<inviter/> invites you": "<inviter/>があなたを招待しています",
-    "toggle event": "イベントを切り替える",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "アカウントにアクセスし、このセッションに保存されている暗号鍵を復元してください。暗号鍵がなければ、どのセッションの暗号化されたメッセージも読めなくなります。",
-    "a new master key signature": "新しいマスターキーの署名",
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s人の知人が既に参加しています",
-        "other": "%(count)s人の知人が既に参加しています"
-    },
-    "%(count)s participants": {
-        "other": "%(count)s人の参加者",
-        "one": "1人の参加者"
-    },
     "View List": "一覧を表示",
     "Explore public spaces in the new search dialog": "新しい検索ダイアログで公開スペースを探す",
     "Show spaces": "スペースを表示",
     "Show rooms": "ルームを表示",
     "Unread email icon": "未読メールアイコン",
-    "%(name)s started a video call": "%(name)sがビデオ通話を始めました",
     "Saved Items": "保存済み項目",
     "%(members)s and %(last)s": "%(members)sと%(last)s",
-    "%(brand)s encountered an error during upload of:": "以下のアップロードの際に%(brand)sでエラーが発生しました：",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "unknown": "不明",
     "%(members)s and more": "%(members)s人とその他のメンバー",
-    " in <strong>%(room)s</strong>": " <strong>%(room)s</strong>内で",
     "You cannot search for rooms that are neither a room nor a space": "ルームまたはスペースではないルームを探すことはできません",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "common": {
@@ -586,7 +528,24 @@
         "filter_results": "結果を絞り込む",
         "no_results_found": "検索結果がありません",
         "unsent": "未送信",
-        "cameras": "カメラ"
+        "cameras": "カメラ",
+        "n_participants": {
+            "other": "%(count)s人の参加者",
+            "one": "1人の参加者"
+        },
+        "and_n_others": {
+            "other": "他%(count)s人…",
+            "one": "他1人…"
+        },
+        "n_members": {
+            "one": "%(count)s人",
+            "other": "%(count)s人"
+        },
+        "edited": "編集済",
+        "n_rooms": {
+            "one": "%(count)s個のルーム",
+            "other": "%(count)s個のルーム"
+        }
     },
     "action": {
         "continue": "続行",
@@ -1581,7 +1540,8 @@
         "developer_mode": "開発者モード",
         "view_source_decrypted_event_source": "復号化したイベントのソースコード",
         "view_source_decrypted_event_source_unavailable": "復号化したソースコードが利用できません",
-        "original_event_source": "元のイベントのソースコード"
+        "original_event_source": "元のイベントのソースコード",
+        "toggle_event": "イベントを切り替える"
     },
     "export_chat": {
         "html": "HTML",
@@ -1671,7 +1631,8 @@
         "m.call": {
             "video_call_started": "ビデオ通話が%(roomName)sで開始しました。",
             "video_call_started_unsupported": "ビデオ通話が%(roomName)sで開始しました。（このブラウザーではサポートされていません）",
-            "video_call_ended": "ビデオ通話が終了しました"
+            "video_call_ended": "ビデオ通話が終了しました",
+            "video_call_started_text": "%(name)sがビデオ通話を始めました"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)sが音声通話を行いました。",
@@ -2069,7 +2030,11 @@
             "you_declined": "拒否しました",
             "you_cancelled": "中止しました",
             "declining": "拒否しています…",
-            "you_started": "認証リクエストを送信しました"
+            "you_started": "認証リクエストを送信しました",
+            "user_accepted": "%(name)sは受け付けました",
+            "user_declined": "%(name)sは拒否しました",
+            "user_cancelled": "%(name)sは中止しました",
+            "user_wants_to_verify": "%(name)sが認証を要求しています"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)sがアンケートを終了しました"
@@ -2091,6 +2056,13 @@
             "error_loading": "返信されたイベントを読み込めません。存在しないか、表示する権限がありません。",
             "in_reply_to": "<pill>への<a>返信</a>",
             "in_reply_to_for_export": "<a>このメッセージ</a>への返信"
+        },
+        "in_room_name": " <strong>%(room)s</strong>内で",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s個の投票",
+                "other": "%(count)s個の投票"
+            }
         }
     },
     "slash_command": {
@@ -2467,7 +2439,8 @@
             "alias_field_matches_invalid": "このアドレスはこのルームを指していません",
             "alias_field_taken_valid": "このアドレスは使用できます",
             "alias_field_taken_invalid_domain": "このアドレスは既に使用されています",
-            "alias_field_taken_invalid": "このアドレスは不正なサーバーを含んでいるか、既に使用されています"
+            "alias_field_taken_invalid": "このアドレスは不正なサーバーを含んでいるか、既に使用されています",
+            "alias_field_placeholder_default": "例：my-room"
         },
         "advanced": {
             "unfederated": "このルームはリモートのMatrixサーバーからアクセスできません",
@@ -2537,7 +2510,8 @@
             "enable_element_call_no_permissions_tooltip": "この変更に必要な権限がありません。",
             "call_type_section": "通話の種類"
         },
-        "title": "ルームの設定 - %(roomName)s"
+        "title": "ルームの設定 - %(roomName)s",
+        "alias_not_specified": "指定なし"
     },
     "encryption": {
         "verification": {
@@ -2724,7 +2698,12 @@
         },
         "confirm_encryption_setup_title": "暗号化の設定を承認してください",
         "confirm_encryption_setup_body": "以下のボタンをクリックして、暗号化の設定を承認してください。",
-        "unable_to_setup_keys_error": "鍵を設定できません"
+        "unable_to_setup_keys_error": "鍵を設定できません",
+        "key_signature_upload_failed_master_key_signature": "新しいマスターキーの署名",
+        "key_signature_upload_failed_cross_signing_key_signature": "新しいクロス署名鍵の署名",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "端末のクロス署名",
+        "key_signature_upload_failed_key_signature": "鍵の署名",
+        "key_signature_upload_failed_body": "以下のアップロードの際に%(brand)sでエラーが発生しました："
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",
@@ -3263,7 +3242,11 @@
         "empty_heading": "スレッド機能を使って、会話をまとめましょう",
         "unable_to_decrypt": "メッセージを復号化できません",
         "open_thread": "スレッドを開く",
-        "error_start_thread_existing_relation": "既存の関係のあるイベントからスレッドを作成することはできません"
+        "error_start_thread_existing_relation": "既存の関係のあるイベントからスレッドを作成することはできません",
+        "count_of_reply": {
+            "other": "%(count)s件の返信",
+            "one": "%(count)s件の返信"
+        }
     },
     "theme": {
         "light_high_contrast": "ライト（高コントラスト）",
@@ -3608,7 +3591,11 @@
         "search": {
             "this_room": "このルーム",
             "all_rooms": "全てのルーム",
-            "field_placeholder": "検索…"
+            "field_placeholder": "検索…",
+            "result_count": {
+                "other": "（〜%(count)s件）",
+                "one": "（〜%(count)s件）"
+            }
         },
         "jump_to_bottom_button": "最新のメッセージを表示",
         "jump_read_marker": "最初の未読メッセージに移動。",
@@ -3623,7 +3610,12 @@
             "other": "全%(count)s人のメンバーを表示"
         },
         "face_pile_tooltip_shortcut_joined": "あなたと%(commaSeparatedMembers)sを含む",
-        "face_pile_tooltip_shortcut": "%(commaSeparatedMembers)sを含む"
+        "face_pile_tooltip_shortcut": "%(commaSeparatedMembers)sを含む",
+        "invites_you_text": "<inviter/>があなたを招待しています",
+        "face_pile_summary": {
+            "one": "%(count)s人の知人が既に参加しています",
+            "other": "%(count)s人の知人が既に参加しています"
+        }
     },
     "file_panel": {
         "guest_note": "この機能を使用するには<a>登録</a>する必要があります",
@@ -3802,7 +3794,8 @@
         },
         "storage_evicted_title": "セッションのデータがありません",
         "storage_evicted_description_1": "暗号化されたメッセージの鍵を含むセッションのデータが見つかりません。サインアウトして改めてサインインすると、バックアップから鍵を回復します。",
-        "storage_evicted_description_2": "ディスクの空き容量が少なかったため、ブラウザーはこのデータを削除しました。"
+        "storage_evicted_description_2": "ディスクの空き容量が少なかったため、ブラウザーはこのデータを削除しました。",
+        "unknown_error_code": "不明なエラーコード"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {
@@ -3969,6 +3962,14 @@
                 "one": "1件のメッセージを削除",
                 "other": "%(count)s件のメッセージを削除"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s件の認証済のセッション",
+            "one": "1件の認証済のセッション"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s個のセッション",
+            "one": "%(count)s個のセッション"
         }
     },
     "stickers": {
@@ -4198,6 +4199,7 @@
         "key_is_valid": "正しいセキュリティーキーです！",
         "key_is_invalid": "セキュリティーキーが正しくありません",
         "enter_key_description": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーキーを入力してください。",
-        "key_forgotten_text": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます"
+        "key_forgotten_text": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます",
+        "load_keys_progress": "計%(total)s個のうち%(completed)s個の鍵が復元されました"
     }
 }

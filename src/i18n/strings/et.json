@@ -27,23 +27,13 @@
     "expand": "laienda",
     "Home": "Avaleht",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Kui soovid teatada Matrix'iga seotud turvaveast, siis palun tutvu enne Matrix.org <a>Turvalisuse avalikustamise juhendiga</a>.",
-    "%(name)s accepted": "%(name)s nõustus",
-    "%(name)s declined": "%(name)s keeldus",
-    "%(name)s cancelled": "%(name)s tühistas",
-    "%(name)s wants to verify": "%(name)s soovib verifitseerida",
-    "edited": "muudetud",
     "Submit logs": "Saada rakenduse logid",
     "%(duration)ss": "%(duration)s sekund(it)",
     "%(duration)sm": "%(duration)s minut(it)",
     "%(duration)sh": "%(duration)s tund(i)",
     "%(duration)sd": "%(duration)s päev(a)",
     "Unnamed room": "Nimeta jututuba",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s tulemust)",
-        "one": "(~%(count)s tulemus)"
-    },
     "Join Room": "Liitu jututoaga",
-    "e.g. my-room": "näiteks minu-jututuba",
     "Sun": "Pühapäev",
     "Mon": "Esmaspäev",
     "Tue": "Teisipäev",
@@ -120,16 +110,9 @@
     "Folder": "Kaust",
     "Warning!": "Hoiatus!",
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
-    "not specified": "määratlemata",
-    "unknown error code": "tundmatu veakood",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Enne logide saatmist sa peaksid <a>GitHub'is looma veateate</a> ja kirjeldama seal tekkinud probleemi.",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
     "Send Logs": "Saada logikirjed",
-    "a new master key signature": "uus üldvõtme allkiri",
-    "a new cross-signing key signature": "uus risttunnustamise võtme allkiri",
-    "a device cross-signing signature": "seadme risttunnustamise allkiri",
-    "a key signature": "võtme allkiri",
-    "%(brand)s encountered an error during upload of:": "%(brand)s'is tekkis viga järgneva üleslaadimisel:",
     "Sign in with SSO": "Logi sisse kasutades SSO'd ehk ühekordset autentimist",
     "Switch theme": "Vaheta teemat",
     "Restricted": "Piiratud õigustega kasutaja",
@@ -139,20 +122,7 @@
     "Your homeserver has exceeded one of its resource limits.": "Sinu koduserver on ületanud ühe oma ressursipiirangutest.",
     "Ok": "Sobib",
     "IRC display name width": "IRC kuvatava nime laius",
-    "and %(count)s others...": {
-        "other": "ja %(count)s muud...",
-        "one": "ja üks muu..."
-    },
-    "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s võtit taastatud",
     "Deactivate account": "Deaktiveeri kasutajakonto",
-    "%(count)s verified sessions": {
-        "other": "%(count)s verifitseeritud sessiooni",
-        "one": "1 verifitseeritud sessioon"
-    },
-    "%(count)s sessions": {
-        "other": "%(count)s sessiooni",
-        "one": "%(count)s sessioon"
-    },
     "This backup is trusted because it has been restored on this session": "See varukoopia on usaldusväärne, sest ta on taastatud sellest sessioonist",
     "Not encrypted": "Krüptimata",
     "Backup version:": "Varukoopia versioon:",
@@ -405,46 +375,20 @@
     "Afghanistan": "Afganistan",
     "United States": "Ameerika Ühendriigid",
     "United Kingdom": "Suurbritannia",
-    "%(count)s members": {
-        "other": "%(count)s liiget",
-        "one": "%(count)s liige"
-    },
-    "%(count)s rooms": {
-        "other": "%(count)s jututuba",
-        "one": "%(count)s jututuba"
-    },
-    "<inviter/> invites you": "<inviter/> saatis sulle kutse",
-    "%(count)s people you know have already joined": {
-        "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
-        "one": "%(count)s sulle tuttav kasutaja on juba liitunud"
-    },
     "To join a space you'll need an invite.": "Kogukonnakeskusega liitumiseks vajad kutset.",
-    "%(count)s reply": {
-        "one": "%(count)s vastus",
-        "other": "%(count)s vastust"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Taasta ligipääs oma kontole ning selles sessioonis salvestatud krüptivõtmetele. Ilma nende võtmeteta sa ei saa lugeda krüptitud sõnumeid mitte üheski oma sessioonis.",
     "Forget": "Unusta",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja veel %(count)s kogukond",
         "other": "%(spaceName)s ja muud %(count)s kogukonda"
     },
-    "%(count)s votes": {
-        "one": "%(count)s hääl",
-        "other": "%(count)s häält"
-    },
     "Developer": "Arendajad",
     "Experimental": "Katsed",
     "Themes": "Teemad",
     "Messaging": "Sõnumisuhtlus",
     "Moderation": "Modereerimine",
-    "toggle event": "lülita sündmus sisse/välja",
     "Feedback sent! Thanks, we appreciate it!": "Tagasiside on saadetud. Täname, sellest on loodetavasti kasu!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 osaleja",
-        "other": "%(count)s oselejat"
-    },
     "View List": "Vaata loendit",
     "%(members)s and more": "%(members)s ja veel",
     "%(members)s and %(last)s": "%(members)s ja veel %(last)s",
@@ -454,15 +398,11 @@
     "Show rooms": "Näita jututubasid",
     "Explore public spaces in the new search dialog": "Tutvu avalike kogukondadega kasutades uut otsinguvaadet",
     "Saved Items": "Salvestatud failid",
-    "%(name)s started a video call": "%(name)s algatas videokõne",
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
-    " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "unknown": "teadmata",
     "Starting export process…": "Alustame eksportimist…",
     "Desktop app logo": "Töölauarakenduse logo",
     "Requires your server to support the stable version of MSC3827": "Eeldab, et sinu koduserver toetab MSC3827 stabiilset versiooni",
-    "unavailable": "pole saadaval",
-    "unknown status code": "teadmata olekukood",
     "common": {
         "about": "Rakenduse teave",
         "analytics": "Analüütika",
@@ -591,7 +531,25 @@
         "filter_results": "Filtreeri tulemusi",
         "no_results_found": "Tulemusi ei ole",
         "unsent": "Saatmata",
-        "cameras": "Kaamerad"
+        "cameras": "Kaamerad",
+        "n_participants": {
+            "one": "1 osaleja",
+            "other": "%(count)s oselejat"
+        },
+        "and_n_others": {
+            "other": "ja %(count)s muud...",
+            "one": "ja üks muu..."
+        },
+        "n_members": {
+            "other": "%(count)s liiget",
+            "one": "%(count)s liige"
+        },
+        "unavailable": "pole saadaval",
+        "edited": "muudetud",
+        "n_rooms": {
+            "other": "%(count)s jututuba",
+            "one": "%(count)s jututuba"
+        }
     },
     "action": {
         "continue": "Jätka",
@@ -1658,7 +1616,8 @@
         "developer_mode": "Arendusrežiim",
         "view_source_decrypted_event_source": "Sündmuse dekrüptitud lähtekood",
         "view_source_decrypted_event_source_unavailable": "Dekrüptitud lähteandmed pole saadaval",
-        "original_event_source": "Sündmuse töötlemata lähtekood"
+        "original_event_source": "Sündmuse töötlemata lähtekood",
+        "toggle_event": "lülita sündmus sisse/välja"
     },
     "export_chat": {
         "html": "HTML",
@@ -1752,7 +1711,8 @@
         "m.call": {
             "video_call_started": "Videokõne algas %(roomName)s jututoas.",
             "video_call_started_unsupported": "Videokõne algas %(roomName)s jututoas. (ei ole selles brauseris toetatud)",
-            "video_call_ended": "Videokõne on lõppenud"
+            "video_call_ended": "Videokõne on lõppenud",
+            "video_call_started_text": "%(name)s algatas videokõne"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s alustas häälkõnet.",
@@ -2166,7 +2126,11 @@
             "you_declined": "Sa keeldusid",
             "you_cancelled": "Sa tühistasid",
             "declining": "Keeldumisel…",
-            "you_started": "Sa saatsid verifitseerimispalve"
+            "you_started": "Sa saatsid verifitseerimispalve",
+            "user_accepted": "%(name)s nõustus",
+            "user_declined": "%(name)s keeldus",
+            "user_cancelled": "%(name)s tühistas",
+            "user_wants_to_verify": "%(name)s soovib verifitseerida"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s lõpetas küsitluse",
@@ -2189,6 +2153,13 @@
             "error_loading": "Ei ole võimalik laadida seda sündmust, millele vastus on tehtud - teda kas pole olemas või sul pole õigusi seda näha.",
             "in_reply_to": "<a>Vastuseks kasutajale</a> <pill>",
             "in_reply_to_for_export": "Vastuseks <a>sellele sõnumile</a>"
+        },
+        "in_room_name": " <strong>%(room)s</strong> jututoas",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s hääl",
+                "other": "%(count)s häält"
+            }
         }
     },
     "slash_command": {
@@ -2585,7 +2556,8 @@
             "alias_field_matches_invalid": "Antud aadress ei viita sellele jututoale",
             "alias_field_taken_valid": "See aadress on kasutatav",
             "alias_field_taken_invalid_domain": "See aadress on juba kasutusel",
-            "alias_field_taken_invalid": "Selle aadressiga seotud server on kas kirjas vigaselt või on juba kasutusel"
+            "alias_field_taken_invalid": "Selle aadressiga seotud server on kas kirjas vigaselt või on juba kasutusel",
+            "alias_field_placeholder_default": "näiteks minu-jututuba"
         },
         "advanced": {
             "unfederated": "See jututuba ei ole leitav teiste Matrix'i serverite jaoks",
@@ -2657,7 +2629,8 @@
             "enable_element_call_no_permissions_tooltip": "Sul pole piisavalt õigusi selle muutmiseks.",
             "call_type_section": "Kõne tüüp"
         },
-        "title": "Jututoa seadistused - %(roomName)s"
+        "title": "Jututoa seadistused - %(roomName)s",
+        "alias_not_specified": "määratlemata"
     },
     "encryption": {
         "verification": {
@@ -2847,7 +2820,12 @@
         },
         "confirm_encryption_setup_title": "Krüptimise seadistuse kinnitamine",
         "confirm_encryption_setup_body": "Kinnitamaks, et soovid krüptimist seadistada, klõpsi järgnevat nuppu.",
-        "unable_to_setup_keys_error": "Krüptovõtmete kasutuselevõtmine ei õnnestu"
+        "unable_to_setup_keys_error": "Krüptovõtmete kasutuselevõtmine ei õnnestu",
+        "key_signature_upload_failed_master_key_signature": "uus üldvõtme allkiri",
+        "key_signature_upload_failed_cross_signing_key_signature": "uus risttunnustamise võtme allkiri",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "seadme risttunnustamise allkiri",
+        "key_signature_upload_failed_key_signature": "võtme allkiri",
+        "key_signature_upload_failed_body": "%(brand)s'is tekkis viga järgneva üleslaadimisel:"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3400,7 +3378,11 @@
         "empty_heading": "Halda vestlusi jutulõngadena",
         "unable_to_decrypt": "Sõnumi dekrüptimine ei õnnestunud",
         "open_thread": "Ava jutulõng",
-        "error_start_thread_existing_relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa"
+        "error_start_thread_existing_relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
+        "count_of_reply": {
+            "one": "%(count)s vastus",
+            "other": "%(count)s vastust"
+        }
     },
     "theme": {
         "light_high_contrast": "Hele ja väga kontrastne",
@@ -3766,7 +3748,11 @@
             "all_rooms": "Kõik jututoad",
             "field_placeholder": "Otsi…",
             "this_room_button": "Otsi sellest jututoast",
-            "all_rooms_button": "Otsi kõikidest jututubadest"
+            "all_rooms_button": "Otsi kõikidest jututubadest",
+            "result_count": {
+                "other": "(~%(count)s tulemust)",
+                "one": "(~%(count)s tulemus)"
+            }
         },
         "jump_to_bottom_button": "Mine viimaste sõnumite juurde",
         "jump_read_marker": "Mine esimese lugemata sõnumi juurde.",
@@ -3787,7 +3773,13 @@
             "other": "Vaata kõiki %(count)s liiget"
         },
         "face_pile_tooltip_shortcut_joined": "Seahulgas Sina, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Sealhulgas %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Sealhulgas %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> saatis sulle kutse",
+        "unknown_status_code_for_timeline_jump": "teadmata olekukood",
+        "face_pile_summary": {
+            "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
+            "one": "%(count)s sulle tuttav kasutaja on juba liitunud"
+        }
     },
     "file_panel": {
         "guest_note": "Selle funktsionaalsuse kasutamiseks pead sa <a>registreeruma</a>",
@@ -3979,7 +3971,8 @@
         },
         "storage_evicted_title": "Sessiooni andmed on puudu",
         "storage_evicted_description_1": "Osa sessiooniandmetest, sealhulgas sõnumi krüptovõtmed, on puudu. Vea parandamiseks logi välja ja sisse, vajadusel taasta võtmed varundusest.",
-        "storage_evicted_description_2": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu."
+        "storage_evicted_description_2": "On võimalik et sinu brauser kustutas need andmed, sest kõvakettaruumist jäi puudu.",
+        "unknown_error_code": "tundmatu veakood"
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4149,6 +4142,14 @@
                 "other": "Eemalda %(count)s sõnumit",
                 "one": "Eemalda 1 sõnum"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s verifitseeritud sessiooni",
+            "one": "1 verifitseeritud sessioon"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sessiooni",
+            "one": "%(count)s sessioon"
         }
     },
     "stickers": {
@@ -4402,6 +4403,7 @@
         "key_is_valid": "See tundub olema õige turvavõti!",
         "key_is_invalid": "Vigane turvavõti",
         "enter_key_description": "Sisestades turvavõtme pääsed ligi oma turvatud sõnumitele ning sätid tööle krüptitud sõnumivahetuse.",
-        "key_forgotten_text": "Kui sa oled unustanud oma turvavõtme, siis sa võid <button>seadistada uued taastamise võimalused</button>"
+        "key_forgotten_text": "Kui sa oled unustanud oma turvavõtme, siis sa võid <button>seadistada uued taastamise võimalused</button>",
+        "load_keys_progress": "%(completed)s / %(total)s võtit taastatud"
     }
 }

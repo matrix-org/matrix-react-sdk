@@ -1,6 +1,5 @@
 {
     "Warning!": "Advarsel!",
-    "unknown error code": "Ukendt fejlkode",
     "Unnamed room": "Unavngivet rum",
     "Sun": "Søn",
     "Mon": "Man",
@@ -837,7 +836,8 @@
     "cannot_reach_homeserver_detail": "Vær sikker at du har en stabil internetforbindelse, eller kontakt serveradministratoren",
     "error": {
         "mau": "Denne homeserver har nået sin begrænsning for antallet af aktive brugere per måned.",
-        "resource_limits": "Denne homeserver har overskredet en af dens ressourcegrænser."
+        "resource_limits": "Denne homeserver har overskredet en af dens ressourcegrænser.",
+        "unknown_error_code": "Ukendt fejlkode"
     },
     "room": {
         "upgrade_error_title": "Fejl under opgradering af rum",

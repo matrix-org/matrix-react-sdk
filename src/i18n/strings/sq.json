@@ -33,16 +33,10 @@
     "Saturday": "E shtunë",
     "Monday": "E hënë",
     "Wednesday": "E mërkurë",
-    "unknown error code": "kod gabimi të panjohur",
     "Thursday": "E enjte",
     "Yesterday": "Dje",
     "PM": "PM",
     "AM": "AM",
-    "not specified": "e papërcaktuar",
-    "and %(count)s others...": {
-        "other": "dhe %(count)s të tjerë…",
-        "one": "dhe një tjetër…"
-    },
     "%(duration)ss": "%(duration)ss",
     "%(duration)sm": "%(duration)sm",
     "%(duration)sh": "%(duration)sh",
@@ -52,10 +46,6 @@
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
     "collapse": "tkurre",
     "expand": "zgjeroje",
-    "(~%(count)s results)": {
-        "other": "(~%(count)s përfundime)",
-        "one": "(~%(count)s përfundim)"
-    },
     "Delete Widget": "Fshije Widget-in",
     "Send Logs": "Dërgo regjistra",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
@@ -119,35 +109,15 @@
     "Hourglass": "Klepsidër",
     "Key": "Kyç",
     "Scissors": "Gërshërë",
-    "edited": "e përpunuar",
     "Deactivate account": "Çaktivizoje llogarinë",
     "Spanner": "Çelës",
-    "e.g. my-room": "p.sh., dhoma-ime",
-    "%(name)s accepted": "%(name)s pranoi",
-    "%(name)s cancelled": "%(name)s anuloi",
-    "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
-    "%(count)s verified sessions": {
-        "other": "%(count)s sesione të verifikuar",
-        "one": "1 sesion i verifikuar"
-    },
     "This backup is trusted because it has been restored on this session": "Kjo kopjeruajtje është e besuar, ngaqë është rikthyer në këtë sesion",
     "Encrypted by a deleted session": "Fshehtëzuar nga një sesion i fshirë",
-    "%(count)s sessions": {
-        "other": "%(count)s sesione",
-        "one": "%(count)s sesion"
-    },
-    "%(name)s declined": "%(name)s hodhi poshtë",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
-    "a new master key signature": "një nënshkrim i ri kyçi të përgjithshëm",
-    "a new cross-signing key signature": "një nënshkrim i ri kyçi <em>cross-signing</em>",
-    "a device cross-signing signature": "një nënshkrim <em>cross-signing</em> pajisjeje",
-    "a key signature": "një nënshkrim kyçi",
-    "%(brand)s encountered an error during upload of:": "%(brand)s-i hasi një gabim gjatë ngarkimit të:",
     "Sign in with SSO": "Hyni me HNj",
     "Lock": "Kyçje",
     "Submit logs": "Parashtro regjistra",
-    "%(completed)s of %(total)s keys restored": "U rikthyen %(completed)s nga %(total)s kyçe",
     "IRC display name width": "Gjerësi shfaqjeje emrash IRC",
     "Your homeserver has exceeded its user limit.": "Shërbyesi juaj Home ka tejkaluar kufijtë e tij të përdorimit.",
     "Your homeserver has exceeded one of its resource limits.": "Shërbyesi juaj Home ka tejkaluar një nga kufijtë e tij të burimeve.",
@@ -404,34 +374,13 @@
     "Bangladesh": "Bangladesh",
     "Falkland Islands": "Ishujt Falkland",
     "Sweden": "Suedi",
-    "%(count)s members": {
-        "one": "%(count)s anëtar",
-        "other": "%(count)s anëtarë"
-    },
-    "<inviter/> invites you": "<inviter/> ju fton",
-    "%(count)s rooms": {
-        "one": "%(count)s dhomë",
-        "other": "%(count)s dhoma"
-    },
-    "%(count)s people you know have already joined": {
-        "one": "%(count)s person që e njihni është bërë pjesë tashmë",
-        "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
-    },
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
-    "%(count)s reply": {
-        "one": "%(count)s përgjigje",
-        "other": "%(count)s përgjigje"
-    },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
     "Forget": "Harroje",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dhe %(count)s tjetër",
         "other": "%(spaceName)s dhe %(count)s të tjerë"
-    },
-    "%(count)s votes": {
-        "one": "%(count)s votë",
-        "other": "%(count)s vota"
     },
     "Developer": "Zhvillues",
     "Experimental": "Eksperimentale",
@@ -440,10 +389,6 @@
     "Messaging": "Shkëmbim mesazhes",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "%(count)s participants": {
-        "one": "1 pjesëmarrës",
-        "other": "%(count)s pjesëmarrës"
-    },
     "Unread email icon": "Ikonë email-esh të palexuar",
     "Show spaces": "Shfaq hapësira",
     "Show rooms": "Shfaq dhoma",
@@ -452,15 +397,11 @@
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
     "You cannot search for rooms that are neither a room nor a space": "S’mund të kërkoni për dhoma që s’janë as dhomë, as hapësirë",
     "Saved Items": "Zëra të Ruajtur",
-    "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "View List": "Shihni Listën",
-    "toggle event": "shfaqe/fshihe aktin",
-    " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "unknown": "e panjohur",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Desktop app logo": "Stemë aplikacioni Desktop",
     "Requires your server to support the stable version of MSC3827": "Lyp që shërbyesi juaj të mbulojë versionin e qëndrueshëm të MSC3827",
-    "unknown status code": "kod i panjohur gjendjeje",
     "common": {
         "about": "Mbi",
         "analytics": "Analiza",
@@ -589,7 +530,24 @@
         "filter_results": "Filtroni përfundimet",
         "no_results_found": "S’u gjetën përfundime",
         "unsent": "Të padërguar",
-        "cameras": "Kamera"
+        "cameras": "Kamera",
+        "n_participants": {
+            "one": "1 pjesëmarrës",
+            "other": "%(count)s pjesëmarrës"
+        },
+        "and_n_others": {
+            "other": "dhe %(count)s të tjerë…",
+            "one": "dhe një tjetër…"
+        },
+        "n_members": {
+            "one": "%(count)s anëtar",
+            "other": "%(count)s anëtarë"
+        },
+        "edited": "e përpunuar",
+        "n_rooms": {
+            "one": "%(count)s dhomë",
+            "other": "%(count)s dhoma"
+        }
     },
     "action": {
         "continue": "Vazhdo",
@@ -1607,7 +1565,8 @@
         "developer_mode": "Mënyra zhvillues",
         "view_source_decrypted_event_source": "U shfshehtëzua burim veprimtarie",
         "view_source_decrypted_event_source_unavailable": "Burim i shfshehtëzuar jo i passhëm",
-        "original_event_source": "Burim i veprimtarisë origjinale"
+        "original_event_source": "Burim i veprimtarisë origjinale",
+        "toggle_event": "shfaqe/fshihe aktin"
     },
     "export_chat": {
         "html": "HTML",
@@ -1696,7 +1655,8 @@
         "m.call": {
             "video_call_started": "Nisi thirrje me video në %(roomName)s.",
             "video_call_started_unsupported": "Nisi thirrje me video te %(roomName)s. (e pambuluar nga ky shfletues)",
-            "video_call_ended": "Thirrja video përfundoi"
+            "video_call_ended": "Thirrja video përfundoi",
+            "video_call_started_text": "%(name)s nisni një thirrje video"
         },
         "m.call.invite": {
             "voice_call": "%(senderName)s bëri një thirrje zanore.",
@@ -2099,7 +2059,11 @@
             "you_declined": "Hodhët poshtë",
             "you_cancelled": "Anuluat",
             "declining": "Po hidhet poshtë…",
-            "you_started": "Dërguat një kërkesë verifikimi"
+            "you_started": "Dërguat një kërkesë verifikimi",
+            "user_accepted": "%(name)s pranoi",
+            "user_declined": "%(name)s hodhi poshtë",
+            "user_cancelled": "%(name)s anuloi",
+            "user_wants_to_verify": "%(name)s dëshiron të verifikojë"
         },
         "m.poll.end": {
             "sender_ended": "%(senderName)s e përfundoi anketimin",
@@ -2122,6 +2086,13 @@
             "error_loading": "S’arrihet të ngarkohet akti të cilit iu përgjigj, ose nuk ekziston, ose s’keni leje ta shihni.",
             "in_reply_to": "<a>Në Përgjigje të</a> <pill>",
             "in_reply_to_for_export": "Në përgjigje të <a>këtij mesazhi</a>"
+        },
+        "in_room_name": " në <strong>%(room)s</strong>",
+        "m.poll": {
+            "count_of_votes": {
+                "one": "%(count)s votë",
+                "other": "%(count)s vota"
+            }
         }
     },
     "slash_command": {
@@ -2508,7 +2479,8 @@
             "alias_field_matches_invalid": "Kjo adresë nuk shpie te kjo dhomë",
             "alias_field_taken_valid": "Kjo adresë është e lirë për përdorim",
             "alias_field_taken_invalid_domain": "Kjo adresë është e përdorur tashmë",
-            "alias_field_taken_invalid": "Kjo adresë kishte një shërbyes të pavlefshëm ose është e përdorur tashmë"
+            "alias_field_taken_invalid": "Kjo adresë kishte një shërbyes të pavlefshëm ose është e përdorur tashmë",
+            "alias_field_placeholder_default": "p.sh., dhoma-ime"
         },
         "advanced": {
             "unfederated": "Kjo dhomë nuk është e përdorshme nga shërbyes Matrix të largët",
@@ -2579,7 +2551,8 @@
             "enable_element_call_no_permissions_tooltip": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
             "call_type_section": "Lloj thirrjeje"
         },
-        "title": "Rregullime Dhome - %(roomName)s"
+        "title": "Rregullime Dhome - %(roomName)s",
+        "alias_not_specified": "e papërcaktuar"
     },
     "encryption": {
         "verification": {
@@ -2769,7 +2742,12 @@
         },
         "confirm_encryption_setup_title": "Ripohoni ujdisje fshehtëzimi",
         "confirm_encryption_setup_body": "Klikoni mbi butonin më poshtë që të ripohoni ujdisjen e fshehtëzimit.",
-        "unable_to_setup_keys_error": "S’arrihet të ujdisen kyçe"
+        "unable_to_setup_keys_error": "S’arrihet të ujdisen kyçe",
+        "key_signature_upload_failed_master_key_signature": "një nënshkrim i ri kyçi të përgjithshëm",
+        "key_signature_upload_failed_cross_signing_key_signature": "një nënshkrim i ri kyçi <em>cross-signing</em>",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "një nënshkrim <em>cross-signing</em> pajisjeje",
+        "key_signature_upload_failed_key_signature": "një nënshkrim kyçi",
+        "key_signature_upload_failed_body": "%(brand)s-i hasi një gabim gjatë ngarkimit të:"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",
@@ -3314,7 +3292,11 @@
         "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha",
         "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi",
         "open_thread": "Hape rrjedhën",
-        "error_start_thread_existing_relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese"
+        "error_start_thread_existing_relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese",
+        "count_of_reply": {
+            "one": "%(count)s përgjigje",
+            "other": "%(count)s përgjigje"
+        }
     },
     "theme": {
         "light_high_contrast": "Kontrast i fortë drite",
@@ -3667,7 +3649,11 @@
             "all_rooms": "Krejt Dhomat",
             "field_placeholder": "Kërkoni…",
             "this_room_button": "Kërko në këtë dhomë",
-            "all_rooms_button": "Kërko në krejt dhomat"
+            "all_rooms_button": "Kërko në krejt dhomat",
+            "result_count": {
+                "other": "(~%(count)s përfundime)",
+                "one": "(~%(count)s përfundim)"
+            }
         },
         "jump_to_bottom_button": "Rrëshqit te mesazhet më të freskët",
         "jump_read_marker": "Hidhu te mesazhi i parë i palexuar.",
@@ -3688,7 +3674,13 @@
             "other": "Shihni krejt %(count)s anëtarët"
         },
         "face_pile_tooltip_shortcut_joined": "Përfshi ju, %(commaSeparatedMembers)s",
-        "face_pile_tooltip_shortcut": "Prfshi %(commaSeparatedMembers)s"
+        "face_pile_tooltip_shortcut": "Prfshi %(commaSeparatedMembers)s",
+        "invites_you_text": "<inviter/> ju fton",
+        "unknown_status_code_for_timeline_jump": "kod i panjohur gjendjeje",
+        "face_pile_summary": {
+            "one": "%(count)s person që e njihni është bërë pjesë tashmë",
+            "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
+        }
     },
     "file_panel": {
         "guest_note": "Që të përdorni këtë funksion, duhet të <a>regjistroheni</a>",
@@ -3876,7 +3868,8 @@
         },
         "storage_evicted_title": "Mungojnë të dhëna sesioni",
         "storage_evicted_description_1": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
-        "storage_evicted_description_2": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk."
+        "storage_evicted_description_2": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk.",
+        "unknown_error_code": "kod gabimi të panjohur"
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
@@ -4045,6 +4038,14 @@
                 "other": "Hiq %(count)s mesazhe",
                 "one": "Hiq 1 mesazh"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s sesione të verifikuar",
+            "one": "1 sesion i verifikuar"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s sesione",
+            "one": "%(count)s sesion"
         }
     },
     "stickers": {
@@ -4295,6 +4296,7 @@
         "key_is_valid": "Ky duket si Kyç i vlefshëm Sigurie!",
         "key_is_invalid": "Kyç Sigurie jo i vlefshëm",
         "enter_key_description": "Hyni te historiku i mesazheve tuaj të siguruar dhe rregulloni shkëmbim mesazhesh të sigurt duke dhënë Kyçin tuaj të Sigurisë.",
-        "key_forgotten_text": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>"
+        "key_forgotten_text": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>",
+        "load_keys_progress": "U rikthyen %(completed)s nga %(total)s kyçe"
     }
 }

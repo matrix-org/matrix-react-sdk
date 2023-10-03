@@ -1,11 +1,9 @@
 {
-    "unknown error code": "errore kode ezezaguna",
     "Home": "Hasiera",
     "Join Room": "Elkartu gelara",
     "Warning!": "Abisua!",
     "Moderator": "Moderatzailea",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
-    "not specified": "zehaztu gabe",
     "Sun": "Ig",
     "Mon": "Al",
     "Tue": "Ar",
@@ -28,14 +26,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)sk %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(fullYear)sko %(monthName)sk %(day)s  %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "(~%(count)s results)": {
-        "one": "(~%(count)s emaitza)",
-        "other": "(~%(count)s emaitza)"
-    },
-    "and %(count)s others...": {
-        "other": "eta beste %(count)s…",
-        "one": "eta beste bat…"
-    },
     "AM": "AM",
     "PM": "PM",
     "Restricted": "Mugatua",
@@ -121,35 +111,15 @@
     "Hourglass": "Harea-erlojua",
     "Paperclip": "Klipa",
     "Scissors": "Artaziak",
-    "edited": "editatua",
     "Deactivate account": "Desaktibatu kontua",
-    "e.g. my-room": "adib. nire-gela",
-    "%(name)s accepted": "%(name)s onartuta",
-    "%(name)s cancelled": "%(name)s utzita",
-    "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
     "Failed to connect to integration manager": "Huts egin du integrazio kudeatzailera konektatzean",
-    "%(count)s verified sessions": {
-        "other": "%(count)s egiaztatutako saio",
-        "one": "Egiaztatutako saio 1"
-    },
     "Lock": "Blokeatu",
     "This backup is trusted because it has been restored on this session": "Babes-kopia hau fidagarritzat jotzen da saio honetan berrekuratu delako",
     "Encrypted by a deleted session": "Ezabatutako saio batek zifratua",
-    "%(count)s sessions": {
-        "other": "%(count)s saio",
-        "one": "saio %(count)s"
-    },
-    "%(name)s declined": "%(name)s erabiltzaileak ukatu du",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
-    "a new master key signature": "gako nagusiaren sinadura berria",
-    "a new cross-signing key signature": "zeharkako sinatze gako sinadura berria",
-    "a device cross-signing signature": "gailuz zeharkako sinadura berria",
-    "a key signature": "gako sinadura",
-    "%(brand)s encountered an error during upload of:": "%(brand)sek errorea aurkitu du hau igotzean:",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
     "Submit logs": "Bidali egunkariak",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
-    "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s gako berreskuratuta",
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
@@ -228,7 +198,12 @@
         "show_more": "Erakutsi gehiago",
         "are_you_sure": "Ziur zaude?",
         "email_address": "E-mail helbidea",
-        "filter_results": "Iragazi emaitzak"
+        "filter_results": "Iragazi emaitzak",
+        "and_n_others": {
+            "other": "eta beste %(count)s…",
+            "one": "eta beste bat…"
+        },
+        "edited": "editatua"
     },
     "action": {
         "continue": "Jarraitu",
@@ -925,7 +900,11 @@
             "you_accepted": "Onartu duzu",
             "you_declined": "Ukatu egin duzu",
             "you_cancelled": "Utzi duzu",
-            "you_started": "Egiaztaketa eskari bat bidali duzu"
+            "you_started": "Egiaztaketa eskari bat bidali duzu",
+            "user_accepted": "%(name)s onartuta",
+            "user_declined": "%(name)s erabiltzaileak ukatu du",
+            "user_cancelled": "%(name)s utzita",
+            "user_wants_to_verify": "%(name)s(e)k egiaztatu nahi du"
         },
         "m.video": {
             "error_decrypting": "Errorea bideoa deszifratzean"
@@ -1127,7 +1106,8 @@
             "alias_heading": "Gelaren helbidea",
             "alias_field_safe_localpart_invalid": "Karaktere batzuk ez dira onartzen",
             "alias_field_taken_valid": "Gelaren helbide hau erabilgarri dago",
-            "alias_field_taken_invalid_domain": "Gelaren helbide hau erabilita dago"
+            "alias_field_taken_invalid_domain": "Gelaren helbide hau erabilita dago",
+            "alias_field_placeholder_default": "adib. nire-gela"
         },
         "advanced": {
             "unfederated": "Gela hau ez dago eskuragarri urruneko zerbitzarietan",
@@ -1162,7 +1142,8 @@
             "custom_sound_prompt": "Ezarri soinu pertsonalizatua",
             "browse_button": "Arakatu"
         },
-        "title": "Gelaren ezarpenak - %(roomName)s"
+        "title": "Gelaren ezarpenak - %(roomName)s",
+        "alias_not_specified": "zehaztu gabe"
     },
     "encryption": {
         "verification": {
@@ -1284,7 +1265,12 @@
             "primary_button_text": "Garbitu zeharkako sinatzerako gakoak"
         },
         "confirm_encryption_setup_title": "Berretsi zifratze ezarpena",
-        "confirm_encryption_setup_body": "Sakatu azpiko botoia zifratze-ezarpena berresteko."
+        "confirm_encryption_setup_body": "Sakatu azpiko botoia zifratze-ezarpena berresteko.",
+        "key_signature_upload_failed_master_key_signature": "gako nagusiaren sinadura berria",
+        "key_signature_upload_failed_cross_signing_key_signature": "zeharkako sinatze gako sinadura berria",
+        "key_signature_upload_failed_device_cross_signing_key_signature": "gailuz zeharkako sinadura berria",
+        "key_signature_upload_failed_key_signature": "gako sinadura",
+        "key_signature_upload_failed_body": "%(brand)sek errorea aurkitu du hau igotzean:"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1610,7 +1596,11 @@
         "search": {
             "this_room": "Gela hau",
             "all_rooms": "Gela guztiak",
-            "field_placeholder": "Bilatu…"
+            "field_placeholder": "Bilatu…",
+            "result_count": {
+                "one": "(~%(count)s emaitza)",
+                "other": "(~%(count)s emaitza)"
+            }
         },
         "jump_to_bottom_button": "Korritu azken mezuetara",
         "jump_read_marker": "Jauzi irakurri gabeko lehen mezura.",
@@ -1735,7 +1725,8 @@
         },
         "storage_evicted_title": "Saioaren datuak falta dira",
         "storage_evicted_description_1": "Saioaren datu batzuk, zifratutako mezuen gakoak barne, falta dira. Amaitu saioa eta hasi saioa berriro hau konpontzeko, gakoak babes-kopiatik berreskuratuz.",
-        "storage_evicted_description_2": "Ziur asko zure nabigatzaileak kendu ditu datu hauek diskoan leku gutxi zuelako."
+        "storage_evicted_description_2": "Ziur asko zure nabigatzaileak kendu ditu datu hauek diskoan leku gutxi zuelako.",
+        "unknown_error_code": "errore kode ezezaguna"
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {
@@ -1842,6 +1833,14 @@
                 "other": "Kendu %(count)s mezu",
                 "one": "Kendu mezu 1"
             }
+        },
+        "count_of_verified_sessions": {
+            "other": "%(count)s egiaztatutako saio",
+            "one": "Egiaztatutako saio 1"
+        },
+        "count_of_sessions": {
+            "other": "%(count)s saio",
+            "one": "saio %(count)s"
         }
     },
     "stickers": {
@@ -1951,6 +1950,7 @@
         "keys_restored_title": "Gakoak berreskuratuta",
         "count_of_decryption_failures": "Ezin izan dira %(failedCount)s saio deszifratu!",
         "count_of_successfully_restored_keys": "%(sessionCount)s gako ongi berreskuratuta",
-        "key_backup_warning": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti."
+        "key_backup_warning": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
+        "load_keys_progress": "%(completed)s/%(total)s gako berreskuratuta"
     }
 }
