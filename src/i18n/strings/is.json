@@ -49,7 +49,6 @@
     "Verification Pending": "Sannvottun í bið",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
     "Delete Widget": "Eyða viðmótshluta",
-    "Create new room": "Búa til nýja spjallrás",
     "Finland": "Finnland",
     "Norway": "Noreg",
     "Denmark": "Danmörk",
@@ -349,14 +348,10 @@
     "Hold": "Bíða",
     "Resume": "Halda áfram",
     "Looks good!": "Lítur vel út!",
-    "Remember this": "Muna þetta",
     "Upload Error": "Villa við innsendingu",
     "Cancel All": "Hætta við allt",
     "Upload all": "Senda allt inn",
     "Upload files": "Hlaða inn skrám",
-    "Recent searches": "Nýlegar leitir",
-    "Public rooms": "Almenningsspjallrásir",
-    "Other rooms in %(spaceName)s": "Aðrar spjallrásir í %(spaceName)s",
     "Link to room": "Tengill á spjallrás",
     "Share Room Message": "Deila skilaboðum spjallrásar",
     "Share Room": "Deila spjallrás",
@@ -368,7 +363,6 @@
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
     },
-    "Recently viewed": "Nýlega skoðað",
     "Deactivate account": "Gera notandaaðgang óvirkann",
     "Folder": "Mappa",
     "Headphones": "Heyrnartól",
@@ -390,7 +384,6 @@
     "Pizza": "Flatbökur",
     "Apple": "Epli",
     "Messaging": "Skilaboð",
-    "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
     "Feedback sent! Thanks, we appreciate it!": "Umsögn send! Takk, við kunnum að meta þetta!",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
@@ -438,7 +431,6 @@
     "You signed in to a new session without verifying it:": "Þú skráðir inn í nýja setu án þess að sannvotta hana:",
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
-    "Join %(roomAddress)s": "Taka þátt í %(roomAddress)s",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
@@ -464,7 +456,6 @@
     "Enter Security Phrase": "Settu inn öryggisfrasa",
     "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
     "Confirm encryption setup": "Staðfestu uppsetningu dulritunar",
-    "Decline All": "Hafna öllu",
     "Command Help": "Hjálp við skipun",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
@@ -474,7 +465,6 @@
         "one": "%(count)s svar",
         "other": "%(count)s svör"
     },
-    "Verification Request": "Beiðni um sannvottun",
     "Security Phrase": "Öryggisfrasi",
     "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
@@ -487,18 +477,12 @@
     "Unsent": "Ósent",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
     "Wrong file type": "Röng skráartegund",
-    "This widget would like to:": "Þessi viðmótshluti vill:",
-    "Verify other device": "Sannreyndu hitt tækið",
     "Be found by phone or email": "Láttu finna þig með símanúmeri eða tölvupóstfangi",
-    "Search Dialog": "Leitargluggi",
-    "Use <arrows/> to scroll": "Notaðu <arrows/> til að skruna",
-    "Spaces you're in": "Svæði sem þú tilheyrir",
     "Submit logs": "Senda inn atvikaskrár",
     "Keys restored": "Dulritunarlyklar endurheimtir",
     "No backup found!": "Ekkert öryggisafrit fannst!",
     "Incorrect Security Phrase": "Rangur öryggisfrasi",
     "Missing session data": "Vantar setugögn",
-    "Other searches": "Aðrar leitir",
     "Link to selected message": "Tengill í valin skilaboð",
     "Link to most recent message": "Tengill í nýjustu skilaboðin",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
@@ -507,8 +491,6 @@
     "%(completed)s of %(total)s keys restored": "%(completed)s af %(total)s lyklum endurheimtir",
     "Restoring keys from backup": "Endurheimti lykla úr öryggisafriti",
     "Unable to set up keys": "Tókst ekki að setja upp lykla",
-    "Allow this widget to verify your identity": "Leyfa þessum viðmótshluta að sannreyna auðkennin þín",
-    "Remember my selection for this widget": "Muna val mitt fyrir þennan viðmótshluta",
     "Upload files (%(current)s of %(total)s)": "Senda inn skrár (%(current)s oaf %(total)s)",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
@@ -516,7 +498,6 @@
         "one": "Senda inn %(count)s skrá til viðbótar",
         "other": "Senda inn %(count)s skrár til viðbótar"
     },
-    "Use \"%(query)s\" to search": "Notaðu \"%(query)s\" til að leita",
     "Sections to show": "Hlutar sem á að sýna",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
@@ -525,15 +506,6 @@
     "Cameras": "Myndavélar",
     "Output devices": "Úttakstæki",
     "Input devices": "Inntakstæki",
-    "Start a group chat": "Hefja hópspjall",
-    "Other options": "Aðrir valkostir",
-    "Some results may be hidden": "Sumar niðurstöður gætu verið faldar",
-    "Copy invite link": "Afrita boðstengil",
-    "Search for": "Leita að",
-    "%(count)s Members": {
-        "one": "%(count)s meðlimur",
-        "other": "%(count)s meðlimir"
-    },
     "%(count)s participants": {
         "one": "1 þáttakandi",
         "other": "%(count)s þátttakendur"
@@ -551,9 +523,6 @@
     "Interactively verify by emoji": "Sannprófa gagnvirkt með táknmyndum",
     "Manually verify by text": "Sannreyna handvirkt með texta",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
-    "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
-    "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
@@ -2509,7 +2478,9 @@
             "manual_device_verification_device_name_label": "Nafn á setu",
             "manual_device_verification_device_id_label": "Auðkenni setu",
             "manual_device_verification_device_key_label": "Dulritunarlykill setu",
-            "manual_device_verification_footer": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð."
+            "manual_device_verification_footer": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð.",
+            "verification_dialog_title_device": "Sannreyndu hitt tækið",
+            "verification_dialog_title_user": "Beiðni um sannvottun"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -2928,7 +2899,17 @@
         "popout": "Sprettviðmótshluti",
         "unpin_to_view_right_panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
         "close_to_view_right_panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi",
-        "modal_data_warning": "Gögnum á þessum skjá er deilt með %(widgetDomain)s"
+        "modal_data_warning": "Gögnum á þessum skjá er deilt með %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Samþykkja heimildir viðmótshluta",
+            "content_starting_text": "Þessi viðmótshluti vill:",
+            "decline_all_permission": "Hafna öllu",
+            "remember_Selection": "Muna val mitt fyrir þennan viðmótshluta"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Leyfa þessum viðmótshluta að sannreyna auðkennin þín",
+            "remember_selection": "Muna þetta"
+        }
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3759,5 +3740,30 @@
         "description_5": "Þjóninum hefur hafnað beiðninni þinni.",
         "description_6": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
         "description_7": "Villa kom upp þegar reynt var að tengjast þjóninum."
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s meðlimur",
+            "other": "%(count)s meðlimir"
+        },
+        "public_rooms_label": "Almenningsspjallrásir",
+        "heading_with_query": "Notaðu \"%(query)s\" til að leita",
+        "heading_without_query": "Leita að",
+        "spaces_title": "Svæði sem þú tilheyrir",
+        "other_rooms_in_space": "Aðrar spjallrásir í %(spaceName)s",
+        "join_button_text": "Taka þátt í %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
+        "cant_find_person_helpful_hint": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
+        "copy_link_text": "Afrita boðstengil",
+        "result_may_be_hidden_warning": "Sumar niðurstöður gætu verið faldar",
+        "cant_find_room_helpful_hint": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
+        "create_new_room_button": "Búa til nýja spjallrás",
+        "group_chat_section_title": "Aðrir valkostir",
+        "start_group_chat_button": "Hefja hópspjall",
+        "message_search_section_title": "Aðrar leitir",
+        "recent_searches_section_title": "Nýlegar leitir",
+        "recently_viewed_section_title": "Nýlega skoðað",
+        "search_dialog": "Leitargluggi",
+        "keyboard_scroll_hint": "Notaðu <arrows/> til að skruna"
     }
 }

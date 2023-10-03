@@ -19,7 +19,6 @@
     "Oct": "Říj",
     "Nov": "Lis",
     "Dec": "Pro",
-    "Create new room": "Vytvořit novou místnost",
     "unknown error code": "neznámý kód chyby",
     "Email address": "E-mailová adresa",
     "and %(count)s others...": {
@@ -153,7 +152,6 @@
     },
     "Cancel All": "Zrušit vše",
     "Upload Error": "Chyba při nahrávání",
-    "Remember my selection for this widget": "Zapamatovat si volbu pro tento widget",
     "Deactivate account": "Deaktivace účtu",
     "Command Help": "Nápověda příkazu",
     "Find others by phone or email": "Najít ostatní pomocí e-mailu nebo telefonu",
@@ -165,7 +163,6 @@
     "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
     "Failed to connect to integration manager": "Nepovedlo se připojit ke správci integrací",
-    "Verification Request": "Požadavek na ověření",
     "%(count)s verified sessions": {
         "other": "%(count)s ověřených relací",
         "one": "1 ověřená relace"
@@ -207,7 +204,6 @@
     "Switch theme": "Přepnout téma",
     "Looks good!": "To vypadá dobře!",
     "Wrong file type": "Špatný typ souboru",
-    "Decline All": "Odmítnout vše",
     "Sign in with SSO": "Přihlásit pomocí SSO",
     "Hold": "Podržet",
     "Resume": "Pokračovat",
@@ -366,7 +362,6 @@
     "Confirm encryption setup": "Potvrďte nastavení šifrování",
     "Unable to set up keys": "Nepovedlo se nastavit klíče",
     "Not encrypted": "Není šifrováno",
-    "Approve widget permissions": "Schválit oprávnění widgetu",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambie",
     "Yemen": "Jemen",
@@ -466,7 +461,6 @@
     "Restoring keys from backup": "Obnovení klíčů ze zálohy",
     "%(completed)s of %(total)s keys restored": "Obnoveno %(completed)s z %(total)s klíčů",
     "a device cross-signing signature": "zařízení používající křížový podpis",
-    "This widget would like to:": "Tento widget by chtěl:",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Pokud jste zapomněli bezpečnostní klíč, můžete <button>nastavit nové možnosti obnovení</button>",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Pokud jste zapomněli bezpečnostní frázi, můžete <button1>použít bezpečnostní klíč</button1> nebo <button2>nastavit nové možnosti obnovení</button2>",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "Zálohu nebylo možné dešifrovat pomocí této bezpečnostní fráze: ověřte, zda jste zadali správnou bezpečnostní frázi.",
@@ -482,9 +476,6 @@
     "Incorrect Security Phrase": "Nesprávná bezpečnostní fráze",
     "Security Key mismatch": "Neshoda bezpečnostního klíče",
     "Wrong Security Key": "Špatný bezpečnostní klíč",
-    "Remember this": "Zapamatujte si toto",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Widget ověří vaše uživatelské ID, ale nebude za vás moci provádět akce:",
-    "Allow this widget to verify your identity": "Povolte tomuto widgetu ověřit vaši identitu",
     "%(count)s members": {
         "one": "%(count)s člen",
         "other": "%(count)s členů"
@@ -527,25 +518,13 @@
     "Themes": "Motivy vzhledu",
     "Moderation": "Moderování",
     "Messaging": "Zprávy",
-    "Recently viewed": "Nedávno zobrazené",
     "Link to room": "Odkaz na místnost",
-    "Recent searches": "Nedávná vyhledávání",
-    "To search messages, look for this icon at the top of a room <icon/>": "Pro vyhledávání zpráv hledejte tuto ikonu v horní části místnosti <icon/>",
-    "Other searches": "Další vyhledávání",
-    "Public rooms": "Veřejné místnosti",
-    "Use \"%(query)s\" to search": "Pro vyhledávání použijte \"%(query)s\"",
-    "Other rooms in %(spaceName)s": "Další místnosti v %(spaceName)s",
-    "Spaces you're in": "Prostory, ve kterých se nacházíte",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Vaše konverzace s členy tohoto prostoru se seskupí. Vypnutím této funkce se tyto chaty skryjí z vašeho pohledu na %(spaceName)s.",
     "Sections to show": "Sekce pro zobrazení",
     "Open in OpenStreetMap": "Otevřít v OpenStreetMap",
     "toggle event": "přepnout událost",
-    "Verify other device": "Ověřit jiné zařízení",
-    "Use <arrows/> to scroll": "K pohybu použijte <arrows/>",
     "Feedback sent! Thanks, we appreciate it!": "Zpětná vazba odeslána! Děkujeme, vážíme si toho!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
-    "Join %(roomAddress)s": "Vstoupit do %(roomAddress)s",
-    "Search Dialog": "Dialogové okno hledání",
     "You are sharing your live location": "Sdílíte svoji polohu živě",
     "Unsent": "Neodeslané",
     "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
@@ -571,19 +550,6 @@
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
     "Unread email icon": "Ikona nepřečteného e-mailu",
-    "If you can't see who you're looking for, send them your invite link.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku.",
-    "Some results may be hidden for privacy": "Některé výsledky mohou být z důvodu ochrany soukromí skryté",
-    "Search for": "Hledat",
-    "%(count)s Members": {
-        "one": "%(count)s člen",
-        "other": "%(count)s členů"
-    },
-    "Remove search filter for %(filter)s": "Odstranit filtr vyhledávání pro %(filter)s",
-    "Start a group chat": "Zahájit skupinový chat",
-    "Other options": "Další možnosti",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Pokud nemůžete najít místnost, kterou hledáte, požádejte o pozvání nebo vytvořte novou místnost.",
-    "Some results may be hidden": "Některé výsledky mohou být skryté",
-    "Copy invite link": "Kopírovat odkaz na pozvánku",
     "You cannot search for rooms that are neither a room nor a space": "Nelze vyhledávat místnosti, které nejsou ani místností, ani prostorem",
     "Show spaces": "Zobrazit prostory",
     "Show rooms": "Zobrazit místnosti",
@@ -604,7 +570,6 @@
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilní verzi MSC3827",
     "unavailable": "nedostupný",
     "unknown status code": "neznámý kód stavu",
-    "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti",
     "common": {
         "about": "O",
         "analytics": "Analytické údaje",
@@ -2880,7 +2845,9 @@
             "manual_device_verification_device_name_label": "Název relace",
             "manual_device_verification_device_id_label": "ID sezení",
             "manual_device_verification_device_key_label": "Klíč relace",
-            "manual_device_verification_footer": "Pokud se neshodují, bezpečnost vaší komunikace může být kompromitována."
+            "manual_device_verification_footer": "Pokud se neshodují, bezpečnost vaší komunikace může být kompromitována.",
+            "verification_dialog_title_device": "Ověřit jiné zařízení",
+            "verification_dialog_title_user": "Požadavek na ověření"
         },
         "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
         "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
@@ -3377,7 +3344,18 @@
         "set_room_layout": "Nastavit všem rozložení mé místnosti",
         "close_to_view_right_panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
         "modal_title_default": "Modální widget",
-        "modal_data_warning": "Data na této obrazovce jsou sdílena s %(widgetDomain)s"
+        "modal_data_warning": "Data na této obrazovce jsou sdílena s %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Schválit oprávnění widgetu",
+            "content_starting_text": "Tento widget by chtěl:",
+            "decline_all_permission": "Odmítnout vše",
+            "remember_Selection": "Zapamatovat si volbu pro tento widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Povolte tomuto widgetu ověřit vaši identitu",
+            "starting_text": "Widget ověří vaše uživatelské ID, ale nebude za vás moci provádět akce:",
+            "remember_selection": "Zapamatujte si toto"
+        }
     },
     "feedback": {
         "sent": "Zpětná vazba byla odeslána",
@@ -4384,5 +4362,33 @@
         "description_7": "Při pokusu o kontakt se serverem došlo k chybě připojení.",
         "description_8": "Server není nakonfigurován tak, aby indikoval, v čem je problém (CORS).",
         "recent_changes_heading": "Nedávné změny, které dosud nebyly přijaty"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s člen",
+            "other": "%(count)s členů"
+        },
+        "public_rooms_label": "Veřejné místnosti",
+        "heading_with_query": "Pro vyhledávání použijte \"%(query)s\"",
+        "heading_without_query": "Hledat",
+        "spaces_title": "Prostory, ve kterých se nacházíte",
+        "failed_querying_public_rooms": "Nepodařilo se vyhledat veřejné místnosti",
+        "other_rooms_in_space": "Další místnosti v %(spaceName)s",
+        "join_button_text": "Vstoupit do %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Některé výsledky mohou být z důvodu ochrany soukromí skryté",
+        "cant_find_person_helpful_hint": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku.",
+        "copy_link_text": "Kopírovat odkaz na pozvánku",
+        "result_may_be_hidden_warning": "Některé výsledky mohou být skryté",
+        "cant_find_room_helpful_hint": "Pokud nemůžete najít místnost, kterou hledáte, požádejte o pozvání nebo vytvořte novou místnost.",
+        "create_new_room_button": "Vytvořit novou místnost",
+        "group_chat_section_title": "Další možnosti",
+        "start_group_chat_button": "Zahájit skupinový chat",
+        "message_search_section_title": "Další vyhledávání",
+        "recent_searches_section_title": "Nedávná vyhledávání",
+        "recently_viewed_section_title": "Nedávno zobrazené",
+        "search_dialog": "Dialogové okno hledání",
+        "remove_filter": "Odstranit filtr vyhledávání pro %(filter)s",
+        "search_messages_hint": "Pro vyhledávání zpráv hledejte tuto ikonu v horní části místnosti <icon/>",
+        "keyboard_scroll_hint": "K pohybu použijte <arrows/>"
     }
 }

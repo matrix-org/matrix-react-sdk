@@ -47,7 +47,6 @@
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
     "%(duration)sd": "%(duration)s d",
-    "Create new room": "Sukurti naują kambarį",
     "collapse": "suskleisti",
     "expand": "išskleisti",
     "Send Logs": "Siųsti žurnalus",
@@ -275,14 +274,6 @@
     "Wrong Security Key": "Netinkamas Saugumo Raktas",
     "Looks good!": "Atrodo gerai!",
     "Wrong file type": "Netinkamas failo tipas",
-    "Remember this": "Prisiminkite tai",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Šis valdiklis patvirtins jūsų vartotojo ID, bet negalės už jus atlikti veiksmų:",
-    "Allow this widget to verify your identity": "Leiskite šiam valdikliui patvirtinti jūsų tapatybę",
-    "Remember my selection for this widget": "Prisiminti mano pasirinkimą šiam valdikliui",
-    "Decline All": "Atmesti Visus",
-    "This widget would like to:": "Šis valdiklis norėtų:",
-    "Approve widget permissions": "Patvirtinti valdiklio leidimus",
-    "Verification Request": "Patikrinimo Užklausa",
     "Be found by phone or email": "Tapkite randami telefonu arba el. paštu",
     "Find others by phone or email": "Ieškokite kitų telefonu arba el. paštu",
     "Link to selected message": "Nuoroda į pasirinktą pranešimą",
@@ -344,14 +335,11 @@
         "one": "%(count)s narys",
         "other": "%(count)s nariai"
     },
-    "Recently viewed": "Neseniai peržiūrėti",
     "%(members)s and %(last)s": "%(members)s ir %(last)s",
     "%(members)s and more": "%(members)s ir daugiau",
     "Latvia": "Latvija",
     "Japan": "Japonija",
     "Italy": "Italija",
-    "Public rooms": "Vieši kambariai",
-    "Search for": "Ieškoti",
     "common": {
         "about": "Apie",
         "analytics": "Analitika",
@@ -1930,7 +1918,8 @@
             "manual_device_verification_device_name_label": "Seanso pavadinimas",
             "manual_device_verification_device_id_label": "Seanso ID",
             "manual_device_verification_device_key_label": "Seanso raktas",
-            "manual_device_verification_footer": "Jei jie nesutampa, gali būti pažeistas jūsų komunikacijos saugumas."
+            "manual_device_verification_footer": "Jei jie nesutampa, gali būti pažeistas jūsų komunikacijos saugumas.",
+            "verification_dialog_title_user": "Patikrinimo Užklausa"
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2256,7 +2245,18 @@
         "unpin_to_view_right_panel": "Atsekite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
         "set_room_layout": "Nustatyti savo kambario išdėstymą visiems",
         "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
-        "modal_data_warning": "Duomenimis šiame ekrane yra dalinamasi su %(widgetDomain)s"
+        "modal_data_warning": "Duomenimis šiame ekrane yra dalinamasi su %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Patvirtinti valdiklio leidimus",
+            "content_starting_text": "Šis valdiklis norėtų:",
+            "decline_all_permission": "Atmesti Visus",
+            "remember_Selection": "Prisiminti mano pasirinkimą šiam valdikliui"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Leiskite šiam valdikliui patvirtinti jūsų tapatybę",
+            "starting_text": "Šis valdiklis patvirtins jūsų vartotojo ID, bet negalės už jus atlikti veiksmų:",
+            "remember_selection": "Prisiminkite tai"
+        }
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2880,5 +2880,11 @@
         "description_7": "Bandant susisiekti su serveriu įvyko ryšio klaida.",
         "description_8": "Serveris nėra sukonfigūruotas taip, kad būtų galima nurodyti, kokia yra problema (CORS).",
         "recent_changes_heading": "Naujausi pakeitimai, kurie dar nebuvo gauti"
+    },
+    "spotlight_dialog": {
+        "public_rooms_label": "Vieši kambariai",
+        "heading_without_query": "Ieškoti",
+        "create_new_room_button": "Sukurti naują kambarį",
+        "recently_viewed_section_title": "Neseniai peržiūrėti"
     }
 }

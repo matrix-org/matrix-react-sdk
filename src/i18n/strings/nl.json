@@ -4,7 +4,6 @@
         "other": "en %(count)s anderen…",
         "one": "en één andere…"
     },
-    "Create new room": "Nieuwe kamer aanmaken",
     "unknown error code": "onbekende foutcode",
     "Moderator": "Moderator",
     "not specified": "niet opgegeven",
@@ -137,7 +136,6 @@
     "No backup found!": "Geen back-up gevonden!",
     "Failed to decrypt %(failedCount)s sessions!": "Ontsleutelen van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
-    "Remember my selection for this widget": "Onthoud mijn keuze voor deze widget",
     "To help us prevent this in future, please <a>send us logs</a>.": "<a>Stuur ons jouw logs</a> om dit in de toekomst te helpen voorkomen.",
     "Missing session data": "Sessiegegevens ontbreken",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Sommige sessiegegevens, waaronder sleutels voor versleutelde berichten, ontbreken. Herstel de sleutels uit je back-up door je af- en weer aan te melden.",
@@ -183,7 +181,6 @@
     "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
-    "Verification Request": "Verificatieverzoek",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
     "Verify your other session using one of the options below.": "Verifieer je andere sessie op een van onderstaande wijzen.",
@@ -472,12 +469,6 @@
     "Wrong Security Key": "Verkeerde veiligheidssleutel",
     "Looks good!": "Ziet er goed uit!",
     "Wrong file type": "Verkeerd bestandstype",
-    "Remember this": "Onthoud dit",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "De widget zal uw persoon-ID verifiëren, maar zal geen acties voor u kunnen uitvoeren:",
-    "Allow this widget to verify your identity": "Sta deze widget toe om uw identiteit te verifiëren",
-    "Decline All": "Alles weigeren",
-    "This widget would like to:": "Deze widget zou willen:",
-    "Approve widget permissions": "Machtigingen voor widgets goedkeuren",
     "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
     "a key signature": "een sleutel ondertekening",
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
@@ -527,26 +518,14 @@
     "Themes": "Thema's",
     "Moderation": "Moderatie",
     "Messaging": "Messaging",
-    "Recently viewed": "Recent bekeken",
     "Open in OpenStreetMap": "In OpenStreetMap openen",
-    "Recent searches": "Recente zoekopdrachten",
-    "To search messages, look for this icon at the top of a room <icon/>": "Om berichten te zoeken, zoek naar dit icoon bovenaan een kamer <icon/>",
-    "Other searches": "Andere zoekopdrachten",
-    "Public rooms": "Publieke kamers",
-    "Use \"%(query)s\" to search": "Gebruik \"%(query)s\" om te zoeken",
-    "Other rooms in %(spaceName)s": "Andere kamers in %(spaceName)s",
-    "Spaces you're in": "Spaces waar u in zit",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Dit groepeert jouw chats met leden van deze space. Als je dit uitschakelt, worden deze chats verborgen voor %(spaceName)s.",
     "Sections to show": "Te tonen secties",
     "Link to room": "Link naar kamer",
-    "Verify other device": "Verifieer ander apparaat",
     "toggle event": "wissel gebeurtenis",
-    "Use <arrows/> to scroll": "Gebruik <arrows/> om te scrollen",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
     "Unsent": "niet verstuurd",
-    "Search Dialog": "Dialoogvenster Zoeken",
-    "Join %(roomAddress)s": "%(roomAddress)s toetreden",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
@@ -571,19 +550,6 @@
     "Unread email icon": "Ongelezen e-mailpictogram",
     "An error occurred whilst sharing your live location, please try again": "Er is een fout opgetreden bij het delen van je live locatie, probeer het opnieuw",
     "An error occurred whilst sharing your live location": "Er is een fout opgetreden bij het delen van je live locatie",
-    "Remove search filter for %(filter)s": "Verwijder zoekfilter voor %(filter)s",
-    "Start a group chat": "Start een groepsgesprek",
-    "Other options": "Andere opties",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Als u de kamer die u zoekt niet kunt vinden, vraag dan om een uitnodiging of maak een nieuwe kamer aan.",
-    "Some results may be hidden": "Sommige resultaten zijn mogelijk verborgen",
-    "Copy invite link": "Uitnodigingslink kopiëren",
-    "If you can't see who you're looking for, send them your invite link.": "Als u niet kunt zien wie u zoekt, stuur ze dan uw uitnodigingslink.",
-    "Some results may be hidden for privacy": "Sommige resultaten kunnen om privacyredenen verborgen zijn",
-    "Search for": "Zoeken naar",
-    "%(count)s Members": {
-        "one": "%(count)s Lid",
-        "other": "%(count)s Leden"
-    },
     "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
     "Show spaces": "Toon spaces",
     "Show rooms": "Toon kamers",
@@ -2616,7 +2582,9 @@
             "manual_device_verification_device_name_label": "Sessienaam",
             "manual_device_verification_device_id_label": "Sessie-ID",
             "manual_device_verification_device_key_label": "Sessiesleutel",
-            "manual_device_verification_footer": "Als deze niet overeenkomen, dan wordt deze sessie mogelijk door iemand anders onderschept."
+            "manual_device_verification_footer": "Als deze niet overeenkomen, dan wordt deze sessie mogelijk door iemand anders onderschept.",
+            "verification_dialog_title_device": "Verifieer ander apparaat",
+            "verification_dialog_title_user": "Verificatieverzoek"
         },
         "old_version_detected_title": "Oude cryptografiegegevens gedetecteerd",
         "old_version_detected_description": "Er zijn gegevens van een oudere versie van %(brand)s gevonden, die problemen veroorzaakt hebben met de eind-tot-eind-versleuteling in de oude versie. Onlangs vanuit de oude versie verzonden eind-tot-eind-versleutelde berichten zijn mogelijk onontsleutelbaar in deze versie. Ook kunnen berichten die met deze versie uitgewisseld zijn falen. Mocht je problemen ervaren, log dan opnieuw in. Exporteer je sleutels en importeer ze weer om je berichtgeschiedenis te behouden.",
@@ -3072,7 +3040,18 @@
         "set_room_layout": "Stel mijn kamerindeling in voor iedereen",
         "close_to_view_right_panel": "Sluit deze widget om het in dit paneel weer te geven",
         "modal_title_default": "Modale widget",
-        "modal_data_warning": "Gegevens op dit scherm worden gedeeld met %(widgetDomain)s"
+        "modal_data_warning": "Gegevens op dit scherm worden gedeeld met %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Machtigingen voor widgets goedkeuren",
+            "content_starting_text": "Deze widget zou willen:",
+            "decline_all_permission": "Alles weigeren",
+            "remember_Selection": "Onthoud mijn keuze voor deze widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Sta deze widget toe om uw identiteit te verifiëren",
+            "starting_text": "De widget zal uw persoon-ID verifiëren, maar zal geen acties voor u kunnen uitvoeren:",
+            "remember_selection": "Onthoud dit"
+        }
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3970,5 +3949,32 @@
         "description_7": "Er is een verbindingsfout opgetreden tijdens het contact maken met de server.",
         "description_8": "De server is niet geconfigureerd om aan te geven wat het probleem is (CORS).",
         "recent_changes_heading": "Recente wijzigingen die nog niet zijn ontvangen"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Lid",
+            "other": "%(count)s Leden"
+        },
+        "public_rooms_label": "Publieke kamers",
+        "heading_with_query": "Gebruik \"%(query)s\" om te zoeken",
+        "heading_without_query": "Zoeken naar",
+        "spaces_title": "Spaces waar u in zit",
+        "other_rooms_in_space": "Andere kamers in %(spaceName)s",
+        "join_button_text": "%(roomAddress)s toetreden",
+        "result_may_be_hidden_privacy_warning": "Sommige resultaten kunnen om privacyredenen verborgen zijn",
+        "cant_find_person_helpful_hint": "Als u niet kunt zien wie u zoekt, stuur ze dan uw uitnodigingslink.",
+        "copy_link_text": "Uitnodigingslink kopiëren",
+        "result_may_be_hidden_warning": "Sommige resultaten zijn mogelijk verborgen",
+        "cant_find_room_helpful_hint": "Als u de kamer die u zoekt niet kunt vinden, vraag dan om een uitnodiging of maak een nieuwe kamer aan.",
+        "create_new_room_button": "Nieuwe kamer aanmaken",
+        "group_chat_section_title": "Andere opties",
+        "start_group_chat_button": "Start een groepsgesprek",
+        "message_search_section_title": "Andere zoekopdrachten",
+        "recent_searches_section_title": "Recente zoekopdrachten",
+        "recently_viewed_section_title": "Recent bekeken",
+        "search_dialog": "Dialoogvenster Zoeken",
+        "remove_filter": "Verwijder zoekfilter voor %(filter)s",
+        "search_messages_hint": "Om berichten te zoeken, zoek naar dit icoon bovenaan een kamer <icon/>",
+        "keyboard_scroll_hint": "Gebruik <arrows/> om te scrollen"
     }
 }

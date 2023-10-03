@@ -1,5 +1,4 @@
 {
-    "Create new room": "പുതിയ റൂം സൃഷ്ടിക്കുക",
     "unknown error code": "അപരിചിത എറര്‍ കോഡ്",
     "Sunday": "ഞായര്‍",
     "Today": "ഇന്ന്",
@@ -116,5 +115,8 @@
     },
     "forward": {
         "send_label": "അയയ്ക്കുക"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "പുതിയ റൂം സൃഷ്ടിക്കുക"
     }
 }

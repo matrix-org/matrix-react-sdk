@@ -34,7 +34,6 @@
     "not specified": "não especificado",
     "Email address": "Endereço de email",
     "Warning!": "Atenção!",
-    "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
         "other": "(~%(count)s resultados)",
         "one": "(~%(count)s resultado)"
@@ -956,5 +955,8 @@
     },
     "report_content": {
         "other_label": "Outros"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Criar nova sala"
     }
 }

@@ -39,7 +39,6 @@
         "one": "(~%(count)s sonuç)",
         "other": "(~%(count)s sonuçlar)"
     },
-    "Create new room": "Yeni Oda Oluştur",
     "This will allow you to reset your password and receive notifications.": "Bu şifrenizi sıfırlamanızı ve bildirimler almanızı sağlayacak.",
     "Sunday": "Pazar",
     "Today": "Bugün",
@@ -73,7 +72,6 @@
     "Unable to load backup status": "Yedek durumu yüklenemiyor",
     "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
     "No backup found!": "Yedek bulunamadı!",
-    "Verification Request": "Doğrulama Talebi",
     "Robot": "Robot",
     "Hat": "Şapka",
     "Glasses": "Gözlük",
@@ -152,7 +150,6 @@
         "other": "%(count)s diğer dosyaları yükle",
         "one": "%(count)s dosyayı sağla"
     },
-    "Remember my selection for this widget": "Bu görsel bileşen işin seçimimi hatırla",
     "Not Trusted": "Güvenilmiyor",
     "%(count)s sessions": {
         "other": "%(count)s oturum",
@@ -1600,7 +1597,8 @@
             "incoming_sas_dialog_title": "Gelen Doğrulama İsteği",
             "manual_device_verification_device_name_label": "Oturum adı",
             "manual_device_verification_device_id_label": "Oturum ID",
-            "manual_device_verification_device_key_label": "Oturum anahtarı"
+            "manual_device_verification_device_key_label": "Oturum anahtarı",
+            "verification_dialog_title_user": "Doğrulama Talebi"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1900,7 +1898,10 @@
         "shared_data_room_id": "Oda ID",
         "shared_data_widget_id": "Görsel Bileşen ID si",
         "popout": "Görsel bileşeni göster",
-        "set_room_layout": "Oda düzenimi herkes için ayarla"
+        "set_room_layout": "Oda düzenimi herkes için ayarla",
+        "capabilities_dialog": {
+            "remember_Selection": "Bu görsel bileşen işin seçimimi hatırla"
+        }
     },
     "zxcvbn": {
         "suggestions": {
@@ -2348,5 +2349,8 @@
         "disabled_action": "Geçici belleği temizle ve yeniden eşle",
         "resync_title": "%(brand)s güncelleniyor"
     },
-    "message_edit_dialog_title": "Mesajları düzenle"
+    "message_edit_dialog_title": "Mesajları düzenle",
+    "spotlight_dialog": {
+        "create_new_room_button": "Yeni Oda Oluştur"
+    }
 }

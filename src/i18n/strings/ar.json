@@ -1,5 +1,4 @@
 {
-    "Create new room": "إنشاء غرفة جديدة",
     "Sun": "الأحد",
     "Mon": "الإثنين",
     "Tue": "الثلاثاء",
@@ -1579,5 +1578,8 @@
     },
     "report_content": {
         "other_label": "أخرى"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "إنشاء غرفة جديدة"
     }
 }

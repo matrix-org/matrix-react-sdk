@@ -122,7 +122,6 @@
     "Missing session data": "Isefka n tɣimit xuṣṣen",
     "Upload all": "Sali-d kullec",
     "Cancel All": "Sefsex kullec",
-    "Verification Request": "Asuter n usenqed",
     "Use your Security Key to continue.": "Seqdec tasarut-ik·im n tɣellist akken ad tkemmleḍ.",
     "Unable to restore backup": "Tiririt n uḥraz tugi ad teddu",
     "Keys restored": "Tisura ttwaskelsent",
@@ -161,7 +160,6 @@
     "%(duration)sh": "%(duration)sh",
     "%(duration)sd": "%(duration)sd",
     "Unnamed room": "Taxxamt war isem",
-    "Create new room": "Rnu taxxamt tamaynut",
     "unknown error code": "tangalt n tuccḍa tarussint",
     "Share Room": "Bḍu taxxamt",
     "Link to most recent message": "Aseɣwen n yizen akk aneggaru",
@@ -198,7 +196,6 @@
         "one": "Sali-d %(count)s afaylu-nniḍen"
     },
     "Upload Error": "Tuccḍa deg usali",
-    "Remember my selection for this widget": "Cfu ɣef tefrant-inu i uwiǧit-a",
     "Wrong file type": "Anaw n yifuyla d arameɣtu",
     "Looks good!": "Yettban igerrez!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ɣur-k·m</b>: ilaq ad tesbaduḍ aḥraz n tsarut seg uselkim kan iɣef tettekleḍ.",
@@ -1595,7 +1592,8 @@
             "manual_device_verification_device_name_label": "Isem n tɣimit",
             "manual_device_verification_device_id_label": "Asulay n tqimit",
             "manual_device_verification_device_key_label": "Tasarut n tɣimit",
-            "manual_device_verification_footer": "Ma yella ur mṣadan ara, taɣellist n teywalt-ik·im tezmer ad tettwaker."
+            "manual_device_verification_footer": "Ma yella ur mṣadan ara, taɣellist n teywalt-ik·im tezmer ad tettwaker.",
+            "verification_dialog_title_user": "Asuter n usenqed"
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
@@ -1862,7 +1860,10 @@
         "unencrypted_warning": "Iwiǧiten ur seqdacen ara awgelhen n yiznan.",
         "added_by": "Awiǧit yettwarna sɣur",
         "cookie_warning": "Awiǧit-a yezmer ad iseqdec inagan n tuqqna.",
-        "popout": "Awiǧit attalan"
+        "popout": "Awiǧit attalan",
+        "capabilities_dialog": {
+            "remember_Selection": "Cfu ɣef tefrant-inu i uwiǧit-a"
+        }
     },
     "feedback": {
         "comment_label": "Awennit",
@@ -2316,5 +2317,8 @@
         "description_7": "Tuccḍa deg tuqqna lawan n uneɛruḍ ad nnermes aqeddac.",
         "description_8": "Aqeddac ur yettusesteb ara i wakken ad d-imel anida-t wugur (CORPS).",
         "recent_changes_heading": "Isnifal imaynuten ur d-newwiḍ ara akka ar tura"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Rnu taxxamt tamaynut"
     }
 }

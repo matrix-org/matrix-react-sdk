@@ -8,7 +8,6 @@
     "Email address": "Ηλεκτρονική διεύθυνση",
     "Join Room": "Είσοδος σε δωμάτιο",
     "Moderator": "Συντονιστής",
-    "Create new room": "Δημιουργία νέου δωματίου",
     "Home": "Αρχική",
     "Warning!": "Προειδοποίηση!",
     "Sun": "Κυρ",
@@ -392,7 +391,6 @@
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
-    "Recently viewed": "Προβλήθηκε πρόσφατα",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
     "%(count)s rooms": {
         "one": "%(count)s δωμάτιο",
@@ -440,9 +438,6 @@
     "Wrong Security Key": "Λάθος Κλειδί Ασφαλείας",
     "Looks good!": "Φαίνεται καλό!",
     "Wrong file type": "Λάθος τύπος αρχείου",
-    "Decline All": "Απόρριψη όλων",
-    "Verification Request": "Αίτημα επαλήθευσης",
-    "Verify other device": "Επαλήθευση άλλης συσκευής",
     "Upload Error": "Σφάλμα μεταφόρτωσης",
     "Cancel All": "Ακύρωση Όλων",
     "Upload %(count)s other files": {
@@ -458,14 +453,6 @@
     "Find others by phone or email": "Βρείτε άλλους μέσω τηλεφώνου ή email",
     "Your browser likely removed this data when running low on disk space.": "Το πρόγραμμα περιήγησης σας πιθανότατα αφαίρεσε αυτά τα δεδομένα όταν ο χώρος στο δίσκο εξαντλήθηκε.",
     "Missing session data": "Λείπουν δεδομένα της συνεδρίας (session)",
-    "Search Dialog": "Παράθυρο Αναζήτησης",
-    "Use <arrows/> to scroll": "Χρησιμοποιήστε τα <arrows/> για κύλιση",
-    "Recent searches": "Πρόσφατες αναζητήσεις",
-    "Other searches": "'Άλλες αναζητήσεις",
-    "Public rooms": "Δημόσια δωμάτια",
-    "Join %(roomAddress)s": "Συμμετοχή στο %(roomAddress)s",
-    "Other rooms in %(spaceName)s": "Άλλα δωμάτιο στο %(spaceName)s",
-    "Spaces you're in": "Χώροι που ανήκετε",
     "Sections to show": "Ενότητες προς εμφάνιση",
     "Command Help": "Βοήθεια Εντολών",
     "Link to room": "Σύνδεσμος στο δωμάτιο",
@@ -517,15 +504,9 @@
     "No results found": "Δε βρέθηκαν αποτελέσματα",
     "Filter results": "Φιλτράρισμα αποτελεσμάτων",
     "To help us prevent this in future, please <a>send us logs</a>.": "Για να μας βοηθήσετε να το αποτρέψουμε αυτό στο μέλλον, <a>στείλτε μας τα αρχεία καταγραφής</a>.",
-    "To search messages, look for this icon at the top of a room <icon/>": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
     "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
-    "Allow this widget to verify your identity": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
-    "Remember my selection for this widget": "Να θυμάστε την επιλογή μου για αυτήν τη μικροεφαρμογή",
-    "This widget would like to:": "Αυτή η μικροεφαρμογή θα ήθελε να:",
-    "Approve widget permissions": "Έγκριση αδειών μικροεφαρμογών",
     "a key signature": "μια υπογραφή κλειδιού",
     "a device cross-signing signature": "μια υπογραφή διασταυρούμενης υπογραφής συσκευής",
     "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
@@ -540,10 +521,8 @@
     "Clear cross-signing keys": "Διαγράψτε τα κλειδιά διασταυρούμενης υπογραφής",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Η διαγραφή κλειδιών διασταυρούμενης υπογραφής είναι μόνιμη. Οποιοσδήποτε με τον οποίο έχετε επαληθευτεί θα λάβει ειδοποιήσεις ασφαλείας. Πιθανότατα δεν θέλετε να το κάνετε αυτό, εκτός και αν έχετε χάσει όλες τις συσκευές από τις οποίες μπορείτε να υπογράψετε.",
     "Destroy cross-signing keys?": "Να καταστραφούν τα κλειδιά διασταυρούμενης υπογραφής;",
-    "Remember this": "Να το θυμάσαι αυτό",
     "Be found by phone or email": "Να βρεθεί μέσω τηλεφώνου ή email",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Ορισμένα δεδομένα συνεδρίας, συμπεριλαμβανομένων των κρυπτογραφημένων κλειδιών μηνυμάτων, λείπουν. Αποσυνδεθείτε και συνδεθείτε για να το διορθώσετε, επαναφέροντας τα κλειδιά από το αντίγραφο ασφαλείας.",
-    "Use \"%(query)s\" to search": "Χρησιμοποιήστε το \"%(query)s\" για αναζήτηση",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Αυτό ομαδοποιεί τις συνομιλίες σας με μέλη αυτού του χώρου. Η απενεργοποίηση του θα αποκρύψει αυτές τις συνομιλίες από την προβολή του %(spaceName)s.",
     "Hold": "Αναμονή",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
@@ -556,17 +535,6 @@
     "Output devices": "Συσκευές εξόδου",
     "Input devices": "Συσκευές εισόδου",
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
-    "Start a group chat": "Ξεκινήστε μια ομαδική συνομιλία",
-    "Other options": "Αλλες επιλογές",
-    "Some results may be hidden": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυμμένα",
-    "Copy invite link": "Αντιγραφή συνδέσμου πρόσκλησης",
-    "If you can't see who you're looking for, send them your invite link.": "Εάν δεν εμφανίζεται το άτομο που αναζητάτε, στείλτε τους τον σύνδεσμο πρόσκλησης.",
-    "Some results may be hidden for privacy": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυφά για λόγους απορρήτου",
-    "Search for": "Αναζήτηση για",
-    "%(count)s Members": {
-        "one": "%(count)s Μέλος",
-        "other": "%(count)s Μέλη"
-    },
     "%(count)s participants": {
         "one": "1 συμμετέχων",
         "other": "%(count)s συμμετέχοντες"
@@ -2395,7 +2363,9 @@
             "manual_device_verification_device_name_label": "Όνομα συνεδρίας",
             "manual_device_verification_device_id_label": "Αναγνωριστικό συνεδρίας",
             "manual_device_verification_device_key_label": "Κλειδί συνεδρίας",
-            "manual_device_verification_footer": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο."
+            "manual_device_verification_footer": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
+            "verification_dialog_title_device": "Επαλήθευση άλλης συσκευής",
+            "verification_dialog_title_user": "Αίτημα επαλήθευσης"
         },
         "old_version_detected_title": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
         "old_version_detected_description": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
@@ -2829,7 +2799,18 @@
         "set_room_layout": "Ορίστε τη διάταξη του δωματίου μου για όλους",
         "close_to_view_right_panel": "Κλείστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα",
         "modal_title_default": "Modal Widget",
-        "modal_data_warning": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s"
+        "modal_data_warning": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Έγκριση αδειών μικροεφαρμογών",
+            "content_starting_text": "Αυτή η μικροεφαρμογή θα ήθελε να:",
+            "decline_all_permission": "Απόρριψη όλων",
+            "remember_Selection": "Να θυμάστε την επιλογή μου για αυτήν τη μικροεφαρμογή"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Επιτρέψτε σε αυτήν τη μικροεφαρμογή να επαληθεύσει την ταυτότητά σας",
+            "starting_text": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
+            "remember_selection": "Να το θυμάσαι αυτό"
+        }
     },
     "feedback": {
         "sent": "Τα σχόλια στάλθηκαν",
@@ -3662,5 +3643,30 @@
         "description_7": "Παρουσιάστηκε σφάλμα σύνδεσης κατά την προσπάθεια επικοινωνίας με τον διακομιστή.",
         "description_8": "Ο διακομιστής δεν έχει ρυθμιστεί για να υποδεικνύει ποιο είναι το πρόβλημα (CORS).",
         "recent_changes_heading": "Πρόσφατες αλλαγές που δεν έχουν ληφθεί ακόμη"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Μέλος",
+            "other": "%(count)s Μέλη"
+        },
+        "public_rooms_label": "Δημόσια δωμάτια",
+        "heading_with_query": "Χρησιμοποιήστε το \"%(query)s\" για αναζήτηση",
+        "heading_without_query": "Αναζήτηση για",
+        "spaces_title": "Χώροι που ανήκετε",
+        "other_rooms_in_space": "Άλλα δωμάτιο στο %(spaceName)s",
+        "join_button_text": "Συμμετοχή στο %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυφά για λόγους απορρήτου",
+        "cant_find_person_helpful_hint": "Εάν δεν εμφανίζεται το άτομο που αναζητάτε, στείλτε τους τον σύνδεσμο πρόσκλησης.",
+        "copy_link_text": "Αντιγραφή συνδέσμου πρόσκλησης",
+        "result_may_be_hidden_warning": "Ορισμένα αποτελέσματα ενδέχεται να είναι κρυμμένα",
+        "create_new_room_button": "Δημιουργία νέου δωματίου",
+        "group_chat_section_title": "Αλλες επιλογές",
+        "start_group_chat_button": "Ξεκινήστε μια ομαδική συνομιλία",
+        "message_search_section_title": "'Άλλες αναζητήσεις",
+        "recent_searches_section_title": "Πρόσφατες αναζητήσεις",
+        "recently_viewed_section_title": "Προβλήθηκε πρόσφατα",
+        "search_dialog": "Παράθυρο Αναζήτησης",
+        "search_messages_hint": "Για να αναζητήσετε μηνύματα, βρείτε αυτό το εικονίδιο στην κορυφή ενός δωματίου <icon/>",
+        "keyboard_scroll_hint": "Χρησιμοποιήστε τα <arrows/> για κύλιση"
     }
 }

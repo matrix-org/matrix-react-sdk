@@ -110,13 +110,11 @@
     "Upload files": "Last opp filer",
     "Upload all": "Last opp alle",
     "Upload Error": "Opplastingsfeil",
-    "Verification Request": "Verifiseringsforespørsel",
     "No backup found!": "Ingen sikkerhetskopier ble funnet!",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Warning!": "Advarsel!",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
-    "Create new room": "Opprett et nytt rom",
     "%(count)s verified sessions": {
         "one": "1 verifisert økt",
         "other": "%(count)s verifiserte økter"
@@ -218,12 +216,10 @@
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du kjenner har allerede blitt med"
     },
-    "Decline All": "Avslå alle",
     "Enter Security Key": "Skriv inn sikkerhetsnøkkel",
     "Germany": "Tyskland",
     "Malta": "Malta",
     "Uruguay": "Uruguay",
-    "Remember this": "Husk dette",
     "Security Phrase": "Sikkerhetsfrase",
     "Hold": "Hold",
     "Enter Security Phrase": "Skriv inn sikkerhetsfrase",
@@ -1362,7 +1358,8 @@
             "cancelled": "Du avbrøt verifiseringen.",
             "manual_device_verification_device_name_label": "Øktens navn",
             "manual_device_verification_device_id_label": "Økt-ID",
-            "manual_device_verification_device_key_label": "Øktnøkkel"
+            "manual_device_verification_device_key_label": "Øktnøkkel",
+            "verification_dialog_title_user": "Verifiseringsforespørsel"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
@@ -1548,7 +1545,13 @@
         "shared_data_widget_id": "Modul-ID",
         "added_by": "Modulen ble lagt til av",
         "cookie_warning": "Denne modulen bruker kanskje infokapsler.",
-        "popout": "Utsprettsmodul"
+        "popout": "Utsprettsmodul",
+        "capabilities_dialog": {
+            "decline_all_permission": "Avslå alle"
+        },
+        "open_id_permissions_dialog": {
+            "remember_selection": "Husk dette"
+        }
     },
     "feedback": {
         "comment_label": "Kommentar"
@@ -1895,5 +1898,8 @@
     },
     "server_offline": {
         "description_4": "Denne tjeneren er offline."
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Opprett et nytt rom"
     }
 }

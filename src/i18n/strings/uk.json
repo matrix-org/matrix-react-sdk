@@ -1,5 +1,4 @@
 {
-    "Create new room": "Створити нову кімнату",
     "unknown error code": "невідомий код помилки",
     "%(items)s and %(lastItem)s": "%(items)s та %(lastItem)s",
     "and %(count)s others...": {
@@ -395,7 +394,6 @@
     "collapse": "згорнути",
     "Share User": "Поділитися користувачем",
     "Home": "Домівка",
-    "Allow this widget to verify your identity": "Дозволити цьому віджету перевіряти вашу особу",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Delete Widget": "Видалити віджет",
     "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
@@ -414,7 +412,6 @@
         "one": "%(count)s учасник",
         "other": "%(count)s учасників"
     },
-    "Verification Request": "Запит підтвердження",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
         "other": "Сеансів: %(count)s"
@@ -476,13 +473,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Перейдіть до своєї е-пошти й натисніть на отримане посилання. Після цього натисніть «Продовжити».",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
-    "Spaces you're in": "Ваші простори",
-    "Other rooms in %(spaceName)s": "Інші кімнати в %(spaceName)s",
-    "Use \"%(query)s\" to search": "У якому контексті шукати \"%(query)s\"",
-    "Public rooms": "Загальнодоступні кімнати",
-    "Other searches": "Інші пошуки",
-    "To search messages, look for this icon at the top of a room <icon/>": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
-    "Recent searches": "Недавні пошуки",
     "Submit logs": "Надіслати журнали",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -492,7 +482,6 @@
     "%(name)s cancelled": "%(name)s скасовує",
     "%(name)s declined": "%(name)s відхиляє",
     "%(name)s accepted": "%(name)s погоджується",
-    "Recently viewed": "Недавно переглянуті",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Якщо ви забули ключ безпеки, <button>налаштуйте нові параметри відновлення</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Отримайте історію своїх зашифрованих повідомлень і налаштуйте безпечне листування, ввівши свій ключ безпеки.",
@@ -505,12 +494,6 @@
     "Invalid Security Key": "Хибний ключ безпеки",
     "Wrong Security Key": "Ключ безпеки не збігається",
     "Wrong file type": "Тип файлу не підтримується",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Віджет звірить ваш ID користувача, але не зможе виконувати такі дії від вашого імені:",
-    "Remember this": "Запам'ятати це",
-    "Remember my selection for this widget": "Запам'ятати мій вибір для цього віджета",
-    "Decline All": "Відхилити все",
-    "This widget would like to:": "Віджет бажає:",
-    "Approve widget permissions": "Підтвердьте дозволи віджета",
     "Looks good!": "Виглядає файно!",
     "Hold": "Утримувати",
     "Resume": "Продовжити",
@@ -540,12 +523,8 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Це групує ваші бесіди з учасниками цього простору. Вимкніть, щоб сховати ці бесіди з вашого огляду %(spaceName)s.",
     "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
-    "Verify other device": "Звірити інший пристрій",
-    "Use <arrows/> to scroll": "Використовуйте <arrows/>, щоб прокручувати",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
-    "Join %(roomAddress)s": "Приєднатися до %(roomAddress)s",
-    "Search Dialog": "Вікно пошуку",
     "You are sharing your live location": "Ви ділитеся місцеперебуванням",
     "Unsent": "Не надіслано",
     "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
@@ -571,19 +550,6 @@
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
     "Unread email icon": "Піктограма непрочитаного електронного листа",
-    "Remove search filter for %(filter)s": "Вилучити фільтр пошуку для %(filter)s",
-    "Start a group chat": "Розпочати нову бесіду",
-    "Other options": "Інші опції",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Якщо ви не можете знайти кімнату, яку шукаєте, попросіть запросити вас або створіть нову кімнату.",
-    "Some results may be hidden": "Деякі результати можуть бути приховані",
-    "Copy invite link": "Копіювати запрошувальне посилання",
-    "If you can't see who you're looking for, send them your invite link.": "Якщо ви не знаходите тих, кого шукаєте, надішліть їм своє запрошення.",
-    "Some results may be hidden for privacy": "Деякі результати можуть бути приховані через приватність",
-    "Search for": "Пошук",
-    "%(count)s Members": {
-        "one": "%(count)s учасник",
-        "other": "%(count)s учасників"
-    },
     "You cannot search for rooms that are neither a room nor a space": "Ви не можете шукати кімнати, які не є ні кімнатою, ні простором",
     "Show spaces": "Показати простори",
     "Show rooms": "Показати кімнати",
@@ -604,7 +570,6 @@
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
     "unavailable": "недоступний",
     "unknown status code": "невідомий код стану",
-    "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
     "common": {
         "about": "Відомості",
         "analytics": "Аналітика",
@@ -2873,7 +2838,9 @@
             "manual_device_verification_device_name_label": "Назва сеансу",
             "manual_device_verification_device_id_label": "ID сеансу",
             "manual_device_verification_device_key_label": "Ключ сеансу",
-            "manual_device_verification_footer": "Якщо вони не збігаються, безпека вашого спілкування ймовірно скомпрометована."
+            "manual_device_verification_footer": "Якщо вони не збігаються, безпека вашого спілкування ймовірно скомпрометована.",
+            "verification_dialog_title_device": "Звірити інший пристрій",
+            "verification_dialog_title_user": "Запит підтвердження"
         },
         "old_version_detected_title": "Виявлено старі криптографічні дані",
         "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
@@ -3370,7 +3337,18 @@
         "set_room_layout": "Встановити мій вигляд кімнати всім",
         "close_to_view_right_panel": "Закрийте віджет, щоб він зʼявився на цій панелі",
         "modal_title_default": "Модальний віджет",
-        "modal_data_warning": "Дані на цьому екрані надсилаються до %(widgetDomain)s"
+        "modal_data_warning": "Дані на цьому екрані надсилаються до %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Підтвердьте дозволи віджета",
+            "content_starting_text": "Віджет бажає:",
+            "decline_all_permission": "Відхилити все",
+            "remember_Selection": "Запам'ятати мій вибір для цього віджета"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Дозволити цьому віджету перевіряти вашу особу",
+            "starting_text": "Віджет звірить ваш ID користувача, але не зможе виконувати такі дії від вашого імені:",
+            "remember_selection": "Запам'ятати це"
+        }
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4377,5 +4355,33 @@
         "description_7": "Стався збій при спробі зв'язку з сервером.",
         "description_8": "Сервер не налаштований на деталізацію суті проблеми (CORS).",
         "recent_changes_heading": "Останні зміни, котрі ще не отримано"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s учасник",
+            "other": "%(count)s учасників"
+        },
+        "public_rooms_label": "Загальнодоступні кімнати",
+        "heading_with_query": "У якому контексті шукати \"%(query)s\"",
+        "heading_without_query": "Пошук",
+        "spaces_title": "Ваші простори",
+        "failed_querying_public_rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
+        "other_rooms_in_space": "Інші кімнати в %(spaceName)s",
+        "join_button_text": "Приєднатися до %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Деякі результати можуть бути приховані через приватність",
+        "cant_find_person_helpful_hint": "Якщо ви не знаходите тих, кого шукаєте, надішліть їм своє запрошення.",
+        "copy_link_text": "Копіювати запрошувальне посилання",
+        "result_may_be_hidden_warning": "Деякі результати можуть бути приховані",
+        "cant_find_room_helpful_hint": "Якщо ви не можете знайти кімнату, яку шукаєте, попросіть запросити вас або створіть нову кімнату.",
+        "create_new_room_button": "Створити нову кімнату",
+        "group_chat_section_title": "Інші опції",
+        "start_group_chat_button": "Розпочати нову бесіду",
+        "message_search_section_title": "Інші пошуки",
+        "recent_searches_section_title": "Недавні пошуки",
+        "recently_viewed_section_title": "Недавно переглянуті",
+        "search_dialog": "Вікно пошуку",
+        "remove_filter": "Вилучити фільтр пошуку для %(filter)s",
+        "search_messages_hint": "Шукайте повідомлення за допомогою піктограми <icon/> вгорі кімнати",
+        "keyboard_scroll_hint": "Використовуйте <arrows/>, щоб прокручувати"
     }
 }

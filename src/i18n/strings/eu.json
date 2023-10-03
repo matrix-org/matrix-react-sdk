@@ -1,5 +1,4 @@
 {
-    "Create new room": "Sortu gela berria",
     "unknown error code": "errore kode ezezaguna",
     "Home": "Hasiera",
     "Join Room": "Elkartu gelara",
@@ -137,7 +136,6 @@
     "Paperclip": "Klipa",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
-    "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
     "edited": "editatua",
     "To help us prevent this in future, please <a>send us logs</a>.": "Etorkizunean hau ekiditeko, <a>bidali guri egunkariak</a>.",
     "Missing session data": "Saioaren datuak falta dira",
@@ -165,7 +163,6 @@
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
     "Failed to connect to integration manager": "Huts egin du integrazio kudeatzailera konektatzean",
-    "Verification Request": "Egiaztaketa eskaria",
     "%(count)s verified sessions": {
         "other": "%(count)s egiaztatutako saio",
         "one": "Egiaztatutako saio 1"
@@ -1260,7 +1257,8 @@
             "manual_device_verification_device_name_label": "Saioaren izena",
             "manual_device_verification_device_id_label": "Saioaren IDa",
             "manual_device_verification_device_key_label": "Saioaren gakoa",
-            "manual_device_verification_footer": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke."
+            "manual_device_verification_footer": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
+            "verification_dialog_title_user": "Egiaztaketa eskaria"
         },
         "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
         "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
@@ -1712,7 +1710,10 @@
         "unencrypted_warning": "Trepetek ez dute mezuen zifratzea erabiltzen.",
         "added_by": "Trepeta honek gehitu du:",
         "cookie_warning": "Trepeta honek cookieak erabili litzake.",
-        "popout": "Laster-leiho trepeta"
+        "popout": "Laster-leiho trepeta",
+        "capabilities_dialog": {
+            "remember_Selection": "Gogoratu nire hautua trepeta honentzat"
+        }
     },
     "scalar": {
         "error_create": "Ezin izan da trepeta sortu.",
@@ -1932,5 +1933,8 @@
     "server_offline": {
         "description_4": "Zerbitzaria lineaz kanpo dago.",
         "description_5": "Zerbitzariak zure eskariari uko egin dio."
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Sortu gela berria"
     }
 }

@@ -9,7 +9,6 @@
     "Home": "主页",
     "Moderator": "协管员",
     "not specified": "未指定",
-    "Create new room": "创建新房间",
     "unknown error code": "未知错误代码",
     "Warning!": "警告！",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "请检查你的电子邮箱并点击里面包含的链接。完成时请点击继续。",
@@ -137,7 +136,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s 个会话解密失败！",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：你应此只在受信任的电脑上设置密钥备份。",
-    "Remember my selection for this widget": "记住我对此挂件的选择",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s(%(userId)s)登录到未验证的新会话：",
@@ -193,7 +191,6 @@
     },
     "Cancel All": "全部取消",
     "Upload Error": "上传错误",
-    "Verification Request": "验证请求",
     "Wrong file type": "错误文件类型",
     "Looks good!": "看着不错！",
     "Security Phrase": "安全短语",
@@ -362,10 +359,6 @@
         "other": "%(count)s 个房间"
     },
     "Enter Security Phrase": "输入安全短语",
-    "Allow this widget to verify your identity": "允许此挂件验证你的身份",
-    "Decline All": "全部拒绝",
-    "This widget would like to:": "此挂件想要：",
-    "Approve widget permissions": "批准挂件权限",
     "Zimbabwe": "津巴布韦",
     "Zambia": "赞比亚",
     "Western Sahara": "西撒哈拉",
@@ -487,8 +480,6 @@
     "Only do this if you have no other device to complete verification with.": "当你没有其他设备可以用于完成验证时，方可执行此操作。",
     "Reset everything": "全部重置",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘记或丢失了所有恢复方式？<a>全部重置</a>",
-    "Remember this": "记住",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "挂件将会验证你的用户 ID，但将无法为你执行动作：",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -527,15 +518,7 @@
     "Themes": "主题",
     "Moderation": "审核",
     "Messaging": "消息传递",
-    "Recently viewed": "最近查看",
     "Link to room": "房间链接",
-    "Recent searches": "最近的搜索",
-    "To search messages, look for this icon at the top of a room <icon/>": "要搜索消息，请在房间顶部查找此图标<icon/>",
-    "Other searches": "其他搜索",
-    "Public rooms": "公共房间",
-    "Use \"%(query)s\" to search": "使用 \"%(query)s\" 来搜索",
-    "Other rooms in %(spaceName)s": "%(spaceName)s 中的其他房间",
-    "Spaces you're in": "你所在的空间",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "将您与该空间的成员的聊天进行分组。关闭这个后你将无法在 %(spaceName)s 内看到这些聊天。",
     "Sections to show": "要显示的部分",
     "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
@@ -544,35 +527,18 @@
         "other": "%(count)s 名参与者",
         "one": "一名参与者"
     },
-    "Verify other device": "验证其他设备",
     "Saved Items": "已保存的项目",
     "%(members)s and %(last)s": "%(members)s和%(last)s",
     "%(members)s and more": "%(members)s和更多",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "若你找不到要找的房间，请请求邀请或创建新房间。",
     "Explore public spaces in the new search dialog": "在新的搜索对话框中探索公开空间",
-    "Use <arrows/> to scroll": "用<arrows/>来滚动",
     "Feedback sent! Thanks, we appreciate it!": "反馈已发送！谢谢，我们很感激！",
     "toggle event": "切换事件",
-    "%(count)s Members": {
-        "one": "%(count)s个成员",
-        "other": "%(count)s个成员"
-    },
-    "Search for": "搜索",
-    "Some results may be hidden for privacy": "为保护隐私，一些结果可能被隐藏",
-    "If you can't see who you're looking for, send them your invite link.": "若你无法看到你正在查找的人，给他们发送你的邀请链接。",
-    "Copy invite link": "复制邀请链接",
-    "Some results may be hidden": "一些结果可能被隐藏",
-    "Other options": "其他选项",
-    "Start a group chat": "发起群聊天",
-    "Remove search filter for %(filter)s": "移除%(filter)s搜索过滤条件",
     "Show rooms": "显示房间",
     "Show spaces": "显示空间",
     "You cannot search for rooms that are neither a room nor a space": "你无法搜索既不是房间也不是空间的房间",
     "We'll help you get connected.": "",
     "Remove them from everything I'm able to": "",
     "Unsent": "未发送",
-    "Search Dialog": "搜索对话",
-    "Join %(roomAddress)s": "加入%(roomAddress)s",
     "Output devices": "输出设备",
     "Input devices": "输入设备",
     "View List": "查看列表",
@@ -2615,7 +2581,9 @@
             "manual_device_verification_device_name_label": "会话名称",
             "manual_device_verification_device_id_label": "会话 ID",
             "manual_device_verification_device_key_label": "会话密钥",
-            "manual_device_verification_footer": "如果它们不匹配，你通讯的安全性可能已受损。"
+            "manual_device_verification_footer": "如果它们不匹配，你通讯的安全性可能已受损。",
+            "verification_dialog_title_device": "验证其他设备",
+            "verification_dialog_title_user": "验证请求"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -3052,7 +3020,18 @@
         "set_room_layout": "将我的房间布局设置给所有人",
         "close_to_view_right_panel": "关闭此小部件以在此面板中查看",
         "modal_title_default": "模态框挂件（Modal Widget）",
-        "modal_data_warning": "此屏幕上的数据与%(widgetDomain)s分享"
+        "modal_data_warning": "此屏幕上的数据与%(widgetDomain)s分享",
+        "capabilities_dialog": {
+            "title": "批准挂件权限",
+            "content_starting_text": "此挂件想要：",
+            "decline_all_permission": "全部拒绝",
+            "remember_Selection": "记住我对此挂件的选择"
+        },
+        "open_id_permissions_dialog": {
+            "title": "允许此挂件验证你的身份",
+            "starting_text": "挂件将会验证你的用户 ID，但将无法为你执行动作：",
+            "remember_selection": "记住"
+        }
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3952,5 +3931,32 @@
         "description_7": "尝试联系服务器时出现连接错误。",
         "description_8": "服务器没有配置为提示错误是什么（CORS）。",
         "recent_changes_heading": "尚未被接受的最近更改"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s个成员",
+            "other": "%(count)s个成员"
+        },
+        "public_rooms_label": "公共房间",
+        "heading_with_query": "使用 \"%(query)s\" 来搜索",
+        "heading_without_query": "搜索",
+        "spaces_title": "你所在的空间",
+        "other_rooms_in_space": "%(spaceName)s 中的其他房间",
+        "join_button_text": "加入%(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "为保护隐私，一些结果可能被隐藏",
+        "cant_find_person_helpful_hint": "若你无法看到你正在查找的人，给他们发送你的邀请链接。",
+        "copy_link_text": "复制邀请链接",
+        "result_may_be_hidden_warning": "一些结果可能被隐藏",
+        "cant_find_room_helpful_hint": "若你找不到要找的房间，请请求邀请或创建新房间。",
+        "create_new_room_button": "创建新房间",
+        "group_chat_section_title": "其他选项",
+        "start_group_chat_button": "发起群聊天",
+        "message_search_section_title": "其他搜索",
+        "recent_searches_section_title": "最近的搜索",
+        "recently_viewed_section_title": "最近查看",
+        "search_dialog": "搜索对话",
+        "remove_filter": "移除%(filter)s搜索过滤条件",
+        "search_messages_hint": "要搜索消息，请在房间顶部查找此图标<icon/>",
+        "keyboard_scroll_hint": "用<arrows/>来滚动"
     }
 }

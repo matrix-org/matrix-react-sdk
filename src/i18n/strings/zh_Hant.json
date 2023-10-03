@@ -6,7 +6,6 @@
     "Mon": "週一",
     "Tue": "週二",
     "unknown error code": "未知的錯誤代碼",
-    "Create new room": "建立新聊天室",
     "Home": "首頁",
     "Moderator": "版主",
     "not specified": "未指定",
@@ -137,7 +136,6 @@
     "Folder": "資料夾",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
-    "Remember my selection for this widget": "記住我對這個小工具的選擇",
     "To help us prevent this in future, please <a>send us logs</a>.": "要協助我們讓這個問題不再發生，請<a>將紀錄檔傳送給我們</a>。",
     "Missing session data": "遺失工作階段資料",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "某些工作階段資料遺失了，其中包含加密訊息金鑰。登出再登入並從備份中復原金鑰可以修復這個問題。",
@@ -165,7 +163,6 @@
     "%(name)s cancelled": "%(name)s 已取消",
     "%(name)s wants to verify": "%(name)s 想要驗證",
     "Failed to connect to integration manager": "無法連線到整合服務伺服器",
-    "Verification Request": "驗證請求",
     "%(count)s verified sessions": {
         "other": "%(count)s 個已驗證的工作階段",
         "one": "1 個已驗證的工作階段"
@@ -462,9 +459,6 @@
     "Afghanistan": "阿富汗",
     "United States": "美國",
     "United Kingdom": "英國",
-    "Decline All": "全部拒絕",
-    "This widget would like to:": "這個小工具想要：",
-    "Approve widget permissions": "批准小工具權限",
     "Hold": "保留",
     "Resume": "繼續",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>",
@@ -482,9 +476,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "無法存取祕密儲存空間。請確認您輸入了正確的安全密語。",
     "Invalid Security Key": "無效的安全金鑰",
     "Wrong Security Key": "錯誤的安全金鑰",
-    "Remember this": "記住這個",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "小工具將會驗證您的使用者 ID，但將無法為您執行動作：",
-    "Allow this widget to verify your identity": "允許此小工具驗證您的身分",
     "%(count)s members": {
         "one": "%(count)s 位成員",
         "other": "%(count)s 位成員"
@@ -527,25 +518,13 @@
     "Themes": "主題",
     "Moderation": "審核",
     "Messaging": "訊息傳遞",
-    "Recently viewed": "最近檢視過",
     "Link to room": "連結到聊天室",
-    "Recent searches": "近期搜尋",
-    "To search messages, look for this icon at the top of a room <icon/>": "要搜尋訊息，請在聊天室頂部尋找此圖示 <icon/>",
-    "Other searches": "其他搜尋",
-    "Public rooms": "公開聊天室",
-    "Use \"%(query)s\" to search": "使用「%(query)s」搜尋",
-    "Other rooms in %(spaceName)s": "其他在 %(spaceName)s 中的聊天室",
-    "Spaces you're in": "您所在的聊天空間",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "將您與此空間成員的聊天進行分組。關閉此功能，將會在您的 %(spaceName)s 畫面中隱藏那些聊天室。",
     "Sections to show": "要顯示的部份",
     "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
     "toggle event": "切換事件",
-    "Verify other device": "驗證其他裝置",
-    "Use <arrows/> to scroll": "使用 <arrows/> 捲動",
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 與 %(space2Name)s",
-    "Join %(roomAddress)s": "加入 %(roomAddress)s",
-    "Search Dialog": "搜尋對話方塊",
     "You are sharing your live location": "您正在分享您的即時位置",
     "Unsent": "未傳送",
     "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
@@ -571,19 +550,6 @@
     "An error occurred whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請再試一次",
     "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤",
     "Unread email icon": "未讀電子郵件圖示",
-    "Remove search filter for %(filter)s": "移除 %(filter)s 的搜尋過濾條件",
-    "Start a group chat": "開始群組聊天",
-    "Other options": "其他選項",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "若您找不到您要找的聊天室，要求邀請或是建立新的聊天室。",
-    "Some results may be hidden": "某些結果可能會被隱藏",
-    "Copy invite link": "複製邀請連結",
-    "If you can't see who you're looking for, send them your invite link.": "若您看不到要找的人，請將您的邀請連結傳送給他們。",
-    "Some results may be hidden for privacy": "出於隱私考量，可能會隱藏一些結果",
-    "Search for": "搜尋",
-    "%(count)s Members": {
-        "one": "%(count)s 個成員",
-        "other": "%(count)s 個成員"
-    },
     "You cannot search for rooms that are neither a room nor a space": "您無法搜尋既不是聊天室也不是聊天空間的空間",
     "Show spaces": "顯示聊天空間",
     "Show rooms": "顯示聊天室",
@@ -604,7 +570,6 @@
     "Requires your server to support the stable version of MSC3827": "您的伺服器必須支援穩定版本的 MSC3827",
     "unavailable": "無法使用",
     "unknown status code": "未知狀態代碼",
-    "Failed to query public rooms": "檢索公開聊天室失敗",
     "common": {
         "about": "關於",
         "analytics": "分析",
@@ -2873,7 +2838,9 @@
             "manual_device_verification_device_name_label": "工作階段名稱",
             "manual_device_verification_device_id_label": "工作階段 ID",
             "manual_device_verification_device_key_label": "工作階段金鑰",
-            "manual_device_verification_footer": "如果它們不相符，則可能會威脅到您的通訊安全。"
+            "manual_device_verification_footer": "如果它們不相符，則可能會威脅到您的通訊安全。",
+            "verification_dialog_title_device": "驗證其他裝置",
+            "verification_dialog_title_user": "驗證請求"
         },
         "old_version_detected_title": "偵測到舊的加密資料",
         "old_version_detected_description": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
@@ -3370,7 +3337,18 @@
         "set_room_layout": "為所有人設定我的聊天室佈局",
         "close_to_view_right_panel": "關閉此小工具以在此面板中檢視",
         "modal_title_default": "程式小工具",
-        "modal_data_warning": "在此畫面上的資料會與 %(widgetDomain)s 分享"
+        "modal_data_warning": "在此畫面上的資料會與 %(widgetDomain)s 分享",
+        "capabilities_dialog": {
+            "title": "批准小工具權限",
+            "content_starting_text": "這個小工具想要：",
+            "decline_all_permission": "全部拒絕",
+            "remember_Selection": "記住我對這個小工具的選擇"
+        },
+        "open_id_permissions_dialog": {
+            "title": "允許此小工具驗證您的身分",
+            "starting_text": "小工具將會驗證您的使用者 ID，但將無法為您執行動作：",
+            "remember_selection": "記住這個"
+        }
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -4377,5 +4355,33 @@
         "description_7": "在試圖與伺服器溝通時遇到連線錯誤。",
         "description_8": "伺服器沒有設定好來指示出問題是什麼 (CORS)。",
         "recent_changes_heading": "尚未收到最新變更"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s 個成員",
+            "other": "%(count)s 個成員"
+        },
+        "public_rooms_label": "公開聊天室",
+        "heading_with_query": "使用「%(query)s」搜尋",
+        "heading_without_query": "搜尋",
+        "spaces_title": "您所在的聊天空間",
+        "failed_querying_public_rooms": "檢索公開聊天室失敗",
+        "other_rooms_in_space": "其他在 %(spaceName)s 中的聊天室",
+        "join_button_text": "加入 %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "出於隱私考量，可能會隱藏一些結果",
+        "cant_find_person_helpful_hint": "若您看不到要找的人，請將您的邀請連結傳送給他們。",
+        "copy_link_text": "複製邀請連結",
+        "result_may_be_hidden_warning": "某些結果可能會被隱藏",
+        "cant_find_room_helpful_hint": "若您找不到您要找的聊天室，要求邀請或是建立新的聊天室。",
+        "create_new_room_button": "建立新聊天室",
+        "group_chat_section_title": "其他選項",
+        "start_group_chat_button": "開始群組聊天",
+        "message_search_section_title": "其他搜尋",
+        "recent_searches_section_title": "近期搜尋",
+        "recently_viewed_section_title": "最近檢視過",
+        "search_dialog": "搜尋對話方塊",
+        "remove_filter": "移除 %(filter)s 的搜尋過濾條件",
+        "search_messages_hint": "要搜尋訊息，請在聊天室頂部尋找此圖示 <icon/>",
+        "keyboard_scroll_hint": "使用 <arrows/> 捲動"
     }
 }

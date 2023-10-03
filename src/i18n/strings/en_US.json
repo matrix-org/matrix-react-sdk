@@ -36,7 +36,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Create new room": "Create new room",
     "Home": "Home",
     "(~%(count)s results)": {
         "one": "(~%(count)s result)",
@@ -642,5 +641,8 @@
     },
     "report_content": {
         "other_label": "Other"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Create new room"
     }
 }

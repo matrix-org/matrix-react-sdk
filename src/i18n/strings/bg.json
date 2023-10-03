@@ -45,7 +45,6 @@
     "not specified": "неопределен",
     "Email address": "Имейл адрес",
     "Delete Widget": "Изтриване на приспособление",
-    "Create new room": "Създай нова стая",
     "Home": "Начална страница",
     "%(items)s and %(lastItem)s": "%(items)s и %(lastItem)s",
     "collapse": "свий",
@@ -152,7 +151,6 @@
     },
     "Cancel All": "Откажи всички",
     "Upload Error": "Грешка при качване",
-    "Remember my selection for this widget": "Запомни избора ми за това приспособление",
     "edited": "редактирано",
     "Upload all": "Качи всички",
     "Resend %(unsentCount)s reaction(s)": "Изпрати наново %(unsentCount)s реакция(и)",
@@ -169,7 +167,6 @@
         "other": "%(count)s потвърдени сесии",
         "one": "1 потвърдена сесия"
     },
-    "Verification Request": "Заявка за потвърждение",
     "Not Trusted": "Недоверено",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
     "Ask this user to verify their session, or manually verify it below.": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
@@ -1641,7 +1638,8 @@
             "manual_device_verification_device_name_label": "Име на сесията",
             "manual_device_verification_device_id_label": "Идентификатор на сесията",
             "manual_device_verification_device_key_label": "Ключ за сесията",
-            "manual_device_verification_footer": "Ако няма съвпадение, сигурността на комуникацията ви може би е компрометирана."
+            "manual_device_verification_footer": "Ако няма съвпадение, сигурността на комуникацията ви може би е компрометирана.",
+            "verification_dialog_title_user": "Заявка за потвърждение"
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
@@ -2191,7 +2189,10 @@
         "cookie_warning": "Това приспособление може да използва бисквитки.",
         "popout": "Изкарай в нов прозорец",
         "modal_title_default": "Модално приспособление",
-        "modal_data_warning": "Данните на този екран са споделени с %(widgetDomain)s"
+        "modal_data_warning": "Данните на този екран са споделени с %(widgetDomain)s",
+        "capabilities_dialog": {
+            "remember_Selection": "Запомни избора ми за това приспособление"
+        }
     },
     "scalar": {
         "error_create": "Неуспешно създаване на приспособление.",
@@ -2446,5 +2447,8 @@
         "description_7": "Възникнал е проблем с връзката при свързване към сървъра.",
         "description_8": "Сървърът не е конфигуриран да укаже какъв е проблемът (CORS).",
         "recent_changes_heading": "Скорошни промени, които още не са били получени"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Създай нова стая"
     }
 }

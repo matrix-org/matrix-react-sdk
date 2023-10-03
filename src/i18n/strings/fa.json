@@ -292,9 +292,7 @@
     "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
     "Be found by phone or email": "از طریق تلفن یا ایمیل پیدا شوید",
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
-    "Remember my selection for this widget": "انتخاب من برای این ابزارک را بخاطر بسپار",
     "Not a valid Security Key": "کلید امنیتی معتبری نیست",
-    "This widget would like to:": "این ابزارک تمایل دارد:",
     "Unable to set up keys": "تنظیم کلیدها امکان پذیر نیست",
     "%(completed)s of %(total)s keys restored": "%(completed)s از %(total)s کلید بازیابی شدند",
     "a new cross-signing key signature": "یک کلید امضای متقابل جدید",
@@ -318,7 +316,6 @@
     "Security Key mismatch": "عدم تطابق کلید امنیتی",
     "Invalid Security Key": "کلید امنیتی نامعتبر است",
     "Wrong Security Key": "کلید امنیتی اشتباه است",
-    "Approve widget permissions": "دسترسی‌های ابزارک را تائید کنید",
     "a key signature": "یک امضای کلیدی",
     "Clear cross-signing keys": "کلیدهای امضای متقابل را پاک کن",
     "Destroy cross-signing keys?": "کلیدهای امضای متقابل نابود شود؟",
@@ -327,14 +324,11 @@
     "No backup found!": "نسخه پشتیبان یافت نشد!",
     "Share Room Message": "به اشتراک گذاشتن پیام اتاق",
     "Reset everything": "همه چیز را بازراه‌اندازی (reset) کنید",
-    "Remember this": "این را به یاد داشته باش",
-    "Decline All": "رد کردن همه",
     "Looks good!": "به نظر خوب میاد!",
     "Security Key": "کلید امنیتی",
     "Security Phrase": "عبارت امنیتی",
     "Keys restored": "کلیدها بازیابی شدند",
     "Not Trusted": "قابل اعتماد نیست",
-    "Verification Request": "درخواست تأیید",
     "Command Help": "راهنمای دستور",
     "Upload all": "بارگذاری همه",
     "Upload Error": "خطای بارگذاری",
@@ -464,7 +458,6 @@
     "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
     "No results found": "نتیجه‌ای یافت نشد",
     "Warning!": "هشدار!",
-    "Create new room": "ایجاد اتاق جدید",
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
     "Delete Widget": "حذف ویجت",
     "Failed to start livestream": "آغاز livestream با شکست همراه بود",
@@ -485,9 +478,7 @@
     "Only do this if you have no other device to complete verification with.": "این کار را فقط درصورتی انجام دهید که دستگاه دیگری برای تکمیل فرآیند تأیید ندارید.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "همه روش‌های بازیابی را فراموش کرده یا از دست داده‌اید؟ <a>بازراه‌اندازی (reset) همه</a>",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "اگر عبارت امنیتی خود را فراموش کرده اید، می توانید <button1>از کلید امنیتی خود استفاده کنید</button1> یا <button2>تنظیمات پشتیانی‌گیری را مجددا انجام دهید</button2>",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "ابزارک شناسه‌ی کاربری شما را تائید خواهد کرد، اما نمی‌تواند این کارها را برای شما انجام دهد:",
     "This looks like a valid Security Key!": "به نظر می رسد این یک کلید امنیتی معتبر است!",
-    "Allow this widget to verify your identity": "به این ابزارک اجازه دهید هویت شما را تأیید کند",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "برخی از فایل‌ها برای بارگذاری <b>بیش از حد بزرگ هستند</b>. محدودیت اندازه فایل %(limit)s است.",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "با وارد کردن کلید امنیتی خود به تاریخچه‌ی پیام‌‌های رمز شده خود دسترسی پیدا کرده و پیام امن ارسال کنید.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "این فایل‌ها برای بارگذاری <b>بیش از حد بزرگ</b> هستند. محدودیت اندازه فایل %(limit)s است.",
@@ -1924,7 +1915,8 @@
             "manual_device_verification_device_name_label": "نام نشست",
             "manual_device_verification_device_id_label": "شناسه‌ی نشست",
             "manual_device_verification_device_key_label": "کلید نشست",
-            "manual_device_verification_footer": "اگر آنها مطابقت نداشته‌باشند ، ممکن است امنیت ارتباطات شما به خطر افتاده باشد."
+            "manual_device_verification_footer": "اگر آنها مطابقت نداشته‌باشند ، ممکن است امنیت ارتباطات شما به خطر افتاده باشد.",
+            "verification_dialog_title_user": "درخواست تأیید"
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2312,7 +2304,18 @@
         "popout": "بیرون انداختن ابزارک",
         "set_room_layout": "چیدمان اتاق من را برای همه تنظیم کن",
         "modal_title_default": "ابزارک کمکی",
-        "modal_data_warning": "داده‌های این صفحه با %(widgetDomain)s به اشتراک گذاشته می‌شود"
+        "modal_data_warning": "داده‌های این صفحه با %(widgetDomain)s به اشتراک گذاشته می‌شود",
+        "capabilities_dialog": {
+            "title": "دسترسی‌های ابزارک را تائید کنید",
+            "content_starting_text": "این ابزارک تمایل دارد:",
+            "decline_all_permission": "رد کردن همه",
+            "remember_Selection": "انتخاب من برای این ابزارک را بخاطر بسپار"
+        },
+        "open_id_permissions_dialog": {
+            "title": "به این ابزارک اجازه دهید هویت شما را تأیید کند",
+            "starting_text": "ابزارک شناسه‌ی کاربری شما را تائید خواهد کرد، اما نمی‌تواند این کارها را برای شما انجام دهد:",
+            "remember_selection": "این را به یاد داشته باش"
+        }
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2986,5 +2989,8 @@
         "description_7": "هنگام تلاش برای اتصال به سرور خطایی رخ داده است.",
         "description_8": "سرور طوری پیکربندی نشده تا نشان دهد مشکل چیست (CORS).",
         "recent_changes_heading": "تغییرات اخیری که هنوز دریافت نشده‌اند"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "ایجاد اتاق جدید"
     }
 }

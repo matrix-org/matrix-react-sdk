@@ -1,5 +1,4 @@
 {
-    "Create new room": "Crea una sala nova",
     "unknown error code": "codi d'error desconegut",
     "Warning!": "Avís!",
     "Sun": "dg.",
@@ -872,5 +871,8 @@
     },
     "server_offline": {
         "description_7": "S'ha produït un error de connexió mentre s'intentava connectar al servidor."
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Crea una sala nova"
     }
 }

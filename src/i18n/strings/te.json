@@ -22,7 +22,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
     "unknown error code": "తెలియని కోడ్ లోపం",
-    "Create new room": "క్రొత్త గది సృష్టించండి",
     "Sunday": "ఆదివారం",
     "Today": "ఈ రోజు",
     "Friday": "శుక్రువారం",
@@ -215,5 +214,8 @@
     },
     "forward": {
         "send_label": "పంపండి"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "క్రొత్త గది సృష్టించండి"
     }
 }

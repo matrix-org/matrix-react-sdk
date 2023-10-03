@@ -44,7 +44,6 @@
     "not specified": "nespecifita",
     "Email address": "Retpoŝtadreso",
     "Delete Widget": "Forigi fenestraĵon",
-    "Create new room": "Krei novan ĉambron",
     "Home": "Hejmo",
     "%(items)s and %(lastItem)s": "%(items)s kaj %(lastItem)s",
     "collapse": "maletendi",
@@ -145,7 +144,6 @@
     },
     "Cancel All": "Nuligi ĉion",
     "Upload Error": "Alŝuto eraris",
-    "Remember my selection for this widget": "Memoru mian elekton por tiu ĉi fenestraĵo",
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
     "No backup found!": "Neniu savkopio troviĝis!",
@@ -184,7 +182,6 @@
     "Destroy cross-signing keys?": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Forigo de delege ĉifraj ŝlosiloj estas porĉiama. Ĉiu, kun kiu vi interkontrolis, vidos avertojn pri sekureco. Vi preskaŭ certe ne volas ĉi tion fari, malse vi perdis ĉiun aparaton, el kiu vi povus delege subskribadi.",
     "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
-    "Verification Request": "Kontrolpeto",
     "a new master key signature": "nova ĉefŝlosila subskribo",
     "a new cross-signing key signature": "nova subskribo de delega ŝlosilo",
     "a device cross-signing signature": "delega subskribo de aparato",
@@ -479,12 +476,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Ne povas akiri sekretandeponejon. Bonvolu kontroli, ĉu vi enigis la ĝustan Sekurecan frazon.",
     "Invalid Security Key": "Nevalida Sekureca ŝlosilo",
     "Wrong Security Key": "Malĝusta Sekureca ŝlosilo",
-    "Remember this": "Memoru ĉi tion",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Ĉi tiu fenestraĵo kontrolos vian identigilon de uzanto, sed ne povos fari agojn por vi:",
-    "Allow this widget to verify your identity": "Permesu al ĉi tiu fenestraĵo kontroli vian identecon",
-    "Decline All": "Rifuzi ĉion",
-    "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
-    "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
     "<inviter/> invites you": "<inviter/> invitas vin",
     "No results found": "Neniuj rezultoj troviĝis",
     "%(count)s rooms": {
@@ -512,7 +503,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kaj %(space2Name)s",
     "Close sidebar": "Fermu la flanka kolumno",
-    "Public rooms": "Publikajn ĉambrojn",
     "Developer": "Programisto",
     "unknown": "nekonata",
     "common": {
@@ -2154,7 +2144,8 @@
             "manual_device_verification_device_name_label": "Nomo de salutaĵo",
             "manual_device_verification_device_id_label": "Identigilo de salutaĵo",
             "manual_device_verification_device_key_label": "Ŝlosilo de salutaĵo",
-            "manual_device_verification_footer": "Se ili ne akordas, la sekureco de via komunikado eble estas rompita."
+            "manual_device_verification_footer": "Se ili ne akordas, la sekureco de via komunikado eble estas rompita.",
+            "verification_dialog_title_user": "Kontrolpeto"
         },
         "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
         "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
@@ -2574,7 +2565,18 @@
         "popout": "Fenestrigi fenestraĵon",
         "set_room_layout": "Agordi al ĉiuj mian aranĝon de ĉambro",
         "modal_title_default": "Reĝima fenestraĵo",
-        "modal_data_warning": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s"
+        "modal_data_warning": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Aprobi rajtojn de fenestraĵo",
+            "content_starting_text": "Ĉi tiu fenestraĵo volas:",
+            "decline_all_permission": "Rifuzi ĉion",
+            "remember_Selection": "Memoru mian elekton por tiu ĉi fenestraĵo"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Permesu al ĉi tiu fenestraĵo kontroli vian identecon",
+            "starting_text": "Ĉi tiu fenestraĵo kontrolos vian identigilon de uzanto, sed ne povos fari agojn por vi:",
+            "remember_selection": "Memoru ĉi tion"
+        }
     },
     "feedback": {
         "sent": "Prikomentoj sendiĝis",
@@ -3330,5 +3332,9 @@
         "description_7": "Eraris konekto dum provo kontakti la servilon.",
         "description_8": "La servilo ne estas agordita por indiki la problemon (CORS).",
         "recent_changes_heading": "Freŝaj ŝanĝoj ankoraŭ ne ricevitaj"
+    },
+    "spotlight_dialog": {
+        "public_rooms_label": "Publikajn ĉambrojn",
+        "create_new_room_button": "Krei novan ĉambron"
     }
 }

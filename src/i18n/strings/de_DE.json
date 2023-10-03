@@ -34,7 +34,6 @@
     "%(items)s and %(lastItem)s": "%(items)s und %(lastItem)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s %(time)s",
     "Email address": "E-Mail-Adresse",
-    "Create new room": "Neuer Raum",
     "Home": "Startseite",
     "(~%(count)s results)": {
         "one": "(~%(count)s Ergebnis)",
@@ -182,12 +181,10 @@
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Die Datei ist <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s, aber diese Datei ist %(sizeOfThisFile)s groß.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Die Datei ist <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Einige Dateien sind <b>zu groß</b>, um hochgeladen zu werden. Die maximale Dateigröße ist %(limit)s.",
-    "Verification Request": "Verifizierungsanfrage",
     "Upload %(count)s other files": {
         "other": "%(count)s andere Dateien hochladen",
         "one": "%(count)s andere Datei hochladen"
     },
-    "Remember my selection for this widget": "Speichere meine Auswahl für dieses Widget",
     "Restoring keys from backup": "Schlüssel aus der Sicherung wiederherstellen",
     "%(completed)s of %(total)s keys restored": "%(completed)s von %(total)s Schlüsseln wiederhergestellt",
     "Keys restored": "Schlüssel wiederhergestellt",
@@ -214,9 +211,6 @@
     "Backup version:": "Version der Sicherung:",
     "Unable to set up keys": "Schlüssel können nicht eingerichtet werden",
     "Uzbekistan": "Usbekistan",
-    "Approve widget permissions": "Rechte für das Widget genehmigen",
-    "This widget would like to:": "Dieses Widget würde gerne:",
-    "Decline All": "Alles ablehnen",
     "Zimbabwe": "Simbabwe",
     "Zambia": "Sambia",
     "Yemen": "Jemen",
@@ -482,9 +476,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Greife auf deinen verschlüsselten Nachrichtenverlauf zu und richte die sichere Kommunikation ein, indem du deinen Sicherheitsschlüssel eingibst.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Wenn du deine Sicherheitsphrase vergessen hast, kannst du <button1>deinen Sicherheitsschlüssel nutzen</button1> oder <button2>neue Wiederherstellungsoptionen einrichten</button2>",
     "Security Key mismatch": "Nicht übereinstimmende Sicherheitsschlüssel",
-    "Remember this": "Dies merken",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Das Widget überprüft deine Nutzer-ID, kann jedoch keine Aktionen für dich ausführen:",
-    "Allow this widget to verify your identity": "Erlaube diesem Widget deine Identität zu überprüfen",
     "%(count)s members": {
         "other": "%(count)s Mitglieder",
         "one": "%(count)s Mitglied"
@@ -518,7 +509,6 @@
         "one": "%(count)s Stimme",
         "other": "%(count)s Stimmen"
     },
-    "Recently viewed": "Kürzlich besucht",
     "Developer": "Entwickler",
     "Experimental": "Experimentell",
     "Themes": "Themen",
@@ -528,24 +518,13 @@
         "other": "%(spaceName)s und %(count)s andere"
     },
     "Open in OpenStreetMap": "In OpenStreetMap öffnen",
-    "Recent searches": "Kürzliche Gesucht",
-    "To search messages, look for this icon at the top of a room <icon/>": "Wenn du Nachrichten durchsuchen willst, klicke auf das <icon/> Icon oberhalb des Raumes",
-    "Other searches": "Andere Suchen",
-    "Public rooms": "Öffentliche Räume",
-    "Use \"%(query)s\" to search": "Nutze \"%(query)s\" zum Suchen",
-    "Other rooms in %(spaceName)s": "Andere Räume in %(spaceName)s",
-    "Spaces you're in": "Spaces, in denen du Mitglied bist",
     "Sections to show": "Anzuzeigende Bereiche",
     "Link to room": "Link zum Raum",
     "Messaging": "Kommunikation",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Gruppiere Unterhaltungen mit Mitgliedern dieses Spaces. Diese Option zu deaktivieren, wird die Unterhaltungen aus %(spaceName)s ausblenden.",
-    "Verify other device": "Anderes Gerät verifizieren",
     "toggle event": "Event umschalten",
     "Feedback sent! Thanks, we appreciate it!": "Rückmeldung gesendet! Danke, wir wissen es zu schätzen!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s und %(space2Name)s",
-    "Use <arrows/> to scroll": "Benutze <arrows/> zum scrollen",
-    "Search Dialog": "Suchdialog",
-    "Join %(roomAddress)s": "%(roomAddress)s betreten",
     "You are sharing your live location": "Du teilst deinen Echtzeit-Standort",
     "%(count)s participants": {
         "one": "1 Teilnehmer",
@@ -561,35 +540,22 @@
     "Unsent": "Nicht gesendet",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
     "Show rooms": "Räume zeigen",
-    "Search for": "Suche nach",
-    "%(count)s Members": {
-        "one": "%(count)s Mitglied",
-        "other": "%(count)s Mitglieder"
-    },
     "Show spaces": "Spaces zeigen",
     "You cannot search for rooms that are neither a room nor a space": "Du kannst nicht nach Räumen suchen, die kein Raum oder Space sind",
-    "Some results may be hidden for privacy": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein",
-    "Copy invite link": "Einladungslink kopieren",
-    "Some results may be hidden": "Einige Ergebnisse können ausgeblendet sein",
     "Close sidebar": "Seitenleiste schließen",
     "No live locations": "Keine Echtzeit-Standorte",
     "Live location error": "Echtzeit-Standort-Fehler",
     "Live location ended": "Echtzeit-Standort beendet",
     "Live until %(expiryTime)s": "Echtzeit bis %(expiryTime)s",
     "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)s aktualisiert",
-    "Other options": "Andere Optionen",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Falls du den Raum nicht findest, frag nach einer Einladung oder erstelle einen neuen Raum.",
     "An error occurred whilst sharing your live location, please try again": "Ein Fehler ist während des Teilens deines Echtzeit-Standorts aufgetreten, bitte versuche es erneut",
     "Live location enabled": "Echtzeit-Standort aktiviert",
     "An error occurred whilst sharing your live location": "Ein Fehler ist während des Teilens deines Echtzeit-Standorts aufgetreten",
     "An error occurred while stopping your live location": "Ein Fehler ist während des Beendens deines Echtzeit-Standorts aufgetreten",
     "An error occurred while stopping your live location, please try again": "Ein Fehler ist während des Beendens deines Echtzeit-Standorts aufgetreten, bitte versuche es erneut",
     "Unread email icon": "Ungelesene E-Mail Symbol",
-    "Start a group chat": "Gruppenunterhaltung beginnen",
-    "If you can't see who you're looking for, send them your invite link.": "Falls du nicht findest wen du suchst, send ihnen deinen Einladungslink.",
     "Interactively verify by emoji": "Interaktiv per Emoji verifizieren",
     "Manually verify by text": "Manuell per Text verifizieren",
-    "Remove search filter for %(filter)s": "Entferne Suchfilter für %(filter)s",
     "Saved Items": "Gespeicherte Elemente",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
@@ -604,7 +570,6 @@
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
     "unavailable": "Nicht verfügbar",
     "unknown status code": "Unbekannter Statuscode",
-    "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
     "common": {
         "about": "Über",
         "analytics": "Analysedaten",
@@ -2880,7 +2845,9 @@
             "manual_device_verification_device_name_label": "Sitzungsname",
             "manual_device_verification_device_id_label": "Sitzungs-ID",
             "manual_device_verification_device_key_label": "Sitzungsschlüssel",
-            "manual_device_verification_footer": "Wenn sie nicht übereinstimmen kann die Sicherheit eurer Kommunikation kompromittiert sein."
+            "manual_device_verification_footer": "Wenn sie nicht übereinstimmen kann die Sicherheit eurer Kommunikation kompromittiert sein.",
+            "verification_dialog_title_device": "Anderes Gerät verifizieren",
+            "verification_dialog_title_user": "Verifizierungsanfrage"
         },
         "old_version_detected_title": "Alte Kryptografiedaten erkannt",
         "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
@@ -3377,7 +3344,18 @@
         "set_room_layout": "Dein Raumlayout für alle setzen",
         "close_to_view_right_panel": "Widget schließen und in diesem Panel anzeigen",
         "modal_title_default": "Modales Widget",
-        "modal_data_warning": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt"
+        "modal_data_warning": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
+        "capabilities_dialog": {
+            "title": "Rechte für das Widget genehmigen",
+            "content_starting_text": "Dieses Widget würde gerne:",
+            "decline_all_permission": "Alles ablehnen",
+            "remember_Selection": "Speichere meine Auswahl für dieses Widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Erlaube diesem Widget deine Identität zu überprüfen",
+            "starting_text": "Das Widget überprüft deine Nutzer-ID, kann jedoch keine Aktionen für dich ausführen:",
+            "remember_selection": "Dies merken"
+        }
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -4384,5 +4362,33 @@
         "description_7": "Beim Versuch, den Server zu kontaktieren, ist ein Verbindungsfehler aufgetreten.",
         "description_8": "Der Server ist nicht dafür konfiguriert, das Problem anzuzeigen (CORS).",
         "recent_changes_heading": "Letzte Änderungen, die noch nicht eingegangen sind"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Mitglied",
+            "other": "%(count)s Mitglieder"
+        },
+        "public_rooms_label": "Öffentliche Räume",
+        "heading_with_query": "Nutze \"%(query)s\" zum Suchen",
+        "heading_without_query": "Suche nach",
+        "spaces_title": "Spaces, in denen du Mitglied bist",
+        "failed_querying_public_rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
+        "other_rooms_in_space": "Andere Räume in %(spaceName)s",
+        "join_button_text": "%(roomAddress)s betreten",
+        "result_may_be_hidden_privacy_warning": "Einige Vorschläge könnten aus Gründen der Privatsphäre ausgeblendet sein",
+        "cant_find_person_helpful_hint": "Falls du nicht findest wen du suchst, send ihnen deinen Einladungslink.",
+        "copy_link_text": "Einladungslink kopieren",
+        "result_may_be_hidden_warning": "Einige Ergebnisse können ausgeblendet sein",
+        "cant_find_room_helpful_hint": "Falls du den Raum nicht findest, frag nach einer Einladung oder erstelle einen neuen Raum.",
+        "create_new_room_button": "Neuer Raum",
+        "group_chat_section_title": "Andere Optionen",
+        "start_group_chat_button": "Gruppenunterhaltung beginnen",
+        "message_search_section_title": "Andere Suchen",
+        "recent_searches_section_title": "Kürzliche Gesucht",
+        "recently_viewed_section_title": "Kürzlich besucht",
+        "search_dialog": "Suchdialog",
+        "remove_filter": "Entferne Suchfilter für %(filter)s",
+        "search_messages_hint": "Wenn du Nachrichten durchsuchen willst, klicke auf das <icon/> Icon oberhalb des Raumes",
+        "keyboard_scroll_hint": "Benutze <arrows/> zum scrollen"
     }
 }

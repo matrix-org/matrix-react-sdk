@@ -50,7 +50,6 @@
     "%(duration)sd": "%(duration)sd",
     "Join Room": "Hyni në dhomë",
     "Email address": "Adresë email",
-    "Create new room": "Krijoni dhomë të re",
     "Home": "Kreu",
     "%(items)s and %(lastItem)s": "%(items)s dhe %(lastItem)s",
     "collapse": "tkurre",
@@ -143,7 +142,6 @@
     },
     "Cancel All": "Anuloji Krejt",
     "Upload Error": "Gabim Ngarkimi",
-    "Remember my selection for this widget": "Mbaje mend përzgjedhjen time për këtë widget",
     "To help us prevent this in future, please <a>send us logs</a>.": "Për të na ndihmuar ta parandalojmë këtë në të ardhmen, ju lutemi, <a>dërgonani regjistra</a>.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Mungojnë disa të dhëna sesioni, përfshi kyçe mesazhesh të fshehtëzuar. Për të ndrequr këtë, dilni dhe hyni, duke rikthyer kështu kyçet nga kopjeruajtje.",
     "Your browser likely removed this data when running low on disk space.": "Ka gjasa që shfletuesi juaj të ketë hequr këto të dhëna kur kish pak hapësirë në disk.",
@@ -164,7 +162,6 @@
     "%(name)s cancelled": "%(name)s anuloi",
     "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
-    "Verification Request": "Kërkesë Verifikimi",
     "%(count)s verified sessions": {
         "other": "%(count)s sesione të verifikuar",
         "one": "1 sesion i verifikuar"
@@ -461,9 +458,6 @@
     "Bangladesh": "Bangladesh",
     "Falkland Islands": "Ishujt Falkland",
     "Sweden": "Suedi",
-    "Decline All": "Hidhi Krejt Poshtë",
-    "This widget would like to:": "Ky widget do të donte të:",
-    "Approve widget permissions": "Miratoni leje widget-i",
     "Hold": "Mbaje",
     "Resume": "Rimerre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>",
@@ -481,9 +475,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "S’arrihet të hyhet në depozitë të fshehtë. Ju lutemi, verifikoni se keni dhënë Frazën e saktë të Sigurisë.",
     "Invalid Security Key": "Kyç Sigurie i Pavlefshëm",
     "Wrong Security Key": "Kyç Sigurie i Gabuar",
-    "Remember this": "Mbaje mend këtë",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
-    "Allow this widget to verify your identity": "Lejojeni këtë widget të verifikojë identitetin tuaj",
     "%(count)s members": {
         "one": "%(count)s anëtar",
         "other": "%(count)s anëtarë"
@@ -527,24 +518,12 @@
     "Themes": "Tema",
     "Moderation": "Moderim",
     "Messaging": "Shkëmbim mesazhes",
-    "Recently viewed": "Parë së fundi",
-    "Recent searches": "Kërkime së fundi",
-    "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
-    "Other searches": "Kërkime të tjera",
-    "Public rooms": "Dhoma publike",
-    "Use \"%(query)s\" to search": "Përdorni \"%(query)s\" për kërkim",
-    "Other rooms in %(spaceName)s": "Dhoma të tjera në %(spaceName)s",
-    "Spaces you're in": "Hapësira ku jeni i pranishëm",
     "Link to room": "Lidhje për te dhoma",
     "Open in OpenStreetMap": "Hape në OpenStreetMap",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Kjo grupon fjalosjet tuaja me anëtarë në këtë hapësirë. Çaktivizimi i kësaj do t’i fshehë këto fjalosje prej pamjes tuaj për %(spaceName)s.",
     "Sections to show": "Ndarje për t’u shfaqur",
-    "Verify other device": "Verifikoni pajisje tjetër",
-    "Use <arrows/> to scroll": "Përdorni <arrows/> për rrëshqitje",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "Join %(roomAddress)s": "Hyni te %(roomAddress)s",
-    "Search Dialog": "Dialog Kërkimi",
     "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
     "Unsent": "Të padërguar",
     "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
@@ -563,21 +542,8 @@
     "Live location ended": "Vendndodhja “live” përfundoi",
     "Updated %(humanizedUpdateTime)s": "Përditësuar më %(humanizedUpdateTime)s",
     "Cameras": "Kamera",
-    "Remove search filter for %(filter)s": "Hiq filtër kërkimesh për %(filter)s",
-    "Start a group chat": "Nisni një fjalosje grupi",
-    "Other options": "Mundësi të tjera",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Nëse s’gjeni dot dhomën për të cilën po shihni, kërkoni një ftesë, ose krijoni një dhomë të re.",
-    "Some results may be hidden": "Disa përfundime mund të jenë të fshehura",
-    "Copy invite link": "Kopjo lidhje ftese",
-    "If you can't see who you're looking for, send them your invite link.": "Nëse s’e shihni atë që po kërkoni, dërgojini lidhjen e ftesës tuaj.",
-    "Some results may be hidden for privacy": "Disa përfundime mund të jenë fshehur, për arsye privatësie",
     "Show spaces": "Shfaq hapësira",
     "Show rooms": "Shfaq dhoma",
-    "Search for": "Kërkoni për",
-    "%(count)s Members": {
-        "one": "%(count)s Anëtar",
-        "other": "%(count)s Anëtarë"
-    },
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
@@ -2794,7 +2760,9 @@
             "manual_device_verification_device_name_label": "Emër sesioni",
             "manual_device_verification_device_id_label": "ID sesioni",
             "manual_device_verification_device_key_label": "Kyç sesioni",
-            "manual_device_verification_footer": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar."
+            "manual_device_verification_footer": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar.",
+            "verification_dialog_title_device": "Verifikoni pajisje tjetër",
+            "verification_dialog_title_user": "Kërkesë Verifikimi"
         },
         "old_version_detected_title": "U pikasën të dhëna kriptografie të vjetër",
         "old_version_detected_description": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
@@ -3285,7 +3253,18 @@
         "set_room_layout": "Ujdise skemën e dhomës time për këdo",
         "close_to_view_right_panel": "Mbylleni këtë widget, që ta shihni te ky panel",
         "modal_title_default": "Widget Modal",
-        "modal_data_warning": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s"
+        "modal_data_warning": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Miratoni leje widget-i",
+            "content_starting_text": "Ky widget do të donte të:",
+            "decline_all_permission": "Hidhi Krejt Poshtë",
+            "remember_Selection": "Mbaje mend përzgjedhjen time për këtë widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Lejojeni këtë widget të verifikojë identitetin tuaj",
+            "starting_text": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
+            "remember_selection": "Mbaje mend këtë"
+        }
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -4270,5 +4249,32 @@
         "description_7": "Ndodhi një gabim teksa provohej lidhja me shërbyesin.",
         "description_8": "Shërbyesi s’është formësuar të tregojë se cili është problemi (CORS).",
         "recent_changes_heading": "Ndryshime tani së fundi që s’janë marrë ende"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Anëtar",
+            "other": "%(count)s Anëtarë"
+        },
+        "public_rooms_label": "Dhoma publike",
+        "heading_with_query": "Përdorni \"%(query)s\" për kërkim",
+        "heading_without_query": "Kërkoni për",
+        "spaces_title": "Hapësira ku jeni i pranishëm",
+        "other_rooms_in_space": "Dhoma të tjera në %(spaceName)s",
+        "join_button_text": "Hyni te %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Disa përfundime mund të jenë fshehur, për arsye privatësie",
+        "cant_find_person_helpful_hint": "Nëse s’e shihni atë që po kërkoni, dërgojini lidhjen e ftesës tuaj.",
+        "copy_link_text": "Kopjo lidhje ftese",
+        "result_may_be_hidden_warning": "Disa përfundime mund të jenë të fshehura",
+        "cant_find_room_helpful_hint": "Nëse s’gjeni dot dhomën për të cilën po shihni, kërkoni një ftesë, ose krijoni një dhomë të re.",
+        "create_new_room_button": "Krijoni dhomë të re",
+        "group_chat_section_title": "Mundësi të tjera",
+        "start_group_chat_button": "Nisni një fjalosje grupi",
+        "message_search_section_title": "Kërkime të tjera",
+        "recent_searches_section_title": "Kërkime së fundi",
+        "recently_viewed_section_title": "Parë së fundi",
+        "search_dialog": "Dialog Kërkimi",
+        "remove_filter": "Hiq filtër kërkimesh për %(filter)s",
+        "search_messages_hint": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
+        "keyboard_scroll_hint": "Përdorni <arrows/> për rrëshqitje"
     }
 }

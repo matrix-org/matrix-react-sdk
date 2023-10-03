@@ -29,7 +29,6 @@
     "Sunday": "Bazar",
     "Friday": "Cümə",
     "Today": "Bu gün",
-    "Create new room": "Otağı yaratmaq",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
     "Verification Pending": "Gözləmə təsdiq etmələr",
@@ -375,5 +374,8 @@
     },
     "report_content": {
         "other_label": "Digər"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Otağı yaratmaq"
     }
 }

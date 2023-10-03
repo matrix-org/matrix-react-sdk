@@ -45,7 +45,6 @@
     "not specified": "non indicado",
     "Email address": "Enderezo de correo",
     "Delete Widget": "Eliminar widget",
-    "Create new room": "Crear unha nova sala",
     "Home": "Inicio",
     "%(items)s and %(lastItem)s": "%(items)s e %(lastItem)s",
     "collapse": "comprimir",
@@ -190,8 +189,6 @@
     },
     "Cancel All": "Cancelar todo",
     "Upload Error": "Fallo ao subir",
-    "Verification Request": "Solicitude de Verificación",
-    "Remember my selection for this widget": "Lembrar a miña decisión para este widget",
     "Restoring keys from backup": "Restablecendo chaves desde a copia",
     "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restablecidas",
     "Unable to load backup status": "Non cargou o estado da copia",
@@ -462,9 +459,6 @@
     "Equatorial Guinea": "Guinea Ecuatorial",
     "El Salvador": "O Salvador",
     "Egypt": "Exipto",
-    "Decline All": "Rexeitar todo",
-    "This widget would like to:": "O widget podería querer:",
-    "Approve widget permissions": "Aprovar permisos do widget",
     "Hold": "Colgar",
     "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se esqueceches a túa Chave de Seguridade podes <button>establecer novas opcións de recuperación</button>",
@@ -482,9 +476,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Non se puido acceder ao almacenaxe segredo. Comproba que escribiches correctamente a Frase de Seguridade.",
     "Invalid Security Key": "Chave de Seguridade non válida",
     "Wrong Security Key": "Chave de Seguridade incorrecta",
-    "Allow this widget to verify your identity": "Permitir a este widget verificar a túa identidade",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
-    "Remember this": "Lembrar isto",
     "%(count)s members": {
         "one": "%(count)s participante",
         "other": "%(count)s participantes"
@@ -527,25 +518,13 @@
     "Themes": "Decorados",
     "Moderation": "Moderación",
     "Messaging": "Conversando",
-    "Recently viewed": "Visto recentemente",
-    "Recent searches": "Buscas recentes",
-    "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
-    "Other searches": "Outras buscas",
-    "Public rooms": "Salas públicas",
-    "Use \"%(query)s\" to search": "Usa \"%(query)s\" para buscar",
-    "Other rooms in %(spaceName)s": "Outras salas en %(spaceName)s",
-    "Spaces you're in": "Espazos nos que estás",
     "Link to room": "Ligazón á sala",
     "toggle event": "activar evento",
     "Open in OpenStreetMap": "Abrir en OpenStreetMap",
-    "Verify other device": "Verificar outro dispositivo",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Esto agrupa os teus chats cos membros deste espazo. Apagandoo ocultará estos chats da túa vista de %(spaceName)s.",
     "Sections to show": "Seccións a mostrar",
-    "Use <arrows/> to scroll": "Usa <arrows/> para desprazarte",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "Join %(roomAddress)s": "Unirse a %(roomAddress)s",
-    "Search Dialog": "Diálogo de busca",
     "You are sharing your live location": "Vas compartir en directo a túa localización",
     "Unsent": "Sen enviar",
     "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
@@ -571,19 +550,6 @@
     "Unread email icon": "Icona de email non lido",
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
-    "Remove search filter for %(filter)s": "Elimina o filtro de busca de %(filter)s",
-    "Start a group chat": "Inicia un chat en grupo",
-    "Other options": "Outras opcións",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Se non atopas a sala que buscas, pide un convite ou crea unha nova sala.",
-    "Some results may be hidden": "Algúns resultados poderían estar agochados",
-    "Copy invite link": "Copia a ligazón de convite",
-    "If you can't see who you're looking for, send them your invite link.": "Se non atopas a quen buscas, envíalle unha ligazón de convite.",
-    "Some results may be hidden for privacy": "Algúns resultados poden estar agochados por privacidade",
-    "Search for": "Buscar",
-    "%(count)s Members": {
-        "one": "%(count)s Participante",
-        "other": "%(count)s Participantes"
-    },
     "You cannot search for rooms that are neither a room nor a space": "Non podes buscar salas que non son nin unha sala nin un espazo",
     "Show spaces": "Mostrar espazos",
     "Show rooms": "Mostrar salas",
@@ -2564,7 +2530,9 @@
             "manual_device_verification_device_name_label": "Nome da sesión",
             "manual_device_verification_device_id_label": "ID de sesión",
             "manual_device_verification_device_key_label": "Chave da sesión",
-            "manual_device_verification_footer": "Se non concordan, a seguridade da comunicación podería estar comprometida."
+            "manual_device_verification_footer": "Se non concordan, a seguridade da comunicación podería estar comprometida.",
+            "verification_dialog_title_device": "Verificar outro dispositivo",
+            "verification_dialog_title_user": "Solicitude de Verificación"
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -3000,7 +2968,18 @@
         "set_room_layout": "Establecer a miña disposición da sala para todas",
         "close_to_view_right_panel": "Pecha este widget para velo neste panel",
         "modal_title_default": "Widget modal",
-        "modal_data_warning": "Os datos nesta pantalla compártense con %(widgetDomain)s"
+        "modal_data_warning": "Os datos nesta pantalla compártense con %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Aprovar permisos do widget",
+            "content_starting_text": "O widget podería querer:",
+            "decline_all_permission": "Rexeitar todo",
+            "remember_Selection": "Lembrar a miña decisión para este widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Permitir a este widget verificar a túa identidade",
+            "starting_text": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
+            "remember_selection": "Lembrar isto"
+        }
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3879,5 +3858,32 @@
         "description_7": "Aconteceu un fallo de conexión ó intentar contactar co servidor.",
         "description_8": "O servidor non está configurado para sinalar cal é o problema (CORS).",
         "recent_changes_heading": "Cambios recentes que aínda non foron recibidos"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s Participante",
+            "other": "%(count)s Participantes"
+        },
+        "public_rooms_label": "Salas públicas",
+        "heading_with_query": "Usa \"%(query)s\" para buscar",
+        "heading_without_query": "Buscar",
+        "spaces_title": "Espazos nos que estás",
+        "other_rooms_in_space": "Outras salas en %(spaceName)s",
+        "join_button_text": "Unirse a %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Algúns resultados poden estar agochados por privacidade",
+        "cant_find_person_helpful_hint": "Se non atopas a quen buscas, envíalle unha ligazón de convite.",
+        "copy_link_text": "Copia a ligazón de convite",
+        "result_may_be_hidden_warning": "Algúns resultados poderían estar agochados",
+        "cant_find_room_helpful_hint": "Se non atopas a sala que buscas, pide un convite ou crea unha nova sala.",
+        "create_new_room_button": "Crear unha nova sala",
+        "group_chat_section_title": "Outras opcións",
+        "start_group_chat_button": "Inicia un chat en grupo",
+        "message_search_section_title": "Outras buscas",
+        "recent_searches_section_title": "Buscas recentes",
+        "recently_viewed_section_title": "Visto recentemente",
+        "search_dialog": "Diálogo de busca",
+        "remove_filter": "Elimina o filtro de busca de %(filter)s",
+        "search_messages_hint": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
+        "keyboard_scroll_hint": "Usa <arrows/> para desprazarte"
     }
 }

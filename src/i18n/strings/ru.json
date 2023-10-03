@@ -34,7 +34,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Email address": "Электронная почта",
-    "Create new room": "Создать комнату",
     "Home": "Главная",
     "(~%(count)s results)": {
         "other": "(~%(count)s результатов)",
@@ -151,7 +150,6 @@
     },
     "Cancel All": "Отменить все",
     "Upload Error": "Ошибка загрузки",
-    "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
     "Find others by phone or email": "Найти других по номеру телефона или email",
@@ -196,7 +194,6 @@
     "a new cross-signing key signature": "новый ключ подписи для кросс-подписи",
     "a device cross-signing signature": "подпись устройства для кросс-подписи",
     "%(brand)s encountered an error during upload of:": "%(brand)s обнаружил ошибку при загрузке файла:",
-    "Verification Request": "Запрос на сверку",
     "Wrong file type": "Неправильный тип файла",
     "Looks good!": "Выглядит неплохо!",
     "Security Phrase": "Мнемоническая фраза",
@@ -213,8 +210,6 @@
     "Not encrypted": "Не зашифровано",
     "Backup version:": "Версия резервной копии:",
     "Unable to set up keys": "Невозможно настроить ключи",
-    "Decline All": "Отклонить все",
-    "Approve widget permissions": "Одобрить разрешения виджета",
     "Zimbabwe": "Зимбабве",
     "Zambia": "Замбия",
     "Yemen": "Йемен",
@@ -464,10 +459,8 @@
     "Afghanistan": "Афганистан",
     "United States": "Соединенные Штаты Америки",
     "United Kingdom": "Великобритания",
-    "This widget would like to:": "Этому виджету хотелось бы:",
     "Hold": "Удерживать",
     "Resume": "Возобновить",
-    "Allow this widget to verify your identity": "Разрешите этому виджету проверить ваш идентификатор",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Получите доступ к своей истории защищенных сообщений и настройте безопасный обмен сообщениями, введя ключ безопасности.",
     "Not a valid Security Key": "Неправильный ключ безопасности",
@@ -483,8 +476,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Невозможно получить доступ к секретному хранилищу. Убедитесь, что вы ввели правильную секретную фразу.",
     "Invalid Security Key": "Неверный ключ безопасности",
     "Wrong Security Key": "Неправильный ключ безопасности",
-    "Remember this": "Запомнить это",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Виджет проверит ваш идентификатор пользователя, но не сможет выполнять за вас действия:",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -515,14 +506,6 @@
     "Thread options": "Параметры обсуждения",
     "Forget": "Забыть",
     "Open in OpenStreetMap": "Открыть в OpenStreetMap",
-    "Verify other device": "Проверить другое устройство",
-    "Recent searches": "Недавние поиски",
-    "To search messages, look for this icon at the top of a room <icon/>": "Для поиска сообщений найдите этот значок <icon/> в верхней части комнаты",
-    "Other searches": "Другие поиски",
-    "Public rooms": "Публичные комнаты",
-    "Use \"%(query)s\" to search": "Используйте \"%(query)s\" для поиска",
-    "Other rooms in %(spaceName)s": "Прочие комнаты в %(spaceName)s",
-    "Spaces you're in": "Ваши пространства",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Это сгруппирует ваши чаты с участниками этого пространства. Выключение, скроет эти чаты от вашего просмотра в %(spaceName)s.",
     "Sections to show": "Разделы для показа",
     "Link to room": "Ссылка на комнату",
@@ -531,7 +514,6 @@
         "one": "%(count)s голос",
         "other": "%(count)s голосов"
     },
-    "Recently viewed": "Недавно просмотренные",
     "Developer": "Разработка",
     "Experimental": "Экспериментально",
     "Themes": "Темы",
@@ -541,9 +523,6 @@
         "one": "%(spaceName)s и %(count)s другой",
         "other": "%(spaceName)s и %(count)s других"
     },
-    "Search Dialog": "Окно поиска",
-    "Use <arrows/> to scroll": "Используйте <arrows/> для прокрутки",
-    "Join %(roomAddress)s": "Присоединиться к %(roomAddress)s",
     "Feedback sent! Thanks, we appreciate it!": "Отзыв отправлен! Спасибо, мы ценим это!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s и %(space2Name)s",
     "Explore public spaces in the new search dialog": "Исследуйте публичные пространства в новом диалоговом окне поиска",
@@ -566,28 +545,15 @@
     "Output devices": "Устройства вывода",
     "Input devices": "Устройства ввода",
     "Unsent": "Не отправлено",
-    "Remove search filter for %(filter)s": "Удалить фильтр поиска для %(filter)s",
-    "Start a group chat": "Начать групповой чат",
-    "Other options": "Другие опции",
-    "Some results may be hidden": "Некоторые результаты могут быть скрыты",
-    "Copy invite link": "Копировать ссылку приглашения",
-    "If you can't see who you're looking for, send them your invite link.": "Если вы не видите того, кто вам нужен, отправьте ему свою ссылку приглашения.",
-    "Some results may be hidden for privacy": "Некоторые результаты могут быть скрыты из-за конфиденциальности",
     "You cannot search for rooms that are neither a room nor a space": "Вы не можете искать комнаты, которые не являются ни комнатой, ни пространством",
     "Show spaces": "Показать пространства",
     "Show rooms": "Показать комнаты",
-    "Search for": "Поиск",
-    "%(count)s Members": {
-        "one": "%(count)s участник",
-        "other": "%(count)s участников"
-    },
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
     },
     "Live location ended": "Трансляция местоположения завершена",
     "Live location enabled": "Трансляция местоположения включена",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
     "Saved Items": "Сохранённые объекты",
     "Manually verify by text": "Ручная сверка по тексту",
     "Interactively verify by emoji": "Интерактивная сверка по смайлам",
@@ -2692,7 +2658,9 @@
             "manual_device_verification_device_name_label": "Название сеанса",
             "manual_device_verification_device_id_label": "ID сеанса",
             "manual_device_verification_device_key_label": "Ключ сеанса",
-            "manual_device_verification_footer": "Если они не совпадают, безопасность вашего общения может быть поставлена под угрозу."
+            "manual_device_verification_footer": "Если они не совпадают, безопасность вашего общения может быть поставлена под угрозу.",
+            "verification_dialog_title_device": "Проверить другое устройство",
+            "verification_dialog_title_user": "Запрос на сверку"
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -3141,7 +3109,18 @@
         "set_room_layout": "Установить мой макет комнаты для всех",
         "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели",
         "modal_title_default": "Модальный виджет",
-        "modal_data_warning": "Данные на этом экране используются %(widgetDomain)s"
+        "modal_data_warning": "Данные на этом экране используются %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Одобрить разрешения виджета",
+            "content_starting_text": "Этому виджету хотелось бы:",
+            "decline_all_permission": "Отклонить все",
+            "remember_Selection": "Запомнить мой выбор для этого виджета"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Разрешите этому виджету проверить ваш идентификатор",
+            "starting_text": "Виджет проверит ваш идентификатор пользователя, но не сможет выполнять за вас действия:",
+            "remember_selection": "Запомнить это"
+        }
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -4062,5 +4041,32 @@
         "description_7": "Произошла ошибка при подключении к серверу.",
         "description_8": "Сервер не настроен должным образом, чтобы определить проблему (CORS).",
         "recent_changes_heading": "Последние изменения, которые еще не были получены"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s участник",
+            "other": "%(count)s участников"
+        },
+        "public_rooms_label": "Публичные комнаты",
+        "heading_with_query": "Используйте \"%(query)s\" для поиска",
+        "heading_without_query": "Поиск",
+        "spaces_title": "Ваши пространства",
+        "other_rooms_in_space": "Прочие комнаты в %(spaceName)s",
+        "join_button_text": "Присоединиться к %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Некоторые результаты могут быть скрыты из-за конфиденциальности",
+        "cant_find_person_helpful_hint": "Если вы не видите того, кто вам нужен, отправьте ему свою ссылку приглашения.",
+        "copy_link_text": "Копировать ссылку приглашения",
+        "result_may_be_hidden_warning": "Некоторые результаты могут быть скрыты",
+        "cant_find_room_helpful_hint": "Если не можете найти нужную комнату, просто попросите пригласить вас или создайте новую комнату.",
+        "create_new_room_button": "Создать комнату",
+        "group_chat_section_title": "Другие опции",
+        "start_group_chat_button": "Начать групповой чат",
+        "message_search_section_title": "Другие поиски",
+        "recent_searches_section_title": "Недавние поиски",
+        "recently_viewed_section_title": "Недавно просмотренные",
+        "search_dialog": "Окно поиска",
+        "remove_filter": "Удалить фильтр поиска для %(filter)s",
+        "search_messages_hint": "Для поиска сообщений найдите этот значок <icon/> в верхней части комнаты",
+        "keyboard_scroll_hint": "Используйте <arrows/> для прокрутки"
     }
 }

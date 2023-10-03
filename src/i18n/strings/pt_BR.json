@@ -35,7 +35,6 @@
     "Email address": "Endereço de e-mail",
     "Warning!": "Atenção!",
     "Home": "Home",
-    "Create new room": "Criar nova sala",
     "(~%(count)s results)": {
         "one": "(~%(count)s resultado)",
         "other": "(~%(count)s resultados)"
@@ -193,8 +192,6 @@
     },
     "Cancel All": "Cancelar tudo",
     "Upload Error": "Erro no envio",
-    "Verification Request": "Solicitação de confirmação",
-    "Remember my selection for this widget": "Lembrar minha escolha para este widget",
     "Wrong file type": "Tipo errado de arquivo",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
     "Missing session data": "Dados de sessão ausentes",
@@ -462,9 +459,6 @@
     "Vatican City": "Cidade do Vaticano",
     "Vanuatu": "Vanuatu",
     "Uzbekistan": "Uzbequistão",
-    "Decline All": "Recusar tudo",
-    "This widget would like to:": "Este widget gostaria de:",
-    "Approve widget permissions": "Autorizar as permissões do widget",
     "Hold": "Pausar",
     "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
@@ -482,9 +476,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Não foi possível acessar o armazenamento secreto. Verifique se você digitou a Frase de Segurança correta.",
     "Invalid Security Key": "Chave de Segurança inválida",
     "Wrong Security Key": "Chave de Segurança errada",
-    "Remember this": "Lembre-se disso",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
-    "Allow this widget to verify your identity": "Permitir que este widget verifique a sua identidade",
     "%(count)s members": {
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
@@ -507,13 +498,11 @@
         "one": "%(count)s voto",
         "other": "%(count)s votos"
     },
-    "Recently viewed": "Visualizado recentemente",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "Public rooms": "Salas públicas",
     "%(count)s participants": {
         "other": "%(count)s participantes",
         "one": "1 participante"
@@ -2192,7 +2181,8 @@
             "manual_device_verification_device_name_label": "Nome da sessão",
             "manual_device_verification_device_id_label": "Identificador de sessão",
             "manual_device_verification_device_key_label": "Chave da sessão",
-            "manual_device_verification_footer": "Se eles não corresponderem, a segurança da sua comunicação pode estar comprometida."
+            "manual_device_verification_footer": "Se eles não corresponderem, a segurança da sua comunicação pode estar comprometida.",
+            "verification_dialog_title_user": "Solicitação de confirmação"
         },
         "old_version_detected_title": "Dados de criptografia antigos foram detectados",
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
@@ -2584,7 +2574,18 @@
         "set_room_layout": "Definir a minha aparência da sala para todos",
         "close_to_view_right_panel": "Feche este widget para visualizá-lo neste painel",
         "modal_title_default": "Popup do widget",
-        "modal_data_warning": "Dados nessa tela são compartilhados com %(widgetDomain)s"
+        "modal_data_warning": "Dados nessa tela são compartilhados com %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Autorizar as permissões do widget",
+            "content_starting_text": "Este widget gostaria de:",
+            "decline_all_permission": "Recusar tudo",
+            "remember_Selection": "Lembrar minha escolha para este widget"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Permitir que este widget verifique a sua identidade",
+            "starting_text": "O widget verificará o seu ID de usuário, mas não poderá realizar ações para você:",
+            "remember_selection": "Lembre-se disso"
+        }
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3277,5 +3278,10 @@
         "description_7": "Um erro ocorreu na conexão do Element com o servidor.",
         "description_8": "O servidor não está configurado para indicar qual é o problema (CORS).",
         "recent_changes_heading": "Alterações recentes que ainda não foram recebidas"
+    },
+    "spotlight_dialog": {
+        "public_rooms_label": "Salas públicas",
+        "create_new_room_button": "Criar nova sala",
+        "recently_viewed_section_title": "Visualizado recentemente"
     }
 }

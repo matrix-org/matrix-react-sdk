@@ -10,7 +10,6 @@
     "Moderator": "Moderator",
     "not specified": "inte specificerad",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
-    "Create new room": "Skapa nytt rum",
     "unknown error code": "okänd felkod",
     "AM": "FM",
     "PM": "EM",
@@ -132,7 +131,6 @@
     "Anchor": "Ankare",
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
-    "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
     "To help us prevent this in future, please <a>send us logs</a>.": "För att hjälpa oss att förhindra detta i framtiden, vänligen <a>skicka oss loggar</a>.",
     "Missing session data": "Sessionsdata saknas",
@@ -191,7 +189,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
     "Command Help": "Kommandohjälp",
     "Upload all": "Ladda upp alla",
-    "Verification Request": "Verifikationsförfrågan",
     "Wrong file type": "Fel filtyp",
     "Looks good!": "Ser bra ut!",
     "Security Phrase": "Säkerhetsfras",
@@ -464,14 +461,8 @@
     "Cape Verde": "Kap Verde",
     "Hold": "Parkera",
     "Resume": "Återuppta",
-    "Decline All": "Neka alla",
-    "This widget would like to:": "Den här widgeten skulle vilja:",
-    "Approve widget permissions": "Godta widgetbehörigheter",
     "Invalid Security Key": "Ogiltig säkerhetsnyckel",
     "Wrong Security Key": "Fel säkerhetsnyckel",
-    "Remember this": "Kom ihåg det här",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Den här widgeten kommer att verifiera ditt användar-ID, men kommer inte kunna utföra handlingar som dig:",
-    "Allow this widget to verify your identity": "Tillåt att den här widgeten verifierar din identitet",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Kan inte komma åt hemlig lagring. Vänligen verifiera att du angav rätt säkerhetsfras.",
     "Security Key mismatch": "Säkerhetsnyckeln matchade inte",
     "Backup could not be decrypted with this Security Key: please verify that you entered the correct Security Key.": "Säkerhetskopian kunde inte avkrypteras med den här säkerhetsnyckeln: vänligen verifiera att du har angett rätt säkerhetsnyckel.",
@@ -522,7 +513,6 @@
     "Themes": "Teman",
     "Moderation": "Moderering",
     "Messaging": "Meddelanden",
-    "Recently viewed": "Nyligen sedda",
     "toggle event": "växla händelse",
     "%(count)s votes": {
         "one": "%(count)s röst",
@@ -533,19 +523,8 @@
     "Link to room": "Länk till rum",
     "Forget": "Glöm",
     "Open in OpenStreetMap": "Öppna i OpenStreetMap",
-    "Verify other device": "Verifiera annan enhet",
-    "Use <arrows/> to scroll": "Använd <arrows/> för att skrolla",
-    "Recent searches": "Nyliga sökningar",
-    "To search messages, look for this icon at the top of a room <icon/>": "För att söka efter meddelanden, leta efter den här ikonen på toppen av ett rum <icon/>",
-    "Other searches": "Andra sökningar",
-    "Public rooms": "Offentliga rum",
-    "Use \"%(query)s\" to search": "Använd \"%(query)s\" för att söka",
-    "Other rooms in %(spaceName)s": "Andra rum i %(spaceName)s",
-    "Spaces you're in": "Utrymmen du är med i",
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s och %(space2Name)s",
-    "Join %(roomAddress)s": "Gå med i %(roomAddress)s",
-    "Search Dialog": "Sökdialog",
     "%(count)s participants": {
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
@@ -571,22 +550,9 @@
     "Unread email icon": "Oläst e-post-ikon",
     "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
     "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
-    "Remove search filter for %(filter)s": "Ta bort sökfilter för %(filter)s",
-    "Start a group chat": "Starta en gruppchatt",
-    "Other options": "Andra alternativ",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Om du inte hittar rummet du letar efter, be om en inbjudan eller skapa ett nytt rum.",
-    "Some results may be hidden": "Vissa resultat kanske är dolda",
-    "Copy invite link": "Kopiera inbjudningslänk",
-    "If you can't see who you're looking for, send them your invite link.": "Om du inte hittar den du letar efter, skicka din inbjudningslänk till denne.",
-    "Some results may be hidden for privacy": "Vissa resultat kan vara dolda av sekretesskäl",
     "You cannot search for rooms that are neither a room nor a space": "Du kan inte söka efter rum som varken är ett rum eller ett utrymme",
     "Show spaces": "Visa utrymmen",
     "Show rooms": "Visa rum",
-    "Search for": "Sök efter",
-    "%(count)s Members": {
-        "one": "%(count)s medlem",
-        "other": "%(count)s medlemmar"
-    },
     "Explore public spaces in the new search dialog": "Utforska offentliga utrymmen i den nya sökdialogen",
     "Saved Items": "Sparade föremål",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
@@ -2825,7 +2791,9 @@
             "manual_device_verification_device_name_label": "Sessionsnamn",
             "manual_device_verification_device_id_label": "Sessions-ID",
             "manual_device_verification_device_key_label": "Sessionsnyckel",
-            "manual_device_verification_footer": "Om de inte matchar så kan din kommunikations säkerhet vara äventyrad."
+            "manual_device_verification_footer": "Om de inte matchar så kan din kommunikations säkerhet vara äventyrad.",
+            "verification_dialog_title_device": "Verifiera annan enhet",
+            "verification_dialog_title_user": "Verifikationsförfrågan"
         },
         "old_version_detected_title": "Gammal kryptografidata upptäckt",
         "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -3320,7 +3288,18 @@
         "set_room_layout": "Sätt mitt rumsarrangemang för alla",
         "close_to_view_right_panel": "Stäng den här widgeten för att se den i den här panelen",
         "modal_title_default": "Dialogruta",
-        "modal_data_warning": "Data på den här skärmen delas med %(widgetDomain)s"
+        "modal_data_warning": "Data på den här skärmen delas med %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Godta widgetbehörigheter",
+            "content_starting_text": "Den här widgeten skulle vilja:",
+            "decline_all_permission": "Neka alla",
+            "remember_Selection": "Kom ihåg mitt val för den här widgeten"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Tillåt att den här widgeten verifierar din identitet",
+            "starting_text": "Den här widgeten kommer att verifiera ditt användar-ID, men kommer inte kunna utföra handlingar som dig:",
+            "remember_selection": "Kom ihåg det här"
+        }
     },
     "feedback": {
         "sent": "Återkoppling skickad",
@@ -4317,5 +4296,32 @@
         "description_7": "Ett fel inträffade vid försök att kontakta servern.",
         "description_8": "Servern är inte inställd på att indikera vad problemet är (CORS).",
         "recent_changes_heading": "Nyliga ändringar har inte mottagits än"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s medlem",
+            "other": "%(count)s medlemmar"
+        },
+        "public_rooms_label": "Offentliga rum",
+        "heading_with_query": "Använd \"%(query)s\" för att söka",
+        "heading_without_query": "Sök efter",
+        "spaces_title": "Utrymmen du är med i",
+        "other_rooms_in_space": "Andra rum i %(spaceName)s",
+        "join_button_text": "Gå med i %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Vissa resultat kan vara dolda av sekretesskäl",
+        "cant_find_person_helpful_hint": "Om du inte hittar den du letar efter, skicka din inbjudningslänk till denne.",
+        "copy_link_text": "Kopiera inbjudningslänk",
+        "result_may_be_hidden_warning": "Vissa resultat kanske är dolda",
+        "cant_find_room_helpful_hint": "Om du inte hittar rummet du letar efter, be om en inbjudan eller skapa ett nytt rum.",
+        "create_new_room_button": "Skapa nytt rum",
+        "group_chat_section_title": "Andra alternativ",
+        "start_group_chat_button": "Starta en gruppchatt",
+        "message_search_section_title": "Andra sökningar",
+        "recent_searches_section_title": "Nyliga sökningar",
+        "recently_viewed_section_title": "Nyligen sedda",
+        "search_dialog": "Sökdialog",
+        "remove_filter": "Ta bort sökfilter för %(filter)s",
+        "search_messages_hint": "För att söka efter meddelanden, leta efter den här ikonen på toppen av ett rum <icon/>",
+        "keyboard_scroll_hint": "Använd <arrows/> för att skrolla"
     }
 }

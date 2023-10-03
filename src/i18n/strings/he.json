@@ -383,7 +383,6 @@
     "Not encrypted": "לא מוצפן",
     "not specified": "לא מוגדר",
     "Failed to connect to integration manager": "ההתחברות למנהל האינטגרציה נכשלה",
-    "Create new room": "צור חדר חדש",
     "Join Room": "הצטרף אל חדר",
     "(~%(count)s results)": {
         "one": "(תוצאת %(count)s)",
@@ -427,11 +426,6 @@
     "Security Phrase": "ביטוי אבטחה",
     "Looks good!": "נראה טוב!",
     "Wrong file type": "סוג קובץ שגוי",
-    "Remember my selection for this widget": "זכור את הבחירה שלי עבור יישומון זה",
-    "Decline All": "סרב להכל",
-    "This widget would like to:": "יישומון זה רוצה:",
-    "Approve widget permissions": "אשר הרשאות יישומון",
-    "Verification Request": "בקשת אימות",
     "Upload Error": "שגיאת העלאה",
     "Cancel All": "בטל הכל",
     "Upload %(count)s other files": {
@@ -474,9 +468,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "אין אפשרות לגשת לאחסון הסודי. אנא אשר שהזנת את ביטוי האבטחה הנכון.",
     "Invalid Security Key": "מפתח אבטחה לא חוקי",
     "Wrong Security Key": "מפתח אבטחה שגוי",
-    "Remember this": "זכור את זה",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "היישומון יאמת את מזהה המשתמש שלך, אך לא יוכל לבצע פעולות עבורך:",
-    "Allow this widget to verify your identity": "אפשר לווידג'ט זה לאמת את זהותך",
     "Enter Security Phrase": "הזן ביטוי אבטחה",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "לא ניתן לפענח גיבוי עם ביטוי אבטחה זה: אנא ודא שהזנת את ביטוי האבטחה הנכון.",
     "Incorrect Security Phrase": "ביטוי אבטחה שגוי",
@@ -486,9 +477,6 @@
     "Moderation": "מְתִינוּת",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
     "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
-    "%(count)s Members": {
-        "one": "%(count)s חברים"
-    },
     "%(count)s rooms": {
         "other": "%(count)s חדרים"
     },
@@ -2074,7 +2062,8 @@
             "manual_device_verification_device_name_label": "שם מושב",
             "manual_device_verification_device_id_label": "זהות מושב",
             "manual_device_verification_device_key_label": "מפתח מושב",
-            "manual_device_verification_footer": "אם הם לא תואמים, אבטחת התקשורת שלך עלולה להיפגע."
+            "manual_device_verification_footer": "אם הם לא תואמים, אבטחת התקשורת שלך עלולה להיפגע.",
+            "verification_dialog_title_user": "בקשת אימות"
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2456,7 +2445,18 @@
         "popout": "יישומון קופץ",
         "set_room_layout": "הגדר את פריסת החדר שלי עבור כולם",
         "modal_title_default": "יישומון מודאלי",
-        "modal_data_warning": "הנתונים על המסך הזה משותפים עם %(widgetDomain)s"
+        "modal_data_warning": "הנתונים על המסך הזה משותפים עם %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "אשר הרשאות יישומון",
+            "content_starting_text": "יישומון זה רוצה:",
+            "decline_all_permission": "סרב להכל",
+            "remember_Selection": "זכור את הבחירה שלי עבור יישומון זה"
+        },
+        "open_id_permissions_dialog": {
+            "title": "אפשר לווידג'ט זה לאמת את זהותך",
+            "starting_text": "היישומון יאמת את מזהה המשתמש שלך, אך לא יוכל לבצע פעולות עבורך:",
+            "remember_selection": "זכור את זה"
+        }
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -3140,5 +3140,11 @@
         "description_7": "אירעה שגיאת חיבור בעת ניסיון ליצור קשר עם השרת.",
         "description_8": "השרת אינו מוגדר לציין מהי הבעיה (CORS).",
         "recent_changes_heading": "שינויים אחרונים שטרם התקבלו"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s חברים"
+        },
+        "create_new_room_button": "צור חדר חדש"
     }
 }

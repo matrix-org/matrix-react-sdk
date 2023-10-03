@@ -53,7 +53,6 @@
     "Yesterday": "i går",
     "Email address": "Epostadresse",
     "Delete Widget": "Slett Widgeten",
-    "Create new room": "Lag nytt rom",
     "Home": "Heim",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "collapse": "Slå saman",
@@ -1364,5 +1363,8 @@
     },
     "report_content": {
         "other_label": "Anna"
+    },
+    "spotlight_dialog": {
+        "create_new_room_button": "Lag nytt rom"
     }
 }

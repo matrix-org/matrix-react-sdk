@@ -1,6 +1,5 @@
 {
     "This will allow you to reset your password and receive notifications.": "To pozwoli Ci zresetować Twoje hasło i otrzymać powiadomienia.",
-    "Create new room": "Utwórz nowy pokój",
     "Jan": "Sty",
     "Feb": "Lut",
     "Mar": "Mar",
@@ -410,12 +409,10 @@
     "Japan": "Japonia",
     "Jamaica": "Jamajka",
     "Italy": "Włochy",
-    "Verification Request": "Żądanie weryfikacji",
     "Find others by phone or email": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Przed wysłaniem logów, <a>zgłoś problem na GitHubie</a> opisujący twój problem.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Niektóre pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Te pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
-    "Remember my selection for this widget": "Zapamiętaj mój wybór dla tego widżetu",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Ten plik jest <b>zbyt duży</b>, aby został wysłany. Ograniczenie wielkości plików to %(limit)s, a ten plik waży %(sizeOfThisFile)s.",
     "Your browser likely removed this data when running low on disk space.": "Twoja przeglądarka prawdopodobnie usunęła te dane, kiedy brakowało jej miejsca.",
     "Missing session data": "Brakujące dane sesji",
@@ -451,7 +448,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
     "Explore public spaces in the new search dialog": "Odkrywaj publiczne przestrzenie w nowym oknie wyszukiwania",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
     "Clear cross-signing keys": "Wyczyść klucze weryfikacji krzyżowej",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Usunięcie kluczy weryfikacji krzyżowej jest trwałe. Każdy, z kim dokonano weryfikacji, zobaczy alerty bezpieczeństwa. Prawie na pewno nie chcesz tego robić, chyba że straciłeś każde urządzenie, z którego możesz weryfikować.",
     "Destroy cross-signing keys?": "Zniszczyć klucze weryfikacji krzyżowej?",
@@ -485,7 +481,6 @@
     " in <strong>%(room)s</strong>": " w <strong>%(room)s</strong>",
     "<inviter/> invites you": "<inviter/> zaprasza cię",
     "Saved Items": "Przedmioty zapisane",
-    "Recently viewed": "Ostatnio wyświetlane",
     "%(members)s and %(last)s": "%(members)s i %(last)s",
     "%(members)s and more": "%(members)s i więcej",
     "Failed to connect to integration manager": "Nie udało się połączyć z menedżerem integracji",
@@ -528,38 +523,9 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomniałeś lub straciłeś wszystkie opcje odzyskiwania? <a>Resetuj wszystko</a>",
     "Looks good!": "Wygląda dobrze!",
     "Wrong file type": "Błędny typ pliku",
-    "Remove search filter for %(filter)s": "Usuń filtr wyszukiwania dla %(filter)s",
-    "Search Dialog": "Pasek wyszukiwania",
-    "Use <arrows/> to scroll": "Użyj <arrows/>, aby przewijać",
-    "Recent searches": "Ostatnie wyszukania",
-    "To search messages, look for this icon at the top of a room <icon/>": "Aby szukać wiadomości, poszukaj tej ikony na górze pokoju <icon/>",
-    "Other searches": "Inne wyszukiwania",
-    "Start a group chat": "Rozpocznij czat grupowy",
-    "Other options": "Inne opcje",
-    "Some results may be hidden": "Niektóre wyniki mogą być ukryte",
-    "Copy invite link": "Kopiuj link z zaproszeniem",
-    "If you can't see who you're looking for, send them your invite link.": "Jeżeli nie możesz zobaczyć osób, których szukasz, wyślij im link z zaproszeniem.",
-    "Some results may be hidden for privacy": "Niektóre wyniki zostały ukryte dla ochrony prywatności",
-    "Join %(roomAddress)s": "Dołącz %(roomAddress)s",
-    "Other rooms in %(spaceName)s": "Inne pokoje w %(spaceName)s",
     "You cannot search for rooms that are neither a room nor a space": "Nie możesz szukać pokojów, które nie pokojem, ani przestrzenią",
     "Show spaces": "Pokaż przestrzenie",
     "Show rooms": "Pokaż pokoje",
-    "Spaces you're in": "Przestrzenie, w których jesteś",
-    "Search for": "Szukaj",
-    "Use \"%(query)s\" to search": "Użyj \"%(query)s\" w trakcie szukania",
-    "Public rooms": "Pokoje publiczne",
-    "%(count)s Members": {
-        "one": "%(count)s członek",
-        "other": "%(count)s członków"
-    },
-    "Remember this": "Zapamiętaj to",
-    "The widget will verify your user ID, but won't be able to perform actions for you:": "Widżet zweryfikuje twoje ID użytkownika, lecz nie będzie w stanie wykonywać za Ciebie działań:",
-    "Allow this widget to verify your identity": "Zezwól temu widżetowi na weryfikacje Twojej tożsamości",
-    "Decline All": "Odmów wszystko",
-    "This widget would like to:": "Ten widżet chciałby:",
-    "Approve widget permissions": "Zatwierdź uprawnienia widżetu",
-    "Verify other device": "Weryfikuj inne urządzenie",
     "Interactively verify by emoji": "Zweryfikuj interaktywnie za pomocą emoji",
     "Manually verify by text": "Zweryfikuj ręcznie za pomocą tekstu",
     "Be found by phone or email": "Zostań znaleziony przez numer telefonu lub adres e-mail",
@@ -2868,7 +2834,9 @@
             "manual_device_verification_device_name_label": "Nazwa sesji",
             "manual_device_verification_device_id_label": "Identyfikator sesji",
             "manual_device_verification_device_key_label": "Klucz sesji",
-            "manual_device_verification_footer": "Jeśli nie pasują, bezpieczeństwo twojego konta mogło zostać zdradzone."
+            "manual_device_verification_footer": "Jeśli nie pasują, bezpieczeństwo twojego konta mogło zostać zdradzone.",
+            "verification_dialog_title_device": "Weryfikuj inne urządzenie",
+            "verification_dialog_title_user": "Żądanie weryfikacji"
         },
         "old_version_detected_title": "Wykryto stare dane kryptograficzne",
         "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
@@ -3364,7 +3332,18 @@
         "set_room_layout": "Ustaw mój układ pokoju dla wszystkich",
         "close_to_view_right_panel": "Zamknij widżet, aby wyświetlić go w tym panelu",
         "modal_title_default": "Widżet modalny",
-        "modal_data_warning": "Dane na tym ekranie są współdzielone z %(widgetDomain)s"
+        "modal_data_warning": "Dane na tym ekranie są współdzielone z %(widgetDomain)s",
+        "capabilities_dialog": {
+            "title": "Zatwierdź uprawnienia widżetu",
+            "content_starting_text": "Ten widżet chciałby:",
+            "decline_all_permission": "Odmów wszystko",
+            "remember_Selection": "Zapamiętaj mój wybór dla tego widżetu"
+        },
+        "open_id_permissions_dialog": {
+            "title": "Zezwól temu widżetowi na weryfikacje Twojej tożsamości",
+            "starting_text": "Widżet zweryfikuje twoje ID użytkownika, lecz nie będzie w stanie wykonywać za Ciebie działań:",
+            "remember_selection": "Zapamiętaj to"
+        }
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -4359,5 +4338,32 @@
         "description_7": "Wystąpił błąd połączenia podczas próby skontaktowania się z serwerem.",
         "description_8": "Serwer nie został skonfigurowany, aby wskazać co jest problemem (CORS).",
         "recent_changes_heading": "Najnowsze zmiany nie zostały jeszcze wprowadzone"
+    },
+    "spotlight_dialog": {
+        "count_of_members": {
+            "one": "%(count)s członek",
+            "other": "%(count)s członków"
+        },
+        "public_rooms_label": "Pokoje publiczne",
+        "heading_with_query": "Użyj \"%(query)s\" w trakcie szukania",
+        "heading_without_query": "Szukaj",
+        "spaces_title": "Przestrzenie, w których jesteś",
+        "other_rooms_in_space": "Inne pokoje w %(spaceName)s",
+        "join_button_text": "Dołącz %(roomAddress)s",
+        "result_may_be_hidden_privacy_warning": "Niektóre wyniki zostały ukryte dla ochrony prywatności",
+        "cant_find_person_helpful_hint": "Jeżeli nie możesz zobaczyć osób, których szukasz, wyślij im link z zaproszeniem.",
+        "copy_link_text": "Kopiuj link z zaproszeniem",
+        "result_may_be_hidden_warning": "Niektóre wyniki mogą być ukryte",
+        "cant_find_room_helpful_hint": "Jeśli nie możesz znaleźć pokoju, którego szukasz, poproś o zaproszenie lub utwórz nowy pokój.",
+        "create_new_room_button": "Utwórz nowy pokój",
+        "group_chat_section_title": "Inne opcje",
+        "start_group_chat_button": "Rozpocznij czat grupowy",
+        "message_search_section_title": "Inne wyszukiwania",
+        "recent_searches_section_title": "Ostatnie wyszukania",
+        "recently_viewed_section_title": "Ostatnio wyświetlane",
+        "search_dialog": "Pasek wyszukiwania",
+        "remove_filter": "Usuń filtr wyszukiwania dla %(filter)s",
+        "search_messages_hint": "Aby szukać wiadomości, poszukaj tej ikony na górze pokoju <icon/>",
+        "keyboard_scroll_hint": "Użyj <arrows/>, aby przewijać"
     }
 }

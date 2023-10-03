@@ -15,7 +15,6 @@
         "other": "(~%(count)s rezultāti)"
     },
     "unknown error code": "nezināms kļūdas kods",
-    "Create new room": "Izveidot jaunu istabu",
     "Verification Pending": "Gaida verifikāciju",
     "Warning!": "Brīdinājums!",
     "Sun": "Sv.",
@@ -111,9 +110,7 @@
     "Link to selected message": "Saite uz izvēlēto ziņu",
     "Share Room Message": "Dalīties ar istabas ziņu",
     "%(name)s wants to verify": "%(name)s vēlas veikt verifikāciju",
-    "Decline All": "Noraidīt visu",
     "%(name)s declined": "%(name)s noraidīja",
-    "Verification Request": "Verifikācijas pieprasījums",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
     "%(count)s rooms": {
         "one": "%(count)s istaba",
@@ -395,22 +392,6 @@
         "other": "Augšupielādēt %(count)s citus failus"
     },
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
-    "Recent searches": "Nesenie meklējumi",
-    "To search messages, look for this icon at the top of a room <icon/>": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
-    "Other searches": "Citi meklējumi",
-    "Public rooms": "Publiskas istabas",
-    "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ja nevarat atrast meklēto istabu, palūdziet uzaicinājumu vai izveidojiet jaunu istabu.",
-    "If you can't see who you're looking for, send them your invite link.": "Ja neredzat meklēto personu, nosūtiet tai uzaicinājuma saiti.",
-    "Copy invite link": "Kopēt uzaicinājuma saiti",
-    "Some results may be hidden for privacy": "Daži rezultāti var būt slēpti dēļ privātuma",
-    "Some results may be hidden": "Atsevišķi rezultāti var būt slēpti",
-    "Other options": "Citas iespējas",
-    "Use \"%(query)s\" to search": "Izmantot \"%(query)s\" meklēšanai",
-    "Use <arrows/> to scroll": "Lietojiet <arrows/> ritināšanai",
-    "Search for": "Meklēt",
-    "Remove search filter for %(filter)s": "Noņemt meklēšanas filtru %(filter)s",
-    "Recently viewed": "Nesen skatītie",
-    "Start a group chat": "Uzsākt grupas čatu",
     "common": {
         "about": "Par",
         "analytics": "Analītika",
@@ -1463,7 +1444,8 @@
             "incoming_sas_device_dialog_text_2": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
             "incoming_sas_dialog_title": "Ienākošais veifikācijas pieprasījums",
             "manual_device_verification_device_id_label": "Sesijas ID",
-            "manual_device_verification_device_key_label": "Sesijas atslēga"
+            "manual_device_verification_device_key_label": "Sesijas atslēga",
+            "verification_dialog_title_user": "Verifikācijas pieprasījums"
         },
         "old_version_detected_title": "Tika uzieti novecojuši šifrēšanas dati",
         "old_version_detected_description": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
@@ -1719,7 +1701,10 @@
         "shared_data_mxid": "Jūsu lietotāja ID",
         "shared_data_theme": "Jūsu tēma",
         "shared_data_url": "%(brand)s URL",
-        "shared_data_room_id": "Istabas ID"
+        "shared_data_room_id": "Istabas ID",
+        "capabilities_dialog": {
+            "decline_all_permission": "Noraidīt visu"
+        }
     },
     "feedback": {
         "sent": "Atsauksme nosūtīta",
@@ -2160,5 +2145,24 @@
     },
     "server_offline": {
         "description_4": "Serveris bezsaistē."
+    },
+    "spotlight_dialog": {
+        "public_rooms_label": "Publiskas istabas",
+        "heading_with_query": "Izmantot \"%(query)s\" meklēšanai",
+        "heading_without_query": "Meklēt",
+        "result_may_be_hidden_privacy_warning": "Daži rezultāti var būt slēpti dēļ privātuma",
+        "cant_find_person_helpful_hint": "Ja neredzat meklēto personu, nosūtiet tai uzaicinājuma saiti.",
+        "copy_link_text": "Kopēt uzaicinājuma saiti",
+        "result_may_be_hidden_warning": "Atsevišķi rezultāti var būt slēpti",
+        "cant_find_room_helpful_hint": "Ja nevarat atrast meklēto istabu, palūdziet uzaicinājumu vai izveidojiet jaunu istabu.",
+        "create_new_room_button": "Izveidot jaunu istabu",
+        "group_chat_section_title": "Citas iespējas",
+        "start_group_chat_button": "Uzsākt grupas čatu",
+        "message_search_section_title": "Citi meklējumi",
+        "recent_searches_section_title": "Nesenie meklējumi",
+        "recently_viewed_section_title": "Nesen skatītie",
+        "remove_filter": "Noņemt meklēšanas filtru %(filter)s",
+        "search_messages_hint": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
+        "keyboard_scroll_hint": "Lietojiet <arrows/> ritināšanai"
     }
 }
