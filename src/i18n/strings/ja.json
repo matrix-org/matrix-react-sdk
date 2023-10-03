@@ -131,8 +131,6 @@
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、メールアドレス、またはユーザー名（<userId/>の形式）を指定するか、<a>このルームを共有</a>してください。",
     "e.g. my-room": "例：my-room",
     "Security Key": "セキュリティーキー",
-    "Integrations not allowed": "インテグレーションは許可されていません",
-    "Integrations are disabled": "インテグレーションが無効になっています",
     "Backup version:": "バックアップのバージョン：",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix関連のセキュリティー問題を報告するには、Matrix.orgの<a>Security Disclosure Policy</a>をご覧ください。",
     "Folder": "フォルダー",
@@ -551,8 +549,6 @@
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Messaging": "メッセージ",
     "No results found": "検索結果がありません",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "このユーザーを認証すると、信頼済として表示します。ユーザーを信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s個のセッションの復号化に失敗しました！",
     "No backup found!": "バックアップがありません！",
     "Unable to restore backup": "バックアップを復元できません",
@@ -576,7 +572,6 @@
     "Thread options": "スレッドの設定",
     "Invited people will be able to read old messages.": "招待したユーザーは、以前のメッセージを閲覧できるようになります。",
     "We couldn't create your DM.": "ダイレクトメッセージを作成できませんでした。",
-    "Confirm to continue": "確認して続行",
     "Failed to find the following users": "次のユーザーの発見に失敗しました",
     "Hold": "保留",
     "Resume": "再開",
@@ -596,7 +591,6 @@
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
     "Missing session data": "セッションのデータがありません",
     "Something went wrong trying to invite the users.": "ユーザーを招待する際に、問題が発生しました。",
-    "Incoming Verification Request": "認証のリクエストが届いています",
     "Failed to start livestream": "ライブストリームの開始に失敗しました",
     "Unable to start audio streaming.": "音声ストリーミングを開始できません。",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "セキュリティーキーを紛失した場合は、<button>新しい復元方法を設定</button>できます",
@@ -617,8 +611,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "アカウントにアクセスし、このセッションに保存されている暗号鍵を復元してください。暗号鍵がなければ、どのセッションの暗号化されたメッセージも読めなくなります。",
     "Other spaces or rooms you might not know": "知らないかもしれない他のスペースやルーム",
     "You're removing all spaces. Access will default to invite only": "全てのスペースを削除しようとしています。招待者しかアクセスできなくなります",
-    "To continue, use Single Sign On to prove your identity.": "続行するには、シングルサインオンを使用して、本人確認を行ってください。",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "このユーザーを認証すると、相手のセッションと自分のセッションを信頼済として表示します。",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "アップロードしようとしているいくつかのファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "アップロードしようとしているファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "a new master key signature": "新しいマスターキーの署名",
@@ -642,7 +634,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
     "Live location error": "位置情報（ライブ）のエラー",
     "Live location enabled": "位置情報（ライブ）が有効です",
     "%(count)s participants": {
@@ -665,7 +656,6 @@
     "Interactively verify by emoji": "絵文字で認証",
     "Manually verify by text": "テキストを使って手動で認証",
     "Modal Widget": "モーダルウィジェット",
-    "Click the button below to confirm your identity.": "本人確認のため、下のボタンをクリックしてください。",
     "%(count)s Members": {
         "other": "%(count)s人の参加者",
         "one": "%(count)s人の参加者"
@@ -699,7 +689,6 @@
     "We couldn't invite those users. Please check the users you want to invite and try again.": "ユーザーを招待できませんでした。招待したいユーザーを確認して、もう一度試してください。",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
     "Consult first": "初めに相談",
     "unknown": "不明",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "メッセージは削除されませんが、インデックスを再構成している間、検索のパフォーマンスが低下します",
@@ -722,11 +711,9 @@
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "これを行うには設定から「%(manageIntegrations)s」を有効にしてください。",
     "Loading live location…": "位置情報（ライブ）を読み込んでいます…",
     "Fetching keys from server…": "鍵をサーバーから取得しています…",
     "Checking…": "確認しています…",
-    "Waiting for partner to confirm…": "相手の承認を待機しています…",
     "Starting export process…": "エクスポートのプロセスを開始しています…",
     "common": {
         "about": "概要",
@@ -2838,7 +2825,13 @@
             "timed_out": "認証がタイムアウトしました。",
             "cancelled_self": "他の端末で認証がキャンセルされました。",
             "cancelled_user": "%(displayName)sが認証をキャンセルしました。",
-            "cancelled": "認証をキャンセルしました。"
+            "cancelled": "認証をキャンセルしました。",
+            "incoming_sas_user_dialog_text_1": "このユーザーを認証すると、信頼済として表示します。ユーザーを信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
+            "incoming_sas_user_dialog_text_2": "このユーザーを認証すると、相手のセッションと自分のセッションを信頼済として表示します。",
+            "incoming_sas_device_dialog_text_1": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
+            "incoming_sas_device_dialog_text_2": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
+            "incoming_sas_dialog_waiting": "相手の承認を待機しています…",
+            "incoming_sas_dialog_title": "認証のリクエストが届いています"
         },
         "old_version_detected_title": "古い暗号化データが検出されました",
         "old_version_detected_description": "%(brand)sの古いバージョンのデータを検出しました。これにより、古いバージョンではエンドツーエンドの暗号化が機能しなくなります。古いバージョンを使用している間に最近交換されたエンドツーエンドの暗号化されたメッセージは、このバージョンでは復号化できません。また、このバージョンで交換されたメッセージが失敗することもあります。問題が発生した場合は、ログアウトして再度ログインしてください。メッセージ履歴を保持するには、鍵をエクスポートして再インポートしてください。",
@@ -3043,7 +3036,10 @@
             "fallback_button": "認証を開始",
             "sso_title": "シングルサインオンを使用して続行",
             "sso_body": "シングルサインオンを使用して本人確認を行い、メールアドレスの追加を承認してください。",
-            "code": "コード"
+            "code": "コード",
+            "sso_preauth_body": "続行するには、シングルサインオンを使用して、本人確認を行ってください。",
+            "sso_postauth_title": "確認して続行",
+            "sso_postauth_body": "本人確認のため、下のボタンをクリックしてください。"
         },
         "password_field_label": "パスワードを入力してください",
         "password_field_strong_label": "素晴らしい、強固なパスワードです！",
@@ -4161,5 +4157,11 @@
         "send_label": "送信",
         "message_preview_heading": "メッセージのプレビュー",
         "filter_placeholder": "ルームと連絡先を検索"
+    },
+    "integrations": {
+        "disabled_dialog_title": "インテグレーションが無効になっています",
+        "disabled_dialog_description": "これを行うには設定から「%(manageIntegrations)s」を有効にしてください。",
+        "impossible_dialog_title": "インテグレーションは許可されていません",
+        "impossible_dialog_description": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。"
     }
 }

@@ -572,9 +572,6 @@
     "A call can only be transferred to a single user.": "Μια κλήση μπορεί να μεταφερθεί μόνο σε έναν χρήστη.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Δεν ήταν δυνατή η πρόσκληση αυτών των χρηστών. Ελέγξτε τους χρήστες που θέλετε να προσκαλέσετε και δοκιμάστε ξανά.",
     "Something went wrong trying to invite the users.": "Κάτι πήγε στραβά στην προσπάθεια πρόσκλησης των χρηστών.",
-    "Click the button below to confirm your identity.": "Κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε την ταυτότητά σας.",
-    "Confirm to continue": "Επιβεβαιώστε για να συνεχίσετε",
-    "To continue, use Single Sign On to prove your identity.": "Για να συνεχίσετε, χρησιμοποιήστε σύνδεση Single Sign On για να αποδείξετε την ταυτότητά σας.",
     "toggle event": "μεταβολή συμβάντος",
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
@@ -621,14 +618,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Χρησιμοποιήστε έναν διακομιστή ταυτότητας για πρόσκληση μέσω email. <default> Χρησιμοποιήστε τον προεπιλεγμένο (%(defaultIdentityServerName)s)</default> ή διαμορφώστε στις <settings>Ρυθμίσεις</settings>.",
     "Recently Direct Messaged": "Πρόσφατα Απευθείας Μηνύματα",
     "Invite by email": "Πρόσκληση μέσω email",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Το %(brand)s σας δε σας επιτρέπει να χρησιμοποιήσετε έναν διαχειριστή πρόσθετων για να το κάνετε αυτό. Επικοινωνήστε με έναν διαχειριστή.",
-    "Integrations not allowed": "Δεν επιτρέπονται πρόσθετα",
-    "Integrations are disabled": "Τα πρόσθετα έχουν απενεργοποιηθεί",
-    "Incoming Verification Request": "Εισερχόμενο Αίτημα Επαλήθευσης",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Η επαλήθευση αυτής της συσκευής θα την επισημάνει ως αξιόπιστη και οι χρήστες που έχουν επαληθευτεί μαζί σας θα εμπιστεύονται αυτήν τη συσκευή.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Επαληθεύστε αυτήν τη συσκευή για να την επισημάνετε ως αξιόπιστη. Η εμπιστοσύνη αυτής της συσκευής προσφέρει σε εσάς και σε άλλους χρήστες επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Η επαλήθευση αυτού του χρήστη θα επισημάνει τη συνεδρία του ως αξιόπιστη και θα επισημάνει επίσης τη συνεδρία σας ως αξιόπιστη σε αυτόν.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Επαληθεύστε αυτόν τον χρήστη για να τον επισημάνετε ως αξιόπιστο. Η εμπιστοσύνη των χρηστών σάς προσφέρει επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "Η μικροεφαρμογή θα επαληθεύσει το αναγνωριστικό χρήστη σας, αλλά δε θα μπορεί να εκτελέσει ενέργειες για εσάς:",
@@ -2482,7 +2471,12 @@
             "timed_out": "Η επαλήθευση έληξε.",
             "cancelled_self": "Ακυρώσατε την επαλήθευση στην άλλη συσκευή σας.",
             "cancelled_user": "%(displayName)s ακύρωσε την επαλύθευση.",
-            "cancelled": "Ακυρώσατε την επαλήθευση."
+            "cancelled": "Ακυρώσατε την επαλήθευση.",
+            "incoming_sas_user_dialog_text_1": "Επαληθεύστε αυτόν τον χρήστη για να τον επισημάνετε ως αξιόπιστο. Η εμπιστοσύνη των χρηστών σάς προσφέρει επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
+            "incoming_sas_user_dialog_text_2": "Η επαλήθευση αυτού του χρήστη θα επισημάνει τη συνεδρία του ως αξιόπιστη και θα επισημάνει επίσης τη συνεδρία σας ως αξιόπιστη σε αυτόν.",
+            "incoming_sas_device_dialog_text_1": "Επαληθεύστε αυτήν τη συσκευή για να την επισημάνετε ως αξιόπιστη. Η εμπιστοσύνη αυτής της συσκευής προσφέρει σε εσάς και σε άλλους χρήστες επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
+            "incoming_sas_device_dialog_text_2": "Η επαλήθευση αυτής της συσκευής θα την επισημάνει ως αξιόπιστη και οι χρήστες που έχουν επαληθευτεί μαζί σας θα εμπιστεύονται αυτήν τη συσκευή.",
+            "incoming_sas_dialog_title": "Εισερχόμενο Αίτημα Επαλήθευσης"
         },
         "old_version_detected_title": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
         "old_version_detected_description": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
@@ -2665,7 +2659,10 @@
             "fallback_button": "Έναρξη πιστοποίησης",
             "sso_title": "Χρήση Single Sign On για συνέχεια",
             "sso_body": "Επιβεβαιώστε την προσθήκη αυτής της διεύθυνσης ηλ. ταχυδρομείου με την χρήση Single Sign On για να επικυρώσετε την ταυτότητα σας.",
-            "code": "Κωδικός"
+            "code": "Κωδικός",
+            "sso_preauth_body": "Για να συνεχίσετε, χρησιμοποιήστε σύνδεση Single Sign On για να αποδείξετε την ταυτότητά σας.",
+            "sso_postauth_title": "Επιβεβαιώστε για να συνεχίσετε",
+            "sso_postauth_body": "Κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε την ταυτότητά σας."
         },
         "password_field_label": "Εισάγετε τον κωδικό πρόσβασης",
         "password_field_strong_label": "Πολύ καλά, ισχυρός κωδικός πρόσβασης!",
@@ -3650,5 +3647,10 @@
         "send_label": "Αποστολή",
         "message_preview_heading": "Προεπισκόπηση μηνύματος",
         "filter_placeholder": "Αναζήτηση δωματίων ή ατόμων"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Τα πρόσθετα έχουν απενεργοποιηθεί",
+        "impossible_dialog_title": "Δεν επιτρέπονται πρόσθετα",
+        "impossible_dialog_description": "Το %(brand)s σας δε σας επιτρέπει να χρησιμοποιήσετε έναν διαχειριστή πρόσθετων για να το κάνετε αυτό. Επικοινωνήστε με έναν διαχειριστή."
     }
 }

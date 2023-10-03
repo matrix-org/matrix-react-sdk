@@ -153,9 +153,6 @@
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "Integrations are disabled": "Integreringer er skrudd av",
-    "Integrations not allowed": "Integreringer er ikke tillatt",
-    "Confirm to continue": "Bekreft for å fortsette",
     "Clear cache and resync": "Tøm mellomlageret og synkroniser på nytt",
     "Manually export keys": "Eksporter nøkler manuelt",
     "Verification Pending": "Avventer verifisering",
@@ -1465,7 +1462,8 @@
             "fallback_button": "Begynn autentisering",
             "sso_title": "Bruk Single Sign On for å fortsette",
             "sso_body": "Befrekt denne e-postadressen ved å bruke Single Sign On for å bevise din identitet.",
-            "code": "Kode"
+            "code": "Kode",
+            "sso_postauth_title": "Bekreft for å fortsette"
         },
         "password_field_label": "Skriv inn passord",
         "password_field_strong_label": "Strålende, passordet er sterkt!",
@@ -1883,5 +1881,9 @@
         "sent": "Sendt",
         "send_label": "Send",
         "message_preview_heading": "Meldingsforhåndsvisning"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integreringer er skrudd av",
+        "impossible_dialog_title": "Integreringer er ikke tillatt"
     }
 }

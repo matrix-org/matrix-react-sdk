@@ -76,7 +76,6 @@
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
-    "To continue, use Single Sign On to prove your identity.": "Para continuar, usa Single Sign On para probar a túa identidade.",
     "Are you sure you want to sign out?": "Tes a certeza de querer saír?",
     "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
@@ -182,15 +181,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema.",
     "Destroy cross-signing keys?": "Destruír chaves de sinatura-cruzada?",
     "Clear cross-signing keys": "Baleirar chaves de sinatura-cruzada",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica esta usuaria para marcala como confiable. Ao confiar nas usuarias proporcionache tranquilidade extra cando usas cifrado de extremo-a-extremo.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Ao verificar esta usuaria marcarás a súa sesión como confiable, e tamén marcará a túa sesión como confiable para elas.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica este dispositivo para marcalo como confiable. Confiando neste dispositivo permite que ti e outras usuarias estedes máis tranquilas ao utilizar mensaxes cifradas.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Ao verificar este dispositivo marcaralo como confiable, e as usuarias que confiaron en ti tamén confiarán nel.",
-    "Incoming Verification Request": "Solicitude entrante de verificación",
-    "Integrations are disabled": "As Integracións están desactivadas",
-    "Integrations not allowed": "Non se permiten Integracións",
-    "Confirm to continue": "Confirma para continuar",
-    "Click the button below to confirm your identity.": "Preme no botón inferior para confirmar a túa identidade.",
     "Something went wrong trying to invite the users.": "Algo fallou ao convidar as usuarias.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Non puidemos invitar esas usuarias. Comprobas que son correctas e intenta convidalas outra vez.",
     "Failed to find the following users": "Non atopamos as seguintes usuarias",
@@ -608,7 +598,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "Or send invite link": "Ou envía ligazón de convite",
     "Some suggestions may be hidden for privacy.": "Algunhas suxestións poderían estar agochadas por privacidade.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración.",
     "User Directory": "Directorio de Usuarias",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
     "Automatically invite members from this room to the new one": "Convidar automáticamente membros desta sala á nova sala",
@@ -2652,7 +2641,12 @@
             "timed_out": "Verificación caducada.",
             "cancelled_self": "Cancelaches a verificación no teu outro dispositivo.",
             "cancelled_user": "%(displayName)s cancelou a verificación.",
-            "cancelled": "Cancelaches a verificación."
+            "cancelled": "Cancelaches a verificación.",
+            "incoming_sas_user_dialog_text_1": "Verifica esta usuaria para marcala como confiable. Ao confiar nas usuarias proporcionache tranquilidade extra cando usas cifrado de extremo-a-extremo.",
+            "incoming_sas_user_dialog_text_2": "Ao verificar esta usuaria marcarás a súa sesión como confiable, e tamén marcará a túa sesión como confiable para elas.",
+            "incoming_sas_device_dialog_text_1": "Verifica este dispositivo para marcalo como confiable. Confiando neste dispositivo permite que ti e outras usuarias estedes máis tranquilas ao utilizar mensaxes cifradas.",
+            "incoming_sas_device_dialog_text_2": "Ao verificar este dispositivo marcaralo como confiable, e as usuarias que confiaron en ti tamén confiarán nel.",
+            "incoming_sas_dialog_title": "Solicitude entrante de verificación"
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -2840,7 +2834,10 @@
             "fallback_button": "Inicie a autenticación",
             "sso_title": "Usar Single Sign On para continuar",
             "sso_body": "Confirma que queres engadir este email usando Single Sign On como proba de identidade.",
-            "code": "Código"
+            "code": "Código",
+            "sso_preauth_body": "Para continuar, usa Single Sign On para probar a túa identidade.",
+            "sso_postauth_title": "Confirma para continuar",
+            "sso_postauth_body": "Preme no botón inferior para confirmar a túa identidade."
         },
         "password_field_label": "Escribe contrasinal",
         "password_field_strong_label": "Ben, bo contrasinal!",
@@ -3867,5 +3864,10 @@
         "send_label": "Enviar",
         "message_preview_heading": "Vista previa da mensaxe",
         "filter_placeholder": "Busca salas ou persoas"
+    },
+    "integrations": {
+        "disabled_dialog_title": "As Integracións están desactivadas",
+        "impossible_dialog_title": "Non se permiten Integracións",
+        "impossible_dialog_description": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración."
     }
 }

@@ -386,16 +386,6 @@
     "Something went wrong trying to invite the users.": "در تلاش برای دعوت از کاربران مشکلی پیش آمد.",
     "We couldn't create your DM.": "نتوانستیم گفتگوی خصوصی مد نظرتان را ایجاد کنیم.",
     "Invite by email": "دعوت از طریق ایمیل",
-    "Click the button below to confirm your identity.": "برای تأیید هویت خود بر روی دکمه زیر کلیک کنید.",
-    "Confirm to continue": "برای ادامه تأیید کنید",
-    "To continue, use Single Sign On to prove your identity.": "برای ادامه از احراز هویت یکپارچه جهت اثبات هویت خود استفاده نمائید.",
-    "Integrations not allowed": "یکپارچه‌سازی‌ها اجازه داده نشده‌اند",
-    "Integrations are disabled": "پکپارچه‌سازی‌ها غیر فعال هستند",
-    "Incoming Verification Request": "درخواست تأیید دریافتی",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "با تأیید این دستگاه، آن را به عنوان مورد اعتماد علامت‌گذاری کرده و کاربرانی که شما را تأیید کرده اند، به این دستگاه اعتماد خواهند کرد.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "این دستگاه را تأیید کنید تا به عنوان مورد اعتماد علامت‌گذاری شود. اعتماد به این دستگاه در هنگام استفاده از رمزنگاری سرتاسر آرامش و اطمینان بیشتری را برای شما به ارمغان می‌آورد.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "با تأیید این کاربر ، نشست وی به عنوان مورد اعتماد علامت‌گذاری شده و همچنین نشست شما به عنوان مورد اعتماد برای وی علامت‌گذاری خواهد شد.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "این کاربر را تأیید کنید تا به عنوان کاربر مورد اعتماد علامت‌گذاری شود. اعتماد به کاربران آرامش و اطمینان بیشتری به شما در استفاده از رمزنگاری سرتاسر می‌دهد.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. اینکار را می‌توانید از طریق بخش <settings>تنظیمات</settings> انجام دهید.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "از یک سرور هویت‌سنجی برای دعوت از طریق ایمیل استفاده کنید. <default>از پیش فرض (%(defaultIdentityServerName)s) استفاده کنید</default> یا آن را در بخش <settings>تنظیمات</settings> مدیریت کنید.",
@@ -605,7 +595,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "با استفاده از نام یا نام کاربری (مانند <userId/>) از افراد دعوت کرده و یا <a>این فضای کاری را به اشتراک بگذارید</a>.",
     "Start a conversation with someone using their name or username (like <userId/>).": "با استفاده از نام یا نام کاربری (مانند <userId/>)، گفتگوی جدیدی را با دیگران شروع کنید.",
     "Start a conversation with someone using their name, email address or username (like <userId/>).": "با استفاده از نام، آدرس ایمیل و یا نام کاربری (مانند <userId/>)، یک گفتگوی جدید را شروع کنید.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s شما اجازهٔ استفاده از یک مدیر یکپارچگی را برای این کار نمی دهد. لطفاً با مدیری تماس بگیرید.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
         "other": "%(spaceName)s و %(count)s دیگران"
@@ -1999,7 +1988,12 @@
             "prompt_user": "دوباره تأیید را از نمایه آنها شروع کنید.",
             "timed_out": "مهلت تأیید تمام شد.",
             "cancelled_user": "%(displayName)s تایید هویت را لغو کرد.",
-            "cancelled": "شما تأیید هویت را لغو کردید."
+            "cancelled": "شما تأیید هویت را لغو کردید.",
+            "incoming_sas_user_dialog_text_1": "این کاربر را تأیید کنید تا به عنوان کاربر مورد اعتماد علامت‌گذاری شود. اعتماد به کاربران آرامش و اطمینان بیشتری به شما در استفاده از رمزنگاری سرتاسر می‌دهد.",
+            "incoming_sas_user_dialog_text_2": "با تأیید این کاربر ، نشست وی به عنوان مورد اعتماد علامت‌گذاری شده و همچنین نشست شما به عنوان مورد اعتماد برای وی علامت‌گذاری خواهد شد.",
+            "incoming_sas_device_dialog_text_1": "این دستگاه را تأیید کنید تا به عنوان مورد اعتماد علامت‌گذاری شود. اعتماد به این دستگاه در هنگام استفاده از رمزنگاری سرتاسر آرامش و اطمینان بیشتری را برای شما به ارمغان می‌آورد.",
+            "incoming_sas_device_dialog_text_2": "با تأیید این دستگاه، آن را به عنوان مورد اعتماد علامت‌گذاری کرده و کاربرانی که شما را تأیید کرده اند، به این دستگاه اعتماد خواهند کرد.",
+            "incoming_sas_dialog_title": "درخواست تأیید دریافتی"
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2163,7 +2157,10 @@
             "fallback_button": "آغاز فرآیند احراز هویت",
             "sso_title": "برای ادامه، از ورود یکپارچه استفاده کنید",
             "sso_body": "برای تأیید هویتتان، این نشانی رایانامه را با ورود یکپارچه تأیید کنید.",
-            "code": "کد"
+            "code": "کد",
+            "sso_preauth_body": "برای ادامه از احراز هویت یکپارچه جهت اثبات هویت خود استفاده نمائید.",
+            "sso_postauth_title": "برای ادامه تأیید کنید",
+            "sso_postauth_body": "برای تأیید هویت خود بر روی دکمه زیر کلیک کنید."
         },
         "password_field_label": "گذرواژه را وارد کنید",
         "password_field_strong_label": "احسنت، گذرواژه‌ی انتخابی قوی است!",
@@ -2974,5 +2971,10 @@
     "forward": {
         "sending": "در حال ارسال",
         "send_label": "ارسال"
+    },
+    "integrations": {
+        "disabled_dialog_title": "پکپارچه‌سازی‌ها غیر فعال هستند",
+        "impossible_dialog_title": "یکپارچه‌سازی‌ها اجازه داده نشده‌اند",
+        "impossible_dialog_description": "%(brand)s شما اجازهٔ استفاده از یک مدیر یکپارچگی را برای این کار نمی دهد. لطفاً با مدیری تماس بگیرید."
     }
 }

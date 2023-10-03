@@ -81,7 +81,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы.",
-    "Incoming Verification Request": "Входящий запрос о проверке",
     "Clear cache and resync": "Очистить кэш и выполнить повторную синхронизацию",
     "Updating %(brand)s": "Обновление %(brand)s",
     "Failed to upgrade room": "Не удалось обновить комнату",
@@ -160,7 +159,6 @@
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Проверить этого пользователя, чтобы отметить его, как доверенного. Доверенные пользователи дают вам больше уверенности при использовании шифрованных сообщений.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Ранее вы использовали %(brand)s на %(host)s с отложенной загрузкой участников. В этой версии отложенная загрузка отключена. Поскольку локальный кеш не совместим между этими двумя настройками, %(brand)s необходимо повторно синхронизировать вашу учётную запись.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Если другая версия %(brand)s все еще открыта на другой вкладке, закройте ее, так как использование %(brand)s на том же хосте с включенной и отключенной ленивой загрузкой одновременно вызовет проблемы.",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s теперь использует в 3-5 раз меньше памяти, загружая информацию о других пользователях только когда это необходимо. Пожалуйста, подождите, пока мы ресинхронизируемся с сервером!",
@@ -236,14 +234,6 @@
     "Submit logs": "Отправить логи",
     "IRC display name width": "Ширина отображаемого имени IRC",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Подтверждение этого пользователя сделает его сеанс доверенным у вас, а также сделает ваш сеанс доверенным у него.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Подтвердите это устройство, чтобы сделать его доверенным. Доверие этому устройству дает вам и другим пользователям дополнительное спокойствие при использовании зашифрованных сообщений.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Проверка этого устройства пометит его как доверенное, и пользователи, которые проверили его вместе с вами, будут доверять этому устройству.",
-    "Integrations are disabled": "Интеграции отключены",
-    "Integrations not allowed": "Интеграции не разрешены",
-    "To continue, use Single Sign On to prove your identity.": "Чтобы продолжить, используйте единый вход, чтобы подтвердить свою личность.",
-    "Confirm to continue": "Подтвердите, чтобы продолжить",
-    "Click the button below to confirm your identity.": "Нажмите кнопку ниже, чтобы подтвердить свою личность.",
     "Something went wrong trying to invite the users.": "Пытаясь пригласить пользователей, что-то пошло не так.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Мы не могли пригласить этих пользователей. Пожалуйста, проверьте пользователей, которых вы хотите пригласить, и повторите попытку.",
     "Failed to find the following users": "Не удалось найти этих пользователей",
@@ -591,7 +581,6 @@
     "Leave space": "Покинуть пространство",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
     "No results found": "Результаты не найдены",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором.",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
     "Only do this if you have no other device to complete verification with.": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
     "Reset everything": "Сбросить всё",
@@ -2780,7 +2769,12 @@
             "timed_out": "Таймаут подтверждения.",
             "cancelled_self": "Вы отменили проверку на другом устройстве.",
             "cancelled_user": "%(displayName)s отменил(а) подтверждение.",
-            "cancelled": "Вы отменили подтверждение."
+            "cancelled": "Вы отменили подтверждение.",
+            "incoming_sas_user_dialog_text_1": "Проверить этого пользователя, чтобы отметить его, как доверенного. Доверенные пользователи дают вам больше уверенности при использовании шифрованных сообщений.",
+            "incoming_sas_user_dialog_text_2": "Подтверждение этого пользователя сделает его сеанс доверенным у вас, а также сделает ваш сеанс доверенным у него.",
+            "incoming_sas_device_dialog_text_1": "Подтвердите это устройство, чтобы сделать его доверенным. Доверие этому устройству дает вам и другим пользователям дополнительное спокойствие при использовании зашифрованных сообщений.",
+            "incoming_sas_device_dialog_text_2": "Проверка этого устройства пометит его как доверенное, и пользователи, которые проверили его вместе с вами, будут доверять этому устройству.",
+            "incoming_sas_dialog_title": "Входящий запрос о проверке"
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -2972,7 +2966,10 @@
             "fallback_button": "Начать аутентификацию",
             "sso_title": "Воспользуйтесь единой точкой входа для продолжения",
             "sso_body": "Подтвердите добавление этого почтового адреса с помощью единой точки входа.",
-            "code": "Код"
+            "code": "Код",
+            "sso_preauth_body": "Чтобы продолжить, используйте единый вход, чтобы подтвердить свою личность.",
+            "sso_postauth_title": "Подтвердите, чтобы продолжить",
+            "sso_postauth_body": "Нажмите кнопку ниже, чтобы подтвердить свою личность."
         },
         "password_field_label": "Введите пароль",
         "password_field_strong_label": "Хороший, надежный пароль!",
@@ -4050,5 +4047,10 @@
         "send_label": "Отправить",
         "message_preview_heading": "Просмотр сообщения",
         "filter_placeholder": "Поиск комнат или людей"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Интеграции отключены",
+        "impossible_dialog_title": "Интеграции не разрешены",
+        "impossible_dialog_description": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором."
     }
 }

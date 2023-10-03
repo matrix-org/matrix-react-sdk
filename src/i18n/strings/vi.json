@@ -176,17 +176,6 @@
     "Something went wrong trying to invite the users.": "Đã xảy ra sự cố khi cố mời người dùng.",
     "We couldn't create your DM.": "Chúng tôi không thể tạo DM của bạn.",
     "Invite by email": "Mời qua thư điện tử",
-    "Click the button below to confirm your identity.": "Nhấp vào nút bên dưới để xác nhận danh tính của bạn.",
-    "Confirm to continue": "Xác nhận để tiếp tục",
-    "To continue, use Single Sign On to prove your identity.": "Để tiếp tục, hãy sử dụng Single Sign On để chứng minh danh tính của bạn.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s của bạn không cho phép bạn sử dụng trình quản lý tích hợp để thực hiện việc này. Vui lòng liên hệ với quản trị viên.",
-    "Integrations not allowed": "Tích hợp không được phép",
-    "Integrations are disabled": "Tích hợp đang bị tắt",
-    "Incoming Verification Request": "Yêu cầu xác thực đến",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Việc xác thực thiết bị này sẽ đánh dấu thiết bị là đáng tin cậy và những người dùng đã xác minh với bạn sẽ tin tưởng thiết bị này.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Xác thực thiết bị này để đánh dấu thiết bị là đáng tin cậy. Tin tưởng vào thiết bị này giúp bạn và những người dùng khác yên tâm hơn khi sử dụng các tin nhắn được mã hóa đầu cuối.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Việc xác thực người dùng này sẽ đánh dấu phiên của họ là đáng tin cậy và cũng đánh dấu phiên của bạn là đáng tin cậy đối với họ.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Xác thực người dùng này để đánh dấu họ là đáng tin cậy. Người dùng đáng tin cậy giúp bạn yên tâm hơn khi sử dụng các tin nhắn được mã hóa end-to-end.",
     "<inviter/> invites you": "<inviter /> mời bạn",
     "No results found": "không tim được kêt quả",
     "Email address": "Địa chỉ thư điện tử",
@@ -691,8 +680,6 @@
     "Use <arrows/> to scroll": "Dùng <arrows/> để cuộn",
     "Start DM anyway and never warn me again": "Cứ tạo phòng nhắn tin riêng và đừng cảnh báo tôi nữa",
     "Some results may be hidden": "Một số kết quả có thể bị ẩn",
-    "Waiting for partner to confirm…": "Đang đợi bên kia xác nhận…",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Bật '%(manageIntegrations)s' trong cài đặt để thực hiện.",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Không thể tìm hồ sơ cho định danh Matrix được liệt kê - bạn có muốn tiếp tục tạo phòng nhắn tin riêng?",
     "Other options": "Lựa chọn khác",
     "Input devices": "Thiết bị đầu vào",
@@ -2805,7 +2792,13 @@
             "timed_out": "Đã hết thời gian xác thực.",
             "cancelled_self": "Bạn đã hủy xác thực trên thiết bị khác của bạn.",
             "cancelled_user": "%(displayName)s đã hủy xác thực.",
-            "cancelled": "Bạn đã hủy xác thực."
+            "cancelled": "Bạn đã hủy xác thực.",
+            "incoming_sas_user_dialog_text_1": "Xác thực người dùng này để đánh dấu họ là đáng tin cậy. Người dùng đáng tin cậy giúp bạn yên tâm hơn khi sử dụng các tin nhắn được mã hóa end-to-end.",
+            "incoming_sas_user_dialog_text_2": "Việc xác thực người dùng này sẽ đánh dấu phiên của họ là đáng tin cậy và cũng đánh dấu phiên của bạn là đáng tin cậy đối với họ.",
+            "incoming_sas_device_dialog_text_1": "Xác thực thiết bị này để đánh dấu thiết bị là đáng tin cậy. Tin tưởng vào thiết bị này giúp bạn và những người dùng khác yên tâm hơn khi sử dụng các tin nhắn được mã hóa đầu cuối.",
+            "incoming_sas_device_dialog_text_2": "Việc xác thực thiết bị này sẽ đánh dấu thiết bị là đáng tin cậy và những người dùng đã xác minh với bạn sẽ tin tưởng thiết bị này.",
+            "incoming_sas_dialog_waiting": "Đang đợi bên kia xác nhận…",
+            "incoming_sas_dialog_title": "Yêu cầu xác thực đến"
         },
         "old_version_detected_title": "Đã phát hiện dữ liệu mật mã cũ",
         "old_version_detected_description": "Dữ liệu từ phiên bản cũ hơn của %(brand)s đã được phát hiện. Điều này sẽ khiến mật mã end-to-end bị trục trặc trong phiên bản cũ hơn. Các tin nhắn được mã hóa end-to-end được trao đổi gần đây trong khi sử dụng phiên bản cũ hơn có thể không giải mã được trong phiên bản này. Điều này cũng có thể khiến các tin nhắn được trao đổi với phiên bản này bị lỗi. Nếu bạn gặp sự cố, hãy đăng xuất và đăng nhập lại. Để lưu lại lịch sử tin nhắn, hãy export và re-import các khóa của bạn.",
@@ -3001,7 +2994,10 @@
             "fallback_button": "Bắt đầu xác thực",
             "sso_title": "Sử dụng Đăng Nhập Một Lần để tiếp tục",
             "sso_body": "Xác nhận việc thêm địa chỉ thư điện tử này bằng cách sử dụng Đăng Nhập Một Lần để chứng minh danh tính của bạn.",
-            "code": "Mã"
+            "code": "Mã",
+            "sso_preauth_body": "Để tiếp tục, hãy sử dụng Single Sign On để chứng minh danh tính của bạn.",
+            "sso_postauth_title": "Xác nhận để tiếp tục",
+            "sso_postauth_body": "Nhấp vào nút bên dưới để xác nhận danh tính của bạn."
         },
         "password_field_label": "Nhập mật khẩu",
         "password_field_strong_label": "Mật khẩu mạnh, tốt đó!",
@@ -4064,5 +4060,11 @@
         "send_label": "Gửi",
         "message_preview_heading": "Xem trước tin nhắn",
         "filter_placeholder": "Tìm kiếm phòng hoặc người"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Tích hợp đang bị tắt",
+        "disabled_dialog_description": "Bật '%(manageIntegrations)s' trong cài đặt để thực hiện.",
+        "impossible_dialog_title": "Tích hợp không được phép",
+        "impossible_dialog_description": "%(brand)s của bạn không cho phép bạn sử dụng trình quản lý tích hợp để thực hiện việc này. Vui lòng liên hệ với quản trị viên."
     }
 }

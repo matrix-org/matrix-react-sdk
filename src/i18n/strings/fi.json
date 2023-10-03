@@ -153,8 +153,6 @@
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Varmenna tämä käyttäjä merkitäksesi hänet luotetuksi. Käyttäjiin luottaminen antaa sinulle ylimääräistä mielenrauhaa käyttäessäsi päästä päähän -salausta.",
-    "Incoming Verification Request": "Saapuva varmennuspyyntö",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Olet aikaisemmin käytttänyt %(brand)sia laitteella %(host)s, jossa oli jäsenten laiska lataus käytössä. Tässä versiossa laiska lataus on pois käytöstä. Koska paikallinen välimuisti ei ole yhteensopiva näiden kahden asetuksen välillä, %(brand)sin täytyy synkronoida tilisi tiedot uudelleen.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jos sinulla on toinen %(brand)sin versio edelleen auki toisessa välilehdessä, suljethan sen, koska %(brand)sin käyttäminen samalla laitteella niin, että laiska lataus on toisessa välilehdessä käytössä ja toisessa ei, aiheuttaa ongelmia.",
     "Incompatible local cache": "Yhteensopimaton paikallinen välimuisti",
@@ -201,8 +199,6 @@
     "%(name)s wants to verify": "%(name)s haluaa varmentaa",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi henkilöitä sähköpostilla. <default>Käytä oletusta (%(defaultIdentityServerName)s)</default> tai aseta toinen palvelin <settings>asetuksissa</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
-    "Integrations are disabled": "Integraatiot ovat pois käytöstä",
-    "Integrations not allowed": "Integraatioiden käyttö on kielletty",
     "Verification Request": "Varmennuspyyntö",
     "%(count)s verified sessions": {
         "other": "%(count)s varmennettua istuntoa",
@@ -232,7 +228,6 @@
     "Submit logs": "Lähetä lokit",
     "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
     "Verify your other session using one of the options below.": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
-    "To continue, use Single Sign On to prove your identity.": "Todista henkilöllisyytesi kertakirjautumisen avulla jatkaaksesi.",
     "If they don't match, the security of your communication may be compromised.": "Jos ne eivät täsmää, viestinnän turvallisuus saattaa olla vaarantunut.",
     "Restoring keys from backup": "Palautetaan avaimia varmuuskopiosta",
     "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s avainta palautettu",
@@ -245,11 +240,6 @@
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Ristiinvarmennuksen avainten tuhoamista ei voi kumota. Jokainen, jonka olet varmentanut, tulee näkemään turvallisuushälytyksiä. Et todennäköisesti halua tehdä tätä, ellet ole hukannut kaikkia laitteitasi, joista pystyit ristiinvarmentamaan.",
     "Clear cross-signing keys": "Tyhjennä ristiinvarmennuksen avaimet",
     "Session key": "Istunnon tunnus",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Tämän käyttäjän varmentaminen merkitsee hänen istuntonsa luotetuksi, ja myös merkkaa sinun istuntosi luotetuksi hänen laitteissaan.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Varmenna tämä laite merkitäksesi sen luotetuksi. Tähän laitteeseen luottaminen antaa sinulle ja muille käyttäjille lisää mielenrauhaa, kun käytätte päästä päähän -salausta.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Tämän laitteen varmentaminen merkkaa sen luotetuksi, ja sinut varmentaneet käyttäjät luottavat automaattisesti tähän laitteeseen.",
-    "Confirm to continue": "Haluan jatkaa",
-    "Click the button below to confirm your identity.": "Napsauta alapuolella olevaa painiketta varmistaaksesi identiteettisi.",
     "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Seuraavat käyttäjät eivät välttämättä ole olemassa tai ne ovat epäkelpoja, joten niitä ei voida kutsua: %(csvNames)s",
     "Recently Direct Messaged": "Viimeaikaiset yksityisviestit",
     "%(brand)s encountered an error during upload of:": "%(brand)s kohtasi virheen lähettäessään:",
@@ -563,7 +553,6 @@
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
     },
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi.",
     "Search spaces": "Etsi avaruuksia",
     "Leave space": "Poistu avaruudesta",
     "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
@@ -2701,7 +2690,12 @@
             "prompt_user": "Aloita varmennus uudelleen hänen profiilista.",
             "timed_out": "Varmennuksessa kesti liikaa.",
             "cancelled_user": "%(displayName)s peruutti varmennuksen.",
-            "cancelled": "Peruutit varmennuksen."
+            "cancelled": "Peruutit varmennuksen.",
+            "incoming_sas_user_dialog_text_1": "Varmenna tämä käyttäjä merkitäksesi hänet luotetuksi. Käyttäjiin luottaminen antaa sinulle ylimääräistä mielenrauhaa käyttäessäsi päästä päähän -salausta.",
+            "incoming_sas_user_dialog_text_2": "Tämän käyttäjän varmentaminen merkitsee hänen istuntonsa luotetuksi, ja myös merkkaa sinun istuntosi luotetuksi hänen laitteissaan.",
+            "incoming_sas_device_dialog_text_1": "Varmenna tämä laite merkitäksesi sen luotetuksi. Tähän laitteeseen luottaminen antaa sinulle ja muille käyttäjille lisää mielenrauhaa, kun käytätte päästä päähän -salausta.",
+            "incoming_sas_device_dialog_text_2": "Tämän laitteen varmentaminen merkkaa sen luotetuksi, ja sinut varmentaneet käyttäjät luottavat automaattisesti tähän laitteeseen.",
+            "incoming_sas_dialog_title": "Saapuva varmennuspyyntö"
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -2897,7 +2891,10 @@
             "fallback_button": "Aloita tunnistus",
             "sso_title": "Jatka kertakirjautumista käyttäen",
             "sso_body": "Vahvista tämän sähköpostiosoitteen lisääminen todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
-            "code": "Koodi"
+            "code": "Koodi",
+            "sso_preauth_body": "Todista henkilöllisyytesi kertakirjautumisen avulla jatkaaksesi.",
+            "sso_postauth_title": "Haluan jatkaa",
+            "sso_postauth_body": "Napsauta alapuolella olevaa painiketta varmistaaksesi identiteettisi."
         },
         "password_field_label": "Syötä salasana",
         "password_field_strong_label": "Hyvä, vahva salasana!",
@@ -3957,5 +3954,10 @@
         "send_label": "Lähetä",
         "message_preview_heading": "Viestin esikatselu",
         "filter_placeholder": "Etsi huoneita tai ihmisiä"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integraatiot ovat pois käytöstä",
+        "impossible_dialog_title": "Integraatioiden käyttö on kielletty",
+        "impossible_dialog_description": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi."
     }
 }

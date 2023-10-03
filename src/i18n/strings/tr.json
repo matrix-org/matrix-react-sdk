@@ -59,8 +59,6 @@
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
     "Filter results": "Sonuçları filtrele",
-    "Integrations are disabled": "Bütünleştirmeler kapatılmış",
-    "Integrations not allowed": "Bütünleştirmelere izin verilmiyor",
     "Incompatible local cache": "Yerel geçici bellek uyumsuz",
     "Clear cache and resync": "Geçici belleği temizle ve yeniden eşle",
     "Updating %(brand)s": "%(brand)s güncelleniyor",
@@ -193,7 +191,6 @@
     "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "Incoming Verification Request": "Gelen Doğrulama İsteği",
     "Upgrade public room": "Açık odayı güncelle",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
     "We encountered an error trying to restore your previous session.": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
@@ -1629,7 +1626,8 @@
             "successful_user": "%(displayName)s başarıyla doğruladınız!",
             "timed_out": "Doğrulama zaman aşımına uğradı.",
             "cancelled_user": "%(displayName)s doğrulamayı iptal etti.",
-            "cancelled": "Doğrulamayı iptal ettiniz."
+            "cancelled": "Doğrulamayı iptal ettiniz.",
+            "incoming_sas_dialog_title": "Gelen Doğrulama İsteği"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -2338,5 +2336,9 @@
     },
     "forward": {
         "send_label": "Gönder"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Bütünleştirmeler kapatılmış",
+        "impossible_dialog_title": "Bütünleştirmelere izin verilmiyor"
     }
 }

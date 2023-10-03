@@ -94,8 +94,6 @@
     "Unable to restore backup": "A mentést nem lehet helyreállítani",
     "No backup found!": "Mentés nem található!",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s kapcsolatot nem lehet visszafejteni!",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Ellenőrizd ezt a felhasználót, hogy megbízhatónak lehessen tekinteni. Megbízható felhasználók további nyugalmat jelenthetnek ha végpontól végpontig titkosítást használsz.",
-    "Incoming Verification Request": "Bejövő Hitelesítési Kérés",
     "Email (optional)": "E-mail (nem kötelező)",
     "Dog": "Kutya",
     "Cat": "Macska",
@@ -201,8 +199,6 @@
     "%(name)s cancelled": "%(name)s megszakította",
     "%(name)s wants to verify": "%(name)s ellenőrizni szeretné",
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
-    "Integrations are disabled": "Az integrációk le vannak tiltva",
-    "Integrations not allowed": "Az integrációk nem engedélyezettek",
     "Verification Request": "Ellenőrzési kérés",
     "Upgrade private room": "Privát szoba fejlesztése",
     "Upgrade public room": "Nyilvános szoba fejlesztése",
@@ -228,9 +224,6 @@
     },
     "Session name": "Munkamenet neve",
     "Session key": "Munkamenetkulcs",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "A felhasználó ellenőrzése által az ő munkamenete megbízhatónak lesz jelölve, és a te munkameneted is megbízhatónak lesz jelölve nála.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Eszköz ellenőrzése és beállítás megbízhatóként. Az eszközben való megbízás megnyugtató lehet, ha végpontok közötti titkosítást használsz.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Az eszköz ellenőrzése megbízhatónak fogja jelezni az eszközt és azok a felhasználók, akik téged ellenőriztek, megbíznak majd ebben az eszközödben.",
     "Not Trusted": "Nem megbízható",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) új munkamenetbe lépett be, anélkül, hogy ellenőrizte volna:",
     "Ask this user to verify their session, or manually verify it below.": "Kérje meg a felhasználót, hogy hitelesítse a munkamenetét, vagy ellenőrizze kézzel lentebb.",
@@ -260,9 +253,6 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s kulcs sikeresen helyreállítva",
     "You signed in to a new session without verifying it:": "Ellenőrzés nélkül jelentkezett be egy új munkamenetbe:",
     "Verify your other session using one of the options below.": "Ellenőrizze a másik munkamenetét a lenti lehetőségek egyikével.",
-    "To continue, use Single Sign On to prove your identity.": "A folytatáshoz, használja az egyszeri bejelentkezést, hogy megerősítse a személyazonosságát.",
-    "Confirm to continue": "Erősítsd meg a továbblépéshez",
-    "Click the button below to confirm your identity.": "A személyazonossága megerősítéséhez kattintson a lenti gombra.",
     "Confirm encryption setup": "Erősítsd meg a titkosítási beállításokat",
     "Click the button below to confirm setting up encryption.": "Az alábbi gomb megnyomásával erősítsd meg, hogy megadod a titkosítási beállításokat.",
     "IRC display name width": "IRC-n megjelenítendő név szélessége",
@@ -608,7 +598,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
     "Some suggestions may be hidden for privacy.": "Adatvédelmi okokból néhány javaslat rejtve lehet.",
     "Or send invite link": "Vagy meghívó link küldése",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
     "Automatically invite members from this room to the new one": "Tagok automatikus meghívása ebből a szobából az újba",
     "Other spaces or rooms you might not know": "Más terek vagy szobák melyről lehet, hogy nem tud",
@@ -725,8 +714,6 @@
     "Loading live location…": "Élő földrajzi helyzet meghatározás betöltése…",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
     "Checking…": "Ellenőrzés…",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Ehhez engedélyezd a(z) „%(manageIntegrations)s”-t a Beállításokban.",
-    "Waiting for partner to confirm…": "Várakozás a partner megerősítésére…",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Invites by email can only be sent one at a time": "E-mail meghívóból egyszerre csak egy küldhető el",
     "Desktop app logo": "Asztali alkalmazás profilkép",
@@ -2897,7 +2884,13 @@
             "timed_out": "Az ellenőrzés időtúllépés miatt megszakadt.",
             "cancelled_self": "Az ellenőrzést megszakította a másik eszközön.",
             "cancelled_user": "%(displayName)s megszakította az ellenőrzést.",
-            "cancelled": "Megszakítottad az ellenőrzést."
+            "cancelled": "Megszakítottad az ellenőrzést.",
+            "incoming_sas_user_dialog_text_1": "Ellenőrizd ezt a felhasználót, hogy megbízhatónak lehessen tekinteni. Megbízható felhasználók további nyugalmat jelenthetnek ha végpontól végpontig titkosítást használsz.",
+            "incoming_sas_user_dialog_text_2": "A felhasználó ellenőrzése által az ő munkamenete megbízhatónak lesz jelölve, és a te munkameneted is megbízhatónak lesz jelölve nála.",
+            "incoming_sas_device_dialog_text_1": "Eszköz ellenőrzése és beállítás megbízhatóként. Az eszközben való megbízás megnyugtató lehet, ha végpontok közötti titkosítást használsz.",
+            "incoming_sas_device_dialog_text_2": "Az eszköz ellenőrzése megbízhatónak fogja jelezni az eszközt és azok a felhasználók, akik téged ellenőriztek, megbíznak majd ebben az eszközödben.",
+            "incoming_sas_dialog_waiting": "Várakozás a partner megerősítésére…",
+            "incoming_sas_dialog_title": "Bejövő Hitelesítési Kérés"
         },
         "old_version_detected_title": "Régi titkosítási adatot találhatók",
         "old_version_detected_description": "Régebbi %(brand)s verzióból származó adatok találhatók. Ezek hibás működéshez vezethettek a végpontok közti titkosításban a régebbi verzióknál. A nemrég küldött/fogadott titkosított üzenetek, ha a régi adatokat használták, lehetséges, hogy nem lesznek visszafejthetők ebben a verzióban. Ha problémákba ütközik, akkor jelentkezzen ki és be. A régi üzenetek elérésének biztosításához exportálja a kulcsokat, és importálja be újra.",
@@ -3104,7 +3097,10 @@
             "fallback_button": "Hitelesítés indítása",
             "sso_title": "A folytatáshoz használja az egyszeri bejelentkezést (SSO)",
             "sso_body": "Erősítse meg az e-mail-cím hozzáadását azáltal, hogy az egyszeri bejelentkezéssel bizonyítja a személyazonosságát.",
-            "code": "Kód"
+            "code": "Kód",
+            "sso_preauth_body": "A folytatáshoz, használja az egyszeri bejelentkezést, hogy megerősítse a személyazonosságát.",
+            "sso_postauth_title": "Erősítsd meg a továbblépéshez",
+            "sso_postauth_body": "A személyazonossága megerősítéséhez kattintson a lenti gombra."
         },
         "password_field_label": "Adja meg a jelszót",
         "password_field_strong_label": "Szép, erős jelszó!",
@@ -4269,5 +4265,11 @@
         "send_label": "Elküldés",
         "message_preview_heading": "Üzenet előnézet",
         "filter_placeholder": "Szobák vagy emberek keresése"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Az integrációk le vannak tiltva",
+        "disabled_dialog_description": "Ehhez engedélyezd a(z) „%(manageIntegrations)s”-t a Beállításokban.",
+        "impossible_dialog_title": "Az integrációk nem engedélyezettek",
+        "impossible_dialog_description": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral."
     }
 }

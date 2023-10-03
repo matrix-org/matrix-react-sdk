@@ -74,12 +74,9 @@
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Prèviament has fet servir %(brand)s a %(host)s amb la càrrega mandrosa de membres activada. En aquesta versió la càrrega mandrosa està desactivada. Com que la memòria cau local no és compatible entre les dues versions, %(brand)s necessita tornar a sincronitzar el teu compte.",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. <default>Utilitza el predeterminat (%(defaultIdentityServerName)s)</default> o gestiona'l a <settings>Configuració</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Utilitza un servidor d'identitat per poder convidar per correu electrònic. Gestiona'l a <settings>Configuració</settings>.",
-    "Integrations not allowed": "No es permeten integracions",
-    "Integrations are disabled": "Les integracions estan desactivades",
     "Room Settings - %(roomName)s": "Configuració de sala - %(roomName)s",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
-    "To continue, use Single Sign On to prove your identity.": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat).",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -603,7 +600,8 @@
             "msisdn_token_prompt": "Introdueix el codi que conté:",
             "fallback_button": "Inicia l'autenticació",
             "sso_title": "Utilitza la inscripció única (SSO) per a continuar",
-            "sso_body": "Confirma l'addició d'aquest correu electrònic mitjançant la inscripció única SSO (per demostrar la teva identitat)."
+            "sso_body": "Confirma l'addició d'aquest correu electrònic mitjançant la inscripció única SSO (per demostrar la teva identitat).",
+            "sso_preauth_body": "Per continuar, utilitza la inscripció única SSO (per demostrar la teva identitat)."
         },
         "msisdn_field_label": "Telèfon",
         "identifier_label": "Inicieu sessió amb",
@@ -860,5 +858,9 @@
     },
     "forward": {
         "send_label": "Envia"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Les integracions estan desactivades",
+        "impossible_dialog_title": "No es permeten integracions"
     }
 }

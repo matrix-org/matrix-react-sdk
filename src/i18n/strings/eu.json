@@ -157,8 +157,6 @@
     "Hourglass": "Harea-erlojua",
     "Paperclip": "Klipa",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zifratutako mezuak muturretik muturrerako zifratzearen bidez babestuak daude. Zuk eta hartzaileak edo hartzaileek irakurri ditzakezue mezu horiek, beste inork ez.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Egiaztatu erabiltzaile hau fidagarritzat markatzeko. Honek bakea ematen dizu muturretik muturrerako zifratutako mezuak erabiltzean.",
-    "Incoming Verification Request": "Jasotako egiaztaketa eskaria",
     "I don't want my encrypted messages": "Ez ditut nire zifratutako mezuak nahi",
     "Manually export keys": "Esportatu gakoak eskuz",
     "You'll lose access to your encrypted messages": "Zure zifratutako mezuetara sarbidea galduko duzu",
@@ -200,8 +198,6 @@
     "%(name)s cancelled": "%(name)s utzita",
     "%(name)s wants to verify": "%(name)s(e)k egiaztatu nahi du",
     "Failed to connect to integration manager": "Huts egin du integrazio kudeatzailera konektatzean",
-    "Integrations are disabled": "Integrazioak desgaituta daude",
-    "Integrations not allowed": "Integrazioak ez daude baimenduta",
     "Verification Request": "Egiaztaketa eskaria",
     "%(count)s verified sessions": {
         "other": "%(count)s egiaztatutako saio",
@@ -226,9 +222,6 @@
     },
     "Session name": "Saioaren izena",
     "Session key": "Saioaren gakoa",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Egiztatu gailu hau fidagarri gisa markatzeko. Gailu hau fidagarritzat jotzeak lasaitasuna ematen du muturretik-muturrera zifratutako mezuak erabiltzean.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Gailu hau egiaztatzean fidagarri gisa markatuko da, eta egiaztatu zaituzten erabiltzaileek fidagarri gisa ikusiko dute.",
     "Not Trusted": "Ez konfiantzazkoa",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
     "Ask this user to verify their session, or manually verify it below.": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
@@ -255,9 +248,6 @@
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
-    "To continue, use Single Sign On to prove your identity.": "Jarraitzeko, erabili Single Sign On zure identitatea frogatzeko.",
-    "Confirm to continue": "Berretsi jarraitzeko",
-    "Click the button below to confirm your identity.": "Sakatu azpiko botoia zure identitatea frogatzeko.",
     "Restoring keys from backup": "Gakoak babes-kopiatik berrezartzen",
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s gako berreskuratuta",
     "Keys restored": "Gakoak berreskuratuta",
@@ -272,7 +262,6 @@
     "The server has denied your request.": "Zerbitzariak zure eskariari uko egin dio.",
     "Wrong file type": "Okerreko fitxategi-mota",
     "Looks good!": "Itxura ona du!",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Zure %(brand)s aplikazioak ez dizu hau egiteko integrazio kudeatzaile bat erabiltzen uzten. Kontaktatu administratzaileren batekin.",
     "common": {
         "analytics": "Estatistikak",
         "encryption_enabled": "Zifratzea gaituta",
@@ -1302,7 +1291,12 @@
             "prompt_user": "Hasi egiaztaketa berriro bere profiletik.",
             "timed_out": "Egiaztaketarako denbora-muga agortu da.",
             "cancelled_user": "%(displayName)s-k egiaztaketa ezeztatu du.",
-            "cancelled": "Egiaztaketa ezeztatu duzu."
+            "cancelled": "Egiaztaketa ezeztatu duzu.",
+            "incoming_sas_user_dialog_text_1": "Egiaztatu erabiltzaile hau fidagarritzat markatzeko. Honek bakea ematen dizu muturretik muturrerako zifratutako mezuak erabiltzean.",
+            "incoming_sas_user_dialog_text_2": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
+            "incoming_sas_device_dialog_text_1": "Egiztatu gailu hau fidagarri gisa markatzeko. Gailu hau fidagarritzat jotzeak lasaitasuna ematen du muturretik-muturrera zifratutako mezuak erabiltzean.",
+            "incoming_sas_device_dialog_text_2": "Gailu hau egiaztatzean fidagarri gisa markatuko da, eta egiaztatu zaituzten erabiltzaileek fidagarri gisa ikusiko dute.",
+            "incoming_sas_dialog_title": "Jasotako egiaztaketa eskaria"
         },
         "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
         "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
@@ -1415,7 +1409,10 @@
             "fallback_button": "Hasi autentifikazioa",
             "sso_title": "Erabili Single sign-on jarraitzeko",
             "sso_body": "Baieztatu e-mail hau gehitzea Single sign-on bidez zure identitatea frogatuz.",
-            "code": "Kodea"
+            "code": "Kodea",
+            "sso_preauth_body": "Jarraitzeko, erabili Single Sign On zure identitatea frogatzeko.",
+            "sso_postauth_title": "Berretsi jarraitzeko",
+            "sso_postauth_body": "Sakatu azpiko botoia zure identitatea frogatzeko."
         },
         "password_field_label": "Sartu pasahitza",
         "password_field_strong_label": "Ongi, pasahitz sendoa!",
@@ -1920,5 +1917,10 @@
     "forward": {
         "send_label": "Bidali",
         "message_preview_heading": "Mezu-aurrebista"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integrazioak desgaituta daude",
+        "impossible_dialog_title": "Integrazioak ez daude baimenduta",
+        "impossible_dialog_description": "Zure %(brand)s aplikazioak ez dizu hau egiteko integrazio kudeatzaile bat erabiltzen uzten. Kontaktatu administratzaileren batekin."
     }
 }

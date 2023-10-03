@@ -200,13 +200,6 @@
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Kui sa varem oled kasutanud uuemat %(brand)s'i versiooni, siis sinu pragune sessioon ei pruugi olla sellega ühilduv. Sulge see aken ja jätka selle uuema versiooni kasutamist.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Brauseri andmeruumi tühjendamine võib selle vea lahendada, kui samas logid sa ka välja ning kogu krüptitud vestlusajalugu muutub loetamatuks.",
     "Verification Pending": "Verifikatsioon on ootel",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Selle kasutaja usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis kasutajate verifitseerimine tagab sulle täiendava meelerahu.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Selle kasutaja verifitseerimisel märgitakse tema sessioon usaldusväärseks ning samuti märgitakse sinu sessioon tema jaoks usaldusväärseks.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Selle seadme usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis selle seadme usaldamine tagab sulle ja teistele kasutajatele täiendava meelerahu.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Selle seadme verifitseerimisel märgitakse ta usaldusväärseks ning kõik kasutajad, kes sinuga on verifitseerimise läbi teinud, loevad ka selle seadme usaldusväärseks.",
-    "Incoming Verification Request": "Saabuv verifitseerimispalve",
-    "Integrations are disabled": "Lõimingud ei ole kasutusel",
-    "Integrations not allowed": "Lõimingute kasutamine ei ole lubatud",
     "a new master key signature": "uus üldvõtme allkiri",
     "a new cross-signing key signature": "uus risttunnustamise võtme allkiri",
     "a device cross-signing signature": "seadme risttunnustamise allkiri",
@@ -234,9 +227,6 @@
     "Destroy cross-signing keys?": "Kas hävitame risttunnustamise võtmed?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Risttunnustamise võtmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kõik sinu verifitseeritud vestluskaaslased näevad seejärel turvateateid. Kui sa just pole kaotanud ligipääsu kõikidele oma seadmetele, kust sa risttunnustamist oled teinud, siis sa ilmselgelt ei peaks kustutamist ette võtma.",
     "Clear cross-signing keys": "Eemalda risttunnustamise võtmed",
-    "To continue, use Single Sign On to prove your identity.": "Jätkamaks tuvasta oma isik kasutades ühekordset sisselogimist.",
-    "Confirm to continue": "Soovin jätkata",
-    "Click the button below to confirm your identity.": "Oma isiku tuvastamiseks klõpsi alljärgnevat nuppu.",
     "Incompatible local cache": "Kohalikud andmepuhvrid ei ühildu",
     "Clear cache and resync": "Tühjenda puhver ja sünkroniseeri andmed uuesti",
     "Confirm by comparing the following with the User Settings in your other session:": "Kinnita seda võrreldes järgnevaid andmeid oma teise sessiooni kasutajaseadetes:",
@@ -608,7 +598,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
     "Or send invite link": "Või saada kutse link",
     "Some suggestions may be hidden for privacy.": "Mõned soovitused võivad privaatsusseadistuste tõttu olla peidetud.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt.",
     "User Directory": "Kasutajate kataloog",
     "You're removing all spaces. Access will default to invite only": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
     "Select spaces": "Vali kogukonnakeskused",
@@ -722,11 +711,9 @@
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "unknown": "teadmata",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
     "Loading live location…": "Reaalajas asukoht on laadimisel…",
     "Fetching keys from server…": "Laadin serverist võtmeid…",
     "Checking…": "Kontrollin…",
-    "Waiting for partner to confirm…": "Ootan teise osapoole kinnitust…",
     "Starting export process…": "Alustame eksportimist…",
     "Invites by email can only be sent one at a time": "Kutseid saad e-posti teel saata vaid ükshaaval",
     "Desktop app logo": "Töölauarakenduse logo",
@@ -2966,7 +2953,13 @@
             "timed_out": "Verifitseerimine aegus.",
             "cancelled_self": "Sina tühistasid verifitseerimise oma teises seadmes.",
             "cancelled_user": "%(displayName)s tühistas verifitseerimise.",
-            "cancelled": "Sina tühistasid verifitseerimise."
+            "cancelled": "Sina tühistasid verifitseerimise.",
+            "incoming_sas_user_dialog_text_1": "Selle kasutaja usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis kasutajate verifitseerimine tagab sulle täiendava meelerahu.",
+            "incoming_sas_user_dialog_text_2": "Selle kasutaja verifitseerimisel märgitakse tema sessioon usaldusväärseks ning samuti märgitakse sinu sessioon tema jaoks usaldusväärseks.",
+            "incoming_sas_device_dialog_text_1": "Selle seadme usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis selle seadme usaldamine tagab sulle ja teistele kasutajatele täiendava meelerahu.",
+            "incoming_sas_device_dialog_text_2": "Selle seadme verifitseerimisel märgitakse ta usaldusväärseks ning kõik kasutajad, kes sinuga on verifitseerimise läbi teinud, loevad ka selle seadme usaldusväärseks.",
+            "incoming_sas_dialog_waiting": "Ootan teise osapoole kinnitust…",
+            "incoming_sas_dialog_title": "Saabuv verifitseerimispalve"
         },
         "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
         "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
@@ -3174,7 +3167,10 @@
             "fallback_button": "Alusta autentimist",
             "sso_title": "Jätkamiseks kasuta ühekordset sisselogimist",
             "sso_body": "Kinnita selle e-posti aadress kasutades oma isiku tuvastamiseks ühekordset sisselogimist (Single Sign On).",
-            "code": "Kood"
+            "code": "Kood",
+            "sso_preauth_body": "Jätkamaks tuvasta oma isik kasutades ühekordset sisselogimist.",
+            "sso_postauth_title": "Soovin jätkata",
+            "sso_postauth_body": "Oma isiku tuvastamiseks klõpsi alljärgnevat nuppu."
         },
         "password_field_label": "Sisesta salasõna",
         "password_field_strong_label": "Vahva, see on korralik salasõna!",
@@ -4365,5 +4361,11 @@
         "send_label": "Saada",
         "message_preview_heading": "Sõnumi eelvaade",
         "filter_placeholder": "Otsi jututubasid või inimesi"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Lõimingud ei ole kasutusel",
+        "disabled_dialog_description": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
+        "impossible_dialog_title": "Lõimingute kasutamine ei ole lubatud",
+        "impossible_dialog_description": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt."
     }
 }

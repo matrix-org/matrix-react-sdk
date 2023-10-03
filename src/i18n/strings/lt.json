@@ -179,8 +179,6 @@
     "Destroy cross-signing keys?": "Sunaikinti kryžminio pasirašymo raktus?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Kryžminio pasirašymo raktų ištrinimas yra neatšaukiamas. Visi, kurie buvo jais patvirtinti, matys saugumo įspėjimus. Jūs greičiausiai nenorite to daryti, nebent praradote visus įrenginius, iš kurių galite patvirtinti kryžminiu pasirašymu.",
     "Clear cross-signing keys": "Valyti kryžminio pasirašymo raktus",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Patvirtinkite šį įrenginį, kad pažymėtumėte jį kaip patikimą. Įrenginio pažymėjimas patikimu jums ir kitiems vartotojams suteikia papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Šio įrenginio patvirtinimas pažymės jį kaip patikimą, ir vartotojai, kurie patvirtino su jumis, pasitikės šiuo įrenginiu.",
     "a new cross-signing key signature": "naujas kryžminio pasirašymo rakto parašas",
     "a device cross-signing signature": "įrenginio kryžminio pasirašymo parašas",
     "IRC display name width": "IRC rodomo vardo plotis",
@@ -188,7 +186,6 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Patvirtinkite šį vartotoją, kad pažymėtumėte jį kaip patikimą. Vartotojų pažymėjimas patikimais suteikia jums papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
     "Sign out and remove encryption keys?": "Atsijungti ir pašalinti šifravimo raktus?",
     "Confirm encryption setup": "Patvirtinti šifravimo sąranką",
     "Click the button below to confirm setting up encryption.": "Paspauskite mygtuką žemiau, kad patvirtintumėte šifravimo nustatymą.",
@@ -201,8 +198,6 @@
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Norėdami pranešti apie su Matrix susijusią saugos problemą, perskaitykite Matrix.org <a>Saugumo Atskleidimo Poliiką</a>.",
     "Failed to connect to integration manager": "Nepavyko prisijungti prie integracijų tvarkytuvo",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Prieš pateikiant žurnalus jūs turite <a>sukurti GitHub problemą</a>, kad apibūdintumėte savo problemą.",
-    "Integrations are disabled": "Integracijos yra išjungtos",
-    "Integrations not allowed": "Integracijos neleidžiamos",
     "Link to most recent message": "Nuoroda į naujausią žinutę",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors naudojant jų vardą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
     "Share Room Message": "Bendrinti Kambario Žinutę",
@@ -225,7 +220,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Patvirtinant šį vartotoją, jo seansas bus pažymėtas kaip patikimas, taip pat jūsų seansas bus pažymėtas kaip patikimas jam.",
     "Security Phrase": "Slaptafrazė",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Pakviesti ką nors, naudojant jų vardą, el. pašto adresą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
@@ -385,9 +379,6 @@
     "Something went wrong trying to invite the users.": "Bandant pakviesti vartotojus kažkas nepavyko.",
     "We couldn't create your DM.": "Negalėjome sukurti jūsų AŽ.",
     "Invite by email": "Kviesti el. paštu",
-    "Click the button below to confirm your identity.": "Spustelėkite toliau esantį mygtuką, kad patvirtintumėte savo tapatybę.",
-    "Confirm to continue": "Patvirtinkite, kad tęstumėte",
-    "Incoming Verification Request": "Įeinantis Patikrinimo Prašymas",
     "Sri Lanka": "Šri Lanka",
     "Spain": "Ispanija",
     "South Korea": "Pietų Korėja",
@@ -405,7 +396,6 @@
     "New Caledonia": "Naujoji Kaledonija",
     "Netherlands": "Nyderlandai",
     "Cayman Islands": "Kaimanų Salos",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jūsų %(brand)s neleidžia jums naudoti integracijų tvarkyklės tam atlikti. Susisiekite su administratoriumi.",
     "Northern Mariana Islands": "Šiaurės Marianų salos",
     "Norfolk Island": "Norfolko sala",
     "Nepal": "Nepalas",
@@ -2000,7 +1990,12 @@
             "timed_out": "Pasibaigė laikas patikrinimui.",
             "cancelled_self": "Atšaukėte patvirtinimą kitame įrenginyje.",
             "cancelled_user": "%(displayName)s atšaukė patvirtinimą.",
-            "cancelled": "Jūs atšaukėte patvirtinimą."
+            "cancelled": "Jūs atšaukėte patvirtinimą.",
+            "incoming_sas_user_dialog_text_1": "Patvirtinkite šį vartotoją, kad pažymėtumėte jį kaip patikimą. Vartotojų pažymėjimas patikimais suteikia jums papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
+            "incoming_sas_user_dialog_text_2": "Patvirtinant šį vartotoją, jo seansas bus pažymėtas kaip patikimas, taip pat jūsų seansas bus pažymėtas kaip patikimas jam.",
+            "incoming_sas_device_dialog_text_1": "Patvirtinkite šį įrenginį, kad pažymėtumėte jį kaip patikimą. Įrenginio pažymėjimas patikimu jums ir kitiems vartotojams suteikia papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
+            "incoming_sas_device_dialog_text_2": "Šio įrenginio patvirtinimas pažymės jį kaip patikimą, ir vartotojai, kurie patvirtino su jumis, pasitikės šiuo įrenginiu.",
+            "incoming_sas_dialog_title": "Įeinantis Patikrinimo Prašymas"
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2147,7 +2142,9 @@
             "fallback_button": "Pradėti tapatybės nustatymą",
             "sso_title": "Norėdami tęsti naudokite Vieną Prisijungimą",
             "sso_body": "Patvirtinkite šio el. pašto adreso pridėjimą naudodami Vieną Prisijungimą, kad įrodytumėte savo tapatybę.",
-            "code": "Kodas"
+            "code": "Kodas",
+            "sso_postauth_title": "Patvirtinkite, kad tęstumėte",
+            "sso_postauth_body": "Spustelėkite toliau esantį mygtuką, kad patvirtintumėte savo tapatybę."
         },
         "password_field_strong_label": "Puiku, stiprus slaptažodis!",
         "username_field_required_invalid": "Įveskite vartotojo vardą",
@@ -2868,5 +2865,10 @@
         "send_label": "Siųsti",
         "message_preview_heading": "Žinutės peržiūra",
         "filter_placeholder": "Ieškoti kambarių ar žmonių"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integracijos yra išjungtos",
+        "impossible_dialog_title": "Integracijos neleidžiamos",
+        "impossible_dialog_description": "Jūsų %(brand)s neleidžia jums naudoti integracijų tvarkyklės tam atlikti. Susisiekite su administratoriumi."
     }
 }

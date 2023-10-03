@@ -541,16 +541,6 @@
     "We couldn't invite those users. Please check the users you want to invite and try again.": "לא יכולנו להזמין את המשתמשים האלה. אנא בדוק את המשתמשים שברצונך להזמין ונסה שוב.",
     "Something went wrong trying to invite the users.": "משהו השתבש בניסיון להזמין את המשתמשים.",
     "Invite by email": "הזמנה באמצעות דוא\"ל",
-    "Click the button below to confirm your identity.": "לחץ על הלחצן למטה כדי לאשר את זהותך.",
-    "Confirm to continue": "אשרו בכדי להמשיך",
-    "To continue, use Single Sign On to prove your identity.": "כדי להמשיך, השתמש בכניסה יחידה כדי להוכיח את זהותך.",
-    "Integrations not allowed": "שילובים אינם מורשים",
-    "Integrations are disabled": "שילובים מושבתים",
-    "Incoming Verification Request": "בקשת אימות נכנסת",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "אימות מכשיר זה יסמן אותו כאמין, ומשתמשים שאימתו אתכם יסמכו על מכשיר זה.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "אמתו את המכשיר הזה כדי לסמן אותו כאמין. אמון במכשיר זה מעניק לכם ולמשתמשים אחרים שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "אימות משתמש זה יסמן את ההפעלה שלו כאמינה, וגם יסמן את ההפעלה שלכם כאמינה להם.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "אמתו את המשתמש הזה כדי לסמן אותו כאמין. אמון במשתמשים מעניק לכם שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
     "Transfer": "לְהַעֲבִיר",
     "A call can only be transferred to a single user.": "ניתן להעביר שיחה רק למשתמש יחיד.",
     "Switch theme": "שנה ערכת נושא",
@@ -566,7 +556,6 @@
     "Remember this": "זכור את זה",
     "The widget will verify your user ID, but won't be able to perform actions for you:": "היישומון יאמת את מזהה המשתמש שלך, אך לא יוכל לבצע פעולות עבורך:",
     "Allow this widget to verify your identity": "אפשר לווידג'ט זה לאמת את זהותך",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת.",
     "Enter Security Phrase": "הזן ביטוי אבטחה",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "לא ניתן לפענח גיבוי עם ביטוי אבטחה זה: אנא ודא שהזנת את ביטוי האבטחה הנכון.",
     "Incorrect Security Phrase": "ביטוי אבטחה שגוי",
@@ -2139,7 +2128,12 @@
             "prompt_user": "התחל לאמת שוב מהפרופיל שלהם.",
             "timed_out": "תם הזמן הקצוב לאימות.",
             "cancelled_user": "הצג אימותים מבוטלים %(displayName)s.",
-            "cancelled": "בטלתם את האימות."
+            "cancelled": "בטלתם את האימות.",
+            "incoming_sas_user_dialog_text_1": "אמתו את המשתמש הזה כדי לסמן אותו כאמין. אמון במשתמשים מעניק לכם שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
+            "incoming_sas_user_dialog_text_2": "אימות משתמש זה יסמן את ההפעלה שלו כאמינה, וגם יסמן את ההפעלה שלכם כאמינה להם.",
+            "incoming_sas_device_dialog_text_1": "אמתו את המכשיר הזה כדי לסמן אותו כאמין. אמון במכשיר זה מעניק לכם ולמשתמשים אחרים שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
+            "incoming_sas_device_dialog_text_2": "אימות מכשיר זה יסמן אותו כאמין, ומשתמשים שאימתו אתכם יסמכו על מכשיר זה.",
+            "incoming_sas_dialog_title": "בקשת אימות נכנסת"
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2307,7 +2301,10 @@
             "fallback_button": "התחל אימות",
             "sso_title": "השתמש בכניסה חד שלבית על מנת להמשיך",
             "sso_body": "אשרו הוספת מייל זה על ידי כניסה למערכת להוכיח את זהותכם.",
-            "code": "קוד"
+            "code": "קוד",
+            "sso_preauth_body": "כדי להמשיך, השתמש בכניסה יחידה כדי להוכיח את זהותך.",
+            "sso_postauth_title": "אשרו בכדי להמשיך",
+            "sso_postauth_body": "לחץ על הלחצן למטה כדי לאשר את זהותך."
         },
         "password_field_label": "הזן סיסמה",
         "password_field_strong_label": "יפה, סיסמה חזקה!",
@@ -3128,5 +3125,10 @@
         "send_label": "שלח",
         "message_preview_heading": "צפו בהודעה",
         "filter_placeholder": "חפשו אנשים או חדרים"
+    },
+    "integrations": {
+        "disabled_dialog_title": "שילובים מושבתים",
+        "impossible_dialog_title": "שילובים אינם מורשים",
+        "impossible_dialog_description": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת."
     }
 }

@@ -113,7 +113,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
                     title: _t("auth|uia|sso_title"),
-                    body: _t("To continue, use Single Sign On to prove your identity."),
+                    body: _t("auth|uia|sso_preauth_body"),
                     continueText: _t("auth|sso"),
                     continueKind: "primary",
                 },

@@ -480,17 +480,6 @@
     "Something went wrong trying to invite the users.": "ມີບາງຢ່າງຜິດພາດໃນການພະຍາຍາມເຊີນຜູ້ໃຊ້.",
     "We couldn't create your DM.": "ພວກເຮົາບໍ່ສາມາດສ້າງ DM ຂອງທ່ານໄດ້.",
     "Invite by email": "ເຊີນທາງອີເມລ໌",
-    "Click the button below to confirm your identity.": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນຕົວຕົນຂອງທ່ານ.",
-    "Confirm to continue": "ຢືນຢັນເພື່ອສືບຕໍ່",
-    "To continue, use Single Sign On to prove your identity.": "ເພື່ອສືບຕໍ່,ໃຊ້ການເຂົ້າສູ່ລະບົບດຽວເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s ຂອງທ່ານບໍ່ອະນຸຍາດໃຫ້ທ່ານໃຊ້ຕົວຈັດການການເຊື່ອມໂຍງເພື່ອເຮັດສິ່ງນີ້. ກະລຸນາຕິດຕໍ່ຫາຜູ້ຄຸ້ມຄອງລະບົບ.",
-    "Integrations not allowed": "ບໍ່ອະນຸຍາດໃຫ້ປະສົມປະສານກັນ",
-    "Integrations are disabled": "ການເຊື່ອມໂຍງຖືກປິດໃຊ້ງານ",
-    "Incoming Verification Request": "ການຮ້ອງຂໍການຢັ້ງຢືນຂາເຂົ້າ",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "ການຢັ້ງຢືນອຸປະກອນນີ້ຈະເປັນເຄື່ອງໝາຍໜ້າເຊື່ອຖືໄດ້ ແລະ ຜູ້ໃຊ້ທີ່ໄດ້ຢັ້ງຢືນກັບທ່ານຈະເຊື່ອຖືອຸປະກອນນີ້.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "ຢັ້ງຢືນອຸປະກອນນີ້ເພື່ອເປັນເຄື່ອງໝາຍ ໜ້າເຊື່ອຖືໄດ້. ການໄວ້ໃຈໃນອຸປະກອນນີ້ເຮັດໃຫ້ທ່ານ ແລະ ຜູ້ໃຊ້ອື່ນໆມີຄວາມອູ່ນໃນຈິດໃຈຫຼາຍຂຶ້ນເມື່ອເຂົ້າລະຫັດຂໍ້ຄວາມເເຕ່ຕົ້ນທາງຫາປາຍທາງ.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "ການຢືນຢັນຜູ້ໃຊ້ນີ້ຈະເປັນເຄື່ອງໝາຍໃນລະບົບຂອງເຂົາເຈົ້າໜ້າເຊື່ອຖືໄດ້ ແລະ ເປັນເຄື່ອງໝາຍເຖິງລະບົບຂອງທ່ານ ເປັນທີ່ເຊື່ອຖືໄດ້ຕໍ່ກັບເຂົາເຈົ້າ.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ເພື່ອສ້າງເຄື່ອງທີ່ເຊື່ອຖືໄດ້. ຜູ້ໃຊ້ທີ່ເຊື່ອຖືໄດ້ ເຮັດໃຫ້ທ່ານອຸ່ນໃຈຂື້ນເມື່ຶຶອເຂົ້າລະຫັດຂໍ້ຄວາມແຕ່ຕົ້ນທາງເຖິງປາຍທາງ.",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
     "An error occurred while stopping your live location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
@@ -2484,7 +2473,12 @@
             "timed_out": "ການຢັ້ງຢືນໝົດເວລາ.",
             "cancelled_self": "ທ່ານໄດ້ຍົກເລີກການຢັ້ງຢືນໃນອຸປະກອນອື່ນຂອງທ່ານ.",
             "cancelled_user": "%(displayName)s ຍົກເລີກການຢັ້ງຢືນ.",
-            "cancelled": "ທ່ານໄດ້ຍົກເລີກການຢັ້ງຢືນແລ້ວ."
+            "cancelled": "ທ່ານໄດ້ຍົກເລີກການຢັ້ງຢືນແລ້ວ.",
+            "incoming_sas_user_dialog_text_1": "ຢັ້ງຢືນຜູ້ໃຊ້ນີ້ເພື່ອສ້າງເຄື່ອງທີ່ເຊື່ອຖືໄດ້. ຜູ້ໃຊ້ທີ່ເຊື່ອຖືໄດ້ ເຮັດໃຫ້ທ່ານອຸ່ນໃຈຂື້ນເມື່ຶຶອເຂົ້າລະຫັດຂໍ້ຄວາມແຕ່ຕົ້ນທາງເຖິງປາຍທາງ.",
+            "incoming_sas_user_dialog_text_2": "ການຢືນຢັນຜູ້ໃຊ້ນີ້ຈະເປັນເຄື່ອງໝາຍໃນລະບົບຂອງເຂົາເຈົ້າໜ້າເຊື່ອຖືໄດ້ ແລະ ເປັນເຄື່ອງໝາຍເຖິງລະບົບຂອງທ່ານ ເປັນທີ່ເຊື່ອຖືໄດ້ຕໍ່ກັບເຂົາເຈົ້າ.",
+            "incoming_sas_device_dialog_text_1": "ຢັ້ງຢືນອຸປະກອນນີ້ເພື່ອເປັນເຄື່ອງໝາຍ ໜ້າເຊື່ອຖືໄດ້. ການໄວ້ໃຈໃນອຸປະກອນນີ້ເຮັດໃຫ້ທ່ານ ແລະ ຜູ້ໃຊ້ອື່ນໆມີຄວາມອູ່ນໃນຈິດໃຈຫຼາຍຂຶ້ນເມື່ອເຂົ້າລະຫັດຂໍ້ຄວາມເເຕ່ຕົ້ນທາງຫາປາຍທາງ.",
+            "incoming_sas_device_dialog_text_2": "ການຢັ້ງຢືນອຸປະກອນນີ້ຈະເປັນເຄື່ອງໝາຍໜ້າເຊື່ອຖືໄດ້ ແລະ ຜູ້ໃຊ້ທີ່ໄດ້ຢັ້ງຢືນກັບທ່ານຈະເຊື່ອຖືອຸປະກອນນີ້.",
+            "incoming_sas_dialog_title": "ການຮ້ອງຂໍການຢັ້ງຢືນຂາເຂົ້າ"
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -2672,7 +2666,10 @@
             "fallback_button": "ເລີ່ມການພິສູດຢືນຢັນ",
             "sso_title": "ໃຊ້ການເຂົ້າສູ່ລະບົບແບບປະຕູດຽວ (SSO) ເພື່ອສືບຕໍ່",
             "sso_body": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ ແບບປະຕູດຍວ (SSO)ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
-            "code": "ລະຫັດ"
+            "code": "ລະຫັດ",
+            "sso_preauth_body": "ເພື່ອສືບຕໍ່,ໃຊ້ການເຂົ້າສູ່ລະບົບດຽວເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
+            "sso_postauth_title": "ຢືນຢັນເພື່ອສືບຕໍ່",
+            "sso_postauth_body": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນຕົວຕົນຂອງທ່ານ."
         },
         "password_field_label": "ໃສ່ລະຫັດຜ່ານ",
         "password_field_strong_label": "ດີ, ລະຫັດຜ່ານທີ່ເຂັ້ມແຂງ!",
@@ -3668,5 +3665,10 @@
         "send_label": "ສົ່ງ",
         "message_preview_heading": "ສະເເດງຕົວຢ່າງຂໍ້ຄວາມ",
         "filter_placeholder": "ຊອກຫາຫ້ອງ ຫຼື ຄົນ"
+    },
+    "integrations": {
+        "disabled_dialog_title": "ການເຊື່ອມໂຍງຖືກປິດໃຊ້ງານ",
+        "impossible_dialog_title": "ບໍ່ອະນຸຍາດໃຫ້ປະສົມປະສານກັນ",
+        "impossible_dialog_description": "%(brand)s ຂອງທ່ານບໍ່ອະນຸຍາດໃຫ້ທ່ານໃຊ້ຕົວຈັດການການເຊື່ອມໂຍງເພື່ອເຮັດສິ່ງນີ້. ກະລຸນາຕິດຕໍ່ຫາຜູ້ຄຸ້ມຄອງລະບົບ."
     }
 }

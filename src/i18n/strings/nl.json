@@ -140,8 +140,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifieer deze persoon om als vertrouwd te markeren. Personen vertrouwen geeft je extra zekerheid bij het gebruik van eind-tot-eind-versleutelde berichten.",
-    "Incoming Verification Request": "Inkomend verificatieverzoek",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Je hebt voorheen %(brand)s op %(host)s gebruikt met lui laden van leden ingeschakeld. In deze versie is lui laden uitgeschakeld. De lokale cache is niet compatibel tussen deze twee instellingen, zodat %(brand)s je account moet hersynchroniseren.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Indien de andere versie van %(brand)s nog open staat in een ander tabblad kan je dat beter sluiten, want het geeft problemen als %(brand)s op dezelfde host gelijktijdig met lui laden ingeschakeld en uitgeschakeld draait.",
     "Incompatible local cache": "Incompatibele lokale cache",
@@ -221,11 +219,6 @@
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
     "Session name": "Sessienaam",
     "Session key": "Sessiesleutel",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Deze persoon verifiëren zal de sessie als vertrouwd markeren voor jullie beide.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifieer dit apparaat om het als vertrouwd te markeren. Door dit apparaat te vertrouwen geef je extra zekerheid aan jezelf en andere personen bij het gebruik van eind-tot-eind-versleutelde berichten.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Dit apparaat verifiëren zal het als vertrouwd markeren, en personen die met je geverifieerd hebben zullen het vertrouwen.",
-    "Integrations are disabled": "Integraties zijn uitgeschakeld",
-    "Integrations not allowed": "Integraties niet toegestaan",
     "Something went wrong trying to invite the users.": "Er is een fout opgetreden bij het uitnodigen van de personen.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Deze personen konden niet uitgenodigd worden. Controleer de personen die je wil uitnodigen en probeer het opnieuw.",
     "Failed to find the following users": "Kon volgende personen niet vinden",
@@ -502,8 +495,6 @@
     "Transfer": "Doorschakelen",
     "Start a conversation with someone using their name or username (like <userId/>).": "Start een kamer met iemand door hun naam of inlognaam (zoals <userId/>) te typen.",
     "Invite by email": "Via e-mail uitnodigen",
-    "Click the button below to confirm your identity.": "Druk op de knop hieronder om je identiteit te bevestigen.",
-    "Confirm to continue": "Bevestig om door te gaan",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -573,7 +564,6 @@
     "Submit logs": "Logs versturen",
     "Dial pad": "Kiestoetsen",
     "IRC display name width": "Breedte IRC-weergavenaam",
-    "To continue, use Single Sign On to prove your identity.": "Om verder te gaan, gebruik je eenmalige aanmelding om je identiteit te bewijzen.",
     "%(count)s members": {
         "other": "%(count)s personen",
         "one": "%(count)s persoon"
@@ -608,7 +598,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "Or send invite link": "Of verstuur je uitnodigingslink",
     "Some suggestions may be hidden for privacy.": "Sommige suggesties kunnen om privacyredenen verborgen zijn.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder.",
     "User Directory": "Personengids",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
     "Automatically invite members from this room to the new one": "Automatisch leden uitnodigen van deze kamer in de nieuwe",
@@ -2704,7 +2693,12 @@
             "timed_out": "Verificatie verlopen.",
             "cancelled_self": "Je hebt de verificatie geannuleerd op het andere apparaat.",
             "cancelled_user": "%(displayName)s heeft de verificatie geannuleerd.",
-            "cancelled": "Je hebt de verificatie geannuleerd."
+            "cancelled": "Je hebt de verificatie geannuleerd.",
+            "incoming_sas_user_dialog_text_1": "Verifieer deze persoon om als vertrouwd te markeren. Personen vertrouwen geeft je extra zekerheid bij het gebruik van eind-tot-eind-versleutelde berichten.",
+            "incoming_sas_user_dialog_text_2": "Deze persoon verifiëren zal de sessie als vertrouwd markeren voor jullie beide.",
+            "incoming_sas_device_dialog_text_1": "Verifieer dit apparaat om het als vertrouwd te markeren. Door dit apparaat te vertrouwen geef je extra zekerheid aan jezelf en andere personen bij het gebruik van eind-tot-eind-versleutelde berichten.",
+            "incoming_sas_device_dialog_text_2": "Dit apparaat verifiëren zal het als vertrouwd markeren, en personen die met je geverifieerd hebben zullen het vertrouwen.",
+            "incoming_sas_dialog_title": "Inkomend verificatieverzoek"
         },
         "old_version_detected_title": "Oude cryptografiegegevens gedetecteerd",
         "old_version_detected_description": "Er zijn gegevens van een oudere versie van %(brand)s gevonden, die problemen veroorzaakt hebben met de eind-tot-eind-versleuteling in de oude versie. Onlangs vanuit de oude versie verzonden eind-tot-eind-versleutelde berichten zijn mogelijk onontsleutelbaar in deze versie. Ook kunnen berichten die met deze versie uitgewisseld zijn falen. Mocht je problemen ervaren, log dan opnieuw in. Exporteer je sleutels en importeer ze weer om je berichtgeschiedenis te behouden.",
@@ -2892,7 +2886,10 @@
             "fallback_button": "Authenticatie starten",
             "sso_title": "Ga verder met eenmalige aanmelding",
             "sso_body": "Bevestig je identiteit met je eenmalige aanmelding om dit e-mailadres toe te voegen.",
-            "code": "Code"
+            "code": "Code",
+            "sso_preauth_body": "Om verder te gaan, gebruik je eenmalige aanmelding om je identiteit te bewijzen.",
+            "sso_postauth_title": "Bevestig om door te gaan",
+            "sso_postauth_body": "Druk op de knop hieronder om je identiteit te bevestigen."
         },
         "password_field_label": "Voer wachtwoord in",
         "password_field_strong_label": "Dit is een sterk wachtwoord!",
@@ -3958,5 +3955,10 @@
         "send_label": "Versturen",
         "message_preview_heading": "Voorbeeld van bericht",
         "filter_placeholder": "Zoek naar kamers of personen"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integraties zijn uitgeschakeld",
+        "impossible_dialog_title": "Integraties niet toegestaan",
+        "impossible_dialog_description": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder."
     }
 }

@@ -149,8 +149,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Los mensajes cifrados son seguros con el cifrado punto a punto. Solo tú y el/los destinatario/s tiene/n las claves para leer estos mensajes.",
     "Start using Key Backup": "Comenzar a usar la copia de claves",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica a este usuario para marcarlo como de confianza. Confiar en usuarios aporta tranquilidad en los mensajes cifrados de extremo a extremo.",
-    "Incoming Verification Request": "Petición de verificación entrante",
     "Scissors": "Tijeras",
     "Lock": "Bloquear",
     "Something went wrong trying to invite the users.": "Algo ha salido mal al intentar invitar a los usuarios.",
@@ -211,11 +209,6 @@
     "Clear cross-signing keys": "Borrar claves de firma cruzada",
     "Session name": "Nombre de sesión",
     "Session key": "Código de sesión",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verificar este usuario marcará su sesión como de confianza, y también marcará tu sesión como de confianza para él.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica este dispositivo para marcarlo como confiable. Confiar en este dispositivo te da a ti y a otros usuarios tranquilidad adicional cuando utilizáis mensajes cifrados de extremo a extremo.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "La verificación de este dispositivo lo marcará como de confianza. Los usuarios que te han verificado confiarán en este dispositivo.",
-    "Integrations are disabled": "Las integraciones están desactivadas",
-    "Integrations not allowed": "Integraciones no están permitidas",
     "a new master key signature": "una nueva firma de llave maestra",
     "a new cross-signing key signature": "una nueva firma de código de firma cruzada",
     "a device cross-signing signature": "una firma para la firma cruzada de dispositivos",
@@ -266,9 +259,6 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "To continue, use Single Sign On to prove your identity.": "Para continuar, utilice el inicio de sesión único para demostrar su identidad.",
-    "Confirm to continue": "Confirmar para continuar",
-    "Click the button below to confirm your identity.": "Haz clic en el botón de abajo para confirmar tu identidad.",
     "You're all caught up.": "Estás al día.",
     "Server isn't responding": "El servidor no está respondiendo",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Tu servidor no responde a algunas de tus solicitudes. A continuación se presentan algunas de las razones más probables.",
@@ -608,7 +598,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
     "Or send invite link": "O envía un enlace de invitación",
     "Some suggestions may be hidden for privacy.": "Puede que algunas sugerencias no se muestren por motivos de privacidad.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador.",
     "User Directory": "Lista de usuarios",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en cuenta que actualizar crea una nueva versión de la sala</b>. Todos los mensajes hasta ahora quedarán archivados aquí, en esta sala.",
     "Automatically invite members from this room to the new one": "Invitar a la nueva sala automáticamente a los miembros que tiene ahora",
@@ -731,9 +720,7 @@
     "Requires your server to support the stable version of MSC3827": "Requiere que tu servidor sea compatible con la versión estable de MSC3827",
     "This session is backing up your keys.": "",
     "Desktop app logo": "Logotipo de la aplicación de escritorio",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
     "Start DM anyway and never warn me again": "Enviar mensaje directo de todos modos y no avisar más",
-    "Waiting for partner to confirm…": "Esperando a que la otra persona confirme…",
     "Enable MSC3946 (to support late-arriving room archives)": "",
     "common": {
         "about": "Acerca de",
@@ -2843,7 +2830,13 @@
             "timed_out": "El tiempo máximo para la verificación se ha agotado.",
             "cancelled_self": "Has cancelado la verificación en tu otro dispositivo.",
             "cancelled_user": "%(displayName)s canceló la verificación.",
-            "cancelled": "Has cancelado la verificación."
+            "cancelled": "Has cancelado la verificación.",
+            "incoming_sas_user_dialog_text_1": "Verifica a este usuario para marcarlo como de confianza. Confiar en usuarios aporta tranquilidad en los mensajes cifrados de extremo a extremo.",
+            "incoming_sas_user_dialog_text_2": "Verificar este usuario marcará su sesión como de confianza, y también marcará tu sesión como de confianza para él.",
+            "incoming_sas_device_dialog_text_1": "Verifica este dispositivo para marcarlo como confiable. Confiar en este dispositivo te da a ti y a otros usuarios tranquilidad adicional cuando utilizáis mensajes cifrados de extremo a extremo.",
+            "incoming_sas_device_dialog_text_2": "La verificación de este dispositivo lo marcará como de confianza. Los usuarios que te han verificado confiarán en este dispositivo.",
+            "incoming_sas_dialog_waiting": "Esperando a que la otra persona confirme…",
+            "incoming_sas_dialog_title": "Petición de verificación entrante"
         },
         "old_version_detected_title": "Se detectó información de criptografía antigua",
         "old_version_detected_description": "Se detectó una versión más antigua de %(brand)s. Esto habrá provocado que la criptografía de extremo a extremo funcione incorrectamente en la versión más antigua. Los mensajes cifrados de extremo a extremo intercambiados recientemente mientras usaba la versión más antigua puede que no sean descifrables con esta versión. Esto también puede hacer que fallen con la más reciente. Si experimenta problemas, desconecte y vuelva a ingresar. Para conservar el historial de mensajes, exporte y vuelva a importar sus claves.",
@@ -3041,7 +3034,10 @@
             "fallback_button": "Iniciar autenticación",
             "sso_title": "Continuar con registro único (SSO)",
             "sso_body": "Confirma la nueva dirección de correo usando SSO para probar tu identidad.",
-            "code": "Código"
+            "code": "Código",
+            "sso_preauth_body": "Para continuar, utilice el inicio de sesión único para demostrar su identidad.",
+            "sso_postauth_title": "Confirmar para continuar",
+            "sso_postauth_body": "Haz clic en el botón de abajo para confirmar tu identidad."
         },
         "password_field_label": "Escribe tu contraseña",
         "password_field_strong_label": "¡Fantástico, una contraseña fuerte!",
@@ -4167,5 +4163,11 @@
         "send_label": "Enviar",
         "message_preview_heading": "Vista previa del mensaje",
         "filter_placeholder": "Busca salas o gente"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Las integraciones están desactivadas",
+        "disabled_dialog_description": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
+        "impossible_dialog_title": "Integraciones no están permitidas",
+        "impossible_dialog_description": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador."
     }
 }

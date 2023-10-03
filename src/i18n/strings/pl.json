@@ -165,7 +165,6 @@
         "other": "%(count)s sesji",
         "one": "%(count)s sesja"
     },
-    "Integrations are disabled": "Integracje są wyłączone",
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
@@ -470,12 +469,6 @@
     "Manually export keys": "Ręcznie eksportuj klucze",
     "Unable to upload": "Nie można wysłać",
     "Recently Direct Messaged": "Ostatnio skontaktowani bezpośrednio",
-    "Click the button below to confirm your identity.": "Naciśnij poniższy przycisk, aby potwierdzić swoją tożsamość.",
-    "Confirm to continue": "Potwierdź, aby kontynuować",
-    "To continue, use Single Sign On to prove your identity.": "Aby kontynuować, użyj Single Sign On do potwierdzenia swojej tożsamości.",
-    "Integrations not allowed": "Integracje nie są dozwolone",
-    "Incoming Verification Request": "Oczekująca prośba o weryfikację",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj tego użytkownika, aby oznaczyć go jako zaufanego. Użytkownicy zaufani dodają większej pewności, gdy korzystasz z wiadomości szyfrowanych end-to-end.",
     "No results found": "Nie znaleziono wyników",
     "%(count)s rooms": {
         "one": "%(count)s pokój",
@@ -604,12 +597,6 @@
     "Start DM anyway and never warn me again": "Rozpocznij wiadomość prywatną mimo to i nie ostrzegaj ponownie",
     "Unable to find profiles for the Matrix IDs listed below - would you like to start a DM anyway?": "Nie znaleziono profilów dla identyfikatorów Matrix wymienionych poniżej - czy chcesz rozpocząć wiadomość prywatną mimo to?",
     "We couldn't create your DM.": "Nie mogliśmy utworzyć Twojej wiadomości prywatnej.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s nie zezwala Tobie na użycie menedżera integracji, aby to zrobić. Skontaktuj się z administratorem.",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Włącz '%(manageIntegrations)s' w ustawieniach, aby to zrobić.",
-    "Waiting for partner to confirm…": "Oczekiwanie na potwierdzenie partnera…",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Weryfikacja tego urządzenia oznaczy je jako zaufane, a użytkownicy, którzy Cię zweryfikowali, będą ufać temu urządzeniu.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Zweryfikuj to urządzenie, aby oznaczyć je jako zaufane. Urządzenia zaufane dają Tobie i innym użytkownikom dodatkową ochronę podczas wysyłania wiadomości szyfrowanych end-to-end.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Weryfikacja tego użytkownika oznaczy Twoją i jego sesję jako zaufaną.",
     "Desktop app logo": "Logo aplikacji Desktop",
     "%(count)s people you know have already joined": {
         "one": "%(count)s osoba, którą znasz, już dołączyła",
@@ -2961,7 +2948,13 @@
             "timed_out": "Upłynął czas oczekiwania weryfikacji.",
             "cancelled_self": "Anulowałeś weryfikację na swoim drugim urządzeniu.",
             "cancelled_user": "%(displayName)s anulował weryfikację.",
-            "cancelled": "Anulowałeś weryfikację."
+            "cancelled": "Anulowałeś weryfikację.",
+            "incoming_sas_user_dialog_text_1": "Zweryfikuj tego użytkownika, aby oznaczyć go jako zaufanego. Użytkownicy zaufani dodają większej pewności, gdy korzystasz z wiadomości szyfrowanych end-to-end.",
+            "incoming_sas_user_dialog_text_2": "Weryfikacja tego użytkownika oznaczy Twoją i jego sesję jako zaufaną.",
+            "incoming_sas_device_dialog_text_1": "Zweryfikuj to urządzenie, aby oznaczyć je jako zaufane. Urządzenia zaufane dają Tobie i innym użytkownikom dodatkową ochronę podczas wysyłania wiadomości szyfrowanych end-to-end.",
+            "incoming_sas_device_dialog_text_2": "Weryfikacja tego urządzenia oznaczy je jako zaufane, a użytkownicy, którzy Cię zweryfikowali, będą ufać temu urządzeniu.",
+            "incoming_sas_dialog_waiting": "Oczekiwanie na potwierdzenie partnera…",
+            "incoming_sas_dialog_title": "Oczekująca prośba o weryfikację"
         },
         "old_version_detected_title": "Wykryto stare dane kryptograficzne",
         "old_version_detected_description": "Dane ze starszej wersji %(brand)s zostały wykryte. Spowoduje to błędne działanie kryptografii typu end-to-end w starszej wersji. Wiadomości szyfrowane end-to-end wymieniane ostatnio podczas korzystania ze starszej wersji mogą być niemożliwe do odszyfrowywane w tej wersji. Może to również spowodować niepowodzenie wiadomości wymienianych z tą wersją. Jeśli wystąpią problemy, wyloguj się i zaloguj ponownie. Aby zachować historię wiadomości, wyeksportuj i ponownie zaimportuj klucze.",
@@ -3169,7 +3162,10 @@
             "fallback_button": "Rozpocznij uwierzytelnienie",
             "sso_title": "Użyj pojedynczego logowania, aby kontynuować",
             "sso_body": "Potwierdź dodanie tego adresu e-mail przez użycie pojedynczego logowania, aby potwierdzić swoją tożsamość.",
-            "code": "Kod"
+            "code": "Kod",
+            "sso_preauth_body": "Aby kontynuować, użyj Single Sign On do potwierdzenia swojej tożsamości.",
+            "sso_postauth_title": "Potwierdź, aby kontynuować",
+            "sso_postauth_body": "Naciśnij poniższy przycisk, aby potwierdzić swoją tożsamość."
         },
         "password_field_label": "Wprowadź hasło",
         "password_field_strong_label": "Ładne, silne hasło!",
@@ -4347,5 +4343,11 @@
         "send_label": "Wyślij",
         "message_preview_heading": "Podgląd wiadomości",
         "filter_placeholder": "Szukaj pokojów i ludzi"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integracje są wyłączone",
+        "disabled_dialog_description": "Włącz '%(manageIntegrations)s' w ustawieniach, aby to zrobić.",
+        "impossible_dialog_title": "Integracje nie są dozwolone",
+        "impossible_dialog_description": "%(brand)s nie zezwala Tobie na użycie menedżera integracji, aby to zrobić. Skontaktuj się z administratorem."
     }
 }

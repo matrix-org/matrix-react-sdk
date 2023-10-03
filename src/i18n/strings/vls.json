@@ -123,8 +123,6 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
-    "Incoming Verification Request": "Inkomend verificoasjeverzoek",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "J’èt al e ki %(brand)s ip %(host)s gebruukt me lui loadn van leedn ingeschoakeld. In deze versie is lui laden uutgeschoakeld. Me da de lokoale cache nie compatibel is tusschn deze twi instelliengn, moe %(brand)s jen account hersynchroniseern.",
     "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Indien dat d’andere versie van %(brand)s nog in een ander tabblad is geopend, sluut je da best, want %(brand)s ip dezelfsten host tegelykertyd me lui loadn ingeschoakeld en uutgeschoakeld gebruukn goa vo probleemn zorgn.",
     "Incompatible local cache": "Incompatibele lokoale cache",
@@ -841,7 +839,9 @@
             "complete_action": "’k Snappen ’t",
             "sas_emoji_caption_user": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm de volgende emoji toogt.",
             "sas_caption_user": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm ’t volgend getal toogt.",
-            "unsupported_method": "Kan geen oundersteunde verificoasjemethode viendn."
+            "unsupported_method": "Kan geen oundersteunde verificoasjemethode viendn.",
+            "incoming_sas_user_dialog_text_1": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
+            "incoming_sas_dialog_title": "Inkomend verificoasjeverzoek"
         },
         "old_version_detected_title": "Oude cryptografiegegeevns gedetecteerd",
         "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn.",

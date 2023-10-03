@@ -85,7 +85,6 @@
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
-    "Confirm to continue": "Apstipriniet, lai turpinātu",
     "Incorrect Security Phrase": "Nepareiza slepenā frāze",
     "Security Phrase": "Slepenā frāze",
     "Afghanistan": "Afganistāna",
@@ -98,7 +97,6 @@
     "Deactivate account": "Deaktivizēt kontu",
     "Recently Direct Messaged": "Nesenās tiešās sarakstes",
     "e.g. my-room": "piem., mana-istaba",
-    "Integrations are disabled": "Integrācijas ir atspējotas",
     "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
     "Flag": "Karogs",
     "Recent Conversations": "Nesenās sarunas",
@@ -128,7 +126,6 @@
     "%(name)s wants to verify": "%(name)s vēlas veikt verifikāciju",
     "Decline All": "Noraidīt visu",
     "%(name)s declined": "%(name)s noraidīja",
-    "Incoming Verification Request": "Ienākošais veifikācijas pieprasījums",
     "Verification Request": "Verifikācijas pieprasījums",
     "<inviter/> invites you": "<inviter/> uzaicina jūs",
     "%(count)s rooms": {
@@ -147,8 +144,6 @@
     "American Samoa": "Amerikāņu Samoa",
     "Algeria": "Alžīrija",
     "Share User": "Dalīties ar lietotāja kontaktdatiem",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
     "edited": "rediģēts",
     "You signed in to a new session without verifying it:": "Jūs pierakstījāties jaunā sesijā, neveicot tās verifikāciju:",
     "%(count)s people you know have already joined": {
@@ -1486,7 +1481,10 @@
             "successful_device": "Jūs veiksmīgi verificējāt %(deviceName)s (%(deviceId)s)!",
             "successful_user": "Jūs veiksmīgi verificējāt %(displayName)s!",
             "cancelled_user": "%(displayName)s atcēla verificēšanu.",
-            "cancelled": "Jūs atcēlāt verifikāciju."
+            "cancelled": "Jūs atcēlāt verifikāciju.",
+            "incoming_sas_user_dialog_text_2": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
+            "incoming_sas_device_dialog_text_2": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
+            "incoming_sas_dialog_title": "Ienākošais veifikācijas pieprasījums"
         },
         "old_version_detected_title": "Tika uzieti novecojuši šifrēšanas dati",
         "old_version_detected_description": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
@@ -1582,7 +1580,8 @@
             "fallback_button": "Sākt autentifikāciju",
             "sso_title": "Izmantot vienoto pieteikšanos, lai turpinātu",
             "sso_body": "Apstiprināt šīs epasta adreses pievienošanu, izmantojot vienoto pieteikšanos savas identitātes apliecināšanai.",
-            "code": "Kods"
+            "code": "Kods",
+            "sso_postauth_title": "Apstipriniet, lai turpinātu"
         },
         "password_field_label": "Ievadiet paroli",
         "password_field_strong_label": "Lieliski, sarežģīta parole!",
@@ -2148,5 +2147,8 @@
         "send_label": "Sūtīt",
         "message_preview_heading": "Ziņas priekšskatījums",
         "filter_placeholder": "Meklēt istabas vai cilvēkus"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integrācijas ir atspējotas"
     }
 }

@@ -150,8 +150,6 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <default>기본 (%(defaultIdentityServerName)s)을(를) 사용하거나</default> <settings>설정</settings>에서 관리하세요.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "이메일로 초대하기 위해 ID 서버를 사용합니다. <settings>설정</settings>에서 관리하세요.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "이 사용자를 신뢰할 수 있도록 인증합니다. 종단간 암호화 메시지를 사용할 때 사용자를 신뢰하면 안심이 듭니다.",
-    "Incoming Verification Request": "수신 확인 요청",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "이전에 구성원의 불러오기 지연이 켜진 %(host)s에서 %(brand)s을 사용했습니다. 이 버전에서 불러오기 지연은 꺼집니다. 로컬 캐시가 이 두 설정 간에 호환되지 않으므로, %(brand)s은 계정을 다시 동기화 해야 합니다.",
     "Incompatible local cache": "호환하지 않는 로컬 캐시",
     "Clear cache and resync": "캐시를 지우고 다시 동기화",
@@ -1069,7 +1067,9 @@
             "complete_action": "알겠습니다",
             "sas_emoji_caption_user": "다음 이모지가 상대방의 화면에 나타나는 것을 확인하는 것으로 이 사용자를 인증합니다.",
             "sas_caption_user": "다음 숫자가 상대방의 화면에 나타나는 것을 확인하는 것으로 이 사용자를 인증합니다.",
-            "unsupported_method": "지원하는 인증 방식을 찾을 수 없습니다."
+            "unsupported_method": "지원하는 인증 방식을 찾을 수 없습니다.",
+            "incoming_sas_user_dialog_text_1": "이 사용자를 신뢰할 수 있도록 인증합니다. 종단간 암호화 메시지를 사용할 때 사용자를 신뢰하면 안심이 듭니다.",
+            "incoming_sas_dialog_title": "수신 확인 요청"
         },
         "old_version_detected_title": "오래된 암호화 데이터 감지됨",
         "old_version_detected_description": "이전 버전 %(brand)s의 데이터가 감지됬습니다. 이 때문에 이전 버전에서 종단간 암호화가 작동하지 않을 수 있습니다. 이전 버전을 사용하면서 최근에 교환한 종단간 암호화 메시지를 이 버전에서는 복호화할 수 없습니다. 이 버전에서 메시지를 교환할 수 없을 수도 있습니다. 문제가 발생하면 로그아웃한 후 다시 로그인하세요. 메시지 기록을 유지하려면 키를 내보낸 후 다시 가져오세요.",

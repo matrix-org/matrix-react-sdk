@@ -158,8 +158,6 @@
     "Folder": "Cartella",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "I messaggi cifrati sono resi sicuri con una crittografia end-to-end. Solo tu e il/i destinatario/i avete le chiavi per leggere questi messaggi.",
     "Start using Key Backup": "Inizia ad usare il backup chiavi",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifica questo utente per contrassegnarlo come affidabile. La fiducia degli utenti offre una maggiore tranquillità quando si utilizzano messaggi cifrati end-to-end.",
-    "Incoming Verification Request": "Richiesta di verifica in arrivo",
     "I don't want my encrypted messages": "Non voglio i miei messaggi cifrati",
     "Manually export keys": "Esporta le chiavi manualmente",
     "You'll lose access to your encrypted messages": "Perderai l'accesso ai tuoi messaggi cifrati",
@@ -201,8 +199,6 @@
     "%(name)s cancelled": "%(name)s ha annullato",
     "%(name)s wants to verify": "%(name)s vuole verificare",
     "Failed to connect to integration manager": "Connessione al gestore di integrazioni fallita",
-    "Integrations are disabled": "Le integrazioni sono disattivate",
-    "Integrations not allowed": "Integrazioni non permesse",
     "Verification Request": "Richiesta verifica",
     "Upgrade private room": "Aggiorna stanza privata",
     "Upgrade public room": "Aggiorna stanza pubblica",
@@ -228,9 +224,6 @@
     },
     "Session name": "Nome sessione",
     "Session key": "Chiave sessione",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "La verifica di questo utente contrassegnerà come fidata la sua sessione a te e viceversa.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifica questo dispositivo per segnarlo come fidato. Fidarsi di questo dispositivo offre a te e agli altri utenti una maggiore tranquillità nell'uso di messaggi cifrati end-to-end.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "La verifica di questo dispositivo lo segnerà come fidato e gli utenti che si sono verificati con te si fideranno di questo dispositivo.",
     "Not Trusted": "Non fidato",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) ha fatto l'accesso con una nuova sessione senza verificarla:",
     "Ask this user to verify their session, or manually verify it below.": "Chiedi a questo utente di verificare la sua sessione o verificala manualmente sotto.",
@@ -260,9 +253,6 @@
     "Successfully restored %(sessionCount)s keys": "Ripristinate %(sessionCount)s chiavi correttamente",
     "You signed in to a new session without verifying it:": "Hai fatto l'accesso ad una nuova sessione senza verificarla:",
     "Verify your other session using one of the options below.": "Verifica la tua altra sessione usando una delle opzioni sotto.",
-    "To continue, use Single Sign On to prove your identity.": "Per continuare, usa Single Sign On per provare la tua identità.",
-    "Confirm to continue": "Conferma per continuare",
-    "Click the button below to confirm your identity.": "Clicca il pulsante sotto per confermare la tua identità.",
     "Confirm encryption setup": "Conferma impostazione crittografia",
     "Click the button below to confirm setting up encryption.": "Clicca il pulsante sotto per confermare l'impostazione della crittografia.",
     "IRC display name width": "Larghezza nome di IRC",
@@ -608,7 +598,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
     "Or send invite link": "O manda un collegamento di invito",
     "Some suggestions may be hidden for privacy.": "Alcuni suggerimenti potrebbero essere nascosti per privacy.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
     "Automatically invite members from this room to the new one": "Invita automaticamente i membri da questa stanza a quella nuova",
     "These are likely ones other room admins are a part of.": "Questi sono probabilmente quelli di cui fanno parte gli altri amministratori delle stanze.",
@@ -725,8 +714,6 @@
     "Loading live location…": "Caricamento posizione in tempo reale…",
     "Fetching keys from server…": "Ricezione delle chiavi dal server…",
     "Checking…": "Controllo…",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Attiva '%(manageIntegrations)s' nelle impostazioni per continuare.",
-    "Waiting for partner to confirm…": "In attesa che il partner confermi…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Invites by email can only be sent one at a time": "Gli inviti per email possono essere inviati uno per volta",
     "Desktop app logo": "Logo app desktop",
@@ -2973,7 +2960,13 @@
             "timed_out": "Verifica scaduta.",
             "cancelled_self": "Hai annullato la verifica nell'altro dispositivo.",
             "cancelled_user": "%(displayName)s ha annullato la verifica.",
-            "cancelled": "Hai annullato la verifica."
+            "cancelled": "Hai annullato la verifica.",
+            "incoming_sas_user_dialog_text_1": "Verifica questo utente per contrassegnarlo come affidabile. La fiducia degli utenti offre una maggiore tranquillità quando si utilizzano messaggi cifrati end-to-end.",
+            "incoming_sas_user_dialog_text_2": "La verifica di questo utente contrassegnerà come fidata la sua sessione a te e viceversa.",
+            "incoming_sas_device_dialog_text_1": "Verifica questo dispositivo per segnarlo come fidato. Fidarsi di questo dispositivo offre a te e agli altri utenti una maggiore tranquillità nell'uso di messaggi cifrati end-to-end.",
+            "incoming_sas_device_dialog_text_2": "La verifica di questo dispositivo lo segnerà come fidato e gli utenti che si sono verificati con te si fideranno di questo dispositivo.",
+            "incoming_sas_dialog_waiting": "In attesa che il partner confermi…",
+            "incoming_sas_dialog_title": "Richiesta di verifica in arrivo"
         },
         "old_version_detected_title": "Rilevati dati di crittografia obsoleti",
         "old_version_detected_description": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
@@ -3181,7 +3174,10 @@
             "fallback_button": "Inizia l'autenticazione",
             "sso_title": "Usa Single Sign On per continuare",
             "sso_body": "Conferma aggiungendo questa email usando Single Sign On per provare la tua identità.",
-            "code": "Codice"
+            "code": "Codice",
+            "sso_preauth_body": "Per continuare, usa Single Sign On per provare la tua identità.",
+            "sso_postauth_title": "Conferma per continuare",
+            "sso_postauth_body": "Clicca il pulsante sotto per confermare la tua identità."
         },
         "password_field_label": "Inserisci password",
         "password_field_strong_label": "Bene, password robusta!",
@@ -4372,5 +4368,11 @@
         "send_label": "Invia",
         "message_preview_heading": "Anteprima messaggio",
         "filter_placeholder": "Cerca stanze o persone"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Le integrazioni sono disattivate",
+        "disabled_dialog_description": "Attiva '%(manageIntegrations)s' nelle impostazioni per continuare.",
+        "impossible_dialog_title": "Integrazioni non permesse",
+        "impossible_dialog_description": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore."
     }
 }

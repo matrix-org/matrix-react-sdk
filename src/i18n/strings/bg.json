@@ -94,8 +94,6 @@
     "Unable to restore backup": "Неуспешно възстановяване на резервно копие",
     "No backup found!": "Не е открито резервно копие!",
     "Failed to decrypt %(failedCount)s sessions!": "Неуспешно разшифроване на %(failedCount)s сесии!",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Потвърди потребителя и го маркирай като доверен. Доверяването на потребители Ви дава допълнително спокойствие при използване на съобщения шифровани от край-до-край.",
-    "Incoming Verification Request": "Входяща заявка за потвърждение",
     "Email (optional)": "Имейл (незадължително)",
     "Dog": "Куче",
     "Cat": "Котка",
@@ -205,8 +203,6 @@
         "other": "%(count)s потвърдени сесии",
         "one": "1 потвърдена сесия"
     },
-    "Integrations are disabled": "Интеграциите са изключени",
-    "Integrations not allowed": "Интеграциите не са разрешени",
     "Upgrade private room": "Обнови лична стая",
     "Upgrade public room": "Обнови публична стая",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Обновяването на стая е действие за напреднали и обикновено се препоръчва когато стаята е нестабилна поради бъгове, липсващи функции или проблеми със сигурността.",
@@ -236,16 +232,10 @@
     "Clear cross-signing keys": "Изчисти ключовете за кръстосано-подписване",
     "Session name": "Име на сесията",
     "Session key": "Ключ за сесията",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Верифицирането на този потребител ще маркира сесията им като доверена при вас, както и вашата като доверена при тях.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Верифицирайте това устройство за да го маркирате като доверено. Доверявайки се на това устройство дава на вас и на другите потребители допълнително спокойствие при използването на от-край-до-край-шифровани съобщения.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Верифицирането на това устройство ще го маркира като доверено, а потребителите, които са потвърдили вас също ще се доверяват на него.",
     "Something went wrong trying to invite the users.": "Нещо се обърка при опита да бъдат поканени потребителите.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Не можахме да поканим тези потребители. Проверете потребителите, които искате да поканите и опитайте пак.",
     "Recently Direct Messaged": "Скорошни директни чатове",
     "IRC display name width": "Ширина на IRC името",
-    "To continue, use Single Sign On to prove your identity.": "За да продължите, използвайте Single Sign On за да потвърдите самоличността си.",
-    "Confirm to continue": "Потвърдете за да продължите",
-    "Click the button below to confirm your identity.": "Кликнете бутона по-долу за да потвърдите самоличността си.",
     "a new master key signature": "нов подпис на основния ключ",
     "a new cross-signing key signature": "нов подпис на ключа за кръстосано-подписване",
     "a device cross-signing signature": "подпис за кръстосано-подписване на устройства",
@@ -548,7 +538,6 @@
     "United Kingdom": "Обединеното кралство",
     "Leave space": "Напусни пространство",
     "unknown person": "",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор.",
     "common": {
         "about": "Относно",
         "analytics": "Статистика",
@@ -1702,7 +1691,12 @@
             "prompt_user": "Започнете верифициране отново от профила им.",
             "timed_out": "Изтече времето за верификация.",
             "cancelled_user": "%(displayName)s отказа верификацията.",
-            "cancelled": "Отказахте верификацията."
+            "cancelled": "Отказахте верификацията.",
+            "incoming_sas_user_dialog_text_1": "Потвърди потребителя и го маркирай като доверен. Доверяването на потребители Ви дава допълнително спокойствие при използване на съобщения шифровани от край-до-край.",
+            "incoming_sas_user_dialog_text_2": "Верифицирането на този потребител ще маркира сесията им като доверена при вас, както и вашата като доверена при тях.",
+            "incoming_sas_device_dialog_text_1": "Верифицирайте това устройство за да го маркирате като доверено. Доверявайки се на това устройство дава на вас и на другите потребители допълнително спокойствие при използването на от-край-до-край-шифровани съобщения.",
+            "incoming_sas_device_dialog_text_2": "Верифицирането на това устройство ще го маркира като доверено, а потребителите, които са потвърдили вас също ще се доверяват на него.",
+            "incoming_sas_dialog_title": "Входяща заявка за потвърждение"
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
@@ -1836,7 +1830,10 @@
             "fallback_button": "Започни автентикация",
             "sso_title": "Използвайте Single Sign On за да продължите",
             "sso_body": "Потвърдете добавянето на този имейл адрес като потвърдите идентичността си чрез Single Sign On.",
-            "code": "Код"
+            "code": "Код",
+            "sso_preauth_body": "За да продължите, използвайте Single Sign On за да потвърдите самоличността си.",
+            "sso_postauth_title": "Потвърдете за да продължите",
+            "sso_postauth_body": "Кликнете бутона по-долу за да потвърдите самоличността си."
         },
         "password_field_label": "Въведете парола",
         "password_field_strong_label": "Хубава, силна парола!",
@@ -2434,5 +2431,10 @@
     "forward": {
         "send_label": "Изпрати",
         "message_preview_heading": "Преглед на съобщението"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Интеграциите са изключени",
+        "impossible_dialog_title": "Интеграциите не са разрешени",
+        "impossible_dialog_description": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор."
     }
 }

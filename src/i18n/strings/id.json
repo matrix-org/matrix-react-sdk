@@ -627,17 +627,6 @@
     "Something went wrong trying to invite the users.": "Ada sesuatu yang salah ketika mengundang penggunanya.",
     "We couldn't create your DM.": "Kami tidak dapat membuat pesan langsung Anda.",
     "Invite by email": "Undang melalui email",
-    "Click the button below to confirm your identity.": "Klik tombol di bawah untuk mengkonfirmasi identitas Anda.",
-    "Confirm to continue": "Konfirmasi untuk melanjutkan",
-    "To continue, use Single Sign On to prove your identity.": "Untuk melanjutkan, gunakan Single Sign On untuk membuktikan identitas Anda.",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s Anda tidak mengizinkan Anda menggunakan sebuah manajer integrasi untuk melakukan ini. Mohon hubungi sebuah admin.",
-    "Integrations not allowed": "Integrasi tidak diperbolehkan",
-    "Integrations are disabled": "Integrasi dinonaktifkan",
-    "Incoming Verification Request": "Permintaan Verifikasi Masuk",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Memverifikasi perangkat ini akan menandainya sebagai terpercaya, dan pengguna yang telah diverifikasi dengan Anda akan mempercayai perangkat ini.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Verifikasi perangkat ini untuk menandainya sebagai terpercaya. Mempercayai perangkat ini akan memberikan Anda dan pengguna lain ketenangan saat menggunakan pesan terenkripsi secara ujung ke ujung.",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Memverifikasi pengguna ini akan menandai sesinya sebagai terpercaya, dan juga menandai sesi Anda sebagai terpercaya kepadanya.",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Verifikasi pengguna ini untuk menandainya sebagai terpercaya. Mempercayai pengguna memberikan Anda ketenangan saat menggunakan pesan terenkripsi secara ujung ke ujung.",
     "%(count)s votes": {
         "one": "%(count)s suara",
         "other": "%(count)s suara"
@@ -722,11 +711,9 @@
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "unknown": "tidak diketahui",
-    "Enable '%(manageIntegrations)s' in Settings to do this.": "Aktifkan '%(manageIntegrations)s' di Pengaturan untuk melakukan ini.",
     "Loading live location…": "Memuat lokasi langsung…",
     "Fetching keys from server…": "Mendapatkan kunci- dari server…",
     "Checking…": "Memeriksa…",
-    "Waiting for partner to confirm…": "Menunggu pengguna untuk konfirmasi…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Invites by email can only be sent one at a time": "Undangan lewat surel hanya dapat dikirim satu-satu",
     "Desktop app logo": "Logo aplikasi desktop",
@@ -2973,7 +2960,13 @@
             "timed_out": "Waktu habis untuk memverifikasi.",
             "cancelled_self": "Anda membatalkan verifikasi di perangkat Anda yang lain.",
             "cancelled_user": "%(displayName)s membatalkan verifikasi.",
-            "cancelled": "Anda membatalkan verifikasi."
+            "cancelled": "Anda membatalkan verifikasi.",
+            "incoming_sas_user_dialog_text_1": "Verifikasi pengguna ini untuk menandainya sebagai terpercaya. Mempercayai pengguna memberikan Anda ketenangan saat menggunakan pesan terenkripsi secara ujung ke ujung.",
+            "incoming_sas_user_dialog_text_2": "Memverifikasi pengguna ini akan menandai sesinya sebagai terpercaya, dan juga menandai sesi Anda sebagai terpercaya kepadanya.",
+            "incoming_sas_device_dialog_text_1": "Verifikasi perangkat ini untuk menandainya sebagai terpercaya. Mempercayai perangkat ini akan memberikan Anda dan pengguna lain ketenangan saat menggunakan pesan terenkripsi secara ujung ke ujung.",
+            "incoming_sas_device_dialog_text_2": "Memverifikasi perangkat ini akan menandainya sebagai terpercaya, dan pengguna yang telah diverifikasi dengan Anda akan mempercayai perangkat ini.",
+            "incoming_sas_dialog_waiting": "Menunggu pengguna untuk konfirmasi…",
+            "incoming_sas_dialog_title": "Permintaan Verifikasi Masuk"
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3181,7 +3174,10 @@
             "fallback_button": "Mulai autentikasi",
             "sso_title": "Gunakan Single Sign On untuk melanjutkan",
             "sso_body": "Konfirmasi penambahan alamat email ini dengan menggunakan Single Sign On untuk membuktikan identitas Anda.",
-            "code": "Kode"
+            "code": "Kode",
+            "sso_preauth_body": "Untuk melanjutkan, gunakan Single Sign On untuk membuktikan identitas Anda.",
+            "sso_postauth_title": "Konfirmasi untuk melanjutkan",
+            "sso_postauth_body": "Klik tombol di bawah untuk mengkonfirmasi identitas Anda."
         },
         "password_field_label": "Masukkan kata sandi",
         "password_field_strong_label": "Bagus, kata sandinya kuat!",
@@ -4372,5 +4368,11 @@
         "send_label": "Kirim",
         "message_preview_heading": "Tampilan pesan",
         "filter_placeholder": "Cari ruangan atau orang"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Integrasi dinonaktifkan",
+        "disabled_dialog_description": "Aktifkan '%(manageIntegrations)s' di Pengaturan untuk melakukan ini.",
+        "impossible_dialog_title": "Integrasi tidak diperbolehkan",
+        "impossible_dialog_description": "%(brand)s Anda tidak mengizinkan Anda menggunakan sebuah manajer integrasi untuk melakukan ini. Mohon hubungi sebuah admin."
     }
 }

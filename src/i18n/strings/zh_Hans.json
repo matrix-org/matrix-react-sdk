@@ -154,8 +154,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
     "Start using Key Backup": "开始使用密钥备份",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "验证此用户并将其标记为已信任。在收发端到端加密消息时，信任用户可让你更加放心。",
-    "Incoming Verification Request": "收到验证请求",
     "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "你之前在 %(host)s 上开启了 %(brand)s 的成员列表延迟加载设置。目前版本中延迟加载功能已被停用。因为本地缓存在这两个设置项上不相容，%(brand)s 需要重新同步你的账户。",
     "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "通过仅在需要时加载其他用户的信息，%(brand)s 现在使用的内存减少到了原来的三分之一至五分之一。 请等待与服务器重新同步！",
     "I don't want my encrypted messages": "我不想要我的加密消息",
@@ -201,14 +199,6 @@
     "Destroy cross-signing keys?": "销毁交叉签名密钥？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "删除交叉签名密钥是永久的。所有你验证过的人都会看到安全警报。除非你丢失了所有可以交叉签名的设备，否则几乎可以确定你不想这么做。",
     "Clear cross-signing keys": "清楚交叉签名密钥",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "验证此用户会将其会话标记为已信任，与此同时，你的会话也会被此用户标记为已信任。",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "验证此设备以将其标记为已信任。在收发端到端加密消息时，信任设备可让你与其他用户更加放心。",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "验证此设备会将其标记为已信任，与此同时，其他验证了你的用户也会信任此设备。",
-    "Integrations are disabled": "集成已禁用",
-    "Integrations not allowed": "集成未被允许",
-    "To continue, use Single Sign On to prove your identity.": "要继续，请使用单点登录证明你的身份。",
-    "Confirm to continue": "确认以继续",
-    "Click the button below to confirm your identity.": "点击下方按钮确认你的身份。",
     "Something went wrong trying to invite the users.": "尝试邀请用户时出错。",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "我们不能邀请这些用户。请检查你想邀请的用户并重试。",
     "Failed to find the following users": "寻找以下用户失败",
@@ -608,7 +598,6 @@
     "Incorrect Security Phrase": "安全短语错误",
     "Or send invite link": "或发送邀请链接",
     "Some suggestions may be hidden for privacy.": "出于隐私考虑，部分建议可能会被隐藏。",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
     "Automatically invite members from this room to the new one": "自动邀请该房间的成员加入新房间",
     "These are likely ones other room admins are a part of.": "这些可能是其他房间管理员的一部分。",
@@ -2703,7 +2692,12 @@
             "timed_out": "验证超时。",
             "cancelled_self": "你在其他设备上取消了验证。",
             "cancelled_user": "%(displayName)s 取消了验证。",
-            "cancelled": "你取消了验证。"
+            "cancelled": "你取消了验证。",
+            "incoming_sas_user_dialog_text_1": "验证此用户并将其标记为已信任。在收发端到端加密消息时，信任用户可让你更加放心。",
+            "incoming_sas_user_dialog_text_2": "验证此用户会将其会话标记为已信任，与此同时，你的会话也会被此用户标记为已信任。",
+            "incoming_sas_device_dialog_text_1": "验证此设备以将其标记为已信任。在收发端到端加密消息时，信任设备可让你与其他用户更加放心。",
+            "incoming_sas_device_dialog_text_2": "验证此设备会将其标记为已信任，与此同时，其他验证了你的用户也会信任此设备。",
+            "incoming_sas_dialog_title": "收到验证请求"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -2891,7 +2885,10 @@
             "fallback_button": "开始认证",
             "sso_title": "使用单点登录继续",
             "sso_body": "使用单一登入证明你的身份，以确认添加此电子邮件地址。",
-            "code": "代码"
+            "code": "代码",
+            "sso_preauth_body": "要继续，请使用单点登录证明你的身份。",
+            "sso_postauth_title": "确认以继续",
+            "sso_postauth_body": "点击下方按钮确认你的身份。"
         },
         "password_field_label": "输入密码",
         "password_field_strong_label": "不错，是个强密码！",
@@ -3940,5 +3937,10 @@
         "send_label": "发送",
         "message_preview_heading": "消息预览",
         "filter_placeholder": "搜索房间或用户"
+    },
+    "integrations": {
+        "disabled_dialog_title": "集成已禁用",
+        "impossible_dialog_title": "集成未被允许",
+        "impossible_dialog_description": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。"
     }
 }

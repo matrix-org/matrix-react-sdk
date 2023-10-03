@@ -137,8 +137,6 @@
     "Paperclip": "Paperkuntenilo",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Ĉifritaj mesaĝoj estas sekurigitaj per tutvoja ĉifrado. Nur vi kaj la ricevonto(j) havas la ŝlosilojn necesajn por legado.",
     "edited": "redaktita",
-    "Verify this user to mark them as trusted. Trusting users gives you extra peace of mind when using end-to-end encrypted messages.": "Kontrolu ĉi tiun uzanton por marki ĝin fidata. Fidado devas vin trankviligi dum uzado de tutvoja ĉifrado.",
-    "Incoming Verification Request": "Venas kontrolpeto",
     "Manually export keys": "Mane elporti ŝlosilojn",
     "The room upgrade could not be completed": "Gradaltigo de la ĉambro ne povis finiĝi",
     "Upgrade this room to version %(version)s": "Gradaltigi ĉi tiun ĉambron al versio %(version)s",
@@ -202,8 +200,6 @@
     "Command Help": "Helpo pri komando",
     "Lock": "Seruro",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
-    "Integrations are disabled": "Kunigoj estas malŝaltitaj",
-    "Integrations not allowed": "Kunigoj ne estas permesitaj",
     "Upgrade private room": "Gradaltigi privatan ĉambron",
     "Upgrade public room": "Gradaltigi publikan ĉambron",
     "Not Trusted": "Nefidata",
@@ -226,9 +222,6 @@
     "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
     "Session name": "Nomo de salutaĵo",
     "Session key": "Ŝlosilo de salutaĵo",
-    "Verifying this user will mark their session as trusted, and also mark your session as trusted to them.": "Kontrolo de tiu ĉi uzanto markos ĝian salutaĵon fidata, kaj ankaŭ markos vian salutaĵon fidata por ĝi.",
-    "Verify this device to mark it as trusted. Trusting this device gives you and other users extra peace of mind when using end-to-end encrypted messages.": "Kontrolu ĉi tiun aparaton por marki ĝin fidata. Fidado povas pacigi la menson de vi kaj aliaj uzantoj dum uzado de tutvoje ĉifrataj mesaĝoj.",
-    "Verifying this device will mark it as trusted, and users who have verified with you will trust this device.": "Kontrolo de ĉi tiu aparato markos ĝin fidata, kaj ankaŭ la uzantoj, kiuj interkontrolis kun vi, fidos ĉi tiun aparaton.",
     "Something went wrong trying to invite the users.": "Io eraris dum invito de la uzantoj.",
     "We couldn't invite those users. Please check the users you want to invite and try again.": "Ni ne povis inviti tiujn uzantojn. Bonvolu kontroli, kiujn uzantojn vi invitas, kaj reprovu.",
     "Failed to find the following users": "Malsukcesis trovi la jenajn uzantojn",
@@ -260,9 +253,6 @@
     "Keys restored": "Ŝlosiloj rehaviĝis",
     "Successfully restored %(sessionCount)s keys": "Sukcese rehavis %(sessionCount)s ŝlosilojn",
     "Sign in with SSO": "Saluti per ununura saluto",
-    "To continue, use Single Sign On to prove your identity.": "Por daŭrigi, pruvu vian identecon per ununura saluto.",
-    "Confirm to continue": "Konfirmu por daŭrigi",
-    "Click the button below to confirm your identity.": "Klaku sube la butonon por konfirmi vian identecon.",
     "Confirm encryption setup": "Konfirmi agordon de ĉifrado",
     "Click the button below to confirm setting up encryption.": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
     "IRC display name width": "Larĝo de vidiga nomo de IRC",
@@ -606,7 +596,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se vi tamen tion faras, sciu ke neniu el viaj mesaĝoj foriĝos, sed via sperto pri serĉado povas malboniĝi momente, dum la indekso estas refarata",
     "You most likely do not want to reset your event index store": "Plej verŝajne, vi ne volas restarigi vian deponejon de indeksoj de okazoj",
     "Reset event store?": "Ĉu restarigi deponejon de okazoj?",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "Via %(brand)so ne permesas al vi uzi kunigilon por tio. Bonvolu kontakti administranton.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Sciu, ke gradaltigo kreos novan version de la ĉambro</b>. Ĉiuj nunaj mesaĝoj restos en ĉi tiu arĥivita ĉambro.",
     "Automatically invite members from this room to the new one": "Memage inviti anojn de ĉi tiu ĉambro al la nova",
     "Other spaces or rooms you might not know": "Aliaj aroj aŭ ĉambroj, kiujn vi eble ne konas",
@@ -2240,7 +2229,12 @@
             "prompt_user": "Rekomencu kontroladon el ĝia profilo.",
             "timed_out": "Kontrolo atingis tempolimon.",
             "cancelled_user": "%(displayName)s nuligis kontrolon.",
-            "cancelled": "Vi nuligis kontrolon."
+            "cancelled": "Vi nuligis kontrolon.",
+            "incoming_sas_user_dialog_text_1": "Kontrolu ĉi tiun uzanton por marki ĝin fidata. Fidado devas vin trankviligi dum uzado de tutvoja ĉifrado.",
+            "incoming_sas_user_dialog_text_2": "Kontrolo de tiu ĉi uzanto markos ĝian salutaĵon fidata, kaj ankaŭ markos vian salutaĵon fidata por ĝi.",
+            "incoming_sas_device_dialog_text_1": "Kontrolu ĉi tiun aparaton por marki ĝin fidata. Fidado povas pacigi la menson de vi kaj aliaj uzantoj dum uzado de tutvoje ĉifrataj mesaĝoj.",
+            "incoming_sas_device_dialog_text_2": "Kontrolo de ĉi tiu aparato markos ĝin fidata, kaj ankaŭ la uzantoj, kiuj interkontrolis kun vi, fidos ĉi tiun aparaton.",
+            "incoming_sas_dialog_title": "Venas kontrolpeto"
         },
         "old_version_detected_title": "Malnovaj datumoj de ĉifroteĥnikaro troviĝis",
         "old_version_detected_description": "Datumoj el malnova versio de %(brand)s troviĝis. Ĉi tio malfunkciigos tutvojan ĉifradon en la malnova versio. Tutvoje ĉifritaj mesaĝoj interŝanĝitaj freŝtempe per la malnova versio eble ne malĉifreblos. Tio povas kaŭzi malsukceson ankaŭ al mesaĝoj interŝanĝitaj kun tiu ĉi versio. Se vin trafos problemoj, adiaŭu kaj resalutu. Por reteni mesaĝan historion, elportu kaj reenportu viajn ŝlosilojn.",
@@ -2416,7 +2410,10 @@
             "fallback_button": "Komenci aŭtentikigon",
             "sso_title": "Daŭrigi per ununura saluto",
             "sso_body": "Konfirmi aldonon de ĉi tiu retpoŝtadreso, uzante ununuran saluton por pruvi vian identecon.",
-            "code": "Kodo"
+            "code": "Kodo",
+            "sso_preauth_body": "Por daŭrigi, pruvu vian identecon per ununura saluto.",
+            "sso_postauth_title": "Konfirmu por daŭrigi",
+            "sso_postauth_body": "Klaku sube la butonon por konfirmi vian identecon."
         },
         "password_field_label": "Enigu pasvorton",
         "password_field_strong_label": "Bona, forta pasvorto!",
@@ -3318,5 +3315,10 @@
         "send_label": "Sendi",
         "message_preview_heading": "Antaŭrigardo al mesaĝo",
         "filter_placeholder": "Serĉi ĉambrojn aŭ personojn"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Kunigoj estas malŝaltitaj",
+        "impossible_dialog_title": "Kunigoj ne estas permesitaj",
+        "impossible_dialog_description": "Via %(brand)so ne permesas al vi uzi kunigilon por tio. Bonvolu kontakti administranton."
     }
 }

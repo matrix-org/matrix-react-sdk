@@ -468,14 +468,11 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Veldu hvaða svæði hafa aðgang að þessari spjallrás. Ef svæði er valið geta meðlimir þess fundið og tekið þátt í spjallrásinni<RoomName/>.",
     "Failed to find the following users": "Mistókst að finna eftirfarandi notendur",
     "We couldn't create your DM.": "Það tókst ekki að útbúa beinu skilaboðin þin.",
-    "Integrations are disabled": "Samþættingar eru óvirkar",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
     "a new cross-signing key signature": "ný kross-undirritun undirritunarlykils",
-    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)s leyfir þér ekki að nota samþættingarstýringu til að gera þetta. Hafðu samband við kerfisstjóra.",
-    "Integrations not allowed": "Samþættingar eru ekki leyfðar",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
     "IRC display name width": "Breidd IRC-birtingarnafns",
     "%(count)s sessions": {
@@ -514,8 +511,6 @@
     "Decline All": "Hafna öllu",
     "Command Help": "Hjálp við skipun",
     "Continuing without email": "Halda áfram án tölvupósts",
-    "Click the button below to confirm your identity.": "Smelltu á hnappinn hér að neðan til að staðfesta auðkennið þitt.",
-    "Confirm to continue": "Staðfestu til að halda áfram",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -527,7 +522,6 @@
     "Verification Request": "Beiðni um sannvottun",
     "Security Phrase": "Öryggisfrasi",
     "Manually export keys": "Flytja út dulritunarlykla handvirkt",
-    "Incoming Verification Request": "Innkomin beiðni um sannvottun",
     "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
     "Find others by phone or email": "Finndu aðra með símanúmeri eða tölvupóstfangi",
@@ -561,7 +555,6 @@
     "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
     "Or send invite link": "Eða senda boðstengil",
-    "To continue, use Single Sign On to prove your identity.": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
     "Unable to load backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
@@ -2575,7 +2568,8 @@
             "timed_out": "Sannvottun rann út á tíma.",
             "cancelled_self": "Þú hættir við sannvottun á hinu tækinu þínu.",
             "cancelled_user": "%(displayName)s hætti við sannvottun.",
-            "cancelled": "Þú hættir við sannvottun."
+            "cancelled": "Þú hættir við sannvottun.",
+            "incoming_sas_dialog_title": "Innkomin beiðni um sannvottun"
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -2754,7 +2748,10 @@
             "fallback_button": "Hefja auðkenningu",
             "sso_title": "Notaðu einfalda innskráningu (single-sign-on) til að halda áfram",
             "sso_body": "Staðfestu viðbætingu þessa tölvupóstfangs með því að nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
-            "code": "Kóði"
+            "code": "Kóði",
+            "sso_preauth_body": "Til að halda áfram skaltu nota einfalda innskráningu (single-sign-on) til að sanna auðkennið þitt.",
+            "sso_postauth_title": "Staðfestu til að halda áfram",
+            "sso_postauth_body": "Smelltu á hnappinn hér að neðan til að staðfesta auðkennið þitt."
         },
         "password_field_label": "Settu inn lykilorð",
         "password_field_strong_label": "Fínt, sterkt lykilorð!",
@@ -3747,5 +3744,10 @@
         "send_label": "Senda",
         "message_preview_heading": "Forskoðun skilaboða",
         "filter_placeholder": "Leita að spjallrásum eða fólki"
+    },
+    "integrations": {
+        "disabled_dialog_title": "Samþættingar eru óvirkar",
+        "impossible_dialog_title": "Samþættingar eru ekki leyfðar",
+        "impossible_dialog_description": "%(brand)s leyfir þér ekki að nota samþættingarstýringu til að gera þetta. Hafðu samband við kerfisstjóra."
     }
 }
