@@ -73,14 +73,6 @@
     "Share User": "Zdieľať používateľa",
     "Link to selected message": "Odkaz na vybratú správu",
     "Share Room Message": "Zdieľať správu z miestnosti",
-    "Failed to upgrade room": "Nepodarilo sa aktualizovať miestnosť",
-    "The room upgrade could not be completed": "Nie je možné dokončiť aktualizáciu miestnosti na jej najnovšiu verziu",
-    "Upgrade this room to version %(version)s": "Aktualizovať túto miestnosť na verziu %(version)s",
-    "Upgrade Room Version": "Aktualizovať verziu miestnosti",
-    "Create a new room with the same name, description and avatar": "Vznikne nová miestnosť s rovnakým názvom, témou a obrázkom",
-    "Update any local room aliases to point to the new room": "Všetky lokálne aliasy pôvodnej miestnosti sa aktualizujú tak, aby ukazovali na novú miestnosť",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "V pôvodnej miestnosti bude zverejnené odporúčanie prejsť do novej miestnosti a posielanie do pôvodnej miestnosti bude zakázané pre všetkých používateľov",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "História novej miestnosti sa začne odkazom do pôvodnej miestnosti, aby si členovia vedeli zobraziť staršie správy",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
     "Unable to load backup status": "Nie je možné načítať stav zálohy",
     "Unable to restore backup": "Nie je možné obnoviť zo zálohy",
@@ -148,9 +140,7 @@
     "Anchor": "Kotva",
     "Headphones": "Slúchadlá",
     "Folder": "Fascikel",
-    "Room Settings - %(roomName)s": "Nastavenia miestnosti - %(roomName)s",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varovanie</b>: zálohovanie šifrovacích kľúčov by ste mali nastavovať na dôveryhodnom počítači.",
-    "Email (optional)": "Email (nepovinné)",
     "Deactivate account": "Deaktivovať účet",
     "You signed in to a new session without verifying it:": "Prihlásili ste sa do novej relácie bez jej overenia:",
     "Verify your other session using one of the options below.": "Overte svoje ostatné relácie pomocou jednej z nižšie uvedených možností.",
@@ -436,11 +426,8 @@
     "Cancel All": "Zrušiť všetky",
     "Developer": "Vývojárske",
     "Experimental": "Experimentálne",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />.",
     "Backup version:": "Verzia zálohy:",
-    "Upgrade private room": "Aktualizovať súkromnú miestnosť",
     "Public rooms": "Verejné miestnosti",
-    "Upgrade public room": "Aktualizovať verejnú miestnosť",
     "To join a space you'll need an invite.": "Ak sa chcete pripojiť k priestoru, budete potrebovať pozvánku.",
     "%(count)s sessions": {
         "one": "%(count)s relácia",
@@ -458,17 +445,12 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "Server isn't responding": "Server neodpovedá",
     "edited": "upravené",
-    "Message edits": "Úpravy správy",
     "Switch theme": "Prepnúť motív",
     "Recent searches": "Nedávne vyhľadávania",
     "To search messages, look for this icon at the top of a room <icon/>": "Ak chcete vyhľadávať správy, nájdite túto ikonu v hornej časti miestnosti <icon/>",
     "Other searches": "Iné vyhľadávania",
     "Use \"%(query)s\" to search": "Na vyhľadávanie použite \"%(query)s\"",
     "Not encrypted": "Nie je zašifrované",
-    "Automatically invite members from this room to the new one": "Automaticky pozvať členov z tejto miestnosti do novej",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s vaším %(brand)s, nahláste prosím <a>chybu</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s %(brand)s, nahláste prosím chybu.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vezmite prosím na vedomie, že aktualizácia vytvorí novú verziu miestnosti</b>. Všetky aktuálne správy zostanú v tejto archivovanej miestnosti.",
     "%(name)s cancelled": "%(name)s zrušil/a",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
     "Your firewall or anti-virus is blocking the request.": "Požiadavku blokuje váš firewall alebo antivírus.",
@@ -485,7 +467,6 @@
     "Security Key mismatch": "Nezhoda bezpečnostných kľúčov",
     "Invalid Security Key": "Neplatný bezpečnostný kľúč",
     "Wrong Security Key": "Nesprávny bezpečnostný kľúč",
-    "Continuing without email": "Pokračovanie bez e-mailu",
     "Wrong file type": "Nesprávny typ súboru",
     "%(count)s reply": {
         "one": "%(count)s odpoveď",
@@ -522,10 +503,8 @@
     "Keys restored": "Kľúče obnovené",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s obnovených kľúčov",
     "Restoring keys from backup": "Obnovenie kľúčov zo zálohy",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
     "Be found by phone or email": "Byť nájdený pomocou telefónu alebo e-mailu",
     "Find others by phone or email": "Nájsť ostatných pomocou telefónu alebo e-mailu",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizácia tejto miestnosti vyžaduje zrušenie aktuálnej inštancie miestnosti a vytvorenie novej miestnosti na jej mieste. Aby sme členom miestnosti poskytli čo najlepšiu skúsenosť, budeme:",
     "%(count)s votes": {
         "one": "%(count)s hlas",
         "other": "%(count)s hlasov"
@@ -565,8 +544,6 @@
     "Reset event store": "Obnoviť úložisko udalostí",
     "You most likely do not want to reset your event index store": "S najväčšou pravdepodobnosťou nechcete obnoviť indexové úložisko udalostí",
     "Reset event store?": "Obnoviť úložisko udalostí?",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
-    "Data on this screen is shared with %(widgetDomain)s": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s",
     "Sections to show": "Sekcie na zobrazenie",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "Use <arrows/> to scroll": "Na posúvanie použite <arrows/>",
@@ -585,7 +562,6 @@
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
     "Search Dialog": "Vyhľadávacie dialógové okno",
     "Join %(roomAddress)s": "Pripojiť sa k %(roomAddress)s",
-    "Modal Widget": "Modálny widget",
     "%(brand)s encountered an error during upload of:": "%(brand)s zaznamenal chybu pri nahrávaní:",
     "a key signature": "podpis kľúča",
     "a new master key signature": "nový podpis hlavného kľúča",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilnú verziu MSC3827",
     "unavailable": "nedostupný",
     "unknown status code": "neznámy kód stavu",
-    "Upgrade room": "Aktualizovať miestnosť",
     "Failed to query public rooms": "Nepodarilo sa vyhľadať verejné miestnosti",
     "common": {
         "about": "Informácie",
@@ -2594,7 +2569,6 @@
         "no_audio_input_description": "Vo vašom zariadení sa nenašiel mikrofón. Skontrolujte svoje nastavenia a skúste to znova.",
         "transfer_consult_first_label": "Najprv konzultovať"
     },
-    "Other": "Ďalšie",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Zmeniť obrázok priestoru",
@@ -2773,7 +2747,25 @@
             "room_version_section": "Verzia miestnosti",
             "room_version": "Verzia miestnosti:",
             "information_section_space": "Informácie o priestore",
-            "information_section_room": "Informácie o miestnosti"
+            "information_section_room": "Informácie o miestnosti",
+            "error_upgrade_title": "Nepodarilo sa aktualizovať miestnosť",
+            "error_upgrade_description": "Nie je možné dokončiť aktualizáciu miestnosti na jej najnovšiu verziu",
+            "upgrade_button": "Aktualizovať túto miestnosť na verziu %(version)s",
+            "upgrade_dialog_title": "Aktualizovať verziu miestnosti",
+            "upgrade_dialog_description": "Aktualizácia tejto miestnosti vyžaduje zrušenie aktuálnej inštancie miestnosti a vytvorenie novej miestnosti na jej mieste. Aby sme členom miestnosti poskytli čo najlepšiu skúsenosť, budeme:",
+            "upgrade_dialog_description_1": "Vznikne nová miestnosť s rovnakým názvom, témou a obrázkom",
+            "upgrade_dialog_description_2": "Všetky lokálne aliasy pôvodnej miestnosti sa aktualizujú tak, aby ukazovali na novú miestnosť",
+            "upgrade_dialog_description_3": "V pôvodnej miestnosti bude zverejnené odporúčanie prejsť do novej miestnosti a posielanie do pôvodnej miestnosti bude zakázané pre všetkých používateľov",
+            "upgrade_dialog_description_4": "História novej miestnosti sa začne odkazom do pôvodnej miestnosti, aby si členovia vedeli zobraziť staršie správy",
+            "upgrade_warning_dialog_invite_label": "Automaticky pozvať členov z tejto miestnosti do novej",
+            "upgrade_warning_dialog_title_private": "Aktualizovať súkromnú miestnosť",
+            "upgrade_dwarning_ialog_title_public": "Aktualizovať verejnú miestnosť",
+            "upgrade_warning_dialog_title": "Aktualizovať miestnosť",
+            "upgrade_warning_dialog_report_bug_prompt": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s %(brand)s, nahláste prosím chybu.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s vaším %(brand)s, nahláste prosím <a>chybu</a>.",
+            "upgrade_warning_dialog_description": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
+            "upgrade_warning_dialog_explainer": "<b>Vezmite prosím na vedomie, že aktualizácia vytvorí novú verziu miestnosti</b>. Všetky aktuálne správy zostanú v tejto archivovanej miestnosti.",
+            "upgrade_warning_dialog_footer": "Túto miestnosť aktualizujete z verzie <oldVersion /> na <newVersion />."
         },
         "delete_avatar_label": "Vymazať obrázok",
         "upload_avatar_label": "Nahrať obrázok",
@@ -2813,7 +2805,8 @@
             "enable_element_call_caption": "%(brand)s je end-to-end šifrovaný, ale v súčasnosti je obmedzený pre menší počet používateľov.",
             "enable_element_call_no_permissions_tooltip": "Nemáte dostatočné oprávnenia na to, aby ste toto mohli zmeniť.",
             "call_type_section": "Typ hovoru"
-        }
+        },
+        "title": "Nastavenia miestnosti - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3218,6 +3211,11 @@
             "megolm_export": "Ručne exportovať kľúče",
             "setup_key_backup_title": "Stratíte prístup ku zašifrovaným správam",
             "description": "Naozaj sa chcete odhlásiť?"
+        },
+        "registration": {
+            "continue_without_email_title": "Pokračovanie bez e-mailu",
+            "continue_without_email_description": "Len upozorňujeme, že ak si nepridáte e-mail a zabudnete heslo, môžete <b>navždy stratiť prístup k svojmu účtu</b>.",
+            "continue_without_email_field_label": "Email (nepovinné)"
         }
     },
     "room_list": {
@@ -3272,7 +3270,8 @@
         "spam_or_propaganda": "Spam alebo propaganda",
         "report_entire_room": "Nahlásiť celú miestnosť",
         "report_content_to_homeserver": "Nahlásenie obsahu správcovi domovského serveru",
-        "description": "Nahlásenie tejto správy odošle jej jedinečné \"ID udalosti\" správcovi vášho domovského servera. Ak sú správy v tejto miestnosti zašifrované, správca domovského servera nebude môcť prečítať text správy ani zobraziť žiadne súbory alebo obrázky."
+        "description": "Nahlásenie tejto správy odošle jej jedinečné \"ID udalosti\" správcovi vášho domovského servera. Ak sú správy v tejto miestnosti zašifrované, správca domovského servera nebude môcť prečítať text správy ani zobraziť žiadne súbory alebo obrázky.",
+        "other_label": "Ďalšie"
     },
     "setting": {
         "help_about": {
@@ -3391,7 +3390,9 @@
         "popout": "Otvoriť widget v novom okne",
         "unpin_to_view_right_panel": "Ak chcete tento widget zobraziť na tomto paneli, zrušte jeho pripnutie",
         "set_room_layout": "Nastavenie rozmiestnenie v mojej miestnosti pre všetkých",
-        "close_to_view_right_panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli"
+        "close_to_view_right_panel": "Zatvorte tento widget a zobrazíte ho na tomto paneli",
+        "modal_title_default": "Modálny widget",
+        "modal_data_warning": "Údaje na tejto obrazovke sú zdieľané s %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Spätná väzba odoslaná",
@@ -4371,5 +4372,6 @@
         "disabled_action": "Vymazať vyrovnávaciu pamäť a synchronizovať znovu",
         "resync_description": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
         "resync_title": "Prebieha aktualizácia %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Úpravy správy"
 }

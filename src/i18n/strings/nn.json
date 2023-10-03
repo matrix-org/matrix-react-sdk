@@ -75,8 +75,6 @@
     "Link to selected message": "Lenk til den valde meldinga",
     "Filter results": "Filtrer resultat",
     "Invalid theme schema.": "",
-    "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
-    "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
@@ -811,7 +809,6 @@
         "hide_sidebar_button": "Gøym sidestolpen",
         "show_sidebar_button": "Vis sidestolpen"
     },
-    "Other": "Anna",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Endre rom-avatar",
@@ -886,14 +883,16 @@
         "advanced": {
             "unfederated": "Rommet er ikkje tilgjengeleg for andre Matrix-heimtenarar",
             "room_upgrade_button": "Oppgrader dette rommet til anbefalt romversjon",
-            "information_section_room": "Rominformasjon"
+            "information_section_room": "Rominformasjon",
+            "error_upgrade_title": "Fekk ikkje til å oppgradere rom"
         },
         "upload_avatar_label": "Last avatar opp",
         "notifications": {
             "sounds_section": "Lydar",
             "custom_sound_prompt": "Set ein ny tilpassa lyd",
             "browse_button": "Bla gjennom"
-        }
+        },
+        "title": "Rominnstillingar - %(roomName)s"
     },
     "auth": {
         "sign_in_with_sso": "Logg på med Single-Sign-On",
@@ -1360,5 +1359,8 @@
     },
     "forward": {
         "send_label": "Send"
+    },
+    "report_content": {
+        "other_label": "Anna"
     }
 }

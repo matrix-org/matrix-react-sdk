@@ -73,11 +73,6 @@
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
-    "Upgrade this room to version %(version)s": "이 방을 %(version)s 버전으로 업그레이드",
-    "Upgrade Room Version": "방 버전 업그레이드",
-    "Create a new room with the same name, description and avatar": "이름, 설명, 아바타가 같은 새 방 만들기",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "이전 버전의 방에서 대화하는 사용자들을 멈추고, 사용자들에게 새 방으로 이동하라고 알리는 메시지를 게시",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "새 방을 시작할 때 이전 방을 연결해서 사람들이 이전 메시지를 볼 수 있게 하기",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "브라우저의 저장소를 청소한다면 문제가 해결될 수도 있지만, 암호화된 대화 기록을 읽을 수 없게 됩니다.",
     "Dog": "개",
     "Cat": "고양이",
@@ -144,12 +139,6 @@
     "Deactivate account": "계정 비활성화",
     "edited": "편집됨",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "Message edits": "메시지 편집",
-    "Room Settings - %(roomName)s": "방 설정 - %(roomName)s",
-    "Failed to upgrade room": "방 업그레이드에 실패함",
-    "The room upgrade could not be completed": "방 업그레이드를 완료할 수 없습니다",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "이 방을 업그레이드하려면 현재 방의 인스턴스를 닫고 그 자리에 새 방을 만들어야 합니다. 방 구성원에게 최상의 경험을 제공하려면 다음 조치를 취해야 합니다:",
-    "Update any local room aliases to point to the new room": "모든 로컬 방 별칭을 새 방을 향하도록 업데이트",
     "Sign out and remove encryption keys?": "로그아웃하고 암호화 키를 제거합니까?",
     "Command Help": "명령어 도움",
     "To help us prevent this in future, please <a>send us logs</a>.": "앞으로 이를 방지할 수 있도록, <a>로그를 보내주세요</a>.",
@@ -177,7 +166,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s개의 세션 복호화에 실패했습니다!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>경고</b>: 신뢰할 수 있는 컴퓨터에서만 키 백업을 설정해야 합니다.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s개의 리액션 다시 보내기",
-    "Email (optional)": "이메일 (선택)",
     "e.g. my-room": "예: my-room",
     "%(name)s accepted": "%(name)s님이 수락했습니다",
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
@@ -930,7 +918,6 @@
         "no_media_perms_title": "미디어 권한 없음",
         "no_media_perms_description": "수동으로 %(brand)s에 마이크와 카메라를 허용해야 함"
     },
-    "Other": "기타",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "방 아바타 변경",
@@ -1012,7 +999,16 @@
             "room_predecessor": "%(roomName)s 방에서 오래된 메시지를 봅니다.",
             "room_version_section": "방 버전",
             "room_version": "방 버전:",
-            "information_section_room": "방 정보"
+            "information_section_room": "방 정보",
+            "error_upgrade_title": "방 업그레이드에 실패함",
+            "error_upgrade_description": "방 업그레이드를 완료할 수 없습니다",
+            "upgrade_button": "이 방을 %(version)s 버전으로 업그레이드",
+            "upgrade_dialog_title": "방 버전 업그레이드",
+            "upgrade_dialog_description": "이 방을 업그레이드하려면 현재 방의 인스턴스를 닫고 그 자리에 새 방을 만들어야 합니다. 방 구성원에게 최상의 경험을 제공하려면 다음 조치를 취해야 합니다:",
+            "upgrade_dialog_description_1": "이름, 설명, 아바타가 같은 새 방 만들기",
+            "upgrade_dialog_description_2": "모든 로컬 방 별칭을 새 방을 향하도록 업데이트",
+            "upgrade_dialog_description_3": "이전 버전의 방에서 대화하는 사용자들을 멈추고, 사용자들에게 새 방으로 이동하라고 알리는 메시지를 게시",
+            "upgrade_dialog_description_4": "새 방을 시작할 때 이전 방을 연결해서 사람들이 이전 메시지를 볼 수 있게 하기"
         },
         "delete_avatar_label": "아바타 삭제",
         "upload_avatar_label": "아바타 업로드",
@@ -1033,7 +1029,8 @@
             "notification_sound": "알림 소리",
             "custom_sound_prompt": "새 맞춤 소리 설정",
             "browse_button": "찾기"
-        }
+        },
+        "title": "방 설정 - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1190,6 +1187,9 @@
             "megolm_export": "수동으로 키 내보내기",
             "setup_key_backup_title": "암호화된 메시지에 접근할 수 없게 됩니다",
             "description": "로그아웃하겠습니까?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "이메일 (선택)"
         }
     },
     "export_chat": {
@@ -1211,7 +1211,8 @@
     "report_content": {
         "missing_reason": "왜 신고하는 지 이유를 적어주세요.",
         "report_content_to_homeserver": "홈서버 관리자에게 내용 신고하기",
-        "description": "이 메시지를 신고하면 고유 '이벤트 ID'를 홈서버의 관리자에게 보내게 됩니다. 이 방의 메시지가 암호화되어 있다면, 홈서버 관리자는 메시지 문자를 읽거나 파일 혹은 사진을 볼 수 없습니다."
+        "description": "이 메시지를 신고하면 고유 '이벤트 ID'를 홈서버의 관리자에게 보내게 됩니다. 이 방의 메시지가 암호화되어 있다면, 홈서버 관리자는 메시지 문자를 읽거나 파일 혹은 사진을 볼 수 없습니다.",
+        "other_label": "기타"
     },
     "a11y": {
         "n_unread_messages_mentions": {
@@ -1692,5 +1693,6 @@
         "disabled_action": "캐시를 지우고 다시 동기화",
         "resync_description": "%(brand)s은 이제 필요할 때만 다른 사용자에 대한 정보를 불러와 메모리를 3배에서 5배 덜 잡아먹습니다. 서버와 다시 동기화하는 동안 기다려주세요!",
         "resync_title": "%(brand)s 업데이트 중"
-    }
+    },
+    "message_edit_dialog_title": "메시지 편집"
 }

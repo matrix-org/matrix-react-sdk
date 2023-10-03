@@ -75,7 +75,6 @@
     "Share Room Message": "Udostępnij wiadomość w pokoju",
     "Link to selected message": "Link do zaznaczonej wiadomości",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
-    "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
     "Dog": "Pies",
     "Cat": "Kot",
     "Lion": "Lew",
@@ -130,7 +129,6 @@
     "Anchor": "Kotwica",
     "Headphones": "Słuchawki",
     "Folder": "Folder",
-    "Room Settings - %(roomName)s": "Ustawienia pokoju - %(roomName)s",
     "Globe": "Ziemia",
     "Smiley": "Uśmiech",
     "Spanner": "Klucz francuski",
@@ -155,8 +153,6 @@
         "other": "%(count)s sesji",
         "one": "%(count)s sesja"
     },
-    "Email (optional)": "Adres e-mail (opcjonalnie)",
-    "Message edits": "Edycje wiadomości",
     "Upload %(count)s other files": {
         "other": "Prześlij %(count)s innych plików",
         "one": "Prześlij %(count)s inny plik"
@@ -431,10 +427,6 @@
     "Sign out and remove encryption keys?": "Wylogować się i usunąć klucze szyfrowania?",
     "Failed to decrypt %(failedCount)s sessions!": "Nie udało się odszyfrować %(failedCount)s sesji!",
     "Unable to load backup status": "Nie udało się załadować stanu kopii zapasowej",
-    "Upgrade Room Version": "Uaktualnij wersję pokoju",
-    "Upgrade this room to version %(version)s": "Uaktualnij ten pokój do wersji %(version)s",
-    "The room upgrade could not be completed": "Uaktualnienie pokoju nie mogło zostać ukończone",
-    "Failed to upgrade room": "Nie udało się uaktualnić pokoju",
     "Backup version:": "Wersja kopii zapasowej:",
     "IRC display name width": "Szerokość nazwy wyświetlanej IRC",
     "Your homeserver has exceeded one of its resource limits.": "Twój homeserver przekroczył jeden z limitów zasobów.",
@@ -521,7 +513,6 @@
     "Submit logs": "Wyślij dzienniki",
     "%(name)s wants to verify": "%(name)s chce weryfikacji",
     "%(name)s cancelled": "%(name)s anulował",
-    "Modal Widget": "Widżet modalny",
     "%(brand)s encountered an error during upload of:": "%(brand)s napotkał błąd podczas wysyłania:",
     "a key signature": "sygnatura klucza",
     "a new master key signature": "nowa główna sygnatura klucza",
@@ -531,21 +522,6 @@
         "other": "%(count)s osób, które znasz, już dołączyło"
     },
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Zaktualizujesz ten pokój z wersji <oldVersion /> do <newVersion />.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Aktualizacja spowoduje utworzenie pokoju w nowej wersji</b>. Wszystkie bieżące wiadomości zostaną zarchiwizowane w tym pokoju.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizowanie pokoju to zaawansowane działanie i zaleca się je głównie, kiedy pokój jest niestabilny, brakuje w nim funkcji lub znajdują się w nim luki bezpieczeństwa.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Przeważnie to wpływa wyłącznie na to, jak serwer jest przetwarzany na serwerze. Jeśli posiadasz problem z %(brand)s, <a>zgłoś błąd</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Przeważnie to wpływa wyłącznie na to, jak serwer jest przetwarzany na serwerze. Jeśli posiadasz problem z %(brand)s, zgłoś błąd.",
-    "Upgrade public room": "Aktualizuj pokój publiczny",
-    "Upgrade private room": "Aktualizuj pokój prywatny",
-    "Automatically invite members from this room to the new one": "Automatycznie zapraszaj członków tego pokoju do nowego",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Opublikuj link do starego pokoju na początku nowego, aby można było czytać stare wiadomości",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Zakaż rozmawiania w starej wersji pokoju i opublikuj wiadomość, aby użytkownicy przenieśli się do nowego",
-    "Update any local room aliases to point to the new room": "Zaktualizuj każdy alias pokoju, aby wskazywał na nowy pokój",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Ulepszenie tego pokoju wymaga zamknięcia bieżącej instancji pokoju i utworzenie nowego w jego miejsce. Aby zapewnić użytkownikom najlepsze możliwe doświadczenia:",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Mała uwaga, jeśli nie dodasz adresu e-mail i stracisz swoje hasło, możesz <b>permanentnie stracić dostęp do swojego konta</b>.",
-    "Continuing without email": "Kontynuowanie bez adresu e-mail",
-    "Data on this screen is shared with %(widgetDomain)s": "Dane na tym ekranie są współdzielone z %(widgetDomain)s",
     "You're all caught up.": "Jesteś na bieżąco.",
     "Fetching keys from server…": "Pobieranie kluczy z serwera…",
     "Unable to set up keys": "Nie można ustawić kluczy",
@@ -650,7 +626,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Odzyskaj dostęp do swojego konta i klucze szyfrujące zachowane w tej sesji. Bez nich, nie będziesz mógł przeczytać żadnej wiadomości szyfrowanej we wszystkich sesjach.",
     "Thread root ID: %(threadRootId)s": "ID root wątku: %(threadRootId)s",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s kluczy przywrócono",
-    "Upgrade room": "Ulepsz pokój",
     "common": {
         "about": "Informacje",
         "analytics": "Analityka",
@@ -2589,7 +2564,6 @@
         "no_audio_input_description": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
         "transfer_consult_first_label": "Najpierw się skonsultuj"
     },
-    "Other": "Inne",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Zmień awatar przestrzeni",
@@ -2768,7 +2742,25 @@
             "room_version_section": "Wersja pokoju",
             "room_version": "Wersja pokoju:",
             "information_section_space": "Informacje przestrzeni",
-            "information_section_room": "Informacje pokoju"
+            "information_section_room": "Informacje pokoju",
+            "error_upgrade_title": "Nie udało się uaktualnić pokoju",
+            "error_upgrade_description": "Uaktualnienie pokoju nie mogło zostać ukończone",
+            "upgrade_button": "Uaktualnij ten pokój do wersji %(version)s",
+            "upgrade_dialog_title": "Uaktualnij wersję pokoju",
+            "upgrade_dialog_description": "Ulepszenie tego pokoju wymaga zamknięcia bieżącej instancji pokoju i utworzenie nowego w jego miejsce. Aby zapewnić użytkownikom najlepsze możliwe doświadczenia:",
+            "upgrade_dialog_description_1": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
+            "upgrade_dialog_description_2": "Zaktualizuj każdy alias pokoju, aby wskazywał na nowy pokój",
+            "upgrade_dialog_description_3": "Zakaż rozmawiania w starej wersji pokoju i opublikuj wiadomość, aby użytkownicy przenieśli się do nowego",
+            "upgrade_dialog_description_4": "Opublikuj link do starego pokoju na początku nowego, aby można było czytać stare wiadomości",
+            "upgrade_warning_dialog_invite_label": "Automatycznie zapraszaj członków tego pokoju do nowego",
+            "upgrade_warning_dialog_title_private": "Aktualizuj pokój prywatny",
+            "upgrade_dwarning_ialog_title_public": "Aktualizuj pokój publiczny",
+            "upgrade_warning_dialog_title": "Ulepsz pokój",
+            "upgrade_warning_dialog_report_bug_prompt": "Przeważnie to wpływa wyłącznie na to, jak serwer jest przetwarzany na serwerze. Jeśli posiadasz problem z %(brand)s, zgłoś błąd.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Przeważnie to wpływa wyłącznie na to, jak serwer jest przetwarzany na serwerze. Jeśli posiadasz problem z %(brand)s, <a>zgłoś błąd</a>.",
+            "upgrade_warning_dialog_description": "Aktualizowanie pokoju to zaawansowane działanie i zaleca się je głównie, kiedy pokój jest niestabilny, brakuje w nim funkcji lub znajdują się w nim luki bezpieczeństwa.",
+            "upgrade_warning_dialog_explainer": "<b>Aktualizacja spowoduje utworzenie pokoju w nowej wersji</b>. Wszystkie bieżące wiadomości zostaną zarchiwizowane w tym pokoju.",
+            "upgrade_warning_dialog_footer": "Zaktualizujesz ten pokój z wersji <oldVersion /> do <newVersion />."
         },
         "delete_avatar_label": "Usuń awatar",
         "upload_avatar_label": "Prześlij awatar",
@@ -2808,7 +2800,8 @@
             "enable_element_call_caption": "%(brand)s jest szyfrowany end-to-end, lecz jest aktualnie ograniczony do mniejszej liczby użytkowników.",
             "enable_element_call_no_permissions_tooltip": "Nie posiadasz wymaganych uprawnień, aby to zmienić.",
             "call_type_section": "Typ połączenia"
-        }
+        },
+        "title": "Ustawienia pokoju - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3212,6 +3205,11 @@
             "megolm_export": "Ręcznie eksportuj klucze",
             "setup_key_backup_title": "Utracisz dostęp do zaszyfrowanych wiadomości",
             "description": "Czy na pewno chcesz się wylogować?"
+        },
+        "registration": {
+            "continue_without_email_title": "Kontynuowanie bez adresu e-mail",
+            "continue_without_email_description": "Mała uwaga, jeśli nie dodasz adresu e-mail i stracisz swoje hasło, możesz <b>permanentnie stracić dostęp do swojego konta</b>.",
+            "continue_without_email_field_label": "Adres e-mail (opcjonalnie)"
         }
     },
     "room_list": {
@@ -3266,7 +3264,8 @@
         "spam_or_propaganda": "Spam lub propaganda",
         "report_entire_room": "Zgłoś cały pokój",
         "report_content_to_homeserver": "Zgłoś zawartość do administratora swojego serwera",
-        "description": "Zgłoszenie tej wiadomości wyśle administratorowi serwera unikatowe „ID wydarzenia”. Jeżeli wiadomości w tym pokoju są szyfrowane, administrator serwera może nie być w stanie przeczytać treści wiadomości, lub zobaczyć plików bądź zdjęć."
+        "description": "Zgłoszenie tej wiadomości wyśle administratorowi serwera unikatowe „ID wydarzenia”. Jeżeli wiadomości w tym pokoju są szyfrowane, administrator serwera może nie być w stanie przeczytać treści wiadomości, lub zobaczyć plików bądź zdjęć.",
+        "other_label": "Inne"
     },
     "setting": {
         "help_about": {
@@ -3385,7 +3384,9 @@
         "popout": "Wyskakujący widżet",
         "unpin_to_view_right_panel": "Odepnij widżet, aby wyświetlić go w tym panelu",
         "set_room_layout": "Ustaw mój układ pokoju dla wszystkich",
-        "close_to_view_right_panel": "Zamknij widżet, aby wyświetlić go w tym panelu"
+        "close_to_view_right_panel": "Zamknij widżet, aby wyświetlić go w tym panelu",
+        "modal_title_default": "Widżet modalny",
+        "modal_data_warning": "Dane na tym ekranie są współdzielone z %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -4353,5 +4354,6 @@
         "disabled_action": "Wyczyść pamięć podręczną i zsynchronizuj ponownie",
         "resync_description": "%(brand)s używa teraz 3-5x mniej pamięci, ładując informacje o innych użytkownikach tylko wtedy, gdy jest to konieczne. Poczekaj, aż ponownie zsynchronizujemy się z serwerem!",
         "resync_title": "Aktualizowanie %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Edycje wiadomości"
 }

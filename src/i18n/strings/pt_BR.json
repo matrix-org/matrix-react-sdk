@@ -66,14 +66,6 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os relatórios, você deve <a>criar um bilhete de erro no GitHub</a> para descrever seu problema.",
-    "Failed to upgrade room": "Falha ao atualizar a sala",
-    "The room upgrade could not be completed": "A atualização da sala não pode ser completada",
-    "Upgrade this room to version %(version)s": "Atualize essa sala para versão %(version)s",
-    "Upgrade Room Version": "Atualize a Versão da Sala",
-    "Create a new room with the same name, description and avatar": "Criar uma nova sala com o mesmo nome, descrição e foto",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Impeça os usuários de conversarem na versão antiga da sala. Além disso, digite uma mensagem aconselhando os usuários a migrarem para a nova sala",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Colocar um link para a sala antiga no começo da sala nova de modo que as pessoas possam ver mensagens antigas",
-    "Update any local room aliases to point to the new room": "Atualize todos os nomes locais da sala para apontar para a nova sala",
     "Clear Storage and Sign Out": "Limpar armazenamento e sair",
     "We encountered an error trying to restore your previous session.": "Encontramos um erro ao tentar restaurar sua sessão anterior.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Limpar o armazenamento do seu navegador pode resolver o problema, mas você será deslogado e isso fará que qualquer histórico de bate-papo criptografado fique ilegível.",
@@ -178,7 +170,6 @@
     "edited": "editado",
     "Submit logs": "Enviar relatórios",
     "e.g. my-room": "por exemplo: minha-sala",
-    "Email (optional)": "E-mail (opcional)",
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
@@ -192,12 +183,6 @@
         "one": "%(count)s sessão"
     },
     "Destroy cross-signing keys?": "Destruir chaves autoverificadas?",
-    "Room Settings - %(roomName)s": "Configurações da sala - %(roomName)s",
-    "Upgrade private room": "Atualizar a sala privada",
-    "Upgrade public room": "Atualizar a sala pública",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Atualizar uma sala é uma ação avançada e geralmente é recomendada quando uma sala está instável devido a erros, recursos ausentes ou vulnerabilidades de segurança.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Isso geralmente afeta apenas como a sala é processada no servidor. Se você tiver problemas com o %(brand)s, <a>informe um erro</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Você atualizará esta sala de <oldVersion /> para <newVersion />.",
     "Command Help": "Ajuda com Comandos",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para nos ajudar a evitar isso no futuro, <a>envie-nos os relatórios</a>.",
     "Your browser likely removed this data when running low on disk space.": "O seu navegador provavelmente removeu esses dados quando o espaço de armazenamento ficou insuficiente.",
@@ -238,18 +223,14 @@
     "Clear cross-signing keys": "Limpar chaves autoverificadas",
     "a device cross-signing signature": "um aparelho autoverificado",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
-    "Message edits": "Edições na mensagem",
     "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Atualizar esta sala irá fechar a instância atual da sala e, em seu lugar, criar uma sala atualizada com o mesmo nome. Para oferecer a melhor experiência possível aos integrantes da sala, nós iremos:",
     "You're all caught up.": "Tudo em dia.",
     "Your area is experiencing difficulties connecting to the internet.": "A sua região está com dificuldade de acesso à internet.",
     "A connection error occurred while trying to contact the server.": "Um erro ocorreu na conexão do Element com o servidor.",
     "Unable to set up keys": "Não foi possível configurar as chaves",
-    "Modal Widget": "Popup do widget",
-    "Data on this screen is shared with %(widgetDomain)s": "Dados nessa tela são compartilhados com %(widgetDomain)s",
     "Jordan": "Jordânia",
     "Japan": "Japão",
     "Jamaica": "Jamaica",
@@ -502,8 +483,6 @@
     "Decline All": "Recusar tudo",
     "This widget would like to:": "Este widget gostaria de:",
     "Approve widget permissions": "Autorizar as permissões do widget",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
-    "Continuing without email": "Continuar sem e-mail",
     "Hold": "Pausar",
     "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
@@ -1980,7 +1959,6 @@
         "no_audio_input_title": "Nenhum microfone encontrado",
         "no_audio_input_description": "Não foi possível encontrar um microfone em seu dispositivo. Confira suas configurações e tente novamente."
     },
-    "Other": "Outros",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Alterar avatar do espaço",
@@ -2130,7 +2108,21 @@
             "room_version_section": "Versão da sala",
             "room_version": "Versão da sala:",
             "information_section_space": "Informações do espaço",
-            "information_section_room": "Informação da sala"
+            "information_section_room": "Informação da sala",
+            "error_upgrade_title": "Falha ao atualizar a sala",
+            "error_upgrade_description": "A atualização da sala não pode ser completada",
+            "upgrade_button": "Atualize essa sala para versão %(version)s",
+            "upgrade_dialog_title": "Atualize a Versão da Sala",
+            "upgrade_dialog_description": "Atualizar esta sala irá fechar a instância atual da sala e, em seu lugar, criar uma sala atualizada com o mesmo nome. Para oferecer a melhor experiência possível aos integrantes da sala, nós iremos:",
+            "upgrade_dialog_description_1": "Criar uma nova sala com o mesmo nome, descrição e foto",
+            "upgrade_dialog_description_2": "Atualize todos os nomes locais da sala para apontar para a nova sala",
+            "upgrade_dialog_description_3": "Impeça os usuários de conversarem na versão antiga da sala. Além disso, digite uma mensagem aconselhando os usuários a migrarem para a nova sala",
+            "upgrade_dialog_description_4": "Colocar um link para a sala antiga no começo da sala nova de modo que as pessoas possam ver mensagens antigas",
+            "upgrade_warning_dialog_title_private": "Atualizar a sala privada",
+            "upgrade_dwarning_ialog_title_public": "Atualizar a sala pública",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Isso geralmente afeta apenas como a sala é processada no servidor. Se você tiver problemas com o %(brand)s, <a>informe um erro</a>.",
+            "upgrade_warning_dialog_description": "Atualizar uma sala é uma ação avançada e geralmente é recomendada quando uma sala está instável devido a erros, recursos ausentes ou vulnerabilidades de segurança.",
+            "upgrade_warning_dialog_footer": "Você atualizará esta sala de <oldVersion /> para <newVersion />."
         },
         "delete_avatar_label": "Remover foto de perfil",
         "upload_avatar_label": "Enviar uma foto de perfil",
@@ -2163,7 +2155,8 @@
             "notification_sound": "Som de notificação",
             "custom_sound_prompt": "Definir um novo som personalizado",
             "browse_button": "Buscar"
-        }
+        },
+        "title": "Configurações da sala - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2456,6 +2449,11 @@
             "megolm_export": "Exportar chaves manualmente",
             "setup_key_backup_title": "Você perderá acesso às suas mensagens criptografadas",
             "description": "Deseja mesmo sair?"
+        },
+        "registration": {
+            "continue_without_email_title": "Continuar sem e-mail",
+            "continue_without_email_description": "Apenas um aviso: se você não adicionar um e-mail e depois esquecer sua senha, poderá <b>perder permanentemente o acesso à sua conta</b>.",
+            "continue_without_email_field_label": "E-mail (opcional)"
         }
     },
     "room_list": {
@@ -2489,7 +2487,8 @@
     "report_content": {
         "missing_reason": "Por favor, descreva porque você está reportando.",
         "report_content_to_homeserver": "Denunciar conteúdo ao administrador do seu servidor principal",
-        "description": "Reportar esta mensagem enviará o seu 'event ID' único para o/a administrador/a do seu Homeserver. Se as mensagens nesta sala são criptografadas, o/a administrador/a não conseguirá ler o texto da mensagem nem ver nenhuma imagem ou arquivo."
+        "description": "Reportar esta mensagem enviará o seu 'event ID' único para o/a administrador/a do seu Homeserver. Se as mensagens nesta sala são criptografadas, o/a administrador/a não conseguirá ler o texto da mensagem nem ver nenhuma imagem ou arquivo.",
+        "other_label": "Outros"
     },
     "setting": {
         "help_about": {
@@ -2601,7 +2600,9 @@
         "popout": "Widget Popout",
         "unpin_to_view_right_panel": "Solte este widget para visualizá-lo neste painel",
         "set_room_layout": "Definir a minha aparência da sala para todos",
-        "close_to_view_right_panel": "Feche este widget para visualizá-lo neste painel"
+        "close_to_view_right_panel": "Feche este widget para visualizá-lo neste painel",
+        "modal_title_default": "Popup do widget",
+        "modal_data_warning": "Dados nessa tela são compartilhados com %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Comentário enviado",
@@ -3271,5 +3272,6 @@
         "disabled_action": "Limpar cache e ressincronizar",
         "resync_description": "%(brand)s agora usa de 3 a 5 vezes menos memória, pois carrega as informações dos outros usuários apenas quando for necessário. Por favor, aguarde enquanto ressincronizamos com o servidor!",
         "resync_title": "Atualizando o %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Edições na mensagem"
 }

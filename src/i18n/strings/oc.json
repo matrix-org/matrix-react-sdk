@@ -233,7 +233,6 @@
         "voice_call": "Sonada vocala",
         "video_call": "Sonada vidèo"
     },
-    "Other": "Autre",
     "emoji": {
         "category_smileys_people": "Emoticònas e personatges",
         "category_animals_nature": "Animals e natura",
@@ -440,5 +439,8 @@
     },
     "forward": {
         "send_label": "Mandar"
+    },
+    "report_content": {
+        "other_label": "Autre"
     }
 }

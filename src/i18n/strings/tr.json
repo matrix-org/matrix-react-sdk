@@ -58,13 +58,6 @@
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
     "Filter results": "Sonuçları filtrele",
-    "Message edits": "Mesajları düzenle",
-    "Room Settings - %(roomName)s": "Oda Ayarları - %(roomName)s",
-    "Failed to upgrade room": "Oda güncelleme başarısız",
-    "The room upgrade could not be completed": "Oda güncelleme tamamlanamadı",
-    "Upgrade this room to version %(version)s": "Bu odayı %(version)s versiyonuna yükselt",
-    "Upgrade Room Version": "Oda Sürümünü Yükselt",
-    "Upgrade private room": "Özel oda güncelle",
     "Sign out and remove encryption keys?": "Oturumu kapat ve şifreleme anahtarlarını sil?",
     "Clear Storage and Sign Out": "Depolamayı temizle ve Oturumu Kapat",
     "Send Logs": "Logları Gönder",
@@ -84,7 +77,6 @@
     "Unable to load backup status": "Yedek durumu yüklenemiyor",
     "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
     "No backup found!": "Yedek bulunamadı!",
-    "Email (optional)": "E-posta (opsiyonel)",
     "Verification Request": "Doğrulama Talebi",
     "Robot": "Robot",
     "Hat": "Şapka",
@@ -175,8 +167,6 @@
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
-    "Upgrade public room": "Açık odayı güncelle",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz.",
     "We encountered an error trying to restore your previous session.": "Önceki oturumunuzu geri yüklerken bir hatayla karşılaştık.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>.",
     "Upload files (%(current)s of %(total)s)": "Dosyaları yükle (%(current)s / %(total)s)",
@@ -1469,7 +1459,6 @@
         "no_audio_input_title": "Mikrofon bulunamadı",
         "no_audio_input_description": "Cihazınızda bir mikrofon bulamadık. Lütfen ayarlarınızı kontrol edin ve tekrar deneyin."
     },
-    "Other": "Diğer",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Oda resmini değiştir",
@@ -1554,7 +1543,14 @@
             "room_predecessor": "%(roomName)s odasında daha eski mesajları göster.",
             "room_version_section": "Oda sürümü",
             "room_version": "Oda versiyonu:",
-            "information_section_room": "Oda bilgisi"
+            "information_section_room": "Oda bilgisi",
+            "error_upgrade_title": "Oda güncelleme başarısız",
+            "error_upgrade_description": "Oda güncelleme tamamlanamadı",
+            "upgrade_button": "Bu odayı %(version)s versiyonuna yükselt",
+            "upgrade_dialog_title": "Oda Sürümünü Yükselt",
+            "upgrade_warning_dialog_title_private": "Özel oda güncelle",
+            "upgrade_dwarning_ialog_title_public": "Açık odayı güncelle",
+            "upgrade_warning_dialog_footer": "Bu odayı <oldVersion /> versiyonundan <newVersion /> versiyonuna güncelleyeceksiniz."
         },
         "upload_avatar_label": "Avatar yükle",
         "visibility": {
@@ -1570,7 +1566,8 @@
             "notification_sound": "Bildirim sesi",
             "custom_sound_prompt": "Özel bir ses ayarla",
             "browse_button": "Gözat"
-        }
+        },
+        "title": "Oda Ayarları - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1783,6 +1780,9 @@
             "megolm_export": "Elle dışa aktarılmış anahtarlar",
             "setup_key_backup_title": "Şifrelenmiş mesajlarınıza erişiminizi kaybedeceksiniz",
             "description": "Oturumdan çıkmak istediğinize emin misiniz?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "E-posta (opsiyonel)"
         }
     },
     "room_list": {
@@ -1807,7 +1807,8 @@
     },
     "report_content": {
         "missing_reason": "Lütfen neden raporlama yaptığınızı belirtin.",
-        "report_content_to_homeserver": "Ana Sunucu Yöneticinize İçeriği Raporlayın"
+        "report_content_to_homeserver": "Ana Sunucu Yöneticinize İçeriği Raporlayın",
+        "other_label": "Diğer"
     },
     "onboarding": {
         "welcome_detail": "Şimdi, başlamanıza yardım edelim",
@@ -2344,5 +2345,6 @@
         "disabled_title": "Yerel geçici bellek uyumsuz",
         "disabled_action": "Geçici belleği temizle ve yeniden eşle",
         "resync_title": "%(brand)s güncelleniyor"
-    }
+    },
+    "message_edit_dialog_title": "Mesajları düzenle"
 }

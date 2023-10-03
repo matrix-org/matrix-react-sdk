@@ -74,14 +74,6 @@
     "Share User": "Partekatu erabiltzailea",
     "Share Room Message": "Partekatu gelako mezua",
     "Link to selected message": "Esteka hautatutako mezura",
-    "Failed to upgrade room": "Huts egin du gela eguneratzea",
-    "The room upgrade could not be completed": "Ezin izan da gelaren eguneraketa osatu",
-    "Upgrade this room to version %(version)s": "Eguneratu gela hau %(version)s bertsiora",
-    "Upgrade Room Version": "Eguneratu gelaren bertsioa",
-    "Create a new room with the same name, description and avatar": "Izen, deskripzio eta abatar bereko beste gela bat sortu",
-    "Update any local room aliases to point to the new room": "Tokiko gelaren ezizen guztiak gela berrira apuntatu ditzaten eguneratu",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Erabiltzaileei gelaren bertsio zaharrean hitz egiten jarraitzea eragotzi, eta erabiltzaileei gela berrira mugitzea aholkatzeko mezu bat bidali",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Gela berriaren hasieran gela zaharrera esteka bat jarri jendeak mezu zaharrak ikus ditzan",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko.",
     "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
@@ -132,7 +124,6 @@
     "Key": "Giltza",
     "Hammer": "Mailua",
     "Telephone": "Telefonoa",
-    "Email (optional)": "E-mail (aukerakoa)",
     "Headphones": "Aurikularrak",
     "Folder": "Karpeta",
     "Flag": "Bandera",
@@ -151,7 +142,6 @@
     "Paperclip": "Klipa",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
-    "Room Settings - %(roomName)s": "Gelaren ezarpenak - %(roomName)s",
     "Remember my selection for this widget": "Gogoratu nire hautua trepeta honentzat",
     "edited": "editatua",
     "Sign out and remove encryption keys?": "Amaitu saioa eta kendu zifratze gakoak?",
@@ -171,8 +161,6 @@
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Fitxategi hauek <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Fitxategi batzuk <b>handiegiak dira</b> igotzeko. Fitxategien tamaina-muga %(limit)s da.",
     "Upload all": "Igo denak",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du. Kideei esperientziarik onena emateko, hau egingo dugu:",
-    "Message edits": "Mezuaren edizioak",
     "Resend %(unsentCount)s reaction(s)": "Birbidali %(unsentCount)s erreakzio",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
@@ -188,10 +176,6 @@
         "other": "%(count)s egiaztatutako saio",
         "one": "Egiaztatutako saio 1"
     },
-    "Upgrade private room": "Eguneratu gela pribatua",
-    "Upgrade public room": "Eguneratu gela publikoa",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Gela eguneratzea ekintza aurreratu bat da eta akatsen, falta diren ezaugarrien, edo segurtasun arazoen erruz gela ezegonkorra denean aholkatzen da.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Gela hau <oldVersion /> bertsiotik <newVersion /> bertsiora eguneratuko duzu.",
     "Lock": "Blokeatu",
     "This backup is trusted because it has been restored on this session": "Babes-kopia hau fidagarritzat jotzen da saio honetan berrekuratu delako",
     "Encrypted by a deleted session": "Ezabatutako saio batek zifratua",
@@ -1117,7 +1101,6 @@
         "no_media_perms_title": "Media baimenik ez",
         "no_media_perms_description": "Agian eskuz baimendu behar duzu %(brand)sek mikrofonoa edo kamera atzitzea"
     },
-    "Other": "Beste bat",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Aldatu gelaren abatarra",
@@ -1208,7 +1191,20 @@
             "room_predecessor": "Ikusi %(roomName)s gelako mezu zaharragoak.",
             "room_version_section": "Gela bertsioa",
             "room_version": "Gela bertsioa:",
-            "information_section_room": "Gelako informazioa"
+            "information_section_room": "Gelako informazioa",
+            "error_upgrade_title": "Huts egin du gela eguneratzea",
+            "error_upgrade_description": "Ezin izan da gelaren eguneraketa osatu",
+            "upgrade_button": "Eguneratu gela hau %(version)s bertsiora",
+            "upgrade_dialog_title": "Eguneratu gelaren bertsioa",
+            "upgrade_dialog_description": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du. Kideei esperientziarik onena emateko, hau egingo dugu:",
+            "upgrade_dialog_description_1": "Izen, deskripzio eta abatar bereko beste gela bat sortu",
+            "upgrade_dialog_description_2": "Tokiko gelaren ezizen guztiak gela berrira apuntatu ditzaten eguneratu",
+            "upgrade_dialog_description_3": "Erabiltzaileei gelaren bertsio zaharrean hitz egiten jarraitzea eragotzi, eta erabiltzaileei gela berrira mugitzea aholkatzeko mezu bat bidali",
+            "upgrade_dialog_description_4": "Gela berriaren hasieran gela zaharrera esteka bat jarri jendeak mezu zaharrak ikus ditzan",
+            "upgrade_warning_dialog_title_private": "Eguneratu gela pribatua",
+            "upgrade_dwarning_ialog_title_public": "Eguneratu gela publikoa",
+            "upgrade_warning_dialog_description": "Gela eguneratzea ekintza aurreratu bat da eta akatsen, falta diren ezaugarrien, edo segurtasun arazoen erruz gela ezegonkorra denean aholkatzen da.",
+            "upgrade_warning_dialog_footer": "Gela hau <oldVersion /> bertsiotik <newVersion /> bertsiora eguneratuko duzu."
         },
         "upload_avatar_label": "Igo abatarra",
         "bridges": {
@@ -1221,7 +1217,8 @@
             "notification_sound": "Jakinarazpen soinua",
             "custom_sound_prompt": "Ezarri soinu pertsonalizatua",
             "browse_button": "Arakatu"
-        }
+        },
+        "title": "Gelaren ezarpenak - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1446,6 +1443,9 @@
             "megolm_export": "Esportatu gakoak eskuz",
             "setup_key_backup_title": "Zure zifratutako mezuetara sarbidea galduko duzu",
             "description": "Ziur saioa amaitu nahi duzula?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "E-mail (aukerakoa)"
         }
     },
     "export_chat": {
@@ -1470,7 +1470,8 @@
     "report_content": {
         "missing_reason": "Idatzi zergatik salatzen duzun.",
         "report_content_to_homeserver": "Salatu edukia zure hasiera-zerbitzariko administratzaileari",
-        "description": "Mezu hau salatzeak bere 'gertaera ID'-a bidaliko dio hasiera-zerbitzariko administratzaileari. Gela honetako mezuak zifratuta badaude, zure hasiera-zerbitzariko administratzaileak ezin izango du mezuaren testua irakurri edo irudirik ikusi."
+        "description": "Mezu hau salatzeak bere 'gertaera ID'-a bidaliko dio hasiera-zerbitzariko administratzaileari. Gela honetako mezuak zifratuta badaude, zure hasiera-zerbitzariko administratzaileak ezin izango du mezuaren testua irakurri edo irudirik ikusi.",
+        "other_label": "Beste bat"
     },
     "onboarding": {
         "intro_welcome": "Ongi etorri %(appName)s-era",
@@ -1926,5 +1927,6 @@
         "disabled_action": "Garbitu katxea eta sinkronizatu berriro",
         "resync_description": "%(brand)s-ek orain 3-5 aldiz memoria gutxiago darabil, beste erabiltzaileen informazioa behar denean besterik ez kargatzen. Itxaron zerbitzariarekin sinkronizatzen garen bitartean!",
         "resync_title": "%(brand)s eguneratzen"
-    }
+    },
+    "message_edit_dialog_title": "Mezuaren edizioak"
 }

@@ -107,19 +107,16 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "Message edits": "Meldingsredigeringer",
     "Upload files": "Last opp filer",
     "Upload all": "Last opp alle",
     "Upload Error": "Opplastingsfeil",
     "Verification Request": "Verifiseringsforespørsel",
     "No backup found!": "Ingen sikkerhetskopier ble funnet!",
-    "Email (optional)": "E-post (valgfritt)",
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Warning!": "Advarsel!",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Create new room": "Opprett et nytt rom",
-    "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
     "%(count)s verified sessions": {
         "one": "1 verifisert økt",
         "other": "%(count)s verifiserte økter"
@@ -174,7 +171,6 @@
     "Security Key mismatch": "Sikkerhetsnøkkel uoverensstemmelse",
     "Unable to load backup status": "Klarte ikke å laste sikkerhetskopi-status",
     "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nøkler gjenopprettet",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
     "Belgium": "Belgia",
     "American Samoa": "Amerikansk Samoa",
     "United States": "USA",
@@ -223,8 +219,6 @@
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du kjenner har allerede blitt med"
     },
-    "Upgrade private room": "Oppgrader privat rom",
-    "Upgrade public room": "Oppgrader offentlig rom",
     "Decline All": "Avslå alle",
     "Enter Security Key": "Skriv inn sikkerhetsnøkkel",
     "Germany": "Tyskland",
@@ -238,8 +232,6 @@
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
     "Not encrypted": "Ikke kryptert",
-    "Continuing without email": "Fortsetter uten E-post",
-    "Upgrade Room Version": "Oppgrader romversjon",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -1249,7 +1241,6 @@
         "unknown_person": "ukjent person",
         "connecting": "Kobler til"
     },
-    "Other": "Andre",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Endre rommets avatar",
@@ -1324,7 +1315,11 @@
         "advanced": {
             "room_version_section": "Romversjon",
             "room_version": "Romversjon:",
-            "information_section_room": "Rominformasjon"
+            "information_section_room": "Rominformasjon",
+            "upgrade_dialog_title": "Oppgrader romversjon",
+            "upgrade_dialog_description_4": "Legg inn en lenke tilbake til det gamle rommet i starten av det nye rommet slik at folk kan finne eldre meldinger",
+            "upgrade_warning_dialog_title_private": "Oppgrader privat rom",
+            "upgrade_dwarning_ialog_title_public": "Oppgrader offentlig rom"
         },
         "delete_avatar_label": "Slett profilbilde",
         "upload_avatar_label": "Last opp en avatar",
@@ -1341,7 +1336,8 @@
             "notification_sound": "Varslingslyd",
             "custom_sound_prompt": "Velg en ny selvvalgt lyd",
             "browse_button": "Bla"
-        }
+        },
+        "title": "Rominnstillinger - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1485,6 +1481,10 @@
             "use_key_backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
             "megolm_export": "Eksporter nøkler manuelt",
             "description": "Er du sikker på at du vil logge av?"
+        },
+        "registration": {
+            "continue_without_email_title": "Fortsetter uten E-post",
+            "continue_without_email_field_label": "E-post (valgfritt)"
         }
     },
     "room_list": {
@@ -1889,5 +1889,9 @@
     "lazy_loading": {
         "disabled_action": "Tøm mellomlageret og synkroniser på nytt",
         "resync_title": "Oppdaterer %(brand)s"
+    },
+    "message_edit_dialog_title": "Meldingsredigeringer",
+    "report_content": {
+        "other_label": "Andre"
     }
 }

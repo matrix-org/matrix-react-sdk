@@ -74,14 +74,6 @@
     "Share User": "Compartir usuario",
     "Share Room Message": "Compartir un mensaje de esta sala",
     "Link to selected message": "Enlazar al mensaje seleccionado",
-    "Upgrade Room Version": "Actualizar Versión de la Sala",
-    "Create a new room with the same name, description and avatar": "Crear una sala nueva con el mismo nombre, descripción y avatar",
-    "Update any local room aliases to point to the new room": "Actualizar los alias locales de la sala para que apunten a la nueva",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Impedir a los usuarios que conversen en la versión antigua de la sala, y publicar un mensaje aconsejándoles que se muden a la nueva",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Poner un enlace de retorno a la sala antigua al principio de la nueva de modo que se puedan ver los mensajes viejos",
-    "Failed to upgrade room": "No se pudo actualizar la sala",
-    "The room upgrade could not be completed": "La actualización de la sala no pudo ser completada",
-    "Upgrade this room to version %(version)s": "Actualiza esta sala a la versión %(version)s",
     "Dog": "Perro",
     "Cat": "Gato",
     "Lion": "León",
@@ -146,14 +138,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema.",
     "Scissors": "Tijeras",
     "Lock": "Bloquear",
-    "Message edits": "Ediciones del mensaje",
-    "Room Settings - %(roomName)s": "Configuración de la sala - %(roomName)s",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Actualizar esta sala requiere cerrar la instancia actual de esta sala y crear una nueva sala en su lugar. Para dar a los miembros de la sala la mejor experiencia, haremos lo siguiente:",
-    "Upgrade private room": "Actualizar sala privada",
-    "Upgrade public room": "Actualizar sala pública",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Actualizar una sala es una acción avanzada y es normalmente recomendada cuando una sala es inestable debido a fallos, funcionalidades no disponibles y vulnerabilidades.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Esto solo afecta a cómo procesa la sala el servidor. Si estás teniendo problemas con %(brand)s, por favor, <a>avísanos del fallo</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Actualizarás esta sala de la versión <oldVersion /> a la <newVersion />.",
     "Sign out and remove encryption keys?": "¿Salir y borrar las claves de cifrado?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para ayudarnos a prevenir esto en el futuro, por favor, <a>envíanos logs</a>.",
     "Missing session data": "Faltan datos de sesión",
@@ -219,7 +203,6 @@
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s claves restauradas con éxito",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Advertencia</b>: deberías configurar la copia de seguridad de claves solamente usando un ordenador de confianza.",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reacción(es)",
-    "Email (optional)": "Correo electrónico (opcional)",
     "Sign in with SSO": "Ingrese con SSO",
     "Ok": "Ok",
     "Your homeserver has exceeded its user limit.": "Tú servidor ha excedido su limite de usuarios.",
@@ -423,9 +406,6 @@
     "Decline All": "Rechazar todo",
     "This widget would like to:": "A este accesorios le gustaría:",
     "Approve widget permissions": "Aprobar permisos de widget",
-    "Data on this screen is shared with %(widgetDomain)s": "Los datos en esta ventana se comparten con %(widgetDomain)s",
-    "Continuing without email": "Continuar sin correo electrónico",
-    "Modal Widget": "Accesorio emergente",
     "Sint Maarten": "San Martín",
     "Singapore": "Singapur",
     "Sierra Leone": "Sierra Leona",
@@ -523,14 +503,12 @@
     "Security Key mismatch": "Las claves de seguridad no coinciden",
     "Enter Security Key": "Introduce la clave de seguridad",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "No se ha podido acceder al almacenamiento seguro. Por favor, comprueba que la frase de seguridad es correcta.",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Ten en cuenta que, si no añades un correo electrónico y olvidas tu contraseña, podrías <b>perder accceso para siempre a tu cuenta</b>.",
     "%(count)s members": {
         "one": "%(count)s miembro",
         "other": "%(count)s miembros"
     },
     "Failed to start livestream": "No se ha podido empezar la retransmisión",
     "Unable to start audio streaming.": "No se ha podido empezar la retransmisión del audio.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
     "<inviter/> invites you": "<inviter/> te ha invitado",
     "No results found": "Ningún resultado",
     "%(count)s rooms": {
@@ -549,8 +527,6 @@
     "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
     "Reset everything": "Restablecer todo",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si lo haces, ten en cuenta que ninguno de tus mensajes serán eliminados, pero la experiencia de búsqueda será peor durante unos momentos mientras recreamos el índice",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en cuenta que actualizar crea una nueva versión de la sala</b>. Todos los mensajes hasta ahora quedarán archivados aquí, en esta sala.",
-    "Automatically invite members from this room to the new one": "Invitar a la nueva sala automáticamente a los miembros que tiene ahora",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
@@ -2479,7 +2455,6 @@
         "no_audio_input_description": "No hemos encontrado un micrófono en tu dispositivo. Por favor, revisa tus ajustes e inténtalo de nuevo.",
         "transfer_consult_first_label": "Consultar primero"
     },
-    "Other": "Otros",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Cambiar la imagen del espacio",
@@ -2654,7 +2629,24 @@
             "room_version_section": "Versión de la sala",
             "room_version": "Versión de la sala:",
             "information_section_space": "Información del espacio",
-            "information_section_room": "Información de la sala"
+            "information_section_room": "Información de la sala",
+            "error_upgrade_title": "No se pudo actualizar la sala",
+            "error_upgrade_description": "La actualización de la sala no pudo ser completada",
+            "upgrade_button": "Actualiza esta sala a la versión %(version)s",
+            "upgrade_dialog_title": "Actualizar Versión de la Sala",
+            "upgrade_dialog_description": "Actualizar esta sala requiere cerrar la instancia actual de esta sala y crear una nueva sala en su lugar. Para dar a los miembros de la sala la mejor experiencia, haremos lo siguiente:",
+            "upgrade_dialog_description_1": "Crear una sala nueva con el mismo nombre, descripción y avatar",
+            "upgrade_dialog_description_2": "Actualizar los alias locales de la sala para que apunten a la nueva",
+            "upgrade_dialog_description_3": "Impedir a los usuarios que conversen en la versión antigua de la sala, y publicar un mensaje aconsejándoles que se muden a la nueva",
+            "upgrade_dialog_description_4": "Poner un enlace de retorno a la sala antigua al principio de la nueva de modo que se puedan ver los mensajes viejos",
+            "upgrade_warning_dialog_invite_label": "Invitar a la nueva sala automáticamente a los miembros que tiene ahora",
+            "upgrade_warning_dialog_title_private": "Actualizar sala privada",
+            "upgrade_dwarning_ialog_title_public": "Actualizar sala pública",
+            "upgrade_warning_dialog_report_bug_prompt": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Esto solo afecta a cómo procesa la sala el servidor. Si estás teniendo problemas con %(brand)s, por favor, <a>avísanos del fallo</a>.",
+            "upgrade_warning_dialog_description": "Actualizar una sala es una acción avanzada y es normalmente recomendada cuando una sala es inestable debido a fallos, funcionalidades no disponibles y vulnerabilidades.",
+            "upgrade_warning_dialog_explainer": "<b>Ten en cuenta que actualizar crea una nueva versión de la sala</b>. Todos los mensajes hasta ahora quedarán archivados aquí, en esta sala.",
+            "upgrade_warning_dialog_footer": "Actualizarás esta sala de la versión <oldVersion /> a la <newVersion />."
         },
         "delete_avatar_label": "Borrar avatar",
         "upload_avatar_label": "Adjuntar avatar",
@@ -2694,7 +2686,8 @@
             "enable_element_call_caption": "%(brand)s está cifrado de extremo a extremo, pero actualmente está limitado a unos pocos participantes.",
             "enable_element_call_no_permissions_tooltip": "No tienes suficientes permisos para cambiar esto.",
             "call_type_section": "Tipo de llamada"
-        }
+        },
+        "title": "Configuración de la sala - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3082,6 +3075,11 @@
             "megolm_export": "Exportar claves manualmente",
             "setup_key_backup_title": "Perderás acceso a tus mensajes cifrados",
             "description": "¿Estás seguro de que quieres salir?"
+        },
+        "registration": {
+            "continue_without_email_title": "Continuar sin correo electrónico",
+            "continue_without_email_description": "Ten en cuenta que, si no añades un correo electrónico y olvidas tu contraseña, podrías <b>perder accceso para siempre a tu cuenta</b>.",
+            "continue_without_email_field_label": "Correo electrónico (opcional)"
         }
     },
     "room_list": {
@@ -3133,7 +3131,8 @@
         "spam_or_propaganda": "Publicidad no deseada o propaganda",
         "report_entire_room": "Denunciar la sala entera",
         "report_content_to_homeserver": "Denunciar contenido al administrador de tu servidor base",
-        "description": "Denunciar este mensaje enviará su único «event ID al administrador de tu servidor base. Si los mensajes en esta sala están cifrados, el administrador de tu servidor no podrá leer el texto del mensaje ni ver ningún archivo o imagen."
+        "description": "Denunciar este mensaje enviará su único «event ID al administrador de tu servidor base. Si los mensajes en esta sala están cifrados, el administrador de tu servidor no podrá leer el texto del mensaje ni ver ningún archivo o imagen.",
+        "other_label": "Otros"
     },
     "setting": {
         "help_about": {
@@ -3250,7 +3249,9 @@
         "popout": "Abrir accesorio en una ventana emergente",
         "unpin_to_view_right_panel": "Deja de fijar este accesorio para verlo en este panel",
         "set_room_layout": "Hacer que todo el mundo use mi disposición de sala",
-        "close_to_view_right_panel": "Cierra este accesorio para verlo en este panel"
+        "close_to_view_right_panel": "Cierra este accesorio para verlo en este panel",
+        "modal_title_default": "Accesorio emergente",
+        "modal_data_warning": "Los datos en esta ventana se comparten con %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Comentarios enviados",
@@ -4173,5 +4174,6 @@
         "disabled_action": "Limpiar la caché y resincronizar",
         "resync_description": "%(brand)s ahora utiliza de 3 a 5 veces menos memoria, porque solo carga información sobre otros usuarios cuando es necesario. Por favor, ¡aguarda mientras volvemos a sincronizar con el servidor!",
         "resync_title": "Actualizando %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Ediciones del mensaje"
 }

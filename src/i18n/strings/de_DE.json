@@ -74,14 +74,6 @@
     "Share User": "Teile Benutzer",
     "Share Room Message": "Raumnachricht teilen",
     "Link to selected message": "Link zur ausgewählten Nachricht",
-    "Upgrade Room Version": "Raumversion aktualisieren",
-    "Create a new room with the same name, description and avatar": "Einen neuen Raum mit demselben Namen, Beschreibung und Profilbild erstellen",
-    "Update any local room aliases to point to the new room": "Alle lokalen Raumaliase aktualisieren, damit sie auf den neuen Raum zeigen",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Nutzern verbieten in dem Raum mit der alten Version zu schreiben und eine Nachricht senden, die den Nutzern rät in den neuen Raum zu wechseln",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Zu Beginn des neuen Raumes einen Link zum alten Raum setzen, damit Personen die alten Nachrichten sehen können",
-    "Failed to upgrade room": "Raumaktualisierung fehlgeschlagen",
-    "The room upgrade could not be completed": "Die Raumaktualisierung konnte nicht fertiggestellt werden",
-    "Upgrade this room to version %(version)s": "Raum auf Version %(version)s aktualisieren",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Bevor du Protokolldateien übermittelst, musst du <a>auf GitHub einen \"Issue\" erstellen</a> um dein Problem zu beschreiben.",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
@@ -148,10 +140,8 @@
     "Anchor": "Anker",
     "Headphones": "Kopfhörer",
     "Folder": "Ordner",
-    "Email (optional)": "E-Mail-Adresse (optional)",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Scissors": "Schere",
-    "Room Settings - %(roomName)s": "Raumeinstellungen - %(roomName)s",
     "edited": "bearbeitet",
     "Upload files": "Dateien hochladen",
     "Upload all": "Alle hochladen",
@@ -190,10 +180,6 @@
     "a new cross-signing key signature": "Eine neue Cross-Signing-Schlüsselsignatur",
     "a device cross-signing signature": "Eine Geräte Schlüssel Signatur",
     "a key signature": "Eine Schlüssel Signatur",
-    "Upgrade private room": "Privaten Raum aktualisieren",
-    "Upgrade public room": "Öffentlichen Raum aktualisieren",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Dies beeinflusst meistens nur, wie der Raum auf dem Server verarbeitet wird. Solltest du Probleme mit %(brand)s haben, <a>melde bitte einen Programmfehler</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Du wirst diesen Raum von <oldVersion /> zu <newVersion /> aktualisieren.",
     "Missing session data": "Fehlende Sitzungsdaten",
     "Your browser likely removed this data when running low on disk space.": "Dein Browser hat diese Daten wahrscheinlich entfernt als der Festplattenspeicher knapp wurde.",
     "Find others by phone or email": "Finde Andere per Telefon oder E-Mail",
@@ -216,9 +202,6 @@
     "Sign in with SSO": "Einmalanmeldung verwenden",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
-    "Message edits": "Nachrichtenänderungen",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Um diesen Raum zu aktualisieren, muss die aktuelle Instanz des Raums geschlossen und an ihrer Stelle ein neuer Raum erstellt werden. Um den Raummitgliedern die bestmögliche Erfahrung zu bieten, werden wir:",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Eine Raumaktualisierung ist ein komplexer Vorgang, der üblicherweise empfohlen wird, wenn ein Raum aufgrund von Fehlern, fehlenden Funktionen oder Sicherheitslücken instabil ist.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Einige Sitzungsdaten, einschließlich der Verschlüsselungsschlüssel, fehlen. Melde dich ab, wieder an und stelle die Schlüssel aus der Sicherung wieder her um dies zu beheben.",
     "Confirm encryption setup": "Bestätige die Einrichtung der Verschlüsselung",
     "Click the button below to confirm setting up encryption.": "Klick die Schaltfläche unten um die Einstellungen der Verschlüsselung zu bestätigen.",
@@ -248,8 +231,6 @@
     "Not encrypted": "Nicht verschlüsselt",
     "Backup version:": "Version der Sicherung:",
     "Unable to set up keys": "Schlüssel können nicht eingerichtet werden",
-    "Data on this screen is shared with %(widgetDomain)s": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt",
-    "Modal Widget": "Modales Widget",
     "Uzbekistan": "Usbekistan",
     "Approve widget permissions": "Rechte für das Widget genehmigen",
     "This widget would like to:": "Dieses Widget würde gerne:",
@@ -502,8 +483,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Vereinigte Staaten",
     "United Kingdom": "Großbritannien",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
-    "Continuing without email": "Ohne E-Mail fortfahren",
     "Hold": "Halten",
     "Resume": "Fortsetzen",
     "Not a valid Security Key": "Kein gültiger Sicherheisschlüssel",
@@ -536,7 +515,6 @@
     },
     "Failed to start livestream": "Livestream konnte nicht gestartet werden",
     "Unable to start audio streaming.": "Audiostream kann nicht gestartet werden.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Dies beeinflusst meistens nur, wie der Raum auf dem Server verarbeitet wird. Solltest du Probleme mit %(brand)s haben, erstelle bitte einen Fehlerbericht.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s Person, die du kennst, ist schon beigetreten",
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
@@ -549,8 +527,6 @@
     "Reset everything": "Alles zurücksetzen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
-    "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Die Aktualisierung wird eine neue Version des Raums erstellen</b>. Die bisherigen Nachrichten verbleiben im archivierten Raum.",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
     "%(count)s reply": {
         "one": "%(count)s Antwort",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Dafür muss dein Server die fertige Fassung der MSC3827 unterstützen",
     "unavailable": "Nicht verfügbar",
     "unknown status code": "Unbekannter Statuscode",
-    "Upgrade room": "Raum aktualisieren",
     "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
     "common": {
         "about": "Über",
@@ -2595,7 +2570,6 @@
         "no_audio_input_description": "Es konnte kein Mikrofon gefunden werden. Überprüfe deine Einstellungen und versuche es erneut.",
         "transfer_consult_first_label": "Zuerst Anfragen"
     },
-    "Other": "Sonstiges",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Space-Icon ändern",
@@ -2774,7 +2748,25 @@
             "room_version_section": "Raumversion",
             "room_version": "Raumversion:",
             "information_section_space": "Information über den Space",
-            "information_section_room": "Rauminformationen"
+            "information_section_room": "Rauminformationen",
+            "error_upgrade_title": "Raumaktualisierung fehlgeschlagen",
+            "error_upgrade_description": "Die Raumaktualisierung konnte nicht fertiggestellt werden",
+            "upgrade_button": "Raum auf Version %(version)s aktualisieren",
+            "upgrade_dialog_title": "Raumversion aktualisieren",
+            "upgrade_dialog_description": "Um diesen Raum zu aktualisieren, muss die aktuelle Instanz des Raums geschlossen und an ihrer Stelle ein neuer Raum erstellt werden. Um den Raummitgliedern die bestmögliche Erfahrung zu bieten, werden wir:",
+            "upgrade_dialog_description_1": "Einen neuen Raum mit demselben Namen, Beschreibung und Profilbild erstellen",
+            "upgrade_dialog_description_2": "Alle lokalen Raumaliase aktualisieren, damit sie auf den neuen Raum zeigen",
+            "upgrade_dialog_description_3": "Nutzern verbieten in dem Raum mit der alten Version zu schreiben und eine Nachricht senden, die den Nutzern rät in den neuen Raum zu wechseln",
+            "upgrade_dialog_description_4": "Zu Beginn des neuen Raumes einen Link zum alten Raum setzen, damit Personen die alten Nachrichten sehen können",
+            "upgrade_warning_dialog_invite_label": "Mitglieder automatisch in den neuen Raum einladen",
+            "upgrade_warning_dialog_title_private": "Privaten Raum aktualisieren",
+            "upgrade_dwarning_ialog_title_public": "Öffentlichen Raum aktualisieren",
+            "upgrade_warning_dialog_title": "Raum aktualisieren",
+            "upgrade_warning_dialog_report_bug_prompt": "Dies beeinflusst meistens nur, wie der Raum auf dem Server verarbeitet wird. Solltest du Probleme mit %(brand)s haben, erstelle bitte einen Fehlerbericht.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Dies beeinflusst meistens nur, wie der Raum auf dem Server verarbeitet wird. Solltest du Probleme mit %(brand)s haben, <a>melde bitte einen Programmfehler</a>.",
+            "upgrade_warning_dialog_description": "Eine Raumaktualisierung ist ein komplexer Vorgang, der üblicherweise empfohlen wird, wenn ein Raum aufgrund von Fehlern, fehlenden Funktionen oder Sicherheitslücken instabil ist.",
+            "upgrade_warning_dialog_explainer": "<b>Die Aktualisierung wird eine neue Version des Raums erstellen</b>. Die bisherigen Nachrichten verbleiben im archivierten Raum.",
+            "upgrade_warning_dialog_footer": "Du wirst diesen Raum von <oldVersion /> zu <newVersion /> aktualisieren."
         },
         "delete_avatar_label": "Avatar löschen",
         "upload_avatar_label": "Profilbild hochladen",
@@ -2820,7 +2812,8 @@
             "enable_element_call_caption": "%(brand)s ist Ende-zu-Ende-verschlüsselt, allerdings noch auf eine geringere Anzahl Benutzer beschränkt.",
             "enable_element_call_no_permissions_tooltip": "Du hast nicht die erforderlichen Berechtigungen, um dies zu ändern.",
             "call_type_section": "Anrufart"
-        }
+        },
+        "title": "Raumeinstellungen - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3225,6 +3218,11 @@
             "megolm_export": "Schlüssel manuell exportieren",
             "setup_key_backup_title": "Du wirst den Zugang zu deinen verschlüsselten Nachrichten verlieren",
             "description": "Bist du sicher, dass du dich abmelden möchtest?"
+        },
+        "registration": {
+            "continue_without_email_title": "Ohne E-Mail fortfahren",
+            "continue_without_email_description": "Aufgepasst: Wenn du keine E-Mail-Adresse angibst und dein Passwort vergisst, kannst du den <b>Zugriff auf deinen Konto dauerhaft verlieren</b>.",
+            "continue_without_email_field_label": "E-Mail-Adresse (optional)"
         }
     },
     "room_list": {
@@ -3279,7 +3277,8 @@
         "spam_or_propaganda": "Spam oder Propaganda",
         "report_entire_room": "Den ganzen Raum melden",
         "report_content_to_homeserver": "Inhalte an die Administration deines Heim-Servers melden",
-        "description": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen."
+        "description": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen.",
+        "other_label": "Sonstiges"
     },
     "setting": {
         "help_about": {
@@ -3398,7 +3397,9 @@
         "popout": "Widget in eigenem Fenster öffnen",
         "unpin_to_view_right_panel": "Widget nicht mehr anheften und in diesem Panel anzeigen",
         "set_room_layout": "Dein Raumlayout für alle setzen",
-        "close_to_view_right_panel": "Widget schließen und in diesem Panel anzeigen"
+        "close_to_view_right_panel": "Widget schließen und in diesem Panel anzeigen",
+        "modal_title_default": "Modales Widget",
+        "modal_data_warning": "Daten auf diesem Bildschirm werden mit %(widgetDomain)s geteilt"
     },
     "feedback": {
         "sent": "Rückmeldung gesendet",
@@ -4378,5 +4379,6 @@
         "disabled_action": "Zwischenspeicher löschen und erneut synchronisieren",
         "resync_description": "%(brand)s benutzt nun 3 bis 5 Mal weniger Arbeitsspeicher, indem Informationen über andere Nutzer erst bei Bedarf geladen werden. Bitte warte, während die Daten erneut mit dem Server abgeglichen werden!",
         "resync_title": "Aktualisiere %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Nachrichtenänderungen"
 }

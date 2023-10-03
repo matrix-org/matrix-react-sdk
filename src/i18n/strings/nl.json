@@ -137,21 +137,11 @@
     "Headphones": "Koptelefoon",
     "Folder": "Map",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
-    "Room Settings - %(roomName)s": "Kamerinstellingen - %(roomName)s",
-    "Failed to upgrade room": "Kamerupgrade mislukt",
-    "The room upgrade could not be completed": "Het upgraden van de kamer kon niet worden voltooid",
-    "Upgrade this room to version %(version)s": "Upgrade de kamer naar versie %(version)s",
-    "Upgrade Room Version": "Kamerversie upgraden",
-    "Create a new room with the same name, description and avatar": "Een nieuw kamer aanmaken met dezelfde naam, omschrijving en afbeelding",
-    "Update any local room aliases to point to the new room": "Alle lokale kamerbijnamen naar de nieuwe kamer laten verwijzen",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Personen verhinderen om aan de oude versie van de kamer bij te dragen en plaats een bericht te dat de personen verwijst naar de nieuwe kamer",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Bovenaan de nieuwe kamer naar de oude verwijzen, om oude berichten te kunnen lezen",
     "Unable to load backup status": "Kan back-upstatus niet laden",
     "Unable to restore backup": "Kan back-up niet terugzetten",
     "No backup found!": "Geen back-up gevonden!",
     "Failed to decrypt %(failedCount)s sessions!": "Ontsleutelen van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
-    "Email (optional)": "E-mailadres (optioneel)",
     "Remember my selection for this widget": "Onthoud mijn keuze voor deze widget",
     "Sign out and remove encryption keys?": "Uitloggen en versleutelingssleutels verwijderen?",
     "To help us prevent this in future, please <a>send us logs</a>.": "<a>Stuur ons jouw logs</a> om dit in de toekomst te helpen voorkomen.",
@@ -171,8 +161,6 @@
     "Upload Error": "Fout bij versturen van bestand",
     "edited": "bewerkt",
     "Upload all": "Alles versturen",
-    "Message edits": "Berichtbewerkingen",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Deze kamer bijwerken vereist dat je de huidige afsluit en in de plaats een nieuwe kamer aanmaakt. Om leden de best mogelijke ervaring te bieden, zullen we:",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
     "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
     "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
@@ -201,11 +189,6 @@
     "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
-    "Upgrade private room": "Privékamer upgraden",
-    "Upgrade public room": "Publieke kamer upgraden",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Het bijwerken van een kamer is een gevorderde actie en wordt meestal aanbevolen wanneer een kamer onstabiel is door bugs, ontbrekende functies of problemen met de beveiliging.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Dit heeft meestal enkel een invloed op de manier waarop de kamer door de server verwerkt wordt. Als je problemen met je %(brand)s ondervindt, <a>dien dan een foutmelding in</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Je upgrade deze kamer van <oldVersion /> naar <newVersion />.",
     "Verification Request": "Verificatieverzoek",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "You signed in to a new session without verifying it:": "Je hebt je bij een nog niet geverifieerde sessie aangemeld:",
@@ -460,8 +443,6 @@
     "The server (%(serverName)s) took too long to respond.": "De server (%(serverName)s) deed er te lang over om te antwoorden.",
     "Server isn't responding": "Server reageert niet",
     "You're all caught up.": "Je bent helemaal bij.",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Let op, wanneer je geen e-mailadres toevoegt en je jouw wachtwoord vergeet, kan je <b>toegang tot je account permanent verliezen</b>.",
-    "Continuing without email": "Doorgaan zonder e-mail",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -515,8 +496,6 @@
     "A connection error occurred while trying to contact the server.": "Er is een verbindingsfout opgetreden tijdens het contact maken met de server.",
     "Your area is experiencing difficulties connecting to the internet.": "Jouw regio ondervindt problemen bij de verbinding met het internet.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jouw server reageert niet op sommige van je verzoeken. Hieronder staan enkele van de meest waarschijnlijke redenen.",
-    "Data on this screen is shared with %(widgetDomain)s": "Gegevens op dit scherm worden gedeeld met %(widgetDomain)s",
-    "Modal Widget": "Modale widget",
     "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
     "a key signature": "een sleutel ondertekening",
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
@@ -536,7 +515,6 @@
         "one": "%(count)s kamer",
         "other": "%(count)s kamers"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Normaal gesproken heeft dit alleen invloed op het verwerken van de kamer op de server. Als je problemen ervaart met %(brand)s, stuur dan een bugmelding.",
     "You most likely do not want to reset your event index store": "Je wilt waarschijnlijk niet jouw gebeurtenisopslag-index resetten",
     "Reset event store?": "Gebeurtenisopslag resetten?",
     "Reset event store": "Gebeurtenisopslag resetten",
@@ -549,8 +527,6 @@
     "Reset everything": "Alles opnieuw instellen",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
-    "Automatically invite members from this room to the new one": "Automatisch leden uitnodigen van deze kamer in de nieuwe",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
@@ -2354,7 +2330,6 @@
         "no_audio_input_description": "We hebben geen microfoon gevonden op je apparaat. Controleer je instellingen en probeer het opnieuw.",
         "transfer_consult_first_label": "Eerst overleggen"
     },
-    "Other": "Overige",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Space-afbeelding wijzigen",
@@ -2525,7 +2500,24 @@
             "room_version_section": "Kamerversie",
             "room_version": "Kamerversie:",
             "information_section_space": "Space-informatie",
-            "information_section_room": "Kamerinformatie"
+            "information_section_room": "Kamerinformatie",
+            "error_upgrade_title": "Kamerupgrade mislukt",
+            "error_upgrade_description": "Het upgraden van de kamer kon niet worden voltooid",
+            "upgrade_button": "Upgrade de kamer naar versie %(version)s",
+            "upgrade_dialog_title": "Kamerversie upgraden",
+            "upgrade_dialog_description": "Deze kamer bijwerken vereist dat je de huidige afsluit en in de plaats een nieuwe kamer aanmaakt. Om leden de best mogelijke ervaring te bieden, zullen we:",
+            "upgrade_dialog_description_1": "Een nieuw kamer aanmaken met dezelfde naam, omschrijving en afbeelding",
+            "upgrade_dialog_description_2": "Alle lokale kamerbijnamen naar de nieuwe kamer laten verwijzen",
+            "upgrade_dialog_description_3": "Personen verhinderen om aan de oude versie van de kamer bij te dragen en plaats een bericht te dat de personen verwijst naar de nieuwe kamer",
+            "upgrade_dialog_description_4": "Bovenaan de nieuwe kamer naar de oude verwijzen, om oude berichten te kunnen lezen",
+            "upgrade_warning_dialog_invite_label": "Automatisch leden uitnodigen van deze kamer in de nieuwe",
+            "upgrade_warning_dialog_title_private": "Privékamer upgraden",
+            "upgrade_dwarning_ialog_title_public": "Publieke kamer upgraden",
+            "upgrade_warning_dialog_report_bug_prompt": "Normaal gesproken heeft dit alleen invloed op het verwerken van de kamer op de server. Als je problemen ervaart met %(brand)s, stuur dan een bugmelding.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Dit heeft meestal enkel een invloed op de manier waarop de kamer door de server verwerkt wordt. Als je problemen met je %(brand)s ondervindt, <a>dien dan een foutmelding in</a>.",
+            "upgrade_warning_dialog_description": "Het bijwerken van een kamer is een gevorderde actie en wordt meestal aanbevolen wanneer een kamer onstabiel is door bugs, ontbrekende functies of problemen met de beveiliging.",
+            "upgrade_warning_dialog_explainer": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
+            "upgrade_warning_dialog_footer": "Je upgrade deze kamer van <oldVersion /> naar <newVersion />."
         },
         "delete_avatar_label": "Afbeelding verwijderen",
         "upload_avatar_label": "Afbeelding uploaden",
@@ -2564,7 +2556,8 @@
             "enable_element_call_caption": "%(brand)s is eind-tot-eind versleuteld, maar is momenteel beperkt tot kleinere aantallen gebruikers.",
             "enable_element_call_no_permissions_tooltip": "U heeft niet voldoende rechten om dit te wijzigen.",
             "call_type_section": "Oproeptype"
-        }
+        },
+        "title": "Kamerinstellingen - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2928,6 +2921,11 @@
             "megolm_export": "Sleutels handmatig wegschrijven",
             "setup_key_backup_title": "Je zal de toegang tot je versleutelde berichten verliezen",
             "description": "Weet je zeker dat je wilt uitloggen?"
+        },
+        "registration": {
+            "continue_without_email_title": "Doorgaan zonder e-mail",
+            "continue_without_email_description": "Let op, wanneer je geen e-mailadres toevoegt en je jouw wachtwoord vergeet, kan je <b>toegang tot je account permanent verliezen</b>.",
+            "continue_without_email_field_label": "E-mailadres (optioneel)"
         }
     },
     "room_list": {
@@ -2979,7 +2977,8 @@
         "spam_or_propaganda": "Spam of propaganda",
         "report_entire_room": "Rapporteer het hele kamer",
         "report_content_to_homeserver": "Inhoud melden aan de beheerder van jouw homeserver",
-        "description": "Dit bericht melden zal zijn unieke ‘gebeurtenis-ID’ versturen naar de beheerder van jouw homeserver. Als de berichten in deze kamer versleuteld zijn, zal de beheerder van jouw homeserver het bericht niet kunnen lezen, noch enige bestanden of afbeeldingen zien."
+        "description": "Dit bericht melden zal zijn unieke ‘gebeurtenis-ID’ versturen naar de beheerder van jouw homeserver. Als de berichten in deze kamer versleuteld zijn, zal de beheerder van jouw homeserver het bericht niet kunnen lezen, noch enige bestanden of afbeeldingen zien.",
+        "other_label": "Overige"
     },
     "setting": {
         "help_about": {
@@ -3093,7 +3092,9 @@
         "popout": "Widget in nieuw venster openen",
         "unpin_to_view_right_panel": "Maak deze widget los om het in dit paneel weer te geven",
         "set_room_layout": "Stel mijn kamerindeling in voor iedereen",
-        "close_to_view_right_panel": "Sluit deze widget om het in dit paneel weer te geven"
+        "close_to_view_right_panel": "Sluit deze widget om het in dit paneel weer te geven",
+        "modal_title_default": "Modale widget",
+        "modal_data_warning": "Gegevens op dit scherm worden gedeeld met %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3964,5 +3965,6 @@
         "disabled_action": "Cache wissen en hersynchroniseren",
         "resync_description": "%(brand)s verbruikt nu 3-5x minder geheugen, door informatie over andere personen enkel te laden wanneer nodig. Even geduld, we synchroniseren met de server!",
         "resync_title": "%(brand)s wordt bijgewerkt"
-    }
+    },
+    "message_edit_dialog_title": "Berichtbewerkingen"
 }

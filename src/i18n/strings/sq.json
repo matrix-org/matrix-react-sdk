@@ -64,29 +64,20 @@
     },
     "Delete Widget": "Fshije Widget-in",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
-    "Failed to upgrade room": "S’u arrit të përmirësohej dhoma",
-    "The room upgrade could not be completed": "Përmirësimi i dhomës s’u plotësua",
-    "Upgrade Room Version": "Përmirësoni Versionin e Dhomës",
     "Send Logs": "Dërgo regjistra",
     "Link to most recent message": "Lidhje për te mesazhet më të freskët",
     "Link to selected message": "Lidhje për te mesazhi i përzgjedhur",
-    "Upgrade this room to version %(version)s": "Përmirësojeni këtë dhomë me versionin %(version)s",
     "Share Room": "Ndani Dhomë Me të Tjerë",
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
-    "Create a new room with the same name, description and avatar": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Vendosni në krye të dhomës së re një lidhje për te dhoma e vjetër, që njerëzit të mund të shohin mesazhet e vjetër",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës.",
-    "Update any local room aliases to point to the new room": "Përditësoni çfarëdo aliasesh dhomash vendore që të shpien te dhoma e re",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Ndalojuni përdoruesve të flasin në versionin e vjetër të dhomës, dhe postoni një mesazh që u këshillon atyre të hidhen te dhoma e re",
     "We encountered an error trying to restore your previous session.": "Hasëm një gabim teksa provohej të rikthehej sesioni juaj i dikurshëm.",
     "This will allow you to reset your password and receive notifications.": "Kjo do t’ju lejojë të ricaktoni fjalëkalimin tuaj dhe të merrni njoftime.",
     "Unable to load backup status": "S’arrihet të ngarkohet gjendje kopjeruajtjeje",
     "Unable to restore backup": "S’arrihet të rikthehet kopjeruajtje",
     "No backup found!": "S’u gjet kopjeruajtje!",
     "Failed to decrypt %(failedCount)s sessions!": "S’u arrit të shfshehtëzohet sesioni %(failedCount)s!",
-    "Email (optional)": "Email (në daçi)",
     "Dog": "Qen",
     "Cat": "Mace",
     "Lion": "Luan",
@@ -148,7 +139,6 @@
     "Key": "Kyç",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
     "Scissors": "Gërshërë",
-    "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
     "edited": "e përpunuar",
     "Sign out and remove encryption keys?": "Të dilet dhe të hiqen kyçet e fshehtëzimit?",
     "Missing session data": "Mungojnë të dhëna sesioni",
@@ -168,8 +158,6 @@
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Këto kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Disa kartela janë <b>shumë të mëdha</b> për ngarkim. Caku për madhësi kartelash është %(limit)s.",
     "Upload all": "Ngarkoji krejt",
-    "Message edits": "Përpunime mesazhi",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
     "Deactivate account": "Çaktivizoje llogarinë",
     "Share User": "Ndani Përdorues",
@@ -183,11 +171,6 @@
     "%(name)s wants to verify": "%(name)s dëshiron të verifikojë",
     "Failed to connect to integration manager": "S’u arrit të lidhet te përgjegjës integrimesh",
     "Verification Request": "Kërkesë Verifikimi",
-    "Upgrade private room": "Përmirëso dhomë private",
-    "Upgrade public room": "Përmirëso dhomë publike",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Përmirësimi i një dhome është një veprim i thelluar dhe zakonisht rekomandohet kur një dhomë është e papërdorshme, për shkak të metash, veçorish që i mungojnë ose cenueshmëri sigurie.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, <a>njoftoni një të metë</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Do ta përmirësoni këtë dhomë nga <oldVersion /> në <newVersion />.",
     "%(count)s verified sessions": {
         "other": "%(count)s sesione të verifikuar",
         "one": "1 sesion i verifikuar"
@@ -246,8 +229,6 @@
     "Not encrypted": "Jo e fshehtëzuar",
     "Backup version:": "Version kopjeruajtjeje:",
     "Unable to set up keys": "S’arrihet të ujdisen kyçe",
-    "Data on this screen is shared with %(widgetDomain)s": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s",
-    "Modal Widget": "Widget Modal",
     "Paraguay": "Paraguai",
     "Guyana": "Guajanë",
     "Central African Republic": "Republika e Afrikës Qendrore",
@@ -500,8 +481,6 @@
     "Decline All": "Hidhi Krejt Poshtë",
     "This widget would like to:": "Ky widget do të donte të:",
     "Approve widget permissions": "Miratoni leje widget-i",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Që mos thoni nuk e dinim, nëse s’shtoni një email dhe harroni fjalëkalimin tuaj, mund <b>të humbi përgjithmonë hyrjen në llogarinë tuaj</b>.",
-    "Continuing without email": "Vazhdim pa email",
     "Hold": "Mbaje",
     "Resume": "Rimerre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>",
@@ -535,7 +514,6 @@
     },
     "Failed to start livestream": "S’u arrit të nisej transmetim i drejtpërdrejtë",
     "You're all caught up.": "Jeni në rregull.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, njoftoni një të metë.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s person që e njihni është bërë pjesë tashmë",
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
@@ -545,8 +523,6 @@
     "Reset everything": "Kthe gjithçka te parazgjedhjet",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ju lutemi, kini parasysh se përmirësimi do të prodhojë një version të ri të dhomës</b>. Krejt mesazhet e tanishëm do të mbeten në këtë dhomë të arkivuar.",
-    "Automatically invite members from this room to the new one": "Fto automatikisht anëtarë prej kësaj dhome te e reja",
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "%(count)s reply": {
@@ -2519,7 +2495,6 @@
         "no_audio_input_description": "S’gjetëm mikrofon në pajisjen tuaj. Ju lutemi, kontrolloni rregullimet tuaja dhe riprovoni.",
         "transfer_consult_first_label": "Konsultohu së pari"
     },
-    "Other": "Tjetër",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Ndryshoni avatar hapësire",
@@ -2694,7 +2669,24 @@
             "room_version_section": "Version dhome",
             "room_version": "Version dhome:",
             "information_section_space": "Hollësi hapësire",
-            "information_section_room": "Të dhëna dhome"
+            "information_section_room": "Të dhëna dhome",
+            "error_upgrade_title": "S’u arrit të përmirësohej dhoma",
+            "error_upgrade_description": "Përmirësimi i dhomës s’u plotësua",
+            "upgrade_button": "Përmirësojeni këtë dhomë me versionin %(version)s",
+            "upgrade_dialog_title": "Përmirësoni Versionin e Dhomës",
+            "upgrade_dialog_description": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
+            "upgrade_dialog_description_1": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
+            "upgrade_dialog_description_2": "Përditësoni çfarëdo aliasesh dhomash vendore që të shpien te dhoma e re",
+            "upgrade_dialog_description_3": "Ndalojuni përdoruesve të flasin në versionin e vjetër të dhomës, dhe postoni një mesazh që u këshillon atyre të hidhen te dhoma e re",
+            "upgrade_dialog_description_4": "Vendosni në krye të dhomës së re një lidhje për te dhoma e vjetër, që njerëzit të mund të shohin mesazhet e vjetër",
+            "upgrade_warning_dialog_invite_label": "Fto automatikisht anëtarë prej kësaj dhome te e reja",
+            "upgrade_warning_dialog_title_private": "Përmirëso dhomë private",
+            "upgrade_dwarning_ialog_title_public": "Përmirëso dhomë publike",
+            "upgrade_warning_dialog_report_bug_prompt": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, njoftoni një të metë.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Kjo zakonisht prek vetëm mënyrën se si përpunohet dhoma te shërbyesi. Nëse keni probleme me %(brand)s-in, ju lutemi, <a>njoftoni një të metë</a>.",
+            "upgrade_warning_dialog_description": "Përmirësimi i një dhome është një veprim i thelluar dhe zakonisht rekomandohet kur një dhomë është e papërdorshme, për shkak të metash, veçorish që i mungojnë ose cenueshmëri sigurie.",
+            "upgrade_warning_dialog_explainer": "<b>Ju lutemi, kini parasysh se përmirësimi do të prodhojë një version të ri të dhomës</b>. Krejt mesazhet e tanishëm do të mbeten në këtë dhomë të arkivuar.",
+            "upgrade_warning_dialog_footer": "Do ta përmirësoni këtë dhomë nga <oldVersion /> në <newVersion />."
         },
         "delete_avatar_label": "Fshije avatarin",
         "upload_avatar_label": "Ngarkoni avatar",
@@ -2734,7 +2726,8 @@
             "enable_element_call_caption": "%(brand)s është i fshehtëzuar skaj-më-skaj, por aktualisht është i kufizuar në numra më të vegjël përdoruesish.",
             "enable_element_call_no_permissions_tooltip": "S’keni leje të mjaftueshme që të ndryshoni këtë.",
             "call_type_section": "Lloj thirrjeje"
-        }
+        },
+        "title": "Rregullime Dhome - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3136,6 +3129,11 @@
             "megolm_export": "Eksporto dorazi kyçet",
             "setup_key_backup_title": "Do të humbni hyrje te mesazhet tuaj të fshehtëzuar",
             "description": "Jeni i sigurt se doni të dilni?"
+        },
+        "registration": {
+            "continue_without_email_title": "Vazhdim pa email",
+            "continue_without_email_description": "Që mos thoni nuk e dinim, nëse s’shtoni një email dhe harroni fjalëkalimin tuaj, mund <b>të humbi përgjithmonë hyrjen në llogarinë tuaj</b>.",
+            "continue_without_email_field_label": "Email (në daçi)"
         }
     },
     "room_list": {
@@ -3190,7 +3188,8 @@
         "spam_or_propaganda": "Mesazh i padëshiruar ose propagandë",
         "report_entire_room": "Raporto krejt dhomën",
         "report_content_to_homeserver": "Raportoni Lëndë te Përgjegjësi i Shërbyesit Tuaj Home",
-        "description": "Raportimi i këtij mesazhi do të shkaktojë dërgimin e 'ID-së së aktit' unike te përgjegjësi i shërbyesit tuaj Home. Nëse mesazhet në këtë dhomë fshehtëzohen, përgjegjësi i shërbyesit tuaj Home s’do të jetë në gjendje të lexojë tekstin e mesazhit apo të shohë çfarëdo kartelë apo figurë."
+        "description": "Raportimi i këtij mesazhi do të shkaktojë dërgimin e 'ID-së së aktit' unike te përgjegjësi i shërbyesit tuaj Home. Nëse mesazhet në këtë dhomë fshehtëzohen, përgjegjësi i shërbyesit tuaj Home s’do të jetë në gjendje të lexojë tekstin e mesazhit apo të shohë çfarëdo kartelë apo figurë.",
+        "other_label": "Tjetër"
     },
     "setting": {
         "help_about": {
@@ -3306,7 +3305,9 @@
         "popout": "Widget flluskë",
         "unpin_to_view_right_panel": "Hiqjani fiksimin këtij widget-i, që ta shihni te ky panel",
         "set_room_layout": "Ujdise skemën e dhomës time për këdo",
-        "close_to_view_right_panel": "Mbylleni këtë widget, që ta shihni te ky panel"
+        "close_to_view_right_panel": "Mbylleni këtë widget, që ta shihni te ky panel",
+        "modal_title_default": "Widget Modal",
+        "modal_data_warning": "Të dhënat në këtë skenë ndahen me %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -4264,5 +4265,6 @@
         "disabled_action": "Spastro fshehtinën dhe rinjëkohëso",
         "resync_description": "%(brand)s-i tani përdor 3 deri 5 herë më pak kujtesë, duke ngarkuar të dhëna mbi përdorues të tjerë vetëm kur duhen. Ju lutemi, prisni, teksa njëkohësojmë të dhënat me shërbyesin!",
         "resync_title": "%(brand)s-i po përditësohet"
-    }
+    },
+    "message_edit_dialog_title": "Përpunime mesazhi"
 }

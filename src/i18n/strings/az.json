@@ -231,7 +231,6 @@
     "devtools": {
         "category_other": "Digər"
     },
-    "Other": "Digər",
     "labs": {
         "group_profile": "Profil"
     },
@@ -373,5 +372,8 @@
     },
     "forward": {
         "send_label": "Göndər"
+    },
+    "report_content": {
+        "other_label": "Digər"
     }
 }

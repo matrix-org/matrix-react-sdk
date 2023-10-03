@@ -406,13 +406,6 @@
     },
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
-    "Continuing without email": "Συνέχεια χωρίς email",
-    "Upgrade Room Version": "Αναβάθμιση Έκδοσης Δωματίου",
-    "Upgrade this room to version %(version)s": "Αναβαθμίστε αυτό το δωμάτιο στην έκδοση %(version)s",
-    "The room upgrade could not be completed": "Δεν ήταν δυνατή η ολοκλήρωση της αναβάθμισης δωματίου",
-    "Failed to upgrade room": "Αποτυχία αναβάθμισης δωματίου",
-    "Room Settings - %(roomName)s": "Ρυθμίσεις Δωματίου - %(roomName)s",
-    "Email (optional)": "Email (προαιρετικό)",
     "A connection error occurred while trying to contact the server.": "Παρουσιάστηκε σφάλμα σύνδεσης κατά την προσπάθεια επικοινωνίας με τον διακομιστή.",
     "Your area is experiencing difficulties connecting to the internet.": "Η περιοχή σας αντιμετωπίζει δυσκολίες σύνδεσης στο διαδίκτυο.",
     "The server has denied your request.": "Ο διακομιστής απέρριψε το αίτημά σας.",
@@ -422,16 +415,6 @@
     "The server (%(serverName)s) took too long to respond.": "Ο διακομιστής (%(serverName)s) έκανε πολύ χρόνο να ανταποκριθεί.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Ο διακομιστής σας δεν ανταποκρίνεται σε ορισμένα από τα αιτήματά σας. Παρακάτω είναι μερικοί από τους πιο πιθανούς λόγους.",
     "Server isn't responding": "Ο διακομιστής δεν ανταποκρίνεται",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Θα αναβαθμίσετε αυτό το δωμάτιο από <oldVersion /> σε <newVersion />.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Λάβετε υπόψη ότι η αναβάθμιση θα δημιουργήσει μια νέα έκδοση του δωματίου</b>. Όλα τα τρέχοντα μηνύματα θα παραμείνουν σε αυτό το αρχειοθετημένο δωμάτιο.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Η αναβάθμιση ενός δωματίου είναι μια προηγμένη ενέργεια και συνήθως συνιστάται όταν ένα δωμάτιο είναι ασταθές λόγω σφαλμάτων, ελλείψεων λειτουργιών ή ευπάθειας ασφαλείας.",
-    "Upgrade public room": "Αναβάθμιση δημόσιου δωματίου",
-    "Upgrade private room": "Αναβάθμιση ιδιωτικού δωματίου",
-    "Automatically invite members from this room to the new one": "Αυτόματη πρόσκληση μελών αυτού του δωματίου στο νέο",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Βάλτε έναν σύνδεσμο προς το παλιό δωμάτιο στην αρχή του νέου δωματίου, ώστε οι χρήστες να μπορούν να δουν παλιά μηνύματα",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Εμποδίστε τους χρήστες να συνομιλούν στην παλιά έκδοση του δωματίου και αναρτήστε ένα μήνυμα που να τους συμβουλεύει να μετακινηθούν στο νέο δωμάτιο",
-    "Update any local room aliases to point to the new room": "Ενημερώστε τυχόν τοπικά ψευδώνυμα δωματίου για να οδηγούν στο νέο δωμάτιο",
-    "Create a new room with the same name, description and avatar": "Δημιουργήστε ένα νέο δωμάτιο με το ίδιο όνομα, περιγραφή και avatar",
     "Delete Widget": "Διαγραφή Μικροεφαρμογής",
     "Sign in with SSO": "Συνδεθείτε με SSO",
     "Unable to start audio streaming.": "Δεν είναι δυνατή η έναρξη ροής ήχου.",
@@ -542,7 +525,6 @@
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
     },
-    "Data on this screen is shared with %(widgetDomain)s": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
     "Failed to start livestream": "Η έναρξη της ζωντανής ροής απέτυχε",
     "Unsent": "Μη απεσταλμένα",
@@ -554,10 +536,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Εάν το κάνετε, σημειώστε ότι κανένα από τα μηνύματά σας δε θα διαγραφεί, αλλά η εμπειρία αναζήτησης ενδέχεται να υποβαθμιστεί για λίγα λεπτά κατά τη δημιουργία του ευρετηρίου",
     "Recent changes that have not yet been received": "Πρόσφατες αλλαγές που δεν έχουν ληφθεί ακόμη",
     "The server is not configured to indicate what the problem is (CORS).": "Ο διακομιστής δεν έχει ρυθμιστεί για να υποδεικνύει ποιο είναι το πρόβλημα (CORS).",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, <a>αναφέρετε ένα σφάλμα</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, αναφέρετε ένα σφάλμα.",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Η αναβάθμιση αυτού του δωματίου απαιτεί τη διαγραφή του και τη δημιουργία ενός νέου δωματίου στη θέση του. Για να προσφέρουμε στα μέλη του την καλύτερη δυνατή εμπειρία, θα:",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Μια προειδοποίηση, αν δεν προσθέσετε ένα email και ξεχάσετε τον κωδικό πρόσβασης, ενδέχεται να <b>χάσετε οριστικά την πρόσβαση στον λογαριασμό σας</b>.",
     "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
@@ -589,8 +567,6 @@
     "Reset event store?": "Eπαναφoρά στο κατάστημα συμβάντων;",
     "You most likely do not want to reset your event index store": "Πιθανότατα δεν θέλετε να επαναφέρετε το κατάστημα ευρετηρίου συμβάντων",
     "You're all caught up.": "Είστε πλήρως ενημερωμένοι.",
-    "Modal Widget": "Modal Widget",
-    "Message edits": "Επεξεργασίες μηνυμάτων",
     "Hold": "Αναμονή",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
@@ -2144,7 +2120,6 @@
         "no_audio_input_description": "Δε βρέθηκε μικρόφωνο στη συσκευή σας. Παρακαλώ ελέγξτε τις ρυθμίσεις σας και δοκιμάστε ξανά.",
         "transfer_consult_first_label": "Συμβουλευτείτε πρώτα"
     },
-    "Other": "Άλλα",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Αλλαγή εικόνας Χώρου",
@@ -2311,7 +2286,24 @@
             "room_version_section": "Έκδοση δωματίου",
             "room_version": "Έκδοση δωματίου:",
             "information_section_space": "Πληροφορίες Χώρου",
-            "information_section_room": "Πληροφορίες δωματίου"
+            "information_section_room": "Πληροφορίες δωματίου",
+            "error_upgrade_title": "Αποτυχία αναβάθμισης δωματίου",
+            "error_upgrade_description": "Δεν ήταν δυνατή η ολοκλήρωση της αναβάθμισης δωματίου",
+            "upgrade_button": "Αναβαθμίστε αυτό το δωμάτιο στην έκδοση %(version)s",
+            "upgrade_dialog_title": "Αναβάθμιση Έκδοσης Δωματίου",
+            "upgrade_dialog_description": "Η αναβάθμιση αυτού του δωματίου απαιτεί τη διαγραφή του και τη δημιουργία ενός νέου δωματίου στη θέση του. Για να προσφέρουμε στα μέλη του την καλύτερη δυνατή εμπειρία, θα:",
+            "upgrade_dialog_description_1": "Δημιουργήστε ένα νέο δωμάτιο με το ίδιο όνομα, περιγραφή και avatar",
+            "upgrade_dialog_description_2": "Ενημερώστε τυχόν τοπικά ψευδώνυμα δωματίου για να οδηγούν στο νέο δωμάτιο",
+            "upgrade_dialog_description_3": "Εμποδίστε τους χρήστες να συνομιλούν στην παλιά έκδοση του δωματίου και αναρτήστε ένα μήνυμα που να τους συμβουλεύει να μετακινηθούν στο νέο δωμάτιο",
+            "upgrade_dialog_description_4": "Βάλτε έναν σύνδεσμο προς το παλιό δωμάτιο στην αρχή του νέου δωματίου, ώστε οι χρήστες να μπορούν να δουν παλιά μηνύματα",
+            "upgrade_warning_dialog_invite_label": "Αυτόματη πρόσκληση μελών αυτού του δωματίου στο νέο",
+            "upgrade_warning_dialog_title_private": "Αναβάθμιση ιδιωτικού δωματίου",
+            "upgrade_dwarning_ialog_title_public": "Αναβάθμιση δημόσιου δωματίου",
+            "upgrade_warning_dialog_report_bug_prompt": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, αναφέρετε ένα σφάλμα.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, <a>αναφέρετε ένα σφάλμα</a>.",
+            "upgrade_warning_dialog_description": "Η αναβάθμιση ενός δωματίου είναι μια προηγμένη ενέργεια και συνήθως συνιστάται όταν ένα δωμάτιο είναι ασταθές λόγω σφαλμάτων, ελλείψεων λειτουργιών ή ευπάθειας ασφαλείας.",
+            "upgrade_warning_dialog_explainer": "<b>Λάβετε υπόψη ότι η αναβάθμιση θα δημιουργήσει μια νέα έκδοση του δωματίου</b>. Όλα τα τρέχοντα μηνύματα θα παραμείνουν σε αυτό το αρχειοθετημένο δωμάτιο.",
+            "upgrade_warning_dialog_footer": "Θα αναβαθμίσετε αυτό το δωμάτιο από <oldVersion /> σε <newVersion />."
         },
         "delete_avatar_label": "Διαγραφή avatar",
         "upload_avatar_label": "Αποστολή προσωπικής εικόνας",
@@ -2344,7 +2336,8 @@
             "notification_sound": "Ήχος ειδοποίησης",
             "custom_sound_prompt": "Ορίστε έναν νέο προσαρμοσμένο ήχο",
             "browse_button": "Εξερεύνηση"
-        }
+        },
+        "title": "Ρυθμίσεις Δωματίου - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2678,6 +2671,11 @@
             "megolm_export": "Μη αυτόματη εξαγωγή κλειδιών",
             "setup_key_backup_title": "Θα χάσετε την πρόσβαση στα κρυπτογραφημένα μηνύματά σας",
             "description": "Είσαστε σίγουροι ότι θέλετε να αποσυνδεθείτε;"
+        },
+        "registration": {
+            "continue_without_email_title": "Συνέχεια χωρίς email",
+            "continue_without_email_description": "Μια προειδοποίηση, αν δεν προσθέσετε ένα email και ξεχάσετε τον κωδικό πρόσβασης, ενδέχεται να <b>χάσετε οριστικά την πρόσβαση στον λογαριασμό σας</b>.",
+            "continue_without_email_field_label": "Email (προαιρετικό)"
         }
     },
     "room_list": {
@@ -2726,7 +2724,8 @@
         "spam_or_propaganda": "Spam ή προπαγάνδα",
         "report_entire_room": "Αναφορά ολόκληρου του δωματίου",
         "report_content_to_homeserver": "Αναφορά Περιεχομένου στον Διαχειριστή του Διακομιστή σας",
-        "description": "Η αναφορά αυτού του μηνύματος θα στείλει το μοναδικό «αναγνωριστικό συμβάντος» στον διαχειριστή του διακομιστή σας. Εάν τα μηνύματα σε αυτό το δωμάτιο είναι κρυπτογραφημένα, ο διαχειριστής του διακομιστή σας δε θα μπορεί να διαβάσει το κείμενο του μηνύματος ή να προβάλει αρχεία και εικόνες."
+        "description": "Η αναφορά αυτού του μηνύματος θα στείλει το μοναδικό «αναγνωριστικό συμβάντος» στον διαχειριστή του διακομιστή σας. Εάν τα μηνύματα σε αυτό το δωμάτιο είναι κρυπτογραφημένα, ο διαχειριστής του διακομιστή σας δε θα μπορεί να διαβάσει το κείμενο του μηνύματος ή να προβάλει αρχεία και εικόνες.",
+        "other_label": "Άλλα"
     },
     "onboarding": {
         "has_avatar_label": "Τέλεια, αυτό θα βοηθήσει άλλα άτομα να καταλάβουν ότι είστε εσείς",
@@ -2850,7 +2849,9 @@
         "popout": "Αναδυόμενη μικροεφαρμογή",
         "unpin_to_view_right_panel": "Ξεκαρφιτσώστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα",
         "set_room_layout": "Ορίστε τη διάταξη του δωματίου μου για όλους",
-        "close_to_view_right_panel": "Κλείστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα"
+        "close_to_view_right_panel": "Κλείστε αυτήν τη μικροεφαρμογή για να την προβάλετε σε αυτόν τον πίνακα",
+        "modal_title_default": "Modal Widget",
+        "modal_data_warning": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Τα σχόλια στάλθηκαν",
@@ -3656,5 +3657,6 @@
         "disabled_action": "Εκκαθάριση προσωρινής μνήμης και επανασυγχρονισμός",
         "resync_description": "Το %(brand)s χρησιμοποιεί πλέον 3-5 φορές λιγότερη μνήμη, φορτώνοντας πληροφορίες για άλλους χρήστες μόνο όταν χρειάζεται. Περιμένετε όσο γίνεται εκ νέου συγχρονισμός με τον διακομιστή!",
         "resync_title": "Ενημέρωση %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Επεξεργασίες μηνυμάτων"
 }

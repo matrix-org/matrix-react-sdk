@@ -124,23 +124,13 @@
     "Anchor": "Ankro",
     "Headphones": "Kapaŭdilo",
     "Folder": "Dosierujo",
-    "Room Settings - %(roomName)s": "Agordoj de ĉambro – %(roomName)s",
-    "Failed to upgrade room": "Malsukcesis gradaltigi ĉambron",
     "Share Room": "Kunhavigi ĉambron",
     "Share User": "Kunhavigi uzanton",
     "Share Room Message": "Kunhavigi ĉambran mesaĝon",
-    "Email (optional)": "Retpoŝto (malnepra)",
     "Santa": "Kristnaska viro",
     "Thumbs up": "Dikfingro supren",
     "Paperclip": "Paperkuntenilo",
     "edited": "redaktita",
-    "The room upgrade could not be completed": "Gradaltigo de la ĉambro ne povis finiĝi",
-    "Upgrade this room to version %(version)s": "Gradaltigi ĉi tiun ĉambron al versio %(version)s",
-    "Upgrade Room Version": "Gradaltigi version de la ĉambro",
-    "Create a new room with the same name, description and avatar": "Kreos novan ĉàmbron kun la sama nomo, priskribo, kaj profilbildo",
-    "Update any local room aliases to point to the new room": "Religos ĉiujn lokajn kromnomojn al la nova ĉambro",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Haltigos parolojn al la malnova versio de al ĉambro, kaj konsilos uzantojn pri la nova per mesaĝo",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Metos en la novan ĉambron ligilon al la malnova, por ke oni povu rigardi la malnovajn mesaĝojn",
     "Sign out and remove encryption keys?": "Ĉu adiaŭi kaj forigi ĉifrajn ŝlosilojn?",
     "Send Logs": "Sendi protokolon",
     "Link to most recent message": "Ligi al plej freŝa mesaĝo",
@@ -162,7 +152,6 @@
     "Unable to load backup status": "Ne povas legi staton de savkopio",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "Message edits": "Redaktoj de mesaĝoj",
     "Clear Storage and Sign Out": "Vakigi memoron kaj adiaŭi",
     "We encountered an error trying to restore your previous session.": "Ni renkontis eraron provante rehavi vian antaŭan salutaĵon.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Vakigo de la memoro de via foliumilo eble korektos la problemon, sed adiaŭigos vin, kaj malebligos legadon de historio de ĉifritaj babiloj.",
@@ -173,7 +162,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Malsukcesis malĉifri%(failedCount)s salutaĵojn!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Averto</b>: vi agordu ŝlosilan savkopion nur per fidata komputilo.",
     "Resend %(unsentCount)s reaction(s)": "Resendi %(unsentCount)s reago(j)n",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gradaltigo de ĉi tiu ĉambro bezonas fermi ĝin, kaj krei novan por anstataŭi ĝin. Por plejbonigi sperton de la ĉambranoj, ni:",
     "Find others by phone or email": "Trovu aliajn per telefonnumero aŭ retpoŝtadreso",
     "Be found by phone or email": "Troviĝu per telefonnumero aŭ retpoŝtadreso",
     "Deactivate account": "Malaktivigi konton",
@@ -184,8 +172,6 @@
     "Command Help": "Helpo pri komando",
     "Lock": "Seruro",
     "Failed to connect to integration manager": "Malsukcesis konekton al kunigilo",
-    "Upgrade private room": "Gradaltigi privatan ĉambron",
-    "Upgrade public room": "Gradaltigi publikan ĉambron",
     "Not Trusted": "Nefidata",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
     "Ask this user to verify their session, or manually verify it below.": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
@@ -204,9 +190,6 @@
     "Destroy cross-signing keys?": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Forigo de delege ĉifraj ŝlosiloj estas porĉiama. Ĉiu, kun kiu vi interkontrolis, vidos avertojn pri sekureco. Vi preskaŭ certe ne volas ĉi tion fari, malse vi perdis ĉiun aparaton, el kiu vi povus delege subskribadi.",
     "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Gradaltigo de ĉambro estas altnivela ago kaj estas kutime rekomendata kiam ĉambro estas malstabila pro eraroj, mankantaj funkcioj, aŭ malsekuraĵoj.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Ĉi tio kutime influas nur traktadon de la ĉambro de la servilo. Se vi spertas problemojn pri %(brand)s, bonvolu <a>raporti problemon</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vi gradaltigos ĉi tiun ĉambron de <oldVersion /> al <newVersion />.",
     "Verification Request": "Kontrolpeto",
     "a new master key signature": "nova ĉefŝlosila subskribo",
     "a new cross-signing key signature": "nova subskribo de delega ŝlosilo",
@@ -248,7 +231,6 @@
     "You're all caught up.": "Sen sciigoj.",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
-    "Data on this screen is shared with %(widgetDomain)s": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s",
     "Uzbekistan": "Uzbekujo",
     "United Arab Emirates": "Unuiĝinaj Arabaj Emirlandoj",
     "Ukraine": "Ukrainujo",
@@ -521,9 +503,6 @@
     "Decline All": "Rifuzi ĉion",
     "This widget would like to:": "Ĉi tiu fenestraĵo volas:",
     "Approve widget permissions": "Aprobi rajtojn de fenestraĵo",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
-    "Continuing without email": "Daŭrigante sen retpoŝtadreso",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ĉi tiu kutime influas nur traktadon de la ĉambro servil-flanke. Se vi spertas problemojn pri via %(brand)s, bonvolu raporti eraron.",
     "<inviter/> invites you": "<inviter/> invitas vin",
     "No results found": "Neniuj rezultoj troviĝis",
     "%(count)s rooms": {
@@ -540,7 +519,6 @@
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
     },
-    "Modal Widget": "Reĝima fenestraĵo",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se vi restarigos ĉion, vi rekomencos sen fidataj salutaĵoj, uzantoj, kaj eble ne povos vidi antaŭajn mesaĝojn.",
     "Only do this if you have no other device to complete verification with.": "Faru tion ĉi nur se vi ne havas alian aparaton, per kiu vi kontrolus ceterajn.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Ĉu vi forgesis aŭ perdis ĉiujn manierojn de rehavo? <a>Restarigu ĉion</a>",
@@ -549,8 +527,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se vi tamen tion faras, sciu ke neniu el viaj mesaĝoj foriĝos, sed via sperto pri serĉado povas malboniĝi momente, dum la indekso estas refarata",
     "You most likely do not want to reset your event index store": "Plej verŝajne, vi ne volas restarigi vian deponejon de indeksoj de okazoj",
     "Reset event store?": "Ĉu restarigi deponejon de okazoj?",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Sciu, ke gradaltigo kreos novan version de la ĉambro</b>. Ĉiuj nunaj mesaĝoj restos en ĉi tiu arĥivita ĉambro.",
-    "Automatically invite members from this room to the new one": "Memage inviti anojn de ĉi tiu ĉambro al la nova",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
@@ -1936,7 +1912,6 @@
         "no_audio_input_description": "Ni ne trovis mikrofonon en via aparato. Bonvolu kontroli viajn agordojn kaj reprovi.",
         "transfer_consult_first_label": "Unue konsulti"
     },
-    "Other": "Alia",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Ŝanĝi bildon de aro",
@@ -2089,7 +2064,24 @@
             "room_version_section": "Ĉambra versio",
             "room_version": "Ĉambra versio:",
             "information_section_space": "Informoj pri aro",
-            "information_section_room": "Informoj pri ĉambro"
+            "information_section_room": "Informoj pri ĉambro",
+            "error_upgrade_title": "Malsukcesis gradaltigi ĉambron",
+            "error_upgrade_description": "Gradaltigo de la ĉambro ne povis finiĝi",
+            "upgrade_button": "Gradaltigi ĉi tiun ĉambron al versio %(version)s",
+            "upgrade_dialog_title": "Gradaltigi version de la ĉambro",
+            "upgrade_dialog_description": "Gradaltigo de ĉi tiu ĉambro bezonas fermi ĝin, kaj krei novan por anstataŭi ĝin. Por plejbonigi sperton de la ĉambranoj, ni:",
+            "upgrade_dialog_description_1": "Kreos novan ĉàmbron kun la sama nomo, priskribo, kaj profilbildo",
+            "upgrade_dialog_description_2": "Religos ĉiujn lokajn kromnomojn al la nova ĉambro",
+            "upgrade_dialog_description_3": "Haltigos parolojn al la malnova versio de al ĉambro, kaj konsilos uzantojn pri la nova per mesaĝo",
+            "upgrade_dialog_description_4": "Metos en la novan ĉambron ligilon al la malnova, por ke oni povu rigardi la malnovajn mesaĝojn",
+            "upgrade_warning_dialog_invite_label": "Memage inviti anojn de ĉi tiu ĉambro al la nova",
+            "upgrade_warning_dialog_title_private": "Gradaltigi privatan ĉambron",
+            "upgrade_dwarning_ialog_title_public": "Gradaltigi publikan ĉambron",
+            "upgrade_warning_dialog_report_bug_prompt": "Ĉi tiu kutime influas nur traktadon de la ĉambro servil-flanke. Se vi spertas problemojn pri via %(brand)s, bonvolu raporti eraron.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Ĉi tio kutime influas nur traktadon de la ĉambro de la servilo. Se vi spertas problemojn pri %(brand)s, bonvolu <a>raporti problemon</a>.",
+            "upgrade_warning_dialog_description": "Gradaltigo de ĉambro estas altnivela ago kaj estas kutime rekomendata kiam ĉambro estas malstabila pro eraroj, mankantaj funkcioj, aŭ malsekuraĵoj.",
+            "upgrade_warning_dialog_explainer": "<b>Sciu, ke gradaltigo kreos novan version de la ĉambro</b>. Ĉiuj nunaj mesaĝoj restos en ĉi tiu arĥivita ĉambro.",
+            "upgrade_warning_dialog_footer": "Vi gradaltigos ĉi tiun ĉambron de <oldVersion /> al <newVersion />."
         },
         "delete_avatar_label": "Forigi profilbildon",
         "upload_avatar_label": "Alŝuti profilbildon",
@@ -2120,7 +2112,8 @@
             "notification_sound": "Sono de sciigo",
             "custom_sound_prompt": "Agordi novan propran sonon",
             "browse_button": "Foliumi"
-        }
+        },
+        "title": "Agordoj de ĉambro – %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2434,6 +2427,11 @@
             "megolm_export": "Mane elporti ŝlosilojn",
             "setup_key_backup_title": "Vi perdos aliron al viaj ĉifritaj mesaĝoj",
             "description": "Ĉu vi certe volas adiaŭi?"
+        },
+        "registration": {
+            "continue_without_email_title": "Daŭrigante sen retpoŝtadreso",
+            "continue_without_email_description": "Averte, se vi ne aldonos retpoŝtadreson kaj poste forgesos vian pasvorton, vi eble <b>por ĉiam perdos aliron al via konto</b>.",
+            "continue_without_email_field_label": "Retpoŝto (malnepra)"
         }
     },
     "room_list": {
@@ -2475,7 +2473,8 @@
         "spam_or_propaganda": "Rubmesaĝo aŭ propagando",
         "report_entire_room": "Raporti la tutan ĉambron",
         "report_content_to_homeserver": "Raporti enhavon al la administrantode via hejmservilo",
-        "description": "Per raporto de ĉi tiu mesaĝo vi sendos ĝian unikan «identigilon de okazo» al la administranto de via hejmservilo. Se mesaĝoj en ĉi tiu ĉambro estas ĉifrataj, la administranto de via hejmservilo ne povos legi la tekston de la mesaĝo, nek rigardi dosierojn aŭ bildojn."
+        "description": "Per raporto de ĉi tiu mesaĝo vi sendos ĝian unikan «identigilon de okazo» al la administranto de via hejmservilo. Se mesaĝoj en ĉi tiu ĉambro estas ĉifrataj, la administranto de via hejmservilo ne povos legi la tekston de la mesaĝo, nek rigardi dosierojn aŭ bildojn.",
+        "other_label": "Alia"
     },
     "onboarding": {
         "has_avatar_label": "Bonege, tio helpos al aliuloj scii, ke temas pri vi",
@@ -2595,7 +2594,9 @@
         "error_loading": "Eraris enlegado de fenestraĵo",
         "error_mixed_content": "Eraris – Miksita enhavo",
         "popout": "Fenestrigi fenestraĵon",
-        "set_room_layout": "Agordi al ĉiuj mian aranĝon de ĉambro"
+        "set_room_layout": "Agordi al ĉiuj mian aranĝon de ĉambro",
+        "modal_title_default": "Reĝima fenestraĵo",
+        "modal_data_warning": "Datumoj sur tiu ĉi ekrano estas havigataj al %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Prikomentoj sendiĝis",
@@ -3324,5 +3325,6 @@
         "disabled_action": "Vakigi kaŝmemoron kaj respeguli",
         "resync_description": "%(brand)s nun uzas 3–5-oble malpli da memoro, ĉar ĝi enlegas informojn pri aliaj uzantoj nur tiam, kiam ĝi bezonas. Bonvolu atendi ĝis ni respegulos la servilon!",
         "resync_title": "Ĝisdatigante %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Redaktoj de mesaĝoj"
 }

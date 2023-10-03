@@ -485,8 +485,6 @@
         "other": "%(spaceName)s ແລະ %(count)s ອື່ນໆ"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ແລະ %(space2Name)s",
-    "Email (optional)": "ອີເມວ (ທາງເລືອກ)",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s%(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Tuesday": "ວັນອັງຄານ",
@@ -496,9 +494,6 @@
     "unknown error code": "ລະຫັດຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
     "%(brand)s encountered an error during upload of:": "%(brand)s ພົບຂໍ້ຜິດພາດໃນລະຫວ່າງການອັບໂຫລດ:",
     "Wednesday": "ວັນພຸດ",
-    "Data on this screen is shared with %(widgetDomain)s": "ຂໍ້ມູນໃນໜ້າຈໍນີ້ຖືກແບ່ງປັນກັບ %(widgetDomain)s",
-    "Modal Widget": "ຕົວຊ່ວຍ Widget",
-    "Message edits": "ແກ້ໄຂຂໍ້ຄວາມ",
     "%(count)s rooms": {
         "one": "%(count)s ຫ້ອງ",
         "other": "%(count)s ຫ້ອງ"
@@ -562,26 +557,8 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "ເຊີບເວີຂອງທ່ານບໍ່ຕອບສະໜອງຕໍ່ບາງຄຳຮ້ອງຂໍຂອງທ່ານ. ຂ້າງລຸ່ມນີ້ແມ່ນສາເຫດທີ່ເປັນໄປໄດ້ທີ່ສຸດ.",
     "Server isn't responding": "ເຊີບເວີບໍ່ຕອບສະໜອງ",
     "You're all caught up.": "ຕາມທັນທັງໝົດ.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "ເຈົ້າຈະຍົກລະດັບຫ້ອງນີ້ຈາກ <oldVersion /> ເປັນ <newVersion />.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>ກະລຸນາຮັບຊາບການຍົກລະດັບຈະເຮັດໃຫ້ຫ້ອງເປັນເວີຊັນໃໝ່</b>. ຂໍ້ຄວາມປັດຈຸບັນທັງໝົດຈະຢູ່ໃນຫ້ອງເກັບມ້ຽນນີ້.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ການຍົກລະດັບຫ້ອງແມ່ນເປັນການກະທຳຂັ້ນສູງ ແລະ ປົກກະຕິແລ້ວແມ່ນແນະນຳເມື່ອຫ້ອງບໍ່ສະຖຽນເນື່ອງຈາກມີຂໍ້ບົກພ່ອງ, ຄຸນສົມບັດທີ່ຂາດຫາຍໄປ ຫຼື ຊ່ອງໂຫວ່ດ້ານຄວາມປອດໄພ.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "ປົກກະຕິແລ້ວຈະມີຜົນກະທົບແຕ່ວິທີການປະມວນຜົນຫ້ອງຢູ່ໃນເຊີບເວີເທົ່ານັ້ນ. ຖ້າຫາກວ່າທ່ານກໍາລັງມີບັນຫາກັບ %(brand)s ຂອງທ່ານ, ກະລຸນາ<a>report a bug</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "ປົກກະຕິແລ້ວນີ້ມີຜົນກະທົບພຽງແຕ່ວິທີການປະມວນຜົນຫ້ອງຢູ່ໃນເຊີບເວີ. ຖ້າທ່ານມີບັນຫາກັບ %(brand)s ຂອງທ່ານ, ກະລຸນາລາຍງານຂໍ້ຜິດພາດ.",
-    "Upgrade public room": "ຍົກລະດັບຫ້ອງສາທາລະນະ",
-    "Upgrade private room": "ຍົກລະດັບຫ້ອງສ່ວນຕົວ",
-    "Automatically invite members from this room to the new one": "ເຊີນສະມາຊິກຈາກຫ້ອງນີ້ໄປຫາຫ້ອງໃໝ່ໂດຍອັດຕະໂນມັດ",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "ໃສ່ລິ້ງກັບຄືນໄປຫາຫ້ອງເກົ່າຕອນທີ່ເລີ່ມຕົ້ນຂອງຫ້ອງໃຫມ່ເພື່ອໃຫ້ຄົນສາມາດເຫັນຂໍ້ຄວາມເກົ່າ",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "ຢຸດຜູ້ໃຊ້ບໍ່ໃຫ້ເວົ້າຢູ່ໃນຫ້ອງສະບັບເກົ່າ ແລະ ປະກາດຂໍ້ຄວາມແນະນໍາໃຫ້ຜູ້ໃຊ້ຍ້າຍໄປຫ້ອງໃຫມ່",
-    "Update any local room aliases to point to the new room": "ອັບເດດຊື່ແທນຫ້ອງໃນພື້ນຈັດເກັບເພື່ອໄປຫາຫ້ອງໃໝ່",
-    "Create a new room with the same name, description and avatar": "ສ້າງຫ້ອງໃຫມ່ທີ່ມີຊື່ດຽວກັນ, ຄໍາອະທິບາຍ ແລະ ຮຸບແທນຕົວ",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "ການຍົກລະດັບຫ້ອງນີ້ຮຽກຮ້ອງໃຫ້ມີການປິດຕົວຢ່າງປັດຈຸບັນຂອງຫ້ອງ ແລະ ສ້າງຫ້ອງໃຫມ່ໃນສະຖານທີ່ຂອງມັນ. ເພື່ອໃຫ້ສະມາຊິກຫ້ອງມີປະສົບການທີ່ດີທີ່ສຸດທີ່, ພວກເຮົາຈະ:",
-    "Upgrade Room Version": "ຍົກລະດັບເວີຊັນຫ້ອງ",
-    "Upgrade this room to version %(version)s": "ຍົກລະດັບຫ້ອງນີ້ເປັນເວີຊັ່ນ %(version)s",
-    "The room upgrade could not be completed": "ການຍົກລະດັບຫ້ອງບໍ່ສຳເລັດໄດ້",
-    "Failed to upgrade room": "ຍົກລະດັບຫ້ອງບໍ່ສຳເລັດ",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "ເພື່ອລາຍງານບັນຫາຄວາມປອດໄພທີ່ກ່ຽວຂ້ອງກັບ Matrix, ກະລຸນາອ່ານ <a>ນະໂຍບາຍການເປີດເຜີຍຄວາມປອດໄພ</a> Matrix.org.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ກ່ອນທີ່ຈະສົ່ງບັນທຶກ, ທ່ານຕ້ອງ <a>ສ້າງບັນຫາ GitHub</a> ເພື່ອອະທິບາຍບັນຫາຂອງທ່ານ.",
-    "Room Settings - %(roomName)s": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s",
     "a key signature": "ລາຍເຊັນຫຼັກ",
     "a device cross-signing signature": "ການ cross-signing ອຸປະກອນ",
     "a new cross-signing key signature": "ການລົງລາຍເຊັນ cross-signing ແບບໃໝ່",
@@ -591,7 +568,6 @@
     "Share User": "ແບ່ງປັນຜູ້ໃຊ້",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "ຖ້າຫາກວ່າທ່ານເຄິຍໃຊ້ເວີຊັ້ນທີ່ໃໝ່ກວ່າຂອງ %(brand)s,ລະບົບຂອງທ່ານອາດຈະບໍ່ສອດຄ່ອງກັນໄດ້ກັບເວີຊັ້ນນີ້. ປິດໜ້າຕ່າງນີ້ແລ້ວກັບຄືນໄປຫາເວີຊັ້ນຫຼ້າສຸດ.",
     "Unable to restore session": "ບໍ່ສາມາດກູ້ລະບົບໄດ້",
-    "Continuing without email": "ສືບຕໍ່ໂດຍບໍ່ມີອີເມວ",
     "%(count)s people you know have already joined": {
         "one": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ",
         "other": "%(count)s ຄົນທີ່ທ່ານຮູ້ຈັກໄດ້ເຂົ້າຮ່ວມແລ້ວ"
@@ -2146,7 +2122,6 @@
         "no_audio_input_description": "ພວກເຮົາບໍ່ພົບໄມໂຄຣໂຟນຢູ່ໃນອຸປະກອນຂອງທ່ານ. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ແລະ ລອງໃໝ່ອີກ.",
         "transfer_consult_first_label": "ປຶກສາກ່ອນ"
     },
-    "Other": "ອື່ນໆ",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "ປ່ຽນຮູບ avatar",
@@ -2313,7 +2288,24 @@
             "room_version_section": "ເວີຊັ້ນຫ້ອງ",
             "room_version": "ເວີຊັ້ນຫ້ອງ:",
             "information_section_space": "ຂໍ້ມູນພື້ນທີ່",
-            "information_section_room": "ຂໍ້ມູນຫ້ອງ"
+            "information_section_room": "ຂໍ້ມູນຫ້ອງ",
+            "error_upgrade_title": "ຍົກລະດັບຫ້ອງບໍ່ສຳເລັດ",
+            "error_upgrade_description": "ການຍົກລະດັບຫ້ອງບໍ່ສຳເລັດໄດ້",
+            "upgrade_button": "ຍົກລະດັບຫ້ອງນີ້ເປັນເວີຊັ່ນ %(version)s",
+            "upgrade_dialog_title": "ຍົກລະດັບເວີຊັນຫ້ອງ",
+            "upgrade_dialog_description": "ການຍົກລະດັບຫ້ອງນີ້ຮຽກຮ້ອງໃຫ້ມີການປິດຕົວຢ່າງປັດຈຸບັນຂອງຫ້ອງ ແລະ ສ້າງຫ້ອງໃຫມ່ໃນສະຖານທີ່ຂອງມັນ. ເພື່ອໃຫ້ສະມາຊິກຫ້ອງມີປະສົບການທີ່ດີທີ່ສຸດທີ່, ພວກເຮົາຈະ:",
+            "upgrade_dialog_description_1": "ສ້າງຫ້ອງໃຫມ່ທີ່ມີຊື່ດຽວກັນ, ຄໍາອະທິບາຍ ແລະ ຮຸບແທນຕົວ",
+            "upgrade_dialog_description_2": "ອັບເດດຊື່ແທນຫ້ອງໃນພື້ນຈັດເກັບເພື່ອໄປຫາຫ້ອງໃໝ່",
+            "upgrade_dialog_description_3": "ຢຸດຜູ້ໃຊ້ບໍ່ໃຫ້ເວົ້າຢູ່ໃນຫ້ອງສະບັບເກົ່າ ແລະ ປະກາດຂໍ້ຄວາມແນະນໍາໃຫ້ຜູ້ໃຊ້ຍ້າຍໄປຫ້ອງໃຫມ່",
+            "upgrade_dialog_description_4": "ໃສ່ລິ້ງກັບຄືນໄປຫາຫ້ອງເກົ່າຕອນທີ່ເລີ່ມຕົ້ນຂອງຫ້ອງໃຫມ່ເພື່ອໃຫ້ຄົນສາມາດເຫັນຂໍ້ຄວາມເກົ່າ",
+            "upgrade_warning_dialog_invite_label": "ເຊີນສະມາຊິກຈາກຫ້ອງນີ້ໄປຫາຫ້ອງໃໝ່ໂດຍອັດຕະໂນມັດ",
+            "upgrade_warning_dialog_title_private": "ຍົກລະດັບຫ້ອງສ່ວນຕົວ",
+            "upgrade_dwarning_ialog_title_public": "ຍົກລະດັບຫ້ອງສາທາລະນະ",
+            "upgrade_warning_dialog_report_bug_prompt": "ປົກກະຕິແລ້ວນີ້ມີຜົນກະທົບພຽງແຕ່ວິທີການປະມວນຜົນຫ້ອງຢູ່ໃນເຊີບເວີ. ຖ້າທ່ານມີບັນຫາກັບ %(brand)s ຂອງທ່ານ, ກະລຸນາລາຍງານຂໍ້ຜິດພາດ.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "ປົກກະຕິແລ້ວຈະມີຜົນກະທົບແຕ່ວິທີການປະມວນຜົນຫ້ອງຢູ່ໃນເຊີບເວີເທົ່ານັ້ນ. ຖ້າຫາກວ່າທ່ານກໍາລັງມີບັນຫາກັບ %(brand)s ຂອງທ່ານ, ກະລຸນາ<a>report a bug</a>.",
+            "upgrade_warning_dialog_description": "ການຍົກລະດັບຫ້ອງແມ່ນເປັນການກະທຳຂັ້ນສູງ ແລະ ປົກກະຕິແລ້ວແມ່ນແນະນຳເມື່ອຫ້ອງບໍ່ສະຖຽນເນື່ອງຈາກມີຂໍ້ບົກພ່ອງ, ຄຸນສົມບັດທີ່ຂາດຫາຍໄປ ຫຼື ຊ່ອງໂຫວ່ດ້ານຄວາມປອດໄພ.",
+            "upgrade_warning_dialog_explainer": "<b>ກະລຸນາຮັບຊາບການຍົກລະດັບຈະເຮັດໃຫ້ຫ້ອງເປັນເວີຊັນໃໝ່</b>. ຂໍ້ຄວາມປັດຈຸບັນທັງໝົດຈະຢູ່ໃນຫ້ອງເກັບມ້ຽນນີ້.",
+            "upgrade_warning_dialog_footer": "ເຈົ້າຈະຍົກລະດັບຫ້ອງນີ້ຈາກ <oldVersion /> ເປັນ <newVersion />."
         },
         "delete_avatar_label": "ລືບອາວາຕ້າ",
         "upload_avatar_label": "ອັບໂຫຼດອາວາຕ້າ",
@@ -2346,7 +2338,8 @@
             "notification_sound": "ສຽງແຈ້ງເຕຶອນ",
             "custom_sound_prompt": "ຕັ້ງສຽງແບບກຳນົດເອງ",
             "browse_button": "ຄົ້ນຫາ"
-        }
+        },
+        "title": "ການຕັ້ງຄ່າຫ້ອງ - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2688,6 +2681,11 @@
             "megolm_export": "ສົ່ງກະແຈອອກດ້ວຍຕົນເອງ",
             "setup_key_backup_title": "ທ່ານຈະສູນເສຍການເຂົ້າເຖິງລະຫັດຂໍ້ຄວາມຂອງທ່ານ",
             "description": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກຈາກລະບົບ?"
+        },
+        "registration": {
+            "continue_without_email_title": "ສືບຕໍ່ໂດຍບໍ່ມີອີເມວ",
+            "continue_without_email_description": "ກະລຸນາຮັບຊາບວ່າ, ຖ້າທ່ານບໍ່ເພີ່ມອີເມວ ແລະ ລືມລະຫັດຜ່ານຂອງທ່ານ, ທ່ານອາດ <b>ສູນເສຍການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງຖາວອນ</b>.",
+            "continue_without_email_field_label": "ອີເມວ (ທາງເລືອກ)"
         }
     },
     "room_list": {
@@ -2738,7 +2736,8 @@
         "spam_or_propaganda": "ຂໍ້ຄວາມຂີ້ເຫຍື້ອ ຫຼື ການໂຄສະນາເຜີຍແຜ່",
         "report_entire_room": "ລາຍງານຫ້ອງທັງໝົດ",
         "report_content_to_homeserver": "ລາຍງານເນື້ອຫາໃຫ້ຜູ້ຄຸ້ມຄອງລະບົບ Homeserver ຂອງທ່ານ",
-        "description": "ການລາຍງານຂໍ້ຄວາມນີ້ຈະສົ່ງ 'ID ເຫດການ' ທີ່ບໍ່ຊໍ້າກັນໄປຫາຜູ້ຄຸ້ມຄອງລະບົບເຊີບເວີຂອງທ່ານ. ຖ້າຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ຖືກເຂົ້າລະຫັດໄວ້, ຜູ້ຄຸ້ມຄອງລະບົບເຊີບເວີຂອງທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມ ຫຼືເບິ່ງໄຟລ໌ ຫຼືຮູບພາບຕ່າງໆໄດ້."
+        "description": "ການລາຍງານຂໍ້ຄວາມນີ້ຈະສົ່ງ 'ID ເຫດການ' ທີ່ບໍ່ຊໍ້າກັນໄປຫາຜູ້ຄຸ້ມຄອງລະບົບເຊີບເວີຂອງທ່ານ. ຖ້າຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ຖືກເຂົ້າລະຫັດໄວ້, ຜູ້ຄຸ້ມຄອງລະບົບເຊີບເວີຂອງທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມ ຫຼືເບິ່ງໄຟລ໌ ຫຼືຮູບພາບຕ່າງໆໄດ້.",
+        "other_label": "ອື່ນໆ"
     },
     "onboarding": {
         "has_avatar_label": "ດີຫຼາຍ, ຊຶ່ງຈະຊ່ວຍໃຫ້ຄົນຮູ້ວ່າແມ່ນທ່ານ",
@@ -2860,7 +2859,9 @@
         "popout": "ວິດເຈັດ popout",
         "unpin_to_view_right_panel": "ຖອນປັກໝຸດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
         "set_room_layout": "ກໍານົດຮູບແບບຫ້ອງຂອງຂ້ອຍສໍາລັບທຸກຄົນ",
-        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້"
+        "close_to_view_right_panel": "ປິດວິດເຈັດນີ້ເພື່ອເບິ່ງມັນຢູ່ໃນແຜງນີ້",
+        "modal_title_default": "ຕົວຊ່ວຍ Widget",
+        "modal_data_warning": "ຂໍ້ມູນໃນໜ້າຈໍນີ້ຖືກແບ່ງປັນກັບ %(widgetDomain)s"
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -3674,5 +3675,6 @@
         "disabled_action": "ລຶບ cache ແລະ resync",
         "resync_description": "ຕອນນີ້ %(brand)s ໃຊ້ຄວາມຈຳໜ້ອຍກວ່າ 3-5x, ໂດຍການໂຫຼດຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້ອື່ນເມື່ອຕ້ອງການເທົ່ານັ້ນ. ກະລຸນາລໍຖ້າໃນຂະນະທີ່ພວກເຮົາ synchronise ກັບເຊີບເວີ!",
         "resync_title": "ກຳລັງອັບເດດ %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "ແກ້ໄຂຂໍ້ຄວາມ"
 }

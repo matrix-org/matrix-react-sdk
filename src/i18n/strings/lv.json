@@ -93,7 +93,6 @@
     "IRC display name width": "IRC parādāmā vārda platums",
     "Deactivate account": "Deaktivizēt kontu",
     "e.g. my-room": "piem., mana-istaba",
-    "Room Settings - %(roomName)s": "Istabas iestatījumi - %(roomName)s",
     "Flag": "Karogs",
     "Use your Security Key to continue.": "Izmantojiet savu drošības atslēgu, lai turpinātu.",
     "Enter Security Key": "Ievadiet drošības atslēgu",
@@ -124,8 +123,6 @@
         "other": "%(count)s istabas"
     },
     "Missing session data": "Trūkst sesijas datu",
-    "Create a new room with the same name, description and avatar": "Izveidot istabu ar to pašu nosaukumu, aprakstu un avataru",
-    "Email (optional)": "Epasts (izvēles)",
     "%(name)s cancelled": "%(name)s atcēla",
     "Anchor": "Enkurs",
     "Aeroplane": "Aeroplāns",
@@ -401,10 +398,6 @@
         "other": "Augšupielādēt %(count)s citus failus"
     },
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
-    "Update any local room aliases to point to the new room": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Pārtraukt lietotāju runāšanu vecajā istabas versijā un publicēt ziņojumu, kurā lietotājiem tiek ieteikts pāriet uz jauno istabu",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Jaunās istabas sākumā ievietojiet saiti uz veco istabu, lai cilvēki varētu apskatīt vecās ziņas",
-    "Automatically invite members from this room to the new one": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
     "Recent searches": "Nesenie meklējumi",
@@ -1330,7 +1323,6 @@
         "unable_to_access_audio_input_title": "Nevar piekļūt mikrofonam",
         "unable_to_access_audio_input_description": "Mēs nevarējām piekļūt jūsu mikrofonam. Lūdzu, pārbaudiet pārlūkprogrammas iestatījumus un mēģiniet vēlreiz."
     },
-    "Other": "Citi",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Mainīt istabas avataru",
@@ -1416,7 +1408,12 @@
             "room_version_section": "Istabas versija",
             "room_version": "Istabas versija:",
             "information_section_space": "Informācija par vietu",
-            "information_section_room": "Informācija par istabu"
+            "information_section_room": "Informācija par istabu",
+            "upgrade_dialog_description_1": "Izveidot istabu ar to pašu nosaukumu, aprakstu un avataru",
+            "upgrade_dialog_description_2": "Atjaunināt jebkurus vietējās istabas aizstājvārdus, lai tie norādītu uz jauno istabu",
+            "upgrade_dialog_description_3": "Pārtraukt lietotāju runāšanu vecajā istabas versijā un publicēt ziņojumu, kurā lietotājiem tiek ieteikts pāriet uz jauno istabu",
+            "upgrade_dialog_description_4": "Jaunās istabas sākumā ievietojiet saiti uz veco istabu, lai cilvēki varētu apskatīt vecās ziņas",
+            "upgrade_warning_dialog_invite_label": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno"
         },
         "upload_avatar_label": "Augšupielādēt avataru",
         "access": {
@@ -1433,7 +1430,8 @@
             "notification_sound": "Paziņojumu skaņas signāli",
             "custom_sound_prompt": "Iestatīt jaunu pielāgotu skaņas signālu",
             "browse_button": "Pārlūkot"
-        }
+        },
+        "title": "Istabas iestatījumi - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1615,6 +1613,9 @@
         },
         "logout_dialog": {
             "description": "Vai tiešām vēlaties izrakstīties?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "Epasts (izvēles)"
         }
     },
     "room_list": {
@@ -1638,7 +1639,8 @@
     "report_content": {
         "report_entire_room": "Ziņot par visu istabu",
         "report_content_to_homeserver": "Ziņojums par saturu bāzes servera administratoram",
-        "description": "Iesniedzot ziņojumu par konkrēto ziņu, tās unikālais notikuma ID tiks nosūtīts jūsu bāzes servera administratoram. Ja ziņas šajā istabā ir šifrētas, jūsu bāzes servera administrators nevarēs lasīt ziņas tekstu vai skatīt failus un attēlus."
+        "description": "Iesniedzot ziņojumu par konkrēto ziņu, tās unikālais notikuma ID tiks nosūtīts jūsu bāzes servera administratoram. Ja ziņas šajā istabā ir šifrētas, jūsu bāzes servera administrators nevarēs lasīt ziņas tekstu vai skatīt failus un attēlus.",
+        "other_label": "Citi"
     },
     "setting": {
         "help_about": {

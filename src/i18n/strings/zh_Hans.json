@@ -74,14 +74,6 @@
     "We encountered an error trying to restore your previous session.": "我们在尝试恢复你先前的会话时遇到了错误。",
     "Link to most recent message": "最新消息的链接",
     "Link to selected message": "选中消息的链接",
-    "Failed to upgrade room": "房间升级失败",
-    "The room upgrade could not be completed": "房间可能没有完整地升级",
-    "Upgrade this room to version %(version)s": "升级此房间至版本 %(version)s",
-    "Upgrade Room Version": "更新房间版本",
-    "Create a new room with the same name, description and avatar": "创建一个拥有相同的名称、描述与头像的新房间",
-    "Update any local room aliases to point to the new room": "更新所有本地房间别名以使其指向新房间",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "阻止用户在旧房间中发言，并发送消息建议用户迁移至新房间",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "在新房间的开始处发送一条指回旧房间的链接，这样用户可以查看旧消息",
     "No backup found!": "找不到备份！",
     "Unable to restore backup": "无法还原备份",
     "Unable to load backup status": "无法获取备份状态",
@@ -148,10 +140,8 @@
     "Headphones": "耳机",
     "Folder": "文件夹",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
-    "Room Settings - %(roomName)s": "房间设置 - %(roomName)s",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s 个会话解密失败！",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：你应此只在受信任的电脑上设置密钥备份。",
-    "Email (optional)": "电子邮箱（可选）",
     "Remember my selection for this widget": "记住我对此挂件的选择",
     "You signed in to a new session without verifying it:": "你登录了未经过验证的新会话：",
     "Verify your other session using one of the options below.": "使用以下选项之一验证你的其他会话。",
@@ -189,13 +179,6 @@
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
     "a key signature": "一个密钥签名",
-    "Message edits": "消息编辑历史",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升级此房间需要关闭此房间的当前实例并创建一个新的房间代替它。为了给房间成员最好的体验，我们会：",
-    "Upgrade private room": "更新私人房间",
-    "Upgrade public room": "更新公共房间",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "更新房间是高级操作，通常建议在房间由于错误、缺失功能或安全漏洞而不稳定时使用。",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "通常这只影响房间在服务器上的处理方式。如果你对你的 %(brand)s 有问题，请<a>报告一个错误</a>。",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "你将把此房间从 <oldVersion /> 升级至 <newVersion />。",
     "You're all caught up.": "全数阅毕。",
     "Server isn't responding": "服务器未响应",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "你的服务器未响应你的一些请求。下方是一些最可能的原因。",
@@ -401,7 +384,6 @@
     "Decline All": "全部拒绝",
     "This widget would like to:": "此挂件想要：",
     "Approve widget permissions": "批准挂件权限",
-    "Modal Widget": "模态框挂件（Modal Widget）",
     "Zimbabwe": "津巴布韦",
     "Zambia": "赞比亚",
     "Western Sahara": "西撒哈拉",
@@ -529,10 +511,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果这样做，请注意你的消息并不会被删除，但在重新建立索引时，搜索体验可能会降低片刻",
     "You most likely do not want to reset your event index store": "你大概率不想重置你的活动缩影存储",
     "Reset event store?": "重置活动存储？",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "这通常仅影响服务器如何处理房间。如果你的 %(brand)s 遇到问题，请回报错误。",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "请注意，如果你不添加电子邮箱并且忘记密码，你将<b>永远失去对你账户的访问权</b>。",
-    "Continuing without email": "不使用电子邮箱并继续",
-    "Data on this screen is shared with %(widgetDomain)s": "此屏幕上的数据与%(widgetDomain)s分享",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -549,8 +527,6 @@
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "无法通过你的安全短语访问你的安全消息历史记录并设置安全通信。",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "无法使用此安全短语解密备份：请确认你是否输入了正确的安全短语。",
     "Incorrect Security Phrase": "安全短语错误",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
-    "Automatically invite members from this room to the new one": "自动邀请该房间的成员加入新房间",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "%(count)s reply": {
         "one": "%(count)s 条回复",
@@ -2349,7 +2325,6 @@
         "no_audio_input_description": "我们没能在你的设备上找到麦克风。请检查设置并重试。",
         "transfer_consult_first_label": "先询问"
     },
-    "Other": "其他",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "更改空间头像",
@@ -2523,7 +2498,24 @@
             "room_version_section": "房间版本",
             "room_version": "房间版本：",
             "information_section_space": "空间信息",
-            "information_section_room": "房间信息"
+            "information_section_room": "房间信息",
+            "error_upgrade_title": "房间升级失败",
+            "error_upgrade_description": "房间可能没有完整地升级",
+            "upgrade_button": "升级此房间至版本 %(version)s",
+            "upgrade_dialog_title": "更新房间版本",
+            "upgrade_dialog_description": "升级此房间需要关闭此房间的当前实例并创建一个新的房间代替它。为了给房间成员最好的体验，我们会：",
+            "upgrade_dialog_description_1": "创建一个拥有相同的名称、描述与头像的新房间",
+            "upgrade_dialog_description_2": "更新所有本地房间别名以使其指向新房间",
+            "upgrade_dialog_description_3": "阻止用户在旧房间中发言，并发送消息建议用户迁移至新房间",
+            "upgrade_dialog_description_4": "在新房间的开始处发送一条指回旧房间的链接，这样用户可以查看旧消息",
+            "upgrade_warning_dialog_invite_label": "自动邀请该房间的成员加入新房间",
+            "upgrade_warning_dialog_title_private": "更新私人房间",
+            "upgrade_dwarning_ialog_title_public": "更新公共房间",
+            "upgrade_warning_dialog_report_bug_prompt": "这通常仅影响服务器如何处理房间。如果你的 %(brand)s 遇到问题，请回报错误。",
+            "upgrade_warning_dialog_report_bug_prompt_link": "通常这只影响房间在服务器上的处理方式。如果你对你的 %(brand)s 有问题，请<a>报告一个错误</a>。",
+            "upgrade_warning_dialog_description": "更新房间是高级操作，通常建议在房间由于错误、缺失功能或安全漏洞而不稳定时使用。",
+            "upgrade_warning_dialog_explainer": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
+            "upgrade_warning_dialog_footer": "你将把此房间从 <oldVersion /> 升级至 <newVersion />。"
         },
         "delete_avatar_label": "删除头像",
         "upload_avatar_label": "上传头像",
@@ -2562,7 +2554,8 @@
             "enable_element_call_caption": "%(brand)s是端到端加密的，但是目前仅限于少数用户。",
             "enable_element_call_no_permissions_tooltip": "你没有足够的权限更改这个。",
             "call_type_section": "通话类型"
-        }
+        },
+        "title": "房间设置 - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2908,6 +2901,11 @@
             "megolm_export": "手动导出密钥",
             "setup_key_backup_title": "你将失去你的加密消息的访问权",
             "description": "你确定要登出吗？"
+        },
+        "registration": {
+            "continue_without_email_title": "不使用电子邮箱并继续",
+            "continue_without_email_description": "请注意，如果你不添加电子邮箱并且忘记密码，你将<b>永远失去对你账户的访问权</b>。",
+            "continue_without_email_field_label": "电子邮箱（可选）"
         }
     },
     "room_list": {
@@ -2959,7 +2957,8 @@
         "spam_or_propaganda": "垃圾信息或宣传",
         "report_entire_room": "报告整个房间",
         "report_content_to_homeserver": "向你的家服务器管理员举报内容",
-        "description": "举报此消息会将其唯一的“事件ID”发送给你的家服务器的管理员。如果此房间中的消息是加密的，则你的家服务器管理员将无法阅读消息文本，也无法查看任何文件或图片。"
+        "description": "举报此消息会将其唯一的“事件ID”发送给你的家服务器的管理员。如果此房间中的消息是加密的，则你的家服务器管理员将无法阅读消息文本，也无法查看任何文件或图片。",
+        "other_label": "其他"
     },
     "setting": {
         "help_about": {
@@ -3073,7 +3072,9 @@
         "popout": "在弹出式窗口中打开挂件",
         "unpin_to_view_right_panel": "取消固定此小部件以在此面板中查看",
         "set_room_layout": "将我的房间布局设置给所有人",
-        "close_to_view_right_panel": "关闭此小部件以在此面板中查看"
+        "close_to_view_right_panel": "关闭此小部件以在此面板中查看",
+        "modal_title_default": "模态框挂件（Modal Widget）",
+        "modal_data_warning": "此屏幕上的数据与%(widgetDomain)s分享"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3946,5 +3947,6 @@
         "disabled_action": "清除缓存并重新同步",
         "resync_description": "通过仅在需要时加载其他用户的信息，%(brand)s 现在使用的内存减少到了原来的三分之一至五分之一。 请等待与服务器重新同步！",
         "resync_title": "正在更新 %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "消息编辑历史"
 }

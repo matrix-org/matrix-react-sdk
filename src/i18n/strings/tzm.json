@@ -140,7 +140,6 @@
     "devtools": {
         "category_other": "Yaḍn"
     },
-    "Other": "Yaḍn",
     "emoji": {
         "category_flags": "Icenyalen"
     },
@@ -195,5 +194,8 @@
     },
     "forward": {
         "send_label": "Azen"
+    },
+    "report_content": {
+        "other_label": "Yaḍn"
     }
 }

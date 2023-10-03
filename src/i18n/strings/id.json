@@ -366,7 +366,6 @@
     "Cancel All": "Batalkan Semua",
     "Upload all": "Unggah semua",
     "Upload files": "Unggah file",
-    "Email (optional)": "Email (opsional)",
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
     "Share User": "Bagikan Pengguna",
@@ -419,7 +418,6 @@
         "one": "%(count)s orang yang Anda tahu telah bergabung",
         "other": "%(count)s orang yang Anda tahu telah bergabung"
     },
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Anda akan meningkatkan ruangan ini dari <oldVersion /> ke <newVersion />.",
     "Recent changes that have not yet been received": "Perubahan terbaru yang belum diterima",
     "The server is not configured to indicate what the problem is (CORS).": "Server tidak diatur untuk menandakan apa masalahnya (CORS).",
     "A connection error occurred while trying to contact the server.": "Sebuah kesalahan koneksi terjadi ketika mencoba untuk menghubungi server.",
@@ -432,24 +430,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Server Anda tidak merespon dengan beberapa permintaan Anda. Berikut ini adalah beberapa alasan yang paling mungkin terjadi.",
     "Server isn't responding": "Server tidak merespon",
     "You're all caught up.": "Anda selesai.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Mohon dicatat bahwa meningkatkan akan membuat versi yang baru dari ruangannya.</b> Semua pesan saat ini akan tetap di ruangan terarsip ini.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Meningkatkan sebuah ruangan adalah aksi lanjutan dan biasanya direkomendasikan ketika sebuah ruangan tidak stabil karena adanya bug, fitur-fitur yang tidak ada, atau kerentanan keamanan.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Ini biasanya hanya memengaruhi bagaimana ruangan diproses di servernya. Jika Anda memiliki masalah dengan %(brand)s, mohon <a>melaporkannya</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ini biasanya hanya memengaruhi bagaimana ruangan diproses di servernya. Jika Anda memiliki masalah dengan %(brand)s, mohon melaporkannya.",
-    "Upgrade public room": "Tingkatkan ruangan publik",
-    "Upgrade private room": "Tingkatkan ruangan privat",
-    "Automatically invite members from this room to the new one": "Mengundang pengguna dari ruangan ini ke yang baru secara otomatis",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Letakkan sebuah tautan kembali ke ruangan yang lama di awal ruangan baru supaya orang-orang dapat melihat pesan-pesan lama",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Menghentikan pengguna dari berbicara di versi ruangan yang lama, dan mengirimkan sebuah pesan memberi tahu pengguna untuk pindah ke ruangan yang baru",
-    "Update any local room aliases to point to the new room": "Memperbarui alias ruangan lokal apa saja untuk diarahkan ke ruangan yang baru",
-    "Create a new room with the same name, description and avatar": "Membuat ruangan baru dengan nama, deskripsi, dan avatar yang sama",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Meningkatkan ruangan ini membutuhkan penutupan instansi ruangan saat ini dan membuat ruangan yang baru di tempatnya. Untuk memberikan anggota ruangan pengalaman yang baik, kami akan:",
-    "Upgrade Room Version": "Tingkatkan Versi Ruangan",
-    "Upgrade this room to version %(version)s": "Tingkatkan ruangan ini ke versi %(version)s",
-    "The room upgrade could not be completed": "Peningkatan ruangan tidak dapat diselesaikan",
-    "Failed to upgrade room": "Gagal untuk meningkatkan ruangan",
-    "Room Settings - %(roomName)s": "Pengaturan Ruangan — %(roomName)s",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
     "Switch theme": "Ubah tema",
     "<inviter/> invites you": "<inviter/> mengundang Anda",
     "No results found": "Tidak ada hasil yang ditemukan",
@@ -543,10 +523,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jika Anda ingin, dicatat bahwa pesan-pesan Anda tidak dihapus, tetapi pengalaman pencarian mungkin terdegradasi untuk beberapa saat indeksnya sedang dibuat ulang",
     "You most likely do not want to reset your event index store": "Kemungkinan besar Anda tidak ingin mengatur ulang penyimpanan indeks peristiwa Anda",
     "Reset event store?": "Atur ulang penyimanan peristiwa?",
-    "Continuing without email": "Melanjutkan tanpa email",
-    "Data on this screen is shared with %(widgetDomain)s": "Data di layar ini dibagikan dengan %(widgetDomain)s",
-    "Modal Widget": "Widget Modal",
-    "Message edits": "Editan pesan",
     "%(count)s rooms": {
         "one": "%(count)s ruangan",
         "other": "%(count)s ruangan"
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Mengharuslkan server Anda mendukung versi MSC3827 yang stabil",
     "unavailable": "tidak tersedia",
     "unknown status code": "kode keadaan tidak diketahui",
-    "Upgrade room": "Tingkatkan ruangan",
     "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
     "common": {
         "about": "Tentang",
@@ -2595,7 +2570,6 @@
         "no_audio_input_description": "Kami tidak menemukan sebuah mikrofon di perangkat Anda. Mohon periksa pengaturan Anda dan coba lagi.",
         "transfer_consult_first_label": "Konsultasi dahulu"
     },
-    "Other": "Lainnya",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Ubah avatar space",
@@ -2774,7 +2748,25 @@
             "room_version_section": "Versi ruangan",
             "room_version": "Versi ruangan:",
             "information_section_space": "Informasi space",
-            "information_section_room": "Informasi ruangan"
+            "information_section_room": "Informasi ruangan",
+            "error_upgrade_title": "Gagal untuk meningkatkan ruangan",
+            "error_upgrade_description": "Peningkatan ruangan tidak dapat diselesaikan",
+            "upgrade_button": "Tingkatkan ruangan ini ke versi %(version)s",
+            "upgrade_dialog_title": "Tingkatkan Versi Ruangan",
+            "upgrade_dialog_description": "Meningkatkan ruangan ini membutuhkan penutupan instansi ruangan saat ini dan membuat ruangan yang baru di tempatnya. Untuk memberikan anggota ruangan pengalaman yang baik, kami akan:",
+            "upgrade_dialog_description_1": "Membuat ruangan baru dengan nama, deskripsi, dan avatar yang sama",
+            "upgrade_dialog_description_2": "Memperbarui alias ruangan lokal apa saja untuk diarahkan ke ruangan yang baru",
+            "upgrade_dialog_description_3": "Menghentikan pengguna dari berbicara di versi ruangan yang lama, dan mengirimkan sebuah pesan memberi tahu pengguna untuk pindah ke ruangan yang baru",
+            "upgrade_dialog_description_4": "Letakkan sebuah tautan kembali ke ruangan yang lama di awal ruangan baru supaya orang-orang dapat melihat pesan-pesan lama",
+            "upgrade_warning_dialog_invite_label": "Mengundang pengguna dari ruangan ini ke yang baru secara otomatis",
+            "upgrade_warning_dialog_title_private": "Tingkatkan ruangan privat",
+            "upgrade_dwarning_ialog_title_public": "Tingkatkan ruangan publik",
+            "upgrade_warning_dialog_title": "Tingkatkan ruangan",
+            "upgrade_warning_dialog_report_bug_prompt": "Ini biasanya hanya memengaruhi bagaimana ruangan diproses di servernya. Jika Anda memiliki masalah dengan %(brand)s, mohon melaporkannya.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Ini biasanya hanya memengaruhi bagaimana ruangan diproses di servernya. Jika Anda memiliki masalah dengan %(brand)s, mohon <a>melaporkannya</a>.",
+            "upgrade_warning_dialog_description": "Meningkatkan sebuah ruangan adalah aksi lanjutan dan biasanya direkomendasikan ketika sebuah ruangan tidak stabil karena adanya bug, fitur-fitur yang tidak ada, atau kerentanan keamanan.",
+            "upgrade_warning_dialog_explainer": "<b>Mohon dicatat bahwa meningkatkan akan membuat versi yang baru dari ruangannya.</b> Semua pesan saat ini akan tetap di ruangan terarsip ini.",
+            "upgrade_warning_dialog_footer": "Anda akan meningkatkan ruangan ini dari <oldVersion /> ke <newVersion />."
         },
         "delete_avatar_label": "Hapus avatar",
         "upload_avatar_label": "Unggah avatar",
@@ -2820,7 +2812,8 @@
             "enable_element_call_caption": "%(brand)s terenkripsi secara ujung ke ujung, tetapi saat ini terbatas jumlah penggunanya.",
             "enable_element_call_no_permissions_tooltip": "Anda tidak memiliki izin untuk mengubah ini.",
             "call_type_section": "Jenis panggilan"
-        }
+        },
+        "title": "Pengaturan Ruangan — %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3225,6 +3218,11 @@
             "megolm_export": "Ekspor kunci secara manual",
             "setup_key_backup_title": "Anda akan kehilangan akses ke pesan terenkripsi Anda",
             "description": "Apakah Anda yakin ingin keluar?"
+        },
+        "registration": {
+            "continue_without_email_title": "Melanjutkan tanpa email",
+            "continue_without_email_description": "Sekadar mengingatkan saja, jika Anda belum menambahkan sebuah email dan Anda lupa kata sandi, Anda mungkin <b>dapat kehilangan akses ke akun Anda</b>.",
+            "continue_without_email_field_label": "Email (opsional)"
         }
     },
     "room_list": {
@@ -3279,7 +3277,8 @@
         "spam_or_propaganda": "Spam atau propaganda",
         "report_entire_room": "Laporkan seluruh ruangan",
         "report_content_to_homeserver": "Laporkan Konten ke Administrator Homeserver Anda",
-        "description": "Melaporkan pesan ini akan mengirimkan ID peristiwa yang untuk ke administrator homeserver Anda. Jika pesan-pesan di ruangan ini terenkripsi, maka administrator homeserver Anda tidak akan dapat membaca teks pesan atau menampilkan file atau gambar apa saja."
+        "description": "Melaporkan pesan ini akan mengirimkan ID peristiwa yang untuk ke administrator homeserver Anda. Jika pesan-pesan di ruangan ini terenkripsi, maka administrator homeserver Anda tidak akan dapat membaca teks pesan atau menampilkan file atau gambar apa saja.",
+        "other_label": "Lainnya"
     },
     "setting": {
         "help_about": {
@@ -3398,7 +3397,9 @@
         "popout": "Widget popout",
         "unpin_to_view_right_panel": "Lepaskan pin widget ini untuk menampilkanya di panel ini",
         "set_room_layout": "Tetapkan tata letak ruangan saya untuk semuanya",
-        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini"
+        "close_to_view_right_panel": "Tutup widget ini untuk menampilkannya di panel ini",
+        "modal_title_default": "Widget Modal",
+        "modal_data_warning": "Data di layar ini dibagikan dengan %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -4378,5 +4379,6 @@
         "disabled_action": "Hapus cache dan sinkron ulang",
         "resync_description": "%(brand)s sekarang menggunakan memori 3-5x kecil dari sebelumnya dengan hanya memuat informasi tentang pengguna lain jika dibutuhkan. Mohon tunggu selagi kita mengsinkronisasi ulang dengan servernya!",
         "resync_title": "Memperbarui %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Editan pesan"
 }

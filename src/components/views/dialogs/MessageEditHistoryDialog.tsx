@@ -186,7 +186,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
                 className="mx_MessageEditHistoryDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
-                title={_t("Message edits")}
+                title={_t("message_edit_dialog_title")}
             >
                 {content}
             </BaseDialog>

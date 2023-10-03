@@ -74,20 +74,11 @@
     "Share User": "分享使用者",
     "Share Room Message": "分享聊天室訊息",
     "Link to selected message": "連結到選定的訊息",
-    "Upgrade Room Version": "更新聊天室版本",
-    "Create a new room with the same name, description and avatar": "使用同樣的名稱、描述與大頭照建立新聊天室",
-    "Update any local room aliases to point to the new room": "更新任何本地聊天室別名來指向新的聊天室",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "讓使用者在舊版聊天室停止發言，並張貼訊息建議使用者移動到新的聊天室",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "在新聊天室的開始處放置連回舊聊天室的連結，這樣夥伴們就可以看到舊的訊息",
-    "Failed to upgrade room": "無法升級聊天室",
-    "The room upgrade could not be completed": "聊天室升級可能不完整",
-    "Upgrade this room to version %(version)s": "升級此聊天室到版本 %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在遞交紀錄檔前，您必須<a>建立 GitHub 議題</a>以描述您的問題。",
     "Unable to load backup status": "無法載入備份狀態",
     "Unable to restore backup": "無法復原備份",
     "No backup found!": "找不到備份！",
     "Failed to decrypt %(failedCount)s sessions!": "無法解密 %(failedCount)s 個工作階段！",
-    "Email (optional)": "電子郵件（選擇性）",
     "Dog": "狗",
     "Cat": "貓",
     "Lion": "獅",
@@ -151,7 +142,6 @@
     "Folder": "資料夾",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
-    "Room Settings - %(roomName)s": "聊天室設定 - %(roomName)s",
     "Remember my selection for this widget": "記住我對這個小工具的選擇",
     "Sign out and remove encryption keys?": "登出並移除加密金鑰？",
     "To help us prevent this in future, please <a>send us logs</a>.": "要協助我們讓這個問題不再發生，請<a>將紀錄檔傳送給我們</a>。",
@@ -171,8 +161,6 @@
     "Upload Error": "上傳錯誤",
     "edited": "已編輯",
     "Upload all": "上傳全部",
-    "Message edits": "訊息編輯紀錄",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升級這個聊天室需要關閉目前的執行個體並重新建立一個新的聊天室來替代。為了給予聊天室成員最佳的體驗，我們將會：",
     "Resend %(unsentCount)s reaction(s)": "重新傳送 %(unsentCount)s 反應",
     "Find others by phone or email": "透過電話或電子郵件尋找其他人",
     "Be found by phone or email": "透過電話或電子郵件找到",
@@ -184,11 +172,6 @@
     "%(name)s wants to verify": "%(name)s 想要驗證",
     "Failed to connect to integration manager": "無法連線到整合服務伺服器",
     "Verification Request": "驗證請求",
-    "Upgrade private room": "升級私密聊天室",
-    "Upgrade public room": "升級公開聊天室",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "升級聊天室為進階動作，通常建議在聊天室因為錯誤而不穩定、缺少功能或安全漏洞等才升級。",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "這通常僅影響如何在伺服器上處理聊天室的方式。如果您遇到與 %(brand)s 相關的問題，請<a>回報錯誤</a>。",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "您將要把此聊天室從 <oldVersion /> 升級到 <newVersion />。",
     "%(count)s verified sessions": {
         "other": "%(count)s 個已驗證的工作階段",
         "one": "1 個已驗證的工作階段"
@@ -248,8 +231,6 @@
     "Not encrypted": "未加密",
     "Backup version:": "備份版本：",
     "Unable to set up keys": "無法設定金鑰",
-    "Data on this screen is shared with %(widgetDomain)s": "在此畫面上的資料會與 %(widgetDomain)s 分享",
-    "Modal Widget": "程式小工具",
     "Zimbabwe": "辛巴威",
     "Zambia": "尚比亞",
     "Yemen": "葉門",
@@ -502,8 +483,6 @@
     "Decline All": "全部拒絕",
     "This widget would like to:": "這個小工具想要：",
     "Approve widget permissions": "批准小工具權限",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "請注意，如果您不新增電子郵件且忘記密碼，您將<b>永遠失去對您帳號的存取權</b>。",
-    "Continuing without email": "不使用電子郵件來繼續",
     "Hold": "保留",
     "Resume": "繼續",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>",
@@ -536,7 +515,6 @@
         "one": "%(count)s 個聊天室",
         "other": "%(count)s 個聊天室"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "這通常只影響伺服器如何處理聊天室。如果您的 %(brand)s 遇到問題，請回報錯誤。",
     "%(count)s people you know have already joined": {
         "other": "%(count)s 個您認識的人已加入",
         "one": "%(count)s 個您認識的人已加入"
@@ -549,8 +527,6 @@
     "Reset everything": "重設所有東西",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘記或遺失了所有復原方法？<a>重設全部</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
-    "Automatically invite members from this room to the new one": "自動將該聊天室的成員邀請至新的聊天室",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "您的伺服器必須支援穩定版本的 MSC3827",
     "unavailable": "無法使用",
     "unknown status code": "未知狀態代碼",
-    "Upgrade room": "升級聊天室",
     "Failed to query public rooms": "檢索公開聊天室失敗",
     "common": {
         "about": "關於",
@@ -2594,7 +2569,6 @@
         "no_audio_input_description": "我們在您的裝置上找不到麥克風。請檢查您的設定並再試一次。",
         "transfer_consult_first_label": "先諮詢"
     },
-    "Other": "其他",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "變更聊天空間大頭照",
@@ -2773,7 +2747,25 @@
             "room_version_section": "聊天室版本",
             "room_version": "聊天室版本：",
             "information_section_space": "聊天空間資訊",
-            "information_section_room": "聊天室資訊"
+            "information_section_room": "聊天室資訊",
+            "error_upgrade_title": "無法升級聊天室",
+            "error_upgrade_description": "聊天室升級可能不完整",
+            "upgrade_button": "升級此聊天室到版本 %(version)s",
+            "upgrade_dialog_title": "更新聊天室版本",
+            "upgrade_dialog_description": "升級這個聊天室需要關閉目前的執行個體並重新建立一個新的聊天室來替代。為了給予聊天室成員最佳的體驗，我們將會：",
+            "upgrade_dialog_description_1": "使用同樣的名稱、描述與大頭照建立新聊天室",
+            "upgrade_dialog_description_2": "更新任何本地聊天室別名來指向新的聊天室",
+            "upgrade_dialog_description_3": "讓使用者在舊版聊天室停止發言，並張貼訊息建議使用者移動到新的聊天室",
+            "upgrade_dialog_description_4": "在新聊天室的開始處放置連回舊聊天室的連結，這樣夥伴們就可以看到舊的訊息",
+            "upgrade_warning_dialog_invite_label": "自動將該聊天室的成員邀請至新的聊天室",
+            "upgrade_warning_dialog_title_private": "升級私密聊天室",
+            "upgrade_dwarning_ialog_title_public": "升級公開聊天室",
+            "upgrade_warning_dialog_title": "升級聊天室",
+            "upgrade_warning_dialog_report_bug_prompt": "這通常只影響伺服器如何處理聊天室。如果您的 %(brand)s 遇到問題，請回報錯誤。",
+            "upgrade_warning_dialog_report_bug_prompt_link": "這通常僅影響如何在伺服器上處理聊天室的方式。如果您遇到與 %(brand)s 相關的問題，請<a>回報錯誤</a>。",
+            "upgrade_warning_dialog_description": "升級聊天室為進階動作，通常建議在聊天室因為錯誤而不穩定、缺少功能或安全漏洞等才升級。",
+            "upgrade_warning_dialog_explainer": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
+            "upgrade_warning_dialog_footer": "您將要把此聊天室從 <oldVersion /> 升級到 <newVersion />。"
         },
         "delete_avatar_label": "刪除大頭照",
         "upload_avatar_label": "上傳大頭照",
@@ -2813,7 +2805,8 @@
             "enable_element_call_caption": "%(brand)s 提供端對端加密，但目前使用者數量較少。",
             "enable_element_call_no_permissions_tooltip": "您沒有足夠的權限來變更此設定。",
             "call_type_section": "通話類型"
-        }
+        },
+        "title": "聊天室設定 - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3218,6 +3211,11 @@
             "megolm_export": "手動匯出金鑰",
             "setup_key_backup_title": "您將會失去您的加密訊息",
             "description": "您確定要登出嗎？"
+        },
+        "registration": {
+            "continue_without_email_title": "不使用電子郵件來繼續",
+            "continue_without_email_description": "請注意，如果您不新增電子郵件且忘記密碼，您將<b>永遠失去對您帳號的存取權</b>。",
+            "continue_without_email_field_label": "電子郵件（選擇性）"
         }
     },
     "room_list": {
@@ -3272,7 +3270,8 @@
         "spam_or_propaganda": "垃圾郵件或宣傳",
         "report_entire_room": "回報整個聊天室",
         "report_content_to_homeserver": "回報內容給您的家伺服器管理員",
-        "description": "回報此訊息將會傳送其獨特的「活動 ID」給您家伺服器的管理員。如果此聊天室中的訊息已加密，您的家伺服器管理員將無法閱讀訊息文字或檢視任何檔案或圖片。"
+        "description": "回報此訊息將會傳送其獨特的「活動 ID」給您家伺服器的管理員。如果此聊天室中的訊息已加密，您的家伺服器管理員將無法閱讀訊息文字或檢視任何檔案或圖片。",
+        "other_label": "其他"
     },
     "setting": {
         "help_about": {
@@ -3391,7 +3390,9 @@
         "popout": "彈出式小工具",
         "unpin_to_view_right_panel": "取消釘選這個小工具以在此面板中檢視",
         "set_room_layout": "為所有人設定我的聊天室佈局",
-        "close_to_view_right_panel": "關閉此小工具以在此面板中檢視"
+        "close_to_view_right_panel": "關閉此小工具以在此面板中檢視",
+        "modal_title_default": "程式小工具",
+        "modal_data_warning": "在此畫面上的資料會與 %(widgetDomain)s 分享"
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -4371,5 +4372,6 @@
         "disabled_action": "清除快取並重新同步",
         "resync_description": "%(brand)s 現在僅使用低於原本3-5倍的記憶體，僅在需要時才會載入其他使用者的資訊。請等待我們與伺服器重新同步！",
         "resync_title": "正在更新 %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "訊息編輯紀錄"
 }

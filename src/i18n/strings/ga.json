@@ -685,7 +685,6 @@
         "more_button": "Níos mó",
         "connecting": "Ag Ceangal"
     },
-    "Other": "Eile",
     "room_settings": {
         "permissions": {
             "m.room.power_levels": "Athraigh ceadanna",
@@ -799,7 +798,8 @@
         "show_less": "Taispeáin níos lú"
     },
     "report_content": {
-        "disagree": "Easaontaigh"
+        "disagree": "Easaontaigh",
+        "other_label": "Eile"
     },
     "setting": {
         "help_about": {

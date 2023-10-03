@@ -53,7 +53,6 @@
     "Email address": "Tansa n yimayl",
     "Upload files": "Sali-d ifuyla",
     "Home": "Agejdan",
-    "Email (optional)": "Imayl (Afrayan)",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ma ulac aɣilif, senqed imayl-ik/im syen sit ɣef useɣwen i yellan. Akken ara yemmed waya, sit ad tkemmleḍ.",
     "This will allow you to reset your password and receive notifications.": "Ayagi ad ak(akem)-yeǧǧ ad twennzeḍ awal-ik/im uffir yerna ad d-tremseḍ ilɣa.",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -62,7 +61,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Yesεa tilas",
     "Pencil": "Akeryun",
-    "Message edits": "Tiẓrigin n yizen",
     "Security Key": "Tasarut n tɣellist",
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(lastItem)s": "%(items)s d %(lastItem)s",
@@ -117,11 +115,6 @@
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
     "Filter results": "Igmaḍ n usizdeg",
-    "Failed to upgrade room": "Aleqqem n texxamt ur yeddi ara",
-    "Upgrade this room to version %(version)s": "Leqqem taxxamt-a ɣer lqem amaynut %(version)s",
-    "Upgrade Room Version": "Lqem n uleqqem n texxamt",
-    "Upgrade private room": "Leqqem taxxamt tusligt",
-    "Upgrade public room": "Leqqem taxxamt tazayezt",
     "Server isn't responding": "Ulac tiririt sɣur aqeddac",
     "The server is offline.": "Aqeddac ha-t-an beṛṛa n tuqqna.",
     "Clear Storage and Sign Out": "Sfeḍ aklas syen ffeɣ seg tuqqna",
@@ -193,8 +186,6 @@
     "a device cross-signing signature": "azmul n uzmul amdigan n yibenk",
     "a key signature": "azmul n tsarut",
     "%(brand)s encountered an error during upload of:": "%(brand)s yemlal-d d tuccḍa mi ara d-yessalay:",
-    "Room Settings - %(roomName)s": "Iɣewwaren n texxamt - %(roomName)s",
-    "The room upgrade could not be completed": "Aleqqem n texxamt yegguma ad yemmed",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Thumbs up": "Adebbuz d asawen",
     "This backup is trusted because it has been restored on this session": "Aḥraz yettwaḍman acku yuɣal-d seg tɣimit-a",
@@ -225,21 +216,13 @@
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
-    "Create a new room with the same name, description and avatar": "Rnu taxxamt tamaynut s yisem-nni, aglam-nni d uvaṭar-nni",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Tukksa n tsura n uzmul anmidag ad yili i lebda. Yal amdan i tesneqdeḍ ad iwali ilɣa n tɣellist. Maca ur tebɣiḍ ara ad txedmeḍ aya, ala ma yella tesruḥeḍ ibenkan akk ara ak·akem-yeǧǧen ad tkecmeḍ seg-s.",
-    "Update any local room aliases to point to the new room": "Leqqem ismawen yettunefken i yal taxxamt tadigant akken ad tsekneḍ ɣer texxamt tamaynut",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Seḥbes iseqdacen ɣef umeslay deg lqem aqbur n texxamt, syen aru izen anida ara twellheḍ iseqdacen ad d-uɣalen ɣer texxamt tamaynut",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Sers aseɣwen deg texxamt taqburt mi ara tebdu kan texxamt tamaynut i wakken imdanen ad izmiren ad walin iznan iqburen",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aleqqem n texxamt d tigawt leqqayen rnu yezga yettuwelleh-d mi ara tili texxamt ur terkid ara ssebba n wabugen, tukksa n tmahilin neɣ iɣisan deg tɣellist.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Aya yettḥaz kan s umata amek tetteg texxamt tasleḍt ɣef uqeddac. Ma yella temlaleḍ-d uguren d %(brand)s-inek·inem, ttxil-k·m <a>azen-d abug</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Tleqqmeḍ taxxamt-a seg <oldVersion /> ɣer <newVersion />.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Aqeddac-inek·inem ur d-yettarra ara ɣef kra n yisutar-ik·im. Ha-tent-a kra n ssebbat i izemren ad ilint.",
     "The server (%(serverName)s) took too long to respond.": "Aqeddac (%(serverName)s) yeṭṭef aṭas n wakud i wakken ad d-yerr.",
     "Your firewall or anti-virus is blocking the request.": "Aɣrab n tmes neɣ amgelavirus inek·inem yessewḥal isutar.",
     "A browser extension is preventing the request.": "Asiɣzef n yiminig tessewḥel asuter.",
     "We encountered an error trying to restore your previous session.": "Nemlal-d tuccḍa mi ara d-nettarra tiɣimit-ik·im yezrin.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ma yella tesqedceḍ yakan lqem n melmi kan n %(brand)s, tiɣimit-ik·im tezmer ur tettemṣada ara d lqem-a. Mdel afaylu-a syen uɣal ɣer lqem n melmi kan.",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aleqqem n texxamt-a yesra amdal n tummant tamirant n texxamt d tmerna n texxamt tamaynut deg wadeg-is. I tikci n tarmit i igerrzen iwumi nezmer i yiɛeggalen n texxamt, ad neg:",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Asfaḍ n uklas n yiminig-ik·im yezmer ad iṣeggem ugur, maca aya ad ak·akem-isuffeɣ seg tuqqna rnu akk imazrayen n udiwenni yettwawgelhen ur d-ttbanen.",
     "To help us prevent this in future, please <a>send us logs</a>.": "I wakken ad aɣ-tɛiwneḍ ur d-iḍerru ara waya ɣer sdat, ttxil-k·m <a>azen-aɣ-d iɣmisen</a>.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Kra n yisefka n tɣimit, daɣen tisura n yiznan yettwawgelhen, ttwakksen. Ffeɣ syen ales anekcum i wakken ad tṣeggmeḍ aya, err-d tisura seg uḥraz.",
@@ -1461,7 +1444,6 @@
         "no_media_perms_title": "Ulac tisirag n umidyat",
         "no_media_perms_description": "Ilaq-ak·am ahat ad tesirgeḍ s ufus %(brand)s i unekcum ɣer usawaḍ/webcam"
     },
-    "Other": "Nniḍen",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Beddel avaṭar n texxamt",
@@ -1553,7 +1535,21 @@
             "room_predecessor": "Senqed iznan iqburen deg %(roomName)s.",
             "room_version_section": "Lqem n texxamt",
             "room_version": "Lqem n texxamt:",
-            "information_section_room": "Talɣut n texxamt"
+            "information_section_room": "Talɣut n texxamt",
+            "error_upgrade_title": "Aleqqem n texxamt ur yeddi ara",
+            "error_upgrade_description": "Aleqqem n texxamt yegguma ad yemmed",
+            "upgrade_button": "Leqqem taxxamt-a ɣer lqem amaynut %(version)s",
+            "upgrade_dialog_title": "Lqem n uleqqem n texxamt",
+            "upgrade_dialog_description": "Aleqqem n texxamt-a yesra amdal n tummant tamirant n texxamt d tmerna n texxamt tamaynut deg wadeg-is. I tikci n tarmit i igerrzen iwumi nezmer i yiɛeggalen n texxamt, ad neg:",
+            "upgrade_dialog_description_1": "Rnu taxxamt tamaynut s yisem-nni, aglam-nni d uvaṭar-nni",
+            "upgrade_dialog_description_2": "Leqqem ismawen yettunefken i yal taxxamt tadigant akken ad tsekneḍ ɣer texxamt tamaynut",
+            "upgrade_dialog_description_3": "Seḥbes iseqdacen ɣef umeslay deg lqem aqbur n texxamt, syen aru izen anida ara twellheḍ iseqdacen ad d-uɣalen ɣer texxamt tamaynut",
+            "upgrade_dialog_description_4": "Sers aseɣwen deg texxamt taqburt mi ara tebdu kan texxamt tamaynut i wakken imdanen ad izmiren ad walin iznan iqburen",
+            "upgrade_warning_dialog_title_private": "Leqqem taxxamt tusligt",
+            "upgrade_dwarning_ialog_title_public": "Leqqem taxxamt tazayezt",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Aya yettḥaz kan s umata amek tetteg texxamt tasleḍt ɣef uqeddac. Ma yella temlaleḍ-d uguren d %(brand)s-inek·inem, ttxil-k·m <a>azen-d abug</a>.",
+            "upgrade_warning_dialog_description": "Aleqqem n texxamt d tigawt leqqayen rnu yezga yettuwelleh-d mi ara tili texxamt ur terkid ara ssebba n wabugen, tukksa n tmahilin neɣ iɣisan deg tɣellist.",
+            "upgrade_warning_dialog_footer": "Tleqqmeḍ taxxamt-a seg <oldVersion /> ɣer <newVersion />."
         },
         "upload_avatar_label": "Sali-d avaṭar",
         "bridges": {
@@ -1566,7 +1562,8 @@
             "notification_sound": "Imesli i yilɣa",
             "custom_sound_prompt": "Sbadu ameslaw udmawan amaynut",
             "browse_button": "Inig"
-        }
+        },
+        "title": "Iɣewwaren n texxamt - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1806,6 +1803,9 @@
             "megolm_export": "Sifeḍ s ufus tisura",
             "setup_key_backup_title": "Tesruḥeḍ anekcum ɣer yiznan-ik·im yettwawgelhen",
             "description": "D tidet tebɣiḍ ad teffɣeḍ?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "Imayl (Afrayan)"
         }
     },
     "export_chat": {
@@ -1832,7 +1832,8 @@
     "report_content": {
         "missing_reason": "Ttxil-k·m ini-aɣ-d ayɣer i d-tettazneḍ alɣu.",
         "report_content_to_homeserver": "Ttxil-k·m azen aneqqis i unedbal-ik·im n usebter agejdan",
-        "description": "Timenna ɣef yizen-a ad yazen \"asulay n uneḍru\" asuf i unedbal n uqeddac agejdan. Ma yella iznan n texxamt-a ttwawgelhen, anedbal-ik·im n uqeddac agejdan ur yettizmir ara ad d-iɣer aḍris n yizen neɣ senqed ifuyla neɣ tugniwin."
+        "description": "Timenna ɣef yizen-a ad yazen \"asulay n uneḍru\" asuf i unedbal n uqeddac agejdan. Ma yella iznan n texxamt-a ttwawgelhen, anedbal-ik·im n uqeddac agejdan ur yettizmir ara ad d-iɣer aḍris n yizen neɣ senqed ifuyla neɣ tugniwin.",
+        "other_label": "Nniḍen"
     },
     "onboarding": {
         "intro_welcome": "Ansuf ɣer %(appName)s",
@@ -2310,5 +2311,6 @@
         "disabled_action": "Sfeḍ takatut tuffirt syen ales amtawi",
         "resync_description": "%(brand)s tura isseqdac drus n tkatut seg 3 ɣer 5 n tikkal, s usali n talɣut n yiseqdac-nniḍen ma yili tettusra. Ttxil-k·m rǧu s leɛqel alamma nules amtawi d useqdac!",
         "resync_title": "Leqqem %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Tiẓrigin n yizen"
 }

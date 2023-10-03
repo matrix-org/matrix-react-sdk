@@ -124,20 +124,11 @@
     "Folder": "Kansio",
     "Share Room": "Jaa huone",
     "Link to most recent message": "Linkitä viimeisimpään viestiin",
-    "Email (optional)": "Sähköposti (valinnainen)",
     "No backup found!": "Varmuuskopiota ei löytynyt!",
     "Unable to restore backup": "Varmuuskopion palauttaminen ei onnistu",
     "Link to selected message": "Linkitä valittuun viestiin",
     "Send Logs": "Lähetä lokit",
-    "Upgrade this room to version %(version)s": "Päivitä tämä huone versioon %(version)s",
-    "Upgrade Room Version": "Päivitä huoneen versio",
-    "The room upgrade could not be completed": "Huoneen päivitystä ei voitu suorittaa",
-    "Failed to upgrade room": "Huoneen päivittäminen epäonnistui",
     "Elephant": "Norsu",
-    "Create a new room with the same name, description and avatar": "luomme uuden huoneen samalla nimellä, kuvauksella ja kuvalla",
-    "Update any local room aliases to point to the new room": "päivitämme kaikki huoneen aliakset osoittamaan uuteen huoneeseen",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "estämme käyttäjiä puhumasta vanhassa huoneessa ja lähetämme viestin, joka ohjeistaa käyttäjiä siirtymään uuteen huoneeseen",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "pistämme linkin vanhaan huoneeseen uuden huoneen alkuun, jotta ihmiset voivat nähdä vanhat viestit",
     "We encountered an error trying to restore your previous session.": "Törmäsimme ongelmaan yrittäessämme palauttaa edellistä istuntoasi.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jos olet aikaisemmin käyttänyt uudempaa versiota %(brand)sista, istuntosi voi olla epäyhteensopiva tämän version kanssa. Sulje tämä ikkuna ja yritä uudemman version kanssa.",
     "Thumbs up": "Peukut ylös",
@@ -146,7 +137,6 @@
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "Room Settings - %(roomName)s": "Huoneen asetukset — %(roomName)s",
     "Clear Storage and Sign Out": "Tyhjennä varasto ja kirjaudu ulos",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Selaimen varaston tyhjentäminen saattaa korjata ongelman, mutta kirjaa sinut samalla ulos ja estää sinua lukemasta salattuja keskusteluita.",
     "Unable to load backup status": "Varmuuskopioinnin tilan lataaminen epäonnistui",
@@ -170,8 +160,6 @@
     "edited": "muokattu",
     "To help us prevent this in future, please <a>send us logs</a>.": "Voit auttaa meitä estämään tämän toistumisen <a>lähettämällä meille lokeja</a>.",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "Tiedosto on <b>liian iso</b> lähetettäväksi. Tiedostojen kokoraja on %(limit)s mutta tämä tiedosto on %(sizeOfThisFile)s.",
-    "Message edits": "Viestin muokkaukset",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
     "Upload all": "Lähetä kaikki palvelimelle",
     "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
     "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
@@ -188,11 +176,6 @@
         "other": "%(count)s varmennettua istuntoa",
         "one": "1 varmennettu istunto"
     },
-    "Upgrade private room": "Päivitä yksityinen huone",
-    "Upgrade public room": "Päivitä julkinen huone",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Huoneen päivittäminen on monimutkainen toimenpide ja yleensä sitä suositellaan, kun huone on epävakaa bugien, puuttuvien ominaisuuksien tai tietoturvaongelmien takia.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Tämä yleensä vaikuttaa siihen, miten huonetta käsitellään palvelimella. Jos sinulla on ongelmia %(brand)stisi kanssa, <a>ilmoita virheestä</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Olat päivittämässä tätä huonetta versiosta <oldVersion/> versioon <newVersion/>.",
     "Lock": "Lukko",
     "%(count)s sessions": {
         "other": "%(count)s istuntoa",
@@ -487,16 +470,13 @@
     "You're all caught up.": "Olet ajan tasalla.",
     "This widget would like to:": "Tämä sovelma haluaa:",
     "The server has denied your request.": "Palvelin eväsi pyyntösi.",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
     "A connection error occurred while trying to contact the server.": "Yhteysvirhe yritettäessä ottaa yhteyttä palvelimeen.",
-    "Continuing without email": "Jatka ilman sähköpostia",
     "Confirm encryption setup": "Vahvista salauksen asetukset",
     "a key signature": "avaimen allekirjoitus",
     "Security Phrase": "Turvalause",
     "Security Key": "Turva-avain",
     "Hold": "Pidä",
     "Resume": "Jatka",
-    "Data on this screen is shared with %(widgetDomain)s": "Tällä näytöllä olevaa tietoa jaetaan verkkotunnuksen %(widgetDomain)s kanssa",
     "A browser extension is preventing the request.": "Selainlaajennus estää pyynnön.",
     "Approve widget permissions": "Hyväksy sovelman käyttöoikeudet",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
@@ -518,7 +498,6 @@
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
     },
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
@@ -548,7 +527,6 @@
     "Use <arrows/> to scroll": "Käytä <arrows/> vierittääksesi",
     "Join %(roomAddress)s": "Liity %(roomAddress)s",
     "Link to room": "Linkitä huoneeseen",
-    "Automatically invite members from this room to the new one": "Kutsu jäsenet tästä huoneesta automaattisesti uuteen huoneeseen",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
     "%(count)s participants": {
         "one": "1 osallistuja",
@@ -2363,7 +2341,6 @@
         "no_audio_input_description": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen.",
         "transfer_consult_first_label": "Tiedustele ensin"
     },
-    "Other": "Muut",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Vaihda avaruuden kuva",
@@ -2531,7 +2508,23 @@
             "room_version_section": "Huoneen versio",
             "room_version": "Huoneen versio:",
             "information_section_space": "Avaruuden tiedot",
-            "information_section_room": "Huoneen tiedot"
+            "information_section_room": "Huoneen tiedot",
+            "error_upgrade_title": "Huoneen päivittäminen epäonnistui",
+            "error_upgrade_description": "Huoneen päivitystä ei voitu suorittaa",
+            "upgrade_button": "Päivitä tämä huone versioon %(version)s",
+            "upgrade_dialog_title": "Päivitä huoneen versio",
+            "upgrade_dialog_description": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
+            "upgrade_dialog_description_1": "luomme uuden huoneen samalla nimellä, kuvauksella ja kuvalla",
+            "upgrade_dialog_description_2": "päivitämme kaikki huoneen aliakset osoittamaan uuteen huoneeseen",
+            "upgrade_dialog_description_3": "estämme käyttäjiä puhumasta vanhassa huoneessa ja lähetämme viestin, joka ohjeistaa käyttäjiä siirtymään uuteen huoneeseen",
+            "upgrade_dialog_description_4": "pistämme linkin vanhaan huoneeseen uuden huoneen alkuun, jotta ihmiset voivat nähdä vanhat viestit",
+            "upgrade_warning_dialog_invite_label": "Kutsu jäsenet tästä huoneesta automaattisesti uuteen huoneeseen",
+            "upgrade_warning_dialog_title_private": "Päivitä yksityinen huone",
+            "upgrade_dwarning_ialog_title_public": "Päivitä julkinen huone",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Tämä yleensä vaikuttaa siihen, miten huonetta käsitellään palvelimella. Jos sinulla on ongelmia %(brand)stisi kanssa, <a>ilmoita virheestä</a>.",
+            "upgrade_warning_dialog_description": "Huoneen päivittäminen on monimutkainen toimenpide ja yleensä sitä suositellaan, kun huone on epävakaa bugien, puuttuvien ominaisuuksien tai tietoturvaongelmien takia.",
+            "upgrade_warning_dialog_explainer": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
+            "upgrade_warning_dialog_footer": "Olat päivittämässä tätä huonetta versiosta <oldVersion/> versioon <newVersion/>."
         },
         "delete_avatar_label": "Poista avatar",
         "upload_avatar_label": "Lähetä profiilikuva",
@@ -2570,7 +2563,8 @@
             "enable_element_call_caption": "%(brand)s on päästä päähän salattu, mutta on tällä hetkellä rajattu pienelle määrälle käyttäjiä.",
             "enable_element_call_no_permissions_tooltip": "Oikeutesi eivät riitä tämän muuttamiseen.",
             "call_type_section": "Puhelun tyyppi"
-        }
+        },
+        "title": "Huoneen asetukset — %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2932,6 +2926,11 @@
             "megolm_export": "Vie avaimet käsin",
             "setup_key_backup_title": "Menetät pääsyn salattuihin viesteihisi",
             "description": "Haluatko varmasti kirjautua ulos?"
+        },
+        "registration": {
+            "continue_without_email_title": "Jatka ilman sähköpostia",
+            "continue_without_email_description": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
+            "continue_without_email_field_label": "Sähköposti (valinnainen)"
         }
     },
     "room_list": {
@@ -2974,7 +2973,8 @@
         "spam_or_propaganda": "Roskapostitusta tai propagandaa",
         "report_entire_room": "Raportoi koko huone",
         "report_content_to_homeserver": "Ilmoita sisällöstä kotipalvelimesi ylläpitäjälle",
-        "description": "Tämän viestin ilmoittaminen lähettää sen yksilöllisen tapahtumatunnuksen (event ID) kotipalvelimesi ylläpitäjälle. Jos tämän huoneen viestit on salattu, kotipalvelimesi ylläpitäjä ei voi lukea viestin tekstiä tai nähdä tiedostoja tai kuvia."
+        "description": "Tämän viestin ilmoittaminen lähettää sen yksilöllisen tapahtumatunnuksen (event ID) kotipalvelimesi ylläpitäjälle. Jos tämän huoneen viestit on salattu, kotipalvelimesi ylläpitäjä ei voi lukea viestin tekstiä tai nähdä tiedostoja tai kuvia.",
+        "other_label": "Muut"
     },
     "setting": {
         "help_about": {
@@ -3072,7 +3072,8 @@
         "popout": "Avaa sovelma omassa ikkunassaan",
         "unpin_to_view_right_panel": "Poista sovelman kiinnitys näyttääksesi sen tässä paneelissa",
         "set_room_layout": "Aseta minun huoneen asettelu kaikille",
-        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa"
+        "close_to_view_right_panel": "Sulje sovelma näyttääksesi sen tässä paneelissa",
+        "modal_data_warning": "Tällä näytöllä olevaa tietoa jaetaan verkkotunnuksen %(widgetDomain)s kanssa"
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3963,5 +3964,6 @@
         "disabled_action": "Tyhjennä välimuisti ja hae tiedot uudelleen",
         "resync_description": "%(brand)s käyttää nyt 3-5 kertaa vähemmän muistia, koska se lataa tietoa muista käyttäjistä vain tarvittaessa. Odotathan, kun haemme tarvittavat tiedot palvelimelta!",
         "resync_title": "Päivitetään %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Viestin muokkaukset"
 }

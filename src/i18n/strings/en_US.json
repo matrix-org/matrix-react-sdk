@@ -385,7 +385,6 @@
         "category_room": "Room",
         "category_other": "Other"
     },
-    "Other": "Other",
     "labs": {
         "group_profile": "Profile",
         "group_rooms": "Rooms"
@@ -638,5 +637,8 @@
     },
     "lazy_loading": {
         "resync_description": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!"
+    },
+    "report_content": {
+        "other_label": "Other"
     }
 }

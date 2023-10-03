@@ -64,7 +64,6 @@
     "Deactivate account": "Деактивувати обліковий запис",
     "Unable to restore session": "Не вдалося відновити сеанс",
     "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
-    "Room Settings - %(roomName)s": "Налаштування кімнати - %(roomName)s",
     "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
     "Verify your other session using one of the options below.": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) починає новий сеанс без його звірення:",
@@ -137,15 +136,8 @@
     "Santa": "Св. Миколай",
     "Gift": "Подарунок",
     "Lock": "Замок",
-    "Failed to upgrade room": "Не вдалось поліпшити кімнату",
-    "The room upgrade could not be completed": "Поліпшення кімнати не може бути завершене",
-    "Upgrade this room to version %(version)s": "Поліпшити цю кімнату до версії %(version)s",
-    "Upgrade Room Version": "Поліпшити версію кімнати",
-    "Upgrade private room": "Поліпшити закриту кімнату",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Ви поліпшите цю кімнату з <oldVersion /> до <newVersion /> версії.",
     "Share Room Message": "Поділитися повідомленням кімнати",
     "expand": "розгорнути",
-    "Upgrade public room": "Поліпшити відкриту кімнату",
     "IRC display name width": "Ширина псевдоніма IRC",
     "Encrypted by a deleted session": "Зашифроване видаленим сеансом",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
@@ -420,7 +412,6 @@
     "Backup version:": "Версія резервної копії:",
     "Cancel All": "Скасувати все",
     "Send Logs": "Надіслати журнали",
-    "Email (optional)": "Е-пошта (необов'язково)",
     "%(count)s rooms": {
         "one": "%(count)s кімната",
         "other": "%(count)s кімнат"
@@ -465,8 +456,6 @@
     "Not a valid Security Key": "Хибний ключ безпеки",
     "No backup found!": "Резервних копій не знайдено!",
     "Forget": "Забути",
-    "Modal Widget": "Модальний віджет",
-    "Message edits": "Редагування повідомлення",
     "Only do this if you have no other device to complete verification with.": "Робіть це лише якщо у вас немає іншого пристрою для виконання перевірки.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Видалення ключів перехресного підписування безповоротне. Усі, з ким ви звірили сеанси, бачитимуть сповіщення системи безпеки. Ви майже напевно не захочете цього робити, якщо тільки ви не втратили всі пристрої, з яких можна виконувати перехресне підписування.",
     "The server is offline.": "Сервер вимкнено.",
@@ -482,8 +471,6 @@
     "Messaging": "Спілкування",
     "Link to room": "Посилання на кімнату",
     "Command Help": "Допомога команди",
-    "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Усі наявні повідомлення залишаться в цій архівованій кімнаті.",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
     "Link to selected message": "Посилання на вибране повідомлення",
@@ -500,11 +487,6 @@
     "Reset event store": "Очистити сховище подій",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Якщо таки бажаєте, зауважте, що жодні ваші повідомлення не видаляться, проте пошук сповільниться, поки індекс буде перестворюватись",
     "You most likely do not want to reset your event index store": "Сумніваємось, що ви бажаєте очистити своє сховище подій",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Додамо лінк старої кімнати нагорі нової, щоб люди могли бачити старі повідомлення",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Вимкнемо користувачам можливість писати до старої версії кімнати й додамо повідомлення з порадою перейти до нової",
-    "Update any local room aliases to point to the new room": "Направимо всі локальні псевдоніми цієї кімнати до нової",
-    "Create a new room with the same name, description and avatar": "Створимо нову кімнату з такою ж назвою, описом і аватаром",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Поліпшення цієї кімнати потребує закриття наявного її примірника й створення нової кімнати натомість. Щоб забезпечити якнайкращі враження учасникам кімнати, ми:",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
     "Spaces you're in": "Ваші простори",
@@ -525,12 +507,6 @@
     "%(name)s accepted": "%(name)s погоджується",
     "Recently viewed": "Недавно переглянуті",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо <a>повідомити нас про ваду</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо повідомити нас про ваду.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Поліпшення кімнати — серйозна операція. Її зазвичай радять, коли кімната нестабільна через вади, брак функціоналу чи вразливості безпеки.",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Зауважте, якщо ви не додасте пошту й забудете пароль, то можете <b>назавжди втратити доступ до свого облікового запису</b>.",
-    "Continuing without email": "Продовження без е-пошти",
-    "Data on this screen is shared with %(widgetDomain)s": "Дані на цьому екрані надсилаються до %(widgetDomain)s",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Якщо ви забули ключ безпеки, <button>налаштуйте нові параметри відновлення</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Отримайте історію своїх зашифрованих повідомлень і налаштуйте безпечне листування, ввівши свій ключ безпеки.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Якщо ви забули фразу безпеки, <button1>скористайтеся ключем безпеки</button1> чи <button2>налаштуйте нові параметри відновлення</button2>",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Потрібно, щоб ваш сервер підтримував стабільну версію MSC3827",
     "unavailable": "недоступний",
     "unknown status code": "невідомий код стану",
-    "Upgrade room": "Поліпшити кімнату",
     "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
     "common": {
         "about": "Відомості",
@@ -2594,7 +2569,6 @@
         "no_audio_input_description": "Мікрофона не знайдено. Перевірте налаштування й повторіть спробу.",
         "transfer_consult_first_label": "Спочатку консультуватися"
     },
-    "Other": "Інше",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Змінити аватар простору",
@@ -2773,7 +2747,25 @@
             "room_version_section": "Версія кімнати",
             "room_version": "Версія кімнати:",
             "information_section_space": "Відомості про простір",
-            "information_section_room": "Відомості про кімнату"
+            "information_section_room": "Відомості про кімнату",
+            "error_upgrade_title": "Не вдалось поліпшити кімнату",
+            "error_upgrade_description": "Поліпшення кімнати не може бути завершене",
+            "upgrade_button": "Поліпшити цю кімнату до версії %(version)s",
+            "upgrade_dialog_title": "Поліпшити версію кімнати",
+            "upgrade_dialog_description": "Поліпшення цієї кімнати потребує закриття наявного її примірника й створення нової кімнати натомість. Щоб забезпечити якнайкращі враження учасникам кімнати, ми:",
+            "upgrade_dialog_description_1": "Створимо нову кімнату з такою ж назвою, описом і аватаром",
+            "upgrade_dialog_description_2": "Направимо всі локальні псевдоніми цієї кімнати до нової",
+            "upgrade_dialog_description_3": "Вимкнемо користувачам можливість писати до старої версії кімнати й додамо повідомлення з порадою перейти до нової",
+            "upgrade_dialog_description_4": "Додамо лінк старої кімнати нагорі нової, щоб люди могли бачити старі повідомлення",
+            "upgrade_warning_dialog_invite_label": "Автоматично запросити учасників цієї кімнати до нової",
+            "upgrade_warning_dialog_title_private": "Поліпшити закриту кімнату",
+            "upgrade_dwarning_ialog_title_public": "Поліпшити відкриту кімнату",
+            "upgrade_warning_dialog_title": "Поліпшити кімнату",
+            "upgrade_warning_dialog_report_bug_prompt": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо повідомити нас про ваду.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо <a>повідомити нас про ваду</a>.",
+            "upgrade_warning_dialog_description": "Поліпшення кімнати — серйозна операція. Її зазвичай радять, коли кімната нестабільна через вади, брак функціоналу чи вразливості безпеки.",
+            "upgrade_warning_dialog_explainer": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Усі наявні повідомлення залишаться в цій архівованій кімнаті.",
+            "upgrade_warning_dialog_footer": "Ви поліпшите цю кімнату з <oldVersion /> до <newVersion /> версії."
         },
         "delete_avatar_label": "Видалити аватар",
         "upload_avatar_label": "Вивантажити аватар",
@@ -2813,7 +2805,8 @@
             "enable_element_call_caption": "%(brand)s наскрізно зашифровано, але наразі обмежений меншою кількістю користувачів.",
             "enable_element_call_no_permissions_tooltip": "Ви не маєте достатніх повноважень, щоб змінити це.",
             "call_type_section": "Тип викликів"
-        }
+        },
+        "title": "Налаштування кімнати - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3218,6 +3211,11 @@
             "megolm_export": "Експорт ключів власноруч",
             "setup_key_backup_title": "Ви втратите доступ до ваших зашифрованих повідомлень",
             "description": "Ви впевнені, що хочете вийти?"
+        },
+        "registration": {
+            "continue_without_email_title": "Продовження без е-пошти",
+            "continue_without_email_description": "Зауважте, якщо ви не додасте пошту й забудете пароль, то можете <b>назавжди втратити доступ до свого облікового запису</b>.",
+            "continue_without_email_field_label": "Е-пошта (необов'язково)"
         }
     },
     "room_list": {
@@ -3272,7 +3270,8 @@
         "spam_or_propaganda": "Спам чи пропаганда",
         "report_entire_room": "Поскаржитися на всю кімнату",
         "report_content_to_homeserver": "Поскаржитися на вміст адміністратору вашого домашнього сервера",
-        "description": "Зі скаргою на це повідомлення буде надіслано його унікальний «ID події» адміністраторові вашого домашнього сервера. Якщо повідомлення у цій кімнаті зашифровані, то адміністратор не зможе побачити ані тексту повідомлень, ані жодних файлів чи зображень."
+        "description": "Зі скаргою на це повідомлення буде надіслано його унікальний «ID події» адміністраторові вашого домашнього сервера. Якщо повідомлення у цій кімнаті зашифровані, то адміністратор не зможе побачити ані тексту повідомлень, ані жодних файлів чи зображень.",
+        "other_label": "Інше"
     },
     "setting": {
         "help_about": {
@@ -3391,7 +3390,9 @@
         "popout": "Спливний віджет",
         "unpin_to_view_right_panel": "Відкріпіть віджет, щоб він зʼявився на цій панелі",
         "set_room_layout": "Встановити мій вигляд кімнати всім",
-        "close_to_view_right_panel": "Закрийте віджет, щоб він зʼявився на цій панелі"
+        "close_to_view_right_panel": "Закрийте віджет, щоб він зʼявився на цій панелі",
+        "modal_title_default": "Модальний віджет",
+        "modal_data_warning": "Дані на цьому екрані надсилаються до %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -4371,5 +4372,6 @@
         "disabled_action": "Очистити кеш і повторно синхронізувати",
         "resync_description": "%(brand)s тепер використовує в 3-5 разів менше пам'яті, звантажуючи дані про інших користувачів лише за потреби. Зачекайте, поки ми синхронізуємося з сервером!",
         "resync_title": "Оновлення %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Редагування повідомлення"
 }

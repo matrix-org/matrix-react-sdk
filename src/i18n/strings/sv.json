@@ -74,14 +74,6 @@
     "Share User": "Dela användare",
     "Share Room Message": "Dela rumsmeddelande",
     "Link to selected message": "Länk till valt meddelande",
-    "Failed to upgrade room": "Misslyckades att uppgradera rummet",
-    "The room upgrade could not be completed": "Rumsuppgraderingen kunde inte slutföras",
-    "Upgrade this room to version %(version)s": "Uppgradera detta rum till version %(version)s",
-    "Upgrade Room Version": "Uppgradera rumsversion",
-    "Create a new room with the same name, description and avatar": "Skapa ett nytt rum med samma namn, beskrivning och avatar",
-    "Update any local room aliases to point to the new room": "Uppdatera lokala rumsalias att peka på det nya rummet",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Hindra användare från att prata i den gamla rumsversionen och posta ett meddelande som rekommenderar användare att flytta till det nya rummet",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Sätta en länk tillbaka till det gamla rummet i början av det nya rummet så att folk kan se gamla meddelanden",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Innan du skickar in loggar måste du <a>skapa ett GitHub-ärende</a> för att beskriva problemet.",
     "Dog": "Hund",
     "Cat": "Katt",
@@ -145,10 +137,8 @@
     "Anchor": "Ankare",
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
-    "Email (optional)": "E-post (valfritt)",
     "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "Room Settings - %(roomName)s": "Rumsinställningar - %(roomName)s",
     "Sign out and remove encryption keys?": "Logga ut och ta bort krypteringsnycklar?",
     "To help us prevent this in future, please <a>send us logs</a>.": "För att hjälpa oss att förhindra detta i framtiden, vänligen <a>skicka oss loggar</a>.",
     "Missing session data": "Sessionsdata saknas",
@@ -172,14 +162,8 @@
     "%(name)s cancelled": "%(name)s avbröt",
     "%(name)s wants to verify": "%(name)s vill verifiera",
     "e.g. my-room": "t.ex. mitt-rum",
-    "Message edits": "Meddelanderedigeringar",
     "Find others by phone or email": "Hitta andra via telefon eller e-post",
     "Be found by phone or email": "Bli hittad via telefon eller e-post",
-    "Upgrade private room": "Uppgradera privat rum",
-    "Upgrade public room": "Uppgradera offentligt rum",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Att uppgradera ett rum är en avancerad åtgärd och rekommenderas vanligtvis när ett rum är instabilt på grund av buggar, saknade funktioner eller säkerhetsproblem.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Detta påverkar vanligtvis bara hur rummet bearbetas på servern. Om du har problem med %(brand)s, vänligen <a>rapportera ett fel</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Du kommer att uppgradera detta rum från <oldVersion /> till <newVersion />.",
     "You signed in to a new session without verifying it:": "Du loggade in i en ny session utan att verifiera den:",
     "Verify your other session using one of the options below.": "Verifiera din andra session med ett av alternativen nedan.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) loggade in i en ny session utan att verifiera den:",
@@ -211,7 +195,6 @@
     "a device cross-signing signature": "en enhets korssigneringssignatur",
     "a key signature": "en nyckelsignatur",
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Att uppgradera det här rummet kräver att den nuvarande instansen a rummet stängs och ett nytt rum skapas i dess plats. För att ge rumsmedlemmar den bästa möjliga upplevelsen kommer vi:",
     "You're all caught up.": "Du är ikapp.",
     "Server isn't responding": "Servern svarar inte",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Din server svarar inte på vissa av dina förfrågningar. Nedan är några av de troligaste anledningarna.",
@@ -248,8 +231,6 @@
     "Not encrypted": "Inte krypterad",
     "Backup version:": "Version av säkerhetskopia:",
     "Unable to set up keys": "Kunde inte ställa in nycklar",
-    "Data on this screen is shared with %(widgetDomain)s": "Data på den här skärmen delas med %(widgetDomain)s",
-    "Modal Widget": "Dialogruta",
     "Canada": "Kanada",
     "Cameroon": "Kamerun",
     "Cambodia": "Kambodja",
@@ -499,8 +480,6 @@
     "Cayman Islands": "Caymanöarna",
     "Caribbean Netherlands": "Karibiska Nederländerna",
     "Cape Verde": "Kap Verde",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
-    "Continuing without email": "Fortsätter utan e-post",
     "Hold": "Parkera",
     "Resume": "Återuppta",
     "Decline All": "Neka alla",
@@ -536,7 +515,6 @@
         "one": "%(count)s rum",
         "other": "%(count)s rum"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Detta påverkar normalt bara hur rummet hanteras på serven. Om du upplever problem med din %(brand)s, vänligen rapportera en bugg.",
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
@@ -549,8 +527,6 @@
     "Reset everything": "Återställ allt",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
-    "Automatically invite members from this room to the new one": "Bjud automatiskt in medlemmar från det här rummet till det nya",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "%(count)s reply": {
         "one": "%(count)s svar",
@@ -2547,7 +2523,6 @@
         "no_audio_input_description": "Vi kunde inte hitta en mikrofon på din enhet. Vänligen kolla dina inställningar och försök igen.",
         "transfer_consult_first_label": "Tillfråga först"
     },
-    "Other": "Annat",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Byt utrymmesavatar",
@@ -2725,7 +2700,24 @@
             "room_version_section": "Rumsversion",
             "room_version": "Rumsversion:",
             "information_section_space": "Utrymmesinfo",
-            "information_section_room": "Rumsinformation"
+            "information_section_room": "Rumsinformation",
+            "error_upgrade_title": "Misslyckades att uppgradera rummet",
+            "error_upgrade_description": "Rumsuppgraderingen kunde inte slutföras",
+            "upgrade_button": "Uppgradera detta rum till version %(version)s",
+            "upgrade_dialog_title": "Uppgradera rumsversion",
+            "upgrade_dialog_description": "Att uppgradera det här rummet kräver att den nuvarande instansen a rummet stängs och ett nytt rum skapas i dess plats. För att ge rumsmedlemmar den bästa möjliga upplevelsen kommer vi:",
+            "upgrade_dialog_description_1": "Skapa ett nytt rum med samma namn, beskrivning och avatar",
+            "upgrade_dialog_description_2": "Uppdatera lokala rumsalias att peka på det nya rummet",
+            "upgrade_dialog_description_3": "Hindra användare från att prata i den gamla rumsversionen och posta ett meddelande som rekommenderar användare att flytta till det nya rummet",
+            "upgrade_dialog_description_4": "Sätta en länk tillbaka till det gamla rummet i början av det nya rummet så att folk kan se gamla meddelanden",
+            "upgrade_warning_dialog_invite_label": "Bjud automatiskt in medlemmar från det här rummet till det nya",
+            "upgrade_warning_dialog_title_private": "Uppgradera privat rum",
+            "upgrade_dwarning_ialog_title_public": "Uppgradera offentligt rum",
+            "upgrade_warning_dialog_report_bug_prompt": "Detta påverkar normalt bara hur rummet hanteras på serven. Om du upplever problem med din %(brand)s, vänligen rapportera en bugg.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Detta påverkar vanligtvis bara hur rummet bearbetas på servern. Om du har problem med %(brand)s, vänligen <a>rapportera ett fel</a>.",
+            "upgrade_warning_dialog_description": "Att uppgradera ett rum är en avancerad åtgärd och rekommenderas vanligtvis när ett rum är instabilt på grund av buggar, saknade funktioner eller säkerhetsproblem.",
+            "upgrade_warning_dialog_explainer": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
+            "upgrade_warning_dialog_footer": "Du kommer att uppgradera detta rum från <oldVersion /> till <newVersion />."
         },
         "delete_avatar_label": "Radera avatar",
         "upload_avatar_label": "Ladda upp avatar",
@@ -2765,7 +2757,8 @@
             "enable_element_call_caption": "%(brand)s är totalsträckskrypterad, men är för närvarande begränsad till ett lägre antal användare.",
             "enable_element_call_no_permissions_tooltip": "Du är inte behörig att ändra detta.",
             "call_type_section": "Samtalstyp"
-        }
+        },
+        "title": "Rumsinställningar - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3169,6 +3162,11 @@
             "megolm_export": "Exportera nycklar manuellt",
             "setup_key_backup_title": "Du kommer att förlora åtkomst till dina krypterade meddelanden",
             "description": "Är du säker på att du vill logga ut?"
+        },
+        "registration": {
+            "continue_without_email_title": "Fortsätter utan e-post",
+            "continue_without_email_description": "En förvarning, om du inte lägger till en e-postadress och glömmer ditt lösenord, så kan du <b>permanent förlora åtkomst till ditt konto</b>.",
+            "continue_without_email_field_label": "E-post (valfritt)"
         }
     },
     "room_list": {
@@ -3223,7 +3221,8 @@
         "spam_or_propaganda": "Spam eller propaganda",
         "report_entire_room": "Rapportera hela rummet",
         "report_content_to_homeserver": "Rapportera innehåll till din hemserveradministratör",
-        "description": "Att rapportera det här meddelandet kommer att skicka dess unika 'händelse-ID' till administratören för din hemserver. Om meddelanden i det här rummet är krypterade kommer din hemserveradministratör inte att kunna läsa meddelandetexten eller se några filer eller bilder."
+        "description": "Att rapportera det här meddelandet kommer att skicka dess unika 'händelse-ID' till administratören för din hemserver. Om meddelanden i det här rummet är krypterade kommer din hemserveradministratör inte att kunna läsa meddelandetexten eller se några filer eller bilder.",
+        "other_label": "Annat"
     },
     "setting": {
         "help_about": {
@@ -3341,7 +3340,9 @@
         "popout": "Poppa ut widget",
         "unpin_to_view_right_panel": "Avfäst den här widgeten för att se den i den här panelen",
         "set_room_layout": "Sätt mitt rumsarrangemang för alla",
-        "close_to_view_right_panel": "Stäng den här widgeten för att se den i den här panelen"
+        "close_to_view_right_panel": "Stäng den här widgeten för att se den i den här panelen",
+        "modal_title_default": "Dialogruta",
+        "modal_data_warning": "Data på den här skärmen delas med %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Återkoppling skickad",
@@ -4311,5 +4312,6 @@
         "disabled_action": "Töm cache och synkronisera om",
         "resync_description": "%(brand)s använder nu 3-5 gånger mindre minne, genom att bara ladda information om andra användare när det behövs. Vänta medan vi återsynkroniserar med servern!",
         "resync_title": "Uppdaterar %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Meddelanderedigeringar"
 }

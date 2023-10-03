@@ -74,12 +74,10 @@
     "Share User": "Подели корисника",
     "Share Room Message": "Подели поруку у соби",
     "Link to selected message": "Веза ка изабраној поруци",
-    "Email (optional)": "Мејл (изборно)",
     "%(count)s verified sessions": {
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
     },
-    "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "Light bulb": "сијалица",
     "Looks good!": "Изгледа добро!",
@@ -1066,7 +1064,6 @@
         "no_media_perms_title": "Нема овлашћења за медије",
         "no_media_perms_description": "Можда ћете морати да ручно доделите овлашћења %(brand)s-у за приступ микрофону/веб камери"
     },
-    "Other": "Остало",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Промените аватар собе",
@@ -1116,7 +1113,8 @@
         "upload_avatar_label": "Отпреми аватар",
         "notifications": {
             "browse_button": "Прегледајте"
-        }
+        },
+        "title": "Подешавања собе - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1237,6 +1235,9 @@
         },
         "logout_dialog": {
             "description": "Заиста желите да се одјавите?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "Мејл (изборно)"
         }
     },
     "export_chat": {
@@ -1255,7 +1256,8 @@
         "breadcrumbs_empty": "Нема недавно посећених соба"
     },
     "report_content": {
-        "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера"
+        "report_content_to_homeserver": "Пријави садржај администратору вашег домаћег сервера",
+        "other_label": "Остало"
     },
     "onboarding": {
         "send_dm": "Пошаљи директну поруку",

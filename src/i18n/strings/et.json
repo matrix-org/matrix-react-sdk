@@ -80,7 +80,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Encrypted by a deleted session": "Krüptitud kustutatud sessiooni poolt",
-    "Room Settings - %(roomName)s": "Jututoa seadistused - %(roomName)s",
     "Dog": "Koer",
     "Cat": "Kass",
     "Lion": "Lõvi",
@@ -158,7 +157,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s sessiooni dekrüptimine ei õnnestunud!",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s sessiooni võtme taastamine õnnestus",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Hoiatus</b>: sa peaksid võtmete varunduse seadistama vaid usaldusväärsest arvutist.",
-    "Email (optional)": "E-posti aadress (kui soovid)",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Enne logide saatmist sa peaksid <a>GitHub'is looma veateate</a> ja kirjeldama seal tekkinud probleemi.",
     "You signed in to a new session without verifying it:": "Sa logisid sisse uude sessiooni ilma seda verifitseerimata:",
     "Verify your other session using one of the options below.": "Verifitseeri oma teine sessioon kasutades üht alljärgnevatest võimalustest.",
@@ -166,18 +164,6 @@
     "Not Trusted": "Ei ole usaldusväärne",
     "Looks good!": "Tundub õige!",
     "%(items)s and %(lastItem)s": "%(items)s ja %(lastItem)s",
-    "Upgrade this room to version %(version)s": "Uuenda jututuba versioonini %(version)s",
-    "Upgrade Room Version": "Uuenda jututoa versioon",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Selle jututoa uuendamine eeldab tema praeguse ilmingu tegevuse lõpetamist ja uue jututoa loomist selle asemele. Selleks, et kõik kulgeks jututoas osalejate jaoks ladusalt, toimime nüüd nii:",
-    "Create a new room with the same name, description and avatar": "loome uue samanimelise jututoa, millel on sama kirjeldus ja tunnuspilt",
-    "Update any local room aliases to point to the new room": "uuendame kõik jututoa aliased nii, et nad viitaks uuele jututoale",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "ei võimalda kasutajatel enam vanas jututoas suhelda ning avaldame seal teate, mis soovitab kõigil kolida uude jututuppa",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "selleks et saaks vanu sõnumeid lugeda, paneme uue jututoa algusesse viite vanale jututoale",
-    "Upgrade private room": "Uuenda omavaheline jututuba",
-    "Upgrade public room": "Uuenda avalik jututuba",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Jututoa uuendamine on keerukas toiming ning tavaliselt soovitatakse seda teha vaid siis, kui jututuba on vigade tõttu halvasti kasutatav, sealt on puudu vajalikke funktsionaalsusi või seal ilmneb turvavigu.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Selline tegevus mõjutab tavaliselt vaid viisi, kuidas jututoa andmeid töödeldakse serveris. Kui sinu kasutatavas %(brand)s'is tekib vigu, siis palun saada meile <a>veateade</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Sa uuendad jututoa versioonist <oldVersion /> versioonini <newVersion />.",
     "Clear Storage and Sign Out": "Tühjenda andmeruum ja logi välja",
     "Send Logs": "Saada logikirjed",
     "Unable to restore session": "Sessiooni taastamine ei õnnestunud",
@@ -208,9 +194,6 @@
     "Destroy cross-signing keys?": "Kas hävitame risttunnustamise võtmed?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Risttunnustamise võtmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kõik sinu verifitseeritud vestluskaaslased näevad seejärel turvateateid. Kui sa just pole kaotanud ligipääsu kõikidele oma seadmetele, kust sa risttunnustamist oled teinud, siis sa ilmselgelt ei peaks kustutamist ette võtma.",
     "Clear cross-signing keys": "Eemalda risttunnustamise võtmed",
-    "Message edits": "Sõnumite muutmised",
-    "Failed to upgrade room": "Jututoa versiooni uuendamine ei õnnestunud",
-    "The room upgrade could not be completed": "Jututoa uuendust ei õnnestunud teha",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Palun vaata oma e-kirju ning klõpsi meie saadetud kirjas leiduvat linki. Kui see on tehtud, siis vajuta Jätka-nuppu.",
     "Email address": "E-posti aadress",
     "This will allow you to reset your password and receive notifications.": "See võimaldab sul luua uue salasõna ning saada teavitusi.",
@@ -248,8 +231,6 @@
     "Not encrypted": "Krüptimata",
     "Backup version:": "Varukoopia versioon:",
     "Unable to set up keys": "Krüptovõtmete kasutuselevõtmine ei õnnestu",
-    "Data on this screen is shared with %(widgetDomain)s": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga",
-    "Modal Widget": "Modaalne vidin",
     "Zambia": "Sambia",
     "Yemen": "Jeemen",
     "Western Sahara": "Lääne-Sahara",
@@ -502,8 +483,6 @@
     "This widget would like to:": "See vidin sooviks:",
     "Approve widget permissions": "Anna vidinale õigused",
     "Decline All": "Keeldu kõigist",
-    "Continuing without email": "Jätka ilma e-posti aadressi seadistamiseta",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lihtsalt hoiatame, et kui sa ei lisa e-posti aadressi ning unustad oma konto salasõna, siis sa võid <b>püsivalt kaotada ligipääsu oma kontole</b>.",
     "Hold": "Pane ootele",
     "Resume": "Jätka",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Kui sa oled unustanud oma turvavõtme, siis sa võid <button>seadistada uued taastamise võimalused</button>",
@@ -530,7 +509,6 @@
         "other": "%(count)s liiget",
         "one": "%(count)s liige"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "See tavaliselt mõjutab vaid viisi, kuidas server jututuba teenindab. Kui sul tekib %(brand)s kasutamisel vigu, siis palun anna sellest meile teada.",
     "%(count)s rooms": {
         "other": "%(count)s jututuba",
         "one": "%(count)s jututuba"
@@ -549,8 +527,6 @@
     "Reset everything": "Alusta kõigega algusest",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unustasid või oled kaotanud kõik võimalused ligipääsu taastamiseks? <a>Lähtesta kõik ühe korraga</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
-    "Automatically invite members from this room to the new one": "Kutsu jututoa senised liikmed automaatselt uude jututuppa",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Palun arvesta, et uuendusega tehakse jututoast uus variant</b>. Kõik senised sõnumid jäävad sellesse jututuppa arhiveeritud olekus.",
     "To join a space you'll need an invite.": "Kogukonnakeskusega liitumiseks vajad kutset.",
     "%(count)s reply": {
         "one": "%(count)s vastus",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Eeldab, et sinu koduserver toetab MSC3827 stabiilset versiooni",
     "unavailable": "pole saadaval",
     "unknown status code": "teadmata olekukood",
-    "Upgrade room": "Uuenda jututoa versiooni",
     "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud",
     "common": {
         "about": "Rakenduse teave",
@@ -2594,7 +2569,6 @@
         "no_audio_input_description": "Me ei suutnud sinu seadmest leida mikrofoni. Palun kontrolli seadistusi ja proovi siis uuesti.",
         "transfer_consult_first_label": "Pea esmalt nõu"
     },
-    "Other": "Muud",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Muuda kogukonna tunnuspilti",
@@ -2773,7 +2747,25 @@
             "room_version_section": "Jututoa versioon",
             "room_version": "Jututoa versioon:",
             "information_section_space": "Kogukonnakeskuse teave",
-            "information_section_room": "Info jututoa kohta"
+            "information_section_room": "Info jututoa kohta",
+            "error_upgrade_title": "Jututoa versiooni uuendamine ei õnnestunud",
+            "error_upgrade_description": "Jututoa uuendust ei õnnestunud teha",
+            "upgrade_button": "Uuenda jututuba versioonini %(version)s",
+            "upgrade_dialog_title": "Uuenda jututoa versioon",
+            "upgrade_dialog_description": "Selle jututoa uuendamine eeldab tema praeguse ilmingu tegevuse lõpetamist ja uue jututoa loomist selle asemele. Selleks, et kõik kulgeks jututoas osalejate jaoks ladusalt, toimime nüüd nii:",
+            "upgrade_dialog_description_1": "loome uue samanimelise jututoa, millel on sama kirjeldus ja tunnuspilt",
+            "upgrade_dialog_description_2": "uuendame kõik jututoa aliased nii, et nad viitaks uuele jututoale",
+            "upgrade_dialog_description_3": "ei võimalda kasutajatel enam vanas jututoas suhelda ning avaldame seal teate, mis soovitab kõigil kolida uude jututuppa",
+            "upgrade_dialog_description_4": "selleks et saaks vanu sõnumeid lugeda, paneme uue jututoa algusesse viite vanale jututoale",
+            "upgrade_warning_dialog_invite_label": "Kutsu jututoa senised liikmed automaatselt uude jututuppa",
+            "upgrade_warning_dialog_title_private": "Uuenda omavaheline jututuba",
+            "upgrade_dwarning_ialog_title_public": "Uuenda avalik jututuba",
+            "upgrade_warning_dialog_title": "Uuenda jututoa versiooni",
+            "upgrade_warning_dialog_report_bug_prompt": "See tavaliselt mõjutab vaid viisi, kuidas server jututuba teenindab. Kui sul tekib %(brand)s kasutamisel vigu, siis palun anna sellest meile teada.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Selline tegevus mõjutab tavaliselt vaid viisi, kuidas jututoa andmeid töödeldakse serveris. Kui sinu kasutatavas %(brand)s'is tekib vigu, siis palun saada meile <a>veateade</a>.",
+            "upgrade_warning_dialog_description": "Jututoa uuendamine on keerukas toiming ning tavaliselt soovitatakse seda teha vaid siis, kui jututuba on vigade tõttu halvasti kasutatav, sealt on puudu vajalikke funktsionaalsusi või seal ilmneb turvavigu.",
+            "upgrade_warning_dialog_explainer": "<b>Palun arvesta, et uuendusega tehakse jututoast uus variant</b>. Kõik senised sõnumid jäävad sellesse jututuppa arhiveeritud olekus.",
+            "upgrade_warning_dialog_footer": "Sa uuendad jututoa versioonist <oldVersion /> versioonini <newVersion />."
         },
         "delete_avatar_label": "Kustuta tunnuspilt",
         "upload_avatar_label": "Laadi üles profiilipilt ehk avatar",
@@ -2813,7 +2805,8 @@
             "enable_element_call_caption": "%(brand)s kasutab läbivat krüptimist, kuid on hetkel piiratud väikese osalejate arvuga ühes kõnes.",
             "enable_element_call_no_permissions_tooltip": "Sul pole piisavalt õigusi selle muutmiseks.",
             "call_type_section": "Kõne tüüp"
-        }
+        },
+        "title": "Jututoa seadistused - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3218,6 +3211,11 @@
             "megolm_export": "Ekspordi võtmed käsitsi",
             "setup_key_backup_title": "Sa kaotad ligipääsu oma krüptitud sõnumitele",
             "description": "Kas sa oled kindel, et soovid välja logida?"
+        },
+        "registration": {
+            "continue_without_email_title": "Jätka ilma e-posti aadressi seadistamiseta",
+            "continue_without_email_description": "Lihtsalt hoiatame, et kui sa ei lisa e-posti aadressi ning unustad oma konto salasõna, siis sa võid <b>püsivalt kaotada ligipääsu oma kontole</b>.",
+            "continue_without_email_field_label": "E-posti aadress (kui soovid)"
         }
     },
     "room_list": {
@@ -3272,7 +3270,8 @@
         "spam_or_propaganda": "Spämm või propaganda",
         "report_entire_room": "Teata tervest jututoast",
         "report_content_to_homeserver": "Teata sisust Sinu koduserveri haldurile",
-        "description": "Sellest sõnumist teatamine saadab tema unikaalse sõnumi tunnuse sinu koduserveri haldurile. Kui selle jututoa sõnumid on krüptitud, siis sinu koduserveri haldur ei saa lugeda selle sõnumi teksti ega vaadata seal leiduvaid faile ja pilte."
+        "description": "Sellest sõnumist teatamine saadab tema unikaalse sõnumi tunnuse sinu koduserveri haldurile. Kui selle jututoa sõnumid on krüptitud, siis sinu koduserveri haldur ei saa lugeda selle sõnumi teksti ega vaadata seal leiduvaid faile ja pilte.",
+        "other_label": "Muud"
     },
     "setting": {
         "help_about": {
@@ -3391,7 +3390,9 @@
         "popout": "Ava rakendus eraldi aknas",
         "unpin_to_view_right_panel": "Sellel paneelil kuvamiseks eemalda vidin lemmikutest",
         "set_room_layout": "Kasuta minu jututoa paigutust kõigi jaoks",
-        "close_to_view_right_panel": "Sellel paneelil kuvamiseks sulge see vidin"
+        "close_to_view_right_panel": "Sellel paneelil kuvamiseks sulge see vidin",
+        "modal_title_default": "Modaalne vidin",
+        "modal_data_warning": "Andmeid selles vaates jagatakse %(widgetDomain)s serveriga"
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -4371,5 +4372,6 @@
         "disabled_action": "Tühjenda puhver ja sünkroniseeri andmed uuesti",
         "resync_description": "%(brand)s kasutab varasemaga võrreldes 3-5 korda vähem mälu, sest laadib teavet kasutajate kohta vaid siis, kui vaja. Palun oota hetke, kuni sünkroniseerime andmeid serveriga!",
         "resync_title": "Uuendan rakendust %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Sõnumite muutmised"
 }

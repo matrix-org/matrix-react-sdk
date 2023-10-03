@@ -182,7 +182,6 @@
     "Liberia": "Libéria",
     "Mexico": "México",
     "Moldova": "Moldávia",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>.",
     "Zambia": "Zâmbia",
     "Zimbabwe": "Zimbabué",
     "Yemen": "Iémen",
@@ -638,7 +637,6 @@
         "no_media_perms_title": "Não há permissões para o uso de vídeo/áudio no seu navegador",
         "no_media_perms_description": "Você talvez precise autorizar manualmente que o %(brand)s acesse seu microfone e webcam"
     },
-    "Other": "Outros",
     "labs": {
         "group_profile": "Perfil",
         "group_rooms": "Salas"
@@ -701,7 +699,10 @@
             "passwords_mismatch": "Novas palavras-passe devem coincidir.",
             "return_to_login": "Retornar à tela de login"
         },
-        "server_picker_description_matrix.org": "Junte-se a milhões gratuitamente no maior servidor público"
+        "server_picker_description_matrix.org": "Junte-se a milhões gratuitamente no maior servidor público",
+        "registration": {
+            "continue_without_email_description": "Apenas um aviso, se não adicionar um email e depois esquecer a sua palavra-passe, poderá <b>perder permanentemente o acesso à sua conta</b>."
+        }
     },
     "export_chat": {
         "messages": "Mensagens"
@@ -950,5 +951,8 @@
     },
     "forward": {
         "send_label": "Enviar"
+    },
+    "report_content": {
+        "other_label": "Outros"
     }
 }

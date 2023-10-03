@@ -70,7 +70,6 @@
     "A connection error occurred while trying to contact the server.": "S'ha produït un error de connexió mentre s'intentava connectar al servidor.",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
     "e.g. my-room": "p.e. la-meva-sala",
-    "Room Settings - %(roomName)s": "Configuració de sala - %(roomName)s",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -514,7 +513,6 @@
         "no_permission_conference": "Es necessita permís",
         "no_permission_conference_description": "No tens permís per iniciar una conferència telefònica en aquesta sala"
     },
-    "Other": "Altres",
     "composer": {
         "placeholder_reply_encrypted": "Envia una resposta xifrada…",
         "placeholder_encrypted": "Envia un missatge xifrat…",
@@ -566,7 +564,8 @@
         "advanced": {
             "unfederated": "Aquesta sala no és accessible per a servidors de Matrix remots"
         },
-        "upload_avatar_label": "Puja l'avatar"
+        "upload_avatar_label": "Puja l'avatar",
+        "title": "Configuració de sala - %(roomName)s"
     },
     "auth": {
         "sign_in_with_sso": "Inicia sessió mitjançant la inscripció única (SSO)",
@@ -866,5 +865,8 @@
     },
     "lazy_loading": {
         "disabled_description1": "Prèviament has fet servir %(brand)s a %(host)s amb la càrrega mandrosa de membres activada. En aquesta versió la càrrega mandrosa està desactivada. Com que la memòria cau local no és compatible entre les dues versions, %(brand)s necessita tornar a sincronitzar el teu compte."
+    },
+    "report_content": {
+        "other_label": "Altres"
     }
 }

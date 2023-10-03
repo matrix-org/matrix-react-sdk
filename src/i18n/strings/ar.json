@@ -926,7 +926,6 @@
         "no_media_perms_title": "لا إذن للوسائط",
         "no_media_perms_description": "قد تحتاج إلى السماح يدويًا ل%(brand)s s بالوصول إلى الميكروفون / كاميرا الويب"
     },
-    "Other": "أخرى",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "تغيير صورة الغرفة",
@@ -1577,5 +1576,8 @@
     },
     "forward": {
         "send_label": "إرسال"
+    },
+    "report_content": {
+        "other_label": "أخرى"
     }
 }

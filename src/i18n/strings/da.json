@@ -603,7 +603,6 @@
         "m.text": "%(senderName)s: %(message)s",
         "m.sticker": "%(senderName)s: %(stickerName)s"
     },
-    "Other": "Andre",
     "composer": {
         "placeholder_reply": "Besvar…",
         "placeholder_encrypted": "Send en krypteret besked…",
@@ -889,5 +888,8 @@
     },
     "forward": {
         "send_label": "Send"
+    },
+    "report_content": {
+        "other_label": "Andre"
     }
 }

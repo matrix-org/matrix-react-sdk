@@ -50,8 +50,6 @@
     "Create new room": "Sukurti naują kambarį",
     "collapse": "suskleisti",
     "expand": "išskleisti",
-    "Failed to upgrade room": "Nepavyko atnaujinti kambario",
-    "The room upgrade could not be completed": "Nepavyko užbaigti kambario atnaujinimo",
     "Send Logs": "Siųsti žurnalus",
     "Unable to restore session": "Nepavyko atkurti seanso",
     "and %(count)s others...": {
@@ -67,8 +65,6 @@
     "No backup found!": "Nerasta jokios atsarginės kopijos!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepavyko iššifruoti %(failedCount)s seansų!",
     "%(items)s and %(lastItem)s": "%(items)s ir %(lastItem)s",
-    "Room Settings - %(roomName)s": "Kambario nustatymai - %(roomName)s",
-    "Upgrade public room": "Atnaujinti viešą kambarį",
     "Upload files (%(current)s of %(total)s)": "Įkelti failus (%(current)s iš %(total)s)",
     "Upload files": "Įkelti failus",
     "Upload all": "Įkelti visus",
@@ -81,7 +77,6 @@
     },
     "Cancel All": "Atšaukti visus",
     "Upload Error": "Įkėlimo klaida",
-    "Email (optional)": "El. paštas (neprivaloma)",
     "Command Help": "Komandų pagalba",
     "%(name)s accepted": "%(name)s priimtas",
     "%(name)s declined": "%(name)s atmestas",
@@ -168,8 +163,6 @@
     "a new cross-signing key signature": "naujas kryžminio pasirašymo rakto parašas",
     "a device cross-signing signature": "įrenginio kryžminio pasirašymo parašas",
     "IRC display name width": "IRC rodomo vardo plotis",
-    "Create a new room with the same name, description and avatar": "Sukurti naują kambarį su tuo pačiu pavadinimu, aprašymu ir pseudoportretu",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
     "To help us prevent this in future, please <a>send us logs</a>.": "Norėdami padėti mums išvengti to ateityje, <a>atsiųskite mums žurnalus</a>.",
     "Ask this user to verify their session, or manually verify it below.": "Paprašykite šio vartotojo patvirtinti savo seansą, arba patvirtinkite jį rankiniu būdu žemiau.",
     "Sign out and remove encryption keys?": "Atsijungti ir pašalinti šifravimo raktus?",
@@ -188,12 +181,6 @@
     "Share Room Message": "Bendrinti Kambario Žinutę",
     "Share Room": "Bendrinti Kambarį",
     "Join Room": "Prisijungti prie kambario",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
-    "Update any local room aliases to point to the new room": "Atnaujinkite vietinių kambarių slapyvardžius, kad nurodytumėte į naująjį kambarį",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Norint atnaujinti šį kambarį, reikia uždaryti esamą kambario instanciją ir vietoje jo sukurti naują kambarį. Norėdami suteikti kambario nariams kuo geresnę patirtį, mes:",
-    "Upgrade Room Version": "Atnaujinti Kambario Versiją",
-    "Upgrade this room to version %(version)s": "Atnaujinti šį kambarį į %(version)s versiją",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Naujojo kambario pradžioje įdėkite nuorodą į senąjį kambarį, kad žmonės galėtų matyti senas žinutes",
     "You signed in to a new session without verifying it:": "Jūs prisijungėte prie naujo seanso, jo nepatvirtinę:",
     "Ok": "Gerai",
     "Not Trusted": "Nepatikimas",
@@ -203,7 +190,6 @@
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
     "Security Phrase": "Slaptafrazė",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
     "Azerbaijan": "Azerbaidžanas",
     "Austria": "Austrija",
     "Australia": "Australija",
@@ -325,13 +311,6 @@
     "The server (%(serverName)s) took too long to respond.": "Serveris (%(serverName)s) užtruko per ilgai atsakydamas.",
     "Server isn't responding": "Serveris neatsako",
     "You're all caught up.": "Jūs jau viską pasivijote.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Atnaujinsite šį kambarį iš <oldVersion /> į <newVersion />.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Paprastai tai turi įtakos tik tam, kaip kambarys apdorojamas serveryje. Jei turite problemų su %(brand)s, praneškite apie klaidą.",
-    "Upgrade private room": "Atnaujinti privatų kambarį",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Įspėjame, kad nepridėję el. pašto ir pamiršę slaptažodį galite <b>visam laikui prarasti prieigą prie savo paskyros</b>.",
-    "Continuing without email": "Tęsiama be el. pašto",
-    "Data on this screen is shared with %(widgetDomain)s": "Duomenimis šiame ekrane yra dalinamasi su %(widgetDomain)s",
-    "Message edits": "Žinutės redagavimai",
     "%(brand)s encountered an error during upload of:": "%(brand)s aptiko klaidą įkeliant:",
     "a key signature": "rakto parašas",
     "a new master key signature": "naujas pagrindinio rakto parašas",
@@ -1711,7 +1690,6 @@
         "no_audio_input_title": "Mikrofonas nerastas",
         "no_audio_input_description": "Jūsų įrenginyje neradome mikrofono. Patikrinkite nustatymus ir bandykite dar kartą."
     },
-    "Other": "Kitas",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Keisti erdvės avatarą",
@@ -1862,7 +1840,22 @@
             "room_version_section": "Kambario versija",
             "room_version": "Kambario versija:",
             "information_section_space": "Erdvės informacija",
-            "information_section_room": "Kambario informacija"
+            "information_section_room": "Kambario informacija",
+            "error_upgrade_title": "Nepavyko atnaujinti kambario",
+            "error_upgrade_description": "Nepavyko užbaigti kambario atnaujinimo",
+            "upgrade_button": "Atnaujinti šį kambarį į %(version)s versiją",
+            "upgrade_dialog_title": "Atnaujinti Kambario Versiją",
+            "upgrade_dialog_description": "Norint atnaujinti šį kambarį, reikia uždaryti esamą kambario instanciją ir vietoje jo sukurti naują kambarį. Norėdami suteikti kambario nariams kuo geresnę patirtį, mes:",
+            "upgrade_dialog_description_1": "Sukurti naują kambarį su tuo pačiu pavadinimu, aprašymu ir pseudoportretu",
+            "upgrade_dialog_description_2": "Atnaujinkite vietinių kambarių slapyvardžius, kad nurodytumėte į naująjį kambarį",
+            "upgrade_dialog_description_3": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
+            "upgrade_dialog_description_4": "Naujojo kambario pradžioje įdėkite nuorodą į senąjį kambarį, kad žmonės galėtų matyti senas žinutes",
+            "upgrade_warning_dialog_title_private": "Atnaujinti privatų kambarį",
+            "upgrade_dwarning_ialog_title_public": "Atnaujinti viešą kambarį",
+            "upgrade_warning_dialog_report_bug_prompt": "Paprastai tai turi įtakos tik tam, kaip kambarys apdorojamas serveryje. Jei turite problemų su %(brand)s, praneškite apie klaidą.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
+            "upgrade_warning_dialog_description": "Kambario atnaujinimas yra sudėtingas veiksmas ir paprastai rekomenduojamas, kai kambarys nestabilus dėl klaidų, trūkstamų funkcijų ar saugos spragų.",
+            "upgrade_warning_dialog_footer": "Atnaujinsite šį kambarį iš <oldVersion /> į <newVersion />."
         },
         "delete_avatar_label": "Ištrinti avatarą",
         "upload_avatar_label": "Įkelti pseudoportretą",
@@ -1895,7 +1888,8 @@
             "notification_sound": "Pranešimo garsas",
             "custom_sound_prompt": "Nustatyti naują pasirinktinį garsą",
             "browse_button": "Naršyti"
-        }
+        },
+        "title": "Kambario nustatymai - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2162,6 +2156,11 @@
             "megolm_export": "Eksportuoti raktus rankiniu būdu",
             "setup_key_backup_title": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
             "description": "Ar tikrai norite atsijungti?"
+        },
+        "registration": {
+            "continue_without_email_title": "Tęsiama be el. pašto",
+            "continue_without_email_description": "Įspėjame, kad nepridėję el. pašto ir pamiršę slaptažodį galite <b>visam laikui prarasti prieigą prie savo paskyros</b>.",
+            "continue_without_email_field_label": "El. paštas (neprivaloma)"
         }
     },
     "room_list": {
@@ -2198,7 +2197,8 @@
     "report_content": {
         "missing_reason": "Įrašykite kodėl pranešate.",
         "report_content_to_homeserver": "Pranešti apie turinį serverio administratoriui",
-        "description": "Pranešant apie šią netinkamą žinutę, serverio administratoriui bus nusiųstas unikalus 'įvykio ID'. Jei žinutės šiame kambaryje yra šifruotos, serverio administratorius negalės perskaityti žinutės teksto ar peržiūrėti failų arba paveikslėlių."
+        "description": "Pranešant apie šią netinkamą žinutę, serverio administratoriui bus nusiųstas unikalus 'įvykio ID'. Jei žinutės šiame kambaryje yra šifruotos, serverio administratorius negalės perskaityti žinutės teksto ar peržiūrėti failų arba paveikslėlių.",
+        "other_label": "Kitas"
     },
     "a11y": {
         "n_unread_messages_mentions": {
@@ -2277,7 +2277,8 @@
         "popout": "Iššokti valdiklį",
         "unpin_to_view_right_panel": "Atsekite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
         "set_room_layout": "Nustatyti savo kambario išdėstymą visiems",
-        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje"
+        "close_to_view_right_panel": "Uždarykite šį valdiklį, kad galėtumėte jį peržiūrėti šiame skydelyje",
+        "modal_data_warning": "Duomenimis šiame ekrane yra dalinamasi su %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",
@@ -2874,5 +2875,6 @@
         "disabled_action": "Išvalyti talpyklą ir sinchronizuoti iš naujo",
         "resync_description": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
         "resync_title": "Atnaujinama %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Žinutės redagavimai"
 }

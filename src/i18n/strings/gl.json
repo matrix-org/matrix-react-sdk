@@ -80,7 +80,6 @@
     "Deactivate account": "Desactivar conta",
     "Command Help": "Comando Axuda",
     "To help us prevent this in future, please <a>send us logs</a>.": "Para axudarnos a evitar esto no futuro, envíanos <a>o rexistro</a>.",
-    "Room Settings - %(roomName)s": "Axustes da sala - %(roomName)s",
     "You signed in to a new session without verifying it:": "Conectácheste nunha nova sesión sen verificala:",
     "Verify your other session using one of the options below.": "Verifica a túa outra sesión usando unha das opcións inferiores.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) conectouse a unha nova sesión sen verificala:",
@@ -180,21 +179,6 @@
     "a device cross-signing signature": "unha sinatura sinatura-cruzada de dispositivo",
     "a key signature": "unha chave de sinatura",
     "%(brand)s encountered an error during upload of:": "%(brand)s atopou un fallo ao subir:",
-    "Message edits": "Edicións da mensaxe",
-    "Failed to upgrade room": "Fallou a actualización da sala",
-    "The room upgrade could not be completed": "A actualización da sala non se completou",
-    "Upgrade this room to version %(version)s": "Actualiza esta sala á versión %(version)s",
-    "Upgrade Room Version": "Actualiza a Versión da Sala",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Para actualizar a sala debes pechar a instancia actual da sala e crear unha nova sala no seu lugar. Para proporcionar a mellor experiencia de usuaria, imos:",
-    "Create a new room with the same name, description and avatar": "Crear unha nova sala co mesmo nome, descrición e avatar",
-    "Update any local room aliases to point to the new room": "Actualizar calquera alias local da sala para que apunte á nova sala",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Evitar que as usuarias conversen na sala antiga e publicar unha mensaxe avisando ás usuarias para que veñan á nova sala",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Poñer unha ligazón na nova sala cara a antiga para que as persoas poidan ver as mensaxes antigas",
-    "Upgrade private room": "Actualizar sala privada",
-    "Upgrade public room": "Actualizar sala pública",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "A actualización da sala é unha acción avanzada e recomendada cando unha sala se volta inestable debido aos fallos, características obsoletas e vulnerabilidades da seguridade.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Esto normalmente só afecta ao xeito en que a sala se procesa no servidor. Se tes problemas con %(brand)s, <a>informa do problema</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Vas actualizar a sala da versión <oldVersion /> á <newVersion />.",
     "Missing session data": "Faltan datos da sesión",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Faltan algúns datos da sesión, incluíndo chaves de mensaxes cifradas. Sae e volve a entrar para arranxalo, restaurando as chaves desde a copia.",
     "Your browser likely removed this data when running low on disk space.": "O navegador probablemente eliminou estos datos ao quedar con pouco espazo de disco.",
@@ -224,7 +208,6 @@
     "Successfully restored %(sessionCount)s keys": "Restablecidas correctamente %(sessionCount)s chaves",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Aviso</b>: só deberías realizar a copia de apoio desde un ordenador de confianza.",
     "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reacción(s)",
-    "Email (optional)": "Email (optativo)",
     "Switch theme": "Cambiar decorado",
     "Confirm encryption setup": "Confirma os axustes de cifrado",
     "Click the button below to confirm setting up encryption.": "Preme no botón inferior para confirmar os axustes do cifrado.",
@@ -248,8 +231,6 @@
     "Not encrypted": "Sen cifrar",
     "Backup version:": "Versión da copia:",
     "Unable to set up keys": "Non se puideron configurar as chaves",
-    "Data on this screen is shared with %(widgetDomain)s": "Os datos nesta pantalla compártense con %(widgetDomain)s",
-    "Modal Widget": "Widget modal",
     "Barbados": "Barbados",
     "Bangladesh": "Bangladesh",
     "Bahrain": "Bahrain",
@@ -502,8 +483,6 @@
     "Decline All": "Rexeitar todo",
     "This widget would like to:": "O widget podería querer:",
     "Approve widget permissions": "Aprovar permisos do widget",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
-    "Continuing without email": "Continuando sen email",
     "Hold": "Colgar",
     "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se esqueceches a túa Chave de Seguridade podes <button>establecer novas opcións de recuperación</button>",
@@ -536,7 +515,6 @@
         "one": "%(count)s sala",
         "other": "%(count)s salas"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Normalmente esto só afecta a como se xestiona a sala no servidor. Se tes problemas co teu %(brand)s, informa do fallo.",
     "Reset event store?": "Restablecer almacenaxe do evento?",
     "You most likely do not want to reset your event index store": "Probablemente non queiras restablecer o índice de almacenaxe do evento",
     "%(count)s people you know have already joined": {
@@ -549,8 +527,6 @@
     "Reset everything": "Restablecer todo",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
-    "Automatically invite members from this room to the new one": "Convidar automáticamente membros desta sala á nova sala",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "%(count)s reply": {
         "one": "%(count)s resposta",
@@ -2310,7 +2286,6 @@
         "no_audio_input_description": "Non atopamos ningún micrófono no teu dispositivo. Comproba os axustes e proba outra vez.",
         "transfer_consult_first_label": "Preguntar primeiro"
     },
-    "Other": "Outro",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Cambiar o avatar do espazo",
@@ -2479,7 +2454,24 @@
             "room_version_section": "Versión da sala",
             "room_version": "Versión da sala:",
             "information_section_space": "Información do Espazo",
-            "information_section_room": "Información da sala"
+            "information_section_room": "Información da sala",
+            "error_upgrade_title": "Fallou a actualización da sala",
+            "error_upgrade_description": "A actualización da sala non se completou",
+            "upgrade_button": "Actualiza esta sala á versión %(version)s",
+            "upgrade_dialog_title": "Actualiza a Versión da Sala",
+            "upgrade_dialog_description": "Para actualizar a sala debes pechar a instancia actual da sala e crear unha nova sala no seu lugar. Para proporcionar a mellor experiencia de usuaria, imos:",
+            "upgrade_dialog_description_1": "Crear unha nova sala co mesmo nome, descrición e avatar",
+            "upgrade_dialog_description_2": "Actualizar calquera alias local da sala para que apunte á nova sala",
+            "upgrade_dialog_description_3": "Evitar que as usuarias conversen na sala antiga e publicar unha mensaxe avisando ás usuarias para que veñan á nova sala",
+            "upgrade_dialog_description_4": "Poñer unha ligazón na nova sala cara a antiga para que as persoas poidan ver as mensaxes antigas",
+            "upgrade_warning_dialog_invite_label": "Convidar automáticamente membros desta sala á nova sala",
+            "upgrade_warning_dialog_title_private": "Actualizar sala privada",
+            "upgrade_dwarning_ialog_title_public": "Actualizar sala pública",
+            "upgrade_warning_dialog_report_bug_prompt": "Normalmente esto só afecta a como se xestiona a sala no servidor. Se tes problemas co teu %(brand)s, informa do fallo.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Esto normalmente só afecta ao xeito en que a sala se procesa no servidor. Se tes problemas con %(brand)s, <a>informa do problema</a>.",
+            "upgrade_warning_dialog_description": "A actualización da sala é unha acción avanzada e recomendada cando unha sala se volta inestable debido aos fallos, características obsoletas e vulnerabilidades da seguridade.",
+            "upgrade_warning_dialog_explainer": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
+            "upgrade_warning_dialog_footer": "Vas actualizar a sala da versión <oldVersion /> á <newVersion />."
         },
         "delete_avatar_label": "Eliminar avatar",
         "upload_avatar_label": "Subir avatar",
@@ -2512,7 +2504,8 @@
             "notification_sound": "Ton de notificación",
             "custom_sound_prompt": "Establecer novo ton personalizado",
             "browse_button": "Buscar"
-        }
+        },
+        "title": "Axustes da sala - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2856,6 +2849,11 @@
             "megolm_export": "Exportar manualmente as chaves",
             "setup_key_backup_title": "Perderás o acceso as túas mensaxes cifradas",
             "description": "Tes a certeza de querer saír?"
+        },
+        "registration": {
+            "continue_without_email_title": "Continuando sen email",
+            "continue_without_email_description": "Lembra que se non engades un email e esqueces o contrasinal <b>perderás de xeito permanente o acceso á conta</b>.",
+            "continue_without_email_field_label": "Email (optativo)"
         }
     },
     "room_list": {
@@ -2907,7 +2905,8 @@
         "spam_or_propaganda": "Spam ou propaganda",
         "report_entire_room": "Denunciar a toda a sala",
         "report_content_to_homeserver": "Denuncia sobre contido á Administración do teu servidor",
-        "description": "Ao denunciar esta mensaxe vasnos enviar o seu 'event ID' único á administración do servidor. Se as mensaxes da sala están cifradas, a administración do servidor non poderá ler o texto da mensaxe ou ver imaxes ou ficheiros."
+        "description": "Ao denunciar esta mensaxe vasnos enviar o seu 'event ID' único á administración do servidor. Se as mensaxes da sala están cifradas, a administración do servidor non poderá ler o texto da mensaxe ou ver imaxes ou ficheiros.",
+        "other_label": "Outro"
     },
     "setting": {
         "help_about": {
@@ -3021,7 +3020,9 @@
         "popout": "trebello emerxente",
         "unpin_to_view_right_panel": "Desafixar este widget para velo neste panel",
         "set_room_layout": "Establecer a miña disposición da sala para todas",
-        "close_to_view_right_panel": "Pecha este widget para velo neste panel"
+        "close_to_view_right_panel": "Pecha este widget para velo neste panel",
+        "modal_title_default": "Widget modal",
+        "modal_data_warning": "Os datos nesta pantalla compártense con %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3873,5 +3874,6 @@
         "disabled_action": "Baleirar caché e sincronizar",
         "resync_description": "%(brand)s utiliza agora entre 3 e 5 veces menos memoria, cargando só información sobre as usuarias cando é preciso. Agarda mentras se sincroniza co servidor!",
         "resync_title": "Actualizando %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Edicións da mensaxe"
 }

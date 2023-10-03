@@ -74,20 +74,11 @@
     "Share User": "Felhasználó megosztása",
     "Share Room Message": "Szoba üzenetének megosztása",
     "Link to selected message": "Hivatkozás a kijelölt üzenethez",
-    "Upgrade Room Version": "Szoba verziójának fejlesztése",
-    "Create a new room with the same name, description and avatar": "Új szoba készítése ugyanazzal a névvel, leírással és profilképpel",
-    "Update any local room aliases to point to the new room": "A helyi szobaálnevek frissítése, hogy az új szobára mutassanak",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "A felhasználók megakadályozása, hogy a régi szobában beszélgessenek, és üzenet küldése, hogy menjenek át az új szobába",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "A régi szobára mutató hivatkozás beszúrása a új szoba elejére, hogy az emberek lássák a régi üzeneteket",
-    "Failed to upgrade room": "A szoba fejlesztése sikertelen",
-    "The room upgrade could not be completed": "A szoba fejlesztését nem sikerült befejezni",
-    "Upgrade this room to version %(version)s": "A szoba fejlesztése erre a verzióra: %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Mielőtt a naplót elküldöd, egy <a>Github jegyet kell nyitni</a> amiben leírod a problémádat.",
     "Unable to load backup status": "A mentés állapotát nem lehet lekérdezni",
     "Unable to restore backup": "A mentést nem lehet helyreállítani",
     "No backup found!": "Mentés nem található!",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s kapcsolatot nem lehet visszafejteni!",
-    "Email (optional)": "E-mail (nem kötelező)",
     "Dog": "Kutya",
     "Cat": "Macska",
     "Lion": "Oroszlán",
@@ -151,7 +142,6 @@
     "Folder": "Dosszié",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Figyelmeztetés</b>: csak biztonságos számítógépről állítson be kulcsmentést.",
     "Scissors": "Olló",
-    "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
     "Remember my selection for this widget": "A döntés megjegyzése ehhez a kisalkalmazáshoz",
     "Sign out and remove encryption keys?": "Kilépés és a titkosítási kulcsok törlése?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Segítsen abban, hogy ez később ne fordulhasson elő, <a>küldje el nekünk a naplókat</a>.",
@@ -171,8 +161,6 @@
     "Upload Error": "Feltöltési hiba",
     "edited": "szerkesztve",
     "Upload all": "Összes feltöltése",
-    "Message edits": "Üzenetszerkesztések",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "A szoba fejlesztéséhez be kell zárnia ezt a szobát, és egy újat kell létrehoznia helyette. Hogy a szoba tagjai számára a lehető legjobb legyen a felhasználói élmény, a következők lépések lesznek végrehajtva:",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reakció újraküldése",
     "Find others by phone or email": "Keressen meg másokat telefonszám vagy e-mail-cím alapján",
     "Be found by phone or email": "Találják meg telefonszám vagy e-mail-cím alapján",
@@ -184,11 +172,6 @@
     "%(name)s wants to verify": "%(name)s ellenőrizni szeretné",
     "Failed to connect to integration manager": "Az integrációs menedzserhez nem sikerült csatlakozni",
     "Verification Request": "Ellenőrzési kérés",
-    "Upgrade private room": "Privát szoba fejlesztése",
-    "Upgrade public room": "Nyilvános szoba fejlesztése",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "A szoba frissítése nem egyszerű művelet, általában a szoba hibás működése, hiányzó funkció vagy biztonsági sérülékenység esetén javasolt.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Ez általában a szoba kiszolgálóoldali kezelésében jelent változást. Ha a(z) %(brand)s kliensben tapasztal problémát, akkor <a>küldjön egy hibajelentést</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "<oldVersion /> verzióról <newVersion /> verzióra fogja fejleszteni a szobát.",
     "%(count)s verified sessions": {
         "other": "%(count)s ellenőrzött munkamenet",
         "one": "1 ellenőrzött munkamenet"
@@ -248,8 +231,6 @@
     "Not encrypted": "Nem titkosított",
     "Backup version:": "Mentés verziója:",
     "Unable to set up keys": "Nem sikerült a kulcsok beállítása",
-    "Data on this screen is shared with %(widgetDomain)s": "Az ezen a képernyőn látható adatok megosztásra kerülnek ezzel: %(widgetDomain)s",
-    "Modal Widget": "Előugró kisalkalmazás",
     "Bermuda": "Bermuda",
     "Benin": "Benin",
     "Belize": "Belize",
@@ -504,8 +485,6 @@
     "Decline All": "Összes elutasítása",
     "This widget would like to:": "A kisalkalmazás ezeket szeretné:",
     "Approve widget permissions": "Kisalkalmazás-engedélyek elfogadása",
-    "Continuing without email": "Folytatás e-mail-cím nélkül",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ha elfelejtette a biztonsági kulcsot, <button>állítson be új helyreállítási lehetőséget</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "A biztonsági kulcs megadásával hozzáférhet a régi biztonságos üzeneteihez és beállíthatja a biztonságos üzenetküldést.",
     "Not a valid Security Key": "Érvénytelen biztonsági kulcs",
@@ -536,7 +515,6 @@
         "one": "%(count)s szoba",
         "other": "%(count)s szoba"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Ez általában a szoba kiszolgálóoldali kezelésében jelent változást. Ha a(z) %(brand)s kliensben tapasztal problémát, akkor küldjön egy hibajelentést.",
     "Reset event store": "Az eseménytároló alaphelyzetbe állítása",
     "You most likely do not want to reset your event index store": "Az eseményindex-tárolót nagy valószínűséggel nem szeretné alaphelyzetbe állítani",
     "Reset event store?": "Alaphelyzetbe állítja az eseménytárolót?",
@@ -549,8 +527,6 @@
     "Reset everything": "Minden alaphelyzetbe állítása",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
-    "Automatically invite members from this room to the new one": "Tagok automatikus meghívása ebből a szobából az újba",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
     "%(count)s reply": {
         "one": "%(count)s válasz",
@@ -2529,7 +2505,6 @@
         "no_audio_input_description": "Nem található mikrofon. Ellenőrizze a beállításokat és próbálja újra.",
         "transfer_consult_first_label": "Kérjen először véleményt"
     },
-    "Other": "Egyéb",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Tér profilképének megváltoztatása",
@@ -2704,7 +2679,24 @@
             "room_version_section": "Szoba verziója",
             "room_version": "Szoba verziója:",
             "information_section_space": "Tér információi",
-            "information_section_room": "Szobainformációk"
+            "information_section_room": "Szobainformációk",
+            "error_upgrade_title": "A szoba fejlesztése sikertelen",
+            "error_upgrade_description": "A szoba fejlesztését nem sikerült befejezni",
+            "upgrade_button": "A szoba fejlesztése erre a verzióra: %(version)s",
+            "upgrade_dialog_title": "Szoba verziójának fejlesztése",
+            "upgrade_dialog_description": "A szoba fejlesztéséhez be kell zárnia ezt a szobát, és egy újat kell létrehoznia helyette. Hogy a szoba tagjai számára a lehető legjobb legyen a felhasználói élmény, a következők lépések lesznek végrehajtva:",
+            "upgrade_dialog_description_1": "Új szoba készítése ugyanazzal a névvel, leírással és profilképpel",
+            "upgrade_dialog_description_2": "A helyi szobaálnevek frissítése, hogy az új szobára mutassanak",
+            "upgrade_dialog_description_3": "A felhasználók megakadályozása, hogy a régi szobában beszélgessenek, és üzenet küldése, hogy menjenek át az új szobába",
+            "upgrade_dialog_description_4": "A régi szobára mutató hivatkozás beszúrása a új szoba elejére, hogy az emberek lássák a régi üzeneteket",
+            "upgrade_warning_dialog_invite_label": "Tagok automatikus meghívása ebből a szobából az újba",
+            "upgrade_warning_dialog_title_private": "Privát szoba fejlesztése",
+            "upgrade_dwarning_ialog_title_public": "Nyilvános szoba fejlesztése",
+            "upgrade_warning_dialog_report_bug_prompt": "Ez általában a szoba kiszolgálóoldali kezelésében jelent változást. Ha a(z) %(brand)s kliensben tapasztal problémát, akkor küldjön egy hibajelentést.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Ez általában a szoba kiszolgálóoldali kezelésében jelent változást. Ha a(z) %(brand)s kliensben tapasztal problémát, akkor <a>küldjön egy hibajelentést</a>.",
+            "upgrade_warning_dialog_description": "A szoba frissítése nem egyszerű művelet, általában a szoba hibás működése, hiányzó funkció vagy biztonsági sérülékenység esetén javasolt.",
+            "upgrade_warning_dialog_explainer": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
+            "upgrade_warning_dialog_footer": "<oldVersion /> verzióról <newVersion /> verzióra fogja fejleszteni a szobát."
         },
         "delete_avatar_label": "Profilkép törlése",
         "upload_avatar_label": "Profilkép feltöltése",
@@ -2744,7 +2736,8 @@
             "enable_element_call_caption": "%(brand)s végpontok között titkosított de jelenleg csak kevés számú résztvevővel működik.",
             "enable_element_call_no_permissions_tooltip": "Nincs megfelelő jogosultság a megváltoztatáshoz.",
             "call_type_section": "Hívás típusa"
-        }
+        },
+        "title": "Szoba beállításai – %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3146,6 +3139,11 @@
             "megolm_export": "Kulcsok kézi mentése",
             "setup_key_backup_title": "Elveszted a hozzáférést a titkosított üzeneteidhez",
             "description": "Biztos, hogy ki akarsz jelentkezni?"
+        },
+        "registration": {
+            "continue_without_email_title": "Folytatás e-mail-cím nélkül",
+            "continue_without_email_description": "Csak egy figyelmeztetés, ha nem ad meg e-mail-címet, és elfelejti a jelszavát, akkor <b>véglegesen elveszíti a hozzáférést a fiókjához</b>.",
+            "continue_without_email_field_label": "E-mail (nem kötelező)"
         }
     },
     "room_list": {
@@ -3200,7 +3198,8 @@
         "spam_or_propaganda": "Kéretlen tartalom vagy propaganda",
         "report_entire_room": "Az egész szoba jelentése",
         "report_content_to_homeserver": "Tartalom bejelentése a Matrix-kiszolgáló rendszergazdájának",
-        "description": "Az üzenet bejelentése egy egyedi „eseményazonosítót” küld el a Matrix-kiszolgáló rendszergazdájának. Ha az üzenetek titkosítottak a szobában, akkor a Matrix-kiszolgáló rendszergazdája nem tudja elolvasni az üzenetet, vagy nem tudja megnézni a fájlokat vagy képeket."
+        "description": "Az üzenet bejelentése egy egyedi „eseményazonosítót” küld el a Matrix-kiszolgáló rendszergazdájának. Ha az üzenetek titkosítottak a szobában, akkor a Matrix-kiszolgáló rendszergazdája nem tudja elolvasni az üzenetet, vagy nem tudja megnézni a fájlokat vagy képeket.",
+        "other_label": "Egyéb"
     },
     "setting": {
         "help_about": {
@@ -3316,7 +3315,9 @@
         "popout": "Kiugró kisalkalmazás",
         "unpin_to_view_right_panel": "Kisalkalmazás rögzítésének megszüntetése az ezen a panelen való megjelenítéshez",
         "set_room_layout": "A szoba megjelenésének beállítása mindenki számára",
-        "close_to_view_right_panel": "Kisalkalmazás bezárása ezen a panelen való megjelenítéshez"
+        "close_to_view_right_panel": "Kisalkalmazás bezárása ezen a panelen való megjelenítéshez",
+        "modal_title_default": "Előugró kisalkalmazás",
+        "modal_data_warning": "Az ezen a képernyőn látható adatok megosztásra kerülnek ezzel: %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Visszajelzés elküldve",
@@ -4275,5 +4276,6 @@
         "disabled_action": "Gyorsítótár törlése és újraszinkronizálás",
         "resync_description": "Az %(brand)s harmad-ötöd annyi memóriát használ azáltal, hogy csak akkor tölti be a felhasználók információit, amikor az szükséges. Kis türelmet, amíg megtörténik az újbóli szinkronizálás a kiszolgálóval.",
         "resync_title": "%(brand)s frissítése"
-    }
+    },
+    "message_edit_dialog_title": "Üzenetszerkesztések"
 }

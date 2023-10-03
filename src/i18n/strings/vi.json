@@ -75,30 +75,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Máy chủ của bạn không phản hồi một số yêu cầu của bạn. Dưới đây là một số lý do có thể xảy ra nhất.",
     "Server isn't responding": "Máy chủ không phản hồi",
     "You're all caught up.": "Bạn đã bắt kịp tất cả.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Bạn sẽ nâng cấp phòng này từ <oldVersion /> thành <newVersion />.",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b> Xin lưu ý rằng việc nâng cấp sẽ tạo ra một phiên bản mới của phòng </b>. Tất cả các tin nhắn hiện tại sẽ ở trong phòng lưu trữ này.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Nâng cấp phòng là một hành động nâng cao và thường được khuyến nghị khi phòng không ổn định do lỗi, thiếu tính năng hoặc lỗ hổng bảo mật.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Điều này thường chỉ ảnh hưởng đến cách xử lý phòng trên máy chủ. Nếu bạn đang gặp sự cố với %(brand)s của mình, vui lòng báo cáo lỗi <a>report a bug</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Điều này thường chỉ ảnh hưởng đến cách xử lý phòng trên máy chủ. Nếu bạn đang gặp sự cố với %(brand)s của mình, vui lòng báo cáo lỗi.",
-    "Upgrade public room": "Nâng cấp phòng công cộng",
-    "Upgrade private room": "Nâng cấp phòng riêng tư",
-    "Automatically invite members from this room to the new one": "Tự động mời các thành viên từ phòng này đến phòng mới",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Đặt một liên kết trở lại phòng cũ ở đầu phòng mới để mọi người có thể xem các tin nhắn cũ",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Ngăn người dùng nói trong phiên bản cũ của phòng và đăng thông báo khuyên người dùng chuyển sang phòng mới",
-    "Update any local room aliases to point to the new room": "Cập nhật bất kỳ bí danh phòng cục bộ nào để trỏ đến phòng mới",
-    "Create a new room with the same name, description and avatar": "Tạo một phòng mới có cùng tên, mô tả và hình đại diện",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Nâng cấp phòng này yêu cầu đóng cửa phiên bản hiện tại của phòng và tạo một phòng mới ở vị trí của nó. Để mang đến cho các thành viên trong phòng trải nghiệm tốt nhất có thể, chúng tôi sẽ:",
-    "Upgrade Room Version": "Nâng cấp phiên bản phòng",
-    "Upgrade this room to version %(version)s": "Nâng cấp phòng này lên phiên bản %(version)s",
-    "The room upgrade could not be completed": "Không thể hoàn thành việc nâng cấp phòng",
-    "Failed to upgrade room": "Không nâng cấp được phòng",
-    "Room Settings - %(roomName)s": "Cài đặt Phòng - %(roomName)s",
-    "Email (optional)": "Địa chỉ thư điện tử (tùy chọn)",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Lưu ý là nếu bạn không thêm địa chỉ thư điện tử và quên mật khẩu, bạn có thể <b>vĩnh viễn mất quyền truy cập vào tài khoản của mình</b>.",
-    "Continuing without email": "Tiếp tục mà không cần địa chỉ thư điện tử",
-    "Data on this screen is shared with %(widgetDomain)s": "Dữ liệu trên màn hình này được chia sẻ với %(widgetDomain)s",
-    "Modal Widget": "widget phương thức",
-    "Message edits": "Chỉnh sửa tin nhắn",
     "%(count)s rooms": {
         "one": "%(count)s phòng",
         "other": "%(count)s phòng"
@@ -2434,7 +2410,6 @@
         "no_audio_input_description": "Chúng tôi không tìm thấy micrô trên thiết bị của bạn. Vui lòng kiểm tra các thiết lập của bạn và thử lại.",
         "transfer_consult_first_label": "Tư vấn trước"
     },
-    "Other": "Khác",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Đổi ảnh đại diện của không gian",
@@ -2612,7 +2587,24 @@
             "room_version_section": "Phiên bản phòng",
             "room_version": "Phiên bản phòng:",
             "information_section_space": "Thông tin Space",
-            "information_section_room": "Thông tin phòng"
+            "information_section_room": "Thông tin phòng",
+            "error_upgrade_title": "Không nâng cấp được phòng",
+            "error_upgrade_description": "Không thể hoàn thành việc nâng cấp phòng",
+            "upgrade_button": "Nâng cấp phòng này lên phiên bản %(version)s",
+            "upgrade_dialog_title": "Nâng cấp phiên bản phòng",
+            "upgrade_dialog_description": "Nâng cấp phòng này yêu cầu đóng cửa phiên bản hiện tại của phòng và tạo một phòng mới ở vị trí của nó. Để mang đến cho các thành viên trong phòng trải nghiệm tốt nhất có thể, chúng tôi sẽ:",
+            "upgrade_dialog_description_1": "Tạo một phòng mới có cùng tên, mô tả và hình đại diện",
+            "upgrade_dialog_description_2": "Cập nhật bất kỳ bí danh phòng cục bộ nào để trỏ đến phòng mới",
+            "upgrade_dialog_description_3": "Ngăn người dùng nói trong phiên bản cũ của phòng và đăng thông báo khuyên người dùng chuyển sang phòng mới",
+            "upgrade_dialog_description_4": "Đặt một liên kết trở lại phòng cũ ở đầu phòng mới để mọi người có thể xem các tin nhắn cũ",
+            "upgrade_warning_dialog_invite_label": "Tự động mời các thành viên từ phòng này đến phòng mới",
+            "upgrade_warning_dialog_title_private": "Nâng cấp phòng riêng tư",
+            "upgrade_dwarning_ialog_title_public": "Nâng cấp phòng công cộng",
+            "upgrade_warning_dialog_report_bug_prompt": "Điều này thường chỉ ảnh hưởng đến cách xử lý phòng trên máy chủ. Nếu bạn đang gặp sự cố với %(brand)s của mình, vui lòng báo cáo lỗi.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Điều này thường chỉ ảnh hưởng đến cách xử lý phòng trên máy chủ. Nếu bạn đang gặp sự cố với %(brand)s của mình, vui lòng báo cáo lỗi <a>report a bug</a>.",
+            "upgrade_warning_dialog_description": "Nâng cấp phòng là một hành động nâng cao và thường được khuyến nghị khi phòng không ổn định do lỗi, thiếu tính năng hoặc lỗ hổng bảo mật.",
+            "upgrade_warning_dialog_explainer": "<b> Xin lưu ý rằng việc nâng cấp sẽ tạo ra một phiên bản mới của phòng </b>. Tất cả các tin nhắn hiện tại sẽ ở trong phòng lưu trữ này.",
+            "upgrade_warning_dialog_footer": "Bạn sẽ nâng cấp phòng này từ <oldVersion /> thành <newVersion />."
         },
         "delete_avatar_label": "Xoá ảnh đại diện",
         "upload_avatar_label": "Tải lên hình đại diện",
@@ -2652,7 +2644,8 @@
             "enable_element_call_caption": "%(brand)s được mã hóa đầu cuối, nhưng hiện giới hạn cho một lượng người dùng nhỏ.",
             "enable_element_call_no_permissions_tooltip": "Bạn không có đủ quyền để thay đổi cái này.",
             "call_type_section": "Loại cuộc gọi"
-        }
+        },
+        "title": "Cài đặt Phòng - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3016,6 +3009,11 @@
             "megolm_export": "Xuất các khóa thủ công",
             "setup_key_backup_title": "Bạn sẽ mất quyền truy cập vào các tin nhắn được mã hóa của mình",
             "description": "Bạn có chắc mình muốn đăng xuất không?"
+        },
+        "registration": {
+            "continue_without_email_title": "Tiếp tục mà không cần địa chỉ thư điện tử",
+            "continue_without_email_description": "Lưu ý là nếu bạn không thêm địa chỉ thư điện tử và quên mật khẩu, bạn có thể <b>vĩnh viễn mất quyền truy cập vào tài khoản của mình</b>.",
+            "continue_without_email_field_label": "Địa chỉ thư điện tử (tùy chọn)"
         }
     },
     "room_list": {
@@ -3066,7 +3064,8 @@
         "spam_or_propaganda": "Thư rác hoặc tuyên truyền",
         "report_entire_room": "Báo cáo toàn bộ phòng",
         "report_content_to_homeserver": "Báo cáo Nội dung cho Quản trị viên Máy chủ Trang chủ của Bạn",
-        "description": "Báo cáo thông báo này sẽ gửi 'ID sự kiện' duy nhất của nó đến quản trị viên của máy chủ của bạn. Nếu tin nhắn trong phòng này được mã hóa, quản trị viên máy chủ của bạn sẽ không thể đọc nội dung tin nhắn hoặc xem bất kỳ tệp hoặc hình ảnh nào."
+        "description": "Báo cáo thông báo này sẽ gửi 'ID sự kiện' duy nhất của nó đến quản trị viên của máy chủ của bạn. Nếu tin nhắn trong phòng này được mã hóa, quản trị viên máy chủ của bạn sẽ không thể đọc nội dung tin nhắn hoặc xem bất kỳ tệp hoặc hình ảnh nào.",
+        "other_label": "Khác"
     },
     "setting": {
         "help_about": {
@@ -3184,7 +3183,9 @@
         "popout": "Tiện ích bật ra",
         "unpin_to_view_right_panel": "Bỏ ghim widget này để xem nó trong bảng điều khiển này",
         "set_room_layout": "Đặt bố cục phòng của tôi cho mọi người",
-        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này"
+        "close_to_view_right_panel": "Đóng widget này để xem nó trong bảng điều khiển này",
+        "modal_title_default": "widget phương thức",
+        "modal_data_warning": "Dữ liệu trên màn hình này được chia sẻ với %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -4070,5 +4071,6 @@
         "disabled_action": "Xóa bộ nhớ cache và đồng bộ hóa lại",
         "resync_description": "%(brand)s hiện sử dụng bộ nhớ ít hơn 3-5 lần, bằng cách chỉ tải thông tin về những người dùng khác khi cần thiết. Vui lòng đợi trong khi chúng tôi đồng bộ hóa lại với máy chủ!",
         "resync_title": "Đang cập nhật %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Chỉnh sửa tin nhắn"
 }

@@ -379,7 +379,6 @@
         "category_other": "drata",
         "widget_screenshots": "lo du'u xu kau kakne lo nu co'a pixra lo uidje kei lo nu kakne tu'a .ubu"
     },
-    "Other": "drata",
     "composer": {
         "placeholder_reply_encrypted": "nu pa mifra be pa jai te spuda cu zilbe'i",
         "placeholder_reply": "nu pa jai te spuda cu zilbe'i",
@@ -549,5 +548,8 @@
     },
     "forward": {
         "send_label": "nu zilbe'i"
+    },
+    "report_content": {
+        "other_label": "drata"
     }
 }

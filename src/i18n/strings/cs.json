@@ -65,11 +65,6 @@
     "Yesterday": "Včera",
     "Wednesday": "Středa",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
-    "Upgrade Room Version": "Aktualizovat verzi místnosti",
-    "Create a new room with the same name, description and avatar": "Vznikne místnost se stejným názvem, popisem a avatarem",
-    "Update any local room aliases to point to the new room": "Aktualizujeme všechny lokální aliasy místnosti tak, aby ukazovaly na novou místnost",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Přerušíme konverzace ve staré verzi místnosti a pošleme uživatelům zprávu o přechodu do nové mistnosti",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Na začátek nové místnosti umístíme odkaz na starou místnost tak, aby uživatelé mohli vidět staré zprávy",
     "Clear Storage and Sign Out": "Vymazat uložiště a odhlásit se",
     "Send Logs": "Odeslat záznamy",
     "We encountered an error trying to restore your previous session.": "V průběhu obnovování Vaší minulé relace nastala chyba.",
@@ -79,9 +74,6 @@
     "Share User": "Sdílet uživatele",
     "Share Room Message": "Sdílet zprávu z místnosti",
     "Link to selected message": "Odkaz na vybranou zprávu",
-    "Failed to upgrade room": "Nezdařilo se aktualizovat místnost",
-    "The room upgrade could not be completed": "Nepodařilo se dokončit aktualizaci místnosti",
-    "Upgrade this room to version %(version)s": "Aktualizace místnosti na verzi %(version)s",
     "Dog": "Pes",
     "Cat": "Kočka",
     "Lion": "Lev",
@@ -149,9 +141,7 @@
     "No backup found!": "Nenalezli jsme žádnou zálohu!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepovedlo se rozšifrovat %(failedCount)s sezení!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Uporoznění</b>: záloha by měla být prováděna na důvěryhodném počítači.",
-    "Email (optional)": "E-mail (nepovinné)",
     "Scissors": "Nůžky",
-    "Room Settings - %(roomName)s": "Nastavení místnosti - %(roomName)s",
     "edited": "upraveno",
     "Sign out and remove encryption keys?": "Odhlásit a odstranit šifrovací klíče?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Abychom tomu mohli pro příště předejít, <a>pošlete nám prosím záznamy</a>.",
@@ -171,8 +161,6 @@
     "Upload Error": "Chyba při nahrávání",
     "Remember my selection for this widget": "Zapamatovat si volbu pro tento widget",
     "Deactivate account": "Deaktivace účtu",
-    "Message edits": "Úpravy zpráv",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizace této místnosti vyžaduje uzavření stávající místnosti a vytvoření nové místnosti, která ji nahradí. Pro usnadnění procesu pro členy místnosti, provedeme:",
     "Command Help": "Nápověda příkazu",
     "Find others by phone or email": "Najít ostatní pomocí e-mailu nebo telefonu",
     "Be found by phone or email": "Umožnit ostatním mě nalézt pomocí e-mailu nebo telefonu",
@@ -183,11 +171,6 @@
     "Upload all": "Nahrát vše",
     "Resend %(unsentCount)s reaction(s)": "Poslat %(unsentCount)s reakcí znovu",
     "Failed to connect to integration manager": "Nepovedlo se připojit ke správci integrací",
-    "Upgrade private room": "Aktualizovat soukromou místnost",
-    "Upgrade public room": "Aktualizovat veřejnou místnost",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Upgradování místnosti je pokročilá operace a je doporučeno jí provést pokud je místnost nestabilní kvůli chybám, chybějícím funkcím nebo zranitelnostem.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Toto obvykle ovlivňuje pouze zpracovávání místnosti na serveru. Pokud máte problém s %(brand)sem, <a>nahlaste nám ho prosím</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Místnost bude povýšena z verze <oldVersion /> na verzi <newVersion />.",
     "Verification Request": "Požadavek na ověření",
     "%(count)s verified sessions": {
         "other": "%(count)s ověřených relací",
@@ -490,22 +473,18 @@
     "Nauru": "Nauru",
     "Namibia": "Namibie",
     "Security Phrase": "Bezpečnostní fráze",
-    "Data on this screen is shared with %(widgetDomain)s": "Data na této obrazovce jsou sdílena s %(widgetDomain)s",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Jen upozornění, pokud nepřidáte e-mail a zapomenete heslo, můžete <b>trvale ztratit přístup ke svému účtu</b>.",
     "Your area is experiencing difficulties connecting to the internet.": "Ve vaší oblasti dochází k problémům s připojením k internetu.",
     "A connection error occurred while trying to contact the server.": "Při pokusu o kontakt se serverem došlo k chybě připojení.",
     "The server is not configured to indicate what the problem is (CORS).": "Server není nakonfigurován tak, aby indikoval, v čem je problém (CORS).",
     "Recent changes that have not yet been received": "Nedávné změny, které dosud nebyly přijaty",
     "Restoring keys from backup": "Obnovení klíčů ze zálohy",
     "%(completed)s of %(total)s keys restored": "Obnoveno %(completed)s z %(total)s klíčů",
-    "Continuing without email": "Pokračuje se bez e-mailu",
     "A browser extension is preventing the request.": "Rozšíření prohlížeče brání požadavku.",
     "Your firewall or anti-virus is blocking the request.": "Váš firewall nebo antivirový program blokuje požadavek.",
     "The server (%(serverName)s) took too long to respond.": "Serveru (%(serverName)s) trvalo příliš dlouho, než odpověděl.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Váš server neodpovídá na některé vaše požadavky. Níže jsou některé z nejpravděpodobnějších důvodů.",
     "a device cross-signing signature": "zařízení používající křížový podpis",
     "This widget would like to:": "Tento widget by chtěl:",
-    "Modal Widget": "Modální widget",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Pokud jste zapomněli bezpečnostní klíč, můžete <button>nastavit nové možnosti obnovení</button>",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Pokud jste zapomněli bezpečnostní frázi, můžete <button1>použít bezpečnostní klíč</button1> nebo <button2>nastavit nové možnosti obnovení</button2>",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "Zálohu nebylo možné dešifrovat pomocí této bezpečnostní fráze: ověřte, zda jste zadali správnou bezpečnostní frázi.",
@@ -530,7 +509,6 @@
     },
     "Failed to start livestream": "Nepodařilo spustit živý přenos",
     "Unable to start audio streaming.": "Nelze spustit streamování zvuku.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
     "<inviter/> invites you": "<inviter/> vás zve",
     "No results found": "Nebyly nalezeny žádné výsledky",
     "%(count)s rooms": {
@@ -549,8 +527,6 @@
     "Reset everything": "Resetovat vše",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
-    "Automatically invite members from this room to the new one": "Automaticky pozvat členy této místnosti do nové místnosti",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Vyžaduje, aby váš server podporoval stabilní verzi MSC3827",
     "unavailable": "nedostupný",
     "unknown status code": "neznámý kód stavu",
-    "Upgrade room": "Aktualizovat místnost",
     "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti",
     "common": {
         "about": "O",
@@ -2595,7 +2570,6 @@
         "no_audio_input_description": "Ve vašem zařízení nebyl nalezen žádný mikrofon. Zkontrolujte prosím nastavení a zkuste to znovu.",
         "transfer_consult_first_label": "Nejprve se poraďte"
     },
-    "Other": "Další možnosti",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Změnit avatar prostoru",
@@ -2774,7 +2748,25 @@
             "room_version_section": "Verze místnosti",
             "room_version": "Verze místnosti:",
             "information_section_space": "Informace o prostoru",
-            "information_section_room": "Informace o místnosti"
+            "information_section_room": "Informace o místnosti",
+            "error_upgrade_title": "Nezdařilo se aktualizovat místnost",
+            "error_upgrade_description": "Nepodařilo se dokončit aktualizaci místnosti",
+            "upgrade_button": "Aktualizace místnosti na verzi %(version)s",
+            "upgrade_dialog_title": "Aktualizovat verzi místnosti",
+            "upgrade_dialog_description": "Aktualizace této místnosti vyžaduje uzavření stávající místnosti a vytvoření nové místnosti, která ji nahradí. Pro usnadnění procesu pro členy místnosti, provedeme:",
+            "upgrade_dialog_description_1": "Vznikne místnost se stejným názvem, popisem a avatarem",
+            "upgrade_dialog_description_2": "Aktualizujeme všechny lokální aliasy místnosti tak, aby ukazovaly na novou místnost",
+            "upgrade_dialog_description_3": "Přerušíme konverzace ve staré verzi místnosti a pošleme uživatelům zprávu o přechodu do nové mistnosti",
+            "upgrade_dialog_description_4": "Na začátek nové místnosti umístíme odkaz na starou místnost tak, aby uživatelé mohli vidět staré zprávy",
+            "upgrade_warning_dialog_invite_label": "Automaticky pozvat členy této místnosti do nové místnosti",
+            "upgrade_warning_dialog_title_private": "Aktualizovat soukromou místnost",
+            "upgrade_dwarning_ialog_title_public": "Aktualizovat veřejnou místnost",
+            "upgrade_warning_dialog_title": "Aktualizovat místnost",
+            "upgrade_warning_dialog_report_bug_prompt": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Toto obvykle ovlivňuje pouze zpracovávání místnosti na serveru. Pokud máte problém s %(brand)sem, <a>nahlaste nám ho prosím</a>.",
+            "upgrade_warning_dialog_description": "Upgradování místnosti je pokročilá operace a je doporučeno jí provést pokud je místnost nestabilní kvůli chybám, chybějícím funkcím nebo zranitelnostem.",
+            "upgrade_warning_dialog_explainer": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
+            "upgrade_warning_dialog_footer": "Místnost bude povýšena z verze <oldVersion /> na verzi <newVersion />."
         },
         "delete_avatar_label": "Smazat avatar",
         "upload_avatar_label": "Nahrát avatar",
@@ -2820,7 +2812,8 @@
             "enable_element_call_caption": "%(brand)s je koncově šifrovaný, ale v současné době je omezen na menší počet uživatelů.",
             "enable_element_call_no_permissions_tooltip": "Ke změně nemáte dostatečná oprávnění.",
             "call_type_section": "Typ volání"
-        }
+        },
+        "title": "Nastavení místnosti - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3225,6 +3218,11 @@
             "megolm_export": "Export klíčů",
             "setup_key_backup_title": "Přijdete o přístup k šifrovaným zprávám",
             "description": "Opravdu se chcete odhlásit?"
+        },
+        "registration": {
+            "continue_without_email_title": "Pokračuje se bez e-mailu",
+            "continue_without_email_description": "Jen upozornění, pokud nepřidáte e-mail a zapomenete heslo, můžete <b>trvale ztratit přístup ke svému účtu</b>.",
+            "continue_without_email_field_label": "E-mail (nepovinné)"
         }
     },
     "room_list": {
@@ -3279,7 +3277,8 @@
         "spam_or_propaganda": "Spam nebo propaganda",
         "report_entire_room": "Nahlásit celou místnost",
         "report_content_to_homeserver": "Nahlásit obsah správci vašeho domovského serveru",
-        "description": "Nahlášení této zprávy pošle její jedinečné 'event ID' správci vašeho domovského serveru. Pokud jsou zprávy šifrované, správce nebude mít možnost přečíst text zprávy ani se podívat na soubory nebo obrázky."
+        "description": "Nahlášení této zprávy pošle její jedinečné 'event ID' správci vašeho domovského serveru. Pokud jsou zprávy šifrované, správce nebude mít možnost přečíst text zprávy ani se podívat na soubory nebo obrázky.",
+        "other_label": "Další možnosti"
     },
     "setting": {
         "help_about": {
@@ -3398,7 +3397,9 @@
         "popout": "Otevřít widget v novém okně",
         "unpin_to_view_right_panel": "Odepnout tento widget a zobrazit ho na tomto panelu",
         "set_room_layout": "Nastavit všem rozložení mé místnosti",
-        "close_to_view_right_panel": "Zavřít tento widget a zobrazit ho na tomto panelu"
+        "close_to_view_right_panel": "Zavřít tento widget a zobrazit ho na tomto panelu",
+        "modal_title_default": "Modální widget",
+        "modal_data_warning": "Data na této obrazovce jsou sdílena s %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Zpětná vazba byla odeslána",
@@ -4378,5 +4379,6 @@
         "disabled_action": "Smazat paměť a sesynchronizovat",
         "resync_description": "%(brand)s teď používá 3-5× méně paměti, protože si informace o ostatních uživatelích načítá až když je potřebuje. Prosím počkejte na dokončení synchronizace se serverem!",
         "resync_title": "Aktualizujeme %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Úpravy zpráv"
 }

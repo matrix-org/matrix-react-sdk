@@ -74,19 +74,10 @@
     "Share User": "Поделиться пользователем",
     "Link to selected message": "Ссылка на выбранное сообщение",
     "Share Room Message": "Поделиться сообщением",
-    "Upgrade Room Version": "Обновление версии комнаты",
-    "Create a new room with the same name, description and avatar": "Создадим новую комнату с тем же именем, описанием и аватаром",
-    "Update any local room aliases to point to the new room": "Обновим локальные псевдонимы комнат",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы.",
-    "Failed to upgrade room": "Не удалось обновить комнату",
-    "The room upgrade could not be completed": "Невозможно завершить обновление комнаты",
-    "Upgrade this room to version %(version)s": "Обновить эту комнату до версии %(version)s",
     "Unable to load backup status": "Невозможно загрузить статус резервной копии",
     "Unable to restore backup": "Невозможно восстановить резервную копию",
     "No backup found!": "Резервных копий не найдено!",
-    "Email (optional)": "Адрес электронной почты (не обязательно)",
     "Dog": "Собака",
     "Cat": "Кошка",
     "Lion": "Лев",
@@ -149,7 +140,6 @@
     "Headphones": "Наушники",
     "Folder": "Папка",
     "Scissors": "Ножницы",
-    "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
     "Sign out and remove encryption keys?": "Выйти и удалить ключи шифрования?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Чтобы помочь нам предотвратить это в будущем, пожалуйста, <a>отправьте нам логи</a>.",
@@ -170,8 +160,6 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Message edits": "Правки сообщения",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Модернизация этой комнаты требует закрытие комнаты в текущем состояние и создания новой комнаты вместо неё. Чтобы упростить процесс для участников, будет сделано:",
     "Find others by phone or email": "Найти других по номеру телефона или email",
     "Be found by phone or email": "Будут найдены по номеру телефона или email",
     "Upload all": "Загрузить всё",
@@ -214,11 +202,6 @@
     "a new cross-signing key signature": "новый ключ подписи для кросс-подписи",
     "a device cross-signing signature": "подпись устройства для кросс-подписи",
     "%(brand)s encountered an error during upload of:": "%(brand)s обнаружил ошибку при загрузке файла:",
-    "Upgrade private room": "Обновить приватную комнату",
-    "Upgrade public room": "Обновить публичную комнату",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Модернизация комнаты — это расширенное действие, которое обычно рекомендуется, когда комната нестабильна из-за ошибок, отсутствующих функций или уязвимостей безопасности.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Обычно это влияет только на то, как комната обрабатывается на сервере. Если у вас возникли проблемы с вашим %(brand)s, пожалуйста, <a>сообщите об ошибке</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Вы модернизируете эту комнату с <oldVersion /> до <newVersion/>.",
     "You're all caught up.": "Нет непрочитанных сообщений.",
     "Server isn't responding": "Сервер не отвечает",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Ваш сервер не отвечает на некоторые ваши запросы. Ниже приведены вероятные причины.",
@@ -248,9 +231,6 @@
     "Not encrypted": "Не зашифровано",
     "Backup version:": "Версия резервной копии:",
     "Unable to set up keys": "Невозможно настроить ключи",
-    "Data on this screen is shared with %(widgetDomain)s": "Данные на этом экране используются %(widgetDomain)s",
-    "Modal Widget": "Модальный виджет",
-    "Continuing without email": "Продолжить без электронной почты",
     "Decline All": "Отклонить все",
     "Approve widget permissions": "Одобрить разрешения виджета",
     "Zimbabwe": "Зимбабве",
@@ -503,7 +483,6 @@
     "United States": "Соединенные Штаты Америки",
     "United Kingdom": "Великобритания",
     "This widget would like to:": "Этому виджету хотелось бы:",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Предупреждаем: если вы не добавите адрес электронной почты и забудете пароль, вы можете <b>навсегда потерять доступ к своей учётной записи</b>.",
     "Hold": "Удерживать",
     "Resume": "Возобновить",
     "Allow this widget to verify your identity": "Разрешите этому виджету проверить ваш идентификатор",
@@ -534,7 +513,6 @@
     },
     "Unable to start audio streaming.": "Невозможно запустить аудио трансляцию.",
     "Failed to start livestream": "Не удалось запустить прямую трансляцию",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Обычно это только влияет на то, как комната обрабатывается на сервере. Если у вас проблемы с вашим %(brand)s, сообщите об ошибке.",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
     "No results found": "Результаты не найдены",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
@@ -545,8 +523,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Если вы это сделаете, обратите внимание, что ни одно из ваших сообщений не будет удалено, но работа поиска может быть ухудшена на несколько мгновений, пока индекс не будет воссоздан",
     "You most likely do not want to reset your event index store": "Скорее всего, вы не захотите сбрасывать индексное хранилище событий",
     "Reset event store?": "Сбросить хранилище событий?",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>При обновлении будет создана новая версия комнаты</b>. Все текущие сообщения останутся в этой архивной комнате.",
-    "Automatically invite members from this room to the new one": "Автоматическое приглашение участников из этой комнаты в новую комнату",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -2431,7 +2407,6 @@
         "no_audio_input_description": "Мы не нашли микрофон на вашем устройстве. Пожалуйста, проверьте настройки и повторите попытку.",
         "transfer_consult_first_label": "Сначала проконсультируйтесь"
     },
-    "Other": "Другие",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Изменить аватар пространства",
@@ -2601,7 +2576,24 @@
             "room_version_section": "Версия комнаты",
             "room_version": "Версия комнаты:",
             "information_section_space": "Информация о пространстве",
-            "information_section_room": "Информация о комнате"
+            "information_section_room": "Информация о комнате",
+            "error_upgrade_title": "Не удалось обновить комнату",
+            "error_upgrade_description": "Невозможно завершить обновление комнаты",
+            "upgrade_button": "Обновить эту комнату до версии %(version)s",
+            "upgrade_dialog_title": "Обновление версии комнаты",
+            "upgrade_dialog_description": "Модернизация этой комнаты требует закрытие комнаты в текущем состояние и создания новой комнаты вместо неё. Чтобы упростить процесс для участников, будет сделано:",
+            "upgrade_dialog_description_1": "Создадим новую комнату с тем же именем, описанием и аватаром",
+            "upgrade_dialog_description_2": "Обновим локальные псевдонимы комнат",
+            "upgrade_dialog_description_3": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
+            "upgrade_dialog_description_4": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
+            "upgrade_warning_dialog_invite_label": "Автоматическое приглашение участников из этой комнаты в новую комнату",
+            "upgrade_warning_dialog_title_private": "Обновить приватную комнату",
+            "upgrade_dwarning_ialog_title_public": "Обновить публичную комнату",
+            "upgrade_warning_dialog_report_bug_prompt": "Обычно это только влияет на то, как комната обрабатывается на сервере. Если у вас проблемы с вашим %(brand)s, сообщите об ошибке.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Обычно это влияет только на то, как комната обрабатывается на сервере. Если у вас возникли проблемы с вашим %(brand)s, пожалуйста, <a>сообщите об ошибке</a>.",
+            "upgrade_warning_dialog_description": "Модернизация комнаты — это расширенное действие, которое обычно рекомендуется, когда комната нестабильна из-за ошибок, отсутствующих функций или уязвимостей безопасности.",
+            "upgrade_warning_dialog_explainer": "<b>При обновлении будет создана новая версия комнаты</b>. Все текущие сообщения останутся в этой архивной комнате.",
+            "upgrade_warning_dialog_footer": "Вы модернизируете эту комнату с <oldVersion /> до <newVersion/>."
         },
         "delete_avatar_label": "Удалить аватар",
         "upload_avatar_label": "Загрузить аватар",
@@ -2637,7 +2629,8 @@
         },
         "voip": {
             "call_type_section": "Тип звонка"
-        }
+        },
+        "title": "Настройки комнаты — %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2996,6 +2989,11 @@
             "megolm_export": "Выгрузить ключи вручную",
             "setup_key_backup_title": "Вы потеряете доступ к вашим шифрованным сообщениям",
             "description": "Уверены, что хотите выйти?"
+        },
+        "registration": {
+            "continue_without_email_title": "Продолжить без электронной почты",
+            "continue_without_email_description": "Предупреждаем: если вы не добавите адрес электронной почты и забудете пароль, вы можете <b>навсегда потерять доступ к своей учётной записи</b>.",
+            "continue_without_email_field_label": "Адрес электронной почты (не обязательно)"
         }
     },
     "room_list": {
@@ -3047,7 +3045,8 @@
         "spam_or_propaganda": "Спам или пропаганда",
         "report_entire_room": "Сообщить обо всей комнате",
         "report_content_to_homeserver": "Сообщите о содержании своему администратору домашнего сервера",
-        "description": "Отчет о данном сообщении отправит свой уникальный 'event ID' администратору вашего домашнего сервера. Если сообщения в этой комнате зашифрованы, администратор вашего домашнего сервера не сможет прочитать текст сообщения или просмотреть какие-либо файлы или изображения."
+        "description": "Отчет о данном сообщении отправит свой уникальный 'event ID' администратору вашего домашнего сервера. Если сообщения в этой комнате зашифрованы, администратор вашего домашнего сервера не сможет прочитать текст сообщения или просмотреть какие-либо файлы или изображения.",
+        "other_label": "Другие"
     },
     "setting": {
         "help_about": {
@@ -3162,7 +3161,9 @@
         "popout": "Всплывающий виджет",
         "unpin_to_view_right_panel": "Открепите виджет, чтобы просмотреть его на этой панели",
         "set_room_layout": "Установить мой макет комнаты для всех",
-        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели"
+        "close_to_view_right_panel": "Закройте виджет, чтобы просмотреть его на этой панели",
+        "modal_title_default": "Модальный виджет",
+        "modal_data_warning": "Данные на этом экране используются %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -4056,5 +4057,6 @@
         "disabled_action": "Очистить кэш и выполнить повторную синхронизацию",
         "resync_description": "%(brand)s теперь использует в 3-5 раз меньше памяти, загружая информацию о других пользователях только когда это необходимо. Пожалуйста, подождите, пока мы ресинхронизируемся с сервером!",
         "resync_title": "Обновление %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Правки сообщения"
 }

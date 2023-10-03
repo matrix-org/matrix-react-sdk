@@ -478,27 +478,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "השרת שלך לא מגיב לחלק מהבקשות שלך. להלן כמה מהסיבות הסבירות ביותר.",
     "Server isn't responding": "השרת לא מגיב",
     "You're all caught up.": "כולכם נתפסתם.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "תשדרג את החדר הזה מ- <oldVersion/> ל- <newVersion/>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "זה בדרך כלל משפיע רק על אופן עיבוד החדר בשרת. אם אתה נתקל בבעיות באחוזים שלך %(brand)s, אנא <a> דווח על באג </a>.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "שדרוג חדר הוא פעולה מתקדמת ומומלץ בדרך כלל כאשר החדר אינו יציב עקב באגים, תכונות חסרות או פרצות אבטחה.",
-    "Upgrade public room": "שדרג חדר ציבורי",
-    "Upgrade private room": "שדרג חדר פרטי",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "החזירו קישור לחדר הישן בתחילת החדר החדש כדי שאנשים יוכלו לראות הודעות ישנות",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "עצור מהמשתמשים לדבר בגרסה הישנה של החדר, ושלח הודעה הממליצה למשתמשים לעבור לחדר החדש",
-    "Update any local room aliases to point to the new room": "עדכן את כינויי החדר המקומיים בכדי להצביע על החדר החדש",
-    "Create a new room with the same name, description and avatar": "צור חדר חדש עם אותו שם, תיאור ואווטאר",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "שדרוג חדר זה מחייב סגירת המופע הנוכחי של החדר ויצירת חדר חדש במקומו. כדי להעניק לחברי החדר את החוויה הטובה ביותר האפשרית, אנו:",
-    "Upgrade Room Version": "גרסת חדר שדרוג",
-    "Upgrade this room to version %(version)s": "שדרג חדר זה לגרסה %(version)s",
-    "The room upgrade could not be completed": "לא ניתן היה להשלים את שדרוג החדר",
-    "Failed to upgrade room": "שדרוג החדר נכשל",
-    "Room Settings - %(roomName)s": "הגדרות חדר - %(roomName)s",
-    "Email (optional)": "דוא\"ל (לא חובה)",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "שים לב, אם לא תשייך כתובת דואר אלקטרוני ותשכח את הסיסמה שלך, אתה תאבד <b>לצמיתות</b> את הגישה לחשבונך.",
-    "Continuing without email": "ממשיך ללא דוא\"ל",
-    "Data on this screen is shared with %(widgetDomain)s": "הנתונים על המסך הזה משותפים עם %(widgetDomain)s",
-    "Modal Widget": "יישומון מודאלי",
-    "Message edits": "עריכת הודעות",
     "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
     "a key signature": "חתימת מפתח",
     "a new cross-signing key signature": "חתימת מפתח צולבת חדשה",
@@ -1865,7 +1844,6 @@
         "unknown_person": "אדם לא ידוע",
         "connecting": "מקשר"
     },
-    "Other": "אחר",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "שנה את דמות מרחב העבודה",
@@ -2007,7 +1985,21 @@
             "room_version_section": "גרסאת חדר",
             "room_version": "גרסאת חדש:",
             "information_section_space": "מידע על מרחב העבודה",
-            "information_section_room": "מידע החדר"
+            "information_section_room": "מידע החדר",
+            "error_upgrade_title": "שדרוג החדר נכשל",
+            "error_upgrade_description": "לא ניתן היה להשלים את שדרוג החדר",
+            "upgrade_button": "שדרג חדר זה לגרסה %(version)s",
+            "upgrade_dialog_title": "גרסת חדר שדרוג",
+            "upgrade_dialog_description": "שדרוג חדר זה מחייב סגירת המופע הנוכחי של החדר ויצירת חדר חדש במקומו. כדי להעניק לחברי החדר את החוויה הטובה ביותר האפשרית, אנו:",
+            "upgrade_dialog_description_1": "צור חדר חדש עם אותו שם, תיאור ואווטאר",
+            "upgrade_dialog_description_2": "עדכן את כינויי החדר המקומיים בכדי להצביע על החדר החדש",
+            "upgrade_dialog_description_3": "עצור מהמשתמשים לדבר בגרסה הישנה של החדר, ושלח הודעה הממליצה למשתמשים לעבור לחדר החדש",
+            "upgrade_dialog_description_4": "החזירו קישור לחדר הישן בתחילת החדר החדש כדי שאנשים יוכלו לראות הודעות ישנות",
+            "upgrade_warning_dialog_title_private": "שדרג חדר פרטי",
+            "upgrade_dwarning_ialog_title_public": "שדרג חדר ציבורי",
+            "upgrade_warning_dialog_report_bug_prompt_link": "זה בדרך כלל משפיע רק על אופן עיבוד החדר בשרת. אם אתה נתקל בבעיות באחוזים שלך %(brand)s, אנא <a> דווח על באג </a>.",
+            "upgrade_warning_dialog_description": "שדרוג חדר הוא פעולה מתקדמת ומומלץ בדרך כלל כאשר החדר אינו יציב עקב באגים, תכונות חסרות או פרצות אבטחה.",
+            "upgrade_warning_dialog_footer": "תשדרג את החדר הזה מ- <oldVersion/> ל- <newVersion/>."
         },
         "upload_avatar_label": "העלה אוואטר",
         "visibility": {
@@ -2038,7 +2030,8 @@
             "notification_sound": "צליל התראה",
             "custom_sound_prompt": "הגדר צליל מותאם אישי",
             "browse_button": "דפדף"
-        }
+        },
+        "title": "הגדרות חדר - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2339,6 +2332,11 @@
             "megolm_export": "ייצא ידנית מפתחות",
             "setup_key_backup_title": "תאבד את הגישה להודעות המוצפנות שלך",
             "description": "האם אתה בטוח שברצונך לצאת?"
+        },
+        "registration": {
+            "continue_without_email_title": "ממשיך ללא דוא\"ל",
+            "continue_without_email_description": "שים לב, אם לא תשייך כתובת דואר אלקטרוני ותשכח את הסיסמה שלך, אתה תאבד <b>לצמיתות</b> את הגישה לחשבונך.",
+            "continue_without_email_field_label": "דוא\"ל (לא חובה)"
         }
     },
     "room_list": {
@@ -2364,7 +2362,8 @@
     "report_content": {
         "missing_reason": "אנא מלאו מדוע אתם מדווחים.",
         "report_content_to_homeserver": "דווח על תוכן למנהל שרת הבית שלך",
-        "description": "דיווח על הודעה זו ישלח את 'מזהה האירוע' הייחודי למנהל שרת הבית שלך. אם הודעות בחדר זה מוצפנות, מנהל שרת הבית שלך לא יוכל לקרוא את טקסט ההודעה או להציג קבצים או תמונות."
+        "description": "דיווח על הודעה זו ישלח את 'מזהה האירוע' הייחודי למנהל שרת הבית שלך. אם הודעות בחדר זה מוצפנות, מנהל שרת הבית שלך לא יוכל לקרוא את טקסט ההודעה או להציג קבצים או תמונות.",
+        "other_label": "אחר"
     },
     "onboarding": {
         "has_avatar_label": "נהדר, זה יעזור לאנשים לדעת שזה אתה",
@@ -2473,7 +2472,9 @@
         "added_by": "ישומון נוסף על ידי",
         "cookie_warning": "יישומון זה עשוי להשתמש בעוגיות.",
         "popout": "יישומון קופץ",
-        "set_room_layout": "הגדר את פריסת החדר שלי עבור כולם"
+        "set_room_layout": "הגדר את פריסת החדר שלי עבור כולם",
+        "modal_title_default": "יישומון מודאלי",
+        "modal_data_warning": "הנתונים על המסך הזה משותפים עם %(widgetDomain)s"
     },
     "feedback": {
         "sent": "משוב נשלח",
@@ -3134,5 +3135,6 @@
         "disabled_action": "נקה מטמון וסנכרן מחדש",
         "resync_description": "%(brand)s משתמש כעת בזכרון פחות פי 3-5, על ידי טעינת מידע רק על משתמשים אחרים בעת הצורך. אנא המתן בזמן שאנחנו מסתנכרנים מחדש עם השרת!",
         "resync_title": "מעדכן %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "עריכת הודעות"
 }

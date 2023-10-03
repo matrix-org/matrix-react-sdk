@@ -121,15 +121,6 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
-    "Room Settings - %(roomName)s": "Gespreksinstelliengn - %(roomName)s",
-    "Failed to upgrade room": "Actualiseern van ’t gesprek is mislukt",
-    "The room upgrade could not be completed": "De gespreksactualiserienge kostege nie voltooid wordn",
-    "Upgrade this room to version %(version)s": "Actualiseert dit gesprek noa versie %(version)s",
-    "Upgrade Room Version": "Gespreksversie actualiseern",
-    "Create a new room with the same name, description and avatar": "E nieuw gesprek anmoakn me dezelfste noame, beschryvienge en avatar",
-    "Update any local room aliases to point to the new room": "Alle lokoale gespreksbynoamn bywerkn vo noa ’t nieuw gesprek te verwyzn",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Gebruukers verhindern van te klappn in d’oude versie van ’t gesprek, en der e bericht in platsn woarin dan de gebruukers wordn anbevooln hunder noa ’t nieuw gesprek te begeevn",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "E verwyzienge noa ’t oud gesprek platsn an ’t begin van ’t nieuw gesprek, zoda menschn oude berichtn kunn zien",
     "Sign out and remove encryption keys?": "Afmeldn en versleuteriengssleuters verwydern?",
     "Clear Storage and Sign Out": "Ipslag wissn en afmeldn",
     "Send Logs": "Logboek verstuurn",
@@ -169,9 +160,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer.",
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
-    "Email (optional)": "E-mailadresse (optioneel)",
-    "Message edits": "Berichtbewerkiengn",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
     "Upload all": "Alles iploadn",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) herverstuurn",
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
@@ -738,7 +726,6 @@
         "no_media_perms_title": "Geen mediatoestemmiengn",
         "no_media_perms_description": "Je moe %(brand)s wellicht handmoatig toestoan van je microfoon/webcam te gebruukn"
     },
-    "Other": "Overige",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Gespreksavatar wyzign",
@@ -805,7 +792,16 @@
             "room_predecessor": "Bekykt oudere berichtn in %(roomName)s.",
             "room_version_section": "Gespreksversie",
             "room_version": "Gespreksversie:",
-            "information_section_room": "Gespreksinformoasje"
+            "information_section_room": "Gespreksinformoasje",
+            "error_upgrade_title": "Actualiseern van ’t gesprek is mislukt",
+            "error_upgrade_description": "De gespreksactualiserienge kostege nie voltooid wordn",
+            "upgrade_button": "Actualiseert dit gesprek noa versie %(version)s",
+            "upgrade_dialog_title": "Gespreksversie actualiseern",
+            "upgrade_dialog_description": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
+            "upgrade_dialog_description_1": "E nieuw gesprek anmoakn me dezelfste noame, beschryvienge en avatar",
+            "upgrade_dialog_description_2": "Alle lokoale gespreksbynoamn bywerkn vo noa ’t nieuw gesprek te verwyzn",
+            "upgrade_dialog_description_3": "Gebruukers verhindern van te klappn in d’oude versie van ’t gesprek, en der e bericht in platsn woarin dan de gebruukers wordn anbevooln hunder noa ’t nieuw gesprek te begeevn",
+            "upgrade_dialog_description_4": "E verwyzienge noa ’t oud gesprek platsn an ’t begin van ’t nieuw gesprek, zoda menschn oude berichtn kunn zien"
         },
         "upload_avatar_label": "Avatar iploadn",
         "notifications": {
@@ -814,7 +810,8 @@
             "notification_sound": "Meldiengsgeluud",
             "custom_sound_prompt": "Stelt e nieuw angepast geluud in",
             "browse_button": "Bloadern"
-        }
+        },
+        "title": "Gespreksinstelliengn - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -949,6 +946,9 @@
             "megolm_export": "Sleuters handmatig exporteern",
             "setup_key_backup_title": "Je goat de toegank tou je versleuterde berichtn kwytspeeln",
             "description": "Zy je zeker da je je wilt afmeldn?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "E-mailadresse (optioneel)"
         }
     },
     "export_chat": {
@@ -1255,5 +1255,9 @@
         "disabled_action": "Cache wissn en hersynchroniseern",
         "resync_description": "%(brand)s verbruukt nu 3-5x minder geheugn, deur informoasje over andere gebruukers alleene moa te loadn wanneer dan ’t nodig is. Eftjes geduld, we zyn an ’t hersynchroniseern me de server!",
         "resync_title": "%(brand)s wor bygewerkt"
+    },
+    "message_edit_dialog_title": "Berichtbewerkiengn",
+    "report_content": {
+        "other_label": "Overige"
     }
 }

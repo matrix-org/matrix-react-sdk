@@ -59,7 +59,6 @@
     "Not encrypted": "Ekki dulritað",
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
-    "Room Settings - %(roomName)s": "Stillingar spjallrásar - %(roomName)s",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
@@ -93,7 +92,6 @@
     "%(duration)sh": "%(duration)sklst",
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)ss",
-    "Message edits": "Breytingar á skilaboðum",
     "Zimbabwe": "Simbabve",
     "Zambia": "Sambía",
     "Yemen": "Jemen",
@@ -365,7 +363,6 @@
     "Link to room": "Tengill á spjallrás",
     "Share Room Message": "Deila skilaboðum spjallrásar",
     "Share Room": "Deila spjallrás",
-    "Email (optional)": "Tölvupóstfang (valfrjálst)",
     "%(count)s rooms": {
         "one": "%(count)s spjallrás",
         "other": "%(count)s spjallrásir"
@@ -458,8 +455,6 @@
     "Share User": "Deila notanda",
     "Server isn't responding": "Netþjónninn er ekki að svara",
     "You're all caught up.": "Þú hefur klárað að lesa allt.",
-    "Upgrade public room": "Uppfæra almenningsspjallrás",
-    "Upgrade private room": "Uppfæra einkaspjallrás",
     "%(count)s members": {
         "one": "%(count)s þátttakandi",
         "other": "%(count)s þátttakendur"
@@ -476,7 +471,6 @@
     "Confirm encryption setup": "Staðfestu uppsetningu dulritunar",
     "Decline All": "Hafna öllu",
     "Command Help": "Hjálp við skipun",
-    "Continuing without email": "Halda áfram án tölvupósts",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -490,7 +484,6 @@
     "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
     "Find others by phone or email": "Finndu aðra með símanúmeri eða tölvupóstfangi",
-    "Failed to upgrade room": "Mistókst að uppfæra spjallrás",
     "toggle event": "víxla atburði af/á",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
     "You are sharing your live location": "Þú ert að deila staðsetninu þinni í rauntíma",
@@ -538,15 +531,7 @@
     "Your firewall or anti-virus is blocking the request.": "Eldveggur eða vírusvarnarforrit kemur í veg fyrir beiðnina.",
     "The server (%(serverName)s) took too long to respond.": "Þjónninn (%(serverName)s) var of lengi að svara.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Netþjónninn þinn er ekki að svara sumum beiðnum frá þér. Hér fyrir neðan eru sumar líklegustu ástæðurnar.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Þú munt uppfæra þessa spjallrás úr <oldVersion /> upp í <newVersion />.",
     "Your area is experiencing difficulties connecting to the internet.": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
-    "Upgrade Room Version": "Uppfæra útgáfu spjallrásar",
-    "Upgrade this room to version %(version)s": "Uppfæra þessa spjallrás í útgáfu %(version)s",
-    "The room upgrade could not be completed": "Ekki tókst að ljúka uppfærslu spjallrásarinnar",
-    "Data on this screen is shared with %(widgetDomain)s": "Gögnum á þessum skjá er deilt með %(widgetDomain)s",
-    "Automatically invite members from this room to the new one": "Bjóða meðlimum á þessari spjallrás sjálfvirkt yfir í þá nýju",
-    "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
@@ -2274,7 +2259,6 @@
         "no_audio_input_description": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur.",
         "transfer_consult_first_label": "Ráðfæra fyrst"
     },
-    "Other": "Annað",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Skipta um táknmynd svæðis",
@@ -2428,7 +2412,16 @@
             "room_version_section": "Útgáfa spjallrásar",
             "room_version": "Útgáfa spjallrásar:",
             "information_section_space": "Upplýsingar um svæði",
-            "information_section_room": "Upplýsingar um spjallrás"
+            "information_section_room": "Upplýsingar um spjallrás",
+            "error_upgrade_title": "Mistókst að uppfæra spjallrás",
+            "error_upgrade_description": "Ekki tókst að ljúka uppfærslu spjallrásarinnar",
+            "upgrade_button": "Uppfæra þessa spjallrás í útgáfu %(version)s",
+            "upgrade_dialog_title": "Uppfæra útgáfu spjallrásar",
+            "upgrade_dialog_description_1": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
+            "upgrade_warning_dialog_invite_label": "Bjóða meðlimum á þessari spjallrás sjálfvirkt yfir í þá nýju",
+            "upgrade_warning_dialog_title_private": "Uppfæra einkaspjallrás",
+            "upgrade_dwarning_ialog_title_public": "Uppfæra almenningsspjallrás",
+            "upgrade_warning_dialog_footer": "Þú munt uppfæra þessa spjallrás úr <oldVersion /> upp í <newVersion />."
         },
         "delete_avatar_label": "Eyða auðkennismynd",
         "upload_avatar_label": "Senda inn auðkennismynd",
@@ -2461,7 +2454,8 @@
         },
         "voip": {
             "call_type_section": "Tegund samtals"
-        }
+        },
+        "title": "Stillingar spjallrásar - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2779,6 +2773,11 @@
             "megolm_export": "Flytja út dulritunarlykla handvirkt",
             "setup_key_backup_title": "Þú munt tapa dulrituðu skilaboðunum þínum",
             "description": "Ertu viss um að þú viljir skrá þig út?"
+        },
+        "registration": {
+            "continue_without_email_title": "Halda áfram án tölvupósts",
+            "continue_without_email_description": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
+            "continue_without_email_field_label": "Tölvupóstfang (valfrjálst)"
         }
     },
     "room_list": {
@@ -2829,7 +2828,8 @@
         "spam_or_propaganda": "Ruslpóstur eða áróður",
         "report_entire_room": "Kæra alla spjallrásina",
         "report_content_to_homeserver": "Kæra efni til kerfisstjóra heimaþjónsins þíns",
-        "description": "Tilkynning um þessi skilaboð mun senda einstakt 'atviksauðkenni' til stjórnanda heimaþjóns. Ef skilaboð í þessari spjallrás eru dulrituð getur stjórnandi heimaþjóns ekki lesið skilaboðatextann eða skoðað skrár eða myndir."
+        "description": "Tilkynning um þessi skilaboð mun senda einstakt 'atviksauðkenni' til stjórnanda heimaþjóns. Ef skilaboð í þessari spjallrás eru dulrituð getur stjórnandi heimaþjóns ekki lesið skilaboðatextann eða skoðað skrár eða myndir.",
+        "other_label": "Annað"
     },
     "setting": {
         "help_about": {
@@ -2942,7 +2942,8 @@
         "unmaximise": "Ekki-hámarka",
         "popout": "Sprettviðmótshluti",
         "unpin_to_view_right_panel": "Losaðu þennan viðmótshluta til að sjá hann á þessu spjaldi",
-        "close_to_view_right_panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi"
+        "close_to_view_right_panel": "Lokaðu þessum viðmótshluta til að sjá hann á þessu spjaldi",
+        "modal_data_warning": "Gögnum á þessum skjá er deilt með %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3753,5 +3754,6 @@
         "disabled_title": "Ósamhæft staðvært skyndiminni",
         "disabled_action": "Hreinsa skyndiminni og endursamstilla",
         "resync_title": "Uppfæri %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Breytingar á skilaboðum"
 }

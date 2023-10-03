@@ -74,20 +74,11 @@
     "Share User": "Споделяне на потребител",
     "Share Room Message": "Споделяне на съобщение от стая",
     "Link to selected message": "Създай връзка към избраното съобщение",
-    "Upgrade Room Version": "Обнови версията на стаята",
-    "Create a new room with the same name, description and avatar": "Създадем нова стая със същото име, описание и снимка",
-    "Update any local room aliases to point to the new room": "Обновим всички локални адреси на стаята да сочат към новата",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Забраним комуникацията на потребителите в старата стая и публикуваме съобщение насочващо ги към новата",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Поставим връзка в новата стая, водещо обратно към старата, за да може хората да виждат старите съобщения",
-    "Failed to upgrade room": "Неуспешно обновяване на стаята",
-    "The room upgrade could not be completed": "Обновяването на тази стая не можа да бъде завършено",
-    "Upgrade this room to version %(version)s": "Обновете тази стая до версия %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Преди да изпратите логове, трябва да <a>отворите доклад за проблем в Github</a>.",
     "Unable to load backup status": "Неуспешно зареждане на състоянието на резервното копие",
     "Unable to restore backup": "Неуспешно възстановяване на резервно копие",
     "No backup found!": "Не е открито резервно копие!",
     "Failed to decrypt %(failedCount)s sessions!": "Неуспешно разшифроване на %(failedCount)s сесии!",
-    "Email (optional)": "Имейл (незадължително)",
     "Dog": "Куче",
     "Cat": "Котка",
     "Lion": "Лъв",
@@ -151,7 +142,6 @@
     "Folder": "Папка",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
-    "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
     "Sign out and remove encryption keys?": "Излизане и премахване на ключовете за шифроване?",
     "To help us prevent this in future, please <a>send us logs</a>.": "За да ни помогнете да предотвратим това в бъдеще, моля <a>изпратете логове</a>.",
     "Missing session data": "Липсват данни за сесията",
@@ -171,8 +161,6 @@
     "Remember my selection for this widget": "Запомни избора ми за това приспособление",
     "edited": "редактирано",
     "Upload all": "Качи всички",
-    "Message edits": "Редакции на съобщение",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
     "Resend %(unsentCount)s reaction(s)": "Изпрати наново %(unsentCount)s реакция(и)",
     "Find others by phone or email": "Открийте други по телефон или имейл",
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
@@ -187,11 +175,6 @@
         "other": "%(count)s потвърдени сесии",
         "one": "1 потвърдена сесия"
     },
-    "Upgrade private room": "Обнови лична стая",
-    "Upgrade public room": "Обнови публична стая",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Обновяването на стая е действие за напреднали и обикновено се препоръчва когато стаята е нестабилна поради бъгове, липсващи функции или проблеми със сигурността.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Това обикновено влия само на това как стаята се обработва на сървъра. Ако имате проблеми с %(brand)s, <a>съобщете за проблем</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Ще обновите стаята от <oldVersion /> до <newVersion />.",
     "Verification Request": "Заявка за потвърждение",
     "Not Trusted": "Недоверено",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
@@ -246,8 +229,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Сървърът ви не отговаря на някой от заявките ви. По-долу са някои от най-вероятните причини.",
     "Server isn't responding": "Сървърът не отговаря",
     "You're all caught up.": "Наваксали сте с всичко.",
-    "Data on this screen is shared with %(widgetDomain)s": "Данните на този екран са споделени с %(widgetDomain)s",
-    "Modal Widget": "Модално приспособление",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -1507,7 +1488,6 @@
         "no_media_perms_title": "Няма разрешения за медийните устройства",
         "no_media_perms_description": "Може да се наложи ръчно да разрешите на %(brand)s да получи достъп до Вашия микрофон/уеб камера"
     },
-    "Other": "Други",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "Промяна на снимката на стаята",
@@ -1599,7 +1579,21 @@
             "room_predecessor": "Виж по-стари съобщения в %(roomName)s.",
             "room_version_section": "Версия на стаята",
             "room_version": "Версия на стаята:",
-            "information_section_room": "Информация за стаята"
+            "information_section_room": "Информация за стаята",
+            "error_upgrade_title": "Неуспешно обновяване на стаята",
+            "error_upgrade_description": "Обновяването на тази стая не можа да бъде завършено",
+            "upgrade_button": "Обновете тази стая до версия %(version)s",
+            "upgrade_dialog_title": "Обнови версията на стаята",
+            "upgrade_dialog_description": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
+            "upgrade_dialog_description_1": "Създадем нова стая със същото име, описание и снимка",
+            "upgrade_dialog_description_2": "Обновим всички локални адреси на стаята да сочат към новата",
+            "upgrade_dialog_description_3": "Забраним комуникацията на потребителите в старата стая и публикуваме съобщение насочващо ги към новата",
+            "upgrade_dialog_description_4": "Поставим връзка в новата стая, водещо обратно към старата, за да може хората да виждат старите съобщения",
+            "upgrade_warning_dialog_title_private": "Обнови лична стая",
+            "upgrade_dwarning_ialog_title_public": "Обнови публична стая",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Това обикновено влия само на това как стаята се обработва на сървъра. Ако имате проблеми с %(brand)s, <a>съобщете за проблем</a>.",
+            "upgrade_warning_dialog_description": "Обновяването на стая е действие за напреднали и обикновено се препоръчва когато стаята е нестабилна поради бъгове, липсващи функции или проблеми със сигурността.",
+            "upgrade_warning_dialog_footer": "Ще обновите стаята от <oldVersion /> до <newVersion />."
         },
         "upload_avatar_label": "Качи профилна снимка",
         "bridges": {
@@ -1612,7 +1606,8 @@
             "notification_sound": "Звук за уведомление",
             "custom_sound_prompt": "Настрой нов собствен звук",
             "browse_button": "Избор"
-        }
+        },
+        "title": "Настройки на стая - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -1865,6 +1860,9 @@
             "megolm_export": "Експортирай ключове ръчно",
             "setup_key_backup_title": "Ще загубите достъп до шифрованите си съобщения",
             "description": "Сигурни ли сте, че искате да излезете от профила?"
+        },
+        "registration": {
+            "continue_without_email_field_label": "Имейл (незадължително)"
         }
     },
     "export_chat": {
@@ -1891,7 +1889,8 @@
     "report_content": {
         "missing_reason": "Въведете защо докладвате.",
         "report_content_to_homeserver": "Докладвай съдържание до администратора на сървъра",
-        "description": "Докладването на съобщението ще изпрати уникалният номер на събитието (event ID) до администратора на сървъра. Ако съобщенията в стаята са шифровани, администратора няма да може да прочете текста им или да види снимките или файловете."
+        "description": "Докладването на съобщението ще изпрати уникалният номер на събитието (event ID) до администратора на сървъра. Ако съобщенията в стаята са шифровани, администратора няма да може да прочете текста им или да види снимките или файловете.",
+        "other_label": "Други"
     },
     "onboarding": {
         "has_avatar_label": "Чудесно, това ще позволи на хората да знаят, че сте вие",
@@ -2208,7 +2207,9 @@
         "unencrypted_warning": "Приспособленията не използваш шифроване на съобщенията.",
         "added_by": "Приспособлението е добавено от",
         "cookie_warning": "Това приспособление може да използва бисквитки.",
-        "popout": "Изкарай в нов прозорец"
+        "popout": "Изкарай в нов прозорец",
+        "modal_title_default": "Модално приспособление",
+        "modal_data_warning": "Данните на този екран са споделени с %(widgetDomain)s"
     },
     "scalar": {
         "error_create": "Неуспешно създаване на приспособление.",
@@ -2440,5 +2441,6 @@
         "disabled_action": "Изчисти кеша и ресинхронизирай",
         "resync_description": "%(brand)s вече използва 3-5 пъти по-малко памет, като зарежда информация за потребители само когато е нужна. Моля, изчакайте докато ресинхронизираме със сървъра!",
         "resync_title": "Обновяване на %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Редакции на съобщение"
 }

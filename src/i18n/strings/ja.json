@@ -61,14 +61,6 @@
     "collapse": "折りたたむ",
     "expand": "展開",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
-    "Failed to upgrade room": "ルームをアップグレードできませんでした",
-    "The room upgrade could not be completed": "ルームのアップグレードを完了できませんでした",
-    "Upgrade this room to version %(version)s": "このルームをバージョン%(version)sにアップグレード",
-    "Upgrade Room Version": "ルームのバージョンをアップグレード",
-    "Create a new room with the same name, description and avatar": "同じ名前、説明、アバターで新しいルームを作成",
-    "Update any local room aliases to point to the new room": "新しいルームを指すようにローカルルームのエイリアスを更新",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "古いバージョンのルームでユーザーが投稿できないよう設定し、新しいルームに移動するようユーザーに通知するメッセージを投稿",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "以前のメッセージを閲覧できるように、新しいルームの先頭に古いルームへのリンクを設定",
     "Clear Storage and Sign Out": "ストレージをクリアし、サインアウト",
     "Send Logs": "ログを送信",
     "Unable to restore session": "セッションを復元できません",
@@ -83,14 +75,10 @@
     "Share User": "ユーザーを共有",
     "Share Room Message": "ルームのメッセージを共有",
     "Link to selected message": "選択したメッセージにリンク",
-    "Room Settings - %(roomName)s": "ルームの設定 - %(roomName)s",
     "edited": "編集済",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "このルームを<oldVersion />から<newVersion />にアップグレードします。",
     "Destroy cross-signing keys?": "クロス署名鍵を破棄してよろしいですか？",
     "Clear cross-signing keys": "クロス署名鍵を削除",
-    "Message edits": "メッセージの編集履歴",
     "Sign out and remove encryption keys?": "サインアウトして、暗号鍵を削除しますか？",
-    "Email (optional)": "電子メール（任意）",
     "Not Trusted": "信頼されていません",
     "%(count)s verified sessions": {
         "other": "%(count)s件の認証済のセッション",
@@ -443,7 +431,6 @@
         "other": "%(spaceName)sと他%(count)s個"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sと%(space2Name)s",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>アップグレードすると、このルームの新しいバージョンが作成されます。</b>今ある全てのメッセージは、アーカイブしたルームに残ります。",
     "Use <arrows/> to scroll": "<arrows/>でスクロール",
     "Public rooms": "公開ルーム",
     "Use \"%(query)s\" to search": "「%(query)s」のキーワードで検索",
@@ -462,7 +449,6 @@
         "one": "%(count)s人",
         "other": "%(count)s人"
     },
-    "Automatically invite members from this room to the new one": "このルームのメンバーを新しいルームに自動的に招待",
     "Enter Security Key": "セキュリティーキーを入力",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：信頼済のコンピューターからのみ鍵のバックアップを設定してください。",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s個の鍵が復元されました",
@@ -479,8 +465,6 @@
     "a key signature": "鍵の署名",
     "Sign in with SSO": "シングルサインオンでサインイン",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "復元方法を全て失ってしまいましたか？<a>リセットできます</a>",
-    "Upgrade public room": "公開ルームをアップグレード",
-    "Upgrade private room": "非公開のルームをアップグレード",
     "Be found by phone or email": "自分を電話番号か電子メールで見つけられるようにする",
     "Find others by phone or email": "知人を電話番号か電子メールで探す",
     "Feedback sent! Thanks, we appreciate it!": "フィードバックを送信しました！ありがとうございました！",
@@ -508,8 +492,6 @@
     "Unable to restore backup": "バックアップを復元できません",
     "Unable to load backup status": "バックアップの状態を読み込めません",
     "Recently viewed": "最近表示したルーム",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
     "Forget": "消去",
     "Not a valid Security Key": "セキュリティーキーが正しくありません",
     "This looks like a valid Security Key!": "正しいセキュリティーキーです！",
@@ -548,8 +530,6 @@
     "The server has denied your request.": "サーバーがリクエストを拒否しました。",
     "Server isn't responding": "サーバーが応答していません",
     "You're all caught up.": "未読はありません。",
-    "Continuing without email": "メールアドレスを使用せずに続行",
-    "Data on this screen is shared with %(widgetDomain)s": "このスクリーンのデータは%(widgetDomain)sと共有されます",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "toggle event": "イベントを切り替える",
     "Other searches": "その他の検索",
@@ -572,7 +552,6 @@
     },
     "Sections to show": "表示するセクション",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "クロス署名鍵の削除は取り消せません。認証した相手には、セキュリティーに関する警告が表示されます。クロス署名を行える全ての端末を失ったのでない限り、続行すべきではありません。",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "Live location error": "位置情報（ライブ）のエラー",
     "Live location enabled": "位置情報（ライブ）が有効です",
     "%(count)s participants": {
@@ -592,7 +571,6 @@
     "Show rooms": "ルームを表示",
     "Interactively verify by emoji": "絵文字で認証",
     "Manually verify by text": "テキストを使って手動で認証",
-    "Modal Widget": "モーダルウィジェット",
     "%(count)s Members": {
         "other": "%(count)s人の参加者",
         "one": "%(count)s人の参加者"
@@ -621,7 +599,6 @@
     "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
     "%(brand)s encountered an error during upload of:": "以下のアップロードの際に%(brand)sでエラーが発生しました：",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
     "unknown": "不明",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "メッセージは削除されませんが、インデックスを再構成している間、検索のパフォーマンスが低下します",
     "Recent changes that have not yet been received": "まだ受信していない最近の変更",
@@ -641,7 +618,6 @@
     "The widget will verify your user ID, but won't be able to perform actions for you:": "ウィジェットはあなたのユーザーIDを認証しますが、操作を行うことはできません：",
     "Reset event store": "イベントストアをリセット",
     "You most likely do not want to reset your event index store": "必要がなければ、イベントインデックスストアをリセットするべきではありません",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
     "Loading live location…": "位置情報（ライブ）を読み込んでいます…",
     "Fetching keys from server…": "鍵をサーバーから取得しています…",
     "Checking…": "確認しています…",
@@ -2482,7 +2458,6 @@
         "no_audio_input_description": "マイクが見つかりません。設定を確認して、もう一度やり直してください。",
         "transfer_consult_first_label": "初めに相談"
     },
-    "Other": "その他",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "スペースのアバターの変更",
@@ -2653,7 +2628,24 @@
             "room_version_section": "ルームのバージョン",
             "room_version": "ルームのバージョン：",
             "information_section_space": "スペースの情報",
-            "information_section_room": "ルームの情報"
+            "information_section_room": "ルームの情報",
+            "error_upgrade_title": "ルームをアップグレードできませんでした",
+            "error_upgrade_description": "ルームのアップグレードを完了できませんでした",
+            "upgrade_button": "このルームをバージョン%(version)sにアップグレード",
+            "upgrade_dialog_title": "ルームのバージョンをアップグレード",
+            "upgrade_dialog_description": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
+            "upgrade_dialog_description_1": "同じ名前、説明、アバターで新しいルームを作成",
+            "upgrade_dialog_description_2": "新しいルームを指すようにローカルルームのエイリアスを更新",
+            "upgrade_dialog_description_3": "古いバージョンのルームでユーザーが投稿できないよう設定し、新しいルームに移動するようユーザーに通知するメッセージを投稿",
+            "upgrade_dialog_description_4": "以前のメッセージを閲覧できるように、新しいルームの先頭に古いルームへのリンクを設定",
+            "upgrade_warning_dialog_invite_label": "このルームのメンバーを新しいルームに自動的に招待",
+            "upgrade_warning_dialog_title_private": "非公開のルームをアップグレード",
+            "upgrade_dwarning_ialog_title_public": "公開ルームをアップグレード",
+            "upgrade_warning_dialog_report_bug_prompt": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
+            "upgrade_warning_dialog_report_bug_prompt_link": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
+            "upgrade_warning_dialog_description": "ルームのアップグレードは高度な操作です。バグや欠けている機能、セキュリティーの脆弱性などによってルームが不安定な場合に、アップデートを推奨します。",
+            "upgrade_warning_dialog_explainer": "<b>アップグレードすると、このルームの新しいバージョンが作成されます。</b>今ある全てのメッセージは、アーカイブしたルームに残ります。",
+            "upgrade_warning_dialog_footer": "このルームを<oldVersion />から<newVersion />にアップグレードします。"
         },
         "delete_avatar_label": "アバターを削除",
         "upload_avatar_label": "アバターをアップロード",
@@ -2692,7 +2684,8 @@
             "enable_element_call_caption": "%(brand)sではエンドツーエンド暗号化が設定されていますが、より少ないユーザー数に限定されています。",
             "enable_element_call_no_permissions_tooltip": "この変更に必要な権限がありません。",
             "call_type_section": "通話の種類"
-        }
+        },
+        "title": "ルームの設定 - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3089,6 +3082,11 @@
             "megolm_export": "手動で鍵をエクスポート",
             "setup_key_backup_title": "暗号化されたメッセージにアクセスできなくなります",
             "description": "サインアウトしてよろしいですか？"
+        },
+        "registration": {
+            "continue_without_email_title": "メールアドレスを使用せずに続行",
+            "continue_without_email_description": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
+            "continue_without_email_field_label": "電子メール（任意）"
         }
     },
     "room_list": {
@@ -3139,7 +3137,8 @@
         "spam_or_propaganda": "スパム、プロパガンダ",
         "report_entire_room": "ルーム全体を報告",
         "report_content_to_homeserver": "あなたのホームサーバーの管理者にコンテンツを報告",
-        "description": "このメッセージを報告すると、このメッセージの一意の「イベントID」があなたのホームサーバーの管理者に送信されます。このルーム内のメッセージが暗号化されている場合、ホームサーバーの管理者はメッセージのテキストを読んだり、ファイルや画像を表示したりすることはできません。"
+        "description": "このメッセージを報告すると、このメッセージの一意の「イベントID」があなたのホームサーバーの管理者に送信されます。このルーム内のメッセージが暗号化されている場合、ホームサーバーの管理者はメッセージのテキストを読んだり、ファイルや画像を表示したりすることはできません。",
+        "other_label": "その他"
     },
     "setting": {
         "help_about": {
@@ -3253,7 +3252,9 @@
         "popout": "ウィジェットをポップアウト",
         "unpin_to_view_right_panel": "ウィジェットの固定を解除して、このパネルに表示",
         "set_room_layout": "このルームのレイアウトを参加者全体に設定",
-        "close_to_view_right_panel": "ウィジェットを閉じて、このパネルに表示"
+        "close_to_view_right_panel": "ウィジェットを閉じて、このパネルに表示",
+        "modal_title_default": "モーダルウィジェット",
+        "modal_data_warning": "このスクリーンのデータは%(widgetDomain)sと共有されます"
     },
     "feedback": {
         "sent": "フィードバックを送信しました",
@@ -4167,5 +4168,6 @@
         "disabled_action": "キャッシュをクリアして再同期",
         "resync_description": "%(brand)sは、必要なときだけに他のユーザーに関する情報を読み込むようにすることで、メモリの使用量を3〜5倍減らしました。サーバーと再同期するのを待ってください！",
         "resync_title": "%(brand)sを更新しています"
-    }
+    },
+    "message_edit_dialog_title": "メッセージの編集履歴"
 }

@@ -74,14 +74,6 @@
     "Share User": "Condividi utente",
     "Share Room Message": "Condividi messaggio stanza",
     "Link to selected message": "Link al messaggio selezionato",
-    "Upgrade Room Version": "Aggiorna versione stanza",
-    "Create a new room with the same name, description and avatar": "Creeremo una nuova stanza con lo stesso nome, descrizione e avatar",
-    "Update any local room aliases to point to the new room": "Aggiorneremo qualsiasi alias di stanza in modo che punti a quella nuova",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Eviteremo che gli utenti parlino nella vecchia versione della stanza e posteremo un messaggio avvisando gli utenti di spostarsi in quella nuova",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "Inseriremo un link alla vecchia stanza all'inizio della di quella nuova in modo che la gente possa vedere i messaggi precedenti",
-    "Failed to upgrade room": "Aggiornamento stanza fallito",
-    "The room upgrade could not be completed": "Non è stato possibile completare l'aggiornamento della stanza",
-    "Upgrade this room to version %(version)s": "Aggiorna questa stanza alla versione %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Prima di inviare i log, devi <a>creare una segnalazione su GitHub</a> per descrivere il tuo problema.",
     "Unable to load backup status": "Impossibile caricare lo stato del backup",
     "Unable to restore backup": "Impossibile ripristinare il backup",
@@ -149,9 +141,7 @@
     "Anchor": "Ancora",
     "Headphones": "Auricolari",
     "Folder": "Cartella",
-    "Room Settings - %(roomName)s": "Impostazioni stanza - %(roomName)s",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
-    "Email (optional)": "Email (facoltativa)",
     "Remember my selection for this widget": "Ricorda la mia scelta per questo widget",
     "edited": "modificato",
     "Sign out and remove encryption keys?": "Disconnettere e rimuovere le chiavi di crittografia?",
@@ -171,8 +161,6 @@
     "Cancel All": "Annulla tutto",
     "Upload Error": "Errore di invio",
     "Upload all": "Invia tutto",
-    "Message edits": "Modifiche del messaggio",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
     "Find others by phone or email": "Trova altri per telefono o email",
     "Be found by phone or email": "Trovato per telefono o email",
@@ -184,11 +172,6 @@
     "%(name)s wants to verify": "%(name)s vuole verificare",
     "Failed to connect to integration manager": "Connessione al gestore di integrazioni fallita",
     "Verification Request": "Richiesta verifica",
-    "Upgrade private room": "Aggiorna stanza privata",
-    "Upgrade public room": "Aggiorna stanza pubblica",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aggiornare una stanza è un'azione avanzata ed è consigliabile quando una stanza non è stabile a causa di errori, funzioni mancanti o vulnerabilità di sicurezza.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Solitamente ciò influisce solo come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, <a>segnala un errore</a>.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Aggiornerai questa stanza dalla <oldVersion /> alla <newVersion />.",
     "%(count)s verified sessions": {
         "other": "%(count)s sessioni verificate",
         "one": "1 sessione verificata"
@@ -248,8 +231,6 @@
     "Backup version:": "Versione backup:",
     "Not encrypted": "Non cifrato",
     "Unable to set up keys": "Impossibile impostare le chiavi",
-    "Data on this screen is shared with %(widgetDomain)s": "I dati in questa schermata vengono condivisi con %(widgetDomain)s",
-    "Modal Widget": "Widget modale",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambia",
     "Yemen": "Yemen",
@@ -502,8 +483,6 @@
     "Decline All": "Rifiuta tutti",
     "Approve widget permissions": "Approva permessi del widget",
     "This widget would like to:": "Il widget vorrebbe:",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Solo un avviso, se non aggiungi un'email e dimentichi la password, potresti <b>perdere permanentemente l'accesso al tuo account</b>.",
-    "Continuing without email": "Continuando senza email",
     "Hold": "Sospendi",
     "Resume": "Riprendi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se hai dimenticato la tua chiave di sicurezza puoi <button>impostare nuove opzioni di recupero</button>",
@@ -536,7 +515,6 @@
         "one": "%(count)s stanza",
         "other": "%(count)s stanze"
     },
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Solitamente ciò influisce solo su come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, segnala un errore.",
     "%(count)s people you know have already joined": {
         "other": "%(count)s persone che conosci sono già entrate",
         "one": "%(count)s persona che conosci è già entrata"
@@ -549,8 +527,6 @@
     "Reset everything": "Reimposta tutto",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hai dimenticato o perso tutti i metodi di recupero? <a>Reimposta tutto</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
-    "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
-    "Automatically invite members from this room to the new one": "Invita automaticamente i membri da questa stanza a quella nuova",
     "To join a space you'll need an invite.": "Per entrare in uno spazio ti serve un invito.",
     "%(count)s reply": {
         "one": "%(count)s risposta",
@@ -650,7 +626,6 @@
     "Requires your server to support the stable version of MSC3827": "Richiede che il tuo server supporti la versione stabile di MSC3827",
     "unavailable": "non disponibile",
     "unknown status code": "codice di stato sconosciuto",
-    "Upgrade room": "Aggiorna stanza",
     "Failed to query public rooms": "Richiesta di stanze pubbliche fallita",
     "common": {
         "about": "Al riguardo",
@@ -2595,7 +2570,6 @@
         "no_audio_input_description": "Non abbiamo trovato un microfono nel tuo dispositivo. Controlla le impostazioni e riprova.",
         "transfer_consult_first_label": "Prima consulta"
     },
-    "Other": "Altro",
     "room_settings": {
         "permissions": {
             "m.room.avatar_space": "Cambia avatar dello spazio",
@@ -2774,7 +2748,25 @@
             "room_version_section": "Versione stanza",
             "room_version": "Versione stanza:",
             "information_section_space": "Informazioni spazio",
-            "information_section_room": "Informazioni stanza"
+            "information_section_room": "Informazioni stanza",
+            "error_upgrade_title": "Aggiornamento stanza fallito",
+            "error_upgrade_description": "Non è stato possibile completare l'aggiornamento della stanza",
+            "upgrade_button": "Aggiorna questa stanza alla versione %(version)s",
+            "upgrade_dialog_title": "Aggiorna versione stanza",
+            "upgrade_dialog_description": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
+            "upgrade_dialog_description_1": "Creeremo una nuova stanza con lo stesso nome, descrizione e avatar",
+            "upgrade_dialog_description_2": "Aggiorneremo qualsiasi alias di stanza in modo che punti a quella nuova",
+            "upgrade_dialog_description_3": "Eviteremo che gli utenti parlino nella vecchia versione della stanza e posteremo un messaggio avvisando gli utenti di spostarsi in quella nuova",
+            "upgrade_dialog_description_4": "Inseriremo un link alla vecchia stanza all'inizio della di quella nuova in modo che la gente possa vedere i messaggi precedenti",
+            "upgrade_warning_dialog_invite_label": "Invita automaticamente i membri da questa stanza a quella nuova",
+            "upgrade_warning_dialog_title_private": "Aggiorna stanza privata",
+            "upgrade_dwarning_ialog_title_public": "Aggiorna stanza pubblica",
+            "upgrade_warning_dialog_title": "Aggiorna stanza",
+            "upgrade_warning_dialog_report_bug_prompt": "Solitamente ciò influisce solo su come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, segnala un errore.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "Solitamente ciò influisce solo come la stanza viene elaborata sul server. Se stai riscontrando problemi con il tuo %(brand)s, <a>segnala un errore</a>.",
+            "upgrade_warning_dialog_description": "Aggiornare una stanza è un'azione avanzata ed è consigliabile quando una stanza non è stabile a causa di errori, funzioni mancanti o vulnerabilità di sicurezza.",
+            "upgrade_warning_dialog_explainer": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
+            "upgrade_warning_dialog_footer": "Aggiornerai questa stanza dalla <oldVersion /> alla <newVersion />."
         },
         "delete_avatar_label": "Elimina avatar",
         "upload_avatar_label": "Invia avatar",
@@ -2820,7 +2812,8 @@
             "enable_element_call_caption": "%(brand)s è crittografato end-to-end, ma attualmente è limitato ad un minore numero di utenti.",
             "enable_element_call_no_permissions_tooltip": "Non hai autorizzazioni sufficienti per cambiarlo.",
             "call_type_section": "Tipo chiamata"
-        }
+        },
+        "title": "Impostazioni stanza - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -3225,6 +3218,11 @@
             "megolm_export": "Esporta le chiavi manualmente",
             "setup_key_backup_title": "Perderai l'accesso ai tuoi messaggi cifrati",
             "description": "Sei sicuro di volerti disconnettere?"
+        },
+        "registration": {
+            "continue_without_email_title": "Continuando senza email",
+            "continue_without_email_description": "Solo un avviso, se non aggiungi un'email e dimentichi la password, potresti <b>perdere permanentemente l'accesso al tuo account</b>.",
+            "continue_without_email_field_label": "Email (facoltativa)"
         }
     },
     "room_list": {
@@ -3279,7 +3277,8 @@
         "spam_or_propaganda": "Spam o propaganda",
         "report_entire_room": "Segnala l'intera stanza",
         "report_content_to_homeserver": "Segnala il contenuto all'amministratore dell'homeserver",
-        "description": "La segnalazione di questo messaggio invierà il suo 'ID evento' univoco all'amministratore del tuo homeserver. Se i messaggi della stanza sono cifrati, l'amministratore non potrà leggere il messaggio o vedere file e immagini."
+        "description": "La segnalazione di questo messaggio invierà il suo 'ID evento' univoco all'amministratore del tuo homeserver. Se i messaggi della stanza sono cifrati, l'amministratore non potrà leggere il messaggio o vedere file e immagini.",
+        "other_label": "Altro"
     },
     "setting": {
         "help_about": {
@@ -3398,7 +3397,9 @@
         "popout": "Oggetto a comparsa",
         "unpin_to_view_right_panel": "Sblocca questo widget per vederlo in questo pannello",
         "set_room_layout": "Imposta la disposizione della stanza per tutti",
-        "close_to_view_right_panel": "Chiudi questo widget per vederlo in questo pannello"
+        "close_to_view_right_panel": "Chiudi questo widget per vederlo in questo pannello",
+        "modal_title_default": "Widget modale",
+        "modal_data_warning": "I dati in questa schermata vengono condivisi con %(widgetDomain)s"
     },
     "feedback": {
         "sent": "Feedback inviato",
@@ -4378,5 +4379,6 @@
         "disabled_action": "Svuota cache e risincronizza",
         "resync_description": "%(brand)s ora usa da 3 a 5 volte meno memoria, caricando le informazioni degli altri utenti solo quando serve. Si prega di attendere mentre ci risincronizziamo con il server!",
         "resync_title": "Aggiornamento di %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "Modifiche del messaggio"
 }

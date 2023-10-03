@@ -295,7 +295,6 @@
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
     "Sign out and remove encryption keys?": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
     "Remember my selection for this widget": "انتخاب من برای این ابزارک را بخاطر بسپار",
-    "Upgrade this room to version %(version)s": "این اتاق را به نسخه %(version)s ارتقا دهید",
     "Not a valid Security Key": "کلید امنیتی معتبری نیست",
     "This widget would like to:": "این ابزارک تمایل دارد:",
     "Unable to set up keys": "تنظیم کلیدها امکان پذیر نیست",
@@ -316,9 +315,7 @@
         "one": "بارگذاری %(count)s فایل دیگر",
         "other": "بارگذاری %(count)s فایل دیگر"
     },
-    "Room Settings - %(roomName)s": "تنظیمات اتاق - %(roomName)s",
     "Unable to restore backup": "بازیابی نسخه پشتیبان امکان پذیر نیست",
-    "Failed to upgrade room": "اتاق ارتقاء نیافت",
     "Link to selected message": "پیوند به پیام انتخاب شده",
     "Unable to restore session": "امکان بازیابی نشست وجود ندارد",
     "Reset event store": "پاک‌کردن مخزن رخداد",
@@ -329,23 +326,18 @@
     "Security Key mismatch": "عدم تطابق کلید امنیتی",
     "Invalid Security Key": "کلید امنیتی نامعتبر است",
     "Wrong Security Key": "کلید امنیتی اشتباه است",
-    "Continuing without email": "ادامه بدون ایمیل",
     "Approve widget permissions": "دسترسی‌های ابزارک را تائید کنید",
     "Server isn't responding": "سرور پاسخ نمی دهد",
     "a key signature": "یک امضای کلیدی",
     "Clear cross-signing keys": "کلیدهای امضای متقابل را پاک کن",
     "Destroy cross-signing keys?": "کلیدهای امضای متقابل نابود شود؟",
-    "Upgrade public room": "ارتقاء اتاق عمومی",
-    "Upgrade private room": "ارتقاء اتاق خصوصی",
     "Resend %(unsentCount)s reaction(s)": "بازارسال %(unsentCount)s واکنش",
     "Missing session data": "داده‌های نشست از دست رفته است",
     "No backup found!": "نسخه پشتیبان یافت نشد!",
-    "Upgrade Room Version": "ارتقاء نسخه‌ی اتاق",
     "Share Room Message": "به اشتراک گذاشتن پیام اتاق",
     "Reset everything": "همه چیز را بازراه‌اندازی (reset) کنید",
     "Remember this": "این را به یاد داشته باش",
     "Decline All": "رد کردن همه",
-    "Modal Widget": "ابزارک کمکی",
     "Looks good!": "به نظر خوب میاد!",
     "Security Key": "کلید امنیتی",
     "Security Phrase": "عبارت امنیتی",
@@ -353,12 +345,10 @@
     "Not Trusted": "قابل اعتماد نیست",
     "Verification Request": "درخواست تأیید",
     "Command Help": "راهنمای دستور",
-    "Message edits": "ویرایش پیام",
     "Upload all": "بارگذاری همه",
     "Upload Error": "خطای بارگذاری",
     "Cancel All": "لغو همه",
     "Upload files": "بارگذاری فایل‌ها",
-    "Email (optional)": "ایمیل (اختیاری)",
     "Share User": "به اشتراک‌گذاری کاربر",
     "Share Room": "به اشتراک‌گذاری اتاق",
     "Send Logs": "ارسال گزارش ها",
@@ -535,18 +525,6 @@
     "Your firewall or anti-virus is blocking the request.": "دیوار آتش یا آنتی‌ویروس شما مانع از ارسال درخواست می‌شود.",
     "The server (%(serverName)s) took too long to respond.": "زمان پاسخگویی سرور (%(serverName)s) بسیار طولانی شده‌است.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "سرور شما به برخی از درخواست‌ها پاسخ نمی‌دهد. در ادامه برخی از دلایل محتمل آن ذکر شده است.",
-    "You'll upgrade this room from <oldVersion /> to <newVersion />.": "این اتاق را از <oldVersion /> به <newVersion /> ارتقا خواهید داد.",
-    "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "به‌روزرسانی اتاق اقدامی پیشرفته بوده و معمولاً در صورتی توصیه می‌شود که اتاق به دلیل اشکالات، فقدان قابلیت‌ها یا آسیب پذیری‌های امنیتی، پایدار و قابل استفاده نباشد.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "این معمولاً فقط بر نحوه پردازش اتاق در سرور تأثیر می‌گذارد. اگر با %(brand)s خود مشکلی دارید، لطفاً <a>اشکال را گزارش کنید</a>.",
-    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "این معمولاً فقط بر نحوه پردازش اتاق در سرور تأثیر می‌گذارد. اگر با %(brand)s خود مشکلی دارید ، لطفاً یک اشکال گزارش دهید.",
-    "Put a link back to the old room at the start of the new room so people can see old messages": "در ابتدای اتاق جدید پیوندی به اتاق قدیمی قرار دهید تا افراد بتوانند پیام‌های موجود در اتاق قدیمی را ببینند",
-    "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "از گفتگوی کاربران در نسخه قدیمی اتاق جلوگیری کرده و با ارسال پیامی به کاربران توصیه کنید به اتاق جدید منتقل شوند",
-    "Update any local room aliases to point to the new room": "برای اشاره به اتاق جدید، نام‌های مستعار (aliases) اتاق محلی را به‌روز کنید",
-    "Create a new room with the same name, description and avatar": "یک اتاق جدید با همان نام ، توضیحات و نمایه ایجاد کنید",
-    "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "ارتقاء این اتاق نیازمند بستن نسخه‌ی فعلی و ساختن درجای یک اتاق جدید است. برای داشتن بهترین تجربه‌ی کاربری ممکن، ما:",
-    "The room upgrade could not be completed": "متاسفانه فرآیند ارتقاء اتاق به پایان نرسید",
-    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "حواستان را جمع کنید، اگر ایمیلی اضافه نکرده و گذرواژه‌ی خود را فراموش کنید ، ممکن است <b>دسترسی به حساب کاربری خود را برای همیشه از دست دهید</b>.",
-    "Data on this screen is shared with %(widgetDomain)s": "داده‌های این صفحه با %(widgetDomain)s به اشتراک گذاشته می‌شود",
     "%(brand)s encountered an error during upload of:": "%(brand)s در حین بارگذاری این دچار مشکل شد:",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
@@ -1790,7 +1768,6 @@
         "no_audio_input_description": "ما میکروفونی در دستگاه شما پیدا نکردیم. لطفاً تنظیمات خود را بررسی کنید و دوباره امتحان کنید.",
         "transfer_consult_first_label": "ابتدا مشورت کنید"
     },
-    "Other": "دیگر",
     "room_settings": {
         "permissions": {
             "m.room.avatar": "تغییر نمایه اتاق",
@@ -1887,7 +1864,22 @@
             "room_predecessor": "پیام‌های قدیمی اتاق %(roomName)s را مشاهده کنید.",
             "room_version_section": "نسخه‌ی اتاق",
             "room_version": "نسخه‌ی اتاق:",
-            "information_section_room": "اطلاعات اتاق"
+            "information_section_room": "اطلاعات اتاق",
+            "error_upgrade_title": "اتاق ارتقاء نیافت",
+            "error_upgrade_description": "متاسفانه فرآیند ارتقاء اتاق به پایان نرسید",
+            "upgrade_button": "این اتاق را به نسخه %(version)s ارتقا دهید",
+            "upgrade_dialog_title": "ارتقاء نسخه‌ی اتاق",
+            "upgrade_dialog_description": "ارتقاء این اتاق نیازمند بستن نسخه‌ی فعلی و ساختن درجای یک اتاق جدید است. برای داشتن بهترین تجربه‌ی کاربری ممکن، ما:",
+            "upgrade_dialog_description_1": "یک اتاق جدید با همان نام ، توضیحات و نمایه ایجاد کنید",
+            "upgrade_dialog_description_2": "برای اشاره به اتاق جدید، نام‌های مستعار (aliases) اتاق محلی را به‌روز کنید",
+            "upgrade_dialog_description_3": "از گفتگوی کاربران در نسخه قدیمی اتاق جلوگیری کرده و با ارسال پیامی به کاربران توصیه کنید به اتاق جدید منتقل شوند",
+            "upgrade_dialog_description_4": "در ابتدای اتاق جدید پیوندی به اتاق قدیمی قرار دهید تا افراد بتوانند پیام‌های موجود در اتاق قدیمی را ببینند",
+            "upgrade_warning_dialog_title_private": "ارتقاء اتاق خصوصی",
+            "upgrade_dwarning_ialog_title_public": "ارتقاء اتاق عمومی",
+            "upgrade_warning_dialog_report_bug_prompt": "این معمولاً فقط بر نحوه پردازش اتاق در سرور تأثیر می‌گذارد. اگر با %(brand)s خود مشکلی دارید ، لطفاً یک اشکال گزارش دهید.",
+            "upgrade_warning_dialog_report_bug_prompt_link": "این معمولاً فقط بر نحوه پردازش اتاق در سرور تأثیر می‌گذارد. اگر با %(brand)s خود مشکلی دارید، لطفاً <a>اشکال را گزارش کنید</a>.",
+            "upgrade_warning_dialog_description": "به‌روزرسانی اتاق اقدامی پیشرفته بوده و معمولاً در صورتی توصیه می‌شود که اتاق به دلیل اشکالات، فقدان قابلیت‌ها یا آسیب پذیری‌های امنیتی، پایدار و قابل استفاده نباشد.",
+            "upgrade_warning_dialog_footer": "این اتاق را از <oldVersion /> به <newVersion /> ارتقا خواهید داد."
         },
         "upload_avatar_label": "بارگذاری نمایه",
         "bridges": {
@@ -1900,7 +1892,8 @@
             "notification_sound": "صدای اعلان",
             "custom_sound_prompt": "تنظیم صدای دلخواه جدید",
             "browse_button": "جستجو"
-        }
+        },
+        "title": "تنظیمات اتاق - %(roomName)s"
     },
     "encryption": {
         "verification": {
@@ -2189,6 +2182,11 @@
             "megolm_export": "کلیدها را به صورت دستی استخراج (Export)کن",
             "setup_key_backup_title": "دسترسی به پیام‌های رمزشده‌ی خود را از دست خواهید داد",
             "description": "آیا مطمئن هستید که می خواهید از برنامه خارج شوید؟"
+        },
+        "registration": {
+            "continue_without_email_title": "ادامه بدون ایمیل",
+            "continue_without_email_description": "حواستان را جمع کنید، اگر ایمیلی اضافه نکرده و گذرواژه‌ی خود را فراموش کنید ، ممکن است <b>دسترسی به حساب کاربری خود را برای همیشه از دست دهید</b>.",
+            "continue_without_email_field_label": "ایمیل (اختیاری)"
         }
     },
     "room_list": {
@@ -2214,7 +2212,8 @@
     "report_content": {
         "missing_reason": "لطفا توضیح دهید که چرا گزارش می‌دهید.",
         "report_content_to_homeserver": "گزارش محتوا به مدیر سرور خود",
-        "description": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت."
+        "description": "گزارش این پیام شناسه‌ی منحصر به فرد رخداد آن را برای مدیر سرور ارسال می‌کند. اگر پیام‌های این اتاق رمزشده باشند، مدیر سرور شما امکان خواندن متن آن پیام یا مشاهده‌ی عکس یا فایل‌های دیگر را نخواهد داشت.",
+        "other_label": "دیگر"
     },
     "onboarding": {
         "has_avatar_label": "احسنت، با این کار شما به سایر افراد کمک می‌کنید که شما را بشناسند",
@@ -2333,7 +2332,9 @@
         "added_by": "ابزارک اضافه شده توسط",
         "cookie_warning": "این ابزارک ممکن است از کوکی استفاده کند.",
         "popout": "بیرون انداختن ابزارک",
-        "set_room_layout": "چیدمان اتاق من را برای همه تنظیم کن"
+        "set_room_layout": "چیدمان اتاق من را برای همه تنظیم کن",
+        "modal_title_default": "ابزارک کمکی",
+        "modal_data_warning": "داده‌های این صفحه با %(widgetDomain)s به اشتراک گذاشته می‌شود"
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2980,5 +2981,6 @@
         "disabled_action": "پاک کردن حافظه‌ی کش و همگام سازی مجدد",
         "resync_description": "هم‌اکنون %(brand)s از طریق بارگیری و نمایش اطلاعات کاربران تنها در زمان‌هایی که نیاز است، حدود ۳ تا ۵ مرتبه حافظه‌ی کمتری استفاده می‌کند. لطفا تا همگام‌سازی با سرور منتظر بمانید!",
         "resync_title": "به‌روزرسانی %(brand)s"
-    }
+    },
+    "message_edit_dialog_title": "ویرایش پیام"
 }
