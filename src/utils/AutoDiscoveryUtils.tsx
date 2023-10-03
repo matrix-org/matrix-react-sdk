@@ -17,11 +17,11 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import {
     AutoDiscovery,
+    AutoDiscoveryError,
     ClientConfig,
     OidcClientConfig,
     M_AUTHENTICATION,
     IClientWellKnown,
-    AutoDiscoveryError,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
