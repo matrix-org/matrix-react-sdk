@@ -58,7 +58,6 @@
     "expand": "Utvid",
     "not specified": "Ikkje spesifisert",
     "Send Logs": "Send Loggar",
-    "Filter results": "Filtrer resultat",
     "Invalid theme schema.": "",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
@@ -82,7 +81,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Sambandsstatane (USA)",
     "United Kingdom": "Storbritannia",
-    "Close sidebar": "Lat att sidestolpen",
     "Deactivate account": "Avliv brukarkontoen",
     "common": {
         "analytics": "Statistikk",
@@ -143,7 +141,8 @@
         "setup_secure_messages": "Sett opp sikre meldingar (Secure Messages)",
         "show_more": "Vis meir",
         "are_you_sure": "Er du sikker?",
-        "email_address": "Epostadresse"
+        "email_address": "Epostadresse",
+        "filter_results": "Filtrer resultat"
     },
     "action": {
         "continue": "Fortset",
@@ -1019,7 +1018,8 @@
         "changelog": "Endringslogg"
     },
     "location_sharing": {
-        "expand_map": "Utvid kart"
+        "expand_map": "Utvid kart",
+        "close_sidebar": "Lat att sidestolpen"
     },
     "labs_mjolnir": {
         "room_name": "Mi blokkeringsliste",

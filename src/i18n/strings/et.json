@@ -25,10 +25,8 @@
     "Yesterday": "Eile",
     "collapse": "ahenda",
     "expand": "laienda",
-    "Resend %(unsentCount)s reaction(s)": "Saada uuesti %(unsentCount)s reaktsioon(i)",
     "Home": "Avaleht",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Kui soovid teatada Matrix'iga seotud turvaveast, siis palun tutvu enne Matrix.org <a>Turvalisuse avalikustamise juhendiga</a>.",
-    "Filter results": "Filtreeri tulemusi",
     "%(name)s accepted": "%(name)s nõustus",
     "%(name)s declined": "%(name)s keeldus",
     "%(name)s cancelled": "%(name)s tühistas",
@@ -426,8 +424,6 @@
     "Afghanistan": "Afganistan",
     "United States": "Ameerika Ühendriigid",
     "United Kingdom": "Suurbritannia",
-    "Hold": "Pane ootele",
-    "Resume": "Jätka",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Kui sa oled unustanud oma turvavõtme, siis sa võid <button>seadistada uued taastamise võimalused</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Sisestades turvavõtme pääsed ligi oma turvatud sõnumitele ning sätid tööle krüptitud sõnumivahetuse.",
     "Not a valid Security Key": "Vigane turvavõti",
@@ -443,8 +439,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Ei õnnestu saada ligipääsu turvahoidlale. Palun kontrolli, et sa oleksid sisestanud õige turvafraasi.",
     "Invalid Security Key": "Vigane turvavõti",
     "Wrong Security Key": "Vale turvavõti",
-    "Failed to start livestream": "Videovoo käivitamine ei õnnestu",
-    "Unable to start audio streaming.": "Audiovoo käivitamine ei õnnestu.",
     "%(count)s members": {
         "other": "%(count)s liiget",
         "one": "%(count)s liige"
@@ -453,7 +447,6 @@
         "other": "%(count)s jututuba",
         "one": "%(count)s jututuba"
     },
-    "No results found": "Tulemusi ei ole",
     "<inviter/> invites you": "<inviter/> saatis sulle kutse",
     "%(count)s people you know have already joined": {
         "other": "%(count)s sulle tuttavat kasutajat on juba liitunud",
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Jätkamiseks sisesta oma turvafraas või <button>kasuta oma turvavõtit</button>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Taasta ligipääs oma kontole ning selles sessioonis salvestatud krüptivõtmetele. Ilma nende võtmeteta sa ei saa lugeda krüptitud sõnumeid mitte üheski oma sessioonis.",
-    "Thread options": "Jutulõnga valikud",
     "Forget": "Unusta",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja veel %(count)s kogukond",
@@ -485,34 +477,16 @@
     "Themes": "Teemad",
     "Messaging": "Sõnumisuhtlus",
     "Moderation": "Modereerimine",
-    "Open in OpenStreetMap": "Ava OpenStreetMap'is",
     "toggle event": "lülita sündmus sisse/välja",
     "Feedback sent! Thanks, we appreciate it!": "Tagasiside on saadetud. Täname, sellest on loodetavasti kasu!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
-    "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
-    "Unsent": "Saatmata",
-    "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "%(count)s participants": {
         "one": "1 osaleja",
         "other": "%(count)s oselejat"
     },
-    "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
-    "Live location enabled": "Reaalajas asukoha jagamine on kasutusel",
-    "Live location error": "Viga asukoha jagamisel reaalajas",
-    "Live until %(expiryTime)s": "Kuvamine toimib kuni %(expiryTime)s",
-    "No live locations": "Reaalajas asukohad puuduvad",
-    "Close sidebar": "Sulge külgpaan",
     "View List": "Vaata loendit",
-    "View list": "Vaata loendit",
-    "Updated %(humanizedUpdateTime)s": "Uuendatud %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "Sinu asukoha reaalajas jagamise lõpetamisel tekkis viga",
     "%(members)s and more": "%(members)s ja veel",
     "%(members)s and %(last)s": "%(members)s ja veel %(last)s",
-    "Cameras": "Kaamerad",
-    "Output devices": "Väljundseadmed",
-    "Input devices": "Sisendseadmed",
-    "An error occurred whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
-    "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga",
     "Unread email icon": "Lugemata e-kirja ikoon",
     "You cannot search for rooms that are neither a room nor a space": "Sa ei saa otsida sellised objekte, mis pole ei jututoad ega kogukonnad",
     "Show spaces": "Näita kogukondi",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "Jutulõnga esimese kirje tunnus: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong> jututoas",
     "unknown": "teadmata",
-    "Loading live location…": "Reaalajas asukoht on laadimisel…",
     "Fetching keys from server…": "Laadin serverist võtmeid…",
     "Starting export process…": "Alustame eksportimist…",
     "Desktop app logo": "Töölauarakenduse logo",
@@ -655,7 +628,11 @@
         "avatar": "Tunnuspilt",
         "are_you_sure": "Kas sa oled kindel?",
         "location": "Asukoht",
-        "email_address": "E-posti aadress"
+        "email_address": "E-posti aadress",
+        "filter_results": "Filtreeri tulemusi",
+        "no_results_found": "Tulemusi ei ole",
+        "unsent": "Saatmata",
+        "cameras": "Kaamerad"
     },
     "action": {
         "continue": "Jätka",
@@ -773,7 +750,10 @@
         "explore_public_rooms": "Sirvi avalikke jututubasid",
         "reply_in_thread": "Vasta jutulõngas",
         "click": "Klõpsi",
-        "transfer": "Suuna kõne edasi"
+        "transfer": "Suuna kõne edasi",
+        "resume": "Jätka",
+        "hold": "Pane ootele",
+        "view_list": "Vaata loendit"
     },
     "a11y": {
         "user_menu": "Kasutajamenüü",
@@ -2145,7 +2125,9 @@
             "external_url": "Lähteaadress",
             "collapse_reply_thread": "Ahenda vastuste jutulõnga",
             "view_related_event": "Vaata seotud sündmust",
-            "report": "Teata sisust"
+            "report": "Teata sisust",
+            "resent_unsent_reactions": "Saada uuesti %(unsentCount)s reaktsioon(i)",
+            "open_in_osm": "Ava OpenStreetMap'is"
         },
         "url_preview": {
             "show_n_more": {
@@ -2475,7 +2457,9 @@
         "unable_to_access_audio_input_description": "Meil puudub ligipääs sinu mikrofonile. Palun kontrolli oma veebibrauseri seadistusi ja proovi uuesti.",
         "no_audio_input_title": "Mikrofoni ei leidu",
         "no_audio_input_description": "Me ei suutnud sinu seadmest leida mikrofoni. Palun kontrolli seadistusi ja proovi siis uuesti.",
-        "transfer_consult_first_label": "Pea esmalt nõu"
+        "transfer_consult_first_label": "Pea esmalt nõu",
+        "input_devices": "Sisendseadmed",
+        "output_devices": "Väljundseadmed"
     },
     "room_settings": {
         "permissions": {
@@ -3327,7 +3311,9 @@
             "title": "Luba sellel vidinal sinu isikut verifitseerida",
             "starting_text": "See vidin verifitseerib sinu kasutajatunnuse, kuid ta ei saa sinu nimel toiminguid teha:",
             "remember_selection": "Jäta see meelde"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Audiovoo käivitamine ei õnnestu.",
+        "error_unable_start_audio_stream_title": "Videovoo käivitamine ei õnnestu"
     },
     "feedback": {
         "sent": "Tagasiside on saadetud",
@@ -3531,7 +3517,20 @@
         "share_type_own": "Minu praegune asukoht",
         "share_type_live": "Minu asukoht reaalajas",
         "share_type_pin": "Märgi nööpnõelaga",
-        "share_type_prompt": "Missugust asukohta sa soovid jagada?"
+        "share_type_prompt": "Missugust asukohta sa soovid jagada?",
+        "live_update_time": "Uuendatud %(humanizedUpdateTime)s",
+        "live_until": "Kuvamine toimib kuni %(expiryTime)s",
+        "loading_live_location": "Reaalajas asukoht on laadimisel…",
+        "live_location_ended": "Reaalajas asukoha jagamine on lõppenud",
+        "live_location_error": "Viga asukoha jagamisel reaalajas",
+        "live_locations_empty": "Reaalajas asukohad puuduvad",
+        "close_sidebar": "Sulge külgpaan",
+        "error_stopping_live_location": "Sinu asukoha reaalajas jagamise lõpetamisel tekkis viga",
+        "error_sharing_live_location": "Sinu asukoha jagamisel reaalajas tekkis viga",
+        "live_location_active": "Sa jagad oma asukohta reaalajas",
+        "live_location_enabled": "Reaalajas asukoha jagamine on kasutusel",
+        "error_sharing_live_location_try_again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
+        "error_stopping_live_location_try_again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti"
     },
     "labs_mjolnir": {
         "room_name": "Minu poolt seatud ligipääsukeeldude loend",
@@ -4217,6 +4216,9 @@
                 "one": "%(count)s'l häälel põhinev lõpptulemus",
                 "other": "%(count)s'l häälel põhinev lõpptulemus"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Jutulõnga valikud"
         }
     },
     "reject_invitation_dialog": {

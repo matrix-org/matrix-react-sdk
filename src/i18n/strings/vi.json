@@ -31,11 +31,6 @@
     "Switch theme": "Chuyển đổi chủ đề",
     "Sign in with SSO": "Đăng nhập bằng SSO",
     "Delete Widget": "Xóa Widget",
-    "Failed to start livestream": "Không thể bắt đầu phát trực tiếp",
-    "Unable to start audio streaming.": "Không thể bắt đầu phát trực tuyến âm thanh.",
-    "Resend %(unsentCount)s reaction(s)": "Gửi lại (các) phản ứng %(unsentCount)s",
-    "Hold": "Giữ máy",
-    "Resume": "Tiếp tục",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Nếu bạn quên Khóa bảo mật của mình, bạn có thể thiết lập các tùy chọn khôi phục mới <button>set up new recovery options</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Truy cập lịch sử tin nhắn an toàn của bạn và thiết lập nhắn tin an toàn bằng cách nhập Khóa bảo mật của bạn.",
     "Not a valid Security Key": "Không phải là khóa bảo mật hợp lệ",
@@ -77,7 +72,6 @@
     "a new cross-signing key signature": "một chữ ký khóa xác thực chéo mới",
     "a new master key signature": "một chữ ký khóa chính mới",
     "<inviter/> invites you": "<inviter /> mời bạn",
-    "No results found": "không tim được kêt quả",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
     "Use your Security Key to continue.": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
@@ -115,7 +109,6 @@
     "Tuesday": "Thứ ba",
     "Monday": "Thứ hai",
     "Sunday": "Chủ nhật",
-    "Filter results": "Lọc kết quả",
     "not specified": "không được chỉ định",
     "Failed to connect to integration manager": "Không kết nối được với trình quản lý tích hợp",
     "unknown error code": "mã lỗi không xác định",
@@ -470,7 +463,6 @@
     "United States": "Hoa Kỳ",
     "United Kingdom": "Vương quốc Anh",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Lấy lại quyền truy cập vào tài khoản của bạn và khôi phục các khóa mã hóa được lưu trữ trong phiên này. Nếu không có chúng, bạn sẽ không thể đọc tất cả các tin nhắn an toàn của mình trong bất kỳ phiên nào.",
-    "Thread options": "Tùy chọn theo chủ đề",
     "Forget": "Quên",
     "%(count)s votes": {
         "one": "%(count)s phiếu bầu",
@@ -485,13 +477,11 @@
         "one": "%(spaceName)s và %(count)s khác",
         "other": "%(spaceName)s và %(count)s khác"
     },
-    "Open in OpenStreetMap": "Mở trong OpenStreetMap",
     "toggle event": "chuyển đổi sự kiện",
     "Explore public spaces in the new search dialog": "Khám phá các space công cộng trong hộp thoại tìm kiếm mới",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s và %(space2Name)s",
     "unknown": "không rõ",
     "Starting export process…": "Bắt đầu trích xuất…",
-    "Unsent": "Chưa gửi",
     "Requires your server to support the stable version of MSC3827": "Cần máy chủ nhà của bạn hỗ trợ phiên bản ổn định của MSC3827",
     "Fetching keys from server…": "Đang lấy các khóa từ máy chủ…",
     "Feedback sent! Thanks, we appreciate it!": "Đã gửi phản hồi! Cảm ơn bạn, chúng tôi đánh giá cao các phản hồi này!",
@@ -502,12 +492,9 @@
     },
     "%(members)s and %(last)s": "%(members)s và %(last)s",
     " in <strong>%(room)s</strong>": " ở <strong>%(room)s</strong>",
-    "Input devices": "Thiết bị đầu vào",
-    "Output devices": "Thiết bị đầu ra",
     "Show rooms": "Hiện phòng",
     "Show spaces": "Hiện spaces",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
-    "Cameras": "Máy quay",
     "unavailable": "không có sẵn",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "<w>WARNING:</w> <description/>": "",
@@ -633,7 +620,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Bạn có chắc không?",
         "location": "Vị trí",
-        "email_address": "Địa chỉ thư điện tử"
+        "email_address": "Địa chỉ thư điện tử",
+        "filter_results": "Lọc kết quả",
+        "no_results_found": "không tim được kêt quả",
+        "unsent": "Chưa gửi",
+        "cameras": "Máy quay"
     },
     "action": {
         "continue": "Tiếp tục",
@@ -751,7 +742,9 @@
         "explore_public_rooms": "Khám phá các phòng chung",
         "reply_in_thread": "Trả lời theo chủ đề",
         "click": "Nhấn",
-        "transfer": "Chuyển"
+        "transfer": "Chuyển",
+        "resume": "Tiếp tục",
+        "hold": "Giữ máy"
     },
     "a11y": {
         "user_menu": "Menu người dùng",
@@ -1999,7 +1992,9 @@
             "external_url": "URL nguồn",
             "collapse_reply_thread": "Thu gọn chuỗi trả lời",
             "view_related_event": "Xem sự kiện liên quan",
-            "report": "Bản báo cáo"
+            "report": "Bản báo cáo",
+            "resent_unsent_reactions": "Gửi lại (các) phản ứng %(unsentCount)s",
+            "open_in_osm": "Mở trong OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2320,7 +2315,9 @@
         "unable_to_access_audio_input_description": "Chúng tôi không thể truy cập micrô của bạn. Xin hãy kiểm tra trình duyệt của bạn và thử lại.",
         "no_audio_input_title": "Không tìm thấy micrô",
         "no_audio_input_description": "Chúng tôi không tìm thấy micrô trên thiết bị của bạn. Vui lòng kiểm tra các thiết lập của bạn và thử lại.",
-        "transfer_consult_first_label": "Tư vấn trước"
+        "transfer_consult_first_label": "Tư vấn trước",
+        "input_devices": "Thiết bị đầu vào",
+        "output_devices": "Thiết bị đầu ra"
     },
     "room_settings": {
         "permissions": {
@@ -3124,7 +3121,9 @@
             "title": "Cho phép tiện ích widget này xác thực danh tính của bạn",
             "starting_text": "Tiện ích widget sẽ xác minh ID người dùng của bạn, nhưng không thể thay bạn thực hiện các hành động:",
             "remember_selection": "Nhớ điều này"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Không thể bắt đầu phát trực tuyến âm thanh.",
+        "error_unable_start_audio_stream_title": "Không thể bắt đầu phát trực tiếp"
     },
     "feedback": {
         "sent": "Đã gửi phản hồi",
@@ -3930,6 +3929,9 @@
                 "one": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu",
                 "other": "Kết quả cuối cùng dựa trên %(count)s phiếu bầu"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Tùy chọn theo chủ đề"
         }
     },
     "reject_invitation_dialog": {

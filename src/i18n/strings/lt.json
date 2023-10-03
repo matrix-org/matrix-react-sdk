@@ -2,7 +2,6 @@
     "Sunday": "Sekmadienis",
     "Today": "Šiandien",
     "Friday": "Penktadienis",
-    "Filter results": "Išfiltruoti rezultatus",
     "Tuesday": "Antradienis",
     "Unnamed room": "Kambarys be pavadinimo",
     "Saturday": "Šeštadienis",
@@ -215,11 +214,6 @@
     "Belarus": "Baltarusija",
     "Barbados": "Barbadosas",
     "Bahrain": "Bahreinas",
-    "Failed to start livestream": "Nepavyko pradėti tiesioginės transliacijos",
-    "Unable to start audio streaming.": "Nepavyksta pradėti garso transliacijos.",
-    "Resend %(unsentCount)s reaction(s)": "Pakartotinai išsiųsti %(unsentCount)s reakciją (-as)",
-    "Hold": "Sulaikyti",
-    "Resume": "Tęsti",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Jei pamiršote Saugumo Raktą, galite <button>nustatyti naujas atkūrimo parinktis</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Prieikite prie savo saugių žinučių istorijos ir nustatykite saugių žinučių siuntimą įvesdami Saugumo Raktą.",
     "This looks like a valid Security Key!": "Atrodo, kad tai tinkamas Saugumo Raktas!",
@@ -406,7 +400,8 @@
         "show_more": "Rodyti daugiau",
         "joined": "Prisijungta",
         "are_you_sure": "Ar tikrai?",
-        "email_address": "El. pašto adresas"
+        "email_address": "El. pašto adresas",
+        "filter_results": "Išfiltruoti rezultatus"
     },
     "action": {
         "continue": "Tęsti",
@@ -510,7 +505,9 @@
         "add_existing_room": "Pridėti esamą kambarį",
         "explore_public_rooms": "Tyrinėti viešuosius kambarius",
         "reply_in_thread": "Atsakyti temoje",
-        "transfer": "Perkelti"
+        "transfer": "Perkelti",
+        "resume": "Tęsti",
+        "hold": "Sulaikyti"
     },
     "labs": {
         "video_rooms": "Vaizdo kambariai",
@@ -1375,7 +1372,8 @@
         "creation_summary_room": "%(creator)s sukūrė ir sukonfigūravo kambarį.",
         "context_menu": {
             "view_source": "Peržiūrėti šaltinį",
-            "external_url": "Šaltinio URL adresas"
+            "external_url": "Šaltinio URL adresas",
+            "resent_unsent_reactions": "Pakartotinai išsiųsti %(unsentCount)s reakciją (-as)"
         },
         "url_preview": {
             "show_n_more": {
@@ -2238,7 +2236,9 @@
             "title": "Leiskite šiam valdikliui patvirtinti jūsų tapatybę",
             "starting_text": "Šis valdiklis patvirtins jūsų vartotojo ID, bet negalės už jus atlikti veiksmų:",
             "remember_selection": "Prisiminkite tai"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Nepavyksta pradėti garso transliacijos.",
+        "error_unable_start_audio_stream_title": "Nepavyko pradėti tiesioginės transliacijos"
     },
     "feedback": {
         "sent": "Atsiliepimas išsiųstas",

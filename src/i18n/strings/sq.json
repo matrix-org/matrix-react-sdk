@@ -28,7 +28,6 @@
     "Sunday": "E diel",
     "Today": "Sot",
     "Friday": "E premte",
-    "Filter results": "Filtroni përfundimet",
     "Tuesday": "E martë",
     "Unnamed room": "Dhomë e paemërtuar",
     "Saturday": "E shtunë",
@@ -126,7 +125,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
     "Scissors": "Gërshërë",
     "edited": "e përpunuar",
-    "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
     "Deactivate account": "Çaktivizoje llogarinë",
     "Spanner": "Çelës",
     "e.g. my-room": "p.sh., dhoma-ime",
@@ -425,8 +423,6 @@
     "Bangladesh": "Bangladesh",
     "Falkland Islands": "Ishujt Falkland",
     "Sweden": "Suedi",
-    "Hold": "Mbaje",
-    "Resume": "Rimerre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Nëse keni harruar Kyçin tuaj të Sigurisë, mund të <button>ujdisni mundësi të reja rimarrjeje</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Hyni te historiku i mesazheve tuaj të siguruar dhe rregulloni shkëmbim mesazhesh të sigurt duke dhënë Kyçin tuaj të Sigurisë.",
     "Not a valid Security Key": "Kyç Sigurie jo i vlefshëm",
@@ -446,14 +442,11 @@
         "one": "%(count)s anëtar",
         "other": "%(count)s anëtarë"
     },
-    "Unable to start audio streaming.": "S’arrihet të niset transmetim audio.",
     "<inviter/> invites you": "<inviter/> ju fton",
-    "No results found": "S’u gjetën përfundime",
     "%(count)s rooms": {
         "one": "%(count)s dhomë",
         "other": "%(count)s dhoma"
     },
-    "Failed to start livestream": "S’u arrit të nisej transmetim i drejtpërdrejtë",
     "%(count)s people you know have already joined": {
         "one": "%(count)s person që e njihni është bërë pjesë tashmë",
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Që të vazhdohet, jepni Frazën tuaj të Sigurisë, ose <button>përdorni Kyçin tuaj të Sigurisë</button>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
-    "Thread options": "Mundësi rrjedhe",
     "Forget": "Harroje",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s dhe %(count)s tjetër",
@@ -485,45 +477,26 @@
     "Themes": "Tema",
     "Moderation": "Moderim",
     "Messaging": "Shkëmbim mesazhes",
-    "Open in OpenStreetMap": "Hape në OpenStreetMap",
     "Feedback sent! Thanks, we appreciate it!": "Përshtypjet u dërguan! Faleminderit, e çmojmë aktin tuaj!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
-    "You are sharing your live location": "Po jepni vendndodhjen tuaj aty për aty",
-    "Unsent": "Të padërguar",
-    "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
     "%(count)s participants": {
         "one": "1 pjesëmarrës",
         "other": "%(count)s pjesëmarrës"
     },
     "Unread email icon": "Ikonë email-esh të palexuar",
-    "An error occurred whilst sharing your live location, please try again": "Ndodhi një gabim teksa tregohej vendndodhja juaj aty për aty, ju lutemi, riprovoni",
-    "Live location enabled": "Vendndodhje aty për aty e aktivizuar",
-    "An error occurred whilst sharing your live location": "Ndodhi një gabim teksa tregohej vendndodhja juaj “live”",
-    "An error occurred while stopping your live location": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj",
-    "Close sidebar": "Mbylle anështyllën",
-    "No live locations": "Pa vendndodhje aty për aty",
-    "Live location error": "Gabim vendndodhjeje aty për aty",
-    "Live location ended": "Vendndodhja “live” përfundoi",
-    "Updated %(humanizedUpdateTime)s": "Përditësuar më %(humanizedUpdateTime)s",
-    "Cameras": "Kamera",
     "Show spaces": "Shfaq hapësira",
     "Show rooms": "Shfaq dhoma",
     "%(members)s and %(last)s": "%(members)s dhe %(last)s",
     "%(members)s and more": "%(members)s dhe më tepër",
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
-    "Live until %(expiryTime)s": "“Live” deri më %(expiryTime)s",
     "You cannot search for rooms that are neither a room nor a space": "S’mund të kërkoni për dhoma që s’janë as dhomë, as hapësirë",
     "Saved Items": "Zëra të Ruajtur",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "View List": "Shihni Listën",
-    "View list": "Shihni listën",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ose %(recoveryFile)s",
     "toggle event": "shfaqe/fshihe aktin",
-    "Output devices": "Pajisje output-i",
-    "Input devices": "Pajisje input-i",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "unknown": "e panjohur",
-    "Loading live location…": "Po ngarkohet vendndodhje “live”…",
     "Fetching keys from server…": "Po sillen kyçet prej shërbyesi…",
     "Starting export process…": "Po niset procesi i eksportimit…",
     "Desktop app logo": "Stemë aplikacioni Desktop",
@@ -653,7 +626,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Jeni i sigurt?",
         "location": "Vendndodhje",
-        "email_address": "Adresë email"
+        "email_address": "Adresë email",
+        "filter_results": "Filtroni përfundimet",
+        "no_results_found": "S’u gjetën përfundime",
+        "unsent": "Të padërguar",
+        "cameras": "Kamera"
     },
     "action": {
         "continue": "Vazhdo",
@@ -770,7 +747,10 @@
         "explore_public_rooms": "Eksploroni dhoma publike",
         "reply_in_thread": "Përgjigjuni te rrjedha",
         "click": "Klikim",
-        "transfer": "Shpërngule"
+        "transfer": "Shpërngule",
+        "resume": "Rimerre",
+        "hold": "Mbaje",
+        "view_list": "Shihni listën"
     },
     "a11y": {
         "user_menu": "Menu përdoruesi",
@@ -2080,7 +2060,9 @@
             "external_url": "URL Burimi",
             "collapse_reply_thread": "Tkurre rrjedhën e përgjigjeve",
             "view_related_event": "Shihni veprimtari të afërt",
-            "report": "Raportoje"
+            "report": "Raportoje",
+            "resent_unsent_reactions": "Ridërgo %(unsentCount)s reagim(e)",
+            "open_in_osm": "Hape në OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2402,7 +2384,9 @@
         "unable_to_access_audio_input_description": "S’qemë në gjendje të përdorim mikrofonin tuaj. Ju lutemi, kontrolloni rregullimet e shfletuesit tuaj dhe riprovoni.",
         "no_audio_input_title": "S’u gjet mikrofon",
         "no_audio_input_description": "S’gjetëm mikrofon në pajisjen tuaj. Ju lutemi, kontrolloni rregullimet tuaja dhe riprovoni.",
-        "transfer_consult_first_label": "Konsultohu së pari"
+        "transfer_consult_first_label": "Konsultohu së pari",
+        "input_devices": "Pajisje input-i",
+        "output_devices": "Pajisje output-i"
     },
     "room_settings": {
         "permissions": {
@@ -3243,7 +3227,9 @@
             "title": "Lejojeni këtë widget të verifikojë identitetin tuaj",
             "starting_text": "Ky widget do të verifikojë ID-në tuaj të përdoruesit, por s’do të jetë në gjendje të kryejë veprime për ju:",
             "remember_selection": "Mbaje mend këtë"
-        }
+        },
+        "error_unable_start_audio_stream_description": "S’arrihet të niset transmetim audio.",
+        "error_unable_start_audio_stream_title": "S’u arrit të nisej transmetim i drejtpërdrejtë"
     },
     "feedback": {
         "sent": "Përshtypjet u dërguan",
@@ -3443,7 +3429,20 @@
         "share_type_own": "Vendndodhja ime e tanishme",
         "share_type_live": "Vendndodhja ime drejtpërsëdrejti",
         "share_type_pin": "Lini një Piketë",
-        "share_type_prompt": "Ç’lloj vendndodhjeje doni të jepet?"
+        "share_type_prompt": "Ç’lloj vendndodhjeje doni të jepet?",
+        "live_update_time": "Përditësuar më %(humanizedUpdateTime)s",
+        "live_until": "“Live” deri më %(expiryTime)s",
+        "loading_live_location": "Po ngarkohet vendndodhje “live”…",
+        "live_location_ended": "Vendndodhja “live” përfundoi",
+        "live_location_error": "Gabim vendndodhjeje aty për aty",
+        "live_locations_empty": "Pa vendndodhje aty për aty",
+        "close_sidebar": "Mbylle anështyllën",
+        "error_stopping_live_location": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj",
+        "error_sharing_live_location": "Ndodhi një gabim teksa tregohej vendndodhja juaj “live”",
+        "live_location_active": "Po jepni vendndodhjen tuaj aty për aty",
+        "live_location_enabled": "Vendndodhje aty për aty e aktivizuar",
+        "error_sharing_live_location_try_again": "Ndodhi një gabim teksa tregohej vendndodhja juaj aty për aty, ju lutemi, riprovoni",
+        "error_stopping_live_location_try_again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni"
     },
     "labs_mjolnir": {
         "room_name": "Lista Ime e Dëbimeve",
@@ -4113,6 +4112,9 @@
                 "one": "Rezultati përfundimtar, bazua në %(count)s votë",
                 "other": "Rezultati përfundimtar, bazua në %(count)s vota"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Mundësi rrjedhe"
         }
     },
     "reject_invitation_dialog": {

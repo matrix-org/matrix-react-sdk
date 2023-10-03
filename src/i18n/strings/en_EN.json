@@ -513,7 +513,8 @@
         "sso": "Single Sign On",
         "oidc": {
             "error_generic": "Something went wrong.",
-            "error_title": "We couldn't log you in"
+            "error_title": "We couldn't log you in",
+            "logout_redirect_warning": "You will be redirected to your server's authentication provider to complete sign out."
         },
         "sso_failed_missing_storage": "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
         "reset_password_email_not_found_title": "This email address was not found",
@@ -815,8 +816,11 @@
         "next": "Next",
         "ask_to_join": "Ask to join",
         "clear": "Clear",
+        "resume": "Resume",
+        "hold": "Hold",
         "forward": "Forward",
         "copy_link": "Copy link",
+        "view_list": "View list",
         "submit": "Submit",
         "register": "Register",
         "pause": "Pause",
@@ -936,8 +940,12 @@
         "suggestions": "Suggestions",
         "email_address": "Email address",
         "labs": "Labs",
+        "filter_results": "Filter results",
+        "no_results_found": "No results found",
         "capabilities": "Capabilities",
         "server": "Server",
+        "unsent": "Unsent",
+        "cameras": "Cameras",
         "space": "Space",
         "beta": "Beta",
         "avatar": "Avatar",
@@ -1122,7 +1130,9 @@
         "screenshare_monitor": "Share entire screen",
         "screenshare_window": "Application window",
         "screenshare_title": "Share content",
-        "transfer_consult_first_label": "Consult first"
+        "transfer_consult_first_label": "Consult first",
+        "input_devices": "Input devices",
+        "output_devices": "Output devices"
     },
     "unsupported_server_title": "Your server is unsupported",
     "unsupported_server_description": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
@@ -1310,6 +1320,8 @@
             "starting_text": "The widget will verify your user ID, but won't be able to perform actions for you:",
             "remember_selection": "Remember this"
         },
+        "error_unable_start_audio_stream_description": "Unable to start audio streaming.",
+        "error_unable_start_audio_stream_title": "Failed to start livestream",
         "context_menu": {
             "start_audio_stream": "Start audio stream",
             "screenshot": "Take a picture",
@@ -2021,6 +2033,8 @@
             "in_reply_to_for_export": "In reply to <a>this message</a>"
         },
         "context_menu": {
+            "resent_unsent_reactions": "Resend %(unsentCount)s reaction(s)",
+            "open_in_osm": "Open in OpenStreetMap",
             "view_source": "View source",
             "show_url_preview": "Show preview",
             "external_url": "Source URL",
@@ -2454,6 +2468,19 @@
         "share_type_live": "My live location",
         "share_type_pin": "Drop a Pin",
         "share_type_prompt": "What location type do you want to share?",
+        "live_update_time": "Updated %(humanizedUpdateTime)s",
+        "live_until": "Live until %(expiryTime)s",
+        "loading_live_location": "Loading live location…",
+        "live_location_ended": "Live location ended",
+        "live_location_error": "Live location error",
+        "live_locations_empty": "No live locations",
+        "close_sidebar": "Close sidebar",
+        "error_stopping_live_location": "An error occurred while stopping your live location",
+        "error_sharing_live_location": "An error occurred whilst sharing your live location",
+        "live_location_active": "You are sharing your live location",
+        "live_location_enabled": "Live location enabled",
+        "error_sharing_live_location_try_again": "An error occurred whilst sharing your live location, please try again",
+        "error_stopping_live_location_try_again": "An error occurred while stopping your live location, please try again",
         "stop_and_close": "Stop and close"
     },
     "export_chat": {
@@ -3555,6 +3582,9 @@
                 "other": "Final result based on %(count)s votes",
                 "one": "Final result based on %(count)s vote"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Thread options"
         }
     },
     "%(count)s verified sessions": {
@@ -3939,35 +3969,6 @@
     "Not a valid Security Key": "Not a valid Security Key",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Access your secure message history and set up secure messaging by entering your Security Key.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "If you've forgotten your Security Key you can <button>set up new recovery options</button>",
-    "You will be redirected to your server's authentication provider to complete sign out.": "You will be redirected to your server's authentication provider to complete sign out.",
-    "Filter results": "Filter results",
-    "No results found": "No results found",
-    "Unsent": "Unsent",
-    "Input devices": "Input devices",
-    "Output devices": "Output devices",
-    "Cameras": "Cameras",
-    "Resume": "Resume",
-    "Hold": "Hold",
-    "Resend %(unsentCount)s reaction(s)": "Resend %(unsentCount)s reaction(s)",
-    "Open in OpenStreetMap": "Open in OpenStreetMap",
-    "Thread options": "Thread options",
-    "Unable to start audio streaming.": "Unable to start audio streaming.",
-    "Failed to start livestream": "Failed to start livestream",
-    "Updated %(humanizedUpdateTime)s": "Updated %(humanizedUpdateTime)s",
-    "Live until %(expiryTime)s": "Live until %(expiryTime)s",
-    "Loading live location…": "Loading live location…",
-    "Live location ended": "Live location ended",
-    "Live location error": "Live location error",
-    "No live locations": "No live locations",
-    "View list": "View list",
-    "View List": "View List",
-    "Close sidebar": "Close sidebar",
-    "An error occurred while stopping your live location": "An error occurred while stopping your live location",
-    "An error occurred whilst sharing your live location": "An error occurred whilst sharing your live location",
-    "You are sharing your live location": "You are sharing your live location",
-    "Live location enabled": "Live location enabled",
-    "An error occurred whilst sharing your live location, please try again": "An error occurred whilst sharing your live location, please try again",
-    "An error occurred while stopping your live location, please try again": "An error occurred while stopping your live location, please try again",
     "cant_load_page": "Couldn't load page",
     "file_panel": {
         "guest_note": "You must <a>register</a> to use this functionality",

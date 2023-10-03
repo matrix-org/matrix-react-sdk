@@ -857,7 +857,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                     } else if (!hierarchy.canLoadMore) {
                         results = (
                             <div className="mx_SpaceHierarchy_noResults">
-                                <h3>{_t("No results found")}</h3>
+                                <h3>{_t("common|no_results_found")}</h3>
                                 <div>{_t("space|no_search_result_hint")}</div>
                             </div>
                         );

@@ -54,7 +54,6 @@
     "%(duration)sm": "%(duration)s분",
     "%(duration)sh": "%(duration)s시간",
     "%(duration)sd": "%(duration)s일",
-    "Filter results": "필터 결과",
     "Delete Widget": "위젯 삭제",
     "collapse": "접기",
     "expand": "펼치기",
@@ -129,7 +128,6 @@
     "No backup found!": "백업을 찾을 수 없습니다!",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s개의 세션 복호화에 실패했습니다!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>경고</b>: 신뢰할 수 있는 컴퓨터에서만 키 백업을 설정해야 합니다.",
-    "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s개의 리액션 다시 보내기",
     "e.g. my-room": "예: my-room",
     "%(name)s accepted": "%(name)s님이 수락했습니다",
     "%(name)s cancelled": "%(name)s님이 취소했습니다",
@@ -228,7 +226,8 @@
         "setup_secure_messages": "보안 메시지 설정",
         "show_more": "더 보기",
         "are_you_sure": "확신합니까?",
-        "email_address": "이메일 주소"
+        "email_address": "이메일 주소",
+        "filter_results": "필터 결과"
     },
     "action": {
         "continue": "계속하기",
@@ -745,7 +744,8 @@
         "context_menu": {
             "view_source": "소스 보기",
             "external_url": "출처 URL",
-            "report": "보고"
+            "report": "보고",
+            "resent_unsent_reactions": "%(unsentCount)s개의 리액션 다시 보내기"
         },
         "mab": {
             "label": "메시지 동작"

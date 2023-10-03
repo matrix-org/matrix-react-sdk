@@ -51,7 +51,6 @@
     "Sunday": "星期日",
     "Today": "今天",
     "Friday": "星期五",
-    "Filter results": "過濾結果",
     "Tuesday": "星期二",
     "Saturday": "星期六",
     "Monday": "星期一",
@@ -128,7 +127,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
     "edited": "已編輯",
-    "Resend %(unsentCount)s reaction(s)": "重新傳送 %(unsentCount)s 反應",
     "Deactivate account": "停用帳號",
     "e.g. my-room": "例如：my-room",
     "%(name)s accepted": "%(name)s 已接受",
@@ -426,8 +424,6 @@
     "Afghanistan": "阿富汗",
     "United States": "美國",
     "United Kingdom": "英國",
-    "Hold": "保留",
-    "Resume": "繼續",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "如果您忘了安全金鑰，您可以<button>設定新的復原選項</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "透過輸入您的安全金鑰來存取您的安全訊息歷史並設定安全訊息。",
     "Not a valid Security Key": "不是有效的安全金鑰",
@@ -447,10 +443,7 @@
         "one": "%(count)s 位成員",
         "other": "%(count)s 位成員"
     },
-    "Failed to start livestream": "無法開始直播",
-    "Unable to start audio streaming.": "無法開始音訊串流。",
     "<inviter/> invites you": "<inviter/> 邀請您",
-    "No results found": "找不到結果",
     "%(count)s rooms": {
         "one": "%(count)s 個聊天室",
         "other": "%(count)s 個聊天室"
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "輸入您的安全密語或<button>使用您的安全金鑰</button>以繼續。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新存取您的帳號並復原儲存在此工作階段中的加密金鑰。沒有它們，您將無法在任何工作階段中閱讀所有安全訊息。",
-    "Thread options": "討論串選項",
     "Forget": "忘記",
     "%(count)s votes": {
         "one": "%(count)s 個投票",
@@ -485,34 +477,16 @@
     "Themes": "主題",
     "Moderation": "審核",
     "Messaging": "訊息傳遞",
-    "Open in OpenStreetMap": "在 OpenStreetMap 中開啟",
     "toggle event": "切換事件",
     "Feedback sent! Thanks, we appreciate it!": "已傳送回饋！謝謝，我們感激不盡！",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 與 %(space2Name)s",
-    "You are sharing your live location": "您正在分享您的即時位置",
-    "Unsent": "未傳送",
-    "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
     "%(count)s participants": {
         "one": "1 位成員",
         "other": "%(count)s 個參與者"
     },
-    "Live location ended": "即時位置已結束",
-    "Live location enabled": "即時位置已啟用",
-    "Live location error": "即時位置錯誤",
-    "Live until %(expiryTime)s": "即時分享直到 %(expiryTime)s",
-    "No live locations": "無即時位置",
-    "Close sidebar": "關閉側邊欄",
     "View List": "檢視清單",
-    "View list": "檢視清單",
-    "Updated %(humanizedUpdateTime)s": "已更新 %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
     "%(members)s and %(last)s": "%(members)s 與 %(last)s",
     "%(members)s and more": "%(members)s 與更多",
-    "Cameras": "相機",
-    "Output devices": "輸出裝置",
-    "Input devices": "輸入裝置",
-    "An error occurred whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請再試一次",
-    "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤",
     "Unread email icon": "未讀電子郵件圖示",
     "You cannot search for rooms that are neither a room nor a space": "您無法搜尋既不是聊天室也不是聊天空間的空間",
     "Show spaces": "顯示聊天空間",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
     "unknown": "未知",
-    "Loading live location…": "正在載入即時位置…",
     "Fetching keys from server…": "正在取得來自伺服器的金鑰…",
     "Starting export process…": "正在開始匯出流程…",
     "Desktop app logo": "桌面應用程式標誌",
@@ -655,7 +628,11 @@
         "avatar": "大頭照",
         "are_you_sure": "您確定嗎？",
         "location": "位置",
-        "email_address": "電子郵件地址"
+        "email_address": "電子郵件地址",
+        "filter_results": "過濾結果",
+        "no_results_found": "找不到結果",
+        "unsent": "未傳送",
+        "cameras": "相機"
     },
     "action": {
         "continue": "繼續",
@@ -773,7 +750,10 @@
         "explore_public_rooms": "探索公開聊天室",
         "reply_in_thread": "在討論串中回覆",
         "click": "點擊",
-        "transfer": "轉接"
+        "transfer": "轉接",
+        "resume": "繼續",
+        "hold": "保留",
+        "view_list": "檢視清單"
     },
     "a11y": {
         "user_menu": "使用者選單",
@@ -2145,7 +2125,9 @@
             "external_url": "來源網址",
             "collapse_reply_thread": "收折回覆討論串",
             "view_related_event": "檢視相關的事件",
-            "report": "回報"
+            "report": "回報",
+            "resent_unsent_reactions": "重新傳送 %(unsentCount)s 反應",
+            "open_in_osm": "在 OpenStreetMap 中開啟"
         },
         "url_preview": {
             "show_n_more": {
@@ -2475,7 +2457,9 @@
         "unable_to_access_audio_input_description": "我們無法存取您的麥克風。請檢查您的瀏覽器設定並再試一次。",
         "no_audio_input_title": "找不到麥克風",
         "no_audio_input_description": "我們在您的裝置上找不到麥克風。請檢查您的設定並再試一次。",
-        "transfer_consult_first_label": "先諮詢"
+        "transfer_consult_first_label": "先諮詢",
+        "input_devices": "輸入裝置",
+        "output_devices": "輸出裝置"
     },
     "room_settings": {
         "permissions": {
@@ -3327,7 +3311,9 @@
             "title": "允許此小工具驗證您的身分",
             "starting_text": "小工具將會驗證您的使用者 ID，但將無法為您執行動作：",
             "remember_selection": "記住這個"
-        }
+        },
+        "error_unable_start_audio_stream_description": "無法開始音訊串流。",
+        "error_unable_start_audio_stream_title": "無法開始直播"
     },
     "feedback": {
         "sent": "已傳送回饋",
@@ -3531,7 +3517,20 @@
         "share_type_own": "我目前的位置",
         "share_type_live": "我的即時位置",
         "share_type_pin": "自訂位置",
-        "share_type_prompt": "您要分享哪種位置類型？"
+        "share_type_prompt": "您要分享哪種位置類型？",
+        "live_update_time": "已更新 %(humanizedUpdateTime)s",
+        "live_until": "即時分享直到 %(expiryTime)s",
+        "loading_live_location": "正在載入即時位置…",
+        "live_location_ended": "即時位置已結束",
+        "live_location_error": "即時位置錯誤",
+        "live_locations_empty": "無即時位置",
+        "close_sidebar": "關閉側邊欄",
+        "error_stopping_live_location": "停止您的即時位置時發生錯誤",
+        "error_sharing_live_location": "分享您的即時位置時發生錯誤",
+        "live_location_active": "您正在分享您的即時位置",
+        "live_location_enabled": "即時位置已啟用",
+        "error_sharing_live_location_try_again": "分享您的即時位置時發生錯誤，請再試一次",
+        "error_stopping_live_location_try_again": "停止您的即時位置時發生錯誤，請再試一次"
     },
     "labs_mjolnir": {
         "room_name": "我的封鎖清單",
@@ -4217,6 +4216,9 @@
                 "one": "共計 %(count)s 票所獲得的投票結果",
                 "other": "共計 %(count)s 票所獲得的投票結果"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "討論串選項"
         }
     },
     "reject_invitation_dialog": {

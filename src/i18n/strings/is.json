@@ -43,7 +43,6 @@
     "Home": "Forsíða",
     "collapse": "fella saman",
     "expand": "fletta út",
-    "Filter results": "Sía niðurstöður",
     "Send Logs": "Senda atvikaskrár",
     "Delete Widget": "Eyða viðmótshluta",
     "Finland": "Finnland",
@@ -340,10 +339,7 @@
         "one": "%(spaceName)s og %(count)s til viðbótar"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s og %(space2Name)s",
-    "No results found": "Engar niðurstöður fundust",
     "Forget": "Gleyma",
-    "Hold": "Bíða",
-    "Resume": "Halda áfram",
     "Looks good!": "Lítur vel út!",
     "%(count)s rooms": {
         "one": "%(count)s spjallrás",
@@ -436,7 +432,6 @@
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
         "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
     },
-    "Open in OpenStreetMap": "Opna í OpenStreetMap",
     "<inviter/> invites you": "<inviter/> býður þér",
     "Enter Security Phrase": "Settu inn öryggisfrasa",
     "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
@@ -450,14 +445,9 @@
         "other": "%(count)s svör"
     },
     "Security Phrase": "Öryggisfrasi",
-    "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
     "toggle event": "víxla atburði af/á",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
-    "You are sharing your live location": "Þú ert að deila staðsetninu þinni í rauntíma",
-    "Unable to start audio streaming.": "Get ekki ræst hljóðstreymi.",
-    "Resend %(unsentCount)s reaction(s)": "Endursenda %(unsentCount)s reaction(s)",
-    "Unsent": "Ósent",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
     "Wrong file type": "Röng skráartegund",
     "Submit logs": "Senda inn atvikaskrár",
@@ -465,20 +455,13 @@
     "No backup found!": "Ekkert öryggisafrit fannst!",
     "Incorrect Security Phrase": "Rangur öryggisfrasi",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
-    "Thread options": "Valkostir spjallþráðar",
     "Unable to load backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
     "%(completed)s of %(total)s keys restored": "%(completed)s af %(total)s lyklum endurheimtir",
     "Restoring keys from backup": "Endurheimti lykla úr öryggisafriti",
     "Unable to set up keys": "Tókst ekki að setja upp lykla",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
-    "Live location enabled": "Staðsetning í rauntíma virkjuð",
-    "Close sidebar": "Loka hliðarstiku",
     "View List": "Skoða lista",
-    "View list": "Skoða lista",
-    "Cameras": "Myndavélar",
-    "Output devices": "Úttakstæki",
-    "Input devices": "Inntakstæki",
     "%(count)s participants": {
         "one": "1 þáttakandi",
         "other": "%(count)s þátttakendur"
@@ -490,9 +473,6 @@
     "Show spaces": "Sýna svæði",
     "Show rooms": "Sýna spjallrásir",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
-    "No live locations": "Engar staðsetningar í rauntíma",
-    "Live location error": "Villa í rauntímastaðsetningu",
-    "Live location ended": "Staðsetningu í rauntíma lauk",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
@@ -618,7 +598,11 @@
         "avatar": "Auðkennismynd",
         "are_you_sure": "Ertu viss?",
         "location": "Staðsetning",
-        "email_address": "Tölvupóstfang"
+        "email_address": "Tölvupóstfang",
+        "filter_results": "Sía niðurstöður",
+        "no_results_found": "Engar niðurstöður fundust",
+        "unsent": "Ósent",
+        "cameras": "Myndavélar"
     },
     "action": {
         "continue": "Halda áfram",
@@ -734,7 +718,10 @@
         "explore_public_rooms": "Kanna almenningsspjallrásir",
         "reply_in_thread": "Svara í spjallþræði",
         "click": "Smelltu",
-        "transfer": "Flutningur"
+        "transfer": "Flutningur",
+        "resume": "Halda áfram",
+        "hold": "Bíða",
+        "view_list": "Skoða lista"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -1880,7 +1867,9 @@
             "external_url": "Upprunaslóð",
             "collapse_reply_thread": "Fella saman svarþráð",
             "view_related_event": "Skoða tengdan atburð",
-            "report": "Tilkynna"
+            "report": "Tilkynna",
+            "resent_unsent_reactions": "Endursenda %(unsentCount)s reaction(s)",
+            "open_in_osm": "Opna í OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2184,7 +2173,9 @@
         "unable_to_access_audio_input_description": "Gat ekki tengst hljóðnemanum þínum. Skoðaðu stillingar vafrans þíns og reyndu aftur.",
         "no_audio_input_title": "Enginn hljóðnemi fannst",
         "no_audio_input_description": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur.",
-        "transfer_consult_first_label": "Ráðfæra fyrst"
+        "transfer_consult_first_label": "Ráðfæra fyrst",
+        "input_devices": "Inntakstæki",
+        "output_devices": "Úttakstæki"
     },
     "room_settings": {
         "permissions": {
@@ -2894,7 +2885,9 @@
         "open_id_permissions_dialog": {
             "title": "Leyfa þessum viðmótshluta að sannreyna auðkennin þín",
             "remember_selection": "Muna þetta"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Get ekki ræst hljóðstreymi.",
+        "error_unable_start_audio_stream_title": "Tókst ekki að ræsa beint streymi"
     },
     "feedback": {
         "sent": "Umsögn send",
@@ -3070,7 +3063,13 @@
         "share_type_own": "Núverandi staðsetning mín",
         "share_type_live": "Staðsetning mín í rauntíma",
         "share_type_pin": "Sleppa pinna",
-        "share_type_prompt": "Hvaða gerð staðsetningar vilt þú deila?"
+        "share_type_prompt": "Hvaða gerð staðsetningar vilt þú deila?",
+        "live_location_ended": "Staðsetningu í rauntíma lauk",
+        "live_location_error": "Villa í rauntímastaðsetningu",
+        "live_locations_empty": "Engar staðsetningar í rauntíma",
+        "close_sidebar": "Loka hliðarstiku",
+        "live_location_active": "Þú ert að deila staðsetninu þinni í rauntíma",
+        "live_location_enabled": "Staðsetning í rauntíma virkjuð"
     },
     "labs_mjolnir": {
         "room_name": "Bannlistinn minn",
@@ -3628,6 +3627,9 @@
                 "one": "Lokaniðurstöður byggðar á %(count)s atkvæði",
                 "other": "Lokaniðurstöður byggðar á %(count)s atkvæðum"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Valkostir spjallþráðar"
         }
     },
     "reject_invitation_dialog": {

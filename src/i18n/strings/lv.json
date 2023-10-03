@@ -51,7 +51,6 @@
     "Sunday": "Svētdiena",
     "Today": "Šodien",
     "Friday": "Piektdiena",
-    "Filter results": "Filtrēt rezultātus",
     "Tuesday": "Otrdiena",
     "Saturday": "Sestdiena",
     "Monday": "Pirmdiena",
@@ -357,16 +356,6 @@
     "Åland Islands": "Ālandu salas",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Corn": "Kukurūza",
-    "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
-    "An error occurred whilst sharing your live location, please try again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
-    "An error occurred while stopping your live location, please try again": "Notika kļūda, pārtraucot reāllaika atrašanās vietas kopīgošanu, lūdzu, mēģiniet vēlreiz",
-    "An error occurred whilst sharing your live location": "Notikusi kļūda, kopīgojot reāllaika atrašanās vietu",
-    "An error occurred while stopping your live location": "Notikusi kļūda, pārtraucot reāllaika atrašanās vietas kopīgošanu",
-    "You are sharing your live location": "Jūs kopīgojat savu reāllaika atrašanās vietu",
-    "No live locations": "Reāllaika atrašanās vietas kopīgošana nenotiek",
-    "Live location enabled": "Reāllaika atrašanās vietas kopīgošana iespējota",
-    "Live location error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
-    "Live location ended": "Reāllaika atrašanās vietas kopīgošana pārtraukta",
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
     "common": {
         "about": "Par",
@@ -435,7 +424,8 @@
         "show_more": "Rādīt vairāk",
         "are_you_sure": "Vai tiešām to vēlaties?",
         "location": "Atrašanās vieta",
-        "email_address": "Epasta adrese"
+        "email_address": "Epasta adrese",
+        "filter_results": "Filtrēt rezultātus"
     },
     "action": {
         "continue": "Turpināt",
@@ -1075,7 +1065,8 @@
         "context_menu": {
             "view_source": "Skatīt pirmkodu",
             "show_url_preview": "Rādīt priekšskatījumu",
-            "external_url": "Avota URL adrese"
+            "external_url": "Avota URL adrese",
+            "open_in_osm": "Atvērt ar OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -1771,7 +1762,16 @@
         "live_description": "%(displayName)s reāllaika atrašanās vieta",
         "share_type_own": "Mana atrašanās vieta",
         "share_type_live": "Mana reāllaika atrašanās vieta",
-        "share_type_prompt": "Kādu atrašanās vietas veidu vēlaties kopīgot?"
+        "share_type_prompt": "Kādu atrašanās vietas veidu vēlaties kopīgot?",
+        "live_location_ended": "Reāllaika atrašanās vietas kopīgošana pārtraukta",
+        "live_location_error": "Reāllaika atrašanās vietas kopīgošanas kļūda",
+        "live_locations_empty": "Reāllaika atrašanās vietas kopīgošana nenotiek",
+        "error_stopping_live_location": "Notikusi kļūda, pārtraucot reāllaika atrašanās vietas kopīgošanu",
+        "error_sharing_live_location": "Notikusi kļūda, kopīgojot reāllaika atrašanās vietu",
+        "live_location_active": "Jūs kopīgojat savu reāllaika atrašanās vietu",
+        "live_location_enabled": "Reāllaika atrašanās vietas kopīgošana iespējota",
+        "error_sharing_live_location_try_again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
+        "error_stopping_live_location_try_again": "Notika kļūda, pārtraucot reāllaika atrašanās vietas kopīgošanu, lūdzu, mēģiniet vēlreiz"
     },
     "create_space": {
         "explainer": "Vietas ir jauns veids, kā grupēt istabas un cilvēkus. Kādu vietu vēlaties izveidot? To var mainīt vēlāk.",

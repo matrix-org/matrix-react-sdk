@@ -109,7 +109,6 @@
     "%(name)s wants to verify": "%(name)s yebɣa ad isenqed",
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
-    "Filter results": "Igmaḍ n usizdeg",
     "Send Logs": "Azen iɣmisen",
     "Use your Security Key to continue.": "Seqdec tasarut-ik·im n tɣellist akken ad tkemmleḍ.",
     "Unable to restore backup": "Tiririt n uḥraz tugi ad teddu",
@@ -161,7 +160,6 @@
     "No backup found!": "Ulac aḥraz yettwafen!",
     "Failed to decrypt %(failedCount)s sessions!": "Tukksa n uwgelhen n tɣimiyin %(failedCount)s ur yeddi ara!",
     "Successfully restored %(sessionCount)s keys": "Tiririt n tsura n %(sessionCount)s yedda akken iwata",
-    "Resend %(unsentCount)s reaction(s)": "Ales tuzna n tsedmirt (tsedmirin) %(unsentCount)s",
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
@@ -381,7 +379,6 @@
     "Ghana": "Gana",
     "Argentina": "Argentine",
     "Spain": "Spenyul",
-    "Resume": "kemmel",
     "Jersey": "Jersey",
     "France": "Fransa",
     "Kyrgyzstan": "Kirgizistan",
@@ -503,7 +500,8 @@
         "unencrypted": "Ur yettwawgelhen ara",
         "show_more": "Sken-d ugar",
         "are_you_sure": "Tebɣiḍ s tidet?",
-        "email_address": "Tansa n yimayl"
+        "email_address": "Tansa n yimayl",
+        "filter_results": "Igmaḍ n usizdeg"
     },
     "action": {
         "continue": "Kemmel",
@@ -588,7 +586,8 @@
         "show_advanced": "Sken talqayt",
         "unignore": "Ur yettwazgel ara",
         "explore_rooms": "Snirem tixxamin",
-        "explore_public_rooms": "Snirem tixxamin tizuyaz"
+        "explore_public_rooms": "Snirem tixxamin tizuyaz",
+        "resume": "kemmel"
     },
     "a11y": {
         "user_menu": "Umuɣ n useqdac",
@@ -1210,7 +1209,8 @@
         },
         "creation_summary_room": "%(creator)s yerna-d taxxamt syen yeswel taxxamt.",
         "context_menu": {
-            "external_url": "URL aɣbalu"
+            "external_url": "URL aɣbalu",
+            "resent_unsent_reactions": "Ales tuzna n tsedmirt (tsedmirin) %(unsentCount)s"
         },
         "url_preview": {
             "close": "Mdel taskant"

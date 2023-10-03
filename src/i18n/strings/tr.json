@@ -50,7 +50,6 @@
     "Restricted": "Sınırlı",
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
-    "Filter results": "Sonuçları filtrele",
     "Send Logs": "Logları Gönder",
     "Unable to load backup status": "Yedek durumu yüklenemiyor",
     "Unable to restore backup": "Yedek geri dönüşü yapılamıyor",
@@ -409,8 +408,6 @@
     "Switch theme": "Temayı değiştir",
     "Keys restored": "Anahtarlar geri yüklendi",
     "Submit logs": "Günlükleri kaydet",
-    "Hold": "Beklet",
-    "Resume": "Devam et",
     "common": {
         "about": "Hakkında",
         "analytics": "Analitik",
@@ -493,7 +490,8 @@
         "unencrypted": "Şifrelenmemiş",
         "show_more": "Daha fazla göster",
         "are_you_sure": "Emin misiniz ?",
-        "email_address": "E-posta Adresi"
+        "email_address": "E-posta Adresi",
+        "filter_results": "Sonuçları filtrele"
     },
     "action": {
         "continue": "Devam Et",
@@ -580,7 +578,9 @@
         "unignore": "Yoksayma",
         "explore_rooms": "Odaları keşfet",
         "explore_public_rooms": "Herkese açık odaları keşfet",
-        "transfer": "Aktar"
+        "transfer": "Aktar",
+        "resume": "Devam et",
+        "hold": "Beklet"
     },
     "a11y": {
         "user_menu": "Kullanıcı menüsü",

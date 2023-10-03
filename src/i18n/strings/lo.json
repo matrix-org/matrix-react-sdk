@@ -304,23 +304,9 @@
     "Umbrella": "ຄັນຮົ່ມ",
     "Thumbs up": "ຍົກໂປ້",
     "Santa": "ຊານຕາ",
-    "Live location enabled": "ເປີດໃຊ້ສະຖານທີປັດຈຸບັນແລ້ວ",
-    "You are sharing your live location": "ທ່ານກໍາລັງແບ່ງປັນສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ",
-    "Close sidebar": "ປິດແຖບດ້ານຂ້າງ",
     "View List": "ເບິ່ງລາຍຊື່",
-    "View list": "ເບິ່ງລາຍຊື່",
-    "No live locations": "ບໍ່ມີສະຖານທີ່ປັດຈູບັນ",
-    "Live location error": "ສະຖານທີ່ປັດຈຸບັນຜິດພາດ",
-    "Live location ended": "ສະຖານທີ່ປັດຈຸບັນສິ້ນສຸດລົງແລ້ວ",
     "Delete Widget": "ລຶບ Widget",
-    "Failed to start livestream": "ການຖ່າຍທອດສົດບໍ່ສຳເລັດ",
-    "Unable to start audio streaming.": "ບໍ່ສາມາດເລີ່ມການຖ່າຍທອດສຽງໄດ້.",
-    "Thread options": "ຕົວເລືອກກະທູ້",
     "Forget": "ລືມ",
-    "Open in OpenStreetMap": "ເປີດໃນ OpenStreetMap",
-    "Hold": "ຖື",
-    "Resume": "ປະຫວັດຫຍໍ້",
-    "Unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
     "Send Logs": "ສົ່ງບັນທຶກ",
     "Not encrypted": "ບໍ່ໄດ້ເຂົ້າລະຫັດ",
     "Messaging": "ການສົ່ງຂໍ້ຄວາມ",
@@ -347,12 +333,6 @@
     },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Sign in with SSO": "ເຂົ້າສູ່ລະບົບດ້ວຍປະຕຸດຽວ ( SSO)",
-    "An error occurred while stopping your live location, please try again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ",
-    "Live until %(expiryTime)s": "ຢູ່ຈົນກ່ວາ %(expiryTime)s",
-    "Updated %(humanizedUpdateTime)s": "ອັບເດດ %(humanizedUpdateTime)s",
-    "Resend %(unsentCount)s reaction(s)": "ສົ່ງການໂຕ້ຕອບ %(unsentCount)s ຄືນໃໝ່",
-    "No results found": "ບໍ່ພົບຜົນການຊອກຫາ",
-    "Filter results": "ການກັ່ນຕອງຜົນຮັບ",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "ຖ້າທ່ານລືມກະແຈຄວາມປອດໄພຂອງທ່ານ ທ່ານສາມາດ <button>ຕັ້ງຄ່າຕົວເລືອກການຟື້ນຕົວໃຫມ່</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "ເຂົ້າເຖິງປະຫວັດຂໍ້ຄວາມທີ່ປອດໄພຂອງທ່ານ ແລະ ຕັ້ງຄ່າການສົ່ງຂໍ້ຄວາມທີ່ປອດໄພໂດຍການໃສ່ກະແຈຄວາມປອດໄພຂອງທ່ານ.",
     "Not a valid Security Key": "ກະແຈຄວາມປອດໄພບໍ່ຖືກຕ້ອງ",
@@ -395,7 +375,6 @@
     "Wrong file type": "ປະເພດໄຟລ໌ບໍ່ຖຶກຕ້ອງ",
     "a new master key signature": "ລາຍເຊັນຫຼັກອັນໃໝ່",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
-    "An error occurred while stopping your live location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
     "expand": "ຂະຫຍາຍ",
     "collapse": "ບໍ່ສຳເລັດ",
@@ -507,12 +486,7 @@
     },
     "%(members)s and %(last)s": "%(members)s ແລະ %(last)s",
     "%(members)s and more": "%(members)s ແລະອື່ນໆ",
-    "Cameras": "ກ້ອງ",
-    "Output devices": "ອຸປະກອນຂາອອກ",
-    "Input devices": "ອຸປະກອນຂາເຂົ້າ",
     "Unread email icon": "ໄອຄັອນເມວທີ່ຍັງບໍ່ໄດ້ຖືກອ່ານ",
-    "An error occurred whilst sharing your live location, please try again": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ, ກະລຸນາລອງໃໝ່",
-    "An error occurred whilst sharing your live location": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ",
     "common": {
         "about": "ກ່ຽວກັບ",
         "analytics": "ວິເຄາະ",
@@ -623,7 +597,11 @@
         "avatar": "ຮູບແທນຕົວ",
         "are_you_sure": "ທ່ານແນ່ໃຈບໍ່?",
         "location": "ສະຖານທີ່",
-        "email_address": "ທີ່ຢູ່ອີເມວ"
+        "email_address": "ທີ່ຢູ່ອີເມວ",
+        "filter_results": "ການກັ່ນຕອງຜົນຮັບ",
+        "no_results_found": "ບໍ່ພົບຜົນການຊອກຫາ",
+        "unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
+        "cameras": "ກ້ອງ"
     },
     "action": {
         "continue": "ສືບຕໍ່",
@@ -733,7 +711,10 @@
         "explore_public_rooms": "ສຳຫຼວດຫ້ອງສາທາລະນະ",
         "reply_in_thread": "ຕອບໃນກະທູ້",
         "click": "ກົດ",
-        "transfer": "ໂອນ"
+        "transfer": "ໂອນ",
+        "resume": "ປະຫວັດຫຍໍ້",
+        "hold": "ຖື",
+        "view_list": "ເບິ່ງລາຍຊື່"
     },
     "a11y": {
         "user_menu": "ເມນູຜູ້ໃຊ້",
@@ -1756,7 +1737,9 @@
             "external_url": "ແຫຼ່ງ URL",
             "collapse_reply_thread": "ຫຍໍ້ກະທູ້ຕອບກັບ",
             "view_related_event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ",
-            "report": "ລາຍງານ"
+            "report": "ລາຍງານ",
+            "resent_unsent_reactions": "ສົ່ງການໂຕ້ຕອບ %(unsentCount)s ຄືນໃໝ່",
+            "open_in_osm": "ເປີດໃນ OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2044,7 +2027,9 @@
         "unable_to_access_audio_input_description": "ພວກເຮົາບໍ່ສາມາດເຂົ້າເຖິງໄມໂຄຣໂຟນຂອງທ່ານໄດ້. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າບຣາວເຊີຂອງທ່ານແລ້ວລອງໃໝ່ອີກຄັ້ງ.",
         "no_audio_input_title": "ບໍ່ພົບໄມໂຄຣໂຟນ",
         "no_audio_input_description": "ພວກເຮົາບໍ່ພົບໄມໂຄຣໂຟນຢູ່ໃນອຸປະກອນຂອງທ່ານ. ກະລຸນາກວດເບິ່ງການຕັ້ງຄ່າຂອງທ່ານ ແລະ ລອງໃໝ່ອີກ.",
-        "transfer_consult_first_label": "ປຶກສາກ່ອນ"
+        "transfer_consult_first_label": "ປຶກສາກ່ອນ",
+        "input_devices": "ອຸປະກອນຂາເຂົ້າ",
+        "output_devices": "ອຸປະກອນຂາອອກ"
     },
     "room_settings": {
         "permissions": {
@@ -2810,7 +2795,9 @@
             "title": "ອະນຸຍາດໃຫ້ widget ນີ້ຢືນຢັນຕົວຕົນຂອງທ່ານ",
             "starting_text": "widget ຈະກວດສອບ ID ຜູ້ໃຊ້ຂອງທ່ານ, ແຕ່ຈະບໍ່ສາມາດດໍາເນີນການສໍາລັບທ່ານ:",
             "remember_selection": "ຈື່ສິ່ງນີ້"
-        }
+        },
+        "error_unable_start_audio_stream_description": "ບໍ່ສາມາດເລີ່ມການຖ່າຍທອດສຽງໄດ້.",
+        "error_unable_start_audio_stream_title": "ການຖ່າຍທອດສົດບໍ່ສຳເລັດ"
     },
     "feedback": {
         "sent": "ສົ່ງຄຳຕິຊົມແລ້ວ",
@@ -2973,7 +2960,19 @@
         "share_type_own": "ສະຖານທີ່ປະຈຸບັນຂອງຂ້ອຍ",
         "share_type_live": "ສະຖານທີ່ຂອງຂ້ອຍ",
         "share_type_pin": "ປັກໝຸດ",
-        "share_type_prompt": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?"
+        "share_type_prompt": "ທ່ານຕ້ອງການແບ່ງປັນສະຖານທີ່ປະເພດໃດ?",
+        "live_update_time": "ອັບເດດ %(humanizedUpdateTime)s",
+        "live_until": "ຢູ່ຈົນກ່ວາ %(expiryTime)s",
+        "live_location_ended": "ສະຖານທີ່ປັດຈຸບັນສິ້ນສຸດລົງແລ້ວ",
+        "live_location_error": "ສະຖານທີ່ປັດຈຸບັນຜິດພາດ",
+        "live_locations_empty": "ບໍ່ມີສະຖານທີ່ປັດຈູບັນ",
+        "close_sidebar": "ປິດແຖບດ້ານຂ້າງ",
+        "error_stopping_live_location": "ເກີດຄວາມຜິດພາດໃນຂະນະທີ່ຢຸດສະຖານທີ່ສະຖານທີ່ຂອງທ່ານ",
+        "error_sharing_live_location": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ",
+        "live_location_active": "ທ່ານກໍາລັງແບ່ງປັນສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ",
+        "live_location_enabled": "ເປີດໃຊ້ສະຖານທີປັດຈຸບັນແລ້ວ",
+        "error_sharing_live_location_try_again": "ພົບບັນຫາຕອນກຳລັງແບ່ງປັນຈຸດພິກັດຂອງທ່ານ, ກະລຸນາລອງໃໝ່",
+        "error_stopping_live_location_try_again": "ເກີດຄວາມຜິດພາດໃນລະຫວ່າງການຢຸດສະຖານທີ່ປັດຈຸບັນຂອງທ່ານ, ກະລຸນາລອງໃໝ່ອີກຄັ້ງ"
     },
     "labs_mjolnir": {
         "room_name": "ບັນຊີລາຍຊື່ການຫ້າມຂອງຂ້ອຍ",
@@ -3549,6 +3548,9 @@
                 "one": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ",
                 "other": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "ຕົວເລືອກກະທູ້"
         }
     },
     "reject_invitation_dialog": {

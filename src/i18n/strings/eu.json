@@ -51,7 +51,6 @@
     "Sunday": "Igandea",
     "Today": "Gaur",
     "Friday": "Ostirala",
-    "Filter results": "Iragazi emaitzak",
     "Tuesday": "Asteartea",
     "Saturday": "Larunbata",
     "Monday": "Astelehena",
@@ -128,7 +127,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
     "edited": "editatua",
-    "Resend %(unsentCount)s reaction(s)": "Birbidali %(unsentCount)s erreakzio",
     "Deactivate account": "Desaktibatu kontua",
     "e.g. my-room": "adib. nire-gela",
     "%(name)s accepted": "%(name)s onartuta",
@@ -244,7 +242,8 @@
         "unencrypted": "Zifratu gabe",
         "show_more": "Erakutsi gehiago",
         "are_you_sure": "Ziur zaude?",
-        "email_address": "E-mail helbidea"
+        "email_address": "E-mail helbidea",
+        "filter_results": "Iragazi emaitzak"
     },
     "action": {
         "continue": "Jarraitu",
@@ -902,7 +901,8 @@
         },
         "creation_summary_room": "%(creator)s erabiltzaileak gela sortu eta konfiguratu du.",
         "context_menu": {
-            "external_url": "Iturriaren URLa"
+            "external_url": "Iturriaren URLa",
+            "resent_unsent_reactions": "Birbidali %(unsentCount)s erreakzio"
         },
         "url_preview": {
             "close": "Itxi aurrebista"

@@ -41,7 +41,6 @@
     "Sunday": "Domingo",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
-    "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
     "Unnamed room": "Sala sem nome",
     "Saturday": "Sábado",
@@ -332,7 +331,8 @@
         "low_priority": "Baixa prioridade",
         "historical": "Histórico",
         "are_you_sure": "Você tem certeza?",
-        "email_address": "Endereço de email"
+        "email_address": "Endereço de email",
+        "filter_results": "Filtrar resultados"
     },
     "action": {
         "continue": "Continuar",

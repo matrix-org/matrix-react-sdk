@@ -70,7 +70,6 @@
     "Folder": "Mappe",
     "collapse": "skjul",
     "expand": "utvid",
-    "Filter results": "Filtrerresultater",
     "Home": "Hjem",
     "Lion": "Løve",
     "Pig": "Gris",
@@ -186,12 +185,10 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "Resume": "Fortsett",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmer"
     },
-    "No results found": "Ingen resultater ble funnet",
     "%(count)s rooms": {
         "other": "%(count)s rom",
         "one": "%(count)s rom"
@@ -204,7 +201,6 @@
     "Malta": "Malta",
     "Uruguay": "Uruguay",
     "Security Phrase": "Sikkerhetsfrase",
-    "Hold": "Hold",
     "Enter Security Phrase": "Skriv inn sikkerhetsfrase",
     "Security Key": "Sikkerhetsnøkkel",
     "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
@@ -500,7 +496,9 @@
         "show_more": "Vis mer",
         "avatar": "Profilbilde",
         "are_you_sure": "Er du sikker?",
-        "email_address": "E-postadresse"
+        "email_address": "E-postadresse",
+        "filter_results": "Filtrerresultater",
+        "no_results_found": "Ingen resultater ble funnet"
     },
     "action": {
         "continue": "Fortsett",
@@ -595,7 +593,9 @@
         "explore_rooms": "Se alle rom",
         "add_existing_room": "Legg til et eksisterende rom",
         "explore_public_rooms": "Utforsk offentlige rom",
-        "transfer": "Overfør"
+        "transfer": "Overfør",
+        "resume": "Fortsett",
+        "hold": "Hold"
     },
     "a11y": {
         "user_menu": "Brukermeny",

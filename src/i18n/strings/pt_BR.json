@@ -51,7 +51,6 @@
     "Sunday": "Domingo",
     "Today": "Hoje",
     "Friday": "Sexta-feira",
-    "Filter results": "Filtrar resultados",
     "Tuesday": "Terça-feira",
     "Saturday": "Sábado",
     "Monday": "Segunda-feira",
@@ -150,7 +149,6 @@
     "e.g. my-room": "por exemplo: minha-sala",
     "Deactivate account": "Desativar minha conta",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para relatar um problema de segurança relacionado à tecnologia Matrix, leia a <a>Política de Divulgação de Segurança</a> da Matrix.org.",
-    "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reações",
     "Failed to connect to integration manager": "Falha ao conectar-se ao gerenciador de integrações",
     "%(count)s verified sessions": {
         "other": "%(count)s sessões confirmadas",
@@ -426,8 +424,6 @@
     "Vatican City": "Cidade do Vaticano",
     "Vanuatu": "Vanuatu",
     "Uzbekistan": "Uzbequistão",
-    "Hold": "Pausar",
-    "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se você esqueceu a sua Chave de Segurança, você pode <button>definir novas opções de recuperação</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Acesse o seu histórico de mensagens seguras e configure as mensagens seguras, ao inserir a sua Chave de Segurança.",
     "Not a valid Security Key": "Chave de Segurança inválida",
@@ -587,7 +583,8 @@
         "unencrypted": "Descriptografada",
         "show_more": "Mostrar mais",
         "are_you_sure": "Você tem certeza?",
-        "email_address": "Endereço de e-mail"
+        "email_address": "Endereço de e-mail",
+        "filter_results": "Filtrar resultados"
     },
     "action": {
         "continue": "Continuar",
@@ -691,7 +688,9 @@
         "add_existing_room": "Adicionar sala existente",
         "explore_public_rooms": "Explorar salas públicas",
         "reply_in_thread": "Responder no tópico",
-        "transfer": "Transferir"
+        "transfer": "Transferir",
+        "resume": "Retomar",
+        "hold": "Pausar"
     },
     "a11y": {
         "user_menu": "Menu do usuário",
@@ -1615,7 +1614,8 @@
         "creation_summary_dm": "%(creator)s criou esta conversa.",
         "creation_summary_room": "%(creator)s criou e configurou esta sala.",
         "context_menu": {
-            "external_url": "Link do código-fonte"
+            "external_url": "Link do código-fonte",
+            "resent_unsent_reactions": "Reenviar %(unsentCount)s reações"
         },
         "url_preview": {
             "show_n_more": {

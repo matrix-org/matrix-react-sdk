@@ -51,7 +51,6 @@
     "Sunday": "Zondag",
     "Today": "Vandaag",
     "Friday": "Vrijdag",
-    "Filter results": "Resultaten filteren",
     "Tuesday": "Dinsdag",
     "Saturday": "Zaterdag",
     "Monday": "Maandag",
@@ -128,7 +127,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Ontsleutelen van %(failedCount)s sessies is mislukt!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let op</b>: stel sleutelback-up enkel in op een vertrouwde computer.",
     "edited": "bewerkt",
-    "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
     "Deactivate account": "Account sluiten",
     "e.g. my-room": "bv. mijn-kamer",
     "Lock": "Hangslot",
@@ -408,8 +406,6 @@
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Geen toegang tot geheime opslag. Controleer of u het juiste veiligheidswachtwoord hebt ingevoerd.",
     "Switch theme": "Thema wisselen",
     "Sign in with SSO": "Inloggen met SSO",
-    "Hold": "Vasthouden",
-    "Resume": "Hervatten",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Als u uw veiligheidssleutel bent vergeten, kunt u <button>nieuwe herstelopties instellen</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Ga naar uw veilige berichtengeschiedenis en stel veilige berichten in door uw veiligheidssleutel in te voeren.",
     "Not a valid Security Key": "Geen geldige veiligheidssleutel",
@@ -447,10 +443,7 @@
         "other": "%(count)s personen",
         "one": "%(count)s persoon"
     },
-    "Failed to start livestream": "Starten van livestream is mislukt",
-    "Unable to start audio streaming.": "Kan audiostream niet starten.",
     "<inviter/> invites you": "<inviter/> nodigt je uit",
-    "No results found": "Geen resultaten gevonden",
     "%(count)s rooms": {
         "one": "%(count)s kamer",
         "other": "%(count)s kamers"
@@ -469,7 +462,6 @@
         "one": "%(count)s reactie",
         "other": "%(count)s reacties"
     },
-    "Thread options": "Draad opties",
     "Forget": "Vergeet",
     "%(count)s votes": {
         "one": "%(count)s stem",
@@ -485,35 +477,17 @@
     "Themes": "Thema's",
     "Moderation": "Moderatie",
     "Messaging": "Messaging",
-    "Open in OpenStreetMap": "In OpenStreetMap openen",
     "toggle event": "wissel gebeurtenis",
     "Feedback sent! Thanks, we appreciate it!": "Reactie verzonden! Bedankt, we waarderen het!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
-    "Unsent": "niet verstuurd",
     "%(count)s participants": {
         "one": "1 deelnemer",
         "other": "%(count)s deelnemers"
     },
-    "An error occurred while stopping your live location, please try again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw",
-    "You are sharing your live location": "Je deelt je live locatie",
-    "Live location enabled": "Live locatie ingeschakeld",
-    "Live location error": "Live locatie error",
-    "Live location ended": "Live locatie beëindigd",
-    "Live until %(expiryTime)s": "Live tot %(expiryTime)s",
-    "Close sidebar": "Zijbalk sluiten",
     "View List": "Toon Lijst",
-    "View list": "Toon lijst",
-    "No live locations": "Geen live locaties",
-    "Updated %(humanizedUpdateTime)s": "%(humanizedUpdateTime)s bijgewerkt",
-    "An error occurred while stopping your live location": "Er is een fout opgetreden bij het stoppen van je live locatie",
-    "Cameras": "Camera's",
-    "Output devices": "Uitvoerapparaten",
-    "Input devices": "Invoer apparaten",
     "%(members)s and %(last)s": "%(members)s en %(last)s",
     "%(members)s and more": "%(members)s en meer",
     "Unread email icon": "Ongelezen e-mailpictogram",
-    "An error occurred whilst sharing your live location, please try again": "Er is een fout opgetreden bij het delen van je live locatie, probeer het opnieuw",
-    "An error occurred whilst sharing your live location": "Er is een fout opgetreden bij het delen van je live locatie",
     "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
     "Show spaces": "Toon spaces",
     "Show rooms": "Toon kamers",
@@ -642,7 +616,11 @@
         "avatar": "Afbeelding",
         "are_you_sure": "Weet je het zeker?",
         "location": "Locatie",
-        "email_address": "E-mailadres"
+        "email_address": "E-mailadres",
+        "filter_results": "Resultaten filteren",
+        "no_results_found": "Geen resultaten gevonden",
+        "unsent": "niet verstuurd",
+        "cameras": "Camera's"
     },
     "action": {
         "continue": "Doorgaan",
@@ -757,7 +735,10 @@
         "explore_public_rooms": "Publieke kamers ontdekken",
         "reply_in_thread": "Reageer in draad",
         "click": "Klik",
-        "transfer": "Doorschakelen"
+        "transfer": "Doorschakelen",
+        "resume": "Hervatten",
+        "hold": "Vasthouden",
+        "view_list": "Toon lijst"
     },
     "a11y": {
         "user_menu": "Persoonsmenu",
@@ -1938,7 +1919,9 @@
             "external_url": "Bron-URL",
             "collapse_reply_thread": "Antwoorddraad invouwen",
             "view_related_event": "Bekijk gerelateerde gebeurtenis",
-            "report": "Melden"
+            "report": "Melden",
+            "resent_unsent_reactions": "%(unsentCount)s reactie(s) opnieuw versturen",
+            "open_in_osm": "In OpenStreetMap openen"
         },
         "url_preview": {
             "show_n_more": {
@@ -2237,7 +2220,9 @@
         "unable_to_access_audio_input_description": "We hebben geen toegang tot je microfoon. Controleer je browserinstellingen en probeer het opnieuw.",
         "no_audio_input_title": "Geen microfoon gevonden",
         "no_audio_input_description": "We hebben geen microfoon gevonden op je apparaat. Controleer je instellingen en probeer het opnieuw.",
-        "transfer_consult_first_label": "Eerst overleggen"
+        "transfer_consult_first_label": "Eerst overleggen",
+        "input_devices": "Invoer apparaten",
+        "output_devices": "Uitvoerapparaten"
     },
     "room_settings": {
         "permissions": {
@@ -3030,7 +3015,9 @@
             "title": "Sta deze widget toe om uw identiteit te verifiëren",
             "starting_text": "De widget zal uw persoon-ID verifiëren, maar zal geen acties voor u kunnen uitvoeren:",
             "remember_selection": "Onthoud dit"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Kan audiostream niet starten.",
+        "error_unable_start_audio_stream_title": "Starten van livestream is mislukt"
     },
     "feedback": {
         "sent": "Feedback verstuurd",
@@ -3217,7 +3204,19 @@
         "share_type_own": "Mijn huidige locatie",
         "share_type_live": "Mijn live locatie",
         "share_type_pin": "Zet een pin neer",
-        "share_type_prompt": "Welk locatietype wil je delen?"
+        "share_type_prompt": "Welk locatietype wil je delen?",
+        "live_update_time": "%(humanizedUpdateTime)s bijgewerkt",
+        "live_until": "Live tot %(expiryTime)s",
+        "live_location_ended": "Live locatie beëindigd",
+        "live_location_error": "Live locatie error",
+        "live_locations_empty": "Geen live locaties",
+        "close_sidebar": "Zijbalk sluiten",
+        "error_stopping_live_location": "Er is een fout opgetreden bij het stoppen van je live locatie",
+        "error_sharing_live_location": "Er is een fout opgetreden bij het delen van je live locatie",
+        "live_location_active": "Je deelt je live locatie",
+        "live_location_enabled": "Live locatie ingeschakeld",
+        "error_sharing_live_location_try_again": "Er is een fout opgetreden bij het delen van je live locatie, probeer het opnieuw",
+        "error_stopping_live_location_try_again": "Er is een fout opgetreden bij het stoppen van je live locatie, probeer het opnieuw"
     },
     "labs_mjolnir": {
         "room_name": "Mijn banlijst",
@@ -3822,6 +3821,9 @@
                 "one": "Einduitslag gebaseerd op %(count)s stem",
                 "other": "Einduitslag gebaseerd op %(count)s stemmen"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Draad opties"
         }
     },
     "reject_invitation_dialog": {

@@ -51,7 +51,6 @@
     "Sunday": "Domenica",
     "Today": "Oggi",
     "Friday": "Venerdì",
-    "Filter results": "Filtra risultati",
     "Tuesday": "Martedì",
     "Saturday": "Sabato",
     "Monday": "Lunedì",
@@ -128,7 +127,6 @@
     "Folder": "Cartella",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
     "edited": "modificato",
-    "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
     "Deactivate account": "Disattiva account",
     "e.g. my-room": "es. mia-stanza",
     "%(name)s accepted": "%(name)s ha accettato",
@@ -426,8 +424,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Stati Uniti",
     "United Kingdom": "Regno Unito",
-    "Hold": "Sospendi",
-    "Resume": "Riprendi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se hai dimenticato la tua chiave di sicurezza puoi <button>impostare nuove opzioni di recupero</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accedi alla cronologia sicura dei messaggi e imposta la messaggistica sicura inserendo la tua chiave di sicurezza.",
     "Not a valid Security Key": "Chiave di sicurezza non valida",
@@ -447,10 +443,7 @@
         "one": "%(count)s membro",
         "other": "%(count)s membri"
     },
-    "Failed to start livestream": "Impossibile avviare lo stream in diretta",
-    "Unable to start audio streaming.": "Impossibile avviare lo streaming audio.",
     "<inviter/> invites you": "<inviter/> ti ha invitato/a",
-    "No results found": "Nessun risultato trovato",
     "%(count)s rooms": {
         "one": "%(count)s stanza",
         "other": "%(count)s stanze"
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Inserisci la tua frase di sicurezza o <button>usa la tua chiave di sicurezza</button> per continuare.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Riprendi l'accesso al tuo account e recupera le chiavi di crittografia memorizzate in questa sessione. Senza di esse, non sarai in grado di leggere tutti i tuoi messaggi sicuri in qualsiasi sessione.",
-    "Thread options": "Opzioni conversazione",
     "Forget": "Dimentica",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -485,34 +477,16 @@
     "Messaging": "Messaggi",
     "Themes": "Temi",
     "Moderation": "Moderazione",
-    "Open in OpenStreetMap": "Apri in OpenStreetMap",
     "toggle event": "commuta evento",
     "Feedback sent! Thanks, we appreciate it!": "Opinione inviata! Grazie, lo apprezziamo!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "You are sharing your live location": "Stai condividendo la tua posizione in tempo reale",
-    "Unsent": "Non inviato",
-    "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
     "%(count)s participants": {
         "one": "1 partecipante",
         "other": "%(count)s partecipanti"
     },
-    "Live location enabled": "Posizione in tempo reale attivata",
-    "Close sidebar": "Chiudi barra laterale",
     "View List": "Vedi lista",
-    "View list": "Vedi lista",
-    "No live locations": "Nessuna posizione in tempo reale",
-    "Live location error": "Errore della posizione in tempo reale",
-    "Live location ended": "Posizione in tempo reale terminata",
-    "Live until %(expiryTime)s": "In tempo reale fino a %(expiryTime)s",
-    "Updated %(humanizedUpdateTime)s": "Aggiornato %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "Si è verificato un errore fermando la tua posizione in tempo reale",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e altri",
-    "Cameras": "Fotocamere",
-    "Input devices": "Dispositivi di input",
-    "Output devices": "Dispositivi di output",
-    "An error occurred whilst sharing your live location, please try again": "Si è verificato un errore condividendo la tua posizione in tempo reale, riprova",
-    "An error occurred whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale",
     "Unread email icon": "Icona email non letta",
     "You cannot search for rooms that are neither a room nor a space": "Non puoi cercare stanze che non sono né stanze né spazi",
     "Show spaces": "Mostra spazi",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "ID root del thread: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
     "unknown": "sconosciuto",
-    "Loading live location…": "Caricamento posizione in tempo reale…",
     "Fetching keys from server…": "Ricezione delle chiavi dal server…",
     "Starting export process…": "Inizio processo di esportazione…",
     "Desktop app logo": "Logo app desktop",
@@ -655,7 +628,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Sei sicuro?",
         "location": "Posizione",
-        "email_address": "Indirizzo email"
+        "email_address": "Indirizzo email",
+        "filter_results": "Filtra risultati",
+        "no_results_found": "Nessun risultato trovato",
+        "unsent": "Non inviato",
+        "cameras": "Fotocamere"
     },
     "action": {
         "continue": "Continua",
@@ -774,7 +751,10 @@
         "explore_public_rooms": "Esplora stanze pubbliche",
         "reply_in_thread": "Rispondi nella conversazione",
         "click": "Click",
-        "transfer": "Trasferisci"
+        "transfer": "Trasferisci",
+        "resume": "Riprendi",
+        "hold": "Sospendi",
+        "view_list": "Vedi lista"
     },
     "a11y": {
         "user_menu": "Menu utente",
@@ -2146,7 +2126,9 @@
             "external_url": "URL d'origine",
             "collapse_reply_thread": "Riduci conversazione di risposta",
             "view_related_event": "Vedi evento correlato",
-            "report": "Segnala"
+            "report": "Segnala",
+            "resent_unsent_reactions": "Reinvia %(unsentCount)s reazione/i",
+            "open_in_osm": "Apri in OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2476,7 +2458,9 @@
         "unable_to_access_audio_input_description": "Non abbiamo potuto accedere al tuo microfono. Controlla le impostazioni del browser e riprova.",
         "no_audio_input_title": "Nessun microfono trovato",
         "no_audio_input_description": "Non abbiamo trovato un microfono nel tuo dispositivo. Controlla le impostazioni e riprova.",
-        "transfer_consult_first_label": "Prima consulta"
+        "transfer_consult_first_label": "Prima consulta",
+        "input_devices": "Dispositivi di input",
+        "output_devices": "Dispositivi di output"
     },
     "room_settings": {
         "permissions": {
@@ -3334,7 +3318,9 @@
             "title": "Permetti a questo widget di verificare la tua identità",
             "starting_text": "Il widget verificherà il tuo ID utente, ma non sarà un grado di eseguire azioni per te:",
             "remember_selection": "Ricordalo"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Impossibile avviare lo streaming audio.",
+        "error_unable_start_audio_stream_title": "Impossibile avviare lo stream in diretta"
     },
     "feedback": {
         "sent": "Feedback inviato",
@@ -3538,7 +3524,20 @@
         "share_type_own": "La mia posizione attuale",
         "share_type_live": "La mia posizione in tempo reale",
         "share_type_pin": "Lascia una puntina",
-        "share_type_prompt": "Che tipo di posizione vuoi condividere?"
+        "share_type_prompt": "Che tipo di posizione vuoi condividere?",
+        "live_update_time": "Aggiornato %(humanizedUpdateTime)s",
+        "live_until": "In tempo reale fino a %(expiryTime)s",
+        "loading_live_location": "Caricamento posizione in tempo reale…",
+        "live_location_ended": "Posizione in tempo reale terminata",
+        "live_location_error": "Errore della posizione in tempo reale",
+        "live_locations_empty": "Nessuna posizione in tempo reale",
+        "close_sidebar": "Chiudi barra laterale",
+        "error_stopping_live_location": "Si è verificato un errore fermando la tua posizione in tempo reale",
+        "error_sharing_live_location": "Si è verificato un errore condividendo la tua posizione in tempo reale",
+        "live_location_active": "Stai condividendo la tua posizione in tempo reale",
+        "live_location_enabled": "Posizione in tempo reale attivata",
+        "error_sharing_live_location_try_again": "Si è verificato un errore condividendo la tua posizione in tempo reale, riprova",
+        "error_stopping_live_location_try_again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova"
     },
     "labs_mjolnir": {
         "room_name": "Mia lista ban",
@@ -4224,6 +4223,9 @@
                 "one": "Risultato finale basato su %(count)s voto",
                 "other": "Risultato finale basato su %(count)s voti"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Opzioni conversazione"
         }
     },
     "reject_invitation_dialog": {

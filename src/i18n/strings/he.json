@@ -26,7 +26,6 @@
     "Sunday": "ראשון",
     "Today": "היום",
     "Friday": "שישי",
-    "Filter results": "סנן התוצאות",
     "Tuesday": "שלישי",
     "Saturday": "שבת",
     "Monday": "שני",
@@ -397,9 +396,6 @@
     "Deactivate account": "סגור חשבון",
     "Sign in with SSO": "היכנס באמצעות SSO",
     "Delete Widget": "מחק ישומון",
-    "Resend %(unsentCount)s reaction(s)": "שלח שוב תגובות %(unsentCount)s",
-    "Hold": "החזק",
-    "Resume": "תקציר",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>אזהרה</b>: עליך להגדיר גיבוי מפתחות הצפנה רק ממחשב מהימן.",
     "Successfully restored %(sessionCount)s keys": "שוחזר בהצלחה %(sessionCount)s מפתחות",
     "Failed to decrypt %(failedCount)s sessions!": "הפענוח של %(failedCount)s חיבורים נכשל!",
@@ -443,11 +439,9 @@
     "Messaging": "הודעות",
     "Moderation": "מְתִינוּת",
     "Not a valid Security Key": "מפתח האבטחה לא חוקי",
-    "An error occurred whilst sharing your live location, please try again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב",
     "%(count)s rooms": {
         "other": "%(count)s חדרים"
     },
-    "Thread options": "אפשרויות שרשור",
     "Feedback sent! Thanks, we appreciate it!": "משוב נשלח! תודה, אנחנו מודים לכם",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "גש להיסטוריית ההודעות המאובטחת שלך והגדר הודעות מאובטחות על ידי הזנת ביטוי האבטחה שלך.",
     "To join a space you'll need an invite.": "כדי להצטרך אל מרחב עבודה, תהיו זקוקים להזמנה.",
@@ -457,7 +451,6 @@
         "other": "%(spaceName)sו%(count)s אחרים"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)sו%(space2Name)s",
-    "Close sidebar": "סגור סרגל צד",
     "common": {
         "about": "אודות",
         "analytics": "אנליטיקה",
@@ -559,7 +552,8 @@
         "show_more": "הצג יותר",
         "are_you_sure": "האם אתם בטוחים?",
         "location": "מיקום",
-        "email_address": "כתובת דוא\"ל"
+        "email_address": "כתובת דוא\"ל",
+        "filter_results": "סנן התוצאות"
     },
     "action": {
         "continue": "המשך",
@@ -660,7 +654,9 @@
         "new_room": "חדר חדש",
         "explore_public_rooms": "שוטט בחדרים ציבוריים",
         "reply_in_thread": "מענה בשרשור",
-        "transfer": "לְהַעֲבִיר"
+        "transfer": "לְהַעֲבִיר",
+        "resume": "תקציר",
+        "hold": "החזק"
     },
     "a11y": {
         "user_menu": "תפריט משתמש",
@@ -1535,7 +1531,8 @@
         "creation_summary_room": "%(creator)s יצר/ה והגדיר/ה את החדר.",
         "context_menu": {
             "external_url": "כתובת URL אתר המקור",
-            "collapse_reply_thread": "אחד שרשור של התשובות"
+            "collapse_reply_thread": "אחד שרשור של התשובות",
+            "resent_unsent_reactions": "שלח שוב תגובות %(unsentCount)s"
         },
         "url_preview": {
             "close": "סגור תצוגה מקדימה"
@@ -2547,7 +2544,9 @@
         "reset_bearing": "נעלו את המפה לכיוון צפון",
         "failed_generic": "איתור המיקום שלך נכשל. אנא נסה שוב מאוחר יותר.",
         "live_enable_description": "שימו לב: זוהי תכונת פיתוח המשתמשת ביישום זמני. משמעות הדבר היא שלא תוכלו למחוק את היסטוריית המיקומים שלכם, ומשתמשים מתקדמים יוכלו לראות את היסטוריית המיקומים שלך גם לאחר שתפסיקו לשתף את המיקום החי שלכם עם החדר הזה.",
-        "share_button": "שתף מיקום"
+        "share_button": "שתף מיקום",
+        "close_sidebar": "סגור סרגל צד",
+        "error_sharing_live_location_try_again": "אירעה שגיאה במהלך שיתוף המיקום החי שלכם, אנא נסו שוב"
     },
     "labs_mjolnir": {
         "room_name": "רשימת החסומים שלי",
@@ -3030,7 +3029,10 @@
         "pinned_messages_button": "הודעות נעוצות",
         "export_chat_button": "ייצוא צ'אט",
         "share_button": "שתף חדר",
-        "settings_button": "הגדרות חדר"
+        "settings_button": "הגדרות חדר",
+        "thread_list": {
+            "context_menu_label": "אפשרויות שרשור"
+        }
     },
     "reject_invitation_dialog": {
         "title": "דחה הזמנה",

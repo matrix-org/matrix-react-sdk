@@ -50,7 +50,6 @@
     "Sunday": "Sunnuntai",
     "Today": "Tänään",
     "Friday": "Perjantai",
-    "Filter results": "Suodata tuloksia",
     "Tuesday": "Tiistai",
     "Saturday": "Lauantai",
     "Monday": "Maanantai",
@@ -128,7 +127,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s istunnon purkaminen epäonnistui!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varoitus</b>: sinun pitäisi ottaa avainvarmuuskopio käyttöön vain luotetulla tietokoneella.",
     "edited": "muokattu",
-    "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
     "Deactivate account": "Poista tili pysyvästi",
     "e.g. my-room": "esim. oma-huone",
     "Failed to connect to integration manager": "Yhdistäminen integraatioiden lähteeseen epäonnistui",
@@ -422,11 +420,8 @@
     "a key signature": "avaimen allekirjoitus",
     "Security Phrase": "Turvalause",
     "Security Key": "Turva-avain",
-    "Hold": "Pidä",
-    "Resume": "Jatka",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
-    "No results found": "Tuloksia ei löytynyt",
     "%(count)s rooms": {
         "one": "%(count)s huone",
         "other": "%(count)s huonetta"
@@ -457,8 +452,6 @@
         "other": "%(count)s ääntä"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
-    "Unable to start audio streaming.": "Äänen suoratoiston aloittaminen ei onnistu.",
-    "Open in OpenStreetMap": "Avaa OpenStreetMapissa",
     "Feedback sent! Thanks, we appreciate it!": "Palaute lähetetty. Kiitos, arvostamme sitä!",
     "%(count)s participants": {
         "one": "1 osallistuja",
@@ -466,11 +459,6 @@
     },
     "%(members)s and %(last)s": "%(members)s ja %(last)s",
     "Developer": "Kehittäjä",
-    "Close sidebar": "Sulje sivupalkki",
-    "Updated %(humanizedUpdateTime)s": "Päivitetty %(humanizedUpdateTime)s",
-    "Cameras": "Kamerat",
-    "Output devices": "Ulostulolaitteet",
-    "Input devices": "Sisääntulolaitteet",
     "Click the button below to confirm setting up encryption.": "Napsauta alla olevaa painiketta vahvistaaksesi salauksen asettamisen.",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unohtanut tai kadottanut kaikki palautustavat? <a>Nollaa kaikki</a>",
     "%(members)s and more": "%(members)s ja enemmän",
@@ -484,7 +472,6 @@
     "Use your Security Key to continue.": "Käytä turva-avain jatkaaksesi.",
     "Invalid Security Key": "Virheellinen turva-avain",
     "Wrong Security Key": "Väärä turva-avain",
-    "Thread options": "Ketjun valinnat",
     "You cannot search for rooms that are neither a room nor a space": "Et voi etsiä huoneita, jotka eivät ole huoneita tai avaruuksia",
     "Show spaces": "Näytä avaruudet",
     "Show rooms": "Näytä huoneet",
@@ -494,7 +481,6 @@
     "Saved Items": "Tallennetut kohteet",
     "Unread email icon": "Lukemattoman sähköpostin kuvake",
     "View List": "Näytä luettelo",
-    "View list": "Näytä luettelo",
     " in <strong>%(room)s</strong>": " huoneessa <strong>%(room)s</strong>",
     "unknown": "tuntematon",
     "Starting export process…": "Käynnistetään vientitoimenpide…",
@@ -626,7 +612,10 @@
         "avatar": "Avatar",
         "are_you_sure": "Oletko varma?",
         "location": "Sijainti",
-        "email_address": "Sähköpostiosoite"
+        "email_address": "Sähköpostiosoite",
+        "filter_results": "Suodata tuloksia",
+        "no_results_found": "Tuloksia ei löytynyt",
+        "cameras": "Kamerat"
     },
     "action": {
         "continue": "Jatka",
@@ -742,7 +731,10 @@
         "add_existing_room": "Lisää olemassa oleva huone",
         "explore_public_rooms": "Selaa julkisia huoneita",
         "reply_in_thread": "Vastaa ketjuun",
-        "transfer": "Siirrä"
+        "transfer": "Siirrä",
+        "resume": "Jatka",
+        "hold": "Pidä",
+        "view_list": "Näytä luettelo"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -1948,7 +1940,9 @@
             "show_url_preview": "Näytä esikatselu",
             "external_url": "Lähdeosoite",
             "collapse_reply_thread": "Supista vastausketju",
-            "report": "Ilmoita"
+            "report": "Ilmoita",
+            "resent_unsent_reactions": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
+            "open_in_osm": "Avaa OpenStreetMapissa"
         },
         "url_preview": {
             "show_n_more": {
@@ -2256,7 +2250,9 @@
         "unable_to_access_audio_input_description": "Mikrofoniasi ei voitu käyttää. Tarkista selaimesi asetukset ja yritä uudelleen.",
         "no_audio_input_title": "Mikrofonia ei löytynyt",
         "no_audio_input_description": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen.",
-        "transfer_consult_first_label": "Tiedustele ensin"
+        "transfer_consult_first_label": "Tiedustele ensin",
+        "input_devices": "Sisääntulolaitteet",
+        "output_devices": "Ulostulolaitteet"
     },
     "room_settings": {
         "permissions": {
@@ -3015,7 +3011,8 @@
         },
         "open_id_permissions_dialog": {
             "remember_selection": "Muista tämä"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Äänen suoratoiston aloittaminen ei onnistu."
     },
     "feedback": {
         "sent": "Palaute lähetetty",
@@ -3195,7 +3192,9 @@
         "error_send_description": "%(brand)s ei voinut lähettää sijaintiasi. Yritä myöhemmin uudelleen.",
         "share_type_own": "Tämänhetkinen sijaintini",
         "share_type_pin": "Sijoita karttaneula",
-        "share_type_prompt": "Minkä sijaintityypin haluat jakaa?"
+        "share_type_prompt": "Minkä sijaintityypin haluat jakaa?",
+        "live_update_time": "Päivitetty %(humanizedUpdateTime)s",
+        "close_sidebar": "Sulje sivupalkki"
     },
     "labs_mjolnir": {
         "room_name": "Tekemäni estot",
@@ -3823,6 +3822,9 @@
                 "one": "Lopullinen tulos %(count)s äänen perusteella",
                 "other": "Lopullinen tulos %(count)s äänen perusteella"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Ketjun valinnat"
         }
     },
     "reject_invitation_dialog": {

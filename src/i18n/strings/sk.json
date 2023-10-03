@@ -51,7 +51,6 @@
     "Sunday": "Nedeľa",
     "Today": "Dnes",
     "Friday": "Piatok",
-    "Filter results": "Filtrovať výsledky",
     "Tuesday": "Utorok",
     "Saturday": "Sobota",
     "Monday": "Pondelok",
@@ -413,7 +412,6 @@
     "Not encrypted": "Nie je zašifrované",
     "%(name)s cancelled": "%(name)s zrušil/a",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "Open in OpenStreetMap": "Otvoriť v OpenStreetMap",
     "Enter Security Key": "Zadajte bezpečnostný kľúč",
     "Enter Security Phrase": "Zadať bezpečnostnú frázu",
     "Incorrect Security Phrase": "Nesprávna bezpečnostná fráza",
@@ -436,7 +434,6 @@
     },
     "Reset everything": "Obnoviť všetko",
     "<inviter/> invites you": "<inviter/> vás pozýva",
-    "No results found": "Nenašli sa žiadne výsledky",
     "%(count)s rooms": {
         "one": "%(count)s miestnosť",
         "other": "%(count)s miestností"
@@ -445,8 +442,6 @@
         "one": "%(count)s člen",
         "other": "%(count)s členov"
     },
-    "Failed to start livestream": "Nepodarilo sa spustiť livestream",
-    "Unable to start audio streaming.": "Nie je možné spustiť streamovanie zvuku.",
     "Click the button below to confirm setting up encryption.": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
     "Confirm encryption setup": "Potvrdiť nastavenie šifrovania",
     "Successfully restored %(sessionCount)s keys": "Úspešne obnovených %(sessionCount)s kľúčov",
@@ -457,7 +452,6 @@
         "one": "%(count)s hlas",
         "other": "%(count)s hlasov"
     },
-    "Thread options": "Možnosti vlákna",
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Získajte prístup k histórii zabezpečených správ a nastavte bezpečné zasielanie správ zadaním bezpečnostného kľúča.",
@@ -470,8 +464,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte prístup k svojmu účtu a obnovte šifrovacie kľúče uložené v tejto relácii. Bez nich nebudete môcť čítať všetky svoje zabezpečené správy v žiadnej relácii.",
-    "Hold": "Podržať",
-    "Resume": "Pokračovať",
     "Not a valid Security Key": "Neplatný bezpečnostný kľúč",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ak ste zabudli bezpečnostný kľúč, môžete <button>nastaviť nové možnosti obnovenia</button>",
     "This looks like a valid Security Key!": "Toto vyzerá ako platný bezpečnostný kľúč!",
@@ -488,31 +480,13 @@
     "a key signature": "podpis kľúča",
     "a new master key signature": "nový podpis hlavného kľúča",
     "toggle event": "prepnúť udalosť",
-    "Resend %(unsentCount)s reaction(s)": "Opätovné odoslanie %(unsentCount)s reakcií",
-    "You are sharing your live location": "Zdieľate svoju polohu v reálnom čase",
-    "Unsent": "Neodoslané",
-    "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova",
     "%(count)s participants": {
         "one": "1 účastník",
         "other": "%(count)s účastníkov"
     },
-    "Live location ended": "Ukončenie polohy v reálnom čase",
-    "Live until %(expiryTime)s": "Poloha v reálnom čase do %(expiryTime)s",
-    "Live location enabled": "Poloha v reálnom čase zapnutá",
-    "Live location error": "Chyba polohy v reálnom čase",
-    "No live locations": "Žiadne polohy v reálnom čase",
-    "Close sidebar": "Zatvoriť bočný panel",
     "View List": "Zobraziť zoznam",
-    "View list": "Zobraziť zoznam",
-    "Updated %(humanizedUpdateTime)s": "Aktualizované %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "Pri zastavovaní zdieľania polohy v reálnom čase došlo k chybe",
     "%(members)s and %(last)s": "%(members)s a %(last)s",
     "%(members)s and more": "%(members)s a ďalší",
-    "Cameras": "Kamery",
-    "Output devices": "Výstupné zariadenia",
-    "Input devices": "Vstupné zariadenia",
-    "An error occurred whilst sharing your live location, please try again": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe, skúste to prosím znova",
-    "An error occurred whilst sharing your live location": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe",
     "Unread email icon": "Ikona neprečítaného e-mailu",
     "You cannot search for rooms that are neither a room nor a space": "Nemôžete vyhľadávať miestnosti, ktoré nie sú ani miestnosťou, ani priestorom",
     "Show spaces": "Zobraziť priestory",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
     "unknown": "neznáme",
-    "Loading live location…": "Načítavanie polohy v reálnom čase…",
     "Fetching keys from server…": "Získavanie kľúčov zo servera…",
     "Starting export process…": "Spustenie procesu exportu…",
     "Desktop app logo": "Logo aplikácie pre stolové počítače",
@@ -655,7 +628,11 @@
         "avatar": "Obrázok",
         "are_you_sure": "Ste si istí?",
         "location": "Poloha",
-        "email_address": "Emailová adresa"
+        "email_address": "Emailová adresa",
+        "filter_results": "Filtrovať výsledky",
+        "no_results_found": "Nenašli sa žiadne výsledky",
+        "unsent": "Neodoslané",
+        "cameras": "Kamery"
     },
     "action": {
         "continue": "Pokračovať",
@@ -773,7 +750,10 @@
         "explore_public_rooms": "Preskúmajte verejné miestnosti",
         "reply_in_thread": "Odpovedať vo vlákne",
         "click": "Kliknúť",
-        "transfer": "Presmerovať"
+        "transfer": "Presmerovať",
+        "resume": "Pokračovať",
+        "hold": "Podržať",
+        "view_list": "Zobraziť zoznam"
     },
     "a11y": {
         "user_menu": "Používateľské menu",
@@ -2145,7 +2125,9 @@
             "external_url": "Pôvodná URL",
             "collapse_reply_thread": "Zbaliť vlákno odpovedí",
             "view_related_event": "Zobraziť súvisiacu udalosť",
-            "report": "Nahlásiť"
+            "report": "Nahlásiť",
+            "resent_unsent_reactions": "Opätovné odoslanie %(unsentCount)s reakcií",
+            "open_in_osm": "Otvoriť v OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2475,7 +2457,9 @@
         "unable_to_access_audio_input_description": "Nepodarilo sa nám získať prístup k vášmu mikrofónu. Skontrolujte prosím nastavenia prehliadača a skúste to znova.",
         "no_audio_input_title": "Nenašiel sa žiadny mikrofón",
         "no_audio_input_description": "Vo vašom zariadení sa nenašiel mikrofón. Skontrolujte svoje nastavenia a skúste to znova.",
-        "transfer_consult_first_label": "Najprv konzultovať"
+        "transfer_consult_first_label": "Najprv konzultovať",
+        "input_devices": "Vstupné zariadenia",
+        "output_devices": "Výstupné zariadenia"
     },
     "room_settings": {
         "permissions": {
@@ -3327,7 +3311,9 @@
             "title": "Umožniť tomuto widgetu overiť vašu totožnosť",
             "starting_text": "Widget overí vaše ID používateľa, ale nebude môcť vykonávať akcie za vás:",
             "remember_selection": "Zapamätať si toto"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Nie je možné spustiť streamovanie zvuku.",
+        "error_unable_start_audio_stream_title": "Nepodarilo sa spustiť livestream"
     },
     "feedback": {
         "sent": "Spätná väzba odoslaná",
@@ -3531,7 +3517,20 @@
         "share_type_own": "Moja aktuálna poloha",
         "share_type_live": "Moja poloha v reálnom čase",
         "share_type_pin": "Označiť špendlíkom",
-        "share_type_prompt": "Aký typ polohy chcete zdieľať?"
+        "share_type_prompt": "Aký typ polohy chcete zdieľať?",
+        "live_update_time": "Aktualizované %(humanizedUpdateTime)s",
+        "live_until": "Poloha v reálnom čase do %(expiryTime)s",
+        "loading_live_location": "Načítavanie polohy v reálnom čase…",
+        "live_location_ended": "Ukončenie polohy v reálnom čase",
+        "live_location_error": "Chyba polohy v reálnom čase",
+        "live_locations_empty": "Žiadne polohy v reálnom čase",
+        "close_sidebar": "Zatvoriť bočný panel",
+        "error_stopping_live_location": "Pri zastavovaní zdieľania polohy v reálnom čase došlo k chybe",
+        "error_sharing_live_location": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe",
+        "live_location_active": "Zdieľate svoju polohu v reálnom čase",
+        "live_location_enabled": "Poloha v reálnom čase zapnutá",
+        "error_sharing_live_location_try_again": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe, skúste to prosím znova",
+        "error_stopping_live_location_try_again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova"
     },
     "labs_mjolnir": {
         "room_name": "Môj zoznam zákazov",
@@ -4217,6 +4216,9 @@
                 "one": "Konečný výsledok na základe %(count)s hlasu",
                 "other": "Konečný výsledok na základe %(count)s hlasov"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Možnosti vlákna"
         }
     },
     "reject_invitation_dialog": {

@@ -51,7 +51,6 @@
     "Sunday": "Dimanche",
     "Today": "Aujourd’hui",
     "Friday": "Vendredi",
-    "Filter results": "Filtrer les résultats",
     "Tuesday": "Mardi",
     "Saturday": "Samedi",
     "Monday": "Lundi",
@@ -128,7 +127,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attention</b> : vous ne devriez configurer la sauvegarde des clés que depuis un ordinateur de confiance.",
     "Scissors": "Ciseaux",
     "edited": "modifié",
-    "Resend %(unsentCount)s reaction(s)": "Renvoyer %(unsentCount)s réaction(s)",
     "Deactivate account": "Désactiver le compte",
     "e.g. my-room": "par ex. mon-salon",
     "%(name)s accepted": "%(name)s a accepté",
@@ -426,8 +424,6 @@
     "Bhutan": "Bhoutan",
     "Bermuda": "Bermudes",
     "Zimbabwe": "Zimbabwe",
-    "Hold": "Mettre en pause",
-    "Resume": "Reprendre",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Si vous avez oublié votre clé de sécurité, vous pouvez <button>définir de nouvelles options de récupération</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accédez à votre historique de messages chiffrés et mettez en place la messagerie sécurisée en entrant votre clé de sécurité.",
     "Not a valid Security Key": "Clé de sécurité invalide",
@@ -447,10 +443,7 @@
         "one": "%(count)s membre",
         "other": "%(count)s membres"
     },
-    "Failed to start livestream": "Échec lors du démarrage de la diffusion en direct",
-    "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
     "<inviter/> invites you": "<inviter/> vous a invité",
-    "No results found": "Aucun résultat",
     "%(count)s rooms": {
         "one": "%(count)s salon",
         "other": "%(count)s salons"
@@ -470,7 +463,6 @@
         "other": "%(count)s réponses"
     },
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Récupérez l’accès à votre compte et restaurez les clés de chiffrement dans cette session. Sans elles, vous ne pourrez pas lire tous vos messages chiffrés dans toutes vos sessions.",
-    "Thread options": "Options des fils de discussion",
     "Forget": "Oublier",
     "%(count)s votes": {
         "one": "%(count)s vote",
@@ -485,35 +477,17 @@
         "one": "%(spaceName)s et %(count)s autre",
         "other": "%(spaceName)s et %(count)s autres"
     },
-    "Open in OpenStreetMap": "Ouvrir dans OpenStreetMap",
     "toggle event": "Afficher/masquer l’évènement",
     "Feedback sent! Thanks, we appreciate it!": "Commentaire envoyé ! Merci, nous l’apprécions !",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s et %(space2Name)s",
-    "You are sharing your live location": "Vous partagez votre position en direct",
-    "Unsent": "Non envoyé",
-    "An error occurred while stopping your live location, please try again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer",
     "%(count)s participants": {
         "one": "1 participant",
         "other": "%(count)s participants"
     },
-    "Live location enabled": "Position en temps réel activée",
-    "Live location error": "Erreur de positionnement en temps réel",
-    "Live location ended": "Position en temps réel terminée",
-    "Live until %(expiryTime)s": "En direct jusqu’à %(expiryTime)s",
-    "Close sidebar": "Fermer la barre latérale",
     "View List": "Voir la liste",
-    "View list": "Voir la liste",
-    "No live locations": "Pas de position en continu",
-    "Updated %(humanizedUpdateTime)s": "Mis-à-jour %(humanizedUpdateTime)s",
     "%(members)s and more": "%(members)s et plus",
-    "An error occurred while stopping your live location": "Une erreur s’est produite lors de l’arrêt de votre position en continu",
-    "Cameras": "Caméras",
-    "Output devices": "Périphériques de sortie",
-    "Input devices": "Périphériques d’entrée",
     "%(members)s and %(last)s": "%(members)s et %(last)s",
     "Unread email icon": "Icone d’e-mail non lu",
-    "An error occurred whilst sharing your live location, please try again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
-    "An error occurred whilst sharing your live location": "Une erreur s’est produite pendant le partage de votre position",
     "You cannot search for rooms that are neither a room nor a space": "Vous ne pouvez pas rechercher de salons qui ne soient ni des salons ni des espaces",
     "Show spaces": "Afficher les espaces",
     "Show rooms": "Afficher les salons",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "ID du fil de discussion racine : %(threadRootId)s",
     " in <strong>%(room)s</strong>": " dans <strong>%(room)s</strong>",
     "unknown": "inconnu",
-    "Loading live location…": "Chargement de la position en direct…",
     "Fetching keys from server…": "Récupération des clés depuis le serveur…",
     "Starting export process…": "Démarrage du processus d’export…",
     "Desktop app logo": "Logo de l’application de bureau",
@@ -655,7 +628,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Êtes-vous sûr ?",
         "location": "Position",
-        "email_address": "Adresse e-mail"
+        "email_address": "Adresse e-mail",
+        "filter_results": "Filtrer les résultats",
+        "no_results_found": "Aucun résultat",
+        "unsent": "Non envoyé",
+        "cameras": "Caméras"
     },
     "action": {
         "continue": "Continuer",
@@ -773,7 +750,10 @@
         "explore_public_rooms": "Parcourir les salons publics",
         "reply_in_thread": "Répondre dans le fil de discussion",
         "click": "Clic",
-        "transfer": "Transférer"
+        "transfer": "Transférer",
+        "resume": "Reprendre",
+        "hold": "Mettre en pause",
+        "view_list": "Voir la liste"
     },
     "a11y": {
         "user_menu": "Menu utilisateur",
@@ -2145,7 +2125,9 @@
             "external_url": "URL de la source",
             "collapse_reply_thread": "Masquer le fil de discussion",
             "view_related_event": "Afficher les événements liés",
-            "report": "Signaler"
+            "report": "Signaler",
+            "resent_unsent_reactions": "Renvoyer %(unsentCount)s réaction(s)",
+            "open_in_osm": "Ouvrir dans OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2475,7 +2457,9 @@
         "unable_to_access_audio_input_description": "Nous n’avons pas pu accéder à votre microphone. Merci de vérifier les paramètres de votre navigateur et de réessayer.",
         "no_audio_input_title": "Aucun microphone détecté",
         "no_audio_input_description": "Nous n’avons pas détecté de microphone sur votre appareil. Merci de vérifier vos paramètres et de réessayer.",
-        "transfer_consult_first_label": "Consulter d’abord"
+        "transfer_consult_first_label": "Consulter d’abord",
+        "input_devices": "Périphériques d’entrée",
+        "output_devices": "Périphériques de sortie"
     },
     "room_settings": {
         "permissions": {
@@ -3327,7 +3311,9 @@
             "title": "Autoriser ce widget à vérifier votre identité",
             "starting_text": "Ce widget vérifiera votre identifiant d’utilisateur, mais ne pourra pas effectuer des actions en votre nom :",
             "remember_selection": "Mémoriser ceci"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Impossible de démarrer la diffusion audio.",
+        "error_unable_start_audio_stream_title": "Échec lors du démarrage de la diffusion en direct"
     },
     "feedback": {
         "sent": "Commentaire envoyé",
@@ -3531,7 +3517,20 @@
         "share_type_own": "Ma position actuelle",
         "share_type_live": "Ma position en continu",
         "share_type_pin": "Choisir sur la carte",
-        "share_type_prompt": "Quel type de localisation voulez-vous partager ?"
+        "share_type_prompt": "Quel type de localisation voulez-vous partager ?",
+        "live_update_time": "Mis-à-jour %(humanizedUpdateTime)s",
+        "live_until": "En direct jusqu’à %(expiryTime)s",
+        "loading_live_location": "Chargement de la position en direct…",
+        "live_location_ended": "Position en temps réel terminée",
+        "live_location_error": "Erreur de positionnement en temps réel",
+        "live_locations_empty": "Pas de position en continu",
+        "close_sidebar": "Fermer la barre latérale",
+        "error_stopping_live_location": "Une erreur s’est produite lors de l’arrêt de votre position en continu",
+        "error_sharing_live_location": "Une erreur s’est produite pendant le partage de votre position",
+        "live_location_active": "Vous partagez votre position en direct",
+        "live_location_enabled": "Position en temps réel activée",
+        "error_sharing_live_location_try_again": "Une erreur s’est produite pendant le partage de votre position, veuillez réessayer plus tard",
+        "error_stopping_live_location_try_again": "Une erreur s’est produite en arrêtant le partage de votre position, veuillez réessayer"
     },
     "labs_mjolnir": {
         "room_name": "Ma liste de bannissement",
@@ -4217,6 +4216,9 @@
                 "one": "Résultat final sur la base de %(count)s vote",
                 "other": "Résultat final sur la base de %(count)s votes"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Options des fils de discussion"
         }
     },
     "reject_invitation_dialog": {

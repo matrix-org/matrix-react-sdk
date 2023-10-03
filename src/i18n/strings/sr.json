@@ -51,7 +51,6 @@
     "Sunday": "Недеља",
     "Today": "Данас",
     "Friday": "Петак",
-    "Filter results": "Филтрирај резултате",
     "Tuesday": "Уторак",
     "Saturday": "Субота",
     "Monday": "Понедељак",
@@ -63,7 +62,6 @@
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
     },
-    "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "Light bulb": "сијалица",
     "Looks good!": "Изгледа добро!",
     "Switch theme": "Промени тему",
@@ -445,7 +443,8 @@
         "go_to_settings": "Идите на подешавања",
         "show_more": "Прикажи више",
         "are_you_sure": "Да ли сте сигурни?",
-        "email_address": "Мејл адреса"
+        "email_address": "Мејл адреса",
+        "filter_results": "Филтрирај резултате"
     },
     "action": {
         "continue": "Настави",
@@ -906,7 +905,8 @@
         },
         "creation_summary_room": "Корисник %(creator)s је направио и подесио собу.",
         "context_menu": {
-            "external_url": "Адреса извора"
+            "external_url": "Адреса извора",
+            "resent_unsent_reactions": "Поново пошаљи укупно %(unsentCount)s реакција"
         },
         "load_error": {
             "no_permission": "Покушао сам да учитам одређену тачку у временској линији ове собе али ви немате овлашћења за преглед наведене поруке.",

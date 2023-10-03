@@ -31,7 +31,6 @@
     "Sunday": "Søndag",
     "Today": "I dag",
     "Friday": "Fredag",
-    "Filter results": "Filtrér resultater",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
@@ -321,7 +320,8 @@
         "rooms": "Rum",
         "low_priority": "Lav prioritet",
         "historical": "Historisk",
-        "show_more": "Vis mere"
+        "show_more": "Vis mere",
+        "filter_results": "Filtrér resultater"
     },
     "action": {
         "continue": "Fortsæt",

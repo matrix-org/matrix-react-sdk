@@ -295,7 +295,6 @@
     "%(duration)sm": "%(duration)sm",
     "%(duration)ss": "%(duration)sd",
     "Home": "Beranda",
-    "Resume": "Lanjutkan",
     "Lock": "Gembok",
     "Mushroom": "Jamur",
     "Folder": "Map",
@@ -363,7 +362,6 @@
     "Light bulb": "Bohlam lampu",
     "Thumbs up": "Jempol",
     "Send Logs": "Kirim Catatan",
-    "Filter results": "Saring hasil",
     "Delete Widget": "Hapus Widget",
     "(~%(count)s results)": {
         "one": "(~%(count)s hasil)",
@@ -371,7 +369,6 @@
     },
     "not specified": "tidak ditentukan",
     "Join Room": "Bergabung dengan Ruangan",
-    "Hold": "Jeda",
     "Backup version:": "Versi cadangan:",
     "This backup is trusted because it has been restored on this session": "Cadangan ini dipercayai karena telah dipulihkan di sesi ini",
     "To join a space you'll need an invite.": "Untuk bergabung sebuah space Anda membutuhkan undangan.",
@@ -411,13 +408,8 @@
     },
     "Switch theme": "Ubah tema",
     "<inviter/> invites you": "<inviter/> mengundang Anda",
-    "No results found": "Tidak ada hasil yang ditemukan",
     "Sign in with SSO": "Masuk dengan SSO",
-    "Unable to start audio streaming.": "Tidak dapat memulai penyiaran audio.",
-    "Failed to start livestream": "Gagal untuk memulai siaran langsung",
-    "Thread options": "Opsi utasan",
     "Forget": "Lupakan",
-    "Resend %(unsentCount)s reaction(s)": "Kirim ulang %(unsentCount)s reaksi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Jika Anda lupa Kunci Keamanan, Anda dapat <button>menyiapkan opsi pemulihan baru</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Akses riwayat pesan aman Anda dan siapkan perpesanan aman dengan memasukkan Kunci Keamanan Anda.",
     "Not a valid Security Key": "Bukan Kunci Keamanan yang absah",
@@ -485,34 +477,16 @@
     "Themes": "Tema",
     "Moderation": "Moderasi",
     "Messaging": "Perpesanan",
-    "Open in OpenStreetMap": "Buka di OpenStreetMap",
     "toggle event": "alih peristiwa",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dan %(space2Name)s",
     "Feedback sent! Thanks, we appreciate it!": "Masukan terkirim! Terima kasih, kami mengapresiasinya!",
-    "You are sharing your live location": "Anda membagikan lokasi langsung Anda",
-    "Unsent": "Belum dikirim",
-    "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "%(count)s participants": {
         "one": "1 perserta",
         "other": "%(count)s perserta"
     },
-    "Live location ended": "Lokasi langsung berakhir",
-    "Live location enabled": "Lokasi langsung diaktifkan",
-    "Live location error": "Kesalahan lokasi langsung",
-    "Live until %(expiryTime)s": "Langsung sampai %(expiryTime)s",
-    "No live locations": "Tidak ada lokasi langsung",
-    "Close sidebar": "Tutup bilah samping",
     "View List": "Tampilkan Daftar",
-    "View list": "Tampilkan daftar",
-    "Updated %(humanizedUpdateTime)s": "Diperbarui %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda",
     "%(members)s and %(last)s": "%(members)s dan %(last)s",
     "%(members)s and more": "%(members)s dan lainnya",
-    "Cameras": "Kamera",
-    "Output devices": "Perangkat keluaran",
-    "Input devices": "Perangkat masukan",
-    "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
-    "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
     "Unread email icon": "Ikon email belum dibaca",
     "You cannot search for rooms that are neither a room nor a space": "Anda tidak dapat mencari ruangan yang bukan sebuah ruangan atau sebuah space",
     "Show spaces": "Tampilkan space",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
     "unknown": "tidak diketahui",
-    "Loading live location…": "Memuat lokasi langsung…",
     "Fetching keys from server…": "Mendapatkan kunci- dari server…",
     "Starting export process…": "Memulai proses pengeksporan…",
     "Desktop app logo": "Logo aplikasi desktop",
@@ -655,7 +628,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Apakah Anda yakin?",
         "location": "Lokasi",
-        "email_address": "Alamat email"
+        "email_address": "Alamat email",
+        "filter_results": "Saring hasil",
+        "no_results_found": "Tidak ada hasil yang ditemukan",
+        "unsent": "Belum dikirim",
+        "cameras": "Kamera"
     },
     "action": {
         "continue": "Lanjut",
@@ -774,7 +751,10 @@
         "explore_public_rooms": "Jelajahi ruangan publik",
         "reply_in_thread": "Balas di utasan",
         "click": "Klik",
-        "transfer": "Pindah"
+        "transfer": "Pindah",
+        "resume": "Lanjutkan",
+        "hold": "Jeda",
+        "view_list": "Tampilkan daftar"
     },
     "a11y": {
         "user_menu": "Menu pengguna",
@@ -2146,7 +2126,9 @@
             "external_url": "URL Sumber",
             "collapse_reply_thread": "Tutup balasan utasan",
             "view_related_event": "Tampilkan peristiwa terkait",
-            "report": "Laporkan"
+            "report": "Laporkan",
+            "resent_unsent_reactions": "Kirim ulang %(unsentCount)s reaksi",
+            "open_in_osm": "Buka di OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2476,7 +2458,9 @@
         "unable_to_access_audio_input_description": "Kami tidak dapat mengakses mikrofon Anda. Mohon periksa pengaturan browser Anda dan coba lagi.",
         "no_audio_input_title": "Tidak ada mikrofon yang ditemukan",
         "no_audio_input_description": "Kami tidak menemukan sebuah mikrofon di perangkat Anda. Mohon periksa pengaturan Anda dan coba lagi.",
-        "transfer_consult_first_label": "Konsultasi dahulu"
+        "transfer_consult_first_label": "Konsultasi dahulu",
+        "input_devices": "Perangkat masukan",
+        "output_devices": "Perangkat keluaran"
     },
     "room_settings": {
         "permissions": {
@@ -3334,7 +3318,9 @@
             "title": "Izinkan widget ini untuk memverifikasi identitas Anda",
             "starting_text": "Widget ini akan memverifikasi ID pengguna Anda, tetapi tidak dapat melakukan aksi untuk Anda:",
             "remember_selection": "Ingat ini"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Tidak dapat memulai penyiaran audio.",
+        "error_unable_start_audio_stream_title": "Gagal untuk memulai siaran langsung"
     },
     "feedback": {
         "sent": "Masukan terkirim",
@@ -3538,7 +3524,20 @@
         "share_type_own": "Lokasi saya saat ini",
         "share_type_live": "Lokasi langsung saya",
         "share_type_pin": "Drop sebuah Pin",
-        "share_type_prompt": "Tipe lokasi apa yang Anda ingin bagikan?"
+        "share_type_prompt": "Tipe lokasi apa yang Anda ingin bagikan?",
+        "live_update_time": "Diperbarui %(humanizedUpdateTime)s",
+        "live_until": "Langsung sampai %(expiryTime)s",
+        "loading_live_location": "Memuat lokasi langsung…",
+        "live_location_ended": "Lokasi langsung berakhir",
+        "live_location_error": "Kesalahan lokasi langsung",
+        "live_locations_empty": "Tidak ada lokasi langsung",
+        "close_sidebar": "Tutup bilah samping",
+        "error_stopping_live_location": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda",
+        "error_sharing_live_location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
+        "live_location_active": "Anda membagikan lokasi langsung Anda",
+        "live_location_enabled": "Lokasi langsung diaktifkan",
+        "error_sharing_live_location_try_again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
+        "error_stopping_live_location_try_again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi"
     },
     "labs_mjolnir": {
         "room_name": "Daftar Cekalan Saya",
@@ -4224,6 +4223,9 @@
                 "other": "Hasil akhir bedasarkan dari %(count)s suara",
                 "one": "Hasil akhir bedasarkan dari %(count)s suara"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Opsi utasan"
         }
     },
     "reject_invitation_dialog": {

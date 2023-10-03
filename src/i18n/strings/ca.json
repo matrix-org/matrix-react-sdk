@@ -51,7 +51,6 @@
     "Sunday": "Diumenge",
     "Today": "Avui",
     "Friday": "Divendres",
-    "Filter results": "Resultats del filtre",
     "Tuesday": "Dimarts",
     "Saturday": "Dissabte",
     "Monday": "Dilluns",
@@ -96,7 +95,8 @@
         "historical": "Històric",
         "go_to_settings": "Ves a Configuració",
         "are_you_sure": "Estàs segur?",
-        "email_address": "Correu electrònic"
+        "email_address": "Correu electrònic",
+        "filter_results": "Resultats del filtre"
     },
     "action": {
         "continue": "Continua",

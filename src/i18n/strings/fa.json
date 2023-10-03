@@ -309,7 +309,6 @@
     "a key signature": "یک امضای کلیدی",
     "Clear cross-signing keys": "کلیدهای امضای متقابل را پاک کن",
     "Destroy cross-signing keys?": "کلیدهای امضای متقابل نابود شود؟",
-    "Resend %(unsentCount)s reaction(s)": "بازارسال %(unsentCount)s واکنش",
     "No backup found!": "نسخه پشتیبان یافت نشد!",
     "Reset everything": "همه چیز را بازراه‌اندازی (reset) کنید",
     "Looks good!": "به نظر خوب میاد!",
@@ -321,7 +320,6 @@
     "Wrong file type": "نوع فایل اشتباه است",
     "Confirm encryption setup": "راه‌اندازی رمزگذاری را تأیید کنید",
     "e.g. my-room": "به عنوان مثال، my-room",
-    "Filter results": "پالایش نتایج",
     "%(count)s members": {
         "other": "%(count)s عضو",
         "one": "%(count)s عضو"
@@ -436,14 +434,9 @@
     "IRC display name width": "عرض نمایش نام‌های IRC",
     "Switch theme": "تعویض پوسته",
     "<inviter/> invites you": "<inviter/> شما را دعوت کرد",
-    "No results found": "نتیجه‌ای یافت نشد",
     "Warning!": "هشدار!",
     "Sign in with SSO": "ورود با استفاده از احراز هویت یکپارچه",
     "Delete Widget": "حذف ویجت",
-    "Failed to start livestream": "آغاز livestream با شکست همراه بود",
-    "Unable to start audio streaming.": "شروع پخش جریان صدا امکان‌پذیر نیست.",
-    "Hold": "نگه‌داشتن",
-    "Resume": "ادامه",
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
@@ -467,7 +460,6 @@
         "other": "%(spaceName)s و %(count)s دیگران"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
-    "Close sidebar": "بستن نوارکناری",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
     "Developer": "توسعه دهنده",
     "Experimental": "تجربی",
@@ -569,7 +561,9 @@
         "show_more": "نمایش بیشتر",
         "avatar": "نمایه",
         "are_you_sure": "مطمئنی؟",
-        "email_address": "آدرس ایمیل"
+        "email_address": "آدرس ایمیل",
+        "filter_results": "پالایش نتایج",
+        "no_results_found": "نتیجه‌ای یافت نشد"
     },
     "action": {
         "continue": "ادامه",
@@ -666,7 +660,9 @@
         "explore_rooms": "جستجو در اتاق ها",
         "add_existing_room": "اضافه‌کردن اتاق موجود",
         "explore_public_rooms": "کاوش در اتاق‌های عمومی",
-        "transfer": "منتقل کردن"
+        "transfer": "منتقل کردن",
+        "resume": "ادامه",
+        "hold": "نگه‌داشتن"
     },
     "a11y": {
         "user_menu": "منوی کاربر",
@@ -1460,7 +1456,8 @@
         "creation_summary_dm": "%(creator)s این گفتگو را ایجاد کرد.",
         "creation_summary_room": "%(creator)s اتاق را ایجاد و پیکربندی کرد.",
         "context_menu": {
-            "external_url": "آدرس مبدا"
+            "external_url": "آدرس مبدا",
+            "resent_unsent_reactions": "بازارسال %(unsentCount)s واکنش"
         },
         "url_preview": {
             "close": "بستن پیش نمایش"
@@ -2297,7 +2294,9 @@
             "title": "به این ابزارک اجازه دهید هویت شما را تأیید کند",
             "starting_text": "ابزارک شناسه‌ی کاربری شما را تائید خواهد کرد، اما نمی‌تواند این کارها را برای شما انجام دهد:",
             "remember_selection": "این را به یاد داشته باش"
-        }
+        },
+        "error_unable_start_audio_stream_description": "شروع پخش جریان صدا امکان‌پذیر نیست.",
+        "error_unable_start_audio_stream_title": "آغاز livestream با شکست همراه بود"
     },
     "feedback": {
         "sent": "بازخورد ارسال شد",
@@ -2417,7 +2416,8 @@
         "find_my_location": "پیدا کردن مکان",
         "location_not_available": "مکان در دسترس نیست",
         "mapbox_logo": "لوگوی جعبه نقشه",
-        "reset_bearing": "بازنشانی جهت شمال"
+        "reset_bearing": "بازنشانی جهت شمال",
+        "close_sidebar": "بستن نوارکناری"
     },
     "labs_mjolnir": {
         "room_name": "لیست تحریم‌های من",

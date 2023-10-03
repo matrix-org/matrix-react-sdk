@@ -51,7 +51,6 @@
     "Sunday": "Dimanĉo",
     "Today": "Hodiaŭ",
     "Friday": "Vendredo",
-    "Filter results": "Filtri rezultojn",
     "Tuesday": "Mardo",
     "Saturday": "Sabato",
     "Monday": "Lundo",
@@ -128,7 +127,6 @@
     "Unable to restore backup": "Ne povas rehavi savkopion",
     "Failed to decrypt %(failedCount)s sessions!": "Malsukcesis malĉifri%(failedCount)s salutaĵojn!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Averto</b>: vi agordu ŝlosilan savkopion nur per fidata komputilo.",
-    "Resend %(unsentCount)s reaction(s)": "Resendi %(unsentCount)s reago(j)n",
     "Deactivate account": "Malaktivigi konton",
     "%(name)s accepted": "%(name)s akceptis",
     "%(name)s cancelled": "%(name)s nuligis",
@@ -426,8 +424,6 @@
     "Curaçao": "Kuracao",
     "Cocos (Keeling) Islands": "Kokosinsuloj",
     "Cayman Islands": "Kajmaninsuloj",
-    "Hold": "Paŭzigi",
-    "Resume": "Daŭrigi",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se vi forgesis vian Sekurecan ŝlosilon, vi povas <button>agordi novajn elekteblojn de rehavo</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Aliru vian historion de sekuraj mesaĝoj kaj agordu sekurajn mesaĝojn per enigo de via Sekureca ŝlosio.",
     "Not a valid Security Key": "Tio ne estas valida Sekureca ŝlosilo",
@@ -444,7 +440,6 @@
     "Invalid Security Key": "Nevalida Sekureca ŝlosilo",
     "Wrong Security Key": "Malĝusta Sekureca ŝlosilo",
     "<inviter/> invites you": "<inviter/> invitas vin",
-    "No results found": "Neniuj rezultoj troviĝis",
     "%(count)s rooms": {
         "one": "%(count)s ĉambro",
         "other": "%(count)s ĉambroj"
@@ -453,8 +448,6 @@
         "one": "%(count)s ano",
         "other": "%(count)s anoj"
     },
-    "Failed to start livestream": "Malsukcesis komenci tujelsendon",
-    "Unable to start audio streaming.": "Ne povas komenci sonelsendon.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
@@ -469,7 +462,6 @@
         "other": "%(spaceName)s kaj %(count)s aliaj"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s kaj %(space2Name)s",
-    "Close sidebar": "Fermu la flanka kolumno",
     "Developer": "Programisto",
     "unknown": "nekonata",
     "common": {
@@ -575,7 +567,9 @@
         "avatar": "Profilbildo",
         "are_you_sure": "Ĉu vi certas?",
         "location": "Loko",
-        "email_address": "Retpoŝtadreso"
+        "email_address": "Retpoŝtadreso",
+        "filter_results": "Filtri rezultojn",
+        "no_results_found": "Neniuj rezultoj troviĝis"
     },
     "action": {
         "continue": "Daŭrigi",
@@ -675,7 +669,9 @@
         "explore_rooms": "Esplori ĉambrojn",
         "add_existing_room": "Aldoni jaman ĉambron",
         "explore_public_rooms": "Esplori publikajn ĉambrojn",
-        "transfer": "Transdoni"
+        "transfer": "Transdoni",
+        "resume": "Daŭrigi",
+        "hold": "Paŭzigi"
     },
     "a11y": {
         "user_menu": "Menuo de uzanto",
@@ -1573,7 +1569,8 @@
             "show_url_preview": "Antaŭrigardi",
             "external_url": "Fonta URL",
             "collapse_reply_thread": "Maletendi respondan fadenon",
-            "report": "Raporti"
+            "report": "Raporti",
+            "resent_unsent_reactions": "Resendi %(unsentCount)s reago(j)n"
         },
         "url_preview": {
             "show_n_more": {
@@ -2558,7 +2555,9 @@
             "title": "Permesu al ĉi tiu fenestraĵo kontroli vian identecon",
             "starting_text": "Ĉi tiu fenestraĵo kontrolos vian identigilon de uzanto, sed ne povos fari agojn por vi:",
             "remember_selection": "Memoru ĉi tion"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Ne povas komenci sonelsendon.",
+        "error_unable_start_audio_stream_title": "Malsukcesis komenci tujelsendon"
     },
     "feedback": {
         "sent": "Prikomentoj sendiĝis",
@@ -2716,7 +2715,8 @@
         "error_send_description": "%(brand)s ne povis sendi vian lokon. Bonvolu reprovi poste.",
         "share_type_own": "Mia nuna loko",
         "share_type_live": "Mia realtempa loko",
-        "share_type_prompt": "Kiel vi volas kunhavigi vian lokon?"
+        "share_type_prompt": "Kiel vi volas kunhavigi vian lokon?",
+        "close_sidebar": "Fermu la flanka kolumno"
     },
     "labs_mjolnir": {
         "room_name": "Mia listo de forbaroj",

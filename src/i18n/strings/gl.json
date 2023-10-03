@@ -51,7 +51,6 @@
     "Sunday": "Domingo",
     "Today": "Hoxe",
     "Friday": "Venres",
-    "Filter results": "Filtrar resultados",
     "Tuesday": "Martes",
     "Saturday": "Sábado",
     "Monday": "Luns",
@@ -165,7 +164,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Fallo ao descifrar %(failedCount)s sesións!",
     "Successfully restored %(sessionCount)s keys": "Restablecidas correctamente %(sessionCount)s chaves",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Aviso</b>: só deberías realizar a copia de apoio desde un ordenador de confianza.",
-    "Resend %(unsentCount)s reaction(s)": "Reenviar %(unsentCount)s reacción(s)",
     "Switch theme": "Cambiar decorado",
     "Confirm encryption setup": "Confirma os axustes de cifrado",
     "Click the button below to confirm setting up encryption.": "Preme no botón inferior para confirmar os axustes do cifrado.",
@@ -426,8 +424,6 @@
     "Equatorial Guinea": "Guinea Ecuatorial",
     "El Salvador": "O Salvador",
     "Egypt": "Exipto",
-    "Hold": "Colgar",
-    "Resume": "Retomar",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Se esqueceches a túa Chave de Seguridade podes <button>establecer novas opcións de recuperación</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Accede ao teu historial de mensaxes seguras e asegura a comunicación escribindo a Chave de Seguridade.",
     "Not a valid Security Key": "Chave de Seguridade non válida",
@@ -447,10 +443,7 @@
         "one": "%(count)s participante",
         "other": "%(count)s participantes"
     },
-    "Failed to start livestream": "Fallou o inicio da emisión en directo",
-    "Unable to start audio streaming.": "Non se puido iniciar a retransmisión de audio.",
     "<inviter/> invites you": "<inviter/> convídate",
-    "No results found": "Sen resultados",
     "%(count)s rooms": {
         "one": "%(count)s sala",
         "other": "%(count)s salas"
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
-    "Thread options": "Opcións da conversa",
     "Forget": "Esquecer",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -486,34 +478,16 @@
     "Moderation": "Moderación",
     "Messaging": "Conversando",
     "toggle event": "activar evento",
-    "Open in OpenStreetMap": "Abrir en OpenStreetMap",
     "Feedback sent! Thanks, we appreciate it!": "Opinión enviada! Moitas grazas!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "You are sharing your live location": "Vas compartir en directo a túa localización",
-    "Unsent": "Sen enviar",
-    "An error occurred while stopping your live location, please try again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez",
     "%(count)s participants": {
         "one": "1 participante",
         "other": "%(count)s participantes"
     },
-    "Live location ended": "Rematou a localización en directo",
-    "Live location enabled": "Activada a localización en directo",
-    "Live location error": "Erro na localización en directo",
-    "Live until %(expiryTime)s": "En directo ata %(expiryTime)s",
-    "Close sidebar": "Pechar panel lateral",
     "View List": "Ver lista",
-    "View list": "Ver lista",
-    "No live locations": "Sen localizacións en directo",
-    "Updated %(humanizedUpdateTime)s": "Actualizado %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "Algo fallou ao deter a compartición da localización en directo",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e máis",
-    "Cameras": "Cámaras",
-    "Output devices": "Dispositivos de saída",
-    "Input devices": "Dispositivos de entrada",
     "Unread email icon": "Icona de email non lido",
-    "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
-    "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
     "You cannot search for rooms that are neither a room nor a space": "Non podes buscar salas que non son nin unha sala nin un espazo",
     "Show spaces": "Mostrar espazos",
     "Show rooms": "Mostrar salas",
@@ -638,7 +612,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Está segura?",
         "location": "Localización",
-        "email_address": "Enderezo de correo"
+        "email_address": "Enderezo de correo",
+        "filter_results": "Filtrar resultados",
+        "no_results_found": "Sen resultados",
+        "unsent": "Sen enviar",
+        "cameras": "Cámaras"
     },
     "action": {
         "continue": "Continuar",
@@ -753,7 +731,10 @@
         "explore_public_rooms": "Explorar salas públicas",
         "reply_in_thread": "Responder nun fío",
         "click": "Premer",
-        "transfer": "Transferir"
+        "transfer": "Transferir",
+        "resume": "Retomar",
+        "hold": "Colgar",
+        "view_list": "Ver lista"
     },
     "a11y": {
         "user_menu": "Menú de usuaria",
@@ -1903,7 +1884,9 @@
             "external_url": "URL fonte",
             "collapse_reply_thread": "Contraer fío de resposta",
             "view_related_event": "Ver evento relacionado",
-            "report": "Denunciar"
+            "report": "Denunciar",
+            "resent_unsent_reactions": "Reenviar %(unsentCount)s reacción(s)",
+            "open_in_osm": "Abrir en OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2193,7 +2176,9 @@
         "unable_to_access_audio_input_description": "Non puidemos acceder ao teu micrófono. Comproba os axustes do navegador e proba outra vez.",
         "no_audio_input_title": "Non atopamos ningún micrófono",
         "no_audio_input_description": "Non atopamos ningún micrófono no teu dispositivo. Comproba os axustes e proba outra vez.",
-        "transfer_consult_first_label": "Preguntar primeiro"
+        "transfer_consult_first_label": "Preguntar primeiro",
+        "input_devices": "Dispositivos de entrada",
+        "output_devices": "Dispositivos de saída"
     },
     "room_settings": {
         "permissions": {
@@ -2958,7 +2943,9 @@
             "title": "Permitir a este widget verificar a túa identidade",
             "starting_text": "Este widget vai verificar o ID do teu usuario, pero non poderá realizar accións no teu nome:",
             "remember_selection": "Lembrar isto"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Non se puido iniciar a retransmisión de audio.",
+        "error_unable_start_audio_stream_title": "Fallou o inicio da emisión en directo"
     },
     "feedback": {
         "sent": "Comentario enviado",
@@ -3130,7 +3117,19 @@
         "share_type_own": "Localización actual",
         "share_type_live": "Localización en direto",
         "share_type_pin": "Fixa a posición",
-        "share_type_prompt": "Que tipo de localización queres compartir?"
+        "share_type_prompt": "Que tipo de localización queres compartir?",
+        "live_update_time": "Actualizado %(humanizedUpdateTime)s",
+        "live_until": "En directo ata %(expiryTime)s",
+        "live_location_ended": "Rematou a localización en directo",
+        "live_location_error": "Erro na localización en directo",
+        "live_locations_empty": "Sen localizacións en directo",
+        "close_sidebar": "Pechar panel lateral",
+        "error_stopping_live_location": "Algo fallou ao deter a compartición da localización en directo",
+        "error_sharing_live_location": "Algo fallou ao intentar compartir a túa localización en directo",
+        "live_location_active": "Vas compartir en directo a túa localización",
+        "live_location_enabled": "Activada a localización en directo",
+        "error_sharing_live_location_try_again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
+        "error_stopping_live_location_try_again": "Algo fallou ao deter a túa localización en directo, inténtao outra vez"
     },
     "labs_mjolnir": {
         "room_name": "Listaxe de bloqueo",
@@ -3731,6 +3730,9 @@
                 "one": "Resultado final baseado en %(count)s voto",
                 "other": "Resultado final baseado en %(count)s votos"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Opcións da conversa"
         }
     },
     "reject_invitation_dialog": {

@@ -119,7 +119,6 @@
     "collapse": "toeklappn",
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
-    "Filter results": "Resultoatn filtern",
     "Send Logs": "Logboek verstuurn",
     "Unable to load backup status": "Kostege back-upstatus nie loadn",
     "Unable to restore backup": "Kostege back-up nie herstelln",
@@ -128,7 +127,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Let ip</b>: stelt sleuterback-up alleene moar in ip e vertrouwde computer.",
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
-    "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) herverstuurn",
     "Deactivate account": "Account deactiveern",
     "common": {
         "analytics": "Statistische gegeevns",
@@ -182,7 +180,8 @@
         "go_to_settings": "Goa noa d’instelliengn",
         "setup_secure_messages": "Beveiligde berichtn instelln",
         "are_you_sure": "Zy je zeker?",
-        "email_address": "E-mailadresse"
+        "email_address": "E-mailadresse",
+        "filter_results": "Resultoatn filtern"
     },
     "action": {
         "continue": "Verdergoan",
@@ -596,7 +595,8 @@
             "changed_img": "%(senderDisplayName)s èt de gespreksavatar angepast noa <img/>"
         },
         "context_menu": {
-            "external_url": "Bron-URL"
+            "external_url": "Bron-URL",
+            "resent_unsent_reactions": "%(unsentCount)s reactie(s) herverstuurn"
         },
         "load_error": {
             "no_permission": "J’è geprobeerd van e gegeven punt in de tydslyn van dit gesprek te loadn, moa j’è geen toeloatienge vo ’t desbetreffend bericht te zien.",

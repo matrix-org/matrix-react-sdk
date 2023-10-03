@@ -51,7 +51,6 @@
     "Sunday": "Воскресенье",
     "Today": "Сегодня",
     "Friday": "Пятница",
-    "Filter results": "Фильтрация результатов",
     "Tuesday": "Вторник",
     "Saturday": "Суббота",
     "Monday": "Понедельник",
@@ -128,7 +127,6 @@
     "edited": "изменено",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Resend %(unsentCount)s reaction(s)": "Отправить повторно %(unsentCount)s реакций",
     "Deactivate account": "Деактивировать учётную запись",
     "e.g. my-room": "например, моя-комната",
     "%(count)s sessions": {
@@ -426,8 +424,6 @@
     "Afghanistan": "Афганистан",
     "United States": "Соединенные Штаты Америки",
     "United Kingdom": "Великобритания",
-    "Hold": "Удерживать",
-    "Resume": "Возобновить",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Если вы забыли свой ключ безопасности, вы можете <button>настроить новые параметры восстановления</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Получите доступ к своей истории защищенных сообщений и настройте безопасный обмен сообщениями, введя ключ безопасности.",
     "Not a valid Security Key": "Неправильный ключ безопасности",
@@ -451,10 +447,7 @@
         "one": "%(count)s участник",
         "other": "%(count)s участников"
     },
-    "Unable to start audio streaming.": "Невозможно запустить аудио трансляцию.",
-    "Failed to start livestream": "Не удалось запустить прямую трансляцию",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
-    "No results found": "Результаты не найдены",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
     "Only do this if you have no other device to complete verification with.": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
     "Reset everything": "Сбросить всё",
@@ -470,9 +463,7 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введите свою секретную фразу или <button> используйте секретный ключ </button> для продолжения.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Восстановите доступ к своей учетной записи и восстановите ключи шифрования, сохранённые в этом сеансе. Без них в любом сеансе вы не сможете прочитать все свои защищённые сообщения.",
-    "Thread options": "Параметры обсуждения",
     "Forget": "Забыть",
-    "Open in OpenStreetMap": "Открыть в OpenStreetMap",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -493,22 +484,7 @@
     "%(members)s and %(last)s": "%(members)s и %(last)s",
     "%(members)s and more": "%(members)s и многие другие",
     "Unread email icon": "Значок непрочитанного электронного письма",
-    "An error occurred while stopping your live location, please try again": "При остановки передачи информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
-    "An error occurred whilst sharing your live location, please try again": "При передаче информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
-    "You are sharing your live location": "Вы делитесь своим местоположением в реальном времени",
-    "An error occurred whilst sharing your live location": "Произошла ошибка при передаче информации о вашем местоположении в реальном времени",
-    "An error occurred while stopping your live location": "Произошла ошибка при остановке вашего местоположения в реальном времени",
-    "Close sidebar": "Закрыть боковую панель",
     "View List": "Посмотреть список",
-    "View list": "Посмотреть список",
-    "No live locations": "Нет местоположений в реальном времени",
-    "Live location error": "Ошибка показа местоположения в реальном времени",
-    "Live until %(expiryTime)s": "В реальном времени до %(expiryTime)s",
-    "Updated %(humanizedUpdateTime)s": "Обновлено %(humanizedUpdateTime)s",
-    "Cameras": "Камеры",
-    "Output devices": "Устройства вывода",
-    "Input devices": "Устройства ввода",
-    "Unsent": "Не отправлено",
     "You cannot search for rooms that are neither a room nor a space": "Вы не можете искать комнаты, которые не являются ни комнатой, ни пространством",
     "Show spaces": "Показать пространства",
     "Show rooms": "Показать комнаты",
@@ -516,8 +492,6 @@
         "one": "1 участник",
         "other": "%(count)s участников"
     },
-    "Live location ended": "Трансляция местоположения завершена",
-    "Live location enabled": "Трансляция местоположения включена",
     "Saved Items": "Сохранённые объекты",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
@@ -644,7 +618,11 @@
         "avatar": "Аватар",
         "are_you_sure": "Вы уверены?",
         "location": "Местоположение",
-        "email_address": "Электронная почта"
+        "email_address": "Электронная почта",
+        "filter_results": "Фильтрация результатов",
+        "no_results_found": "Результаты не найдены",
+        "unsent": "Не отправлено",
+        "cameras": "Камеры"
     },
     "action": {
         "continue": "Продолжить",
@@ -760,7 +738,10 @@
         "explore_public_rooms": "Просмотреть публичные комнаты",
         "reply_in_thread": "Обсудить",
         "click": "Нажать",
-        "transfer": "Перевод"
+        "transfer": "Перевод",
+        "resume": "Возобновить",
+        "hold": "Удерживать",
+        "view_list": "Посмотреть список"
     },
     "a11y": {
         "user_menu": "Меню пользователя",
@@ -2003,7 +1984,9 @@
             "external_url": "Исходная ссылка",
             "collapse_reply_thread": "Свернуть ответы обсуждения",
             "view_related_event": "Посмотреть связанное событие",
-            "report": "Сообщить"
+            "report": "Сообщить",
+            "resent_unsent_reactions": "Отправить повторно %(unsentCount)s реакций",
+            "open_in_osm": "Открыть в OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2314,7 +2297,9 @@
         "unable_to_access_audio_input_description": "Мы не смогли получить доступ к вашему микрофону. Пожалуйста, проверьте настройки браузера и повторите попытку.",
         "no_audio_input_title": "Микрофон не найден",
         "no_audio_input_description": "Мы не нашли микрофон на вашем устройстве. Пожалуйста, проверьте настройки и повторите попытку.",
-        "transfer_consult_first_label": "Сначала проконсультируйтесь"
+        "transfer_consult_first_label": "Сначала проконсультируйтесь",
+        "input_devices": "Устройства ввода",
+        "output_devices": "Устройства вывода"
     },
     "room_settings": {
         "permissions": {
@@ -3099,7 +3084,9 @@
             "title": "Разрешите этому виджету проверить ваш идентификатор",
             "starting_text": "Виджет проверит ваш идентификатор пользователя, но не сможет выполнять за вас действия:",
             "remember_selection": "Запомнить это"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Невозможно запустить аудио трансляцию.",
+        "error_unable_start_audio_stream_title": "Не удалось запустить прямую трансляцию"
     },
     "feedback": {
         "sent": "Отзыв отправлен",
@@ -3293,7 +3280,19 @@
         "share_type_own": "Моё текущее местоположение",
         "share_type_live": "Моё местоположение в реальном времени",
         "share_type_pin": "Маркер на карте",
-        "share_type_prompt": "Каким типом местоположения вы хотите поделиться?"
+        "share_type_prompt": "Каким типом местоположения вы хотите поделиться?",
+        "live_update_time": "Обновлено %(humanizedUpdateTime)s",
+        "live_until": "В реальном времени до %(expiryTime)s",
+        "live_location_ended": "Трансляция местоположения завершена",
+        "live_location_error": "Ошибка показа местоположения в реальном времени",
+        "live_locations_empty": "Нет местоположений в реальном времени",
+        "close_sidebar": "Закрыть боковую панель",
+        "error_stopping_live_location": "Произошла ошибка при остановке вашего местоположения в реальном времени",
+        "error_sharing_live_location": "Произошла ошибка при передаче информации о вашем местоположении в реальном времени",
+        "live_location_active": "Вы делитесь своим местоположением в реальном времени",
+        "live_location_enabled": "Трансляция местоположения включена",
+        "error_sharing_live_location_try_again": "При передаче информации о вашем местоположении произошла ошибка, попробуйте ещё раз",
+        "error_stopping_live_location_try_again": "При остановки передачи информации о вашем местоположении произошла ошибка, попробуйте ещё раз"
     },
     "labs_mjolnir": {
         "room_name": "Мой список блокировки",
@@ -3910,6 +3909,9 @@
                 "one": "Окончательный результат на основе %(count)s голоса",
                 "other": "Окончательный результат на основе %(count)s голосов"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Параметры обсуждения"
         }
     },
     "reject_invitation_dialog": {

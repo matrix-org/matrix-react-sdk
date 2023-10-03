@@ -51,7 +51,6 @@
     "Sunday": "Неделя",
     "Today": "Днес",
     "Friday": "Петък",
-    "Filter results": "Филтриране на резултати",
     "Tuesday": "Вторник",
     "Saturday": "Събота",
     "Monday": "Понеделник",
@@ -128,7 +127,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
     "edited": "редактирано",
-    "Resend %(unsentCount)s reaction(s)": "Изпрати наново %(unsentCount)s реакция(и)",
     "Deactivate account": "Деактивиране на акаунт",
     "e.g. my-room": "например my-room",
     "%(name)s accepted": "%(name)s прие",
@@ -508,7 +506,8 @@
         "unencrypted": "Нешифровано",
         "show_more": "Покажи повече",
         "are_you_sure": "Сигурни ли сте?",
-        "email_address": "Имейл адрес"
+        "email_address": "Имейл адрес",
+        "filter_results": "Филтриране на резултати"
     },
     "action": {
         "continue": "Продължи",
@@ -1235,7 +1234,8 @@
         "creation_summary_dm": "%(creator)s създаде този директен чат.",
         "creation_summary_room": "%(creator)s създаде и настрой стаята.",
         "context_menu": {
-            "external_url": "URL на източника"
+            "external_url": "URL на източника",
+            "resent_unsent_reactions": "Изпрати наново %(unsentCount)s реакция(и)"
         },
         "url_preview": {
             "close": "Затвори прегледа"

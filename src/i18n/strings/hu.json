@@ -51,7 +51,6 @@
     "Sunday": "Vasárnap",
     "Today": "Ma",
     "Friday": "Péntek",
-    "Filter results": "Találatok szűrése",
     "Tuesday": "Kedd",
     "Saturday": "Szombat",
     "Monday": "Hétfő",
@@ -128,7 +127,6 @@
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Figyelmeztetés</b>: csak biztonságos számítógépről állítson be kulcsmentést.",
     "Scissors": "Olló",
     "edited": "szerkesztve",
-    "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reakció újraküldése",
     "Deactivate account": "Fiók zárolása",
     "e.g. my-room": "pl.: szobam",
     "%(name)s accepted": "%(name)s elfogadta",
@@ -426,8 +424,6 @@
     "Greenland": "Grönland",
     "Greece": "Görögország",
     "Gibraltar": "Gibraltár",
-    "Hold": "Várakoztatás",
-    "Resume": "Folytatás",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Ha elfelejtette a biztonsági kulcsot, <button>állítson be új helyreállítási lehetőséget</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "A biztonsági kulcs megadásával hozzáférhet a régi biztonságos üzeneteihez és beállíthatja a biztonságos üzenetküldést.",
     "Not a valid Security Key": "Érvénytelen biztonsági kulcs",
@@ -447,10 +443,7 @@
         "one": "%(count)s tag",
         "other": "%(count)s tag"
     },
-    "Failed to start livestream": "Az élő adás indítása sikertelen",
-    "Unable to start audio streaming.": "A hang folyam indítása sikertelen.",
     "<inviter/> invites you": "<inviter/> meghívta",
-    "No results found": "Nincs találat",
     "%(count)s rooms": {
         "one": "%(count)s szoba",
         "other": "%(count)s szoba"
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Adja meg a biztonsági jelmondatot vagy <button>használja a biztonsági kulcsot</button> a folytatáshoz.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
-    "Thread options": "Üzenetszál beállításai",
     "Forget": "Elfelejtés",
     "%(count)s votes": {
         "one": "%(count)s szavazat",
@@ -485,22 +477,10 @@
     "Themes": "Témák",
     "Moderation": "Moderálás",
     "Messaging": "Üzenetküldés",
-    "Open in OpenStreetMap": "Megnyitás az OpenStreetMapen",
     "toggle event": "esemény be/ki",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s és %(space2Name)s",
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve. Köszönjük, nagyra értékeljük.",
-    "You are sharing your live location": "Ön folyamatosan megosztja az aktuális földrajzi pozícióját",
-    "Unsent": "Elküldetlen",
-    "An error occurred while stopping your live location, please try again": "Élő pozíció megosztás befejezése közben hiba történt, kérjük próbálja újra",
-    "Live location enabled": "Élő pozíció megosztás engedélyezve",
-    "Close sidebar": "Oldalsáv bezárása",
     "View List": "Lista megjelenítése",
-    "View list": "Lista megjelenítése",
-    "No live locations": "Nincs élő pozíció megosztás",
-    "Live location error": "Élő pozíció megosztás hiba",
-    "Live location ended": "Élő pozíció megosztás befejeződött",
-    "Live until %(expiryTime)s": "Élő eddig: %(expiryTime)s",
-    "Updated %(humanizedUpdateTime)s": "Frissítve %(humanizedUpdateTime)s",
     "%(count)s participants": {
         "one": "1 résztvevő",
         "other": "%(count)s résztvevő"
@@ -508,12 +488,6 @@
     "%(members)s and %(last)s": "%(members)s és %(last)s",
     "%(members)s and more": "%(members)s és mások",
     "Unread email icon": "Olvasatlan e-mail ikon",
-    "An error occurred whilst sharing your live location, please try again": "Élő pozíció megosztás közben hiba történt, kérjük próbálja újra",
-    "An error occurred whilst sharing your live location": "Élő pozíció megosztás közben hiba történt",
-    "An error occurred while stopping your live location": "Élő pozíció megosztás megállítása közben hiba történt",
-    "Cameras": "Kamerák",
-    "Output devices": "Kimeneti eszközök",
-    "Input devices": "Beviteli eszközök",
     "You cannot search for rooms that are neither a room nor a space": "Nem lehet olyan szobákat keresni, amelyeket se nem szobák, se nem terek",
     "Show spaces": "Terek megjelenítése",
     "Show rooms": "Szobák megjelenítése",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "Üzenetszál gyökerének azonosítója: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
     "unknown": "ismeretlen",
-    "Loading live location…": "Élő földrajzi helyzet meghatározás betöltése…",
     "Fetching keys from server…": "Kulcsok lekérése a kiszolgálóról…",
     "Starting export process…": "Exportálási folyamat indítása…",
     "Desktop app logo": "Asztali alkalmazás profilkép",
@@ -655,7 +628,11 @@
         "avatar": "Profilkép",
         "are_you_sure": "Biztos?",
         "location": "Földrajzi helyzet",
-        "email_address": "E-mail-cím"
+        "email_address": "E-mail-cím",
+        "filter_results": "Találatok szűrése",
+        "no_results_found": "Nincs találat",
+        "unsent": "Elküldetlen",
+        "cameras": "Kamerák"
     },
     "action": {
         "continue": "Folytatás",
@@ -772,7 +749,10 @@
         "explore_public_rooms": "Nyilvános szobák felfedezése",
         "reply_in_thread": "Válasz üzenetszálban",
         "click": "Kattintson",
-        "transfer": "Átadás"
+        "transfer": "Átadás",
+        "resume": "Folytatás",
+        "hold": "Várakoztatás",
+        "view_list": "Lista megjelenítése"
     },
     "a11y": {
         "user_menu": "Felhasználói menü",
@@ -2089,7 +2069,9 @@
             "external_url": "Forrás URL",
             "collapse_reply_thread": "Üzenetszál összecsukása",
             "view_related_event": "Kapcsolódó események megjelenítése",
-            "report": "Jelentés"
+            "report": "Jelentés",
+            "resent_unsent_reactions": "%(unsentCount)s reakció újraküldése",
+            "open_in_osm": "Megnyitás az OpenStreetMapen"
         },
         "url_preview": {
             "show_n_more": {
@@ -2412,7 +2394,9 @@
         "unable_to_access_audio_input_description": "Nem lehet a mikrofont használni. Ellenőrizze a böngésző beállításait és próbálja újra.",
         "no_audio_input_title": "Nem található mikrofon",
         "no_audio_input_description": "Nem található mikrofon. Ellenőrizze a beállításokat és próbálja újra.",
-        "transfer_consult_first_label": "Kérjen először véleményt"
+        "transfer_consult_first_label": "Kérjen először véleményt",
+        "input_devices": "Beviteli eszközök",
+        "output_devices": "Kimeneti eszközök"
     },
     "room_settings": {
         "permissions": {
@@ -3253,7 +3237,9 @@
             "title": "A kisalkalmazás ellenőrizheti a személyazonosságát",
             "starting_text": "A kisalkalmazás ellenőrizni fogja a felhasználói azonosítóját, de az alábbi tevékenységeket nem tudja végrehajtani:",
             "remember_selection": "Emlékezzen erre"
-        }
+        },
+        "error_unable_start_audio_stream_description": "A hang folyam indítása sikertelen.",
+        "error_unable_start_audio_stream_title": "Az élő adás indítása sikertelen"
     },
     "feedback": {
         "sent": "Visszajelzés elküldve",
@@ -3457,7 +3443,20 @@
         "share_type_own": "Jelenlegi saját földrajzi helyzet",
         "share_type_live": "Folyamatos saját földrajzi helyzet",
         "share_type_pin": "Hely kijelölése",
-        "share_type_prompt": "Milyen jellegű földrajzi helyzetet szeretne megosztani?"
+        "share_type_prompt": "Milyen jellegű földrajzi helyzetet szeretne megosztani?",
+        "live_update_time": "Frissítve %(humanizedUpdateTime)s",
+        "live_until": "Élő eddig: %(expiryTime)s",
+        "loading_live_location": "Élő földrajzi helyzet meghatározás betöltése…",
+        "live_location_ended": "Élő pozíció megosztás befejeződött",
+        "live_location_error": "Élő pozíció megosztás hiba",
+        "live_locations_empty": "Nincs élő pozíció megosztás",
+        "close_sidebar": "Oldalsáv bezárása",
+        "error_stopping_live_location": "Élő pozíció megosztás megállítása közben hiba történt",
+        "error_sharing_live_location": "Élő pozíció megosztás közben hiba történt",
+        "live_location_active": "Ön folyamatosan megosztja az aktuális földrajzi pozícióját",
+        "live_location_enabled": "Élő pozíció megosztás engedélyezve",
+        "error_sharing_live_location_try_again": "Élő pozíció megosztás közben hiba történt, kérjük próbálja újra",
+        "error_stopping_live_location_try_again": "Élő pozíció megosztás befejezése közben hiba történt, kérjük próbálja újra"
     },
     "labs_mjolnir": {
         "room_name": "Saját tiltólista",
@@ -4124,6 +4123,9 @@
                 "one": "Végeredmény %(count)s szavazat alapján",
                 "other": "Végeredmény %(count)s szavazat alapján"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Üzenetszál beállításai"
         }
     },
     "reject_invitation_dialog": {

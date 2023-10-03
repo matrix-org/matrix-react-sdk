@@ -8,7 +8,6 @@
     "Sunday": "Неділя",
     "Today": "Сьогодні",
     "Friday": "П'ятниця",
-    "Filter results": "Відфільтрувати результати",
     "Tuesday": "Вівторок",
     "Unnamed room": "Неназвана кімната",
     "Saturday": "Субота",
@@ -373,11 +372,9 @@
     "Home": "Домівка",
     "Sign in with SSO": "Увійти за допомогою SSO",
     "Delete Widget": "Видалити віджет",
-    "Resend %(unsentCount)s reaction(s)": "Повторно надіслати %(unsentCount)s реакцій",
     "e.g. my-room": "наприклад, моя-кімната",
     "Switch theme": "Змінити тему",
     "<inviter/> invites you": "<inviter/> запрошує вас",
-    "No results found": "Нічого не знайдено",
     "Backup version:": "Версія резервної копії:",
     "Send Logs": "Надіслати журнали",
     "%(count)s rooms": {
@@ -429,7 +426,6 @@
         "one": "%(spaceName)s і %(count)s інших",
         "other": "%(spaceName)s і %(count)s інших"
     },
-    "Thread options": "Параметри гілки",
     "Developer": "Розробка",
     "Moderation": "Модерування",
     "Experimental": "Експериментально",
@@ -461,8 +457,6 @@
     "Wrong Security Key": "Ключ безпеки не збігається",
     "Wrong file type": "Тип файлу не підтримується",
     "Looks good!": "Виглядає файно!",
-    "Hold": "Утримувати",
-    "Resume": "Продовжити",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Застереження</b>: налаштовуйте резервне копіювання ключів лише на довіреному комп'ютері.",
     "Enter Security Phrase": "Введіть фразу безпеки",
     "Unable to restore backup": "Не вдалося відновити резервну копію",
@@ -479,40 +473,20 @@
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Якщо ви скинете все, то почнете заново без довірених сеансів, користувачів і доступу до минулих повідомлень.",
     "Reset everything": "Скинути все",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забули чи втратили всі способи відновлення? <a>Скинути все</a>",
-    "Unable to start audio streaming.": "Не вдалося почати аудіотрансляцію.",
-    "Failed to start livestream": "Не вдалося почати живу трансляцію",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
     "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
     "a key signature": "відбиток ключа",
     "a device cross-signing signature": "підпис перехресного підписування пристрою",
-    "Open in OpenStreetMap": "Відкрити в OpenStreetMap",
     "toggle event": "перемкнути подію",
     "Feedback sent! Thanks, we appreciate it!": "Відгук надісланий! Дякуємо, візьмемо до уваги!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s і %(space2Name)s",
-    "You are sharing your live location": "Ви ділитеся місцеперебуванням",
-    "Unsent": "Не надіслано",
-    "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
     "%(count)s participants": {
         "one": "1 учасник",
         "other": "%(count)s учасників"
     },
-    "Live location ended": "Показ місцеперебування наживо завершено",
-    "Live location enabled": "Показ місцеперебування наживо ввімкнено",
-    "Live location error": "Помилка показу місцеперебування наживо",
-    "Live until %(expiryTime)s": "Наживо до %(expiryTime)s",
-    "No live locations": "Передавання місцеперебування наживо відсутні",
-    "Close sidebar": "Закрити бічну панель",
     "View List": "Переглянути список",
-    "View list": "Переглянути список",
-    "Updated %(humanizedUpdateTime)s": "Оновлено %(humanizedUpdateTime)s",
-    "An error occurred while stopping your live location": "Під час припинення поширення поточного місцеперебування сталася помилка",
     "%(members)s and %(last)s": "%(members)s і %(last)s",
     "%(members)s and more": "%(members)s та інші",
-    "Cameras": "Камери",
-    "Output devices": "Пристрої виводу",
-    "Input devices": "Пристрої вводу",
-    "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
-    "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
     "Unread email icon": "Піктограма непрочитаного електронного листа",
     "You cannot search for rooms that are neither a room nor a space": "Ви не можете шукати кімнати, які не є ні кімнатою, ні простором",
     "Show spaces": "Показати простори",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "unknown": "невідомо",
-    "Loading live location…": "Завантаження місця перебування наживо…",
     "Fetching keys from server…": "Отримання ключів із сервера…",
     "Starting export process…": "Початок процесу експорту…",
     "Desktop app logo": "Логотип комп'ютерного застосунку",
@@ -655,7 +628,11 @@
         "avatar": "Аватар",
         "are_you_sure": "Ви впевнені?",
         "location": "Місцеперебування",
-        "email_address": "Адреса е-пошти"
+        "email_address": "Адреса е-пошти",
+        "filter_results": "Відфільтрувати результати",
+        "no_results_found": "Нічого не знайдено",
+        "unsent": "Не надіслано",
+        "cameras": "Камери"
     },
     "action": {
         "continue": "Продовжити",
@@ -773,7 +750,10 @@
         "explore_public_rooms": "Переглянути загальнодоступні кімнати",
         "reply_in_thread": "Відповісти у гілці",
         "click": "Клацнути",
-        "transfer": "Переадресація"
+        "transfer": "Переадресація",
+        "resume": "Продовжити",
+        "hold": "Утримувати",
+        "view_list": "Переглянути список"
     },
     "a11y": {
         "user_menu": "Користувацьке меню",
@@ -2145,7 +2125,9 @@
             "external_url": "Початкова URL-адреса",
             "collapse_reply_thread": "Згорнути відповіді",
             "view_related_event": "Переглянути пов'язані події",
-            "report": "Поскаржитися"
+            "report": "Поскаржитися",
+            "resent_unsent_reactions": "Повторно надіслати %(unsentCount)s реакцій",
+            "open_in_osm": "Відкрити в OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2475,7 +2457,9 @@
         "unable_to_access_audio_input_description": "Збій доступу до вашого мікрофона. Перевірте налаштування браузера й повторіть спробу.",
         "no_audio_input_title": "Мікрофона не знайдено",
         "no_audio_input_description": "Мікрофона не знайдено. Перевірте налаштування й повторіть спробу.",
-        "transfer_consult_first_label": "Спочатку консультуватися"
+        "transfer_consult_first_label": "Спочатку консультуватися",
+        "input_devices": "Пристрої вводу",
+        "output_devices": "Пристрої виводу"
     },
     "room_settings": {
         "permissions": {
@@ -3327,7 +3311,9 @@
             "title": "Дозволити цьому віджету перевіряти вашу особу",
             "starting_text": "Віджет звірить ваш ID користувача, але не зможе виконувати такі дії від вашого імені:",
             "remember_selection": "Запам'ятати це"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Не вдалося почати аудіотрансляцію.",
+        "error_unable_start_audio_stream_title": "Не вдалося почати живу трансляцію"
     },
     "feedback": {
         "sent": "Відгук надіслано",
@@ -3531,7 +3517,20 @@
         "share_type_own": "Лише поточне місцеперебування",
         "share_type_live": "Змінне місцеперебування наживо",
         "share_type_pin": "Маркер на карті",
-        "share_type_prompt": "Який вид місцеперебування поширити?"
+        "share_type_prompt": "Який вид місцеперебування поширити?",
+        "live_update_time": "Оновлено %(humanizedUpdateTime)s",
+        "live_until": "Наживо до %(expiryTime)s",
+        "loading_live_location": "Завантаження місця перебування наживо…",
+        "live_location_ended": "Показ місцеперебування наживо завершено",
+        "live_location_error": "Помилка показу місцеперебування наживо",
+        "live_locations_empty": "Передавання місцеперебування наживо відсутні",
+        "close_sidebar": "Закрити бічну панель",
+        "error_stopping_live_location": "Під час припинення поширення поточного місцеперебування сталася помилка",
+        "error_sharing_live_location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
+        "live_location_active": "Ви ділитеся місцеперебуванням",
+        "live_location_enabled": "Показ місцеперебування наживо ввімкнено",
+        "error_sharing_live_location_try_again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
+        "error_stopping_live_location_try_again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу"
     },
     "labs_mjolnir": {
         "room_name": "Мій список блокувань",
@@ -4217,6 +4216,9 @@
                 "one": "Остаточний результат на підставі %(count)s голосу",
                 "other": "Остаточний результат на підставі %(count)s голосів"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Параметри гілки"
         }
     },
     "reject_invitation_dialog": {

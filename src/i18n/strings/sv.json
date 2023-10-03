@@ -35,7 +35,6 @@
     "Sunday": "söndag",
     "Today": "idag",
     "Friday": "fredag",
-    "Filter results": "Filtrera resultaten",
     "Tuesday": "tisdag",
     "Saturday": "lördag",
     "Monday": "måndag",
@@ -169,7 +168,6 @@
     "Failed to decrypt %(failedCount)s sessions!": "Misslyckades att avkryptera %(failedCount)s sessioner!",
     "Successfully restored %(sessionCount)s keys": "Återställde framgångsrikt %(sessionCount)s nycklar",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Varning</b>: Du bör endast sätta upp nyckelsäkerhetskopiering från en betrodd dator.",
-    "Resend %(unsentCount)s reaction(s)": "Skicka %(unsentCount)s reaktion(er) igen",
     "Sign in with SSO": "Logga in med SSO",
     "Switch theme": "Byt tema",
     "Confirm encryption setup": "Bekräfta krypteringsinställning",
@@ -426,8 +424,6 @@
     "Cayman Islands": "Caymanöarna",
     "Caribbean Netherlands": "Karibiska Nederländerna",
     "Cape Verde": "Kap Verde",
-    "Hold": "Parkera",
-    "Resume": "Återuppta",
     "Invalid Security Key": "Ogiltig säkerhetsnyckel",
     "Wrong Security Key": "Fel säkerhetsnyckel",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Kan inte komma åt hemlig lagring. Vänligen verifiera att du angav rätt säkerhetsfras.",
@@ -447,10 +443,7 @@
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
     },
-    "Failed to start livestream": "Misslyckades att starta livestream",
-    "Unable to start audio streaming.": "Kunde inte starta ljudströmning.",
     "<inviter/> invites you": "<inviter/> bjuder in dig",
-    "No results found": "Inga resultat funna",
     "%(count)s rooms": {
         "one": "%(count)s rum",
         "other": "%(count)s rum"
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Ange din säkerhetsfras eller <button>använd din säkerhetsnyckel</button> för att fortsätta.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
-    "Thread options": "Trådalternativ",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
         "other": "%(spaceName)s och %(count)s till"
@@ -486,34 +478,16 @@
         "other": "%(count)s röster"
     },
     "Forget": "Glöm",
-    "Open in OpenStreetMap": "Öppna i OpenStreetMap",
     "Feedback sent! Thanks, we appreciate it!": "Återkoppling skickad! Tack, vi uppskattar det!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s och %(space2Name)s",
     "%(count)s participants": {
         "one": "1 deltagare",
         "other": "%(count)s deltagare"
     },
-    "An error occurred while stopping your live location, please try again": "Ett fel inträffade medans din platsdelning avslutades, försök igen",
-    "Live location enabled": "Realtidsposition aktiverad",
-    "You are sharing your live location": "Du delar din position i realtid",
-    "Close sidebar": "Stäng sidopanel",
     "View List": "Se lista",
-    "View list": "Se lista",
-    "No live locations": "Ingen realtidsposition",
-    "Live location error": "Fel i realtidsposition",
-    "Live location ended": "Realtidsposition avslutad",
-    "Live until %(expiryTime)s": "Realtid tills %(expiryTime)s",
-    "Updated %(humanizedUpdateTime)s": "Uppdaterade %(humanizedUpdateTime)s",
-    "Unsent": "Ej skickat",
-    "An error occurred while stopping your live location": "Ett fel inträffade vid delning av din realtidsposition",
     "%(members)s and %(last)s": "%(members)s och %(last)s",
     "%(members)s and more": "%(members)s och fler",
-    "Cameras": "Kameror",
-    "Output devices": "Utgångsenheter",
-    "Input devices": "Ingångsenheter",
     "Unread email icon": "Oläst e-post-ikon",
-    "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
-    "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
     "You cannot search for rooms that are neither a room nor a space": "Du kan inte söka efter rum som varken är ett rum eller ett utrymme",
     "Show spaces": "Visa utrymmen",
     "Show rooms": "Visa rum",
@@ -524,7 +498,6 @@
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
     "unknown": "okänd",
-    "Loading live location…": "Laddar realtidsposition …",
     "Fetching keys from server…": "Hämtar nycklar från server …",
     "Starting export process…": "Startar exportprocessen …",
     "Requires your server to support the stable version of MSC3827": "Kräver att din server stöder den stabila versionen av MSC3827",
@@ -655,7 +628,11 @@
         "avatar": "Avatar",
         "are_you_sure": "Är du säker?",
         "location": "Plats",
-        "email_address": "E-postadress"
+        "email_address": "E-postadress",
+        "filter_results": "Filtrera resultaten",
+        "no_results_found": "Inga resultat funna",
+        "unsent": "Ej skickat",
+        "cameras": "Kameror"
     },
     "action": {
         "continue": "Fortsätt",
@@ -772,7 +749,10 @@
         "explore_public_rooms": "Utforska offentliga rum",
         "reply_in_thread": "Svara i tråd",
         "click": "Klicka",
-        "transfer": "Överlåt"
+        "transfer": "Överlåt",
+        "resume": "Återuppta",
+        "hold": "Parkera",
+        "view_list": "Se lista"
     },
     "a11y": {
         "user_menu": "Användarmeny",
@@ -2103,7 +2083,9 @@
             "external_url": "Käll-URL",
             "collapse_reply_thread": "Kollapsa svarstråd",
             "view_related_event": "Visa relaterade händelser",
-            "report": "Rapportera"
+            "report": "Rapportera",
+            "resent_unsent_reactions": "Skicka %(unsentCount)s reaktion(er) igen",
+            "open_in_osm": "Öppna i OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2430,7 +2412,9 @@
         "unable_to_access_audio_input_description": "Vi kunde inte komma åt din mikrofon. Vänligen kolla dina webbläsarinställningar och försök igen.",
         "no_audio_input_title": "Ingen mikrofon hittad",
         "no_audio_input_description": "Vi kunde inte hitta en mikrofon på din enhet. Vänligen kolla dina inställningar och försök igen.",
-        "transfer_consult_first_label": "Tillfråga först"
+        "transfer_consult_first_label": "Tillfråga först",
+        "input_devices": "Ingångsenheter",
+        "output_devices": "Utgångsenheter"
     },
     "room_settings": {
         "permissions": {
@@ -3278,7 +3262,9 @@
             "title": "Tillåt att den här widgeten verifierar din identitet",
             "starting_text": "Den här widgeten kommer att verifiera ditt användar-ID, men kommer inte kunna utföra handlingar som dig:",
             "remember_selection": "Kom ihåg det här"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Kunde inte starta ljudströmning.",
+        "error_unable_start_audio_stream_title": "Misslyckades att starta livestream"
     },
     "feedback": {
         "sent": "Återkoppling skickad",
@@ -3482,7 +3468,20 @@
         "share_type_own": "Min nuvarande positoin",
         "share_type_live": "Min realtidsposition",
         "share_type_pin": "Sätt en nål",
-        "share_type_prompt": "Vilken typ av positionsdelning vill du använda?"
+        "share_type_prompt": "Vilken typ av positionsdelning vill du använda?",
+        "live_update_time": "Uppdaterade %(humanizedUpdateTime)s",
+        "live_until": "Realtid tills %(expiryTime)s",
+        "loading_live_location": "Laddar realtidsposition …",
+        "live_location_ended": "Realtidsposition avslutad",
+        "live_location_error": "Fel i realtidsposition",
+        "live_locations_empty": "Ingen realtidsposition",
+        "close_sidebar": "Stäng sidopanel",
+        "error_stopping_live_location": "Ett fel inträffade vid delning av din realtidsposition",
+        "error_sharing_live_location": "Ett fel inträffade vid delning av din realtidsplats",
+        "live_location_active": "Du delar din position i realtid",
+        "live_location_enabled": "Realtidsposition aktiverad",
+        "error_sharing_live_location_try_again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
+        "error_stopping_live_location_try_again": "Ett fel inträffade medans din platsdelning avslutades, försök igen"
     },
     "labs_mjolnir": {
         "room_name": "Min bannlista",
@@ -4158,6 +4157,9 @@
                 "one": "Slutgiltigt resultat baserat på %(count)s röst",
                 "other": "Slutgiltigt resultat baserat på %(count)s röster"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Trådalternativ"
         }
     },
     "reject_invitation_dialog": {

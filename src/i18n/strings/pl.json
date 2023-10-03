@@ -44,7 +44,6 @@
     "Sunday": "Niedziela",
     "Today": "Dzisiaj",
     "Friday": "Piątek",
-    "Filter results": "Filtruj wyniki",
     "Tuesday": "Wtorek",
     "Saturday": "Sobota",
     "Monday": "Poniedziałek",
@@ -395,7 +394,6 @@
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ostrzeżenie</b>: kopia zapasowa klucza powinna być konfigurowana tylko z zaufanego komputera.",
-    "No results found": "Nie znaleziono wyników",
     "%(count)s rooms": {
         "one": "%(count)s pokój",
         "other": "%(count)s pokojów"
@@ -414,7 +412,6 @@
     "Moderation": "Moderacja",
     "Messaging": "Wiadomości",
     "Lock": "Zamek",
-    "Hold": "Wstrzymaj",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s i %(space2Name)s",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s lub %(recoveryFile)s",
     "To join a space you'll need an invite.": "Wymagane jest zaproszenie, aby dołączyć do przestrzeni.",
@@ -440,7 +437,6 @@
     "Restoring keys from backup": "Przywracanie kluczy z kopii zapasowej",
     "Requires your server to support the stable version of MSC3827": "Wymaga od Twojego serwera wsparcia wersji stabilnej MSC3827",
     "unknown": "nieznane",
-    "Unsent": "Niewysłane",
     "Starting export process…": "Rozpoczynanie procesu eksportowania…",
     "This backup is trusted because it has been restored on this session": "Ta kopia jest zaufana, ponieważ została przywrócona w tej sesji",
     "%(count)s participants": {
@@ -497,31 +493,8 @@
     "Show spaces": "Pokaż przestrzenie",
     "Show rooms": "Pokaż pokoje",
     "Unread email icon": "Ikona nieprzeczytanych wiadomości e-mail",
-    "An error occurred while stopping your live location, please try again": "Wystąpił błąd podczas zatrzymywania Twojej lokalizacji na żywo, spróbuj ponownie",
-    "An error occurred whilst sharing your live location, please try again": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo, spróbuj ponownie",
-    "Live location enabled": "Włączono lokalizację na żywo",
-    "You are sharing your live location": "Udostępniasz swoją lokalizację na żywo",
-    "An error occurred whilst sharing your live location": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo",
-    "An error occurred while stopping your live location": "Wystąpił błąd podczas kończenia lokalizacji na żywo",
-    "Close sidebar": "Zamknij pasek boczny",
     "View List": "Wyświetl listę",
-    "View list": "Wyświetl listę",
-    "No live locations": "Brak lokalizacji na żywo",
-    "Live location error": "Wystąpił błąd w lokalizacji na żywo",
-    "Live location ended": "Zakończono lokalizację na żywo",
-    "Loading live location…": "Wczytywanie lokalizacji na żywo…",
-    "Live until %(expiryTime)s": "Na żywo do %(expiryTime)s",
-    "Updated %(humanizedUpdateTime)s": "Zaktualizowano %(humanizedUpdateTime)s",
-    "Failed to start livestream": "Nie udało się rozpocząć transmisji na żywo",
-    "Unable to start audio streaming.": "Nie można rozpocząć przesyłania strumienia audio.",
-    "Thread options": "Opcje wątków",
     "Forget": "Zapomnij",
-    "Open in OpenStreetMap": "Otwórz w OpenStreetMap",
-    "Resend %(unsentCount)s reaction(s)": "Wyślij ponownie %(unsentCount)s reakcje",
-    "Resume": "Wznów",
-    "Cameras": "Kamery",
-    "Output devices": "Urządzenia wyjściowe",
-    "Input devices": "Urządzenia wejściowe",
     "Access your secure message history and set up secure messaging by entering your Security Phrase.": "Uzyskaj dostęp do swojej bezpiecznej historii wiadomości i skonfiguruj bezpieczne wiadomości, wprowadzając Hasło bezpieczeństwa.",
     "Enter Security Phrase": "Wprowadź hasło bezpieczeństwa",
     "Successfully restored %(sessionCount)s keys": "Przywrócono pomyślnie %(sessionCount)s kluczy",
@@ -655,7 +628,11 @@
         "avatar": "Awatar",
         "are_you_sure": "Czy jesteś pewien?",
         "location": "Lokalizacja",
-        "email_address": "Adres e-mail"
+        "email_address": "Adres e-mail",
+        "filter_results": "Filtruj wyniki",
+        "no_results_found": "Nie znaleziono wyników",
+        "unsent": "Niewysłane",
+        "cameras": "Kamery"
     },
     "action": {
         "continue": "Kontynuuj",
@@ -773,7 +750,10 @@
         "explore_public_rooms": "Przeglądaj pokoje publiczne",
         "reply_in_thread": "Odpowiedz w wątku",
         "click": "Kliknij",
-        "transfer": "Przenieś"
+        "transfer": "Przenieś",
+        "resume": "Wznów",
+        "hold": "Wstrzymaj",
+        "view_list": "Wyświetl listę"
     },
     "a11y": {
         "user_menu": "Menu użytkownika",
@@ -2141,7 +2121,9 @@
             "external_url": "Źródłowy URL",
             "collapse_reply_thread": "Zwiń wątek odpowiedzi",
             "view_related_event": "Wyświetl powiązane wydarzenie",
-            "report": "Zgłoś"
+            "report": "Zgłoś",
+            "resent_unsent_reactions": "Wyślij ponownie %(unsentCount)s reakcje",
+            "open_in_osm": "Otwórz w OpenStreetMap"
         },
         "url_preview": {
             "show_n_more": {
@@ -2471,7 +2453,9 @@
         "unable_to_access_audio_input_description": "Nie byliśmy w stanie uzyskać dostępu do Twojego mikrofonu. Sprawdź ustawienia swojej wyszukiwarki.",
         "no_audio_input_title": "Nie znaleziono mikrofonu",
         "no_audio_input_description": "Nie udało się znaleźć żadnego mikrofonu w twoim urządzeniu. Sprawdź ustawienia i spróbuj ponownie.",
-        "transfer_consult_first_label": "Najpierw się skonsultuj"
+        "transfer_consult_first_label": "Najpierw się skonsultuj",
+        "input_devices": "Urządzenia wejściowe",
+        "output_devices": "Urządzenia wyjściowe"
     },
     "room_settings": {
         "permissions": {
@@ -3322,7 +3306,9 @@
             "title": "Zezwól temu widżetowi na weryfikacje Twojej tożsamości",
             "starting_text": "Widżet zweryfikuje twoje ID użytkownika, lecz nie będzie w stanie wykonywać za Ciebie działań:",
             "remember_selection": "Zapamiętaj to"
-        }
+        },
+        "error_unable_start_audio_stream_description": "Nie można rozpocząć przesyłania strumienia audio.",
+        "error_unable_start_audio_stream_title": "Nie udało się rozpocząć transmisji na żywo"
     },
     "feedback": {
         "sent": "Wysłano opinię użytkownka",
@@ -3526,7 +3512,20 @@
         "share_type_own": "Moja aktualna lokalizacja",
         "share_type_live": "Moja lokalizacja na żywo",
         "share_type_pin": "Upuść przypinkę",
-        "share_type_prompt": "Jaki typ lokalizacji chcesz udostępnić?"
+        "share_type_prompt": "Jaki typ lokalizacji chcesz udostępnić?",
+        "live_update_time": "Zaktualizowano %(humanizedUpdateTime)s",
+        "live_until": "Na żywo do %(expiryTime)s",
+        "loading_live_location": "Wczytywanie lokalizacji na żywo…",
+        "live_location_ended": "Zakończono lokalizację na żywo",
+        "live_location_error": "Wystąpił błąd w lokalizacji na żywo",
+        "live_locations_empty": "Brak lokalizacji na żywo",
+        "close_sidebar": "Zamknij pasek boczny",
+        "error_stopping_live_location": "Wystąpił błąd podczas kończenia lokalizacji na żywo",
+        "error_sharing_live_location": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo",
+        "live_location_active": "Udostępniasz swoją lokalizację na żywo",
+        "live_location_enabled": "Włączono lokalizację na żywo",
+        "error_sharing_live_location_try_again": "Wystąpił błąd podczas udostępniania Twojej lokalizacji na żywo, spróbuj ponownie",
+        "error_stopping_live_location_try_again": "Wystąpił błąd podczas zatrzymywania Twojej lokalizacji na żywo, spróbuj ponownie"
     },
     "labs_mjolnir": {
         "room_name": "Moja lista zablokowanych",
@@ -4200,6 +4199,9 @@
                 "one": "Ostateczny wynik na podstawie %(count)s głosu",
                 "other": "Ostateczne wyniki na podstawie %(count)s głosów"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "Opcje wątków"
         }
     },
     "reject_invitation_dialog": {

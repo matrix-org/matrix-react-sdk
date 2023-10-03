@@ -51,7 +51,6 @@
     "Sunday": "星期日",
     "Today": "今天",
     "Friday": "星期五",
-    "Filter results": "过滤结果",
     "Tuesday": "星期二",
     "Saturday": "星期六",
     "Monday": "星期一",
@@ -167,7 +166,6 @@
     "%(completed)s of %(total)s keys restored": "%(total)s 个密钥中之 %(completed)s 个已恢复",
     "Keys restored": "已恢复密钥",
     "Successfully restored %(sessionCount)s keys": "成功恢复了 %(sessionCount)s 个密钥",
-    "Resend %(unsentCount)s reaction(s)": "重新发送%(unsentCount)s个反应",
     "Sign in with SSO": "使用单点登录",
     "Switch theme": "切换主题",
     "Confirm encryption setup": "确认加密设置",
@@ -320,7 +318,6 @@
     "Croatia": "克罗地亚",
     "Costa Rica": "哥斯达黎加",
     "<inviter/> invites you": "<inviter/> 邀请了你",
-    "No results found": "找不到结果",
     "%(count)s rooms": {
         "one": "%(count)s 个房间",
         "other": "%(count)s 个房间"
@@ -451,10 +448,6 @@
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
     },
-    "Failed to start livestream": "开始流直播失败",
-    "Unable to start audio streaming.": "无法开始音频流媒体。",
-    "Hold": "挂起",
-    "Resume": "恢复",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "如果你忘记了你的安全密钥，你可以<button>设置新的恢复选项</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "通过输入你的安全密钥来访问你的安全消息历史记录并设置安全通信。",
     "Not a valid Security Key": "安全密钥无效",
@@ -470,7 +463,6 @@
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "输入安全短语或<button>使用安全密钥</button>以继续。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
-    "Thread options": "消息列选项",
     "Forget": "忘记",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s 和其他 %(count)s 个空间",
@@ -485,7 +477,6 @@
     "Themes": "主题",
     "Moderation": "审核",
     "Messaging": "消息传递",
-    "Open in OpenStreetMap": "在 OpenStreetMap 中打开",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s 与 %(space2Name)s",
     "%(count)s participants": {
         "other": "%(count)s 名参与者",
@@ -502,24 +493,8 @@
     "You cannot search for rooms that are neither a room nor a space": "你无法搜索既不是房间也不是空间的房间",
     "We'll help you get connected.": "",
     "Remove them from everything I'm able to": "",
-    "Unsent": "未发送",
-    "Output devices": "输出设备",
-    "Input devices": "输入设备",
     "View List": "查看列表",
-    "View list": "查看列表",
-    "No live locations": "无实时位置",
-    "Live location error": "实时位置错误",
-    "Live location ended": "实时位置已结束",
-    "Live until %(expiryTime)s": "实时分享直至%(expiryTime)s",
-    "Cameras": "相机",
     "Unread email icon": "未读电子邮件图标",
-    "An error occurred while stopping your live location, please try again": "停止你的实时位置时出错，请重试",
-    "An error occurred whilst sharing your live location, please try again": "分享你的实时位置时出错，请重试",
-    "Live location enabled": "实时位置已启用",
-    "You are sharing your live location": "你正在分享你的实时位置",
-    "An error occurred whilst sharing your live location": "分享实时位置时出错",
-    "An error occurred while stopping your live location": "停止实时位置时出错",
-    "Close sidebar": "关闭侧边栏",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "common": {
         "about": "关于",
@@ -637,7 +612,11 @@
         "avatar": "头像",
         "are_you_sure": "你确定吗？",
         "location": "位置",
-        "email_address": "邮箱地址"
+        "email_address": "邮箱地址",
+        "filter_results": "过滤结果",
+        "no_results_found": "找不到结果",
+        "unsent": "未发送",
+        "cameras": "相机"
     },
     "action": {
         "continue": "继续",
@@ -754,7 +733,10 @@
         "explore_public_rooms": "探索公共房间",
         "reply_in_thread": "在消息列中回复",
         "click": "点击",
-        "transfer": "传输"
+        "transfer": "传输",
+        "resume": "恢复",
+        "hold": "挂起",
+        "view_list": "查看列表"
     },
     "a11y": {
         "user_menu": "用户菜单",
@@ -1927,7 +1909,9 @@
             "external_url": "源网址",
             "collapse_reply_thread": "折叠回复消息列",
             "view_related_event": "查看相关事件",
-            "report": "举报"
+            "report": "举报",
+            "resent_unsent_reactions": "重新发送%(unsentCount)s个反应",
+            "open_in_osm": "在 OpenStreetMap 中打开"
         },
         "url_preview": {
             "show_n_more": {
@@ -2232,7 +2216,9 @@
         "unable_to_access_audio_input_description": "我们无法访问你的麦克风。 请检查浏览器设置并重试。",
         "no_audio_input_title": "未找到麦克风",
         "no_audio_input_description": "我们没能在你的设备上找到麦克风。请检查设置并重试。",
-        "transfer_consult_first_label": "先询问"
+        "transfer_consult_first_label": "先询问",
+        "input_devices": "输入设备",
+        "output_devices": "输出设备"
     },
     "room_settings": {
         "permissions": {
@@ -3010,7 +2996,9 @@
             "title": "允许此挂件验证你的身份",
             "starting_text": "挂件将会验证你的用户 ID，但将无法为你执行动作：",
             "remember_selection": "记住"
-        }
+        },
+        "error_unable_start_audio_stream_description": "无法开始音频流媒体。",
+        "error_unable_start_audio_stream_title": "开始流直播失败"
     },
     "feedback": {
         "sent": "反馈已发送",
@@ -3203,7 +3191,18 @@
         "share_type_own": "我当前的位置",
         "share_type_live": "我的实时位置",
         "share_type_pin": "放置图钉",
-        "share_type_prompt": "你想分享什么位置类型？"
+        "share_type_prompt": "你想分享什么位置类型？",
+        "live_until": "实时分享直至%(expiryTime)s",
+        "live_location_ended": "实时位置已结束",
+        "live_location_error": "实时位置错误",
+        "live_locations_empty": "无实时位置",
+        "close_sidebar": "关闭侧边栏",
+        "error_stopping_live_location": "停止实时位置时出错",
+        "error_sharing_live_location": "分享实时位置时出错",
+        "live_location_active": "你正在分享你的实时位置",
+        "live_location_enabled": "实时位置已启用",
+        "error_sharing_live_location_try_again": "分享你的实时位置时出错，请重试",
+        "error_stopping_live_location_try_again": "停止你的实时位置时出错，请重试"
     },
     "labs_mjolnir": {
         "room_name": "我的封禁列表",
@@ -3804,6 +3803,9 @@
                 "one": "基于 %(count)s 票数的最终结果",
                 "other": "基于 %(count)s 票数的最终结果"
             }
+        },
+        "thread_list": {
+            "context_menu_label": "消息列选项"
         }
     },
     "reject_invitation_dialog": {
