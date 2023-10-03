@@ -97,7 +97,7 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent, closeMen
     return (
         <IconizedContextMenuOption
             iconClassName="mx_MessageContextMenu_iconReplyInThread"
-            label={_t("Reply in thread")}
+            label={_t("action|reply_in_thread")}
             onClick={onClick}
         />
     );
@@ -676,7 +676,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             viewInRoomButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconViewInRoom"
-                    label={_t("View in room")}
+                    label={_t("timeline|mab|view_in_room")}
                     onClick={this.viewInRoom}
                 />
             );

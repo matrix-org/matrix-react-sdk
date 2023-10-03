@@ -43,8 +43,6 @@
     "Send": "Azen",
     "edited": "infel",
     "Home": "Asnubeg",
-    "Search…": "Arezzu…",
-    "Re-join": "als-lkem",
     "%(duration)sd": "%(duration)sas",
     "Folder": "Asdaw",
     "Guitar": "Agiṭaṛ",
@@ -130,7 +128,9 @@
         "category_calls": "Iɣuṛiten"
     },
     "timeline": {
-        "m.image": "yuzen %(senderDisplayName)s yat twelaft."
+        "m.image": {
+            "sent": "yuzen %(senderDisplayName)s yat twelaft."
+        }
     },
     "slash_command": {
         "usage": "Asemres",
@@ -187,5 +187,11 @@
     },
     "labs_mjolnir": {
         "rules_empty": "Walu"
+    },
+    "room": {
+        "rejoin_button": "als-lkem",
+        "search": {
+            "field_placeholder": "Arezzu…"
+        }
     }
 }

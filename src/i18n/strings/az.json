@@ -24,42 +24,17 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s",
     "Moderator": "Moderator",
     "not specified": "qeyd edilmədi",
-    "Failed to ban user": "İstifadəçini bloklamağı bacarmadı",
-    "Failed to mute user": "İstifadəçini kəsməyi bacarmadı",
-    "Are you sure?": "Siz əminsiniz?",
-    "Invited": "Dəvət edilmişdir",
-    "Filter room members": "İştirakçılara görə axtarış",
-    "You do not have permission to post to this room": "Siz bu otağa yaza bilmirsiniz",
     "Join Room": "Otağa girmək",
-    "Forget room": "Otağı unutmaq",
-    "Low priority": "Əhəmiyyətsizlər",
-    "Historical": "Arxiv",
     "unknown error code": "naməlum səhv kodu",
-    "Failed to forget room %(errCode)s": "Otağı unutmağı bacarmadı: %(errCode)s",
     "Sunday": "Bazar",
     "Friday": "Cümə",
     "Today": "Bu gün",
-    "Decrypt %(text)s": "Şifrini açmaq %(text)s",
-    "Download %(text)s": "Yükləmək %(text)s",
     "Create new room": "Otağı yaratmaq",
     "Home": "Başlanğıc",
     "%(items)s and %(lastItem)s": "%(items)s və %(lastItem)s",
     "An error has occurred.": "Səhv oldu.",
     "Verification Pending": "Gözləmə təsdiq etmələr",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öz elektron poçtunu yoxlayın və olan istinadı basın. Bundan sonra düyməni Davam etməyə basın.",
-    "Reject invitation": "Dəvəti rədd etmək",
-    "Are you sure you want to reject the invitation?": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
-    "Failed to reject invitation": "Dəvəti rədd etməyi bacarmadı",
-    "Connectivity to the server has been lost.": "Serverlə əlaqə itirilmişdir.",
-    "Sent messages will be stored until your connection has returned.": "Hələ ki serverlə əlaqə bərpa olmayacaq, göndərilmiş mesajlar saxlanacaq.",
-    "No more results": "Daha çox nəticə yoxdur",
-    "Failed to reject invite": "Dəvəti rədd etməyi bacarmadı",
-    "Failed to load timeline position": "Xronologiyadan nişanı yükləməyi bacarmadı",
-    "A new password must be entered.": "Yeni parolu daxil edin.",
-    "New passwords must match each other.": "Yeni şifrələr uyğun olmalıdır.",
-    "Return to login screen": "Girişin ekranına qayıtmaq",
-    "Confirm passphrase": "Şifrəni təsdiqləyin",
-    "Permission Required": "İzn tələb olunur",
     "Send": "Göndər",
     "PM": "24:00",
     "AM": "12:00",
@@ -82,7 +57,10 @@
         "on": "Qoşmaq",
         "advanced": "Təfərrüatlar",
         "profile": "Profil",
-        "authentication": "Müəyyənləşdirilmə"
+        "authentication": "Müəyyənləşdirilmə",
+        "low_priority": "Əhəmiyyətsizlər",
+        "historical": "Arxiv",
+        "are_you_sure": "Siz əminsiniz?"
     },
     "action": {
         "continue": "Davam etmək",
@@ -152,6 +130,9 @@
             "error_remove_3pid": "Əlaqə məlumatlarının silməyi bacarmadı",
             "error_invalid_email": "Yanlış email",
             "error_add_email": "Email-i əlavə etməyə müvəffəq olmur"
+        },
+        "key_export_import": {
+            "confirm_passphrase": "Şifrəni təsdiqləyin"
         }
     },
     "timeline": {
@@ -181,6 +162,13 @@
         "m.room.power_levels": {
             "changed": "%(senderName)s hüquqların səviyyələrini dəyişdirdi %(powerLevelDiffText)s.",
             "user_from_to": "%(userId)s üçün  %(fromPowerLevel)s-dan %(toPowerLevel)s-lə"
+        },
+        "load_error": {
+            "title": "Xronologiyadan nişanı yükləməyi bacarmadı"
+        },
+        "m.file": {
+            "download_label": "Yükləmək %(text)s",
+            "decrypt_label": "Şifrini açmaq %(text)s"
         }
     },
     "slash_command": {
@@ -267,7 +255,12 @@
         "email_field_label": "E-poçt",
         "msisdn_field_label": "Telefon",
         "identifier_label": "Seçmək",
-        "reset_password_email_not_found_title": "Bu e-poçt ünvanı tapılmadı"
+        "reset_password_email_not_found_title": "Bu e-poçt ünvanı tapılmadı",
+        "reset_password": {
+            "password_not_entered": "Yeni parolu daxil edin.",
+            "passwords_mismatch": "Yeni şifrələr uyğun olmalıdır.",
+            "return_to_login": "Girişin ekranına qayıtmaq"
+        }
     },
     "update": {
         "release_notes_toast_title": "Nə dəyişdi"
@@ -276,7 +269,9 @@
         "autocomplete": {
             "command_description": "Komandalar",
             "user_description": "İstifadəçilər"
-        }
+        },
+        "no_perms_notice": "Siz bu otağa yaza bilmirsiniz",
+        "poll_button_no_perms_title": "İzn tələb olunur"
     },
     "space": {
         "context_menu": {
@@ -339,7 +334,15 @@
         "upgrade_error_description": "Serverinizin seçilmiş otaq versiyasını dəstəklədiyini  bir daha yoxlayın və yenidən cəhd edin.",
         "context_menu": {
             "favourite": "Seçilmiş"
-        }
+        },
+        "header": {
+            "forget_room_button": "Otağı unutmaq"
+        },
+        "status_bar": {
+            "server_connectivity_lost_title": "Serverlə əlaqə itirilmişdir.",
+            "server_connectivity_lost_description": "Hələ ki serverlə əlaqə bərpa olmayacaq, göndərilmiş mesajlar saxlanacaq."
+        },
+        "failed_reject_invite": "Dəvəti rədd etməyi bacarmadı"
     },
     "notifications": {
         "enable_prompt_toast_title": "Xəbərdarlıqlar",
@@ -351,5 +354,22 @@
     },
     "error": {
         "update_power_level": "Hüquqların səviyyəsini dəyişdirməyi bacarmadı"
+    },
+    "member_list": {
+        "invited_list_heading": "Dəvət edilmişdir",
+        "filter_placeholder": "İştirakçılara görə axtarış"
+    },
+    "user_info": {
+        "error_ban_user": "İstifadəçini bloklamağı bacarmadı",
+        "error_mute_user": "İstifadəçini kəsməyi bacarmadı"
+    },
+    "reject_invitation_dialog": {
+        "title": "Dəvəti rədd etmək",
+        "confirmation": "Siz əminsiniz ki, siz dəvəti rədd etmək istəyirsiniz?",
+        "failed": "Dəvəti rədd etməyi bacarmadı"
+    },
+    "no_more_results": "Daha çox nəticə yoxdur",
+    "error_dialog": {
+        "forget_room_failed": "Otağı unutmağı bacarmadı: %(errCode)s"
     }
 }

@@ -1,16 +1,7 @@
 {
-    "Filter room members": "Filter medlemmer",
-    "Rooms": "Rum",
-    "Low priority": "Lav prioritet",
-    "Historical": "Historisk",
-    "New passwords must match each other.": "Nye adgangskoder skal matche hinanden.",
-    "A new password must be entered.": "Der skal indtastes en ny adgangskode.",
     "Session ID": "Sessions ID",
     "Warning!": "Advarsel!",
-    "Are you sure you want to reject the invitation?": "Er du sikker på du vil afvise invitationen?",
-    "Failed to reject invitation": "Kunne ikke afvise invitationen",
     "unknown error code": "Ukendt fejlkode",
-    "Failed to forget room %(errCode)s": "Kunne ikke glemme rummet %(errCode)s",
     "Unnamed room": "Unavngivet rum",
     "Sun": "Søn",
     "Mon": "Man",
@@ -42,15 +33,12 @@
     "Today": "I dag",
     "Friday": "Fredag",
     "Changelog": "Ændringslog",
-    "This Room": "Dette rum",
     "Unavailable": "Utilgængelig",
     "Filter results": "Filtrér resultater",
-    "Search…": "Søg…",
     "Tuesday": "Tirsdag",
     "Saturday": "Lørdag",
     "Monday": "Mandag",
     "Send": "Send",
-    "All Rooms": "Alle rum",
     "You cannot delete this message. (%(code)s)": "Du kan ikke slette denne besked. (%(code)s)",
     "Thursday": "Torsdag",
     "Yesterday": "I går",
@@ -59,16 +47,10 @@
     "Logs sent": "Logfiler sendt",
     "Failed to send logs: ": "Kunne ikke sende logfiler: ",
     "Preparing to send logs": "Forbereder afsendelse af logfiler",
-    "Permission Required": "Tilladelse påkrævet",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(day)s. %(monthName)s %(fullYear)s",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
-    "Enter passphrase": "Indtast kodeord",
     "Headphones": "Hovedtelefoner",
-    "Show more": "Vis mere",
     "Add a new server": "Tilføj en ny server",
-    "Local address": "Lokal adresse",
-    "This room has no local addresses": "Dette rum har ingen lokal adresse",
-    "The conversation continues here.": "Samtalen fortsætter her.",
     "France": "Frankrig",
     "Finland": "Finland",
     "Egypt": "Egypten",
@@ -323,7 +305,6 @@
     "American Samoa": "Amerikansk Samoa",
     "Algeria": "Algeriet",
     "Åland Islands": "Ålandsøerne",
-    "Your password has been reset.": "Din adgangskode er blevet nulstillet.",
     "common": {
         "analytics": "Analyse data",
         "error": "Fejl",
@@ -346,7 +327,11 @@
         "off": "Slukket",
         "advanced": "Avanceret",
         "profile": "Profil",
-        "user_avatar": "Profil billede"
+        "user_avatar": "Profil billede",
+        "rooms": "Rum",
+        "low_priority": "Lav prioritet",
+        "historical": "Historisk",
+        "show_more": "Vis mere"
     },
     "action": {
         "continue": "Fortsæt",
@@ -450,6 +435,9 @@
             "password_change_success": "Din adgangskode blev ændret.",
             "deactivate_section": "Deaktiver brugerkonto",
             "msisdn_verification_field_label": "Verifikationskode"
+        },
+        "key_export_import": {
+            "enter_passphrase": "Indtast kodeord"
         }
     },
     "devtools": {
@@ -485,7 +473,6 @@
             "forbidden": "%(senderDisplayName)s har forhindret gæster i at tilgå rummet.",
             "unknown": "%(senderDisplayName)s ændrede gæsteadgang til %(rule)s"
         },
-        "m.image": "%(senderDisplayName)s sendte et billed.",
         "m.room.canonical_alias": {
             "set": "%(senderName)s satte hovedadressen af dette rum til %(address)s.",
             "removed": "%(senderName)s fjernede hovedadressen for dette rum.",
@@ -550,6 +537,9 @@
         },
         "context_menu": {
             "external_url": "Kilde URL"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s sendte et billed."
         }
     },
     "slash_command": {
@@ -626,7 +616,9 @@
         "placeholder": "Send en besked…",
         "autocomplete": {
             "command_description": "Kommandoer"
-        }
+        },
+        "room_upgraded_link": "Samtalen fortsætter her.",
+        "poll_button_no_perms_title": "Tilladelse påkrævet"
     },
     "voip": {
         "call_failed": "Opkald mislykkedes",
@@ -710,7 +702,12 @@
         "failed_connect_identity_server_other": "Du kan logge på, men nogle funktioner vil ikke være tilgængelige inden identitetsserveren er online igen. Hvis du bliver ved med at se denne advarsel, tjek din konfiguration eller kontakt en serveradministrator.",
         "no_hs_url_provided": "Ingen homeserver URL oplyst",
         "autodiscovery_unexpected_error_hs": "Uventet fejl ved indlæsning af homeserver-konfigurationen",
-        "autodiscovery_unexpected_error_is": "Uventet fejl ved indlæsning af identitetsserver-konfigurationen"
+        "autodiscovery_unexpected_error_is": "Uventet fejl ved indlæsning af identitetsserver-konfigurationen",
+        "reset_password": {
+            "password_not_entered": "Der skal indtastes en ny adgangskode.",
+            "passwords_mismatch": "Nye adgangskoder skal matche hinanden.",
+            "reset_successful": "Din adgangskode er blevet nulstillet."
+        }
     },
     "export_chat": {
         "messages": "Beskeder"
@@ -792,7 +789,9 @@
             "encryption_permanent": "Efter aktivering er det ikke muligt at slå kryptering fra."
         },
         "general": {
-            "other_section": "Andre"
+            "other_section": "Andre",
+            "no_aliases_room": "Dette rum har ingen lokal adresse",
+            "local_alias_field_label": "Lokal adresse"
         },
         "notifications": {
             "custom_sound_prompt": "Sæt en ny brugerdefineret lyd"
@@ -852,7 +851,12 @@
             "favourite": "Favorit",
             "low_priority": "Lav prioritet"
         },
-        "invite_this_room": "Inviter til dette rum"
+        "invite_this_room": "Inviter til dette rum",
+        "search": {
+            "this_room": "Dette rum",
+            "all_rooms": "Alle rum",
+            "field_placeholder": "Søg…"
+        }
     },
     "items_and_n_others": {
         "other": "<Items/> og %(count)s andre",
@@ -867,5 +871,15 @@
     },
     "identity_server": {
         "checking": "Tjekker server"
+    },
+    "member_list": {
+        "filter_placeholder": "Filter medlemmer"
+    },
+    "reject_invitation_dialog": {
+        "confirmation": "Er du sikker på du vil afvise invitationen?",
+        "failed": "Kunne ikke afvise invitationen"
+    },
+    "error_dialog": {
+        "forget_room_failed": "Kunne ikke glemme rummet %(errCode)s"
     }
 }

@@ -1,22 +1,5 @@
 {
-    "Admin Tools": "Aisinas d’administrator",
-    "Invited": "Convidat",
     "Unnamed room": "Sala sens nom",
-    "Share room": "Partejar la sala",
-    "Rooms": "Salas",
-    "Low priority": "Febla prioritat",
-    "Reason: %(reason)s": "Rason : %(reason)s",
-    "Forget this room": "Oblidar aquesta sala",
-    "Do you want to chat with %(user)s?": "Volètz charrar amb %(user)s ?",
-    "<userName/> wants to chat": "<userName/> vòl charrar",
-    "Start chatting": "Començar de charrar",
-    "Do you want to join %(roomName)s?": "Volètz rejonher %(roomName)s ?",
-    "<userName/> invited you": "<userName/> vos convidèt",
-    "Reject & Ignore user": "Regetar e ignorar",
-    "%(roomName)s does not exist.": "%(roomName)s existís pas.",
-    "This Room": "Aquesta sala",
-    "All Rooms": "Totas les salas",
-    "Search…": "Cercar…",
     "Sun": "Dg",
     "Mon": "Dl",
     "Tue": "Dm",
@@ -41,7 +24,6 @@
     "Moderator": "Moderator",
     "Thank you!": "Mercés !",
     "Ok": "Validar",
-    "Set up": "Parametrar",
     "Fish": "Pes",
     "Butterfly": "Parpalhòl",
     "Tree": "Arborescéncia",
@@ -59,13 +41,6 @@
     "Anchor": "Ancorar",
     "Headphones": "Escotadors",
     "Folder": "Dorsièr",
-    "Show more": "Ne veire mai",
-    "Unencrypted": "Pas chifrat",
-    "Italics": "Italicas",
-    "Historical": "Istoric",
-    "Sign Up": "S’inscriure",
-    "Demote": "Retrogradar",
-    "Are you sure?": "O volètz vertadièrament ?",
     "Sunday": "Dimenge",
     "Monday": "Diluns",
     "Tuesday": "Dimars",
@@ -75,7 +50,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Show image": "Afichar l'imatge",
     "Cancel search": "Anullar la recèrca",
     "Server name": "Títol del servidor",
     "Notes": "Nòtas",
@@ -88,8 +62,6 @@
     "Email address": "Adreça de corrièl",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
-    "Search failed": "La recèrca a fracassat",
-    "Success!": "Capitada !",
     "common": {
         "mute": "Copar lo son",
         "no_results": "Pas cap de resultat",
@@ -132,7 +104,13 @@
         "general": "General",
         "profile": "Perfil",
         "display_name": "Nom d'afichatge",
-        "authentication": "Autentificacion"
+        "authentication": "Autentificacion",
+        "rooms": "Salas",
+        "low_priority": "Febla prioritat",
+        "historical": "Istoric",
+        "unencrypted": "Pas chifrat",
+        "show_more": "Ne veire mai",
+        "are_you_sure": "O volètz vertadièrament ?"
     },
     "action": {
         "continue": "Contunhar",
@@ -225,7 +203,8 @@
         "autocomplete": {
             "command_description": "Comandas",
             "user_description": "Utilizaires"
-        }
+        },
+        "format_italics": "Italicas"
     },
     "power_level": {
         "default": "Predefinit",
@@ -250,7 +229,6 @@
         "offline": "Fòra linha",
         "away": "Absent"
     },
-    "Unknown": "Desconegut",
     "slash_command": {
         "usage": "Usatge",
         "category_messages": "Messatges",
@@ -309,6 +287,9 @@
         },
         "voip": {
             "audio_output": "Sortida àudio"
+        },
+        "key_backup": {
+            "backup_success": "Capitada !"
         }
     },
     "auth": {
@@ -377,6 +358,9 @@
     "encryption": {
         "verification": {
             "cancelling": "Anullacion…"
+        },
+        "setup_secure_backup": {
+            "title": "Parametrar"
         }
     },
     "invite": {
@@ -401,10 +385,46 @@
             "favourite": "Favorit",
             "low_priority": "Prioritat bassa"
         },
-        "invite_this_room": "Convidar a aquesta sala"
+        "invite_this_room": "Convidar a aquesta sala",
+        "join_button_account": "S’inscriure",
+        "kick_reason": "Rason : %(reason)s",
+        "forget_room": "Oblidar aquesta sala",
+        "dm_invite_title": "Volètz charrar amb %(user)s ?",
+        "dm_invite_subtitle": "<userName/> vòl charrar",
+        "dm_invite_action": "Començar de charrar",
+        "invite_title": "Volètz rejonher %(roomName)s ?",
+        "invite_subtitle": "<userName/> vos convidèt",
+        "invite_reject_ignore": "Regetar e ignorar",
+        "not_found_title_name": "%(roomName)s existís pas.",
+        "search": {
+            "this_room": "Aquesta sala",
+            "all_rooms": "Totas les salas",
+            "field_placeholder": "Cercar…"
+        },
+        "inviter_unknown": "Desconegut"
     },
     "lightbox": {
         "rotate_left": "Pivotar cap a èrra",
         "rotate_right": "Pivotar cap a drecha"
+    },
+    "member_list": {
+        "invited_list_heading": "Convidat"
+    },
+    "user_info": {
+        "admin_tools_section": "Aisinas d’administrator",
+        "demote_button": "Retrogradar"
+    },
+    "right_panel": {
+        "share_button": "Partejar la sala"
+    },
+    "error_dialog": {
+        "search_failed": {
+            "title": "La recèrca a fracassat"
+        }
+    },
+    "timeline": {
+        "m.image": {
+            "show_image": "Afichar l'imatge"
+        }
     }
 }
