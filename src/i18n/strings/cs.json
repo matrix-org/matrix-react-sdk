@@ -31,7 +31,6 @@
     "not specified": "neurčeno",
     "AM": "dop.",
     "PM": "odp.",
-    "Session ID": "ID sezení",
     "Warning!": "Upozornění!",
     "Verification Pending": "Čeká na ověření",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -80,14 +79,9 @@
     "Share User": "Sdílet uživatele",
     "Share Room Message": "Sdílet zprávu z místnosti",
     "Link to selected message": "Odkaz na vybranou zprávu",
-    "Manually export keys": "Export klíčů",
-    "You'll lose access to your encrypted messages": "Přijdete o přístup k šifrovaným zprávám",
-    "Are you sure you want to sign out?": "Opravdu se chcete odhlásit?",
     "Failed to upgrade room": "Nezdařilo se aktualizovat místnost",
     "The room upgrade could not be completed": "Nepodařilo se dokončit aktualizaci místnosti",
     "Upgrade this room to version %(version)s": "Aktualizace místnosti na verzi %(version)s",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Šifrované zprávy jsou zabezpečené koncovým šifrováním. Klíče pro jejich dešifrování máte jen vy a příjemci zpráv.",
-    "Start using Key Backup": "Začít používat zálohu klíčů",
     "Dog": "Pes",
     "Cat": "Kočka",
     "Lion": "Lev",
@@ -150,7 +144,6 @@
     "Headphones": "Sluchátka",
     "Folder": "Desky",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pro odeslání záznamů je potřeba <a>vytvořit issue na GitHubu</a> s popisem problému.",
-    "I don't want my encrypted messages": "Už své zašifrované zprávy nechci",
     "Unable to load backup status": "Nepovedlo se načíst stav zálohy",
     "Unable to restore backup": "Nepovedlo se obnovit ze zálohy",
     "No backup found!": "Nenalezli jsme žádnou zálohu!",
@@ -178,7 +171,6 @@
     "Upload Error": "Chyba při nahrávání",
     "Remember my selection for this widget": "Zapamatovat si volbu pro tento widget",
     "Deactivate account": "Deaktivace účtu",
-    "Your homeserver doesn't seem to support this feature.": "Váš domovský server asi tuto funkci nepodporuje.",
     "Message edits": "Úpravy zpráv",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aktualizace této místnosti vyžaduje uzavření stávající místnosti a vytvoření nové místnosti, která ji nahradí. Pro usnadnění procesu pro členy místnosti, provedeme:",
     "Command Help": "Nápověda příkazu",
@@ -208,8 +200,6 @@
         "other": "%(count)s relací",
         "one": "%(count)s relace"
     },
-    "Session name": "Název relace",
-    "Session key": "Klíč relace",
     "Destroy cross-signing keys?": "Nenávratně smazat klíče pro křížové podepisování?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Smazání klíčů pro křížové podepisování je definitivní. Každý, kdo vás ověřil, teď uvidí bezpečnostní varování. Pokud jste zrovna neztratili všechna zařízení, ze kterých se můžete ověřit, tak to asi nechcete udělat.",
     "Clear cross-signing keys": "Smazat klíče pro křížové podepisování",
@@ -399,8 +389,6 @@
     "American Samoa": "Americká Samoa",
     "Security Key": "Bezpečnostní klíč",
     "Use your Security Key to continue.": "Pokračujte pomocí bezpečnostního klíče.",
-    "If they don't match, the security of your communication may be compromised.": "Pokud se neshodují, bezpečnost vaší komunikace může být kompromitována.",
-    "Confirm this user's session by comparing the following with their User Settings:": "Potvrďte relaci tohoto uživatele porovnáním následujícího s jeho uživatelským nastavením:",
     "Click the button below to confirm setting up encryption.": "Kliknutím na tlačítko níže potvrďte nastavení šifrování.",
     "Confirm encryption setup": "Potvrďte nastavení šifrování",
     "Unable to set up keys": "Nepovedlo se nastavit klíče",
@@ -502,7 +490,6 @@
     "Nauru": "Nauru",
     "Namibia": "Namibie",
     "Security Phrase": "Bezpečnostní fráze",
-    "Confirm by comparing the following with the User Settings in your other session:": "Potvrďte porovnáním následujícího s uživatelským nastavením v jiné relaci:",
     "Data on this screen is shared with %(widgetDomain)s": "Data na této obrazovce jsou sdílena s %(widgetDomain)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Jen upozornění, pokud nepřidáte e-mail a zapomenete heslo, můžete <b>trvale ztratit přístup ke svému účtu</b>.",
     "Your area is experiencing difficulties connecting to the internet.": "Ve vaší oblasti dochází k problémům s připojením k internetu.",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Pokud tak učiníte, nezapomeňte, že žádná z vašich zpráv nebude smazána, ale vyhledávání může být na několik okamžiků zpomaleno během opětovného vytvoření indexu",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Upozorňujeme, že aktualizací vznikne nová verze místnosti</b>. Všechny aktuální zprávy zůstanou v této archivované místnosti.",
     "Automatically invite members from this room to the new one": "Automaticky pozvat členy této místnosti do nové místnosti",
-    "These are likely ones other room admins are a part of.": "Pravděpodobně se jedná o ty, kterých se účastní i ostatní správci místností.",
-    "Other spaces or rooms you might not know": "Další prostory nebo místnosti, které možná neznáte",
-    "Spaces you know that contain this room": "Prostory, které znáte a které obsahují tuto místnost",
-    "Search spaces": "Hledat prostory",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Rozhodněte, které prostory mají přístup do této místnosti. Pokud je vybrán prostor, mohou jeho členové najít <RoomName/> a připojit se k němu.",
-    "Select spaces": "Vybrané prostory",
-    "You're removing all spaces. Access will default to invite only": "Odstraňujete všechny prostory. Přístup bude ve výchozím nastavení pouze na pozvánky",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
@@ -593,7 +573,6 @@
     "Themes": "Motivy vzhledu",
     "Moderation": "Moderování",
     "Messaging": "Zprávy",
-    "Spaces you know that contain this space": "Prostory, které znáte obsahující tento prostor",
     "Recently viewed": "Nedávno zobrazené",
     "Link to room": "Odkaz na místnost",
     "Recent searches": "Nedávná vyhledávání",
@@ -638,7 +617,6 @@
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
     "Unread email icon": "Ikona nepřečteného e-mailu",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru.",
     "If you can't see who you're looking for, send them your invite link.": "Pokud nevidíte, koho hledáte, pošlete mu odkaz na pozvánku.",
     "Some results may be hidden for privacy": "Některé výsledky mohou být z důvodu ochrany soukromí skryté",
     "Search for": "Hledat",
@@ -673,7 +651,6 @@
     "unavailable": "nedostupný",
     "unknown status code": "neznámý kód stavu",
     "Upgrade room": "Aktualizovat místnost",
-    "Other spaces you know": "Další prostory, které znáte",
     "Failed to query public rooms": "Nepodařilo se vyhledat veřejné místnosti",
     "common": {
         "about": "O",
@@ -2725,7 +2702,16 @@
                 "other": "Aktualizace prostorů... (%(progress)s z %(count)s)"
             },
             "error_join_rule_change_title": "Nepodařilo se aktualizovat pravidla pro připojení",
-            "error_join_rule_change_unknown": "Neznámá chyba"
+            "error_join_rule_change_unknown": "Neznámá chyba",
+            "join_rule_restricted_dialog_empty_warning": "Odstraňujete všechny prostory. Přístup bude ve výchozím nastavení pouze na pozvánky",
+            "join_rule_restricted_dialog_title": "Vybrané prostory",
+            "join_rule_restricted_dialog_description": "Rozhodněte, které prostory mají přístup do této místnosti. Pokud je vybrán prostor, mohou jeho členové najít <RoomName/> a připojit se k němu.",
+            "join_rule_restricted_dialog_filter_placeholder": "Hledat prostory",
+            "join_rule_restricted_dialog_heading_space": "Prostory, které znáte obsahující tento prostor",
+            "join_rule_restricted_dialog_heading_room": "Prostory, které znáte a které obsahují tuto místnost",
+            "join_rule_restricted_dialog_heading_other": "Další prostory nebo místnosti, které možná neznáte",
+            "join_rule_restricted_dialog_heading_unknown": "Pravděpodobně se jedná o ty, kterých se účastní i ostatní správci místností.",
+            "join_rule_restricted_dialog_heading_known": "Další prostory, které znáte"
         },
         "general": {
             "publish_toggle": "Zapsat tuto místnost do veřejného adresáře místností na %(domain)s?",
@@ -2917,7 +2903,13 @@
             "incoming_sas_device_dialog_text_1": "Ověření zařízení ho označí za důvěryhodné. Ověření konkrétního zařízení vám dává větší jistotu, že je komunikace důvěrná.",
             "incoming_sas_device_dialog_text_2": "Ověření zařízení ho označí za důvěryhodné a uživatelé, kteří věří vám budou také tomuto zařízení důvěřovat.",
             "incoming_sas_dialog_waiting": "Čekání na potvrzení partnerem…",
-            "incoming_sas_dialog_title": "Přišla vám žádost o ověření"
+            "incoming_sas_dialog_title": "Přišla vám žádost o ověření",
+            "manual_device_verification_self_text": "Potvrďte porovnáním následujícího s uživatelským nastavením v jiné relaci:",
+            "manual_device_verification_user_text": "Potvrďte relaci tohoto uživatele porovnáním následujícího s jeho uživatelským nastavením:",
+            "manual_device_verification_device_name_label": "Název relace",
+            "manual_device_verification_device_id_label": "ID sezení",
+            "manual_device_verification_device_key_label": "Klíč relace",
+            "manual_device_verification_footer": "Pokud se neshodují, bezpečnost vaší komunikace může být kompromitována."
         },
         "old_version_detected_title": "Nalezeny starší šifrované datové zprávy",
         "old_version_detected_description": "Byla zjištěna data ze starší verze %(brand)s. To bude mít za následek nefunkčnost koncové kryptografie ve starší verzi. Koncově šifrované zprávy vyměněné nedávno při používání starší verze nemusí být v této verzi dešifrovatelné. To může také způsobit selhání zpráv vyměňovaných s touto verzí. Pokud narazíte na problémy, odhlaste se a znovu se přihlaste. Chcete-li zachovat historii zpráv, exportujte a znovu importujte klíče.",
@@ -3224,6 +3216,15 @@
             "clear_data_title": "Smazat všechna data v této relaci?",
             "clear_data_description": "Výmaz všech dat v relaci je nevratný. Pokud nemáte zálohované šifrovací klíče, přijdete o šifrované zprávy.",
             "clear_data_button": "Smazat všechna data"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Šifrované zprávy jsou zabezpečené koncovým šifrováním. Klíče pro jejich dešifrování máte jen vy a příjemci zpráv.",
+            "setup_secure_backup_description_2": "Po odhlášení budou tyto klíče z tohoto zařízení odstraněny, což znamená, že nebudete moci číst zašifrované zprávy, pokud k nim nemáte klíče v jiných zařízeních nebo je nemáte zálohované na serveru.",
+            "use_key_backup": "Začít používat zálohu klíčů",
+            "skip_key_backup": "Už své zašifrované zprávy nechci",
+            "megolm_export": "Export klíčů",
+            "setup_key_backup_title": "Přijdete o přístup k šifrovaným zprávám",
+            "description": "Opravdu se chcete odhlásit?"
         }
     },
     "room_list": {
@@ -4046,7 +4047,8 @@
         "download_media": "Nepodařilo se stáhnout zdrojové médium, nebyla nalezena žádná zdrojová url adresa",
         "update_power_level": "Nepodařilo se změnit úroveň oprávnění",
         "unknown": "Neznámá chyba",
-        "dialog_description_default": "Nastala chyba."
+        "dialog_description_default": "Nastala chyba.",
+        "edit_history_unsupported": "Váš domovský server asi tuto funkci nepodporuje."
     },
     "in_space1_and_space2": "V prostorech %(space1Name)s a %(space2Name)s.",
     "in_space_and_n_other_spaces": {

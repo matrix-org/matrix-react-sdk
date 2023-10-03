@@ -46,8 +46,6 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Restricted": "Обмежено",
     "Moderator": "Модератор",
-    "Are you sure you want to sign out?": "Ви впевнені, що хочете вийти?",
-    "Your homeserver doesn't seem to support this feature.": "Схоже, що ваш домашній сервер не підтримує цю властивість.",
     "Sign out and remove encryption keys?": "Вийти та видалити ключі шифрування?",
     "Clear Storage and Sign Out": "Очистити сховище та вийти",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Очищення сховища вашого браузера може усунути проблему, але ви вийдете з системи та зробить історію вашого зашифрованого спілкування непрочитною.",
@@ -66,9 +64,6 @@
     "Deactivate account": "Деактивувати обліковий запис",
     "Unable to restore session": "Не вдалося відновити сеанс",
     "We encountered an error trying to restore your previous session.": "Ми натрапили на помилку, намагаючись відновити ваш попередній сеанс.",
-    "Session name": "Назва сеансу",
-    "Session ID": "ID сеансу",
-    "Session key": "Ключ сеансу",
     "Room Settings - %(roomName)s": "Налаштування кімнати - %(roomName)s",
     "You signed in to a new session without verifying it:": "Ви увійшли в новий сеанс, не звіривши його:",
     "Verify your other session using one of the options below.": "Звірте інший сеанс за допомогою одного з варіантів знизу.",
@@ -79,8 +74,6 @@
     "Your homeserver has exceeded one of its resource limits.": "Ваш домашній сервер перевищив одне із своїх обмежень ресурсів.",
     "Ok": "Гаразд",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Щоб повідомити про проблеми безпеки Matrix, будь ласка, прочитайте <a>Політику розкриття інформації</a> Matrix.org.",
-    "Confirm by comparing the following with the User Settings in your other session:": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
     "Dog": "Пес",
     "Cat": "Кіт",
     "Lion": "Лев",
@@ -154,10 +147,7 @@
     "expand": "розгорнути",
     "Upgrade public room": "Поліпшити відкриту кімнату",
     "IRC display name width": "Ширина псевдоніма IRC",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Зашифровані повідомлення захищені наскрізним шифруванням. Лише ви та отримувачі повідомлень мають ключі для їх читання.",
     "Encrypted by a deleted session": "Зашифроване видаленим сеансом",
-    "I don't want my encrypted messages": "Мені не потрібні мої зашифровані повідомлення",
-    "You'll lose access to your encrypted messages": "Ви втратите доступ до ваших зашифрованих повідомлень",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Бракує деяких даних сеансу, включно з ключами зашифрованих повідомлень. Вийдіть та зайдіть знову щоб виправити цю проблему, відновлюючи ключі з дубля.",
     "Failed to connect to integration manager": "Не вдалось з'єднатись з менеджером інтеграцій",
     "Comoros": "Коморські Острови",
@@ -431,8 +421,6 @@
     "Cancel All": "Скасувати все",
     "Send Logs": "Надіслати журнали",
     "Email (optional)": "Е-пошта (необов'язково)",
-    "Search spaces": "Пошук просторів",
-    "Select spaces": "Вибрати простори",
     "%(count)s rooms": {
         "one": "%(count)s кімната",
         "other": "%(count)s кімнат"
@@ -441,7 +429,6 @@
         "one": "%(count)s учасник",
         "other": "%(count)s учасників"
     },
-    "Manually export keys": "Експорт ключів власноруч",
     "Verification Request": "Запит підтвердження",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
@@ -493,7 +480,6 @@
     "Experimental": "Експериментально",
     "Themes": "Теми",
     "Messaging": "Спілкування",
-    "Spaces you know that contain this space": "Відомі вам простори, до яких входить цей",
     "Link to room": "Посилання на кімнату",
     "Command Help": "Допомога команди",
     "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
@@ -545,13 +531,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Зауважте, якщо ви не додасте пошту й забудете пароль, то можете <b>назавжди втратити доступ до свого облікового запису</b>.",
     "Continuing without email": "Продовження без е-пошти",
     "Data on this screen is shared with %(widgetDomain)s": "Дані на цьому екрані надсилаються до %(widgetDomain)s",
-    "If they don't match, the security of your communication may be compromised.": "Якщо вони не збігаються, безпека вашого спілкування ймовірно скомпрометована.",
-    "These are likely ones other room admins are a part of.": "Ймовірно, інші адміністратори кімнати є їхніми учасниками.",
-    "Other spaces or rooms you might not know": "Інші простори чи кімнати, яких ви можете не знати",
-    "Spaces you know that contain this room": "Відомі вам простори, до яких входить кімната",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Оберіть, які простори матимуть доступ до цієї кімнати. Якщо обрати простір, його учасники зможуть знаходити <RoomName/> і приєднуватися.",
-    "You're removing all spaces. Access will default to invite only": "Ви вилучаєте всі простори. Усталеним стане доступ за запрошенням",
-    "Start using Key Backup": "Скористайтеся резервним копіюванням ключів",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Якщо ви забули ключ безпеки, <button>налаштуйте нові параметри відновлення</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Отримайте історію своїх зашифрованих повідомлень і налаштуйте безпечне листування, ввівши свій ключ безпеки.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Якщо ви забули фразу безпеки, <button1>скористайтеся ключем безпеки</button1> чи <button2>налаштуйте нові параметри відновлення</button2>",
@@ -638,7 +617,6 @@
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
     "Unread email icon": "Піктограма непрочитаного електронного листа",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
     "Remove search filter for %(filter)s": "Вилучити фільтр пошуку для %(filter)s",
     "Start a group chat": "Розпочати нову бесіду",
     "Other options": "Інші опції",
@@ -673,7 +651,6 @@
     "unavailable": "недоступний",
     "unknown status code": "невідомий код стану",
     "Upgrade room": "Поліпшити кімнату",
-    "Other spaces you know": "Інші відомі вам простори",
     "Failed to query public rooms": "Не вдалося зробити запит до загальнодоступних кімнат",
     "common": {
         "about": "Відомості",
@@ -2724,7 +2701,16 @@
                 "other": "Оновлення просторів... (%(progress)s із %(count)s)"
             },
             "error_join_rule_change_title": "Не вдалося оновити правила приєднання",
-            "error_join_rule_change_unknown": "Невідомий збій"
+            "error_join_rule_change_unknown": "Невідомий збій",
+            "join_rule_restricted_dialog_empty_warning": "Ви вилучаєте всі простори. Усталеним стане доступ за запрошенням",
+            "join_rule_restricted_dialog_title": "Вибрати простори",
+            "join_rule_restricted_dialog_description": "Оберіть, які простори матимуть доступ до цієї кімнати. Якщо обрати простір, його учасники зможуть знаходити <RoomName/> і приєднуватися.",
+            "join_rule_restricted_dialog_filter_placeholder": "Пошук просторів",
+            "join_rule_restricted_dialog_heading_space": "Відомі вам простори, до яких входить цей",
+            "join_rule_restricted_dialog_heading_room": "Відомі вам простори, до яких входить кімната",
+            "join_rule_restricted_dialog_heading_other": "Інші простори чи кімнати, яких ви можете не знати",
+            "join_rule_restricted_dialog_heading_unknown": "Ймовірно, інші адміністратори кімнати є їхніми учасниками.",
+            "join_rule_restricted_dialog_heading_known": "Інші відомі вам простори"
         },
         "general": {
             "publish_toggle": "Опублікувати цю кімнату для всіх у каталозі кімнат %(domain)s?",
@@ -2910,7 +2896,13 @@
             "incoming_sas_device_dialog_text_1": "Звірте цей пристрій щоб позначити його довіреним. Довіряння цьому пристрою додає вам та іншим користувачам спокою якщо ви користуєтесь наскрізно зашифрованими повідомленнями.",
             "incoming_sas_device_dialog_text_2": "Якщо звірити цей пристрій, його буде позначено надійним, а користувачі, які перевірили у вас, будуть довіряти цьому пристрою.",
             "incoming_sas_dialog_waiting": "Очікування підтвердження партнером…",
-            "incoming_sas_dialog_title": "Надійшов запит на звірку"
+            "incoming_sas_dialog_title": "Надійшов запит на звірку",
+            "manual_device_verification_self_text": "Підтвердьте шляхом порівняння наступного рядка з рядком у користувацьких налаштуваннях вашого іншого сеансу:",
+            "manual_device_verification_user_text": "Підтвердьте сеанс цього користувача шляхом порівняння наступного рядка з рядком з їхніх користувацьких налаштувань:",
+            "manual_device_verification_device_name_label": "Назва сеансу",
+            "manual_device_verification_device_id_label": "ID сеансу",
+            "manual_device_verification_device_key_label": "Ключ сеансу",
+            "manual_device_verification_footer": "Якщо вони не збігаються, безпека вашого спілкування ймовірно скомпрометована."
         },
         "old_version_detected_title": "Виявлено старі криптографічні дані",
         "old_version_detected_description": "Було виявлено дані зі старої версії %(brand)s. Це призведе до збоїння наскрізного шифрування у старій версії. Наскрізно зашифровані повідомлення, що обмінювані нещодавно, під час використання старої версії, можуть бути недешифровними у цій версії. Це може призвести до збоїв повідомлень, обмінюваних також і з цією версією. У разі виникнення проблем вийдіть з програми та зайдіть знову. Задля збереження історії повідомлень експортуйте та переімпортуйте ваші ключі.",
@@ -3217,6 +3209,15 @@
             "clear_data_title": "Очистити всі дані сеансу?",
             "clear_data_description": "Видалення даних з цього сеансу є безповоротним. Зашифровані повідомлення будуть втрачені якщо їхні ключі не було продубльовано.",
             "clear_data_button": "Очистити всі дані"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Зашифровані повідомлення захищені наскрізним шифруванням. Лише ви та отримувачі повідомлень мають ключі для їх читання.",
+            "setup_secure_backup_description_2": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері.",
+            "use_key_backup": "Скористайтеся резервним копіюванням ключів",
+            "skip_key_backup": "Мені не потрібні мої зашифровані повідомлення",
+            "megolm_export": "Експорт ключів власноруч",
+            "setup_key_backup_title": "Ви втратите доступ до ваших зашифрованих повідомлень",
+            "description": "Ви впевнені, що хочете вийти?"
         }
     },
     "room_list": {
@@ -4039,7 +4040,8 @@
         "download_media": "Не вдалося завантажити початковий медіафайл, не знайдено url джерела",
         "update_power_level": "Не вдалося змінити рівень повноважень",
         "unknown": "Невідома помилка",
-        "dialog_description_default": "Сталася помилка."
+        "dialog_description_default": "Сталася помилка.",
+        "edit_history_unsupported": "Схоже, що ваш домашній сервер не підтримує цю властивість."
     },
     "in_space1_and_space2": "У просторах %(space1Name)s і %(space2Name)s.",
     "in_space_and_n_other_spaces": {

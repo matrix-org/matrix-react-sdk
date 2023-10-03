@@ -11,7 +11,6 @@
     "Moderator": "Moderator",
     "not specified": "not specified",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Please check your email and click on the link it contains. Once this is done, click continue.",
-    "Session ID": "Session ID",
     "unknown error code": "unknown error code",
     "Verification Pending": "Verification Pending",
     "Warning!": "Warning!",
@@ -580,7 +579,10 @@
         "export_unsupported": "Your browser does not support the required cryptography extensions",
         "import_invalid_keyfile": "Not a valid %(brand)s keyfile",
         "import_invalid_passphrase": "Authentication check failed: incorrect password?",
-        "not_supported": "<not supported>"
+        "not_supported": "<not supported>",
+        "verification": {
+            "manual_device_verification_device_id_label": "Session ID"
+        }
     },
     "error": {
         "mixed_content": "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. Either use HTTPS or <a>enable unsafe scripts</a>.",

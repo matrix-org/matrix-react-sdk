@@ -109,7 +109,6 @@
     },
     "collapse": "nu tcila be na ku viska",
     "expand": "nu tcila viska",
-    "Are you sure you want to sign out?": ".i xu do birti le du'u do kaidji le ka co'u se jaspu",
     "Sign out and remove encryption keys?": ".i xu do djica lo nu co'u jaspu do je lo nu tolmo'i le du'u mifra ckiku",
     "Upload %(count)s other files": {
         "one": "nu kibdu'a %(count)s vreji poi na du"
@@ -467,7 +466,10 @@
         "change_password_action": "nu basti fi le ka lerpoijaspu",
         "username_field_required_invalid": ".i ko cuxna fo le ka judri cmene",
         "msisdn_field_label": "fonxa",
-        "reset_password_email_not_found_title": ".i na da zo'u facki le du'u samymri judri da"
+        "reset_password_email_not_found_title": ".i na da zo'u facki le du'u samymri judri da",
+        "logout_dialog": {
+            "description": ".i xu do birti le du'u do kaidji le ka co'u se jaspu"
+        }
     },
     "update": {
         "release_notes_toast_title": "notci le du'u cnino"

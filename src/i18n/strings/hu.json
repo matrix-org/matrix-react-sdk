@@ -12,7 +12,6 @@
     "Moderator": "Moderátor",
     "not specified": "nincs meghatározva",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Nézze meg a levelét és kattintson a benne lévő hivatkozásra. Ha ez megvan, kattintson a folytatásra.",
-    "Session ID": "Kapcsolat azonosító",
     "Verification Pending": "Ellenőrzés függőben",
     "Warning!": "Figyelmeztetés!",
     "Sun": "Vas",
@@ -150,12 +149,6 @@
     "Anchor": "Horgony",
     "Headphones": "Fejhallgató",
     "Folder": "Dosszié",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "A titkosított üzenetek végponttól végpontig titkosítással védettek. Csak neked és a címzetteknek lehet meg a kulcs az üzenet visszafejtéséhez.",
-    "Start using Key Backup": "Kulcs mentés használatának megkezdése",
-    "I don't want my encrypted messages": "Nincs szükségem a titkosított üzeneteimre",
-    "Manually export keys": "Kulcsok kézi mentése",
-    "You'll lose access to your encrypted messages": "Elveszted a hozzáférést a titkosított üzeneteidhez",
-    "Are you sure you want to sign out?": "Biztos, hogy ki akarsz jelentkezni?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Figyelmeztetés</b>: csak biztonságos számítógépről állítson be kulcsmentést.",
     "Scissors": "Olló",
     "Room Settings - %(roomName)s": "Szoba beállításai – %(roomName)s",
@@ -180,7 +173,6 @@
     "Upload all": "Összes feltöltése",
     "Message edits": "Üzenetszerkesztések",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "A szoba fejlesztéséhez be kell zárnia ezt a szobát, és egy újat kell létrehoznia helyette. Hogy a szoba tagjai számára a lehető legjobb legyen a felhasználói élmény, a következők lépések lesznek végrehajtva:",
-    "Your homeserver doesn't seem to support this feature.": "Úgy tűnik, hogy a Matrix-kiszolgálója nem támogatja ezt a szolgáltatást.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reakció újraküldése",
     "Find others by phone or email": "Keressen meg másokat telefonszám vagy e-mail-cím alapján",
     "Be found by phone or email": "Találják meg telefonszám vagy e-mail-cím alapján",
@@ -208,8 +200,6 @@
         "other": "%(count)s munkamenet",
         "one": "%(count)s munkamenet"
     },
-    "Session name": "Munkamenet neve",
-    "Session key": "Munkamenetkulcs",
     "Not Trusted": "Nem megbízható",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) új munkamenetbe lépett be, anélkül, hogy ellenőrizte volna:",
     "Ask this user to verify their session, or manually verify it below.": "Kérje meg a felhasználót, hogy hitelesítse a munkamenetét, vagy ellenőrizze kézzel lentebb.",
@@ -223,9 +213,6 @@
     "a device cross-signing signature": "az eszköz eszközök közötti aláírása",
     "a key signature": "kulcs aláírás",
     "%(brand)s encountered an error during upload of:": "%(brand)s hibába ütközött a feltöltés közben:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Erősítsd meg a felhasználói beállítások összehasonlításával a többi munkamenetedben:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Ezt a munkamenetet hitelesítsd az ő felhasználói beállításának az összehasonlításával:",
-    "If they don't match, the security of your communication may be compromised.": "Ha nem egyeznek akkor a kommunikációtok biztonsága veszélyben lehet.",
     "Sign in with SSO": "Belépés SSO-val",
     "Submit logs": "Napló elküldése",
     "Restoring keys from backup": "Kulcsok helyreállítása mentésből",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Ha ezt teszi, tudnia kell, hogy az üzenetek nem lesznek törölve, de a keresési élmény addig nem lesz tökéletes, amíg az indexek újra el nem készülnek",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vegye figyelembe, hogy a fejlesztés a szoba új verzióját hozza létre</b>. Minden jelenlegi üzenet itt marad ebben az archivált szobában.",
     "Automatically invite members from this room to the new one": "Tagok automatikus meghívása ebből a szobából az újba",
-    "Other spaces or rooms you might not know": "Más terek vagy szobák melyről lehet, hogy nem tud",
-    "Spaces you know that contain this room": "Terek melyről tudja, hogy ezt a szobát tartalmazzák",
-    "Search spaces": "Terek keresése",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Döntse el melyik terek férhetnek hozzá ehhez a szobához. Ha a tér ki van választva a tagsága megtalálhatja és beléphet ebbe a szobába: <RoomName/>.",
-    "Select spaces": "Terek kiválasztása",
-    "You're removing all spaces. Access will default to invite only": "Az összes teret törli. A hozzáférés alapállapota „csak meghívóval” lesz.",
-    "These are likely ones other room admins are a part of.": "Ezek valószínűleg olyanok, amelyeknek más szoba adminok is tagjai.",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
     "%(count)s reply": {
         "one": "%(count)s válasz",
@@ -593,7 +573,6 @@
     "Themes": "Témák",
     "Moderation": "Moderálás",
     "Messaging": "Üzenetküldés",
-    "Spaces you know that contain this space": "Terek melyről tudja, hogy ezt a teret tartalmazzák",
     "Recently viewed": "Nemrég megtekintett",
     "Open in OpenStreetMap": "Megnyitás az OpenStreetMapen",
     "Recent searches": "Keresési előzmények",
@@ -638,7 +617,6 @@
     "Cameras": "Kamerák",
     "Output devices": "Kimeneti eszközök",
     "Input devices": "Beviteli eszközök",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
     "Remove search filter for %(filter)s": "Keresési szűrő eltávolítása innen: %(filter)s",
     "Start a group chat": "Csoportos csevegés indítása",
     "Other options": "További lehetőségek",
@@ -2655,7 +2633,15 @@
                 "other": "Terek frissítése… (%(progress)s / %(count)s)"
             },
             "error_join_rule_change_title": "A csatlakozási szabályokat nem sikerült frissíteni",
-            "error_join_rule_change_unknown": "Ismeretlen hiba"
+            "error_join_rule_change_unknown": "Ismeretlen hiba",
+            "join_rule_restricted_dialog_empty_warning": "Az összes teret törli. A hozzáférés alapállapota „csak meghívóval” lesz.",
+            "join_rule_restricted_dialog_title": "Terek kiválasztása",
+            "join_rule_restricted_dialog_description": "Döntse el melyik terek férhetnek hozzá ehhez a szobához. Ha a tér ki van választva a tagsága megtalálhatja és beléphet ebbe a szobába: <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Terek keresése",
+            "join_rule_restricted_dialog_heading_space": "Terek melyről tudja, hogy ezt a teret tartalmazzák",
+            "join_rule_restricted_dialog_heading_room": "Terek melyről tudja, hogy ezt a szobát tartalmazzák",
+            "join_rule_restricted_dialog_heading_other": "Más terek vagy szobák melyről lehet, hogy nem tud",
+            "join_rule_restricted_dialog_heading_unknown": "Ezek valószínűleg olyanok, amelyeknek más szoba adminok is tagjai."
         },
         "general": {
             "publish_toggle": "Publikálod a szobát a(z) %(domain)s szoba listájába?",
@@ -2841,7 +2827,13 @@
             "incoming_sas_device_dialog_text_1": "Eszköz ellenőrzése és beállítás megbízhatóként. Az eszközben való megbízás megnyugtató lehet, ha végpontok közötti titkosítást használsz.",
             "incoming_sas_device_dialog_text_2": "Az eszköz ellenőrzése megbízhatónak fogja jelezni az eszközt és azok a felhasználók, akik téged ellenőriztek, megbíznak majd ebben az eszközödben.",
             "incoming_sas_dialog_waiting": "Várakozás a partner megerősítésére…",
-            "incoming_sas_dialog_title": "Bejövő Hitelesítési Kérés"
+            "incoming_sas_dialog_title": "Bejövő Hitelesítési Kérés",
+            "manual_device_verification_self_text": "Erősítsd meg a felhasználói beállítások összehasonlításával a többi munkamenetedben:",
+            "manual_device_verification_user_text": "Ezt a munkamenetet hitelesítsd az ő felhasználói beállításának az összehasonlításával:",
+            "manual_device_verification_device_name_label": "Munkamenet neve",
+            "manual_device_verification_device_id_label": "Kapcsolat azonosító",
+            "manual_device_verification_device_key_label": "Munkamenetkulcs",
+            "manual_device_verification_footer": "Ha nem egyeznek akkor a kommunikációtok biztonsága veszélyben lehet."
         },
         "old_version_detected_title": "Régi titkosítási adatot találhatók",
         "old_version_detected_description": "Régebbi %(brand)s verzióból származó adatok találhatók. Ezek hibás működéshez vezethettek a végpontok közti titkosításban a régebbi verzióknál. A nemrég küldött/fogadott titkosított üzenetek, ha a régi adatokat használták, lehetséges, hogy nem lesznek visszafejthetők ebben a verzióban. Ha problémákba ütközik, akkor jelentkezzen ki és be. A régi üzenetek elérésének biztosításához exportálja a kulcsokat, és importálja be újra.",
@@ -3145,6 +3137,15 @@
             "clear_data_title": "Minden adat törlése ebben a munkamenetben?",
             "clear_data_description": "Az adatok törlése ebből a munkamenetből végleges. A titkosított üzenetek elvesznek hacsak nincsenek elmentve a kulcsai.",
             "clear_data_button": "Minden adat törlése"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "A titkosított üzenetek végponttól végpontig titkosítással védettek. Csak neked és a címzetteknek lehet meg a kulcs az üzenet visszafejtéséhez.",
+            "setup_secure_backup_description_2": "A kijelentkezéssel a kulcsok az eszközről törlődnek, ami azt jelenti, hogy ha nincsenek meg máshol a kulcsok, vagy nincsenek mentve a kiszolgálón, akkor a titkosított üzenetek olvashatatlanná válnak.",
+            "use_key_backup": "Kulcs mentés használatának megkezdése",
+            "skip_key_backup": "Nincs szükségem a titkosított üzeneteimre",
+            "megolm_export": "Kulcsok kézi mentése",
+            "setup_key_backup_title": "Elveszted a hozzáférést a titkosított üzeneteidhez",
+            "description": "Biztos, hogy ki akarsz jelentkezni?"
         }
     },
     "room_list": {
@@ -3947,7 +3948,8 @@
         "download_media": "A forrásmédia letöltése sikertelen, nem található forráswebcím",
         "update_power_level": "A hozzáférési szint megváltoztatása sikertelen",
         "unknown": "Ismeretlen hiba",
-        "dialog_description_default": "Hiba történt."
+        "dialog_description_default": "Hiba történt.",
+        "edit_history_unsupported": "Úgy tűnik, hogy a Matrix-kiszolgálója nem támogatja ezt a szolgáltatást."
     },
     "in_space1_and_space2": "Ezekben a terekben: %(space1Name)s és %(space2Name)s.",
     "in_space_and_n_other_spaces": {

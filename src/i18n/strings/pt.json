@@ -1,7 +1,6 @@
 {
     "Moderator": "Moderador/a",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor verifique seu email e clique no link enviado. Quando finalizar este processo, clique para continuar.",
-    "Session ID": "Identificador de sessão",
     "unknown error code": "código de erro desconhecido",
     "Verification Pending": "Verificação pendente",
     "Sun": "Dom",
@@ -886,7 +885,10 @@
         "export_unsupported": "O seu navegador não suporta as extensões de criptografia necessárias",
         "import_invalid_keyfile": "Não é um ficheiro de chaves %(brand)s válido",
         "import_invalid_passphrase": "Erro de autenticação: palavra-passe incorreta?",
-        "not_supported": "<não suportado>"
+        "not_supported": "<não suportado>",
+        "verification": {
+            "manual_device_verification_device_id_label": "Identificador de sessão"
+        }
     },
     "error": {
         "mixed_content": "Não consigo conectar ao servidor padrão através de HTTP quando uma URL HTTPS está na barra de endereços do seu navegador. Use HTTPS ou então <a>habilite scripts não seguros no seu navegador</a>.",

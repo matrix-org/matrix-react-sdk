@@ -1,7 +1,6 @@
 {
     "Moderator": "Moderador/a",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Por favor, confirme o seu e-mail e clique no link enviado. Feito isso, clique em continuar.",
-    "Session ID": "Identificador de sessão",
     "unknown error code": "código de erro desconhecido",
     "Verification Pending": "Confirmação pendente",
     "Sun": "Dom",
@@ -150,8 +149,6 @@
     "Anchor": "Âncora",
     "Headphones": "Fones de ouvido",
     "Folder": "Pasta",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "As mensagens estão protegidas com a criptografia de ponta a ponta. Somente você e o(s) destinatário(s) têm as chaves para ler essas mensagens.",
-    "Start using Key Backup": "Comece a usar backup de chave",
     "You signed in to a new session without verifying it:": "Você entrou em uma nova sessão sem confirmá-la:",
     "Verify your other session using one of the options below.": "Confirme suas outras sessões usando uma das opções abaixo.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
@@ -168,9 +165,6 @@
     "a new master key signature": "uma nova chave mestra de assinatura",
     "a new cross-signing key signature": "uma nova chave de autoverificação",
     "a key signature": "uma assinatura de chave",
-    "I don't want my encrypted messages": "Não quero minhas mensagens criptografadas",
-    "You'll lose access to your encrypted messages": "Você perderá acesso às suas mensagens criptografadas",
-    "Session key": "Chave da sessão",
     "Sign out and remove encryption keys?": "Fazer logout e remover as chaves de criptografia?",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Alguns dados de sessão, incluindo chaves de mensagens criptografadas, estão faltando. Desconecte-se e entre novamente para resolver isso, o que restaurará as chaves do backup.",
     "Security Key": "Chave de Segurança",
@@ -240,22 +234,15 @@
     "Keys restored": "Chaves restauradas",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s chaves foram restauradas com sucesso",
     "Switch theme": "Escolha um tema",
-    "Confirm this user's session by comparing the following with their User Settings:": "Confirme a sessão deste usuário comparando o seguinte com as configurações deste usuário:",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Apagar chaves de autoverificação é permanente. Qualquer pessoa com quem você se confirmou receberá alertas de segurança. Não é aconselhável fazer isso, a menos que você tenha perdido todos os aparelhos nos quais fez a autoverificação.",
     "Clear cross-signing keys": "Limpar chaves autoverificadas",
     "a device cross-signing signature": "um aparelho autoverificado",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
-    "Manually export keys": "Exportar chaves manualmente",
-    "Are you sure you want to sign out?": "Deseja mesmo sair?",
-    "Session name": "Nome da sessão",
-    "If they don't match, the security of your communication may be compromised.": "Se eles não corresponderem, a segurança da sua comunicação pode estar comprometida.",
-    "Your homeserver doesn't seem to support this feature.": "O seu servidor local não parece suportar este recurso.",
     "Message edits": "Edições na mensagem",
     "A browser extension is preventing the request.": "Uma extensão do navegador está impedindo a solicitação.",
     "The server has denied your request.": "O servidor recusou a sua solicitação.",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "Confirm by comparing the following with the User Settings in your other session:": "Para confirmar, compare a seguinte informação com aquela apresentada em sua outra sessão:",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Atualizar esta sala irá fechar a instância atual da sala e, em seu lugar, criar uma sala atualizada com o mesmo nome. Para oferecer a melhor experiência possível aos integrantes da sala, nós iremos:",
     "You're all caught up.": "Tudo em dia.",
     "Your area is experiencing difficulties connecting to the internet.": "A sua região está com dificuldade de acesso à internet.",
@@ -2224,7 +2211,13 @@
             "incoming_sas_user_dialog_text_2": "Se você confirmar esse usuário, a sessão será marcada como confiável para você e para ele.",
             "incoming_sas_device_dialog_text_1": "Confirme este aparelho para torná-lo confiável. Confiar neste aparelho fornecerá segurança adicional para você e aos outros ao trocarem mensagens criptografadas de ponta a ponta.",
             "incoming_sas_device_dialog_text_2": "Confirmar este aparelho o marcará como confiável para você e para os usuários que se confirmaram com você.",
-            "incoming_sas_dialog_title": "Recebendo solicitação de confirmação"
+            "incoming_sas_dialog_title": "Recebendo solicitação de confirmação",
+            "manual_device_verification_self_text": "Para confirmar, compare a seguinte informação com aquela apresentada em sua outra sessão:",
+            "manual_device_verification_user_text": "Confirme a sessão deste usuário comparando o seguinte com as configurações deste usuário:",
+            "manual_device_verification_device_name_label": "Nome da sessão",
+            "manual_device_verification_device_id_label": "Identificador de sessão",
+            "manual_device_verification_device_key_label": "Chave da sessão",
+            "manual_device_verification_footer": "Se eles não corresponderem, a segurança da sua comunicação pode estar comprometida."
         },
         "old_version_detected_title": "Dados de criptografia antigos foram detectados",
         "old_version_detected_description": "Detectamos uma versão mais antiga do %(brand)s. Isso fará com que a criptografia de ponta a ponta não funcione corretamente. As mensagens criptografadas de ponta a ponta trocadas recentemente, enquanto você usava a versão mais antiga, talvez não sejam descriptografáveis na nova versão. Isso também poderá fazer com que as mensagens trocadas nesta sessão falhem na mais atual. Se você tiver problemas, desconecte-se e entre novamente. Para manter o histórico de mensagens, exporte e reimporte suas chaves.",
@@ -2455,6 +2448,14 @@
             "clear_data_title": "Limpar todos os dados nesta sessão?",
             "clear_data_description": "Apagar todos os dados desta sessão é uma ação permanente. Mensagens criptografadas serão perdidas, a não ser que as chaves delas tenham sido copiadas para o backup.",
             "clear_data_button": "Limpar todos os dados"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "As mensagens estão protegidas com a criptografia de ponta a ponta. Somente você e o(s) destinatário(s) têm as chaves para ler essas mensagens.",
+            "use_key_backup": "Comece a usar backup de chave",
+            "skip_key_backup": "Não quero minhas mensagens criptografadas",
+            "megolm_export": "Exportar chaves manualmente",
+            "setup_key_backup_title": "Você perderá acesso às suas mensagens criptografadas",
+            "description": "Deseja mesmo sair?"
         }
     },
     "room_list": {
@@ -3009,7 +3010,8 @@
         "something_went_wrong": "Não foi possível carregar!",
         "update_power_level": "Não foi possível alterar o nível de permissão",
         "unknown": "Erro desconhecido",
-        "dialog_description_default": "Ocorreu um erro."
+        "dialog_description_default": "Ocorreu um erro.",
+        "edit_history_unsupported": "O seu servidor local não parece suportar este recurso."
     },
     "in_space1_and_space2": "Nos espaços %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {

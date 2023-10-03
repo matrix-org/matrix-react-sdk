@@ -96,8 +96,6 @@
     "Anchor": "लंगर",
     "Headphones": "हेडफोन",
     "Folder": "फ़ोल्डर",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "एन्क्रिप्ट किए गए संदेश एंड-टू-एंड एन्क्रिप्शन के साथ सुरक्षित हैं। केवल आपके और प्राप्तकर्ता के पास ही इन संदेशों को पढ़ने की कुंजी है।",
-    "Start using Key Backup": "कुंजी बैकअप का उपयोग करना शुरू करें",
     "Scissors": "कैंची",
     "Mongolia": "मंगोलिया",
     "Monaco": "मोनाको",
@@ -616,7 +614,11 @@
         "oidc": {
             "error_title": "हम आपको लॉग इन नहीं कर सके"
         },
-        "reset_password_email_not_found_title": "यह ईमेल पता नहीं मिला था"
+        "reset_password_email_not_found_title": "यह ईमेल पता नहीं मिला था",
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "एन्क्रिप्ट किए गए संदेश एंड-टू-एंड एन्क्रिप्शन के साथ सुरक्षित हैं। केवल आपके और प्राप्तकर्ता के पास ही इन संदेशों को पढ़ने की कुंजी है।",
+            "use_key_backup": "कुंजी बैकअप का उपयोग करना शुरू करें"
+        }
     },
     "setting": {
         "help_about": {

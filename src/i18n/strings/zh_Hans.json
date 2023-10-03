@@ -1,6 +1,5 @@
 {
     "Email address": "邮箱地址",
-    "Session ID": "会话 ID",
     "Join Room": "加入房间",
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "and %(count)s others...": {
@@ -148,13 +147,7 @@
     "Anchor": "锚",
     "Headphones": "耳机",
     "Folder": "文件夹",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
-    "Start using Key Backup": "开始使用密钥备份",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
-    "I don't want my encrypted messages": "我不想要我的加密消息",
-    "Manually export keys": "手动导出密钥",
-    "You'll lose access to your encrypted messages": "你将失去你的加密消息的访问权",
-    "Are you sure you want to sign out?": "你确定要登出吗？",
     "Room Settings - %(roomName)s": "房间设置 - %(roomName)s",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s 个会话解密失败！",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：你应此只在受信任的电脑上设置密钥备份。",
@@ -196,12 +189,6 @@
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
     "a key signature": "一个密钥签名",
-    "Confirm by comparing the following with the User Settings in your other session:": "通过比较下方内容和你别的会话中的用户设置来确认：",
-    "Confirm this user's session by comparing the following with their User Settings:": "通过比较下方内容和对方用户设置来确认此用户会话：",
-    "Session name": "会话名称",
-    "Session key": "会话密钥",
-    "If they don't match, the security of your communication may be compromised.": "如果它们不匹配，你通讯的安全性可能已受损。",
-    "Your homeserver doesn't seem to support this feature.": "你的家服务器似乎不支持此功能。",
     "Message edits": "消息编辑历史",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升级此房间需要关闭此房间的当前实例并创建一个新的房间代替它。为了给房间成员最好的体验，我们会：",
     "Upgrade private room": "更新私人房间",
@@ -564,13 +551,6 @@
     "Incorrect Security Phrase": "安全短语错误",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>请注意升级将使这个房间有一个新版本</b>。所有当前的消息都将保留在此存档房间中。",
     "Automatically invite members from this room to the new one": "自动邀请该房间的成员加入新房间",
-    "These are likely ones other room admins are a part of.": "这些可能是其他房间管理员的一部分。",
-    "Other spaces or rooms you might not know": "你可能不知道的其他空间或房间",
-    "Spaces you know that contain this room": "你知道的包含此房间的空间",
-    "Search spaces": "搜索空间",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "决定哪些空间可以访问这个房间。如果一个空间被选中，它的成员可以找到并加入<RoomName/>。",
-    "Select spaces": "选择空间",
-    "You're removing all spaces. Access will default to invite only": "你正在移除所有空间。访问权限将预设为仅邀请",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
     "%(count)s reply": {
         "one": "%(count)s 条回复",
@@ -593,7 +573,6 @@
     "Themes": "主题",
     "Moderation": "审核",
     "Messaging": "消息传递",
-    "Spaces you know that contain this space": "你知道的包含这个空间的空间",
     "Recently viewed": "最近查看",
     "Link to room": "房间链接",
     "Recent searches": "最近的搜索",
@@ -640,7 +619,6 @@
     "Unsent": "未发送",
     "Search Dialog": "搜索对话",
     "Join %(roomAddress)s": "加入%(roomAddress)s",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "当你登出时，这些密钥会从此设备删除。这意味着你将无法查阅已加密消息，除非你在其他设备上有那些消息的密钥，或者已将其备份到服务器。",
     "Output devices": "输出设备",
     "Input devices": "输入设备",
     "View List": "查看列表",
@@ -2475,7 +2453,15 @@
                 "one": "正在更新空间…"
             },
             "error_join_rule_change_title": "未能更新加入列表",
-            "error_join_rule_change_unknown": "未知失败"
+            "error_join_rule_change_unknown": "未知失败",
+            "join_rule_restricted_dialog_empty_warning": "你正在移除所有空间。访问权限将预设为仅邀请",
+            "join_rule_restricted_dialog_title": "选择空间",
+            "join_rule_restricted_dialog_description": "决定哪些空间可以访问这个房间。如果一个空间被选中，它的成员可以找到并加入<RoomName/>。",
+            "join_rule_restricted_dialog_filter_placeholder": "搜索空间",
+            "join_rule_restricted_dialog_heading_space": "你知道的包含这个空间的空间",
+            "join_rule_restricted_dialog_heading_room": "你知道的包含此房间的空间",
+            "join_rule_restricted_dialog_heading_other": "你可能不知道的其他空间或房间",
+            "join_rule_restricted_dialog_heading_unknown": "这些可能是其他房间管理员的一部分。"
         },
         "general": {
             "publish_toggle": "是否将此房间发布至 %(domain)s 的房间目录中？",
@@ -2652,7 +2638,13 @@
             "incoming_sas_user_dialog_text_2": "验证此用户会将其会话标记为已信任，与此同时，你的会话也会被此用户标记为已信任。",
             "incoming_sas_device_dialog_text_1": "验证此设备以将其标记为已信任。在收发端到端加密消息时，信任设备可让你与其他用户更加放心。",
             "incoming_sas_device_dialog_text_2": "验证此设备会将其标记为已信任，与此同时，其他验证了你的用户也会信任此设备。",
-            "incoming_sas_dialog_title": "收到验证请求"
+            "incoming_sas_dialog_title": "收到验证请求",
+            "manual_device_verification_self_text": "通过比较下方内容和你别的会话中的用户设置来确认：",
+            "manual_device_verification_user_text": "通过比较下方内容和对方用户设置来确认此用户会话：",
+            "manual_device_verification_device_name_label": "会话名称",
+            "manual_device_verification_device_id_label": "会话 ID",
+            "manual_device_verification_device_key_label": "会话密钥",
+            "manual_device_verification_footer": "如果它们不匹配，你通讯的安全性可能已受损。"
         },
         "old_version_detected_title": "检测到旧的加密数据",
         "old_version_detected_description": "已检测到旧版%(brand)s的数据，这将导致端到端加密在旧版本中发生故障。在此版本中，使用旧版本交换的端到端加密消息可能无法解密。这也可能导致与此版本交换的消息失败。如果你遇到问题，请登出并重新登录。要保留历史消息，请先导出并在重新登录后导入你的密钥。",
@@ -2907,6 +2899,15 @@
             "clear_data_title": "是否清除此会话中的所有数据？",
             "clear_data_description": "清除此会话中的所有数据是永久的。加密消息会丢失，除非其密钥已被备份。",
             "clear_data_button": "清除所有数据"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
+            "setup_secure_backup_description_2": "当你登出时，这些密钥会从此设备删除。这意味着你将无法查阅已加密消息，除非你在其他设备上有那些消息的密钥，或者已将其备份到服务器。",
+            "use_key_backup": "开始使用密钥备份",
+            "skip_key_backup": "我不想要我的加密消息",
+            "megolm_export": "手动导出密钥",
+            "setup_key_backup_title": "你将失去你的加密消息的访问权",
+            "description": "你确定要登出吗？"
         }
     },
     "room_list": {
@@ -3658,7 +3659,8 @@
         "something_went_wrong": "出了点问题！",
         "update_power_level": "权力级别修改失败",
         "unknown": "未知错误",
-        "dialog_description_default": "发生了一个错误。"
+        "dialog_description_default": "发生了一个错误。",
+        "edit_history_unsupported": "你的家服务器似乎不支持此功能。"
     },
     "in_space1_and_space2": "在 %(space1Name)s 和 %(space2Name)s 空间。",
     "in_space_and_n_other_spaces": {

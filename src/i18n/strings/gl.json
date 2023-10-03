@@ -55,7 +55,6 @@
     "Verification Pending": "Verificación pendente",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Comprobe o seu correo electrónico e pulse na ligazón que contén. Unha vez feito iso prema continuar.",
     "This will allow you to reset your password and receive notifications.": "Isto permitiralle restablecer o seu contrasinal e recibir notificacións.",
-    "Session ID": "ID de sesión",
     "Sunday": "Domingo",
     "Today": "Hoxe",
     "Friday": "Venres",
@@ -76,7 +75,6 @@
     "Share Room Message": "Compartir unha mensaxe da sala",
     "Link to selected message": "Ligazón á mensaxe escollida",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
-    "Are you sure you want to sign out?": "Tes a certeza de querer saír?",
     "Sign out and remove encryption keys?": "Saír e eliminar as chaves de cifrado?",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Deactivate account": "Desactivar conta",
@@ -155,9 +153,7 @@
     "Anchor": "Áncora",
     "Headphones": "Auriculares",
     "Folder": "Cartafol",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "As mensaxes cifradas están seguras con cifrado de extremo-a-extremo. Só ti e o correpondente(s) tedes as chaves para ler as mensaxes.",
     "This backup is trusted because it has been restored on this session": "Esta copia é de confianza porque foi restaurada nesta sesión",
-    "Start using Key Backup": "Fai unha Copia de apoio das chaves",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar dun asunto relacionado coa seguridade de Matrix, le a <a>Política de Revelación de Privacidade</a> de Matrix.org.",
     "Encrypted by a deleted session": "Cifrada por unha sesión eliminada",
     "Failed to connect to integration manager": "Fallou a conexión co xestor de integracións",
@@ -184,15 +180,6 @@
     "a device cross-signing signature": "unha sinatura sinatura-cruzada de dispositivo",
     "a key signature": "unha chave de sinatura",
     "%(brand)s encountered an error during upload of:": "%(brand)s atopou un fallo ao subir:",
-    "I don't want my encrypted messages": "Non quero as miñas mensaxes cifradas",
-    "Manually export keys": "Exportar manualmente as chaves",
-    "You'll lose access to your encrypted messages": "Perderás o acceso as túas mensaxes cifradas",
-    "Confirm by comparing the following with the User Settings in your other session:": "Corfirma comparando o seguinte cos Axustes de Usuaria na outra sesión:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Confirma a sesión desta usuaria comparando o seguinte cos seus Axustes de Usuaria:",
-    "Session name": "Nome da sesión",
-    "Session key": "Chave da sesión",
-    "If they don't match, the security of your communication may be compromised.": "Se non concordan, a seguridade da comunicación podería estar comprometida.",
-    "Your homeserver doesn't seem to support this feature.": "O servidor non semella soportar esta característica.",
     "Message edits": "Edicións da mensaxe",
     "Failed to upgrade room": "Fallou a actualización da sala",
     "The room upgrade could not be completed": "A actualización da sala non se completou",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se o fas, ten en conta que non se borrará ningunha das túas mensaxes, mais a experiencia de busca podería degradarse durante uns momentos ata que se recrea o índice",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ten en conta que a actualización creará unha nova versión da sala</b>. Tódalas mensaxes actuais permanecerán nesta sala arquivada.",
     "Automatically invite members from this room to the new one": "Convidar automáticamente membros desta sala á nova sala",
-    "These are likely ones other room admins are a part of.": "Probablemente estas son salas das que forman parte outras administradoras da sala.",
-    "Other spaces or rooms you might not know": "Outros espazos ou salas que poderías coñecer",
-    "Spaces you know that contain this room": "Espazos que coñeces que conteñen a esta sala",
-    "Search spaces": "Buscar espazos",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decide que espazos poderán acceder a esta sala. Se un espazo é elexido, os seus membros poderán atopar e unirse a <RoomName/>.",
-    "Select spaces": "Elixe espazos",
-    "You're removing all spaces. Access will default to invite only": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "%(count)s reply": {
         "one": "%(count)s resposta",
@@ -593,7 +573,6 @@
     "Themes": "Decorados",
     "Moderation": "Moderación",
     "Messaging": "Conversando",
-    "Spaces you know that contain this space": "Espazos que sabes conteñen este espazo",
     "Recently viewed": "Visto recentemente",
     "Recent searches": "Buscas recentes",
     "To search messages, look for this icon at the top of a room <icon/>": "Para buscar mensaxes, busca esta icona arriba de todo na sala <icon/>",
@@ -638,7 +617,6 @@
     "Unread email icon": "Icona de email non lido",
     "An error occurred whilst sharing your live location, please try again": "Algo fallou ao compartir a túa localización en directo, inténtao outra vez",
     "An error occurred whilst sharing your live location": "Algo fallou ao intentar compartir a túa localización en directo",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
     "Remove search filter for %(filter)s": "Elimina o filtro de busca de %(filter)s",
     "Start a group chat": "Inicia un chat en grupo",
     "Other options": "Outras opcións",
@@ -2431,7 +2409,15 @@
                 "other": "Actualizando espazos... (%(progress)s de %(count)s)"
             },
             "error_join_rule_change_title": "Fallou a actualización das normas para unirse",
-            "error_join_rule_change_unknown": "Fallo descoñecido"
+            "error_join_rule_change_unknown": "Fallo descoñecido",
+            "join_rule_restricted_dialog_empty_warning": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
+            "join_rule_restricted_dialog_title": "Elixe espazos",
+            "join_rule_restricted_dialog_description": "Decide que espazos poderán acceder a esta sala. Se un espazo é elexido, os seus membros poderán atopar e unirse a <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Buscar espazos",
+            "join_rule_restricted_dialog_heading_space": "Espazos que sabes conteñen este espazo",
+            "join_rule_restricted_dialog_heading_room": "Espazos que coñeces que conteñen a esta sala",
+            "join_rule_restricted_dialog_heading_other": "Outros espazos ou salas que poderías coñecer",
+            "join_rule_restricted_dialog_heading_unknown": "Probablemente estas son salas das que forman parte outras administradoras da sala."
         },
         "general": {
             "publish_toggle": "Publicar esta sala no directorio público de salas de %(domain)s?",
@@ -2601,7 +2587,13 @@
             "incoming_sas_user_dialog_text_2": "Ao verificar esta usuaria marcarás a súa sesión como confiable, e tamén marcará a túa sesión como confiable para elas.",
             "incoming_sas_device_dialog_text_1": "Verifica este dispositivo para marcalo como confiable. Confiando neste dispositivo permite que ti e outras usuarias estedes máis tranquilas ao utilizar mensaxes cifradas.",
             "incoming_sas_device_dialog_text_2": "Ao verificar este dispositivo marcaralo como confiable, e as usuarias que confiaron en ti tamén confiarán nel.",
-            "incoming_sas_dialog_title": "Solicitude entrante de verificación"
+            "incoming_sas_dialog_title": "Solicitude entrante de verificación",
+            "manual_device_verification_self_text": "Corfirma comparando o seguinte cos Axustes de Usuaria na outra sesión:",
+            "manual_device_verification_user_text": "Confirma a sesión desta usuaria comparando o seguinte cos seus Axustes de Usuaria:",
+            "manual_device_verification_device_name_label": "Nome da sesión",
+            "manual_device_verification_device_id_label": "ID de sesión",
+            "manual_device_verification_device_key_label": "Chave da sesión",
+            "manual_device_verification_footer": "Se non concordan, a seguridade da comunicación podería estar comprometida."
         },
         "old_version_detected_title": "Detectouse o uso de criptografía sobre datos antigos",
         "old_version_detected_description": "Detectáronse datos de una versión anterior de %(brand)s. Isto causará un mal funcionamento da criptografía extremo-a-extremo na versión antiga. As mensaxes cifradas extremo-a-extremo intercambiadas mentres utilizaba a versión anterior poderían non ser descifrables en esta versión. Isto tamén podería causar que mensaxes intercambiadas con esta versión tampouco funcionasen. Se ten problemas, desconéctese e conéctese de novo. Para manter o historial de mensaxes, exporte e reimporte as súas chaves.",
@@ -2855,6 +2847,15 @@
             "clear_data_title": "¿Baleirar todos os datos desta sesión?",
             "clear_data_description": "O baleirado dos datos da sesión é permanente. As mensaxes cifradas perderánse a menos que as súas chaves estiveren nunha copia de apoio.",
             "clear_data_button": "Eliminar todos os datos"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "As mensaxes cifradas están seguras con cifrado de extremo-a-extremo. Só ti e o correpondente(s) tedes as chaves para ler as mensaxes.",
+            "setup_secure_backup_description_2": "Ao saír, estas chaves serán eliminadas deste dispositivo, o que significa que non poderás ler as mensaxes cifradas a menos que teñas as chaves noutro dos teus dispositivos, ou unha copia de apoio no servidor.",
+            "use_key_backup": "Fai unha Copia de apoio das chaves",
+            "skip_key_backup": "Non quero as miñas mensaxes cifradas",
+            "megolm_export": "Exportar manualmente as chaves",
+            "setup_key_backup_title": "Perderás o acceso as túas mensaxes cifradas",
+            "description": "Tes a certeza de querer saír?"
         }
     },
     "room_list": {
@@ -3582,7 +3583,8 @@
         "something_went_wrong": "Algo fallou!",
         "update_power_level": "Fallo ao cambiar o nivel de permisos",
         "unknown": "Fallo descoñecido",
-        "dialog_description_default": "Algo fallou."
+        "dialog_description_default": "Algo fallou.",
+        "edit_history_unsupported": "O servidor non semella soportar esta característica."
     },
     "in_space1_and_space2": "Nos espazos %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {

@@ -2,7 +2,6 @@
     "%(items)s and %(lastItem)s": "%(items)s 和 %(lastItem)s",
     "Email address": "電子郵件地址",
     "Join Room": "加入聊天室",
-    "Session ID": "工作階段 ID",
     "Sun": "週日",
     "Mon": "週一",
     "Tue": "週二",
@@ -150,12 +149,6 @@
     "Anchor": "船錨",
     "Headphones": "耳機",
     "Folder": "資料夾",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密訊息是使用端對端加密。只有您和接收者才有金鑰可以閱讀這些訊息。",
-    "Start using Key Backup": "開始使用金鑰備份",
-    "I don't want my encrypted messages": "我不要我的加密訊息了",
-    "Manually export keys": "手動匯出金鑰",
-    "You'll lose access to your encrypted messages": "您將會失去您的加密訊息",
-    "Are you sure you want to sign out?": "您確定要登出嗎？",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：您應該只從信任的電腦設定金鑰備份。",
     "Scissors": "剪刀",
     "Room Settings - %(roomName)s": "聊天室設定 - %(roomName)s",
@@ -181,7 +174,6 @@
     "Message edits": "訊息編輯紀錄",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "升級這個聊天室需要關閉目前的執行個體並重新建立一個新的聊天室來替代。為了給予聊天室成員最佳的體驗，我們將會：",
     "Resend %(unsentCount)s reaction(s)": "重新傳送 %(unsentCount)s 反應",
-    "Your homeserver doesn't seem to support this feature.": "您的家伺服器似乎並不支援此功能。",
     "Find others by phone or email": "透過電話或電子郵件尋找其他人",
     "Be found by phone or email": "透過電話或電子郵件找到",
     "Command Help": "指令說明",
@@ -208,8 +200,6 @@
         "other": "%(count)s 個工作階段",
         "one": "%(count)s 個工作階段"
     },
-    "Session name": "工作階段名稱",
-    "Session key": "工作階段金鑰",
     "Destroy cross-signing keys?": "摧毀交叉簽署金鑰？",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
     "Clear cross-signing keys": "清除交叉簽署金鑰",
@@ -223,9 +213,6 @@
     "a device cross-signing signature": "裝置交叉簽署",
     "a key signature": "金鑰簽章",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上傳以下內容時遇到錯誤：",
-    "Confirm by comparing the following with the User Settings in your other session:": "透過將下列內容與您其他工作階段中的「使用者設定」所顯示的內容來確認：",
-    "Confirm this user's session by comparing the following with their User Settings:": "將以下內容與對方的「使用者設定」當中顯示的內容進行比對，來確認對方的工作階段：",
-    "If they don't match, the security of your communication may be compromised.": "如果它們不相符，則可能會威脅到您的通訊安全。",
     "Sign in with SSO": "使用 SSO 登入",
     "Submit logs": "遞交紀錄檔",
     "Restoring keys from backup": "從備份還原金鑰",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "如果這樣做，請注意，您的訊息不會被刪除，但在重新建立索引時，搜尋體驗可能會降低片刻",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>請注意，升級會讓聊天室變成全新的版本</b>。目前所有的訊息都只會留在被封存的聊天室。",
     "Automatically invite members from this room to the new one": "自動將該聊天室的成員邀請至新的聊天室",
-    "These are likely ones other room admins are a part of.": "這些可能是其他聊天室管理員的一部分。",
-    "Other spaces or rooms you might not know": "您可能不知道的其他聊天空間或聊天室",
-    "Spaces you know that contain this room": "您已知包含此聊天室的聊天空間",
-    "Search spaces": "搜尋聊天空間",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "決定哪些聊天空間可以存取此聊天室。若選取了聊天空間，其成員就可以找到並加入<RoomName/>。",
-    "Select spaces": "選取聊天空間",
-    "You're removing all spaces. Access will default to invite only": "您將取消所有聊天空間。存取權限將會預設為邀請制",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
@@ -593,7 +573,6 @@
     "Themes": "主題",
     "Moderation": "審核",
     "Messaging": "訊息傳遞",
-    "Spaces you know that contain this space": "您知道的包含此聊天空間的聊天空間",
     "Recently viewed": "最近檢視過",
     "Link to room": "連結到聊天室",
     "Recent searches": "近期搜尋",
@@ -638,7 +617,6 @@
     "An error occurred whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請再試一次",
     "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤",
     "Unread email icon": "未讀電子郵件圖示",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。",
     "Remove search filter for %(filter)s": "移除 %(filter)s 的搜尋過濾條件",
     "Start a group chat": "開始群組聊天",
     "Other options": "其他選項",
@@ -673,7 +651,6 @@
     "unavailable": "無法使用",
     "unknown status code": "未知狀態代碼",
     "Upgrade room": "升級聊天室",
-    "Other spaces you know": "您知道的其他空間",
     "Failed to query public rooms": "檢索公開聊天室失敗",
     "common": {
         "about": "關於",
@@ -2724,7 +2701,16 @@
                 "other": "正在更新空間…（%(count)s 中的第 %(progress)s 個）"
             },
             "error_join_rule_change_title": "加入規則更新失敗",
-            "error_join_rule_change_unknown": "未知錯誤"
+            "error_join_rule_change_unknown": "未知錯誤",
+            "join_rule_restricted_dialog_empty_warning": "您將取消所有聊天空間。存取權限將會預設為邀請制",
+            "join_rule_restricted_dialog_title": "選取聊天空間",
+            "join_rule_restricted_dialog_description": "決定哪些聊天空間可以存取此聊天室。若選取了聊天空間，其成員就可以找到並加入<RoomName/>。",
+            "join_rule_restricted_dialog_filter_placeholder": "搜尋聊天空間",
+            "join_rule_restricted_dialog_heading_space": "您知道的包含此聊天空間的聊天空間",
+            "join_rule_restricted_dialog_heading_room": "您已知包含此聊天室的聊天空間",
+            "join_rule_restricted_dialog_heading_other": "您可能不知道的其他聊天空間或聊天室",
+            "join_rule_restricted_dialog_heading_unknown": "這些可能是其他聊天室管理員的一部分。",
+            "join_rule_restricted_dialog_heading_known": "您知道的其他空間"
         },
         "general": {
             "publish_toggle": "將這個聊天室公開到 %(domain)s 的聊天室目錄中？",
@@ -2910,7 +2896,13 @@
             "incoming_sas_device_dialog_text_1": "驗證此裝置，並標記為可受信任。由您將裝置標記為可受信任後，可讓聊天夥伴傳送端到端加密訊息時能更加放心。",
             "incoming_sas_device_dialog_text_2": "驗證此裝置將會將其標記為受信任，且已驗證您的使用者將會信任此裝置。",
             "incoming_sas_dialog_waiting": "正在等待夥伴確認…",
-            "incoming_sas_dialog_title": "收到的驗證請求"
+            "incoming_sas_dialog_title": "收到的驗證請求",
+            "manual_device_verification_self_text": "透過將下列內容與您其他工作階段中的「使用者設定」所顯示的內容來確認：",
+            "manual_device_verification_user_text": "將以下內容與對方的「使用者設定」當中顯示的內容進行比對，來確認對方的工作階段：",
+            "manual_device_verification_device_name_label": "工作階段名稱",
+            "manual_device_verification_device_id_label": "工作階段 ID",
+            "manual_device_verification_device_key_label": "工作階段金鑰",
+            "manual_device_verification_footer": "如果它們不相符，則可能會威脅到您的通訊安全。"
         },
         "old_version_detected_title": "偵測到舊的加密資料",
         "old_version_detected_description": "偵測到來自舊版 %(brand)s 的資料。這將會造成舊版的端對端加密失敗。在此版本中使用最近在舊版本交換的金鑰可能無法解密訊息。這也會造成與此版本的訊息交換失敗。若您遇到問題，請登出並重新登入。要保留訊息歷史，請匯出並重新匯入您的金鑰。",
@@ -3217,6 +3209,15 @@
             "clear_data_title": "清除此工作階段中的所有資料？",
             "clear_data_description": "將會永久清除此工作階段的所有資料。除非已備份金鑰，否則將會遺失所有加密訊息。",
             "clear_data_button": "清除所有資料"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "加密訊息是使用端對端加密。只有您和接收者才有金鑰可以閱讀這些訊息。",
+            "setup_secure_backup_description_2": "當您登出時，這些金鑰將會從此裝置被刪除，這代表您將無法再閱讀加密的訊息，除非您在其他裝置上有那些訊息的金鑰，或是將它們備份到伺服器上。",
+            "use_key_backup": "開始使用金鑰備份",
+            "skip_key_backup": "我不要我的加密訊息了",
+            "megolm_export": "手動匯出金鑰",
+            "setup_key_backup_title": "您將會失去您的加密訊息",
+            "description": "您確定要登出嗎？"
         }
     },
     "room_list": {
@@ -4039,7 +4040,8 @@
         "download_media": "下載來源媒體失敗，找不到來源 URL",
         "update_power_level": "無法變更權限等級",
         "unknown": "未知的錯誤",
-        "dialog_description_default": "出現一個錯誤。"
+        "dialog_description_default": "出現一個錯誤。",
+        "edit_history_unsupported": "您的家伺服器似乎並不支援此功能。"
     },
     "in_space1_and_space2": "在聊天空間 %(space1Name)s 與 %(space2Name)s。",
     "in_space_and_n_other_spaces": {

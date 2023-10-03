@@ -1,6 +1,5 @@
 {
     "Email address": "Alamat email",
-    "Session ID": "ID Sesi",
     "unknown error code": "kode kesalahan tidak diketahui",
     "Verification Pending": "Verifikasi Menunggu",
     "Warning!": "Peringatan!",
@@ -548,19 +547,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "Data di layar ini dibagikan dengan %(widgetDomain)s",
     "Modal Widget": "Widget Modal",
     "Message edits": "Editan pesan",
-    "Your homeserver doesn't seem to support this feature.": "Homeserver Anda sepertinya tidak mendukung fitur ini.",
-    "If they don't match, the security of your communication may be compromised.": "Jika mereka tidak cocok, keamanan komunikasi Anda mungkin dikompromikan.",
-    "Session key": "Kunci sesi",
-    "Session name": "Nama sesi",
-    "Confirm this user's session by comparing the following with their User Settings:": "Konfirmasi sesi pengguna ini dengan membandingkan berikut ini dengan Pengaturan Pengguna:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Konfirmasi dengan membandingkan berikut ini dengan Pengaturan Pengguna di sesi Anda yang lain:",
-    "These are likely ones other room admins are a part of.": "Ini kemungkinan adalah bagian dari admin ruangan lain.",
-    "Other spaces or rooms you might not know": "Space atau ruangan lainnya yang Anda mungkin tidak tahu",
-    "Spaces you know that contain this room": "Space yang Anda tahu yang berisi ruangan ini",
-    "Search spaces": "Cari space",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Tentukan space mana yang dapat mengakses ruangan ini. Jika sebuah space dipilih, anggotanya dapat menemukan dan bergabung <RoomName/>.",
-    "Select spaces": "Pilih space",
-    "You're removing all spaces. Access will default to invite only": "Anda menghilangkan semua space. Akses secara bawaan ke undangan saja",
     "%(count)s rooms": {
         "one": "%(count)s ruangan",
         "other": "%(count)s ruangan"
@@ -569,12 +555,6 @@
         "one": "%(count)s anggota",
         "other": "%(count)s anggota"
     },
-    "Are you sure you want to sign out?": "Apakah Anda yakin ingin keluar?",
-    "You'll lose access to your encrypted messages": "Anda akan kehilangan akses ke pesan terenkripsi Anda",
-    "Manually export keys": "Ekspor kunci secara manual",
-    "I don't want my encrypted messages": "Saya tidak ingin pesan-pesan terenkripsi saya",
-    "Start using Key Backup": "Mulai menggunakan Cadangan Kunci",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Pesan terenkripsi diamankan dengan enkripsi ujung ke ujung. Hanya Anda dan penerima punya kuncinya untuk membaca pesan ini.",
     "%(brand)s encountered an error during upload of:": "%(brand)s mengalami sebuah kesalahan ketika mengunggah unggahan:",
     "a key signature": "sebuah tandatangan kunci",
     "a device cross-signing signature": "sebuah tandatangan penandatanganan silang perangkat",
@@ -593,7 +573,6 @@
     "Themes": "Tema",
     "Moderation": "Moderasi",
     "Messaging": "Perpesanan",
-    "Spaces you know that contain this space": "Space yang Anda tahu yang berisi space ini",
     "Recently viewed": "Baru saja dilihat",
     "Link to room": "Tautan ke ruangan",
     "Recent searches": "Pencarian terkini",
@@ -638,7 +617,6 @@
     "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
     "Unread email icon": "Ikon email belum dibaca",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
     "Remove search filter for %(filter)s": "Hapus saringan pencarian untuk %(filter)s",
     "Start a group chat": "Mulai sebuah grup obrolan",
     "Other options": "Opsi lain",
@@ -673,7 +651,6 @@
     "unavailable": "tidak tersedia",
     "unknown status code": "kode keadaan tidak diketahui",
     "Upgrade room": "Tingkatkan ruangan",
-    "Other spaces you know": "Space lainnya yang Anda tahu",
     "Failed to query public rooms": "Gagal melakukan kueri ruangan publik",
     "common": {
         "about": "Tentang",
@@ -2725,7 +2702,16 @@
                 "other": "Memperbarui space... (%(progress)s dari %(count)s)"
             },
             "error_join_rule_change_title": "Gagal untuk memperbarui aturan bergabung",
-            "error_join_rule_change_unknown": "Kesalahan yang tidak diketahui"
+            "error_join_rule_change_unknown": "Kesalahan yang tidak diketahui",
+            "join_rule_restricted_dialog_empty_warning": "Anda menghilangkan semua space. Akses secara bawaan ke undangan saja",
+            "join_rule_restricted_dialog_title": "Pilih space",
+            "join_rule_restricted_dialog_description": "Tentukan space mana yang dapat mengakses ruangan ini. Jika sebuah space dipilih, anggotanya dapat menemukan dan bergabung <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Cari space",
+            "join_rule_restricted_dialog_heading_space": "Space yang Anda tahu yang berisi space ini",
+            "join_rule_restricted_dialog_heading_room": "Space yang Anda tahu yang berisi ruangan ini",
+            "join_rule_restricted_dialog_heading_other": "Space atau ruangan lainnya yang Anda mungkin tidak tahu",
+            "join_rule_restricted_dialog_heading_unknown": "Ini kemungkinan adalah bagian dari admin ruangan lain.",
+            "join_rule_restricted_dialog_heading_known": "Space lainnya yang Anda tahu"
         },
         "general": {
             "publish_toggle": "Publikasi ruangan ini ke publik di direktori ruangan %(domain)s?",
@@ -2917,7 +2903,13 @@
             "incoming_sas_device_dialog_text_1": "Verifikasi perangkat ini untuk menandainya sebagai terpercaya. Mempercayai perangkat ini akan memberikan Anda dan pengguna lain ketenangan saat menggunakan pesan terenkripsi secara ujung ke ujung.",
             "incoming_sas_device_dialog_text_2": "Memverifikasi perangkat ini akan menandainya sebagai terpercaya, dan pengguna yang telah diverifikasi dengan Anda akan mempercayai perangkat ini.",
             "incoming_sas_dialog_waiting": "Menunggu pengguna untuk konfirmasi…",
-            "incoming_sas_dialog_title": "Permintaan Verifikasi Masuk"
+            "incoming_sas_dialog_title": "Permintaan Verifikasi Masuk",
+            "manual_device_verification_self_text": "Konfirmasi dengan membandingkan berikut ini dengan Pengaturan Pengguna di sesi Anda yang lain:",
+            "manual_device_verification_user_text": "Konfirmasi sesi pengguna ini dengan membandingkan berikut ini dengan Pengaturan Pengguna:",
+            "manual_device_verification_device_name_label": "Nama sesi",
+            "manual_device_verification_device_id_label": "ID Sesi",
+            "manual_device_verification_device_key_label": "Kunci sesi",
+            "manual_device_verification_footer": "Jika mereka tidak cocok, keamanan komunikasi Anda mungkin dikompromikan."
         },
         "old_version_detected_title": "Data kriptografi lama terdeteksi",
         "old_version_detected_description": "Data dari %(brand)s versi lama telah terdeteksi. Ini akan menyebabkan kriptografi ujung ke ujung tidak berfungsi di versi yang lebih lama. Pesan terenkripsi secara ujung ke ujung yang dipertukarkan baru-baru ini saat menggunakan versi yang lebih lama mungkin tidak dapat didekripsi dalam versi ini. Ini juga dapat menyebabkan pesan yang dipertukarkan dengan versi ini gagal. Jika Anda mengalami masalah, keluar dan masuk kembali. Untuk menyimpan riwayat pesan, ekspor dan impor ulang kunci Anda.",
@@ -3224,6 +3216,15 @@
             "clear_data_title": "Hapus semua data di sesi ini?",
             "clear_data_description": "Menghapus semua data dari sesi ini itu permanen. Pesan-pesan terenkripsi akan hilang kecuali jika kunci-kuncinya telah dicadangkan.",
             "clear_data_button": "Hapus semua data"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Pesan terenkripsi diamankan dengan enkripsi ujung ke ujung. Hanya Anda dan penerima punya kuncinya untuk membaca pesan ini.",
+            "setup_secure_backup_description_2": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server.",
+            "use_key_backup": "Mulai menggunakan Cadangan Kunci",
+            "skip_key_backup": "Saya tidak ingin pesan-pesan terenkripsi saya",
+            "megolm_export": "Ekspor kunci secara manual",
+            "setup_key_backup_title": "Anda akan kehilangan akses ke pesan terenkripsi Anda",
+            "description": "Apakah Anda yakin ingin keluar?"
         }
     },
     "room_list": {
@@ -4046,7 +4047,8 @@
         "download_media": "Gagal mengunduh media sumber, tidak ada URL sumber yang ditemukan",
         "update_power_level": "Gagal untuk mengubah tingkat daya",
         "unknown": "Kesalahan tidak diketahui",
-        "dialog_description_default": "Telah terjadi kesalahan."
+        "dialog_description_default": "Telah terjadi kesalahan.",
+        "edit_history_unsupported": "Homeserver Anda sepertinya tidak mendukung fitur ini."
     },
     "in_space1_and_space2": "Dalam space %(space1Name)s dan %(space2Name)s.",
     "in_space_and_n_other_spaces": {

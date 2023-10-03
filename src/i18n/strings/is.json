@@ -48,7 +48,6 @@
     "Send Logs": "Senda atvikaskrár",
     "Verification Pending": "Sannvottun í bið",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Skoðaðu tölvupóstinn þinn og smelltu á tengilinn sem hann inniheldur. Þegar því er lokið skaltu smella á að halda áfram.",
-    "Session ID": "Auðkenni setu",
     "Delete Widget": "Eyða viðmótshluta",
     "Create new room": "Búa til nýja spjallrás",
     "Clear Storage and Sign Out": "Hreinsa gagnageymslu og skrá út",
@@ -367,12 +366,10 @@
     "Share Room Message": "Deila skilaboðum spjallrásar",
     "Share Room": "Deila spjallrás",
     "Email (optional)": "Tölvupóstfang (valfrjálst)",
-    "Session name": "Nafn á setu",
     "%(count)s rooms": {
         "one": "%(count)s spjallrás",
         "other": "%(count)s spjallrásir"
     },
-    "Are you sure you want to sign out?": "Ertu viss um að þú viljir skrá þig út?",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -405,9 +402,6 @@
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
     "Reset everything": "Frumstilla allt",
     "Not Trusted": "Ekki treyst",
-    "Session key": "Dulritunarlykill setu",
-    "Other spaces or rooms you might not know": "Önnur svæði sem þú gætir ekki vitað um",
-    "Select spaces": "Veldu svæði",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -435,13 +429,8 @@
     "Heart": "Hjarta",
     "Corn": "Maís",
     "Strawberry": "Jarðarber",
-    "If they don't match, the security of your communication may be compromised.": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð.",
-    "Confirm by comparing the following with the User Settings in your other session:": "Staðfestu með því að bera eftirfarandi saman við 'Stillingar notanda' í hinni setunni þinni:",
-    "Start using Key Backup": "Byrja að nota öryggisafrit dulritunarlykla",
     "Spanner": "Skrúflykill",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
-    "Spaces you know that contain this room": "Svæði sem þú veist að innihalda þetta svæði",
-    "Spaces you know that contain this space": "Svæði sem þú veist að innihalda þetta svæði",
     "Not a valid Security Key": "Ekki gildur öryggislykill",
     "This looks like a valid Security Key!": "Þetta lítur út eins og gildur öryggislykill!",
     "Enter Security Key": "Settu inn öryggislykil",
@@ -456,8 +445,6 @@
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
     "Join %(roomAddress)s": "Taka þátt í %(roomAddress)s",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Veldu hvaða svæði hafa aðgang að þessari spjallrás. Ef svæði er valið geta meðlimir þess fundið og tekið þátt í spjallrásinni<RoomName/>.",
-    "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
@@ -473,19 +460,16 @@
     "You're all caught up.": "Þú hefur klárað að lesa allt.",
     "Upgrade public room": "Uppfæra almenningsspjallrás",
     "Upgrade private room": "Uppfæra einkaspjallrás",
-    "Search spaces": "Leita að svæðum",
     "%(count)s members": {
         "one": "%(count)s þátttakandi",
         "other": "%(count)s þátttakendur"
     },
-    "You'll lose access to your encrypted messages": "Þú munt tapa dulrituðu skilaboðunum þínum",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
         "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
     },
     "Open in OpenStreetMap": "Opna í OpenStreetMap",
-    "I don't want my encrypted messages": "Ég vil ekki dulrituðu skilaboðin mín",
     "<inviter/> invites you": "<inviter/> býður þér",
     "Enter Security Phrase": "Settu inn öryggisfrasa",
     "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
@@ -503,7 +487,6 @@
     },
     "Verification Request": "Beiðni um sannvottun",
     "Security Phrase": "Öryggisfrasi",
-    "Manually export keys": "Flytja út dulritunarlykla handvirkt",
     "Failed to start livestream": "Tókst ekki að ræsa beint streymi",
     "Failed to decrypt %(failedCount)s sessions!": "Mistókst að afkóða %(failedCount)s setur!",
     "Find others by phone or email": "Finndu aðra með símanúmeri eða tölvupóstfangi",
@@ -541,7 +524,6 @@
     "Upload files (%(current)s of %(total)s)": "Senda inn skrár (%(current)s oaf %(total)s)",
     "We encountered an error trying to restore your previous session.": "Villa kom upp þegar reynt var að endurheimta fyrri setuna þína.",
     "A connection error occurred while trying to contact the server.": "Villa kom upp þegar reynt var að tengjast þjóninum.",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Öryggi dulritaðra skilaboða er tryggt með enda-í-enda dulritun. Einungis þú og viðtakendurnir hafa dulritunarlyklana til að lesa slík skilaboð.",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "Unable to restore backup": "Tekst ekki að endurheimta öryggisafrit",
     "Upload %(count)s other files": {
@@ -2386,7 +2368,13 @@
                 "other": "Uppfæri svæði... (%(progress)s af %(count)s)"
             },
             "error_join_rule_change_title": "Mistókst að uppfæra reglur fyrir þátttöku",
-            "error_join_rule_change_unknown": "Óþekkt bilun"
+            "error_join_rule_change_unknown": "Óþekkt bilun",
+            "join_rule_restricted_dialog_title": "Veldu svæði",
+            "join_rule_restricted_dialog_description": "Veldu hvaða svæði hafa aðgang að þessari spjallrás. Ef svæði er valið geta meðlimir þess fundið og tekið þátt í spjallrásinni<RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Leita að svæðum",
+            "join_rule_restricted_dialog_heading_space": "Svæði sem þú veist að innihalda þetta svæði",
+            "join_rule_restricted_dialog_heading_room": "Svæði sem þú veist að innihalda þetta svæði",
+            "join_rule_restricted_dialog_heading_other": "Önnur svæði sem þú gætir ekki vitað um"
         },
         "general": {
             "publish_toggle": "Birta þessa spjallrás opinberlega á skrá %(domain)s yfir spjallrásir?",
@@ -2537,7 +2525,12 @@
             "cancelled_self": "Þú hættir við sannvottun á hinu tækinu þínu.",
             "cancelled_user": "%(displayName)s hætti við sannvottun.",
             "cancelled": "Þú hættir við sannvottun.",
-            "incoming_sas_dialog_title": "Innkomin beiðni um sannvottun"
+            "incoming_sas_dialog_title": "Innkomin beiðni um sannvottun",
+            "manual_device_verification_self_text": "Staðfestu með því að bera eftirfarandi saman við 'Stillingar notanda' í hinni setunni þinni:",
+            "manual_device_verification_device_name_label": "Nafn á setu",
+            "manual_device_verification_device_id_label": "Auðkenni setu",
+            "manual_device_verification_device_key_label": "Dulritunarlykill setu",
+            "manual_device_verification_footer": "Ef þetta samsvarar ekki, getur verið að samskiptin þín séu berskjölduð."
         },
         "old_version_detected_title": "Gömul dulritunargögn fundust",
         "verification_requested_toast_title": "Beðið um sannvottun",
@@ -2778,6 +2771,14 @@
         "soft_logout": {
             "clear_data_title": "Hreinsa öll gögn í þessari setu?",
             "clear_data_button": "Hreinsa öll gögn"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Öryggi dulritaðra skilaboða er tryggt með enda-í-enda dulritun. Einungis þú og viðtakendurnir hafa dulritunarlyklana til að lesa slík skilaboð.",
+            "use_key_backup": "Byrja að nota öryggisafrit dulritunarlykla",
+            "skip_key_backup": "Ég vil ekki dulrituðu skilaboðin mín",
+            "megolm_export": "Flytja út dulritunarlykla handvirkt",
+            "setup_key_backup_title": "Þú munt tapa dulrituðu skilaboðunum þínum",
+            "description": "Ertu viss um að þú viljir skrá þig út?"
         }
     },
     "room_list": {
@@ -3477,7 +3478,8 @@
         "something_went_wrong": "Eitthvað fór úrskeiðis!",
         "update_power_level": "Mistókst að breyta valdastigi",
         "unknown": "Óþekkt villa",
-        "dialog_description_default": "Villa kom upp."
+        "dialog_description_default": "Villa kom upp.",
+        "edit_history_unsupported": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika."
     },
     "in_space1_and_space2": "Á svæðunum %(space1Name)s og %(space2Name)s.",
     "in_space_and_n_other_spaces": {

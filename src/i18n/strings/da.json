@@ -1,5 +1,4 @@
 {
-    "Session ID": "Sessions ID",
     "Warning!": "Advarsel!",
     "unknown error code": "Ukendt fejlkode",
     "Unnamed room": "Unavngivet rum",
@@ -650,7 +649,8 @@
     },
     "encryption": {
         "verification": {
-            "complete_title": "Bekræftet!"
+            "complete_title": "Bekræftet!",
+            "manual_device_verification_device_id_label": "Sessions ID"
         },
         "cancel_entering_passphrase_title": "Annuller indtastning af kodeord?",
         "cancel_entering_passphrase_description": "Er du sikker på, at du vil annullere indtastning af adgangssætning?",

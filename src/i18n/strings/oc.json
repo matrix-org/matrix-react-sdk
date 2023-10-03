@@ -49,7 +49,6 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Session name": "Nom de session",
     "Email address": "Adreça de corrièl",
     "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
@@ -348,7 +347,8 @@
     },
     "encryption": {
         "verification": {
-            "cancelling": "Anullacion…"
+            "cancelling": "Anullacion…",
+            "manual_device_verification_device_name_label": "Nom de session"
         },
         "setup_secure_backup": {
             "title": "Parametrar"

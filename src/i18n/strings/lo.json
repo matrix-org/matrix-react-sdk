@@ -499,21 +499,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "ຂໍ້ມູນໃນໜ້າຈໍນີ້ຖືກແບ່ງປັນກັບ %(widgetDomain)s",
     "Modal Widget": "ຕົວຊ່ວຍ Widget",
     "Message edits": "ແກ້ໄຂຂໍ້ຄວາມ",
-    "Your homeserver doesn't seem to support this feature.": "ເບິ່ງຄືວ່າ homeserver ຂອງທ່ານບໍ່ຮອງຮັບຄຸນສົມບັດນີ້.",
-    "If they don't match, the security of your communication may be compromised.": "ຖ້າລະຫັດບໍ່ກົງກັນ, ຄວາມປອດໄພຂອງການສື່ສານຂອງທ່ານອາດຈະຖືກທໍາລາຍ.",
-    "Session key": "ລະຫັດລະບົບ",
-    "Session ID": "ID ລະບົບ",
-    "Session name": "ຊື່ລະບົບ",
-    "Confirm this user's session by comparing the following with their User Settings:": "ຢືນຢັນລະບົບຂອງຜູ້ໃຊ້ນີ້ໂດຍການປຽບທຽບສິ່ງຕໍ່ໄປນີ້ກັບການຕັ້ງຄ່າຜູ້ໃຊ້ຂອງເຂົາເຈົ້າ:",
-    "Confirm by comparing the following with the User Settings in your other session:": "ຢືນຢັນໂດຍການປຽບທຽບສິ່ງຕໍ່ໄປນີ້ກັບການຕັ້ງຄ່າຜູ້ໃຊ້ໃນລະບົບອື່ນຂອງທ່ານ:",
-    "These are likely ones other room admins are a part of.": "ເຫຼົ່ານີ້ອາດຈະເປັນຜູ້ຄຸ້ມຄອງຫ້ອງອື່ນໆເປັນສ່ວນຫນຶ່ງຂອງ.",
-    "Other spaces or rooms you might not know": "ພື້ນທີ່ ຫຼື ຫ້ອງອື່ນໆທີ່ທ່ານອາດບໍ່ຮູ້ຈັກ",
-    "Spaces you know that contain this room": "ພື້ນທີ່ທີ່ທ່ານຮູ້ຈັກ ຊຶ່ງບັນຈຸໃນຫ້ອງນີ້",
-    "Spaces you know that contain this space": "ພື້ນທີ່ ທີ່ທ່ານຮູ້ຈັກ ທີ່ບັນຈຸພື້ນທີ່ນີ້",
-    "Search spaces": "ຊອກຫາສະຖານທີ່",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "ຕັດສິນໃຈວ່າບ່ອນໃດທີ່ສາມາດເຂົ້າເຖິງຫ້ອງນີ້ໄດ້. ຖ້າຫາກພື້ນທີ່ເລືອກ, ສະມາຊິກຂອງຕົນສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມ <RoomName/>.",
-    "Select spaces": "ເລືອກພື້ນທີ່",
-    "You're removing all spaces. Access will default to invite only": "ທ່ານກຳລັງລຶບພື້ນທີ່ທັງໝົດອອກ. ການເຂົ້າເຖິງຈະເປັນຄ່າເລີ່ມຕົ້ນເພື່ອເຊີນເທົ່ານັ້ນ",
     "%(count)s rooms": {
         "one": "%(count)s ຫ້ອງ",
         "other": "%(count)s ຫ້ອງ"
@@ -522,12 +507,6 @@
         "one": "ສະມາຊິກ %(count)s",
         "other": "ສະມາຊິກ %(count)s"
     },
-    "Are you sure you want to sign out?": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກຈາກລະບົບ?",
-    "You'll lose access to your encrypted messages": "ທ່ານຈະສູນເສຍການເຂົ້າເຖິງລະຫັດຂໍ້ຄວາມຂອງທ່ານ",
-    "Manually export keys": "ສົ່ງກະແຈອອກດ້ວຍຕົນເອງ",
-    "I don't want my encrypted messages": "ຂ້ອຍບໍ່ຕ້ອງການຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດຂອງຂ້ອຍ",
-    "Start using Key Backup": "ເລີ່ມຕົ້ນການນໍາໃຊ້ ສຳຮອງກະເເຈ",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ແມ່ນປອດໄພດ້ວຍການເຂົ້າລະຫັດແບບຕົ້ນທາງ. ພຽງແຕ່ທ່ານ ແລະ ຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈເພື່ອອ່ານຂໍ້ຄວາມເຫຼົ່ານີ້.",
     "Backup version:": "ເວີຊັ້ນສໍາຮອງຂໍ້ມູນ:",
     "This backup is trusted because it has been restored on this session": "ການສຳຮອງຂໍ້ມູນນີ້ແມ່ນເຊື່ອຖືໄດ້ເນື່ອງຈາກຖືກກູ້ຄືນໃນລະບົບນີ້",
     "Fish": "ປາ",
@@ -2264,7 +2243,15 @@
                 "other": "ກຳລັງຍົກລະດັບພື້ນທີ່... (%(progress)s ຈາກທັງໝົດ %(count)s)"
             },
             "error_join_rule_change_title": "ອັບເດດກົດລະບຽບການເຂົ້າຮ່ວມບໍ່ສຳເລັດ",
-            "error_join_rule_change_unknown": "ຄວາມລົ້ມເຫຼວທີ່ບໍ່ຮູ້ສາເຫດ"
+            "error_join_rule_change_unknown": "ຄວາມລົ້ມເຫຼວທີ່ບໍ່ຮູ້ສາເຫດ",
+            "join_rule_restricted_dialog_empty_warning": "ທ່ານກຳລັງລຶບພື້ນທີ່ທັງໝົດອອກ. ການເຂົ້າເຖິງຈະເປັນຄ່າເລີ່ມຕົ້ນເພື່ອເຊີນເທົ່ານັ້ນ",
+            "join_rule_restricted_dialog_title": "ເລືອກພື້ນທີ່",
+            "join_rule_restricted_dialog_description": "ຕັດສິນໃຈວ່າບ່ອນໃດທີ່ສາມາດເຂົ້າເຖິງຫ້ອງນີ້ໄດ້. ຖ້າຫາກພື້ນທີ່ເລືອກ, ສະມາຊິກຂອງຕົນສາມາດຊອກຫາ ແລະເຂົ້າຮ່ວມ <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "ຊອກຫາສະຖານທີ່",
+            "join_rule_restricted_dialog_heading_space": "ພື້ນທີ່ ທີ່ທ່ານຮູ້ຈັກ ທີ່ບັນຈຸພື້ນທີ່ນີ້",
+            "join_rule_restricted_dialog_heading_room": "ພື້ນທີ່ທີ່ທ່ານຮູ້ຈັກ ຊຶ່ງບັນຈຸໃນຫ້ອງນີ້",
+            "join_rule_restricted_dialog_heading_other": "ພື້ນທີ່ ຫຼື ຫ້ອງອື່ນໆທີ່ທ່ານອາດບໍ່ຮູ້ຈັກ",
+            "join_rule_restricted_dialog_heading_unknown": "ເຫຼົ່ານີ້ອາດຈະເປັນຜູ້ຄຸ້ມຄອງຫ້ອງອື່ນໆເປັນສ່ວນຫນຶ່ງຂອງ."
         },
         "general": {
             "publish_toggle": "ເຜີຍແຜ່ຫ້ອງນີ້ຕໍ່ສາທາລະນະຢູ່ໃນຄຳນຳຫ້ອງຂອງ %(domain)s ບໍ?",
@@ -2433,7 +2420,13 @@
             "incoming_sas_user_dialog_text_2": "ການຢືນຢັນຜູ້ໃຊ້ນີ້ຈະເປັນເຄື່ອງໝາຍໃນລະບົບຂອງເຂົາເຈົ້າໜ້າເຊື່ອຖືໄດ້ ແລະ ເປັນເຄື່ອງໝາຍເຖິງລະບົບຂອງທ່ານ ເປັນທີ່ເຊື່ອຖືໄດ້ຕໍ່ກັບເຂົາເຈົ້າ.",
             "incoming_sas_device_dialog_text_1": "ຢັ້ງຢືນອຸປະກອນນີ້ເພື່ອເປັນເຄື່ອງໝາຍ ໜ້າເຊື່ອຖືໄດ້. ການໄວ້ໃຈໃນອຸປະກອນນີ້ເຮັດໃຫ້ທ່ານ ແລະ ຜູ້ໃຊ້ອື່ນໆມີຄວາມອູ່ນໃນຈິດໃຈຫຼາຍຂຶ້ນເມື່ອເຂົ້າລະຫັດຂໍ້ຄວາມເເຕ່ຕົ້ນທາງຫາປາຍທາງ.",
             "incoming_sas_device_dialog_text_2": "ການຢັ້ງຢືນອຸປະກອນນີ້ຈະເປັນເຄື່ອງໝາຍໜ້າເຊື່ອຖືໄດ້ ແລະ ຜູ້ໃຊ້ທີ່ໄດ້ຢັ້ງຢືນກັບທ່ານຈະເຊື່ອຖືອຸປະກອນນີ້.",
-            "incoming_sas_dialog_title": "ການຮ້ອງຂໍການຢັ້ງຢືນຂາເຂົ້າ"
+            "incoming_sas_dialog_title": "ການຮ້ອງຂໍການຢັ້ງຢືນຂາເຂົ້າ",
+            "manual_device_verification_self_text": "ຢືນຢັນໂດຍການປຽບທຽບສິ່ງຕໍ່ໄປນີ້ກັບການຕັ້ງຄ່າຜູ້ໃຊ້ໃນລະບົບອື່ນຂອງທ່ານ:",
+            "manual_device_verification_user_text": "ຢືນຢັນລະບົບຂອງຜູ້ໃຊ້ນີ້ໂດຍການປຽບທຽບສິ່ງຕໍ່ໄປນີ້ກັບການຕັ້ງຄ່າຜູ້ໃຊ້ຂອງເຂົາເຈົ້າ:",
+            "manual_device_verification_device_name_label": "ຊື່ລະບົບ",
+            "manual_device_verification_device_id_label": "ID ລະບົບ",
+            "manual_device_verification_device_key_label": "ລະຫັດລະບົບ",
+            "manual_device_verification_footer": "ຖ້າລະຫັດບໍ່ກົງກັນ, ຄວາມປອດໄພຂອງການສື່ສານຂອງທ່ານອາດຈະຖືກທໍາລາຍ."
         },
         "old_version_detected_title": "ກວດພົບຂໍ້ມູນການເຂົ້າລະຫັດລັບເກົ່າ",
         "old_version_detected_description": "ກວດພົບຂໍ້ມູນຈາກ%(brand)s ລຸ້ນເກົ່າກວ່າ. ອັນນີ້ຈະເຮັດໃຫ້ການເຂົ້າລະຫັດລັບແບບຕົ້ນທາງເຖິງປາຍທາງເຮັດວຽກຜິດປົກກະຕິໃນລຸ້ນເກົ່າ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງທີ່ໄດ້ແລກປ່ຽນເມື່ອບໍ່ດົນມານີ້ ໃນຂະນະທີ່ໃຊ້ເວີຊັນເກົ່າອາດຈະບໍ່ສາມາດຖອດລະຫັດໄດ້ໃນລູ້ນນີ້. ນີ້ອາດຈະເຮັດໃຫ້ຂໍ້ຄວາມທີ່ແລກປ່ຽນກັບລູ້ນນີ້ບໍ່ສຳເລັດ. ຖ້າເຈົ້າປະສົບບັນຫາ, ໃຫ້ອອກຈາກລະບົບ ແລະ ກັບມາໃໝ່ອີກຄັ້ງ. ເພື່ອຮັກສາປະຫວັດຂໍ້ຄວາມ, ສົ່ງອອກ ແລະ ນໍາເຂົ້າລະຫັດຂອງທ່ານຄືນໃໝ່.",
@@ -2687,6 +2680,14 @@
             "clear_data_title": "ລຶບລ້າງຂໍ້ມູນທັງໝົດໃນລະບົບນີ້ບໍ?",
             "clear_data_description": "ການລຶບລ້າງຂໍ້ມູນທັງໝົດຈາກລະບົບນີ້ຖາວອນ. ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດຈະສູນເສຍເວັ້ນເສຍແຕ່ກະແຈຂອງເຂົາເຈົ້າໄດ້ຮັບການສໍາຮອງຂໍ້ມູນ.",
             "clear_data_button": "ລຶບລ້າງຂໍ້ມູນທັງໝົດ"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ແມ່ນປອດໄພດ້ວຍການເຂົ້າລະຫັດແບບຕົ້ນທາງ. ພຽງແຕ່ທ່ານ ແລະ ຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈເພື່ອອ່ານຂໍ້ຄວາມເຫຼົ່ານີ້.",
+            "use_key_backup": "ເລີ່ມຕົ້ນການນໍາໃຊ້ ສຳຮອງກະເເຈ",
+            "skip_key_backup": "ຂ້ອຍບໍ່ຕ້ອງການຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດຂອງຂ້ອຍ",
+            "megolm_export": "ສົ່ງກະແຈອອກດ້ວຍຕົນເອງ",
+            "setup_key_backup_title": "ທ່ານຈະສູນເສຍການເຂົ້າເຖິງລະຫັດຂໍ້ຄວາມຂອງທ່ານ",
+            "description": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກຈາກລະບົບ?"
         }
     },
     "room_list": {
@@ -3393,7 +3394,8 @@
         "something_went_wrong": "ມີບາງຢ່າງຜິດພາດ!",
         "update_power_level": "ການປ່ຽນແປງລະດັບພະລັງງານບໍ່ສຳເລັດ",
         "unknown": "ຄວາມຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
-        "dialog_description_default": "ໄດ້ເກີດຂໍ້ຜິດພາດ."
+        "dialog_description_default": "ໄດ້ເກີດຂໍ້ຜິດພາດ.",
+        "edit_history_unsupported": "ເບິ່ງຄືວ່າ homeserver ຂອງທ່ານບໍ່ຮອງຮັບຄຸນສົມບັດນີ້."
     },
     "name_and_id": "%(name)s(%(userId)s)",
     "items_and_n_others": {

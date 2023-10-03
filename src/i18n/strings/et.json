@@ -148,10 +148,6 @@
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
     "not specified": "määratlemata",
     "unknown error code": "tundmatu veakood",
-    "I don't want my encrypted messages": "Ma ei soovi oma krüptitud sõnumeid",
-    "Manually export keys": "Ekspordi võtmed käsitsi",
-    "You'll lose access to your encrypted messages": "Sa kaotad ligipääsu oma krüptitud sõnumitele",
-    "Are you sure you want to sign out?": "Kas sa oled kindel, et soovid välja logida?",
     "Cancel All": "Tühista kõik",
     "Upload Error": "Üleslaadimise viga",
     "Verification Request": "Verifitseerimispäring",
@@ -212,13 +208,6 @@
     "Destroy cross-signing keys?": "Kas hävitame risttunnustamise võtmed?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Risttunnustamise võtmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kõik sinu verifitseeritud vestluskaaslased näevad seejärel turvateateid. Kui sa just pole kaotanud ligipääsu kõikidele oma seadmetele, kust sa risttunnustamist oled teinud, siis sa ilmselgelt ei peaks kustutamist ette võtma.",
     "Clear cross-signing keys": "Eemalda risttunnustamise võtmed",
-    "Confirm by comparing the following with the User Settings in your other session:": "Kinnita seda võrreldes järgnevaid andmeid oma teise sessiooni kasutajaseadetes:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Kinnita selle kasutaja sessioon võrreldes järgnevaid andmeid tema kasutajaseadetes:",
-    "Session name": "Sessiooni nimi",
-    "Session ID": "Sessiooni tunnus",
-    "Session key": "Sessiooni võti",
-    "If they don't match, the security of your communication may be compromised.": "Kui nad omavahel ei klapi, siis teie suhtluse turvalisus võib olla ohus.",
-    "Your homeserver doesn't seem to support this feature.": "Tundub, et sinu koduserver ei toeta sellist funktsionaalsust.",
     "Message edits": "Sõnumite muutmised",
     "Failed to upgrade room": "Jututoa versiooni uuendamine ei õnnestunud",
     "The room upgrade could not be completed": "Jututoa uuendust ei õnnestunud teha",
@@ -234,7 +223,6 @@
     "Unable to load backup status": "Varunduse oleku laadimine ei õnnestunud",
     "Confirm encryption setup": "Krüptimise seadistuse kinnitamine",
     "Click the button below to confirm setting up encryption.": "Kinnitamaks, et soovid krüptimist seadistada, klõpsi järgnevat nuppu.",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krüptitud sõnumid kasutavad läbivat krüptimist. Ainult sinul ja saaja(te)l on võtmed selliste sõnumite lugemiseks.",
     "Deactivate account": "Deaktiveeri kasutajakonto",
     "%(count)s verified sessions": {
         "other": "%(count)s verifitseeritud sessiooni",
@@ -245,7 +233,6 @@
         "one": "%(count)s sessioon"
     },
     "This backup is trusted because it has been restored on this session": "See varukoopia on usaldusväärne, sest ta on taastatud sellest sessioonist",
-    "Start using Key Backup": "Võta kasutusele krüptovõtmete varundamine",
     "Server isn't responding": "Server ei vasta päringutele",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Sinu koduserver ei vasta mõnedele sinu päringutele. Alljärgnevalt on mõned võimalikud põhjused.",
     "The server (%(serverName)s) took too long to respond.": "Vastuseks serverist %(serverName)s kulus liiga palju aega.",
@@ -562,15 +549,8 @@
     "Reset everything": "Alusta kõigega algusest",
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Unustasid või oled kaotanud kõik võimalused ligipääsu taastamiseks? <a>Lähtesta kõik ühe korraga</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Kui sa siiski soovid seda teha, siis sinu sõnumeid me ei kustuta, aga seniks kuni sõnumite indeks taustal uuesti luuakse, toimib otsing aeglaselt ja ebatõhusalt",
-    "You're removing all spaces. Access will default to invite only": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
-    "Select spaces": "Vali kogukonnakeskused",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vali missugustel kogukonnakeskustel on sellele jututoale ligipääs. Kui kogukonnakeskus on valitud, siis selle liikmed saavad <RoomName/> jututuba leida ja temaga liituda.",
-    "Search spaces": "Otsi kogukonnakeskusi",
-    "Spaces you know that contain this room": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see jututuba",
-    "Other spaces or rooms you might not know": "Sellised muud jututoad ja kogukonnakeskused, mida sa ei pruugi teada",
     "Automatically invite members from this room to the new one": "Kutsu jututoa senised liikmed automaatselt uude jututuppa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Palun arvesta, et uuendusega tehakse jututoast uus variant</b>. Kõik senised sõnumid jäävad sellesse jututuppa arhiveeritud olekus.",
-    "These are likely ones other room admins are a part of.": "Ilmselt on tegemist nendega, mille liikmed on teiste jututubade haldajad.",
     "To join a space you'll need an invite.": "Kogukonnakeskusega liitumiseks vajad kutset.",
     "%(count)s reply": {
         "one": "%(count)s vastus",
@@ -593,7 +573,6 @@
     "Themes": "Teemad",
     "Messaging": "Sõnumisuhtlus",
     "Moderation": "Modereerimine",
-    "Spaces you know that contain this space": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see kogukond",
     "Recently viewed": "Hiljuti vaadatud",
     "Recent searches": "Hiljutised otsingud",
     "To search messages, look for this icon at the top of a room <icon/>": "Sõnumite otsimiseks klõpsi <icon/> ikooni jututoa ülaosas",
@@ -638,7 +617,6 @@
     "An error occurred whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga",
     "Unread email icon": "Lugemata e-kirja ikoon",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kui sa logid välja, siis krüptovõtmed kustutatakse sellest seadmest. Seega, kui sul pole krüptovõtmeid varundatud teistes seadmetes või kasutusel serveripoolset varundust, siis sa krüptitud sõnumeid hiljem lugeda ei saa.",
     "Remove search filter for %(filter)s": "Eemalda otsingufilter „%(filter)s“",
     "Start a group chat": "Alusta rühmavestlust",
     "Other options": "Muud valikud",
@@ -673,7 +651,6 @@
     "unavailable": "pole saadaval",
     "unknown status code": "teadmata olekukood",
     "Upgrade room": "Uuenda jututoa versiooni",
-    "Other spaces you know": "Muud kogukonnad, mida sa tead",
     "Failed to query public rooms": "Avalike jututubade tuvastamise päring ei õnnestunud",
     "common": {
         "about": "Rakenduse teave",
@@ -2724,7 +2701,16 @@
                 "other": "Uuendan kogukonnakeskuseid... (%(progress)s / %(count)s)"
             },
             "error_join_rule_change_title": "Liitumisreeglite uuendamine ei õnnestunud",
-            "error_join_rule_change_unknown": "Määratlemata viga"
+            "error_join_rule_change_unknown": "Määratlemata viga",
+            "join_rule_restricted_dialog_empty_warning": "Sa oled eemaldamas kõiki kogukonnakeskuseid. Edaspidine ligipääs eeldab kutse olemasolu",
+            "join_rule_restricted_dialog_title": "Vali kogukonnakeskused",
+            "join_rule_restricted_dialog_description": "Vali missugustel kogukonnakeskustel on sellele jututoale ligipääs. Kui kogukonnakeskus on valitud, siis selle liikmed saavad <RoomName/> jututuba leida ja temaga liituda.",
+            "join_rule_restricted_dialog_filter_placeholder": "Otsi kogukonnakeskusi",
+            "join_rule_restricted_dialog_heading_space": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see kogukond",
+            "join_rule_restricted_dialog_heading_room": "Sulle teadaolevad kogukonnakeskused, millesse kuulub see jututuba",
+            "join_rule_restricted_dialog_heading_other": "Sellised muud jututoad ja kogukonnakeskused, mida sa ei pruugi teada",
+            "join_rule_restricted_dialog_heading_unknown": "Ilmselt on tegemist nendega, mille liikmed on teiste jututubade haldajad.",
+            "join_rule_restricted_dialog_heading_known": "Muud kogukonnad, mida sa tead"
         },
         "general": {
             "publish_toggle": "Kas avaldame selle jututoa %(domain)s jututubade loendis?",
@@ -2910,7 +2896,13 @@
             "incoming_sas_device_dialog_text_1": "Selle seadme usaldamiseks peaksid ta verifitseerima. Kui sa pruugid läbivalt krüptitud sõnumeid, siis selle seadme usaldamine tagab sulle ja teistele kasutajatele täiendava meelerahu.",
             "incoming_sas_device_dialog_text_2": "Selle seadme verifitseerimisel märgitakse ta usaldusväärseks ning kõik kasutajad, kes sinuga on verifitseerimise läbi teinud, loevad ka selle seadme usaldusväärseks.",
             "incoming_sas_dialog_waiting": "Ootan teise osapoole kinnitust…",
-            "incoming_sas_dialog_title": "Saabuv verifitseerimispalve"
+            "incoming_sas_dialog_title": "Saabuv verifitseerimispalve",
+            "manual_device_verification_self_text": "Kinnita seda võrreldes järgnevaid andmeid oma teise sessiooni kasutajaseadetes:",
+            "manual_device_verification_user_text": "Kinnita selle kasutaja sessioon võrreldes järgnevaid andmeid tema kasutajaseadetes:",
+            "manual_device_verification_device_name_label": "Sessiooni nimi",
+            "manual_device_verification_device_id_label": "Sessiooni tunnus",
+            "manual_device_verification_device_key_label": "Sessiooni võti",
+            "manual_device_verification_footer": "Kui nad omavahel ei klapi, siis teie suhtluse turvalisus võib olla ohus."
         },
         "old_version_detected_title": "Tuvastasin andmed, mille puhul on kasutatud vanemat tüüpi krüptimist",
         "old_version_detected_description": "%(brand)s vanema versiooni andmed on tuvastatud. See kindlasti põhjustab läbiva krüptimise tõrke vanemas versioonis. Läbivalt krüptitud sõnumid, mida on vanema versiooni kasutamise ajal hiljuti vahetatud, ei pruugi selles versioonis olla dekrüptitavad. See võib põhjustada vigu ka selle versiooniga saadetud sõnumite lugemisel. Kui teil tekib probleeme, logige välja ja uuesti sisse. Sõnumite ajaloo säilitamiseks eksportige ja uuesti importige oma krüptovõtmed.",
@@ -3217,6 +3209,15 @@
             "clear_data_title": "Kas eemaldame kõik selle sessiooni andmed?",
             "clear_data_description": "Sessiooni kõikide andmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kui sa pole varundanud krüptovõtmeid, siis sa kaotad ligipääsu krüptitud sõnumitele.",
             "clear_data_button": "Eemalda kõik andmed"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Krüptitud sõnumid kasutavad läbivat krüptimist. Ainult sinul ja saaja(te)l on võtmed selliste sõnumite lugemiseks.",
+            "setup_secure_backup_description_2": "Kui sa logid välja, siis krüptovõtmed kustutatakse sellest seadmest. Seega, kui sul pole krüptovõtmeid varundatud teistes seadmetes või kasutusel serveripoolset varundust, siis sa krüptitud sõnumeid hiljem lugeda ei saa.",
+            "use_key_backup": "Võta kasutusele krüptovõtmete varundamine",
+            "skip_key_backup": "Ma ei soovi oma krüptitud sõnumeid",
+            "megolm_export": "Ekspordi võtmed käsitsi",
+            "setup_key_backup_title": "Sa kaotad ligipääsu oma krüptitud sõnumitele",
+            "description": "Kas sa oled kindel, et soovid välja logida?"
         }
     },
     "room_list": {
@@ -4039,7 +4040,8 @@
         "download_media": "Kuna meedia aadressi ei leidu, siis allalaadimine ei õnnestu",
         "update_power_level": "Õiguste muutmine ei õnnestunud",
         "unknown": "Teadmata viga",
-        "dialog_description_default": "Tekkis viga."
+        "dialog_description_default": "Tekkis viga.",
+        "edit_history_unsupported": "Tundub, et sinu koduserver ei toeta sellist funktsionaalsust."
     },
     "in_space1_and_space2": "Kogukondades %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {

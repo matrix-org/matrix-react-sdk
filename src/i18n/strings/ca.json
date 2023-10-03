@@ -55,7 +55,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Reviseu el vostre correu electrònic i feu clic a l'enllaç que conté. Un cop fet això, feu clic a Continua.",
     "This will allow you to reset your password and receive notifications.": "Això us permetrà restablir la vostra contrasenya i rebre notificacions.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Si anteriorment heu utilitzat un versió de %(brand)s més recent, la vostra sessió podría ser incompatible amb aquesta versió. Tanqueu aquesta finestra i torneu a la versió més recent.",
-    "Session ID": "ID de la sessió",
     "Sunday": "Diumenge",
     "Today": "Avui",
     "Friday": "Divendres",
@@ -72,8 +71,6 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s ha trobat un error durant la pujada de:",
     "e.g. my-room": "p.e. la-meva-sala",
     "Room Settings - %(roomName)s": "Configuració de sala - %(roomName)s",
-    "Confirm this user's session by comparing the following with their User Settings:": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
     "common": {
         "analytics": "Analítiques",
         "error": "Error",
@@ -720,6 +717,11 @@
         },
         "recovery_method_removed": {
             "warning": "Si no has eliminat el mètode de recuperació, pot ser que un atacant estigui intentant accedir al teu compte. Canvia la teva contrasenya i configura un nou mètode de recuperació a Configuració, immediatament."
+        },
+        "verification": {
+            "manual_device_verification_self_text": "Confirma comparant el següent amb la configuració d'usuari de la teva altra sessió:",
+            "manual_device_verification_user_text": "Confirma aquesta sessió d'usuari comparant amb la seva configuració d'usuari, el següent:",
+            "manual_device_verification_device_id_label": "ID de la sessió"
         }
     },
     "labs_mjolnir": {

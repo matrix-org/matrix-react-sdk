@@ -7,7 +7,6 @@
     "Warning!": "Abisua!",
     "Verification Pending": "Egiaztaketa egiteke",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Irakurri zure e-maila eta egin klik dakarren estekan. Behin eginda, egin klik Jarraitu botoian.",
-    "Session ID": "Saioaren IDa",
     "Moderator": "Moderatzailea",
     "%(items)s and %(lastItem)s": "%(items)s eta %(lastItem)s",
     "not specified": "zehaztu gabe",
@@ -134,7 +133,6 @@
     "Hammer": "Mailua",
     "Telephone": "Telefonoa",
     "Email (optional)": "E-mail (aukerakoa)",
-    "Start using Key Backup": "Hasi gakoen babes-kopia egiten",
     "Headphones": "Aurikularrak",
     "Folder": "Karpeta",
     "Flag": "Bandera",
@@ -151,11 +149,6 @@
     "Thumbs up": "Ederto",
     "Hourglass": "Harea-erlojua",
     "Paperclip": "Klipa",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Zifratutako mezuak muturretik muturrerako zifratzearen bidez babestuak daude. Zuk eta hartzaileak edo hartzaileek irakurri ditzakezue mezu horiek, beste inork ez.",
-    "I don't want my encrypted messages": "Ez ditut nire zifratutako mezuak nahi",
-    "Manually export keys": "Esportatu gakoak eskuz",
-    "You'll lose access to your encrypted messages": "Zure zifratutako mezuetara sarbidea galduko duzu",
-    "Are you sure you want to sign out?": "Ziur saioa amaitu nahi duzula?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Abisua:</b>: Gakoen babeskopia fidagarria den gailu batetik egin beharko zenuke beti.",
     "Scissors": "Artaziak",
     "Room Settings - %(roomName)s": "Gelaren ezarpenak - %(roomName)s",
@@ -180,7 +173,6 @@
     "Upload all": "Igo denak",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Gela hau bertsio-berritzeak gelaren oraingo instantzia itzaliko du eta izen bereko beste gela berri bat sortuko du. Kideei esperientziarik onena emateko, hau egingo dugu:",
     "Message edits": "Mezuaren edizioak",
-    "Your homeserver doesn't seem to support this feature.": "Antza zure hasiera-zerbitzariak ez du ezaugarri hau onartzen.",
     "Resend %(unsentCount)s reaction(s)": "Birbidali %(unsentCount)s erreakzio",
     "Find others by phone or email": "Aurkitu besteak telefonoa edo e-maila erabiliz",
     "Be found by phone or email": "Izan telefonoa edo e-maila erabiliz aurkigarria",
@@ -207,8 +199,6 @@
         "other": "%(count)s saio",
         "one": "saio %(count)s"
     },
-    "Session name": "Saioaren izena",
-    "Session key": "Saioaren gakoa",
     "Not Trusted": "Ez konfiantzazkoa",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
     "Ask this user to verify their session, or manually verify it below.": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
@@ -222,9 +212,6 @@
     "a device cross-signing signature": "gailuz zeharkako sinadura berria",
     "a key signature": "gako sinadura",
     "%(brand)s encountered an error during upload of:": "%(brand)sek errorea aurkitu du hau igotzean:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Berretsi honako hau zure beste saioaren erabiltzaile-ezarpenetan agertzen denarekin alderatuz:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
-    "If they don't match, the security of your communication may be compromised.": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
     "Submit logs": "Bidali egunkariak",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
@@ -1278,7 +1265,13 @@
             "incoming_sas_user_dialog_text_2": "Erabiltzaile hau egiaztatzean bere saioa fidagarritzat joko da, eta zure saioak beretzat fidagarritzat ere.",
             "incoming_sas_device_dialog_text_1": "Egiztatu gailu hau fidagarri gisa markatzeko. Gailu hau fidagarritzat jotzeak lasaitasuna ematen du muturretik-muturrera zifratutako mezuak erabiltzean.",
             "incoming_sas_device_dialog_text_2": "Gailu hau egiaztatzean fidagarri gisa markatuko da, eta egiaztatu zaituzten erabiltzaileek fidagarri gisa ikusiko dute.",
-            "incoming_sas_dialog_title": "Jasotako egiaztaketa eskaria"
+            "incoming_sas_dialog_title": "Jasotako egiaztaketa eskaria",
+            "manual_device_verification_self_text": "Berretsi honako hau zure beste saioaren erabiltzaile-ezarpenetan agertzen denarekin alderatuz:",
+            "manual_device_verification_user_text": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
+            "manual_device_verification_device_name_label": "Saioaren izena",
+            "manual_device_verification_device_id_label": "Saioaren IDa",
+            "manual_device_verification_device_key_label": "Saioaren gakoa",
+            "manual_device_verification_footer": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke."
         },
         "old_version_detected_title": "Kriptografia datu zaharrak atzeman dira",
         "old_version_detected_description": "%(brand)s bertsio zahar batek datuak antzeman dira. Honek bertsio zaharrean  muturretik muturrerako zifratzea ez funtzionatzea eragingo du. Azkenaldian bertsio zaharrean bidali edo jasotako zifratutako mezuak agian ezin izango dira deszifratu bertsio honetan. Honek ere Bertsio honekin egindako mezu trukeak huts egitea ekar dezake. Arazoak badituzu, amaitu saioa eta hasi berriro saioa. Mezuen historiala gordetzeko, esportatu eta berriro inportatu zure gakoak.",
@@ -1445,6 +1438,14 @@
             "clear_data_title": "Garbitu saio honetako datu guztiak?",
             "clear_data_description": "Saio honetako datuak garbitzea behin betirako da. Zifratutako mezuak galdu egingo dira gakoen babes-kopia egin ez bada.",
             "clear_data_button": "Garbitu datu guztiak"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Zifratutako mezuak muturretik muturrerako zifratzearen bidez babestuak daude. Zuk eta hartzaileak edo hartzaileek irakurri ditzakezue mezu horiek, beste inork ez.",
+            "use_key_backup": "Hasi gakoen babes-kopia egiten",
+            "skip_key_backup": "Ez ditut nire zifratutako mezuak nahi",
+            "megolm_export": "Esportatu gakoak eskuz",
+            "setup_key_backup_title": "Zure zifratutako mezuetara sarbidea galduko duzu",
+            "description": "Ziur saioa amaitu nahi duzula?"
         }
     },
     "export_chat": {
@@ -1745,7 +1746,8 @@
         "something_went_wrong": "Zerk edo zerk huts egin du!",
         "update_power_level": "Huts egin du botere maila aldatzean",
         "unknown": "Errore ezezaguna",
-        "dialog_description_default": "Errore bat gertatu da."
+        "dialog_description_default": "Errore bat gertatu da.",
+        "edit_history_unsupported": "Antza zure hasiera-zerbitzariak ez du ezaugarri hau onartzen."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

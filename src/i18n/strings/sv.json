@@ -10,7 +10,6 @@
     "Moderator": "Moderator",
     "not specified": "inte specificerad",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Öppna meddelandet i din e-post och klicka på länken i meddelandet. När du har gjort detta, klicka fortsätt.",
-    "Session ID": "Sessions-ID",
     "Create new room": "Skapa nytt rum",
     "unknown error code": "okänd felkod",
     "AM": "FM",
@@ -147,13 +146,8 @@
     "Headphones": "Hörlurar",
     "Folder": "Mapp",
     "Email (optional)": "E-post (valfritt)",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterade meddelanden är säkrade med totalsträckskryptering. Bara du och mottagaren/na har nycklarna för att läsa dessa meddelanden.",
     "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "I don't want my encrypted messages": "Jag vill inte ha mina krypterade meddelanden",
-    "Manually export keys": "Exportera nycklar manuellt",
-    "You'll lose access to your encrypted messages": "Du kommer att förlora åtkomst till dina krypterade meddelanden",
-    "Are you sure you want to sign out?": "Är du säker på att du vill logga ut?",
     "Room Settings - %(roomName)s": "Rumsinställningar - %(roomName)s",
     "Sign out and remove encryption keys?": "Logga ut och ta bort krypteringsnycklar?",
     "To help us prevent this in future, please <a>send us logs</a>.": "För att hjälpa oss att förhindra detta i framtiden, vänligen <a>skicka oss loggar</a>.",
@@ -178,12 +172,9 @@
     "%(name)s cancelled": "%(name)s avbröt",
     "%(name)s wants to verify": "%(name)s vill verifiera",
     "e.g. my-room": "t.ex. mitt-rum",
-    "Your homeserver doesn't seem to support this feature.": "Din hemserver verkar inte stödja den här funktionen.",
     "Message edits": "Meddelanderedigeringar",
     "Find others by phone or email": "Hitta andra via telefon eller e-post",
     "Be found by phone or email": "Bli hittad via telefon eller e-post",
-    "Session name": "Sessionsnamn",
-    "Session key": "Sessionsnyckel",
     "Upgrade private room": "Uppgradera privat rum",
     "Upgrade public room": "Uppgradera offentligt rum",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Att uppgradera ett rum är en avancerad åtgärd och rekommenderas vanligtvis när ett rum är instabilt på grund av buggar, saknade funktioner eller säkerhetsproblem.",
@@ -200,7 +191,6 @@
     "IRC display name width": "Bredd för IRC-visningsnamn",
     "Lock": "Lås",
     "This backup is trusted because it has been restored on this session": "Den här säkerhetskopian är betrodd för att den har återställts på den här sessionen",
-    "Start using Key Backup": "Börja använda nyckelsäkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "För att rapportera ett Matrix-relaterat säkerhetsproblem, vänligen läs Matrix.orgs <a>riktlinjer för säkerhetspublicering</a>.",
     "Encrypted by a deleted session": "Krypterat av en raderad session",
     "%(count)s verified sessions": {
@@ -221,9 +211,6 @@
     "a device cross-signing signature": "en enhets korssigneringssignatur",
     "a key signature": "en nyckelsignatur",
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Bekräfta genom att jämföra följande med användarinställningarna i din andra session:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Bekräfta den här användarens session genom att jämföra följande med deras användarinställningar:",
-    "If they don't match, the security of your communication may be compromised.": "Om de inte matchar så kan din kommunikations säkerhet vara äventyrad.",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Att uppgradera det här rummet kräver att den nuvarande instansen a rummet stängs och ett nytt rum skapas i dess plats. För att ge rumsmedlemmar den bästa möjliga upplevelsen kommer vi:",
     "You're all caught up.": "Du är ikapp.",
     "Server isn't responding": "Servern svarar inte",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Om du gör det, observera att inga av dina meddelanden kommer att raderas, men sökupplevelsen kan degraderas en stund medans registret byggs upp igen",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Observera att en uppgradering kommer att skapa en ny version av rummet</b>. Alla nuvarande meddelanden kommer att stanna i det arkiverade rummet.",
     "Automatically invite members from this room to the new one": "Bjud automatiskt in medlemmar från det här rummet till det nya",
-    "These are likely ones other room admins are a part of.": "Dessa är troligen såna andra rumsadmins är med i.",
-    "Other spaces or rooms you might not know": "Andra utrymmen du kanske inte känner till",
-    "Spaces you know that contain this room": "Utrymmen du känner till som innehåller det här rummet",
-    "Search spaces": "Sök i utrymmen",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Bestäm vilka utrymmen som kan komma åt det hör rummet. Om ett utrymme väljs så kan dess medlemmar hitta och gå med i <RoomName/>.",
-    "Select spaces": "Välj utrymmen",
-    "You're removing all spaces. Access will default to invite only": "Du tar bort alla utrymmen. Åtkomst kommer att sättas som förval till endast inbjudan",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "%(count)s reply": {
         "one": "%(count)s svar",
@@ -597,7 +577,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Det här grupperar dina chattar med medlemmar i det här utrymmet. Att stänga av det kommer att dölja dessa chattar från din vy av %(spaceName)s.",
     "Sections to show": "Sektioner att visa",
     "Link to room": "Länk till rum",
-    "Spaces you know that contain this space": "Utrymmen du känner till som innehåller det här utrymmet",
     "Forget": "Glöm",
     "Open in OpenStreetMap": "Öppna i OpenStreetMap",
     "Verify other device": "Verifiera annan enhet",
@@ -654,7 +633,6 @@
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
     },
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "När du loggar ut kommer nycklarna att raderas från den här enheten, vilket betyder att du inte kommer kunna läsa krypterade meddelanden om du inte har nycklarna för dem på dina andra enheter, eller säkerhetskopierade dem till servern.",
     "Explore public spaces in the new search dialog": "Utforska offentliga utrymmen i den nya sökdialogen",
     "Saved Items": "Sparade föremål",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
@@ -2676,7 +2654,15 @@
                 "other": "Uppdaterar utrymmen… (%(progress)s av %(count)s)"
             },
             "error_join_rule_change_title": "Misslyckades att uppdatera regler för att gå med",
-            "error_join_rule_change_unknown": "Okänt fel"
+            "error_join_rule_change_unknown": "Okänt fel",
+            "join_rule_restricted_dialog_empty_warning": "Du tar bort alla utrymmen. Åtkomst kommer att sättas som förval till endast inbjudan",
+            "join_rule_restricted_dialog_title": "Välj utrymmen",
+            "join_rule_restricted_dialog_description": "Bestäm vilka utrymmen som kan komma åt det hör rummet. Om ett utrymme väljs så kan dess medlemmar hitta och gå med i <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Sök i utrymmen",
+            "join_rule_restricted_dialog_heading_space": "Utrymmen du känner till som innehåller det här utrymmet",
+            "join_rule_restricted_dialog_heading_room": "Utrymmen du känner till som innehåller det här rummet",
+            "join_rule_restricted_dialog_heading_other": "Andra utrymmen du kanske inte känner till",
+            "join_rule_restricted_dialog_heading_unknown": "Dessa är troligen såna andra rumsadmins är med i."
         },
         "general": {
             "publish_toggle": "Publicera rummet i den offentliga rumskatalogen på %(domain)s?",
@@ -2862,7 +2848,13 @@
             "incoming_sas_device_dialog_text_1": "Verifiera denna enhet för att markera den som betrodd. Att lita på denna enhet och andra användare ger en extra sinnesfrid när man använder totalsträckskrypterade meddelanden.",
             "incoming_sas_device_dialog_text_2": "Att verifiera den här enheten kommer att markera den som betrodd, användare som har verifierat dig kommer att lita på den här enheten.",
             "incoming_sas_dialog_waiting": "Väntar på att andra parten ska bekräfta …",
-            "incoming_sas_dialog_title": "Inkommande verifieringsbegäran"
+            "incoming_sas_dialog_title": "Inkommande verifieringsbegäran",
+            "manual_device_verification_self_text": "Bekräfta genom att jämföra följande med användarinställningarna i din andra session:",
+            "manual_device_verification_user_text": "Bekräfta den här användarens session genom att jämföra följande med deras användarinställningar:",
+            "manual_device_verification_device_name_label": "Sessionsnamn",
+            "manual_device_verification_device_id_label": "Sessions-ID",
+            "manual_device_verification_device_key_label": "Sessionsnyckel",
+            "manual_device_verification_footer": "Om de inte matchar så kan din kommunikations säkerhet vara äventyrad."
         },
         "old_version_detected_title": "Gammal kryptografidata upptäckt",
         "old_version_detected_description": "Data från en äldre version av %(brand)s has upptäckts. Detta ska ha orsakat att totalsträckskryptering inte fungerat i den äldre versionen. Krypterade meddelanden som nyligen har skickats medans den äldre versionen användes kanske inte kan avkrypteras i denna version. Detta kan även orsaka att meddelanden skickade med denna version inte fungerar. Om du upplever problem, logga ut och in igen. För att behålla meddelandehistoriken, exportera dina nycklar och importera dem igen.",
@@ -3168,6 +3160,15 @@
             "clear_data_title": "Rensa all data i den här sessionen?",
             "clear_data_description": "Rensning av all data från den här sessionen är permanent. Krypterade meddelande kommer att förloras om inte deras nycklar har säkerhetskopierats.",
             "clear_data_button": "Rensa all data"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Krypterade meddelanden är säkrade med totalsträckskryptering. Bara du och mottagaren/na har nycklarna för att läsa dessa meddelanden.",
+            "setup_secure_backup_description_2": "När du loggar ut kommer nycklarna att raderas från den här enheten, vilket betyder att du inte kommer kunna läsa krypterade meddelanden om du inte har nycklarna för dem på dina andra enheter, eller säkerhetskopierade dem till servern.",
+            "use_key_backup": "Börja använda nyckelsäkerhetskopiering",
+            "skip_key_backup": "Jag vill inte ha mina krypterade meddelanden",
+            "megolm_export": "Exportera nycklar manuellt",
+            "setup_key_backup_title": "Du kommer att förlora åtkomst till dina krypterade meddelanden",
+            "description": "Är du säker på att du vill logga ut?"
         }
     },
     "room_list": {
@@ -3980,7 +3981,8 @@
         "download_media": "Misslyckades att ladda ned källmedian, ingen käll-URL hittades",
         "update_power_level": "Misslyckades att ändra behörighetsnivå",
         "unknown": "Okänt fel",
-        "dialog_description_default": "Ett fel har inträffat."
+        "dialog_description_default": "Ett fel har inträffat.",
+        "edit_history_unsupported": "Din hemserver verkar inte stödja den här funktionen."
     },
     "in_space1_and_space2": "I utrymmena %(space1Name)s och %(space2Name)s.",
     "in_space_and_n_other_spaces": {

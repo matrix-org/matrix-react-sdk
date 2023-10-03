@@ -14,7 +14,6 @@
         "one": "(~%(count)s rezultāts)",
         "other": "(~%(count)s rezultāti)"
     },
-    "Session ID": "Sesijas ID",
     "unknown error code": "nezināms kļūdas kods",
     "Create new room": "Izveidot jaunu istabu",
     "Verification Pending": "Gaida verifikāciju",
@@ -103,7 +102,6 @@
     "Wrong Security Key": "Nepareiza drošības atslēga",
     "Security Key": "Drošības atslēga",
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
-    "Session key": "Sesijas atslēga",
     "Ok": "Labi",
     "Your homeserver has exceeded one of its resource limits.": "Jūsu bāzes serverī ir pārsniegts limits kādam no resursiem.",
     "Your homeserver has exceeded its user limit.": "Jūsu bāzes serverī ir pārsniegts lietotāju limits.",
@@ -116,7 +114,6 @@
     "Latvia": "Latvija",
     "Link to selected message": "Saite uz izvēlēto ziņu",
     "Share Room Message": "Dalīties ar istabas ziņu",
-    "Are you sure you want to sign out?": "Vai tiešām vēlaties izrakstīties?",
     "%(name)s wants to verify": "%(name)s vēlas veikt verifikāciju",
     "Decline All": "Noraidīt visu",
     "%(name)s declined": "%(name)s noraidīja",
@@ -1471,7 +1468,9 @@
             "cancelled": "Jūs atcēlāt verifikāciju.",
             "incoming_sas_user_dialog_text_2": "Verificējot šo lietotāju, tā sesija tiks atzīmēta kā uzticama, kā arī jūsu sesija viņiem tiks atzīmēta kā uzticama.",
             "incoming_sas_device_dialog_text_2": "Verificējot šo ierīci, tā tiks atzīmēta kā uzticama, un ierīci verificējušie lietotāji tai uzticēsies.",
-            "incoming_sas_dialog_title": "Ienākošais veifikācijas pieprasījums"
+            "incoming_sas_dialog_title": "Ienākošais veifikācijas pieprasījums",
+            "manual_device_verification_device_id_label": "Sesijas ID",
+            "manual_device_verification_device_key_label": "Sesijas atslēga"
         },
         "old_version_detected_title": "Tika uzieti novecojuši šifrēšanas dati",
         "old_version_detected_description": "Uzieti dati no vecākas %(brand)s versijas. Tas novedīs pie \"end-to-end\" šifrēšanas problēmām vecākajā versijā. Šajā versijā nevar tikt atšifrēti ziņojumi, kuri radīti izmantojot vecākajā versijā \"end-to-end\" šifrētas ziņas. Tas var arī novest pie ziņapmaiņas, kas veikta ar šo versiju, neizdošanās. Ja rodas ķibeles, izraksties un par jaunu pieraksties sistēmā. Lai saglabātu ziņu vēsturi, eksportē un tad importē savas šifrēšanas atslēgas.",
@@ -1613,6 +1612,9 @@
             "clear_data_title": "Notīrīt visus šīs sesijas datus?",
             "clear_data_description": "Visu šīs sesijas datu dzēšana ir neatgriezeniska. Šifrētās ziņas tiks zaudētas, ja vien to atslēgas nebūs dublētas.",
             "clear_data_button": "Notīrīt visus datus"
+        },
+        "logout_dialog": {
+            "description": "Vai tiešām vēlaties izrakstīties?"
         }
     },
     "room_list": {

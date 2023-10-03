@@ -295,7 +295,6 @@
     "Find others by phone or email": "دیگران را از طریق تلفن یا ایمیل پیدا کنید",
     "Sign out and remove encryption keys?": "خروج از حساب کاربری و حذف کلیدهای رمزنگاری؟",
     "Remember my selection for this widget": "انتخاب من برای این ابزارک را بخاطر بسپار",
-    "I don't want my encrypted messages": "پیام‌های رمزشده‌ی خود را نمی‌خواهم",
     "Upgrade this room to version %(version)s": "این اتاق را به نسخه %(version)s ارتقا دهید",
     "Not a valid Security Key": "کلید امنیتی معتبری نیست",
     "This widget would like to:": "این ابزارک تمایل دارد:",
@@ -318,7 +317,6 @@
         "other": "بارگذاری %(count)s فایل دیگر"
     },
     "Room Settings - %(roomName)s": "تنظیمات اتاق - %(roomName)s",
-    "Start using Key Backup": "شروع استفاده از نسخه‌ی پشتیبان کلید",
     "Unable to restore backup": "بازیابی نسخه پشتیبان امکان پذیر نیست",
     "Failed to upgrade room": "اتاق ارتقاء نیافت",
     "Link to selected message": "پیوند به پیام انتخاب شده",
@@ -341,7 +339,6 @@
     "Upgrade private room": "ارتقاء اتاق خصوصی",
     "Resend %(unsentCount)s reaction(s)": "بازارسال %(unsentCount)s واکنش",
     "Missing session data": "داده‌های نشست از دست رفته است",
-    "Manually export keys": "کلیدها را به صورت دستی استخراج (Export)کن",
     "No backup found!": "نسخه پشتیبان یافت نشد!",
     "Upgrade Room Version": "ارتقاء نسخه‌ی اتاق",
     "Share Room Message": "به اشتراک گذاشتن پیام اتاق",
@@ -354,8 +351,6 @@
     "Security Phrase": "عبارت امنیتی",
     "Keys restored": "کلیدها بازیابی شدند",
     "Not Trusted": "قابل اعتماد نیست",
-    "Session key": "کلید نشست",
-    "Session name": "نام نشست",
     "Verification Request": "درخواست تأیید",
     "Command Help": "راهنمای دستور",
     "Message edits": "ویرایش پیام",
@@ -551,15 +546,7 @@
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "ارتقاء این اتاق نیازمند بستن نسخه‌ی فعلی و ساختن درجای یک اتاق جدید است. برای داشتن بهترین تجربه‌ی کاربری ممکن، ما:",
     "The room upgrade could not be completed": "متاسفانه فرآیند ارتقاء اتاق به پایان نرسید",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "حواستان را جمع کنید، اگر ایمیلی اضافه نکرده و گذرواژه‌ی خود را فراموش کنید ، ممکن است <b>دسترسی به حساب کاربری خود را برای همیشه از دست دهید</b>.",
-    "If they don't match, the security of your communication may be compromised.": "اگر آنها مطابقت نداشته‌باشند ، ممکن است امنیت ارتباطات شما به خطر افتاده باشد.",
     "Data on this screen is shared with %(widgetDomain)s": "داده‌های این صفحه با %(widgetDomain)s به اشتراک گذاشته می‌شود",
-    "Your homeserver doesn't seem to support this feature.": "به نظر نمی‌رسد که سرور شما از این قابلیت پشتیبانی کند.",
-    "Session ID": "شناسه‌ی نشست",
-    "Confirm this user's session by comparing the following with their User Settings:": "این نشست کاربر را از طریق مقایسه‌ی این با تنظیمات کاربری تائيد کنید:",
-    "Confirm by comparing the following with the User Settings in your other session:": "از طریق مقایسه‌ی این با تنظیمات کاربری در نشست‌های دیگرتان، تائيد کنید:",
-    "Are you sure you want to sign out?": "آیا مطمئن هستید که می خواهید از برنامه خارج شوید؟",
-    "You'll lose access to your encrypted messages": "دسترسی به پیام‌های رمزشده‌ی خود را از دست خواهید داد",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "پیام‌های رمزشده با رمزنگاری سرتاسر ایمن می‌شوند. فقط شما و طرف گیرنده(ها) کلیدهای خواندن این پیام ها را در اختیار دارید.",
     "%(brand)s encountered an error during upload of:": "%(brand)s در حین بارگذاری این دچار مشکل شد:",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
@@ -573,7 +560,6 @@
     "Themes": "قالب ها",
     "Moderation": "اعتدال",
     "Messaging": "پیام رسانی",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
     "common": {
         "about": "درباره",
         "analytics": "تجزیه و تحلیل",
@@ -1961,7 +1947,13 @@
             "incoming_sas_user_dialog_text_2": "با تأیید این کاربر ، نشست وی به عنوان مورد اعتماد علامت‌گذاری شده و همچنین نشست شما به عنوان مورد اعتماد برای وی علامت‌گذاری خواهد شد.",
             "incoming_sas_device_dialog_text_1": "این دستگاه را تأیید کنید تا به عنوان مورد اعتماد علامت‌گذاری شود. اعتماد به این دستگاه در هنگام استفاده از رمزنگاری سرتاسر آرامش و اطمینان بیشتری را برای شما به ارمغان می‌آورد.",
             "incoming_sas_device_dialog_text_2": "با تأیید این دستگاه، آن را به عنوان مورد اعتماد علامت‌گذاری کرده و کاربرانی که شما را تأیید کرده اند، به این دستگاه اعتماد خواهند کرد.",
-            "incoming_sas_dialog_title": "درخواست تأیید دریافتی"
+            "incoming_sas_dialog_title": "درخواست تأیید دریافتی",
+            "manual_device_verification_self_text": "از طریق مقایسه‌ی این با تنظیمات کاربری در نشست‌های دیگرتان، تائيد کنید:",
+            "manual_device_verification_user_text": "این نشست کاربر را از طریق مقایسه‌ی این با تنظیمات کاربری تائيد کنید:",
+            "manual_device_verification_device_name_label": "نام نشست",
+            "manual_device_verification_device_id_label": "شناسه‌ی نشست",
+            "manual_device_verification_device_key_label": "کلید نشست",
+            "manual_device_verification_footer": "اگر آنها مطابقت نداشته‌باشند ، ممکن است امنیت ارتباطات شما به خطر افتاده باشد."
         },
         "old_version_detected_title": "داده‌های رمزنگاری قدیمی شناسایی شد",
         "old_version_detected_description": "داده هایی از نسخه قدیمی %(brand)s شناسایی شده است. این امر باعث اختلال در رمزنگاری سرتاسر در نسخه قدیمی شده است. پیام های رمزگذاری شده سرتاسر که اخیراً رد و بدل شده اند ممکن است با استفاده از نسخه قدیمی رمزگشایی نشوند. همچنین ممکن است پیام های رد و بدل شده با این نسخه با مشکل مواجه شود. اگر مشکلی رخ داد، از سیستم خارج شوید و مجددا وارد شوید. برای حفظ سابقه پیام، کلیدهای خود را خروجی گرفته و دوباره وارد کنید.",
@@ -2188,6 +2180,15 @@
             "clear_data_title": "همه داده‌های این نشست پاک شود؟",
             "clear_data_description": "پاک کردن همه داده های این جلسه غیرقابل بازگشت است. پیامهای رمزگذاری شده از بین می‌روند مگر اینکه از کلیدهای آنها پشتیبان تهیه شده باشد.",
             "clear_data_button": "پاک کردن همه داده ها"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "پیام‌های رمزشده با رمزنگاری سرتاسر ایمن می‌شوند. فقط شما و طرف گیرنده(ها) کلیدهای خواندن این پیام ها را در اختیار دارید.",
+            "setup_secure_backup_description_2": "وقتی از سیستم خارج می‌شوید، این کلیدها از این دستگاه حذف می‌شوند، به این معنی که نمی‌توانید پیام‌های رمزگذاری‌شده را بخوانید مگر اینکه کلیدهای آن‌ها را در دستگاه‌های دیگر خود داشته باشید یا از آنها در سرور نسخه پشتیبان تهیه کنید.",
+            "use_key_backup": "شروع استفاده از نسخه‌ی پشتیبان کلید",
+            "skip_key_backup": "پیام‌های رمزشده‌ی خود را نمی‌خواهم",
+            "megolm_export": "کلیدها را به صورت دستی استخراج (Export)کن",
+            "setup_key_backup_title": "دسترسی به پیام‌های رمزشده‌ی خود را از دست خواهید داد",
+            "description": "آیا مطمئن هستید که می خواهید از برنامه خارج شوید؟"
         }
     },
     "room_list": {
@@ -2757,7 +2758,8 @@
         "something_went_wrong": "مشکلی پیش آمد!",
         "update_power_level": "تغییر سطح قدرت انجام نشد",
         "unknown": "خطای ناشناخته",
-        "dialog_description_default": "خطایی رخ داده است."
+        "dialog_description_default": "خطایی رخ داده است.",
+        "edit_history_unsupported": "به نظر نمی‌رسد که سرور شما از این قابلیت پشتیبانی کند."
     },
     "in_space1_and_space2": "در فضای %(space1Name)s و %(space2Name)s.",
     "in_space_and_n_other_spaces": {

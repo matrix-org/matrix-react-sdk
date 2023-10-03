@@ -10,7 +10,6 @@
     "unknown error code": "code d’erreur inconnu",
     "Email address": "Adresse e-mail",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Veuillez consulter vos e-mails et cliquer sur le lien que vous avez reçu. Puis cliquez sur continuer.",
-    "Session ID": "Identifiant de session",
     "Verification Pending": "Vérification en attente",
     "Warning!": "Attention !",
     "Sun": "Dim",
@@ -150,12 +149,6 @@
     "Anchor": "Ancre",
     "Headphones": "Écouteurs",
     "Folder": "Dossier",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Les messages chiffrés sont sécurisés avec un chiffrement de bout en bout. Seuls vous et le(s) destinataire(s) ont les clés pour lire ces messages.",
-    "Start using Key Backup": "Commencer à utiliser la sauvegarde de clés",
-    "I don't want my encrypted messages": "Je ne veux pas de mes messages chiffrés",
-    "Manually export keys": "Exporter manuellement les clés",
-    "You'll lose access to your encrypted messages": "Vous perdrez l’accès à vos messages chiffrés",
-    "Are you sure you want to sign out?": "Voulez-vous vraiment vous déconnecter ?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attention</b> : vous ne devriez configurer la sauvegarde des clés que depuis un ordinateur de confiance.",
     "Scissors": "Ciseaux",
     "Room Settings - %(roomName)s": "Paramètres du salon – %(roomName)s",
@@ -181,7 +174,6 @@
     "Message edits": "Modifications du message",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "La mise à niveau de ce salon nécessite de fermer l’instance actuelle du salon et de créer un nouveau salon à la place. Pour fournir la meilleure expérience possible aux utilisateurs, nous allons :",
     "Resend %(unsentCount)s reaction(s)": "Renvoyer %(unsentCount)s réaction(s)",
-    "Your homeserver doesn't seem to support this feature.": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité.",
     "Find others by phone or email": "Trouver d’autres personnes par téléphone ou e-mail",
     "Be found by phone or email": "Être trouvé par téléphone ou e-mail",
     "Deactivate account": "Désactiver le compte",
@@ -208,8 +200,6 @@
         "other": "%(count)s sessions",
         "one": "%(count)s session"
     },
-    "Session name": "Nom de la session",
-    "Session key": "Clé de la session",
     "Destroy cross-signing keys?": "Détruire les clés de signature croisée ?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La suppression des clés de signature croisée est permanente. Tous ceux que vous avez vérifié vont voir des alertes de sécurité. Il est peu probable que ce soit ce que vous voulez faire, sauf si vous avez perdu tous les appareils vous permettant d’effectuer une signature croisée.",
     "Clear cross-signing keys": "Vider les clés de signature croisée",
@@ -223,9 +213,6 @@
     "a device cross-signing signature": "une signature de signature croisée d’un appareil",
     "a key signature": "une signature de clé",
     "%(brand)s encountered an error during upload of:": "%(brand)s a rencontré une erreur pendant l’envoi de :",
-    "Confirm by comparing the following with the User Settings in your other session:": "Confirmez en comparant ceci avec les paramètres utilisateurs de votre autre session :",
-    "Confirm this user's session by comparing the following with their User Settings:": "Confirmez la session de cet utilisateur en comparant ceci avec ses paramètres utilisateur :",
-    "If they don't match, the security of your communication may be compromised.": "S’ils ne correspondent pas, la sécurité de vos communications est peut-être compromise.",
     "Sign in with SSO": "Se connecter avec l’authentification unique",
     "Submit logs": "Envoyer les journaux",
     "Restoring keys from backup": "Restauration des clés depuis la sauvegarde",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Si vous le faites, notez qu’aucun de vos messages ne sera supprimé, mais la recherche pourrait être dégradée pendant quelques instants, le temps de recréer l’index",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Veuillez notez que la mise-à-jour va créer une nouvelle version de ce salon</b>. Tous les messages actuels resteront dans ce salon archivé.",
     "Automatically invite members from this room to the new one": "Inviter automatiquement les membres de ce salon dans le nouveau",
-    "These are likely ones other room admins are a part of.": "Ces autres administrateurs du salon en font probablement partie.",
-    "Other spaces or rooms you might not know": "Autres espaces ou salons que vous pourriez ne pas connaître",
-    "Spaces you know that contain this room": "Les espaces connus qui contiennent ce salon",
-    "Search spaces": "Rechercher des espaces",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Choisir quels espaces peuvent accéder à ce salon. Si un espace est sélectionné, ses membres pourront trouver et rejoindre <RoomName/>.",
-    "Select spaces": "Sélectionner des espaces",
-    "You're removing all spaces. Access will default to invite only": "Vous allez supprimer tous les espaces. L’accès se fera sur invitation uniquement par défaut",
     "To join a space you'll need an invite.": "Vous avez besoin d’une invitation pour rejoindre un espace.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
@@ -580,7 +560,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Récupérez l’accès à votre compte et restaurez les clés de chiffrement dans cette session. Sans elles, vous ne pourrez pas lire tous vos messages chiffrés dans toutes vos sessions.",
     "Thread options": "Options des fils de discussion",
     "Forget": "Oublier",
-    "Spaces you know that contain this space": "Les espaces connus qui contiennent cet espace",
     "%(count)s votes": {
         "one": "%(count)s vote",
         "other": "%(count)s votes"
@@ -651,7 +630,6 @@
         "one": "%(count)s membre",
         "other": "%(count)s membres"
     },
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Quand vous vous déconnectez, ces clés seront supprimées de cet appareil, et vous ne pourrez plus lire les messages chiffrés à moins d’avoir les clés de ces messages sur vos autres appareils, ou de les avoir sauvegardées sur le serveur.",
     "You cannot search for rooms that are neither a room nor a space": "Vous ne pouvez pas rechercher de salons qui ne soient ni des salons ni des espaces",
     "Show spaces": "Afficher les espaces",
     "Show rooms": "Afficher les salons",
@@ -673,7 +651,6 @@
     "unavailable": "indisponible",
     "unknown status code": "code de statut inconnu",
     "Upgrade room": "Mettre à niveau le salon",
-    "Other spaces you know": "Autres espaces que vous connaissez",
     "Failed to query public rooms": "Impossible d’interroger les salons publics",
     "common": {
         "about": "À propos",
@@ -2724,7 +2701,16 @@
                 "other": "Mise-à-jour des espaces… (%(progress)s sur %(count)s)"
             },
             "error_join_rule_change_title": "Échec de mise-à-jour des règles pour rejoindre le salon",
-            "error_join_rule_change_unknown": "Erreur inconnue"
+            "error_join_rule_change_unknown": "Erreur inconnue",
+            "join_rule_restricted_dialog_empty_warning": "Vous allez supprimer tous les espaces. L’accès se fera sur invitation uniquement par défaut",
+            "join_rule_restricted_dialog_title": "Sélectionner des espaces",
+            "join_rule_restricted_dialog_description": "Choisir quels espaces peuvent accéder à ce salon. Si un espace est sélectionné, ses membres pourront trouver et rejoindre <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Rechercher des espaces",
+            "join_rule_restricted_dialog_heading_space": "Les espaces connus qui contiennent cet espace",
+            "join_rule_restricted_dialog_heading_room": "Les espaces connus qui contiennent ce salon",
+            "join_rule_restricted_dialog_heading_other": "Autres espaces ou salons que vous pourriez ne pas connaître",
+            "join_rule_restricted_dialog_heading_unknown": "Ces autres administrateurs du salon en font probablement partie.",
+            "join_rule_restricted_dialog_heading_known": "Autres espaces que vous connaissez"
         },
         "general": {
             "publish_toggle": "Publier ce salon dans le répertoire de salons public de %(domain)s ?",
@@ -2910,7 +2896,13 @@
             "incoming_sas_device_dialog_text_1": "Vérifier cet appareil le marquera comme fiable. Faire confiance à cette appareil vous permettra à vous et aux autres utilisateurs d’être tranquilles lors de l’utilisation de messages chiffrés.",
             "incoming_sas_device_dialog_text_2": "Vérifier cet appareil le marquera comme fiable, et les utilisateurs qui ont vérifié avec vous feront confiance à cet appareil.",
             "incoming_sas_dialog_waiting": "Attente de la confirmation du partenaire…",
-            "incoming_sas_dialog_title": "Demande de vérification entrante"
+            "incoming_sas_dialog_title": "Demande de vérification entrante",
+            "manual_device_verification_self_text": "Confirmez en comparant ceci avec les paramètres utilisateurs de votre autre session :",
+            "manual_device_verification_user_text": "Confirmez la session de cet utilisateur en comparant ceci avec ses paramètres utilisateur :",
+            "manual_device_verification_device_name_label": "Nom de la session",
+            "manual_device_verification_device_id_label": "Identifiant de session",
+            "manual_device_verification_device_key_label": "Clé de la session",
+            "manual_device_verification_footer": "S’ils ne correspondent pas, la sécurité de vos communications est peut-être compromise."
         },
         "old_version_detected_title": "Anciennes données de chiffrement détectées",
         "old_version_detected_description": "Nous avons détecté des données d’une ancienne version de %(brand)s. Le chiffrement de bout en bout n’aura pas fonctionné correctement sur l’ancienne version. Les messages chiffrés échangés récemment dans l’ancienne version ne sont peut-être pas déchiffrables dans cette version. Les échanges de message avec cette version peuvent aussi échouer. Si vous rencontrez des problèmes, déconnectez-vous puis reconnectez-vous. Pour conserver l’historique des messages, exportez puis réimportez vos clés de chiffrement.",
@@ -3217,6 +3209,15 @@
             "clear_data_title": "Supprimer toutes les données de cette session ?",
             "clear_data_description": "La suppression de toutes les données de cette session est permanente. Les messages chiffrés seront perdus sauf si les clés ont été sauvegardées.",
             "clear_data_button": "Supprimer toutes les données"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Les messages chiffrés sont sécurisés avec un chiffrement de bout en bout. Seuls vous et le(s) destinataire(s) ont les clés pour lire ces messages.",
+            "setup_secure_backup_description_2": "Quand vous vous déconnectez, ces clés seront supprimées de cet appareil, et vous ne pourrez plus lire les messages chiffrés à moins d’avoir les clés de ces messages sur vos autres appareils, ou de les avoir sauvegardées sur le serveur.",
+            "use_key_backup": "Commencer à utiliser la sauvegarde de clés",
+            "skip_key_backup": "Je ne veux pas de mes messages chiffrés",
+            "megolm_export": "Exporter manuellement les clés",
+            "setup_key_backup_title": "Vous perdrez l’accès à vos messages chiffrés",
+            "description": "Voulez-vous vraiment vous déconnecter ?"
         }
     },
     "room_list": {
@@ -4039,7 +4040,8 @@
         "download_media": "Impossible de télécharger la source du média, aucune URL source n’a été trouvée",
         "update_power_level": "Échec du changement de rang",
         "unknown": "Erreur inconnue",
-        "dialog_description_default": "Une erreur est survenue."
+        "dialog_description_default": "Une erreur est survenue.",
+        "edit_history_unsupported": "Il semble que votre serveur d’accueil ne prenne pas en charge cette fonctionnalité."
     },
     "in_space1_and_space2": "Dans les espaces %(space1Name)s et %(space2Name)s.",
     "in_space_and_n_other_spaces": {

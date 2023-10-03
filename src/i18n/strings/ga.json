@@ -292,7 +292,6 @@
     "Sun": "Doṁ",
     "Sign out and remove encryption keys?": "Sínigh amach agus scrios eochracha criptiúcháin?",
     "Clear Storage and Sign Out": "Scrios Stóras agus Sínigh Amach",
-    "Are you sure you want to sign out?": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?",
     "Unnamed room": "Seomra gan ainm",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
@@ -782,6 +781,9 @@
         "create_account_title": "Déan cuntas a chruthú",
         "reset_password": {
             "password_not_entered": "Caithfear focal faire nua a iontráil."
+        },
+        "logout_dialog": {
+            "description": "An bhfuil tú cinnte go dteastaíonn uait sínigh amach?"
         }
     },
     "export_chat": {

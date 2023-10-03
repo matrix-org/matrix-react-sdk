@@ -43,7 +43,6 @@
     },
     "Email address": "El. pašto adresas",
     "Delete Widget": "Ištrinti valdiklį",
-    "Session ID": "Seanso ID",
     "%(duration)ss": "%(duration)s sek",
     "%(duration)sm": "%(duration)s min",
     "%(duration)sh": "%(duration)s val",
@@ -84,19 +83,12 @@
     "Upload Error": "Įkėlimo klaida",
     "Email (optional)": "El. paštas (neprivaloma)",
     "Command Help": "Komandų pagalba",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
-    "Start using Key Backup": "Pradėti naudoti atsarginę raktų kopiją",
     "%(name)s accepted": "%(name)s priimtas",
     "%(name)s declined": "%(name)s atmestas",
     "%(name)s cancelled": "%(name)s atšauktas",
     "%(name)s wants to verify": "%(name)s nori patvirtinti",
     "e.g. my-room": "pvz.: mano-kambarys",
-    "Session name": "Seanso pavadinimas",
-    "Session key": "Seanso raktas",
-    "I don't want my encrypted messages": "Man nereikalingos užšifruotos žinutės",
-    "You'll lose access to your encrypted messages": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Įspėjimas</b>: atsarginę raktų kopiją sukurkite tik iš patikimo kompiuterio.",
-    "Manually export keys": "Eksportuoti raktus rankiniu būdu",
     "Verify your other session using one of the options below.": "Patvirtinkite savo kitą seansą naudodami vieną iš žemiau esančių parinkčių.",
     "%(count)s verified sessions": {
         "other": "%(count)s patvirtintų seansų",
@@ -106,7 +98,6 @@
         "other": "%(count)s seansai(-ų)",
         "one": "%(count)s seansas"
     },
-    "Are you sure you want to sign out?": "Ar tikrai norite atsijungti?",
     "Dog": "Šuo",
     "Cat": "Katė",
     "Lion": "Liūtas",
@@ -233,8 +224,6 @@
     "United Kingdom": "Jungtinė Karalystė",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jei anksčiau naudojote naujesnę %(brand)s versiją, jūsų seansas gali būti nesuderinamas su šia versija. Uždarykite šį langą ir grįžkite į naujesnę versiją.",
     "We encountered an error trying to restore your previous session.": "Bandant atkurti ankstesnį seansą įvyko klaida.",
-    "Confirm this user's session by comparing the following with their User Settings:": "Patvirtinkite šio vartotojo seansą, palygindami tai, kas nurodyta toliau, su jo Vartotojo Nustatymais:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Patvirtinkite, palygindami tai, kas nurodyta toliau, su Vartotojo Nustatymais kitame jūsų seanse:",
     "Missing session data": "Trūksta seanso duomenų",
     "Successfully restored %(sessionCount)s keys": "Sėkmingai atkurti %(sessionCount)s raktai",
     "edited": "pakeista",
@@ -343,8 +332,6 @@
     "Continuing without email": "Tęsiama be el. pašto",
     "Data on this screen is shared with %(widgetDomain)s": "Duomenimis šiame ekrane yra dalinamasi su %(widgetDomain)s",
     "Message edits": "Žinutės redagavimai",
-    "Your homeserver doesn't seem to support this feature.": "Panašu, kad jūsų namų serveris nepalaiko šios galimybės.",
-    "If they don't match, the security of your communication may be compromised.": "Jei jie nesutampa, gali būti pažeistas jūsų komunikacijos saugumas.",
     "%(brand)s encountered an error during upload of:": "%(brand)s aptiko klaidą įkeliant:",
     "a key signature": "rakto parašas",
     "a new master key signature": "naujas pagrindinio rakto parašas",
@@ -1965,7 +1952,13 @@
             "incoming_sas_user_dialog_text_2": "Patvirtinant šį vartotoją, jo seansas bus pažymėtas kaip patikimas, taip pat jūsų seansas bus pažymėtas kaip patikimas jam.",
             "incoming_sas_device_dialog_text_1": "Patvirtinkite šį įrenginį, kad pažymėtumėte jį kaip patikimą. Įrenginio pažymėjimas patikimu jums ir kitiems vartotojams suteikia papildomos ramybės naudojant visapusiškai užšifruotas žinutes.",
             "incoming_sas_device_dialog_text_2": "Šio įrenginio patvirtinimas pažymės jį kaip patikimą, ir vartotojai, kurie patvirtino su jumis, pasitikės šiuo įrenginiu.",
-            "incoming_sas_dialog_title": "Įeinantis Patikrinimo Prašymas"
+            "incoming_sas_dialog_title": "Įeinantis Patikrinimo Prašymas",
+            "manual_device_verification_self_text": "Patvirtinkite, palygindami tai, kas nurodyta toliau, su Vartotojo Nustatymais kitame jūsų seanse:",
+            "manual_device_verification_user_text": "Patvirtinkite šio vartotojo seansą, palygindami tai, kas nurodyta toliau, su jo Vartotojo Nustatymais:",
+            "manual_device_verification_device_name_label": "Seanso pavadinimas",
+            "manual_device_verification_device_id_label": "Seanso ID",
+            "manual_device_verification_device_key_label": "Seanso raktas",
+            "manual_device_verification_footer": "Jei jie nesutampa, gali būti pažeistas jūsų komunikacijos saugumas."
         },
         "old_version_detected_title": "Aptikti seni kriptografijos duomenys",
         "cancel_entering_passphrase_title": "Atšaukti slaptafrazės įvedimą?",
@@ -2161,6 +2154,14 @@
             "clear_data_title": "Išvalyti visus duomenis šiame seanse?",
             "clear_data_description": "Šio seanso duomenų išvalymas yra negrįžtamas. Šifruotos žinutės bus prarastos, nebent buvo sukurta jų raktų atsarginė kopija.",
             "clear_data_button": "Išvalyti visus duomenis"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Užšifruotos žinutės yra apsaugotos visapusiu šifravimu. Tik jūs ir gavėjas(-ai) turi raktus šioms žinutėms perskaityti.",
+            "use_key_backup": "Pradėti naudoti atsarginę raktų kopiją",
+            "skip_key_backup": "Man nereikalingos užšifruotos žinutės",
+            "megolm_export": "Eksportuoti raktus rankiniu būdu",
+            "setup_key_backup_title": "Jūs prarasite prieigą prie savo užšifruotų žinučių",
+            "description": "Ar tikrai norite atsijungti?"
         }
     },
     "room_list": {
@@ -2619,7 +2620,8 @@
         "something_went_wrong": "Kažkas nutiko!",
         "update_power_level": "Nepavyko pakeisti galios lygio",
         "unknown": "Nežinoma klaida",
-        "dialog_description_default": "Įvyko klaida."
+        "dialog_description_default": "Įvyko klaida.",
+        "edit_history_unsupported": "Panašu, kad jūsų namų serveris nepalaiko šios galimybės."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

@@ -55,7 +55,6 @@
     "Verification Pending": "Чека се на проверу",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверите ваш мејл и кликните на везу унутар њега. Када ово урадите, кликните на дугме „настави“.",
     "This will allow you to reset your password and receive notifications.": "Ово омогућава поновно постављање лозинке и примање обавештења.",
-    "Session ID": "ИД сесије",
     "Sunday": "Недеља",
     "Today": "Данас",
     "Friday": "Петак",
@@ -76,7 +75,6 @@
     "Share Room Message": "Подели поруку у соби",
     "Link to selected message": "Веза ка изабраној поруци",
     "Email (optional)": "Мејл (изборно)",
-    "Are you sure you want to sign out?": "Заиста желите да се одјавите?",
     "%(count)s verified sessions": {
         "other": "потврђених сесија: %(count)s",
         "one": "1 потврђена сесија"
@@ -398,8 +396,6 @@
     "Lion": "лав",
     "Cat": "мачка",
     "Dog": "Пас",
-    "Confirm this user's session by comparing the following with their User Settings:": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
     "Sign in with SSO": "Пријавите се помоћу SSO",
     "Kosovo": "/",
     "End": "",
@@ -1129,7 +1125,10 @@
             "in_person": "Да будете сигурни, ово обавите лично или путем поузданог начина комуникације.",
             "complete_action": "Разумем",
             "cancelling": "Отказујем…",
-            "unverified_session_toast_title": "Нова пријава. Да ли сте то били Ви?"
+            "unverified_session_toast_title": "Нова пријава. Да ли сте то били Ви?",
+            "manual_device_verification_self_text": "Потврдите упоређивањем следећег са корисничким подешавањима у вашој другој сесији:",
+            "manual_device_verification_user_text": "Потврдите сесију овог корисника упоређивањем следећег са њиховим корисничким подешавањима:",
+            "manual_device_verification_device_id_label": "ИД сесије"
         },
         "old_version_detected_title": "Нађени су стари криптографски подаци",
         "old_version_detected_description": "Подаци из старијег издања %(brand)s-а су нађени. Ово ће узроковати лош рад шифровања с краја на крај у старијем издању. Размењене поруке које су шифроване с краја на крај у старијем издању је можда немогуће дешифровати у овом издању. Такође, ово може узроковати неуспешно размењивање порука са овим издањем. Ако доживите проблеме, одјавите се и пријавите се поново. Да бисте задржали историјат поруке, извезите па поново увезите ваше кључеве.",
@@ -1235,6 +1234,9 @@
         "soft_logout": {
             "clear_data_title": "Да очистим све податке у овој сесији?",
             "clear_data_button": "Очисти све податке"
+        },
+        "logout_dialog": {
+            "description": "Заиста желите да се одјавите?"
         }
     },
     "export_chat": {

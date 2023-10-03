@@ -34,7 +34,6 @@
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Проверьте свою электронную почту и нажмите на ссылку в письме. После этого нажмите кнопку Продолжить.",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(day)s %(monthName)s %(fullYear)s %(time)s",
     "Email address": "Электронная почта",
-    "Session ID": "ID сеанса",
     "Unable to restore session": "Восстановление сеанса не удалось",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Если вы использовали более новую версию %(brand)s, то ваш сеанс может быть несовместим с ней. Закройте это окно и вернитесь к более новой версии.",
     "Create new room": "Создать комнату",
@@ -150,14 +149,8 @@
     "Headphones": "Наушники",
     "Folder": "Папка",
     "Scissors": "Ножницы",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Эти сообщения защищены сквозным шифрованием. Только вы и ваш собеседник имеете ключи для их расшифровки и чтения.",
-    "Start using Key Backup": "Использовать резервную копию ключей шифрования",
-    "You'll lose access to your encrypted messages": "Вы потеряете доступ к вашим шифрованным сообщениям",
-    "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
-    "I don't want my encrypted messages": "Мне не нужны мои зашифрованные сообщения",
-    "Manually export keys": "Выгрузить ключи вручную",
     "Sign out and remove encryption keys?": "Выйти и удалить ключи шифрования?",
     "To help us prevent this in future, please <a>send us logs</a>.": "Чтобы помочь нам предотвратить это в будущем, пожалуйста, <a>отправьте нам логи</a>.",
     "Missing session data": "Отсутствуют данные сеанса",
@@ -177,7 +170,6 @@
     "Remember my selection for this widget": "Запомнить мой выбор для этого виджета",
     "Failed to decrypt %(failedCount)s sessions!": "Не удалось расшифровать сеансы (%(failedCount)s)!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Предупреждение</b>: вам следует настроить резервное копирование ключей только с доверенного компьютера.",
-    "Your homeserver doesn't seem to support this feature.": "Ваш сервер, похоже, не поддерживает эту возможность.",
     "Message edits": "Правки сообщения",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Модернизация этой комнаты требует закрытие комнаты в текущем состояние и создания новой комнаты вместо неё. Чтобы упростить процесс для участников, будет сделано:",
     "Find others by phone or email": "Найти других по номеру телефона или email",
@@ -208,8 +200,6 @@
     "%(name)s wants to verify": "%(name)s желает подтвердить",
     "Destroy cross-signing keys?": "Уничтожить ключи кросс-подписи?",
     "Clear cross-signing keys": "Очистить ключи кросс-подписи",
-    "Session name": "Название сеанса",
-    "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "a key signature": "отпечаток ключа",
     "You signed in to a new session without verifying it:": "Вы вошли в новый сеанс, не подтвердив его:",
@@ -224,9 +214,6 @@
     "a new cross-signing key signature": "новый ключ подписи для кросс-подписи",
     "a device cross-signing signature": "подпись устройства для кросс-подписи",
     "%(brand)s encountered an error during upload of:": "%(brand)s обнаружил ошибку при загрузке файла:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Сравните следующие параметры с \"Пользовательскими настройками\" в другом вашем сеансе:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Подтвердите сеанс этого пользователя, сравнив следующие параметры с его \"Пользовательскими настройками\":",
-    "If they don't match, the security of your communication may be compromised.": "Если они не совпадают, безопасность вашего общения может быть поставлена под угрозу.",
     "Upgrade private room": "Обновить приватную комнату",
     "Upgrade public room": "Обновить публичную комнату",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Модернизация комнаты — это расширенное действие, которое обычно рекомендуется, когда комната нестабильна из-за ошибок, отсутствующих функций или уязвимостей безопасности.",
@@ -560,13 +547,6 @@
     "Reset event store?": "Сбросить хранилище событий?",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>При обновлении будет создана новая версия комнаты</b>. Все текущие сообщения останутся в этой архивной комнате.",
     "Automatically invite members from this room to the new one": "Автоматическое приглашение участников из этой комнаты в новую комнату",
-    "These are likely ones other room admins are a part of.": "Это, скорее всего, те, в которых участвуют другие администраторы комнат.",
-    "Other spaces or rooms you might not know": "Другие пространства или комнаты, которые вы могли не знать",
-    "Spaces you know that contain this room": "Пространства, которые вы знаете, уже содержат эту комнату",
-    "Search spaces": "Поиск пространств",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Определите, какие пространства могут получить доступ к этой комнате. Если пространство выбрано, его члены могут найти и присоединиться к <RoomName/>.",
-    "Select spaces": "Выберите места",
-    "You're removing all spaces. Access will default to invite only": "Вы удаляете все пространства. Доступ будет по умолчанию только по приглашениям",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -592,7 +572,6 @@
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Это сгруппирует ваши чаты с участниками этого пространства. Выключение, скроет эти чаты от вашего просмотра в %(spaceName)s.",
     "Sections to show": "Разделы для показа",
     "Link to room": "Ссылка на комнату",
-    "Spaces you know that contain this space": "Пространства, которые вы знаете, уже содержат эту комнату",
     "toggle event": "переключить событие",
     "%(count)s votes": {
         "one": "%(count)s голос",
@@ -648,7 +627,6 @@
         "one": "%(count)s участник",
         "other": "%(count)s участников"
     },
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "При выходе эти ключи будут удалены с данного устройства и вы больше не сможете прочитать зашифрованные сообщения, если у вас нет ключей для них на других устройствах или резервной копии на сервере.",
     "%(count)s participants": {
         "one": "1 участник",
         "other": "%(count)s участников"
@@ -2553,7 +2531,15 @@
                 "other": "Обновление пространств... (%(progress)s из %(count)s)"
             },
             "error_join_rule_change_title": "Не удалось обновить правила присоединения",
-            "error_join_rule_change_unknown": "Неизвестная ошибка"
+            "error_join_rule_change_unknown": "Неизвестная ошибка",
+            "join_rule_restricted_dialog_empty_warning": "Вы удаляете все пространства. Доступ будет по умолчанию только по приглашениям",
+            "join_rule_restricted_dialog_title": "Выберите места",
+            "join_rule_restricted_dialog_description": "Определите, какие пространства могут получить доступ к этой комнате. Если пространство выбрано, его члены могут найти и присоединиться к <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Поиск пространств",
+            "join_rule_restricted_dialog_heading_space": "Пространства, которые вы знаете, уже содержат эту комнату",
+            "join_rule_restricted_dialog_heading_room": "Пространства, которые вы знаете, уже содержат эту комнату",
+            "join_rule_restricted_dialog_heading_other": "Другие пространства или комнаты, которые вы могли не знать",
+            "join_rule_restricted_dialog_heading_unknown": "Это, скорее всего, те, в которых участвуют другие администраторы комнат."
         },
         "general": {
             "publish_toggle": "Опубликовать эту комнату в каталоге комнат %(domain)s?",
@@ -2729,7 +2715,13 @@
             "incoming_sas_user_dialog_text_2": "Подтверждение этого пользователя сделает его сеанс доверенным у вас, а также сделает ваш сеанс доверенным у него.",
             "incoming_sas_device_dialog_text_1": "Подтвердите это устройство, чтобы сделать его доверенным. Доверие этому устройству дает вам и другим пользователям дополнительное спокойствие при использовании зашифрованных сообщений.",
             "incoming_sas_device_dialog_text_2": "Проверка этого устройства пометит его как доверенное, и пользователи, которые проверили его вместе с вами, будут доверять этому устройству.",
-            "incoming_sas_dialog_title": "Входящий запрос о проверке"
+            "incoming_sas_dialog_title": "Входящий запрос о проверке",
+            "manual_device_verification_self_text": "Сравните следующие параметры с \"Пользовательскими настройками\" в другом вашем сеансе:",
+            "manual_device_verification_user_text": "Подтвердите сеанс этого пользователя, сравнив следующие параметры с его \"Пользовательскими настройками\":",
+            "manual_device_verification_device_name_label": "Название сеанса",
+            "manual_device_verification_device_id_label": "ID сеанса",
+            "manual_device_verification_device_key_label": "Ключ сеанса",
+            "manual_device_verification_footer": "Если они не совпадают, безопасность вашего общения может быть поставлена под угрозу."
         },
         "old_version_detected_title": "Обнаружены старые криптографические данные",
         "old_version_detected_description": "Обнаружены данные из более старой версии %(brand)s. Это приведет к сбою криптографии в более ранней версии. В этой версии не могут быть расшифрованы сообщения, которые использовались недавно при использовании старой версии. Это также может привести к сбою обмена сообщениями с этой версией. Если возникают неполадки, выйдите и снова войдите в систему. Чтобы сохранить журнал сообщений, экспортируйте и повторно импортируйте ключи.",
@@ -2995,6 +2987,15 @@
             "clear_data_title": "Очистить все данные в этом сеансе?",
             "clear_data_description": "Очистка всех данных в этом сеансе является необратимой. Зашифрованные сообщения будут потеряны, если их ключи не были зарезервированы.",
             "clear_data_button": "Очистить все данные"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Эти сообщения защищены сквозным шифрованием. Только вы и ваш собеседник имеете ключи для их расшифровки и чтения.",
+            "setup_secure_backup_description_2": "При выходе эти ключи будут удалены с данного устройства и вы больше не сможете прочитать зашифрованные сообщения, если у вас нет ключей для них на других устройствах или резервной копии на сервере.",
+            "use_key_backup": "Использовать резервную копию ключей шифрования",
+            "skip_key_backup": "Мне не нужны мои зашифрованные сообщения",
+            "megolm_export": "Выгрузить ключи вручную",
+            "setup_key_backup_title": "Вы потеряете доступ к вашим шифрованным сообщениям",
+            "description": "Уверены, что хотите выйти?"
         }
     },
     "room_list": {
@@ -3752,7 +3753,8 @@
         "something_went_wrong": "Что-то пошло не так!",
         "update_power_level": "Не удалось изменить уровень прав",
         "unknown": "Неизвестная ошибка",
-        "dialog_description_default": "Произошла ошибка."
+        "dialog_description_default": "Произошла ошибка.",
+        "edit_history_unsupported": "Ваш сервер, похоже, не поддерживает эту возможность."
     },
     "in_space1_and_space2": "В пространствах %(space1Name)s и %(space2Name)s.",
     "in_space_and_n_other_spaces": {

@@ -55,7 +55,6 @@
     "Verification Pending": "In attesa di verifica",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Controlla la tua email e clicca il link contenuto. Una volta fatto, clicca continua.",
     "This will allow you to reset your password and receive notifications.": "Ciò ti permetterà di reimpostare la tua password e ricevere notifiche.",
-    "Session ID": "ID sessione",
     "Sunday": "Domenica",
     "Today": "Oggi",
     "Friday": "Venerdì",
@@ -150,12 +149,6 @@
     "Anchor": "Ancora",
     "Headphones": "Auricolari",
     "Folder": "Cartella",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "I messaggi cifrati sono resi sicuri con una crittografia end-to-end. Solo tu e il/i destinatario/i avete le chiavi per leggere questi messaggi.",
-    "Start using Key Backup": "Inizia ad usare il backup chiavi",
-    "I don't want my encrypted messages": "Non voglio i miei messaggi cifrati",
-    "Manually export keys": "Esporta le chiavi manualmente",
-    "You'll lose access to your encrypted messages": "Perderai l'accesso ai tuoi messaggi cifrati",
-    "Are you sure you want to sign out?": "Sei sicuro di volerti disconnettere?",
     "Room Settings - %(roomName)s": "Impostazioni stanza - %(roomName)s",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Attenzione</b>: dovresti impostare il backup chiavi solo da un computer fidato.",
     "Email (optional)": "Email (facoltativa)",
@@ -181,7 +174,6 @@
     "Message edits": "Modifiche del messaggio",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Per aggiornare questa stanza devi chiudere l'istanza attuale e creare una nuova stanza al suo posto. Per offrire la migliore esperienza possibile ai membri della stanza:",
     "Resend %(unsentCount)s reaction(s)": "Reinvia %(unsentCount)s reazione/i",
-    "Your homeserver doesn't seem to support this feature.": "Il tuo homeserver non sembra supportare questa funzione.",
     "Find others by phone or email": "Trova altri per telefono o email",
     "Be found by phone or email": "Trovato per telefono o email",
     "Deactivate account": "Disattiva account",
@@ -208,8 +200,6 @@
         "other": "%(count)s sessioni",
         "one": "%(count)s sessione"
     },
-    "Session name": "Nome sessione",
-    "Session key": "Chiave sessione",
     "Not Trusted": "Non fidato",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) ha fatto l'accesso con una nuova sessione senza verificarla:",
     "Ask this user to verify their session, or manually verify it below.": "Chiedi a questo utente di verificare la sua sessione o verificala manualmente sotto.",
@@ -223,9 +213,6 @@
     "a device cross-signing signature": "una firma incrociata di dispositivo",
     "a key signature": "una firma di chiave",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha riscontrato un errore durante l'invio di:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Conferma confrontando il seguente con le impostazioni utente nell'altra sessione:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Conferma questa sessione confrontando il seguente con le sue impostazioni utente:",
-    "If they don't match, the security of your communication may be compromised.": "Se non corrispondono, la sicurezza delle tue comunicazioni potrebbe essere compromessa.",
     "Sign in with SSO": "Accedi con SSO",
     "Submit logs": "Invia registri",
     "Restoring keys from backup": "Ripristino delle chiavi dal backup",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Se lo fai, ricorda che nessuno dei tuoi messaggi verrà eliminato, ma l'esperienza di ricerca potrà peggiorare per qualche momento mentre l'indice viene ricreato",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Nota che aggiornare creerà una nuova versione della stanza</b>. Tutti i messaggi attuali resteranno in questa stanza archiviata.",
     "Automatically invite members from this room to the new one": "Invita automaticamente i membri da questa stanza a quella nuova",
-    "These are likely ones other room admins are a part of.": "Questi sono probabilmente quelli di cui fanno parte gli altri amministratori delle stanze.",
-    "Other spaces or rooms you might not know": "Altri spazi o stanze che potresti non conoscere",
-    "Spaces you know that contain this room": "Spazi di cui sai che contengono questa stanza",
-    "Search spaces": "Cerca spazi",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decidi quali spazi possono accedere a questa stanza. Se uno spazio è selezionato, i suoi membri possono trovare ed entrare in <RoomName/>.",
-    "Select spaces": "Seleziona spazi",
-    "You're removing all spaces. Access will default to invite only": "Stai rimuovendo tutti gli spazi. L'accesso tornerà solo su invito",
     "To join a space you'll need an invite.": "Per entrare in uno spazio ti serve un invito.",
     "%(count)s reply": {
         "one": "%(count)s risposta",
@@ -593,7 +573,6 @@
     "Messaging": "Messaggi",
     "Themes": "Temi",
     "Moderation": "Moderazione",
-    "Spaces you know that contain this space": "Spazi di cui sai che contengono questo spazio",
     "Recently viewed": "Visti di recente",
     "Recent searches": "Ricerche recenti",
     "To search messages, look for this icon at the top of a room <icon/>": "Per cercare messaggi, trova questa icona in cima ad una stanza <icon/>",
@@ -651,7 +630,6 @@
     "Start a group chat": "Inizia una conversazione di gruppo",
     "Other options": "Altre opzioni",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Se non trovi la stanza che stai cercando, chiedi un invito o crea una stanza nuova.",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Quando ti disconnetti queste chiavi verranno eliminate dal dispositivo, quindi non potrai leggere i messaggi cifrati a meno che tu non abbia le chiavi su altri dispositivi, o salvate in backup sul server.",
     "You cannot search for rooms that are neither a room nor a space": "Non puoi cercare stanze che non sono né stanze né spazi",
     "Show spaces": "Mostra spazi",
     "Show rooms": "Mostra stanze",
@@ -673,7 +651,6 @@
     "unavailable": "non disponibile",
     "unknown status code": "codice di stato sconosciuto",
     "Upgrade room": "Aggiorna stanza",
-    "Other spaces you know": "Altri spazi che conosci",
     "Failed to query public rooms": "Richiesta di stanze pubbliche fallita",
     "common": {
         "about": "Al riguardo",
@@ -2725,7 +2702,16 @@
                 "other": "Aggiornamento spazi... (%(progress)s di %(count)s)"
             },
             "error_join_rule_change_title": "Modifica delle regole di accesso fallita",
-            "error_join_rule_change_unknown": "Errore sconosciuto"
+            "error_join_rule_change_unknown": "Errore sconosciuto",
+            "join_rule_restricted_dialog_empty_warning": "Stai rimuovendo tutti gli spazi. L'accesso tornerà solo su invito",
+            "join_rule_restricted_dialog_title": "Seleziona spazi",
+            "join_rule_restricted_dialog_description": "Decidi quali spazi possono accedere a questa stanza. Se uno spazio è selezionato, i suoi membri possono trovare ed entrare in <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Cerca spazi",
+            "join_rule_restricted_dialog_heading_space": "Spazi di cui sai che contengono questo spazio",
+            "join_rule_restricted_dialog_heading_room": "Spazi di cui sai che contengono questa stanza",
+            "join_rule_restricted_dialog_heading_other": "Altri spazi o stanze che potresti non conoscere",
+            "join_rule_restricted_dialog_heading_unknown": "Questi sono probabilmente quelli di cui fanno parte gli altri amministratori delle stanze.",
+            "join_rule_restricted_dialog_heading_known": "Altri spazi che conosci"
         },
         "general": {
             "publish_toggle": "Pubblicare questa stanza nell'elenco pubblico delle stanze in %(domain)s ?",
@@ -2917,7 +2903,13 @@
             "incoming_sas_device_dialog_text_1": "Verifica questo dispositivo per segnarlo come fidato. Fidarsi di questo dispositivo offre a te e agli altri utenti una maggiore tranquillità nell'uso di messaggi cifrati end-to-end.",
             "incoming_sas_device_dialog_text_2": "La verifica di questo dispositivo lo segnerà come fidato e gli utenti che si sono verificati con te si fideranno di questo dispositivo.",
             "incoming_sas_dialog_waiting": "In attesa che il partner confermi…",
-            "incoming_sas_dialog_title": "Richiesta di verifica in arrivo"
+            "incoming_sas_dialog_title": "Richiesta di verifica in arrivo",
+            "manual_device_verification_self_text": "Conferma confrontando il seguente con le impostazioni utente nell'altra sessione:",
+            "manual_device_verification_user_text": "Conferma questa sessione confrontando il seguente con le sue impostazioni utente:",
+            "manual_device_verification_device_name_label": "Nome sessione",
+            "manual_device_verification_device_id_label": "ID sessione",
+            "manual_device_verification_device_key_label": "Chiave sessione",
+            "manual_device_verification_footer": "Se non corrispondono, la sicurezza delle tue comunicazioni potrebbe essere compromessa."
         },
         "old_version_detected_title": "Rilevati dati di crittografia obsoleti",
         "old_version_detected_description": "Sono stati rilevati dati da una vecchia versione di %(brand)s. Ciò avrà causato malfunzionamenti della crittografia end-to-end nella vecchia versione. I messaggi cifrati end-to-end scambiati di recente usando la vecchia versione potrebbero essere indecifrabili in questa versione. Anche i messaggi scambiati con questa versione possono fallire. Se riscontri problemi, disconnettiti e riaccedi. Per conservare la cronologia, esporta e re-importa le tue chiavi.",
@@ -3224,6 +3216,15 @@
             "clear_data_title": "Svuotare tutti i dati in questa sessione?",
             "clear_data_description": "Lo svuotamento dei dati di questa sessione è permanente. I messaggi cifrati andranno persi a meno non si abbia un backup delle loro chiavi.",
             "clear_data_button": "Elimina tutti i dati"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "I messaggi cifrati sono resi sicuri con una crittografia end-to-end. Solo tu e il/i destinatario/i avete le chiavi per leggere questi messaggi.",
+            "setup_secure_backup_description_2": "Quando ti disconnetti queste chiavi verranno eliminate dal dispositivo, quindi non potrai leggere i messaggi cifrati a meno che tu non abbia le chiavi su altri dispositivi, o salvate in backup sul server.",
+            "use_key_backup": "Inizia ad usare il backup chiavi",
+            "skip_key_backup": "Non voglio i miei messaggi cifrati",
+            "megolm_export": "Esporta le chiavi manualmente",
+            "setup_key_backup_title": "Perderai l'accesso ai tuoi messaggi cifrati",
+            "description": "Sei sicuro di volerti disconnettere?"
         }
     },
     "room_list": {
@@ -4046,7 +4047,8 @@
         "download_media": "Scaricamento della fonte fallito, nessun url trovato",
         "update_power_level": "Cambio di livello poteri fallito",
         "unknown": "Errore sconosciuto",
-        "dialog_description_default": "Si è verificato un errore."
+        "dialog_description_default": "Si è verificato un errore.",
+        "edit_history_unsupported": "Il tuo homeserver non sembra supportare questa funzione."
     },
     "in_space1_and_space2": "Negli spazi %(space1Name)s e %(space2Name)s.",
     "in_space_and_n_other_spaces": {

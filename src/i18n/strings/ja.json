@@ -83,17 +83,9 @@
     "Share User": "ユーザーを共有",
     "Share Room Message": "ルームのメッセージを共有",
     "Link to selected message": "選択したメッセージにリンク",
-    "Session ID": "セッションID",
     "Room Settings - %(roomName)s": "ルームの設定 - %(roomName)s",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
-    "Start using Key Backup": "鍵のバックアップを使用開始",
     "edited": "編集済",
-    "I don't want my encrypted messages": "暗号化されたメッセージは不要です",
-    "Manually export keys": "手動で鍵をエクスポート",
-    "You'll lose access to your encrypted messages": "暗号化されたメッセージにアクセスできなくなります",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "このルームを<oldVersion />から<newVersion />にアップグレードします。",
-    "Session name": "セッション名",
-    "Session key": "セッションキー",
     "Destroy cross-signing keys?": "クロス署名鍵を破棄してよろしいですか？",
     "Clear cross-signing keys": "クロス署名鍵を削除",
     "Message edits": "メッセージの編集履歴",
@@ -445,7 +437,6 @@
     "%(name)s cancelled": "%(name)sは中止しました",
     "%(name)s declined": "%(name)sは拒否しました",
     "Not encrypted": "暗号化されていません",
-    "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)sと他%(count)s個",
@@ -467,14 +458,11 @@
         "other": "%(count)s個の投票"
     },
     "Submit logs": "ログを提出",
-    "Spaces you know that contain this space": "このスペースを含む参加済のスペース",
-    "Spaces you know that contain this room": "このルームを含む参加済のスペース",
     "%(count)s members": {
         "one": "%(count)s人",
         "other": "%(count)s人"
     },
     "Automatically invite members from this room to the new one": "このルームのメンバーを新しいルームに自動的に招待",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "このルームにアクセスできるスペースを選択してください。選択したスペースのメンバーは<RoomName/>を検索し、参加できるようになります。",
     "Enter Security Key": "セキュリティーキーを入力",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>警告</b>：信頼済のコンピューターからのみ鍵のバックアップを設定してください。",
     "Successfully restored %(sessionCount)s keys": "%(sessionCount)s個の鍵が復元されました",
@@ -512,8 +500,6 @@
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
     },
-    "Select spaces": "スペースを選択",
-    "Your homeserver doesn't seem to support this feature.": "ホームサーバーはこの機能をサポートしていません。",
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Messaging": "メッセージ",
     "No results found": "検索結果がありません",
@@ -564,15 +550,11 @@
     "You're all caught up.": "未読はありません。",
     "Continuing without email": "メールアドレスを使用せずに続行",
     "Data on this screen is shared with %(widgetDomain)s": "このスクリーンのデータは%(widgetDomain)sと共有されます",
-    "If they don't match, the security of your communication may be compromised.": "一致していない場合は、コミュニケーションのセキュリティーが損なわれている可能性があります。",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
     "toggle event": "イベントを切り替える",
-    "Search spaces": "スペースを検索",
     "Other searches": "その他の検索",
     "To search messages, look for this icon at the top of a room <icon/>": "メッセージを検索する場合は、ルームの上に表示されるアイコン<icon/>をクリックしてください。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "アカウントにアクセスし、このセッションに保存されている暗号鍵を復元してください。暗号鍵がなければ、どのセッションの暗号化されたメッセージも読めなくなります。",
-    "Other spaces or rooms you might not know": "知らないかもしれない他のスペースやルーム",
-    "You're removing all spaces. Access will default to invite only": "全てのスペースを削除しようとしています。招待者しかアクセスできなくなります",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "アップロードしようとしているいくつかのファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "アップロードしようとしているファイルのサイズが<b>大きすぎます</b>。最大のサイズは%(limit)sです。",
     "a new master key signature": "新しいマスターキーの署名",
@@ -597,8 +579,6 @@
         "other": "%(count)s人の参加者",
         "one": "1人の参加者"
     },
-    "Confirm this user's session by comparing the following with their User Settings:": "ユーザー設定画面で以下を比較し、このユーザーのセッションを承認してください：",
-    "Confirm by comparing the following with the User Settings in your other session:": "他のセッションのユーザー設定で、以下を比較して承認してください：",
     "Live location ended": "位置情報（ライブ）が終了しました",
     "No live locations": "位置情報（ライブ）がありません",
     "View list": "一覧を表示",
@@ -639,7 +619,6 @@
     "Search for": "検索",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "探しているルームが見つからない場合、招待を要求するか新しいルームを作成してください。",
     "If you can't see who you're looking for, send them your invite link.": "探している相手が見つからなければ、招待リンクを送信してください。",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "サインアウトすると、これらの鍵はこの端末から削除されます。使用できる鍵が他の端末にあったり、サーバーにバックアップされたりしているのでない限り、暗号化されたメッセージは読むことができなくなります。",
     "%(brand)s encountered an error during upload of:": "以下のアップロードの際に%(brand)sでエラーが発生しました：",
     "Thread root ID: %(threadRootId)s": "スレッドのルートID：%(threadRootId)s",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "このルームをアップグレードするには、現在のルームを閉鎖し、新しくルームを作成する必要があります。ルームの参加者のため、アップグレードの際に以下を行います。",
@@ -650,7 +629,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "サーバーは問題を特定するように設定されていません（CORS）。",
     "Your area is experiencing difficulties connecting to the internet.": "インターネットに接続できません。",
     "The server (%(serverName)s) took too long to respond.": "サーバー（%(serverName)s）が時間内に応答しませんでした。",
-    "These are likely ones other room admins are a part of.": "これらは、他のルームの管理者がいるスペースまたはルームです。",
     "%(members)s and more": "%(members)s人とその他のメンバー",
     " in <strong>%(room)s</strong>": " <strong>%(room)s</strong>内で",
     "Some results may be hidden for privacy": "プライバシーの観点から表示していない結果があります",
@@ -2604,7 +2582,15 @@
                 "other": "スペースを更新しています…（計%(count)s個のうち%(progress)s個）"
             },
             "error_join_rule_change_title": "参加のルールの更新に失敗しました",
-            "error_join_rule_change_unknown": "不明なエラー"
+            "error_join_rule_change_unknown": "不明なエラー",
+            "join_rule_restricted_dialog_empty_warning": "全てのスペースを削除しようとしています。招待者しかアクセスできなくなります",
+            "join_rule_restricted_dialog_title": "スペースを選択",
+            "join_rule_restricted_dialog_description": "このルームにアクセスできるスペースを選択してください。選択したスペースのメンバーは<RoomName/>を検索し、参加できるようになります。",
+            "join_rule_restricted_dialog_filter_placeholder": "スペースを検索",
+            "join_rule_restricted_dialog_heading_space": "このスペースを含む参加済のスペース",
+            "join_rule_restricted_dialog_heading_room": "このルームを含む参加済のスペース",
+            "join_rule_restricted_dialog_heading_other": "知らないかもしれない他のスペースやルーム",
+            "join_rule_restricted_dialog_heading_unknown": "これらは、他のルームの管理者がいるスペースまたはルームです。"
         },
         "general": {
             "publish_toggle": "%(domain)sのルームディレクトリーにこのルームを公開しますか？",
@@ -2786,7 +2772,13 @@
             "incoming_sas_device_dialog_text_1": "この端末を認証すると、信頼済として表示します。相手の端末を信頼すると、より一層安心してエンドツーエンド暗号化を使用することができます。",
             "incoming_sas_device_dialog_text_2": "この端末を認証すると、信頼済として表示します。あなたを認証したユーザーはこの端末を信頼することができるようになります。",
             "incoming_sas_dialog_waiting": "相手の承認を待機しています…",
-            "incoming_sas_dialog_title": "認証のリクエストが届いています"
+            "incoming_sas_dialog_title": "認証のリクエストが届いています",
+            "manual_device_verification_self_text": "他のセッションのユーザー設定で、以下を比較して承認してください：",
+            "manual_device_verification_user_text": "ユーザー設定画面で以下を比較し、このユーザーのセッションを承認してください：",
+            "manual_device_verification_device_name_label": "セッション名",
+            "manual_device_verification_device_id_label": "セッションID",
+            "manual_device_verification_device_key_label": "セッションキー",
+            "manual_device_verification_footer": "一致していない場合は、コミュニケーションのセキュリティーが損なわれている可能性があります。"
         },
         "old_version_detected_title": "古い暗号化データが検出されました",
         "old_version_detected_description": "%(brand)sの古いバージョンのデータを検出しました。これにより、古いバージョンではエンドツーエンドの暗号化が機能しなくなります。古いバージョンを使用している間に最近交換されたエンドツーエンドの暗号化されたメッセージは、このバージョンでは復号化できません。また、このバージョンで交換されたメッセージが失敗することもあります。問題が発生した場合は、ログアウトして再度ログインしてください。メッセージ履歴を保持するには、鍵をエクスポートして再インポートしてください。",
@@ -3088,6 +3080,15 @@
             "clear_data_title": "このセッションの全てのデータを削除してよろしいですか？",
             "clear_data_description": "このセッションのデータの消去は取り消せません。鍵がバックアップされていない限り、暗号化されたメッセージを読むことはできなくなります。",
             "clear_data_button": "全てのデータを消去"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "暗号化されたメッセージは、エンドツーエンドの暗号化によって保護されています。これらの暗号化されたメッセージを読むための鍵を持っているのは、あなたと受信者だけです。",
+            "setup_secure_backup_description_2": "サインアウトすると、これらの鍵はこの端末から削除されます。使用できる鍵が他の端末にあったり、サーバーにバックアップされたりしているのでない限り、暗号化されたメッセージは読むことができなくなります。",
+            "use_key_backup": "鍵のバックアップを使用開始",
+            "skip_key_backup": "暗号化されたメッセージは不要です",
+            "megolm_export": "手動で鍵をエクスポート",
+            "setup_key_backup_title": "暗号化されたメッセージにアクセスできなくなります",
+            "description": "サインアウトしてよろしいですか？"
         }
     },
     "room_list": {
@@ -3861,7 +3862,8 @@
         "something_went_wrong": "問題が発生しました！",
         "update_power_level": "権限レベルの変更に失敗しました",
         "unknown": "不明なエラー",
-        "dialog_description_default": "エラーが発生しました。"
+        "dialog_description_default": "エラーが発生しました。",
+        "edit_history_unsupported": "ホームサーバーはこの機能をサポートしていません。"
     },
     "in_space1_and_space2": "スペース %(space1Name)sと%(space2Name)s内。",
     "in_space_and_n_other_spaces": {

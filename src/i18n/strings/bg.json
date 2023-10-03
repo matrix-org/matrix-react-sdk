@@ -54,7 +54,6 @@
     "Unable to restore session": "Неуспешно възстановяване на сесията",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Моля, проверете своя имейл адрес и натиснете връзката, която той съдържа. След като направите това, натиснете продължи.",
     "This will allow you to reset your password and receive notifications.": "Това ще Ви позволи да възстановите Вашата парола и да получавате известия.",
-    "Session ID": "Идентификатор на сесията",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ако преди сте използвали по-нова версия на %(brand)s, Вашата сесия може да не бъде съвместима с текущата версия. Затворете този прозорец и се върнете в по-новата версия.",
     "Sunday": "Неделя",
     "Today": "Днес",
@@ -150,12 +149,6 @@
     "Anchor": "Котва",
     "Headphones": "Слушалки",
     "Folder": "Папка",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Шифрованите съобщения са защитени с шифроване от край до край. Само Вие и получателят (получателите) имате ключове за четенето им.",
-    "Start using Key Backup": "Включи резервни копия за ключовете",
-    "I don't want my encrypted messages": "Не искам шифрованите съобщения",
-    "Manually export keys": "Експортирай ключове ръчно",
-    "You'll lose access to your encrypted messages": "Ще загубите достъп до шифрованите си съобщения",
-    "Are you sure you want to sign out?": "Сигурни ли сте, че искате да излезете от профила?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Внимание</b>: настройването на резервно копие на ключовете трябва да се прави само от доверен компютър.",
     "Scissors": "Ножици",
     "Room Settings - %(roomName)s": "Настройки на стая - %(roomName)s",
@@ -180,7 +173,6 @@
     "Upload all": "Качи всички",
     "Message edits": "Редакции на съобщение",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Обновяването на тази стая изисква затварянето на текущата и създаване на нова на нейно място. За да е най-удобно за членовете на стаята, ще:",
-    "Your homeserver doesn't seem to support this feature.": "Не изглежда сървърът ви да поддържа тази функция.",
     "Resend %(unsentCount)s reaction(s)": "Изпрати наново %(unsentCount)s реакция(и)",
     "Find others by phone or email": "Открийте други по телефон или имейл",
     "Be found by phone or email": "Бъдете открит по телефон или имейл",
@@ -219,17 +211,12 @@
     "Verify your other session using one of the options below.": "Верифицирайте другите си сесии използвайки една от опциите по-долу.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Изтриването на ключовете за кръстосано-подписване е необратимо. Всички, с които сте се верифицирали ще видят предупреждения за сигурността. Почти със сигурност не искате да направите това, освен ако не сте загубили всички устройства, от които можете да подписвате кръстосано.",
     "Clear cross-signing keys": "Изчисти ключовете за кръстосано-подписване",
-    "Session name": "Име на сесията",
-    "Session key": "Ключ за сесията",
     "IRC display name width": "Ширина на IRC името",
     "a new master key signature": "нов подпис на основния ключ",
     "a new cross-signing key signature": "нов подпис на ключа за кръстосано-подписване",
     "a device cross-signing signature": "подпис за кръстосано-подписване на устройства",
     "a key signature": "подпис на ключ",
     "%(brand)s encountered an error during upload of:": "%(brand)s срещна проблем при качването на:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Потвърдете чрез сравняване на следното с Потребителски Настройки в другата ви сесия:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Потвърдете сесията на този потребител чрез сравняване на следното с техните Потребителски Настройки:",
-    "If they don't match, the security of your communication may be compromised.": "Ако няма съвпадение, сигурността на комуникацията ви може би е компрометирана.",
     "Your homeserver has exceeded its user limit.": "Надвишен е лимитът за потребители на сървъра ви.",
     "Your homeserver has exceeded one of its resource limits.": "Беше надвишен някой от лимитите на сървъра.",
     "Ok": "Добре",
@@ -1671,7 +1658,13 @@
             "incoming_sas_user_dialog_text_2": "Верифицирането на този потребител ще маркира сесията им като доверена при вас, както и вашата като доверена при тях.",
             "incoming_sas_device_dialog_text_1": "Верифицирайте това устройство за да го маркирате като доверено. Доверявайки се на това устройство дава на вас и на другите потребители допълнително спокойствие при използването на от-край-до-край-шифровани съобщения.",
             "incoming_sas_device_dialog_text_2": "Верифицирането на това устройство ще го маркира като доверено, а потребителите, които са потвърдили вас също ще се доверяват на него.",
-            "incoming_sas_dialog_title": "Входяща заявка за потвърждение"
+            "incoming_sas_dialog_title": "Входяща заявка за потвърждение",
+            "manual_device_verification_self_text": "Потвърдете чрез сравняване на следното с Потребителски Настройки в другата ви сесия:",
+            "manual_device_verification_user_text": "Потвърдете сесията на този потребител чрез сравняване на следното с техните Потребителски Настройки:",
+            "manual_device_verification_device_name_label": "Име на сесията",
+            "manual_device_verification_device_id_label": "Идентификатор на сесията",
+            "manual_device_verification_device_key_label": "Ключ за сесията",
+            "manual_device_verification_footer": "Ако няма съвпадение, сигурността на комуникацията ви може би е компрометирана."
         },
         "old_version_detected_title": "Бяха открити стари криптографски данни",
         "old_version_detected_description": "Засечени са данни от по-стара версия на %(brand)s. Това ще доведе до неправилна работа на криптографията от край до край в по-старата версия. Шифрованите от край до край съобщения, които са били обменени наскоро (при използването на по-стара версия), може да не успеят да бъдат разшифровани в тази версия. Това също може да доведе до неуспех в обмяната на съобщения в тази версия. Ако имате проблеми, излезте и влезте отново в профила си. За да запазите историята на съобщенията, експортирайте и импортирайте отново Вашите ключове.",
@@ -1864,6 +1857,14 @@
             "clear_data_title": "Изчисти всички данни в тази сесия?",
             "clear_data_description": "Изчистването на всички данни от сесията е необратимо. Шифрованите съобщения ще бъдат загубени, освен ако няма резервно копие на ключовете им.",
             "clear_data_button": "Изчисти всички данни"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Шифрованите съобщения са защитени с шифроване от край до край. Само Вие и получателят (получателите) имате ключове за четенето им.",
+            "use_key_backup": "Включи резервни копия за ключовете",
+            "skip_key_backup": "Не искам шифрованите съобщения",
+            "megolm_export": "Експортирай ключове ръчно",
+            "setup_key_backup_title": "Ще загубите достъп до шифрованите си съобщения",
+            "description": "Сигурни ли сте, че искате да излезете от профила?"
         }
     },
     "export_chat": {
@@ -2236,7 +2237,8 @@
         "something_went_wrong": "Нещо се обърка!",
         "update_power_level": "Неуспешна промяна на нивото на достъп",
         "unknown": "Неизвестна грешка",
-        "dialog_description_default": "Възникна грешка."
+        "dialog_description_default": "Възникна грешка.",
+        "edit_history_unsupported": "Не изглежда сървърът ви да поддържа тази функция."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

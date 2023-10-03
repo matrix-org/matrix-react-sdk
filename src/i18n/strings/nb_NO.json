@@ -70,7 +70,6 @@
     "Folder": "Mappe",
     "collapse": "skjul",
     "expand": "utvid",
-    "Session name": "Øktens navn",
     "Filter results": "Filtrerresultater",
     "Email address": "E-postadresse",
     "Share Room Message": "Del rommelding",
@@ -108,8 +107,6 @@
     "edited": "redigert",
     "Delete Widget": "Slett modul",
     "e.g. my-room": "f.eks. mitt-rom",
-    "Session ID": "Økt-ID",
-    "Session key": "Øktnøkkel",
     "Message edits": "Meldingsredigeringer",
     "Upload files": "Last opp filer",
     "Upload all": "Last opp alle",
@@ -120,8 +117,6 @@
     "Not Trusted": "Ikke betrodd",
     "%(items)s and %(lastItem)s": "%(items)s og %(lastItem)s",
     "Warning!": "Advarsel!",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
-    "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Create new room": "Opprett et nytt rom",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
@@ -149,7 +144,6 @@
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "Manually export keys": "Eksporter nøkler manuelt",
     "Verification Pending": "Avventer verifisering",
     "Share Room": "Del rommet",
     "Share User": "Del brukeren",
@@ -245,7 +239,6 @@
     "Wrong Security Key": "Feil sikkerhetsnøkkel",
     "Not encrypted": "Ikke kryptert",
     "Continuing without email": "Fortsetter uten E-post",
-    "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
     "Upgrade Room Version": "Oppgrader romversjon",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
@@ -1371,7 +1364,10 @@
             "successful_own_device": "Du har vellykket verifisert enheten din!",
             "successful_device": "Du har vellykket verifisert %(deviceName)s (%(deviceId)s)!",
             "successful_user": "Du har vellykket verifisert %(displayName)s!",
-            "cancelled": "Du avbrøt verifiseringen."
+            "cancelled": "Du avbrøt verifiseringen.",
+            "manual_device_verification_device_name_label": "Øktens navn",
+            "manual_device_verification_device_id_label": "Økt-ID",
+            "manual_device_verification_device_key_label": "Øktnøkkel"
         },
         "verification_requested_toast_title": "Verifisering ble forespurt",
         "bootstrap_title": "Setter opp nøkler",
@@ -1483,6 +1479,12 @@
         "country_dropdown": "Nedfallsmeny over land",
         "soft_logout": {
             "clear_data_button": "Tøm alle data"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Krypterte meldinger er sikret med punkt-til-punkt-kryptering. Bare du og mottakeren(e) har nøklene til å lese disse meldingene.",
+            "use_key_backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
+            "megolm_export": "Eksporter nøkler manuelt",
+            "description": "Er du sikker på at du vil logge av?"
         }
     },
     "room_list": {

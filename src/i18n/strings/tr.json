@@ -10,7 +10,6 @@
     "Moderator": "Moderatör",
     "not specified": "Belirtilmemiş",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Lütfen e-postanızı kontrol edin ve içerdiği bağlantıya tıklayın . Bu işlem tamamlandıktan sonra , 'devam et' e tıklayın .",
-    "Session ID": "Oturum ID",
     "unknown error code": "bilinmeyen hata kodu",
     "Verification Pending": "Bekleyen doğrulama",
     "Warning!": "Uyarı!",
@@ -59,11 +58,6 @@
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
     "Filter results": "Sonuçları filtrele",
-    "I don't want my encrypted messages": "Şifrelenmiş mesajlarımı istemiyorum",
-    "Manually export keys": "Elle dışa aktarılmış anahtarlar",
-    "You'll lose access to your encrypted messages": "Şifrelenmiş mesajlarınıza erişiminizi kaybedeceksiniz",
-    "Are you sure you want to sign out?": "Oturumdan çıkmak istediğinize emin misiniz?",
-    "Your homeserver doesn't seem to support this feature.": "Ana sunucunuz bu özelliği desteklemiyor gözüküyor.",
     "Message edits": "Mesajları düzenle",
     "Room Settings - %(roomName)s": "Oda Ayarları - %(roomName)s",
     "Failed to upgrade room": "Oda güncelleme başarısız",
@@ -119,7 +113,6 @@
     "Anchor": "Çıpa",
     "Headphones": "Kulaklık",
     "Folder": "Klasör",
-    "Start using Key Backup": "Anahtar Yedekleme kullanmaya başla",
     "Dog": "Köpek",
     "Cat": "Kedi",
     "Lion": "Aslan",
@@ -180,8 +173,6 @@
     "Delete Widget": "Görsel Bileşen Sil",
     "Destroy cross-signing keys?": "Çarpraz-imzalama anahtarlarını imha et?",
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
-    "Session name": "Oturum adı",
-    "Session key": "Oturum anahtarı",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "Upgrade public room": "Açık odayı güncelle",
@@ -1614,7 +1605,10 @@
             "timed_out": "Doğrulama zaman aşımına uğradı.",
             "cancelled_user": "%(displayName)s doğrulamayı iptal etti.",
             "cancelled": "Doğrulamayı iptal ettiniz.",
-            "incoming_sas_dialog_title": "Gelen Doğrulama İsteği"
+            "incoming_sas_dialog_title": "Gelen Doğrulama İsteği",
+            "manual_device_verification_device_name_label": "Oturum adı",
+            "manual_device_verification_device_id_label": "Oturum ID",
+            "manual_device_verification_device_key_label": "Oturum anahtarı"
         },
         "old_version_detected_title": "Eski kriptolama verisi tespit edildi",
         "cancel_entering_passphrase_title": "Parola girişini iptal et?",
@@ -1782,6 +1776,13 @@
         "soft_logout": {
             "clear_data_title": "Bu oturumdaki tüm verileri temizle?",
             "clear_data_button": "Bütün verileri sil"
+        },
+        "logout_dialog": {
+            "use_key_backup": "Anahtar Yedekleme kullanmaya başla",
+            "skip_key_backup": "Şifrelenmiş mesajlarımı istemiyorum",
+            "megolm_export": "Elle dışa aktarılmış anahtarlar",
+            "setup_key_backup_title": "Şifrelenmiş mesajlarınıza erişiminizi kaybedeceksiniz",
+            "description": "Oturumdan çıkmak istediğinize emin misiniz?"
         }
     },
     "room_list": {
@@ -2155,7 +2156,8 @@
         "something_went_wrong": "Bir şeyler yanlış gitti!",
         "update_power_level": "Güç seviyesini değiştirme başarısız oldu",
         "unknown": "Bilinmeyen Hata",
-        "dialog_description_default": "Bir hata oluştu."
+        "dialog_description_default": "Bir hata oluştu.",
+        "edit_history_unsupported": "Ana sunucunuz bu özelliği desteklemiyor gözüküyor."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

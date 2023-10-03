@@ -1,5 +1,4 @@
 {
-    "Session ID": "Sitzungs-ID",
     "Warning!": "Warnung!",
     "Moderator": "Moderator",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bitte prüfe deinen E-Mail-Posteingang und klicke auf den in der E-Mail enthaltenen Link. Anschließend auf \"Fortsetzen\" klicken.",
@@ -149,12 +148,6 @@
     "Anchor": "Anker",
     "Headphones": "Kopfhörer",
     "Folder": "Ordner",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Verschlüsselte Nachrichten sind mit Ende-zu-Ende-Verschlüsselung gesichert. Nur du und der/die Empfänger haben die Schlüssel um diese Nachrichten zu lesen.",
-    "Start using Key Backup": "Beginne Schlüsselsicherung zu nutzen",
-    "Are you sure you want to sign out?": "Bist du sicher, dass du dich abmelden möchtest?",
-    "Manually export keys": "Schlüssel manuell exportieren",
-    "I don't want my encrypted messages": "Ich möchte meine verschlüsselten Nachrichten nicht",
-    "You'll lose access to your encrypted messages": "Du wirst den Zugang zu deinen verschlüsselten Nachrichten verlieren",
     "Email (optional)": "E-Mail-Adresse (optional)",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Warnung</b>: Du solltest die Schlüsselsicherung nur auf einem vertrauenswürdigen Gerät einrichten.",
     "Scissors": "Schere",
@@ -181,12 +174,10 @@
     "%(name)s declined": "%(name)s hat abgelehnt",
     "%(name)s cancelled": "%(name)s hat abgebrochen",
     "%(name)s wants to verify": "%(name)s will eine Verifizierung",
-    "Session name": "Sitzungsname",
     "Sign out and remove encryption keys?": "Abmelden und Verschlüsselungsschlüssel entfernen?",
     "This backup is trusted because it has been restored on this session": "Dieser Sicherung wird vertraut, da sie während dieser Sitzung wiederhergestellt wurde",
     "Encrypted by a deleted session": "Von einer gelöschten Sitzung verschlüsselt",
     "e.g. my-room": "z. B. mein-raum",
-    "Session key": "Sitzungsschlüssel",
     "Not Trusted": "Nicht vertraut",
     "Ask this user to verify their session, or manually verify it below.": "Bitte diesen Nutzer, seine Sitzung zu verifizieren, oder verifiziere diese unten manuell.",
     "Verify your other session using one of the options below.": "Verifiziere deine andere Sitzung mit einer der folgenden Optionen.",
@@ -225,10 +216,6 @@
     "Sign in with SSO": "Einmalanmeldung verwenden",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
-    "Confirm by comparing the following with the User Settings in your other session:": "Bestätige indem du das folgende mit deinen Benutzereinstellungen in deiner anderen Sitzung vergleichst:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Bestätige die Sitzung dieses Benutzers indem du das folgende mit seinen Benutzereinstellungen vergleichst:",
-    "If they don't match, the security of your communication may be compromised.": "Wenn sie nicht übereinstimmen kann die Sicherheit eurer Kommunikation kompromittiert sein.",
-    "Your homeserver doesn't seem to support this feature.": "Dein Heim-Server scheint diese Funktion nicht zu unterstützen.",
     "Message edits": "Nachrichtenänderungen",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Um diesen Raum zu aktualisieren, muss die aktuelle Instanz des Raums geschlossen und an ihrer Stelle ein neuer Raum erstellt werden. Um den Raummitgliedern die bestmögliche Erfahrung zu bieten, werden wir:",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Eine Raumaktualisierung ist ein komplexer Vorgang, der üblicherweise empfohlen wird, wenn ein Raum aufgrund von Fehlern, fehlenden Funktionen oder Sicherheitslücken instabil ist.",
@@ -563,13 +550,7 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Falls du es wirklich willst: Es werden keine Nachrichten gelöscht. Außerdem wird die Suche, während der Index erstellt wird, etwas langsamer sein",
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
-    "Search spaces": "Spaces durchsuchen",
-    "Select spaces": "Spaces wählen",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Die Aktualisierung wird eine neue Version des Raums erstellen</b>. Die bisherigen Nachrichten verbleiben im archivierten Raum.",
-    "Other spaces or rooms you might not know": "Andere Spaces, die du möglicherweise nicht kennst",
-    "Spaces you know that contain this room": "Spaces, in denen du Mitglied bist und die diesen Raum enthalten",
-    "You're removing all spaces. Access will default to invite only": "Du entfernst alle Spaces. Der Zutritt wird auf den Standard (Privat) zurückgesetzt",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Entscheide, welche Spaces auf den Raum zugreifen können. Mitglieder ausgewählter Spaces können <RoomName/> betreten.",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
     "%(count)s reply": {
         "one": "%(count)s Antwort",
@@ -578,7 +559,6 @@
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
     "Thread options": "Thread-Optionen",
-    "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
     "Forget": "Vergessen",
     "%(count)s votes": {
         "one": "%(count)s Stimme",
@@ -593,7 +573,6 @@
         "one": "%(spaceName)s und %(count)s anderer",
         "other": "%(spaceName)s und %(count)s andere"
     },
-    "Spaces you know that contain this space": "Spaces, die diesen Space enthalten und in denen du Mitglied bist",
     "Open in OpenStreetMap": "In OpenStreetMap öffnen",
     "Recent searches": "Kürzliche Gesucht",
     "To search messages, look for this icon at the top of a room <icon/>": "Wenn du Nachrichten durchsuchen willst, klicke auf das <icon/> Icon oberhalb des Raumes",
@@ -627,7 +606,6 @@
     "Input devices": "Eingabegeräte",
     "Unsent": "Nicht gesendet",
     "Explore public spaces in the new search dialog": "Erkunde öffentliche Räume mit der neuen Suchfunktion",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
     "Show rooms": "Räume zeigen",
     "Search for": "Suche nach",
     "%(count)s Members": {
@@ -673,7 +651,6 @@
     "unavailable": "Nicht verfügbar",
     "unknown status code": "Unbekannter Statuscode",
     "Upgrade room": "Raum aktualisieren",
-    "Other spaces you know": "Andere dir bekannte Spaces",
     "Failed to query public rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
     "common": {
         "about": "Über",
@@ -2725,7 +2702,16 @@
                 "other": "Spaces aktualisieren … (%(progress)s von %(count)s)"
             },
             "error_join_rule_change_title": "Fehler beim Aktualisieren der Beitrittsregeln",
-            "error_join_rule_change_unknown": "Unbekannter Fehler"
+            "error_join_rule_change_unknown": "Unbekannter Fehler",
+            "join_rule_restricted_dialog_empty_warning": "Du entfernst alle Spaces. Der Zutritt wird auf den Standard (Privat) zurückgesetzt",
+            "join_rule_restricted_dialog_title": "Spaces wählen",
+            "join_rule_restricted_dialog_description": "Entscheide, welche Spaces auf den Raum zugreifen können. Mitglieder ausgewählter Spaces können <RoomName/> betreten.",
+            "join_rule_restricted_dialog_filter_placeholder": "Spaces durchsuchen",
+            "join_rule_restricted_dialog_heading_space": "Spaces, die diesen Space enthalten und in denen du Mitglied bist",
+            "join_rule_restricted_dialog_heading_room": "Spaces, in denen du Mitglied bist und die diesen Raum enthalten",
+            "join_rule_restricted_dialog_heading_other": "Andere Spaces, die du möglicherweise nicht kennst",
+            "join_rule_restricted_dialog_heading_unknown": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
+            "join_rule_restricted_dialog_heading_known": "Andere dir bekannte Spaces"
         },
         "general": {
             "publish_toggle": "Diesen Raum im Raumverzeichnis von %(domain)s veröffentlichen?",
@@ -2917,7 +2903,13 @@
             "incoming_sas_device_dialog_text_1": "Verifiziere dieses Gerät, um es als vertrauenswürdig zu markieren. Das Vertrauen in dieses Gerät gibt dir und anderen Benutzern zusätzliche Sicherheit, wenn ihr Ende-zu-Ende verschlüsselte Nachrichten verwendet.",
             "incoming_sas_device_dialog_text_2": "Verifiziere dieses Gerät und es wird es als vertrauenswürdig markiert. Benutzer, die sich bei dir verifiziert haben, werden diesem Gerät auch vertrauen.",
             "incoming_sas_dialog_waiting": "Warte auf Bestätigung des Gesprächspartners …",
-            "incoming_sas_dialog_title": "Eingehende Verifikationsanfrage"
+            "incoming_sas_dialog_title": "Eingehende Verifikationsanfrage",
+            "manual_device_verification_self_text": "Bestätige indem du das folgende mit deinen Benutzereinstellungen in deiner anderen Sitzung vergleichst:",
+            "manual_device_verification_user_text": "Bestätige die Sitzung dieses Benutzers indem du das folgende mit seinen Benutzereinstellungen vergleichst:",
+            "manual_device_verification_device_name_label": "Sitzungsname",
+            "manual_device_verification_device_id_label": "Sitzungs-ID",
+            "manual_device_verification_device_key_label": "Sitzungsschlüssel",
+            "manual_device_verification_footer": "Wenn sie nicht übereinstimmen kann die Sicherheit eurer Kommunikation kompromittiert sein."
         },
         "old_version_detected_title": "Alte Kryptografiedaten erkannt",
         "old_version_detected_description": "Es wurden Daten von einer älteren Version von %(brand)s entdeckt. Dies wird zu Fehlern in der Ende-zu-Ende-Verschlüsselung der älteren Version geführt haben. Ende-zu-Ende verschlüsselte Nachrichten, die ausgetauscht wruden, während die ältere Version genutzt wurde, werden in dieser Version nicht entschlüsselbar sein. Es kann auch zu Fehlern mit Nachrichten führen, die mit dieser Version versendet werden. Wenn du Probleme feststellst, melde dich ab und wieder an. Um die Historie zu behalten, ex- und reimportiere deine Schlüssel.",
@@ -3224,6 +3216,15 @@
             "clear_data_title": "Alle Daten dieser Sitzung löschen?",
             "clear_data_description": "Das Löschen aller Daten aus dieser Sitzung ist dauerhaft. Verschlüsselte Nachrichten gehen verloren, sofern deine Schlüssel nicht gesichert wurden.",
             "clear_data_button": "Alle Daten löschen"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Verschlüsselte Nachrichten sind mit Ende-zu-Ende-Verschlüsselung gesichert. Nur du und der/die Empfänger haben die Schlüssel um diese Nachrichten zu lesen.",
+            "setup_secure_backup_description_2": "Wenn du dich abmeldest, werden die Schlüssel auf diesem Gerät gelöscht. Das bedeutet, dass du keine verschlüsselten Nachrichten mehr lesen kannst, wenn du die Schlüssel nicht auf einem anderen Gerät oder eine Sicherung auf dem Server hast.",
+            "use_key_backup": "Beginne Schlüsselsicherung zu nutzen",
+            "skip_key_backup": "Ich möchte meine verschlüsselten Nachrichten nicht",
+            "megolm_export": "Schlüssel manuell exportieren",
+            "setup_key_backup_title": "Du wirst den Zugang zu deinen verschlüsselten Nachrichten verlieren",
+            "description": "Bist du sicher, dass du dich abmelden möchtest?"
         }
     },
     "room_list": {
@@ -4046,7 +4047,8 @@
         "download_media": "Herunterladen der Quellmedien fehlgeschlagen, da keine Quell-URL gefunden wurde",
         "update_power_level": "Ändern der Berechtigungsstufe fehlgeschlagen",
         "unknown": "Unbekannter Fehler",
-        "dialog_description_default": "Ein Fehler ist aufgetreten."
+        "dialog_description_default": "Ein Fehler ist aufgetreten.",
+        "edit_history_unsupported": "Dein Heim-Server scheint diese Funktion nicht zu unterstützen."
     },
     "in_space1_and_space2": "In den Spaces %(space1Name)s und %(space2Name)s.",
     "in_space_and_n_other_spaces": {

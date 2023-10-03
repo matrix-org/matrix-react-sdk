@@ -50,15 +50,10 @@
     "Yesterday": "Iḍelli",
     "edited": "yettwaẓreg",
     "collapse": "fneẓ",
-    "Session name": "Isem n tɣimit",
     "Email address": "Tansa n yimayl",
     "Upload files": "Sali-d ifuyla",
     "Home": "Agejdan",
     "Email (optional)": "Imayl (Afrayan)",
-    "I don't want my encrypted messages": "Ur bɣiɣ ara izan-inu iwgelhanen",
-    "Manually export keys": "Sifeḍ s ufus tisura",
-    "Session ID": "Asulay n tqimit",
-    "Session key": "Tasarut n tɣimit",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ma ulac aɣilif, senqed imayl-ik/im syen sit ɣef useɣwen i yellan. Akken ara yemmed waya, sit ad tkemmleḍ.",
     "This will allow you to reset your password and receive notifications.": "Ayagi ad ak(akem)-yeǧǧ ad twennzeḍ awal-ik/im uffir yerna ad d-tremseḍ ilɣa.",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
@@ -71,7 +66,6 @@
     "Security Key": "Tasarut n tɣellist",
     "Not Trusted": "Ur yettwattkal ara",
     "%(items)s and %(lastItem)s": "%(items)s d %(lastItem)s",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
     "Confirm encryption setup": "Sentem asebded n uwgelhen",
     "Click the button below to confirm setting up encryption.": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen.",
     "Dog": "Aqjun",
@@ -167,7 +161,6 @@
     "Verify your other session using one of the options below.": "Senqed tiɣimiyin-ik·im tiyaḍ s useqdec yiwet seg textiṛiyin ddaw.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) yeqqen ɣer tɣimit tamaynut war ma isenqed-itt:",
     "Ask this user to verify their session, or manually verify it below.": "Suter deg useqdac-a ad isenqed tiɣimit-is, neɣ senqed-itt ddaw s ufus.",
-    "Start using Key Backup": "Bdu aseqdec n uḥraz n tsarut",
     "%(count)s verified sessions": {
         "other": "%(count)s isenqed tiɣimiyin",
         "one": "1 n tɣimit i yettwasneqden"
@@ -232,12 +225,6 @@
     "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
     "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
-    "You'll lose access to your encrypted messages": "Tesruḥeḍ anekcum ɣer yiznan-ik·im yettwawgelhen",
-    "Are you sure you want to sign out?": "D tidet tebɣiḍ ad teffɣeḍ?",
-    "Confirm by comparing the following with the User Settings in your other session:": "Sentem s userwes gar wayen i d-iteddun d yiɣewwaren n useqdac deg tɣimit-ik·im tayeḍ:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Sentem tiɣimit n useqdac-a s userwes gar wayen i d-iteddun d yiɣewwaren-is n useqdac:",
-    "If they don't match, the security of your communication may be compromised.": "Ma yella ur mṣadan ara, taɣellist n teywalt-ik·im tezmer ad tettwaker.",
-    "Your homeserver doesn't seem to support this feature.": "Aqeddac-ik·im agejdan ur yettban ara yessefrak tamahilt-a.",
     "Create a new room with the same name, description and avatar": "Rnu taxxamt tamaynut s yisem-nni, aglam-nni d uvaṭar-nni",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Tukksa n tsura n uzmul anmidag ad yili i lebda. Yal amdan i tesneqdeḍ ad iwali ilɣa n tɣellist. Maca ur tebɣiḍ ara ad txedmeḍ aya, ala ma yella tesruḥeḍ ibenkan akk ara ak·akem-yeǧǧen ad tkecmeḍ seg-s.",
     "Update any local room aliases to point to the new room": "Leqqem ismawen yettunefken i yal taxxamt tadigant akken ad tsekneḍ ɣer texxamt tamaynut",
@@ -1623,7 +1610,13 @@
             "incoming_sas_user_dialog_text_2": "Asenqed n useqdac-a ad yecreḍ ɣef tɣimit-is tettwattkal, yerna ad yecreḍ ula ɣef tɣimit-ik·im tettwattkal i netta·nettat.",
             "incoming_sas_device_dialog_text_1": "Senqed ibenk-a i wakken ad tcerḍeḍ fell-as yettwattkal. Attkal n yibenk-a ad imudd i kečč·kemm d yiseqdacen-nniḍen lehna n uqerru mi ara tesqedcem awgelhen seg yixef ɣer yixef.",
             "incoming_sas_device_dialog_text_2": "Asenqed n yibenk-a ad yettucreḍ fall-as yettuklal, syen iseqdacen yettusneqden yid-k·m ad tteklen ɣef yibenk-a.",
-            "incoming_sas_dialog_title": "Tuttra n usenqed i d-ikecmen"
+            "incoming_sas_dialog_title": "Tuttra n usenqed i d-ikecmen",
+            "manual_device_verification_self_text": "Sentem s userwes gar wayen i d-iteddun d yiɣewwaren n useqdac deg tɣimit-ik·im tayeḍ:",
+            "manual_device_verification_user_text": "Sentem tiɣimit n useqdac-a s userwes gar wayen i d-iteddun d yiɣewwaren-is n useqdac:",
+            "manual_device_verification_device_name_label": "Isem n tɣimit",
+            "manual_device_verification_device_id_label": "Asulay n tqimit",
+            "manual_device_verification_device_key_label": "Tasarut n tɣimit",
+            "manual_device_verification_footer": "Ma yella ur mṣadan ara, taɣellist n teywalt-ik·im tezmer ad tettwaker."
         },
         "old_version_detected_title": "Ala isefka iweglehnen i d-iteffɣen",
         "old_version_detected_description": "Isefka n lqem aqbur n %(brand)s ttwafen. Ayagi ad d-yeglu s yir tamahalt n uwgelhen seg yixef ɣer yixef deg lqem aqbur. Iznan yettwawgelhen seg yixef ɣer yixef yettumbeddalen yakan mi akken yettuseqdac lqem aqbur yezmer ur asen-ittekkes ara uwgelhen deg lqem-a. Aya yezmer daɣen ad d-yeglu asefsex n yiznan yettumbeddalen s lqem-a. Ma yella temlaleḍ-d uguren, ffeɣ syen tuɣaleḍ-d tikkelt-nniḍen. I wakken ad tḥerzeḍ amazray n yiznan, sifeḍ rnu ales kter tisura-ik·im.",
@@ -1805,6 +1798,14 @@
             "clear_data_title": "Sfeḍ akk isefka seg tɣimit-a?",
             "clear_data_description": "Asfaḍ akk n yisefka seg tɣimit-a ad yili i lebda. Ad ak-ruḥen yiznan yettwawgelhen ala ma yella tisura ttwaḥerzent.",
             "clear_data_button": "Sfeḍ meṛṛa isefka"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Iznan yettwawgelhen ttuḥerzen s uwgelhen n yixef ɣer yixef. Ala kečč d uɣerwaḍ (yiɣerwaḍen) i yesεan tisura akken ad ɣren iznan-a.",
+            "use_key_backup": "Bdu aseqdec n uḥraz n tsarut",
+            "skip_key_backup": "Ur bɣiɣ ara izan-inu iwgelhanen",
+            "megolm_export": "Sifeḍ s ufus tisura",
+            "setup_key_backup_title": "Tesruḥeḍ anekcum ɣer yiznan-ik·im yettwawgelhen",
+            "description": "D tidet tebɣiḍ ad teffɣeḍ?"
         }
     },
     "export_chat": {
@@ -2126,7 +2127,8 @@
         "something_went_wrong": "Yella wayen ur nteddu ara akken iwata!",
         "update_power_level": "Asnifel n uswir afellay ur yeddi ara",
         "unknown": "Tuccḍa tarussint",
-        "dialog_description_default": "Tella-d tuccḍa."
+        "dialog_description_default": "Tella-d tuccḍa.",
+        "edit_history_unsupported": "Aqeddac-ik·im agejdan ur yettban ara yessefrak tamahilt-a."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

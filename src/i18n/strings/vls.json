@@ -90,8 +90,6 @@
     "Headphones": "Koptelefong",
     "Folder": "Mappe",
     "Warning!": "Let ip!",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleuterde berichtn zyn beveiligd me eind-tout-eind-versleuterienge. Alleene d’ountvanger(s) en gy èn de sleuters vo deze berichtn te leezn.",
-    "Start using Key Backup": "Begint me de sleuterback-up te gebruukn",
     "and %(count)s others...": {
         "other": "en %(count)s anderen…",
         "one": "en één andere…"
@@ -123,10 +121,6 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
-    "I don't want my encrypted messages": "’k En willn ik myn versleuterde berichtn nie",
-    "Manually export keys": "Sleuters handmatig exporteern",
-    "You'll lose access to your encrypted messages": "Je goat de toegank tou je versleuterde berichtn kwytspeeln",
-    "Are you sure you want to sign out?": "Zy je zeker da je je wilt afmeldn?",
     "Room Settings - %(roomName)s": "Gespreksinstelliengn - %(roomName)s",
     "Failed to upgrade room": "Actualiseern van ’t gesprek is mislukt",
     "The room upgrade could not be completed": "De gespreksactualiserienge kostege nie voltooid wordn",
@@ -176,11 +170,9 @@
     "unknown error code": "ounbekende foutcode",
     "Home": "Thuus",
     "Email (optional)": "E-mailadresse (optioneel)",
-    "Session ID": "Sessie-ID",
     "Message edits": "Berichtbewerkiengn",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Dit gesprek bywerkn vereist da je d’huudige instantie dervan ofsluut en in de plekke dervan e nieuw gesprek anmakt. Vo de gespreksleedn de best meuglike ervoarienge te biedn, goan me:",
     "Upload all": "Alles iploadn",
-    "Your homeserver doesn't seem to support this feature.": "Je thuusserver biedt geen oundersteunienge vo deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) herverstuurn",
     "Find others by phone or email": "Viendt andere menschn via hunder telefongnumero of e-mailadresse",
     "Be found by phone or email": "Wor gevoundn via je telefongnumero of e-mailadresse",
@@ -835,7 +827,8 @@
             "sas_caption_user": "Verifieert deze gebruuker deur te bevestign da zyn/heur scherm ’t volgend getal toogt.",
             "unsupported_method": "Kan geen oundersteunde verificoasjemethode viendn.",
             "incoming_sas_user_dialog_text_1": "Verifieert deze gebruuker vo n’hem/heur als vertrouwd te markeern. Gebruukers vertrouwn gift je extra gemoedsrust by ’t gebruuk van eind-tout-eind-versleuterde berichtn.",
-            "incoming_sas_dialog_title": "Inkomend verificoasjeverzoek"
+            "incoming_sas_dialog_title": "Inkomend verificoasjeverzoek",
+            "manual_device_verification_device_id_label": "Sessie-ID"
         },
         "old_version_detected_title": "Oude cryptografiegegeevns gedetecteerd",
         "old_version_detected_description": "’t Zyn gegeevns van een oudere versie van %(brand)s gedetecteerd gewist. Dit goa probleemn veroorzakt ghed èn me de eind-tout-eind-versleuterienge in d’oude versie. Eind-tout-eind-versleuterde berichtn da recent uutgewisseld gewist zyn me d’oude versie zyn meugliks nie t’ountsleutern in deze versie. Dit zoudt der ook voorn kunnn zorgn da berichtn da uutgewisseld gewist zyn in deze versie foaln. Meldt jen heran moest je probleemn ervoarn. Exporteert de sleuters en importeer z’achteraf were vo de berichtgeschiedenisse te behoudn.",
@@ -948,6 +941,14 @@
         "server_picker_description_matrix.org": "Doe mee me miljoenen anderen ip de grotste publieke server",
         "soft_logout": {
             "clear_data_button": "Alle gegeevns wissn"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Versleuterde berichtn zyn beveiligd me eind-tout-eind-versleuterienge. Alleene d’ountvanger(s) en gy èn de sleuters vo deze berichtn te leezn.",
+            "use_key_backup": "Begint me de sleuterback-up te gebruukn",
+            "skip_key_backup": "’k En willn ik myn versleuterde berichtn nie",
+            "megolm_export": "Sleuters handmatig exporteern",
+            "setup_key_backup_title": "Je goat de toegank tou je versleuterde berichtn kwytspeeln",
+            "description": "Zy je zeker da je je wilt afmeldn?"
         }
     },
     "export_chat": {
@@ -1150,7 +1151,8 @@
         "something_went_wrong": "’t Es etwa misgegoan!",
         "update_power_level": "Wyzign van ’t machtsniveau es mislukt",
         "unknown": "Ounbekende foute",
-        "dialog_description_default": "’t Is e foute ipgetreedn."
+        "dialog_description_default": "’t Is e foute ipgetreedn.",
+        "edit_history_unsupported": "Je thuusserver biedt geen oundersteunienge vo deze functie."
     },
     "items_and_n_others": {
         "other": "<Items/> en %(count)s andere",

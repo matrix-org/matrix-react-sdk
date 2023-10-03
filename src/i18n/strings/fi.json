@@ -12,7 +12,6 @@
     "not specified": "ei määritetty",
     "AM": "ap.",
     "PM": "ip.",
-    "Session ID": "Istuntotunniste",
     "Home": "Etusivu",
     "Warning!": "Varoitus!",
     "Sun": "su",
@@ -134,9 +133,7 @@
     "Upgrade Room Version": "Päivitä huoneen versio",
     "The room upgrade could not be completed": "Huoneen päivitystä ei voitu suorittaa",
     "Failed to upgrade room": "Huoneen päivittäminen epäonnistui",
-    "Are you sure you want to sign out?": "Haluatko varmasti kirjautua ulos?",
     "Elephant": "Norsu",
-    "You'll lose access to your encrypted messages": "Menetät pääsyn salattuihin viesteihisi",
     "Create a new room with the same name, description and avatar": "luomme uuden huoneen samalla nimellä, kuvauksella ja kuvalla",
     "Update any local room aliases to point to the new room": "päivitämme kaikki huoneen aliakset osoittamaan uuteen huoneeseen",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "estämme käyttäjiä puhumasta vanhassa huoneessa ja lähetämme viestin, joka ohjeistaa käyttäjiä siirtymään uuteen huoneeseen",
@@ -144,15 +141,11 @@
     "We encountered an error trying to restore your previous session.": "Törmäsimme ongelmaan yrittäessämme palauttaa edellistä istuntoasi.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Jos olet aikaisemmin käyttänyt uudempaa versiota %(brand)sista, istuntosi voi olla epäyhteensopiva tämän version kanssa. Sulje tämä ikkuna ja yritä uudemman version kanssa.",
     "Thumbs up": "Peukut ylös",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Salatut viestit turvataan päästä päähän -salauksella. Vain sinä ja viestien vastaanottaja(t) omaavat avaimet näiden viestien lukemiseen.",
-    "Start using Key Backup": "Aloita avainvarmuuskopion käyttö",
-    "Manually export keys": "Vie avaimet käsin",
     "Share User": "Jaa käyttäjä",
     "Share Room Message": "Jaa huoneviesti",
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "I don't want my encrypted messages": "En halua salattuja viestejäni",
     "Room Settings - %(roomName)s": "Huoneen asetukset — %(roomName)s",
     "Clear Storage and Sign Out": "Tyhjennä varasto ja kirjaudu ulos",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Selaimen varaston tyhjentäminen saattaa korjata ongelman, mutta kirjaa sinut samalla ulos ja estää sinua lukemasta salattuja keskusteluita.",
@@ -180,7 +173,6 @@
     "Message edits": "Viestin muokkaukset",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Tämän huoneen päivittäminen edellyttää huoneen nykyisen instanssin sulkemista ja uuden huoneen luomista sen tilalle. Jotta tämä kävisi huoneen jäsenten kannalta mahdollisimman sujuvasti, teemme seuraavaa:",
     "Upload all": "Lähetä kaikki palvelimelle",
-    "Your homeserver doesn't seem to support this feature.": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta.",
     "Resend %(unsentCount)s reaction(s)": "Lähetä %(unsentCount)s reaktio(ta) uudelleen",
     "Find others by phone or email": "Löydä muita käyttäjiä puhelimen tai sähköpostin perusteella",
     "Be found by phone or email": "Varmista, että sinut löydetään puhelimen tai sähköpostin perusteella",
@@ -206,7 +198,6 @@
         "other": "%(count)s istuntoa",
         "one": "%(count)s istunto"
     },
-    "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
     "%(name)s declined": "%(name)s kieltäytyi",
     "Not Trusted": "Ei luotettu",
@@ -216,7 +207,6 @@
     "Submit logs": "Lähetä lokit",
     "You signed in to a new session without verifying it:": "Olet kirjautunut uuteen istuntoon varmentamatta sitä:",
     "Verify your other session using one of the options below.": "Varmenna toinen istuntosi käyttämällä yhtä seuraavista tavoista.",
-    "If they don't match, the security of your communication may be compromised.": "Jos ne eivät täsmää, viestinnän turvallisuus saattaa olla vaarantunut.",
     "Restoring keys from backup": "Palautetaan avaimia varmuuskopiosta",
     "%(completed)s of %(total)s keys restored": "%(completed)s / %(total)s avainta palautettu",
     "Keys restored": "Avaimet palautettu",
@@ -227,7 +217,6 @@
     "Destroy cross-signing keys?": "Tuhoa ristiinvarmennuksen avaimet?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Ristiinvarmennuksen avainten tuhoamista ei voi kumota. Jokainen, jonka olet varmentanut, tulee näkemään turvallisuushälytyksiä. Et todennäköisesti halua tehdä tätä, ellet ole hukannut kaikkia laitteitasi, joista pystyit ristiinvarmentamaan.",
     "Clear cross-signing keys": "Tyhjennä ristiinvarmennuksen avaimet",
-    "Session key": "Istunnon tunnus",
     "%(brand)s encountered an error during upload of:": "%(brand)s kohtasi virheen lähettäessään:",
     "Your homeserver has exceeded its user limit.": "Kotipalvelimesi on ylittänyt käyttäjärajansa.",
     "Your homeserver has exceeded one of its resource limits.": "Kotipalvelimesi on ylittänyt jonkin resurssirajansa.",
@@ -528,8 +517,6 @@
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
     },
-    "Search spaces": "Etsi avaruuksia",
-    "Select spaces": "Valitse avaruudet",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "%(count)s reply": {
@@ -541,10 +528,6 @@
     "Other rooms in %(spaceName)s": "Muut huoneet avaruudessa %(spaceName)s",
     "Spaces you're in": "Avaruudet, joissa olet",
     "This groups your chats with members of this space. Turning this off will hide those chats from your view of %(spaceName)s.": "Tämä ryhmittelee yksityisviestisi avaruuden jäsenten kanssa. Tämän poistaminen päältä piilottaa kyseiset keskustelut sinun näkymästäsi avaruudessa %(spaceName)s.",
-    "Other spaces or rooms you might not know": "Muut avaruudet tai huoneet, joita et ehkä tunne",
-    "Spaces you know that contain this space": "Tuntemasi avaruudet, jotka sisältävät tämän avaruuden",
-    "Spaces you know that contain this room": "Tuntemasi avaruudet, jotka sisältävät tämän huoneen",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Valitse, millä avaruuksilla on pääsyoikeus tähän huoneeseen. Jos avaruus valitaan, sen jäsenet voivat löytää ja liittyä huoneeseen <RoomName/>.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -2482,7 +2465,13 @@
                 "other": "Päivitetään avaruuksia... (%(progress)s/%(count)s)"
             },
             "error_join_rule_change_title": "Liittymissääntöjen päivittäminen epäonnistui",
-            "error_join_rule_change_unknown": "Tuntematon virhe"
+            "error_join_rule_change_unknown": "Tuntematon virhe",
+            "join_rule_restricted_dialog_title": "Valitse avaruudet",
+            "join_rule_restricted_dialog_description": "Valitse, millä avaruuksilla on pääsyoikeus tähän huoneeseen. Jos avaruus valitaan, sen jäsenet voivat löytää ja liittyä huoneeseen <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Etsi avaruuksia",
+            "join_rule_restricted_dialog_heading_space": "Tuntemasi avaruudet, jotka sisältävät tämän avaruuden",
+            "join_rule_restricted_dialog_heading_room": "Tuntemasi avaruudet, jotka sisältävät tämän huoneen",
+            "join_rule_restricted_dialog_heading_other": "Muut avaruudet tai huoneet, joita et ehkä tunne"
         },
         "general": {
             "publish_toggle": "Julkaise tämä huone verkkotunnuksen %(domain)s huoneluettelossa?",
@@ -2651,7 +2640,11 @@
             "incoming_sas_user_dialog_text_2": "Tämän käyttäjän varmentaminen merkitsee hänen istuntonsa luotetuksi, ja myös merkkaa sinun istuntosi luotetuksi hänen laitteissaan.",
             "incoming_sas_device_dialog_text_1": "Varmenna tämä laite merkitäksesi sen luotetuksi. Tähän laitteeseen luottaminen antaa sinulle ja muille käyttäjille lisää mielenrauhaa, kun käytätte päästä päähän -salausta.",
             "incoming_sas_device_dialog_text_2": "Tämän laitteen varmentaminen merkkaa sen luotetuksi, ja sinut varmentaneet käyttäjät luottavat automaattisesti tähän laitteeseen.",
-            "incoming_sas_dialog_title": "Saapuva varmennuspyyntö"
+            "incoming_sas_dialog_title": "Saapuva varmennuspyyntö",
+            "manual_device_verification_device_name_label": "Istunnon nimi",
+            "manual_device_verification_device_id_label": "Istuntotunniste",
+            "manual_device_verification_device_key_label": "Istunnon tunnus",
+            "manual_device_verification_footer": "Jos ne eivät täsmää, viestinnän turvallisuus saattaa olla vaarantunut."
         },
         "old_version_detected_title": "Vanhaa salaustietoa havaittu",
         "old_version_detected_description": "Tunnistimme dataa, joka on lähtöisin vanhasta %(brand)sin versiosta. Tämä aiheuttaa toimintahäiriöitä päästä päähän -salauksessa vanhassa versiossa. Viestejä, jotka on salattu päästä päähän -salauksella vanhalla versiolla, ei välttämättä voida purkaa tällä versiolla. Tämä voi myös aiheuttaa epäonnistumisia viestien välityksessä tämän version kanssa. Jos kohtaat ongelmia, kirjaudu ulos ja takaisin sisään. Säilyttääksesi viestihistoriasi, vie salausavaimesi ja tuo ne uudelleen.",
@@ -2931,6 +2924,14 @@
             "clear_data_title": "Poista kaikki tämän istunnon tiedot?",
             "clear_data_description": "Kaikkien tämän istunnon tietojen poistaminen on pysyvää. Salatut viestit menetetään, ellei niiden avaimia ole varmuuskopioitu.",
             "clear_data_button": "Poista kaikki tiedot"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Salatut viestit turvataan päästä päähän -salauksella. Vain sinä ja viestien vastaanottaja(t) omaavat avaimet näiden viestien lukemiseen.",
+            "use_key_backup": "Aloita avainvarmuuskopion käyttö",
+            "skip_key_backup": "En halua salattuja viestejäni",
+            "megolm_export": "Vie avaimet käsin",
+            "setup_key_backup_title": "Menetät pääsyn salattuihin viesteihisi",
+            "description": "Haluatko varmasti kirjautua ulos?"
         }
     },
     "room_list": {
@@ -3654,7 +3655,8 @@
         "something_went_wrong": "Jokin meni vikaan!",
         "update_power_level": "Oikeustason muuttaminen epäonnistui",
         "unknown": "Tuntematon virhe",
-        "dialog_description_default": "Tapahtui virhe."
+        "dialog_description_default": "Tapahtui virhe.",
+        "edit_history_unsupported": "Kotipalvelimesi ei näytä tukevan tätä ominaisuutta."
     },
     "in_space1_and_space2": "Avaruuksissa %(space1Name)s ja %(space2Name)s.",
     "in_space_and_n_other_spaces": {

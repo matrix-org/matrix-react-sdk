@@ -10,7 +10,6 @@
     "Moderator": "Συντονιστής",
     "Create new room": "Δημιουργία νέου δωματίου",
     "Home": "Αρχική",
-    "Session ID": "Αναγνωριστικό συνεδρίας",
     "Warning!": "Προειδοποίηση!",
     "Sun": "Κυρ",
     "Mon": "Δευ",
@@ -397,11 +396,6 @@
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
-    "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
-    "If they don't match, the security of your communication may be compromised.": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο.",
-    "Session key": "Κλειδί συνεδρίας",
-    "Session name": "Όνομα συνεδρίας",
-    "Select spaces": "Επιλέξτε χώρους",
     "%(count)s rooms": {
         "one": "%(count)s δωμάτιο",
         "other": "%(count)s δωμάτια"
@@ -410,11 +404,6 @@
         "one": "%(count)s μέλος",
         "other": "%(count)s μέλη"
     },
-    "Are you sure you want to sign out?": "Είσαστε σίγουροι ότι θέλετε να αποσυνδεθείτε;",
-    "You'll lose access to your encrypted messages": "Θα χάσετε την πρόσβαση στα κρυπτογραφημένα μηνύματά σας",
-    "Manually export keys": "Μη αυτόματη εξαγωγή κλειδιών",
-    "I don't want my encrypted messages": "Δε θέλω τα κρυπτογραφημένα μηνύματά μου",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Τα κρυπτογραφημένα μηνύματα προστατεύονται με κρυπτογράφηση από άκρο σε άκρο. Μόνο εσείς και οι παραλήπτες έχετε τα κλειδιά για να διαβάσετε αυτά τα μηνύματα.",
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
     "Continuing without email": "Συνέχεια χωρίς email",
@@ -548,17 +537,12 @@
     "Switch theme": "Αλλαγή θέματος",
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
     "You are sharing your live location": "Μοιράζεστε την τρέχουσα τοποθεσία σας",
-    "Search spaces": "Αναζήτηση χώρων",
     "toggle event": "μεταβολή συμβάντος",
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
         "other": "%(count)s άτομα που γνωρίζετε έχουν ήδη εγγραφεί"
     },
     "Data on this screen is shared with %(widgetDomain)s": "Τα δεδομένα σε αυτήν την οθόνη μοιράζονται με το %(widgetDomain)s",
-    "Other spaces or rooms you might not know": "Άλλοι χώροι ή δωμάτια που ίσως δε γνωρίζετε",
-    "Spaces you know that contain this space": "Χώροι που γνωρίζετε ότι περιέχουν αυτόν το χώρο",
-    "Spaces you know that contain this room": "Χώροι που γνωρίζετε ότι περιέχουν αυτό το δωμάτιο",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Αποφασίστε ποιοι χώροι μπορούν να έχουν πρόσβαση σε αυτό το δωμάτιο. Εάν επιλεγεί ένας χώρος, τα μέλη του μπορούν να βρουν και να εγγραφούν στο <RoomName/>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Αποκτήστε ξανά πρόσβαση στον λογαριασμό σας και ανακτήστε τα κλειδιά κρυπτογράφησης που είναι αποθηκευμένα σε αυτήν τη συνεδρία. Χωρίς αυτά, δε θα μπορείτε να διαβάσετε όλα τα ασφαλή μηνύματά σας σε καμία συνεδρία.",
     "Failed to start livestream": "Η έναρξη της ζωντανής ροής απέτυχε",
     "Unsent": "Μη απεσταλμένα",
@@ -582,8 +566,6 @@
     "Remember my selection for this widget": "Να θυμάστε την επιλογή μου για αυτήν τη μικροεφαρμογή",
     "This widget would like to:": "Αυτή η μικροεφαρμογή θα ήθελε να:",
     "Approve widget permissions": "Έγκριση αδειών μικροεφαρμογών",
-    "You're removing all spaces. Access will default to invite only": "Καταργείτε όλους τους χώρους. Η πρόσβαση θα είναι προεπιλεγμένη μόνο για πρόσκληση",
-    "Start using Key Backup": "Ξεκινήστε να χρησιμοποιείτε το αντίγραφο ασφαλείας κλειδιού",
     "a key signature": "μια υπογραφή κλειδιού",
     "a device cross-signing signature": "μια υπογραφή διασταυρούμενης υπογραφής συσκευής",
     "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
@@ -609,10 +591,7 @@
     "You're all caught up.": "Είστε πλήρως ενημερωμένοι.",
     "Modal Widget": "Modal Widget",
     "Message edits": "Επεξεργασίες μηνυμάτων",
-    "Confirm this user's session by comparing the following with their User Settings:": "Επιβεβαιώστε την συνεδρία αυτού του χρήστη συγκρίνοντας τα ακόλουθα με τις Ρυθμίσεις του:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Επιβεβαιώστε συγκρίνοντας τα ακόλουθα με τις Ρυθμίσεις χρήστη στην άλλη συνεδρία σας:",
     "Hold": "Αναμονή",
-    "These are likely ones other room admins are a part of.": "Πιθανότατα αυτά είναι μέρος στα οποία συμμετέχουν και άλλοι διαχειριστές δωματίου.",
     "An error occurred while stopping your live location, please try again": "Παρουσιάστηκε σφάλμα κατά τη διακοπή της ζωντανής τοποθεσίας σας, δοκιμάστε ξανά",
     "Resume": "Συνέχιση",
     "Thumbs up": "Μπράβο",
@@ -2262,7 +2241,15 @@
                 "other": "Ενημέρωση χώρων... (%(progress)s out of %(count)s)"
             },
             "error_join_rule_change_title": "Αποτυχία ενημέρωσης των κανόνων συμμετοχής",
-            "error_join_rule_change_unknown": "Άγνωστο σφάλμα"
+            "error_join_rule_change_unknown": "Άγνωστο σφάλμα",
+            "join_rule_restricted_dialog_empty_warning": "Καταργείτε όλους τους χώρους. Η πρόσβαση θα είναι προεπιλεγμένη μόνο για πρόσκληση",
+            "join_rule_restricted_dialog_title": "Επιλέξτε χώρους",
+            "join_rule_restricted_dialog_description": "Αποφασίστε ποιοι χώροι μπορούν να έχουν πρόσβαση σε αυτό το δωμάτιο. Εάν επιλεγεί ένας χώρος, τα μέλη του μπορούν να βρουν και να εγγραφούν στο <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Αναζήτηση χώρων",
+            "join_rule_restricted_dialog_heading_space": "Χώροι που γνωρίζετε ότι περιέχουν αυτόν το χώρο",
+            "join_rule_restricted_dialog_heading_room": "Χώροι που γνωρίζετε ότι περιέχουν αυτό το δωμάτιο",
+            "join_rule_restricted_dialog_heading_other": "Άλλοι χώροι ή δωμάτια που ίσως δε γνωρίζετε",
+            "join_rule_restricted_dialog_heading_unknown": "Πιθανότατα αυτά είναι μέρος στα οποία συμμετέχουν και άλλοι διαχειριστές δωματίου."
         },
         "general": {
             "publish_toggle": "Δημοσίευση αυτού του δωματίου στο κοινό κατάλογο δωματίων του %(domain)s;",
@@ -2431,7 +2418,13 @@
             "incoming_sas_user_dialog_text_2": "Η επαλήθευση αυτού του χρήστη θα επισημάνει τη συνεδρία του ως αξιόπιστη και θα επισημάνει επίσης τη συνεδρία σας ως αξιόπιστη σε αυτόν.",
             "incoming_sas_device_dialog_text_1": "Επαληθεύστε αυτήν τη συσκευή για να την επισημάνετε ως αξιόπιστη. Η εμπιστοσύνη αυτής της συσκευής προσφέρει σε εσάς και σε άλλους χρήστες επιπλέον ηρεμία όταν χρησιμοποιείτε μηνύματα με κρυπτογράφηση από άκρο σε άκρο.",
             "incoming_sas_device_dialog_text_2": "Η επαλήθευση αυτής της συσκευής θα την επισημάνει ως αξιόπιστη και οι χρήστες που έχουν επαληθευτεί μαζί σας θα εμπιστεύονται αυτήν τη συσκευή.",
-            "incoming_sas_dialog_title": "Εισερχόμενο Αίτημα Επαλήθευσης"
+            "incoming_sas_dialog_title": "Εισερχόμενο Αίτημα Επαλήθευσης",
+            "manual_device_verification_self_text": "Επιβεβαιώστε συγκρίνοντας τα ακόλουθα με τις Ρυθμίσεις χρήστη στην άλλη συνεδρία σας:",
+            "manual_device_verification_user_text": "Επιβεβαιώστε την συνεδρία αυτού του χρήστη συγκρίνοντας τα ακόλουθα με τις Ρυθμίσεις του:",
+            "manual_device_verification_device_name_label": "Όνομα συνεδρίας",
+            "manual_device_verification_device_id_label": "Αναγνωριστικό συνεδρίας",
+            "manual_device_verification_device_key_label": "Κλειδί συνεδρίας",
+            "manual_device_verification_footer": "Εάν δεν ταιριάζουν, η ασφάλεια της επικοινωνίας σας μπορεί να τεθεί σε κίνδυνο."
         },
         "old_version_detected_title": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
         "old_version_detected_description": "Έχουν εντοπιστεί δεδομένα από μια παλαιότερη έκδοση του %(brand)s. Αυτό θα έχει προκαλέσει δυσλειτουργία της κρυπτογράφησης από άκρο σε άκρο στην παλαιότερη έκδοση. Τα κρυπτογραφημένα μηνύματα από άκρο σε άκρο που ανταλλάχθηκαν πρόσφατα κατά τη χρήση της παλαιότερης έκδοσης ενδέχεται να μην μπορούν να αποκρυπτογραφηθούν σε αυτήν την έκδοση. Αυτό μπορεί επίσης να προκαλέσει την αποτυχία των μηνυμάτων που ανταλλάσσονται με αυτήν την έκδοση. Εάν αντιμετωπίζετε προβλήματα, αποσυνδεθείτε και συνδεθείτε ξανά. Για να διατηρήσετε το ιστορικό μηνυμάτων, εξάγετε και εισαγάγετε ξανά τα κλειδιά σας.",
@@ -2677,6 +2670,14 @@
             "clear_data_title": "Εκκαθάριση όλων των δεδομένων σε αυτήν την περίοδο σύνδεσης;",
             "clear_data_description": "Η εκκαθάριση όλων των δεδομένων από αυτήν τη συνεδρία είναι μόνιμη. Τα κρυπτογραφημένα μηνύματα θα χαθούν εκτός εάν έχουν δημιουργηθεί αντίγραφα ασφαλείας των κλειδιών τους.",
             "clear_data_button": "Εκκαθάριση όλων των δεδομένων"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Τα κρυπτογραφημένα μηνύματα προστατεύονται με κρυπτογράφηση από άκρο σε άκρο. Μόνο εσείς και οι παραλήπτες έχετε τα κλειδιά για να διαβάσετε αυτά τα μηνύματα.",
+            "use_key_backup": "Ξεκινήστε να χρησιμοποιείτε το αντίγραφο ασφαλείας κλειδιού",
+            "skip_key_backup": "Δε θέλω τα κρυπτογραφημένα μηνύματά μου",
+            "megolm_export": "Μη αυτόματη εξαγωγή κλειδιών",
+            "setup_key_backup_title": "Θα χάσετε την πρόσβαση στα κρυπτογραφημένα μηνύματά σας",
+            "description": "Είσαστε σίγουροι ότι θέλετε να αποσυνδεθείτε;"
         }
     },
     "room_list": {
@@ -3377,7 +3378,8 @@
         "something_went_wrong": "Κάτι πήγε στραβά!",
         "update_power_level": "Δεν ήταν δυνατή η αλλαγή του επιπέδου δύναμης",
         "unknown": "Άγνωστο σφάλμα",
-        "dialog_description_default": "Παρουσιάστηκε ένα σφάλμα."
+        "dialog_description_default": "Παρουσιάστηκε ένα σφάλμα.",
+        "edit_history_unsupported": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα."
     },
     "name_and_id": "%(name)s (%(userId)s)",
     "items_and_n_others": {

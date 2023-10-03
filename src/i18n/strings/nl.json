@@ -34,7 +34,6 @@
     "Home": "Home",
     "Join Room": "Kamer toetreden",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Bekijk je e-mail en klik op de koppeling daarin. Klik vervolgens op ‘Verder gaan’.",
-    "Session ID": "Sessie-ID",
     "Verification Pending": "Verificatie in afwachting",
     "Warning!": "Let op!",
     "(~%(count)s results)": {
@@ -137,13 +136,7 @@
     "Anchor": "Anker",
     "Headphones": "Koptelefoon",
     "Folder": "Map",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
-    "Start using Key Backup": "Begin sleutelback-up te gebruiken",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
-    "I don't want my encrypted messages": "Ik wil mijn versleutelde berichten niet",
-    "Manually export keys": "Sleutels handmatig wegschrijven",
-    "You'll lose access to your encrypted messages": "Je zal de toegang tot je versleutelde berichten verliezen",
-    "Are you sure you want to sign out?": "Weet je zeker dat je wilt uitloggen?",
     "Room Settings - %(roomName)s": "Kamerinstellingen - %(roomName)s",
     "Failed to upgrade room": "Kamerupgrade mislukt",
     "The room upgrade could not be completed": "Het upgraden van de kamer kon niet worden voltooid",
@@ -180,7 +173,6 @@
     "Upload all": "Alles versturen",
     "Message edits": "Berichtbewerkingen",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Deze kamer bijwerken vereist dat je de huidige afsluit en in de plaats een nieuwe kamer aanmaakt. Om leden de best mogelijke ervaring te bieden, zullen we:",
-    "Your homeserver doesn't seem to support this feature.": "Jouw homeserver biedt geen ondersteuning voor deze functie.",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s reactie(s) opnieuw versturen",
     "Find others by phone or email": "Vind anderen via telefoonnummer of e-mailadres",
     "Be found by phone or email": "Wees vindbaar via telefoonnummer of e-mailadres",
@@ -209,8 +201,6 @@
     "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
     "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
-    "Session name": "Sessienaam",
-    "Session key": "Sessiesleutel",
     "Upgrade private room": "Privékamer upgraden",
     "Upgrade public room": "Publieke kamer upgraden",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Het bijwerken van een kamer is een gevorderde actie en wordt meestal aanbevolen wanneer een kamer onstabiel is door bugs, ontbrekende functies of problemen met de beveiliging.",
@@ -472,8 +462,6 @@
     "You're all caught up.": "Je bent helemaal bij.",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Let op, wanneer je geen e-mailadres toevoegt en je jouw wachtwoord vergeet, kan je <b>toegang tot je account permanent verliezen</b>.",
     "Continuing without email": "Doorgaan zonder e-mail",
-    "If they don't match, the security of your communication may be compromised.": "Als deze niet overeenkomen, dan wordt deze sessie mogelijk door iemand anders onderschept.",
-    "Confirm by comparing the following with the User Settings in your other session:": "Bevestig door het volgende te vergelijken met de persoonsinstellingen in je andere sessie:",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -529,7 +517,6 @@
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jouw server reageert niet op sommige van je verzoeken. Hieronder staan enkele van de meest waarschijnlijke redenen.",
     "Data on this screen is shared with %(widgetDomain)s": "Gegevens op dit scherm worden gedeeld met %(widgetDomain)s",
     "Modal Widget": "Modale widget",
-    "Confirm this user's session by comparing the following with their User Settings:": "Bevestig de sessie van deze persoon door het volgende te vergelijken met zijn persoonsinstellingen:",
     "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
     "a key signature": "een sleutel ondertekening",
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
@@ -564,13 +551,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Als je dat doet, let wel op dat geen van jouw berichten wordt verwijderd, maar de zoekresultaten zullen gedurende enkele ogenblikken verslechteren terwijl de index opnieuw wordt aangemaakt",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Let op bijwerken maakt een nieuwe versie van deze kamer</b>. Alle huidige berichten blijven in deze gearchiveerde kamer.",
     "Automatically invite members from this room to the new one": "Automatisch leden uitnodigen van deze kamer in de nieuwe",
-    "These are likely ones other room admins are a part of.": "Dit zijn waarschijnlijk kamers waar andere kamerbeheerders deel van uitmaken.",
-    "Other spaces or rooms you might not know": "Andere Spaces of kamers die je misschien niet kent",
-    "Spaces you know that contain this room": "Spaces die je kent met deze kamer",
-    "Search spaces": "Spaces zoeken",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Kies welke Spaces toegang hebben tot deze kamer. Als een Space is geselecteerd kunnen deze leden <RoomName/> vinden en aan deelnemen.",
-    "Select spaces": "Space selecteren",
-    "You're removing all spaces. Access will default to invite only": "Je verwijdert alle Spaces. De toegang zal teruggezet worden naar alleen op uitnodiging",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
@@ -593,7 +573,6 @@
     "Themes": "Thema's",
     "Moderation": "Moderatie",
     "Messaging": "Messaging",
-    "Spaces you know that contain this space": "Spaces die je kent met deze Space",
     "Recently viewed": "Recent bekeken",
     "Open in OpenStreetMap": "In OpenStreetMap openen",
     "Recent searches": "Recente zoekopdrachten",
@@ -651,7 +630,6 @@
         "one": "%(count)s Lid",
         "other": "%(count)s Leden"
     },
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Wanneer je jezelf afmeldt, worden deze sleutels van dit apparaat verwijderd, wat betekent dat je geen versleutelde berichten kunt lezen, tenzij je de sleutels ervoor op je andere apparaten hebt of er een back-up van hebt gemaakt op de server.",
     "You cannot search for rooms that are neither a room nor a space": "U kunt niet zoeken naar kamers die geen kamer of een space zijn",
     "Show spaces": "Toon spaces",
     "Show rooms": "Toon kamers",
@@ -2477,7 +2455,15 @@
                 "other": "Spaces bijwerken... (%(progress)s van %(count)s)"
             },
             "error_join_rule_change_title": "Het updaten van de deelname regels is mislukt",
-            "error_join_rule_change_unknown": "Onbekende fout"
+            "error_join_rule_change_unknown": "Onbekende fout",
+            "join_rule_restricted_dialog_empty_warning": "Je verwijdert alle Spaces. De toegang zal teruggezet worden naar alleen op uitnodiging",
+            "join_rule_restricted_dialog_title": "Space selecteren",
+            "join_rule_restricted_dialog_description": "Kies welke Spaces toegang hebben tot deze kamer. Als een Space is geselecteerd kunnen deze leden <RoomName/> vinden en aan deelnemen.",
+            "join_rule_restricted_dialog_filter_placeholder": "Spaces zoeken",
+            "join_rule_restricted_dialog_heading_space": "Spaces die je kent met deze Space",
+            "join_rule_restricted_dialog_heading_room": "Spaces die je kent met deze kamer",
+            "join_rule_restricted_dialog_heading_other": "Andere Spaces of kamers die je misschien niet kent",
+            "join_rule_restricted_dialog_heading_unknown": "Dit zijn waarschijnlijk kamers waar andere kamerbeheerders deel van uitmaken."
         },
         "general": {
             "publish_toggle": "Deze kamer vermelden in de publieke kamersgids van %(domain)s?",
@@ -2653,7 +2639,13 @@
             "incoming_sas_user_dialog_text_2": "Deze persoon verifiëren zal de sessie als vertrouwd markeren voor jullie beide.",
             "incoming_sas_device_dialog_text_1": "Verifieer dit apparaat om het als vertrouwd te markeren. Door dit apparaat te vertrouwen geef je extra zekerheid aan jezelf en andere personen bij het gebruik van eind-tot-eind-versleutelde berichten.",
             "incoming_sas_device_dialog_text_2": "Dit apparaat verifiëren zal het als vertrouwd markeren, en personen die met je geverifieerd hebben zullen het vertrouwen.",
-            "incoming_sas_dialog_title": "Inkomend verificatieverzoek"
+            "incoming_sas_dialog_title": "Inkomend verificatieverzoek",
+            "manual_device_verification_self_text": "Bevestig door het volgende te vergelijken met de persoonsinstellingen in je andere sessie:",
+            "manual_device_verification_user_text": "Bevestig de sessie van deze persoon door het volgende te vergelijken met zijn persoonsinstellingen:",
+            "manual_device_verification_device_name_label": "Sessienaam",
+            "manual_device_verification_device_id_label": "Sessie-ID",
+            "manual_device_verification_device_key_label": "Sessiesleutel",
+            "manual_device_verification_footer": "Als deze niet overeenkomen, dan wordt deze sessie mogelijk door iemand anders onderschept."
         },
         "old_version_detected_title": "Oude cryptografiegegevens gedetecteerd",
         "old_version_detected_description": "Er zijn gegevens van een oudere versie van %(brand)s gevonden, die problemen veroorzaakt hebben met de eind-tot-eind-versleuteling in de oude versie. Onlangs vanuit de oude versie verzonden eind-tot-eind-versleutelde berichten zijn mogelijk onontsleutelbaar in deze versie. Ook kunnen berichten die met deze versie uitgewisseld zijn falen. Mocht je problemen ervaren, log dan opnieuw in. Exporteer je sleutels en importeer ze weer om je berichtgeschiedenis te behouden.",
@@ -2927,6 +2919,15 @@
             "clear_data_title": "Alle gegevens in deze sessie verwijderen?",
             "clear_data_description": "Het verwijderen van alle gegevens in deze sessie is niet terug te draaien. Versleutelde berichten zullen verloren gaan, tenzij je een back-up van de sleutels hebt.",
             "clear_data_button": "Alle gegevens wissen"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
+            "setup_secure_backup_description_2": "Wanneer je jezelf afmeldt, worden deze sleutels van dit apparaat verwijderd, wat betekent dat je geen versleutelde berichten kunt lezen, tenzij je de sleutels ervoor op je andere apparaten hebt of er een back-up van hebt gemaakt op de server.",
+            "use_key_backup": "Begin sleutelback-up te gebruiken",
+            "skip_key_backup": "Ik wil mijn versleutelde berichten niet",
+            "megolm_export": "Sleutels handmatig wegschrijven",
+            "setup_key_backup_title": "Je zal de toegang tot je versleutelde berichten verliezen",
+            "description": "Weet je zeker dat je wilt uitloggen?"
         }
     },
     "room_list": {
@@ -3670,7 +3671,8 @@
         "something_went_wrong": "Er is iets misgegaan!",
         "update_power_level": "Wijzigen van machtsniveau is mislukt",
         "unknown": "Onbekende fout",
-        "dialog_description_default": "Er is een fout opgetreden."
+        "dialog_description_default": "Er is een fout opgetreden.",
+        "edit_history_unsupported": "Jouw homeserver biedt geen ondersteuning voor deze functie."
     },
     "in_space1_and_space2": "In spaces %(space1Name)s en %(space2Name)s.",
     "in_space_and_n_other_spaces": {

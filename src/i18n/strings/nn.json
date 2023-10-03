@@ -73,18 +73,14 @@
     "Share User": "Del Brukar",
     "Share Room Message": "Del Rommelding",
     "Link to selected message": "Lenk til den valde meldinga",
-    "Session ID": "Økt-ID",
     "Filter results": "Filtrer resultat",
     "Invalid theme schema.": "",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
     "Command Help": "Kommandohjelp",
     "To help us prevent this in future, please <a>send us logs</a>.": "For å bistå med å forhindre dette i framtida, gjerne <a>send oss loggar</a>.",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere eit Matrix-relatert sikkerheitsproblem, les Matrix.org sin <a>Security Disclosure Policy</a>.",
     "Encrypted by a deleted session": "Kryptert av ein sletta sesjon",
-    "I don't want my encrypted messages": "Eg treng ikkje mine krypterte meldingar",
-    "You'll lose access to your encrypted messages": "Du vil miste tilgangen til dine krypterte meldingar",
     "Norway": "Noreg",
     "Bahamas": "Bahamas",
     "Azerbaijan": "Aserbajdsjan",
@@ -973,6 +969,11 @@
         "server_picker_description_matrix.org": "Kom ihop med millionar av andre på den største offentlege tenaren",
         "soft_logout": {
             "clear_data_description": "Tømming av data frå denne sesjonen er permanent. Krypterte meldingar vil gå tapt med mindre krypteringsnøklane har blitt sikkerheitskopierte."
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Krypterte meldingar er sikra med ende-til-ende kryptering. Berre du og mottakar(ane) har nøklane for å lese desse meldingane.",
+            "skip_key_backup": "Eg treng ikkje mine krypterte meldingar",
+            "setup_key_backup_title": "Du vil miste tilgangen til dine krypterte meldingar"
         }
     },
     "export_chat": {
@@ -1132,7 +1133,8 @@
             "explainer": "Sikre meldingar med denne brukaren er ende-til-ende krypterte og kan ikkje lesast av tredjepart.",
             "sas_caption_self": "Verifiser denne eininga ved å stadfeste det følgjande talet når det kjem til syne på skjermen.",
             "unverified_sessions_toast_description": "Undersøk dette for å gjere kontoen trygg",
-            "unverified_sessions_toast_reject": "Seinare"
+            "unverified_sessions_toast_reject": "Seinare",
+            "manual_device_verification_device_id_label": "Økt-ID"
         },
         "cancel_entering_passphrase_title": "Avbryte inntasting av passfrase ?",
         "bootstrap_title": "Setter opp nøklar",

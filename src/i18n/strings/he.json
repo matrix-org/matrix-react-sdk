@@ -499,19 +499,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "הנתונים על המסך הזה משותפים עם %(widgetDomain)s",
     "Modal Widget": "יישומון מודאלי",
     "Message edits": "עריכת הודעות",
-    "Your homeserver doesn't seem to support this feature.": "נראה ששרת הבית שלך אינו תומך בתכונה זו.",
-    "If they don't match, the security of your communication may be compromised.": "אם הם לא תואמים, אבטחת התקשורת שלך עלולה להיפגע.",
-    "Session key": "מפתח מושב",
-    "Session ID": "זהות מושב",
-    "Session name": "שם מושב",
-    "Confirm this user's session by comparing the following with their User Settings:": "אשר את הפעלת המשתמש הזה על ידי השוואה בין הדברים הבאים להגדרות המשתמש שלהם:",
-    "Confirm by comparing the following with the User Settings in your other session:": "אשר על ידי השוואה בין הדברים הבאים להגדרות המשתמש בפגישה האחרת שלך:",
-    "Are you sure you want to sign out?": "האם אתה בטוח שברצונך לצאת?",
-    "You'll lose access to your encrypted messages": "תאבד את הגישה להודעות המוצפנות שלך",
-    "Manually export keys": "ייצא ידנית מפתחות",
-    "I don't want my encrypted messages": "אני לא רוצה את ההודעות המוצפנות שלי",
-    "Start using Key Backup": "התחל להשתמש בגיבוי מקשים",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "הודעות מוצפנות מאובטחות באמצעות הצפנה מקצה לקצה. רק לך ולמקבל / ים יש / ה מקשים לקריאת הודעות אלה.",
     "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
     "a key signature": "חתימת מפתח",
     "a new cross-signing key signature": "חתימת מפתח צולבת חדשה",
@@ -2106,7 +2093,13 @@
             "incoming_sas_user_dialog_text_2": "אימות משתמש זה יסמן את ההפעלה שלו כאמינה, וגם יסמן את ההפעלה שלכם כאמינה להם.",
             "incoming_sas_device_dialog_text_1": "אמתו את המכשיר הזה כדי לסמן אותו כאמין. אמון במכשיר זה מעניק לכם ולמשתמשים אחרים שקט נפשי נוסף בשימוש בהודעות מוצפנות מקצה לקצה.",
             "incoming_sas_device_dialog_text_2": "אימות מכשיר זה יסמן אותו כאמין, ומשתמשים שאימתו אתכם יסמכו על מכשיר זה.",
-            "incoming_sas_dialog_title": "בקשת אימות נכנסת"
+            "incoming_sas_dialog_title": "בקשת אימות נכנסת",
+            "manual_device_verification_self_text": "אשר על ידי השוואה בין הדברים הבאים להגדרות המשתמש בפגישה האחרת שלך:",
+            "manual_device_verification_user_text": "אשר את הפעלת המשתמש הזה על ידי השוואה בין הדברים הבאים להגדרות המשתמש שלהם:",
+            "manual_device_verification_device_name_label": "שם מושב",
+            "manual_device_verification_device_id_label": "זהות מושב",
+            "manual_device_verification_device_key_label": "מפתח מושב",
+            "manual_device_verification_footer": "אם הם לא תואמים, אבטחת התקשורת שלך עלולה להיפגע."
         },
         "old_version_detected_title": "נתגלו נתוני הצפנה ישנים",
         "old_version_detected_description": "נתגלו גרסאות ישנות יותר של %(brand)s. זה יגרום לתקלה בקריפטוגרפיה מקצה לקצה בגרסה הישנה יותר. הודעות מוצפנות מקצה לקצה שהוחלפו לאחרונה בעת השימוש בגרסה הישנה עשויות שלא להיות ניתנות לפענוח בגירסה זו. זה עלול גם לגרום להודעות שהוחלפו עם גרסה זו להיכשל. אם אתה נתקל בבעיות, צא וחזור שוב. כדי לשמור על היסטוריית ההודעות, ייצא וייבא מחדש את המפתחות שלך.",
@@ -2338,6 +2331,14 @@
             "clear_data_title": "למחוק את כל הנתונים בפגישה זו?",
             "clear_data_description": "ניקוי כל הנתונים מהפגישה זו הוא קבוע. הודעות מוצפנות יאבדו אלא אם כן גובו על המפתחות שלהן.",
             "clear_data_button": "נקה את כל הנתונים"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "הודעות מוצפנות מאובטחות באמצעות הצפנה מקצה לקצה. רק לך ולמקבל / ים יש / ה מקשים לקריאת הודעות אלה.",
+            "use_key_backup": "התחל להשתמש בגיבוי מקשים",
+            "skip_key_backup": "אני לא רוצה את ההודעות המוצפנות שלי",
+            "megolm_export": "ייצא ידנית מפתחות",
+            "setup_key_backup_title": "תאבד את הגישה להודעות המוצפנות שלך",
+            "description": "האם אתה בטוח שברצונך לצאת?"
         }
     },
     "room_list": {
@@ -2885,7 +2886,8 @@
         "something_went_wrong": "משהו השתבש!",
         "update_power_level": "שינוי דרגת מנהל נכשל",
         "unknown": "שגיאה לא ידועה",
-        "dialog_description_default": "קרתה שגיאה."
+        "dialog_description_default": "קרתה שגיאה.",
+        "edit_history_unsupported": "נראה ששרת הבית שלך אינו תומך בתכונה זו."
     },
     "in_space1_and_space2": "במרחבי עבודה %(space1Name)sו%(space2Name)s.",
     "in_space_and_n_other_spaces": {

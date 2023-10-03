@@ -56,7 +56,6 @@
     "collapse": "tkurre",
     "expand": "zgjeroje",
     "Verification Pending": "Verifikim Në Pritje të Miratimit",
-    "Session ID": "ID sesioni",
     "Unable to restore session": "S’arrihet të rikthehet sesioni",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "Ju lutemi, kontrolloni email-in tuaj dhe klikoni mbi lidhjen që përmban. Pasi të jetë bërë kjo, klikoni që të vazhdohet.",
     "(~%(count)s results)": {
@@ -147,12 +146,6 @@
     "Santa": "Babagjyshi i Vitit të Ri",
     "Hourglass": "Klepsidër",
     "Key": "Kyç",
-    "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Mesazhet e fshehtëzuar sigurohen me fshehtëzim skaj-më-skaj. Vetëm ju dhe marrësi(t) kanë kyçet për të lexuar këto mesazhe.",
-    "Start using Key Backup": "Fillo të përdorësh Kopjeruajtje Kyçesh",
-    "I don't want my encrypted messages": "Nuk i dua mesazhet e mia të fshehtëzuar",
-    "Manually export keys": "Eksporto dorazi kyçet",
-    "You'll lose access to your encrypted messages": "Do të humbni hyrje te mesazhet tuaj të fshehtëzuar",
-    "Are you sure you want to sign out?": "Jeni i sigurt se doni të dilni?",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Kujdes</b>: duhet të ujdisni kopjeruajtje kyçesh vetëm nga një kompjuter i besuar.",
     "Scissors": "Gërshërë",
     "Room Settings - %(roomName)s": "Rregullime Dhome - %(roomName)s",
@@ -178,7 +171,6 @@
     "Message edits": "Përpunime mesazhi",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Përmirësimi i kësaj dhome lyp mbylljen e instancës së tanishme të dhomës dhe krijimin e një dhome të re në vend të saj. Për t’u dhënë anëtarëve të dhomës më të mirën, do të:",
     "Resend %(unsentCount)s reaction(s)": "Ridërgo %(unsentCount)s reagim(e)",
-    "Your homeserver doesn't seem to support this feature.": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori.",
     "Deactivate account": "Çaktivizoje llogarinë",
     "Share User": "Ndani Përdorues",
     "Command Help": "Ndihmë Urdhri",
@@ -206,8 +198,6 @@
         "other": "%(count)s sesione",
         "one": "%(count)s sesion"
     },
-    "Session name": "Emër sesioni",
-    "Session key": "Kyç sesioni",
     "Destroy cross-signing keys?": "Të shkatërrohen kyçet <em>cross-signing</em>?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Fshirja e kyçeve <em>cross-signing</em> është e përhershme. Cilido që keni verifikuar me to, do të shohë një sinjalizim sigurie. Thuajse e sigurt që s’keni pse ta bëni një gjë të tillë, veç në paçi humbur çdo pajisje prej nga mund të bëni <em>cross-sign</em>.",
     "Clear cross-signing keys": "Spastro kyçe <em>cross-signing</em>",
@@ -221,9 +211,6 @@
     "a device cross-signing signature": "një nënshkrim <em>cross-signing</em> pajisjeje",
     "a key signature": "një nënshkrim kyçi",
     "%(brand)s encountered an error during upload of:": "%(brand)s-i hasi një gabim gjatë ngarkimit të:",
-    "Confirm by comparing the following with the User Settings in your other session:": "Ripohojeni duke krahasuar sa vijon me Rregullimet e Përdoruesit te sesioni juaj tjetër:",
-    "Confirm this user's session by comparing the following with their User Settings:": "Ripohojeni këtë sesion përdoruesi duke krahasuar sa vijon me Rregullimet e tij të Përdoruesit:",
-    "If they don't match, the security of your communication may be compromised.": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar.",
     "Sign in with SSO": "Hyni me HNj",
     "You signed in to a new session without verifying it:": "Bëtë hyrjen në një sesion të ri pa e verifikuar:",
     "Verify your other session using one of the options below.": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
@@ -560,13 +547,6 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Nëse e bëni, ju lutemi, kini parasysh se s’do të fshihet asnjë nga mesazhet tuaj, por puna me kërkimin mund degradojë për pak çaste, ndërkohë që rikrijohet treguesi",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Ju lutemi, kini parasysh se përmirësimi do të prodhojë një version të ri të dhomës</b>. Krejt mesazhet e tanishëm do të mbeten në këtë dhomë të arkivuar.",
     "Automatically invite members from this room to the new one": "Fto automatikisht anëtarë prej kësaj dhome te e reja",
-    "These are likely ones other room admins are a part of.": "Këto ka shumë mundësi të jetë ato ku përgjegjës të tjerë dhomash janë pjesë.",
-    "Other spaces or rooms you might not know": "Hapësira ose dhoma të tjera që mund të mos i dini",
-    "Spaces you know that contain this room": "Hapësira që e dini se përmbajnë këtë dhomë",
-    "Search spaces": "Kërkoni në hapësira",
-    "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
-    "Select spaces": "Përzgjidhni hapësira",
-    "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "%(count)s reply": {
@@ -593,7 +573,6 @@
     "Themes": "Tema",
     "Moderation": "Moderim",
     "Messaging": "Shkëmbim mesazhes",
-    "Spaces you know that contain this space": "Hapësira që e dini se përmbajnë këtë hapësirë",
     "Recently viewed": "Parë së fundi",
     "Recent searches": "Kërkime së fundi",
     "To search messages, look for this icon at the top of a room <icon/>": "Që të kërkoni te mesazhet, shihni për këtë ikonë në krye të një dhome <icon/>",
@@ -650,7 +629,6 @@
     "Explore public spaces in the new search dialog": "Eksploroni hapësira publike te dialogu i ri i kërkimeve",
     "Live until %(expiryTime)s": "“Live” deri më %(expiryTime)s",
     "You cannot search for rooms that are neither a room nor a space": "S’mund të kërkoni për dhoma që s’janë as dhomë, as hapësirë",
-    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kur dilni nga llogaria, këto kyçe do të fshihen te kjo pajisje, që do të thotë se s’do të jeni në gjendje të lexoni mesazhe të fshehtëzuar, veç në paçi kyçet për ta në pajisjet tuaja të tjera, ose të kopjeruajtur te shërbyesi.",
     "Saved Items": "Zëra të Ruajtur",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "Interactively verify by emoji": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh",
@@ -2645,7 +2623,15 @@
                 "other": "Po përditësohen hapësira… (%(progress)s nga %(count)s) gjithsej"
             },
             "error_join_rule_change_title": "S’u arrit të përditësohen rregulla hyrjeje",
-            "error_join_rule_change_unknown": "Dështim i panjohur"
+            "error_join_rule_change_unknown": "Dështim i panjohur",
+            "join_rule_restricted_dialog_empty_warning": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
+            "join_rule_restricted_dialog_title": "Përzgjidhni hapësira",
+            "join_rule_restricted_dialog_description": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
+            "join_rule_restricted_dialog_filter_placeholder": "Kërkoni në hapësira",
+            "join_rule_restricted_dialog_heading_space": "Hapësira që e dini se përmbajnë këtë hapësirë",
+            "join_rule_restricted_dialog_heading_room": "Hapësira që e dini se përmbajnë këtë dhomë",
+            "join_rule_restricted_dialog_heading_other": "Hapësira ose dhoma të tjera që mund të mos i dini",
+            "join_rule_restricted_dialog_heading_unknown": "Këto ka shumë mundësi të jetë ato ku përgjegjës të tjerë dhomash janë pjesë."
         },
         "general": {
             "publish_toggle": "Të bëhet publike kjo dhomë te drejtoria e dhomave %(domain)s?",
@@ -2831,7 +2817,13 @@
             "incoming_sas_device_dialog_text_1": "Që t’i vihet shenjë si e besuar, verifikojeni këtë pajisje. Besimi i kësaj pajisjeje ju jep juve dhe përdoruesve të tjerë ca qetësi më tepër, kur përdoren mesazhe të fshehtëzuar skaj-më-skaj.",
             "incoming_sas_device_dialog_text_2": "Verifikimi i kësaj pajisjeje do të t’i vërë shenjë si të besuar dhe përdoruesit që janë verifikuar me ju do ta besojnë këtë pajisje.",
             "incoming_sas_dialog_waiting": "Po pritet ripohimi nga partneri…",
-            "incoming_sas_dialog_title": "Kërkesë Verifikimi e Ardhur"
+            "incoming_sas_dialog_title": "Kërkesë Verifikimi e Ardhur",
+            "manual_device_verification_self_text": "Ripohojeni duke krahasuar sa vijon me Rregullimet e Përdoruesit te sesioni juaj tjetër:",
+            "manual_device_verification_user_text": "Ripohojeni këtë sesion përdoruesi duke krahasuar sa vijon me Rregullimet e tij të Përdoruesit:",
+            "manual_device_verification_device_name_label": "Emër sesioni",
+            "manual_device_verification_device_id_label": "ID sesioni",
+            "manual_device_verification_device_key_label": "Kyç sesioni",
+            "manual_device_verification_footer": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar."
         },
         "old_version_detected_title": "U pikasën të dhëna kriptografie të vjetër",
         "old_version_detected_description": "Janë pikasur të dhëna nga një version i dikurshëm i %(brand)s-it. Kjo do të bëjë që kriptografia skaj-më-skaj te versioni i dikurshëm të mos punojë si duhet. Mesazhet e fshehtëzuar skaj-më-skaj tani së fundi teksa përdorej versioni i dikurshëm mund të mos jenë të shfshehtëzueshëm në këtë version. Kjo mund bëjë edhe që mesazhet e shkëmbyera me këtë version të dështojnë. Nëse ju dalin probleme, bëni daljen dhe rihyni në llogari. Që të ruhet historiku i mesazheve, eksportoni dhe riimportoni kyçet tuaj.",
@@ -3135,6 +3127,15 @@
             "clear_data_title": "Të pastrohen krejt të dhënat në këtë sesion?",
             "clear_data_description": "Spastrimi i krejt të dhënave prej këtij sesioni është përfundimtar. Mesazhet e fshehtëzuar do të humbin, veç në qofshin kopjeruajtur kyçet e tyre.",
             "clear_data_button": "Spastro krejt të dhënat"
+        },
+        "logout_dialog": {
+            "setup_secure_backup_description_1": "Mesazhet e fshehtëzuar sigurohen me fshehtëzim skaj-më-skaj. Vetëm ju dhe marrësi(t) kanë kyçet për të lexuar këto mesazhe.",
+            "setup_secure_backup_description_2": "Kur dilni nga llogaria, këto kyçe do të fshihen te kjo pajisje, që do të thotë se s’do të jeni në gjendje të lexoni mesazhe të fshehtëzuar, veç në paçi kyçet për ta në pajisjet tuaja të tjera, ose të kopjeruajtur te shërbyesi.",
+            "use_key_backup": "Fillo të përdorësh Kopjeruajtje Kyçesh",
+            "skip_key_backup": "Nuk i dua mesazhet e mia të fshehtëzuar",
+            "megolm_export": "Eksporto dorazi kyçet",
+            "setup_key_backup_title": "Do të humbni hyrje te mesazhet tuaj të fshehtëzuar",
+            "description": "Jeni i sigurt se doni të dilni?"
         }
     },
     "room_list": {
@@ -3935,7 +3936,8 @@
         "download_media": "S’u arrit të shkarkohet media burim, s’u gjet URL burimi",
         "update_power_level": "S’u arrit të ndryshohej shkalla e pushtetit",
         "unknown": "Gabim i panjohur",
-        "dialog_description_default": "Ndodhi një gabim."
+        "dialog_description_default": "Ndodhi një gabim.",
+        "edit_history_unsupported": "Shërbyesi juaj Home nuk duket se e mbulon këtë veçori."
     },
     "in_space1_and_space2": "Në hapësirat %(space1Name)s dhe %(space2Name)s.",
     "in_space_and_n_other_spaces": {
