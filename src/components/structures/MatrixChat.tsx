@@ -35,8 +35,6 @@ import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
-// focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by various components
-import "focus-visible";
 // what-input helps improve keyboard accessibility
 import "what-input";
 
@@ -395,7 +393,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        if (firstScreen === "login" || firstScreen === "register" || firstScreen === "forgot_password") {
+        // If the first screen is an auth screen, we don't want to wait for login.
+        if (firstScreen !== null && AUTH_SCREENS.includes(firstScreen)) {
             this.showScreenAfterLogin();
         }
     }
@@ -514,13 +513,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const largeFontSize = "50px";
         const normalFontSize = "15px";
 
-        const waitText = _t("Wait!");
-        const scamText = _t(
-            "If someone told you to copy/paste something here, there is a high likelihood you're being scammed!",
-        );
-        const devText = _t(
-            "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!",
-        );
+        const waitText = _t("console_wait");
+        const scamText = _t("console_scam_warning");
+        const devText = _t("console_dev_note");
 
         global.mx_rage_logger.bypassRageshake(
             "log",
@@ -704,8 +699,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case "reject_invite":
                 Modal.createDialog(QuestionDialog, {
-                    title: _t("Reject invitation"),
-                    description: _t("Are you sure you want to reject the invitation?"),
+                    title: _t("reject_invitation_dialog|title"),
+                    description: _t("reject_invitation_dialog|confirmation"),
                     onFinished: (confirm) => {
                         if (confirm) {
                             // FIXME: controller shouldn't be loading a view :(
@@ -723,7 +718,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                     (err) => {
                                         modal.close();
                                         Modal.createDialog(ErrorDialog, {
-                                            title: _t("Failed to reject invitation"),
+                                            title: _t("reject_invitation_dialog|failed"),
                                             description: err.toString(),
                                         });
                                     },
@@ -1202,9 +1197,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             warnings.push(
                 <span className="warning" key="only_member_warning">
                     {" " /* Whitespace, otherwise the sentences get smashed together */}
-                    {_t(
-                        "You are the only person here. If you leave, no one will be able to join in the future, including you.",
-                    )}
+                    {_t("leave_room_dialog|last_person_warning")}
                 </span>,
             );
 
@@ -1219,8 +1212,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     <span className="warning" key="non_public_warning">
                         {" " /* Whitespace, otherwise the sentences get smashed together */}
                         {isSpace
-                            ? _t("This space is not public. You will not be able to rejoin without an invite.")
-                            : _t("This room is not public. You will not be able to rejoin without an invite.")}
+                            ? _t("leave_room_dialog|space_rejoin_warning")
+                            : _t("leave_room_dialog|room_rejoin_warning")}
                     </span>,
                 );
             }
@@ -1235,14 +1228,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         const isSpace = roomToLeave?.isSpaceRoom();
         Modal.createDialog(QuestionDialog, {
-            title: isSpace ? _t("Leave space") : _t("action|leave_room"),
+            title: isSpace ? _t("space|leave_dialog_action") : _t("action|leave_room"),
             description: (
                 <span>
                     {isSpace
-                        ? _t("Are you sure you want to leave the space '%(spaceName)s'?", {
+                        ? _t("leave_room_dialog|leave_space_question", {
                               spaceName: roomToLeave?.name ?? _t("common|unnamed_space"),
                           })
-                        : _t("Are you sure you want to leave the room '%(roomName)s'?", {
+                        : _t("leave_room_dialog|leave_room_question", {
                               roomName: roomToLeave?.name ?? _t("common|unnamed_room"),
                           })}
                     {warnings}
@@ -1278,10 +1271,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (room) RoomListStore.instance.manualRoomUpdate(room, RoomUpdateCause.RoomRemoved);
             })
             .catch((err) => {
-                const errCode = err.errcode || _td("unknown error code");
+                const errCode = err.errcode || _td("error|unknown_error_code");
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to forget room %(errCode)s", { errCode }),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    title: _t("error_dialog|forget_room_failed", { errCode }),
+                    description: err && err.message ? err.message : _t("invite|failed_generic"),
                 });
             });
     }
@@ -1291,8 +1284,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const success = await copyPlaintext(roomLink);
         if (!success) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Unable to copy room link"),
-                description: _t("Unable to copy a link to the room to the clipboard."),
+                title: _t("error_dialog|copy_room_link_failed|title"),
+                description: _t("error_dialog|copy_room_link_failed|description"),
             });
         }
     }
@@ -1611,8 +1604,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Signed Out"),
-                description: _t("For security, this session has been signed out. Please sign in again."),
+                title: _t("auth|session_logged_out_title"),
+                description: _t("auth|session_logged_out_description"),
             });
 
             dis.dispatch({
@@ -1623,19 +1616,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Modal.createDialog(
                 QuestionDialog,
                 {
-                    title: _t("Terms and Conditions"),
+                    title: _t("terms|tac_title"),
                     description: (
                         <div>
-                            <p>
-                                {" "}
-                                {_t(
-                                    "To continue using the %(homeserverDomain)s homeserver you must review and agree to our terms and conditions.",
-                                    { homeserverDomain: cli.getDomain() },
-                                )}
-                            </p>
+                            <p> {_t("terms|tac_description", { homeserverDomain: cli.getDomain() })}</p>
                         </div>
                     ),
-                    button: _t("Review terms and conditions"),
+                    button: _t("terms|tac_button"),
                     cancelButton: _t("action|dismiss"),
                     onFinished: (confirmed) => {
                         if (confirmed) {
@@ -1676,11 +1663,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             switch (type) {
                 case "CRYPTO_WARNING_OLD_VERSION_DETECTED":
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Old cryptography data detected"),
-                        description: _t(
-                            "Data from an older version of %(brand)s has been detected. This will have caused end-to-end cryptography to malfunction in the older version. End-to-end encrypted messages exchanged recently whilst using the older version may not be decryptable in this version. This may also cause messages exchanged with this version to fail. If you experience problems, log out and back in again. To retain message history, export and re-import your keys.",
-                            { brand: SdkConfig.get().brand },
-                        ),
+                        title: _t("encryption|old_version_detected_title"),
+                        description: _t("encryption|old_version_detected_description", {
+                            brand: SdkConfig.get().brand,
+                        }),
                     });
                     break;
             }
@@ -1736,7 +1722,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             } else if (request.pending) {
                 ToastStore.sharedInstance().addOrReplaceToast({
                     key: "verifreq_" + request.transactionId,
-                    title: _t("Verification requested"),
+                    title: _t("encryption|verification_requested_toast_title"),
                     icon: "verification",
                     props: { request },
                     component: VerificationRequestToast,

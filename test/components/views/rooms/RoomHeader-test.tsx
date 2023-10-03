@@ -15,12 +15,20 @@ limitations under the License.
 */
 
 import React from "react";
-import userEvent from "@testing-library/user-event";
 import { CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { EventType, JoinRule, MatrixClient, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { getAllByTitle, getByLabelText, getByText, getByTitle, render, screen, waitFor } from "@testing-library/react";
+import {
+    fireEvent,
+    getAllByLabelText,
+    getByLabelText,
+    getByRole,
+    getByText,
+    render,
+    screen,
+    waitFor,
+} from "@testing-library/react";
 
-import { mkEvent, stubClient, withClientContextRenderOptions } from "../../../test-utils";
+import { filterConsole, mkEvent, stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -33,10 +41,13 @@ import dispatcher from "../../../../src/dispatcher/dispatcher";
 import { CallStore } from "../../../../src/stores/CallStore";
 import { Call, ElementCall } from "../../../../src/models/Call";
 import * as ShieldUtils from "../../../../src/utils/ShieldUtils";
+import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/WidgetLayoutStore";
 
 jest.mock("../../../../src/utils/ShieldUtils");
 
 describe("RoomHeader", () => {
+    filterConsole("[getType] Room !1:example.org does not have an m.room.create event");
+
     let room: Room;
 
     const ROOM_ID = "!1:example.org";
@@ -56,7 +67,7 @@ describe("RoomHeader", () => {
     });
 
     afterEach(() => {
-        jest.resetAllMocks();
+        jest.restoreAllMocks();
     });
 
     it("renders the room header", () => {
@@ -68,7 +79,7 @@ describe("RoomHeader", () => {
     });
 
     it("renders the room topic", async () => {
-        const TOPIC = "Hello World!";
+        const TOPIC = "Hello World! http://element.io";
 
         const roomTopic = new MatrixEvent({
             type: EventType.RoomTopic,
@@ -86,6 +97,7 @@ describe("RoomHeader", () => {
             withClientContextRenderOptions(MatrixClientPeg.get()!),
         );
         expect(container).toHaveTextContent(TOPIC);
+        expect(getByRole(container, "link")).toHaveTextContent("http://element.io");
     });
 
     it("opens the room summary", async () => {
@@ -94,7 +106,7 @@ describe("RoomHeader", () => {
             withClientContextRenderOptions(MatrixClientPeg.get()!),
         );
 
-        await userEvent.click(getByText(container, ROOM_ID));
+        fireEvent.click(getByText(container, ROOM_ID));
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomSummary });
     });
 
@@ -184,7 +196,7 @@ describe("RoomHeader", () => {
         const facePile = getByLabelText(container, "4 members");
         expect(facePile).toHaveTextContent("4");
 
-        await userEvent.click(facePile);
+        fireEvent.click(facePile);
 
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomMemberList });
     });
@@ -195,17 +207,21 @@ describe("RoomHeader", () => {
             withClientContextRenderOptions(MatrixClientPeg.get()!),
         );
 
-        await userEvent.click(getByTitle(container, "Threads"));
+        fireEvent.click(getByLabelText(container, "Threads"));
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.ThreadPanel });
     });
 
     it("opens the notifications panel", async () => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+            if (name === "feature_notifications") return true;
+        });
+
         const { container } = render(
             <RoomHeader room={room} />,
             withClientContextRenderOptions(MatrixClientPeg.get()!),
         );
 
-        await userEvent.click(getByTitle(container, "Notifications"));
+        fireEvent.click(getByLabelText(container, "Notifications"));
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.NotificationPanel });
     });
 
@@ -216,7 +232,7 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            for (const button of getAllByTitle(container, "There's no one here to call")) {
+            for (const button of getAllByLabelText(container, "There's no one here to call")) {
                 expect(button).toBeDisabled();
             }
         });
@@ -227,17 +243,17 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            const voiceButton = getByTitle(container, "Voice call");
-            const videoButton = getByTitle(container, "Video call");
+            const voiceButton = getByLabelText(container, "Voice call");
+            const videoButton = getByLabelText(container, "Video call");
             expect(voiceButton).not.toBeDisabled();
             expect(videoButton).not.toBeDisabled();
 
             const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
 
-            await userEvent.click(voiceButton);
+            fireEvent.click(voiceButton);
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
 
-            await userEvent.click(videoButton);
+            fireEvent.click(videoButton);
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
         });
 
@@ -251,7 +267,7 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            for (const button of getAllByTitle(container, "Ongoing call")) {
+            for (const button of getAllByLabelText(container, "Ongoing call")) {
                 expect(button).toBeDisabled();
             }
         });
@@ -264,8 +280,8 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
 
-            expect(getByTitle(container, "Voice call")).not.toBeDisabled();
-            expect(getByTitle(container, "Video call")).not.toBeDisabled();
+            expect(getByLabelText(container, "Voice call")).not.toBeDisabled();
+            expect(getByLabelText(container, "Video call")).not.toBeDisabled();
         });
 
         it("disable calls in large rooms by default", () => {
@@ -275,8 +291,12 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            expect(getByTitle(container, "You do not have permission to start voice calls")).toBeDisabled();
-            expect(getByTitle(container, "You do not have permission to start video calls")).toBeDisabled();
+            expect(
+                getByLabelText(container, "You do not have permission to start voice calls", { selector: "button" }),
+            ).toBeDisabled();
+            expect(
+                getByLabelText(container, "You do not have permission to start video calls", { selector: "button" }),
+            ).toBeDisabled();
         });
     });
 
@@ -286,6 +306,7 @@ describe("RoomHeader", () => {
         });
 
         it("renders only the video call element", async () => {
+            mockRoomMembers(room, 3);
             jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
             // allow element calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
@@ -297,28 +318,48 @@ describe("RoomHeader", () => {
 
             expect(screen.queryByTitle("Voice call")).toBeNull();
 
-            const videoCallButton = getByTitle(container, "Video call");
+            const videoCallButton = getByLabelText(container, "Video call");
             expect(videoCallButton).not.toBeDisabled();
 
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
 
-            await userEvent.click(getByTitle(container, "Video call"));
+            fireEvent.click(getByLabelText(container, "Video call"));
 
             expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
         });
 
-        it("can call if there's an ongoing call", () => {
+        it("can't call if there's an ongoing (pinned) call", () => {
             jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
             // allow element calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
 
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({} as Call);
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {} } as Call);
 
             const { container } = render(
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            expect(getByTitle(container, "Ongoing call")).toBeDisabled();
+            expect(getByLabelText(container, "Ongoing call")).toBeDisabled();
+        });
+
+        it("clicking on ongoing (unpinned) call re-pins it", () => {
+            jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
+            // allow element calls
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
+            jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);
+            const spy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
+
+            const widget = {};
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget } as Call);
+
+            const { container } = render(
+                <RoomHeader room={room} />,
+                withClientContextRenderOptions(MatrixClientPeg.get()!),
+            );
+            expect(getByLabelText(container, "Video call")).not.toBeDisabled();
+            fireEvent.click(getByLabelText(container, "Video call"));
+            expect(spy).toHaveBeenCalledWith(room, widget, Container.Top);
         });
 
         it("disables calling if there's a jitsi call", () => {
@@ -331,7 +372,7 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            for (const button of getAllByTitle(container, "Ongoing call")) {
+            for (const button of getAllByLabelText(container, "Ongoing call")) {
                 expect(button).toBeDisabled();
             }
         });
@@ -342,7 +383,7 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            for (const button of getAllByTitle(container, "There's no one here to call")) {
+            for (const button of getAllByLabelText(container, "There's no one here to call")) {
                 expect(button).toBeDisabled();
             }
         });
@@ -354,16 +395,16 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
 
-            const voiceButton = getByTitle(container, "Voice call");
-            const videoButton = getByTitle(container, "Video call");
+            const voiceButton = getByLabelText(container, "Voice call");
+            const videoButton = getByLabelText(container, "Video call");
             expect(voiceButton).not.toBeDisabled();
             expect(videoButton).not.toBeDisabled();
 
             const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-            await userEvent.click(voiceButton);
+            fireEvent.click(voiceButton);
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
 
-            await userEvent.click(videoButton);
+            fireEvent.click(videoButton);
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
         });
 
@@ -380,16 +421,16 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
 
-            const voiceButton = getByTitle(container, "Voice call");
-            const videoButton = getByTitle(container, "Video call");
+            const voiceButton = getByLabelText(container, "Voice call");
+            const videoButton = getByLabelText(container, "Video call");
             expect(voiceButton).not.toBeDisabled();
             expect(videoButton).not.toBeDisabled();
 
             const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-            await userEvent.click(voiceButton);
+            fireEvent.click(voiceButton);
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
 
-            await userEvent.click(videoButton);
+            fireEvent.click(videoButton);
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
         });
 
@@ -407,17 +448,13 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
 
-            const voiceButton = getByTitle(container, "Voice call");
-            const videoButton = getByTitle(container, "Video call");
+            const voiceButton = getByLabelText(container, "Voice call");
+            const videoButton = getByLabelText(container, "Video call");
             expect(voiceButton).not.toBeDisabled();
             expect(videoButton).not.toBeDisabled();
 
-            const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
-            await userEvent.click(voiceButton);
-            expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Voice);
-
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
-            await userEvent.click(videoButton);
+            fireEvent.click(videoButton);
             expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
         });
     });

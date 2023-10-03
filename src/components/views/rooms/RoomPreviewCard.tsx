@@ -99,7 +99,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
                     <div>
                         <div className="mx_RoomPreviewCard_inviter_name">
                             {_t(
-                                "<inviter/> invites you",
+                                "room|invites_you_text",
                                 {},
                                 {
                                     inviter: () => <b>{inviter?.name || inviteSender}</b>,
@@ -162,7 +162,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
             <>
                 <RoomAvatar room={room} size="50px" viewAvatarOnClick />
                 <div className="mx_RoomPreviewCard_video" />
-                <BetaPill onClick={viewLabs} tooltipTitle={_t("Video rooms are a beta feature")} />
+                <BetaPill onClick={viewLabs} tooltipTitle={_t("labs|video_rooms_beta")} />
             </>
         );
     } else if (room.isSpaceRoom()) {
@@ -173,18 +173,18 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
 
     let notice: string | null = null;
     if (cannotJoin) {
-        notice = _t("To view %(roomName)s, you need an invite", {
+        notice = _t("room|join_failed_needs_invite", {
             roomName: room.name,
         });
     } else if (isVideoRoom && !videoRoomsEnabled) {
         notice =
             myMembership === "join"
-                ? _t("To view, please enable video rooms in Labs first")
-                : _t("To join, please enable video rooms in Labs first");
+                ? _t("room|view_failed_enable_video_rooms")
+                : _t("room|join_failed_enable_video_rooms");
 
         joinButtons = (
             <AccessibleButton kind="primary" onClick={viewLabs}>
-                {_t("Show Labs settings")}
+                {_t("room|show_labs_settings")}
             </AccessibleButton>
         );
     }

@@ -16,6 +16,8 @@ limitations under the License.
 
 import { defineConfig } from "cypress";
 
+import registerPlugins from "./cypress/plugins";
+
 export default defineConfig({
     videoUploadOnPasses: false,
     projectId: "ppvnzg",
@@ -25,7 +27,7 @@ export default defineConfig({
     chromeWebSecurity: false,
     e2e: {
         setupNodeEvents(on, config) {
-            return require("./cypress/plugins/index.ts").default(on, config);
+            return registerPlugins(on, config);
         },
         baseUrl: "http://localhost:8080",
         specPattern: "cypress/e2e/**/*.spec.{js,jsx,ts,tsx}",

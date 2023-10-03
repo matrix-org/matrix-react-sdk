@@ -1,27 +1,5 @@
 {
-    "Add Email Address": "Ajustar una adreça electronica",
-    "Add Phone Number": "Ajustar un numèro de telefòn",
-    "Admin Tools": "Aisinas d’administrator",
-    "Invite to this room": "Convidar a aquesta sala",
-    "Invited": "Convidat",
     "Unnamed room": "Sala sens nom",
-    "Share room": "Partejar la sala",
-    "Rooms": "Salas",
-    "Low priority": "Febla prioritat",
-    "Reason: %(reason)s": "Rason : %(reason)s",
-    "Forget this room": "Oblidar aquesta sala",
-    "Do you want to chat with %(user)s?": "Volètz charrar amb %(user)s ?",
-    "<userName/> wants to chat": "<userName/> vòl charrar",
-    "Start chatting": "Començar de charrar",
-    "Do you want to join %(roomName)s?": "Volètz rejonher %(roomName)s ?",
-    "<userName/> invited you": "<userName/> vos convidèt",
-    "Reject & Ignore user": "Regetar e ignorar",
-    "%(roomName)s does not exist.": "%(roomName)s existís pas.",
-    "This Room": "Aquesta sala",
-    "All Rooms": "Totas les salas",
-    "Search…": "Cercar…",
-    "Server error": "Error servidor",
-    "Single Sign On": "Autentificacion unica",
     "Sun": "Dg",
     "Mon": "Dl",
     "Tue": "Dm",
@@ -43,16 +21,8 @@
     "Dec": "Dec",
     "PM": "PM",
     "AM": "AM",
-    "Default": "Predefinit",
     "Moderator": "Moderator",
-    "Operation failed": "L'operacion a fracassat",
-    "Thank you!": "Mercés !",
-    "Reason": "Rason",
-    "Notifications": "Notificacions",
     "Ok": "Validar",
-    "Set up": "Parametrar",
-    "Font size": "Talha de poliça",
-    "Cancelling…": "Anullacion…",
     "Fish": "Pes",
     "Butterfly": "Parpalhòl",
     "Tree": "Arborescéncia",
@@ -70,46 +40,6 @@
     "Anchor": "Ancorar",
     "Headphones": "Escotadors",
     "Folder": "Dorsièr",
-    "Show less": "Ne veire mens",
-    "Show more": "Ne veire mai",
-    "Current password": "Senhal actual",
-    "New Password": "Senhal novèl",
-    "Confirm password": "Confirmar lo senhal",
-    "Change Password": "Modificar senhal",
-    "not found": "pas trobat",
-    "exists": "existís",
-    "Authentication": "Autentificacion",
-    "Restore from Backup": "Restablir a partir de l'archiu",
-    "Off": "Atudat",
-    "Display Name": "Nom d'afichatge",
-    "Profile": "Perfil",
-    "Account": "Compte",
-    "General": "General",
-    "Versions": "Versions",
-    "Composer": "Compositor",
-    "Unignore": "Ignorar pas",
-    "Security & Privacy": "Seguretat e vida privada",
-    "Audio Output": "Sortida àudio",
-    "Bridges": "Bridges",
-    "Sounds": "Sons",
-    "Browse": "Percórrer",
-    "Unban": "Reabilitar",
-    "Permissions": "Permissions",
-    "Encryption": "Chiframent",
-    "Phone Number": "Numèro de telefòn",
-    "Unencrypted": "Pas chifrat",
-    "Italics": "Italicas",
-    "Historical": "Istoric",
-    "Sign Up": "S’inscriure",
-    "Sort by": "Triar per",
-    "Activity": "Activitat",
-    "A-Z": "A-Z",
-    "List options": "Opcions de lista",
-    "Favourite": "Favorit",
-    "Low Priority": "Prioritat bassa",
-    "Mark all as read": "Tot marcar coma legit",
-    "Demote": "Retrogradar",
-    "Are you sure?": "O volètz vertadièrament ?",
     "Sunday": "Dimenge",
     "Monday": "Diluns",
     "Tuesday": "Dimars",
@@ -119,48 +49,7 @@
     "Saturday": "Dissabte",
     "Today": "Uèi",
     "Yesterday": "Ièr",
-    "Show image": "Afichar l'imatge",
-    "Failed to copy": "Impossible de copiar",
-    "Cancel search": "Anullar la recèrca",
-    "More options": "Autras opcions",
-    "Rotate Left": "Pivotar cap a èrra",
-    "Rotate Right": "Pivotar cap a drecha",
-    "Server name": "Títol del servidor",
-    "Notes": "Nòtas",
-    "Unavailable": "Pas disponible",
-    "Changelog": "Istoric dels cambiaments (Changelog)",
-    "Removing…": "Supression en cors…",
-    "Send": "Mandar",
-    "An error has occurred.": "Una error s'es producha.",
-    "Session name": "Nom de session",
-    "Email address": "Adreça de corrièl",
-    "Terms of Service": "Terms of Service",
-    "Service": "Servici",
-    "Summary": "Resumit",
-    "Document": "Document",
-    "Upload files": "Mandar de fichièrs",
     "Home": "Dorsièr personal",
-    "Enter password": "Sasissètz lo senhal",
-    "Email": "Corrièl",
-    "Phone": "Telefòn",
-    "Passwords don't match": "Los senhals correspondon pas",
-    "Unknown error": "Error desconeguda",
-    "Search failed": "La recèrca a fracassat",
-    "Feedback": "Comentaris",
-    "Incorrect password": "Senhal incorrècte",
-    "Commands": "Comandas",
-    "Users": "Utilizaires",
-    "Success!": "Capitada !",
-    "Navigation": "Navigacion",
-    "Upload a file": "Actualizar un fichièr",
-    "Explore rooms": "Percórrer las salas",
-    "Create Account": "Crear un compte",
-    "Click the button below to confirm adding this email address.": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
-    "Confirm adding email": "Confirmar l'adicion de l'adressa e-mail",
-    "Confirm adding this email address by using Single Sign On to prove your identity.": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat.",
-    "Use Single Sign On to continue": "Utilizar l'autentificacion unica (SSO) per contunhar",
-    "This phone number is already in use": "Aquel numèro de telefòn es ja utilizat",
-    "This email address is already in use": "Aquela adreça e-mail es ja utilizada",
     "common": {
         "mute": "Copar lo son",
         "no_results": "Pas cap de resultat",
@@ -196,7 +85,21 @@
         "matrix": "Matritz",
         "trusted": "Fisable",
         "not_trusted": "Pas securizat",
-        "system_alerts": "Alèrtas sistèma"
+        "system_alerts": "Alèrtas sistèma",
+        "feedback": "Comentaris",
+        "off": "Atudat",
+        "advanced": "Avançat",
+        "general": "General",
+        "profile": "Perfil",
+        "display_name": "Nom d'afichatge",
+        "authentication": "Autentificacion",
+        "rooms": "Salas",
+        "low_priority": "Febla prioritat",
+        "historical": "Istoric",
+        "unencrypted": "Pas chifrat",
+        "show_more": "Ne veire mai",
+        "are_you_sure": "O volètz vertadièrament ?",
+        "email_address": "Adreça de corrièl"
     },
     "action": {
         "continue": "Contunhar",
@@ -260,7 +163,10 @@
         "import": "Importar",
         "export": "Exportar",
         "refresh": "Actualizada",
-        "submit": "Mandar"
+        "submit": "Mandar",
+        "unban": "Reabilitar",
+        "unignore": "Ignorar pas",
+        "explore_rooms": "Percórrer las salas"
     },
     "keyboard": {
         "home": "Dorsièr personal",
@@ -272,7 +178,9 @@
         "end": "Fin",
         "alt": "Alt",
         "control": "Ctrl",
-        "shift": "Descalatge"
+        "shift": "Descalatge",
+        "category_navigation": "Navigacion",
+        "upload_file": "Actualizar un fichièr"
     },
     "composer": {
         "format_bold": "Gras",
@@ -280,9 +188,13 @@
         "placeholder_reply_encrypted": "Enviar una responsa chifrada …",
         "placeholder_reply": "Enviar una responsa…",
         "placeholder_encrypted": "Enviar un messatge chifrat…",
-        "placeholder": "Enviar un messatge…"
+        "placeholder": "Enviar un messatge…",
+        "autocomplete": {
+            "command_description": "Comandas",
+            "user_description": "Utilizaires"
+        },
+        "format_italics": "Italicas"
     },
-    "Bold": "Gras",
     "power_level": {
         "default": "Predefinit",
         "moderator": "Moderator",
@@ -306,23 +218,20 @@
         "offline": "Fòra linha",
         "away": "Absent"
     },
-    "Unknown": "Desconegut",
     "slash_command": {
         "usage": "Usatge",
         "category_messages": "Messatges",
         "category_actions": "Accions",
         "category_admin": "Admin",
         "category_advanced": "Avançat",
-        "category_other": "Autre"
+        "category_other": "Autre",
+        "server_error": "Error servidor"
     },
     "voip": {
         "hangup": "Penjar",
         "voice_call": "Sonada vocala",
         "video_call": "Sonada vidèo"
     },
-    "Messages": "Messatges",
-    "Other": "Autre",
-    "Advanced": "Avançat",
     "emoji": {
         "category_smileys_people": "Emoticònas e personatges",
         "category_animals_nature": "Animals e natura",
@@ -333,5 +242,207 @@
         "category_symbols": "Simbòls",
         "category_flags": "Marcadors",
         "categories": "Categorias"
+    },
+    "labs": {
+        "group_profile": "Perfil",
+        "group_rooms": "Salas",
+        "group_encryption": "Chiframent"
+    },
+    "settings": {
+        "appearance": {
+            "font_size": "Talha de poliça",
+            "timeline_image_size_default": "Predefinit",
+            "image_size_default": "Predefinit"
+        },
+        "preferences": {
+            "composer_heading": "Compositor"
+        },
+        "security": {
+            "cross_signing_not_found": "pas trobat",
+            "cross_signing_homeserver_support_exists": "existís",
+            "encryption_section": "Chiframent",
+            "restore_key_backup": "Restablir a partir de l'archiu"
+        },
+        "general": {
+            "account_section": "Compte",
+            "email_address_in_use": "Aquela adreça e-mail es ja utilizada",
+            "msisdn_in_use": "Aquel numèro de telefòn es ja utilizat",
+            "confirm_adding_email_title": "Confirmar l'adicion de l'adressa e-mail",
+            "confirm_adding_email_body": "Clicatz sus lo boton aicí dejós per confirmar l'adicion de l'adreça e-mail.",
+            "add_email_dialog_title": "Ajustar una adreça electronica",
+            "add_msisdn_dialog_title": "Ajustar un numèro de telefòn",
+            "msisdn_label": "Numèro de telefòn"
+        },
+        "voip": {
+            "audio_output": "Sortida àudio"
+        },
+        "key_backup": {
+            "backup_success": "Capitada !"
+        }
+    },
+    "auth": {
+        "sso": "Autentificacion unica",
+        "incorrect_password": "Senhal incorrècte",
+        "register_action": "Crear un compte",
+        "phone_label": "Telefòn",
+        "change_password_confirm_label": "Confirmar lo senhal",
+        "change_password_confirm_invalid": "Los senhals correspondon pas",
+        "change_password_current_label": "Senhal actual",
+        "change_password_new_label": "Senhal novèl",
+        "change_password_action": "Modificar senhal",
+        "email_field_label": "Corrièl",
+        "password_field_label": "Sasissètz lo senhal",
+        "msisdn_field_label": "Telefòn",
+        "uia": {
+            "sso_title": "Utilizar l'autentificacion unica (SSO) per contunhar",
+            "sso_body": "Confirmatz l'adicion d'aquela adreça e-mail en utilizant l'autentificacion unica per provar la vòstra identitat."
+        }
+    },
+    "export_chat": {
+        "messages": "Messatges"
+    },
+    "room_list": {
+        "sort_by": "Triar per",
+        "sort_by_activity": "Activitat",
+        "sort_by_alphabet": "A-Z",
+        "sublist_options": "Opcions de lista",
+        "show_less": "Ne veire mens"
+    },
+    "setting": {
+        "help_about": {
+            "versions": "Versions"
+        }
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Percórrer las salas"
+        }
+    },
+    "terms": {
+        "tos": "Terms of Service",
+        "column_service": "Servici",
+        "column_summary": "Resumit",
+        "column_document": "Document"
+    },
+    "room_settings": {
+        "permissions": {
+            "permissions_section": "Permissions",
+            "ban_reason": "Rason"
+        },
+        "security": {
+            "title": "Seguretat e vida privada"
+        },
+        "bridges": {
+            "title": "Bridges"
+        },
+        "general": {
+            "other_section": "Autre"
+        },
+        "notifications": {
+            "sounds_section": "Sons",
+            "browse_button": "Percórrer"
+        }
+    },
+    "encryption": {
+        "verification": {
+            "cancelling": "Anullacion…",
+            "manual_device_verification_device_name_label": "Nom de session"
+        },
+        "setup_secure_backup": {
+            "title": "Parametrar"
+        }
+    },
+    "invite": {
+        "failed_generic": "L'operacion a fracassat"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "Notificacions",
+        "colour_bold": "Gras",
+        "mark_all_read": "Tot marcar coma legit",
+        "class_other": "Autre",
+        "default": "Predefinit"
+    },
+    "quick_settings": {
+        "sidebar_settings": "Autras opcions"
+    },
+    "error": {
+        "failed_copy": "Impossible de copiar",
+        "unknown": "Error desconeguda",
+        "dialog_description_default": "Una error s'es producha."
+    },
+    "room": {
+        "context_menu": {
+            "favourite": "Favorit",
+            "low_priority": "Prioritat bassa"
+        },
+        "invite_this_room": "Convidar a aquesta sala",
+        "join_button_account": "S’inscriure",
+        "kick_reason": "Rason : %(reason)s",
+        "forget_room": "Oblidar aquesta sala",
+        "dm_invite_title": "Volètz charrar amb %(user)s ?",
+        "dm_invite_subtitle": "<userName/> vòl charrar",
+        "dm_invite_action": "Començar de charrar",
+        "invite_title": "Volètz rejonher %(roomName)s ?",
+        "invite_subtitle": "<userName/> vos convidèt",
+        "invite_reject_ignore": "Regetar e ignorar",
+        "not_found_title_name": "%(roomName)s existís pas.",
+        "search": {
+            "this_room": "Aquesta sala",
+            "all_rooms": "Totas les salas",
+            "field_placeholder": "Cercar…"
+        },
+        "inviter_unknown": "Desconegut"
+    },
+    "lightbox": {
+        "rotate_left": "Pivotar cap a èrra",
+        "rotate_right": "Pivotar cap a drecha"
+    },
+    "member_list": {
+        "invited_list_heading": "Convidat"
+    },
+    "user_info": {
+        "admin_tools_section": "Aisinas d’administrator",
+        "demote_button": "Retrogradar"
+    },
+    "right_panel": {
+        "share_button": "Partejar la sala"
+    },
+    "error_dialog": {
+        "search_failed": {
+            "title": "La recèrca a fracassat"
+        }
+    },
+    "timeline": {
+        "m.image": {
+            "show_image": "Afichar l'imatge"
+        }
+    },
+    "emoji_picker": {
+        "cancel_search_label": "Anullar la recèrca"
+    },
+    "spotlight": {
+        "public_rooms": {
+            "network_dropdown_add_dialog_placeholder": "Títol del servidor"
+        }
+    },
+    "bug_reporting": {
+        "thank_you": "Mercés !",
+        "textarea_label": "Nòtas"
+    },
+    "update": {
+        "unavailable": "Pas disponible",
+        "changelog": "Istoric dels cambiaments (Changelog)"
+    },
+    "redact": {
+        "ongoing": "Supression en cors…"
+    },
+    "forward": {
+        "send_label": "Mandar"
+    },
+    "report_content": {
+        "other_label": "Autre"
+    },
+    "upload_file": {
+        "title": "Mandar de fichièrs"
     }
 }

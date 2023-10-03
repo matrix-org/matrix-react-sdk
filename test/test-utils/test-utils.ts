@@ -60,7 +60,7 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
  *
- * See also `getMockClientWithEventEmitter` which does something similar but different.
+ * See also {@link getMockClientWithEventEmitter} which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -249,6 +249,8 @@ export function createTestClient(): MatrixClient {
         addThreePidOnly: jest.fn(),
         requestMsisdnToken: jest.fn(),
         submitMsisdnToken: jest.fn(),
+        getMediaConfig: jest.fn(),
+        baseUrl: "https://matrix-client.matrix.org",
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -464,14 +466,26 @@ export function mkMembership(
     return e;
 }
 
-export function mkRoomMember(roomId: string, userId: string, membership = "join"): RoomMember {
+export function mkRoomMember(
+    roomId: string,
+    userId: string,
+    membership = "join",
+    isKicked = false,
+    prevMemberContent: Partial<IContent> = {},
+): RoomMember {
     return {
         userId,
         membership,
         name: userId,
         rawDisplayName: userId,
         roomId,
-        events: {},
+        events: {
+            member: {
+                getSender: () => undefined,
+                getPrevContent: () => prevMemberContent,
+            },
+        },
+        isKicked: () => isKicked,
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
         getDMInviter: () => {},
@@ -597,6 +611,8 @@ export function mkStubRoom(
             roomId: roomId,
             getAvatarUrl: () => "mxc://avatar.url/image.png",
             getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            events: {},
+            isKicked: () => false,
         }),
         getMembers: jest.fn().mockReturnValue([]),
         getMembersWithMembership: jest.fn().mockReturnValue([]),

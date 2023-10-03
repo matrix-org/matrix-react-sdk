@@ -257,7 +257,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             {
                 key: "required",
                 test: async ({ value }) => !!value,
-                invalid: () => _t("Please enter a name for the room"),
+                invalid: () => _t("create_room|name_validation_required"),
             },
         ],
     });
@@ -285,54 +285,48 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             publicPrivateLabel = (
                 <p>
                     {_t(
-                        "Everyone in <SpaceName/> will be able to find and join this room.",
+                        "create_room|join_rule_restricted_label",
                         {},
                         {
                             SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("common|unnamed_space")}</b>,
                         },
                     )}
                     &nbsp;
-                    {_t("You can change this at any time from room settings.")}
+                    {_t("create_room|join_rule_change_notice")}
                 </p>
             );
         } else if (this.state.joinRule === JoinRule.Public && this.props.parentSpace) {
             publicPrivateLabel = (
                 <p>
                     {_t(
-                        "Anyone will be able to find and join this room, not just members of <SpaceName/>.",
+                        "create_room|join_rule_public_parent_space_label",
                         {},
                         {
                             SpaceName: () => <b>{this.props.parentSpace?.name ?? _t("common|unnamed_space")}</b>,
                         },
                     )}
                     &nbsp;
-                    {_t("You can change this at any time from room settings.")}
+                    {_t("create_room|join_rule_change_notice")}
                 </p>
             );
         } else if (this.state.joinRule === JoinRule.Public) {
             publicPrivateLabel = (
                 <p>
-                    {_t("Anyone will be able to find and join this room.")}
+                    {_t("create_room|join_rule_public_label")}
                     &nbsp;
-                    {_t("You can change this at any time from room settings.")}
+                    {_t("create_room|join_rule_change_notice")}
                 </p>
             );
         } else if (this.state.joinRule === JoinRule.Invite) {
             publicPrivateLabel = (
                 <p>
-                    {_t("Only people invited will be able to find and join this room.")}
+                    {_t("create_room|join_rule_invite_label")}
                     &nbsp;
-                    {_t("You can change this at any time from room settings.")}
+                    {_t("create_room|join_rule_change_notice")}
                 </p>
             );
         } else if (this.state.joinRule === JoinRule.Knock) {
-            publicPrivateLabel = (
-                <p>
-                    {_t(
-                        "Anyone can request to join, but admins or moderators need to grant access. You can change this later.",
-                    )}
-                </p>
-            );
+            publicPrivateLabel = <p>{_t("create_room|join_rule_knock_label")}</p>;
         }
 
         let visibilitySection: JSX.Element | undefined;
@@ -340,7 +334,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             visibilitySection = (
                 <LabelledCheckbox
                     className="mx_CreateRoomDialog_labelledCheckbox"
-                    label={_t("Make this room visible in the public room directory.")}
+                    label={_t("room_settings|security|publish_room")}
                     onChange={this.onIsPublicKnockRoomChange}
                     value={this.state.isPublicKnockRoom}
                 />
@@ -353,20 +347,18 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             if (privateShouldBeEncrypted(MatrixClientPeg.safeGet())) {
                 if (this.state.canChangeEncryption) {
                     microcopy = isVideoRoom
-                        ? _t("You can't disable this later. The room will be encrypted but the embedded call will not.")
-                        : _t("You can't disable this later. Bridges & most bots won't work yet.");
+                        ? _t("create_room|encrypted_video_room_warning")
+                        : _t("create_room|encrypted_warning");
                 } else {
-                    microcopy = _t("Your server requires encryption to be enabled in private rooms.");
+                    microcopy = _t("create_room|encryption_forced");
                 }
             } else {
-                microcopy = _t(
-                    "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
-                );
+                microcopy = _t("settings|security|e2ee_default_disabled_warning");
             }
             e2eeSection = (
                 <React.Fragment>
                     <LabelledToggleSwitch
-                        label={_t("Enable end-to-end encryption")}
+                        label={_t("create_room|encryption_label")}
                         onChange={this.onEncryptedChange}
                         value={this.state.isEncrypted}
                         className="mx_CreateRoomDialog_e2eSwitch" // for end-to-end tests
@@ -377,15 +369,11 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let federateLabel = _t(
-            "You might enable this if the room will only be used for collaborating with internal teams on your homeserver. This cannot be changed later.",
-        );
+        let federateLabel = _t("create_room|unfederated_label_default_off");
         if (SdkConfig.get().default_federate === false) {
             // We only change the label if the default setting is different to avoid jarring text changes to the
             // user. They will have read the implications of turning this off/on, so no need to rephrase for them.
-            federateLabel = _t(
-                "You might disable this if the room will be used for collaborating with external teams who have their own homeserver. This cannot be changed later.",
-            );
+            federateLabel = _t("create_room|unfederated_label_default_on");
         }
 
         let title: string;
@@ -418,18 +406,22 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                             className="mx_CreateRoomDialog_name"
                         />
                         <Field
-                            label={_t("Topic (optional)")}
+                            label={_t("create_room|topic_label")}
                             onChange={this.onTopicChange}
                             value={this.state.topic}
                             className="mx_CreateRoomDialog_topic"
                         />
 
                         <JoinRuleDropdown
-                            label={_t("Room visibility")}
-                            labelInvite={_t("Private room (invite only)")}
-                            labelKnock={this.askToJoinEnabled ? _t("Ask to join") : undefined}
-                            labelPublic={_t("Public room")}
-                            labelRestricted={this.supportsRestricted ? _t("Visible to space members") : undefined}
+                            label={_t("create_room|room_visibility_label")}
+                            labelInvite={_t("create_room|join_rule_invite")}
+                            labelKnock={
+                                this.askToJoinEnabled ? _t("room_settings|security|join_rule_knock") : undefined
+                            }
+                            labelPublic={_t("common|public_room")}
+                            labelRestricted={
+                                this.supportsRestricted ? _t("create_room|join_rule_restricted") : undefined
+                            }
                             value={this.state.joinRule}
                             onChange={this.onJoinRuleChange}
                         />
@@ -440,10 +432,10 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         {aliasField}
                         <details onToggle={this.onDetailsToggled} className="mx_CreateRoomDialog_details">
                             <summary className="mx_CreateRoomDialog_details_summary">
-                                {this.state.detailsOpen ? _t("Hide advanced") : _t("Show advanced")}
+                                {this.state.detailsOpen ? _t("action|hide_advanced") : _t("action|show_advanced")}
                             </summary>
                             <LabelledToggleSwitch
-                                label={_t("Block anyone not part of %(serverName)s from ever joining this room.", {
+                                label={_t("create_room|unfederated", {
                                     serverName: MatrixClientPeg.getHomeserverName(),
                                 })}
                                 onChange={this.onNoFederateChange}

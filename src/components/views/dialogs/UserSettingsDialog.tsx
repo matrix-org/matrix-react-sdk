@@ -77,7 +77,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.General,
-                _td("General"),
+                _td("common|general"),
                 "mx_UserSettingsDialog_settingsIcon",
                 <GeneralUserSettingsTab closeSettingsFn={this.props.onFinished} />,
                 "UserSettingsGeneral",
@@ -95,7 +95,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Notifications,
-                _td("Notifications"),
+                _td("notifications|enable_prompt_toast_title"),
                 "mx_UserSettingsDialog_bellIcon",
                 <NotificationUserSettingsTab />,
                 "UserSettingsNotifications",
@@ -113,7 +113,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Keyboard,
-                _td("Keyboard"),
+                _td("settings|keyboard|title"),
                 "mx_UserSettingsDialog_keyboardIcon",
                 <KeyboardUserSettingsTab />,
                 "UserSettingsKeyboard",
@@ -122,7 +122,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Sidebar,
-                _td("Sidebar"),
+                _td("settings|sidebar|title"),
                 "mx_UserSettingsDialog_sidebarIcon",
                 <SidebarUserSettingsTab />,
                 "UserSettingsSidebar",
@@ -133,7 +133,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             tabs.push(
                 new Tab(
                     UserTab.Voice,
-                    _td("Voice & Video"),
+                    _td("settings|voip|title"),
                     "mx_UserSettingsDialog_voiceIcon",
                     <VoiceUserSettingsTab />,
                     "UserSettingsVoiceVideo",
@@ -144,7 +144,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Security,
-                _td("Security & Privacy"),
+                _td("room_settings|security|title"),
                 "mx_UserSettingsDialog_securityIcon",
                 <SecurityUserSettingsTab closeSettingsFn={this.props.onFinished} />,
                 "UserSettingsSecurityPrivacy",
@@ -153,7 +153,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.SessionManager,
-                _td("Sessions"),
+                _td("settings|sessions|title"),
                 "mx_UserSettingsDialog_sessionsIcon",
                 <SessionManagerTab />,
                 // don't track with posthog while under construction
@@ -179,7 +179,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             tabs.push(
                 new Tab(
                     UserTab.Mjolnir,
-                    _td("Ignored users"),
+                    _td("labs_mjolnir|title"),
                     "mx_UserSettingsDialog_mjolnirIcon",
                     <MjolnirUserSettingsTab />,
                     "UserSettingMjolnir",
@@ -189,7 +189,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         tabs.push(
             new Tab(
                 UserTab.Help,
-                _td("Help & About"),
+                _td("setting|help_about|title"),
                 "mx_UserSettingsDialog_helpIcon",
                 <HelpUserSettingsTab closeSettingsFn={() => this.props.onFinished()} />,
                 "UserSettingsHelpAbout",

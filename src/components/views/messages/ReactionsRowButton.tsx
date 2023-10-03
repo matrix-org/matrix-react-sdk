@@ -20,7 +20,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { mediaFromMxc } from "../../../customisations/Media";
 import { _t } from "../../../languageHandler";
-import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
+import { formatList } from "../../../utils/FormattingUtils";
 import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -123,9 +123,9 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                     undefined;
             }
 
-            const reactors = formatCommaSeparatedList(senders, 6);
+            const reactors = formatList(senders, 6);
             if (content) {
-                label = _t("%(reactors)s reacted with %(content)s", {
+                label = _t("timeline|reactions|label", {
                     reactors,
                     content: customReactionName || content,
                 });
@@ -145,7 +145,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                 reactionContent = (
                     <img
                         className="mx_ReactionsRowButton_content"
-                        alt={customReactionName || _t("Custom reaction")}
+                        alt={customReactionName || _t("timeline|reactions|custom_reaction_fallback_label")}
                         src={imageSrc}
                         width="16"
                         height="16"

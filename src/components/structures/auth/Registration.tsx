@@ -263,7 +263,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 } else {
                     this.setState({
                         serverErrorIsFatal: true, // fatal because user cannot continue on this server
-                        errorText: _t("Registration has been disabled on this homeserver."),
+                        errorText: _t("auth|registration_disabled"),
                         // add empty flows array to get rid of spinner
                         flows: [],
                     });
@@ -271,7 +271,7 @@ export default class Registration extends React.Component<IProps, IState> {
             } else {
                 logger.log("Unable to query for supported registration methods.", e);
                 this.setState({
-                    errorText: _t("Unable to query for supported registration methods."),
+                    errorText: _t("auth|failed_query_registration_methods"),
                     // add empty flows array to get rid of spinner
                     flows: [],
                 });
@@ -326,12 +326,12 @@ export default class Registration extends React.Component<IProps, IState> {
                 const flows = (response as IAuthData).flows ?? [];
                 const msisdnAvailable = flows.some((flow) => flow.stages.includes(AuthType.Msisdn));
                 if (!msisdnAvailable) {
-                    errorText = _t("This server does not support authentication with a phone number.");
+                    errorText = _t("auth|unsupported_auth_msisdn");
                 }
             } else if (response instanceof MatrixError && response.errcode === "M_USER_IN_USE") {
-                errorText = _t("Someone already has that username, please try another.");
+                errorText = _t("auth|username_in_use");
             } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
-                errorText = _t("That e-mail address or phone number is already in use.");
+                errorText = _t("auth|3pid_in_use");
             }
 
             this.setState({
@@ -523,7 +523,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     // i18n: ssoButtons is a placeholder to help translators understand context
                     continueWithSection = (
                         <h2 className="mx_AuthBody_centered">
-                            {_t("Continue with %(ssoButtons)s", { ssoButtons: "" }).trim()}
+                            {_t("auth|continue_with_sso", { ssoButtons: "" }).trim()}
                         </h2>
                     );
                 }
@@ -540,7 +540,7 @@ export default class Registration extends React.Component<IProps, IState> {
                             action={SSOAction.REGISTER}
                         />
                         <h2 className="mx_AuthBody_centered">
-                            {_t("%(ssoButtons)s Or %(usernamePassword)s", {
+                            {_t("auth|sso_or_username_password", {
                                 ssoButtons: "",
                                 usernamePassword: "",
                             }).trim()}
@@ -591,7 +591,7 @@ export default class Registration extends React.Component<IProps, IState> {
         const signIn = (
             <span className="mx_AuthBody_changeFlow">
                 {_t(
-                    "Already have an account? <a>Sign in here</a>",
+                    "auth|sign_in_instead_prompt",
                     {},
                     {
                         a: (sub) => (
@@ -621,13 +621,10 @@ export default class Registration extends React.Component<IProps, IState> {
                 regDoneText = (
                     <div>
                         <p>
-                            {_t(
-                                "Your new account (%(newAccountId)s) is registered, but you're already logged into a different account (%(loggedInUserId)s).",
-                                {
-                                    newAccountId: this.state.registeredUsername,
-                                    loggedInUserId: this.state.differentLoggedInUserId,
-                                },
-                            )}
+                            {_t("auth|account_clash", {
+                                newAccountId: this.state.registeredUsername,
+                                loggedInUserId: this.state.differentLoggedInUserId,
+                            })}
                         </p>
                         <p>
                             <AccessibleButton
@@ -639,7 +636,7 @@ export default class Registration extends React.Component<IProps, IState> {
                                     }
                                 }}
                             >
-                                {_t("Continue with previous account")}
+                                {_t("auth|account_clash_previous_account")}
                             </AccessibleButton>
                         </p>
                     </div>
@@ -650,7 +647,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 regDoneText = (
                     <h2>
                         {_t(
-                            "<a>Log in</a> to your new account.",
+                            "auth|log_in_new_account",
                             {},
                             {
                                 a: (sub) => (
@@ -673,7 +670,7 @@ export default class Registration extends React.Component<IProps, IState> {
             }
             body = (
                 <div>
-                    <h1>{_t("Registration Successful")}</h1>
+                    <h1>{_t("auth|registration_successful")}</h1>
                     {regDoneText}
                 </div>
             );
@@ -682,11 +679,11 @@ export default class Registration extends React.Component<IProps, IState> {
                 <Fragment>
                     <div className="mx_Register_mainContent">
                         <AuthHeaderDisplay
-                            title={_t("Create account")}
+                            title={_t("auth|create_account_title")}
                             serverPicker={
                                 <ServerPicker
-                                    title={_t("Host account on")}
-                                    dialogTitle={_t("Decide where your account is hosted")}
+                                    title={_t("auth|server_picker_title_registration")}
+                                    dialogTitle={_t("auth|server_picker_dialog_title")}
                                     serverConfig={this.props.serverConfig}
                                     onServerConfigChange={
                                         this.state.doingUIAuth ? undefined : this.props.onServerConfigChange
