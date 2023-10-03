@@ -16,12 +16,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { RoomMember, RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import dis from "../../../dispatcher/dispatcher";
@@ -176,7 +173,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
     }
 
     private getPowerLabel(): string {
-        return _t("%(userName)s (power %(powerLevelNumber)s)", {
+        return _t("member_list|power_label", {
             userName: UserIdentifierCustomisations.getDisplayUserIdentifier(this.props.member.userId, {
                 roomId: this.props.member.roomId,
             }),
@@ -189,7 +186,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const name = this.getDisplayName();
         const presenceState = member.user?.presence as PresenceState | undefined;
 
-        const av = <MemberAvatar member={member} width={36} height={36} aria-hidden="true" />;
+        const av = <MemberAvatar member={member} size="36px" aria-hidden="true" />;
 
         if (member.user) {
             this.userLastModifiedTime = member.user.getLastModifiedTime();

@@ -20,7 +20,7 @@ import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { Device } from "matrix-js-sdk/src/models/device";
+import { Device } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { AccessCancelledError, accessSecretStorage } from "../SecurityManager";
@@ -245,7 +245,7 @@ export class SetupEncryptionStore extends EventEmitter {
                         }
 
                         const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                            title: _t("Setting up keys"),
+                            title: _t("encryption|bootstrap_title"),
                             matrixClient: cli,
                             makeRequest,
                         });

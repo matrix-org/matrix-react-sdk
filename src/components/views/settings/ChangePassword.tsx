@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import type ExportE2eKeysDialog from "../../../async-components/views/dialogs/security/ExportE2eKeysDialog";
 import Field from "../elements/Field";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -29,7 +28,6 @@ import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
 import { PASSWORD_MIN_SCORE } from "../auth/RegistrationForm";
 import SetEmailDialog from "../dialogs/SetEmailDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 
 const FIELD_OLD_PASSWORD = "field_old_password";
 const FIELD_NEW_PASSWORD = "field_new_password";
@@ -43,11 +41,7 @@ enum Phase {
 }
 
 interface IProps {
-    onFinished: (outcome: {
-        didSetEmail?: boolean;
-        /** Was one or more other devices logged out whilst changing the password */
-        didLogoutOutOtherDevices: boolean;
-    }) => void;
+    onFinished: (outcome: { didSetEmail?: boolean }) => void;
     onError: (error: Error) => void;
     rowClassName?: string;
     buttonClassName?: string;
@@ -95,58 +89,10 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
         const cli = MatrixClientPeg.safeGet();
 
-        // if the server supports it then don't sign user out of all devices
-        const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
-        const userHasOtherDevices = (await cli.getDevices()).devices.length > 1;
-
-        if (userHasOtherDevices && !serverSupportsControlOfDevicesLogout && this.props.confirm) {
-            // warn about logging out all devices
-            const { finished } = Modal.createDialog(QuestionDialog, {
-                title: _t("Warning!"),
-                description: (
-                    <div>
-                        <p>
-                            {_t(
-                                "Changing your password on this homeserver will cause all of your other devices to be " +
-                                    "signed out. This will delete the message encryption keys stored on them, and may make " +
-                                    "encrypted chat history unreadable.",
-                            )}
-                        </p>
-                        <p>
-                            {_t(
-                                "If you want to retain access to your chat history in encrypted rooms you should first " +
-                                    "export your room keys and re-import them afterwards.",
-                            )}
-                        </p>
-                        <p>
-                            {_t(
-                                "You can also ask your homeserver admin to upgrade the server to change this behaviour.",
-                            )}
-                        </p>
-                    </div>
-                ),
-                button: _t("Continue"),
-                extraButtons: [
-                    <button key="exportRoomKeys" className="mx_Dialog_primary" onClick={this.onExportE2eKeysClicked}>
-                        {_t("Export E2E room keys")}
-                    </button>,
-                ],
-            });
-
-            const [confirmed] = await finished;
-            if (!confirmed) return;
-        }
-
-        this.changePassword(cli, oldPassword, newPassword, serverSupportsControlOfDevicesLogout, userHasOtherDevices);
+        this.changePassword(cli, oldPassword, newPassword);
     }
 
-    private changePassword(
-        cli: MatrixClient,
-        oldPassword: string,
-        newPassword: string,
-        serverSupportsControlOfDevicesLogout: boolean,
-        userHasOtherDevices: boolean,
-    ): void {
+    private changePassword(cli: MatrixClient, oldPassword: string, newPassword: string): void {
         const authDict = {
             type: "m.login.password",
             identifier: {
@@ -163,23 +109,17 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
-        const logoutDevices = serverSupportsControlOfDevicesLogout ? false : undefined;
-
-        // undefined or true mean all devices signed out
-        const didLogoutOutOtherDevices = !serverSupportsControlOfDevicesLogout && userHasOtherDevices;
-
-        cli.setPassword(authDict, newPassword, logoutDevices)
+        cli.setPassword(authDict, newPassword, false)
             .then(
                 () => {
                     if (this.props.shouldAskForEmail) {
                         return this.optionallySetEmail().then((confirmed) => {
                             this.props.onFinished({
                                 didSetEmail: confirmed,
-                                didLogoutOutOtherDevices,
                             });
                         });
                     } else {
-                        this.props.onFinished({ didLogoutOutOtherDevices });
+                        this.props.onFinished({});
                     }
                 },
                 (err) => {
@@ -187,7 +127,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                         this.props.onError(err);
                     } else {
                         this.props.onError(
-                            new UserFriendlyError("Error while changing password: %(error)s", {
+                            new UserFriendlyError("auth|change_password_error", {
                                 error: String(err),
                                 cause: undefined,
                             }),
@@ -215,30 +155,19 @@ export default class ChangePassword extends React.Component<IProps, IState> {
      */
     private checkPassword(oldPass: string, newPass: string, confirmPass: string): void {
         if (newPass !== confirmPass) {
-            throw new UserFriendlyError("New passwords don't match");
+            throw new UserFriendlyError("auth|change_password_mismatch");
         } else if (!newPass || newPass.length === 0) {
-            throw new UserFriendlyError("Passwords can't be empty");
+            throw new UserFriendlyError("auth|change_password_empty");
         }
     }
 
     private optionallySetEmail(): Promise<boolean> {
         // Ask for an email otherwise the user has no way to reset their password
         const modal = Modal.createDialog(SetEmailDialog, {
-            title: _t("Do you want to set an email address?"),
+            title: _t("auth|set_email_prompt"),
         });
         return modal.finished.then(([confirmed]) => !!confirmed);
     }
-
-    private onExportE2eKeysClicked = (): void => {
-        Modal.createDialogAsync(
-            import("../../../async-components/views/dialogs/security/ExportE2eKeysDialog") as unknown as Promise<
-                typeof ExportE2eKeysDialog
-            >,
-            {
-                matrixClient: MatrixClientPeg.safeGet(),
-            },
-        );
-    };
 
     private markFieldValid(fieldID: FieldType, valid?: boolean): void {
         const { fieldValid } = this.state;
@@ -265,7 +194,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             {
                 key: "required",
                 test: ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t("Passwords can't be empty"),
+                invalid: () => _t("auth|change_password_empty"),
             },
         ],
     });
@@ -297,14 +226,14 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             {
                 key: "required",
                 test: ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t("Confirm password"),
+                invalid: () => _t("auth|change_password_confirm_label"),
             },
             {
                 key: "match",
                 test({ value }) {
                     return !value || value === this.state.newPassword;
                 },
-                invalid: () => _t("Passwords don't match"),
+                invalid: () => _t("auth|change_password_confirm_invalid"),
             },
         ],
     });
@@ -332,7 +261,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                 this.props.onError(err);
             } else {
                 this.props.onError(
-                    new UserFriendlyError("Error while changing password: %(error)s", {
+                    new UserFriendlyError("auth|change_password_error", {
                         error: String(err),
                         cause: undefined,
                     }),
@@ -415,7 +344,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <Field
                                 ref={(field) => (this[FIELD_OLD_PASSWORD] = field)}
                                 type="password"
-                                label={_t("Current password")}
+                                label={_t("auth|change_password_current_label")}
                                 value={this.state.oldPassword}
                                 onChange={this.onChangeOldPassword}
                                 onValidate={this.onOldPasswordValidate}
@@ -425,7 +354,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <PassphraseField
                                 fieldRef={(field) => (this[FIELD_NEW_PASSWORD] = field)}
                                 type="password"
-                                label={_td("New Password")}
+                                label={_td("auth|change_password_new_label")}
                                 minScore={PASSWORD_MIN_SCORE}
                                 value={this.state.newPassword}
                                 autoFocus={this.props.autoFocusNewPasswordInput}
@@ -438,7 +367,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <Field
                                 ref={(field) => (this[FIELD_NEW_PASSWORD_CONFIRM] = field)}
                                 type="password"
-                                label={_t("Confirm password")}
+                                label={_t("auth|change_password_confirm_label")}
                                 value={this.state.newPasswordConfirm}
                                 onChange={this.onChangeNewPasswordConfirm}
                                 onValidate={this.onNewPasswordConfirmValidate}
@@ -450,7 +379,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             kind={this.props.buttonKind}
                             onClick={this.onClickChange}
                         >
-                            {this.props.buttonLabel || _t("Change Password")}
+                            {this.props.buttonLabel || _t("auth|change_password_action")}
                         </AccessibleButton>
                     </form>
                 );

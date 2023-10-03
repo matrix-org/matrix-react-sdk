@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import DMRoomMap from "./DMRoomMap";
@@ -38,17 +37,15 @@ export async function shieldStatusForRoom(client: MatrixClient, room: Room): Pro
 
     const verified: string[] = [];
     const unverified: string[] = [];
-    members
-        .filter((userId) => userId !== client.getUserId())
-        .forEach((userId) => {
-            (client.checkUserTrust(userId).isCrossSigningVerified() ? verified : unverified).push(userId);
-        });
+    for (const userId of members) {
+        if (userId === client.getUserId()) continue;
+        const userTrust = await crypto.getUserVerificationStatus(userId);
 
-    /* Alarm if any unverified users were verified before. */
-    for (const userId of unverified) {
-        if (client.checkUserTrust(userId).wasCrossSigningVerified()) {
+        /* Alarm if any unverified users were verified before. */
+        if (userTrust.wasCrossSigningVerified() && !userTrust.isCrossSigningVerified()) {
             return E2EStatus.Warning;
         }
+        (userTrust.isCrossSigningVerified() ? verified : unverified).push(userId);
     }
 
     /* Check all verified user devices. */

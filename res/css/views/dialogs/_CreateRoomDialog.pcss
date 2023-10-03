@@ -28,7 +28,7 @@ limitations under the License.
             display: none;
         }
 
-        &:not(.focus-visible) {
+        &:not(:focus-visible) {
             outline: none;
         }
     }
@@ -112,4 +112,9 @@ limitations under the License.
         margin: 0 85px 0 0;
         font-size: $font-12px;
     }
+}
+
+.mx_CreateRoomDialog_labelledCheckbox {
+    color: $muted-fg-color;
+    margin-top: var(--cpd-space-6x);
 }

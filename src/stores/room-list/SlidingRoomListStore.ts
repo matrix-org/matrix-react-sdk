@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import { Optional } from "matrix-events-sdk";
@@ -48,8 +48,6 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
     [DefaultTagID.Favourite]: {
         tags: ["m.favourite"],
     },
-    // TODO https://github.com/vector-im/element-web/issues/23207
-    // DefaultTagID.SavedItems,
     [DefaultTagID.DM]: {
         is_dm: true,
         is_invite: false,
@@ -399,6 +397,4 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {}
-
-    protected async onDispatchAsync(payload: ActionPayload): Promise<void> {}
 }

@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 @import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
+@import url("@vector-im/compound-web/dist/style.css");
 @import "./_font-sizes.pcss";
 @import "./_animations.pcss";
 @import "./_spacing.pcss";
@@ -133,6 +134,22 @@ code {
     color: $muted-fg-color;
 }
 
+.text-primary {
+    color: $primary-content;
+}
+
+.text-secondary {
+    color: $secondary-content;
+}
+
+.mx_Verified {
+    color: $e2e-verified-color;
+}
+
+.mx_Untrusted {
+    color: $e2e-warning-color;
+}
+
 b {
     /* On Firefox, the default weight for `<b>` is `bolder` which results in no bold */
     /* effect since we only have specific weights of our fonts available. */
@@ -213,7 +230,7 @@ textarea:focus {
 /* accessible (focusable) components. Not intended for buttons, but */
 /* should be used on things like focusable containers where the outline */
 /* is usually not helping anyone. */
-*:focus:not(.focus-visible) {
+*:focus:not(:focus-visible) {
     outline: none;
 }
 
@@ -419,6 +436,7 @@ legend {
 
         blockquote {
             border-left: 2px solid $blockquote-bar-color;
+            color: $secondary-content;
             border-radius: 2px;
             padding: 0 10px;
         }
@@ -567,7 +585,7 @@ legend {
     cursor: pointer;
     display: inline-block;
 
-    &:not(.focus-visible) {
+    &:not(:focus-visible) {
         outline: none;
     }
 }

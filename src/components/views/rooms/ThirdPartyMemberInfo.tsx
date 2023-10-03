@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, Room, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -109,11 +106,8 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
                 this.setState({ invited: true });
 
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to revoke invite"),
-                    description: _t(
-                        "Could not revoke the invite. The server may be experiencing a temporary problem or " +
-                            "you do not have sufficient permissions to revoke the invite.",
-                    ),
+                    title: _t("user_info|error_revoke_3pid_invite_title"),
+                    description: _t("user_info|error_revoke_3pid_invite_description"),
                 });
             });
 
@@ -126,9 +120,9 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         if (this.state.canKick && this.state.invited) {
             adminTools = (
                 <div className="mx_MemberInfo_container">
-                    <h3>{_t("Admin Tools")}</h3>
+                    <h3>{_t("user_info|admin_tools_section")}</h3>
                     <AccessibleButton className="mx_MemberInfo_field" onClick={this.onKickClick}>
-                        {_t("Revoke invite")}
+                        {_t("user_info|revoke_invite")}
                     </AccessibleButton>
                 </div>
             );
@@ -138,7 +132,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         if (this.room?.isSpaceRoom()) {
             scopeHeader = (
                 <div className="mx_RightPanel_scopeHeader">
-                    <RoomAvatar room={this.room} height={32} width={32} />
+                    <RoomAvatar room={this.room} size="32px" />
                     <RoomName room={this.room} />
                 </div>
             );
@@ -149,11 +143,15 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
             <div className="mx_MemberInfo" role="tabpanel">
                 {scopeHeader}
                 <div className="mx_MemberInfo_name">
-                    <AccessibleButton className="mx_MemberInfo_cancel" onClick={this.onCancel} title={_t("Close")} />
+                    <AccessibleButton
+                        className="mx_MemberInfo_cancel"
+                        onClick={this.onCancel}
+                        title={_t("action|close")}
+                    />
                     <h2>{this.state.displayName}</h2>
                 </div>
                 <div className="mx_MemberInfo_container mx_MemberInfo_container--profile">
-                    {_t("Invited by %(sender)s", { sender: this.state.senderName })}
+                    {_t("user_info|invited_by", { sender: this.state.senderName })}
                 </div>
                 {adminTools}
             </div>

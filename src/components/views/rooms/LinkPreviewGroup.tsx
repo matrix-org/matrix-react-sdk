@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, MatrixError, IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import LinkPreviewWidget from "./LinkPreviewWidget";
@@ -60,8 +58,8 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
         toggleButton = (
             <AccessibleButton onClick={toggleExpanded}>
                 {expanded
-                    ? _t("Collapse")
-                    : _t("Show %(count)s other previews", { count: previews.length - showPreviews.length })}
+                    ? _t("action|collapse")
+                    : _t("timeline|url_preview|show_n_more", { count: previews.length - showPreviews.length })}
             </AccessibleButton>
         );
     }
@@ -74,7 +72,7 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
                         <AccessibleButton
                             className="mx_LinkPreviewGroup_hide"
                             onClick={onCancelClick}
-                            aria-label={_t("Close preview")}
+                            aria-label={_t("timeline|url_preview|close")}
                         >
                             <img
                                 className="mx_filterFlipColor"

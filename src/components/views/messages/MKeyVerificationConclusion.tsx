@@ -16,9 +16,8 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -110,17 +109,17 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         let title: string | undefined;
 
         if (request.phase === VerificationPhase.Done) {
-            title = _t("You verified %(name)s", {
+            title = _t("timeline|m.key.verification.done", {
                 name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
             });
         } else if (request.phase === VerificationPhase.Cancelled) {
             const userId = request.cancellingUserId;
             if (userId === myUserId) {
-                title = _t("You cancelled verifying %(name)s", {
+                title = _t("timeline|m.key.verification.cancel|you_cancelled", {
                     name: getNameForEventRoom(client, request.otherUserId, mxEvent.getRoomId()!),
                 });
             } else if (userId) {
-                title = _t("%(name)s cancelled verifying", {
+                title = _t("timeline|m.key.verification.cancel|user_cancelled", {
                     name: getNameForEventRoom(client, userId, mxEvent.getRoomId()!),
                 });
             }

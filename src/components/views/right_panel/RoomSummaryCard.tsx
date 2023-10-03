@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -58,6 +58,7 @@ interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
+    onSearchClick?: () => void;
 }
 
 interface IAppsSectionProps {
@@ -148,9 +149,9 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
 
     let pinTitle: string;
     if (cannotPin) {
-        pinTitle = _t("You can only pin up to %(count)s widgets", { count: MAX_PINNED });
+        pinTitle = _t("right_panel|pinned_messages|limits", { count: MAX_PINNED });
     } else {
-        pinTitle = isPinned ? _t("Unpin") : _t("Pin");
+        pinTitle = isPinned ? _t("action|unpin") : _t("action|pin");
     }
 
     const isMaximised = WidgetLayoutStore.instance.isInContainer(room, app, Container.Center);
@@ -162,13 +163,13 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
               WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
           };
 
-    const maximiseTitle = isMaximised ? _t("Close") : _t("Maximise");
+    const maximiseTitle = isMaximised ? _t("action|close") : _t("action|maximise");
 
     let openTitle = "";
     if (isPinned) {
-        openTitle = _t("Unpin this widget to view it in this panel");
+        openTitle = _t("widget|unpin_to_view_right_panel");
     } else if (isMaximised) {
-        openTitle = _t("Close this widget to view it in this panel");
+        openTitle = _t("widget|close_to_view_right_panel");
     }
 
     const classes = classNames("mx_BaseCard_Button mx_RoomSummaryCard_Button", {
@@ -186,7 +187,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 forceHide={!(isPinned || isMaximised)}
                 disabled={isPinned || isMaximised}
             >
-                <WidgetAvatar app={app} />
+                <WidgetAvatar app={app} size="20px" />
                 <span>{name}</span>
                 {subtitle}
             </AccessibleTooltipButton>
@@ -196,7 +197,7 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                     className="mx_RoomSummaryCard_app_options"
                     isExpanded={menuDisplayed}
                     onClick={openMenu}
-                    title={_t("Options")}
+                    title={_t("common|options")}
                 />
             )}
 
@@ -236,19 +237,19 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     if (realApps.length > 0 && WidgetLayoutStore.instance.canCopyLayoutToRoom(room)) {
         copyLayoutBtn = (
             <AccessibleButton kind="link" onClick={() => WidgetLayoutStore.instance.copyLayoutToRoom(room)}>
-                {_t("Set my room layout for everyone")}
+                {_t("widget|set_room_layout")}
             </AccessibleButton>
         );
     }
 
     return (
-        <Group className="mx_RoomSummaryCard_appsGroup" title={_t("Widgets")}>
+        <Group className="mx_RoomSummaryCard_appsGroup" title={_t("right_panel|widgets_section")}>
             {realApps.map((app) => (
                 <AppRow key={app.id} app={app} room={room} />
             ))}
             {copyLayoutBtn}
             <AccessibleButton kind="link" onClick={onManageIntegrations}>
-                {realApps.length > 0 ? _t("Edit widgets, bridges & bots") : _t("Add widgets, bridges & bots")}
+                {realApps.length > 0 ? _t("right_panel|edit_integrations") : _t("right_panel|add_integrations")}
             </AccessibleButton>
         </Group>
     );
@@ -272,7 +273,7 @@ const onRoomSettingsClick = (ev: ButtonEvent): void => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -307,9 +308,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
     const header = (
         <React.Fragment>
             <div className="mx_RoomSummaryCard_avatar" role="presentation">
-                <RoomAvatar room={room} height={54} width={54} viewAvatarOnClick />
+                <RoomAvatar room={room} size="54px" viewAvatarOnClick />
                 <TextWithTooltip
-                    tooltip={isRoomEncrypted ? _t("Encrypted") : _t("Not encrypted")}
+                    tooltip={isRoomEncrypted ? _t("common|encrypted") : _t("common|unencrypted")}
                     class={classNames("mx_RoomSummaryCard_e2ee", {
                         mx_RoomSummaryCard_e2ee_normal: isRoomEncrypted,
                         mx_RoomSummaryCard_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
@@ -337,30 +338,40 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
 
     return (
         <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
-            <Group title={_t("About")} className="mx_RoomSummaryCard_aboutGroup">
+            <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
                 <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
-                    {_t("People")}
+                    {_t("common|people")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
+                {SettingsStore.getValue("feature_new_room_decoration_ui") && (
+                    <Button
+                        className="mx_RoomSummaryCard_icon_search"
+                        onClick={() => {
+                            onSearchClick?.();
+                        }}
+                    >
+                        {_t("right_panel|search_button")}
+                    </Button>
+                )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
-                        {_t("Files")}
+                        {_t("right_panel|files_button")}
                     </Button>
                 )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_poll" onClick={onRoomPollHistoryClick}>
-                        {_t("Poll history")}
+                        {_t("right_panel|polls_button")}
                     </Button>
                 )}
                 {pinningEnabled && !isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_pins" onClick={onRoomPinsClick}>
-                        {_t("Pinned")}
+                        {_t("right_panel|pinned_messages_button")}
                         {pinCount > 0 && <span className="mx_BaseCard_Button_sublabel">{pinCount}</span>}
                     </Button>
                 )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
-                        {_t("Export chat")}
+                        {_t("right_panel|export_chat_button")}
                     </Button>
                 )}
                 <Button
@@ -368,10 +379,10 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose }) 
                     className="mx_RoomSummaryCard_icon_share"
                     onClick={onShareRoomClick}
                 >
-                    {_t("Share room")}
+                    {_t("right_panel|share_button")}
                 </Button>
                 <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
-                    {_t("Room settings")}
+                    {_t("right_panel|settings_button")}
                 </Button>
             </Group>
 

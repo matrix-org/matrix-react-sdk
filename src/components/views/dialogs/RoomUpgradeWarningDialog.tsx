@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode, SyntheticEvent } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventType, JoinRule } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -116,7 +115,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                 <LabelledToggleSwitch
                     value={this.state.inviteUsersToNewRoom}
                     onChange={this.onInviteUsersToggle}
-                    label={_t("Automatically invite members from this room to the new one")}
+                    label={_t("room_settings|advanced|upgrade_warning_dialog_invite_label")}
                 />
             );
         }
@@ -124,30 +123,21 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         let title: string;
         switch (this.joinRule) {
             case JoinRule.Invite:
-                title = _t("Upgrade private room");
+                title = _t("room_settings|advanced|upgrade_warning_dialog_title_private");
                 break;
             case JoinRule.Public:
-                title = _t("Upgrade public room");
+                title = _t("room_settings|advanced|upgrade_dwarning_ialog_title_public");
                 break;
             default:
-                title = _t("Upgrade room");
+                title = _t("room_settings|advanced|upgrade_warning_dialog_title");
         }
 
-        let bugReports = (
-            <p>
-                {_t(
-                    "This usually only affects how the room is processed on the server. If you're " +
-                        "having problems with your %(brand)s, please report a bug.",
-                    { brand },
-                )}
-            </p>
-        );
+        let bugReports = <p>{_t("room_settings|advanced|upgrade_warning_dialog_report_bug_prompt", { brand })}</p>;
         if (SdkConfig.get().bug_report_endpoint_url) {
             bugReports = (
                 <p>
                     {_t(
-                        "This usually only affects how the room is processed on the server. If you're " +
-                            "having problems with your %(brand)s, please <a>report a bug</a>.",
+                        "room_settings|advanced|upgrade_warning_dialog_report_bug_prompt_link",
                         {
                             brand,
                         },
@@ -176,9 +166,9 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
         } else {
             footer = (
                 <DialogButtons
-                    primaryButton={_t("Upgrade")}
+                    primaryButton={_t("action|upgrade")}
                     onPrimaryButtonClick={this.onContinue}
-                    cancelButton={_t("Cancel")}
+                    cancelButton={_t("action|cancel")}
                     onCancel={this.onCancel}
                 />
             );
@@ -193,17 +183,10 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                 title={title}
             >
                 <div>
-                    <p>
-                        {this.props.description ||
-                            _t(
-                                "Upgrading a room is an advanced action and is usually recommended when a room " +
-                                    "is unstable due to bugs, missing features or security vulnerabilities.",
-                            )}
-                    </p>
+                    <p>{this.props.description || _t("room_settings|advanced|upgrade_warning_dialog_description")}</p>
                     <p>
                         {_t(
-                            "<b>Please note upgrading will make a new version of the room</b>. " +
-                                "All current messages will stay in this archived room.",
+                            "room_settings|advanced|upgrade_warning_dialog_explainer",
                             {},
                             {
                                 b: (sub) => <b>{sub}</b>,
@@ -213,7 +196,7 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                     {bugReports}
                     <p>
                         {_t(
-                            "You'll upgrade this room from <oldVersion /> to <newVersion />.",
+                            "room_settings|advanced|upgrade_warning_dialog_footer",
                             {},
                             {
                                 oldVersion: () => <code>{this.currentVersion}</code>,

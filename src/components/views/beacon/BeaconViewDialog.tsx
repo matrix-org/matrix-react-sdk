@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useState, useEffect } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Beacon, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Beacon, Room } from "matrix-js-sdk/src/matrix";
 import * as maplibregl from "maplibre-gl";
 
 import { Icon as LiveLocationIcon } from "../../../../res/img/location/live-location.svg";
@@ -161,13 +160,15 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                 )}
                 {!centerGeoUri && !mapDisplayError && (
                     <MapFallback data-testid="beacon-view-dialog-map-fallback" className="mx_BeaconViewDialog_map">
-                        <span className="mx_BeaconViewDialog_mapFallbackMessage">{_t("No live locations")}</span>
+                        <span className="mx_BeaconViewDialog_mapFallbackMessage">
+                            {_t("location_sharing|live_locations_empty")}
+                        </span>
                         <AccessibleButton
                             kind="primary"
                             onClick={onFinished}
                             data-testid="beacon-view-dialog-fallback-close"
                         >
-                            {_t("Close")}
+                            {_t("action|close")}
                         </AccessibleButton>
                     </MapFallback>
                 )}
@@ -186,7 +187,7 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                     >
                         <LiveLocationIcon height={12} />
                         &nbsp;
-                        {_t("View list")}
+                        {_t("action|view_list")}
                     </AccessibleButton>
                 )}
                 <DialogOwnBeaconStatus roomId={roomId} />

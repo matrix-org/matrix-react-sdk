@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/matrix";
 import React, { useContext, useRef, useState, MouseEvent, ReactNode } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -26,7 +26,7 @@ import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";
 
-export const AVATAR_SIZE = 52;
+export const AVATAR_SIZE = "52px";
 
 interface IProps {
     hasAvatar: boolean;

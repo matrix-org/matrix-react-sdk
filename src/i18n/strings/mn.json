@@ -1,6 +1,15 @@
 {
-    "Explore rooms": "Өрөөнүүд үзэх",
-    "Sign In": "Нэвтрэх",
-    "Create Account": "Хэрэглэгч үүсгэх",
-    "Dismiss": "Орхих"
+    "action": {
+        "dismiss": "Орхих",
+        "sign_in": "Нэвтрэх",
+        "explore_rooms": "Өрөөнүүд үзэх"
+    },
+    "auth": {
+        "register_action": "Хэрэглэгч үүсгэх"
+    },
+    "space": {
+        "context_menu": {
+            "explore": "Өрөөнүүд үзэх"
+        }
+    }
 }

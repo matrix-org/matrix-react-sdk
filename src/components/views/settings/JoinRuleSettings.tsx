@@ -14,10 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
-import { IJoinRuleEventContent, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import React, { ReactNode, useEffect, useState } from "react";
+import {
+    IJoinRuleEventContent,
+    JoinRule,
+    RestrictedAllowType,
+    Room,
+    EventType,
+    Visibility,
+} from "matrix-js-sdk/src/matrix";
 
 import StyledRadioGroup, { IDefinition } from "../elements/StyledRadioGroup";
 import { _t } from "../../../languageHandler";
@@ -36,6 +41,7 @@ import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { doesRoomVersionSupport, PreferredRoomVersions } from "../../../utils/PreferredRoomVersions";
 import SettingsStore from "../../../settings/SettingsStore";
+import LabelledCheckbox from "../elements/LabelledCheckbox";
 
 export interface JoinRuleSettingsProps {
     room: Room;
@@ -78,6 +84,22 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
             ? content?.allow?.filter((o) => o.type === RestrictedAllowType.RoomMembership).map((o) => o.room_id)
             : undefined;
 
+    const [isPublicKnockRoom, setIsPublicKnockRoom] = useState(false);
+
+    useEffect(() => {
+        if (joinRule === JoinRule.Knock) {
+            cli.getRoomDirectoryVisibility(room.roomId)
+                .then(({ visibility }) => setIsPublicKnockRoom(visibility === Visibility.Public))
+                .catch(onError);
+        }
+    }, [cli, joinRule, onError, room.roomId]);
+
+    const onIsPublicKnockRoomChange = (checked: boolean): void => {
+        cli.setRoomDirectoryVisibility(room.roomId, checked ? Visibility.Public : Visibility.Private)
+            .then(() => setIsPublicKnockRoom(checked))
+            .catch(onError);
+    };
+
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
         let selected = restrictedAllowRoomIds;
         if (!selected?.length && SpaceStore.instance.activeSpaceRoom) {
@@ -109,15 +131,15 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                 const roomId = await upgradeRoom(room, targetVersion, opts.invite, true, true, true, (progress) => {
                     const total = 2 + progress.updateSpacesTotal + progress.inviteUsersTotal;
                     if (!progress.roomUpgraded) {
-                        fn(_t("Upgrading room"), 0, total);
+                        fn(_t("room_settings|security|join_rule_upgrade_upgrading_room"), 0, total);
                     } else if (!progress.roomSynced) {
-                        fn(_t("Loading new room"), 1, total);
+                        fn(_t("room_settings|security|join_rule_upgrade_awaiting_room"), 1, total);
                     } else if (
                         progress.inviteUsersProgress !== undefined &&
                         progress.inviteUsersProgress < progress.inviteUsersTotal
                     ) {
                         fn(
-                            _t("Sending invites... (%(progress)s out of %(count)s)", {
+                            _t("room_settings|security|join_rule_upgrade_sending_invites", {
                                 progress: progress.inviteUsersProgress,
                                 count: progress.inviteUsersTotal,
                             }),
@@ -129,7 +151,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                         progress.updateSpacesProgress < progress.updateSpacesTotal
                     ) {
                         fn(
-                            _t("Updating spaces... (%(progress)s out of %(count)s)", {
+                            _t("room_settings|security|join_rule_upgrade_updating_spaces", {
                                 progress: progress.updateSpacesProgress,
                                 count: progress.updateSpacesTotal,
                             }),
@@ -157,22 +179,26 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
         });
     };
 
-    const upgradeRequiredPill = <span className="mx_JoinRuleSettings_upgradeRequired">{_t("Upgrade required")}</span>;
+    const upgradeRequiredPill = (
+        <span className="mx_JoinRuleSettings_upgradeRequired">
+            {_t("room_settings|security|join_rule_upgrade_required")}
+        </span>
+    );
 
     const definitions: IDefinition<JoinRule>[] = [
         {
             value: JoinRule.Invite,
-            label: _t("Private (invite only)"),
-            description: _t("Only invited people can join."),
+            label: _t("room_settings|security|join_rule_invite"),
+            description: _t("room_settings|security|join_rule_invite_description"),
             checked:
                 joinRule === JoinRule.Invite || (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length),
         },
         {
             value: JoinRule.Public,
-            label: _t("Public"),
+            label: _t("common|public"),
             description: (
                 <>
-                    {_t("Anyone can find and join.")}
+                    {_t("room_settings|security|join_rule_public_description")}
                     {aliasWarning}
                 </>
             ),
@@ -191,11 +217,11 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
             let moreText;
             if (shownSpaces.length < restrictedAllowRoomIds.length) {
                 if (shownSpaces.length > 0) {
-                    moreText = _t("& %(count)s more", {
+                    moreText = _t("room_settings|security|join_rule_restricted_n_more", {
                         count: restrictedAllowRoomIds.length - shownSpaces.length,
                     });
                 } else {
-                    moreText = _t("Currently, %(count)s spaces have access", {
+                    moreText = _t("room_settings|security|join_rule_restricted_summary", {
                         count: restrictedAllowRoomIds.length,
                     });
                 }
@@ -234,7 +260,7 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                 <div>
                     <span>
                         {_t(
-                            "Anyone in a space can find and join. <a>Edit which spaces can access here.</a>",
+                            "room_settings|security|join_rule_restricted_description",
                             {},
                             {
                                 a: (sub) => (
@@ -251,11 +277,11 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     </span>
 
                     <div className="mx_JoinRuleSettings_spacesWithAccess">
-                        <h4>{_t("Spaces with access")}</h4>
+                        <h4>{_t("room_settings|security|join_rule_restricted_description_spaces")}</h4>
                         {shownSpaces.map((room) => {
                             return (
                                 <span key={room.roomId}>
-                                    <RoomAvatar room={room} height={32} width={32} />
+                                    <RoomAvatar room={room} size="32px" />
                                     {room.name}
                                 </span>
                             );
@@ -266,21 +292,21 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
             );
         } else if (SpaceStore.instance.activeSpaceRoom) {
             description = _t(
-                "Anyone in <spaceName/> can find and join. You can select other spaces too.",
+                "room_settings|security|join_rule_restricted_description_active_space",
                 {},
                 {
                     spaceName: () => <b>{SpaceStore.instance.activeSpaceRoom!.name}</b>,
                 },
             );
         } else {
-            description = _t("Anyone in a space can find and join. You can select multiple spaces.");
+            description = _t("room_settings|security|join_rule_restricted_description_prompt");
         }
 
         definitions.splice(1, 0, {
             value: JoinRule.Restricted,
             label: (
                 <>
-                    {_t("Space members")}
+                    {_t("room_settings|security|join_rule_restricted")}
                     {preferredRestrictionVersion && upgradeRequiredPill}
                 </>
             ),
@@ -295,11 +321,26 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
             value: JoinRule.Knock,
             label: (
                 <>
-                    {_t("Ask to join")}
+                    {_t("room_settings|security|join_rule_knock")}
                     {preferredKnockVersion && upgradeRequiredPill}
                 </>
             ),
-            description: _t("People cannot join unless access is granted."),
+            description: (
+                <>
+                    {_t("room_settings|security|join_rule_knock_description")}
+                    <LabelledCheckbox
+                        className="mx_JoinRuleSettings_labelledCheckbox"
+                        disabled={joinRule !== JoinRule.Knock}
+                        label={
+                            room.isSpaceRoom()
+                                ? _t("room_settings|security|publish_space")
+                                : _t("room_settings|security|publish_room")
+                        }
+                        onChange={onIsPublicKnockRoomChange}
+                        value={isPublicKnockRoom}
+                    />
+                </>
+            ),
         });
     }
 
@@ -322,24 +363,13 @@ const JoinRuleSettings: React.FC<JoinRuleSettingsProps> = ({
                     (roomId) => !cli.getRoom(roomId)?.currentState.maySendStateEvent(EventType.SpaceChild, userId),
                 );
                 if (unableToUpdateSomeParents) {
-                    warning = (
-                        <b>
-                            {_t(
-                                "This room is in some spaces you're not an admin of. " +
-                                    "In those spaces, the old room will still be shown, " +
-                                    "but people will be prompted to join the new one.",
-                            )}
-                        </b>
-                    );
+                    warning = <b>{_t("room_settings|security|join_rule_restricted_upgrade_warning")}</b>;
                 }
 
                 upgradeRequiredDialog(
                     targetVersion,
                     <>
-                        {_t(
-                            "This upgrade will allow members of selected spaces " +
-                                "access to this room without an invite.",
-                        )}
+                        {_t("room_settings|security|join_rule_restricted_upgrade_description")}
                         {warning}
                     </>,
                 );

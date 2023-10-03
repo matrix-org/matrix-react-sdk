@@ -16,9 +16,8 @@ limitations under the License.
 
 import EventEmitter from "events";
 import { mocked, MockedObject } from "jest-mock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import {
+    MatrixEvent,
     Room,
     User,
     IContent,
@@ -36,16 +35,17 @@ import {
     ConditionKind,
     IPushRules,
     RelationType,
+    JoinRule,
+    IEventDecryptionResult,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
-import { IEventDecryptionResult } from "matrix-js-sdk/src/@types/crypto";
 import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 
-import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
+import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
 import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
@@ -60,7 +60,7 @@ import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/Matri
  * the react context, we can get rid of this and just inject a test client
  * via the context instead.
  *
- * See also `getMockClientWithEventEmitter` which does something similar but different.
+ * See also {@link getMockClientWithEventEmitter} which does something similar but different.
  */
 export function stubClient(): MatrixClient {
     const client = createTestClient();
@@ -217,7 +217,6 @@ export function createTestClient(): MatrixClient {
         uploadContent: jest.fn(),
         getEventMapper: (_options?: MapperOpts) => (event: Partial<IEvent>) => new MatrixEvent(event),
         leaveRoomChain: jest.fn((roomId) => ({ [roomId]: null })),
-        doesServerSupportLogoutDevices: jest.fn().mockReturnValue(true),
         requestPasswordEmailToken: jest.fn().mockRejectedValue({}),
         setPassword: jest.fn().mockRejectedValue({}),
         groupCallEventHandler: { groupCalls: new Map<string, GroupCall>() },
@@ -241,6 +240,17 @@ export function createTestClient(): MatrixClient {
         joinRoom: jest.fn(),
         getSyncStateData: jest.fn(),
         getDehydratedDevice: jest.fn(),
+        exportRoomKeys: jest.fn(),
+        knockRoom: jest.fn(),
+        leave: jest.fn(),
+        getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
+        requestAdd3pidMsisdnToken: jest.fn(),
+        submitMsisdnTokenOtherUrl: jest.fn(),
+        addThreePidOnly: jest.fn(),
+        requestMsisdnToken: jest.fn(),
+        submitMsisdnToken: jest.fn(),
+        getMediaConfig: jest.fn(),
+        baseUrl: "https://matrix-client.matrix.org",
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -456,14 +466,26 @@ export function mkMembership(
     return e;
 }
 
-export function mkRoomMember(roomId: string, userId: string, membership = "join"): RoomMember {
+export function mkRoomMember(
+    roomId: string,
+    userId: string,
+    membership = "join",
+    isKicked = false,
+    prevMemberContent: Partial<IContent> = {},
+): RoomMember {
     return {
         userId,
         membership,
         name: userId,
         rawDisplayName: userId,
         roomId,
-        events: {},
+        events: {
+            member: {
+                getSender: () => undefined,
+                getPrevContent: () => prevMemberContent,
+            },
+        },
+        isKicked: () => isKicked,
         getAvatarUrl: () => {},
         getMxcAvatarUrl: () => {},
         getDMInviter: () => {},
@@ -530,6 +552,7 @@ export function mkMessage({
     }
     const message = msg ?? "Random->" + Math.random();
     const event: MakeEventProps = {
+        ts: 0,
         ...opts,
         type: "m.room.message",
         content: {
@@ -588,6 +611,8 @@ export function mkStubRoom(
             roomId: roomId,
             getAvatarUrl: () => "mxc://avatar.url/image.png",
             getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
+            events: {},
+            isKicked: () => false,
         }),
         getMembers: jest.fn().mockReturnValue([]),
         getMembersWithMembership: jest.fn().mockReturnValue([]),

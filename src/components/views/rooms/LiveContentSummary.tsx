@@ -51,7 +51,7 @@ export const LiveContentSummary: FC<Props> = ({ type, text, active, participantC
                 {" • "}
                 <span
                     className="mx_LiveContentSummary_participants"
-                    aria-label={_t("%(count)s participants", { count: participantCount })}
+                    aria-label={_t("common|n_participants", { count: participantCount })}
                 >
                     {participantCount}
                 </span>
@@ -67,7 +67,7 @@ interface LiveContentSummaryWithCallProps {
 export const LiveContentSummaryWithCall: FC<LiveContentSummaryWithCallProps> = ({ call }) => (
     <LiveContentSummary
         type={LiveContentType.Video}
-        text={_t("Video")}
+        text={_t("common|video")}
         active={false}
         participantCount={useParticipantCount(call)}
     />

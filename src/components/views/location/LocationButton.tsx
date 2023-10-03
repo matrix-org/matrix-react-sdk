@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, SyntheticEvent, useContext } from "react";
 import classNames from "classnames";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
+import { RoomMember, IEventRelation } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { CollapsibleButton } from "../rooms/CollapsibleButton";
@@ -67,7 +66,7 @@ export const LocationButton: React.FC<IProps> = ({ roomId, sender, menuPosition,
                 className={className}
                 iconClassName="mx_MessageComposer_location"
                 onClick={openMenu}
-                title={_t("Location")}
+                title={_t("common|location")}
                 inputRef={button}
             />
 

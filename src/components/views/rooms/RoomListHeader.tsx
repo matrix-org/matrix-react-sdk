@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { ClientEvent } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { EventType, RoomType, Room, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
 import React, { useContext, useEffect, useState } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -187,7 +185,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
         if (shouldShowSpaceInvite(activeSpace)) {
             inviteOption = (
                 <IconizedContextMenuOption
-                    label={_t("Invite")}
+                    label={_t("action|invite")}
                     iconClassName="mx_RoomListHeader_iconInvite"
                     onClick={(e) => {
                         e.preventDefault();
@@ -205,7 +203,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                 <>
                     <IconizedContextMenuOption
                         iconClassName="mx_RoomListHeader_iconNewRoom"
-                        label={_t("New room")}
+                        label={_t("action|new_room")}
                         onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -217,7 +215,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                     {videoRoomsEnabled && (
                         <IconizedContextMenuOption
                             iconClassName="mx_RoomListHeader_iconNewVideoRoom"
-                            label={_t("New video room")}
+                            label={_t("action|new_video_room")}
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -245,7 +243,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                     {inviteOption}
                     {newRoomOptions}
                     <IconizedContextMenuOption
-                        label={_t("Explore rooms")}
+                        label={_t("action|explore_rooms")}
                         iconClassName="mx_RoomListHeader_iconExplore"
                         onClick={(e) => {
                             e.preventDefault();
@@ -260,7 +258,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                         }}
                     />
                     <IconizedContextMenuOption
-                        label={_t("Add existing room")}
+                        label={_t("action|add_existing_room")}
                         iconClassName="mx_RoomListHeader_iconPlus"
                         onClick={(e) => {
                             e.preventDefault();
@@ -269,13 +267,11 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                             closePlusMenu();
                         }}
                         disabled={!canAddSubRooms}
-                        tooltip={
-                            !canAddSubRooms ? _t("You do not have permissions to add rooms to this space") : undefined
-                        }
+                        tooltip={!canAddSubRooms ? _t("spaces|error_no_permission_add_room") : undefined}
                     />
                     {canCreateSpaces && (
                         <IconizedContextMenuOption
-                            label={_t("Add space")}
+                            label={_t("room_list|add_space_label")}
                             iconClassName="mx_RoomListHeader_iconPlus"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -284,11 +280,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                                 closePlusMenu();
                             }}
                             disabled={!canAddSubSpaces}
-                            tooltip={
-                                !canAddSubSpaces
-                                    ? _t("You do not have permissions to add spaces to this space")
-                                    : undefined
-                            }
+                            tooltip={!canAddSubSpaces ? _t("spaces|error_no_permission_add_space") : undefined}
                         >
                             <BetaPill />
                         </IconizedContextMenuOption>
@@ -304,7 +296,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
             newRoomOpts = (
                 <>
                     <IconizedContextMenuOption
-                        label={_t("Start new chat")}
+                        label={_t("action|start_new_chat")}
                         iconClassName="mx_RoomListHeader_iconStartChat"
                         onClick={(e) => {
                             e.preventDefault();
@@ -315,7 +307,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                         }}
                     />
                     <IconizedContextMenuOption
-                        label={_t("New room")}
+                        label={_t("action|new_room")}
                         iconClassName="mx_RoomListHeader_iconNewRoom"
                         onClick={(e) => {
                             e.preventDefault();
@@ -327,7 +319,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                     />
                     {videoRoomsEnabled && (
                         <IconizedContextMenuOption
-                            label={_t("New video room")}
+                            label={_t("action|new_video_room")}
                             iconClassName="mx_RoomListHeader_iconNewVideoRoom"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -348,7 +340,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
         if (canExploreRooms) {
             joinRoomOpt = (
                 <IconizedContextMenuOption
-                    label={_t("Join public room")}
+                    label={_t("room_list|join_public_room_label")}
                     iconClassName="mx_RoomListHeader_iconExplore"
                     onClick={(e) => {
                         e.preventDefault();
@@ -387,9 +379,9 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
         .map(([type, keys]) => {
             switch (type) {
                 case PendingActionType.JoinRoom:
-                    return _t("Currently joining %(count)s rooms", { count: keys.size });
+                    return _t("room_list|joining_rooms_status", { count: keys.size });
                 case PendingActionType.BulkRedact:
-                    return _t("Currently removing messages in %(count)s rooms", { count: keys.size });
+                    return _t("room_list|redacting_messages_status", { count: keys.size });
             }
         })
         .join("\n");
@@ -408,11 +400,11 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
             contextMenuButton = (
                 <ContextMenuButton
                     {...commonProps}
-                    label={_t("%(spaceName)s menu", { spaceName: spaceName ?? activeSpace.name })}
+                    label={_t("room_list|space_menu_label", { spaceName: spaceName ?? activeSpace.name })}
                 />
             );
         } else {
-            contextMenuButton = <ContextMenuTooltipButton {...commonProps} title={_t("Home options")} />;
+            contextMenuButton = <ContextMenuTooltipButton {...commonProps} title={_t("room_list|home_menu_label")} />;
         }
     }
 
@@ -430,7 +422,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
                     onClick={openPlusMenu}
                     isExpanded={plusMenuDisplayed}
                     className="mx_RoomListHeader_plusButton"
-                    title={_t("Add")}
+                    title={_t("action|add")}
                 />
             )}
 

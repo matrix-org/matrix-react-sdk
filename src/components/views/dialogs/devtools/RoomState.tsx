@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { _t } from "../../../../languageHandler";
@@ -95,6 +95,11 @@ const RoomStateHistory: React.FC<{
 const StateEventButton: React.FC<StateEventButtonProps> = ({ label, onClick }) => {
     const trimmed = label.trim();
 
+    let content = label;
+    if (!trimmed) {
+        content = label.length > 0 ? _t("devtools|spaces", { count: label.length }) : _t("devtools|empty_string");
+    }
+
     return (
         <button
             className={classNames("mx_DevTools_button", {
@@ -103,7 +108,7 @@ const StateEventButton: React.FC<StateEventButtonProps> = ({ label, onClick }) =
             })}
             onClick={onClick}
         >
-            {trimmed ? label : _t("<%(count)s spaces>", { count: label.length })}
+            {content}
         </button>
     );
 };
@@ -145,7 +150,7 @@ const RoomStateExplorerEventType: React.FC<IEventTypeProps> = ({ eventType, onBa
         const onHistoryClick = (): void => {
             setHistory(true);
         };
-        const extraButton = <button onClick={onHistoryClick}>{_t("See history")}</button>;
+        const extraButton = <button onClick={onHistoryClick}>{_t("devtools|see_history")}</button>;
         return <EventViewer mxEvent={event} onBack={_onBack} Editor={StateEventEditor} extraButton={extraButton} />;
     }
 
@@ -175,11 +180,11 @@ export const RoomStateExplorer: React.FC<IDevtoolsProps> = ({ onBack, setTool })
     }
 
     const onAction = async (): Promise<void> => {
-        setTool(_t("Send custom state event"), StateEventEditor);
+        setTool(_t("devtools|send_custom_state_event"), StateEventEditor);
     };
 
     return (
-        <BaseTool onBack={onBack} actionLabel={_t("Send custom state event")} onAction={onAction}>
+        <BaseTool onBack={onBack} actionLabel={_t("devtools|send_custom_state_event")} onAction={onAction}>
             <FilteredList query={query} onChange={setQuery}>
                 {Array.from(events.keys()).map((eventType) => (
                     <StateEventButton key={eventType} label={eventType} onClick={() => setEventType(eventType)} />

@@ -15,21 +15,24 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { unicodeToShortcode } from "../../../HtmlUtils";
 import { _t } from "../../../languageHandler";
-import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
+import { formatList } from "../../../utils/FormattingUtils";
 import Tooltip from "../elements/Tooltip";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
 interface IProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
     // The reaction content / key / emoji
     content: string;
-    // A Set of Matrix reaction events for this key
-    reactionEvents: Set<MatrixEvent>;
+    // A list of Matrix reaction events for this key
+    reactionEvents: MatrixEvent[];
     visible: boolean;
+    // Whether to render custom image reactions
+    customReactionImagesEnabled?: boolean;
 }
 
 export default class ReactionsRowButtonTooltip extends React.PureComponent<IProps> {
@@ -43,22 +46,27 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
         let tooltipLabel: JSX.Element | undefined;
         if (room) {
             const senders: string[] = [];
+            let customReactionName: string | undefined;
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender()!);
                 const name = member?.name ?? reactionEvent.getSender()!;
                 senders.push(name);
+                customReactionName =
+                    (this.props.customReactionImagesEnabled &&
+                        REACTION_SHORTCODE_KEY.findIn(reactionEvent.getContent())) ||
+                    undefined;
             }
-            const shortName = unicodeToShortcode(content);
+            const shortName = unicodeToShortcode(content) || customReactionName;
             tooltipLabel = (
                 <div>
                     {_t(
-                        "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>",
+                        "timeline|reactions|tooltip",
                         {
                             shortName,
                         },
                         {
                             reactors: () => {
-                                return <div className="mx_Tooltip_title">{formatCommaSeparatedList(senders, 6)}</div>;
+                                return <div className="mx_Tooltip_title">{formatList(senders, 6)}</div>;
                             },
                             reactedWith: (sub) => {
                                 if (!shortName) {

@@ -17,7 +17,7 @@ limitations under the License.
 import fetchMock from "fetch-mock-jest";
 import { mocked } from "jest-mock";
 import { OidcClient } from "oidc-client-ts";
-import { M_AUTHENTICATION } from "matrix-js-sdk/src/client";
+import { M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { discoverAndValidateAuthenticationConfig } from "matrix-js-sdk/src/oidc/discovery";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";

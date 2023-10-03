@@ -19,7 +19,7 @@ limitations under the License.
 import React from "react";
 import FocusLock from "react-focus-lock";
 import classNames from "classnames";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -127,7 +127,7 @@ export default class BaseDialog extends React.Component<IProps> {
                 <AccessibleButton
                     onClick={this.onCancelClick}
                     className="mx_Dialog_cancelButton"
-                    aria-label={_t("Close dialog")}
+                    aria-label={_t("dialog_close_label")}
                 />
             );
         }

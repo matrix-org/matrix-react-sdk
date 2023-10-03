@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { useTopic } from "../../../hooks/room/useTopic";
 import { Alignment } from "./Tooltip";
@@ -100,7 +99,7 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
                                     dis.dispatch({ action: "open_room_settings" });
                                 }}
                             >
-                                {_t("Edit topic")}
+                                {_t("room|edit_topic")}
                             </AccessibleButton>
                         )}
                     </div>
@@ -120,7 +119,7 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
             onClick={onClick}
             dir="auto"
             tooltipTargetClassName={className}
-            label={_t("Click to read topic")}
+            label={_t("room|read_topic")}
             alignment={Alignment.Bottom}
             ignoreHover={ignoreHover}
         >

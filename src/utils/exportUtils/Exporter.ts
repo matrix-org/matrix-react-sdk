@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
+import { Direction, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { saveAs } from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 import sanitizeFilename from "sanitize-filename";
@@ -62,7 +60,7 @@ export default abstract class Exporter {
 
     protected onBeforeUnload(e: BeforeUnloadEvent): string {
         e.preventDefault();
-        return (e.returnValue = _t("Are you sure you want to exit during this export?"));
+        return (e.returnValue = _t("export_chat|unload_confirm"));
     }
 
     protected updateProgress(progress: string, log = true, show = true): void {
@@ -81,7 +79,7 @@ export default abstract class Exporter {
     protected makeFileNameNoExtension(brand = "matrix"): string {
         // First try to use the real name of the room, then a translated copy of a generic name,
         // then finally hardcoded default to guarantee we'll have a name.
-        const safeRoomName = sanitizeFilename(this.room.name ?? _t("Unnamed Room")).trim() || "Unnamed Room";
+        const safeRoomName = sanitizeFilename(this.room.name ?? _t("common|unnamed_room")).trim() || "Unnamed Room";
         const safeDate = formatFullDateNoDayISO(new Date()).replace(/:/g, "-"); // ISO format automatically removes a lot of stuff for us
         const safeBrand = sanitizeFilename(brand);
         return `${safeBrand} - ${safeRoomName} - Chat Export - ${safeDate}`;
@@ -94,7 +92,7 @@ export default abstract class Exporter {
 
         const zip = new JSZip();
         // Create a writable stream to the directory
-        if (!this.cancelled) this.updateProgress(_t("Generating a ZIP"));
+        if (!this.cancelled) this.updateProgress(_t("export_chat|generating_zip"));
         else return this.cleanUp();
 
         for (const file of this.files) zip.file(filenameWithoutExt + "/" + file.name, file.blob);
@@ -137,9 +135,6 @@ export default abstract class Exporter {
                 // when export type is LastNMessages
                 limit = this.exportOptions.numberOfMessages!;
                 break;
-            case ExportType.Timeline:
-                limit = 40;
-                break;
             default:
                 limit = 10 ** 8;
         }
@@ -150,58 +145,60 @@ export default abstract class Exporter {
         const eventMapper = this.room.client.getEventMapper();
 
         let prevToken: string | null = null;
-        let limit = this.getLimit();
-        const events: MatrixEvent[] = [];
 
-        while (limit) {
-            const eventsPerCrawl = Math.min(limit, 1000);
-            const res = await this.room.client.createMessagesRequest(
-                this.room.roomId,
-                prevToken,
-                eventsPerCrawl,
-                Direction.Backward,
-            );
-
-            if (this.cancelled) {
-                this.cleanUp();
-                return [];
-            }
-
-            if (res.chunk.length === 0) break;
-
-            limit -= res.chunk.length;
-
-            const matrixEvents: MatrixEvent[] = res.chunk.map(eventMapper);
-
-            for (const mxEv of matrixEvents) {
-                // if (this.exportOptions.startDate && mxEv.getTs() < this.exportOptions.startDate) {
-                //     // Once the last message received is older than the start date, we break out of both the loops
-                //     limit = 0;
-                //     break;
-                // }
-                events.push(mxEv);
-            }
-
-            if (this.exportType === ExportType.LastNMessages) {
-                this.updateProgress(
-                    _t("Fetched %(count)s events out of %(total)s", {
-                        count: events.length,
-                        total: this.exportOptions.numberOfMessages,
-                    }),
+        let events: MatrixEvent[] = [];
+        if (this.exportType === ExportType.Timeline) {
+            events = this.room.getLiveTimeline().getEvents();
+        } else {
+            let limit = this.getLimit();
+            while (limit) {
+                const eventsPerCrawl = Math.min(limit, 1000);
+                const res = await this.room.client.createMessagesRequest(
+                    this.room.roomId,
+                    prevToken,
+                    eventsPerCrawl,
+                    Direction.Backward,
                 );
-            } else {
-                this.updateProgress(
-                    _t("Fetched %(count)s events so far", {
-                        count: events.length,
-                    }),
-                );
-            }
 
-            prevToken = res.end ?? null;
-        }
-        // Reverse the events so that we preserve the order
-        for (let i = 0; i < Math.floor(events.length / 2); i++) {
-            [events[i], events[events.length - i - 1]] = [events[events.length - i - 1], events[i]];
+                if (this.cancelled) {
+                    this.cleanUp();
+                    return [];
+                }
+
+                if (res.chunk.length === 0) break;
+
+                limit -= res.chunk.length;
+
+                const matrixEvents: MatrixEvent[] = res.chunk.map(eventMapper);
+
+                for (const mxEv of matrixEvents) {
+                    // if (this.exportOptions.startDate && mxEv.getTs() < this.exportOptions.startDate) {
+                    //     // Once the last message received is older than the start date, we break out of both the loops
+                    //     limit = 0;
+                    //     break;
+                    // }
+                    events.push(mxEv);
+                }
+
+                if (this.exportType === ExportType.LastNMessages) {
+                    this.updateProgress(
+                        _t("export_chat|fetched_n_events_with_total", {
+                            count: events.length,
+                            total: this.exportOptions.numberOfMessages,
+                        }),
+                    );
+                } else {
+                    this.updateProgress(
+                        _t("export_chat|fetched_n_events", {
+                            count: events.length,
+                        }),
+                    );
+                }
+
+                prevToken = res.end ?? null;
+            }
+            // Reverse the events so that we preserve the order
+            events.reverse();
         }
 
         const decryptionPromises = events

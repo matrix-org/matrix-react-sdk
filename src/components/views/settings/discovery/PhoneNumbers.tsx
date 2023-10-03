@@ -38,6 +38,7 @@ This is a copy/paste of EmailAddresses, mostly.
 
 interface IPhoneNumberProps {
     msisdn: ThirdPartyIdentifier;
+    disabled?: boolean;
 }
 
 interface IPhoneNumberState {
@@ -73,10 +74,6 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
     }
 
     private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
-        if (!(await MatrixClientPeg.safeGet().doesServerSupportSeparateAddAndBind())) {
-            return this.changeBindingTangledAddBind({ bind, label, errorTitle });
-        }
-
         const { medium, address } = this.props.msisdn;
 
         try {
@@ -109,48 +106,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: extractErrorMessageFromError(err, _t("Operation failed")),
-            });
-        }
-    }
-
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
-        const { medium, address } = this.props.msisdn;
-
-        const task = new AddThreepid(MatrixClientPeg.safeGet());
-        this.setState({
-            verifying: true,
-            continueDisabled: true,
-            addTask: task,
-        });
-
-        try {
-            await MatrixClientPeg.safeGet().deleteThreePid(medium, address);
-            // XXX: Sydent will accept a number without country code if you add
-            // a leading plus sign to a number in E.164 format (which the 3PID
-            // address is), but this goes against the spec.
-            // See https://github.com/matrix-org/matrix-doc/issues/2222
-            if (bind) {
-                // @ts-ignore
-                await task.bindMsisdn(null, `+${address}`);
-            } else {
-                // @ts-ignore
-                await task.addMsisdn(null, `+${address}`);
-            }
-            this.setState({
-                continueDisabled: false,
-                bound: bind,
-            });
-        } catch (err) {
-            logger.error(`changeBindingTangledAddBind: Unable to ${label} phone number ${address}`, err);
-            this.setState({
-                verifying: false,
-                continueDisabled: false,
-                addTask: null,
-            });
-            Modal.createDialog(ErrorDialog, {
-                title: errorTitle,
-                description: extractErrorMessageFromError(err, _t("Operation failed")),
+                description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
             });
         }
     }
@@ -161,7 +117,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         this.changeBinding({
             bind: false,
             label: "revoke",
-            errorTitle: _t("Unable to revoke sharing for phone number"),
+            errorTitle: _t("settings|general|error_revoke_msisdn_discovery"),
         });
     };
 
@@ -171,7 +127,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
         this.changeBinding({
             bind: true,
             label: "share",
-            errorTitle: _t("Unable to share phone number"),
+            errorTitle: _t("settings|general|error_share_msisdn_discovery"),
         });
     };
 
@@ -207,11 +163,11 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             this.setState({ continueDisabled: false });
             if (underlyingError instanceof MatrixError && underlyingError.errcode !== "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to verify phone number."),
-                    description: extractErrorMessageFromError(err, _t("Operation failed")),
+                    title: _t("settings|general|error_msisdn_verification"),
+                    description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                 });
             } else {
-                this.setState({ verifyError: _t("Incorrect verification code") });
+                this.setState({ verifyError: _t("settings|general|incorrect_msisdn_verification") });
             }
         }
     };
@@ -225,14 +181,14 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
             status = (
                 <span className="mx_GeneralUserSettingsTab_section--discovery_existing_verification">
                     <span>
-                        {_t("Please enter verification code sent via text.")}
+                        {_t("settings|general|msisdn_verification_instructions")}
                         <br />
                         {this.state.verifyError}
                     </span>
                     <form onSubmit={this.onContinueClick} autoComplete="off" noValidate={true}>
                         <Field
                             type="text"
-                            label={_t("Verification code")}
+                            label={_t("settings|general|msisdn_verification_field_label")}
                             autoComplete="off"
                             disabled={this.state.continueDisabled}
                             value={this.state.verificationCode}
@@ -247,8 +203,9 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
                     className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
+                    disabled={this.props.disabled}
                 >
-                    {_t("Revoke")}
+                    {_t("action|revoke")}
                 </AccessibleButton>
             );
         } else {
@@ -257,8 +214,9 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
                     className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
+                    disabled={this.props.disabled}
                 >
-                    {_t("Share")}
+                    {_t("action|share")}
                 </AccessibleButton>
             );
         }
@@ -275,6 +233,7 @@ export class PhoneNumber extends React.Component<IPhoneNumberProps, IPhoneNumber
 interface IProps {
     msisdns: ThirdPartyIdentifier[];
     isLoading?: boolean;
+    disabled?: boolean;
 }
 
 export default class PhoneNumbers extends React.Component<IProps> {
@@ -284,17 +243,16 @@ export default class PhoneNumbers extends React.Component<IProps> {
             content = <InlineSpinner />;
         } else if (this.props.msisdns.length > 0) {
             content = this.props.msisdns.map((e) => {
-                return <PhoneNumber msisdn={e} key={e.address} />;
+                return <PhoneNumber msisdn={e} key={e.address} disabled={this.props.disabled} />;
             });
         }
 
-        const description =
-            (!content && _t("Discovery options will appear once you have added a phone number above.")) || undefined;
+        const description = (!content && _t("settings|general|discovery_msisdn_empty")) || undefined;
 
         return (
             <SettingsSubsection
                 data-testid="mx_DiscoveryPhoneNumbers"
-                heading={_t("Phone numbers")}
+                heading={_t("settings|general|msisdns_heading")}
                 description={description}
                 stretchContent
             >

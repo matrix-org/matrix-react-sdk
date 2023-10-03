@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, fireEvent, render, RenderResult } from "@testing-library/react";
+import { act, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
@@ -28,23 +28,24 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     IAuthData,
-    UNSTABLE_MSC3882_CAPABILITY,
+    GET_LOGIN_TOKEN_CAPABILITY,
     CryptoApi,
     DeviceVerificationStatus,
     MatrixError,
+    M_AUTHENTICATION,
 } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
-import { clearAllModals } from "../../../../../test-utils";
-import SessionManagerTab from "../../../../../../src/components/views/settings/tabs/user/SessionManagerTab";
-import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import {
+    clearAllModals,
     flushPromises,
     getMockClientWithEventEmitter,
     mkPusher,
     mockClientMethodsUser,
     mockPlatformPeg,
 } from "../../../../../test-utils";
+import SessionManagerTab from "../../../../../../src/components/views/settings/tabs/user/SessionManagerTab";
+import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import Modal from "../../../../../../src/Modal";
 import LogoutDialog from "../../../../../../src/components/views/dialogs/LogoutDialog";
 import { DeviceSecurityVariation, ExtendedDevice } from "../../../../../../src/components/views/settings/devices/types";
@@ -54,10 +55,8 @@ import { getClientInformationEventType } from "../../../../../../src/utils/devic
 
 mockPlatformPeg();
 
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
+// to restore later
+const realWindowLocation = window.location;
 
 describe("<SessionManagerTab />", () => {
     const aliceId = "@alice:server.org";
@@ -92,7 +91,7 @@ describe("<SessionManagerTab />", () => {
         requestDeviceVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
     } as unknown as CryptoApi);
 
-    const mockClient = getMockClientWithEventEmitter({
+    let mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(aliceId),
         getCrypto: jest.fn().mockReturnValue(mockCrypto),
         getDevices: jest.fn(),
@@ -109,6 +108,7 @@ describe("<SessionManagerTab />", () => {
         setLocalNotificationSettings: jest.fn(),
         getVersions: jest.fn().mockResolvedValue({}),
         getCapabilities: jest.fn().mockResolvedValue({}),
+        getClientWellKnown: jest.fn().mockReturnValue({}),
     });
 
     const defaultProps = {};
@@ -169,7 +169,7 @@ describe("<SessionManagerTab />", () => {
         confirm = true,
     ): Promise<void> => {
         // modal has sleeps in rendering process :(
-        await sleep(100);
+        await screen.findByRole("dialog");
         const buttonId = confirm ? "dialog-primary-button" : "dialog-cancel-button";
         fireEvent.click(getByTestId(buttonId));
 
@@ -178,6 +178,25 @@ describe("<SessionManagerTab />", () => {
     };
 
     beforeEach(async () => {
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(aliceId),
+            getCrypto: jest.fn().mockReturnValue(mockCrypto),
+            getDevices: jest.fn(),
+            getStoredDevice: jest.fn(),
+            getDeviceId: jest.fn().mockReturnValue(deviceId),
+            deleteMultipleDevices: jest.fn(),
+            generateClientSecret: jest.fn(),
+            setDeviceDetails: jest.fn(),
+            getAccountData: jest.fn(),
+            deleteAccountData: jest.fn(),
+            doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(true),
+            getPushers: jest.fn(),
+            setPusher: jest.fn(),
+            setLocalNotificationSettings: jest.fn(),
+            getVersions: jest.fn().mockResolvedValue({}),
+            getCapabilities: jest.fn().mockResolvedValue({}),
+            getClientWellKnown: jest.fn().mockReturnValue({}),
+        });
         jest.clearAllMocks();
         jest.spyOn(logger, "error").mockRestore();
         mockClient.getStoredDevice.mockImplementation((_userId, id) => {
@@ -211,9 +230,21 @@ describe("<SessionManagerTab />", () => {
             }
         });
 
+        // @ts-ignore allow delete of non-optional prop
+        delete window.location;
+        // @ts-ignore ugly mocking
+        window.location = {
+            href: "https://localhost/",
+            origin: "https://localhost/",
+        };
+
         // sometimes a verification modal is in modal state when these tests run
         // make sure the coast is clear
         await clearAllModals();
+    });
+
+    afterAll(() => {
+        window.location = realWindowLocation;
     });
 
     it("renders spinner while devices load", () => {
@@ -842,7 +873,7 @@ describe("<SessionManagerTab />", () => {
 
                 await flushPromises();
                 // modal rendering has some weird sleeps
-                await sleep(100);
+                await screen.findByRole("dialog");
 
                 expect(mockClient.deleteMultipleDevices).toHaveBeenCalledWith(
                     [alicesMobileDevice.device_id],
@@ -1017,6 +1048,137 @@ describe("<SessionManagerTab />", () => {
                 );
             });
         });
+
+        describe("for an OIDC-aware server", () => {
+            beforeEach(() => {
+                mockClient.getClientWellKnown.mockReturnValue({
+                    [M_AUTHENTICATION.name]: {
+                        issuer: "https://issuer.org",
+                        account: "https://issuer.org/account",
+                    },
+                });
+            });
+
+            // signing out the current device works as usual
+            it("Signs out of current device", async () => {
+                const modalSpy = jest.spyOn(Modal, "createDialog");
+
+                mockClient.getDevices.mockResolvedValue({
+                    devices: [alicesDevice],
+                });
+                const { getByTestId } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                toggleDeviceDetails(getByTestId, alicesDevice.device_id);
+
+                const signOutButton = getByTestId("device-detail-sign-out-cta");
+                expect(signOutButton).toMatchSnapshot();
+                fireEvent.click(signOutButton);
+
+                // logout dialog opened
+                expect(modalSpy).toHaveBeenCalledWith(LogoutDialog, {}, undefined, false, true);
+            });
+
+            it("does not allow signing out of all other devices from current session context menu", async () => {
+                mockClient.getDevices.mockResolvedValue({
+                    devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
+                });
+                const { getByTestId } = render(getComponent());
+
+                await act(async () => {
+                    await flushPromises();
+                });
+
+                fireEvent.click(getByTestId("current-session-menu"));
+                expect(screen.queryByLabelText("Sign out of all other sessions (2)")).not.toBeInTheDocument();
+            });
+
+            describe("other devices", () => {
+                it("opens delegated auth provider to sign out a single device", async () => {
+                    mockClient.getDevices.mockResolvedValue({
+                        devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
+                    });
+
+                    const { getByTestId } = render(getComponent());
+
+                    await act(async () => {
+                        await flushPromises();
+                    });
+
+                    // reset call count
+                    mockClient.getDevices.mockClear();
+
+                    toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
+
+                    const deviceDetails = getByTestId(`device-detail-${alicesMobileDevice.device_id}`);
+                    const signOutButton = deviceDetails.querySelector(
+                        '[data-testid="device-detail-sign-out-cta"]',
+                    ) as Element;
+                    fireEvent.click(signOutButton);
+
+                    await screen.findByRole("dialog");
+                    expect(
+                        screen.getByText(
+                            "You will be redirected to your server's authentication provider to complete sign out.",
+                        ),
+                    ).toBeInTheDocument();
+                    // correct link to auth provider
+                    expect(screen.getByText("Continue")).toHaveAttribute(
+                        "href",
+                        `https://issuer.org/account?action=session_end&device_id=${alicesMobileDevice.device_id}`,
+                    );
+
+                    // go to the link
+                    fireEvent.click(screen.getByText("Continue"));
+                    await flushPromises();
+
+                    // come back from the link and close the modal
+                    fireEvent.click(screen.getByText("Close"));
+
+                    await flushPromises();
+
+                    // devices were refreshed
+                    expect(mockClient.getDevices).toHaveBeenCalled();
+                });
+
+                it("does not allow removing multiple devices at once", async () => {
+                    mockClient.getDevices.mockResolvedValue({
+                        devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice, alicesInactiveDevice],
+                    });
+
+                    render(getComponent());
+
+                    await act(async () => {
+                        await flushPromises();
+                    });
+
+                    // sessions don't have checkboxes
+                    expect(
+                        screen.queryByTestId(`device-tile-checkbox-${alicesMobileDevice.device_id}`),
+                    ).not.toBeInTheDocument();
+                    // no select all
+                    expect(screen.queryByLabelText("Select all")).not.toBeInTheDocument();
+                });
+
+                it("does not allow signing out of all other devices from other sessions context menu", async () => {
+                    mockClient.getDevices.mockResolvedValue({
+                        devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
+                    });
+                    render(getComponent());
+
+                    await act(async () => {
+                        await flushPromises();
+                    });
+
+                    // no context menu because 'sign out all' is the only option
+                    // and it is not allowed when server is oidc-aware
+                    expect(screen.queryByTestId("other-sessions-menu")).not.toBeInTheDocument();
+                });
+            });
+        });
     });
 
     describe("Rename sessions", () => {
@@ -1117,7 +1279,7 @@ describe("<SessionManagerTab />", () => {
 
             await flushPromises();
 
-            expect(logSpy).toHaveBeenCalledWith("Error setting session display name", error);
+            expect(logSpy).toHaveBeenCalledWith("Error setting device name", error);
 
             // error displayed
             expect(getByTestId("device-rename-error")).toBeTruthy();
@@ -1372,7 +1534,7 @@ describe("<SessionManagerTab />", () => {
                 },
             });
             mockClient.getCapabilities.mockResolvedValue({
-                [UNSTABLE_MSC3882_CAPABILITY.name]: {
+                [GET_LOGIN_TOKEN_CAPABILITY.name]: {
                     enabled: true,
                 },
             });

@@ -20,6 +20,7 @@ import "@percy/cypress";
 import "cypress-real-events";
 import "@testing-library/cypress/add-commands";
 import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";
+import "cypress-cloud/support";
 
 import "./config.json";
 import "./homeserver";
@@ -40,6 +41,8 @@ import "./network";
 import "./composer";
 import "./proxy";
 import "./axe";
+import "./mailhog";
+import "./promise";
 
 installLogsCollector({
     // specify the types of logs to collect (and report to the node console at the end of the test)
@@ -48,7 +51,9 @@ installLogsCollector({
         "cons:info",
         "cons:warn",
         "cons:error",
-        // "cons:debug",
+        // most of our logs go through `loglevel`, which sets `logger.log` to be an alias of `logger.debug`.
+        // Hence, if we want to capture `logger.log` lines, we need to enable `cons:debug` here.
+        "cons:debug",
         "cy:log",
         "cy:xhr",
         "cy:fetch",

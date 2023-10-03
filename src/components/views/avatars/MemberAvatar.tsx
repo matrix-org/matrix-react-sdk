@@ -16,8 +16,7 @@ limitations under the License.
 */
 
 import React, { ReactNode, useContext } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { RoomMember, ResizeMethod } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -31,8 +30,7 @@ import { _t } from "../../../languageHandler";
 interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | "idName" | "url"> {
     member: RoomMember | null;
     fallbackUserId?: string;
-    width: number;
-    height: number;
+    size: string;
     resizeMethod?: ResizeMethod;
     // Whether the onClick of the avatar should be overridden to dispatch `Action.ViewUser`
     viewUserOnClick?: boolean;
@@ -45,8 +43,7 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
 }
 
 export default function MemberAvatar({
-    width,
-    height,
+    size,
     resizeMethod = "crop",
     viewUserOnClick,
     forceHistorical,
@@ -69,8 +66,8 @@ export default function MemberAvatar({
     if (member?.name) {
         if (member.getMxcAvatarUrl()) {
             imageUrl = mediaFromMxc(member.getMxcAvatarUrl() ?? "").getThumbnailOfSourceHttp(
-                width,
-                height,
+                parseInt(size, 10),
+                parseInt(size, 10),
                 resizeMethod,
             );
         }
@@ -86,9 +83,7 @@ export default function MemberAvatar({
     return (
         <BaseAvatar
             {...props}
-            width={width}
-            height={height}
-            resizeMethod={resizeMethod}
+            size={size}
             name={name ?? ""}
             title={hideTitle ? undefined : title}
             idName={member?.userId ?? fallbackUserId}
@@ -104,8 +99,7 @@ export default function MemberAvatar({
                       }
                     : props.onClick
             }
-            altText={_t("Profile picture")}
-            ariaLabel={_t("Profile picture")}
+            altText={_t("common|user_avatar")}
         />
     );
 }

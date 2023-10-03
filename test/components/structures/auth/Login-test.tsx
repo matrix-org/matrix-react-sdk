@@ -18,9 +18,9 @@ import React from "react";
 import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import { mocked, MockedObject } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
-import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand } from "matrix-js-sdk/src/@types/auth";
+import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
+import * as Matrix from "matrix-js-sdk/src/matrix";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import SdkConfig from "../../../../src/SdkConfig";
@@ -31,8 +31,6 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Features } from "../../../../src/settings/Settings";
 import { ValidatedDelegatedAuthConfig } from "../../../../src/utils/ValidatedServerConfig";
 import * as registerClientUtils from "../../../../src/utils/oidc/registerClient";
-
-jest.mock("matrix-js-sdk/src/matrix");
 
 jest.useRealTimers();
 
@@ -48,7 +46,7 @@ describe("Login", function () {
     const mockClient = mocked({
         login: jest.fn().mockResolvedValue({}),
         loginFlows: jest.fn(),
-    } as unknown as MatrixClient);
+    } as unknown as Matrix.MatrixClient);
 
     beforeEach(function () {
         SdkConfig.put({
@@ -62,7 +60,7 @@ describe("Login", function () {
             user_id: "@user:server",
         });
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
-        mocked(createClient).mockImplementation((opts) => {
+        jest.spyOn(Matrix, "createClient").mockImplementation((opts) => {
             mockClient.idBaseUrl = opts.idBaseUrl;
             mockClient.baseUrl = opts.baseUrl;
             return mockClient;
@@ -71,7 +69,7 @@ describe("Login", function () {
         fetchMock.resetHistory();
         fetchMock.get("https://matrix.org/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         platform = mockPlatformPeg({
             startSingleSignOn: jest.fn(),
@@ -209,7 +207,7 @@ describe("Login", function () {
 
         fetchMock.get("https://server2/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         rerender(getRawComponent("https://server2"));
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
@@ -341,13 +339,13 @@ describe("Login", function () {
     it("should display an error when homeserver fails liveliness check", async () => {
         fetchMock.resetBehavior();
         fetchMock.get("https://matrix.org/_matrix/client/versions", {
-            status: 400,
+            status: 0,
         });
         getComponent();
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         // error displayed
-        expect(screen.getByText("Your test-brand is misconfigured")).toBeInTheDocument();
+        expect(screen.getByText("Cannot reach homeserver")).toBeInTheDocument();
     });
 
     it("should reset liveliness error when server config changes", async () => {
@@ -359,20 +357,20 @@ describe("Login", function () {
         // but server2 is
         fetchMock.get("https://server2/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         const { rerender } = render(getRawComponent());
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         // error displayed
-        expect(screen.getByText("Your test-brand is misconfigured")).toBeInTheDocument();
+        expect(screen.getByText("Cannot reach homeserver")).toBeInTheDocument();
 
         rerender(getRawComponent("https://server2"));
 
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         // error cleared
-        expect(screen.queryByText("Your test-brand is misconfigured")).not.toBeInTheDocument();
+        expect(screen.queryByText("Cannot reach homeserver")).not.toBeInTheDocument();
     });
 
     describe("OIDC native flow", () => {

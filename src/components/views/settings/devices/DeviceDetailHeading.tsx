@@ -49,7 +49,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
             await saveDeviceName(deviceName);
             stopEditing();
         } catch (error) {
-            setError(_t("Failed to set display name"));
+            setError(_t("settings|sessions|error_set_name"));
             setIsLoading(false);
         }
     };
@@ -60,7 +60,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
     return (
         <form aria-disabled={isLoading} className="mx_DeviceDetailHeading_renameForm" onSubmit={onSubmit} method="post">
             <p id={headingId} className="mx_DeviceDetailHeading_renameFormHeading">
-                {_t("Rename session")}
+                {_t("settings|sessions|rename_form_heading")}
             </p>
             <div>
                 <Field
@@ -77,23 +77,13 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     maxLength={100}
                 />
                 <Caption id={descriptionId}>
-                    {_t("Please be aware that session names are also visible to people you communicate with.")}
+                    {_t("settings|sessions|rename_form_caption")}
                     <LearnMore
-                        title={_t("Renaming sessions")}
+                        title={_t("settings|sessions|rename_form_learn_more")}
                         description={
                             <>
-                                <p>
-                                    {_t(
-                                        `Other users in direct messages and rooms that you join ` +
-                                            `are able to view a full list of your sessions.`,
-                                    )}
-                                </p>
-                                <p>
-                                    {_t(
-                                        `This provides them with confidence that they are really speaking to you, ` +
-                                            `but it also means they can see the session name you enter here.`,
-                                    )}
-                                </p>
+                                <p>{_t("settings|sessions|rename_form_learn_more_description_1")}</p>
+                                <p>{_t("settings|sessions|rename_form_learn_more_description_2")}</p>
                             </>
                         }
                     />
@@ -111,7 +101,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     data-testid="device-rename-submit-cta"
                     disabled={isLoading}
                 >
-                    {_t("Save")}
+                    {_t("action|save")}
                 </AccessibleButton>
                 <AccessibleButton
                     onClick={stopEditing}
@@ -119,7 +109,7 @@ const DeviceNameEditor: React.FC<Props & { stopEditing: () => void }> = ({ devic
                     data-testid="device-rename-cancel-cta"
                     disabled={isLoading}
                 >
-                    {_t("Cancel")}
+                    {_t("action|cancel")}
                 </AccessibleButton>
                 {isLoading && <Spinner w={16} h={16} />}
             </div>
@@ -141,7 +131,7 @@ export const DeviceDetailHeading: React.FC<Props> = ({ device, saveDeviceName })
                 className="mx_DeviceDetailHeading_renameCta"
                 data-testid="device-heading-rename-cta"
             >
-                {_t("Rename")}
+                {_t("action|rename")}
             </AccessibleButton>
         </div>
     );

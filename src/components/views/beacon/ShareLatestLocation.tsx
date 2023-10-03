@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useState } from "react";
-import { BeaconLocationState } from "matrix-js-sdk/src/content-helpers";
+import { ContentHelpers } from "matrix-js-sdk/src/matrix";
 
 import { Icon as ExternalLinkIcon } from "../../../../res/img/external-link.svg";
 import { _t } from "../../../languageHandler";
@@ -24,7 +24,7 @@ import CopyableText from "../elements/CopyableText";
 import TooltipTarget from "../elements/TooltipTarget";
 
 interface Props {
-    latestLocationState?: BeaconLocationState;
+    latestLocationState?: ContentHelpers.BeaconLocationState;
 }
 
 const ShareLatestLocation: React.FC<Props> = ({ latestLocationState }) => {
@@ -46,7 +46,7 @@ const ShareLatestLocation: React.FC<Props> = ({ latestLocationState }) => {
 
     return (
         <>
-            <TooltipTarget label={_t("Open in OpenStreetMap")}>
+            <TooltipTarget label={_t("timeline|context_menu|open_in_osm")}>
                 <a data-testid="open-location-in-osm" href={mapLink} target="_blank" rel="noreferrer noopener">
                     <ExternalLinkIcon className="mx_ShareLatestLocation_icon" />
                 </a>

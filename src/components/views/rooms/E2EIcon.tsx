@@ -18,7 +18,7 @@ limitations under the License.
 import React, { CSSProperties, useState } from "react";
 import classNames from "classnames";
 
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import { E2EStatus } from "../../../utils/ShieldUtils";
@@ -32,15 +32,15 @@ export enum E2EState {
     Unauthenticated = "unauthenticated",
 }
 
-const crossSigningUserTitles: { [key in E2EState]?: string } = {
-    [E2EState.Warning]: _td("This user has not verified all of their sessions."),
-    [E2EState.Normal]: _td("You have not verified this user."),
-    [E2EState.Verified]: _td("You have verified this user. This user has verified all of their sessions."),
+const crossSigningUserTitles: { [key in E2EState]?: TranslationKey } = {
+    [E2EState.Warning]: _td("encryption|cross_signing_user_warning"),
+    [E2EState.Normal]: _td("encryption|cross_signing_user_normal"),
+    [E2EState.Verified]: _td("encryption|cross_signing_user_verified"),
 };
-const crossSigningRoomTitles: { [key in E2EState]?: string } = {
-    [E2EState.Warning]: _td("Someone is using an unknown session"),
-    [E2EState.Normal]: _td("This room is end-to-end encrypted"),
-    [E2EState.Verified]: _td("Everyone in this room is verified"),
+const crossSigningRoomTitles: { [key in E2EState]?: TranslationKey } = {
+    [E2EState.Warning]: _td("encryption|cross_signing_room_warning"),
+    [E2EState.Normal]: _td("encryption|cross_signing_room_normal"),
+    [E2EState.Verified]: _td("encryption|cross_signing_room_verified"),
 };
 
 interface Props {
@@ -85,7 +85,7 @@ const E2EIcon: React.FC<XOR<UserProps, RoomProps>> = ({
         className,
     );
 
-    let e2eTitle: string | undefined;
+    let e2eTitle: TranslationKey | undefined;
     if (isUser) {
         e2eTitle = crossSigningUserTitles[status];
     } else {

@@ -142,7 +142,7 @@ jobs:
               run: |
                   echo "sha=$(cat webapp/sha)" >> $GITHUB_OUTPUT
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   # XXX: We're checking out untrusted code in a secure context
                   # We need to be careful to not trust anything this code outputs/may do
@@ -163,7 +163,7 @@ jobs:
                   echo "CYPRESS_RUST_CRYPTO=1" >> "$GITHUB_ENV"
 
             - name: Run Cypress tests
-              uses: cypress-io/github-action@7ad5be0b88bd98f5b692b581a4e7b6ed39939911
+              uses: cypress-io/github-action@2558ee6af05072a19de2ce92cb68b38616132726
               with:
                   working-directory: matrix-react-sdk
                   # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
@@ -174,11 +174,15 @@ jobs:
                   record: true
                   parallel: true
                   command-prefix: "yarn percy exec --parallel --"
+                  command: "npx cypress-cloud run"
                   config: '{"reporter":"cypress-multi-reporters", "reporterOptions": { "configFile": "cypress-ci-reporter-config.json" } }'
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}
               env:
                   # pass the Dashboard record key as an environment variable
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  CURRENTS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  CURRENTS_PROJECT_ID: ${{ github.repository }}
+                  CURRENTS_API_URL: ${{ vars.CURRENTS_API_URL }}
 
                   # Use existing chromium rather than downloading another
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true

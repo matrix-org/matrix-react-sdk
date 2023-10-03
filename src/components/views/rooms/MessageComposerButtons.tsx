@@ -15,12 +15,8 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import { IEventRelation, Room, MatrixClient, THREAD_RELATION_TYPE, M_POLL_START } from "matrix-js-sdk/src/matrix";
 import React, { createContext, ReactElement, ReactNode, useContext, useRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -135,7 +131,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                 <AccessibleTooltipButton
                     className={moreOptionsClasses}
                     onClick={props.toggleButtonMenu}
-                    title={_t("More options")}
+                    title={_t("quick_settings|sidebar_settings")}
                 />
             )}
             {props.isMenuOpen && (
@@ -249,7 +245,7 @@ const UploadButton: React.FC = () => {
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_upload"
             onClick={onClick}
-            title={_t("Attachment")}
+            title={_t("common|attachment")}
         />
     );
 };
@@ -262,7 +258,7 @@ function showStickersButton(props: IProps): ReactElement | null {
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_stickers"
             onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
-            title={props.isStickerPickerOpen ? _t("Hide stickers") : _t("Sticker")}
+            title={props.isStickerPickerOpen ? _t("composer|close_sticker_picker") : _t("common|sticker")}
         />
     ) : null;
 }
@@ -274,7 +270,7 @@ const startVoiceBroadcastButton: React.FC<IProps> = (props: IProps): ReactElemen
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_voiceBroadcast"
             onClick={props.onStartVoiceBroadcastClick}
-            title={_t("Voice broadcast")}
+            title={_t("voice_broadcast|action")}
         />
     ) : null;
 };
@@ -287,7 +283,7 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement | nu
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_voiceMessage"
             onClick={props.onRecordStartEndClick}
-            title={_t("Voice Message")}
+            title={_t("composer|voice_message_button")}
         />
     );
 }
@@ -313,8 +309,8 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         );
         if (!canSend) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Permission Required"),
-                description: _t("You do not have permission to start polls in this room."),
+                title: _t("composer|poll_button_no_perms_title"),
+                description: _t("composer|poll_button_no_perms_description"),
             });
         } else {
             const threadId =
@@ -342,7 +338,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 className="mx_MessageComposer_button"
                 iconClassName="mx_MessageComposer_poll"
                 onClick={this.onCreateClick}
-                title={_t("Poll")}
+                title={_t("composer|poll_button")}
             />
         );
     }
@@ -368,7 +364,7 @@ interface WysiwygToggleButtonProps {
 }
 
 function ComposerModeButton({ isRichTextEnabled, onClick }: WysiwygToggleButtonProps): JSX.Element {
-    const title = isRichTextEnabled ? _t("Hide formatting") : _t("Show formatting");
+    const title = isRichTextEnabled ? _t("composer|mode_plain") : _t("composer|mode_rich_text");
 
     return (
         <CollapsibleButton
