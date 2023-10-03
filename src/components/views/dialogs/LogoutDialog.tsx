@@ -176,13 +176,13 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                         "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.",
                     )}
                 </p>
-                <p>{_t("Back up your keys before signing out to avoid losing them.")}</p>
+                <p>{_t("encryption|setup_secure_backup|explainer")}</p>
             </div>
         );
 
         let setupButtonCaption;
         if (this.state.backupStatus === BackupStatus.SERVER_BACKUP_BUT_DISABLED) {
-            setupButtonCaption = _t("Connect this session to Key Backup");
+            setupButtonCaption = _t("settings|security|key_backup_connect");
         } else {
             // if there's an error fetching the backup info, we'll just assume there's
             // no backup for the purpose of the button caption
@@ -203,7 +203,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                     <button onClick={this.onLogoutConfirm}>{_t("I don't want my encrypted messages")}</button>
                 </DialogButtons>
                 <details>
-                    <summary>{_t("Advanced")}</summary>
+                    <summary>{_t("common|advanced")}</summary>
                     <p>
                         <button onClick={this.onExportE2eKeysClicked}>{_t("Manually export keys")}</button>
                     </p>
