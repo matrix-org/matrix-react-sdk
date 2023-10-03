@@ -139,9 +139,6 @@
         "other": "%(count)s munkamenet",
         "one": "%(count)s munkamenet"
     },
-    "Destroy cross-signing keys?": "Megsemmisíted az eszközök közti hitelesítés kulcsait?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Eszközök közti hitelesítési kulcsok törlése végleges. Mindenki akit ezzel hitelesítettél biztonsági figyelmeztetéseket fog látni. Hacsak nem vesztetted el az összes eszközödet amivel eszközök közti hitelesítést tudsz végezni, nem valószínű, hogy ezt szeretnéd tenni.",
-    "Clear cross-signing keys": "Eszközök közti hitelesítési kulcsok törlése",
     "%(name)s declined": "%(name)s elutasította",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "A Matrixszal kapcsolatos biztonsági hibák jelentésével kapcsolatban olvassa el a Matrix.org <a>biztonsági hibák közzétételi házirendjét</a>.",
     "a new master key signature": "az új mester kulcs aláírás",
@@ -151,23 +148,14 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s hibába ütközött a feltöltés közben:",
     "Sign in with SSO": "Belépés SSO-val",
     "Submit logs": "Napló elküldése",
-    "Restoring keys from backup": "Kulcsok helyreállítása mentésből",
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s kulcs helyreállítva",
-    "Confirm encryption setup": "Erősítsd meg a titkosítási beállításokat",
-    "Click the button below to confirm setting up encryption.": "Az alábbi gomb megnyomásával erősítsd meg, hogy megadod a titkosítási beállításokat.",
     "IRC display name width": "IRC-n megjelenítendő név szélessége",
     "Your homeserver has exceeded its user limit.": "A Matrix-kiszolgálója túllépte a felhasználói szám korlátját.",
     "Your homeserver has exceeded one of its resource limits.": "A Matrix-kiszolgálója túllépte valamelyik erőforráskorlátját.",
     "Ok": "Rendben",
     "Switch theme": "Kinézet váltása",
-    "Looks good!": "Jónak tűnik!",
-    "Wrong file type": "A fájltípus hibás",
-    "Security Phrase": "Biztonsági jelmondat",
-    "Security Key": "Biztonsági kulcs",
-    "Use your Security Key to continue.": "Használja a biztonsági kulcsot a folytatáshoz.",
     "Not encrypted": "Nem titkosított",
     "Backup version:": "Mentés verziója:",
-    "Unable to set up keys": "Nem sikerült a kulcsok beállítása",
     "Bermuda": "Bermuda",
     "Benin": "Benin",
     "Belize": "Belize",
@@ -417,9 +405,6 @@
     "Greenland": "Grönland",
     "Greece": "Görögország",
     "Gibraltar": "Gibraltár",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "A biztonsági tárolóhoz nem lehet hozzáférni. Kérjük ellenőrizze, hogy jó Biztonsági jelmondatot adott-e meg.",
-    "Invalid Security Key": "Érvénytelen biztonsági kulcs",
-    "Wrong Security Key": "Hibás biztonsági kulcs",
     "%(count)s members": {
         "one": "%(count)s tag",
         "other": "%(count)s tag"
@@ -433,16 +418,11 @@
         "one": "%(count)s ismerős már csatlakozott",
         "other": "%(count)s ismerős már csatlakozott"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Ha mindent alaphelyzetbe állít, akkor nem lesz megbízható munkamenete, nem lesznek megbízható felhasználók és a régi üzenetekhez sem biztos, hogy hozzáfér majd.",
-    "Only do this if you have no other device to complete verification with.": "Csak akkor tegye meg, ha egyetlen másik eszköze sincs az ellenőrzés elvégzéséhez.",
-    "Reset everything": "Minden alaphelyzetbe állítása",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
     "%(count)s reply": {
         "one": "%(count)s válasz",
         "other": "%(count)s válasz"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Adja meg a biztonsági jelmondatot vagy <button>használja a biztonsági kulcsot</button> a folytatáshoz.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Szerezze vissza a hozzáférést a fiókjához és állítsa vissza az elmentett titkosítási kulcsokat ebben a munkamenetben. Ezek nélkül egyetlen munkamenetben sem tudja elolvasni a titkosított üzeneteit.",
     "Forget": "Elfelejtés",
     "%(count)s votes": {
@@ -474,7 +454,6 @@
     "Show rooms": "Szobák megjelenítése",
     "Explore public spaces in the new search dialog": "Nyilvános terek felderítése az új keresőben",
     "Saved Items": "Mentett elemek",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s vagy %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s videóhívást indított",
     "Thread root ID: %(threadRootId)s": "Üzenetszál gyökerének azonosítója: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " itt: <strong>%(room)s</strong>",
@@ -2773,7 +2752,34 @@
             "title": "Nem megbízható",
             "manual_verification_button": "Kézi szöveges ellenőrzés",
             "interactive_verification_button": "Interaktív ellenőrzés emodzsikkal"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "A fájltípus hibás",
+                "recovery_key_is_correct": "Jónak tűnik!",
+                "wrong_security_key": "Hibás biztonsági kulcs",
+                "invalid_security_key": "Érvénytelen biztonsági kulcs"
+            },
+            "reset_title": "Minden alaphelyzetbe állítása",
+            "reset_warning_1": "Csak akkor tegye meg, ha egyetlen másik eszköze sincs az ellenőrzés elvégzéséhez.",
+            "reset_warning_2": "Ha mindent alaphelyzetbe állít, akkor nem lesz megbízható munkamenete, nem lesznek megbízható felhasználók és a régi üzenetekhez sem biztos, hogy hozzáfér majd.",
+            "security_phrase_title": "Biztonsági jelmondat",
+            "security_phrase_incorrect_error": "A biztonsági tárolóhoz nem lehet hozzáférni. Kérjük ellenőrizze, hogy jó Biztonsági jelmondatot adott-e meg.",
+            "enter_phrase_or_key_prompt": "Adja meg a biztonsági jelmondatot vagy <button>használja a biztonsági kulcsot</button> a folytatáshoz.",
+            "security_key_title": "Biztonsági kulcs",
+            "use_security_key_prompt": "Használja a biztonsági kulcsot a folytatáshoz.",
+            "separator": "%(securityKey)s vagy %(recoveryFile)s",
+            "restoring": "Kulcsok helyreállítása mentésből"
+        },
+        "reset_all_button": "Elfelejtette vagy elveszett minden helyreállítási lehetőség? <a>Minden alaphelyzetbe állítása</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Megsemmisíted az eszközök közti hitelesítés kulcsait?",
+            "warning": "Eszközök közti hitelesítési kulcsok törlése végleges. Mindenki akit ezzel hitelesítettél biztonsági figyelmeztetéseket fog látni. Hacsak nem vesztetted el az összes eszközödet amivel eszközök közti hitelesítést tudsz végezni, nem valószínű, hogy ezt szeretnéd tenni.",
+            "primary_button_text": "Eszközök közti hitelesítési kulcsok törlése"
+        },
+        "confirm_encryption_setup_title": "Erősítsd meg a titkosítási beállításokat",
+        "confirm_encryption_setup_body": "Az alábbi gomb megnyomásával erősítsd meg, hogy megadod a titkosítási beállításokat.",
+        "unable_to_setup_keys_error": "Nem sikerült a kulcsok beállítása"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",

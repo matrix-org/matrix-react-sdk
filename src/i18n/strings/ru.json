@@ -140,8 +140,6 @@
     "%(name)s declined": "%(name)s отказал(а)",
     "%(name)s cancelled": "%(name)s отменил(а)",
     "%(name)s wants to verify": "%(name)s желает подтвердить",
-    "Destroy cross-signing keys?": "Уничтожить ключи кросс-подписи?",
-    "Clear cross-signing keys": "Очистить ключи кросс-подписи",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "a key signature": "отпечаток ключа",
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
@@ -149,25 +147,15 @@
     "Ok": "Хорошо",
     "Submit logs": "Отправить логи",
     "IRC display name width": "Ширина отображаемого имени IRC",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
     "a new master key signature": "новая подпись мастер-ключа",
     "a new cross-signing key signature": "новый ключ подписи для кросс-подписи",
     "a device cross-signing signature": "подпись устройства для кросс-подписи",
     "%(brand)s encountered an error during upload of:": "%(brand)s обнаружил ошибку при загрузке файла:",
-    "Wrong file type": "Неправильный тип файла",
-    "Looks good!": "Выглядит неплохо!",
-    "Security Phrase": "Мнемоническая фраза",
-    "Security Key": "Бумажный ключ",
-    "Use your Security Key to continue.": "Чтобы продолжить, используйте свой бумажный ключ.",
-    "Restoring keys from backup": "Восстановление ключей из резервной копии",
     "%(completed)s of %(total)s keys restored": "%(completed)s из %(total)s ключей восстановлено",
     "Sign in with SSO": "Вход с помощью SSO",
     "Switch theme": "Сменить тему",
-    "Confirm encryption setup": "Подтвердите настройку шифрования",
-    "Click the button below to confirm setting up encryption.": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
     "Not encrypted": "Не зашифровано",
     "Backup version:": "Версия резервной копии:",
-    "Unable to set up keys": "Невозможно настроить ключи",
     "Zimbabwe": "Зимбабве",
     "Zambia": "Замбия",
     "Yemen": "Йемен",
@@ -417,9 +405,6 @@
     "Afghanistan": "Афганистан",
     "United States": "Соединенные Штаты Америки",
     "United Kingdom": "Великобритания",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Невозможно получить доступ к секретному хранилищу. Убедитесь, что вы ввели правильную секретную фразу.",
-    "Invalid Security Key": "Неверный ключ безопасности",
-    "Wrong Security Key": "Неправильный ключ безопасности",
     "%(count)s rooms": {
         "one": "%(count)s комната",
         "other": "%(count)s комнат"
@@ -429,10 +414,6 @@
         "other": "%(count)s участников"
     },
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
-    "Only do this if you have no other device to complete verification with.": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
-    "Reset everything": "Сбросить всё",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забыли или потеряли все варианты восстановления? <a>Сбросить всё</a>",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
@@ -442,7 +423,6 @@
         "one": "%(count)s ответ",
         "other": "%(count)s ответов"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введите свою секретную фразу или <button> используйте секретный ключ </button> для продолжения.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Восстановите доступ к своей учетной записи и восстановите ключи шифрования, сохранённые в этом сеансе. Без них в любом сеансе вы не сможете прочитать все свои защищённые сообщения.",
     "Forget": "Забыть",
     "toggle event": "переключить событие",
@@ -474,7 +454,6 @@
         "other": "%(count)s участников"
     },
     "Saved Items": "Сохранённые объекты",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s или %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s начал(а) видеозвонок",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
     "common": {
@@ -2663,7 +2642,34 @@
             "title": "Недоверенное",
             "manual_verification_button": "Ручная сверка по тексту",
             "interactive_verification_button": "Интерактивная сверка по смайлам"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Неправильный тип файла",
+                "recovery_key_is_correct": "Выглядит неплохо!",
+                "wrong_security_key": "Неправильный ключ безопасности",
+                "invalid_security_key": "Неверный ключ безопасности"
+            },
+            "reset_title": "Сбросить всё",
+            "reset_warning_1": "Делайте это только в том случае, если у вас нет другого устройства для завершения проверки.",
+            "reset_warning_2": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
+            "security_phrase_title": "Мнемоническая фраза",
+            "security_phrase_incorrect_error": "Невозможно получить доступ к секретному хранилищу. Убедитесь, что вы ввели правильную секретную фразу.",
+            "enter_phrase_or_key_prompt": "Введите свою секретную фразу или <button> используйте секретный ключ </button> для продолжения.",
+            "security_key_title": "Бумажный ключ",
+            "use_security_key_prompt": "Чтобы продолжить, используйте свой бумажный ключ.",
+            "separator": "%(securityKey)s или %(recoveryFile)s",
+            "restoring": "Восстановление ключей из резервной копии"
+        },
+        "reset_all_button": "Забыли или потеряли все варианты восстановления? <a>Сбросить всё</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Уничтожить ключи кросс-подписи?",
+            "warning": "Удаление ключей кросс-подписи является мгновенным и необратимым действием. Любой, с кем вы прошли проверку, увидит предупреждения безопасности. Вы почти наверняка не захотите этого делать, если только не потеряете все устройства, с которых можно совершать кросс-подпись.",
+            "primary_button_text": "Очистить ключи кросс-подписи"
+        },
+        "confirm_encryption_setup_title": "Подтвердите настройку шифрования",
+        "confirm_encryption_setup_body": "Нажмите кнопку ниже, чтобы подтвердить настройку шифрования.",
+        "unable_to_setup_keys_error": "Невозможно настроить ключи"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",

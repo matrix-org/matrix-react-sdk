@@ -126,9 +126,6 @@
     "This backup is trusted because it has been restored on this session": "Esta copia de seguridad es de confianza porque ha sido restaurada en esta sesión",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Para informar de un problema de seguridad relacionado con Matrix, lee la <a>Política de divulgación de seguridad</a> de Matrix.org.",
     "e.g. my-room": "p.ej. mi-sala",
-    "Destroy cross-signing keys?": "¿Destruir las claves de firma cruzada?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "La eliminación de claves de firma cruzada es definitiva. Cualquiera con el que lo hayas verificado verá alertas de seguridad. Es casi seguro que no quieres hacer esto, a menos que hayas perdido todos los dispositivos puedas usar hacer una firma cruzada.",
-    "Clear cross-signing keys": "Borrar claves de firma cruzada",
     "a new master key signature": "una nueva firma de llave maestra",
     "a new cross-signing key signature": "una nueva firma de código de firma cruzada",
     "a device cross-signing signature": "una firma para la firma cruzada de dispositivos",
@@ -150,7 +147,6 @@
     "%(name)s wants to verify": "%(name)s quiere verificar",
     "edited": "editado",
     "Submit logs": "Enviar registros",
-    "Restoring keys from backup": "Restaurando las claves desde copia de seguridad",
     "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s llaves restauradas",
     "Sign in with SSO": "Ingrese con SSO",
     "Ok": "Ok",
@@ -159,14 +155,7 @@
     "IRC display name width": "Ancho del nombre de visualización de IRC",
     "Backup version:": "Versión de la copia de seguridad:",
     "Not encrypted": "Sin cifrar",
-    "Wrong file type": "Tipo de archivo incorrecto",
-    "Looks good!": "¡Se ve bien!",
-    "Security Phrase": "Frase de seguridad",
-    "Security Key": "Clave de seguridad",
-    "Use your Security Key to continue.": "Usa tu llave de seguridad para continuar.",
     "Switch theme": "Cambiar tema",
-    "Confirm encryption setup": "Confirmar la configuración de cifrado",
-    "Click the button below to confirm setting up encryption.": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
     "Zimbabwe": "Zimbabue",
     "Yemen": "Yemen",
     "Wallis & Futuna": "Wallis y Futuna",
@@ -328,9 +317,6 @@
     "American Samoa": "Samoa Americana",
     "Algeria": "Argelia",
     "Åland Islands": "Åland",
-    "Unable to set up keys": "No se han podido configurar las claves",
-    "Invalid Security Key": "Clave de seguridad inválida",
-    "Wrong Security Key": "Clave de seguridad incorrecta",
     "Sint Maarten": "San Martín",
     "Singapore": "Singapur",
     "Sierra Leone": "Sierra Leona",
@@ -419,7 +405,6 @@
     "Afghanistan": "Afganistán",
     "United States": "Estados Unidos",
     "United Kingdom": "Reino Unido",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "No se ha podido acceder al almacenamiento seguro. Por favor, comprueba que la frase de seguridad es correcta.",
     "%(count)s members": {
         "one": "%(count)s miembro",
         "other": "%(count)s miembros"
@@ -433,16 +418,11 @@
         "one": "%(count)s persona que ya conoces se ha unido",
         "other": "%(count)s personas que ya conoces se han unido"
     },
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "¿Has olvidado o perdido todos los métodos de recuperación? <a>Restablecer todo</a>",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Si restableces todo, volverás a empezar sin sesiones ni usuarios de confianza, y puede que no puedas ver mensajes anteriores.",
-    "Only do this if you have no other device to complete verification with.": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
-    "Reset everything": "Restablecer todo",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
     "Forget": "Olvidar",
     "%(count)s votes": {
         "one": "%(count)s voto",
@@ -474,7 +454,6 @@
     "Show spaces": "Ver espacios",
     "Show rooms": "Ver salas",
     "Saved Items": "Elementos guardados",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s o %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s comenzó una videollamada",
     "Thread root ID: %(threadRootId)s": "ID del hilo raíz: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " en <strong>%(room)s</strong>",
@@ -2722,7 +2701,34 @@
             "title": "No es de confianza",
             "manual_verification_button": "Verificar manualmente usando un texto",
             "interactive_verification_button": "Verificar interactivamente usando emojis"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Tipo de archivo incorrecto",
+                "recovery_key_is_correct": "¡Se ve bien!",
+                "wrong_security_key": "Clave de seguridad incorrecta",
+                "invalid_security_key": "Clave de seguridad inválida"
+            },
+            "reset_title": "Restablecer todo",
+            "reset_warning_1": "Solo haz esto si no tienes ningún otro dispositivo con el que completar la verificación.",
+            "reset_warning_2": "Si restableces todo, volverás a empezar sin sesiones ni usuarios de confianza, y puede que no puedas ver mensajes anteriores.",
+            "security_phrase_title": "Frase de seguridad",
+            "security_phrase_incorrect_error": "No se ha podido acceder al almacenamiento seguro. Por favor, comprueba que la frase de seguridad es correcta.",
+            "enter_phrase_or_key_prompt": "Escribe tu frase de seguridad o <button>usa tu clave de seguridad</button> para continuar.",
+            "security_key_title": "Clave de seguridad",
+            "use_security_key_prompt": "Usa tu llave de seguridad para continuar.",
+            "separator": "%(securityKey)s o %(recoveryFile)s",
+            "restoring": "Restaurando las claves desde copia de seguridad"
+        },
+        "reset_all_button": "¿Has olvidado o perdido todos los métodos de recuperación? <a>Restablecer todo</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "¿Destruir las claves de firma cruzada?",
+            "warning": "La eliminación de claves de firma cruzada es definitiva. Cualquiera con el que lo hayas verificado verá alertas de seguridad. Es casi seguro que no quieres hacer esto, a menos que hayas perdido todos los dispositivos puedas usar hacer una firma cruzada.",
+            "primary_button_text": "Borrar claves de firma cruzada"
+        },
+        "confirm_encryption_setup_title": "Confirmar la configuración de cifrado",
+        "confirm_encryption_setup_body": "Haz clic en el botón de abajo para confirmar la configuración del cifrado.",
+        "unable_to_setup_keys_error": "No se han podido configurar las claves"
     },
     "emoji": {
         "category_frequently_used": "Frecuente",

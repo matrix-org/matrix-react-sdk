@@ -137,9 +137,6 @@
         "other": "%(count)s sesione",
         "one": "%(count)s sesion"
     },
-    "Destroy cross-signing keys?": "Të shkatërrohen kyçet <em>cross-signing</em>?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Fshirja e kyçeve <em>cross-signing</em> është e përhershme. Cilido që keni verifikuar me to, do të shohë një sinjalizim sigurie. Thuajse e sigurt që s’keni pse ta bëni një gjë të tillë, veç në paçi humbur çdo pajisje prej nga mund të bëni <em>cross-sign</em>.",
-    "Clear cross-signing keys": "Spastro kyçe <em>cross-signing</em>",
     "%(name)s declined": "%(name)s hodhi poshtë",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Që të njoftoni një problem sigurie lidhur me Matrix-in, ju lutemi, lexoni <a>Rregulla Tregimi Çështjes Sigurie</a> te Matrix.org.",
     "a new master key signature": "një nënshkrim i ri kyçi të përgjithshëm",
@@ -150,23 +147,14 @@
     "Sign in with SSO": "Hyni me HNj",
     "Lock": "Kyçje",
     "Submit logs": "Parashtro regjistra",
-    "Restoring keys from backup": "Po rikthehen kyçesh nga kopjeruajtje",
     "%(completed)s of %(total)s keys restored": "U rikthyen %(completed)s nga %(total)s kyçe",
-    "Confirm encryption setup": "Ripohoni ujdisje fshehtëzimi",
-    "Click the button below to confirm setting up encryption.": "Klikoni mbi butonin më poshtë që të ripohoni ujdisjen e fshehtëzimit.",
     "IRC display name width": "Gjerësi shfaqjeje emrash IRC",
     "Your homeserver has exceeded its user limit.": "Shërbyesi juaj Home ka tejkaluar kufijtë e tij të përdorimit.",
     "Your homeserver has exceeded one of its resource limits.": "Shërbyesi juaj Home ka tejkaluar një nga kufijtë e tij të burimeve.",
     "Ok": "OK",
     "Switch theme": "Ndërroni temën",
-    "Looks good!": "Mirë duket!",
-    "Wrong file type": "Lloj i gabuar kartele",
-    "Security Phrase": "Frazë Sigurie",
-    "Security Key": "Kyç Sigurie",
-    "Use your Security Key to continue.": "Që të vazhdohet përdorni Kyçin tuaj të Sigurisë.",
     "Not encrypted": "Jo e fshehtëzuar",
     "Backup version:": "Version kopjeruajtjeje:",
-    "Unable to set up keys": "S’arrihet të ujdisen kyçe",
     "Paraguay": "Paraguai",
     "Guyana": "Guajanë",
     "Central African Republic": "Republika e Afrikës Qendrore",
@@ -416,9 +404,6 @@
     "Bangladesh": "Bangladesh",
     "Falkland Islands": "Ishujt Falkland",
     "Sweden": "Suedi",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "S’arrihet të hyhet në depozitë të fshehtë. Ju lutemi, verifikoni se keni dhënë Frazën e saktë të Sigurisë.",
-    "Invalid Security Key": "Kyç Sigurie i Pavlefshëm",
-    "Wrong Security Key": "Kyç Sigurie i Gabuar",
     "%(count)s members": {
         "one": "%(count)s anëtar",
         "other": "%(count)s anëtarë"
@@ -432,17 +417,12 @@
         "one": "%(count)s person që e njihni është bërë pjesë tashmë",
         "other": "%(count)s persona që i njihni janë bërë pjesë tashmë"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Nëse riktheni gjithçka te parazgjedhjet, do të rifilloni pa sesione të besuara, pa përdorues të besuar, dhe mund të mos jeni në gjendje të shihni mesazhe të dikurshëm.",
-    "Only do this if you have no other device to complete verification with.": "Bëjeni këtë vetëm nëse s’keni pajisje tjetër me të cilën të plotësoni verifikimin.",
-    "Reset everything": "Kthe gjithçka te parazgjedhjet",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
     "%(count)s reply": {
         "one": "%(count)s përgjigje",
         "other": "%(count)s përgjigje"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Që të vazhdohet, jepni Frazën tuaj të Sigurisë, ose <button>përdorni Kyçin tuaj të Sigurisë</button>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Rifitoni hyrjen te llogaria juaj dhe rimerrni kyçe fshehtëzimi të depozituar në këtë sesion. Pa ta, s’do të jeni në gjendje të lexoni krejt mesazhet tuaj të siguruar në çfarëdo sesion.",
     "Forget": "Harroje",
     "%(spaceName)s and %(count)s others": {
@@ -474,7 +454,6 @@
     "Saved Items": "Zëra të Ruajtur",
     "%(name)s started a video call": "%(name)s nisni një thirrje video",
     "View List": "Shihni Listën",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ose %(recoveryFile)s",
     "toggle event": "shfaqe/fshihe aktin",
     " in <strong>%(room)s</strong>": " në <strong>%(room)s</strong>",
     "unknown": "e panjohur",
@@ -2763,7 +2742,34 @@
             "title": "Jo e Besuar",
             "manual_verification_button": "Verifikojeni dorazi përmes teksti",
             "interactive_verification_button": "Verifikojeni në mënyrë ndërvepruese përmes emoji-sh"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Lloj i gabuar kartele",
+                "recovery_key_is_correct": "Mirë duket!",
+                "wrong_security_key": "Kyç Sigurie i Gabuar",
+                "invalid_security_key": "Kyç Sigurie i Pavlefshëm"
+            },
+            "reset_title": "Kthe gjithçka te parazgjedhjet",
+            "reset_warning_1": "Bëjeni këtë vetëm nëse s’keni pajisje tjetër me të cilën të plotësoni verifikimin.",
+            "reset_warning_2": "Nëse riktheni gjithçka te parazgjedhjet, do të rifilloni pa sesione të besuara, pa përdorues të besuar, dhe mund të mos jeni në gjendje të shihni mesazhe të dikurshëm.",
+            "security_phrase_title": "Frazë Sigurie",
+            "security_phrase_incorrect_error": "S’arrihet të hyhet në depozitë të fshehtë. Ju lutemi, verifikoni se keni dhënë Frazën e saktë të Sigurisë.",
+            "enter_phrase_or_key_prompt": "Që të vazhdohet, jepni Frazën tuaj të Sigurisë, ose <button>përdorni Kyçin tuaj të Sigurisë</button>.",
+            "security_key_title": "Kyç Sigurie",
+            "use_security_key_prompt": "Që të vazhdohet përdorni Kyçin tuaj të Sigurisë.",
+            "separator": "%(securityKey)s ose %(recoveryFile)s",
+            "restoring": "Po rikthehen kyçesh nga kopjeruajtje"
+        },
+        "reset_all_button": "Harruat, ose humbët krejt metodat e rimarrjes? <a>Riujdisini të gjitha</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Të shkatërrohen kyçet <em>cross-signing</em>?",
+            "warning": "Fshirja e kyçeve <em>cross-signing</em> është e përhershme. Cilido që keni verifikuar me to, do të shohë një sinjalizim sigurie. Thuajse e sigurt që s’keni pse ta bëni një gjë të tillë, veç në paçi humbur çdo pajisje prej nga mund të bëni <em>cross-sign</em>.",
+            "primary_button_text": "Spastro kyçe <em>cross-signing</em>"
+        },
+        "confirm_encryption_setup_title": "Ripohoni ujdisje fshehtëzimi",
+        "confirm_encryption_setup_body": "Klikoni mbi butonin më poshtë që të ripohoni ujdisjen e fshehtëzimit.",
+        "unable_to_setup_keys_error": "S’arrihet të ujdisen kyçe"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",

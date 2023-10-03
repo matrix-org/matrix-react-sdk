@@ -397,18 +397,6 @@
     "Sign in with SSO": "היכנס באמצעות SSO",
     "Delete Widget": "מחק ישומון",
     "%(completed)s of %(total)s keys restored": "%(completed)s שניות מתוך %(total)s מפתחות שוחזרו",
-    "Restoring keys from backup": "שחזור מפתחות מגיבוי",
-    "Unable to set up keys": "לא ניתן להגדיר מקשים",
-    "Click the button below to confirm setting up encryption.": "לחץ על הלחצן למטה כדי לאשר את הגדרת ההצפנה.",
-    "Confirm encryption setup": "אשר את הגדרת ההצפנה",
-    "Clear cross-signing keys": "נקה מפתחות חתימה צולבת",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "מחיקת מפתחות חתימה צולבת הינה קבועה. כל מי שאימתת איתו יראה התראות אבטחה. כמעט בוודאות אינך רוצה לעשות זאת, אלא אם איבדת כל מכשיר ממנו תוכל לחתום.",
-    "Destroy cross-signing keys?": "להרוס מפתחות חתימה צולבת?",
-    "Use your Security Key to continue.": "השתמש במפתח האבטחה שלך כדי להמשיך.",
-    "Security Key": "מפתח אבטחה",
-    "Security Phrase": "ביטוי אבטחה",
-    "Looks good!": "נראה טוב!",
-    "Wrong file type": "סוג קובץ שגוי",
     "Send Logs": "שלח יומנים",
     "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
     "a key signature": "חתימת מפתח",
@@ -416,9 +404,6 @@
     "a device cross-signing signature": "חתימה צולבת של התקן",
     "a new master key signature": "חתימת מפתח ראשית חדשה",
     "Switch theme": "שנה ערכת נושא",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "אין אפשרות לגשת לאחסון הסודי. אנא אשר שהזנת את ביטוי האבטחה הנכון.",
-    "Invalid Security Key": "מפתח אבטחה לא חוקי",
-    "Wrong Security Key": "מפתח אבטחה שגוי",
     "Developer": "מפתח",
     "Experimental": "נִסיוֹנִי",
     "Messaging": "הודעות",
@@ -2077,7 +2062,28 @@
             "other_new_session_text": "%(name)s %(userId)s נכנס דרך התחברות חדשה מבלי לאמת אותה:",
             "other_ask_verify_text": "בקש ממשתמש זה לאמת את ההתחברות שלו, או לאמת אותה באופן ידני למטה.",
             "title": "לא אמין"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "סוג קובץ שגוי",
+                "recovery_key_is_correct": "נראה טוב!",
+                "wrong_security_key": "מפתח אבטחה שגוי",
+                "invalid_security_key": "מפתח אבטחה לא חוקי"
+            },
+            "security_phrase_title": "ביטוי אבטחה",
+            "security_phrase_incorrect_error": "אין אפשרות לגשת לאחסון הסודי. אנא אשר שהזנת את ביטוי האבטחה הנכון.",
+            "security_key_title": "מפתח אבטחה",
+            "use_security_key_prompt": "השתמש במפתח האבטחה שלך כדי להמשיך.",
+            "restoring": "שחזור מפתחות מגיבוי"
+        },
+        "destroy_cross_signing_dialog": {
+            "title": "להרוס מפתחות חתימה צולבת?",
+            "warning": "מחיקת מפתחות חתימה צולבת הינה קבועה. כל מי שאימתת איתו יראה התראות אבטחה. כמעט בוודאות אינך רוצה לעשות זאת, אלא אם איבדת כל מכשיר ממנו תוכל לחתום.",
+            "primary_button_text": "נקה מפתחות חתימה צולבת"
+        },
+        "confirm_encryption_setup_title": "אשר את הגדרת ההצפנה",
+        "confirm_encryption_setup_body": "לחץ על הלחצן למטה כדי לאשר את הגדרת ההצפנה.",
+        "unable_to_setup_keys_error": "לא ניתן להגדיר מקשים"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",

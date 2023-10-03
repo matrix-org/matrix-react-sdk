@@ -146,28 +146,16 @@
     },
     "%(name)s declined": "%(name)s avslog",
     "Submit logs": "Skicka loggar",
-    "Destroy cross-signing keys?": "Förstöra korssigneringsnycklar?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Radering av korssigneringsnycklar är permanent. Alla du har verifierat med kommer att se säkerhetsvarningar. Du vill troligen inte göra detta, såvida du inte har tappat bort alla enheter du kan korssignera från.",
-    "Clear cross-signing keys": "Rensa korssigneringsnycklar",
     "a new master key signature": "en ny huvudnyckelsignatur",
     "a new cross-signing key signature": "en ny korssigneringssignatur",
     "a device cross-signing signature": "en enhets korssigneringssignatur",
     "a key signature": "en nyckelsignatur",
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "Wrong file type": "Fel filtyp",
-    "Looks good!": "Ser bra ut!",
-    "Security Phrase": "Säkerhetsfras",
-    "Security Key": "Säkerhetsnyckel",
-    "Use your Security Key to continue.": "Använd din säkerhetsnyckel för att fortsätta.",
-    "Restoring keys from backup": "Återställer nycklar från säkerhetskopia",
     "%(completed)s of %(total)s keys restored": "%(completed)s av %(total)s nycklar återställda",
     "Sign in with SSO": "Logga in med SSO",
     "Switch theme": "Byt tema",
-    "Confirm encryption setup": "Bekräfta krypteringsinställning",
-    "Click the button below to confirm setting up encryption.": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
     "Not encrypted": "Inte krypterad",
     "Backup version:": "Version av säkerhetskopia:",
-    "Unable to set up keys": "Kunde inte ställa in nycklar",
     "Canada": "Kanada",
     "Cameroon": "Kamerun",
     "Cambodia": "Kambodja",
@@ -417,9 +405,6 @@
     "Cayman Islands": "Caymanöarna",
     "Caribbean Netherlands": "Karibiska Nederländerna",
     "Cape Verde": "Kap Verde",
-    "Invalid Security Key": "Ogiltig säkerhetsnyckel",
-    "Wrong Security Key": "Fel säkerhetsnyckel",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Kan inte komma åt hemlig lagring. Vänligen verifiera att du angav rätt säkerhetsfras.",
     "%(count)s members": {
         "one": "%(count)s medlem",
         "other": "%(count)s medlemmar"
@@ -433,16 +418,11 @@
         "other": "%(count)s personer du känner har redan gått med",
         "one": "%(count)s person du känner har redan gått med"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Om du återställer allt så kommer du att börja om utan betrodda sessioner eller betrodda användare, och kommer kanske inte kunna se gamla meddelanden.",
-    "Only do this if you have no other device to complete verification with.": "Gör detta endast om du inte har någon annan enhet att slutföra verifikationen med.",
-    "Reset everything": "Återställ allt",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svar"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Ange din säkerhetsfras eller <button>använd din säkerhetsnyckel</button> för att fortsätta.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Återfå åtkomst till ditt konto och få tillbaka krypteringsnycklar lagrade i den här sessionen. Utan dem kommer du inte kunna läsa alla dina säkra meddelanden i någon session.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s och %(count)s till",
@@ -474,7 +454,6 @@
     "Show rooms": "Visa rum",
     "Explore public spaces in the new search dialog": "Utforska offentliga utrymmen i den nya sökdialogen",
     "Saved Items": "Sparade föremål",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eller %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s startade ett videosamtal",
     "Thread root ID: %(threadRootId)s": "Trådens rot-ID: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " i <strong>%(room)s</strong>",
@@ -2794,7 +2773,34 @@
             "title": "Inte betrodd",
             "manual_verification_button": "Verifiera manuellt med text",
             "interactive_verification_button": "Verifiera interaktivt med emoji"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Fel filtyp",
+                "recovery_key_is_correct": "Ser bra ut!",
+                "wrong_security_key": "Fel säkerhetsnyckel",
+                "invalid_security_key": "Ogiltig säkerhetsnyckel"
+            },
+            "reset_title": "Återställ allt",
+            "reset_warning_1": "Gör detta endast om du inte har någon annan enhet att slutföra verifikationen med.",
+            "reset_warning_2": "Om du återställer allt så kommer du att börja om utan betrodda sessioner eller betrodda användare, och kommer kanske inte kunna se gamla meddelanden.",
+            "security_phrase_title": "Säkerhetsfras",
+            "security_phrase_incorrect_error": "Kan inte komma åt hemlig lagring. Vänligen verifiera att du angav rätt säkerhetsfras.",
+            "enter_phrase_or_key_prompt": "Ange din säkerhetsfras eller <button>använd din säkerhetsnyckel</button> för att fortsätta.",
+            "security_key_title": "Säkerhetsnyckel",
+            "use_security_key_prompt": "Använd din säkerhetsnyckel för att fortsätta.",
+            "separator": "%(securityKey)s eller %(recoveryFile)s",
+            "restoring": "Återställer nycklar från säkerhetskopia"
+        },
+        "reset_all_button": "Glömt eller förlorat alla återställningsalternativ? <a>Återställ allt</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Förstöra korssigneringsnycklar?",
+            "warning": "Radering av korssigneringsnycklar är permanent. Alla du har verifierat med kommer att se säkerhetsvarningar. Du vill troligen inte göra detta, såvida du inte har tappat bort alla enheter du kan korssignera från.",
+            "primary_button_text": "Rensa korssigneringsnycklar"
+        },
+        "confirm_encryption_setup_title": "Bekräfta krypteringsinställning",
+        "confirm_encryption_setup_body": "Klicka på knappen nedan för att bekräfta inställning av kryptering.",
+        "unable_to_setup_keys_error": "Kunde inte ställa in nycklar"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",

@@ -32,13 +32,6 @@
     "Sign in with SSO": "Đăng nhập bằng SSO",
     "Delete Widget": "Xóa Widget",
     "%(completed)s of %(total)s keys restored": "Đã khôi phục%(completed)s trong số %(total)s khóa",
-    "Restoring keys from backup": "Khôi phục khóa từ sao lưu",
-    "Unable to set up keys": "Không thể thiết lập khóa",
-    "Click the button below to confirm setting up encryption.": "Nhấp vào nút bên dưới để xác nhận thiết lập mã hóa.",
-    "Confirm encryption setup": "Xác nhận thiết lập mã hóa",
-    "Clear cross-signing keys": "Xóa các khóa ký chéo",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Xóa khóa ký chéo là vĩnh viễn. Bất kỳ ai mà bạn đã xác thực đều sẽ thấy cảnh báo bảo mật. Bạn gần như chắc chắn không muốn làm điều này, trừ khi bạn bị mất mọi thiết bị mà bạn có thể đăng nhập chéo.",
-    "Destroy cross-signing keys?": "Hủy khóa xác thực chéo?",
     "%(count)s rooms": {
         "one": "%(count)s phòng",
         "other": "%(count)s phòng"
@@ -55,19 +48,6 @@
     "<inviter/> invites you": "<inviter /> mời bạn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Trước khi gửi log, bạn phải <a>tạo một sự cố trên Github</a> để mô tả vấn đề của mình.",
     "e.g. my-room": "ví dụ: phòng của tôi my-room",
-    "Use your Security Key to continue.": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
-    "Security Key": "Chìa khóa bảo mật",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Nhập Chuỗi bảo mật hoặc <button>sử dụng Khóa bảo mật</button> của bạn để tiếp tục.",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Không thể truy cập bộ nhớ bí mật. Vui lòng xác minh rằng bạn đã nhập đúng Cụm từ bảo mật.",
-    "Security Phrase": "Cụm từ Bảo mật",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Nếu bạn đặt lại mọi thứ, bạn sẽ khởi động lại mà không có phiên nào đáng tin cậy, không có người dùng đáng tin cậy và có thể không xem được các tin nhắn trước đây.",
-    "Only do this if you have no other device to complete verification with.": "Chỉ thực hiện việc này nếu bạn không có thiết bị nào khác để hoàn tất quá trình xác thực.",
-    "Reset everything": "Đặt lại mọi thứ",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Quên hoặc mất tất cả các phương pháp khôi phục? Đặt lại tất cả <a>Reset all</a>",
-    "Invalid Security Key": "Khóa bảo mật không hợp lệ",
-    "Wrong Security Key": "Khóa bảo mật sai",
-    "Looks good!": "Có vẻ tốt!",
-    "Wrong file type": "Loại tệp sai",
     "Send Logs": "Gửi những bản ghi",
     "%(count)s people you know have already joined": {
         "one": "%(count)s người bạn đã biết vừa tham gia",
@@ -474,7 +454,6 @@
     " in <strong>%(room)s</strong>": " ở <strong>%(room)s</strong>",
     "Show rooms": "Hiện phòng",
     "Show spaces": "Hiện spaces",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s hay %(recoveryFile)s",
     "unavailable": "không có sẵn",
     "%(name)s started a video call": "%(name)s đã bắt đầu một cuộc gọi truyền hình",
     "<w>WARNING:</w> <description/>": "",
@@ -2697,7 +2676,34 @@
             "title": "Không tin cậy",
             "manual_verification_button": "Xác thực thủ công bằng văn bản",
             "interactive_verification_button": "Xác thực có tương tác bằng biểu tượng cảm xúc"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Loại tệp sai",
+                "recovery_key_is_correct": "Có vẻ tốt!",
+                "wrong_security_key": "Khóa bảo mật sai",
+                "invalid_security_key": "Khóa bảo mật không hợp lệ"
+            },
+            "reset_title": "Đặt lại mọi thứ",
+            "reset_warning_1": "Chỉ thực hiện việc này nếu bạn không có thiết bị nào khác để hoàn tất quá trình xác thực.",
+            "reset_warning_2": "Nếu bạn đặt lại mọi thứ, bạn sẽ khởi động lại mà không có phiên nào đáng tin cậy, không có người dùng đáng tin cậy và có thể không xem được các tin nhắn trước đây.",
+            "security_phrase_title": "Cụm từ Bảo mật",
+            "security_phrase_incorrect_error": "Không thể truy cập bộ nhớ bí mật. Vui lòng xác minh rằng bạn đã nhập đúng Cụm từ bảo mật.",
+            "enter_phrase_or_key_prompt": "Nhập Chuỗi bảo mật hoặc <button>sử dụng Khóa bảo mật</button> của bạn để tiếp tục.",
+            "security_key_title": "Chìa khóa bảo mật",
+            "use_security_key_prompt": "Sử dụng Khóa bảo mật của bạn để tiếp tục.",
+            "separator": "%(securityKey)s hay %(recoveryFile)s",
+            "restoring": "Khôi phục khóa từ sao lưu"
+        },
+        "reset_all_button": "Quên hoặc mất tất cả các phương pháp khôi phục? Đặt lại tất cả <a>Reset all</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Hủy khóa xác thực chéo?",
+            "warning": "Xóa khóa ký chéo là vĩnh viễn. Bất kỳ ai mà bạn đã xác thực đều sẽ thấy cảnh báo bảo mật. Bạn gần như chắc chắn không muốn làm điều này, trừ khi bạn bị mất mọi thiết bị mà bạn có thể đăng nhập chéo.",
+            "primary_button_text": "Xóa các khóa ký chéo"
+        },
+        "confirm_encryption_setup_title": "Xác nhận thiết lập mã hóa",
+        "confirm_encryption_setup_body": "Nhấp vào nút bên dưới để xác nhận thiết lập mã hóa.",
+        "unable_to_setup_keys_error": "Không thể thiết lập khóa"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",

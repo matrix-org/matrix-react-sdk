@@ -130,8 +130,6 @@
         "one": "%(count)s oturum"
     },
     "Delete Widget": "Görsel Bileşen Sil",
-    "Destroy cross-signing keys?": "Çarpraz-imzalama anahtarlarını imha et?",
-    "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "a new master key signature": "yeni bir master anahtar imzası",
@@ -399,8 +397,6 @@
     "Smiley": "Gülen yüz",
     "Not encrypted": "Şifrelenmemiş",
     "Backup version:": "Yedekleme sürümü:",
-    "Looks good!": "İyi görünüyor!",
-    "Security Key": "Güvenlik anahtarı",
     "Switch theme": "Temayı değiştir",
     "Submit logs": "Günlükleri kaydet",
     "common": {
@@ -1621,6 +1617,16 @@
             "other_new_session_text": "%(name)s (%(userId)s) yeni oturuma doğrulamadan giriş yaptı:",
             "other_ask_verify_text": "Kullanıcıya oturumunu doğrulamasını söyle, ya da aşağıdan doğrula.",
             "title": "Güvenilmiyor"
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "recovery_key_is_correct": "İyi görünüyor!"
+            },
+            "security_key_title": "Güvenlik anahtarı"
+        },
+        "destroy_cross_signing_dialog": {
+            "title": "Çarpraz-imzalama anahtarlarını imha et?",
+            "primary_button_text": "Çapraz-imzalama anahtarlarını temizle"
         }
     },
     "emoji": {

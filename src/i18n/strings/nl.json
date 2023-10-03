@@ -140,9 +140,6 @@
     "%(name)s declined": "%(name)s heeft geweigerd",
     "%(name)s cancelled": "%(name)s heeft geannuleerd",
     "%(name)s wants to verify": "%(name)s wil verifiëren",
-    "Destroy cross-signing keys?": "Sleutels voor kruiselings ondertekenen verwijderen?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
-    "Clear cross-signing keys": "Sleutels voor kruiselings ondertekenen wissen",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Bekijk eerst het <a>openbaarmakingsbeleid</a> van Matrix.org als je een probleem met de beveiliging van Matrix wilt melden.",
     "Your homeserver has exceeded its user limit.": "Jouw homeserver heeft het maximaal aantal personen overschreden.",
     "Your homeserver has exceeded one of its resource limits.": "Jouw homeserver heeft een van zijn limieten overschreden.",
@@ -398,21 +395,9 @@
     "St. Lucia": "Sint Lucia",
     "South Sudan": "Zuid-Soedan",
     "Oman": "Oman",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Geen toegang tot geheime opslag. Controleer of u het juiste veiligheidswachtwoord hebt ingevoerd.",
     "Switch theme": "Thema wisselen",
     "Sign in with SSO": "Inloggen met SSO",
     "%(completed)s of %(total)s keys restored": "%(completed)s van %(total)s sleutels hersteld",
-    "Restoring keys from backup": "Sleutels herstellen vanaf back-up",
-    "Unable to set up keys": "Kan geen sleutels instellen",
-    "Click the button below to confirm setting up encryption.": "Klik op de knop hieronder om het instellen van de versleuting te bevestigen.",
-    "Confirm encryption setup": "Bevestig versleuting instelling",
-    "Use your Security Key to continue.": "Gebruik uw veiligheidssleutel om verder te gaan.",
-    "Security Key": "Veiligheidssleutel",
-    "Security Phrase": "Veiligheidswachtwoord",
-    "Invalid Security Key": "Ongeldige veiligheidssleutel",
-    "Wrong Security Key": "Verkeerde veiligheidssleutel",
-    "Looks good!": "Ziet er goed uit!",
-    "Wrong file type": "Verkeerd bestandstype",
     "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
     "a key signature": "een sleutel ondertekening",
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
@@ -433,12 +418,7 @@
         "one": "%(count)s persoon die je kent is al geregistreerd",
         "other": "%(count)s personen die je kent hebben zich al geregistreerd"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Als u alles reset zult u opnieuw opstarten zonder vertrouwde sessies, zonder vertrouwde personen, en zult u misschien geen oude berichten meer kunnen zien.",
-    "Only do this if you have no other device to complete verification with.": "Doe dit alleen als u geen ander apparaat hebt om de verificatie mee uit te voeren.",
-    "Reset everything": "Alles opnieuw instellen",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
         "one": "%(count)s reactie",
         "other": "%(count)s reacties"
@@ -474,7 +454,6 @@
     "Show rooms": "Toon kamers",
     "Explore public spaces in the new search dialog": "Ontdek openbare ruimtes in het nieuwe zoekvenster",
     "Saved Items": "Opgeslagen items",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s of %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s is een videogesprek gestart",
     "common": {
         "about": "Over",
@@ -2587,7 +2566,34 @@
             "title": "Niet vertrouwd",
             "manual_verification_button": "Handmatig verifiëren via tekst",
             "interactive_verification_button": "Interactief verifiëren door emoji"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Verkeerd bestandstype",
+                "recovery_key_is_correct": "Ziet er goed uit!",
+                "wrong_security_key": "Verkeerde veiligheidssleutel",
+                "invalid_security_key": "Ongeldige veiligheidssleutel"
+            },
+            "reset_title": "Alles opnieuw instellen",
+            "reset_warning_1": "Doe dit alleen als u geen ander apparaat hebt om de verificatie mee uit te voeren.",
+            "reset_warning_2": "Als u alles reset zult u opnieuw opstarten zonder vertrouwde sessies, zonder vertrouwde personen, en zult u misschien geen oude berichten meer kunnen zien.",
+            "security_phrase_title": "Veiligheidswachtwoord",
+            "security_phrase_incorrect_error": "Geen toegang tot geheime opslag. Controleer of u het juiste veiligheidswachtwoord hebt ingevoerd.",
+            "enter_phrase_or_key_prompt": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
+            "security_key_title": "Veiligheidssleutel",
+            "use_security_key_prompt": "Gebruik uw veiligheidssleutel om verder te gaan.",
+            "separator": "%(securityKey)s of %(recoveryFile)s",
+            "restoring": "Sleutels herstellen vanaf back-up"
+        },
+        "reset_all_button": "Alles vergeten en alle herstelmethoden verloren? <a>Alles opnieuw instellen</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Sleutels voor kruiselings ondertekenen verwijderen?",
+            "warning": "Het verwijderen van sleutels voor kruiselings ondertekenen is niet terug te draaien. Iedereen waarmee u geverifieerd heeft zal beveiligingswaarschuwingen te zien krijgen. U wilt dit hoogstwaarschijnlijk niet doen, tenzij u alle apparaten heeft verloren waarmee u kruiselings kon ondertekenen.",
+            "primary_button_text": "Sleutels voor kruiselings ondertekenen wissen"
+        },
+        "confirm_encryption_setup_title": "Bevestig versleuting instelling",
+        "confirm_encryption_setup_body": "Klik op de knop hieronder om het instellen van de versleuting te bevestigen.",
+        "unable_to_setup_keys_error": "Kan geen sleutels instellen"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",

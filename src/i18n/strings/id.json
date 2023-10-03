@@ -411,26 +411,6 @@
     "Sign in with SSO": "Masuk dengan SSO",
     "Forget": "Lupakan",
     "%(completed)s of %(total)s keys restored": "%(completed)s dari %(total)s kunci dipulihkan",
-    "Restoring keys from backup": "Memulihkan kunci-kunci dari cadangan",
-    "Unable to set up keys": "Tidak dapat mengatur kunci-kunci",
-    "Click the button below to confirm setting up encryption.": "Klik tombol di bawah untuk mengkonfirmasi menyiapkan enkripsi.",
-    "Confirm encryption setup": "Konfirmasi pengaturan enkripsi",
-    "Clear cross-signing keys": "Hapus kunci-kunci penandatanganan silang",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Menghapus kunci penandatanganan silang itu permanen. Siapa saja yang Anda verifikasi akan melihat peringatan keamanan. Anda hampir pasti tidak ingin melakukan ini, kecuali jika Anda kehilangan setiap perangkat yang dapat digunakan untuk melakukan penandatanganan silang.",
-    "Destroy cross-signing keys?": "Hancurkan kunci-kunci penandatanganan silang?",
-    "Use your Security Key to continue.": "Gunakan Kunci Keamanan Anda untuk melanjutkan.",
-    "Security Key": "Kunci Keamanan",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Masukkan Frasa Keamanan Anda atau <button>gunakan Kunci Keamanan Anda</button> untuk melanjutkan.",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Tidak dapat mengakses penyimpanan rahasia. Periksa jika Anda memasukkan Frasa Keamanan yang benar.",
-    "Security Phrase": "Frasa Keamanan",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Jika Anda mengatur ulang semuanya, Anda dengan mulai ulang dengan tidak ada sesi yang dipercayai, tidak ada pengguna yang dipercayai, dan mungkin tidak dapat melihat pesan-pesan lama.",
-    "Only do this if you have no other device to complete verification with.": "Hanya lakukan ini jika Anda tidak memiliki perangkat yang lain untuk menyelesaikan verifikasi.",
-    "Reset everything": "Atur ulang semuanya",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Lupa atau kehilangan semua metode pemulihan? <a>Atur ulang semuanya</a>",
-    "Invalid Security Key": "Kunci Keamanan tidak absah",
-    "Wrong Security Key": "Kunci Keamanan salah",
-    "Looks good!": "Kelihatannya bagus!",
-    "Wrong file type": "Tipe file salah",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Dapatkan kembali akses ke akun Anda dan pulihkan kunci enkripsi yang disimpan dalam sesi ini. Tanpa mereka, Anda tidak akan dapat membaca semua pesan aman Anda di sesi mana saja.",
     "%(count)s rooms": {
         "one": "%(count)s ruangan",
@@ -474,7 +454,6 @@
     "Show rooms": "Tampilkan ruangan",
     "Explore public spaces in the new search dialog": "Jelajahi space publik di dialog pencarian baru",
     "Saved Items": "Item yang Tersimpan",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s atau %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s memulai sebuah panggilan video",
     "Thread root ID: %(threadRootId)s": "ID akar utasan: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " di <strong>%(room)s</strong>",
@@ -2848,7 +2827,34 @@
             "title": "Tidak Dipercayai",
             "manual_verification_button": "Verifikasi secara manual dengan teks",
             "interactive_verification_button": "Verifikasi secara interaktif sengan emoji"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Tipe file salah",
+                "recovery_key_is_correct": "Kelihatannya bagus!",
+                "wrong_security_key": "Kunci Keamanan salah",
+                "invalid_security_key": "Kunci Keamanan tidak absah"
+            },
+            "reset_title": "Atur ulang semuanya",
+            "reset_warning_1": "Hanya lakukan ini jika Anda tidak memiliki perangkat yang lain untuk menyelesaikan verifikasi.",
+            "reset_warning_2": "Jika Anda mengatur ulang semuanya, Anda dengan mulai ulang dengan tidak ada sesi yang dipercayai, tidak ada pengguna yang dipercayai, dan mungkin tidak dapat melihat pesan-pesan lama.",
+            "security_phrase_title": "Frasa Keamanan",
+            "security_phrase_incorrect_error": "Tidak dapat mengakses penyimpanan rahasia. Periksa jika Anda memasukkan Frasa Keamanan yang benar.",
+            "enter_phrase_or_key_prompt": "Masukkan Frasa Keamanan Anda atau <button>gunakan Kunci Keamanan Anda</button> untuk melanjutkan.",
+            "security_key_title": "Kunci Keamanan",
+            "use_security_key_prompt": "Gunakan Kunci Keamanan Anda untuk melanjutkan.",
+            "separator": "%(securityKey)s atau %(recoveryFile)s",
+            "restoring": "Memulihkan kunci-kunci dari cadangan"
+        },
+        "reset_all_button": "Lupa atau kehilangan semua metode pemulihan? <a>Atur ulang semuanya</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Hancurkan kunci-kunci penandatanganan silang?",
+            "warning": "Menghapus kunci penandatanganan silang itu permanen. Siapa saja yang Anda verifikasi akan melihat peringatan keamanan. Anda hampir pasti tidak ingin melakukan ini, kecuali jika Anda kehilangan setiap perangkat yang dapat digunakan untuk melakukan penandatanganan silang.",
+            "primary_button_text": "Hapus kunci-kunci penandatanganan silang"
+        },
+        "confirm_encryption_setup_title": "Konfirmasi pengaturan enkripsi",
+        "confirm_encryption_setup_body": "Klik tombol di bawah untuk mengkonfirmasi menyiapkan enkripsi.",
+        "unable_to_setup_keys_error": "Tidak dapat mengatur kunci-kunci"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",

@@ -71,7 +71,6 @@
     "Lebanon": "Libāna",
     "Bangladesh": "Bangladeša",
     "Albania": "Albānija",
-    "Security Phrase": "Slepenā frāze",
     "Afghanistan": "Afganistāna",
     "United States": "Amerikas Savienotās Valstis",
     "United Kingdom": "Lielbritānija",
@@ -80,10 +79,6 @@
     "Deactivate account": "Deaktivizēt kontu",
     "e.g. my-room": "piem., mana-istaba",
     "Flag": "Karogs",
-    "Use your Security Key to continue.": "Izmantojiet savu drošības atslēgu, lai turpinātu.",
-    "Invalid Security Key": "Kļūdaina drošības atslēga",
-    "Wrong Security Key": "Nepareiza drošības atslēga",
-    "Security Key": "Drošības atslēga",
     "Sign in with SSO": "Pierakstieties, izmantojot SSO",
     "Ok": "Labi",
     "Your homeserver has exceeded one of its resource limits.": "Jūsu bāzes serverī ir pārsniegts limits kādam no resursiem.",
@@ -349,7 +344,6 @@
     "Angola": "Angola",
     "Andorra": "Andora",
     "Åland Islands": "Ālandu salas",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Corn": "Kukurūza",
     "To join a space you'll need an invite.": "Lai pievienotos vietai, ir nepieciešams uzaicinājums.",
     "common": {
@@ -1435,7 +1429,17 @@
             "own_ask_verify_text": "Verificējiet citas jūsu sesijas, izmantojot kādu no iespējām zemāk.",
             "other_new_session_text": "%(name)s (%(userId)s) pierakstījās jaunā sesijā, neveicot tās verifikāciju:",
             "title": "Neuzticama"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_security_key": "Nepareiza drošības atslēga",
+                "invalid_security_key": "Kļūdaina drošības atslēga"
+            },
+            "security_phrase_title": "Slepenā frāze",
+            "security_key_title": "Drošības atslēga",
+            "use_security_key_prompt": "Izmantojiet savu drošības atslēgu, lai turpinātu."
+        },
+        "reset_all_button": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>"
     },
     "emoji": {
         "category_frequently_used": "Bieži lietotas",

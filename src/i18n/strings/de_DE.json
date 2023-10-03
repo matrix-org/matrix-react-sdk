@@ -141,33 +141,21 @@
     "e.g. my-room": "z. B. mein-raum",
     "Failed to connect to integration manager": "Fehler beim Verbinden mit dem Integrations-Server",
     "Submit logs": "Protokolldateien senden",
-    "Destroy cross-signing keys?": "Cross-Signing-Schlüssel zerstören?",
-    "Clear cross-signing keys": "Cross-Signing-Schlüssel löschen",
     "a new master key signature": "Eine neue Hauptschlüssel Signatur",
     "a new cross-signing key signature": "Eine neue Cross-Signing-Schlüsselsignatur",
     "a device cross-signing signature": "Eine Geräte Schlüssel Signatur",
     "a key signature": "Eine Schlüssel Signatur",
-    "Restoring keys from backup": "Schlüssel aus der Sicherung wiederherstellen",
     "%(completed)s of %(total)s keys restored": "%(completed)s von %(total)s Schlüsseln wiederhergestellt",
     "Sign in with SSO": "Einmalanmeldung verwenden",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
-    "Confirm encryption setup": "Bestätige die Einrichtung der Verschlüsselung",
-    "Click the button below to confirm setting up encryption.": "Klick die Schaltfläche unten um die Einstellungen der Verschlüsselung zu bestätigen.",
     "IRC display name width": "Breite des IRC-Anzeigenamens",
     "Your homeserver has exceeded its user limit.": "Dein Heim-Server hat den Benutzergrenzwert erreicht.",
     "Your homeserver has exceeded one of its resource limits.": "Dein Heim-Server hat einen seiner Ressourcengrenzwerte erreicht.",
     "Ok": "Ok",
     "Switch theme": "Design wechseln",
-    "Looks good!": "Sieht gut aus!",
-    "Wrong file type": "Falscher Dateityp",
     "%(brand)s encountered an error during upload of:": "%(brand)s hat einen Fehler festgestellt beim hochladen von:",
-    "Security Phrase": "Sicherheitsphrase",
-    "Security Key": "Sicherheitsschlüssel",
-    "Use your Security Key to continue.": "Benutze deinen Sicherheitsschlüssel um fortzufahren.",
     "Not encrypted": "Nicht verschlüsselt",
     "Backup version:": "Version der Sicherung:",
-    "Unable to set up keys": "Schlüssel können nicht eingerichtet werden",
     "Uzbekistan": "Usbekistan",
     "Zimbabwe": "Simbabwe",
     "Zambia": "Sambia",
@@ -417,9 +405,6 @@
     "Afghanistan": "Afghanistan",
     "United States": "Vereinigte Staaten",
     "United Kingdom": "Großbritannien",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Zugriff auf sicheren Speicher nicht möglich. Bitte überprüfe, ob du die richtige Sicherheitsphrase eingegeben hast.",
-    "Invalid Security Key": "Ungültiger Sicherheitsschlüssel",
-    "Wrong Security Key": "Falscher Sicherheitsschlüssel",
     "%(count)s members": {
         "other": "%(count)s Mitglieder",
         "one": "%(count)s Mitglied"
@@ -433,16 +418,11 @@
         "one": "%(count)s Person, die du kennst, ist schon beigetreten",
         "other": "%(count)s Leute, die du kennst, sind bereits beigetreten"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Wenn du alles zurücksetzt, beginnst du ohne verifizierte Sitzungen und Benutzende von Neuem und siehst eventuell keine alten Nachrichten.",
-    "Only do this if you have no other device to complete verification with.": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
-    "Reset everything": "Alles zurücksetzen",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
     "%(count)s reply": {
         "one": "%(count)s Antwort",
         "other": "%(count)s Antworten"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
     "Forget": "Vergessen",
     "%(count)s votes": {
@@ -474,7 +454,6 @@
     "You cannot search for rooms that are neither a room nor a space": "Du kannst nicht nach Räumen suchen, die kein Raum oder Space sind",
     "Unread email icon": "Ungelesene E-Mail Symbol",
     "Saved Items": "Gespeicherte Elemente",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s oder %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s hat einen Videoanruf begonnen",
     "Thread root ID: %(threadRootId)s": "Thread-Ursprungs-ID: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " in <strong>%(room)s</strong>",
@@ -2848,7 +2827,34 @@
             "title": "Nicht vertraut",
             "manual_verification_button": "Manuell per Text verifizieren",
             "interactive_verification_button": "Interaktiv per Emoji verifizieren"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Falscher Dateityp",
+                "recovery_key_is_correct": "Sieht gut aus!",
+                "wrong_security_key": "Falscher Sicherheitsschlüssel",
+                "invalid_security_key": "Ungültiger Sicherheitsschlüssel"
+            },
+            "reset_title": "Alles zurücksetzen",
+            "reset_warning_1": "Verwende es nur, wenn du kein Gerät, mit dem du dich verifizieren kannst, bei dir hast.",
+            "reset_warning_2": "Wenn du alles zurücksetzt, beginnst du ohne verifizierte Sitzungen und Benutzende von Neuem und siehst eventuell keine alten Nachrichten.",
+            "security_phrase_title": "Sicherheitsphrase",
+            "security_phrase_incorrect_error": "Zugriff auf sicheren Speicher nicht möglich. Bitte überprüfe, ob du die richtige Sicherheitsphrase eingegeben hast.",
+            "enter_phrase_or_key_prompt": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
+            "security_key_title": "Sicherheitsschlüssel",
+            "use_security_key_prompt": "Benutze deinen Sicherheitsschlüssel um fortzufahren.",
+            "separator": "%(securityKey)s oder %(recoveryFile)s",
+            "restoring": "Schlüssel aus der Sicherung wiederherstellen"
+        },
+        "reset_all_button": "Hast du alle Wiederherstellungsmethoden vergessen? <a>Setze sie hier zurück</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Cross-Signing-Schlüssel zerstören?",
+            "warning": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
+            "primary_button_text": "Cross-Signing-Schlüssel löschen"
+        },
+        "confirm_encryption_setup_title": "Bestätige die Einrichtung der Verschlüsselung",
+        "confirm_encryption_setup_body": "Klick die Schaltfläche unten um die Einstellungen der Verschlüsselung zu bestätigen.",
+        "unable_to_setup_keys_error": "Schlüssel können nicht eingerichtet werden"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",

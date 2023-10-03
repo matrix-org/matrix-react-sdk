@@ -140,9 +140,6 @@
         "one": "saio %(count)s"
     },
     "%(name)s declined": "%(name)s erabiltzaileak ukatu du",
-    "Destroy cross-signing keys?": "Suntsitu zeharkako sinatzerako gakoak?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
-    "Clear cross-signing keys": "Garbitu zeharkako sinatzerako gakoak",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Matrix-ekin lotutako segurtasun arazo baten berri emateko, irakurri <a>Segurtasun ezagutarazte gidalerroak</a>.",
     "a new master key signature": "gako nagusiaren sinadura berria",
     "a new cross-signing key signature": "zeharkako sinatze gako sinadura berria",
@@ -152,16 +149,11 @@
     "Sign in with SSO": "Hasi saioa SSO-rekin",
     "Submit logs": "Bidali egunkariak",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
-    "Restoring keys from backup": "Gakoak babes-kopiatik berrezartzen",
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s gako berreskuratuta",
-    "Confirm encryption setup": "Berretsi zifratze ezarpena",
-    "Click the button below to confirm setting up encryption.": "Sakatu azpiko botoia zifratze-ezarpena berresteko.",
     "Your homeserver has exceeded its user limit.": "Zure hasiera-zerbitzariak erabiltzaile muga gainditu du.",
     "Your homeserver has exceeded one of its resource limits.": "Zure hasiera-zerbitzariak bere baliabide mugetako bat gainditu du.",
     "Ok": "Ados",
     "Switch theme": "Aldatu azala",
-    "Wrong file type": "Okerreko fitxategi-mota",
-    "Looks good!": "Itxura ona du!",
     "common": {
         "analytics": "Estatistikak",
         "encryption_enabled": "Zifratzea gaituta",
@@ -1278,7 +1270,21 @@
             "other_new_session_text": "%(name)s (%(userId)s) erabiltzaileak saio berria hasi du hau egiaztatu gabe:",
             "other_ask_verify_text": "Eskatu erabiltzaile honi saioa egiaztatu dezala, edo egiaztatu eskuz azpian.",
             "title": "Ez konfiantzazkoa"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Okerreko fitxategi-mota",
+                "recovery_key_is_correct": "Itxura ona du!"
+            },
+            "restoring": "Gakoak babes-kopiatik berrezartzen"
+        },
+        "destroy_cross_signing_dialog": {
+            "title": "Suntsitu zeharkako sinatzerako gakoak?",
+            "warning": "Zeharkako sinatzerako gakoak ezabatzea behin betiko da. Egiaztatu dituzunak segurtasun abisu bat jasoko dute.  Ziur aski ez duzu hau egin nahi, zeharkako sinatzea ahalbidetzen dizun gailu oro galdu ez baduzu.",
+            "primary_button_text": "Garbitu zeharkako sinatzerako gakoak"
+        },
+        "confirm_encryption_setup_title": "Berretsi zifratze ezarpena",
+        "confirm_encryption_setup_body": "Sakatu azpiko botoia zifratze-ezarpena berresteko."
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",

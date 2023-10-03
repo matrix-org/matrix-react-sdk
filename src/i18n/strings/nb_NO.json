@@ -129,10 +129,7 @@
     "Ok": "OK",
     "Santa": "Julenisse",
     "Switch theme": "Bytt tema",
-    "Confirm encryption setup": "Bekreft krypteringsoppsett",
     "Lock": "Lås",
-    "Wrong file type": "Feil filtype",
-    "Looks good!": "Ser bra ut!",
     "Encrypted by a deleted session": "Kryptert av en slettet sesjon",
     "Jordan": "Jordan",
     "Jersey": "Jersey",
@@ -194,10 +191,6 @@
     "Germany": "Tyskland",
     "Malta": "Malta",
     "Uruguay": "Uruguay",
-    "Security Phrase": "Sikkerhetsfrase",
-    "Security Key": "Sikkerhetsnøkkel",
-    "Invalid Security Key": "Ugyldig sikkerhetsnøkkel",
-    "Wrong Security Key": "Feil sikkerhetsnøkkel",
     "Not encrypted": "Ikke kryptert",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
@@ -1365,7 +1358,18 @@
         "udd": {
             "own_ask_verify_text": "Verifiser den andre økten din med en av metodene nedenfor.",
             "title": "Ikke betrodd"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Feil filtype",
+                "recovery_key_is_correct": "Ser bra ut!",
+                "wrong_security_key": "Feil sikkerhetsnøkkel",
+                "invalid_security_key": "Ugyldig sikkerhetsnøkkel"
+            },
+            "security_phrase_title": "Sikkerhetsfrase",
+            "security_key_title": "Sikkerhetsnøkkel"
+        },
+        "confirm_encryption_setup_title": "Bekreft krypteringsoppsett"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",

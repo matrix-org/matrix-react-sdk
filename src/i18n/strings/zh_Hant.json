@@ -139,9 +139,6 @@
         "other": "%(count)s 個工作階段",
         "one": "%(count)s 個工作階段"
     },
-    "Destroy cross-signing keys?": "摧毀交叉簽署金鑰？",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
-    "Clear cross-signing keys": "清除交叉簽署金鑰",
     "%(name)s declined": "%(name)s 拒絕了",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "要回報與 Matrix 有關的安全性問題，請閱讀 Matrix.org 的<a>安全性揭露政策</a>。",
     "a new master key signature": "新的主金鑰簽署",
@@ -151,23 +148,14 @@
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上傳以下內容時遇到錯誤：",
     "Sign in with SSO": "使用 SSO 登入",
     "Submit logs": "遞交紀錄檔",
-    "Restoring keys from backup": "從備份還原金鑰",
     "%(completed)s of %(total)s keys restored": "%(total)s 中的 %(completed)s 金鑰已復原",
-    "Confirm encryption setup": "確認加密設定",
-    "Click the button below to confirm setting up encryption.": "點擊下方按鈕以確認設定加密。",
     "IRC display name width": "IRC 顯示名稱寬度",
     "Your homeserver has exceeded its user limit.": "您的家伺服器已超過使用者限制。",
     "Your homeserver has exceeded one of its resource limits.": "您的家伺服器已超過其中一種資源限制。",
     "Ok": "確定",
     "Switch theme": "切換佈景主題",
-    "Looks good!": "看起來真棒！",
-    "Wrong file type": "錯誤的檔案類型",
-    "Security Phrase": "安全密語",
-    "Security Key": "安全金鑰",
-    "Use your Security Key to continue.": "使用您的安全金鑰以繼續。",
     "Not encrypted": "未加密",
     "Backup version:": "備份版本：",
-    "Unable to set up keys": "無法設定金鑰",
     "Zimbabwe": "辛巴威",
     "Zambia": "尚比亞",
     "Yemen": "葉門",
@@ -417,9 +405,6 @@
     "Afghanistan": "阿富汗",
     "United States": "美國",
     "United Kingdom": "英國",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "無法存取祕密儲存空間。請確認您輸入了正確的安全密語。",
-    "Invalid Security Key": "無效的安全金鑰",
-    "Wrong Security Key": "錯誤的安全金鑰",
     "%(count)s members": {
         "one": "%(count)s 位成員",
         "other": "%(count)s 位成員"
@@ -433,16 +418,11 @@
         "other": "%(count)s 個您認識的人已加入",
         "one": "%(count)s 個您認識的人已加入"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "如果您重設所有東西，您將會在沒有受信任的工作階段、沒有受信任的使用者的情況下重新啟動，且可能會看不到過去的訊息。",
-    "Only do this if you have no other device to complete verification with.": "當您沒有其他裝置可以完成驗證時，才執行此動作。",
-    "Reset everything": "重設所有東西",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘記或遺失了所有復原方法？<a>重設全部</a>",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
         "other": "%(count)s 回覆"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "輸入您的安全密語或<button>使用您的安全金鑰</button>以繼續。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新存取您的帳號並復原儲存在此工作階段中的加密金鑰。沒有它們，您將無法在任何工作階段中閱讀所有安全訊息。",
     "Forget": "忘記",
     "%(count)s votes": {
@@ -474,7 +454,6 @@
     "Show rooms": "顯示聊天室",
     "Explore public spaces in the new search dialog": "在新的搜尋對話方框中探索公開聊天空間",
     "Saved Items": "已儲存的項目",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s 或 %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s 開始了視訊通話",
     "Thread root ID: %(threadRootId)s": "討論串根 ID：%(threadRootId)s",
     " in <strong>%(room)s</strong>": " 在 <strong>%(room)s</strong>",
@@ -2841,7 +2820,34 @@
             "title": "未受信任",
             "manual_verification_button": "透過文字手動驗證",
             "interactive_verification_button": "透過表情符號互動來驗證"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "錯誤的檔案類型",
+                "recovery_key_is_correct": "看起來真棒！",
+                "wrong_security_key": "錯誤的安全金鑰",
+                "invalid_security_key": "無效的安全金鑰"
+            },
+            "reset_title": "重設所有東西",
+            "reset_warning_1": "當您沒有其他裝置可以完成驗證時，才執行此動作。",
+            "reset_warning_2": "如果您重設所有東西，您將會在沒有受信任的工作階段、沒有受信任的使用者的情況下重新啟動，且可能會看不到過去的訊息。",
+            "security_phrase_title": "安全密語",
+            "security_phrase_incorrect_error": "無法存取祕密儲存空間。請確認您輸入了正確的安全密語。",
+            "enter_phrase_or_key_prompt": "輸入您的安全密語或<button>使用您的安全金鑰</button>以繼續。",
+            "security_key_title": "安全金鑰",
+            "use_security_key_prompt": "使用您的安全金鑰以繼續。",
+            "separator": "%(securityKey)s 或 %(recoveryFile)s",
+            "restoring": "從備份還原金鑰"
+        },
+        "reset_all_button": "忘記或遺失了所有復原方法？<a>重設全部</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "摧毀交叉簽署金鑰？",
+            "warning": "永久刪除交叉簽署金鑰。任何您已驗證過的人都會看到安全性警告。除非您遺失了所有可以進行交叉簽署的裝置，否則您不會想要這樣做。",
+            "primary_button_text": "清除交叉簽署金鑰"
+        },
+        "confirm_encryption_setup_title": "確認加密設定",
+        "confirm_encryption_setup_body": "點擊下方按鈕以確認設定加密。",
+        "unable_to_setup_keys_error": "無法設定金鑰"
     },
     "emoji": {
         "category_frequently_used": "經常使用",

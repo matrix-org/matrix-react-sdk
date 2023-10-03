@@ -63,7 +63,6 @@
         "one": "1 потврђена сесија"
     },
     "Light bulb": "сијалица",
-    "Looks good!": "Изгледа добро!",
     "Switch theme": "Промени тему",
     "Zimbabwe": "Зимбабве",
     "Zambia": "Замбија",
@@ -1137,6 +1136,11 @@
             "other_new_session_text": "%(name)s (%(userId)s) се улоговао у нову сесију без потврђивања:",
             "other_ask_verify_text": "Питајте овог корисника да потврди његову сесију или ручно да потврди у наставку.",
             "title": "Није поуздано"
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "recovery_key_is_correct": "Изгледа добро!"
+            }
         }
     },
     "emoji": {

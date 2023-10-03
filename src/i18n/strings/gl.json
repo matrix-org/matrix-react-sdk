@@ -58,7 +58,6 @@
     "Thursday": "Xoves",
     "Yesterday": "Onte",
     "Send Logs": "Enviar informes",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
     "Sign in with SSO": "Conecta utilizando SSO",
     "Deactivate account": "Desactivar conta",
     "Your homeserver has exceeded its user limit.": "O teu servidor superou o seu límite de usuaras.",
@@ -148,26 +147,15 @@
     "Submit logs": "Enviar rexistro",
     "e.g. my-room": "ex. a-miña-sala",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os rexistros, deberías <a>abrir un informe en GitHub</a> para describir o problema.",
-    "Destroy cross-signing keys?": "Destruír chaves de sinatura-cruzada?",
-    "Clear cross-signing keys": "Baleirar chaves de sinatura-cruzada",
     "a new master key signature": "unha nova firma con chave mestra",
     "a new cross-signing key signature": "unha nova firma con chave de sinatura-cruzada",
     "a device cross-signing signature": "unha sinatura sinatura-cruzada de dispositivo",
     "a key signature": "unha chave de sinatura",
     "%(brand)s encountered an error during upload of:": "%(brand)s atopou un fallo ao subir:",
-    "Restoring keys from backup": "Restablecendo chaves desde a copia",
     "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restablecidas",
     "Switch theme": "Cambiar decorado",
-    "Confirm encryption setup": "Confirma os axustes de cifrado",
-    "Click the button below to confirm setting up encryption.": "Preme no botón inferior para confirmar os axustes do cifrado.",
-    "Wrong file type": "Tipo de ficheiro erróneo",
-    "Looks good!": "Pinta ben!",
-    "Security Phrase": "Frase de seguridade",
-    "Security Key": "Chave de Seguridade",
-    "Use your Security Key to continue.": "Usa a túa Chave de Seguridade para continuar.",
     "Not encrypted": "Sen cifrar",
     "Backup version:": "Versión da copia:",
-    "Unable to set up keys": "Non se puideron configurar as chaves",
     "Barbados": "Barbados",
     "Bangladesh": "Bangladesh",
     "Bahrain": "Bahrain",
@@ -417,9 +405,6 @@
     "Equatorial Guinea": "Guinea Ecuatorial",
     "El Salvador": "O Salvador",
     "Egypt": "Exipto",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Non se puido acceder ao almacenaxe segredo. Comproba que escribiches correctamente a Frase de Seguridade.",
-    "Invalid Security Key": "Chave de Seguridade non válida",
-    "Wrong Security Key": "Chave de Seguridade incorrecta",
     "%(count)s members": {
         "one": "%(count)s participante",
         "other": "%(count)s participantes"
@@ -433,16 +418,11 @@
         "other": "%(count)s persoas que coñeces xa se uniron",
         "one": "%(count)s persoa que coñeces xa se uniu"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se restableces todo, volverás a comezar sen sesións verificadas, usuarias de confianza, e poderías non poder ver as mensaxes anteriores.",
-    "Only do this if you have no other device to complete verification with.": "Fai isto únicamente se non tes outro dispositivo co que completar a verificación.",
-    "Reset everything": "Restablecer todo",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Recupera o acceso á túa conta e ás chaves de cifrado gardadas nesta sesión. Sen elas, non poderás ler tódalas túas mensaxes seguras en calquera sesión.",
     "Forget": "Esquecer",
     "%(count)s votes": {
@@ -474,7 +454,6 @@
     "Show rooms": "Mostrar salas",
     "Explore public spaces in the new search dialog": "Explorar espazos públicos no novo diálogo de busca",
     "Saved Items": "Elementos gardados",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s ou %(recoveryFile)s",
     "common": {
         "about": "Acerca de",
         "analytics": "Análise",
@@ -2535,7 +2514,34 @@
             "title": "Non confiable",
             "manual_verification_button": "Verificar manualmente con texto",
             "interactive_verification_button": "Verificar interactivamente usando emoji"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Tipo de ficheiro erróneo",
+                "recovery_key_is_correct": "Pinta ben!",
+                "wrong_security_key": "Chave de Seguridade incorrecta",
+                "invalid_security_key": "Chave de Seguridade non válida"
+            },
+            "reset_title": "Restablecer todo",
+            "reset_warning_1": "Fai isto únicamente se non tes outro dispositivo co que completar a verificación.",
+            "reset_warning_2": "Se restableces todo, volverás a comezar sen sesións verificadas, usuarias de confianza, e poderías non poder ver as mensaxes anteriores.",
+            "security_phrase_title": "Frase de seguridade",
+            "security_phrase_incorrect_error": "Non se puido acceder ao almacenaxe segredo. Comproba que escribiches correctamente a Frase de Seguridade.",
+            "enter_phrase_or_key_prompt": "Escribe a túa Frase de Seguridade ou <button>usa a túa Chave de Seguridade</button> para continuar.",
+            "security_key_title": "Chave de Seguridade",
+            "use_security_key_prompt": "Usa a túa Chave de Seguridade para continuar.",
+            "separator": "%(securityKey)s ou %(recoveryFile)s",
+            "restoring": "Restablecendo chaves desde a copia"
+        },
+        "reset_all_button": "Perdidos ou esquecidos tódolos métodos de recuperación? <a>Restabléceos</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Destruír chaves de sinatura-cruzada?",
+            "warning": "O eliminación das chaves de sinatura cruzada é permanente. Calquera a quen verificases con elas verá alertas de seguridade. Seguramente non queres facer esto, a menos que perdeses todos os dispositivos nos que podías asinar.",
+            "primary_button_text": "Baleirar chaves de sinatura-cruzada"
+        },
+        "confirm_encryption_setup_title": "Confirma os axustes de cifrado",
+        "confirm_encryption_setup_body": "Preme no botón inferior para confirmar os axustes do cifrado.",
+        "unable_to_setup_keys_error": "Non se puideron configurar as chaves"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",

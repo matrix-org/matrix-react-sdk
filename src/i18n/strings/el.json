@@ -395,23 +395,6 @@
     "Delete Widget": "Διαγραφή Μικροεφαρμογής",
     "Sign in with SSO": "Συνδεθείτε με SSO",
     "%(completed)s of %(total)s keys restored": "%(completed)s από %(total)s κλειδιά ανακτήθηκαν",
-    "Restoring keys from backup": "Επαναφορά κλειδιών από αντίγραφο ασφαλείας",
-    "Unable to set up keys": "Δεν είναι δυνατή η ρύθμιση των κλειδιών",
-    "Click the button below to confirm setting up encryption.": "Κάντε κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε τη ρύθμιση της κρυπτογράφησης.",
-    "Confirm encryption setup": "Επιβεβαιώστε τη ρύθμιση κρυπτογράφησης",
-    "Use your Security Key to continue.": "Χρησιμοποιήστε το Κλειδί Ασφαλείας σας για να συνεχίσετε.",
-    "Security Key": "Κλειδί Ασφαλείας",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Εισαγάγετε τη Φράση Ασφαλείας ή <button>χρησιμοποιήστε το Κλειδί Ασφαλείας</button> για να συνεχίσετε.",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Δεν είναι δυνατή η πρόσβαση στον κρυφό χώρο αποθήκευσης. Βεβαιωθείτε ότι έχετε εισαγάγει τη σωστή Φράση Ασφαλείας.",
-    "Security Phrase": "Φράση Ασφαλείας",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Εάν επαναφέρετε τα πάντα, θα κάνετε επανεκκίνηση χωρίς αξιόπιστες συνεδρίες, χωρίς αξιόπιστους χρήστες και ενδέχεται να μην μπορείτε να δείτε προηγούμενα μηνύματα.",
-    "Only do this if you have no other device to complete verification with.": "Κάντε αυτό μόνο όταν δεν έχετε άλλη συσκευή για να ολοκληρώσετε την επαλήθευση.",
-    "Reset everything": "Επαναφορά όλων",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Ξεχάσατε ή χάσατε όλες τις μεθόδους ανάκτησης; <a>Επαναφορά όλων</a>",
-    "Invalid Security Key": "Μη έγκυρο Κλειδί Ασφαλείας",
-    "Wrong Security Key": "Λάθος Κλειδί Ασφαλείας",
-    "Looks good!": "Φαίνεται καλό!",
-    "Wrong file type": "Λάθος τύπος αρχείου",
     "Send Logs": "Αποστολή Αρχείων καταγραφής",
     "expand": "επέκταση",
     "collapse": "σύμπτηξη",
@@ -457,9 +440,6 @@
     "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
     "a new master key signature": "μια νέα υπογραφή κύριου κλειδιού",
     "Forget": "Ξεχάστε",
-    "Clear cross-signing keys": "Διαγράψτε τα κλειδιά διασταυρούμενης υπογραφής",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Η διαγραφή κλειδιών διασταυρούμενης υπογραφής είναι μόνιμη. Οποιοσδήποτε με τον οποίο έχετε επαληθευτεί θα λάβει ειδοποιήσεις ασφαλείας. Πιθανότατα δεν θέλετε να το κάνετε αυτό, εκτός και αν έχετε χάσει όλες τις συσκευές από τις οποίες μπορείτε να υπογράψετε.",
-    "Destroy cross-signing keys?": "Να καταστραφούν τα κλειδιά διασταυρούμενης υπογραφής;",
     "Thumbs up": "Μπράβο",
     "View List": "Προβολή Λίστας",
     "Unread email icon": "Εικονίδιο μη αναγνωσμένου μηνύματος",
@@ -2377,7 +2357,33 @@
             "other_new_session_text": "Ο %(name)s (%(userId)s) συνδέθηκε σε μία νέα συνεδρία χωρίς να την επιβεβαιώσει:",
             "other_ask_verify_text": "Ζητήστε από αυτόν τον χρήστη να επιβεβαιώσει την συνεδρία του, ή επιβεβαιώστε την χειροκίνητα παρακάτω.",
             "title": "Μη Έμπιστο"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Λάθος τύπος αρχείου",
+                "recovery_key_is_correct": "Φαίνεται καλό!",
+                "wrong_security_key": "Λάθος Κλειδί Ασφαλείας",
+                "invalid_security_key": "Μη έγκυρο Κλειδί Ασφαλείας"
+            },
+            "reset_title": "Επαναφορά όλων",
+            "reset_warning_1": "Κάντε αυτό μόνο όταν δεν έχετε άλλη συσκευή για να ολοκληρώσετε την επαλήθευση.",
+            "reset_warning_2": "Εάν επαναφέρετε τα πάντα, θα κάνετε επανεκκίνηση χωρίς αξιόπιστες συνεδρίες, χωρίς αξιόπιστους χρήστες και ενδέχεται να μην μπορείτε να δείτε προηγούμενα μηνύματα.",
+            "security_phrase_title": "Φράση Ασφαλείας",
+            "security_phrase_incorrect_error": "Δεν είναι δυνατή η πρόσβαση στον κρυφό χώρο αποθήκευσης. Βεβαιωθείτε ότι έχετε εισαγάγει τη σωστή Φράση Ασφαλείας.",
+            "enter_phrase_or_key_prompt": "Εισαγάγετε τη Φράση Ασφαλείας ή <button>χρησιμοποιήστε το Κλειδί Ασφαλείας</button> για να συνεχίσετε.",
+            "security_key_title": "Κλειδί Ασφαλείας",
+            "use_security_key_prompt": "Χρησιμοποιήστε το Κλειδί Ασφαλείας σας για να συνεχίσετε.",
+            "restoring": "Επαναφορά κλειδιών από αντίγραφο ασφαλείας"
+        },
+        "reset_all_button": "Ξεχάσατε ή χάσατε όλες τις μεθόδους ανάκτησης; <a>Επαναφορά όλων</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Να καταστραφούν τα κλειδιά διασταυρούμενης υπογραφής;",
+            "warning": "Η διαγραφή κλειδιών διασταυρούμενης υπογραφής είναι μόνιμη. Οποιοσδήποτε με τον οποίο έχετε επαληθευτεί θα λάβει ειδοποιήσεις ασφαλείας. Πιθανότατα δεν θέλετε να το κάνετε αυτό, εκτός και αν έχετε χάσει όλες τις συσκευές από τις οποίες μπορείτε να υπογράψετε.",
+            "primary_button_text": "Διαγράψτε τα κλειδιά διασταυρούμενης υπογραφής"
+        },
+        "confirm_encryption_setup_title": "Επιβεβαιώστε τη ρύθμιση κρυπτογράφησης",
+        "confirm_encryption_setup_body": "Κάντε κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε τη ρύθμιση της κρυπτογράφησης.",
+        "unable_to_setup_keys_error": "Δεν είναι δυνατή η ρύθμιση των κλειδιών"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",

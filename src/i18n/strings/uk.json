@@ -364,8 +364,6 @@
     "Finland": "Фінляндія",
     "Fiji": "Фіджі",
     "Faroe Islands": "Фарерські Острови",
-    "Click the button below to confirm setting up encryption.": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
-    "Confirm encryption setup": "Підтвердити налаштування шифрування",
     "This backup is trusted because it has been restored on this session": "Ця резервна копія довірена, оскільки її було відновлено у цьому сеансі",
     "edited": "змінено",
     "collapse": "згорнути",
@@ -413,8 +411,6 @@
         "other": "%(count)s людей, яких ви знаєте, уже приєдналися"
     },
     "Forget": "Забути",
-    "Only do this if you have no other device to complete verification with.": "Робіть це лише якщо у вас немає іншого пристрою для виконання перевірки.",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Видалення ключів перехресного підписування безповоротне. Усі, з ким ви звірили сеанси, бачитимуть сповіщення системи безпеки. Ви майже напевно не захочете цього робити, якщо тільки ви не втратили всі пристрої, з яких можна виконувати перехресне підписування.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s і %(count)s інших",
         "other": "%(spaceName)s і %(count)s інших"
@@ -425,7 +421,6 @@
     "Themes": "Теми",
     "Messaging": "Спілкування",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
     "a new cross-signing key signature": "новий підпис ключа перехресного підписування",
     "a new master key signature": "новий підпис головного ключа",
     "Submit logs": "Надіслати журнали",
@@ -439,21 +434,6 @@
     "%(name)s accepted": "%(name)s погоджується",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перш ніж надіслати журнали, <a>створіть обговорення на GitHub</a> із описом проблеми.",
     "%(completed)s of %(total)s keys restored": "%(completed)s із %(total)s ключів відновлено",
-    "Restoring keys from backup": "Відновлення ключів із резервної копії",
-    "Unable to set up keys": "Не вдалося налаштувати ключі",
-    "Invalid Security Key": "Хибний ключ безпеки",
-    "Wrong Security Key": "Ключ безпеки не збігається",
-    "Wrong file type": "Тип файлу не підтримується",
-    "Looks good!": "Виглядає файно!",
-    "Clear cross-signing keys": "Очистити ключі перехресного підписування",
-    "Destroy cross-signing keys?": "Знищити ключі перехресного підписування?",
-    "Use your Security Key to continue.": "Скористайтеся ключем безпеки для продовження.",
-    "Security Key": "Ключ безпеки",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Не вдалося зайти до таємного сховища. Переконайтеся, що ввели правильну фразу безпеки.",
-    "Security Phrase": "Фраза безпеки",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Якщо ви скинете все, то почнете заново без довірених сеансів, користувачів і доступу до минулих повідомлень.",
-    "Reset everything": "Скинути все",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Забули чи втратили всі способи відновлення? <a>Скинути все</a>",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Відновіть доступ до облікового запису й ключів шифрування, збережених у цьому сеансі. Без них ваші сеанси показуватимуть не всі ваші захищені повідомлення.",
     "%(brand)s encountered an error during upload of:": "%(brand)s зіткнувся з помилкою під час вивантаження:",
     "a key signature": "відбиток ключа",
@@ -474,7 +454,6 @@
     "Show rooms": "Показати кімнати",
     "Explore public spaces in the new search dialog": "Знаходьте загальнодоступні простори в новому діалоговому вікні пошуку",
     "Saved Items": "Збережені елементи",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s або %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s розпочинає відеовиклик",
     "Thread root ID: %(threadRootId)s": "ID кореневої гілки: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " в <strong>%(room)s</strong>",
@@ -2841,7 +2820,34 @@
             "title": "Не довірений",
             "manual_verification_button": "Звірити вручну за допомогою тексту",
             "interactive_verification_button": "Звірити інтерактивно за допомогою емоджі"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Тип файлу не підтримується",
+                "recovery_key_is_correct": "Виглядає файно!",
+                "wrong_security_key": "Ключ безпеки не збігається",
+                "invalid_security_key": "Хибний ключ безпеки"
+            },
+            "reset_title": "Скинути все",
+            "reset_warning_1": "Робіть це лише якщо у вас немає іншого пристрою для виконання перевірки.",
+            "reset_warning_2": "Якщо ви скинете все, то почнете заново без довірених сеансів, користувачів і доступу до минулих повідомлень.",
+            "security_phrase_title": "Фраза безпеки",
+            "security_phrase_incorrect_error": "Не вдалося зайти до таємного сховища. Переконайтеся, що ввели правильну фразу безпеки.",
+            "enter_phrase_or_key_prompt": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
+            "security_key_title": "Ключ безпеки",
+            "use_security_key_prompt": "Скористайтеся ключем безпеки для продовження.",
+            "separator": "%(securityKey)s або %(recoveryFile)s",
+            "restoring": "Відновлення ключів із резервної копії"
+        },
+        "reset_all_button": "Забули чи втратили всі способи відновлення? <a>Скинути все</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Знищити ключі перехресного підписування?",
+            "warning": "Видалення ключів перехресного підписування безповоротне. Усі, з ким ви звірили сеанси, бачитимуть сповіщення системи безпеки. Ви майже напевно не захочете цього робити, якщо тільки ви не втратили всі пристрої, з яких можна виконувати перехресне підписування.",
+            "primary_button_text": "Очистити ключі перехресного підписування"
+        },
+        "confirm_encryption_setup_title": "Підтвердити налаштування шифрування",
+        "confirm_encryption_setup_body": "Клацніть на кнопку внизу, щоб підтвердити налаштування шифрування.",
+        "unable_to_setup_keys_error": "Не вдалося налаштувати ключі"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",

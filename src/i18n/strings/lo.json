@@ -334,26 +334,6 @@
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "ເຂົ້າເຖິງບັນຊີຂອງທ່ານ ອີກເທື່ອນຶ່ງ ແລະ ກູ້ຄືນລະຫັດທີ່ເກັບໄວ້ໃນການດຳເນີນການນີ້. ຖ້າບໍ່ມີພວກລະຫັດ, ທ່ານຈະບໍ່ສາມາດອ່ານຂໍ້ຄວາມທີ່ປອດໄພທັງໝົດຂອງທ່ານໃນການດຳເນີນການໃດໆ.",
     "Sign in with SSO": "ເຂົ້າສູ່ລະບົບດ້ວຍປະຕຸດຽວ ( SSO)",
     "%(completed)s of %(total)s keys restored": "ກູ້ລະຫັດ %(completed)s ຂອງ %(total)sຄືນແລ້ວ",
-    "Restoring keys from backup": "ການຟື້ນຟູລະຫັດຈາກການສໍາຮອງຂໍ້ມູນ",
-    "Unable to set up keys": "ບໍ່ສາມາດຕັ້ງຄ່າກະແຈໄດ້",
-    "Click the button below to confirm setting up encryption.": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການຕັ້ງຄ່າການເຂົ້າລະຫັດ.",
-    "Confirm encryption setup": "ຢືນຢັນການຕັ້ງຄ່າການເຂົ້າລະຫັດ",
-    "Clear cross-signing keys": "ລຶບກະເເຈ cross-signing",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "ການລຶບລະຫັດ cross-signing ແມ່ນຖາວອນ. ໃຜກໍຕາມທີ່ທ່ານໄດ້ຢັ້ງຢືນດ້ວຍຈະເຫັນການແຈ້ງເຕືອນຄວາມປອດໄພ. ທ່ານບໍ່ຕ້ອງເຮັດສິ່ງນີ້ເລີຍ, ເວັ້ນເສຍແຕ່ວ່າທ່ານເຮັດທຸກອຸກອນເສຍ ທີ່ທ່ານສາມາດຂ້າມເຂົ້າສູ່ລະບົບໄດ້.",
-    "Destroy cross-signing keys?": "ທໍາລາຍກະແຈການເຊັນຮ່ວມ cross-signing ບໍ?",
-    "Use your Security Key to continue.": "ໃຊ້ກະແຈຄວາມປອດໄພຂອງທ່ານເພື່ອສືບຕໍ່.",
-    "Security Key": "ກະແຈຄວາມປອດໄພ",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "ກະລຸນາໃສ່ປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ ຫຼື <button>ໃຊ້ກະແຈຄວາມປອດໄພຂອງທ່ານ</button> ເພື່ອສືບຕໍ່.",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "ບໍ່ສາມາດເຂົ້າເຖິງບ່ອນເກັບຂໍ້ມູນລັບໄດ້. ກະລຸນາກວດສອບວ່າທ່ານໃສ່ປະໂຫຍກຄວາມປອດໄພທີ່ຖືກຕ້ອງ.",
-    "Security Phrase": "ປະໂຫຍກລະຫັດຄວາມປອດໄພ",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "ຖ້າທ່ານຕັ້ງຄ່າຄືນໃໝ່ທຸກຢ່າງ, ທ່ານຈະຣີສະຕາດໂດຍບໍ່ມີລະບົບທີ່ເຊື່ອຖືໄດ້, ບໍ່ມີຜູ້ໃຊ້ທີ່ເຊື່ອຖືໄດ້ ແລະ ອາດຈະບໍ່ເຫັນຂໍ້ຄວາມທີ່ຜ່ານມາ.",
-    "Only do this if you have no other device to complete verification with.": "ເຮັດແນວນີ້ກໍ່ຕໍ່ເມື່ອທ່ານບໍ່ມີອຸປະກອນອື່ນເພື່ອການຢັ້ງຢືນດ້ວຍ.",
-    "Reset everything": "ຕັ້ງຄ່າໃໝ່ທຸກຢ່າງ",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "ລືມ ຫຼື ສູນເສຍວິທີການກູ້ຄືນທັງຫມົດ? <a>ຕັ້ງຄ່າຄືນໃໝ່ທັງໝົດ</a>",
-    "Invalid Security Key": "ກະແຈຄວາມປອດໄພບໍ່ຖືກຕ້ອງ",
-    "Wrong Security Key": "ກະແຈຄວາມປອດໄພບໍ່ຖຶກຕ້ອງ",
-    "Looks good!": "ດີ!",
-    "Wrong file type": "ປະເພດໄຟລ໌ບໍ່ຖຶກຕ້ອງ",
     "a new master key signature": "ລາຍເຊັນຫຼັກອັນໃໝ່",
     "Feedback sent! Thanks, we appreciate it!": "ສົ່ງຄຳຕິຊົມແລ້ວ! ຂອບໃຈ, ພວກເຮົາຂອບໃຈ!",
     "%(name)s accepted": "ຍອມຮັບ %(name)s",
@@ -2381,7 +2361,33 @@
             "other_new_session_text": "%(name)s (%(userId)s) ເຂົ້າສູ່ລະບົບໃໝ່ໂດຍບໍ່ມີການຢັ້ງຢືນ:",
             "other_ask_verify_text": "ຂໍໃຫ້ຜູ້ໃຊ້ນີ້ກວດສອບລະບົບຂອງເຂົາເຈົ້າ, ຫຼື ຢືນຢັນດ້ວຍຕົນເອງຂ້າງລຸ່ມນີ້.",
             "title": "ເຊື່ອຖືບໍ່ໄດ້"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "ປະເພດໄຟລ໌ບໍ່ຖຶກຕ້ອງ",
+                "recovery_key_is_correct": "ດີ!",
+                "wrong_security_key": "ກະແຈຄວາມປອດໄພບໍ່ຖຶກຕ້ອງ",
+                "invalid_security_key": "ກະແຈຄວາມປອດໄພບໍ່ຖືກຕ້ອງ"
+            },
+            "reset_title": "ຕັ້ງຄ່າໃໝ່ທຸກຢ່າງ",
+            "reset_warning_1": "ເຮັດແນວນີ້ກໍ່ຕໍ່ເມື່ອທ່ານບໍ່ມີອຸປະກອນອື່ນເພື່ອການຢັ້ງຢືນດ້ວຍ.",
+            "reset_warning_2": "ຖ້າທ່ານຕັ້ງຄ່າຄືນໃໝ່ທຸກຢ່າງ, ທ່ານຈະຣີສະຕາດໂດຍບໍ່ມີລະບົບທີ່ເຊື່ອຖືໄດ້, ບໍ່ມີຜູ້ໃຊ້ທີ່ເຊື່ອຖືໄດ້ ແລະ ອາດຈະບໍ່ເຫັນຂໍ້ຄວາມທີ່ຜ່ານມາ.",
+            "security_phrase_title": "ປະໂຫຍກລະຫັດຄວາມປອດໄພ",
+            "security_phrase_incorrect_error": "ບໍ່ສາມາດເຂົ້າເຖິງບ່ອນເກັບຂໍ້ມູນລັບໄດ້. ກະລຸນາກວດສອບວ່າທ່ານໃສ່ປະໂຫຍກຄວາມປອດໄພທີ່ຖືກຕ້ອງ.",
+            "enter_phrase_or_key_prompt": "ກະລຸນາໃສ່ປະໂຫຍກຄວາມປອດໄພຂອງທ່ານ ຫຼື <button>ໃຊ້ກະແຈຄວາມປອດໄພຂອງທ່ານ</button> ເພື່ອສືບຕໍ່.",
+            "security_key_title": "ກະແຈຄວາມປອດໄພ",
+            "use_security_key_prompt": "ໃຊ້ກະແຈຄວາມປອດໄພຂອງທ່ານເພື່ອສືບຕໍ່.",
+            "restoring": "ການຟື້ນຟູລະຫັດຈາກການສໍາຮອງຂໍ້ມູນ"
+        },
+        "reset_all_button": "ລືມ ຫຼື ສູນເສຍວິທີການກູ້ຄືນທັງຫມົດ? <a>ຕັ້ງຄ່າຄືນໃໝ່ທັງໝົດ</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "ທໍາລາຍກະແຈການເຊັນຮ່ວມ cross-signing ບໍ?",
+            "warning": "ການລຶບລະຫັດ cross-signing ແມ່ນຖາວອນ. ໃຜກໍຕາມທີ່ທ່ານໄດ້ຢັ້ງຢືນດ້ວຍຈະເຫັນການແຈ້ງເຕືອນຄວາມປອດໄພ. ທ່ານບໍ່ຕ້ອງເຮັດສິ່ງນີ້ເລີຍ, ເວັ້ນເສຍແຕ່ວ່າທ່ານເຮັດທຸກອຸກອນເສຍ ທີ່ທ່ານສາມາດຂ້າມເຂົ້າສູ່ລະບົບໄດ້.",
+            "primary_button_text": "ລຶບກະເເຈ cross-signing"
+        },
+        "confirm_encryption_setup_title": "ຢືນຢັນການຕັ້ງຄ່າການເຂົ້າລະຫັດ",
+        "confirm_encryption_setup_body": "ກົດທີ່ປຸ່ມຂ້າງລຸ່ມນີ້ເພື່ອຢືນຢັນການຕັ້ງຄ່າການເຂົ້າລະຫັດ.",
+        "unable_to_setup_keys_error": "ບໍ່ສາມາດຕັ້ງຄ່າກະແຈໄດ້"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",

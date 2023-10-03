@@ -132,10 +132,6 @@
     "a new master key signature": "uma nova chave mestra de assinatura",
     "a new cross-signing key signature": "uma nova chave de autoverificação",
     "a key signature": "uma assinatura de chave",
-    "Security Key": "Chave de Segurança",
-    "Use your Security Key to continue.": "Use sua Chave de Segurança para continuar.",
-    "Confirm encryption setup": "Confirmar a configuração de criptografia",
-    "Click the button below to confirm setting up encryption.": "Clique no botão abaixo para confirmar a configuração da criptografia.",
     "%(name)s accepted": "%(name)s aceitou",
     "%(name)s declined": "%(name)s recusou",
     "%(name)s cancelled": "%(name)s cancelou",
@@ -153,21 +149,13 @@
         "other": "%(count)s sessões",
         "one": "%(count)s sessão"
     },
-    "Destroy cross-signing keys?": "Destruir chaves autoverificadas?",
-    "Wrong file type": "Tipo errado de arquivo",
     "Sign in with SSO": "Faça login com SSO (Login Único)",
-    "Looks good!": "Muito bem!",
-    "Security Phrase": "Frase de segurança",
-    "Restoring keys from backup": "Restaurando chaves do backup",
     "%(completed)s of %(total)s keys restored": "%(completed)s de %(total)s chaves restauradas",
     "Switch theme": "Escolha um tema",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Apagar chaves de autoverificação é permanente. Qualquer pessoa com quem você se confirmou receberá alertas de segurança. Não é aconselhável fazer isso, a menos que você tenha perdido todos os aparelhos nos quais fez a autoverificação.",
-    "Clear cross-signing keys": "Limpar chaves autoverificadas",
     "a device cross-signing signature": "um aparelho autoverificado",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
     "Backup version:": "Versão do backup:",
     "Not encrypted": "Não criptografada",
-    "Unable to set up keys": "Não foi possível configurar as chaves",
     "Jordan": "Jordânia",
     "Japan": "Japão",
     "Jamaica": "Jamaica",
@@ -417,9 +405,6 @@
     "Vatican City": "Cidade do Vaticano",
     "Vanuatu": "Vanuatu",
     "Uzbekistan": "Uzbequistão",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Não foi possível acessar o armazenamento secreto. Verifique se você digitou a Frase de Segurança correta.",
-    "Invalid Security Key": "Chave de Segurança inválida",
-    "Wrong Security Key": "Chave de Segurança errada",
     "%(count)s members": {
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
@@ -2202,7 +2187,28 @@
             "other_new_session_text": "%(name)s (%(userId)s) entrou em uma nova sessão sem confirmá-la:",
             "other_ask_verify_text": "Peça a este usuário para confirmar a sessão dele, ou confirme-a manualmente abaixo.",
             "title": "Não confiável"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Tipo errado de arquivo",
+                "recovery_key_is_correct": "Muito bem!",
+                "wrong_security_key": "Chave de Segurança errada",
+                "invalid_security_key": "Chave de Segurança inválida"
+            },
+            "security_phrase_title": "Frase de segurança",
+            "security_phrase_incorrect_error": "Não foi possível acessar o armazenamento secreto. Verifique se você digitou a Frase de Segurança correta.",
+            "security_key_title": "Chave de Segurança",
+            "use_security_key_prompt": "Use sua Chave de Segurança para continuar.",
+            "restoring": "Restaurando chaves do backup"
+        },
+        "destroy_cross_signing_dialog": {
+            "title": "Destruir chaves autoverificadas?",
+            "warning": "Apagar chaves de autoverificação é permanente. Qualquer pessoa com quem você se confirmou receberá alertas de segurança. Não é aconselhável fazer isso, a menos que você tenha perdido todos os aparelhos nos quais fez a autoverificação.",
+            "primary_button_text": "Limpar chaves autoverificadas"
+        },
+        "confirm_encryption_setup_title": "Confirmar a configuração de criptografia",
+        "confirm_encryption_setup_body": "Clique no botão abaixo para confirmar a configuração da criptografia.",
+        "unable_to_setup_keys_error": "Não foi possível configurar as chaves"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",

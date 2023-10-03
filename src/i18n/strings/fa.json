@@ -288,26 +288,13 @@
     "Afghanistan": "افغانستان",
     "United States": "ایالات متحده",
     "United Kingdom": "انگلستان",
-    "Use your Security Key to continue.": "برای ادامه از کلید امنیتی خود استفاده کنید.",
-    "Unable to set up keys": "تنظیم کلیدها امکان پذیر نیست",
     "%(completed)s of %(total)s keys restored": "%(completed)s از %(total)s کلید بازیابی شدند",
     "a new cross-signing key signature": "یک کلید امضای متقابل جدید",
     "a new master key signature": "یک شاه‌کلید جدید",
-    "Restoring keys from backup": "بازیابی کلیدها از نسخه پشتیبان",
     "a device cross-signing signature": "کلید امضای متقابل یک دستگاه",
-    "Invalid Security Key": "کلید امنیتی نامعتبر است",
-    "Wrong Security Key": "کلید امنیتی اشتباه است",
     "a key signature": "یک امضای کلیدی",
-    "Clear cross-signing keys": "کلیدهای امضای متقابل را پاک کن",
-    "Destroy cross-signing keys?": "کلیدهای امضای متقابل نابود شود؟",
-    "Reset everything": "همه چیز را بازراه‌اندازی (reset) کنید",
-    "Looks good!": "به نظر خوب میاد!",
-    "Security Key": "کلید امنیتی",
-    "Security Phrase": "عبارت امنیتی",
     "Send Logs": "ارسال گزارش ها",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "قبل از ارسال گزارش‌ها، برای توصیف مشکل خود باید <a>یک مسئله در GitHub ایجاد کنید</a>.",
-    "Wrong file type": "نوع فایل اشتباه است",
-    "Confirm encryption setup": "راه‌اندازی رمزگذاری را تأیید کنید",
     "e.g. my-room": "به عنوان مثال، my-room",
     "%(count)s members": {
         "other": "%(count)s عضو",
@@ -429,19 +416,12 @@
     "Deactivate account": "غیرفعال‌کردن حساب کاربری",
     "Your homeserver has exceeded one of its resource limits.": "سرور شما از یکی از محدودیت‌های منابع خود فراتر رفته است.",
     "Your homeserver has exceeded its user limit.": "سرور شما از حد مجاز کاربر خود فراتر رفته است.",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "حذف کلیدهای امضای متقابل دائمی است. هرکسی که او را تائید کرده‌باشید، هشدارهای امنیتی را مشاهده خواهد کرد. به احتمال زیاد نمی‌خواهید این کار را انجام دهید ، مگر هیچ دستگاهی برای امضاء متقابل از طریق آن نداشته باشید.",
-    "Click the button below to confirm setting up encryption.": "برای تأیید و فعال‌سازی رمزگذاری ، روی دکمه زیر کلیک کنید.",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "دسترسی به حافظه نهان امکان‌پذیر نیست. لطفاً تأیید کنید که عبارت امنیتی صحیح را وارد کرده‌اید.",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "اگر همه موارد را بازراه‌اندازی (reset) کنید، دیگر هیچ نشست تائید شده‌ای و هیچ کاربر تائيد‌ شده‌ای نخواهید داشت و ممکن است نتوانید پیام‌های گذشته‌ی خود را مشاهده نمائید.",
-    "Only do this if you have no other device to complete verification with.": "این کار را فقط درصورتی انجام دهید که دستگاه دیگری برای تکمیل فرآیند تأیید ندارید.",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "همه روش‌های بازیابی را فراموش کرده یا از دست داده‌اید؟ <a>بازراه‌اندازی (reset) همه</a>",
     "%(brand)s encountered an error during upload of:": "%(brand)s در حین بارگذاری این دچار مشکل شد:",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s و %(count)s دیگر",
         "other": "%(spaceName)s و %(count)s دیگران"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s و %(space2Name)s",
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
     "Developer": "توسعه دهنده",
     "Experimental": "تجربی",
     "Themes": "قالب ها",
@@ -1930,7 +1910,33 @@
             "other_new_session_text": "%(name)s (%(userId)s) وارد یک نشست جدید شد بدون اینکه آن را تائید کند:",
             "other_ask_verify_text": "از این کاربر بخواهید نشست خود را تأیید کرده و یا آن را به صورت دستی تأیید کنید.",
             "title": "قابل اعتماد نیست"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "نوع فایل اشتباه است",
+                "recovery_key_is_correct": "به نظر خوب میاد!",
+                "wrong_security_key": "کلید امنیتی اشتباه است",
+                "invalid_security_key": "کلید امنیتی نامعتبر است"
+            },
+            "reset_title": "همه چیز را بازراه‌اندازی (reset) کنید",
+            "reset_warning_1": "این کار را فقط درصورتی انجام دهید که دستگاه دیگری برای تکمیل فرآیند تأیید ندارید.",
+            "reset_warning_2": "اگر همه موارد را بازراه‌اندازی (reset) کنید، دیگر هیچ نشست تائید شده‌ای و هیچ کاربر تائيد‌ شده‌ای نخواهید داشت و ممکن است نتوانید پیام‌های گذشته‌ی خود را مشاهده نمائید.",
+            "security_phrase_title": "عبارت امنیتی",
+            "security_phrase_incorrect_error": "دسترسی به حافظه نهان امکان‌پذیر نیست. لطفاً تأیید کنید که عبارت امنیتی صحیح را وارد کرده‌اید.",
+            "enter_phrase_or_key_prompt": "عبارت امنیتی خود را وارد کنید و یا <button>کلید امنیتی خود را استفاده کنید</button>.",
+            "security_key_title": "کلید امنیتی",
+            "use_security_key_prompt": "برای ادامه از کلید امنیتی خود استفاده کنید.",
+            "restoring": "بازیابی کلیدها از نسخه پشتیبان"
+        },
+        "reset_all_button": "همه روش‌های بازیابی را فراموش کرده یا از دست داده‌اید؟ <a>بازراه‌اندازی (reset) همه</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "کلیدهای امضای متقابل نابود شود؟",
+            "warning": "حذف کلیدهای امضای متقابل دائمی است. هرکسی که او را تائید کرده‌باشید، هشدارهای امنیتی را مشاهده خواهد کرد. به احتمال زیاد نمی‌خواهید این کار را انجام دهید ، مگر هیچ دستگاهی برای امضاء متقابل از طریق آن نداشته باشید.",
+            "primary_button_text": "کلیدهای امضای متقابل را پاک کن"
+        },
+        "confirm_encryption_setup_title": "راه‌اندازی رمزگذاری را تأیید کنید",
+        "confirm_encryption_setup_body": "برای تأیید و فعال‌سازی رمزگذاری ، روی دکمه زیر کلیک کنید.",
+        "unable_to_setup_keys_error": "تنظیم کلیدها امکان پذیر نیست"
     },
     "emoji": {
         "category_frequently_used": "متداول",

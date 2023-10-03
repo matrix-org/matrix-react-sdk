@@ -318,7 +318,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         let content;
         let title;
         if (this.state.loading) {
-            title = _t("Restoring keys from backup");
+            title = _t("encryption|access_secret_storage_dialog|restoring");
             let details;
             if (this.state.progress.stage === ProgressState.Fetch) {
                 details = _t("restore_key_backup_dialog|key_fetch_in_progress");

@@ -122,9 +122,6 @@
     "Headphones": "Slúchadlá",
     "Folder": "Fascikel",
     "Deactivate account": "Deaktivovať účet",
-    "Destroy cross-signing keys?": "Zničiť kľúče na krížové podpisovanie?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Zmazanie kľúčov pre krížové podpisovanie je nenávratné. Každý, s kým ste sa overili, bude vidieť bezpečnostné upozornenia. Toto určite nechcete robiť, dokiaľ ste nestratili všetky zariadenia, s ktorými by ste mohli krížovo podpisovať.",
-    "Clear cross-signing keys": "Vyčistiť kľúče na krížové podpisovanie",
     "a new cross-signing key signature": "nový podpis kľúča pre krížové podpisovanie",
     "a device cross-signing signature": "krížový podpis zariadenia",
     "IRC display name width": "Šírka zobrazovaného mena IRC",
@@ -389,8 +386,6 @@
         "one": "1 overená relácia",
         "other": "%(count)s overených relácií"
     },
-    "Looks good!": "Vyzerá to super!",
-    "Only do this if you have no other device to complete verification with.": "Urobte to len vtedy, ak nemáte iné zariadenie, pomocou ktorého by ste mohli dokončiť overenie.",
     "%(name)s declined": "%(name)s odmietol/a",
     "e.g. my-room": "napr. moja-miestnost",
     "Developer": "Vývojárske",
@@ -401,21 +396,15 @@
         "one": "%(count)s relácia",
         "other": "%(count)s relácie"
     },
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "edited": "upravené",
     "Switch theme": "Prepnúť motív",
     "Not encrypted": "Nie je zašifrované",
     "%(name)s cancelled": "%(name)s zrušil/a",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "Invalid Security Key": "Neplatný bezpečnostný kľúč",
-    "Wrong Security Key": "Nesprávny bezpečnostný kľúč",
-    "Wrong file type": "Nesprávny typ súboru",
     "%(count)s reply": {
         "one": "%(count)s odpoveď",
         "other": "%(count)s odpovedí"
     },
-    "Security Key": "Bezpečnostný kľúč",
-    "Security Phrase": "Bezpečnostná fráza",
     "Submit logs": "Odoslať záznamy",
     "%(name)s accepted": "%(name)s prijal",
     "Forget": "Zabudnúť",
@@ -423,7 +412,6 @@
         "one": "%(count)s človek, ktorého poznáte, sa už pripojil",
         "other": "%(count)s ľudí, ktorých poznáte, sa už pripojilo"
     },
-    "Reset everything": "Obnoviť všetko",
     "<inviter/> invites you": "<inviter/> vás pozýva",
     "%(count)s rooms": {
         "one": "%(count)s miestnosť",
@@ -433,10 +421,7 @@
         "one": "%(count)s člen",
         "other": "%(count)s členov"
     },
-    "Click the button below to confirm setting up encryption.": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
-    "Confirm encryption setup": "Potvrdiť nastavenie šifrovania",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s obnovených kľúčov",
-    "Restoring keys from backup": "Obnovenie kľúčov zo zálohy",
     "%(count)s votes": {
         "one": "%(count)s hlas",
         "other": "%(count)s hlasov"
@@ -444,16 +429,11 @@
     "Themes": "Vzhľad",
     "Moderation": "Moderovanie",
     "Messaging": "Posielanie správ",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zabudli ste alebo ste stratili všetky metódy obnovy? <a>Resetovať všetko</a>",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s a %(count)s ďalší",
         "other": "%(spaceName)s a %(count)s ďalší"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte prístup k svojmu účtu a obnovte šifrovacie kľúče uložené v tejto relácii. Bez nich nebudete môcť čítať všetky svoje zabezpečené správy v žiadnej relácii.",
-    "Unable to set up keys": "Nie je možné nastaviť kľúče",
-    "Use your Security Key to continue.": "Ak chcete pokračovať, použite bezpečnostný kľúč.",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Ak všetko obnovíte, reštartujete bez dôveryhodných relácií, bez dôveryhodných používateľov a možno nebudete môcť vidieť predchádzajúce správy.",
     "Feedback sent! Thanks, we appreciate it!": "Spätná väzba odoslaná! Ďakujeme, vážime si to!",
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s a %(space2Name)s",
     "Sign in with SSO": "Prihlásiť sa pomocou jednotného prihlásenia SSO",
@@ -474,7 +454,6 @@
     "Show rooms": "Zobraziť miestnosti",
     "Explore public spaces in the new search dialog": "Preskúmajte verejné priestory v novom okne vyhľadávania",
     "Saved Items": "Uložené položky",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s alebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s začal/a videohovor",
     "Thread root ID: %(threadRootId)s": "ID koreňového vlákna: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
@@ -2841,7 +2820,34 @@
             "title": "Nedôveryhodné",
             "manual_verification_button": "Manuálne overte pomocou textu",
             "interactive_verification_button": "Interaktívne overte pomocou emotikonov"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Nesprávny typ súboru",
+                "recovery_key_is_correct": "Vyzerá to super!",
+                "wrong_security_key": "Nesprávny bezpečnostný kľúč",
+                "invalid_security_key": "Neplatný bezpečnostný kľúč"
+            },
+            "reset_title": "Obnoviť všetko",
+            "reset_warning_1": "Urobte to len vtedy, ak nemáte iné zariadenie, pomocou ktorého by ste mohli dokončiť overenie.",
+            "reset_warning_2": "Ak všetko obnovíte, reštartujete bez dôveryhodných relácií, bez dôveryhodných používateľov a možno nebudete môcť vidieť predchádzajúce správy.",
+            "security_phrase_title": "Bezpečnostná fráza",
+            "security_phrase_incorrect_error": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
+            "enter_phrase_or_key_prompt": "Zadajte svoju bezpečnostnú frázu alebo <button>použite svoj bezpečnostný kľúč</button> pre pokračovanie.",
+            "security_key_title": "Bezpečnostný kľúč",
+            "use_security_key_prompt": "Ak chcete pokračovať, použite bezpečnostný kľúč.",
+            "separator": "%(securityKey)s alebo %(recoveryFile)s",
+            "restoring": "Obnovenie kľúčov zo zálohy"
+        },
+        "reset_all_button": "Zabudli ste alebo ste stratili všetky metódy obnovy? <a>Resetovať všetko</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Zničiť kľúče na krížové podpisovanie?",
+            "warning": "Zmazanie kľúčov pre krížové podpisovanie je nenávratné. Každý, s kým ste sa overili, bude vidieť bezpečnostné upozornenia. Toto určite nechcete robiť, dokiaľ ste nestratili všetky zariadenia, s ktorými by ste mohli krížovo podpisovať.",
+            "primary_button_text": "Vyčistiť kľúče na krížové podpisovanie"
+        },
+        "confirm_encryption_setup_title": "Potvrdiť nastavenie šifrovania",
+        "confirm_encryption_setup_body": "Kliknutím na tlačidlo nižšie potvrdíte nastavenie šifrovania.",
+        "unable_to_setup_keys_error": "Nie je možné nastaviť kľúče"
     },
     "emoji": {
         "category_frequently_used": "Často používané",

@@ -145,24 +145,13 @@
     "edited": "已编辑",
     "Submit logs": "提交日志",
     "e.g. my-room": "例如 my-room",
-    "Destroy cross-signing keys?": "销毁交叉签名密钥？",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "删除交叉签名密钥是永久的。所有你验证过的人都会看到安全警报。除非你丢失了所有可以交叉签名的设备，否则几乎可以确定你不想这么做。",
-    "Clear cross-signing keys": "清楚交叉签名密钥",
     "a new master key signature": "一个新的主密钥签名",
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
     "a key signature": "一个密钥签名",
-    "Wrong file type": "错误文件类型",
-    "Looks good!": "看着不错！",
-    "Security Phrase": "安全短语",
-    "Security Key": "安全密钥",
-    "Use your Security Key to continue.": "使用你的安全密钥以继续。",
-    "Restoring keys from backup": "从备份恢复密钥",
     "%(completed)s of %(total)s keys restored": "%(total)s 个密钥中之 %(completed)s 个已恢复",
     "Sign in with SSO": "使用单点登录",
     "Switch theme": "切换主题",
-    "Confirm encryption setup": "确认加密设置",
-    "Click the button below to confirm setting up encryption.": "点击下方按钮以确认设置加密。",
     "IRC display name width": "IRC 显示名称宽度",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上传此文件时出错：",
     "Backup version:": "备份版本：",
@@ -227,8 +216,6 @@
         "one": "%(count)s 位成员",
         "other": "%(count)s 位成员"
     },
-    "Invalid Security Key": "安全密钥无效",
-    "Wrong Security Key": "安全密钥错误",
     "Not encrypted": "未加密",
     "Pakistan": "巴基斯坦",
     "United Arab Emirates": "阿拉伯联合酋长国",
@@ -427,12 +414,6 @@
     "Guinea-Bissau": "几内亚比绍",
     "Guinea": "几内亚",
     "Guernsey": "根西岛",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "无法访问秘密存储。请确认你输入了正确的安全短语。",
-    "Unable to set up keys": "无法设置密钥",
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "如果你全部重置，你将会在没有受信任的会话重新开始、没有受信任的用户，且可能会看不到过去的消息。",
-    "Only do this if you have no other device to complete verification with.": "当你没有其他设备可以用于完成验证时，方可执行此操作。",
-    "Reset everything": "全部重置",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "忘记或丢失了所有恢复方式？<a>全部重置</a>",
     "%(count)s people you know have already joined": {
         "one": "已有你所认识的 %(count)s 个人加入",
         "other": "已有你所认识的 %(count)s 个人加入"
@@ -442,7 +423,6 @@
         "one": "%(count)s 条回复",
         "other": "%(count)s 条回复"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "输入安全短语或<button>使用安全密钥</button>以继续。",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "重新获取账户访问权限并恢复存储在此会话中的加密密钥。 没有它们，您将无法在任何会话中阅读所有安全消息。",
     "Forget": "忘记",
     "%(spaceName)s and %(count)s others": {
@@ -476,7 +456,6 @@
     "Remove them from everything I'm able to": "",
     "View List": "查看列表",
     "Unread email icon": "未读电子邮件图标",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s或%(recoveryFile)s",
     "common": {
         "about": "关于",
         "analytics": "统计分析服务",
@@ -2587,7 +2566,34 @@
             "title": "不可信任",
             "manual_verification_button": "用文本手动验证",
             "interactive_verification_button": "用表情符号交互式验证"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "错误文件类型",
+                "recovery_key_is_correct": "看着不错！",
+                "wrong_security_key": "安全密钥错误",
+                "invalid_security_key": "安全密钥无效"
+            },
+            "reset_title": "全部重置",
+            "reset_warning_1": "当你没有其他设备可以用于完成验证时，方可执行此操作。",
+            "reset_warning_2": "如果你全部重置，你将会在没有受信任的会话重新开始、没有受信任的用户，且可能会看不到过去的消息。",
+            "security_phrase_title": "安全短语",
+            "security_phrase_incorrect_error": "无法访问秘密存储。请确认你输入了正确的安全短语。",
+            "enter_phrase_or_key_prompt": "输入安全短语或<button>使用安全密钥</button>以继续。",
+            "security_key_title": "安全密钥",
+            "use_security_key_prompt": "使用你的安全密钥以继续。",
+            "separator": "%(securityKey)s或%(recoveryFile)s",
+            "restoring": "从备份恢复密钥"
+        },
+        "reset_all_button": "忘记或丢失了所有恢复方式？<a>全部重置</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "销毁交叉签名密钥？",
+            "warning": "删除交叉签名密钥是永久的。所有你验证过的人都会看到安全警报。除非你丢失了所有可以交叉签名的设备，否则几乎可以确定你不想这么做。",
+            "primary_button_text": "清楚交叉签名密钥"
+        },
+        "confirm_encryption_setup_title": "确认加密设置",
+        "confirm_encryption_setup_body": "点击下方按钮以确认设置加密。",
+        "unable_to_setup_keys_error": "无法设置密钥"
     },
     "emoji": {
         "category_frequently_used": "经常使用",

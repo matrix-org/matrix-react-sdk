@@ -139,9 +139,6 @@
         "other": "%(count)s relací",
         "one": "%(count)s relace"
     },
-    "Destroy cross-signing keys?": "Nenávratně smazat klíče pro křížové podepisování?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Smazání klíčů pro křížové podepisování je definitivní. Každý, kdo vás ověřil, teď uvidí bezpečnostní varování. Pokud jste zrovna neztratili všechna zařízení, ze kterých se můžete ověřit, tak to asi nechcete udělat.",
-    "Clear cross-signing keys": "Smazat klíče pro křížové podepisování",
     "%(name)s declined": "%(name)s odmítl(a)",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Pro hlášení bezpečnostních problémů s Matrixem si prosím přečtěte <a>naší Bezpečnostní politiku</a> (anglicky).",
     "Submit logs": "Odeslat záznamy o chybě",
@@ -162,8 +159,6 @@
     "United Kingdom": "Spojené Království",
     "Backup version:": "Verze zálohy:",
     "Switch theme": "Přepnout téma",
-    "Looks good!": "To vypadá dobře!",
-    "Wrong file type": "Špatný typ souboru",
     "Sign in with SSO": "Přihlásit pomocí SSO",
     "Madagascar": "Madagaskar",
     "Macedonia": "Makedonie",
@@ -312,11 +307,6 @@
     "Angola": "Angola",
     "Andorra": "Andorra",
     "American Samoa": "Americká Samoa",
-    "Security Key": "Bezpečnostní klíč",
-    "Use your Security Key to continue.": "Pokračujte pomocí bezpečnostního klíče.",
-    "Click the button below to confirm setting up encryption.": "Kliknutím na tlačítko níže potvrďte nastavení šifrování.",
-    "Confirm encryption setup": "Potvrďte nastavení šifrování",
-    "Unable to set up keys": "Nepovedlo se nastavit klíče",
     "Not encrypted": "Není šifrováno",
     "Zimbabwe": "Zimbabwe",
     "Zambia": "Zambie",
@@ -413,13 +403,8 @@
     "Nepal": "Nepál",
     "Nauru": "Nauru",
     "Namibia": "Namibie",
-    "Security Phrase": "Bezpečnostní fráze",
-    "Restoring keys from backup": "Obnovení klíčů ze zálohy",
     "%(completed)s of %(total)s keys restored": "Obnoveno %(completed)s z %(total)s klíčů",
     "a device cross-signing signature": "zařízení používající křížový podpis",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nelze získat přístup k zabezpečenému úložišti. Ověřte, zda jste zadali správnou bezpečnostní frázi.",
-    "Invalid Security Key": "Neplatný bezpečnostní klíč",
-    "Wrong Security Key": "Špatný bezpečnostní klíč",
     "%(count)s members": {
         "one": "%(count)s člen",
         "other": "%(count)s členů"
@@ -433,16 +418,11 @@
         "one": "%(count)s osoba, kterou znáte, se již připojila",
         "other": "%(count)s lidí, které znáte, se již připojili"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Pokud vše resetujete, začnete bez důvěryhodných relací, bez důvěryhodných uživatelů a možná nebudete moci zobrazit minulé zprávy.",
-    "Only do this if you have no other device to complete verification with.": "Udělejte to, pouze pokud nemáte žádné jiné zařízení, se kterým byste mohli dokončit ověření.",
-    "Reset everything": "Resetovat vše",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
         "other": "%(count)s odpovědí"
     },
-    "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Zadejte bezpečnostní frázi nebo <button>použijte bezpečnostní klíč</button> pro pokračování.",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Obnovte přístup ke svému účtu a šifrovací klíče uložené v této relaci. Bez nich nebudete moci číst všechny své zabezpečené zprávy v žádné relaci.",
     "Forget": "Zapomenout",
     "%(count)s votes": {
@@ -474,7 +454,6 @@
     "Show rooms": "Zobrazit místnosti",
     "Explore public spaces in the new search dialog": "Prozkoumejte veřejné prostory v novém dialogu vyhledávání",
     "Saved Items": "Uložené položky",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s nebo %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s zahájil(a) videohovor",
     "Thread root ID: %(threadRootId)s": "ID kořenového vlákna: %(threadRootId)s",
     " in <strong>%(room)s</strong>": " v <strong>%(room)s</strong>",
@@ -2848,7 +2827,34 @@
             "title": "Nedůvěryhodné",
             "manual_verification_button": "Ruční ověření pomocí textu",
             "interactive_verification_button": "Interaktivní ověření pomocí emoji"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Špatný typ souboru",
+                "recovery_key_is_correct": "To vypadá dobře!",
+                "wrong_security_key": "Špatný bezpečnostní klíč",
+                "invalid_security_key": "Neplatný bezpečnostní klíč"
+            },
+            "reset_title": "Resetovat vše",
+            "reset_warning_1": "Udělejte to, pouze pokud nemáte žádné jiné zařízení, se kterým byste mohli dokončit ověření.",
+            "reset_warning_2": "Pokud vše resetujete, začnete bez důvěryhodných relací, bez důvěryhodných uživatelů a možná nebudete moci zobrazit minulé zprávy.",
+            "security_phrase_title": "Bezpečnostní fráze",
+            "security_phrase_incorrect_error": "Nelze získat přístup k zabezpečenému úložišti. Ověřte, zda jste zadali správnou bezpečnostní frázi.",
+            "enter_phrase_or_key_prompt": "Zadejte bezpečnostní frázi nebo <button>použijte bezpečnostní klíč</button> pro pokračování.",
+            "security_key_title": "Bezpečnostní klíč",
+            "use_security_key_prompt": "Pokračujte pomocí bezpečnostního klíče.",
+            "separator": "%(securityKey)s nebo %(recoveryFile)s",
+            "restoring": "Obnovení klíčů ze zálohy"
+        },
+        "reset_all_button": "Zapomněli nebo ztratili jste všechny metody obnovy? <a>Resetovat vše</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Nenávratně smazat klíče pro křížové podepisování?",
+            "warning": "Smazání klíčů pro křížové podepisování je definitivní. Každý, kdo vás ověřil, teď uvidí bezpečnostní varování. Pokud jste zrovna neztratili všechna zařízení, ze kterých se můžete ověřit, tak to asi nechcete udělat.",
+            "primary_button_text": "Smazat klíče pro křížové podepisování"
+        },
+        "confirm_encryption_setup_title": "Potvrďte nastavení šifrování",
+        "confirm_encryption_setup_body": "Kliknutím na tlačítko níže potvrďte nastavení šifrování.",
+        "unable_to_setup_keys_error": "Nepovedlo se nastavit klíče"
     },
     "emoji": {
         "category_frequently_used": "Často používané",

@@ -329,8 +329,8 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     continueKind: "primary",
                 },
                 [SSOAuthEntry.PHASE_POSTAUTH]: {
-                    title: _t("Confirm encryption setup"),
-                    body: _t("Click the button below to confirm setting up encryption."),
+                    title: _t("encryption|confirm_encryption_setup_title"),
+                    body: _t("encryption|confirm_encryption_setup_body"),
                     continueText: _t("action|confirm"),
                     continueKind: "primary",
                 },

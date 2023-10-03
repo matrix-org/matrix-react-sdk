@@ -141,31 +141,19 @@
         "one": "%(count)s salutaĵo"
     },
     "%(name)s declined": "%(name)s rifuzis",
-    "Destroy cross-signing keys?": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Forigo de delege ĉifraj ŝlosiloj estas porĉiama. Ĉiu, kun kiu vi interkontrolis, vidos avertojn pri sekureco. Vi preskaŭ certe ne volas ĉi tion fari, malse vi perdis ĉiun aparaton, el kiu vi povus delege subskribadi.",
-    "Clear cross-signing keys": "Vakigi delege ĉifrajn ŝlosilojn",
     "a new master key signature": "nova ĉefŝlosila subskribo",
     "a new cross-signing key signature": "nova subskribo de delega ŝlosilo",
     "a device cross-signing signature": "delega subskribo de aparato",
     "a key signature": "ŝlosila subskribo",
     "%(brand)s encountered an error during upload of:": "%(brand)s eraris dum alŝuto de:",
     "Submit logs": "Alŝuti protokolon",
-    "Restoring keys from backup": "Rehavo de ŝlosiloj el savkopio",
     "%(completed)s of %(total)s keys restored": "%(completed)s el %(total)s ŝlosiloj rehaviĝis",
     "Sign in with SSO": "Saluti per ununura saluto",
-    "Confirm encryption setup": "Konfirmi agordon de ĉifrado",
-    "Click the button below to confirm setting up encryption.": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
     "IRC display name width": "Larĝo de vidiga nomo de IRC",
     "Your homeserver has exceeded its user limit.": "Via hejmservilo atingis sian limon de uzantoj.",
     "Your homeserver has exceeded one of its resource limits.": "Via hejmservilo atingis iun limon de rimedoj.",
     "Ok": "Bone",
-    "Wrong file type": "Neĝusta dosiertipo",
-    "Looks good!": "Ŝajnas bona!",
-    "Security Phrase": "Sekureca frazo",
-    "Security Key": "Sekureca ŝlosilo",
-    "Use your Security Key to continue.": "Uzu vian sekurecan ŝlosilon por daŭrigi.",
     "Switch theme": "Ŝalti haŭton",
-    "Unable to set up keys": "Ne povas agordi ŝlosilojn",
     "Not encrypted": "Neĉifrita",
     "Backup version:": "Repaŝa versio:",
     "Uzbekistan": "Uzbekujo",
@@ -417,9 +405,6 @@
     "Curaçao": "Kuracao",
     "Cocos (Keeling) Islands": "Kokosinsuloj",
     "Cayman Islands": "Kajmaninsuloj",
-    "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Ne povas akiri sekretandeponejon. Bonvolu kontroli, ĉu vi enigis la ĝustan Sekurecan frazon.",
-    "Invalid Security Key": "Nevalida Sekureca ŝlosilo",
-    "Wrong Security Key": "Malĝusta Sekureca ŝlosilo",
     "<inviter/> invites you": "<inviter/> invitas vin",
     "%(count)s rooms": {
         "one": "%(count)s ĉambro",
@@ -433,10 +418,6 @@
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
     },
-    "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Se vi restarigos ĉion, vi rekomencos sen fidataj salutaĵoj, uzantoj, kaj eble ne povos vidi antaŭajn mesaĝojn.",
-    "Only do this if you have no other device to complete verification with.": "Faru tion ĉi nur se vi ne havas alian aparaton, per kiu vi kontrolus ceterajn.",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Ĉu vi forgesis aŭ perdis ĉiujn manierojn de rehavo? <a>Restarigu ĉion</a>",
-    "Reset everything": "Restarigi ĉion",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
@@ -2160,7 +2141,32 @@
             "other_new_session_text": "%(name)s (%(userId)s) salutis novan salutaĵon ne kontrolante ĝin:",
             "other_ask_verify_text": "Petu, ke ĉi tiu la uzanto kontrolu sian salutaĵon, aŭ kontrolu ĝin permane sube.",
             "title": "Nefidata"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Neĝusta dosiertipo",
+                "recovery_key_is_correct": "Ŝajnas bona!",
+                "wrong_security_key": "Malĝusta Sekureca ŝlosilo",
+                "invalid_security_key": "Nevalida Sekureca ŝlosilo"
+            },
+            "reset_title": "Restarigi ĉion",
+            "reset_warning_1": "Faru tion ĉi nur se vi ne havas alian aparaton, per kiu vi kontrolus ceterajn.",
+            "reset_warning_2": "Se vi restarigos ĉion, vi rekomencos sen fidataj salutaĵoj, uzantoj, kaj eble ne povos vidi antaŭajn mesaĝojn.",
+            "security_phrase_title": "Sekureca frazo",
+            "security_phrase_incorrect_error": "Ne povas akiri sekretandeponejon. Bonvolu kontroli, ĉu vi enigis la ĝustan Sekurecan frazon.",
+            "security_key_title": "Sekureca ŝlosilo",
+            "use_security_key_prompt": "Uzu vian sekurecan ŝlosilon por daŭrigi.",
+            "restoring": "Rehavo de ŝlosiloj el savkopio"
+        },
+        "reset_all_button": "Ĉu vi forgesis aŭ perdis ĉiujn manierojn de rehavo? <a>Restarigu ĉion</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Ĉu detrui delege ĉifrajn ŝlosilojn?",
+            "warning": "Forigo de delege ĉifraj ŝlosiloj estas porĉiama. Ĉiu, kun kiu vi interkontrolis, vidos avertojn pri sekureco. Vi preskaŭ certe ne volas ĉi tion fari, malse vi perdis ĉiun aparaton, el kiu vi povus delege subskribadi.",
+            "primary_button_text": "Vakigi delege ĉifrajn ŝlosilojn"
+        },
+        "confirm_encryption_setup_title": "Konfirmi agordon de ĉifrado",
+        "confirm_encryption_setup_body": "Klaku sube la butonon por konfirmi agordon de ĉifrado.",
+        "unable_to_setup_keys_error": "Ne povas agordi ŝlosilojn"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",

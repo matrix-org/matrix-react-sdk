@@ -57,10 +57,7 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s",
     "Restricted": "Yesεa tilas",
     "Pencil": "Akeryun",
-    "Security Key": "Tasarut n tɣellist",
     "%(items)s and %(lastItem)s": "%(items)s d %(lastItem)s",
-    "Confirm encryption setup": "Sentem asebded n uwgelhen",
-    "Click the button below to confirm setting up encryption.": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen.",
     "Dog": "Aqjun",
     "Horse": "Aεewdiw",
     "Pig": "Ilef",
@@ -110,7 +107,6 @@
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
     "Send Logs": "Azen iɣmisen",
-    "Use your Security Key to continue.": "Seqdec tasarut-ik·im n tɣellist akken ad tkemmleḍ.",
     "Sign in with SSO": "Anekcum s SSO",
     "Switch theme": "Abeddel n usentel",
     "Unicorn": "Azara",
@@ -151,19 +147,12 @@
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
     "Thumbs up": "Adebbuz d asawen",
     "This backup is trusted because it has been restored on this session": "Aḥraz yettwaḍman acku yuɣal-d seg tɣimit-a",
-    "Security Phrase": "Tafyirt n tɣellist",
-    "Restoring keys from backup": "Tiririt n tsura seg uḥraz",
     "%(completed)s of %(total)s keys restored": "%(completed)s n %(total)s tsura i yettwarran",
     "Paperclip": "Tamessakt n lkaɣeḍ",
     "Cactus": "Akermus",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "I wakken ad d-tazneḍ ugur n tɣellist i icudden ɣer Matrix, ttxil-k·m ɣer <a>tasertit n ukcaf n tɣellist</a> deg Matrix.org.",
     "Failed to connect to integration manager": "Tuqqna ɣer umsefrak n umsidef ur yeddi ara",
-    "Wrong file type": "Anaw n yifuyla d arameɣtu",
-    "Looks good!": "Yettban igerrez!",
-    "Destroy cross-signing keys?": "Erẓ tisura n uzmul anmidag?",
-    "Clear cross-signing keys": "Sfeḍ tisura n uzmul anmidag",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Send ad tazneḍ iɣmisen-ik·im, ilaq <a>ad ternuḍ ugur deg Github</a> i wakken ad d-tgelmeḍ ugur-inek·inem.",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Tukksa n tsura n uzmul anmidag ad yili i lebda. Yal amdan i tesneqdeḍ ad iwali ilɣa n tɣellist. Maca ur tebɣiḍ ara ad txedmeḍ aya, ala ma yella tesruḥeḍ ibenkan akk ara ak·akem-yeǧǧen ad tkecmeḍ seg-s.",
     "Trophy": "Arraz",
     "Backup version:": "Lqem n uklas:",
     "Not encrypted": "Ur yettwawgelhen ara",
@@ -1619,7 +1608,24 @@
             "other_new_session_text": "%(name)s (%(userId)s) yeqqen ɣer tɣimit tamaynut war ma isenqed-itt:",
             "other_ask_verify_text": "Suter deg useqdac-a ad isenqed tiɣimit-is, neɣ senqed-itt ddaw s ufus.",
             "title": "Ur yettwattkal ara"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Anaw n yifuyla d arameɣtu",
+                "recovery_key_is_correct": "Yettban igerrez!"
+            },
+            "security_phrase_title": "Tafyirt n tɣellist",
+            "security_key_title": "Tasarut n tɣellist",
+            "use_security_key_prompt": "Seqdec tasarut-ik·im n tɣellist akken ad tkemmleḍ.",
+            "restoring": "Tiririt n tsura seg uḥraz"
+        },
+        "destroy_cross_signing_dialog": {
+            "title": "Erẓ tisura n uzmul anmidag?",
+            "warning": "Tukksa n tsura n uzmul anmidag ad yili i lebda. Yal amdan i tesneqdeḍ ad iwali ilɣa n tɣellist. Maca ur tebɣiḍ ara ad txedmeḍ aya, ala ma yella tesruḥeḍ ibenkan akk ara ak·akem-yeǧǧen ad tkecmeḍ seg-s.",
+            "primary_button_text": "Sfeḍ tisura n uzmul anmidag"
+        },
+        "confirm_encryption_setup_title": "Sentem asebded n uwgelhen",
+        "confirm_encryption_setup_body": "Sit ɣef tqeffalt ddaw akken ad tesnetmeḍ asebded n uwgelhen."
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",

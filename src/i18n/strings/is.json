@@ -340,7 +340,6 @@
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s og %(space2Name)s",
     "Forget": "Gleyma",
-    "Looks good!": "Lítur vel út!",
     "%(count)s rooms": {
         "one": "%(count)s spjallrás",
         "other": "%(count)s spjallrásir"
@@ -373,7 +372,6 @@
     "Feedback sent! Thanks, we appreciate it!": "Umsögn send! Takk, við kunnum að meta þetta!",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
-    "Reset everything": "Frumstilla allt",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -403,14 +401,8 @@
     "Strawberry": "Jarðarber",
     "Spanner": "Skrúflykill",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Til að tilkynna Matrix-tengd öryggisvandamál, skaltu lesa <a>Security Disclosure Policy</a> á matrix.org.",
-    "Use your Security Key to continue.": "Notaðu öryggislykilinn þinn til að halda áfram.",
-    "Security Key": "Öryggislykill",
-    "Invalid Security Key": "Ógildur öryggislykill",
-    "Wrong Security Key": "Rangur öryggislykill",
     "Backup version:": "Útgáfa öryggisafrits:",
     "Switch theme": "Skipta um þema",
-    "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
-    "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
     "a device cross-signing signature": "kross-undirritun undirritunarlykils tækis",
     "a new cross-signing key signature": "ný kross-undirritun undirritunarlykils",
     "Failed to connect to integration manager": "Mistókst að tengjast samþættingarstýringu",
@@ -429,8 +421,6 @@
         "other": "%(count)s aðilar sem þú þekkir hafa þegar tekið þátt"
     },
     "<inviter/> invites you": "<inviter/> býður þér",
-    "Click the button below to confirm setting up encryption.": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
-    "Confirm encryption setup": "Staðfestu uppsetningu dulritunar",
     "%(name)s wants to verify": "%(name)s vill sannreyna",
     "%(name)s cancelled": "%(name)s hætti við",
     "%(name)s declined": "%(name)s hafnaði",
@@ -439,16 +429,11 @@
         "one": "%(count)s svar",
         "other": "%(count)s svör"
     },
-    "Security Phrase": "Öryggisfrasi",
     "toggle event": "víxla atburði af/á",
     "Sign in with SSO": "Skrá inn með einfaldri innskráningu (SSO)",
-    "Forgotten or lost all recovery methods? <a>Reset all</a>": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
-    "Wrong file type": "Röng skráartegund",
     "Submit logs": "Senda inn atvikaskrár",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "%(completed)s of %(total)s keys restored": "%(completed)s af %(total)s lyklum endurheimtir",
-    "Restoring keys from backup": "Endurheimti lykla úr öryggisafriti",
-    "Unable to set up keys": "Tókst ekki að setja upp lykla",
     "%(brand)s encountered an error during upload of:": "%(brand)s rakst á villu við innsendingu á:",
     "View List": "Skoða lista",
     "%(count)s participants": {
@@ -464,7 +449,6 @@
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
-    "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
         "about": "Um hugbúnaðinn",
@@ -2488,7 +2472,29 @@
             "title": "Ekki treyst",
             "manual_verification_button": "Sannreyna handvirkt með texta",
             "interactive_verification_button": "Sannprófa gagnvirkt með táknmyndum"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Röng skráartegund",
+                "recovery_key_is_correct": "Lítur vel út!",
+                "wrong_security_key": "Rangur öryggislykill",
+                "invalid_security_key": "Ógildur öryggislykill"
+            },
+            "reset_title": "Frumstilla allt",
+            "security_phrase_title": "Öryggisfrasi",
+            "security_key_title": "Öryggislykill",
+            "use_security_key_prompt": "Notaðu öryggislykilinn þinn til að halda áfram.",
+            "separator": "%(securityKey)s eða %(recoveryFile)s",
+            "restoring": "Endurheimti lykla úr öryggisafriti"
+        },
+        "reset_all_button": "Gleymdirðu eða týndir öllum aðferðum til endurheimtu? <a>Endurstilla allt</a>",
+        "destroy_cross_signing_dialog": {
+            "title": "Eyða kross-undirritunarlyklum?",
+            "primary_button_text": "Hreinsa kross-undirritunarlykla"
+        },
+        "confirm_encryption_setup_title": "Staðfestu uppsetningu dulritunar",
+        "confirm_encryption_setup_body": "Smelltu á hnappinn hér að neðan til að staðfesta uppsetningu á dulritun.",
+        "unable_to_setup_keys_error": "Tókst ekki að setja upp lykla"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",

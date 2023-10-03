@@ -142,9 +142,6 @@
     },
     "%(name)s declined": "%(name)s отказа",
     "Submit logs": "Изпрати логове",
-    "Destroy cross-signing keys?": "Унищожаване на ключовете за кръстосано-подписване?",
-    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Изтриването на ключовете за кръстосано-подписване е необратимо. Всички, с които сте се верифицирали ще видят предупреждения за сигурността. Почти със сигурност не искате да направите това, освен ако не сте загубили всички устройства, от които можете да подписвате кръстосано.",
-    "Clear cross-signing keys": "Изчисти ключовете за кръстосано-подписване",
     "IRC display name width": "Ширина на IRC името",
     "a new master key signature": "нов подпис на основния ключ",
     "a new cross-signing key signature": "нов подпис на ключа за кръстосано-подписване",
@@ -154,18 +151,9 @@
     "Your homeserver has exceeded its user limit.": "Надвишен е лимитът за потребители на сървъра ви.",
     "Your homeserver has exceeded one of its resource limits.": "Беше надвишен някой от лимитите на сървъра.",
     "Ok": "Добре",
-    "Restoring keys from backup": "Възстановяване на ключове от резервно копие",
     "%(completed)s of %(total)s keys restored": "%(completed)s от %(total)s ключа са възстановени",
     "Sign in with SSO": "Влезте със SSO",
     "Switch theme": "Смени темата",
-    "Confirm encryption setup": "Потвърждение на настройки за шифроване",
-    "Click the button below to confirm setting up encryption.": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
-    "Unable to set up keys": "Неуспешна настройка на ключовете",
-    "Use your Security Key to continue.": "Използвайте ключа си за сигурност за да продължите.",
-    "Security Key": "Ключ за сигурност",
-    "Security Phrase": "Защитна фраза",
-    "Looks good!": "Изглежда добре!",
-    "Wrong file type": "Грешен тип файл",
     "Not encrypted": "Не е шифровано",
     "Backup version:": "Версия на резервното копие:",
     "Anguilla": "Ангила",
@@ -1667,7 +1655,25 @@
             "other_new_session_text": "%(name)s (%(userId)s) влезе в нова сесия без да я потвърди:",
             "other_ask_verify_text": "Поискайте от този потребител да потвърди сесията си, или я потвърдете ръчно по-долу.",
             "title": "Недоверено"
-        }
+        },
+        "access_secret_storage_dialog": {
+            "key_validation_text": {
+                "wrong_file_type": "Грешен тип файл",
+                "recovery_key_is_correct": "Изглежда добре!"
+            },
+            "security_phrase_title": "Защитна фраза",
+            "security_key_title": "Ключ за сигурност",
+            "use_security_key_prompt": "Използвайте ключа си за сигурност за да продължите.",
+            "restoring": "Възстановяване на ключове от резервно копие"
+        },
+        "destroy_cross_signing_dialog": {
+            "title": "Унищожаване на ключовете за кръстосано-подписване?",
+            "warning": "Изтриването на ключовете за кръстосано-подписване е необратимо. Всички, с които сте се верифицирали ще видят предупреждения за сигурността. Почти със сигурност не искате да направите това, освен ако не сте загубили всички устройства, от които можете да подписвате кръстосано.",
+            "primary_button_text": "Изчисти ключовете за кръстосано-подписване"
+        },
+        "confirm_encryption_setup_title": "Потвърждение на настройки за шифроване",
+        "confirm_encryption_setup_body": "Кликнете бутона по-долу за да потвърдите настройването на шифроване.",
+        "unable_to_setup_keys_error": "Неуспешна настройка на ключовете"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
