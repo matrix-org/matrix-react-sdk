@@ -33,6 +33,9 @@
     "scripts": {
         "prepublishOnly": "yarn build",
         "i18n": "matrix-gen-i18n && yarn i18n:sort && yarn i18n:lint",
+        "i18n:sort": "jq --sort-keys '.' src/i18n/strings/en_EN.json > src/i18n/strings/en_EN.json.tmp && mv src/i18n/strings/en_EN.json.tmp src/i18n/strings/en_EN.json",
+        "i18n:lint": "matrix-i18n-lint && prettier --loglevel silent --write src/i18n/strings/ --ignore-path /dev/null",
+        "i18n:diff": "cp src/i18n/strings/en_EN.json src/i18n/strings/en_EN_orig.json && yarn i18n && matrix-compare-i18n-files src/i18n/strings/en_EN_orig.json src/i18n/strings/en_EN.json",
         "make-component": "node scripts/make-react-component.js",
         "rethemendex": "res/css/rethemendex.sh",
         "clean": "rimraf lib",
@@ -50,10 +53,7 @@
         "test": "jest",
         "test:cypress": "cypress run",
         "test:cypress:open": "cypress open",
-        "coverage": "yarn test --coverage",
-        "i18n:sort": "jq --sort-keys '.' src/i18n/strings/en_EN.json > src/i18n/strings/en_EN.json.tmp && mv src/i18n/strings/en_EN.json.tmp src/i18n/strings/en_EN.json",
-        "i18n:lint": "matrix-i18n-lint && prettier --loglevel silent --write src/i18n/strings/ --ignore-path /dev/null",
-        "i18n:diff": "cp src/i18n/strings/en_EN.json src/i18n/strings/en_EN_orig.json && yarn i18n && matrix-compare-i18n-files src/i18n/strings/en_EN_orig.json src/i18n/strings/en_EN.json"
+        "coverage": "yarn test --coverage"
     },
     "resolutions": {
         "@types/react-dom": "17.0.19",
