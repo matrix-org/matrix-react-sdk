@@ -84,12 +84,6 @@
     "The room upgrade could not be completed": "A szoba fejlesztését nem sikerült befejezni",
     "Upgrade this room to version %(version)s": "A szoba fejlesztése erre a verzióra: %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Mielőtt a naplót elküldöd, egy <a>Github jegyet kell nyitni</a> amiben leírod a problémádat.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "Az %(brand)s harmad-ötöd annyi memóriát használ azáltal, hogy csak akkor tölti be a felhasználók információit, amikor az szükséges. Kis türelmet, amíg megtörténik az újbóli szinkronizálás a kiszolgálóval.",
-    "Updating %(brand)s": "%(brand)s frissítése",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Előzőleg a szoba tagság késleltetett betöltésének engedélyével itt használtad a %(brand)sot: %(host)s. Ebben a verzióban viszont a késleltetett betöltés nem engedélyezett. Mivel a két gyorsítótár nem kompatibilis egymással így %(brand)snak újra kell szinkronizálnia a fiókot.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ha a másik %(brand)s verzió még fut egy másik fülön, akkor zárja be, mert ha egy gépen használja a %(brand)sot úgy, hogy az egyiken be van kapcsolva a késleltetett betöltés, a másikon pedig ki, akkor problémák adódhatnak.",
-    "Incompatible local cache": "A helyi gyorsítótár nem kompatibilis ezzel a verzióval",
-    "Clear cache and resync": "Gyorsítótár törlése és újraszinkronizálás",
     "Unable to load backup status": "A mentés állapotát nem lehet lekérdezni",
     "Unable to restore backup": "A mentést nem lehet helyreállítani",
     "No backup found!": "Mentés nem található!",
@@ -229,16 +223,11 @@
     "a device cross-signing signature": "az eszköz eszközök közötti aláírása",
     "a key signature": "kulcs aláírás",
     "%(brand)s encountered an error during upload of:": "%(brand)s hibába ütközött a feltöltés közben:",
-    "Upload completed": "A feltöltés befejeződött",
-    "Cancelled signature upload": "Az aláírás feltöltése megszakítva",
-    "Signature upload success": "Az aláírások feltöltése sikeres",
-    "Signature upload failed": "Az aláírások feltöltése sikertelen",
     "Confirm by comparing the following with the User Settings in your other session:": "Erősítsd meg a felhasználói beállítások összehasonlításával a többi munkamenetedben:",
     "Confirm this user's session by comparing the following with their User Settings:": "Ezt a munkamenetet hitelesítsd az ő felhasználói beállításának az összehasonlításával:",
     "If they don't match, the security of your communication may be compromised.": "Ha nem egyeznek akkor a kommunikációtok biztonsága veszélyben lehet.",
     "Sign in with SSO": "Belépés SSO-val",
     "Submit logs": "Napló elküldése",
-    "Unable to upload": "Nem lehet feltölteni",
     "Restoring keys from backup": "Kulcsok helyreállítása mentésből",
     "%(completed)s of %(total)s keys restored": "%(completed)s/%(total)s kulcs helyreállítva",
     "Keys restored": "Kulcsok helyreállítva",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Az élő adás indítása sikertelen",
     "Unable to start audio streaming.": "A hang folyam indítása sikertelen.",
-    "Leave space": "Tér elhagyása",
     "<inviter/> invites you": "<inviter/> meghívta",
     "No results found": "Nincs találat",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Select spaces": "Terek kiválasztása",
     "You're removing all spaces. Access will default to invite only": "Az összes teret törli. A hozzáférés alapállapota „csak meghívóval” lesz.",
     "These are likely ones other room admins are a part of.": "Ezek valószínűleg olyanok, amelyeknek más szoba adminok is tagjai.",
-    "Leave %(spaceName)s": "Kilép innen: %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ön az adminisztrátora néhány szobának vagy térnek amiből ki szeretne lépni. Ha kilép belőlük akkor azok adminisztrátor nélkül maradnak.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ön az egyetlen adminisztrátora a térnek. Ha kilép, senki nem tudja irányítani.",
-    "You won't be able to rejoin unless you are re-invited.": "Nem fog tudni újra belépni amíg nem hívják meg újra.",
     "To join a space you'll need an invite.": "A térre való belépéshez meghívóra van szükség.",
-    "Would you like to leave the rooms in this space?": "Ki szeretne lépni ennek a térnek minden szobájából?",
-    "You are about to leave <spaceName/>.": "Éppen el akarja hagyni <spaceName/> teret.",
-    "Leave some rooms": "Kilépés néhány szobából",
-    "Leave all rooms": "Kilépés minden szobából",
-    "Don't leave any rooms": "Ne lépjen ki egy szobából sem",
     "%(count)s reply": {
         "one": "%(count)s válasz",
         "other": "%(count)s válasz"
@@ -2920,7 +2899,12 @@
         "incompatible_database_sign_out_description": "Hogy a régi üzenetekhez továbbra is hozzáférhess kijelentkezés előtt ki kell mentened a szobák titkosító kulcsait. Ehhez a %(brand)s egy frissebb verzióját kell használnod",
         "incompatible_database_description": "Ezt a munkamenetet előzőleg egy újabb %(brand)s verzióval használtad. Ahhoz, hogy újra ezt a verziót tudd használni végpontok közötti titkosítással, ki kell lépned majd újra vissza.",
         "incompatible_database_title": "Nem kompatibilis adatbázis",
-        "incompatible_database_disable": "Folytatás a titkosítás kikapcsolásával"
+        "incompatible_database_disable": "Folytatás a titkosítás kikapcsolásával",
+        "key_signature_upload_completed": "A feltöltés befejeződött",
+        "key_signature_upload_cancelled": "Az aláírás feltöltése megszakítva",
+        "key_signature_upload_failed": "Nem lehet feltölteni",
+        "key_signature_upload_success_title": "Az aláírások feltöltése sikeres",
+        "key_signature_upload_failed_title": "Az aláírások feltöltése sikertelen"
     },
     "emoji": {
         "category_frequently_used": "Gyakran használt",
@@ -3486,7 +3470,17 @@
             "create_prompt": "Új szoba készítése",
             "subspace_moved_note": "Terek hozzáadása elköltözött."
         },
-        "room_filter_placeholder": "Szobák keresése"
+        "room_filter_placeholder": "Szobák keresése",
+        "leave_dialog_public_rejoin_warning": "Nem fog tudni újra belépni amíg nem hívják meg újra.",
+        "leave_dialog_only_admin_warning": "Ön az egyetlen adminisztrátora a térnek. Ha kilép, senki nem tudja irányítani.",
+        "leave_dialog_only_admin_room_warning": "Ön az adminisztrátora néhány szobának vagy térnek amiből ki szeretne lépni. Ha kilép belőlük akkor azok adminisztrátor nélkül maradnak.",
+        "leave_dialog_title": "Kilép innen: %(spaceName)s",
+        "leave_dialog_description": "Éppen el akarja hagyni <spaceName/> teret.",
+        "leave_dialog_option_intro": "Ki szeretne lépni ennek a térnek minden szobájából?",
+        "leave_dialog_option_none": "Ne lépjen ki egy szobából sem",
+        "leave_dialog_option_all": "Kilépés minden szobából",
+        "leave_dialog_option_specific": "Kilépés néhány szobából",
+        "leave_dialog_action": "Tér elhagyása"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ezen a Matrix-kiszolgálón nincs beállítva a térképek megjelenítése.",
@@ -4271,5 +4265,13 @@
         "disabled_dialog_description": "Ehhez engedélyezd a(z) „%(manageIntegrations)s”-t a Beállításokban.",
         "impossible_dialog_title": "Az integrációk nem engedélyezettek",
         "impossible_dialog_description": "A %(brand)s nem használhat Integrációs Menedzsert. Kérem vegye fel a kapcsolatot az adminisztrátorral."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Előzőleg a szoba tagság késleltetett betöltésének engedélyével itt használtad a %(brand)sot: %(host)s. Ebben a verzióban viszont a késleltetett betöltés nem engedélyezett. Mivel a két gyorsítótár nem kompatibilis egymással így %(brand)snak újra kell szinkronizálnia a fiókot.",
+        "disabled_description2": "Ha a másik %(brand)s verzió még fut egy másik fülön, akkor zárja be, mert ha egy gépen használja a %(brand)sot úgy, hogy az egyiken be van kapcsolva a késleltetett betöltés, a másikon pedig ki, akkor problémák adódhatnak.",
+        "disabled_title": "A helyi gyorsítótár nem kompatibilis ezzel a verzióval",
+        "disabled_action": "Gyorsítótár törlése és újraszinkronizálás",
+        "resync_description": "Az %(brand)s harmad-ötöd annyi memóriát használ azáltal, hogy csak akkor tölti be a felhasználók információit, amikor az szükséges. Kis türelmet, amíg megtörténik az újbóli szinkronizálás a kiszolgálóval.",
+        "resync_title": "%(brand)s frissítése"
     }
 }

@@ -83,12 +83,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "V pôvodnej miestnosti bude zverejnené odporúčanie prejsť do novej miestnosti a posielanie do pôvodnej miestnosti bude zakázané pre všetkých používateľov",
     "Put a link back to the old room at the start of the new room so people can see old messages": "História novej miestnosti sa začne odkazom do pôvodnej miestnosti, aby si členovia vedeli zobraziť staršie správy",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pred tým, než odošlete záznamy, musíte <a>nahlásiť váš problém na GitHub</a>. Uvedte prosím podrobný popis.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
-    "Updating %(brand)s": "Prebieha aktualizácia %(brand)s",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Použili ste aj %(brand)s na adrese %(host)s so zapnutou voľbou Načítanie zoznamu členov pri prvom zobrazení. V tejto verzii je Načítanie zoznamu členov pri prvom zobrazení vypnuté. Keď že lokálna vyrovnávacia pamäť nie je vzájomne kompatibilná s takýmito nastaveniami, %(brand)s potrebuje znovu synchronizovať údaje z vašeho účtu.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ak máte %(brand)s s iným nastavením otvorený na ďalšej karte, prosím zatvorte ju, pretože použitie %(brand)s s rôznym nastavením na jednom zariadení vám spôsobí len problémy.",
-    "Incompatible local cache": "Nekompatibilná lokálna vyrovnávacia pamäť",
-    "Clear cache and resync": "Vymazať vyrovnávaciu pamäť a synchronizovať znovu",
     "Unable to load backup status": "Nie je možné načítať stav zálohy",
     "Unable to restore backup": "Nie je možné obnoviť zo zálohy",
     "No backup found!": "Nebola nájdená žiadna záloha!",
@@ -457,10 +451,6 @@
     "Upgrade private room": "Aktualizovať súkromnú miestnosť",
     "Public rooms": "Verejné miestnosti",
     "Upgrade public room": "Aktualizovať verejnú miestnosť",
-    "Leave some rooms": "Opustiť niektoré miestnosti",
-    "Leave all rooms": "Opustiť všetky miestnosti",
-    "Don't leave any rooms": "Neopustiť žiadne miestnosti",
-    "Would you like to leave the rooms in this space?": "Chcete opustiť miestnosti v tomto priestore?",
     "To join a space you'll need an invite.": "Ak sa chcete pripojiť k priestoru, budete potrebovať pozvánku.",
     "%(count)s sessions": {
         "one": "%(count)s relácia",
@@ -477,9 +467,6 @@
     "Upload files": "Nahrať súbory",
     "Unable to access secret storage. Please verify that you entered the correct Security Phrase.": "Nie je možné získať prístup k tajnému úložisku. Skontrolujte, či ste zadali správnu bezpečnostnú frázu.",
     "Server isn't responding": "Server neodpovedá",
-    "Signature upload failed": "Nahrávanie podpisu zlyhalo",
-    "Signature upload success": "Úspešné nahratie podpisu",
-    "Cancelled signature upload": "Zrušené nahrávanie podpisu",
     "edited": "upravené",
     "Message edits": "Úpravy správy",
     "Switch theme": "Prepnúť motív",
@@ -496,15 +483,9 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Zvyčajne to ovplyvňuje len spôsob spracovania miestnosti na serveri. Ak máte problémy s %(brand)s, nahláste prosím chybu.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Vezmite prosím na vedomie, že aktualizácia vytvorí novú verziu miestnosti</b>. Všetky aktuálne správy zostanú v tejto archivovanej miestnosti.",
     "%(name)s cancelled": "%(name)s zrušil/a",
-    "Leave space": "Opustiť priestor",
-    "You are about to leave <spaceName/>.": "Chystáte sa opustiť <spaceName/>.",
-    "Leave %(spaceName)s": "Opustiť %(spaceName)s",
     "Failed to connect to integration manager": "Nepodarilo sa pripojiť k správcovi integrácie",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ste jediným správcom niektorých miestností alebo priestorov, ktoré chcete opustiť. Ich opustenie ich ponechá bez administrátorov.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ste jediným správcom tohto priestoru. Jeho opustenie bude znamenať, že nad ním nikto nebude mať kontrolu.",
     "Your firewall or anti-virus is blocking the request.": "Požiadavku blokuje váš firewall alebo antivírus.",
     "Your homeserver doesn't seem to support this feature.": "Zdá sa, že váš domovský server túto funkciu nepodporuje.",
-    "You won't be able to rejoin unless you are re-invited.": "Nebudete sa môcť znova pripojiť, kým nebudete opätovne pozvaní.",
     "Approve widget permissions": "Schváliť oprávnenia widgetu",
     "Upload Error": "Chyba pri nahrávaní",
     "Your browser likely removed this data when running low on disk space.": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
@@ -555,8 +536,6 @@
     "Keys restored": "Kľúče obnovené",
     "%(completed)s of %(total)s keys restored": "%(completed)s z %(total)s obnovených kľúčov",
     "Restoring keys from backup": "Obnovenie kľúčov zo zálohy",
-    "Unable to upload": "Nie je možné nahrať",
-    "Upload completed": "Nahrávanie dokončené",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizácia miestnosti je pokročilá akcia a zvyčajne sa odporúča, keď je miestnosť nestabilná kvôli chybám, chýbajúcim funkciám alebo bezpečnostným zraniteľnostiam.",
     "Be found by phone or email": "Byť nájdený pomocou telefónu alebo e-mailu",
     "Find others by phone or email": "Nájsť ostatných pomocou telefónu alebo e-mailu",
@@ -2989,7 +2968,12 @@
         "incompatible_database_sign_out_description": "Aby ste po odhlásení neprišli o možnosť čítať históriu šifrovaných konverzácií, mali by ste si ešte pred odhlásením exportovať šifrovacie kľúče miestností. Prosím vráťte sa k novšej verzii %(brand)s a exportujte si kľúče",
         "incompatible_database_description": "Pri tejto relácii ste už predtým použili novšiu verziu %(brand)s. Ak chcete túto verziu znovu používať s end-to-end šifrovaním, budete sa musieť odhlásiť a znova prihlásiť.",
         "incompatible_database_title": "Nekompatibilná databáza",
-        "incompatible_database_disable": "Pokračovať s vypnutým šifrovaním"
+        "incompatible_database_disable": "Pokračovať s vypnutým šifrovaním",
+        "key_signature_upload_completed": "Nahrávanie dokončené",
+        "key_signature_upload_cancelled": "Zrušené nahrávanie podpisu",
+        "key_signature_upload_failed": "Nie je možné nahrať",
+        "key_signature_upload_success_title": "Úspešné nahratie podpisu",
+        "key_signature_upload_failed_title": "Nahrávanie podpisu zlyhalo"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3561,7 +3545,17 @@
             "create_prompt": "Vytvoriť novú miestnosť",
             "subspace_moved_note": "Pridávanie priestorov bolo presunuté."
         },
-        "room_filter_placeholder": "Hľadať miestnosti"
+        "room_filter_placeholder": "Hľadať miestnosti",
+        "leave_dialog_public_rejoin_warning": "Nebudete sa môcť znova pripojiť, kým nebudete opätovne pozvaní.",
+        "leave_dialog_only_admin_warning": "Ste jediným správcom tohto priestoru. Jeho opustenie bude znamenať, že nad ním nikto nebude mať kontrolu.",
+        "leave_dialog_only_admin_room_warning": "Ste jediným správcom niektorých miestností alebo priestorov, ktoré chcete opustiť. Ich opustenie ich ponechá bez administrátorov.",
+        "leave_dialog_title": "Opustiť %(spaceName)s",
+        "leave_dialog_description": "Chystáte sa opustiť <spaceName/>.",
+        "leave_dialog_option_intro": "Chcete opustiť miestnosti v tomto priestore?",
+        "leave_dialog_option_none": "Neopustiť žiadne miestnosti",
+        "leave_dialog_option_all": "Opustiť všetky miestnosti",
+        "leave_dialog_option_specific": "Opustiť niektoré miestnosti",
+        "leave_dialog_action": "Opustiť priestor"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server nie je nastavený na zobrazovanie máp.",
@@ -4367,5 +4361,13 @@
         "disabled_dialog_description": "Ak to chcete urobiť, povoľte v Nastaveniach položku \"%(manageIntegrations)s\".",
         "impossible_dialog_title": "Integrácie nie sú povolené",
         "impossible_dialog_description": "Vaša aplikácia %(brand)s vám na to neumožňuje použiť správcu integrácie. Obráťte sa na administrátora."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Použili ste aj %(brand)s na adrese %(host)s so zapnutou voľbou Načítanie zoznamu členov pri prvom zobrazení. V tejto verzii je Načítanie zoznamu členov pri prvom zobrazení vypnuté. Keď že lokálna vyrovnávacia pamäť nie je vzájomne kompatibilná s takýmito nastaveniami, %(brand)s potrebuje znovu synchronizovať údaje z vašeho účtu.",
+        "disabled_description2": "Ak máte %(brand)s s iným nastavením otvorený na ďalšej karte, prosím zatvorte ju, pretože použitie %(brand)s s rôznym nastavením na jednom zariadení vám spôsobí len problémy.",
+        "disabled_title": "Nekompatibilná lokálna vyrovnávacia pamäť",
+        "disabled_action": "Vymazať vyrovnávaciu pamäť a synchronizovať znovu",
+        "resync_description": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
+        "resync_title": "Prebieha aktualizácia %(brand)s"
     }
 }

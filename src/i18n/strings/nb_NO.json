@@ -110,7 +110,6 @@
     "e.g. my-room": "f.eks. mitt-rom",
     "Session ID": "Økt-ID",
     "Session key": "Øktnøkkel",
-    "Updating %(brand)s": "Oppdaterer %(brand)s",
     "Message edits": "Meldingsredigeringer",
     "Upload files": "Last opp filer",
     "Upload all": "Last opp alle",
@@ -139,8 +138,6 @@
     "%(name)s cancelled": "%(name)s avbrøt",
     "%(name)s wants to verify": "%(name)s ønsker å verifisere",
     "Submit logs": "Send inn loggføringer",
-    "Upload completed": "Opplasting fullført",
-    "Unable to upload": "Mislyktes i å laste opp",
     "Aeroplane": "Fly",
     "and %(count)s others...": {
         "other": "og %(count)s andre …",
@@ -152,7 +149,6 @@
     "Verify your other session using one of the options below.": "Verifiser den andre økten din med en av metodene nedenfor.",
     "Ok": "OK",
     "Santa": "Julenisse",
-    "Clear cache and resync": "Tøm mellomlageret og synkroniser på nytt",
     "Manually export keys": "Eksporter nøkler manuelt",
     "Verification Pending": "Avventer verifisering",
     "Share Room": "Del rommet",
@@ -230,7 +226,6 @@
         "other": "%(count)s rom",
         "one": "%(count)s rom"
     },
-    "Leave space": "Forlat området",
     "%(count)s people you know have already joined": {
         "other": "%(count)s personer du kjenner har allerede blitt med"
     },
@@ -1397,7 +1392,9 @@
             "cause_1": "Hjemmetjeneren din"
         },
         "event_shield_reason_authenticity_not_guaranteed": "Autentisiteten av denne krypterte meldingen kan ikke garanteres på denne enheten.",
-        "incompatible_database_title": "Inkompatibel database"
+        "incompatible_database_title": "Inkompatibel database",
+        "key_signature_upload_completed": "Opplasting fullført",
+        "key_signature_upload_failed": "Mislyktes i å laste opp"
     },
     "emoji": {
         "category_frequently_used": "Ofte brukte",
@@ -1633,7 +1630,8 @@
             "dm_heading": "Direktemeldinger",
             "space_dropdown_title": "Legg til eksisterende rom",
             "create_prompt": "Opprett et nytt rom"
-        }
+        },
+        "leave_dialog_action": "Forlat området"
     },
     "room": {
         "drop_file_prompt": "Slipp ned en fil her for å laste opp",
@@ -1885,5 +1883,9 @@
     "integrations": {
         "disabled_dialog_title": "Integreringer er skrudd av",
         "impossible_dialog_title": "Integreringer er ikke tillatt"
+    },
+    "lazy_loading": {
+        "disabled_action": "Tøm mellomlageret og synkroniser på nytt",
+        "resync_title": "Oppdaterer %(brand)s"
     }
 }

@@ -442,19 +442,7 @@
         "other": "%(count)s учасників"
     },
     "Manually export keys": "Експорт ключів власноруч",
-    "Don't leave any rooms": "Не виходити з будь-якої кімнати",
-    "Updating %(brand)s": "Оновлення %(brand)s",
-    "Clear cache and resync": "Очистити кеш і повторно синхронізувати",
-    "Incompatible local cache": "Несумісний локальний кеш",
-    "Signature upload failed": "Не вдалося вивантажити підпис",
-    "Signature upload success": "Підпис успішно вивантажено",
-    "Unable to upload": "Не вдалося вивантажити",
-    "Cancelled signature upload": "Вивантаження підпису скасовано",
-    "Upload completed": "Вивантаження виконано",
-    "Leave some rooms": "Вийте з кількох кімнат",
-    "Leave all rooms": "Вийти з кімнати",
     "Verification Request": "Запит підтвердження",
-    "Leave space": "Вийти з простору",
     "%(count)s sessions": {
         "one": "%(count)s сеанс",
         "other": "Сеансів: %(count)s"
@@ -510,12 +498,7 @@
     "Command Help": "Допомога команди",
     "Automatically invite members from this room to the new one": "Автоматично запросити учасників цієї кімнати до нової",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Зауважте, поліпшення створить нову версію кімнати</b>. Усі наявні повідомлення залишаться в цій архівованій кімнаті.",
-    "You won't be able to rejoin unless you are re-invited.": "Ви не зможете приєднатись, доки вас не запросять знову.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ви єдиний адміністратор цього простору. Вихід із нього залишить його без керівництва.",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Ви єдиний адміністратор кімнат чи просторів, з яких ви бажаєте вийти. Вихід із них залишить їх без адміністраторів.",
-    "Leave %(spaceName)s": "Вийти з %(spaceName)s",
     "To join a space you'll need an invite.": "Щоб приєднатись до простору, вам потрібне запрошення.",
-    "You are about to leave <spaceName/>.": "Ви збираєтеся вийти з <spaceName/>.",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Введіть свою фразу безпеки чи <button>скористайтесь ключем безпеки</button> для продовження.",
     "Link to selected message": "Посилання на вибране повідомлення",
     "To help us prevent this in future, please <a>send us logs</a>.": "Щоб уникнути цього в майбутньому просимо <a>надіслати нам журнал</a>.",
@@ -531,7 +514,6 @@
     "Reset event store": "Очистити сховище подій",
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Якщо таки бажаєте, зауважте, що жодні ваші повідомлення не видаляться, проте пошук сповільниться, поки індекс буде перестворюватись",
     "You most likely do not want to reset your event index store": "Сумніваємось, що ви бажаєте очистити своє сховище подій",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Ви використовували %(brand)s на %(host)s, ввімкнувши відкладене звантаження учасників. У цій версії відкладене звантаження вимкнене. Оскільки локальне кешування не підтримує переходу між цими опціями, %(brand)s мусить заново синхронізувати ваш обліковий запис.",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Додамо лінк старої кімнати нагорі нової, щоб люди могли бачити старі повідомлення",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Вимкнемо користувачам можливість писати до старої версії кімнати й додамо повідомлення з порадою перейти до нової",
     "Update any local room aliases to point to the new room": "Направимо всі локальні псевдоніми цієї кімнати до нової",
@@ -560,7 +542,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо <a>повідомити нас про ваду</a>.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Зазвичай це впливає лише на деталі опрацювання кімнати сервером. Якщо проблема полягає саме в %(brand)s, просимо повідомити нас про ваду.",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Поліпшення кімнати — серйозна операція. Її зазвичай радять, коли кімната нестабільна через вади, брак функціоналу чи вразливості безпеки.",
-    "Would you like to leave the rooms in this space?": "Бажаєте вийти з кімнат у цьому просторі?",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Зауважте, якщо ви не додасте пошту й забудете пароль, то можете <b>назавжди втратити доступ до свого облікового запису</b>.",
     "Continuing without email": "Продовження без е-пошти",
     "Data on this screen is shared with %(widgetDomain)s": "Дані на цьому екрані надсилаються до %(widgetDomain)s",
@@ -571,8 +552,6 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Оберіть, які простори матимуть доступ до цієї кімнати. Якщо обрати простір, його учасники зможуть знаходити <RoomName/> і приєднуватися.",
     "You're removing all spaces. Access will default to invite only": "Ви вилучаєте всі простори. Усталеним стане доступ за запрошенням",
     "Start using Key Backup": "Скористайтеся резервним копіюванням ключів",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s тепер використовує в 3-5 разів менше пам'яті, звантажуючи дані про інших користувачів лише за потреби. Зачекайте, поки ми синхронізуємося з сервером!",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Якщо інший примірник %(brand)s досі відкритий в іншій вкладці, просимо закрити її, бо використання %(brand)s із водночас увімкненим і вимкненим відкладеним звантаженням створюватиме проблеми.",
     "If you've forgotten your Security Key you can <button>set up new recovery options</button>": "Якщо ви забули ключ безпеки, <button>налаштуйте нові параметри відновлення</button>",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "Отримайте історію своїх зашифрованих повідомлень і налаштуйте безпечне листування, ввівши свій ключ безпеки.",
     "If you've forgotten your Security Phrase you can <button1>use your Security Key</button1> or <button2>set up new recovery options</button2>": "Якщо ви забули фразу безпеки, <button1>скористайтеся ключем безпеки</button1> чи <button2>налаштуйте нові параметри відновлення</button2>",
@@ -2989,7 +2968,12 @@
         "incompatible_database_sign_out_description": "Щоб уникнути втрати історії ваших листувань, ви маєте експортувати ключі кімнати перед виходом. Вам треба буде повернутися до новішої версії %(brand)s аби зробити це",
         "incompatible_database_description": "Ви раніше використовували новішу версію %(brand)s для цього сеансу. Щоб знову використовувати цю версію із наскрізним шифруванням, вам потрібно буде вийти та знову ввійти.",
         "incompatible_database_title": "Несумісна база даних",
-        "incompatible_database_disable": "Продовжити із вимкненим шифруванням"
+        "incompatible_database_disable": "Продовжити із вимкненим шифруванням",
+        "key_signature_upload_completed": "Вивантаження виконано",
+        "key_signature_upload_cancelled": "Вивантаження підпису скасовано",
+        "key_signature_upload_failed": "Не вдалося вивантажити",
+        "key_signature_upload_success_title": "Підпис успішно вивантажено",
+        "key_signature_upload_failed_title": "Не вдалося вивантажити підпис"
     },
     "emoji": {
         "category_frequently_used": "Часто використовувані",
@@ -3561,7 +3545,17 @@
             "create_prompt": "Створити нову кімнату",
             "subspace_moved_note": "Додавання просторів переміщено."
         },
-        "room_filter_placeholder": "Пошук кімнат"
+        "room_filter_placeholder": "Пошук кімнат",
+        "leave_dialog_public_rejoin_warning": "Ви не зможете приєднатись, доки вас не запросять знову.",
+        "leave_dialog_only_admin_warning": "Ви єдиний адміністратор цього простору. Вихід із нього залишить його без керівництва.",
+        "leave_dialog_only_admin_room_warning": "Ви єдиний адміністратор кімнат чи просторів, з яких ви бажаєте вийти. Вихід із них залишить їх без адміністраторів.",
+        "leave_dialog_title": "Вийти з %(spaceName)s",
+        "leave_dialog_description": "Ви збираєтеся вийти з <spaceName/>.",
+        "leave_dialog_option_intro": "Бажаєте вийти з кімнат у цьому просторі?",
+        "leave_dialog_option_none": "Не виходити з будь-якої кімнати",
+        "leave_dialog_option_all": "Вийти з кімнати",
+        "leave_dialog_option_specific": "Вийте з кількох кімнат",
+        "leave_dialog_action": "Вийти з простору"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Цей домашній сервер не налаштовано на показ карт.",
@@ -4367,5 +4361,13 @@
         "disabled_dialog_description": "Увімкніть «%(manageIntegrations)s» в Налаштуваннях, щоб зробити це.",
         "impossible_dialog_title": "Інтеграції не дозволені",
         "impossible_dialog_description": "Ваш %(brand)s не дозволяє вам користуватись для цього менеджером інтеграцій. Зверніться до адміністратора."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Ви використовували %(brand)s на %(host)s, ввімкнувши відкладене звантаження учасників. У цій версії відкладене звантаження вимкнене. Оскільки локальне кешування не підтримує переходу між цими опціями, %(brand)s мусить заново синхронізувати ваш обліковий запис.",
+        "disabled_description2": "Якщо інший примірник %(brand)s досі відкритий в іншій вкладці, просимо закрити її, бо використання %(brand)s із водночас увімкненим і вимкненим відкладеним звантаженням створюватиме проблеми.",
+        "disabled_title": "Несумісний локальний кеш",
+        "disabled_action": "Очистити кеш і повторно синхронізувати",
+        "resync_description": "%(brand)s тепер використовує в 3-5 разів менше пам'яті, звантажуючи дані про інших користувачів лише за потреби. Зачекайте, поки ми синхронізуємося з сервером!",
+        "resync_title": "Оновлення %(brand)s"
     }
 }

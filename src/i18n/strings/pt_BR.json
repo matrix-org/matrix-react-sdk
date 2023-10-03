@@ -67,10 +67,6 @@
     "Yesterday": "Ontem",
     "Wednesday": "Quarta-feira",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar os relatórios, você deve <a>criar um bilhete de erro no GitHub</a> para descrever seu problema.",
-    "Incompatible local cache": "Cache local incompatível",
-    "Clear cache and resync": "Limpar cache e ressincronizar",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s agora usa de 3 a 5 vezes menos memória, pois carrega as informações dos outros usuários apenas quando for necessário. Por favor, aguarde enquanto ressincronizamos com o servidor!",
-    "Updating %(brand)s": "Atualizando o %(brand)s",
     "Failed to upgrade room": "Falha ao atualizar a sala",
     "The room upgrade could not be completed": "A atualização da sala não pode ser completada",
     "Upgrade this room to version %(version)s": "Atualize essa sala para versão %(version)s",
@@ -78,8 +74,6 @@
     "Create a new room with the same name, description and avatar": "Criar uma nova sala com o mesmo nome, descrição e foto",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Impeça os usuários de conversarem na versão antiga da sala. Além disso, digite uma mensagem aconselhando os usuários a migrarem para a nova sala",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Colocar um link para a sala antiga no começo da sala nova de modo que as pessoas possam ver mensagens antigas",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Você já usou o %(brand)s em %(host)s com o carregamento Lazy de participantes ativado. Nesta versão, o carregamento Lazy está desativado. Como o cache local não é compatível entre essas duas configurações, o %(brand)s precisa ressincronizar sua conta.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versão do %(brand)s ainda estiver aberta em outra aba, por favor, feche-a pois usar o %(brand)s no mesmo host com o carregamento Lazy ativado e desativado simultaneamente causará problemas.",
     "Update any local room aliases to point to the new room": "Atualize todos os nomes locais da sala para apontar para a nova sala",
     "Clear Storage and Sign Out": "Limpar armazenamento e sair",
     "We encountered an error trying to restore your previous session.": "Encontramos um erro ao tentar restaurar sua sessão anterior.",
@@ -251,11 +245,6 @@
     "Clear cross-signing keys": "Limpar chaves autoverificadas",
     "a device cross-signing signature": "um aparelho autoverificado",
     "%(brand)s encountered an error during upload of:": "%(brand)s encontrou um erro durante o envio de:",
-    "Upload completed": "Envio concluído",
-    "Cancelled signature upload": "Envio cancelado da assinatura",
-    "Unable to upload": "Falha no envio",
-    "Signature upload success": "Envio bem-sucedido da assinatura",
-    "Signature upload failed": "O envio da assinatura falhou",
     "Manually export keys": "Exportar chaves manualmente",
     "Are you sure you want to sign out?": "Deseja mesmo sair?",
     "Session name": "Nome da sessão",
@@ -552,7 +541,6 @@
         "one": "%(count)s integrante",
         "other": "%(count)s integrantes"
     },
-    "Leave space": "Sair do espaço",
     "To join a space you'll need an invite.": "Para se juntar a um espaço você precisará de um convite.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s pessoa que você conhece já entrou",
@@ -577,9 +565,6 @@
         "other": "%(count)s respostas"
     },
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s e %(space2Name)s",
-    "Leave some rooms": "Sair de algumas salas",
-    "Leave all rooms": "Sair de todas as salas",
-    "Don't leave any rooms": "Não saia de nenhuma sala",
     "Public rooms": "Salas públicas",
     "%(count)s participants": {
         "other": "%(count)s participantes",
@@ -2296,7 +2281,12 @@
         "incompatible_database_sign_out_description": "Para evitar perder seu histórico de bate-papo, você precisa exportar as chaves da sua sala antes de se desconectar. Quando entrar novamente, você precisará usar a versão mais atual do %(brand)s",
         "incompatible_database_description": "Você já usou uma versão mais recente do %(brand)s nesta sessão. Para usar esta versão novamente com a criptografia de ponta a ponta, você terá que se desconectar e entrar novamente.",
         "incompatible_database_title": "Banco de dados incompatível",
-        "incompatible_database_disable": "Continuar com criptografia desativada"
+        "incompatible_database_disable": "Continuar com criptografia desativada",
+        "key_signature_upload_completed": "Envio concluído",
+        "key_signature_upload_cancelled": "Envio cancelado da assinatura",
+        "key_signature_upload_failed": "Falha no envio",
+        "key_signature_upload_success_title": "Envio bem-sucedido da assinatura",
+        "key_signature_upload_failed_title": "O envio da assinatura falhou"
     },
     "emoji": {
         "category_frequently_used": "Mais usados",
@@ -2713,7 +2703,11 @@
             "space_dropdown_title": "Adicionar salas existentes",
             "create_prompt": "Criar uma nova sala"
         },
-        "room_filter_placeholder": "Buscar salas"
+        "room_filter_placeholder": "Buscar salas",
+        "leave_dialog_option_none": "Não saia de nenhuma sala",
+        "leave_dialog_option_all": "Sair de todas as salas",
+        "leave_dialog_option_specific": "Sair de algumas salas",
+        "leave_dialog_action": "Sair do espaço"
     },
     "location_sharing": {
         "find_my_location": "Encontrar minha localização",
@@ -3267,5 +3261,13 @@
         "disabled_dialog_title": "As integrações estão desativadas",
         "impossible_dialog_title": "As integrações não estão permitidas",
         "impossible_dialog_description": "Seu %(brand)s não permite que você use o gerenciador de integrações para fazer isso. Entre em contato com o administrador."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Você já usou o %(brand)s em %(host)s com o carregamento Lazy de participantes ativado. Nesta versão, o carregamento Lazy está desativado. Como o cache local não é compatível entre essas duas configurações, o %(brand)s precisa ressincronizar sua conta.",
+        "disabled_description2": "Se a outra versão do %(brand)s ainda estiver aberta em outra aba, por favor, feche-a pois usar o %(brand)s no mesmo host com o carregamento Lazy ativado e desativado simultaneamente causará problemas.",
+        "disabled_title": "Cache local incompatível",
+        "disabled_action": "Limpar cache e ressincronizar",
+        "resync_description": "%(brand)s agora usa de 3 a 5 vezes menos memória, pois carrega as informações dos outros usuários apenas quando for necessário. Por favor, aguarde enquanto ressincronizamos com o servidor!",
+        "resync_title": "Atualizando o %(brand)s"
     }
 }

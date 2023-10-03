@@ -81,8 +81,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Остановим общение пользователей в старой версии комнаты и опубликуем сообщение, в котором пользователям рекомендуется перейти в новую комнату",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Разместим ссылку на старую комнату, чтобы люди могли видеть старые сообщения",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Перед отправкой логов необходимо <a>создать GitHub issue</a>, для описания проблемы.",
-    "Clear cache and resync": "Очистить кэш и выполнить повторную синхронизацию",
-    "Updating %(brand)s": "Обновление %(brand)s",
     "Failed to upgrade room": "Не удалось обновить комнату",
     "The room upgrade could not be completed": "Невозможно завершить обновление комнаты",
     "Upgrade this room to version %(version)s": "Обновить эту комнату до версии %(version)s",
@@ -154,14 +152,10 @@
     "Scissors": "Ножницы",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Эти сообщения защищены сквозным шифрованием. Только вы и ваш собеседник имеете ключи для их расшифровки и чтения.",
     "Start using Key Backup": "Использовать резервную копию ключей шифрования",
-    "Incompatible local cache": "Несовместимый локальный кэш",
     "You'll lose access to your encrypted messages": "Вы потеряете доступ к вашим шифрованным сообщениям",
     "Are you sure you want to sign out?": "Уверены, что хотите выйти?",
     "Room Settings - %(roomName)s": "Настройки комнаты — %(roomName)s",
     "edited": "изменено",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Ранее вы использовали %(brand)s на %(host)s с отложенной загрузкой участников. В этой версии отложенная загрузка отключена. Поскольку локальный кеш не совместим между этими двумя настройками, %(brand)s необходимо повторно синхронизировать вашу учётную запись.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Если другая версия %(brand)s все еще открыта на другой вкладке, закройте ее, так как использование %(brand)s на том же хосте с включенной и отключенной ленивой загрузкой одновременно вызовет проблемы.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s теперь использует в 3-5 раз меньше памяти, загружая информацию о других пользователях только когда это необходимо. Пожалуйста, подождите, пока мы ресинхронизируемся с сервером!",
     "I don't want my encrypted messages": "Мне не нужны мои зашифрованные сообщения",
     "Manually export keys": "Выгрузить ключи вручную",
     "Sign out and remove encryption keys?": "Выйти и удалить ключи шифрования?",
@@ -218,11 +212,6 @@
     "Session key": "Ключ сеанса",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Чтобы сообщить о проблеме безопасности Matrix, пожалуйста, прочитайте <a>Политику раскрытия информации</a> Matrix.org.",
     "a key signature": "отпечаток ключа",
-    "Upload completed": "Отправка успешно завершена",
-    "Cancelled signature upload": "Отправка отпечатка отменена",
-    "Unable to upload": "Невозможно отправить",
-    "Signature upload success": "Отпечаток успешно отправлен",
-    "Signature upload failed": "Сбой отправки отпечатка",
     "You signed in to a new session without verifying it:": "Вы вошли в новый сеанс, не подтвердив его:",
     "Verify your other session using one of the options below.": "Подтвердите ваш другой сеанс, используя один из вариантов ниже.",
     "Your homeserver has exceeded its user limit.": "Ваш домашний сервер превысил свой лимит пользователей.",
@@ -559,7 +548,6 @@
     "Unable to start audio streaming.": "Невозможно запустить аудио трансляцию.",
     "Failed to start livestream": "Не удалось запустить прямую трансляцию",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Обычно это только влияет на то, как комната обрабатывается на сервере. Если у вас проблемы с вашим %(brand)s, сообщите об ошибке.",
-    "Leave space": "Покинуть пространство",
     "<inviter/> invites you": "<inviter/> пригласил(а) тебя",
     "No results found": "Результаты не найдены",
     "If you reset everything, you will restart with no trusted sessions, no trusted users, and might not be able to see past messages.": "Если вы сбросите все настройки, вы перезагрузитесь без доверенных сеансов, без доверенных пользователей, и скорее всего не сможете просматривать прошлые сообщения.",
@@ -579,19 +567,10 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Определите, какие пространства могут получить доступ к этой комнате. Если пространство выбрано, его члены могут найти и присоединиться к <RoomName/>.",
     "Select spaces": "Выберите места",
     "You're removing all spaces. Access will default to invite only": "Вы удаляете все пространства. Доступ будет по умолчанию только по приглашениям",
-    "Leave %(spaceName)s": "Покинуть %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Вы являетесь единственным администратором некоторых комнат или пространств, которые вы хотите покинуть. Покинув их, вы оставите их без администраторов.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Вы единственный администратор этого пространства. Если вы его оставите, это будет означать, что никто не имеет над ним контроля.",
-    "You won't be able to rejoin unless you are re-invited.": "Вы сможете присоединиться только после повторного приглашения.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s человек, которого вы знаете, уже присоединился",
         "other": "%(count)s человек(а), которых вы знаете, уже присоединились"
     },
-    "Leave some rooms": "Покинуть несколько комнат",
-    "Leave all rooms": "Покинуть все комнаты",
-    "Don't leave any rooms": "Не покидать ни одну комнату",
-    "Would you like to leave the rooms in this space?": "Хотите ли вы покинуть комнаты в этом пространстве?",
-    "You are about to leave <spaceName/>.": "Вы собираетесь покинуть <spaceName/>.",
     "To join a space you'll need an invite.": "Чтобы присоединиться к пространству, вам нужно получить приглашение.",
     "%(count)s reply": {
         "one": "%(count)s ответ",
@@ -2808,7 +2787,12 @@
         "incompatible_database_sign_out_description": "Чтобы не потерять историю чата, вы должны экспортировать ключи от комнаты перед выходом из системы. Для этого вам нужно будет вернуться к более новой версии %(brand)s",
         "incompatible_database_description": "Ранее вы использовали более новую версию %(brand)s через этот сеанс. Чтобы снова использовать эту версию со сквозным шифрованием, вам нужно будет выйти из учётной записи и снова войти.",
         "incompatible_database_title": "Несовместимая база данных",
-        "incompatible_database_disable": "Продолжить с отключенным шифрованием"
+        "incompatible_database_disable": "Продолжить с отключенным шифрованием",
+        "key_signature_upload_completed": "Отправка успешно завершена",
+        "key_signature_upload_cancelled": "Отправка отпечатка отменена",
+        "key_signature_upload_failed": "Невозможно отправить",
+        "key_signature_upload_success_title": "Отпечаток успешно отправлен",
+        "key_signature_upload_failed_title": "Сбой отправки отпечатка"
     },
     "emoji": {
         "category_frequently_used": "Часто используемые",
@@ -3323,7 +3307,17 @@
             "create_prompt": "Создать новую комнату",
             "subspace_moved_note": "Добавление пространств перемещено."
         },
-        "room_filter_placeholder": "Поиск комнат"
+        "room_filter_placeholder": "Поиск комнат",
+        "leave_dialog_public_rejoin_warning": "Вы сможете присоединиться только после повторного приглашения.",
+        "leave_dialog_only_admin_warning": "Вы единственный администратор этого пространства. Если вы его оставите, это будет означать, что никто не имеет над ним контроля.",
+        "leave_dialog_only_admin_room_warning": "Вы являетесь единственным администратором некоторых комнат или пространств, которые вы хотите покинуть. Покинув их, вы оставите их без администраторов.",
+        "leave_dialog_title": "Покинуть %(spaceName)s",
+        "leave_dialog_description": "Вы собираетесь покинуть <spaceName/>.",
+        "leave_dialog_option_intro": "Хотите ли вы покинуть комнаты в этом пространстве?",
+        "leave_dialog_option_none": "Не покидать ни одну комнату",
+        "leave_dialog_option_all": "Покинуть все комнаты",
+        "leave_dialog_option_specific": "Покинуть несколько комнат",
+        "leave_dialog_action": "Покинуть пространство"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Этот домашний сервер не настроен на отображение карт.",
@@ -4052,5 +4046,13 @@
         "disabled_dialog_title": "Интеграции отключены",
         "impossible_dialog_title": "Интеграции не разрешены",
         "impossible_dialog_description": "Ваш %(brand)s не позволяет вам использовать для этого Менеджер Интеграции. Пожалуйста, свяжитесь с администратором."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Ранее вы использовали %(brand)s на %(host)s с отложенной загрузкой участников. В этой версии отложенная загрузка отключена. Поскольку локальный кеш не совместим между этими двумя настройками, %(brand)s необходимо повторно синхронизировать вашу учётную запись.",
+        "disabled_description2": "Если другая версия %(brand)s все еще открыта на другой вкладке, закройте ее, так как использование %(brand)s на том же хосте с включенной и отключенной ленивой загрузкой одновременно вызовет проблемы.",
+        "disabled_title": "Несовместимый локальный кэш",
+        "disabled_action": "Очистить кэш и выполнить повторную синхронизацию",
+        "resync_description": "%(brand)s теперь использует в 3-5 раз меньше памяти, загружая информацию о других пользователях только когда это необходимо. Пожалуйста, подождите, пока мы ресинхронизируемся с сервером!",
+        "resync_title": "Обновление %(brand)s"
     }
 }

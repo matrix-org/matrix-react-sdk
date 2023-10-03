@@ -61,7 +61,6 @@
     "Spanner": "Wrench",
     "Aeroplane": "Airplane",
     "Cat": "Cat",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!",
     "common": {
         "analytics": "Analytics",
         "error": "Error",
@@ -634,5 +633,8 @@
     },
     "forward": {
         "send_label": "Send"
+    },
+    "lazy_loading": {
+        "resync_description": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait while we resynchronize with the server!"
     }
 }

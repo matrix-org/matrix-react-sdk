@@ -123,12 +123,6 @@
     "expand": "uutklappn",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Vooraleer da je logboekn indient, moe j’e <a>meldienge openn ip GitHub</a> woarin da je je probleem beschryft.",
     "Filter results": "Resultoatn filtern",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "J’èt al e ki %(brand)s ip %(host)s gebruukt me lui loadn van leedn ingeschoakeld. In deze versie is lui laden uutgeschoakeld. Me da de lokoale cache nie compatibel is tusschn deze twi instelliengn, moe %(brand)s jen account hersynchroniseern.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Indien dat d’andere versie van %(brand)s nog in een ander tabblad is geopend, sluut je da best, want %(brand)s ip dezelfsten host tegelykertyd me lui loadn ingeschoakeld en uutgeschoakeld gebruukn goa vo probleemn zorgn.",
-    "Incompatible local cache": "Incompatibele lokoale cache",
-    "Clear cache and resync": "Cache wissn en hersynchroniseern",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s verbruukt nu 3-5x minder geheugn, deur informoasje over andere gebruukers alleene moa te loadn wanneer dan ’t nodig is. Eftjes geduld, we zyn an ’t hersynchroniseern me de server!",
-    "Updating %(brand)s": "%(brand)s wor bygewerkt",
     "I don't want my encrypted messages": "’k En willn ik myn versleuterde berichtn nie",
     "Manually export keys": "Sleuters handmatig exporteern",
     "You'll lose access to your encrypted messages": "Je goat de toegank tou je versleuterde berichtn kwytspeeln",
@@ -1251,5 +1245,13 @@
     },
     "forward": {
         "send_label": "Verstuurn"
+    },
+    "lazy_loading": {
+        "disabled_description1": "J’èt al e ki %(brand)s ip %(host)s gebruukt me lui loadn van leedn ingeschoakeld. In deze versie is lui laden uutgeschoakeld. Me da de lokoale cache nie compatibel is tusschn deze twi instelliengn, moe %(brand)s jen account hersynchroniseern.",
+        "disabled_description2": "Indien dat d’andere versie van %(brand)s nog in een ander tabblad is geopend, sluut je da best, want %(brand)s ip dezelfsten host tegelykertyd me lui loadn ingeschoakeld en uutgeschoakeld gebruukn goa vo probleemn zorgn.",
+        "disabled_title": "Incompatibele lokoale cache",
+        "disabled_action": "Cache wissn en hersynchroniseern",
+        "resync_description": "%(brand)s verbruukt nu 3-5x minder geheugn, deur informoasje over andere gebruukers alleene moa te loadn wanneer dan ’t nodig is. Eftjes geduld, we zyn an ’t hersynchroniseern me de server!",
+        "resync_title": "%(brand)s wor bygewerkt"
     }
 }

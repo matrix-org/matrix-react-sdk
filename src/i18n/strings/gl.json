@@ -184,16 +184,6 @@
     "a device cross-signing signature": "unha sinatura sinatura-cruzada de dispositivo",
     "a key signature": "unha chave de sinatura",
     "%(brand)s encountered an error during upload of:": "%(brand)s atopou un fallo ao subir:",
-    "Upload completed": "Subida completa",
-    "Cancelled signature upload": "Cancelada a subida da sinatura",
-    "Unable to upload": "Non foi posible a subida",
-    "Signature upload success": "Subeuse correctamente a sinatura",
-    "Signature upload failed": "Fallou a subida da sinatura",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Anteriormente utilizaches %(brand)s en %(host)s con carga preguiceira de membros. Nesta versión a carga preguiceira está desactivada. Como a caché local non é compatible entre as dúas configuracións, %(brand)s precisa volver a sincronizar a conta.",
-    "Incompatible local cache": "Caché local incompatible",
-    "Clear cache and resync": "Baleirar caché e sincronizar",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s utiliza agora entre 3 e 5 veces menos memoria, cargando só información sobre as usuarias cando é preciso. Agarda mentras se sincroniza co servidor!",
-    "Updating %(brand)s": "Actualizando %(brand)s",
     "I don't want my encrypted messages": "Non quero as miñas mensaxes cifradas",
     "Manually export keys": "Exportar manualmente as chaves",
     "You'll lose access to your encrypted messages": "Perderás o acceso as túas mensaxes cifradas",
@@ -256,7 +246,6 @@
     "Security Phrase": "Frase de seguridade",
     "Security Key": "Chave de Seguridade",
     "Use your Security Key to continue.": "Usa a túa Chave de Seguridade para continuar.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
     "You're all caught up.": "Xa estás ó día.",
     "Server isn't responding": "O servidor non responde",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "O servidor non responde a algunhas peticións. Aquí tes algunha das razóns máis probables.",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Fallou o inicio da emisión en directo",
     "Unable to start audio streaming.": "Non se puido iniciar a retransmisión de audio.",
-    "Leave space": "Saír do espazo",
     "<inviter/> invites you": "<inviter/> convídate",
     "No results found": "Sen resultados",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decide que espazos poderán acceder a esta sala. Se un espazo é elexido, os seus membros poderán atopar e unirse a <RoomName/>.",
     "Select spaces": "Elixe espazos",
     "You're removing all spaces. Access will default to invite only": "Vas eliminar tódolos espazos. Por defecto o acceso cambiará a só por convite",
-    "Leave %(spaceName)s": "Saír de %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Es a única administradora dalgunhas salas ou espazos dos que queres saír. Ao saír deles deixaralos sen administración.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Ti es a única administradora deste espazo. Ao saír farás que a ninguén teña control sobre el.",
-    "You won't be able to rejoin unless you are re-invited.": "Non poderás volver a unirte se non te volven a convidar.",
     "To join a space you'll need an invite.": "Para unirte a un espazo precisas un convite.",
-    "Would you like to leave the rooms in this space?": "Queres saír destas salas neste espazo?",
-    "You are about to leave <spaceName/>.": "Vas saír de <spaceName/>.",
-    "Leave some rooms": "Saír de algunhas salas",
-    "Leave all rooms": "Saír de tódalas salas",
-    "Don't leave any rooms": "Non saír de ningunha sala",
     "%(count)s reply": {
         "one": "%(count)s resposta",
         "other": "%(count)s respostas"
@@ -2680,7 +2659,12 @@
         "incompatible_database_sign_out_description": "Para evitar perder o historial da conversa, debes exportar as chaves da sala antes de saír. Necesitarás volver á nova versión de %(brand)s para facer esto",
         "incompatible_database_description": "Xa utilizaches unha versión máis nova de %(brand)s nesta sesión. Para usar esta versión novamente con cifrado extremo-a-extremo tes que saír e volver a acceder.",
         "incompatible_database_title": "Base de datos non compatible",
-        "incompatible_database_disable": "Continuar con Cifrado Desactivado"
+        "incompatible_database_disable": "Continuar con Cifrado Desactivado",
+        "key_signature_upload_completed": "Subida completa",
+        "key_signature_upload_cancelled": "Cancelada a subida da sinatura",
+        "key_signature_upload_failed": "Non foi posible a subida",
+        "key_signature_upload_success_title": "Subeuse correctamente a sinatura",
+        "key_signature_upload_failed_title": "Fallou a subida da sinatura"
     },
     "emoji": {
         "category_frequently_used": "Utilizado con frecuencia",
@@ -3160,7 +3144,17 @@
             "create_prompt": "Crear unha nova sala",
             "subspace_moved_note": "Engadir espazos moveuse."
         },
-        "room_filter_placeholder": "Buscar salas"
+        "room_filter_placeholder": "Buscar salas",
+        "leave_dialog_public_rejoin_warning": "Non poderás volver a unirte se non te volven a convidar.",
+        "leave_dialog_only_admin_warning": "Ti es a única administradora deste espazo. Ao saír farás que a ninguén teña control sobre el.",
+        "leave_dialog_only_admin_room_warning": "Es a única administradora dalgunhas salas ou espazos dos que queres saír. Ao saír deles deixaralos sen administración.",
+        "leave_dialog_title": "Saír de %(spaceName)s",
+        "leave_dialog_description": "Vas saír de <spaceName/>.",
+        "leave_dialog_option_intro": "Queres saír destas salas neste espazo?",
+        "leave_dialog_option_none": "Non saír de ningunha sala",
+        "leave_dialog_option_all": "Saír de tódalas salas",
+        "leave_dialog_option_specific": "Saír de algunhas salas",
+        "leave_dialog_action": "Saír do espazo"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor non está configurado para mostrar mapas.",
@@ -3869,5 +3863,13 @@
         "disabled_dialog_title": "As Integracións están desactivadas",
         "impossible_dialog_title": "Non se permiten Integracións",
         "impossible_dialog_description": "O teu %(brand)s non permite que uses o Xestor de Integracións, contacta coa administración."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Anteriormente utilizaches %(brand)s en %(host)s con carga preguiceira de membros. Nesta versión a carga preguiceira está desactivada. Como a caché local non é compatible entre as dúas configuracións, %(brand)s precisa volver a sincronizar a conta.",
+        "disabled_description2": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
+        "disabled_title": "Caché local incompatible",
+        "disabled_action": "Baleirar caché e sincronizar",
+        "resync_description": "%(brand)s utiliza agora entre 3 e 5 veces menos memoria, cargando só información sobre as usuarias cando é preciso. Agarda mentras se sincroniza co servidor!",
+        "resync_title": "Actualizando %(brand)s"
     }
 }

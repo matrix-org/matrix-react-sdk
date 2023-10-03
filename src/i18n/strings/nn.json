@@ -76,8 +76,6 @@
     "Session ID": "Økt-ID",
     "Filter results": "Filtrer resultat",
     "Invalid theme schema.": "",
-    "Upload completed": "Opplasting fullført",
-    "Cancelled signature upload": "Kansellerte opplasting av signatur",
     "Room Settings - %(roomName)s": "Rominnstillingar - %(roomName)s",
     "Failed to upgrade room": "Fekk ikkje til å oppgradere rom",
     "Command Help": "Kommandohjelp",
@@ -1158,7 +1156,9 @@
         },
         "event_shield_reason_mismatched_sender_key": "Kryptert av ein ikkje-verifisert sesjon",
         "cross_signing_room_normal": "Dette rommet er ende-til-ende kryptert",
-        "unsupported": "Denne klienten støttar ikkje ende-til-ende kryptering."
+        "unsupported": "Denne klienten støttar ikkje ende-til-ende kryptering.",
+        "key_signature_upload_completed": "Opplasting fullført",
+        "key_signature_upload_cancelled": "Kansellerte opplasting av signatur"
     },
     "poll": {
         "create_poll_title": "Opprett røysting",

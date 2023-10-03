@@ -83,8 +83,6 @@
     "Failed to upgrade room": "No se pudo actualizar la sala",
     "The room upgrade could not be completed": "La actualización de la sala no pudo ser completada",
     "Upgrade this room to version %(version)s": "Actualiza esta sala a la versión %(version)s",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s ahora utiliza de 3 a 5 veces menos memoria, porque solo carga información sobre otros usuarios cuando es necesario. Por favor, ¡aguarda mientras volvemos a sincronizar con el servidor!",
-    "Updating %(brand)s": "Actualizando %(brand)s",
     "Dog": "Perro",
     "Cat": "Gato",
     "Lion": "León",
@@ -151,10 +149,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antes de enviar los registros debes <a>crear una incidencia en GitHub</a> describiendo el problema.",
     "Scissors": "Tijeras",
     "Lock": "Bloquear",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Has usado %(brand)s anteriormente en %(host)s con carga diferida de usuarios activada. En esta versión la carga diferida está desactivada. Como el caché local no es compatible entre estas dos configuraciones, %(brand)s tiene que resincronizar tu cuenta.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Si la otra versión de %(brand)s esta todavía abierta en otra pestaña, por favor, ciérrala, ya que usar %(brand)s en el mismo host con la opción de carga diferida activada y desactivada simultáneamente causará problemas.",
-    "Incompatible local cache": "Caché local incompatible",
-    "Clear cache and resync": "Limpiar la caché y resincronizar",
     "I don't want my encrypted messages": "No quiero mis mensajes cifrados",
     "Manually export keys": "Exportar claves manualmente",
     "You'll lose access to your encrypted messages": "Perderás acceso a tus mensajes cifrados",
@@ -222,11 +216,6 @@
     "%(name)s wants to verify": "%(name)s quiere verificar",
     "edited": "editado",
     "Submit logs": "Enviar registros",
-    "Upload completed": "Subida completada",
-    "Cancelled signature upload": "Subida de firma cancelada",
-    "Unable to upload": "No se ha podido enviar",
-    "Signature upload success": "Subida de firma exitosa",
-    "Signature upload failed": "Subida de firma ha fallado",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirme comparando lo siguiente con los ajustes de usuario de su otra sesión:",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirma la sesión de este usuario comparando lo siguiente con su configuración:",
     "If they don't match, the security of your communication may be compromised.": "Si no coinciden, la seguridad de su comunicación puede estar comprometida.",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "No se ha podido empezar la retransmisión",
     "Unable to start audio streaming.": "No se ha podido empezar la retransmisión del audio.",
-    "Leave space": "Salir del espacio",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Esto solo afecta normalmente a cómo el servidor procesa la sala. Si estás teniendo problemas con %(brand)s, por favor, infórmanos del problema.",
     "<inviter/> invites you": "<inviter/> te ha invitado",
     "No results found": "Ningún resultado",
@@ -583,16 +571,7 @@
     "Spaces you know that contain this room": "Espacios que conoces que contienen esta sala",
     "Search spaces": "Buscar espacios",
     "Select spaces": "Elegir espacios",
-    "Leave %(spaceName)s": "Salir de %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Eres la única persona con permisos de administración en algunos de los espacios de los que quieres irte. Al salir de ellos, nadie podrá gestionarlos.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Eres la única persona con permisos de administración en este espacio. Cuando salgas, nadie más podrá gestionarlo.",
-    "You won't be able to rejoin unless you are re-invited.": "No te podrás unir de nuevo hasta que te inviten otra vez a él.",
     "To join a space you'll need an invite.": "Para unirte a un espacio, necesitas que te inviten a él.",
-    "Don't leave any rooms": "No salir de ninguna sala",
-    "Leave all rooms": "Salir de todas las salas",
-    "Leave some rooms": "Salir de algunas salas",
-    "Would you like to leave the rooms in this space?": "¿Quieres salir también de las salas del espacio?",
-    "You are about to leave <spaceName/>.": "Estás a punto de salirte de <spaceName/>.",
     "%(count)s reply": {
         "one": "%(count)s respuesta",
         "other": "%(count)s respuestas"
@@ -2869,7 +2848,12 @@
         "incompatible_database_sign_out_description": "Para evitar perder tu historial de chat, debes exportar las claves de la sala antes de salir. Debes volver a la versión actual de %(brand)s para esto",
         "incompatible_database_description": "Anteriormente usaste una versión más nueva de %(brand)s con esta sesión. Para volver a utilizar esta versión con cifrado de extremo a extremo, deberá cerrar sesión y volver a iniciar sesión.",
         "incompatible_database_title": "Base de datos incompatible",
-        "incompatible_database_disable": "Seguir con el cifrado desactivado"
+        "incompatible_database_disable": "Seguir con el cifrado desactivado",
+        "key_signature_upload_completed": "Subida completada",
+        "key_signature_upload_cancelled": "Subida de firma cancelada",
+        "key_signature_upload_failed": "No se ha podido enviar",
+        "key_signature_upload_success_title": "Subida de firma exitosa",
+        "key_signature_upload_failed_title": "Subida de firma ha fallado"
     },
     "emoji": {
         "category_frequently_used": "Frecuente",
@@ -3412,7 +3396,17 @@
             "create_prompt": "Crear una sala nueva",
             "subspace_moved_note": "Hemos cambiado de sitio la creación de espacios."
         },
-        "room_filter_placeholder": "Buscar salas"
+        "room_filter_placeholder": "Buscar salas",
+        "leave_dialog_public_rejoin_warning": "No te podrás unir de nuevo hasta que te inviten otra vez a él.",
+        "leave_dialog_only_admin_warning": "Eres la única persona con permisos de administración en este espacio. Cuando salgas, nadie más podrá gestionarlo.",
+        "leave_dialog_only_admin_room_warning": "Eres la única persona con permisos de administración en algunos de los espacios de los que quieres irte. Al salir de ellos, nadie podrá gestionarlos.",
+        "leave_dialog_title": "Salir de %(spaceName)s",
+        "leave_dialog_description": "Estás a punto de salirte de <spaceName/>.",
+        "leave_dialog_option_intro": "¿Quieres salir también de las salas del espacio?",
+        "leave_dialog_option_none": "No salir de ninguna sala",
+        "leave_dialog_option_all": "Salir de todas las salas",
+        "leave_dialog_option_specific": "Salir de algunas salas",
+        "leave_dialog_action": "Salir del espacio"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Este servidor base no está configurado para mostrar mapas.",
@@ -4169,5 +4163,13 @@
         "disabled_dialog_description": "Activa «%(manageIntegrations)s» en ajustes para poder hacer esto.",
         "impossible_dialog_title": "Integraciones no están permitidas",
         "impossible_dialog_description": "Tu aplicación %(brand)s no te permite usar un gestor de integración para hacer esto. Por favor, contacta con un administrador."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Has usado %(brand)s anteriormente en %(host)s con carga diferida de usuarios activada. En esta versión la carga diferida está desactivada. Como el caché local no es compatible entre estas dos configuraciones, %(brand)s tiene que resincronizar tu cuenta.",
+        "disabled_description2": "Si la otra versión de %(brand)s esta todavía abierta en otra pestaña, por favor, ciérrala, ya que usar %(brand)s en el mismo host con la opción de carga diferida activada y desactivada simultáneamente causará problemas.",
+        "disabled_title": "Caché local incompatible",
+        "disabled_action": "Limpiar la caché y resincronizar",
+        "resync_description": "%(brand)s ahora utiliza de 3 a 5 veces menos memoria, porque solo carga información sobre otros usuarios cuando es necesario. Por favor, ¡aguarda mientras volvemos a sincronizar con el servidor!",
+        "resync_title": "Actualizando %(brand)s"
     }
 }

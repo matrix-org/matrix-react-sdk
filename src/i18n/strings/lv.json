@@ -386,7 +386,6 @@
     "Forgotten or lost all recovery methods? <a>Reset all</a>": "Aizmirsāt vai pazaudējāt visas atkopšanās iespējas? <a>Atiestatiet visu</a>",
     "Link to most recent message": "Saite uz jaunāko ziņu",
     "Share Room": "Dalīties ar istabu",
-    "Leave all rooms": "Pamest visas istabas",
     "Corn": "Kukurūza",
     "Open in OpenStreetMap": "Atvērt ar OpenStreetMap",
     "An error occurred whilst sharing your live location, please try again": "Notika kļūda, kopīgojot reāllaika atrašanās vietu, lūdzu, mēģiniet vēlreiz",
@@ -411,7 +410,6 @@
     "Automatically invite members from this room to the new one": "Automātiski uzaicināt dalībniekus no šīs istabas uz jauno",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Pārlūkprogrammas krātuves dzēšana var atrisināt problēmu, taču tas nozīmē, ka jūs izrakstīsieties un šifrēto čata vēsturi vairs nebūs iespējams nolasīt.",
     "Clear Storage and Sign Out": "Iztīrīt krātuvi un izrakstīties",
-    "Clear cache and resync": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt",
     "Recent searches": "Nesenie meklējumi",
     "To search messages, look for this icon at the top of a room <icon/>": "Lai meklētu ziņas, istabas augšpusē meklējiet šo ikonu <icon/>",
     "Other searches": "Citi meklējumi",
@@ -1773,7 +1771,8 @@
             "create": "Vai tā vietā vēlaties pievienot jaunu istabu?",
             "create_prompt": "Izveidot jaunu istabu"
         },
-        "room_filter_placeholder": "Meklēt istabas"
+        "room_filter_placeholder": "Meklēt istabas",
+        "leave_dialog_option_all": "Pamest visas istabas"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Šis bāzes serveris nav konfigurēts karšu attēlošanai.",
@@ -2150,5 +2149,8 @@
     },
     "integrations": {
         "disabled_dialog_title": "Integrācijas ir atspējotas"
+    },
+    "lazy_loading": {
+        "disabled_action": "Iztīrīt kešatmiņu un atkārtoti sinhronizēt"
     }
 }

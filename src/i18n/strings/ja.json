@@ -61,12 +61,6 @@
     "collapse": "折りたたむ",
     "expand": "展開",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "ログを送信する前に、問題を説明する<a>GitHub issueを作成</a>してください。",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "以前%(host)sにて、メンバーの遅延ロードを有効にした%(brand)sが使用されていました。このバージョンでは、遅延ロードは無効です。ローカルのキャッシュにはこれらの2つの設定の間での互換性がないため、%(brand)sはアカウントを再同期する必要があります。",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "他のバージョンの%(brand)sが別のタブで開いている場合は、それを閉じてください。同じホスト上で遅延ロードを有効と無効の両方に設定して%(brand)sを使用すると、問題が発生します。",
-    "Incompatible local cache": "互換性のないローカルキャッシュ",
-    "Clear cache and resync": "キャッシュをクリアして再同期",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)sは、必要なときだけに他のユーザーに関する情報を読み込むようにすることで、メモリの使用量を3〜5倍減らしました。サーバーと再同期するのを待ってください！",
-    "Updating %(brand)s": "%(brand)sを更新しています",
     "Failed to upgrade room": "ルームをアップグレードできませんでした",
     "The room upgrade could not be completed": "ルームのアップグレードを完了できませんでした",
     "Upgrade this room to version %(version)s": "このルームをバージョン%(version)sにアップグレード",
@@ -451,7 +445,6 @@
     "%(name)s cancelled": "%(name)sは中止しました",
     "%(name)s declined": "%(name)sは拒否しました",
     "Not encrypted": "暗号化されていません",
-    "Leave space": "スペースから退出",
     "Are you sure you want to sign out?": "サインアウトしてよろしいですか？",
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "%(spaceName)s and %(count)s others": {
@@ -512,8 +505,6 @@
     "Themes": "テーマ",
     "Developer": "開発者",
     "Experimental": "実験的",
-    "Signature upload success": "署名のアップロードに成功しました",
-    "Cancelled signature upload": "署名のアップロードをキャンセルしました",
     "Open in OpenStreetMap": "OpenStreetMapで開く",
     "Verification Request": "認証の要求",
     "The server is offline.": "サーバーはオフラインです。",
@@ -521,13 +512,6 @@
         "one": "%(count)s個のルーム",
         "other": "%(count)s個のルーム"
     },
-    "Would you like to leave the rooms in this space?": "このスペースのルームから退出しますか？",
-    "Don't leave any rooms": "どのルームからも退出しない",
-    "Unable to upload": "アップロードできません",
-    "Upload completed": "アップロードが完了しました",
-    "Leave %(spaceName)s": "%(spaceName)sから退出",
-    "Leave some rooms": "退出するルームを選択",
-    "Leave all rooms": "全てのルームから退出",
     "Select spaces": "スペースを選択",
     "Your homeserver doesn't seem to support this feature.": "ホームサーバーはこの機能をサポートしていません。",
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
@@ -559,7 +543,6 @@
     "Moderation": "モデレート",
     "Looks good!": "問題ありません！",
     "Cancel All": "全てキャンセル",
-    "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
     "a new cross-signing key signature": "新しいクロス署名鍵の署名",
     "a device cross-signing signature": "端末のクロス署名",
     "A connection error occurred while trying to contact the server.": "サーバーに接続する際にエラーが発生しました。",
@@ -583,7 +566,6 @@
     "Data on this screen is shared with %(widgetDomain)s": "このスクリーンのデータは%(widgetDomain)sと共有されます",
     "If they don't match, the security of your communication may be compromised.": "一致していない場合は、コミュニケーションのセキュリティーが損なわれている可能性があります。",
     "<inviter/> invites you": "<inviter/>があなたを招待しています",
-    "Signature upload failed": "署名のアップロードに失敗しました",
     "toggle event": "イベントを切り替える",
     "Search spaces": "スペースを検索",
     "Other searches": "その他の検索",
@@ -596,9 +578,6 @@
     "a new master key signature": "新しいマスターキーの署名",
     "Resend %(unsentCount)s reaction(s)": "%(unsentCount)s個のリアクションを再送信",
     "Your browser likely removed this data when running low on disk space.": "ディスクの空き容量が少なかったため、ブラウザーはこのデータを削除しました。",
-    "You are about to leave <spaceName/>.": "<spaceName/>から退出しようとしています。",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "あなたは、退出しようとしているいくつかのルームとスペースの唯一の管理者です。退出すると、誰もそれらを管理できなくなります。",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "あなたはこのスペースの唯一の管理者です。退出すると、誰もそれを管理できなくなります。",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "暗号化されたメッセージの鍵を含むセッションのデータが見つかりません。サインアウトして改めてサインインすると、バックアップから鍵を回復します。",
     "Recent searches": "最近の検索",
     "Access your secure message history and set up secure messaging by entering your Security Key.": "保護されたメッセージの履歴にアクセスし、安全なメッセージのやり取りを行うには、セキュリティーキーを入力してください。",
@@ -2865,7 +2844,12 @@
         "incompatible_database_sign_out_description": "チャットの履歴の消去を防ぐには、ログアウトする前にルームの鍵をエクスポートする必要があります。そのためには%(brand)sの新しいバージョンへと戻る必要があります",
         "incompatible_database_description": "以前このセッションで、より新しい%(brand)sのバージョンを使用していました。エンドツーエンド暗号化を有効にしてこのバージョンを再び使用するには、サインアウトして、再びサインインする必要があります。",
         "incompatible_database_title": "互換性のないデータベース",
-        "incompatible_database_disable": "暗号化を無効にして続行"
+        "incompatible_database_disable": "暗号化を無効にして続行",
+        "key_signature_upload_completed": "アップロードが完了しました",
+        "key_signature_upload_cancelled": "署名のアップロードをキャンセルしました",
+        "key_signature_upload_failed": "アップロードできません",
+        "key_signature_upload_success_title": "署名のアップロードに成功しました",
+        "key_signature_upload_failed_title": "署名のアップロードに失敗しました"
     },
     "emoji": {
         "category_frequently_used": "使用頻度の高いリアクション",
@@ -3423,7 +3407,17 @@
             "create_prompt": "新しいルームを作成",
             "subspace_moved_note": "スペースの追加機能は移動しました。"
         },
-        "room_filter_placeholder": "ルームを検索"
+        "room_filter_placeholder": "ルームを検索",
+        "leave_dialog_public_rejoin_warning": "再び招待されない限り、再参加することはできません。",
+        "leave_dialog_only_admin_warning": "あなたはこのスペースの唯一の管理者です。退出すると、誰もそれを管理できなくなります。",
+        "leave_dialog_only_admin_room_warning": "あなたは、退出しようとしているいくつかのルームとスペースの唯一の管理者です。退出すると、誰もそれらを管理できなくなります。",
+        "leave_dialog_title": "%(spaceName)sから退出",
+        "leave_dialog_description": "<spaceName/>から退出しようとしています。",
+        "leave_dialog_option_intro": "このスペースのルームから退出しますか？",
+        "leave_dialog_option_none": "どのルームからも退出しない",
+        "leave_dialog_option_all": "全てのルームから退出",
+        "leave_dialog_option_specific": "退出するルームを選択",
+        "leave_dialog_action": "スペースから退出"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "このホームサーバーは地図を表示するように設定されていません。",
@@ -4163,5 +4157,13 @@
         "disabled_dialog_description": "これを行うには設定から「%(manageIntegrations)s」を有効にしてください。",
         "impossible_dialog_title": "インテグレーションは許可されていません",
         "impossible_dialog_description": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。"
+    },
+    "lazy_loading": {
+        "disabled_description1": "以前%(host)sにて、メンバーの遅延ロードを有効にした%(brand)sが使用されていました。このバージョンでは、遅延ロードは無効です。ローカルのキャッシュにはこれらの2つの設定の間での互換性がないため、%(brand)sはアカウントを再同期する必要があります。",
+        "disabled_description2": "他のバージョンの%(brand)sが別のタブで開いている場合は、それを閉じてください。同じホスト上で遅延ロードを有効と無効の両方に設定して%(brand)sを使用すると、問題が発生します。",
+        "disabled_title": "互換性のないローカルキャッシュ",
+        "disabled_action": "キャッシュをクリアして再同期",
+        "resync_description": "%(brand)sは、必要なときだけに他のユーザーに関する情報を読み込むようにすることで、メモリの使用量を3〜5倍減らしました。サーバーと再同期するのを待ってください！",
+        "resync_title": "%(brand)sを更新しています"
     }
 }

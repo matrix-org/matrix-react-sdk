@@ -494,24 +494,6 @@
     "Sunday": "ວັນອາທິດ",
     "%(duration)sd": "%(duration)sd",
     "unknown error code": "ລະຫັດຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
-    "Don't leave any rooms": "ຢ່າອອກຈາກຫ້ອງ",
-    "Would you like to leave the rooms in this space?": "ທ່ານຕ້ອງການອອກຈາກຫ້ອງໃນພື້ນທີ່ນີ້ບໍ?",
-    "You are about to leave <spaceName/>.": "ທ່ານກຳລັງຈະອອກຈາກ <spaceName/>.",
-    "Leave %(spaceName)s": "ອອກຈາກ %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "ທ່ານເປັນຜູ້ຄຸ້ມຄອງລະບົບບາງຫ້ອງ ຫຼື ພື້ນທີ່ທ່ານຕ້ອງການອອກຈາກ. ການປະຖິ້ມຈະເຮັດໃຫ້ລະບົບຫ້ອງບໍ່ມີຜູ້ຄຸ້ມຄອງ.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "ທ່ານເປັນຜູ້ຄຸ້ມຄອງລະບົບພື້ນທີ່ນີ້ເປັນພຽງຜູ້ດຽວ. ການປ່ອຍຖິ້ມໄວ້ຈະບໍ່ມີໃຜຄວບຄຸມມັນໄດ້ອີກ.",
-    "You won't be able to rejoin unless you are re-invited.": "ທ່ານຈະບໍ່ສາມາດເຂົ້າຮ່ວມຄືນໃໝ່ໄດ້ເວັ້ນເສຍແຕ່ວ່າທ່ານໄດ້ຮັບເຊີນຄືນໃໝ່.",
-    "Updating %(brand)s": "ກຳລັງອັບເດດ %(brand)s",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "ຕອນນີ້ %(brand)s ໃຊ້ຄວາມຈຳໜ້ອຍກວ່າ 3-5x, ໂດຍການໂຫຼດຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້ອື່ນເມື່ອຕ້ອງການເທົ່ານັ້ນ. ກະລຸນາລໍຖ້າໃນຂະນະທີ່ພວກເຮົາ synchronise ກັບເຊີບເວີ!",
-    "Clear cache and resync": "ລຶບ cache ແລະ resync",
-    "Incompatible local cache": "ແຄດໃນເຄື່ອງບໍ່ເຂົ້າກັນໄດ້",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "ຖ້າເວີຊັ້ນອື່ນຂອງ %(brand)s ເປີດຢູ່ໃນແຖບອື່ນ, ກະລຸນາປິດການໃຊ້ %(brand)s ຢູ່ໃນໂຮດດຽວກັນທັງການໂຫຼດແບບ lazy ເປີດໃຊ້ງານ ແລະປິດໃຊ້ງານພ້ອມກັນຈະເຮັດໃຫ້ເກີດບັນຫາ.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "ກ່ອນໜ້ານີ້ທ່ານເຄີຍໃຊ້ %(brand)sກັບ %(host)s ດ້ວຍການເປີດໂຫຼດສະມາຊິກ. ໃນເວີຊັ້ນນີ້ ໄດ້ປິດການໃຊ້ງານ. ເນື່ອງຈາກ cache ໃນເຄື່ອງບໍ່ເຂົ້າກັນລະຫວ່າງສອງການຕັ້ງຄ່ານີ້, %(brand)s ຕ້ອງການ sync ບັນຊີຂອງທ່ານຄືນໃໝ່.",
-    "Signature upload failed": "ການອັບໂຫລດລາຍເຊັນບໍ່ສຳເລັດ",
-    "Signature upload success": "ສຳເລັດການອັບໂຫລດລາຍເຊັນ",
-    "Unable to upload": "ບໍ່ສາມາດອັບໂຫລດໄດ້",
-    "Cancelled signature upload": "ຍົກເລີກການອັບໂຫລດລາຍເຊັນແລ້ວ",
-    "Upload completed": "ອັບໂຫຼດສຳເລັດ",
     "%(brand)s encountered an error during upload of:": "%(brand)s ພົບຂໍ້ຜິດພາດໃນລະຫວ່າງການອັບໂຫລດ:",
     "Wednesday": "ວັນພຸດ",
     "Data on this screen is shared with %(widgetDomain)s": "ຂໍ້ມູນໃນໜ້າຈໍນີ້ຖືກແບ່ງປັນກັບ %(widgetDomain)s",
@@ -546,9 +528,6 @@
     "I don't want my encrypted messages": "ຂ້ອຍບໍ່ຕ້ອງການຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດຂອງຂ້ອຍ",
     "Start using Key Backup": "ເລີ່ມຕົ້ນການນໍາໃຊ້ ສຳຮອງກະເເຈ",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ແມ່ນປອດໄພດ້ວຍການເຂົ້າລະຫັດແບບຕົ້ນທາງ. ພຽງແຕ່ທ່ານ ແລະ ຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈເພື່ອອ່ານຂໍ້ຄວາມເຫຼົ່ານີ້.",
-    "Leave space": "ອອກຈາກພື້ນທີ່",
-    "Leave some rooms": "ອອກຈາກບາງຫ້ອງ",
-    "Leave all rooms": "ອອກຈາກຫ້ອງທັງຫມົດ",
     "Backup version:": "ເວີຊັ້ນສໍາຮອງຂໍ້ມູນ:",
     "This backup is trusted because it has been restored on this session": "ການສຳຮອງຂໍ້ມູນນີ້ແມ່ນເຊື່ອຖືໄດ້ເນື່ອງຈາກຖືກກູ້ຄືນໃນລະບົບນີ້",
     "Fish": "ປາ",
@@ -2512,7 +2491,12 @@
         "incompatible_database_sign_out_description": "ເພື່ອຫຼີກເວັ້ນການສູນເສຍປະຫວັດການສົນທະນາຂອງທ່ານ, ທ່ານຕ້ອງອອກກະແຈຫ້ອງຂອງທ່ານກ່ອນທີ່ຈະອອກຈາກລະບົບ. ທ່ານຈະຕ້ອງໄດ້ກັບຄືນໄປຫາເວີຊັ້ນໃຫມ່ຂອງ %(brand)s ເພື່ອເຮັດສິ່ງນີ້",
         "incompatible_database_description": "ກ່ອນໜ້ານີ້ທ່ານເຄີຍໃຊ້%(brand)sເວີຊັ້ນໃໝ່ກວ່າໃນລະບົບນີ້. ເພື່ອໃຊ້ເວີຊັ້ນນີ້ອີກເທື່ອໜຶ່ງດ້ວຍການເຂົ້າລະຫັດແບບຕົ້ນທາງເຖິງປາຍທາງ, ທ່ານຈະຕ້ອງອອກຈາກລະບົບ ແລະ ກັບຄືນເຂົ້າລະຫັດໃໝ່ອີກຄັ້ງ.",
         "incompatible_database_title": "ຖານຂໍ້ມູນບໍ່ສອດຄ່ອງກັນ",
-        "incompatible_database_disable": "ສືບຕໍ່ດ້ວຍການປິດການເຂົ້າລະຫັດ"
+        "incompatible_database_disable": "ສືບຕໍ່ດ້ວຍການປິດການເຂົ້າລະຫັດ",
+        "key_signature_upload_completed": "ອັບໂຫຼດສຳເລັດ",
+        "key_signature_upload_cancelled": "ຍົກເລີກການອັບໂຫລດລາຍເຊັນແລ້ວ",
+        "key_signature_upload_failed": "ບໍ່ສາມາດອັບໂຫລດໄດ້",
+        "key_signature_upload_success_title": "ສຳເລັດການອັບໂຫລດລາຍເຊັນ",
+        "key_signature_upload_failed_title": "ການອັບໂຫລດລາຍເຊັນບໍ່ສຳເລັດ"
     },
     "emoji": {
         "category_frequently_used": "ໃຊ້ເປັນປະຈຳ",
@@ -2999,7 +2983,17 @@
             "create_prompt": "ສ້າງຫ້ອງໃຫມ່",
             "subspace_moved_note": "ຍ້າຍພຶ້ນທີ່ເພິ່ມແລ້ວ."
         },
-        "room_filter_placeholder": "ຄົ້ນຫາຫ້ອງ"
+        "room_filter_placeholder": "ຄົ້ນຫາຫ້ອງ",
+        "leave_dialog_public_rejoin_warning": "ທ່ານຈະບໍ່ສາມາດເຂົ້າຮ່ວມຄືນໃໝ່ໄດ້ເວັ້ນເສຍແຕ່ວ່າທ່ານໄດ້ຮັບເຊີນຄືນໃໝ່.",
+        "leave_dialog_only_admin_warning": "ທ່ານເປັນຜູ້ຄຸ້ມຄອງລະບົບພື້ນທີ່ນີ້ເປັນພຽງຜູ້ດຽວ. ການປ່ອຍຖິ້ມໄວ້ຈະບໍ່ມີໃຜຄວບຄຸມມັນໄດ້ອີກ.",
+        "leave_dialog_only_admin_room_warning": "ທ່ານເປັນຜູ້ຄຸ້ມຄອງລະບົບບາງຫ້ອງ ຫຼື ພື້ນທີ່ທ່ານຕ້ອງການອອກຈາກ. ການປະຖິ້ມຈະເຮັດໃຫ້ລະບົບຫ້ອງບໍ່ມີຜູ້ຄຸ້ມຄອງ.",
+        "leave_dialog_title": "ອອກຈາກ %(spaceName)s",
+        "leave_dialog_description": "ທ່ານກຳລັງຈະອອກຈາກ <spaceName/>.",
+        "leave_dialog_option_intro": "ທ່ານຕ້ອງການອອກຈາກຫ້ອງໃນພື້ນທີ່ນີ້ບໍ?",
+        "leave_dialog_option_none": "ຢ່າອອກຈາກຫ້ອງ",
+        "leave_dialog_option_all": "ອອກຈາກຫ້ອງທັງຫມົດ",
+        "leave_dialog_option_specific": "ອອກຈາກບາງຫ້ອງ",
+        "leave_dialog_action": "ອອກຈາກພື້ນທີ່"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "homeserver ນີ້ບໍ່ໄດ້ຕັ້ງຄ່າເພື່ອສະແດງແຜນທີ່.",
@@ -3670,5 +3664,13 @@
         "disabled_dialog_title": "ການເຊື່ອມໂຍງຖືກປິດໃຊ້ງານ",
         "impossible_dialog_title": "ບໍ່ອະນຸຍາດໃຫ້ປະສົມປະສານກັນ",
         "impossible_dialog_description": "%(brand)s ຂອງທ່ານບໍ່ອະນຸຍາດໃຫ້ທ່ານໃຊ້ຕົວຈັດການການເຊື່ອມໂຍງເພື່ອເຮັດສິ່ງນີ້. ກະລຸນາຕິດຕໍ່ຫາຜູ້ຄຸ້ມຄອງລະບົບ."
+    },
+    "lazy_loading": {
+        "disabled_description1": "ກ່ອນໜ້ານີ້ທ່ານເຄີຍໃຊ້ %(brand)sກັບ %(host)s ດ້ວຍການເປີດໂຫຼດສະມາຊິກ. ໃນເວີຊັ້ນນີ້ ໄດ້ປິດການໃຊ້ງານ. ເນື່ອງຈາກ cache ໃນເຄື່ອງບໍ່ເຂົ້າກັນລະຫວ່າງສອງການຕັ້ງຄ່ານີ້, %(brand)s ຕ້ອງການ sync ບັນຊີຂອງທ່ານຄືນໃໝ່.",
+        "disabled_description2": "ຖ້າເວີຊັ້ນອື່ນຂອງ %(brand)s ເປີດຢູ່ໃນແຖບອື່ນ, ກະລຸນາປິດການໃຊ້ %(brand)s ຢູ່ໃນໂຮດດຽວກັນທັງການໂຫຼດແບບ lazy ເປີດໃຊ້ງານ ແລະປິດໃຊ້ງານພ້ອມກັນຈະເຮັດໃຫ້ເກີດບັນຫາ.",
+        "disabled_title": "ແຄດໃນເຄື່ອງບໍ່ເຂົ້າກັນໄດ້",
+        "disabled_action": "ລຶບ cache ແລະ resync",
+        "resync_description": "ຕອນນີ້ %(brand)s ໃຊ້ຄວາມຈຳໜ້ອຍກວ່າ 3-5x, ໂດຍການໂຫຼດຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້ອື່ນເມື່ອຕ້ອງການເທົ່ານັ້ນ. ກະລຸນາລໍຖ້າໃນຂະນະທີ່ພວກເຮົາ synchronise ກັບເຊີບເວີ!",
+        "resync_title": "ກຳລັງອັບເດດ %(brand)s"
     }
 }

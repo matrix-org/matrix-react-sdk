@@ -395,10 +395,6 @@
     "This backup is trusted because it has been restored on this session": "Αυτό το αντίγραφο ασφαλείας είναι αξιόπιστο επειδή έχει αποκατασταθεί σε αυτήν τη συνεδρία",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Για να αναφέρετε ένα ζήτημα ασφάλειας που σχετίζεται με το Matrix, διαβάστε την <a>Πολιτική Γνωστοποίησης Ασφαλείας</a> του Matrix.org.",
     "Deactivate account": "Απενεργοποίηση λογαριασμού",
-    "Signature upload failed": "Αποτυχία μεταφόρτωσης υπογραφής",
-    "Signature upload success": "Επιτυχία μεταφόρτωσης υπογραφής",
-    "Cancelled signature upload": "Ακυρώθηκε η μεταφόρτωση υπογραφής",
-    "Upload completed": "Η μεταφόρτωση ολοκληρώθηκε",
     "Recently viewed": "Προβλήθηκε πρόσφατα",
     "Encrypted by a deleted session": "Κρυπτογραφήθηκε από μια διαγραμμένη συνεδρία",
     "Your homeserver doesn't seem to support this feature.": "Ο διακομιστής σας δε φαίνεται να υποστηρίζει αυτήν τη δυνατότητα.",
@@ -419,17 +415,6 @@
     "Manually export keys": "Μη αυτόματη εξαγωγή κλειδιών",
     "I don't want my encrypted messages": "Δε θέλω τα κρυπτογραφημένα μηνύματά μου",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Τα κρυπτογραφημένα μηνύματα προστατεύονται με κρυπτογράφηση από άκρο σε άκρο. Μόνο εσείς και οι παραλήπτες έχετε τα κλειδιά για να διαβάσετε αυτά τα μηνύματα.",
-    "Leave space": "Αποχώρηση από τον χώρο",
-    "Leave all rooms": "Αποχώρηση από όλα τα δωμάτια",
-    "Leave some rooms": "Αποχώρηση από κάποια δωμάτια",
-    "Would you like to leave the rooms in this space?": "Θα θέλατε να αποχωρήσετε από τα δωμάτια σε αυτόν τον χώρο;",
-    "Don't leave any rooms": "Μην αφήνετε κανένα δωμάτιο",
-    "You are about to leave <spaceName/>.": "Πρόκειται να αποχωρήσετε από το <spaceName/>.",
-    "Leave %(spaceName)s": "Αποχωρήστε από %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Είστε ο μοναδικός διαχειριστής ορισμένων από τα δωμάτια ή τους χώρους που θέλετε να αποχωρήσετε. Αν αποχωρήσετε, θα μείνουν χωρίς διαχειριστές.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Είστε ο μοναδικός διαχειριστής αυτού του χώρου. Αν αποχωρήσετε τότε κανείς άλλος δε θα τον ελέγχει.",
-    "You won't be able to rejoin unless you are re-invited.": "Δε θα μπορείτε να συμμετάσχετε ξανά εκτός αν προσκληθείτε και πάλι.",
-    "Clear cache and resync": "Εκκαθάριση προσωρινής μνήμης και επανασυγχρονισμός",
     "Enter Security Phrase": "Εισαγάγετε τη Φράση Ασφαλείας",
     "Moderation": "Συντονισμός",
     "Continuing without email": "Συνέχεια χωρίς email",
@@ -564,8 +549,6 @@
     "<inviter/> invites you": "<inviter/> σας προσκαλεί",
     "You are sharing your live location": "Μοιράζεστε την τρέχουσα τοποθεσία σας",
     "Search spaces": "Αναζήτηση χώρων",
-    "Updating %(brand)s": "Ενημέρωση %(brand)s",
-    "Unable to upload": "Αδυναμία μεταφόρτωσης",
     "toggle event": "μεταβολή συμβάντος",
     "%(count)s people you know have already joined": {
         "one": "%(count)s άτομο που γνωρίζετε έχει ήδη εγγραφεί",
@@ -591,7 +574,6 @@
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Αυτό συνήθως επηρεάζει μόνο τον τρόπο επεξεργασίας του δωματίου στον διακομιστή. Εάν αντιμετωπίζετε προβλήματα με το %(brand)s σας, αναφέρετε ένα σφάλμα.",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Η αναβάθμιση αυτού του δωματίου απαιτεί τη διαγραφή του και τη δημιουργία ενός νέου δωματίου στη θέση του. Για να προσφέρουμε στα μέλη του την καλύτερη δυνατή εμπειρία, θα:",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Μια προειδοποίηση, αν δεν προσθέσετε ένα email και ξεχάσετε τον κωδικό πρόσβασης, ενδέχεται να <b>χάσετε οριστικά την πρόσβαση στον λογαριασμό σας</b>.",
-    "Incompatible local cache": "Μη συμβατή τοπική κρυφή μνήμη",
     "%(brand)s encountered an error during upload of:": "Το %(brand)s αντιμετώπισε ένα σφάλμα κατά τη μεταφόρτωση του:",
     "Feedback sent! Thanks, we appreciate it!": "Τα σχόλια ανατροφοδότησης στάλθηκαν! Ευχαριστούμε, το εκτιμούμε!",
     "Failed to connect to integration manager": "Αποτυχία σύνδεσης με τον διαχειριστή πρόσθετων",
@@ -602,9 +584,6 @@
     "Approve widget permissions": "Έγκριση αδειών μικροεφαρμογών",
     "You're removing all spaces. Access will default to invite only": "Καταργείτε όλους τους χώρους. Η πρόσβαση θα είναι προεπιλεγμένη μόνο για πρόσκληση",
     "Start using Key Backup": "Ξεκινήστε να χρησιμοποιείτε το αντίγραφο ασφαλείας κλειδιού",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "Το %(brand)s χρησιμοποιεί πλέον 3-5 φορές λιγότερη μνήμη, φορτώνοντας πληροφορίες για άλλους χρήστες μόνο όταν χρειάζεται. Περιμένετε όσο γίνεται εκ νέου συγχρονισμός με τον διακομιστή!",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Εάν η άλλη έκδοση του %(brand)s εξακολουθεί να είναι ανοιχτή σε άλλη καρτέλα, κλείστε την, καθώς η χρήση του %(brand)s στον ίδιο κεντρικό υπολογιστή με ενεργοποιημένη και απενεργοποιημένη την αργή φόρτωση ταυτόχρονα , θα προκαλέσει προβλήματα.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Έχετε χρησιμοποιήσει στο παρελθόν %(brand)s στον %(host)s με ενεργοποιημένη την αργή φόρτωση μελών. Σε αυτήν την έκδοση η αργή φόρτωση είναι απενεργοποιημένη. Η τοπική κρυφή μνήμη δεν είναι συμβατή μεταξύ αυτών των δύο ρυθμίσεων και έτσι το %(brand)s πρέπει να συγχρονίσει ξανά τον λογαριασμό σας.",
     "a key signature": "μια υπογραφή κλειδιού",
     "a device cross-signing signature": "μια υπογραφή διασταυρούμενης υπογραφής συσκευής",
     "a new cross-signing key signature": "μια νέα υπογραφή κλειδιού διασταυρούμενης υπογραφής",
@@ -2510,7 +2489,12 @@
         "incompatible_database_sign_out_description": "Για να αποφύγετε να χάσετε το ιστορικό των συνομιλιών σας, πρέπει να εξαγάγετε τα κλειδιά του δωματίου σας πριν αποσυνδεθείτε. Για να το κάνετε αυτό, θα χρειαστεί να επιστρέψετε στη νεότερη έκδοση του %(brand)s",
         "incompatible_database_description": "Έχετε χρησιμοποιήσει στο παρελθόν μια νεότερη έκδοση του %(brand)s με αυτήν την συνεδρία. Για να χρησιμοποιήσετε ξανά αυτήν την έκδοση με κρυπτογράφηση από άκρο σε άκρο, θα πρέπει να αποσυνδεθείτε και να συνδεθείτε ξανά.",
         "incompatible_database_title": "Μη συμβατή Βάση Δεδομένων",
-        "incompatible_database_disable": "Συνέχεια με Απενεργοποίηση Κρυπτογράφησης"
+        "incompatible_database_disable": "Συνέχεια με Απενεργοποίηση Κρυπτογράφησης",
+        "key_signature_upload_completed": "Η μεταφόρτωση ολοκληρώθηκε",
+        "key_signature_upload_cancelled": "Ακυρώθηκε η μεταφόρτωση υπογραφής",
+        "key_signature_upload_failed": "Αδυναμία μεταφόρτωσης",
+        "key_signature_upload_success_title": "Επιτυχία μεταφόρτωσης υπογραφής",
+        "key_signature_upload_failed_title": "Αποτυχία μεταφόρτωσης υπογραφής"
     },
     "emoji": {
         "category_frequently_used": "Συχνά χρησιμοποιούμενα",
@@ -2988,7 +2972,17 @@
             "create_prompt": "Δημιουργήστε νέο δωμάτιο",
             "subspace_moved_note": "Η προσθήκη χώρων μετακινήθηκε."
         },
-        "room_filter_placeholder": "Αναζητήστε δωμάτια"
+        "room_filter_placeholder": "Αναζητήστε δωμάτια",
+        "leave_dialog_public_rejoin_warning": "Δε θα μπορείτε να συμμετάσχετε ξανά εκτός αν προσκληθείτε και πάλι.",
+        "leave_dialog_only_admin_warning": "Είστε ο μοναδικός διαχειριστής αυτού του χώρου. Αν αποχωρήσετε τότε κανείς άλλος δε θα τον ελέγχει.",
+        "leave_dialog_only_admin_room_warning": "Είστε ο μοναδικός διαχειριστής ορισμένων από τα δωμάτια ή τους χώρους που θέλετε να αποχωρήσετε. Αν αποχωρήσετε, θα μείνουν χωρίς διαχειριστές.",
+        "leave_dialog_title": "Αποχωρήστε από %(spaceName)s",
+        "leave_dialog_description": "Πρόκειται να αποχωρήσετε από το <spaceName/>.",
+        "leave_dialog_option_intro": "Θα θέλατε να αποχωρήσετε από τα δωμάτια σε αυτόν τον χώρο;",
+        "leave_dialog_option_none": "Μην αφήνετε κανένα δωμάτιο",
+        "leave_dialog_option_all": "Αποχώρηση από όλα τα δωμάτια",
+        "leave_dialog_option_specific": "Αποχώρηση από κάποια δωμάτια",
+        "leave_dialog_action": "Αποχώρηση από τον χώρο"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Αυτός ο κεντρικός διακομιστής δεν έχει ρυθμιστεί για εμφάνιση χαρτών.",
@@ -3652,5 +3646,13 @@
         "disabled_dialog_title": "Τα πρόσθετα έχουν απενεργοποιηθεί",
         "impossible_dialog_title": "Δεν επιτρέπονται πρόσθετα",
         "impossible_dialog_description": "Το %(brand)s σας δε σας επιτρέπει να χρησιμοποιήσετε έναν διαχειριστή πρόσθετων για να το κάνετε αυτό. Επικοινωνήστε με έναν διαχειριστή."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Έχετε χρησιμοποιήσει στο παρελθόν %(brand)s στον %(host)s με ενεργοποιημένη την αργή φόρτωση μελών. Σε αυτήν την έκδοση η αργή φόρτωση είναι απενεργοποιημένη. Η τοπική κρυφή μνήμη δεν είναι συμβατή μεταξύ αυτών των δύο ρυθμίσεων και έτσι το %(brand)s πρέπει να συγχρονίσει ξανά τον λογαριασμό σας.",
+        "disabled_description2": "Εάν η άλλη έκδοση του %(brand)s εξακολουθεί να είναι ανοιχτή σε άλλη καρτέλα, κλείστε την, καθώς η χρήση του %(brand)s στον ίδιο κεντρικό υπολογιστή με ενεργοποιημένη και απενεργοποιημένη την αργή φόρτωση ταυτόχρονα , θα προκαλέσει προβλήματα.",
+        "disabled_title": "Μη συμβατή τοπική κρυφή μνήμη",
+        "disabled_action": "Εκκαθάριση προσωρινής μνήμης και επανασυγχρονισμός",
+        "resync_description": "Το %(brand)s χρησιμοποιεί πλέον 3-5 φορές λιγότερη μνήμη, φορτώνοντας πληροφορίες για άλλους χρήστες μόνο όταν χρειάζεται. Περιμένετε όσο γίνεται εκ νέου συγχρονισμός με τον διακομιστή!",
+        "resync_title": "Ενημέρωση %(brand)s"
     }
 }

@@ -1442,7 +1442,12 @@
             "description_1": "This session has detected that your Security Phrase and key for Secure Messages have been removed.",
             "description_2": "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.",
             "warning": "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings."
-        }
+        },
+        "key_signature_upload_completed": "Upload completed",
+        "key_signature_upload_cancelled": "Cancelled signature upload",
+        "key_signature_upload_failed": "Unable to upload",
+        "key_signature_upload_success_title": "Signature upload success",
+        "key_signature_upload_failed_title": "Signature upload failed"
     },
     "slash_command": {
         "spoiler": "Sends the given message as a spoiler",
@@ -2335,7 +2340,17 @@
         "title_when_query_available": "Results",
         "title_when_query_unavailable": "Rooms and spaces",
         "search_placeholder": "Search names and descriptions",
-        "landing_welcome": "Welcome to <name/>"
+        "landing_welcome": "Welcome to <name/>",
+        "leave_dialog_public_rejoin_warning": "You won't be able to rejoin unless you are re-invited.",
+        "leave_dialog_only_admin_warning": "You're the only admin of this space. Leaving it will mean no one has control over it.",
+        "leave_dialog_only_admin_room_warning": "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.",
+        "leave_dialog_title": "Leave %(spaceName)s",
+        "leave_dialog_description": "You are about to leave <spaceName/>.",
+        "leave_dialog_option_intro": "Would you like to leave the rooms in this space?",
+        "leave_dialog_option_none": "Don't leave any rooms",
+        "leave_dialog_option_all": "Leave all rooms",
+        "leave_dialog_option_specific": "Leave some rooms",
+        "leave_dialog_action": "Leave space"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "This homeserver is not configured to display maps.",
@@ -3675,27 +3690,6 @@
     "a device cross-signing signature": "a device cross-signing signature",
     "a key signature": "a key signature",
     "%(brand)s encountered an error during upload of:": "%(brand)s encountered an error during upload of:",
-    "Upload completed": "Upload completed",
-    "Cancelled signature upload": "Cancelled signature upload",
-    "Unable to upload": "Unable to upload",
-    "Signature upload success": "Signature upload success",
-    "Signature upload failed": "Signature upload failed",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.",
-    "Incompatible local cache": "Incompatible local cache",
-    "Clear cache and resync": "Clear cache and resync",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!",
-    "Updating %(brand)s": "Updating %(brand)s",
-    "You won't be able to rejoin unless you are re-invited.": "You won't be able to rejoin unless you are re-invited.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "You're the only admin of this space. Leaving it will mean no one has control over it.",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.",
-    "Leave %(spaceName)s": "Leave %(spaceName)s",
-    "You are about to leave <spaceName/>.": "You are about to leave <spaceName/>.",
-    "Would you like to leave the rooms in this space?": "Would you like to leave the rooms in this space?",
-    "Don't leave any rooms": "Don't leave any rooms",
-    "Leave all rooms": "Leave all rooms",
-    "Leave some rooms": "Leave some rooms",
-    "Leave space": "Leave space",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.",
     "Start using Key Backup": "Start using Key Backup",
@@ -3994,5 +3988,13 @@
         "switch_theme_dark": "Switch to dark mode"
     },
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab."
+    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab.",
+    "lazy_loading": {
+        "disabled_description1": "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.",
+        "disabled_description2": "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.",
+        "disabled_title": "Incompatible local cache",
+        "disabled_action": "Clear cache and resync",
+        "resync_description": "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!",
+        "resync_title": "Updating %(brand)s"
+    }
 }

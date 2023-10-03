@@ -512,17 +512,6 @@
     "I don't want my encrypted messages": "אני לא רוצה את ההודעות המוצפנות שלי",
     "Start using Key Backup": "התחל להשתמש בגיבוי מקשים",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "הודעות מוצפנות מאובטחות באמצעות הצפנה מקצה לקצה. רק לך ולמקבל / ים יש / ה מקשים לקריאת הודעות אלה.",
-    "Updating %(brand)s": "מעדכן %(brand)s",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s משתמש כעת בזכרון פחות פי 3-5, על ידי טעינת מידע רק על משתמשים אחרים בעת הצורך. אנא המתן בזמן שאנחנו מסתנכרנים מחדש עם השרת!",
-    "Clear cache and resync": "נקה מטמון וסנכרן מחדש",
-    "Incompatible local cache": "מטמון מקומי לא תואם",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "אם הגרסה האחרת של %(brand)s עדיין פתוחה בכרטיסייה אחרת, אנא סגור אותה כשימוש ב-%(brand)s באותו מארח כאשר טעינה עצלה מופעלת וגם מושבתת בו זמנית תגרום לבעיות.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "השתמשת בעבר ב- %(brand)s ב- %(host)s עם טעינה עצלה של חברים מופעלת. בגרסה זו טעינה עצלה מושבתת. מכיוון שהמטמון המקומי אינו תואם בין שתי ההגדרות הללו, %(brand)s צריך לסנכרן מחדש את חשבונך.",
-    "Signature upload failed": "העלאת החתימה נכשלה",
-    "Signature upload success": "הצלחה בהעלאת חתימה",
-    "Unable to upload": "לא ניתן להעלות",
-    "Cancelled signature upload": "העלאת החתימה בוטלה",
-    "Upload completed": "העלאה הושלמה",
     "%(brand)s encountered an error during upload of:": "%(brand)s נתקל בשגיאה במהלך ההעלאה של:",
     "a key signature": "חתימת מפתח",
     "a new cross-signing key signature": "חתימת מפתח צולבת חדשה",
@@ -2169,7 +2158,12 @@
         "incompatible_database_sign_out_description": "כדי להימנע מאיבוד היסטוריית הצ'אט שלכם, עליכם לייצא את מפתחות החדר שלכם לפני שאתם מתנתקים. יהיה עליכם לחזור לגרסה החדשה יותר של %(brand)s כדי לעשות זאת",
         "incompatible_database_description": "השתמשת בעבר בגרסה חדשה יותר של %(brand)s עם הפעלה זו. כדי להשתמש בגרסה זו שוב עם הצפנה מקצה לקצה, יהיה עליך לצאת ולחזור שוב.",
         "incompatible_database_title": "מסד נתונים לא תואם",
-        "incompatible_database_disable": "המשך כאשר ההצפנה מושבתת"
+        "incompatible_database_disable": "המשך כאשר ההצפנה מושבתת",
+        "key_signature_upload_completed": "העלאה הושלמה",
+        "key_signature_upload_cancelled": "העלאת החתימה בוטלה",
+        "key_signature_upload_failed": "לא ניתן להעלות",
+        "key_signature_upload_success_title": "הצלחה בהעלאת חתימה",
+        "key_signature_upload_failed_title": "העלאת החתימה נכשלה"
     },
     "emoji": {
         "category_frequently_used": "לעיתים קרובות בשימוש",
@@ -3130,5 +3124,13 @@
         "disabled_dialog_title": "שילובים מושבתים",
         "impossible_dialog_title": "שילובים אינם מורשים",
         "impossible_dialog_description": "%(brand)s שלכם אינו מאפשר לך להשתמש במנהל שילוב לשם כך. אנא צרו קשר עם מנהל מערכת."
+    },
+    "lazy_loading": {
+        "disabled_description1": "השתמשת בעבר ב- %(brand)s ב- %(host)s עם טעינה עצלה של חברים מופעלת. בגרסה זו טעינה עצלה מושבתת. מכיוון שהמטמון המקומי אינו תואם בין שתי ההגדרות הללו, %(brand)s צריך לסנכרן מחדש את חשבונך.",
+        "disabled_description2": "אם הגרסה האחרת של %(brand)s עדיין פתוחה בכרטיסייה אחרת, אנא סגור אותה כשימוש ב-%(brand)s באותו מארח כאשר טעינה עצלה מופעלת וגם מושבתת בו זמנית תגרום לבעיות.",
+        "disabled_title": "מטמון מקומי לא תואם",
+        "disabled_action": "נקה מטמון וסנכרן מחדש",
+        "resync_description": "%(brand)s משתמש כעת בזכרון פחות פי 3-5, על ידי טעינת מידע רק על משתמשים אחרים בעת הצורך. אנא המתן בזמן שאנחנו מסתנכרנים מחדש עם השרת!",
+        "resync_title": "מעדכן %(brand)s"
     }
 }

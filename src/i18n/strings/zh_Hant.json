@@ -84,11 +84,6 @@
     "The room upgrade could not be completed": "聊天室升級可能不完整",
     "Upgrade this room to version %(version)s": "升級此聊天室到版本 %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在遞交紀錄檔前，您必須<a>建立 GitHub 議題</a>以描述您的問題。",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s 現在僅使用低於原本3-5倍的記憶體，僅在需要時才會載入其他使用者的資訊。請等待我們與伺服器重新同步！",
-    "Updating %(brand)s": "正在更新 %(brand)s",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "您之前曾在 %(host)s 上使用 %(brand)s 並啟用成員列表的延遲載入。在此版本中延遲載入已停用。由於本機快取在這兩個設定間不相容，%(brand)s 必須重新同步您的帳號。",
-    "Incompatible local cache": "不相容的本機快取",
-    "Clear cache and resync": "清除快取並重新同步",
     "Unable to load backup status": "無法載入備份狀態",
     "Unable to restore backup": "無法復原備份",
     "No backup found!": "找不到備份！",
@@ -228,16 +223,11 @@
     "a device cross-signing signature": "裝置交叉簽署",
     "a key signature": "金鑰簽章",
     "%(brand)s encountered an error during upload of:": "%(brand)s 在上傳以下內容時遇到錯誤：",
-    "Upload completed": "上傳完成",
-    "Cancelled signature upload": "已取消簽章上傳",
-    "Signature upload success": "簽章上傳成功",
-    "Signature upload failed": "無上傳簽章",
     "Confirm by comparing the following with the User Settings in your other session:": "透過將下列內容與您其他工作階段中的「使用者設定」所顯示的內容來確認：",
     "Confirm this user's session by comparing the following with their User Settings:": "將以下內容與對方的「使用者設定」當中顯示的內容進行比對，來確認對方的工作階段：",
     "If they don't match, the security of your communication may be compromised.": "如果它們不相符，則可能會威脅到您的通訊安全。",
     "Sign in with SSO": "使用 SSO 登入",
     "Submit logs": "遞交紀錄檔",
-    "Unable to upload": "無法上傳",
     "Restoring keys from backup": "從備份還原金鑰",
     "%(completed)s of %(total)s keys restored": "%(total)s 中的 %(completed)s 金鑰已復原",
     "Keys restored": "金鑰已復原",
@@ -256,7 +246,6 @@
     "Security Phrase": "安全密語",
     "Security Key": "安全金鑰",
     "Use your Security Key to continue.": "使用您的安全金鑰以繼續。",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
     "You're all caught up.": "您已完成。",
     "Server isn't responding": "伺服器沒有回應",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "您的伺服器未對您的某些請求回應。下列是可能的原因。",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "無法開始直播",
     "Unable to start audio streaming.": "無法開始音訊串流。",
-    "Leave space": "離開聊天空間",
     "<inviter/> invites you": "<inviter/> 邀請您",
     "No results found": "找不到結果",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "決定哪些聊天空間可以存取此聊天室。若選取了聊天空間，其成員就可以找到並加入<RoomName/>。",
     "Select spaces": "選取聊天空間",
     "You're removing all spaces. Access will default to invite only": "您將取消所有聊天空間。存取權限將會預設為邀請制",
-    "Leave %(spaceName)s": "離開 %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "您是將要離開的聊天室與聊天空間唯一的管理員。您離開之後會讓它們沒有任何管理員。",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
-    "You won't be able to rejoin unless you are re-invited.": "您將無法重新加入，除非您再次被邀請。",
     "To join a space you'll need an invite.": "若要加入聊天空間，您必須被邀請。",
-    "Would you like to leave the rooms in this space?": "您想要離開此聊天空間中的聊天室嗎？",
-    "You are about to leave <spaceName/>.": "您將要離開 <spaceName/>。",
-    "Leave some rooms": "離開部份聊天室",
-    "Leave all rooms": "離開所有聊天室",
-    "Don't leave any rooms": "不要離開任何聊天室",
     "%(count)s reply": {
         "one": "%(count)s 回覆",
         "other": "%(count)s 回覆"
@@ -2989,7 +2968,12 @@
         "incompatible_database_sign_out_description": "為了避免遺失您的聊天歷史，您必須在登出前匯出您的聊天室金鑰。您必須回到較新版的 %(brand)s 才能執行此動作",
         "incompatible_database_description": "您先前在此工作階段中使用了較新版本的 %(brand)s。要再次與此版本使用端對端加密，您必須先登出再登入。",
         "incompatible_database_title": "不相容的資料庫",
-        "incompatible_database_disable": "在停用加密的情況下繼續"
+        "incompatible_database_disable": "在停用加密的情況下繼續",
+        "key_signature_upload_completed": "上傳完成",
+        "key_signature_upload_cancelled": "已取消簽章上傳",
+        "key_signature_upload_failed": "無法上傳",
+        "key_signature_upload_success_title": "簽章上傳成功",
+        "key_signature_upload_failed_title": "無上傳簽章"
     },
     "emoji": {
         "category_frequently_used": "經常使用",
@@ -3561,7 +3545,17 @@
             "create_prompt": "建立新聊天室",
             "subspace_moved_note": "新增的聊天空間已被移動。"
         },
-        "room_filter_placeholder": "搜尋聊天室"
+        "room_filter_placeholder": "搜尋聊天室",
+        "leave_dialog_public_rejoin_warning": "您將無法重新加入，除非您再次被邀請。",
+        "leave_dialog_only_admin_warning": "您是此聊天空間唯一的管理員。離開將代表沒有人可以控制它。",
+        "leave_dialog_only_admin_room_warning": "您是將要離開的聊天室與聊天空間唯一的管理員。您離開之後會讓它們沒有任何管理員。",
+        "leave_dialog_title": "離開 %(spaceName)s",
+        "leave_dialog_description": "您將要離開 <spaceName/>。",
+        "leave_dialog_option_intro": "您想要離開此聊天空間中的聊天室嗎？",
+        "leave_dialog_option_none": "不要離開任何聊天室",
+        "leave_dialog_option_all": "離開所有聊天室",
+        "leave_dialog_option_specific": "離開部份聊天室",
+        "leave_dialog_action": "離開聊天空間"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家伺服器未設定來顯示地圖。",
@@ -4367,5 +4361,13 @@
         "disabled_dialog_description": "在設定中啟用「%(manageIntegrations)s」來執行此動作。",
         "impossible_dialog_title": "不允許整合",
         "impossible_dialog_description": "您的 %(brand)s 不允許您使用整合管理員來執行此動作。請聯絡管理員。"
+    },
+    "lazy_loading": {
+        "disabled_description1": "您之前曾在 %(host)s 上使用 %(brand)s 並啟用成員列表的延遲載入。在此版本中延遲載入已停用。由於本機快取在這兩個設定間不相容，%(brand)s 必須重新同步您的帳號。",
+        "disabled_description2": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
+        "disabled_title": "不相容的本機快取",
+        "disabled_action": "清除快取並重新同步",
+        "resync_description": "%(brand)s 現在僅使用低於原本3-5倍的記憶體，僅在需要時才會載入其他使用者的資訊。請等待我們與伺服器重新同步！",
+        "resync_title": "正在更新 %(brand)s"
     }
 }

@@ -140,12 +140,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Versleutelde berichten zijn beveiligd met eind-tot-eind-versleuteling. Enkel de ontvanger(s) en jij hebben de sleutels om deze berichten te lezen.",
     "Start using Key Backup": "Begin sleutelback-up te gebruiken",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Voordat je logs indient, dien je jouw probleem te melden <a>in een GitHub issue</a>.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Je hebt voorheen %(brand)s op %(host)s gebruikt met lui laden van leden ingeschakeld. In deze versie is lui laden uitgeschakeld. De lokale cache is niet compatibel tussen deze twee instellingen, zodat %(brand)s je account moet hersynchroniseren.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Indien de andere versie van %(brand)s nog open staat in een ander tabblad kan je dat beter sluiten, want het geeft problemen als %(brand)s op dezelfde host gelijktijdig met lui laden ingeschakeld en uitgeschakeld draait.",
-    "Incompatible local cache": "Incompatibele lokale cache",
-    "Clear cache and resync": "Cache wissen en hersynchroniseren",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s verbruikt nu 3-5x minder geheugen, door informatie over andere personen enkel te laden wanneer nodig. Even geduld, we synchroniseren met de server!",
-    "Updating %(brand)s": "%(brand)s wordt bijgewerkt",
     "I don't want my encrypted messages": "Ik wil mijn versleutelde berichten niet",
     "Manually export keys": "Sleutels handmatig wegschrijven",
     "You'll lose access to your encrypted messages": "Je zal de toegang tot je versleutelde berichten verliezen",
@@ -480,9 +474,6 @@
     "Continuing without email": "Doorgaan zonder e-mail",
     "If they don't match, the security of your communication may be compromised.": "Als deze niet overeenkomen, dan wordt deze sessie mogelijk door iemand anders onderschept.",
     "Confirm by comparing the following with the User Settings in your other session:": "Bevestig door het volgende te vergelijken met de persoonsinstellingen in je andere sessie:",
-    "Signature upload failed": "Versturen van ondertekening mislukt",
-    "Signature upload success": "Ondertekening succesvol verstuurd",
-    "Unable to upload": "Versturen niet mogelijk",
     "São Tomé & Príncipe": "Sao Tomé en Principe",
     "Swaziland": "Swaziland",
     "Sudan": "Soedan",
@@ -539,13 +530,11 @@
     "Data on this screen is shared with %(widgetDomain)s": "Gegevens op dit scherm worden gedeeld met %(widgetDomain)s",
     "Modal Widget": "Modale widget",
     "Confirm this user's session by comparing the following with their User Settings:": "Bevestig de sessie van deze persoon door het volgende te vergelijken met zijn persoonsinstellingen:",
-    "Cancelled signature upload": "Geannuleerde ondertekening upload",
     "%(brand)s encountered an error during upload of:": "%(brand)s is een fout tegengekomen tijdens het uploaden van:",
     "a key signature": "een sleutel ondertekening",
     "a device cross-signing signature": "een apparaat kruiselings ondertekenen ondertekening",
     "a new cross-signing key signature": "een nieuwe kruiselings ondertekenen ondertekening",
     "a new master key signature": "een nieuwe hoofdsleutel ondertekening",
-    "Upload completed": "Upload voltooid",
     "Submit logs": "Logs versturen",
     "IRC display name width": "Breedte IRC-weergavenaam",
     "%(count)s members": {
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Starten van livestream is mislukt",
     "Unable to start audio streaming.": "Kan audiostream niet starten.",
-    "Leave space": "Space verlaten",
     "<inviter/> invites you": "<inviter/> nodigt je uit",
     "No results found": "Geen resultaten gevonden",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Kies welke Spaces toegang hebben tot deze kamer. Als een Space is geselecteerd kunnen deze leden <RoomName/> vinden en aan deelnemen.",
     "Select spaces": "Space selecteren",
     "You're removing all spaces. Access will default to invite only": "Je verwijdert alle Spaces. De toegang zal teruggezet worden naar alleen op uitnodiging",
-    "Leave %(spaceName)s": "%(spaceName)s verlaten",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Je bent de enige beheerder van sommige kamers of Spaces die je wil verlaten. Door deze te verlaten hebben ze geen beheerder meer.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Je bent de enige beheerder van deze Space. Door het te verlaten zal er niemand meer controle over hebben.",
-    "You won't be able to rejoin unless you are re-invited.": "Je kan niet opnieuw deelnemen behalve als je opnieuw wordt uitgenodigd.",
     "To join a space you'll need an invite.": "Om te kunnen deelnemen aan een space heb je een uitnodiging nodig.",
-    "Would you like to leave the rooms in this space?": "Wil je de kamers verlaten in deze Space?",
-    "You are about to leave <spaceName/>.": "Je staat op het punt <spaceName/> te verlaten.",
-    "Leave some rooms": "Sommige kamers verlaten",
-    "Leave all rooms": "Alle kamers verlaten",
-    "Don't leave any rooms": "Geen kamers verlaten",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Voer uw veiligheidswachtwoord in of <button>gebruik uw veiligheidssleutel</button> om door te gaan.",
     "%(count)s reply": {
         "one": "%(count)s reactie",
@@ -2732,7 +2711,12 @@
         "incompatible_database_sign_out_description": "Om jouw kamergeschiedenis niet te verliezen vóór het uitloggen dien je jouw veiligheidssleutel te exporteren. Dat moet vanuit de nieuwere versie van %(brand)s",
         "incompatible_database_description": "Je hebt eerder een nieuwere versie van %(brand)s in deze sessie gebruikt. Om deze versie opnieuw met eind-tot-eind-versleuteling te gebruiken, zal je moeten uitloggen en opnieuw inloggen.",
         "incompatible_database_title": "Incompatibele database",
-        "incompatible_database_disable": "Verdergaan met versleuteling uitgeschakeld"
+        "incompatible_database_disable": "Verdergaan met versleuteling uitgeschakeld",
+        "key_signature_upload_completed": "Upload voltooid",
+        "key_signature_upload_cancelled": "Geannuleerde ondertekening upload",
+        "key_signature_upload_failed": "Versturen niet mogelijk",
+        "key_signature_upload_success_title": "Ondertekening succesvol verstuurd",
+        "key_signature_upload_failed_title": "Versturen van ondertekening mislukt"
     },
     "emoji": {
         "category_frequently_used": "Vaak gebruikt",
@@ -3247,7 +3231,17 @@
             "create_prompt": "Nieuwe kamer aanmaken",
             "subspace_moved_note": "Spaces toevoegen is verplaatst."
         },
-        "room_filter_placeholder": "Naar kamers zoeken"
+        "room_filter_placeholder": "Naar kamers zoeken",
+        "leave_dialog_public_rejoin_warning": "Je kan niet opnieuw deelnemen behalve als je opnieuw wordt uitgenodigd.",
+        "leave_dialog_only_admin_warning": "Je bent de enige beheerder van deze Space. Door het te verlaten zal er niemand meer controle over hebben.",
+        "leave_dialog_only_admin_room_warning": "Je bent de enige beheerder van sommige kamers of Spaces die je wil verlaten. Door deze te verlaten hebben ze geen beheerder meer.",
+        "leave_dialog_title": "%(spaceName)s verlaten",
+        "leave_dialog_description": "Je staat op het punt <spaceName/> te verlaten.",
+        "leave_dialog_option_intro": "Wil je de kamers verlaten in deze Space?",
+        "leave_dialog_option_none": "Geen kamers verlaten",
+        "leave_dialog_option_all": "Alle kamers verlaten",
+        "leave_dialog_option_specific": "Sommige kamers verlaten",
+        "leave_dialog_action": "Space verlaten"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Deze server is niet geconfigureerd om kaarten weer te geven.",
@@ -3960,5 +3954,13 @@
         "disabled_dialog_title": "Integraties zijn uitgeschakeld",
         "impossible_dialog_title": "Integraties niet toegestaan",
         "impossible_dialog_description": "Jouw %(brand)s laat je geen integratiebeheerder gebruiken om dit te doen. Neem contact op met een beheerder."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Je hebt voorheen %(brand)s op %(host)s gebruikt met lui laden van leden ingeschakeld. In deze versie is lui laden uitgeschakeld. De lokale cache is niet compatibel tussen deze twee instellingen, zodat %(brand)s je account moet hersynchroniseren.",
+        "disabled_description2": "Indien de andere versie van %(brand)s nog open staat in een ander tabblad kan je dat beter sluiten, want het geeft problemen als %(brand)s op dezelfde host gelijktijdig met lui laden ingeschakeld en uitgeschakeld draait.",
+        "disabled_title": "Incompatibele lokale cache",
+        "disabled_action": "Cache wissen en hersynchroniseren",
+        "resync_description": "%(brand)s verbruikt nu 3-5x minder geheugen, door informatie over andere personen enkel te laden wanneer nodig. Even geduld, we synchroniseren met de server!",
+        "resync_title": "%(brand)s wordt bijgewerkt"
     }
 }

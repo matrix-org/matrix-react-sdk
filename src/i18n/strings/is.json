@@ -373,9 +373,6 @@
         "other": "%(count)s spjallrásir"
     },
     "Are you sure you want to sign out?": "Ertu viss um að þú viljir skrá þig út?",
-    "Leave space": "Yfirgefa svæði",
-    "Leave %(spaceName)s": "Yfirgefa %(spaceName)s",
-    "Upload completed": "Innsendingu er lokið",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -403,8 +400,6 @@
     "Apple": "Epli",
     "Messaging": "Skilaboð",
     "Approve widget permissions": "Samþykkja heimildir viðmótshluta",
-    "Clear cache and resync": "Hreinsa skyndiminni og endursamstilla",
-    "Incompatible local cache": "Ósamhæft staðvært skyndiminni",
     "Feedback sent! Thanks, we appreciate it!": "Umsögn send! Takk, við kunnum að meta þetta!",
     "Your homeserver has exceeded one of its resource limits.": "Heimaþjóninn þinn er kominn fram yfir takmörk á tilföngum.",
     "Your homeserver has exceeded its user limit.": "Heimaþjóninn þinn er kominn fram yfir takmörk á fjölda notenda.",
@@ -484,10 +479,6 @@
         "other": "%(count)s þátttakendur"
     },
     "You'll lose access to your encrypted messages": "Þú munt tapa dulrituðu skilaboðunum þínum",
-    "Leave some rooms": "Yfirgefa sumar spjallrásir",
-    "Leave all rooms": "Yfirgefa allar spjallrásir",
-    "Don't leave any rooms": "Ekki yfirgefa neinar spjallrásir",
-    "Updating %(brand)s": "Uppfæri %(brand)s",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
@@ -531,7 +522,6 @@
     "Search Dialog": "Leitargluggi",
     "Use <arrows/> to scroll": "Notaðu <arrows/> til að skruna",
     "Spaces you're in": "Svæði sem þú tilheyrir",
-    "Unable to upload": "Ekki tókst að senda inn",
     "Submit logs": "Senda inn atvikaskrár",
     "Keys restored": "Dulritunarlyklar endurheimtir",
     "No backup found!": "Ekkert öryggisafrit fannst!",
@@ -572,7 +562,6 @@
     "Upgrade this room to version %(version)s": "Uppfæra þessa spjallrás í útgáfu %(version)s",
     "The room upgrade could not be completed": "Ekki tókst að ljúka uppfærslu spjallrásarinnar",
     "Data on this screen is shared with %(widgetDomain)s": "Gögnum á þessum skjá er deilt með %(widgetDomain)s",
-    "You are about to leave <spaceName/>.": "Þú ert í þann mund að yfirgefa <spaceName/>.",
     "Automatically invite members from this room to the new one": "Bjóða meðlimum á þessari spjallrás sjálfvirkt yfir í þá nýju",
     "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
@@ -614,8 +603,6 @@
     "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
     "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
     "Explore public spaces in the new search dialog": "Kannaðu opimber svæði í nýja leitarglugganum",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Þú ert eini stjórnandi þessa svæðis. Ef þú yfirgefur það verður enginn annar sem er með stjórn yfir því.",
-    "You won't be able to rejoin unless you are re-invited.": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s eða %(recoveryFile)s",
     " in <strong>%(room)s</strong>": " í <strong>%(room)s</strong>",
     "common": {
@@ -2595,7 +2582,9 @@
         "cross_signing_room_normal": "Þessi spjallrás er enda-í-enda dulrituð",
         "unsupported": "Þetta forrit styður ekki enda-í-enda dulritun.",
         "incompatible_database_title": "Ósamhæfður gagnagrunnur",
-        "incompatible_database_disable": "Halda áfram með dulritun óvirka"
+        "incompatible_database_disable": "Halda áfram með dulritun óvirka",
+        "key_signature_upload_completed": "Innsendingu er lokið",
+        "key_signature_upload_failed": "Ekki tókst að senda inn"
     },
     "emoji": {
         "category_frequently_used": "Oft notað",
@@ -3086,7 +3075,15 @@
             "create_prompt": "Búa til nýja spjallrás",
             "subspace_moved_note": "Aðgerðin til að bæta við svæðum hefur verið flutt."
         },
-        "room_filter_placeholder": "Leita að spjallrásum"
+        "room_filter_placeholder": "Leita að spjallrásum",
+        "leave_dialog_public_rejoin_warning": "Þú munt ekki geta tekið þátt aftur nema þér verði boðið aftur.",
+        "leave_dialog_only_admin_warning": "Þú ert eini stjórnandi þessa svæðis. Ef þú yfirgefur það verður enginn annar sem er með stjórn yfir því.",
+        "leave_dialog_title": "Yfirgefa %(spaceName)s",
+        "leave_dialog_description": "Þú ert í þann mund að yfirgefa <spaceName/>.",
+        "leave_dialog_option_none": "Ekki yfirgefa neinar spjallrásir",
+        "leave_dialog_option_all": "Yfirgefa allar spjallrásir",
+        "leave_dialog_option_specific": "Yfirgefa sumar spjallrásir",
+        "leave_dialog_action": "Yfirgefa svæði"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Heimaþjónninn er ekki stilltur til að birta landakort.",
@@ -3749,5 +3746,10 @@
         "disabled_dialog_title": "Samþættingar eru óvirkar",
         "impossible_dialog_title": "Samþættingar eru ekki leyfðar",
         "impossible_dialog_description": "%(brand)s leyfir þér ekki að nota samþættingarstýringu til að gera þetta. Hafðu samband við kerfisstjóra."
+    },
+    "lazy_loading": {
+        "disabled_title": "Ósamhæft staðvært skyndiminni",
+        "disabled_action": "Hreinsa skyndiminni og endursamstilla",
+        "resync_title": "Uppfæri %(brand)s"
     }
 }

@@ -84,12 +84,6 @@
     "The room upgrade could not be completed": "Non è stato possibile completare l'aggiornamento della stanza",
     "Upgrade this room to version %(version)s": "Aggiorna questa stanza alla versione %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Prima di inviare i log, devi <a>creare una segnalazione su GitHub</a> per descrivere il tuo problema.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s ora usa da 3 a 5 volte meno memoria, caricando le informazioni degli altri utenti solo quando serve. Si prega di attendere mentre ci risincronizziamo con il server!",
-    "Updating %(brand)s": "Aggiornamento di %(brand)s",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Hai usato %(brand)s precedentemente su %(host)s con il caricamento lento dei membri attivato. In questa versione il caricamento lento è disattivato. Dato che la cache locale non è compatibile tra queste due impostazioni, %(brand)s deve risincronizzare il tuo account.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se l'altra versione di %(brand)s è ancora aperta in un'altra scheda, chiudila perché usare %(brand)s nello stesso host con il caricamento lento sia attivato che disattivato può causare errori.",
-    "Incompatible local cache": "Cache locale non compatibile",
-    "Clear cache and resync": "Svuota cache e risincronizza",
     "Unable to load backup status": "Impossibile caricare lo stato del backup",
     "Unable to restore backup": "Impossibile ripristinare il backup",
     "No backup found!": "Nessun backup trovato!",
@@ -229,16 +223,11 @@
     "a device cross-signing signature": "una firma incrociata di dispositivo",
     "a key signature": "una firma di chiave",
     "%(brand)s encountered an error during upload of:": "%(brand)s ha riscontrato un errore durante l'invio di:",
-    "Upload completed": "Invio completato",
-    "Cancelled signature upload": "Invio della firma annullato",
-    "Signature upload success": "Firma inviata correttamente",
-    "Signature upload failed": "Invio della firma fallito",
     "Confirm by comparing the following with the User Settings in your other session:": "Conferma confrontando il seguente con le impostazioni utente nell'altra sessione:",
     "Confirm this user's session by comparing the following with their User Settings:": "Conferma questa sessione confrontando il seguente con le sue impostazioni utente:",
     "If they don't match, the security of your communication may be compromised.": "Se non corrispondono, la sicurezza delle tue comunicazioni potrebbe essere compromessa.",
     "Sign in with SSO": "Accedi con SSO",
     "Submit logs": "Invia registri",
-    "Unable to upload": "Impossibile inviare",
     "Restoring keys from backup": "Ripristino delle chiavi dal backup",
     "%(completed)s of %(total)s keys restored": "%(completed)s di %(total)s chiavi ripristinate",
     "Keys restored": "Chiavi ripristinate",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Impossibile avviare lo stream in diretta",
     "Unable to start audio streaming.": "Impossibile avviare lo streaming audio.",
-    "Leave space": "Esci dallo spazio",
     "<inviter/> invites you": "<inviter/> ti ha invitato/a",
     "No results found": "Nessun risultato trovato",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decidi quali spazi possono accedere a questa stanza. Se uno spazio è selezionato, i suoi membri possono trovare ed entrare in <RoomName/>.",
     "Select spaces": "Seleziona spazi",
     "You're removing all spaces. Access will default to invite only": "Stai rimuovendo tutti gli spazi. L'accesso tornerà solo su invito",
-    "Leave %(spaceName)s": "Esci da %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Sei l'unico amministratore di alcune delle stanze o spazi che vuoi abbandonare. Se esci li lascerai senza amministratori.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Sei l'unico amministratore di questo spazio. Se esci nessuno ne avrà il controllo.",
-    "You won't be able to rejoin unless you are re-invited.": "Non potrai rientrare a meno che non ti invitino di nuovo.",
     "To join a space you'll need an invite.": "Per entrare in uno spazio ti serve un invito.",
-    "Would you like to leave the rooms in this space?": "Vuoi uscire dalle stanze di questo spazio?",
-    "You are about to leave <spaceName/>.": "Stai per uscire da <spaceName/>.",
-    "Leave some rooms": "Esci da alcune stanze",
-    "Leave all rooms": "Esci da tutte le stanze",
-    "Don't leave any rooms": "Non uscire da alcuna stanza",
     "%(count)s reply": {
         "one": "%(count)s risposta",
         "other": "%(count)s risposte"
@@ -2996,7 +2975,12 @@
         "incompatible_database_sign_out_description": "Per evitare di perdere la cronologia della chat, devi esportare le tue chiavi della stanza prima di uscire. Dovrai tornare alla versione più recente di %(brand)s per farlo",
         "incompatible_database_description": "Hai precedentemente usato una versione più recente di %(brand)s con questa sessione. Per usare ancora questa versione con la crittografia end to end, dovrai disconnetterti e riaccedere.",
         "incompatible_database_title": "Database non compatibile",
-        "incompatible_database_disable": "Continua con la crittografia disattivata"
+        "incompatible_database_disable": "Continua con la crittografia disattivata",
+        "key_signature_upload_completed": "Invio completato",
+        "key_signature_upload_cancelled": "Invio della firma annullato",
+        "key_signature_upload_failed": "Impossibile inviare",
+        "key_signature_upload_success_title": "Firma inviata correttamente",
+        "key_signature_upload_failed_title": "Invio della firma fallito"
     },
     "emoji": {
         "category_frequently_used": "Usati di frequente",
@@ -3568,7 +3552,17 @@
             "create_prompt": "Crea nuova stanza",
             "subspace_moved_note": "L'aggiunta di spazi è stata spostata."
         },
-        "room_filter_placeholder": "Cerca stanze"
+        "room_filter_placeholder": "Cerca stanze",
+        "leave_dialog_public_rejoin_warning": "Non potrai rientrare a meno che non ti invitino di nuovo.",
+        "leave_dialog_only_admin_warning": "Sei l'unico amministratore di questo spazio. Se esci nessuno ne avrà il controllo.",
+        "leave_dialog_only_admin_room_warning": "Sei l'unico amministratore di alcune delle stanze o spazi che vuoi abbandonare. Se esci li lascerai senza amministratori.",
+        "leave_dialog_title": "Esci da %(spaceName)s",
+        "leave_dialog_description": "Stai per uscire da <spaceName/>.",
+        "leave_dialog_option_intro": "Vuoi uscire dalle stanze di questo spazio?",
+        "leave_dialog_option_none": "Non uscire da alcuna stanza",
+        "leave_dialog_option_all": "Esci da tutte le stanze",
+        "leave_dialog_option_specific": "Esci da alcune stanze",
+        "leave_dialog_action": "Esci dallo spazio"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Questo homeserver non è configurato per mostrare mappe.",
@@ -4374,5 +4368,13 @@
         "disabled_dialog_description": "Attiva '%(manageIntegrations)s' nelle impostazioni per continuare.",
         "impossible_dialog_title": "Integrazioni non permesse",
         "impossible_dialog_description": "Il tuo %(brand)s non ti permette di usare il gestore di integrazioni per questa azione. Contatta un amministratore."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Hai usato %(brand)s precedentemente su %(host)s con il caricamento lento dei membri attivato. In questa versione il caricamento lento è disattivato. Dato che la cache locale non è compatibile tra queste due impostazioni, %(brand)s deve risincronizzare il tuo account.",
+        "disabled_description2": "Se l'altra versione di %(brand)s è ancora aperta in un'altra scheda, chiudila perché usare %(brand)s nello stesso host con il caricamento lento sia attivato che disattivato può causare errori.",
+        "disabled_title": "Cache locale non compatibile",
+        "disabled_action": "Svuota cache e risincronizza",
+        "resync_description": "%(brand)s ora usa da 3 a 5 volte meno memoria, caricando le informazioni degli altri utenti solo quando serve. Si prega di attendere mentre ci risincronizziamo con il server!",
+        "resync_title": "Aggiornamento di %(brand)s"
     }
 }

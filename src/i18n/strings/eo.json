@@ -125,7 +125,6 @@
     "Anchor": "Ankro",
     "Headphones": "Kapaŭdilo",
     "Folder": "Dosierujo",
-    "Updating %(brand)s": "Ĝisdatigante %(brand)s",
     "Room Settings - %(roomName)s": "Agordoj de ĉambro – %(roomName)s",
     "Failed to upgrade room": "Malsukcesis gradaltigi ĉambron",
     "Share Room": "Kunhavigi ĉambron",
@@ -168,11 +167,6 @@
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Antaŭ ol sendi protokolon, vi devas <a>raporti problemon per GitHub</a> por priskribi la problemon.",
     "I don't want my encrypted messages": "Mi ne volas miajn ĉifritajn mesaĝojn",
     "No backup found!": "Neniu savkopio troviĝis!",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Vi antaŭe uzis %(brand)s-on je %(host)s kun ŝaltita malfrua enlegado de anoj. En ĉi tiu versio, malfrua enlegado estas malŝaltita. Ĉar la loka kaŝmemoro de ambaŭ versioj ne akordas, %(brand)s bezonas respeguli vian konton.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Se la alia versio de %(brand)s ankoraŭ estas malfermita en alia langeto, bonvolu tiun fermi, ĉar uzado de %(brand)s je la sama gastiganto, kun malfrua enlegado samtempe ŝaltita kaj malŝaltita, kaŭzos problemojn.",
-    "Incompatible local cache": "Neakorda loka kaŝmemoro",
-    "Clear cache and resync": "Vakigi kaŝmemoron kaj respeguli",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s nun uzas 3–5-oble malpli da memoro, ĉar ĝi enlegas informojn pri aliaj uzantoj nur tiam, kiam ĝi bezonas. Bonvolu atendi ĝis ni respegulos la servilon!",
     "You'll lose access to your encrypted messages": "Vi perdos aliron al viaj ĉifritaj mesaĝoj",
     "Are you sure you want to sign out?": "Ĉu vi certe volas adiaŭi?",
     "Your homeserver doesn't seem to support this feature.": "Via hejmservilo ŝajne ne subtenas ĉi tiun funkcion.",
@@ -229,17 +223,12 @@
     "a device cross-signing signature": "delega subskribo de aparato",
     "a key signature": "ŝlosila subskribo",
     "%(brand)s encountered an error during upload of:": "%(brand)s eraris dum alŝuto de:",
-    "Upload completed": "Alŝuto finiĝis",
-    "Cancelled signature upload": "Alŝuto de subskribo nuliĝis",
-    "Signature upload success": "Alŝuto de subskribo sukcesis",
-    "Signature upload failed": "Alŝuto de subskribo malsukcesis",
     "Confirm by comparing the following with the User Settings in your other session:": "Konfirmu per komparo de la sekva kun la agardoj de uzanto en via alia salutaĵo:",
     "Confirm this user's session by comparing the following with their User Settings:": "Konfirmu la salutaĵon de ĉi tiu uzanto per komparo de la sekva kun ĝiaj agordoj de uzanto:",
     "If they don't match, the security of your communication may be compromised.": "Se ili ne akordas, la sekureco de via komunikado eble estas rompita.",
     "You signed in to a new session without verifying it:": "Vi salutis novan salutaĵon sen kontrolo:",
     "Verify your other session using one of the options below.": "Kontrolu vian alian salutaĵon per unu el la ĉi-subaj elektebloj.",
     "Submit logs": "Alŝuti protokolon",
-    "Unable to upload": "Ne povas alŝuti",
     "Restoring keys from backup": "Rehavo de ŝlosiloj el savkopio",
     "%(completed)s of %(total)s keys restored": "%(completed)s el %(total)s ŝlosiloj rehaviĝis",
     "Keys restored": "Ŝlosiloj rehaviĝis",
@@ -560,7 +549,6 @@
     },
     "Failed to start livestream": "Malsukcesis komenci tujelsendon",
     "Unable to start audio streaming.": "Ne povas komenci sonelsendon.",
-    "Leave space": "Forlasi aron",
     "%(count)s people you know have already joined": {
         "one": "%(count)s persono, kiun vi konas, jam aliĝis",
         "other": "%(count)s personoj, kiujn vi konas, jam aliĝis"
@@ -582,16 +570,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decidu, kiuj aroj rajtos aliri ĉi tiun ĉambron. Se aro estas elektita, ĝiaj anoj povas trovi kaj aliĝi al <RoomName/>.",
     "Select spaces": "Elekti arojn",
     "You're removing all spaces. Access will default to invite only": "Vi forigas ĉiujn arojn. Implicite povos aliri nur invititoj",
-    "Leave %(spaceName)s": "Foriri de %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Vi estas la sola administranto de iuj ĉambroj aŭ aroj, de kie vi volas foriri. Se vi faros tion, neniu povos ilin plu administri.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Vi estas la sola administranto de ĉi tiu aro. Se vi foriros, neniu povos ĝin administri.",
-    "You won't be able to rejoin unless you are re-invited.": "Vi ne povos ree aliĝi, krom se oni ree invitos vin.",
     "To join a space you'll need an invite.": "Por aliĝi al aro, vi bezonas inviton.",
-    "Would you like to leave the rooms in this space?": "Ĉu vi volus foriri de la ĉambroj en ĉi tiu aro?",
-    "You are about to leave <spaceName/>.": "Vi foriros de <spaceName/>.",
-    "Leave some rooms": "Foriri de iuj ĉambroj",
-    "Leave all rooms": "Foriri de ĉiuj ĉambroj",
-    "Don't leave any rooms": "Foriru de neniuj ĉambroj",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s kaj %(count)s alia",
         "other": "%(spaceName)s kaj %(count)s aliaj"
@@ -2266,7 +2245,12 @@
         "incompatible_database_sign_out_description": "Por eviti perdon de via babila historio, vi devas elporti la ŝlosilojn de viaj ĉambroj antaŭ adiaŭo. Por tio vi bezonos reveni al la pli nova versio de %(brand)s",
         "incompatible_database_description": "Vi antaŭe uzis pli novan version de %(brand)s kun tiu ĉi salutaĵo. Por ree uzi ĉi tiun version kun tutvoja ĉifrado, vi devos adiaŭi kaj resaluti.",
         "incompatible_database_title": "Neakorda datumbazo",
-        "incompatible_database_disable": "Pluigi sen ĉifrado"
+        "incompatible_database_disable": "Pluigi sen ĉifrado",
+        "key_signature_upload_completed": "Alŝuto finiĝis",
+        "key_signature_upload_cancelled": "Alŝuto de subskribo nuliĝis",
+        "key_signature_upload_failed": "Ne povas alŝuti",
+        "key_signature_upload_success_title": "Alŝuto de subskribo sukcesis",
+        "key_signature_upload_failed_title": "Alŝuto de subskribo malsukcesis"
     },
     "emoji": {
         "category_frequently_used": "Ofte uzataj",
@@ -2740,7 +2724,17 @@
             "create_prompt": "Krei novan ĉambron",
             "subspace_moved_note": "Aldonejo de aroj moviĝis."
         },
-        "room_filter_placeholder": "Serĉi ĉambrojn"
+        "room_filter_placeholder": "Serĉi ĉambrojn",
+        "leave_dialog_public_rejoin_warning": "Vi ne povos ree aliĝi, krom se oni ree invitos vin.",
+        "leave_dialog_only_admin_warning": "Vi estas la sola administranto de ĉi tiu aro. Se vi foriros, neniu povos ĝin administri.",
+        "leave_dialog_only_admin_room_warning": "Vi estas la sola administranto de iuj ĉambroj aŭ aroj, de kie vi volas foriri. Se vi faros tion, neniu povos ilin plu administri.",
+        "leave_dialog_title": "Foriri de %(spaceName)s",
+        "leave_dialog_description": "Vi foriros de <spaceName/>.",
+        "leave_dialog_option_intro": "Ĉu vi volus foriri de la ĉambroj en ĉi tiu aro?",
+        "leave_dialog_option_none": "Foriru de neniuj ĉambroj",
+        "leave_dialog_option_all": "Foriri de ĉiuj ĉambroj",
+        "leave_dialog_option_specific": "Foriri de iuj ĉambroj",
+        "leave_dialog_action": "Forlasi aron"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ĉi tiu hejmservilo ne estas agordita por montri mapojn.",
@@ -3320,5 +3314,13 @@
         "disabled_dialog_title": "Kunigoj estas malŝaltitaj",
         "impossible_dialog_title": "Kunigoj ne estas permesitaj",
         "impossible_dialog_description": "Via %(brand)so ne permesas al vi uzi kunigilon por tio. Bonvolu kontakti administranton."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Vi antaŭe uzis %(brand)s-on je %(host)s kun ŝaltita malfrua enlegado de anoj. En ĉi tiu versio, malfrua enlegado estas malŝaltita. Ĉar la loka kaŝmemoro de ambaŭ versioj ne akordas, %(brand)s bezonas respeguli vian konton.",
+        "disabled_description2": "Se la alia versio de %(brand)s ankoraŭ estas malfermita en alia langeto, bonvolu tiun fermi, ĉar uzado de %(brand)s je la sama gastiganto, kun malfrua enlegado samtempe ŝaltita kaj malŝaltita, kaŭzos problemojn.",
+        "disabled_title": "Neakorda loka kaŝmemoro",
+        "disabled_action": "Vakigi kaŝmemoron kaj respeguli",
+        "resync_description": "%(brand)s nun uzas 3–5-oble malpli da memoro, ĉar ĝi enlegas informojn pri aliaj uzantoj nur tiam, kiam ĝi bezonas. Bonvolu atendi ĝis ni respegulos la servilon!",
+        "resync_title": "Ĝisdatigante %(brand)s"
     }
 }

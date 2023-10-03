@@ -59,9 +59,6 @@
     "expand": "genişlet",
     "e.g. my-room": "örn. odam",
     "Filter results": "Sonuçları filtrele",
-    "Incompatible local cache": "Yerel geçici bellek uyumsuz",
-    "Clear cache and resync": "Geçici belleği temizle ve yeniden eşle",
-    "Updating %(brand)s": "%(brand)s güncelleniyor",
     "I don't want my encrypted messages": "Şifrelenmiş mesajlarımı istemiyorum",
     "Manually export keys": "Elle dışa aktarılmış anahtarlar",
     "You'll lose access to your encrypted messages": "Şifrelenmiş mesajlarınıza erişiminizi kaybedeceksiniz",
@@ -196,10 +193,6 @@
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
     "a key signature": "bir anahtar imzası",
-    "Upload completed": "Yükleme tamamlandı",
-    "Cancelled signature upload": "anahtar yükleme iptal edildi",
-    "Signature upload success": "Anahtar yükleme başarılı",
-    "Signature upload failed": "İmza yükleme başarısız",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Bu dosyalar yükleme için <b>çok büyük</b>. Dosya boyut limiti %(limit)s.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Bazı dosyalar yükleme için <b>çok büyük</b>. Dosya boyutu limiti %(limit)s.",
     "PM": "24:00",
@@ -1665,7 +1658,11 @@
         "unsupported": "Bu istemci uçtan uca şifrelemeyi desteklemiyor.",
         "incompatible_database_sign_out_description": "Sohbet tarihçesini kaybetmemek için, çıkmadan önce odanızın anahtarlarını dışarıya aktarın. Bunu yapabilmek için %(brand)sun daha yeni sürümü gerekli. Ulaşmak için geri gitmeye ihtiyacınız var",
         "incompatible_database_title": "Uyumsuz Veritabanı",
-        "incompatible_database_disable": "Şifreleme Kapalı Şekilde Devam Et"
+        "incompatible_database_disable": "Şifreleme Kapalı Şekilde Devam Et",
+        "key_signature_upload_completed": "Yükleme tamamlandı",
+        "key_signature_upload_cancelled": "anahtar yükleme iptal edildi",
+        "key_signature_upload_success_title": "Anahtar yükleme başarılı",
+        "key_signature_upload_failed_title": "İmza yükleme başarısız"
     },
     "emoji": {
         "category_frequently_used": "Sıklıkla Kullanılan",
@@ -2340,5 +2337,10 @@
     "integrations": {
         "disabled_dialog_title": "Bütünleştirmeler kapatılmış",
         "impossible_dialog_title": "Bütünleştirmelere izin verilmiyor"
+    },
+    "lazy_loading": {
+        "disabled_title": "Yerel geçici bellek uyumsuz",
+        "disabled_action": "Geçici belleği temizle ve yeniden eşle",
+        "resync_title": "%(brand)s güncelleniyor"
     }
 }

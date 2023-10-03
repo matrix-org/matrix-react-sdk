@@ -83,13 +83,7 @@
     "Failed to upgrade room": "Échec de la mise à niveau du salon",
     "The room upgrade could not be completed": "La mise à niveau du salon n’a pas pu être effectuée",
     "Upgrade this room to version %(version)s": "Mettre à niveau ce salon vers la version %(version)s",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s utilise maintenant 3 à 5 fois moins de mémoire, en ne chargeant les informations des autres utilisateurs que quand elles sont nécessaires. Veuillez patienter pendant que l’on se resynchronise avec le serveur !",
-    "Updating %(brand)s": "Mise à jour de %(brand)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Avant de soumettre vos journaux, vous devez <a>créer une « issue » sur GitHub</a> pour décrire votre problème.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Vous avez utilisé auparavant %(brand)s sur %(host)s avec le chargement différé activé. Dans cette version le chargement différé est désactivé. Comme le cache local n’est pas compatible entre ces deux réglages, %(brand)s doit resynchroniser votre compte.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Si l’autre version de %(brand)s est encore ouverte dans un autre onglet, merci de le fermer car l’utilisation de %(brand)s sur le même hôte avec le chargement différé activé et désactivé à la fois causera des problèmes.",
-    "Incompatible local cache": "Cache local incompatible",
-    "Clear cache and resync": "Vider le cache et resynchroniser",
     "Unable to load backup status": "Impossible de récupérer l’état de la sauvegarde",
     "Unable to restore backup": "Impossible de restaurer la sauvegarde",
     "No backup found!": "Aucune sauvegarde n’a été trouvée !",
@@ -229,16 +223,11 @@
     "a device cross-signing signature": "une signature de signature croisée d’un appareil",
     "a key signature": "une signature de clé",
     "%(brand)s encountered an error during upload of:": "%(brand)s a rencontré une erreur pendant l’envoi de :",
-    "Upload completed": "Envoi terminé",
-    "Cancelled signature upload": "Envoi de signature annulé",
-    "Signature upload success": "Succès de l’envoi de signature",
-    "Signature upload failed": "Échec de l’envoi de signature",
     "Confirm by comparing the following with the User Settings in your other session:": "Confirmez en comparant ceci avec les paramètres utilisateurs de votre autre session :",
     "Confirm this user's session by comparing the following with their User Settings:": "Confirmez la session de cet utilisateur en comparant ceci avec ses paramètres utilisateur :",
     "If they don't match, the security of your communication may be compromised.": "S’ils ne correspondent pas, la sécurité de vos communications est peut-être compromise.",
     "Sign in with SSO": "Se connecter avec l’authentification unique",
     "Submit logs": "Envoyer les journaux",
-    "Unable to upload": "Envoi impossible",
     "Restoring keys from backup": "Restauration des clés depuis la sauvegarde",
     "%(completed)s of %(total)s keys restored": "%(completed)s clés sur %(total)s restaurées",
     "Keys restored": "Clés restaurées",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Échec lors du démarrage de la diffusion en direct",
     "Unable to start audio streaming.": "Impossible de démarrer la diffusion audio.",
-    "Leave space": "Quitter l’espace",
     "<inviter/> invites you": "<inviter/> vous a invité",
     "No results found": "Aucun résultat",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Choisir quels espaces peuvent accéder à ce salon. Si un espace est sélectionné, ses membres pourront trouver et rejoindre <RoomName/>.",
     "Select spaces": "Sélectionner des espaces",
     "You're removing all spaces. Access will default to invite only": "Vous allez supprimer tous les espaces. L’accès se fera sur invitation uniquement par défaut",
-    "Leave %(spaceName)s": "Quitter %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Vous êtes le seul administrateur de certains salons ou espaces que vous souhaitez quitter. En les quittant, vous les laisserez sans aucun administrateur.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Vous êtes le seul administrateur de cet espace. En le quittant, plus personne n’aura le contrôle dessus.",
-    "You won't be able to rejoin unless you are re-invited.": "Il vous sera impossible de revenir à moins d’y être réinvité.",
     "To join a space you'll need an invite.": "Vous avez besoin d’une invitation pour rejoindre un espace.",
-    "Would you like to leave the rooms in this space?": "Voulez-vous quitter les salons de cet espace ?",
-    "You are about to leave <spaceName/>.": "Vous êtes sur le point de quitter <spaceName/>.",
-    "Leave some rooms": "Quitter certains salons",
-    "Leave all rooms": "Quitter tous les salons",
-    "Don't leave any rooms": "Ne quitter aucun salon",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Saisissez votre phrase de sécurité ou <button>utilisez votre clé de sécurité</button> pour continuer.",
     "%(count)s reply": {
         "one": "%(count)s réponse",
@@ -2989,7 +2968,12 @@
         "incompatible_database_sign_out_description": "Pour éviter de perdre l’historique de vos discussions, vous devez exporter vos clés avant de vous déconnecter. Vous devez revenir à une version plus récente de %(brand)s pour pouvoir le faire",
         "incompatible_database_description": "Vous avez précédemment utilisé une version plus récente de %(brand)s avec cette session. Pour réutiliser cette version avec le chiffrement de bout en bout, vous devrez vous déconnecter et vous reconnecter.",
         "incompatible_database_title": "Base de données incompatible",
-        "incompatible_database_disable": "Continuer avec le chiffrement désactivé"
+        "incompatible_database_disable": "Continuer avec le chiffrement désactivé",
+        "key_signature_upload_completed": "Envoi terminé",
+        "key_signature_upload_cancelled": "Envoi de signature annulé",
+        "key_signature_upload_failed": "Envoi impossible",
+        "key_signature_upload_success_title": "Succès de l’envoi de signature",
+        "key_signature_upload_failed_title": "Échec de l’envoi de signature"
     },
     "emoji": {
         "category_frequently_used": "Utilisé fréquemment",
@@ -3561,7 +3545,17 @@
             "create_prompt": "Créer un nouveau salon",
             "subspace_moved_note": "L’ajout d’espaces a été déplacé."
         },
-        "room_filter_placeholder": "Rechercher des salons"
+        "room_filter_placeholder": "Rechercher des salons",
+        "leave_dialog_public_rejoin_warning": "Il vous sera impossible de revenir à moins d’y être réinvité.",
+        "leave_dialog_only_admin_warning": "Vous êtes le seul administrateur de cet espace. En le quittant, plus personne n’aura le contrôle dessus.",
+        "leave_dialog_only_admin_room_warning": "Vous êtes le seul administrateur de certains salons ou espaces que vous souhaitez quitter. En les quittant, vous les laisserez sans aucun administrateur.",
+        "leave_dialog_title": "Quitter %(spaceName)s",
+        "leave_dialog_description": "Vous êtes sur le point de quitter <spaceName/>.",
+        "leave_dialog_option_intro": "Voulez-vous quitter les salons de cet espace ?",
+        "leave_dialog_option_none": "Ne quitter aucun salon",
+        "leave_dialog_option_all": "Quitter tous les salons",
+        "leave_dialog_option_specific": "Quitter certains salons",
+        "leave_dialog_action": "Quitter l’espace"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ce serveur d’accueil n’est pas configuré pour afficher des cartes.",
@@ -4367,5 +4361,13 @@
         "disabled_dialog_description": "Activez « %(manageIntegrations)s » dans les paramètres pour faire ça.",
         "impossible_dialog_title": "Les intégrations ne sont pas autorisées",
         "impossible_dialog_description": "Votre %(brand)s ne vous autorise pas à utiliser un gestionnaire d’intégrations pour faire ça. Merci de contacter un administrateur."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Vous avez utilisé auparavant %(brand)s sur %(host)s avec le chargement différé activé. Dans cette version le chargement différé est désactivé. Comme le cache local n’est pas compatible entre ces deux réglages, %(brand)s doit resynchroniser votre compte.",
+        "disabled_description2": "Si l’autre version de %(brand)s est encore ouverte dans un autre onglet, merci de le fermer car l’utilisation de %(brand)s sur le même hôte avec le chargement différé activé et désactivé à la fois causera des problèmes.",
+        "disabled_title": "Cache local incompatible",
+        "disabled_action": "Vider le cache et resynchroniser",
+        "resync_description": "%(brand)s utilise maintenant 3 à 5 fois moins de mémoire, en ne chargeant les informations des autres utilisateurs que quand elles sont nécessaires. Veuillez patienter pendant que l’on se resynchronise avec le serveur !",
+        "resync_title": "Mise à jour de %(brand)s"
     }
 }

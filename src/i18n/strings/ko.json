@@ -74,7 +74,6 @@
     "Send Logs": "로그 보내기",
     "We encountered an error trying to restore your previous session.": "이전 활동을 복구하는 중 에러가 발생했습니다.",
     "Link to most recent message": "가장 최근 메시지로 연결",
-    "Updating %(brand)s": "%(brand)s 업데이트 중",
     "Upgrade this room to version %(version)s": "이 방을 %(version)s 버전으로 업그레이드",
     "Upgrade Room Version": "방 버전 업그레이드",
     "Create a new room with the same name, description and avatar": "이름, 설명, 아바타가 같은 새 방 만들기",
@@ -148,10 +147,6 @@
     "Deactivate account": "계정 비활성화",
     "edited": "편집됨",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "로그를 전송하기 전에, 문제를 설명하는 <a>GitHub 이슈를 만들어야 합니다</a>.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "이전에 구성원의 불러오기 지연이 켜진 %(host)s에서 %(brand)s을 사용했습니다. 이 버전에서 불러오기 지연은 꺼집니다. 로컬 캐시가 이 두 설정 간에 호환되지 않으므로, %(brand)s은 계정을 다시 동기화 해야 합니다.",
-    "Incompatible local cache": "호환하지 않는 로컬 캐시",
-    "Clear cache and resync": "캐시를 지우고 다시 동기화",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s은 이제 필요할 때만 다른 사용자에 대한 정보를 불러와 메모리를 3배에서 5배 덜 잡아먹습니다. 서버와 다시 동기화하는 동안 기다려주세요!",
     "I don't want my encrypted messages": "저는 제 암호화된 메시지를 원하지 않아요",
     "Manually export keys": "수동으로 키 내보내기",
     "You'll lose access to your encrypted messages": "암호화된 메시지에 접근할 수 없게 됩니다",
@@ -198,7 +193,6 @@
     "Search for": "검색 기준",
     "Recently viewed": "최근에 확인한",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "만약 찾고 있는 방이 없다면, 초대를 요청하거나 새로운 방을 만드세요.",
-    "Leave all rooms": "모든 방에서 떠나기",
     "Slovakia": "슬로바키아",
     "Argentina": "아르헨티나",
     "Laos": "라오스",
@@ -1429,7 +1423,8 @@
             "dm_heading": "다이렉트 메세지",
             "space_dropdown_title": "기존 방 추가"
         },
-        "room_filter_placeholder": "방 검색"
+        "room_filter_placeholder": "방 검색",
+        "leave_dialog_option_all": "모든 방에서 떠나기"
     },
     "terms": {
         "integration_manager": "봇, 브릿지, 위젯 그리고 스티커 팩을 사용",
@@ -1688,5 +1683,12 @@
     "forward": {
         "send_label": "보내기",
         "filter_placeholder": "방 또는 사람 검색"
+    },
+    "lazy_loading": {
+        "disabled_description1": "이전에 구성원의 불러오기 지연이 켜진 %(host)s에서 %(brand)s을 사용했습니다. 이 버전에서 불러오기 지연은 꺼집니다. 로컬 캐시가 이 두 설정 간에 호환되지 않으므로, %(brand)s은 계정을 다시 동기화 해야 합니다.",
+        "disabled_title": "호환하지 않는 로컬 캐시",
+        "disabled_action": "캐시를 지우고 다시 동기화",
+        "resync_description": "%(brand)s은 이제 필요할 때만 다른 사용자에 대한 정보를 불러와 메모리를 3배에서 5배 덜 잡아먹습니다. 서버와 다시 동기화하는 동안 기다려주세요!",
+        "resync_title": "%(brand)s 업데이트 중"
     }
 }

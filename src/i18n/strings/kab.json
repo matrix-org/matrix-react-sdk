@@ -55,7 +55,6 @@
     "Upload files": "Sali-d ifuyla",
     "Home": "Agejdan",
     "Email (optional)": "Imayl (Afrayan)",
-    "Updating %(brand)s": "Leqqem %(brand)s",
     "I don't want my encrypted messages": "Ur bɣiɣ ara izan-inu iwgelhanen",
     "Manually export keys": "Sifeḍ s ufus tisura",
     "Session ID": "Asulay n tqimit",
@@ -124,9 +123,6 @@
     "Submit logs": "Azen iɣmisen",
     "e.g. my-room": "e.g. taxxamt-inu",
     "Filter results": "Igmaḍ n usizdeg",
-    "Upload completed": "Asali yemmed",
-    "Signature upload success": "Asali n uzmul yedda akken iwata",
-    "Clear cache and resync": "Sfeḍ takatut tuffirt syen ales amtawi",
     "Failed to upgrade room": "Aleqqem n texxamt ur yeddi ara",
     "Upgrade this room to version %(version)s": "Leqqem taxxamt-a ɣer lqem amaynut %(version)s",
     "Upgrade Room Version": "Lqem n uleqqem n texxamt",
@@ -204,10 +200,6 @@
     "a device cross-signing signature": "azmul n uzmul amdigan n yibenk",
     "a key signature": "azmul n tsarut",
     "%(brand)s encountered an error during upload of:": "%(brand)s yemlal-d d tuccḍa mi ara d-yessalay:",
-    "Cancelled signature upload": "Asali n uzmul yettwasefsex",
-    "Unable to upload": "Yegguma ad d-yali",
-    "Signature upload failed": "Asali n uzmul ur yeddi ara",
-    "Incompatible local cache": "Tuffra tadigant ur temṣada ara",
     "Room Settings - %(roomName)s": "Iɣewwaren n texxamt - %(roomName)s",
     "The room upgrade could not be completed": "Aleqqem n texxamt yegguma ad yemmed",
     "IRC display name width": "Tehri n yisem i d-yettwaseknen IRC",
@@ -260,9 +252,6 @@
     "A browser extension is preventing the request.": "Asiɣzef n yiminig tessewḥel asuter.",
     "We encountered an error trying to restore your previous session.": "Nemlal-d tuccḍa mi ara d-nettarra tiɣimit-ik·im yezrin.",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Ma yella tesqedceḍ yakan lqem n melmi kan n %(brand)s, tiɣimit-ik·im tezmer ur tettemṣada ara d lqem-a. Mdel afaylu-a syen uɣal ɣer lqem n melmi kan.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Tesqedceḍ yakan %(brand)s ɣef %(host)s s usali ẓẓayen d yiɛeggalen i iremden. Deg lqem-a asali ẓẓayen yensa. Am tkatut tuffirt tadigant ur temṣada ara gar sin-a n yiɣewwaren, %(brand)s yesra  allus n umtawi amiḍan-ik·im.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ma yella ileqman-nniḍen n %(brand)s mazal-iten ldin deg yiccer-nniḍen, ttxil-k·m mdel-it acku aseqec n %(brand)s deg yiwet n tnezduɣt s usali ẓẓayenurmid, asensi-nsen ɣef tikkelt ad d-yeglu s wuguren.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s tura isseqdac drus n tkatut seg 3 ɣer 5 n tikkal, s usali n talɣut n yiseqdac-nniḍen ma yili tettusra. Ttxil-k·m rǧu s leɛqel alamma nules amtawi d useqdac!",
     "Upgrading this room requires closing down the current instance of the room and creating a new room in its place. To give room members the best possible experience, we will:": "Aleqqem n texxamt-a yesra amdal n tummant tamirant n texxamt d tmerna n texxamt tamaynut deg wadeg-is. I tikci n tarmit i igerrzen iwumi nezmer i yiɛeggalen n texxamt, ad neg:",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Asfaḍ n uklas n yiminig-ik·im yezmer ad iṣeggem ugur, maca aya ad ak·akem-isuffeɣ seg tuqqna rnu akk imazrayen n udiwenni yettwawgelhen ur d-ttbanen.",
     "To help us prevent this in future, please <a>send us logs</a>.": "I wakken ad aɣ-tɛiwneḍ ur d-iḍerru ara waya ɣer sdat, ttxil-k·m <a>azen-aɣ-d iɣmisen</a>.",
@@ -1685,7 +1674,12 @@
         "incompatible_database_sign_out_description": "I wakken ur tesruḥuyeḍ ara amazray n udiwenni, ilaq ad tsifḍeḍ tisura seg texxam-ik·im send ad teffɣeḍ seg tuqqna. Tesriḍ ad tuɣaleḍ ɣer lqem amaynut n %(brand)s i wakken ad tgeḍ aya",
         "incompatible_database_description": "Tesxedmeḍ yakan lqem akk aneggaru n %(brand)s s tɣimit-a. I useqdec n lqem-a i tikkelt-nniḍen s uwgelhen seg yixef ɣer yixef, tesriḍ ad teffɣeḍ syen ad talseḍ anekcum i tikkelt-nniḍen.",
         "incompatible_database_title": "Taffa n yisefka ur temada ara",
-        "incompatible_database_disable": "Kemmel s uwgelhen yensan"
+        "incompatible_database_disable": "Kemmel s uwgelhen yensan",
+        "key_signature_upload_completed": "Asali yemmed",
+        "key_signature_upload_cancelled": "Asali n uzmul yettwasefsex",
+        "key_signature_upload_failed": "Yegguma ad d-yali",
+        "key_signature_upload_success_title": "Asali n uzmul yedda akken iwata",
+        "key_signature_upload_failed_title": "Asali n uzmul ur yeddi ara"
     },
     "emoji": {
         "category_frequently_used": "Yettuseqdac s waṭas",
@@ -2306,5 +2300,13 @@
         "disabled_dialog_title": "Imsidaf ttwasensen",
         "impossible_dialog_title": "Imsidaf ur ttusirgen ara",
         "impossible_dialog_description": "%(brand)s-ik·im ur ak·am yefki ara tisirag i useqdec n umsefrak n umsidef i wakken ad tgeḍ aya. Ttxil-k·m nermes anedbal."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Tesqedceḍ yakan %(brand)s ɣef %(host)s s usali ẓẓayen d yiɛeggalen i iremden. Deg lqem-a asali ẓẓayen yensa. Am tkatut tuffirt tadigant ur temṣada ara gar sin-a n yiɣewwaren, %(brand)s yesra  allus n umtawi amiḍan-ik·im.",
+        "disabled_description2": "Ma yella ileqman-nniḍen n %(brand)s mazal-iten ldin deg yiccer-nniḍen, ttxil-k·m mdel-it acku aseqec n %(brand)s deg yiwet n tnezduɣt s usali ẓẓayenurmid, asensi-nsen ɣef tikkelt ad d-yeglu s wuguren.",
+        "disabled_title": "Tuffra tadigant ur temṣada ara",
+        "disabled_action": "Sfeḍ takatut tuffirt syen ales amtawi",
+        "resync_description": "%(brand)s tura isseqdac drus n tkatut seg 3 ɣer 5 n tikkal, s usali n talɣut n yiseqdac-nniḍen ma yili tettusra. Ttxil-k·m rǧu s leɛqel alamma nules amtawi d useqdac!",
+        "resync_title": "Leqqem %(brand)s"
     }
 }

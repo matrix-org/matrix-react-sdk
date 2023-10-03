@@ -135,7 +135,6 @@
     "The room upgrade could not be completed": "Huoneen päivitystä ei voitu suorittaa",
     "Failed to upgrade room": "Huoneen päivittäminen epäonnistui",
     "Are you sure you want to sign out?": "Haluatko varmasti kirjautua ulos?",
-    "Updating %(brand)s": "Päivitetään %(brand)s",
     "Elephant": "Norsu",
     "You'll lose access to your encrypted messages": "Menetät pääsyn salattuihin viesteihisi",
     "Create a new room with the same name, description and avatar": "luomme uuden huoneen samalla nimellä, kuvauksella ja kuvalla",
@@ -153,11 +152,6 @@
     "Scissors": "Sakset",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s %(day)s. %(monthName)s %(fullYear)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Ennen lokien lähettämistä sinun täytyy <a>luoda Githubiin issue (kysymys/ongelma)</a>, joka sisältää kuvauksen ongelmastasi.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Olet aikaisemmin käytttänyt %(brand)sia laitteella %(host)s, jossa oli jäsenten laiska lataus käytössä. Tässä versiossa laiska lataus on pois käytöstä. Koska paikallinen välimuisti ei ole yhteensopiva näiden kahden asetuksen välillä, %(brand)sin täytyy synkronoida tilisi tiedot uudelleen.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jos sinulla on toinen %(brand)sin versio edelleen auki toisessa välilehdessä, suljethan sen, koska %(brand)sin käyttäminen samalla laitteella niin, että laiska lataus on toisessa välilehdessä käytössä ja toisessa ei, aiheuttaa ongelmia.",
-    "Incompatible local cache": "Yhteensopimaton paikallinen välimuisti",
-    "Clear cache and resync": "Tyhjennä välimuisti ja hae tiedot uudelleen",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s käyttää nyt 3-5 kertaa vähemmän muistia, koska se lataa tietoa muista käyttäjistä vain tarvittaessa. Odotathan, kun haemme tarvittavat tiedot palvelimelta!",
     "I don't want my encrypted messages": "En halua salattuja viestejäni",
     "Room Settings - %(roomName)s": "Huoneen asetukset — %(roomName)s",
     "Clear Storage and Sign Out": "Tyhjennä varasto ja kirjaudu ulos",
@@ -235,11 +229,6 @@
     "Clear cross-signing keys": "Tyhjennä ristiinvarmennuksen avaimet",
     "Session key": "Istunnon tunnus",
     "%(brand)s encountered an error during upload of:": "%(brand)s kohtasi virheen lähettäessään:",
-    "Upload completed": "Lähetys valmis",
-    "Cancelled signature upload": "Allekirjoituksen lähetys peruutettu",
-    "Unable to upload": "Lähettäminen ei ole mahdollista",
-    "Signature upload success": "Allekirjoituksen lähettäminen onnistui",
-    "Signature upload failed": "Allekirjoituksen lähettäminen epäonnistui",
     "Your homeserver has exceeded its user limit.": "Kotipalvelimesi on ylittänyt käyttäjärajansa.",
     "Your homeserver has exceeded one of its resource limits.": "Kotipalvelimesi on ylittänyt jonkin resurssirajansa.",
     "Ok": "OK",
@@ -540,17 +529,9 @@
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
     },
     "Search spaces": "Etsi avaruuksia",
-    "Leave space": "Poistu avaruudesta",
-    "Would you like to leave the rooms in this space?": "Haluatko poistua tässä avaruudessa olevista huoneista?",
-    "You are about to leave <spaceName/>.": "Olet aikeissa poistua avaruudesta <spaceName/>.",
-    "Leave %(spaceName)s": "Poistu avaruudesta %(spaceName)s",
     "Select spaces": "Valitse avaruudet",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
-    "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
-    "Leave some rooms": "Poistu joistakin huoneista",
-    "Leave all rooms": "Poistu kaikista huoneista",
-    "Don't leave any rooms": "Älä poistu mistään huoneesta",
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
@@ -564,8 +545,6 @@
     "Spaces you know that contain this space": "Tuntemasi avaruudet, jotka sisältävät tämän avaruuden",
     "Spaces you know that contain this room": "Tuntemasi avaruudet, jotka sisältävät tämän huoneen",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Valitse, millä avaruuksilla on pääsyoikeus tähän huoneeseen. Jos avaruus valitaan, sen jäsenet voivat löytää ja liittyä huoneeseen <RoomName/>.",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Olet ainoa ylläpitäjä joissain huoneissa tai avaruuksissa, joista haluat lähteä. Niistä lähteminen jättää ne ilman yhtään ylläpitäjää.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Olet tämän avaruuden ainoa ylläpitäjä. Avaruudesta lähteminen tarkoittaa, että kenelläkään ei ole oikeuksia hallita sitä.",
     "%(spaceName)s and %(count)s others": {
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
@@ -2725,7 +2704,12 @@
         "unsupported": "Tämä asiakasohjelma ei tue päästä päähän -salausta.",
         "incompatible_database_sign_out_description": "Jotta et menetä keskusteluhistoriaasi, sinun täytyy tallentaa huoneen avaimet ennen kuin kirjaudut ulos. Joudut käyttämään uudempaa %(brand)sin versiota tätä varten",
         "incompatible_database_title": "Yhteensopimaton tietokanta",
-        "incompatible_database_disable": "Jatka salaus poistettuna käytöstä"
+        "incompatible_database_disable": "Jatka salaus poistettuna käytöstä",
+        "key_signature_upload_completed": "Lähetys valmis",
+        "key_signature_upload_cancelled": "Allekirjoituksen lähetys peruutettu",
+        "key_signature_upload_failed": "Lähettäminen ei ole mahdollista",
+        "key_signature_upload_success_title": "Allekirjoituksen lähettäminen onnistui",
+        "key_signature_upload_failed_title": "Allekirjoituksen lähettäminen epäonnistui"
     },
     "emoji": {
         "category_frequently_used": "Usein käytetyt",
@@ -3227,7 +3211,17 @@
             "create_prompt": "Luo uusi huone",
             "subspace_moved_note": "Avaruuksien lisääminen on siirtynyt."
         },
-        "room_filter_placeholder": "Etsi huoneita"
+        "room_filter_placeholder": "Etsi huoneita",
+        "leave_dialog_public_rejoin_warning": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
+        "leave_dialog_only_admin_warning": "Olet tämän avaruuden ainoa ylläpitäjä. Avaruudesta lähteminen tarkoittaa, että kenelläkään ei ole oikeuksia hallita sitä.",
+        "leave_dialog_only_admin_room_warning": "Olet ainoa ylläpitäjä joissain huoneissa tai avaruuksissa, joista haluat lähteä. Niistä lähteminen jättää ne ilman yhtään ylläpitäjää.",
+        "leave_dialog_title": "Poistu avaruudesta %(spaceName)s",
+        "leave_dialog_description": "Olet aikeissa poistua avaruudesta <spaceName/>.",
+        "leave_dialog_option_intro": "Haluatko poistua tässä avaruudessa olevista huoneista?",
+        "leave_dialog_option_none": "Älä poistu mistään huoneesta",
+        "leave_dialog_option_all": "Poistu kaikista huoneista",
+        "leave_dialog_option_specific": "Poistu joistakin huoneista",
+        "leave_dialog_action": "Poistu avaruudesta"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tätä kotipalvelinta ei ole säädetty näyttämään karttoja.",
@@ -3959,5 +3953,13 @@
         "disabled_dialog_title": "Integraatiot ovat pois käytöstä",
         "impossible_dialog_title": "Integraatioiden käyttö on kielletty",
         "impossible_dialog_description": "%(brand)s-instanssisi ei salli sinun käyttävän integraatioiden lähdettä tämän tekemiseen. Ota yhteys ylläpitäjääsi."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Olet aikaisemmin käytttänyt %(brand)sia laitteella %(host)s, jossa oli jäsenten laiska lataus käytössä. Tässä versiossa laiska lataus on pois käytöstä. Koska paikallinen välimuisti ei ole yhteensopiva näiden kahden asetuksen välillä, %(brand)sin täytyy synkronoida tilisi tiedot uudelleen.",
+        "disabled_description2": "Jos sinulla on toinen %(brand)sin versio edelleen auki toisessa välilehdessä, suljethan sen, koska %(brand)sin käyttäminen samalla laitteella niin, että laiska lataus on toisessa välilehdessä käytössä ja toisessa ei, aiheuttaa ongelmia.",
+        "disabled_title": "Yhteensopimaton paikallinen välimuisti",
+        "disabled_action": "Tyhjennä välimuisti ja hae tiedot uudelleen",
+        "resync_description": "%(brand)s käyttää nyt 3-5 kertaa vähemmän muistia, koska se lataa tietoa muista käyttäjistä vain tarvittaessa. Odotathan, kun haemme tarvittavat tiedot palvelimelta!",
+        "resync_title": "Päivitetään %(brand)s"
     }
 }

@@ -84,12 +84,6 @@
     "The room upgrade could not be completed": "Die Raumaktualisierung konnte nicht fertiggestellt werden",
     "Upgrade this room to version %(version)s": "Raum auf Version %(version)s aktualisieren",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Bevor du Protokolldateien übermittelst, musst du <a>auf GitHub einen \"Issue\" erstellen</a> um dein Problem zu beschreiben.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s benutzt nun 3 bis 5 Mal weniger Arbeitsspeicher, indem Informationen über andere Nutzer erst bei Bedarf geladen werden. Bitte warte, während die Daten erneut mit dem Server abgeglichen werden!",
-    "Updating %(brand)s": "Aktualisiere %(brand)s",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Du hast zuvor %(brand)s auf %(host)s ohne das verzögerte Laden von Mitgliedern genutzt. In dieser Version war das verzögerte Laden deaktiviert. Da die lokal zwischengespeicherten Daten zwischen diesen Einstellungen nicht kompatibel sind, muss %(brand)s dein Konto neu synchronisieren.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Wenn %(brand)s mit der alten Version in einem anderen Tab geöffnet ist, schließe dies bitte, da das parallele Nutzen von %(brand)s auf demselben Host mit aktivierten und deaktivierten verzögertem Laden, Probleme verursachen wird.",
-    "Incompatible local cache": "Inkompatibler lokaler Zwischenspeicher",
-    "Clear cache and resync": "Zwischenspeicher löschen und erneut synchronisieren",
     "Unable to restore backup": "Konnte Schlüsselsicherung nicht wiederherstellen",
     "No backup found!": "Keine Schlüsselsicherung gefunden!",
     "Unable to load backup status": "Konnte Sicherungsstatus nicht laden",
@@ -231,11 +225,6 @@
     "Sign in with SSO": "Einmalanmeldung verwenden",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Um ein Matrix-bezogenes Sicherheitsproblem zu melden, lies bitte die Matrix.org <a>Sicherheitsrichtlinien</a>.",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Das Löschen von Quersignierungsschlüsseln ist dauerhaft. Alle, mit dem du dich verifiziert hast, werden Sicherheitswarnungen angezeigt bekommen. Du möchtest dies mit ziemlicher Sicherheit nicht tun, es sei denn, du hast jedes Gerät verloren, von dem aus du quersignieren kannst.",
-    "Upload completed": "Hochladen abgeschlossen",
-    "Cancelled signature upload": "Hochladen der Signatur abgebrochen",
-    "Unable to upload": "Hochladen nicht möglich",
-    "Signature upload success": "Signatur erfolgreich hochgeladen",
-    "Signature upload failed": "Hochladen der Signatur fehlgeschlagen",
     "Confirm by comparing the following with the User Settings in your other session:": "Bestätige indem du das folgende mit deinen Benutzereinstellungen in deiner anderen Sitzung vergleichst:",
     "Confirm this user's session by comparing the following with their User Settings:": "Bestätige die Sitzung dieses Benutzers indem du das folgende mit seinen Benutzereinstellungen vergleichst:",
     "If they don't match, the security of your communication may be compromised.": "Wenn sie nicht übereinstimmen kann die Sicherheit eurer Kommunikation kompromittiert sein.",
@@ -552,7 +541,6 @@
         "other": "%(count)s Mitglieder",
         "one": "%(count)s Mitglied"
     },
-    "Leave space": "Space verlassen",
     "<inviter/> invites you": "Du wirst von <inviter/> eingeladen",
     "No results found": "Keine Ergebnisse",
     "%(count)s rooms": {
@@ -577,26 +565,17 @@
     "Automatically invite members from this room to the new one": "Mitglieder automatisch in den neuen Raum einladen",
     "Search spaces": "Spaces durchsuchen",
     "Select spaces": "Spaces wählen",
-    "Leave %(spaceName)s": "%(spaceName)s verlassen",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Du bist der einzige Admin einiger Räume oder Spaces, die du verlassen willst. Dadurch werden diese keine Admins mehr haben.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Du bist der letzte Admin in diesem Space. Wenn du ihn jetzt verlässt, hat niemand mehr die Kontrolle über ihn.",
-    "You won't be able to rejoin unless you are re-invited.": "Das Betreten wird dir ohne erneute Einladung nicht möglich sein.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Die Aktualisierung wird eine neue Version des Raums erstellen</b>. Die bisherigen Nachrichten verbleiben im archivierten Raum.",
     "Other spaces or rooms you might not know": "Andere Spaces, die du möglicherweise nicht kennst",
     "Spaces you know that contain this room": "Spaces, in denen du Mitglied bist und die diesen Raum enthalten",
     "You're removing all spaces. Access will default to invite only": "Du entfernst alle Spaces. Der Zutritt wird auf den Standard (Privat) zurückgesetzt",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Entscheide, welche Spaces auf den Raum zugreifen können. Mitglieder ausgewählter Spaces können <RoomName/> betreten.",
     "To join a space you'll need an invite.": "Um einen Space zu betreten, brauchst du eine Einladung.",
-    "You are about to leave <spaceName/>.": "Du bist dabei, <spaceName/> zu verlassen.",
-    "Leave some rooms": "Zu verlassende Räume auswählen",
-    "Leave all rooms": "Alle Räume verlassen",
-    "Don't leave any rooms": "Keine Räume und Subspaces verlassen",
     "%(count)s reply": {
         "one": "%(count)s Antwort",
         "other": "%(count)s Antworten"
     },
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "Um fortzufahren gib die Sicherheitsphrase ein oder <button>verwende deinen Sicherheitsschlüssel</button>.",
-    "Would you like to leave the rooms in this space?": "Willst du die Räume in diesem Space verlassen?",
     "Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.": "Zugriff auf dein Konto wiederherstellen und in dieser Sitzung gespeicherte Verschlüsselungs-Schlüssel wiederherstellen. Ohne diese wirst du nicht all deine verschlüsselten Nachrichten lesen können.",
     "Thread options": "Thread-Optionen",
     "These are likely ones other room admins are a part of.": "Das sind vermutliche solche, in denen andere Raumadministratoren Mitglieder sind.",
@@ -2996,7 +2975,12 @@
         "incompatible_database_sign_out_description": "Um zu vermeiden, dass dein Verlauf verloren geht, musst du deine Raumschlüssel exportieren, bevor du dich abmeldest. Dazu musst du auf die neuere Version von %(brand)s zurückgehen",
         "incompatible_database_description": "Du hast für diese Sitzung zuvor eine neuere Version von %(brand)s verwendet. Um diese Version mit Ende-zu-Ende-Verschlüsselung wieder zu benutzen, musst du dich erst ab- und dann wieder anmelden.",
         "incompatible_database_title": "Inkompatible Datenbanken",
-        "incompatible_database_disable": "Mit deaktivierter Verschlüsselung fortfahren"
+        "incompatible_database_disable": "Mit deaktivierter Verschlüsselung fortfahren",
+        "key_signature_upload_completed": "Hochladen abgeschlossen",
+        "key_signature_upload_cancelled": "Hochladen der Signatur abgebrochen",
+        "key_signature_upload_failed": "Hochladen nicht möglich",
+        "key_signature_upload_success_title": "Signatur erfolgreich hochgeladen",
+        "key_signature_upload_failed_title": "Hochladen der Signatur fehlgeschlagen"
     },
     "emoji": {
         "category_frequently_used": "Oft verwendet",
@@ -3568,7 +3552,17 @@
             "create_prompt": "Neuen Raum erstellen",
             "subspace_moved_note": "Das Hinzufügen von Spaces ist umgezogen."
         },
-        "room_filter_placeholder": "Räume suchen"
+        "room_filter_placeholder": "Räume suchen",
+        "leave_dialog_public_rejoin_warning": "Das Betreten wird dir ohne erneute Einladung nicht möglich sein.",
+        "leave_dialog_only_admin_warning": "Du bist der letzte Admin in diesem Space. Wenn du ihn jetzt verlässt, hat niemand mehr die Kontrolle über ihn.",
+        "leave_dialog_only_admin_room_warning": "Du bist der einzige Admin einiger Räume oder Spaces, die du verlassen willst. Dadurch werden diese keine Admins mehr haben.",
+        "leave_dialog_title": "%(spaceName)s verlassen",
+        "leave_dialog_description": "Du bist dabei, <spaceName/> zu verlassen.",
+        "leave_dialog_option_intro": "Willst du die Räume in diesem Space verlassen?",
+        "leave_dialog_option_none": "Keine Räume und Subspaces verlassen",
+        "leave_dialog_option_all": "Alle Räume verlassen",
+        "leave_dialog_option_specific": "Zu verlassende Räume auswählen",
+        "leave_dialog_action": "Space verlassen"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Dein Heim-Server unterstützt das Anzeigen von Karten nicht.",
@@ -4374,5 +4368,13 @@
         "disabled_dialog_description": "Aktiviere „%(manageIntegrations)s“ in den Einstellungen, um dies zu tun.",
         "impossible_dialog_title": "Integrationen sind nicht erlaubt",
         "impossible_dialog_description": "%(brand)s erlaubt dir nicht, eine Integrationsverwaltung zu verwenden, um dies zu tun. Bitte kontaktiere einen Administrator."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Du hast zuvor %(brand)s auf %(host)s ohne das verzögerte Laden von Mitgliedern genutzt. In dieser Version war das verzögerte Laden deaktiviert. Da die lokal zwischengespeicherten Daten zwischen diesen Einstellungen nicht kompatibel sind, muss %(brand)s dein Konto neu synchronisieren.",
+        "disabled_description2": "Wenn %(brand)s mit der alten Version in einem anderen Tab geöffnet ist, schließe dies bitte, da das parallele Nutzen von %(brand)s auf demselben Host mit aktivierten und deaktivierten verzögertem Laden, Probleme verursachen wird.",
+        "disabled_title": "Inkompatibler lokaler Zwischenspeicher",
+        "disabled_action": "Zwischenspeicher löschen und erneut synchronisieren",
+        "resync_description": "%(brand)s benutzt nun 3 bis 5 Mal weniger Arbeitsspeicher, indem Informationen über andere Nutzer erst bei Bedarf geladen werden. Bitte warte, während die Daten erneut mit dem Server abgeglichen werden!",
+        "resync_title": "Aktualisiere %(brand)s"
     }
 }

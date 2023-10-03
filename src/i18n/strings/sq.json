@@ -64,10 +64,7 @@
         "one": "(~%(count)s përfundim)"
     },
     "Delete Widget": "Fshije Widget-in",
-    "Clear cache and resync": "Spastro fshehtinën dhe rinjëkohëso",
     "Clear Storage and Sign Out": "Spastro Depon dhe Dil",
-    "Incompatible local cache": "Fshehtinë vendore e papërputhshme",
-    "Updating %(brand)s": "%(brand)s-i po përditësohet",
     "Failed to upgrade room": "S’u arrit të përmirësohej dhoma",
     "The room upgrade could not be completed": "Përmirësimi i dhomës s’u plotësua",
     "Upgrade Room Version": "Përmirësoni Versionin e Dhomës",
@@ -79,12 +76,9 @@
     "Share Room Message": "Ndani Me të Tjerë Mesazh Dhome",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Përpara se të parashtroni regjistra, duhet <a>të krijoni një çështje në GitHub issue</a> që të përshkruani problemin tuaj.",
     "Create a new room with the same name, description and avatar": "Krijoni një dhomë të re me po atë emër, përshkrim dhe avatar",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Nëse versioni tjetër i %(brand)s-it është ende i hapur në një skedë tjetër, ju lutemi, mbylleni, ngaqë përdorimi njëkohësisht i %(brand)s-it në të njëjtën strehë, në njërën anë me <em>lazy loading</em> të aktivizuar dhe në anën tjetër të çaktivizuar do të shkaktojë probleme.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s-i tani përdor 3 deri 5 herë më pak kujtesë, duke ngarkuar të dhëna mbi përdorues të tjerë vetëm kur duhen. Ju lutemi, prisni, teksa njëkohësojmë të dhënat me shërbyesin!",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Vendosni në krye të dhomës së re një lidhje për te dhoma e vjetër, që njerëzit të mund të shohin mesazhet e vjetër",
     "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.": "Nëse më herët keni përdorur një version më të freskët të %(brand)s-it, sesioni juaj mund të jetë i papërputhshëm me këtë version. Mbylleni këtë dritare dhe kthehuni te versioni më i ri.",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Spastrimi i gjërave të depozituara në shfletuesin tuaj mund ta ndreqë problemin, por kjo do të sjellë nxjerrjen tuaj nga llogari dhe do ta bëjë të palexueshëm çfarëdo historiku të fshehtëzuar të bisedës.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Më parë përdornit %(brand)s në %(host)s me <em>lazy loading</em> anëtarësh të aktivizuar. Në këtë version <em>lazy loading</em> është çaktivizuar. Ngaqë fshehtina vendore s’është e përputhshme mes këtyre dy rregullimeve, %(brand)s-i lyp të rinjëkohësohet llogaria juaj.",
     "Update any local room aliases to point to the new room": "Përditësoni çfarëdo aliasesh dhomash vendore që të shpien te dhoma e re",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Ndalojuni përdoruesve të flasin në versionin e vjetër të dhomës, dhe postoni një mesazh që u këshillon atyre të hidhen te dhoma e re",
     "We encountered an error trying to restore your previous session.": "Hasëm një gabim teksa provohej të rikthehej sesioni juaj i dikurshëm.",
@@ -227,10 +221,6 @@
     "a device cross-signing signature": "një nënshkrim <em>cross-signing</em> pajisjeje",
     "a key signature": "një nënshkrim kyçi",
     "%(brand)s encountered an error during upload of:": "%(brand)s-i hasi një gabim gjatë ngarkimit të:",
-    "Upload completed": "Ngarkimi u plotësua",
-    "Cancelled signature upload": "Ngarkim i anuluar nënshkrimi",
-    "Signature upload success": "Sukses ngarkimi nënshkrimi",
-    "Signature upload failed": "Ngarkimi i nënshkrimit dështoi",
     "Confirm by comparing the following with the User Settings in your other session:": "Ripohojeni duke krahasuar sa vijon me Rregullimet e Përdoruesit te sesioni juaj tjetër:",
     "Confirm this user's session by comparing the following with their User Settings:": "Ripohojeni këtë sesion përdoruesi duke krahasuar sa vijon me Rregullimet e tij të Përdoruesit:",
     "If they don't match, the security of your communication may be compromised.": "Nëse s’përputhen, siguria e komunikimeve tuaja mund të jetë komprometuar.",
@@ -239,7 +229,6 @@
     "Verify your other session using one of the options below.": "Verifikoni sesionit tuaj tjetër duke përdorur një nga mundësitë më poshtë.",
     "Lock": "Kyçje",
     "Submit logs": "Parashtro regjistra",
-    "Unable to upload": "S’arrihet të ngarkohet",
     "Restoring keys from backup": "Po rikthehen kyçesh nga kopjeruajtje",
     "%(completed)s of %(total)s keys restored": "U rikthyen %(completed)s nga %(total)s kyçe",
     "Keys restored": "Kyçet u rikthyen",
@@ -551,7 +540,6 @@
         "other": "%(count)s anëtarë"
     },
     "Unable to start audio streaming.": "S’arrihet të niset transmetim audio.",
-    "Leave space": "Braktiseni hapësirën",
     "<inviter/> invites you": "<inviter/> ju fton",
     "No results found": "S’u gjetën përfundime",
     "%(count)s rooms": {
@@ -579,17 +567,8 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Vendosni se prej cilave hapësira mund të hyhet në këtë dhomë. Nëse përzgjidhet një hapësirë, anëtarët e saj do të mund ta gjejnë dhe hyjnë te <RoomName/>.",
     "Select spaces": "Përzgjidhni hapësira",
     "You're removing all spaces. Access will default to invite only": "Po hiqni krejt hapësirat. Hyrja do të kthehet te parazgjedhja, pra vetëm me ftesa",
-    "Leave %(spaceName)s": "Braktise %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jeni përgjegjësi i vetëm i disa dhomave apo hapësirave që dëshironi t’i braktisni. Braktisja e tyre do t’i lërë pa ndonjë përgjegjës.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jeni përgjegjësi i vetëm i kësaj hapësire. Braktisja e saj do të thotë se askush s’ka kontroll mbi të.",
-    "You won't be able to rejoin unless you are re-invited.": "S’do të jeni në gjendje të rihyni, para se të riftoheni.",
     "Thumbs up": "Thumbs up",
     "To join a space you'll need an invite.": "Që të hyni në një hapësirë, do t’ju duhet një ftesë.",
-    "Would you like to leave the rooms in this space?": "Doni të braktisen dhomat në këtë hapësirë?",
-    "You are about to leave <spaceName/>.": "Ju ndan një hap nga braktisja e <spaceName/>.",
-    "Leave some rooms": "Braktis disa dhoma",
-    "Leave all rooms": "Braktisi krejt dhomat",
-    "Don't leave any rooms": "Mos braktis ndonjë dhomë",
     "%(count)s reply": {
         "one": "%(count)s përgjigje",
         "other": "%(count)s përgjigje"
@@ -2910,7 +2889,12 @@
         "incompatible_database_sign_out_description": "Që të shmanget humbja e historikut të fjalosjes tuaj, duhet të eksportoni kyçet e dhomës tuaj përpara se të dilni nga llogari. Që ta bëni këtë, duhe të riktheheni te versioni më i ri i %(brand)s-it",
         "incompatible_database_description": "Me këtë sesion, keni përdorur më herët një version më të ri të %(brand)s-it. Që të ripërdorni këtë version me fshehtëzim skaj më skaj, do t’ju duhet të bëni daljen dhe të rihyni.",
         "incompatible_database_title": "Bazë të dhënash e Papërputhshme",
-        "incompatible_database_disable": "Vazhdo Me Fshehtëzimin të Çaktivizuar"
+        "incompatible_database_disable": "Vazhdo Me Fshehtëzimin të Çaktivizuar",
+        "key_signature_upload_completed": "Ngarkimi u plotësua",
+        "key_signature_upload_cancelled": "Ngarkim i anuluar nënshkrimi",
+        "key_signature_upload_failed": "S’arrihet të ngarkohet",
+        "key_signature_upload_success_title": "Sukses ngarkimi nënshkrimi",
+        "key_signature_upload_failed_title": "Ngarkimi i nënshkrimit dështoi"
     },
     "emoji": {
         "category_frequently_used": "Përdorur Shpesh",
@@ -3474,7 +3458,17 @@
             "create_prompt": "Krijoni dhomë të re",
             "subspace_moved_note": "Shtimi i hapësirave është lëvizur."
         },
-        "room_filter_placeholder": "Kërkoni për dhoma"
+        "room_filter_placeholder": "Kërkoni për dhoma",
+        "leave_dialog_public_rejoin_warning": "S’do të jeni në gjendje të rihyni, para se të riftoheni.",
+        "leave_dialog_only_admin_warning": "Jeni përgjegjësi i vetëm i kësaj hapësire. Braktisja e saj do të thotë se askush s’ka kontroll mbi të.",
+        "leave_dialog_only_admin_room_warning": "Jeni përgjegjësi i vetëm i disa dhomave apo hapësirave që dëshironi t’i braktisni. Braktisja e tyre do t’i lërë pa ndonjë përgjegjës.",
+        "leave_dialog_title": "Braktise %(spaceName)s",
+        "leave_dialog_description": "Ju ndan një hap nga braktisja e <spaceName/>.",
+        "leave_dialog_option_intro": "Doni të braktisen dhomat në këtë hapësirë?",
+        "leave_dialog_option_none": "Mos braktis ndonjë dhomë",
+        "leave_dialog_option_all": "Braktisi krejt dhomat",
+        "leave_dialog_option_specific": "Braktis disa dhoma",
+        "leave_dialog_action": "Braktiseni hapësirën"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
@@ -4260,5 +4254,13 @@
         "disabled_dialog_description": "Që të bëni këtë, aktivizoni '%(manageIntegrations)s' te Rregullimet.",
         "impossible_dialog_title": "Integrimet s’lejohen",
         "impossible_dialog_description": "%(brand)s-i juaj nuk ju lejon të përdorni një përgjegjës integrimesh për të bërë këtë. Ju lutemi, lidhuni me përgjegjësin."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Më parë përdornit %(brand)s në %(host)s me <em>lazy loading</em> anëtarësh të aktivizuar. Në këtë version <em>lazy loading</em> është çaktivizuar. Ngaqë fshehtina vendore s’është e përputhshme mes këtyre dy rregullimeve, %(brand)s-i lyp të rinjëkohësohet llogaria juaj.",
+        "disabled_description2": "Nëse versioni tjetër i %(brand)s-it është ende i hapur në një skedë tjetër, ju lutemi, mbylleni, ngaqë përdorimi njëkohësisht i %(brand)s-it në të njëjtën strehë, në njërën anë me <em>lazy loading</em> të aktivizuar dhe në anën tjetër të çaktivizuar do të shkaktojë probleme.",
+        "disabled_title": "Fshehtinë vendore e papërputhshme",
+        "disabled_action": "Spastro fshehtinën dhe rinjëkohëso",
+        "resync_description": "%(brand)s-i tani përdor 3 deri 5 herë më pak kujtesë, duke ngarkuar të dhëna mbi përdorues të tjerë vetëm kur duhen. Ju lutemi, prisni, teksa njëkohësojmë të dhënat me shërbyesin!",
+        "resync_title": "%(brand)s-i po përditësohet"
     }
 }

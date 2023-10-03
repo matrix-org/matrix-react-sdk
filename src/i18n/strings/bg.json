@@ -84,12 +84,6 @@
     "The room upgrade could not be completed": "Обновяването на тази стая не можа да бъде завършено",
     "Upgrade this room to version %(version)s": "Обновете тази стая до версия %(version)s",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Преди да изпратите логове, трябва да <a>отворите доклад за проблем в Github</a>.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s вече използва 3-5 пъти по-малко памет, като зарежда информация за потребители само когато е нужна. Моля, изчакайте докато ресинхронизираме със сървъра!",
-    "Updating %(brand)s": "Обновяване на %(brand)s",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Преди сте използвали %(brand)s на %(host)s с включено постепенно зареждане на членове. В тази версия, тази настройка е изключена. Понеже локалният кеш не е съвместим при тези две настройки, %(brand)s трябва да синхронизира акаунта Ви наново.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Ако другата версия на %(brand)s все още е отворена в друг таб, моля затворете я. Използването на %(brand)s на един адрес във версии с постепенно и без постепенно зареждане ще причини проблеми.",
-    "Incompatible local cache": "Несъвместим локален кеш",
-    "Clear cache and resync": "Изчисти кеша и ресинхронизирай",
     "Unable to load backup status": "Неуспешно зареждане на състоянието на резервното копие",
     "Unable to restore backup": "Неуспешно възстановяване на резервно копие",
     "No backup found!": "Не е открито резервно копие!",
@@ -233,11 +227,6 @@
     "a device cross-signing signature": "подпис за кръстосано-подписване на устройства",
     "a key signature": "подпис на ключ",
     "%(brand)s encountered an error during upload of:": "%(brand)s срещна проблем при качването на:",
-    "Upload completed": "Качването завърши",
-    "Cancelled signature upload": "Отказано качване на подпис",
-    "Unable to upload": "Неуспешно качване",
-    "Signature upload success": "Успешно качване на подпис",
-    "Signature upload failed": "Неуспешно качване на подпис",
     "Confirm by comparing the following with the User Settings in your other session:": "Потвърдете чрез сравняване на следното с Потребителски Настройки в другата ви сесия:",
     "Confirm this user's session by comparing the following with their User Settings:": "Потвърдете сесията на този потребител чрез сравняване на следното с техните Потребителски Настройки:",
     "If they don't match, the security of your communication may be compromised.": "Ако няма съвпадение, сигурността на комуникацията ви може би е компрометирана.",
@@ -523,7 +512,6 @@
     "Afghanistan": "Афганистан",
     "United States": "Съединените щати",
     "United Kingdom": "Обединеното кралство",
-    "Leave space": "Напусни пространство",
     "unknown person": "",
     "common": {
         "about": "Относно",
@@ -1736,7 +1724,12 @@
         "incompatible_database_sign_out_description": "За да избегнете загубата на чат история, трябва да експортирате ключовете на стаята преди да излезете от профила си. Ще трябва да се върнете към по-новата версия на %(brand)s за да направите това",
         "incompatible_database_description": "Използвали сте и по-нова версия на %(brand)s от сегашната за тази сесия. За да използвате сегашната версия отново с шифроване от-край-до-край, ще е необходимо да излезете и да влезете отново.",
         "incompatible_database_title": "Несъвместима база данни",
-        "incompatible_database_disable": "Продължи с изключено шифроване"
+        "incompatible_database_disable": "Продължи с изключено шифроване",
+        "key_signature_upload_completed": "Качването завърши",
+        "key_signature_upload_cancelled": "Отказано качване на подпис",
+        "key_signature_upload_failed": "Неуспешно качване",
+        "key_signature_upload_success_title": "Успешно качване на подпис",
+        "key_signature_upload_failed_title": "Неуспешно качване на подпис"
     },
     "emoji": {
         "category_frequently_used": "Често използвани",
@@ -2123,7 +2116,8 @@
         "invite_description": "Покани чрез имейл или потребителско име",
         "add_existing_room_space": {
             "dm_heading": "Директни съобщения"
-        }
+        },
+        "leave_dialog_action": "Напусни пространство"
     },
     "terms": {
         "integration_manager": "Използвайте ботове, връзки с други мрежи, приспособления и стикери",
@@ -2436,5 +2430,13 @@
         "disabled_dialog_title": "Интеграциите са изключени",
         "impossible_dialog_title": "Интеграциите не са разрешени",
         "impossible_dialog_description": "Вашият %(brand)s не позволява да използвате мениджъра на интеграции за да направите това. Свържете се с администратор."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Преди сте използвали %(brand)s на %(host)s с включено постепенно зареждане на членове. В тази версия, тази настройка е изключена. Понеже локалният кеш не е съвместим при тези две настройки, %(brand)s трябва да синхронизира акаунта Ви наново.",
+        "disabled_description2": "Ако другата версия на %(brand)s все още е отворена в друг таб, моля затворете я. Използването на %(brand)s на един адрес във версии с постепенно и без постепенно зареждане ще причини проблеми.",
+        "disabled_title": "Несъвместим локален кеш",
+        "disabled_action": "Изчисти кеша и ресинхронизирай",
+        "resync_description": "%(brand)s вече използва 3-5 пъти по-малко памет, като зарежда информация за потребители само когато е нужна. Моля, изчакайте докато ресинхронизираме със сървъра!",
+        "resync_title": "Обновяване на %(brand)s"
     }
 }

@@ -75,10 +75,6 @@
     "Share User": "Udostępnij użytkownika",
     "Share Room Message": "Udostępnij wiadomość w pokoju",
     "Link to selected message": "Link do zaznaczonej wiadomości",
-    "Updating %(brand)s": "Aktualizowanie %(brand)s",
-    "Clear cache and resync": "Wyczyść pamięć podręczną i zsynchronizuj ponownie",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s używa teraz 3-5x mniej pamięci, ładując informacje o innych użytkownikach tylko wtedy, gdy jest to konieczne. Poczekaj, aż ponownie zsynchronizujemy się z serwerem!",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jeśli inna wersja %(brand)s jest nadal otwarta w innej zakładce, proszę zamknij ją, ponieważ używanie %(brand)s na tym samym komputerze z włączonym i wyłączonym jednocześnie leniwym ładowaniem będzie powodować problemy.",
     "No backup found!": "Nie znaleziono kopii zapasowej!",
     "Create a new room with the same name, description and avatar": "Utwórz nowy pokój o tej samej nazwie, opisie i awatarze",
     "I don't want my encrypted messages": "Nie chcę moich zaszyfrowanych wiadomości",
@@ -167,7 +163,6 @@
     "Session name": "Nazwa sesji",
     "Session key": "Klucz sesji",
     "Email (optional)": "Adres e-mail (opcjonalnie)",
-    "Upload completed": "Przesyłanie zakończone",
     "Message edits": "Edycje wiadomości",
     "Upload %(count)s other files": {
         "other": "Prześlij %(count)s innych plików",
@@ -433,7 +428,6 @@
     "Italy": "Włochy",
     "Verification Request": "Żądanie weryfikacji",
     "Find others by phone or email": "Odnajdź innych z użyciem numeru telefonu lub adresu e-mail",
-    "Incompatible local cache": "Niekompatybilna lokalna pamięć podręczna",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Przed wysłaniem logów, <a>zgłoś problem na GitHubie</a> opisujący twój problem.",
     "Some files are <b>too large</b> to be uploaded. The file size limit is %(limit)s.": "Niektóre pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
     "These files are <b>too large</b> to upload. The file size limit is %(limit)s.": "Te pliki są <b>zbyt duże</b> do wysłania. Ograniczenie wielkości plików to %(limit)s.",
@@ -455,10 +449,7 @@
     "Your homeserver has exceeded its user limit.": "Twój homeserver przekroczył limit użytkowników.",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Aby zgłosić błąd związany z bezpieczeństwem Matriksa, przeczytaj <a>Politykę odpowiedzialnego ujawniania informacji</a> Matrix.org.",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Ostrzeżenie</b>: kopia zapasowa klucza powinna być konfigurowana tylko z zaufanego komputera.",
-    "Signature upload failed": "Wysłanie podpisu nie powiodło się",
-    "Signature upload success": "Wysłanie podpisu udało się",
     "Manually export keys": "Ręcznie eksportuj klucze",
-    "Unable to upload": "Nie można wysłać",
     "No results found": "Nie znaleziono wyników",
     "%(count)s rooms": {
         "one": "%(count)s pokój",
@@ -549,21 +540,10 @@
     "Spaces you know that contain this room": "Przestrzenie, które znasz, że zawierają ten pokój",
     "Spaces you know that contain this space": "Przestrzenie, które znasz, że zawierają tą przestrzeń",
     "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Po wylogowaniu, te klucze zostaną usunięte z urządzenia, co oznacza, że nie będziesz w stanie czytać wiadomości szyfrowanych, chyba że posiadasz je na swoich innych urządzeniach lub zapisałeś je na serwerze.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Ostatnia sesja %(brand)s na %(host)s miała włączone leniwe ładowanie członków. W tej wersji leniwe ładowanie jest wyłączone. Ponieważ lokalna pamięć podręczna nie jest kompatybilna pomiędzy tymi wersjami, %(brand)s musi zsynchronizować ponownie Twoje konto.",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Decyduj, które przestrzenie mogą dostać się do tego pokoju. Jeśli wybrano przestrzeń, jej członkowie mogą znaleźć i dołączyć do <RoomName/>.",
     "Search spaces": "Szukaj przestrzeni",
     "Select spaces": "Wybierz przestrzenie",
     "You're removing all spaces. Access will default to invite only": "Usuwasz wszystkie przestrzenie. Domyślnie dostęp będą miały tylko osoby z zaproszeniem",
-    "Leave space": "Opuść przestrzeń",
-    "Leave some rooms": "Opuść niektóre pokoje",
-    "Leave all rooms": "Opuść wszystkie pokoje",
-    "Don't leave any rooms": "Nie opuszczaj żadnych pokoi",
-    "Would you like to leave the rooms in this space?": "Czy chcesz opuścić pokoje w tej przestrzeni?",
-    "Leave %(spaceName)s": "Opuść %(spaceName)s",
-    "You are about to leave <spaceName/>.": "Zamierzasz opuścić <spaceName/>.",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jesteś jedynym administratorem niektórych pokoi i przestrzeni, które chcesz opuścić. Opuszczenie zostawi je bez żadnego administratora.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jesteś jedynym administratorem tej przestrzeni. Opuszczenie, będzie oznaczać, że nikt nie będzie miał nad nią kontroli.",
-    "You won't be able to rejoin unless you are re-invited.": "Nie będziesz mógł dołączyć, dopóki nie dostaniesz nowego zaproszenia.",
     "%(brand)s encountered an error during upload of:": "%(brand)s napotkał błąd podczas wysyłania:",
     "a key signature": "sygnatura klucza",
     "a new master key signature": "nowa główna sygnatura klucza",
@@ -573,7 +553,6 @@
         "other": "%(count)s osób, które znasz, już dołączyło"
     },
     "Feedback sent! Thanks, we appreciate it!": "Wysłano opinię! Dziękujemy, doceniamy to!",
-    "Cancelled signature upload": "Przesyłanie sygnatury zostało anulowane",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Zaktualizujesz ten pokój z wersji <oldVersion /> do <newVersion />.",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Aktualizacja spowoduje utworzenie pokoju w nowej wersji</b>. Wszystkie bieżące wiadomości zostaną zarchiwizowane w tym pokoju.",
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Aktualizowanie pokoju to zaawansowane działanie i zaleca się je głównie, kiedy pokój jest niestabilny, brakuje w nim funkcji lub znajdują się w nim luki bezpieczeństwa.",
@@ -2984,7 +2963,12 @@
         "incompatible_database_sign_out_description": "Aby uniknąć utraty historii czatu, eksportuj swoje klucze pokoju przed wylogowaniem. Musisz powrócić do nowszej wersji %(brand)s, aby do zrobić",
         "incompatible_database_description": "Użyłeś wcześniej nowszej wersji %(brand)s na tej sesji. Aby korzystać z tej wersji z szyfrowaniem end-to-end, będziesz musiał zalogować się ponownie.",
         "incompatible_database_title": "Niekompatybilna baza danych",
-        "incompatible_database_disable": "Kontynuuj Z Wyłączonym Szyfrowaniem"
+        "incompatible_database_disable": "Kontynuuj Z Wyłączonym Szyfrowaniem",
+        "key_signature_upload_completed": "Przesyłanie zakończone",
+        "key_signature_upload_cancelled": "Przesyłanie sygnatury zostało anulowane",
+        "key_signature_upload_failed": "Nie można wysłać",
+        "key_signature_upload_success_title": "Wysłanie podpisu udało się",
+        "key_signature_upload_failed_title": "Wysłanie podpisu nie powiodło się"
     },
     "emoji": {
         "category_frequently_used": "Często używane",
@@ -3555,7 +3539,17 @@
             "create_prompt": "Utwórz nowy pokój",
             "subspace_moved_note": "Dodawanie przestrzeni zostało przeniesione."
         },
-        "room_filter_placeholder": "Szukaj pokoi"
+        "room_filter_placeholder": "Szukaj pokoi",
+        "leave_dialog_public_rejoin_warning": "Nie będziesz mógł dołączyć, dopóki nie dostaniesz nowego zaproszenia.",
+        "leave_dialog_only_admin_warning": "Jesteś jedynym administratorem tej przestrzeni. Opuszczenie, będzie oznaczać, że nikt nie będzie miał nad nią kontroli.",
+        "leave_dialog_only_admin_room_warning": "Jesteś jedynym administratorem niektórych pokoi i przestrzeni, które chcesz opuścić. Opuszczenie zostawi je bez żadnego administratora.",
+        "leave_dialog_title": "Opuść %(spaceName)s",
+        "leave_dialog_description": "Zamierzasz opuścić <spaceName/>.",
+        "leave_dialog_option_intro": "Czy chcesz opuścić pokoje w tej przestrzeni?",
+        "leave_dialog_option_none": "Nie opuszczaj żadnych pokoi",
+        "leave_dialog_option_all": "Opuść wszystkie pokoje",
+        "leave_dialog_option_specific": "Opuść niektóre pokoje",
+        "leave_dialog_action": "Opuść przestrzeń"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Ten serwer domowy nie jest skonfigurowany by wyświetlać mapy.",
@@ -4349,5 +4343,13 @@
         "disabled_dialog_description": "Włącz '%(manageIntegrations)s' w ustawieniach, aby to zrobić.",
         "impossible_dialog_title": "Integracje nie są dozwolone",
         "impossible_dialog_description": "%(brand)s nie zezwala Tobie na użycie menedżera integracji, aby to zrobić. Skontaktuj się z administratorem."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Ostatnia sesja %(brand)s na %(host)s miała włączone leniwe ładowanie członków. W tej wersji leniwe ładowanie jest wyłączone. Ponieważ lokalna pamięć podręczna nie jest kompatybilna pomiędzy tymi wersjami, %(brand)s musi zsynchronizować ponownie Twoje konto.",
+        "disabled_description2": "Jeśli inna wersja %(brand)s jest nadal otwarta w innej zakładce, proszę zamknij ją, ponieważ używanie %(brand)s na tym samym komputerze z włączonym i wyłączonym jednocześnie leniwym ładowaniem będzie powodować problemy.",
+        "disabled_title": "Niekompatybilna lokalna pamięć podręczna",
+        "disabled_action": "Wyczyść pamięć podręczną i zsynchronizuj ponownie",
+        "resync_description": "%(brand)s używa teraz 3-5x mniej pamięci, ładując informacje o innych użytkownikach tylko wtedy, gdy jest to konieczne. Poczekaj, aż ponownie zsynchronizujemy się z serwerem!",
+        "resync_title": "Aktualizowanie %(brand)s"
     }
 }

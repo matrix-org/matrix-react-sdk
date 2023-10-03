@@ -148,9 +148,6 @@
     "Failed to connect to integration manager": "Ühendus integratsioonihalduriga ei õnnestunud",
     "not specified": "määratlemata",
     "unknown error code": "tundmatu veakood",
-    "Upload completed": "Üleslaadimine valmis",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s kasutab varasemaga võrreldes 3-5 korda vähem mälu, sest laadib teavet kasutajate kohta vaid siis, kui vaja. Palun oota hetke, kuni sünkroniseerime andmeid serveriga!",
-    "Updating %(brand)s": "Uuendan rakendust %(brand)s",
     "I don't want my encrypted messages": "Ma ei soovi oma krüptitud sõnumeid",
     "Manually export keys": "Ekspordi võtmed käsitsi",
     "You'll lose access to your encrypted messages": "Sa kaotad ligipääsu oma krüptitud sõnumitele",
@@ -197,10 +194,6 @@
     "a device cross-signing signature": "seadme risttunnustamise allkiri",
     "a key signature": "võtme allkiri",
     "%(brand)s encountered an error during upload of:": "%(brand)s'is tekkis viga järgneva üleslaadimisel:",
-    "Cancelled signature upload": "Allkirja üleslaadimine on tühistatud",
-    "Unable to upload": "Üleslaadimine ei õnnestu",
-    "Signature upload success": "Allkirja üleslaadimine õnnestus",
-    "Signature upload failed": "Allkirja üleslaadimine ei õnnestunud",
     "Sign in with SSO": "Logi sisse kasutades SSO'd ehk ühekordset autentimist",
     "Upload all": "Laadi kõik üles",
     "This file is <b>too large</b> to upload. The file size limit is %(limit)s but this file is %(sizeOfThisFile)s.": "See fail on üleslaadimiseks <b>liiga suur</b>. Üleslaaditavate failide mahupiir on %(limit)s, kuid selle faili suurus on %(sizeOfThisFile)s.",
@@ -219,8 +212,6 @@
     "Destroy cross-signing keys?": "Kas hävitame risttunnustamise võtmed?",
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Risttunnustamise võtmete kustutamine on tegevus, mida ei saa tagasi pöörata. Kõik sinu verifitseeritud vestluskaaslased näevad seejärel turvateateid. Kui sa just pole kaotanud ligipääsu kõikidele oma seadmetele, kust sa risttunnustamist oled teinud, siis sa ilmselgelt ei peaks kustutamist ette võtma.",
     "Clear cross-signing keys": "Eemalda risttunnustamise võtmed",
-    "Incompatible local cache": "Kohalikud andmepuhvrid ei ühildu",
-    "Clear cache and resync": "Tühjenda puhver ja sünkroniseeri andmed uuesti",
     "Confirm by comparing the following with the User Settings in your other session:": "Kinnita seda võrreldes järgnevaid andmeid oma teise sessiooni kasutajaseadetes:",
     "Confirm this user's session by comparing the following with their User Settings:": "Kinnita selle kasutaja sessioon võrreldes järgnevaid andmeid tema kasutajaseadetes:",
     "Session name": "Sessiooni nimi",
@@ -267,8 +258,6 @@
     "The server is not configured to indicate what the problem is (CORS).": "Server on seadistatud varjama tegelikke veapõhjuseid (CORS).",
     "You're all caught up.": "Ei tea... kõik vist on nüüd tehtud.",
     "Recent changes that have not yet been received": "Hiljutised muudatused, mis pole veel alla laetud või saabunud",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
     "Not encrypted": "Krüptimata",
     "Backup version:": "Varukoopia versioon:",
     "Unable to set up keys": "Krüptovõtmete kasutuselevõtmine ei õnnestu",
@@ -550,7 +539,6 @@
     "Allow this widget to verify your identity": "Luba sellel vidinal sinu isikut verifitseerida",
     "Failed to start livestream": "Videovoo käivitamine ei õnnestu",
     "Unable to start audio streaming.": "Audiovoo käivitamine ei õnnestu.",
-    "Leave space": "Lahku kogukonnakeskusest",
     "%(count)s members": {
         "other": "%(count)s liiget",
         "one": "%(count)s liige"
@@ -582,17 +570,8 @@
     "Other spaces or rooms you might not know": "Sellised muud jututoad ja kogukonnakeskused, mida sa ei pruugi teada",
     "Automatically invite members from this room to the new one": "Kutsu jututoa senised liikmed automaatselt uude jututuppa",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Palun arvesta, et uuendusega tehakse jututoast uus variant</b>. Kõik senised sõnumid jäävad sellesse jututuppa arhiveeritud olekus.",
-    "Leave %(spaceName)s": "Lahku %(spaceName)s kogukonnakeskusest",
-    "You won't be able to rejoin unless you are re-invited.": "Ilma uue kutseta sa ei saa uuesti liituda.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Sa oled selle kogukonna ainus haldaja. Kui lahkud, siis ei leidu enam kedagi, kellel oleks seal haldusõigusi.",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Mõnedes jututubades või kogukondades oled sa ainus haldaja. Kuna sa nüüd soovid neist lahkuda, siis jäävad nad haldajata.",
     "These are likely ones other room admins are a part of.": "Ilmselt on tegemist nendega, mille liikmed on teiste jututubade haldajad.",
     "To join a space you'll need an invite.": "Kogukonnakeskusega liitumiseks vajad kutset.",
-    "Would you like to leave the rooms in this space?": "Kas sa soovid lahkuda ka selle kogukonna jututubadest?",
-    "You are about to leave <spaceName/>.": "Sa oled lahkumas <spaceName/> kogukonnast.",
-    "Leave some rooms": "Lahku mõnedest jututubadest",
-    "Leave all rooms": "Lahku kõikidest jututubadest",
-    "Don't leave any rooms": "Ära lahku ühestki jututoast",
     "%(count)s reply": {
         "one": "%(count)s vastus",
         "other": "%(count)s vastust"
@@ -2989,7 +2968,12 @@
         "incompatible_database_sign_out_description": "Selleks, et sa ei kaotaks oma vestluste ajalugu, pead sa eksportima jututoa krüptovõtmed enne välja logimist. Küll, aga pead sa selleks kasutama %(brand)s uuemat versiooni",
         "incompatible_database_description": "Sa oled selle sessiooni jaoks varem kasutanud %(brand)s'i uuemat versiooni. Selle versiooni kasutamiseks läbiva krüptimisega, pead sa esmalt logima välja ja siis uuesti logima tagasi sisse.",
         "incompatible_database_title": "Mitteühilduv andmebaas",
-        "incompatible_database_disable": "Jätka ilma krüptimiseta"
+        "incompatible_database_disable": "Jätka ilma krüptimiseta",
+        "key_signature_upload_completed": "Üleslaadimine valmis",
+        "key_signature_upload_cancelled": "Allkirja üleslaadimine on tühistatud",
+        "key_signature_upload_failed": "Üleslaadimine ei õnnestu",
+        "key_signature_upload_success_title": "Allkirja üleslaadimine õnnestus",
+        "key_signature_upload_failed_title": "Allkirja üleslaadimine ei õnnestunud"
     },
     "emoji": {
         "category_frequently_used": "Enamkasutatud",
@@ -3561,7 +3545,17 @@
             "create_prompt": "Loo uus jututuba",
             "subspace_moved_note": "Kogukondade lisamine asub nüüd uues kohas."
         },
-        "room_filter_placeholder": "Otsi jututube"
+        "room_filter_placeholder": "Otsi jututube",
+        "leave_dialog_public_rejoin_warning": "Ilma uue kutseta sa ei saa uuesti liituda.",
+        "leave_dialog_only_admin_warning": "Sa oled selle kogukonna ainus haldaja. Kui lahkud, siis ei leidu enam kedagi, kellel oleks seal haldusõigusi.",
+        "leave_dialog_only_admin_room_warning": "Mõnedes jututubades või kogukondades oled sa ainus haldaja. Kuna sa nüüd soovid neist lahkuda, siis jäävad nad haldajata.",
+        "leave_dialog_title": "Lahku %(spaceName)s kogukonnakeskusest",
+        "leave_dialog_description": "Sa oled lahkumas <spaceName/> kogukonnast.",
+        "leave_dialog_option_intro": "Kas sa soovid lahkuda ka selle kogukonna jututubadest?",
+        "leave_dialog_option_none": "Ära lahku ühestki jututoast",
+        "leave_dialog_option_all": "Lahku kõikidest jututubadest",
+        "leave_dialog_option_specific": "Lahku mõnedest jututubadest",
+        "leave_dialog_action": "Lahku kogukonnakeskusest"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "See koduserver pole seadistatud kuvama kaarte.",
@@ -4367,5 +4361,13 @@
         "disabled_dialog_description": "Selle tegevuse kasutuselevõetuks lülita seadetes sisse „%(manageIntegrations)s“ valik.",
         "impossible_dialog_title": "Lõimingute kasutamine ei ole lubatud",
         "impossible_dialog_description": "Sinu %(brand)s ei võimalda selle tegevuse jaoks kasutada lõiminguhaldurit. Palun küsi lisateavet serveri haldajalt."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Oled varem kasutanud %(brand)s serveriga %(host)s ja lubanud andmete laisa laadimise. Selles versioonis on laisk laadimine keelatud. Kuna kohalik vahemälu nende kahe seadistuse vahel ei ühildu, peab %(brand)s sinu konto uuesti sünkroonima.",
+        "disabled_description2": "Kui %(brand)s teine versioon on mõnel teisel vahekaardil endiselt avatud, palun sulge see. %(brand)s kasutamine samal serveril põhjustab vigu olukorras, kus laisk laadimine on samal ajal lubatud ja keelatud.",
+        "disabled_title": "Kohalikud andmepuhvrid ei ühildu",
+        "disabled_action": "Tühjenda puhver ja sünkroniseeri andmed uuesti",
+        "resync_description": "%(brand)s kasutab varasemaga võrreldes 3-5 korda vähem mälu, sest laadib teavet kasutajate kohta vaid siis, kui vaja. Palun oota hetke, kuni sünkroniseerime andmeid serveriga!",
+        "resync_title": "Uuendan rakendust %(brand)s"
     }
 }

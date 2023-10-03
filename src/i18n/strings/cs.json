@@ -83,7 +83,6 @@
     "Manually export keys": "Export klíčů",
     "You'll lose access to your encrypted messages": "Přijdete o přístup k šifrovaným zprávám",
     "Are you sure you want to sign out?": "Opravdu se chcete odhlásit?",
-    "Updating %(brand)s": "Aktualizujeme %(brand)s",
     "Failed to upgrade room": "Nezdařilo se aktualizovat místnost",
     "The room upgrade could not be completed": "Nepodařilo se dokončit aktualizaci místnosti",
     "Upgrade this room to version %(version)s": "Aktualizace místnosti na verzi %(version)s",
@@ -151,16 +150,12 @@
     "Headphones": "Sluchátka",
     "Folder": "Desky",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Pro odeslání záznamů je potřeba <a>vytvořit issue na GitHubu</a> s popisem problému.",
-    "Incompatible local cache": "Nekompatibilní lokální vyrovnávací paměť",
-    "Clear cache and resync": "Smazat paměť a sesynchronizovat",
     "I don't want my encrypted messages": "Už své zašifrované zprávy nechci",
     "Unable to load backup status": "Nepovedlo se načíst stav zálohy",
     "Unable to restore backup": "Nepovedlo se obnovit ze zálohy",
     "No backup found!": "Nenalezli jsme žádnou zálohu!",
     "Failed to decrypt %(failedCount)s sessions!": "Nepovedlo se rozšifrovat %(failedCount)s sezení!",
     "<b>Warning</b>: you should only set up key backup from a trusted computer.": "<b>Uporoznění</b>: záloha by měla být prováděna na důvěryhodném počítači.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Na adrese %(host)s už jste použili %(brand)s se zapnutou volbou načítání členů místností až při prvním zobrazení. V této verzi je načítání členů až při prvním zobrazení vypnuté. Protože je s tímto nastavením lokální vyrovnávací paměť nekompatibilní, %(brand)s potřebuje znovu synchronizovat údaje z vašeho účtu.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s teď používá 3-5× méně paměti, protože si informace o ostatních uživatelích načítá až když je potřebuje. Prosím počkejte na dokončení synchronizace se serverem!",
     "Email (optional)": "E-mail (nepovinné)",
     "Scissors": "Nůžky",
     "Room Settings - %(roomName)s": "Nastavení místnosti - %(roomName)s",
@@ -231,15 +226,9 @@
     "Your homeserver has exceeded one of its resource limits.": "Na vašem domovském serveru byl překročen limit systémových požadavků.",
     "Ok": "Ok",
     "a new master key signature": "nový podpis hlavního klíče",
-    "Signature upload success": "Podpis úspěšně nahrán",
-    "Signature upload failed": "Podpis se nepodařilo nahrát",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
     "a new cross-signing key signature": "nový klíč pro křížový podpis",
     "a key signature": "podpis klíče",
     "%(brand)s encountered an error during upload of:": "%(brand)s narazil na chybu při nahrávání:",
-    "Upload completed": "Nahrávání dokončeno",
-    "Cancelled signature upload": "Nahrávání podpisu zrušeno",
-    "Unable to upload": "Nelze nahrát",
     "Server isn't responding": "Server neodpovídá",
     "Czech Republic": "Česká republika",
     "Algeria": "Alžírsko",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Nepodařilo spustit živý přenos",
     "Unable to start audio streaming.": "Nelze spustit streamování zvuku.",
-    "Leave space": "Opusit prostor",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "Toto obvykle ovlivňuje pouze to, jak je místnost zpracována na serveru. Pokud máte problémy s %(brand)s, nahlaste prosím chybu.",
     "<inviter/> invites you": "<inviter/> vás zve",
     "No results found": "Nebyly nalezeny žádné výsledky",
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Rozhodněte, které prostory mají přístup do této místnosti. Pokud je vybrán prostor, mohou jeho členové najít <RoomName/> a připojit se k němu.",
     "Select spaces": "Vybrané prostory",
     "You're removing all spaces. Access will default to invite only": "Odstraňujete všechny prostory. Přístup bude ve výchozím nastavení pouze na pozvánky",
-    "Leave %(spaceName)s": "Opustit %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Jste jediným správcem některých místností nebo prostorů, které chcete opustit. Jejich opuštěním zůstanou bez správců.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Jste jediným správcem tohoto prostoru. Jeho opuštění bude znamenat, že nad ním nebude mít nikdo kontrolu.",
-    "You won't be able to rejoin unless you are re-invited.": "Pokud nebudete znovu pozváni, nebudete se moci připojit.",
     "To join a space you'll need an invite.": "Pro připojení k prostoru potřebujete pozvánku.",
-    "Would you like to leave the rooms in this space?": "Chcete odejít z místností v tomto prostoru?",
-    "You are about to leave <spaceName/>.": "Odcházíte z <spaceName/>.",
-    "Leave some rooms": "Odejít z některých místností",
-    "Don't leave any rooms": "Neodcházet z žádné místnosti",
-    "Leave all rooms": "Odejít ze všech místností",
     "%(count)s reply": {
         "one": "%(count)s odpověď",
         "other": "%(count)s odpovědí"
@@ -2996,7 +2975,12 @@
         "incompatible_database_sign_out_description": "Abyste po odhlášení nepřišli o přístup k historii šifrovaných konverzací, měli byste si před odhlášením exportovat šifrovací klíče místností. Prosím vraťte se k novější verzi %(brand)su a exportujte si klíče",
         "incompatible_database_description": "V této relaci jste již dříve používali novější verzi %(brand)s. Chcete-li tuto verzi znovu použít s šifrováním, budete se muset odhlásit a znovu přihlásit.",
         "incompatible_database_title": "Nekompatibilní databáze",
-        "incompatible_database_disable": "Pokračovat bez šifrování"
+        "incompatible_database_disable": "Pokračovat bez šifrování",
+        "key_signature_upload_completed": "Nahrávání dokončeno",
+        "key_signature_upload_cancelled": "Nahrávání podpisu zrušeno",
+        "key_signature_upload_failed": "Nelze nahrát",
+        "key_signature_upload_success_title": "Podpis úspěšně nahrán",
+        "key_signature_upload_failed_title": "Podpis se nepodařilo nahrát"
     },
     "emoji": {
         "category_frequently_used": "Často používané",
@@ -3568,7 +3552,17 @@
             "create_prompt": "Vytvořit novou místnost",
             "subspace_moved_note": "Přidávání prostorů bylo přesunuto."
         },
-        "room_filter_placeholder": "Hledat místnosti"
+        "room_filter_placeholder": "Hledat místnosti",
+        "leave_dialog_public_rejoin_warning": "Pokud nebudete znovu pozváni, nebudete se moci připojit.",
+        "leave_dialog_only_admin_warning": "Jste jediným správcem tohoto prostoru. Jeho opuštění bude znamenat, že nad ním nebude mít nikdo kontrolu.",
+        "leave_dialog_only_admin_room_warning": "Jste jediným správcem některých místností nebo prostorů, které chcete opustit. Jejich opuštěním zůstanou bez správců.",
+        "leave_dialog_title": "Opustit %(spaceName)s",
+        "leave_dialog_description": "Odcházíte z <spaceName/>.",
+        "leave_dialog_option_intro": "Chcete odejít z místností v tomto prostoru?",
+        "leave_dialog_option_none": "Neodcházet z žádné místnosti",
+        "leave_dialog_option_all": "Odejít ze všech místností",
+        "leave_dialog_option_specific": "Odejít z některých místností",
+        "leave_dialog_action": "Opusit prostor"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Tento domovský server není nakonfigurován pro zobrazování map.",
@@ -4374,5 +4368,13 @@
         "disabled_dialog_description": "Pro provedení povolte v Nastavení položku '%(manageIntegrations)s'.",
         "impossible_dialog_title": "Integrace nejsou povolené",
         "impossible_dialog_description": "Váš %(brand)s neumožňuje použít správce integrací. Kontaktujte prosím správce."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Na adrese %(host)s už jste použili %(brand)s se zapnutou volbou načítání členů místností až při prvním zobrazení. V této verzi je načítání členů až při prvním zobrazení vypnuté. Protože je s tímto nastavením lokální vyrovnávací paměť nekompatibilní, %(brand)s potřebuje znovu synchronizovat údaje z vašeho účtu.",
+        "disabled_description2": "Je-li jiná verze programu %(brand)s stále otevřená na jiné kartě, tak ji prosím zavřete, neboť užívání programu %(brand)s stejným hostitelem se zpožděným nahráváním současně povoleným i zakázaným bude působit problémy.",
+        "disabled_title": "Nekompatibilní lokální vyrovnávací paměť",
+        "disabled_action": "Smazat paměť a sesynchronizovat",
+        "resync_description": "%(brand)s teď používá 3-5× méně paměti, protože si informace o ostatních uživatelích načítá až když je potřebuje. Prosím počkejte na dokončení synchronizace se serverem!",
+        "resync_title": "Aktualizujeme %(brand)s"
     }
 }

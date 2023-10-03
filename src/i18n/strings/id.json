@@ -575,27 +575,6 @@
     "I don't want my encrypted messages": "Saya tidak ingin pesan-pesan terenkripsi saya",
     "Start using Key Backup": "Mulai menggunakan Cadangan Kunci",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Pesan terenkripsi diamankan dengan enkripsi ujung ke ujung. Hanya Anda dan penerima punya kuncinya untuk membaca pesan ini.",
-    "Leave space": "Tinggalkan space",
-    "Leave some rooms": "Tinggalkan beberapa ruangan",
-    "Leave all rooms": "Tinggalkan semua ruangan",
-    "Don't leave any rooms": "Jangan tinggalkan ruangan apa pun",
-    "Would you like to leave the rooms in this space?": "Apakah Anda ingin keluar dari ruangan-ruangan di space ini?",
-    "You are about to leave <spaceName/>.": "Anda akan keluar dari <spaceName/>.",
-    "Leave %(spaceName)s": "Tinggalkan %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Anda adalah satu-satunya admin di beberapa ruangan atau space yang ingin Anda tinggalkan. Meninggalkan mereka akan meninggalkan mereka tanpa admin.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Anda adalah satu-satu admin di space ini. Meninggalkannya akan berarti tidak ada siapa saja yang dapat melakukan apa-apa di spacenya.",
-    "You won't be able to rejoin unless you are re-invited.": "Anda tidak dapat bergabung lagi kecuali jika Anda diundang lagi.",
-    "Updating %(brand)s": "Memperbarui %(brand)s",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s sekarang menggunakan memori 3-5x kecil dari sebelumnya dengan hanya memuat informasi tentang pengguna lain jika dibutuhkan. Mohon tunggu selagi kita mengsinkronisasi ulang dengan servernya!",
-    "Clear cache and resync": "Hapus cache dan sinkron ulang",
-    "Incompatible local cache": "Cache lokal tidak kompatibel",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jika versi %(brand)s yang lain masih terbuka di tab yang lain, mohon menutupnya karena menggunakan %(brand)s di host yang sama dengan pemuatan malas diaktifkan dan dinonaktifkan secara bersamaan akan mengakibatkan masalah.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Anda sebelumnya menggunakan %(brand)s di %(host)s dengan pemuatan malas pengguna diaktifkan. Di versi ini pemuatan malas dinonaktifkan. Karena cache lokal tidak kompatibel antara dua pengaturan ini, %(brand)s harus mengsinkronisasi ulang akun Anda.",
-    "Signature upload failed": "Unggahan tandatangan gagal",
-    "Signature upload success": "Unggahan tandatangan berhasil",
-    "Unable to upload": "Tidak dapat mengunggah",
-    "Cancelled signature upload": "Unggahan tandatangan dibatalkan",
-    "Upload completed": "Unggahan selesai",
     "%(brand)s encountered an error during upload of:": "%(brand)s mengalami sebuah kesalahan ketika mengunggah unggahan:",
     "a key signature": "sebuah tandatangan kunci",
     "a device cross-signing signature": "sebuah tandatangan penandatanganan silang perangkat",
@@ -2996,7 +2975,12 @@
         "incompatible_database_sign_out_description": "Untuk menghindari kehilangan riwayat obrolan, Anda harus mengekspor kunci ruangan Anda sebelum keluar. Anda harus kembali ke versi %(brand)s yang baru untuk melakukannya",
         "incompatible_database_description": "Anda sebelumnya menggunakan sebuah versi %(brand)s yang baru dengan sesi ini. Untuk menggunakan versi ini lagi dengan enkripsi ujung ke ujung, Anda harus keluar dan masuk lagi.",
         "incompatible_database_title": "Databasis Tidak Kompatibel",
-        "incompatible_database_disable": "Lanjutkan Dengan Enkripsi Dinonaktifkan"
+        "incompatible_database_disable": "Lanjutkan Dengan Enkripsi Dinonaktifkan",
+        "key_signature_upload_completed": "Unggahan selesai",
+        "key_signature_upload_cancelled": "Unggahan tandatangan dibatalkan",
+        "key_signature_upload_failed": "Tidak dapat mengunggah",
+        "key_signature_upload_success_title": "Unggahan tandatangan berhasil",
+        "key_signature_upload_failed_title": "Unggahan tandatangan gagal"
     },
     "emoji": {
         "category_frequently_used": "Sering Digunakan",
@@ -3568,7 +3552,17 @@
             "create_prompt": "Buat sebuah ruangan baru",
             "subspace_moved_note": "Menambahkan space telah dipindah."
         },
-        "room_filter_placeholder": "Cari ruangan"
+        "room_filter_placeholder": "Cari ruangan",
+        "leave_dialog_public_rejoin_warning": "Anda tidak dapat bergabung lagi kecuali jika Anda diundang lagi.",
+        "leave_dialog_only_admin_warning": "Anda adalah satu-satu admin di space ini. Meninggalkannya akan berarti tidak ada siapa saja yang dapat melakukan apa-apa di spacenya.",
+        "leave_dialog_only_admin_room_warning": "Anda adalah satu-satunya admin di beberapa ruangan atau space yang ingin Anda tinggalkan. Meninggalkan mereka akan meninggalkan mereka tanpa admin.",
+        "leave_dialog_title": "Tinggalkan %(spaceName)s",
+        "leave_dialog_description": "Anda akan keluar dari <spaceName/>.",
+        "leave_dialog_option_intro": "Apakah Anda ingin keluar dari ruangan-ruangan di space ini?",
+        "leave_dialog_option_none": "Jangan tinggalkan ruangan apa pun",
+        "leave_dialog_option_all": "Tinggalkan semua ruangan",
+        "leave_dialog_option_specific": "Tinggalkan beberapa ruangan",
+        "leave_dialog_action": "Tinggalkan space"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver ini tidak diatur untuk menampilkan peta.",
@@ -4374,5 +4368,13 @@
         "disabled_dialog_description": "Aktifkan '%(manageIntegrations)s' di Pengaturan untuk melakukan ini.",
         "impossible_dialog_title": "Integrasi tidak diperbolehkan",
         "impossible_dialog_description": "%(brand)s Anda tidak mengizinkan Anda menggunakan sebuah manajer integrasi untuk melakukan ini. Mohon hubungi sebuah admin."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Anda sebelumnya menggunakan %(brand)s di %(host)s dengan pemuatan malas pengguna diaktifkan. Di versi ini pemuatan malas dinonaktifkan. Karena cache lokal tidak kompatibel antara dua pengaturan ini, %(brand)s harus mengsinkronisasi ulang akun Anda.",
+        "disabled_description2": "Jika versi %(brand)s yang lain masih terbuka di tab yang lain, mohon menutupnya karena menggunakan %(brand)s di host yang sama dengan pemuatan malas diaktifkan dan dinonaktifkan secara bersamaan akan mengakibatkan masalah.",
+        "disabled_title": "Cache lokal tidak kompatibel",
+        "disabled_action": "Hapus cache dan sinkron ulang",
+        "resync_description": "%(brand)s sekarang menggunakan memori 3-5x kecil dari sebelumnya dengan hanya memuat informasi tentang pengguna lain jika dibutuhkan. Mohon tunggu selagi kita mengsinkronisasi ulang dengan servernya!",
+        "resync_title": "Memperbarui %(brand)s"
     }
 }

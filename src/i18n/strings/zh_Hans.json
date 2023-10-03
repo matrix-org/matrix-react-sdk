@@ -83,9 +83,6 @@
     "Update any local room aliases to point to the new room": "更新所有本地房间别名以使其指向新房间",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "阻止用户在旧房间中发言，并发送消息建议用户迁移至新房间",
     "Put a link back to the old room at the start of the new room so people can see old messages": "在新房间的开始处发送一条指回旧房间的链接，这样用户可以查看旧消息",
-    "Incompatible local cache": "本地缓存不兼容",
-    "Clear cache and resync": "清除缓存并重新同步",
-    "Updating %(brand)s": "正在更新 %(brand)s",
     "No backup found!": "找不到备份！",
     "Unable to restore backup": "无法还原备份",
     "Unable to load backup status": "无法获取备份状态",
@@ -154,8 +151,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "加密消息已使用端到端加密保护。只有你和拥有密钥的收件人可以阅读这些消息。",
     "Start using Key Backup": "开始使用密钥备份",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "在提交日志之前，你必须<a>创建一个GitHub issue</a> 来描述你的问题。",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "你之前在 %(host)s 上开启了 %(brand)s 的成员列表延迟加载设置。目前版本中延迟加载功能已被停用。因为本地缓存在这两个设置项上不相容，%(brand)s 需要重新同步你的账户。",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "通过仅在需要时加载其他用户的信息，%(brand)s 现在使用的内存减少到了原来的三分之一至五分之一。 请等待与服务器重新同步！",
     "I don't want my encrypted messages": "我不想要我的加密消息",
     "Manually export keys": "手动导出密钥",
     "You'll lose access to your encrypted messages": "你将失去你的加密消息的访问权",
@@ -201,12 +196,6 @@
     "a new cross-signing key signature": "一个新的交叉签名密钥的签名",
     "a device cross-signing signature": "一个设备的交叉签名的签名",
     "a key signature": "一个密钥签名",
-    "Upload completed": "上传完成",
-    "Cancelled signature upload": "已取消签名上传",
-    "Unable to upload": "无法上传",
-    "Signature upload success": "签名上传成功",
-    "Signature upload failed": "签名上传失败",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "如果别的 %(brand)s 版本在别的标签页中仍然开启，请关闭它，因为在同一宿主上同时使用开启了延迟加载和关闭了延迟加载的 %(brand)s 会导致问题。",
     "Confirm by comparing the following with the User Settings in your other session:": "通过比较下方内容和你别的会话中的用户设置来确认：",
     "Confirm this user's session by comparing the following with their User Settings:": "通过比较下方内容和对方用户设置来确认此用户会话：",
     "Session name": "会话名称",
@@ -335,7 +324,6 @@
     "Invalid Security Key": "安全密钥无效",
     "Wrong Security Key": "安全密钥错误",
     "Not encrypted": "未加密",
-    "Leave space": "离开空间",
     "Pakistan": "巴基斯坦",
     "United Arab Emirates": "阿拉伯联合酋长国",
     "Yemen": "也门",
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "决定哪些空间可以访问这个房间。如果一个空间被选中，它的成员可以找到并加入<RoomName/>。",
     "Select spaces": "选择空间",
     "You're removing all spaces. Access will default to invite only": "你正在移除所有空间。访问权限将预设为仅邀请",
-    "Leave %(spaceName)s": "离开 %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "你是某些要离开的房间或空间的唯一管理员。离开将使它们没有任何管理员。",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "你是此空间的唯一管理员。离开它将意味着没有人可以控制它。",
-    "You won't be able to rejoin unless you are re-invited.": "除非你被重新邀请，否则你将无法重新加入。",
     "To join a space you'll need an invite.": "要加入一个空间，你需要一个邀请。",
-    "Would you like to leave the rooms in this space?": "你想俩开此空间内的房间吗？",
-    "You are about to leave <spaceName/>.": "你即将离开 <spaceName/>。",
-    "Leave some rooms": "离开一些房间",
-    "Leave all rooms": "离开所有房间",
-    "Don't leave any rooms": "不离开任何房间",
     "%(count)s reply": {
         "one": "%(count)s 条回复",
         "other": "%(count)s 条回复"
@@ -2731,7 +2710,12 @@
         "incompatible_database_sign_out_description": "为避免丢失聊天记录，你必须在登出前导出房间密钥。你需要切换至新版 %(brand)s 方可继续执行此操作",
         "incompatible_database_description": "你曾在此会话中使用了一个更新版本的 %(brand)s。要再使用此版本并使用端到端加密，你需要登出再重新登录。",
         "incompatible_database_title": "数据库不兼容",
-        "incompatible_database_disable": "在停用加密的情况下继续"
+        "incompatible_database_disable": "在停用加密的情况下继续",
+        "key_signature_upload_completed": "上传完成",
+        "key_signature_upload_cancelled": "已取消签名上传",
+        "key_signature_upload_failed": "无法上传",
+        "key_signature_upload_success_title": "签名上传成功",
+        "key_signature_upload_failed_title": "签名上传失败"
     },
     "emoji": {
         "category_frequently_used": "经常使用",
@@ -3233,7 +3217,17 @@
             "create_prompt": "创建新房间",
             "subspace_moved_note": "新增空间已移动。"
         },
-        "room_filter_placeholder": "搜索房间"
+        "room_filter_placeholder": "搜索房间",
+        "leave_dialog_public_rejoin_warning": "除非你被重新邀请，否则你将无法重新加入。",
+        "leave_dialog_only_admin_warning": "你是此空间的唯一管理员。离开它将意味着没有人可以控制它。",
+        "leave_dialog_only_admin_room_warning": "你是某些要离开的房间或空间的唯一管理员。离开将使它们没有任何管理员。",
+        "leave_dialog_title": "离开 %(spaceName)s",
+        "leave_dialog_description": "你即将离开 <spaceName/>。",
+        "leave_dialog_option_intro": "你想俩开此空间内的房间吗？",
+        "leave_dialog_option_none": "不离开任何房间",
+        "leave_dialog_option_all": "离开所有房间",
+        "leave_dialog_option_specific": "离开一些房间",
+        "leave_dialog_action": "离开空间"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "此家服务器未配置显示地图。",
@@ -3942,5 +3936,13 @@
         "disabled_dialog_title": "集成已禁用",
         "impossible_dialog_title": "集成未被允许",
         "impossible_dialog_description": "你的 %(brand)s 不允许你使用集成管理器来完成此操作，请联系管理员。"
+    },
+    "lazy_loading": {
+        "disabled_description1": "你之前在 %(host)s 上开启了 %(brand)s 的成员列表延迟加载设置。目前版本中延迟加载功能已被停用。因为本地缓存在这两个设置项上不相容，%(brand)s 需要重新同步你的账户。",
+        "disabled_description2": "如果别的 %(brand)s 版本在别的标签页中仍然开启，请关闭它，因为在同一宿主上同时使用开启了延迟加载和关闭了延迟加载的 %(brand)s 会导致问题。",
+        "disabled_title": "本地缓存不兼容",
+        "disabled_action": "清除缓存并重新同步",
+        "resync_description": "通过仅在需要时加载其他用户的信息，%(brand)s 现在使用的内存减少到了原来的三分之一至五分之一。 请等待与服务器重新同步！",
+        "resync_title": "正在更新 %(brand)s"
     }
 }

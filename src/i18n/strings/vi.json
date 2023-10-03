@@ -127,27 +127,6 @@
     "I don't want my encrypted messages": "Tôi không muốn tin nhắn được mã hóa của mình",
     "Start using Key Backup": "Bắt đầu sao lưu các khóa",
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Các tin nhắn được mã hóa được bảo mật bằng mã hóa đầu cuối. Chỉ bạn và (những) người nhận mới có chìa khóa để đọc những tin nhắn này.",
-    "Leave space": "Rời space",
-    "Leave some rooms": "Rời một vài phòng",
-    "Leave all rooms": "Rời tất cả phòng",
-    "Don't leave any rooms": "Không rời bất kỳ phòng nào",
-    "Would you like to leave the rooms in this space?": "Bạn có muốn rời khỏi các phòng trong space này?",
-    "You are about to leave <spaceName/>.": "Bạn sắp rời khỏi <spaceName/>.",
-    "Leave %(spaceName)s": "Rời khỏi %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Bạn là quản trị viên duy nhất của một số phòng hoặc space mà bạn muốn rời khỏi. Rời khỏi họ sẽ Rời khỏi họ mà không có bất kỳ quản trị viên nào.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Bạn là quản trị viên duy nhất của không gian này. Rời khỏi nó sẽ có nghĩa là không ai có quyền kiểm soát nó.",
-    "You won't be able to rejoin unless you are re-invited.": "Bạn sẽ không thể tham gia lại trừ khi bạn được mời lại.",
-    "Updating %(brand)s": "Đang cập nhật %(brand)s",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s hiện sử dụng bộ nhớ ít hơn 3-5 lần, bằng cách chỉ tải thông tin về những người dùng khác khi cần thiết. Vui lòng đợi trong khi chúng tôi đồng bộ hóa lại với máy chủ!",
-    "Clear cache and resync": "Xóa bộ nhớ cache và đồng bộ hóa lại",
-    "Incompatible local cache": "Bộ nhớ cache cục bộ không tương thích",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Nếu phiên bản khác của %(brand)s vẫn đang mở trong một tab khác, vui lòng đóng nó lại vì việc sử dụng %(brand)s trên cùng một máy chủ với cả hai chế độ tải chậm được bật và tắt đồng thời sẽ gây ra sự cố.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Trước đây, bạn đã sử dụng %(brand)s trên %(host)s khi đã bật tính năng tải chậm các thành viên. Trong phiên bản này, tính năng tải lười biếng bị vô hiệu hóa. Vì bộ nhớ cache cục bộ không tương thích giữa hai cài đặt này, %(brand)s cần phải đồng bộ hóa lại tài khoản của bạn.",
-    "Signature upload failed": "Tải lên chữ ký không thành công",
-    "Signature upload success": "Tải lên chữ ký thành công",
-    "Unable to upload": "Không thể tải lên",
-    "Cancelled signature upload": "Đã hủy tải lên chữ ký",
-    "Upload completed": "Hoàn tất tải lên",
     "%(brand)s encountered an error during upload of:": "%(brand)s đã gặp lỗi khi tải lên:",
     "a key signature": "một chữ ký chính",
     "a device cross-signing signature": "một chữ ký được xác thực chéo trên thiết bị",
@@ -2828,7 +2807,12 @@
         "incompatible_database_sign_out_description": "Để tránh mất lịch sử trò chuyện, bạn phải xuất chìa khóa phòng trước khi đăng xuất. Bạn sẽ cần quay lại phiên bản %(brand)s mới hơn để thực hiện việc này",
         "incompatible_database_description": "Trước đây, bạn đã sử dụng phiên bản %(brand)s mới hơn với phiên này. Để sử dụng lại phiên bản này với mã hóa đầu cuối, bạn cần đăng xuất và đăng nhập lại.",
         "incompatible_database_title": "Cơ sở dữ liệu không tương thích",
-        "incompatible_database_disable": "Tiếp tục với mã hóa bị tắt"
+        "incompatible_database_disable": "Tiếp tục với mã hóa bị tắt",
+        "key_signature_upload_completed": "Hoàn tất tải lên",
+        "key_signature_upload_cancelled": "Đã hủy tải lên chữ ký",
+        "key_signature_upload_failed": "Không thể tải lên",
+        "key_signature_upload_success_title": "Tải lên chữ ký thành công",
+        "key_signature_upload_failed_title": "Tải lên chữ ký không thành công"
     },
     "emoji": {
         "category_frequently_used": "Thường xuyên sử dụng",
@@ -3348,7 +3332,17 @@
             "create_prompt": "Tạo phòng chat mới",
             "subspace_moved_note": "Thêm dấu cách đã di chuyển."
         },
-        "room_filter_placeholder": "Tìm kiếm phòng"
+        "room_filter_placeholder": "Tìm kiếm phòng",
+        "leave_dialog_public_rejoin_warning": "Bạn sẽ không thể tham gia lại trừ khi bạn được mời lại.",
+        "leave_dialog_only_admin_warning": "Bạn là quản trị viên duy nhất của không gian này. Rời khỏi nó sẽ có nghĩa là không ai có quyền kiểm soát nó.",
+        "leave_dialog_only_admin_room_warning": "Bạn là quản trị viên duy nhất của một số phòng hoặc space mà bạn muốn rời khỏi. Rời khỏi họ sẽ Rời khỏi họ mà không có bất kỳ quản trị viên nào.",
+        "leave_dialog_title": "Rời khỏi %(spaceName)s",
+        "leave_dialog_description": "Bạn sắp rời khỏi <spaceName/>.",
+        "leave_dialog_option_intro": "Bạn có muốn rời khỏi các phòng trong space này?",
+        "leave_dialog_option_none": "Không rời bất kỳ phòng nào",
+        "leave_dialog_option_all": "Rời tất cả phòng",
+        "leave_dialog_option_specific": "Rời một vài phòng",
+        "leave_dialog_action": "Rời space"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Homeserver này không được cấu hình để hiển thị bản đồ.",
@@ -4066,5 +4060,13 @@
         "disabled_dialog_description": "Bật '%(manageIntegrations)s' trong cài đặt để thực hiện.",
         "impossible_dialog_title": "Tích hợp không được phép",
         "impossible_dialog_description": "%(brand)s của bạn không cho phép bạn sử dụng trình quản lý tích hợp để thực hiện việc này. Vui lòng liên hệ với quản trị viên."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Trước đây, bạn đã sử dụng %(brand)s trên %(host)s khi đã bật tính năng tải chậm các thành viên. Trong phiên bản này, tính năng tải lười biếng bị vô hiệu hóa. Vì bộ nhớ cache cục bộ không tương thích giữa hai cài đặt này, %(brand)s cần phải đồng bộ hóa lại tài khoản của bạn.",
+        "disabled_description2": "Nếu phiên bản khác của %(brand)s vẫn đang mở trong một tab khác, vui lòng đóng nó lại vì việc sử dụng %(brand)s trên cùng một máy chủ với cả hai chế độ tải chậm được bật và tắt đồng thời sẽ gây ra sự cố.",
+        "disabled_title": "Bộ nhớ cache cục bộ không tương thích",
+        "disabled_action": "Xóa bộ nhớ cache và đồng bộ hóa lại",
+        "resync_description": "%(brand)s hiện sử dụng bộ nhớ ít hơn 3-5 lần, bằng cách chỉ tải thông tin về những người dùng khác khi cần thiết. Vui lòng đợi trong khi chúng tôi đồng bộ hóa lại với máy chủ!",
+        "resync_title": "Đang cập nhật %(brand)s"
     }
 }

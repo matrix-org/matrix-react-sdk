@@ -92,9 +92,11 @@ const KeySignatureUploadFailedDialog: React.FC<IProps> = ({ failures, source, co
             </div>
         );
     } else {
-        let text = _t("Upload completed");
+        let text = _t("encryption|key_signature_upload_completed");
         if (!success) {
-            text = cancelled ? _t("Cancelled signature upload") : _t("Unable to upload");
+            text = cancelled
+                ? _t("encryption|key_signature_upload_cancelled")
+                : _t("encryption|key_signature_upload_failed");
         }
 
         body = (
@@ -107,7 +109,11 @@ const KeySignatureUploadFailedDialog: React.FC<IProps> = ({ failures, source, co
 
     return (
         <BaseDialog
-            title={success ? _t("Signature upload success") : _t("Signature upload failed")}
+            title={
+                success
+                    ? _t("encryption|key_signature_upload_success_title")
+                    : _t("encryption|key_signature_upload_failed_title")
+            }
             fixedWidth={false}
             onFinished={() => {}}
         >

@@ -63,8 +63,6 @@
     "Home": "Pradžia",
     "Restricted": "Apribotas",
     "Moderator": "Moderatorius",
-    "Incompatible local cache": "Nesuderinamas vietinis podėlis",
-    "Updating %(brand)s": "Atnaujinama %(brand)s",
     "This will allow you to reset your password and receive notifications.": "Tai jums leis iš naujo nustatyti slaptažodį ir gauti pranešimus.",
     "Unable to restore backup": "Nepavyko atkurti atsarginės kopijos",
     "No backup found!": "Nerasta jokios atsarginės kopijos!",
@@ -198,7 +196,6 @@
     "Link to most recent message": "Nuoroda į naujausią žinutę",
     "Share Room Message": "Bendrinti Kambario Žinutę",
     "Share Room": "Bendrinti Kambarį",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
     "Join Room": "Prisijungti prie kambario",
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Neleisti vartotojams kalbėti senoje kambario versijoje ir paskelbti pranešimą, kuriame vartotojams patariama persikelti į naują kambarį",
     "Update any local room aliases to point to the new room": "Atnaujinkite vietinių kambarių slapyvardžius, kad nurodytumėte į naująjį kambarį",
@@ -214,8 +211,6 @@
     "Backup version:": "Atsarginės kopijos versija:",
     "Your area is experiencing difficulties connecting to the internet.": "Jūsų vietovėje kyla sunkumų prisijungiant prie interneto.",
     "Your server isn't responding to some of your requests. Below are some of the most likely reasons.": "Jūsų serveris neatsako į kai kurias jūsų užklausas. Žemiau pateikiamos kelios labiausiai tikėtinos priežastys.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
     "Security Phrase": "Slaptafrazė",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Paprastai tai turi įtakos tik kambario apdorojimui serveryje. Jei jūs turite problemų su savo %(brand)s, <a>praneškite apie klaidą</a>.",
     "Azerbaijan": "Azerbaidžanas",
@@ -350,12 +345,6 @@
     "Message edits": "Žinutės redagavimai",
     "Your homeserver doesn't seem to support this feature.": "Panašu, kad jūsų namų serveris nepalaiko šios galimybės.",
     "If they don't match, the security of your communication may be compromised.": "Jei jie nesutampa, gali būti pažeistas jūsų komunikacijos saugumas.",
-    "Clear cache and resync": "Išvalyti talpyklą ir sinchronizuoti iš naujo",
-    "Signature upload failed": "Parašo įkėlimas nepavyko",
-    "Signature upload success": "Parašo įkėlimas sėkmingas",
-    "Unable to upload": "Nepavyksta įkelti",
-    "Cancelled signature upload": "Atšauktas parašo įkėlimas",
-    "Upload completed": "Įkėlimas baigtas",
     "%(brand)s encountered an error during upload of:": "%(brand)s aptiko klaidą įkeliant:",
     "a key signature": "rakto parašas",
     "a new master key signature": "naujas pagrindinio rakto parašas",
@@ -2030,7 +2019,12 @@
         "incompatible_database_sign_out_description": "Tam, kad neprarastumėte savo pokalbių istorijos, prieš atsijungdami turite eksportuoti kambario raktus. Norėdami tai padaryti, turėsite grįžti į naujesnę %(brand)s versiją",
         "incompatible_database_description": "Anksčiau šiame seanse naudojote naujesnę %(brand)s versiją. Norėdami vėl naudoti šią versiją su visapusiu šifravimu, turėsite atsijungti ir prisijungti iš naujo.",
         "incompatible_database_title": "Nesuderinama duomenų bazė",
-        "incompatible_database_disable": "Tęsti išjungus šifravimą"
+        "incompatible_database_disable": "Tęsti išjungus šifravimą",
+        "key_signature_upload_completed": "Įkėlimas baigtas",
+        "key_signature_upload_cancelled": "Atšauktas parašo įkėlimas",
+        "key_signature_upload_failed": "Nepavyksta įkelti",
+        "key_signature_upload_success_title": "Parašo įkėlimas sėkmingas",
+        "key_signature_upload_failed_title": "Parašo įkėlimas nepavyko"
     },
     "emoji": {
         "category_frequently_used": "Dažnai Naudojama",
@@ -2870,5 +2864,13 @@
         "disabled_dialog_title": "Integracijos yra išjungtos",
         "impossible_dialog_title": "Integracijos neleidžiamos",
         "impossible_dialog_description": "Jūsų %(brand)s neleidžia jums naudoti integracijų tvarkyklės tam atlikti. Susisiekite su administratoriumi."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
+        "disabled_description2": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
+        "disabled_title": "Nesuderinamas vietinis podėlis",
+        "disabled_action": "Išvalyti talpyklą ir sinchronizuoti iš naujo",
+        "resync_description": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
+        "resync_title": "Atnaujinama %(brand)s"
     }
 }

@@ -84,11 +84,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Erabiltzaileei gelaren bertsio zaharrean hitz egiten jarraitzea eragotzi, eta erabiltzaileei gela berrira mugitzea aholkatzeko mezu bat bidali",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Gela berriaren hasieran gela zaharrera esteka bat jarri jendeak mezu zaharrak ikus ditzan",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Egunkariak bidali aurretik, <a>GitHub arazo bat sortu</a> behar duzu gertatzen zaizuna azaltzeko.",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s-ek orain 3-5 aldiz memoria gutxiago darabil, beste erabiltzaileen informazioa behar denean besterik ez kargatzen. Itxaron zerbitzariarekin sinkronizatzen garen bitartean!",
-    "Updating %(brand)s": "%(brand)s eguneratzen",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Aurretik %(brand)s erabili duzu %(host)s zerbitzarian kideen karga alferra gaituta zenuela. Bertsio honetan karga alferra desgaituta dago. Katxe lokala bi ezarpen hauen artean bateragarria ez denez, %(brand)sek zure kontua berriro sinkronizatu behar du.",
-    "Incompatible local cache": "Katxe lokal bateraezina",
-    "Clear cache and resync": "Garbitu katxea eta sinkronizatu berriro",
     "Unable to load backup status": "Ezin izan da babes-kopiaren egoera kargatu",
     "Unable to restore backup": "Ezin izan da babes-kopia berrezarri",
     "No backup found!": "Ez da babes-kopiarik aurkitu!",
@@ -227,16 +222,11 @@
     "a device cross-signing signature": "gailuz zeharkako sinadura berria",
     "a key signature": "gako sinadura",
     "%(brand)s encountered an error during upload of:": "%(brand)sek errorea aurkitu du hau igotzean:",
-    "Upload completed": "Igoera burututa",
-    "Cancelled signature upload": "Sinadura igoera ezeztatuta",
-    "Signature upload success": "Sinaduren igoera ongi burutu da",
-    "Signature upload failed": "Sinaduren igoerak huts egin du",
     "Confirm by comparing the following with the User Settings in your other session:": "Berretsi honako hau zure beste saioaren erabiltzaile-ezarpenetan agertzen denarekin alderatuz:",
     "Confirm this user's session by comparing the following with their User Settings:": "Egiaztatu erabiltzailearen saio hau, honako hau bestearen erabiltzaile-ezarpenekin alderatuz:",
     "If they don't match, the security of your communication may be compromised.": "Ez badatoz bat, komunikazioaren segurtasuna konprometitua egon daiteke.",
     "Sign in with SSO": "Hasi saioa SSO-rekin",
     "Submit logs": "Bidali egunkariak",
-    "Unable to upload": "Ezin izan da igo",
     "You signed in to a new session without verifying it:": "Saio berria hasi duzu hau egiaztatu gabe:",
     "Verify your other session using one of the options below.": "Egiaztatu zure beste saioa beheko aukeretako batekin.",
     "IRC display name width": "IRC-ko pantaila izenaren zabalera",
@@ -1333,7 +1323,12 @@
         "incompatible_database_sign_out_description": "Zure txaten historiala ez galtzeko, zure gelako gakoak esportatu behar dituzu saioa amaitu aurretik. %(brand)s-en bertsio berriagora bueltatu behar zara hau egiteko",
         "incompatible_database_description": "%(brand)s bertsio berriago bat erabili duzu saio honekin. Berriro bertsio hau muturretik muturrerako zifratzearekin erabiltzeko, saioa amaitu eta berriro hasi beharko duzu.",
         "incompatible_database_title": "Datu-base bateraezina",
-        "incompatible_database_disable": "Jarraitu zifratzerik gabe"
+        "incompatible_database_disable": "Jarraitu zifratzerik gabe",
+        "key_signature_upload_completed": "Igoera burututa",
+        "key_signature_upload_cancelled": "Sinadura igoera ezeztatuta",
+        "key_signature_upload_failed": "Ezin izan da igo",
+        "key_signature_upload_success_title": "Sinaduren igoera ongi burutu da",
+        "key_signature_upload_failed_title": "Sinaduren igoerak huts egin du"
     },
     "emoji": {
         "category_frequently_used": "Maiz erabilia",
@@ -1922,5 +1917,12 @@
         "disabled_dialog_title": "Integrazioak desgaituta daude",
         "impossible_dialog_title": "Integrazioak ez daude baimenduta",
         "impossible_dialog_description": "Zure %(brand)s aplikazioak ez dizu hau egiteko integrazio kudeatzaile bat erabiltzen uzten. Kontaktatu administratzaileren batekin."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Aurretik %(brand)s erabili duzu %(host)s zerbitzarian kideen karga alferra gaituta zenuela. Bertsio honetan karga alferra desgaituta dago. Katxe lokala bi ezarpen hauen artean bateragarria ez denez, %(brand)sek zure kontua berriro sinkronizatu behar du.",
+        "disabled_title": "Katxe lokal bateraezina",
+        "disabled_action": "Garbitu katxea eta sinkronizatu berriro",
+        "resync_description": "%(brand)s-ek orain 3-5 aldiz memoria gutxiago darabil, beste erabiltzaileen informazioa behar denean besterik ez kargatzen. Itxaron zerbitzariarekin sinkronizatzen garen bitartean!",
+        "resync_title": "%(brand)s eguneratzen"
     }
 }

@@ -84,7 +84,6 @@
     "Stop users from speaking in the old version of the room, and post a message advising users to move to the new room": "Hindra användare från att prata i den gamla rumsversionen och posta ett meddelande som rekommenderar användare att flytta till det nya rummet",
     "Put a link back to the old room at the start of the new room so people can see old messages": "Sätta en länk tillbaka till det gamla rummet i början av det nya rummet så att folk kan se gamla meddelanden",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Innan du skickar in loggar måste du <a>skapa ett GitHub-ärende</a> för att beskriva problemet.",
-    "Updating %(brand)s": "Uppdaterar %(brand)s",
     "Dog": "Hund",
     "Cat": "Katt",
     "Lion": "Lejon",
@@ -151,11 +150,6 @@
     "Encrypted messages are secured with end-to-end encryption. Only you and the recipient(s) have the keys to read these messages.": "Krypterade meddelanden är säkrade med totalsträckskryptering. Bara du och mottagaren/na har nycklarna för att läsa dessa meddelanden.",
     "Remember my selection for this widget": "Kom ihåg mitt val för den här widgeten",
     "Unable to load backup status": "Kunde inte ladda status för säkerhetskopia",
-    "You've previously used %(brand)s on %(host)s with lazy loading of members enabled. In this version lazy loading is disabled. As the local cache is not compatible between these two settings, %(brand)s needs to resync your account.": "Du har tidigare använt %(brand)s på %(host)s med fördröjd inladdning av medlemmar aktiverat. I den här versionen är fördröjd inladdning inaktiverat. Eftersom den lokala cachen inte är kompatibel mellan dessa två inställningar behöver %(brand)s synkronisera om ditt konto.",
-    "If the other version of %(brand)s is still open in another tab, please close it as using %(brand)s on the same host with both lazy loading enabled and disabled simultaneously will cause issues.": "Om den andra versionen av %(brand)s fortfarande är öppen i en annan flik, stäng den eftersom användning av %(brand)s på samma värd med fördröjd inladdning både aktiverad och inaktiverad samtidigt kommer att orsaka problem.",
-    "Incompatible local cache": "Inkompatibel lokal cache",
-    "Clear cache and resync": "Töm cache och synkronisera om",
-    "%(brand)s now uses 3-5x less memory, by only loading information about other users when needed. Please wait whilst we resynchronise with the server!": "%(brand)s använder nu 3-5 gånger mindre minne, genom att bara ladda information om andra användare när det behövs. Vänta medan vi återsynkroniserar med servern!",
     "I don't want my encrypted messages": "Jag vill inte ha mina krypterade meddelanden",
     "Manually export keys": "Exportera nycklar manuellt",
     "You'll lose access to your encrypted messages": "Du kommer att förlora åtkomst till dina krypterade meddelanden",
@@ -227,11 +221,6 @@
     "a device cross-signing signature": "en enhets korssigneringssignatur",
     "a key signature": "en nyckelsignatur",
     "%(brand)s encountered an error during upload of:": "%(brand)s stötte på ett fel vid uppladdning av:",
-    "Upload completed": "Uppladdning slutförd",
-    "Cancelled signature upload": "Avbröt signaturuppladdning",
-    "Unable to upload": "Kunde inte ladda upp",
-    "Signature upload success": "Signaturuppladdning lyckades",
-    "Signature upload failed": "Signaturuppladdning misslyckades",
     "Confirm by comparing the following with the User Settings in your other session:": "Bekräfta genom att jämföra följande med användarinställningarna i din andra session:",
     "Confirm this user's session by comparing the following with their User Settings:": "Bekräfta den här användarens session genom att jämföra följande med deras användarinställningar:",
     "If they don't match, the security of your communication may be compromised.": "Om de inte matchar så kan din kommunikations säkerhet vara äventyrad.",
@@ -554,7 +543,6 @@
     },
     "Failed to start livestream": "Misslyckades att starta livestream",
     "Unable to start audio streaming.": "Kunde inte starta ljudströmning.",
-    "Leave space": "Lämna utrymmet",
     "<inviter/> invites you": "<inviter/> bjuder in dig",
     "No results found": "Inga resultat funna",
     "%(count)s rooms": {
@@ -583,16 +571,7 @@
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Bestäm vilka utrymmen som kan komma åt det hör rummet. Om ett utrymme väljs så kan dess medlemmar hitta och gå med i <RoomName/>.",
     "Select spaces": "Välj utrymmen",
     "You're removing all spaces. Access will default to invite only": "Du tar bort alla utrymmen. Åtkomst kommer att sättas som förval till endast inbjudan",
-    "Leave %(spaceName)s": "Lämna %(spaceName)s",
-    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "Du är den enda administratören i vissa rum eller utrymmen du vill lämna. Om du lämnar så kommer vissa av dem sakna administratör.",
-    "You're the only admin of this space. Leaving it will mean no one has control over it.": "Du är den enda administratören i utrymmet. Om du lämnar nu så kommer ingen ha kontroll över det.",
-    "You won't be able to rejoin unless you are re-invited.": "Du kommer inte kunna gå med igen om du inte bjuds in igen.",
     "To join a space you'll need an invite.": "För att gå med i ett utrymme så behöver du en inbjudan.",
-    "Would you like to leave the rooms in this space?": "Vill du lämna rummen i det här utrymmet?",
-    "You are about to leave <spaceName/>.": "Du kommer att lämna <spaceName/>.",
-    "Leave some rooms": "Lämna vissa rum",
-    "Leave all rooms": "Lämna alla rum",
-    "Don't leave any rooms": "Lämna inga rum",
     "%(count)s reply": {
         "one": "%(count)s svar",
         "other": "%(count)s svar"
@@ -2941,7 +2920,12 @@
         "incompatible_database_sign_out_description": "För att undvika att förlora din chatthistorik måste du exportera dina rumsnycklar innan du loggar ut. Du behöver gå tillbaka till den nyare versionen av %(brand)s för att göra detta",
         "incompatible_database_description": "Du har tidigare använt en nyare version av %(brand)s med den här sessionen. Om du vill använda den här versionen igen med totalsträckskryptering behöver du logga ut och logga in igen.",
         "incompatible_database_title": "Inkompatibel databas",
-        "incompatible_database_disable": "Fortsätt med kryptering inaktiverad"
+        "incompatible_database_disable": "Fortsätt med kryptering inaktiverad",
+        "key_signature_upload_completed": "Uppladdning slutförd",
+        "key_signature_upload_cancelled": "Avbröt signaturuppladdning",
+        "key_signature_upload_failed": "Kunde inte ladda upp",
+        "key_signature_upload_success_title": "Signaturuppladdning lyckades",
+        "key_signature_upload_failed_title": "Signaturuppladdning misslyckades"
     },
     "emoji": {
         "category_frequently_used": "Ofta använda",
@@ -3511,7 +3495,17 @@
             "create_prompt": "Skapa ett nytt rum",
             "subspace_moved_note": "Tilläggning av utrymmen har flyttats."
         },
-        "room_filter_placeholder": "Sök efter rum"
+        "room_filter_placeholder": "Sök efter rum",
+        "leave_dialog_public_rejoin_warning": "Du kommer inte kunna gå med igen om du inte bjuds in igen.",
+        "leave_dialog_only_admin_warning": "Du är den enda administratören i utrymmet. Om du lämnar nu så kommer ingen ha kontroll över det.",
+        "leave_dialog_only_admin_room_warning": "Du är den enda administratören i vissa rum eller utrymmen du vill lämna. Om du lämnar så kommer vissa av dem sakna administratör.",
+        "leave_dialog_title": "Lämna %(spaceName)s",
+        "leave_dialog_description": "Du kommer att lämna <spaceName/>.",
+        "leave_dialog_option_intro": "Vill du lämna rummen i det här utrymmet?",
+        "leave_dialog_option_none": "Lämna inga rum",
+        "leave_dialog_option_all": "Lämna alla rum",
+        "leave_dialog_option_specific": "Lämna vissa rum",
+        "leave_dialog_action": "Lämna utrymmet"
     },
     "location_sharing": {
         "MapStyleUrlNotConfigured": "Den här hemservern har inte konfigurerats för att visa kartor.",
@@ -4307,5 +4301,13 @@
         "disabled_dialog_description": "Aktivera '%(manageIntegrations)s' i inställningarna för att göra detta.",
         "impossible_dialog_title": "Integrationer är inte tillåtna",
         "impossible_dialog_description": "Din %(brand)s tillåter dig inte att använda en integrationshanterare för att göra detta. Vänligen kontakta en administratör."
+    },
+    "lazy_loading": {
+        "disabled_description1": "Du har tidigare använt %(brand)s på %(host)s med fördröjd inladdning av medlemmar aktiverat. I den här versionen är fördröjd inladdning inaktiverat. Eftersom den lokala cachen inte är kompatibel mellan dessa två inställningar behöver %(brand)s synkronisera om ditt konto.",
+        "disabled_description2": "Om den andra versionen av %(brand)s fortfarande är öppen i en annan flik, stäng den eftersom användning av %(brand)s på samma värd med fördröjd inladdning både aktiverad och inaktiverad samtidigt kommer att orsaka problem.",
+        "disabled_title": "Inkompatibel lokal cache",
+        "disabled_action": "Töm cache och synkronisera om",
+        "resync_description": "%(brand)s använder nu 3-5 gånger mindre minne, genom att bara ladda information om andra användare när det behövs. Vänta medan vi återsynkroniserar med servern!",
+        "resync_title": "Uppdaterar %(brand)s"
     }
 }
