@@ -16,6 +16,7 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         <form
           aria-hidden="true"
           class="_root_1eiqo_23"
+          data-testid="summary-search"
           style="flex: 1;"
         >
           <label

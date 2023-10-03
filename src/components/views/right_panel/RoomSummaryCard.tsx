@@ -360,6 +360,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                     style={{
                         flex: "1",
                     }}
+                    data-testid="summary-search"
                 >
                     <Search name="search" className="mx_RoomSummaryCard_search" placeholder={_t("action|search")} />
                 </Root>
