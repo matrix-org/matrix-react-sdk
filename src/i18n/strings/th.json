@@ -1,64 +1,17 @@
 {
-    "No Microphones detected": "ไม่พบไมโครโฟน",
-    "Default": "ค่าเริ่มต้น",
-    "Decrypt %(text)s": "ถอดรหัส %(text)s",
-    "Download %(text)s": "ดาวน์โหลด %(text)s",
-    "Low priority": "ความสำคัญต่ำ",
-    "Profile": "โปรไฟล์",
-    "Reason": "เหตุผล",
-    "Notifications": "การแจ้งเตือน",
     "unknown error code": "รหัสข้อผิดพลาดที่ไม่รู้จัก",
-    "Favourite": "รายการโปรด",
-    "Failed to forget room %(errCode)s": "การลืมห้องล้มเหลว %(errCode)s",
-    "No Webcams detected": "ไม่พบกล้องเว็บแคม",
-    "Authentication": "การยืนยันตัวตน",
     "%(items)s and %(lastItem)s": "%(items)s และ %(lastItem)s",
     "and %(count)s others...": {
         "one": "และอีกหนึ่งผู้ใช้...",
         "other": "และอีก %(count)s ผู้ใช้..."
     },
     "An error has occurred.": "เกิดข้อผิดพลาด",
-    "Are you sure?": "คุณแน่ใจหรือไม่?",
-    "Are you sure you want to leave the room '%(roomName)s'?": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?",
-    "Are you sure you want to reject the invitation?": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
-    "Deactivate Account": "ปิดการใช้งานบัญชี",
     "Email address": "ที่อยู่อีเมล",
-    "Error decrypting attachment": "การถอดรหัสไฟล์แนบผิดพลาด",
-    "Failed to ban user": "การแบนผู้ใช้ล้มเหลว",
-    "Failed to change password. Is your password correct?": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
-    "Failed to reject invite": "การปฏิเสธคำเชิญล้มเหลว",
-    "Failed to reject invitation": "การปฏิเสธคำเชิญล้มเหลว",
-    "Failed to set display name": "การตั้งชื่อที่แสดงล้มเหลว",
-    "Failed to unban": "การถอนแบนล้มเหลว",
-    "Filter room members": "กรองสมาชิกห้อง",
-    "Forget room": "ลืมห้อง",
-    "Historical": "ประวัติแชทเก่า",
-    "Incorrect verification code": "รหัสยืนยันไม่ถูกต้อง",
-    "Invalid Email Address": "ที่อยู่อีเมลไม่ถูกต้อง",
-    "Invalid file%(extra)s": "ไฟล์ %(extra)s ไม่ถูกต้อง",
-    "Invited": "เชิญแล้ว",
     "Join Room": "เข้าร่วมห้อง",
-    "Jump to first unread message.": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
     "Moderator": "ผู้ช่วยดูแล",
-    "New passwords must match each other.": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
     "not specified": "ไม่ได้ระบุ",
-    "<not supported>": "<ไม่รองรับ>",
-    "No more results": "ไม่มีผลลัพธ์อื่น",
     "Please check your email and click on the link it contains. Once this is done, click continue.": "กรุณาเช็คอีเมลและคลิกลิงก์ข้างใน หลังจากนั้น คลิกดำเนินการต่อ",
-    "Reject invitation": "ปฏิเสธคำเชิญ",
-    "Return to login screen": "กลับไปยังหน้าลงชื่อเข้าใช้",
-    "Rooms": "ห้องสนทนา",
-    "Search failed": "การค้นหาล้มเหลว",
-    "Server may be unavailable, overloaded, or search timed out :(": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :(",
     "Create new room": "สร้างห้องใหม่",
-    "Failed to change power level": "การเปลี่ยนระดับอำนาจล้มเหลว",
-    "Unable to add email address": "ไมาสามารถเพิ่มที่อยู่อีเมล",
-    "Unable to verify email address.": "ไม่สามารถยืนยันที่อยู่อีเมล",
-    "Uploading %(filename)s": "กำลังอัปโหลด %(filename)s",
-    "Uploading %(filename)s and %(count)s others": {
-        "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
-        "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
-    },
     "Warning!": "คำเตือน!",
     "Sun": "อา.",
     "Mon": "จ.",
@@ -82,68 +35,35 @@
     "%(weekDayName)s, %(monthName)s %(day)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s %(day)s %(monthName)s %(fullYear)s %(time)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s %(time)s",
-    "Export room keys": "ส่งออกกุณแจห้อง",
-    "Confirm passphrase": "ยืนยันรหัสผ่าน",
-    "Import room keys": "นำเข้ากุณแจห้อง",
-    "File to import": "ไฟล์ที่จะนำเข้า",
     "Confirm Removal": "ยืนยันการลบ",
-    "Unknown error": "ข้อผิดพลาดที่ไม่รู้จัก",
     "Home": "เมนูหลัก",
     "(~%(count)s results)": {
         "one": "(~%(count)s ผลลัพท์)",
         "other": "(~%(count)s ผลลัพท์)"
     },
-    "A new password must be entered.": "กรุณากรอกรหัสผ่านใหม่",
     "Custom level": "กำหนดระดับเอง",
-    "No display name": "ไม่มีชื่อที่แสดง",
-    "%(roomName)s does not exist.": "ไม่มีห้อง %(roomName)s อยู่จริง",
-    "Enter passphrase": "กรอกรหัสผ่าน",
-    "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)",
     "Verification Pending": "รอการตรวจสอบ",
-    "Error decrypting image": "เกิดข้อผิดพลาดในการถอดรหัสรูป",
-    "Error decrypting video": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ",
     "Sunday": "วันอาทิตย์",
-    "Notification targets": "เป้าหมายการแจ้งเตือน",
     "Today": "วันนี้",
     "Friday": "วันศุกร์",
     "Changelog": "บันทึกการเปลี่ยนแปลง",
-    "This Room": "ห้องนี้",
     "Unavailable": "ไม่มี",
     "Send": "ส่ง",
-    "Source URL": "URL ต้นฉบับ",
     "Tuesday": "วันอังคาร",
-    "Search…": "ค้นหา…",
     "Unnamed room": "ห้องที่ไม่มีชื่อ",
     "Saturday": "วันเสาร์",
     "Monday": "วันจันทร์",
-    "All Rooms": "ทุกห้อง",
     "Wednesday": "วันพุธ",
-    "All messages": "ทุกข้อความ",
-    "Invite to this room": "เชิญเข้าห้องนี้",
     "You cannot delete this message. (%(code)s)": "คุณไม่สามารถลบข้อความนี้ได้ (%(code)s)",
     "Thursday": "วันพฤหัสบดี",
     "Yesterday": "เมื่อวานนี้",
-    "Low Priority": "ความสำคัญต่ำ",
-    "Explore rooms": "สำรวจห้อง",
     "You most likely do not want to reset your event index store": "คุณมักไม่ต้องการรีเซ็ตที่เก็บดัชนีเหตุการณ์ของคุณ",
     "Reset event store?": "รีเซ็ตที่เก็บกิจกรรม?",
     "The server is not configured to indicate what the problem is (CORS).": "เซิร์ฟเวอร์ไม่ได้กำหนดค่าเพื่อระบุว่าปัญหาคืออะไร (CORS).",
     "A connection error occurred while trying to contact the server.": "เกิดข้อผิดพลาดในการเชื่อมต่อขณะพยายามติดต่อกับเซิร์ฟเวอร์.",
     "Your area is experiencing difficulties connecting to the internet.": "พื้นที่ของคุณประสบปัญหาในการเชื่อมต่ออินเทอร์เน็ต.",
     "The server has denied your request.": "เซิร์ฟเวอร์ปฏิเสธคำขอของคุณ.",
-    "Permission Required": "ต้องได้รับอนุญาต",
     "Session ID": "รหัสเซสชัน",
-    "Encryption not enabled": "ไม่ได้เปิดใช้งานการเข้ารหัส",
-    "Deactivate user": "ปิดใช้งานผู้ใช้",
-    "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?": "การปิดใช้งานผู้ใช้รายนี้จะออกจากระบบและป้องกันไม่ให้กลับเข้าสู่ระบบ นอกจากนี้ ผู้ใช้จะออกจากห้องทั้งหมดที่พวกเขาอยู่ การดำเนินการนี้ไม่สามารถย้อนกลับได้ คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานผู้ใช้รายนี้?",
-    "Deactivate user?": "ปิดการใช้งานผู้ใช้?",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "คุณจะไม่สามารถเลิกทำการเปลี่ยนแปลงนี้ได้ เนื่องจากคุณกำลังส่งเสริมผู้ใช้ให้มีระดับพลังเดียวกันกับตัวคุณเอง.",
-    "Failed to mute user": "ไม่สามารถปิดเสียงผู้ใช้",
-    "Ban from %(roomName)s": "แบนจาก %(roomName)s",
-    "Unban from %(roomName)s": "ปลดแบนจาก %(roomName)s",
-    "Ban from room": "แบนจากห้อง",
-    "Unban from room": "ปลดแบนจากห้อง",
-    "Ban from space": "แบนจากสเปซ",
     "Barbados": "บาร์เบโดส",
     "Bangladesh": "บังคลาเทศ",
     "Bahrain": "บาห์เรน",
@@ -166,41 +86,11 @@
     "Afghanistan": "อัฟกานิสถาน",
     "United States": "สหรัฐอเมริกา",
     "United Kingdom": "สหราชอาณาจักร",
-    "Main address": "ที่อยู่หลัก",
-    "Error removing address": "เกิดข้อผิดพลาดในการนำที่อยู่ออก",
-    "There was an error removing that address. It may no longer exist or a temporary error occurred.": "เกิดข้อผิดพลาดในการลบที่อยู่นั้น อาจไม่มีอยู่อีกต่อไปหรือเกิดข้อผิดพลาดชั่วคราว.",
-    "You don't have permission to delete the address.": "คุณไม่ได้รับอนุญาตให้ลบที่อยู่.",
-    "There was an error creating that address. It may not be allowed by the server or a temporary failure occurred.": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-    "Error creating address": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
-    "There was an error updating the room's alternative addresses. It may not be allowed by the server or a temporary failure occurred.": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่สำรองของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-    "There was an error updating the room's main address. It may not be allowed by the server or a temporary failure occurred.": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลักของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
-    "Error updating main address": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลัก",
-    "Copy link to thread": "คัดลอกลิงค์ไปยังกระทู้",
-    "View in room": "ดูในห้อง",
-    "Message Actions": "การดำเนินการกับข้อความ",
-    "Text": "ตัวอักษร",
-    "Create a link": "สร้างลิงค์",
-    "Stop recording": "หยุดการบันทึก",
-    "We didn't find a microphone on your device. Please check your settings and try again.": "เราไม่พบไมโครโฟนบนอุปกรณ์ของคุณ โปรดตรวจสอบการตั้งค่าของคุณแล้วลองอีกครั้ง.",
-    "No microphone found": "ไม่พบไมโครโฟน",
-    "We were unable to access your microphone. Please check your browser settings and try again.": "เราไม่สามารถเข้าถึงไมโครโฟนของคุณได้ โปรดตรวจสอบการตั้งค่าเบราว์เซอร์ของคุณแล้วลองอีกครั้ง.",
-    "Unable to access your microphone": "ไม่สามารถเข้าถึงไมโครโฟนของคุณ",
-    "Mark all as read": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
-    "Open thread": "เปิดกระทู้",
     "%(count)s reply": {
         "one": "%(count)s ตอบ",
         "other": "%(count)s ตอบกลับ"
     },
-    "Invited by %(sender)s": "ได้รับเชิญจาก %(sender)s",
-    "Revoke invite": "ยกเลิกการเชิญ",
-    "Admin Tools": "เครื่องมือผู้ดูแลระบบ",
-    "Could not revoke the invite. The server may be experiencing a temporary problem or you do not have sufficient permissions to revoke the invite.": "ไม่สามารถยกเลิกคำเชิญได้ เซิร์ฟเวอร์อาจประสบปัญหาชั่วคราวหรือคุณไม่มีสิทธิ์เพียงพอที่จะยกเลิกคำเชิญ",
-    "Failed to revoke invite": "ยกเลิกคำเชิญไม่สำเร็จ",
-    "Add some now": "เพิ่มบางส่วนในขณะนี้",
-    "You don't currently have any stickerpacks enabled": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
     "Failed to connect to integration manager": "ไม่สามารถเชื่อมต่อกับตัวจัดการการรวม",
-    "General failure": "ข้อผิดพลาดทั่วไป",
-    "General": "ทั่วไป",
     "collapse": "ยุบ",
     "common": {
         "encryption_enabled": "เปิดใช้งานการเข้ารหัส",
@@ -232,7 +122,15 @@
         "unnamed_room": "ห้องที่ยังไม่ได้ตั้งชื่อ",
         "stickerpack": "ชุดสติ๊กเกอร์",
         "on": "เปิด",
-        "off": "ปิด"
+        "off": "ปิด",
+        "advanced": "ขึ้นสูง",
+        "general": "ทั่วไป",
+        "profile": "โปรไฟล์",
+        "authentication": "การยืนยันตัวตน",
+        "rooms": "ห้องสนทนา",
+        "low_priority": "ความสำคัญต่ำ",
+        "historical": "ประวัติแชทเก่า",
+        "are_you_sure": "คุณแน่ใจหรือไม่?"
     },
     "action": {
         "continue": "ดำเนินการต่อ",
@@ -275,7 +173,8 @@
         "import": "นำเข้า",
         "export": "ส่งออก",
         "submit": "ส่ง",
-        "unban": "ปลดแบน"
+        "unban": "ปลดแบน",
+        "explore_rooms": "สำรวจห้อง"
     },
     "keyboard": {
         "home": "เมนูหลัก"
@@ -288,10 +187,15 @@
         "autocomplete": {
             "command_description": "คำสั่ง",
             "user_description": "ผู้ใช้"
+        },
+        "poll_button_no_perms_title": "ต้องได้รับอนุญาต",
+        "stop_voice_message": "หยุดการบันทึก",
+        "link_modal": {
+            "title_create": "สร้างลิงค์",
+            "text_field_label": "ตัวอักษร",
+            "link_field_label": "ลิงค์"
         }
     },
-    "Link": "ลิงค์",
-    "Code": "โค้ด",
     "power_level": {
         "default": "ค่าเริ่มต้น",
         "moderator": "ผู้ช่วยดูแล",
@@ -322,7 +226,8 @@
             "noisy": "เสียงดัง",
             "error_permissions_denied": "%(brand)s ไม่มีสิทธิ์ส่งการแจ้งเตือน - กรุณาตรวจสอบการตั้งค่าเบราว์เซอร์ของคุณ",
             "error_permissions_missing": "%(brand)s ไม่ได้รับสิทธิ์ส่งการแจ้งเตือน - กรุณาลองใหม่อีกครั้ง",
-            "error_title": "ไม่สามารถเปิดใช้งานการแจ้งเตือน"
+            "error_title": "ไม่สามารถเปิดใช้งานการแจ้งเตือน",
+            "push_targets": "เป้าหมายการแจ้งเตือน"
         },
         "appearance": {
             "timeline_image_size_default": "ค่าเริ่มต้น",
@@ -381,7 +286,26 @@
             "add_msisdn_confirm_sso_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์นี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
             "add_msisdn_confirm_button": "ยืนยันการเพิ่มหมายเลขโทรศัพท์",
             "add_msisdn_confirm_body": "คลิกปุ่มด้านล่างเพื่อยืนยันการเพิ่มหมายเลขโทรศัพท์นี้.",
-            "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์"
+            "add_msisdn_dialog_title": "เพิ่มหมายเลขโทรศัพท์",
+            "name_placeholder": "ไม่มีชื่อที่แสดง",
+            "error_password_change_403": "การเปลี่ยนรหัสผ่านล้มเหลว รหัสผ่านของคุณถูกต้องหรือไม่?",
+            "deactivate_section": "ปิดการใช้งานบัญชี",
+            "error_email_verification": "ไม่สามารถยืนยันที่อยู่อีเมล",
+            "incorrect_msisdn_verification": "รหัสยืนยันไม่ถูกต้อง",
+            "error_set_name": "การตั้งชื่อที่แสดงล้มเหลว",
+            "error_invalid_email": "ที่อยู่อีเมลไม่ถูกต้อง",
+            "error_add_email": "ไมาสามารถเพิ่มที่อยู่อีเมล"
+        },
+        "voip": {
+            "audio_input_empty": "ไม่พบไมโครโฟน",
+            "video_input_empty": "ไม่พบกล้องเว็บแคม"
+        },
+        "key_export_import": {
+            "export_title": "ส่งออกกุณแจห้อง",
+            "enter_passphrase": "กรอกรหัสผ่าน",
+            "confirm_passphrase": "ยืนยันรหัสผ่าน",
+            "import_title": "นำเข้ากุณแจห้อง",
+            "file_to_import": "ไฟล์ที่จะนำเข้า"
         }
     },
     "timeline": {
@@ -390,12 +314,35 @@
             "remove": "%(senderDisplayName)s ลบชื่อห้อง",
             "set": "%(senderDisplayName)s เปลี่ยนชื่อห้องไปเป็น %(roomName)s"
         },
-        "m.image": "%(senderDisplayName)s ได้ส่งรูป",
         "m.room.third_party_invite": {
             "sent": "%(senderName)s ได้ส่งคำเชิญให้ %(targetDisplayName)s เข้าร่วมห้อง"
         },
         "m.room.power_levels": {
             "user_from_to": "%(userId)s จาก %(fromPowerLevel)s ไปเป็น %(toPowerLevel)s"
+        },
+        "context_menu": {
+            "external_url": "URL ต้นฉบับ"
+        },
+        "mab": {
+            "label": "การดำเนินการกับข้อความ",
+            "view_in_room": "ดูในห้อง",
+            "copy_link_thread": "คัดลอกลิงค์ไปยังกระทู้"
+        },
+        "m.room.encryption": {
+            "disabled": "ไม่ได้เปิดใช้งานการเข้ารหัส"
+        },
+        "m.file": {
+            "download_label": "ดาวน์โหลด %(text)s",
+            "error_decrypting": "การถอดรหัสไฟล์แนบผิดพลาด",
+            "decrypt_label": "ถอดรหัส %(text)s",
+            "error_invalid": "ไฟล์ %(extra)s ไม่ถูกต้อง"
+        },
+        "m.image": {
+            "sent": "%(senderDisplayName)s ได้ส่งรูป",
+            "error_decrypting": "เกิดข้อผิดพลาดในการถอดรหัสรูป"
+        },
+        "m.video": {
+            "error_decrypting": "เกิดข้อผิดพลาดในการถอดรหัสวิดิโอ"
         }
     },
     "slash_command": {
@@ -448,12 +395,15 @@
         "no_permission_conference_description": "คุณไม่ได้รับอนุญาตให้เริ่มการประชุมทางโทรศัพท์ในห้องนี้",
         "default_device": "อุปกรณ์เริ่มต้น",
         "no_media_perms_title": "ไม่มีสิทธิ์เข้าถึงสื่อ",
-        "no_media_perms_description": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง"
+        "no_media_perms_description": "คุณอาจต้องให้สิทธิ์ %(brand)s เข้าถึงไมค์โครโฟนไมค์โครโฟน/กล้องเว็บแคม ด้วยตัวเอง",
+        "unable_to_access_audio_input_title": "ไม่สามารถเข้าถึงไมโครโฟนของคุณ",
+        "unable_to_access_audio_input_description": "เราไม่สามารถเข้าถึงไมโครโฟนของคุณได้ โปรดตรวจสอบการตั้งค่าเบราว์เซอร์ของคุณแล้วลองอีกครั้ง.",
+        "no_audio_input_title": "ไม่พบไมโครโฟน",
+        "no_audio_input_description": "เราไม่พบไมโครโฟนบนอุปกรณ์ของคุณ โปรดตรวจสอบการตั้งค่าของคุณแล้วลองอีกครั้ง."
     },
     "devtools": {
         "category_room": "ห้อง"
     },
-    "Advanced": "ขึ้นสูง",
     "labs": {
         "group_profile": "โปรไฟล์",
         "group_rooms": "ห้องสนทนา"
@@ -487,14 +437,21 @@
         "identifier_label": "เข้าสู่ระบบด้วย",
         "uia": {
             "sso_title": "ใช้การลงชื่อเพียงครั้งเดียวเพื่อดำเนินการต่อ",
-            "sso_body": "ยืนยันการเพิ่มที่อยู่อีเมลนี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ."
+            "sso_body": "ยืนยันการเพิ่มที่อยู่อีเมลนี้โดยใช้การลงชื่อเพียงครั้งเดียวเพื่อพิสูจน์ตัวตนของคุณ.",
+            "code": "โค้ด"
         },
         "sso_failed_missing_storage": "เราส่งคำขอให้เบราว์เซอร์จดจำโฮมเซิร์ฟเวอร์ที่คุณใช้เพื่ออนุญาตให้คุณลงชื่อเข้าใช้, แต่น่าเสียดายที่เบราว์เซอร์ของคุณไม่จดจำ. ไปที่หน้าลงชื่อเข้าใช้แล้วลองอีกครั้ง.",
         "oidc": {
             "error_title": "เราไม่สามารถเข้าสู่ระบบของคุณได้"
         },
         "reset_password_email_not_found_title": "ไม่พบที่อยู่อีเมล",
-        "reset_password_email_not_associated": "ที่อยู่อีเมลของคุณไม่ได้เชื่อมโยงกับ Matrix ID บนโฮมเซิร์ฟเวอร์นี้"
+        "reset_password_email_not_associated": "ที่อยู่อีเมลของคุณไม่ได้เชื่อมโยงกับ Matrix ID บนโฮมเซิร์ฟเวอร์นี้",
+        "reset_password": {
+            "password_not_entered": "กรุณากรอกรหัสผ่านใหม่",
+            "passwords_mismatch": "รหัสผ่านใหม่ทั้งสองช่องต้องตรงกัน",
+            "return_to_login": "กลับไปยังหน้าลงชื่อเข้าใช้"
+        },
+        "common_failures": {}
     },
     "setting": {
         "help_about": {
@@ -529,7 +486,9 @@
         "permissions": {
             "privileged_users_section": "ผู้ใช้ที่มีสิทธิพิเศษ",
             "banned_users_section": "ผู้ใช้ที่ถูกแบน",
-            "permissions_section": "สิทธิ์"
+            "permissions_section": "สิทธิ์",
+            "error_unbanning": "การถอนแบนล้มเหลว",
+            "ban_reason": "เหตุผล"
         },
         "security": {
             "enable_encryption_confirm_description": "เมื่อเปิดใช้งานแล้ว จะไม่สามารถปิดใช้งานการเข้ารหัสสำหรับห้องได้ เซิร์ฟเวอร์ไม่สามารถเห็นข้อความที่ส่งในห้องที่เข้ารหัสได้ เฉพาะผู้เข้าร่วมในห้องเท่านั้น การเปิดใช้งานการเข้ารหัสอาจทำให้บอทและบริดจ์จำนวนมากทำงานไม่ถูกต้อง. <a>เรียนรู้เพิ่มเติมเกี่ยวกับการเข้ารหัส.</a>",
@@ -539,13 +498,45 @@
         },
         "general": {
             "user_url_previews_default_on": "ค่าเริ่มต้นของคุณ<a>เปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
-            "user_url_previews_default_off": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้"
+            "user_url_previews_default_off": "ค่าเริ่มต้นของคุณ<a>ปิดใช้งาน</a>ตัวอย่าง URL เอาไว้",
+            "error_updating_canonical_alias_title": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลัก",
+            "error_updating_canonical_alias_description": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่หลักของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "error_updating_alias_description": "เกิดข้อผิดพลาดในการอัปเดตที่อยู่สำรองของห้อง เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "error_deleting_alias_title": "เกิดข้อผิดพลาดในการนำที่อยู่ออก",
+            "error_deleting_alias_description_forbidden": "คุณไม่ได้รับอนุญาตให้ลบที่อยู่.",
+            "error_deleting_alias_description": "เกิดข้อผิดพลาดในการลบที่อยู่นั้น อาจไม่มีอยู่อีกต่อไปหรือเกิดข้อผิดพลาดชั่วคราว.",
+            "error_creating_alias_title": "เกิดข้อผิดพลาดในการสร้างที่อยู่",
+            "error_creating_alias_description": "เกิดข้อผิดพลาดในการสร้างที่อยู่นั้น เซิร์ฟเวอร์อาจไม่ได้รับอนุญาตหรือเกิดความล้มเหลวชั่วคราว.",
+            "canonical_alias_field_label": "ที่อยู่หลัก"
         }
     },
     "room": {
         "intro": {
             "unencrypted_warning": "ไม่ได้เปิดใช้งานการเข้ารหัสจากต้นทางถึงปลายทาง"
-        }
+        },
+        "context_menu": {
+            "favourite": "รายการโปรด",
+            "low_priority": "ความสำคัญต่ำ"
+        },
+        "invite_this_room": "เชิญเข้าห้องนี้",
+        "header": {
+            "forget_room_button": "ลืมห้อง"
+        },
+        "not_found_title_name": "ไม่มีห้อง %(roomName)s อยู่จริง",
+        "upload": {
+            "uploading_multiple_file": {
+                "one": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์",
+                "other": "กำลังอัปโหลด %(filename)s และอีก %(count)s ไฟล์"
+            },
+            "uploading_single_file": "กำลังอัปโหลด %(filename)s"
+        },
+        "search": {
+            "this_room": "ห้องนี้",
+            "all_rooms": "ทุกห้อง",
+            "field_placeholder": "ค้นหา…"
+        },
+        "jump_read_marker": "ข้ามไปยังข้อความแรกที่ยังไม่ได้อ่าน",
+        "failed_reject_invite": "การปฏิเสธคำเชิญล้มเหลว"
     },
     "failed_load_async_component": "ไม่สามารถโหลดได้! ตรวจสอบการเชื่อมต่อเครือข่ายของคุณแล้วลองอีกครั้ง.",
     "upload_failed_generic": "ไฟล์ '%(fileName)s' อัปโหลดไม่สำเร็จ.",
@@ -585,6 +576,64 @@
     },
     "error": {
         "mixed_content": "ไม่สามารถเชื่อมต่อไปยังเซิร์ฟเวอร์บ้านผ่านทาง HTTP ได้เนื่องจาก URL ที่อยู่บนเบราว์เซอร์เป็น HTTPS กรุณาใช้ HTTPS หรือ<a>เปิดใช้งานสคริปต์ที่ไม่ปลอดภัย</a>.",
-        "tls": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่"
-    }
+        "tls": "ไม่สามารถเฃื่อมต่อไปหาเซิร์ฟเวอร์บ้านได้ - กรุณาตรวจสอบคุณภาพการเชื่อมต่อ, ตรวจสอบว่า<a>SSL certificate ของเซิร์ฟเวอร์บ้าน</a>ของคุณเชื่อถือได้, และวไม่มีส่วนขยายเบราว์เซอร์ใดบล๊อคการเชื่อมต่ออยู่",
+        "update_power_level": "การเปลี่ยนระดับอำนาจล้มเหลว",
+        "unknown": "ข้อผิดพลาดที่ไม่รู้จัก"
+    },
+    "notifications": {
+        "enable_prompt_toast_title": "การแจ้งเตือน",
+        "mark_all_read": "ทำเครื่องหมายทั้งหมดว่าอ่านแล้ว",
+        "default": "ค่าเริ่มต้น",
+        "all_messages": "ทุกข้อความ"
+    },
+    "encryption": {
+        "not_supported": "<ไม่รองรับ>"
+    },
+    "member_list": {
+        "invited_list_heading": "เชิญแล้ว",
+        "filter_placeholder": "กรองสมาชิกห้อง",
+        "power_label": "%(userName)s (ระดับอำนาจ %(powerLevelNumber)s)"
+    },
+    "user_info": {
+        "error_revoke_3pid_invite_title": "ยกเลิกคำเชิญไม่สำเร็จ",
+        "error_revoke_3pid_invite_description": "ไม่สามารถยกเลิกคำเชิญได้ เซิร์ฟเวอร์อาจประสบปัญหาชั่วคราวหรือคุณไม่มีสิทธิ์เพียงพอที่จะยกเลิกคำเชิญ",
+        "admin_tools_section": "เครื่องมือผู้ดูแลระบบ",
+        "revoke_invite": "ยกเลิกการเชิญ",
+        "invited_by": "ได้รับเชิญจาก %(sender)s",
+        "ban_button_space": "แบนจากสเปซ",
+        "unban_button_room": "ปลดแบนจากห้อง",
+        "ban_button_room": "แบนจากห้อง",
+        "unban_room_confirm_title": "ปลดแบนจาก %(roomName)s",
+        "ban_room_confirm_title": "แบนจาก %(roomName)s",
+        "error_ban_user": "การแบนผู้ใช้ล้มเหลว",
+        "error_mute_user": "ไม่สามารถปิดเสียงผู้ใช้",
+        "promote_warning": "คุณจะไม่สามารถเลิกทำการเปลี่ยนแปลงนี้ได้ เนื่องจากคุณกำลังส่งเสริมผู้ใช้ให้มีระดับพลังเดียวกันกับตัวคุณเอง.",
+        "deactivate_confirm_title": "ปิดการใช้งานผู้ใช้?",
+        "deactivate_confirm_description": "การปิดใช้งานผู้ใช้รายนี้จะออกจากระบบและป้องกันไม่ให้กลับเข้าสู่ระบบ นอกจากนี้ ผู้ใช้จะออกจากห้องทั้งหมดที่พวกเขาอยู่ การดำเนินการนี้ไม่สามารถย้อนกลับได้ คุณแน่ใจหรือไม่ว่าต้องการปิดใช้งานผู้ใช้รายนี้?",
+        "deactivate_confirm_action": "ปิดใช้งานผู้ใช้"
+    },
+    "threads": {
+        "open_thread": "เปิดกระทู้"
+    },
+    "stickers": {
+        "empty": "ขณะนี้คุณไม่ได้เปิดใช้งานชุดสติกเกอร์ใดๆ",
+        "empty_add_prompt": "เพิ่มบางส่วนในขณะนี้"
+    },
+    "reject_invitation_dialog": {
+        "title": "ปฏิเสธคำเชิญ",
+        "confirmation": "คุณแน่ใจหรือว่าต้องการจะปฏิเสธคำเชิญ?",
+        "failed": "การปฏิเสธคำเชิญล้มเหลว"
+    },
+    "no_more_results": "ไม่มีผลลัพธ์อื่น",
+    "leave_room_dialog": {
+        "leave_room_question": "คุณแน่ใจหรือว่าต้องการจะออกจากห้อง '%(roomName)s'?"
+    },
+    "error_dialog": {
+        "forget_room_failed": "การลืมห้องล้มเหลว %(errCode)s",
+        "search_failed": {
+            "title": "การค้นหาล้มเหลว",
+            "server_unavailable": "เซิร์ฟเวอร์อาจไม่พร้อมใช้งาน ทำงานหนักเกินไป หรือการค้นหาหมดเวลา :("
+        }
+    },
+    "General failure": "ข้อผิดพลาดทั่วไป"
 }
