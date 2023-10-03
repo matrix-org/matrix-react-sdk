@@ -30,7 +30,7 @@ import {
     Device,
     EventType,
 } from "matrix-js-sdk/src/matrix";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
+import { UserVerificationStatus, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -168,7 +168,11 @@ function useHasCrossSigningKeys(
 export function DeviceItem({ userId, device }: { userId: string; device: IDevice }): JSX.Element {
     const cli = useContext(MatrixClientContext);
     const isMe = userId === cli.getUserId();
-    const userTrust = cli.checkUserTrust(userId);
+
+    const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
+        async () => cli.getCrypto()?.getUserVerificationStatus(userId),
+        [userId],
+    );
 
     /** is the device verified? */
     const isVerified = useAsyncMemo(async () => {
@@ -188,9 +192,9 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
         mx_UserInfo_device_unverified: !isVerified,
     });
     const iconClasses = classNames("mx_E2EIcon", {
-        mx_E2EIcon_normal: !userTrust.isVerified(),
+        mx_E2EIcon_normal: !userTrust?.isVerified(),
         mx_E2EIcon_verified: isVerified,
-        mx_E2EIcon_warning: userTrust.isVerified() && !isVerified,
+        mx_E2EIcon_warning: userTrust?.isVerified() && !isVerified,
     });
 
     const onDeviceClick = (): void => {
@@ -208,7 +212,7 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     }
 
     let trustedLabel: string | undefined;
-    if (userTrust.isVerified()) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
+    if (userTrust?.isVerified()) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
 
     if (isVerified === undefined) {
         // we're still deciding if the device is verified
