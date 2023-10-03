@@ -52,6 +52,7 @@
         "test": "jest",
         "test:cypress": "cypress run",
         "test:cypress:open": "cypress open",
+        "test:screenshot:local": "PERCY_TOKEN=a04f2cc2bbfa5d01df2e234622896ad47bff8433a26c563ef551d2e1c15a171f PERCY_BRANCH=local yarn percy exec --parallel -- yarn test:cypress",
         "coverage": "yarn test --coverage"
     },
     "resolutions": {
@@ -69,7 +70,7 @@
         "@sentry/tracing": "^7.0.0",
         "@testing-library/react-hooks": "^8.0.1",
         "@vector-im/compound-design-tokens": "^0.0.5",
-        "@vector-im/compound-web": "^0.4.0",
+        "@vector-im/compound-web": "0.5.0",
         "@zxcvbn-ts/core": "^3.0.4",
         "@zxcvbn-ts/language-common": "^3.0.4",
         "@zxcvbn-ts/language-en": "^3.0.2",
