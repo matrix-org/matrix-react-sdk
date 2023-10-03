@@ -1442,8 +1442,11 @@ const BasicUserInfo: React.FC<{
     let verifyButton;
     const homeserverSupportsCrossSigning = useHomeserverSupportsCrossSigning(cli);
 
-    const userTrust = cryptoEnabled && cli.checkUserTrust(member.userId);
-    const userVerified = cryptoEnabled && userTrust && userTrust.isCrossSigningVerified();
+    const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
+        async () => cli.getCrypto()?.getUserVerificationStatus(member.userId),
+        [member.userId],
+    );
+    const userVerified = userTrust?.isCrossSigningVerified();
     const isMe = member.userId === cli.getUserId();
     const canVerify =
         cryptoEnabled && homeserverSupportsCrossSigning && !userVerified && !isMe && devices && devices.length > 0;
