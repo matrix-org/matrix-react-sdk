@@ -553,7 +553,7 @@ const SpaceSetupPrivateInvite: React.FC<{
             }
         } catch (err) {
             logger.error("Failed to invite users to space: ", err);
-            setError(_t("We couldn't invite those users. Please check the users you want to invite and try again."));
+            setError(_t("invite|error_invite"));
         }
         setBusy(false);
     };

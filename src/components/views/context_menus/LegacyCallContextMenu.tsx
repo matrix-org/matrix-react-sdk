@@ -54,7 +54,7 @@ export default class LegacyCallContextMenu extends React.Component<IProps> {
         if (this.props.call.opponentCanBeTransferred()) {
             transferItem = (
                 <MenuItem className="mx_LegacyCallContextMenu_item" onClick={this.onTransferClick}>
-                    {_t("Transfer")}
+                    {_t("action|transfer")}
                 </MenuItem>
             );
         }

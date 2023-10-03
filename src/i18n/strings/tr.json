@@ -168,8 +168,6 @@
     "%(name)s wants to verify": "%(name)s doğrulamak istiyor",
     "edited": "düzenlendi",
     "Deactivate account": "Hesabı pasifleştir",
-    "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
-    "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
     "Before submitting logs, you must <a>create a GitHub issue</a> to describe your problem.": "Logları göndermeden önce, probleminizi betimleyen <a>bir GitHub talebi oluşturun</a>.",
     "This backup is trusted because it has been restored on this session": "Bu yedek güvenilir çünkü bu oturumda geri döndürüldü",
     "Upload %(count)s other files": {
@@ -187,8 +185,6 @@
     "Clear cross-signing keys": "Çapraz-imzalama anahtarlarını temizle",
     "Session name": "Oturum adı",
     "Session key": "Oturum anahtarı",
-    "Recent Conversations": "Güncel Sohbetler",
-    "Recently Direct Messaged": "Güncel Doğrudan Mesajlar",
     "Lock": "Kilit",
     "Encrypted by a deleted session": "Silinen bir oturumla şifrelenmiş",
     "Upgrade public room": "Açık odayı güncelle",
@@ -197,7 +193,6 @@
     "To help us prevent this in future, please <a>send us logs</a>.": "Bunun gelecekte de olmasının önüne geçmek için lütfen <a>günceleri bize gönderin</a>.",
     "Upload files (%(current)s of %(total)s)": "Dosyaları yükle (%(current)s / %(total)s)",
     "Failed to decrypt %(failedCount)s sessions!": "%(failedCount)s adet oturum çözümlenemedi!",
-    "Something went wrong trying to invite the users.": "Kullanıcıların davet edilmesinde bir şeyler yanlış gitti.",
     "a new master key signature": "yeni bir master anahtar imzası",
     "a new cross-signing key signature": "yeni bir çapraz-imzalama anahtarı imzası",
     "a key signature": "bir anahtar imzası",
@@ -471,7 +466,6 @@
     "Santa": "Noel Baba",
     "Spanner": "Anahtar",
     "Smiley": "Gülen yüz",
-    "Dial pad": "Arama tuşları",
     "Not encrypted": "Şifrelenmemiş",
     "Backup version:": "Yedekleme sürümü:",
     "Looks good!": "İyi görünüyor!",
@@ -479,7 +473,6 @@
     "Switch theme": "Temayı değiştir",
     "Keys restored": "Anahtarlar geri yüklendi",
     "Submit logs": "Günlükleri kaydet",
-    "Transfer": "Aktar",
     "Hold": "Beklet",
     "Resume": "Devam et",
     "common": {
@@ -649,7 +642,8 @@
         "show_advanced": "Gelişmiş göster",
         "unignore": "Yoksayma",
         "explore_rooms": "Odaları keşfet",
-        "explore_public_rooms": "Herkese açık odaları keşfet"
+        "explore_public_rooms": "Herkese açık odaları keşfet",
+        "transfer": "Aktar"
     },
     "a11y": {
         "user_menu": "Kullanıcı menüsü",
@@ -2129,7 +2123,13 @@
         "unable_find_profiles_description_default": "Altta belirtilen Matrix ID li profiller bulunamıyor - Onları yinede davet etmek ister misiniz?",
         "unable_find_profiles_title": "Belirtilen kullanıcılar mevcut olmayabilir",
         "unable_find_profiles_invite_never_warn_label_default": "Yinede davet et ve asla beni uyarma",
-        "unable_find_profiles_invite_label_default": "Yinede davet et"
+        "unable_find_profiles_invite_label_default": "Yinede davet et",
+        "error_find_room": "Kullanıcıların davet edilmesinde bir şeyler yanlış gitti.",
+        "recents_section": "Güncel Sohbetler",
+        "suggestions_section": "Güncel Doğrudan Mesajlar",
+        "email_use_default_is": "E-posta ile davet etmek için bir kimlik sunucusu kullan. <default> Varsayılanı kullan (%(defaultIdentityServerName)s</default> ya da <settings>Ayarlar</settings> kullanarak yönetin.",
+        "email_use_is": "E-posta ile davet için bir kimlik sunucu kullan. <settings>Ayarlar</settings> dan yönet.",
+        "transfer_dial_pad_tab": "Arama tuşları"
     },
     "scalar": {
         "error_create": "Görsel bileşen oluşturulamıyor.",

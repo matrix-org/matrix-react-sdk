@@ -1,7 +1,6 @@
 {
     "%(items)s and %(lastItem)s": "%(items)s agus %(lastItem)s",
     "%(weekDayName)s %(time)s": "%(weekDayName)s ar a %(time)s",
-    "Transfer": "Aistrigh",
     "Hold": "Fan",
     "Resume": "Tosaigh arís",
     "Zimbabwe": "an tSiombáib",
@@ -457,7 +456,8 @@
         "submit": "Cuir isteach",
         "unban": "Bain an cosc",
         "unignore": "Stop ag tabhairt neamhaird air",
-        "explore_rooms": "Breathnaigh thart ar na seomraí"
+        "explore_rooms": "Breathnaigh thart ar na seomraí",
+        "transfer": "Aistrigh"
     },
     "labs": {
         "pinning": "Ceangal teachtaireachta",

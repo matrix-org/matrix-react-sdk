@@ -197,8 +197,6 @@
     "%(name)s accepted": "%(name)s hyväksyi",
     "%(name)s cancelled": "%(name)s peruutti",
     "%(name)s wants to verify": "%(name)s haluaa varmentaa",
-    "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi henkilöitä sähköpostilla. <default>Käytä oletusta (%(defaultIdentityServerName)s)</default> tai aseta toinen palvelin <settings>asetuksissa</settings>.",
-    "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
     "Verification Request": "Varmennuspyyntö",
     "%(count)s verified sessions": {
         "other": "%(count)s varmennettua istuntoa",
@@ -209,9 +207,7 @@
     "Upgrading a room is an advanced action and is usually recommended when a room is unstable due to bugs, missing features or security vulnerabilities.": "Huoneen päivittäminen on monimutkainen toimenpide ja yleensä sitä suositellaan, kun huone on epävakaa bugien, puuttuvien ominaisuuksien tai tietoturvaongelmien takia.",
     "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "Tämä yleensä vaikuttaa siihen, miten huonetta käsitellään palvelimella. Jos sinulla on ongelmia %(brand)stisi kanssa, <a>ilmoita virheestä</a>.",
     "You'll upgrade this room from <oldVersion /> to <newVersion />.": "Olat päivittämässä tätä huonetta versiosta <oldVersion/> versioon <newVersion/>.",
-    "Recent Conversations": "Viimeaikaiset keskustelut",
     "Lock": "Lukko",
-    "Failed to find the following users": "Seuraavia käyttäjiä ei löytynyt",
     "%(count)s sessions": {
         "other": "%(count)s istuntoa",
         "one": "%(count)s istunto"
@@ -219,8 +215,6 @@
     "Session name": "Istunnon nimi",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "Raportoidaksesi Matrixiin liittyvän tietoturvaongelman, lue Matrix.orgin <a>tietoturvaongelmien julkaisukäytäntö</a>.",
     "%(name)s declined": "%(name)s kieltäytyi",
-    "Something went wrong trying to invite the users.": "Käyttäjien kutsumisessa meni jotain pieleen.",
-    "We couldn't invite those users. Please check the users you want to invite and try again.": "Emme voineet kutsua kyseisiä käyttäjiä. Tarkista käyttäjät, jotka haluat kutsua ja yritä uudelleen.",
     "Not Trusted": "Ei luotettu",
     "Ask this user to verify their session, or manually verify it below.": "Pyydä tätä käyttäjää vahvistamaan istuntonsa, tai vahvista se manuaalisesti alla.",
     "%(name)s (%(userId)s) signed in to a new session without verifying it:": "%(name)s (%(userId)s) kirjautui uudella istunnolla varmentamatta sitä:",
@@ -240,8 +234,6 @@
     "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "Ristiinvarmennuksen avainten tuhoamista ei voi kumota. Jokainen, jonka olet varmentanut, tulee näkemään turvallisuushälytyksiä. Et todennäköisesti halua tehdä tätä, ellet ole hukannut kaikkia laitteitasi, joista pystyit ristiinvarmentamaan.",
     "Clear cross-signing keys": "Tyhjennä ristiinvarmennuksen avaimet",
     "Session key": "Istunnon tunnus",
-    "The following users might not exist or are invalid, and cannot be invited: %(csvNames)s": "Seuraavat käyttäjät eivät välttämättä ole olemassa tai ne ovat epäkelpoja, joten niitä ei voida kutsua: %(csvNames)s",
-    "Recently Direct Messaged": "Viimeaikaiset yksityisviestit",
     "%(brand)s encountered an error during upload of:": "%(brand)s kohtasi virheen lähettäessään:",
     "Upload completed": "Lähetys valmis",
     "Cancelled signature upload": "Allekirjoituksen lähetys peruutettu",
@@ -520,7 +512,6 @@
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Huomio: jos et lisää sähköpostia ja unohdat salasanasi, saatat <b>menettää pääsyn tiliisi pysyvästi</b>.",
     "A connection error occurred while trying to contact the server.": "Yhteysvirhe yritettäessä ottaa yhteyttä palvelimeen.",
     "Continuing without email": "Jatka ilman sähköpostia",
-    "Invite by email": "Kutsu sähköpostilla",
     "Confirm encryption setup": "Vahvista salauksen asetukset",
     "a key signature": "avaimen allekirjoitus",
     "Security Phrase": "Turvalause",
@@ -531,8 +522,6 @@
     "A browser extension is preventing the request.": "Selainlaajennus estää pyynnön.",
     "Approve widget permissions": "Hyväksy sovelman käyttöoikeudet",
     "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "",
-    "A call can only be transferred to a single user.": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
-    "Dial pad": "Näppäimistö",
     "Recent changes that have not yet been received": "Tuoreet muutokset, joita ei ole vielä otettu vastaan",
     "<inviter/> invites you": "<inviter/> kutsuu sinut",
     "No results found": "Tuloksia ei löytynyt",
@@ -545,10 +534,7 @@
         "other": "%(count)s jäsentä"
     },
     "Remember this": "Muista tämä",
-    "Invite to %(roomName)s": "Kutsu huoneeseen %(roomName)s",
     "The server is not configured to indicate what the problem is (CORS).": "Palvelinta ei ole säädetty ilmoittamaan, mikä ongelma on kyseessä (CORS).",
-    "Invited people will be able to read old messages.": "Kutsutut ihmiset voivat lukea vanhoja viestejä.",
-    "We couldn't create your DM.": "Yksityisviestiä ei voitu luoda.",
     "%(count)s people you know have already joined": {
         "one": "%(count)s tuntemasi henkilö on jo liittynyt",
         "other": "%(count)s tuntemaasi ihmistä on jo liittynyt"
@@ -561,12 +547,10 @@
     "Select spaces": "Valitse avaruudet",
     "To join a space you'll need an invite.": "Liittyäksesi avaruuteen tarvitset kutsun.",
     "You won't be able to rejoin unless you are re-invited.": "Et voi liittyä uudelleen, ellei sinua kutsuta uudelleen.",
-    "User Directory": "Käyttäjähakemisto",
     "<b>Please note upgrading will make a new version of the room</b>. All current messages will stay in this archived room.": "<b>Huomaa, että päivittäminen tekee huoneesta uuden version.</b> Kaikki nykyiset viestit pysyvät tässä arkistoidussa huoneessa.",
     "Leave some rooms": "Poistu joistakin huoneista",
     "Leave all rooms": "Poistu kaikista huoneista",
     "Don't leave any rooms": "Älä poistu mistään huoneesta",
-    "Or send invite link": "Tai lähetä kutsulinkki",
     "%(count)s reply": {
         "one": "%(count)s vastaus",
         "other": "%(count)s vastausta"
@@ -586,12 +570,6 @@
         "one": "%(spaceName)s ja %(count)s muu",
         "other": "%(spaceName)s ja %(count)s muuta"
     },
-    "Consult first": "Tiedustele ensin",
-    "Transfer": "Siirrä",
-    "Some suggestions may be hidden for privacy.": "Jotkut ehdotukset voivat olla piilotettu yksityisyyden takia.",
-    "Start a conversation with someone using their name or username (like <userId/>).": "Aloita keskustelu jonkun kanssa käyttäen heidän nimeä tai käyttäjänimeä (kuten <userId/>).",
-    "Start a conversation with someone using their name, email address or username (like <userId/>).": "Aloita keskustelu jonkun kanssa käyttäen heidän sähköpostia tai käyttäjänimeä (kuten <userId/>).",
-    "If you can't see who you're looking for, send them your invite link below.": "Jos et näe henkilöä jota etsit, lähetä hänelle linkki alhaalta.",
     "a new master key signature": "uusi pääsalasanan avaintunnus",
     "Forget": "Unohda",
     "%(count)s votes": {
@@ -655,8 +633,6 @@
     "%(securityKey)s or %(recoveryFile)s": "%(securityKey)s tai %(recoveryFile)s",
     "%(name)s started a video call": "%(name)s aloitti videopuhelun",
     "Search for": "Etsittävät kohteet",
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
     "To search messages, look for this icon at the top of a room <icon/>": "Etsi viesteistä huoneen yläosassa olevalla kuvakkeella <icon/>",
     "Use \"%(query)s\" to search": "Etsitään \"%(query)s\"",
     "Saved Items": "Tallennetut kohteet",
@@ -670,7 +646,6 @@
     "Starting export process…": "Käynnistetään vientitoimenpide…",
     "Fetching keys from server…": "Noudetaan avaimia palvelimelta…",
     "Checking…": "Tarkistetaan…",
-    "Invites by email can only be sent one at a time": "Sähköpostikutsuja voi lähettää vain yhden kerrallaan",
     "unavailable": "ei saatavilla",
     "unknown status code": "tuntematon tilakoodi",
     "Requires your server to support the stable version of MSC3827": "Edellyttää palvelimesi tukevan MSC3827:n vakaata versiota",
@@ -912,7 +887,8 @@
         "new_video_room": "Uusi videohuone",
         "add_existing_room": "Lisää olemassa oleva huone",
         "explore_public_rooms": "Selaa julkisia huoneita",
-        "reply_in_thread": "Vastaa ketjuun"
+        "reply_in_thread": "Vastaa ketjuun",
+        "transfer": "Siirrä"
     },
     "a11y": {
         "user_menu": "Käyttäjän valikko",
@@ -2422,7 +2398,8 @@
         "unable_to_access_audio_input_title": "Mikrofonia ei voi käyttää",
         "unable_to_access_audio_input_description": "Mikrofoniasi ei voitu käyttää. Tarkista selaimesi asetukset ja yritä uudelleen.",
         "no_audio_input_title": "Mikrofonia ei löytynyt",
-        "no_audio_input_description": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen."
+        "no_audio_input_description": "Laitteestasi ei löytynyt mikrofonia. Tarkista asetuksesi ja yritä uudelleen.",
+        "transfer_consult_first_label": "Tiedustele ensin"
     },
     "Other": "Muut",
     "room_settings": {
@@ -3627,7 +3604,30 @@
         "unable_find_profiles_description_default": "Alla luetelluille Matrix ID:ille ei löytynyt profiileja. Haluaisitko kutsua ne siitä huolimatta?",
         "unable_find_profiles_title": "Seuraavat käyttäjät eivät välttämättä ole olemassa",
         "unable_find_profiles_invite_never_warn_label_default": "Kutsu silti, äläkä varoita minua enää uudelleen",
-        "unable_find_profiles_invite_label_default": "Kutsu silti"
+        "unable_find_profiles_invite_label_default": "Kutsu silti",
+        "email_caption": "Kutsu sähköpostilla",
+        "error_dm": "Yksityisviestiä ei voitu luoda.",
+        "error_find_room": "Käyttäjien kutsumisessa meni jotain pieleen.",
+        "error_invite": "Emme voineet kutsua kyseisiä käyttäjiä. Tarkista käyttäjät, jotka haluat kutsua ja yritä uudelleen.",
+        "error_transfer_multiple_target": "Puhelun voi siirtää vain yhdelle käyttäjälle.",
+        "error_find_user_title": "Seuraavia käyttäjiä ei löytynyt",
+        "error_find_user_description": "Seuraavat käyttäjät eivät välttämättä ole olemassa tai ne ovat epäkelpoja, joten niitä ei voida kutsua: %(csvNames)s",
+        "recents_section": "Viimeaikaiset keskustelut",
+        "suggestions_section": "Viimeaikaiset yksityisviestit",
+        "email_use_default_is": "Käytä identiteettipalvelinta kutsuaksesi henkilöitä sähköpostilla. <default>Käytä oletusta (%(defaultIdentityServerName)s)</default> tai aseta toinen palvelin <settings>asetuksissa</settings>.",
+        "email_use_is": "Käytä identiteettipalvelinta kutsuaksesi käyttäjiä sähköpostilla. Voit vaihtaa identiteettipalvelimen <settings>asetuksissa</settings>.",
+        "start_conversation_name_email_mxid_prompt": "Aloita keskustelu jonkun kanssa käyttäen heidän sähköpostia tai käyttäjänimeä (kuten <userId/>).",
+        "start_conversation_name_mxid_prompt": "Aloita keskustelu jonkun kanssa käyttäen heidän nimeä tai käyttäjänimeä (kuten <userId/>).",
+        "suggestions_disclaimer": "Jotkut ehdotukset voivat olla piilotettu yksityisyyden takia.",
+        "suggestions_disclaimer_prompt": "Jos et näe henkilöä jota etsit, lähetä hänelle linkki alhaalta.",
+        "send_link_prompt": "Tai lähetä kutsulinkki",
+        "to_room": "Kutsu huoneeseen %(roomName)s",
+        "name_email_mxid_share_space": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
+        "name_email_mxid_share_room": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
+        "key_share_warning": "Kutsutut ihmiset voivat lukea vanhoja viestejä.",
+        "email_limit_one": "Sähköpostikutsuja voi lähettää vain yhden kerrallaan",
+        "transfer_user_directory_tab": "Käyttäjähakemisto",
+        "transfer_dial_pad_tab": "Näppäimistö"
     },
     "scalar": {
         "error_create": "Sovelman luominen epäonnistui.",

@@ -61,7 +61,6 @@
     "Encrypted by a deleted session": "Dulritað með eyddri setu",
     "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.": "Hreinsun geymslu vafrans gæti lagað vandamálið en mun skrá þig út og valda því að dulritaður spjallferil verði ólæsilegur.",
     "Room Settings - %(roomName)s": "Stillingar spjallrásar - %(roomName)s",
-    "Recently Direct Messaged": "Nýsend bein skilaboð",
     "%(count)s verified sessions": {
         "one": "1 sannreynd seta",
         "other": "%(count)s sannreyndar setur"
@@ -377,8 +376,6 @@
     "Leave space": "Yfirgefa svæði",
     "Leave %(spaceName)s": "Yfirgefa %(spaceName)s",
     "Upload completed": "Innsendingu er lokið",
-    "User Directory": "Mappa notanda",
-    "Transfer": "Flutningur",
     "%(count)s votes": {
         "one": "%(count)s atkvæði",
         "other": "%(count)s atkvæði"
@@ -416,7 +413,6 @@
     "Session key": "Dulritunarlykill setu",
     "Other spaces or rooms you might not know": "Önnur svæði sem þú gætir ekki vitað um",
     "Select spaces": "Veldu svæði",
-    "Dial pad": "Talnaborð",
     "(~%(count)s results)": {
         "one": "(~%(count)s niðurstaða)",
         "other": "(~%(count)s niðurstöður)"
@@ -466,8 +462,6 @@
     "Switch theme": "Skipta um þema",
     "Join %(roomAddress)s": "Taka þátt í %(roomAddress)s",
     "Decide which spaces can access this room. If a space is selected, its members can find and join <RoomName/>.": "Veldu hvaða svæði hafa aðgang að þessari spjallrás. Ef svæði er valið geta meðlimir þess fundið og tekið þátt í spjallrásinni<RoomName/>.",
-    "Failed to find the following users": "Mistókst að finna eftirfarandi notendur",
-    "We couldn't create your DM.": "Það tókst ekki að útbúa beinu skilaboðin þin.",
     "Your homeserver doesn't seem to support this feature.": "Heimaþjóninn þinn virðist ekki styðja þennan eiginleika.",
     "Clear cross-signing keys": "Hreinsa kross-undirritunarlykla",
     "Destroy cross-signing keys?": "Eyða kross-undirritunarlyklum?",
@@ -494,9 +488,6 @@
     "Leave all rooms": "Yfirgefa allar spjallrásir",
     "Don't leave any rooms": "Ekki yfirgefa neinar spjallrásir",
     "Updating %(brand)s": "Uppfæri %(brand)s",
-    "Invite to %(roomName)s": "Bjóða í %(roomName)s",
-    "Recent Conversations": "Nýleg samtöl",
-    "Invite by email": "Bjóða með tölvupósti",
     "e.g. my-room": "t.d. mín-spjallrás",
     "%(count)s people you know have already joined": {
         "one": "%(count)s aðili sem þú þekkir hefur þegar tekið þátt",
@@ -549,12 +540,6 @@
     "Other searches": "Aðrar leitir",
     "Link to selected message": "Tengill í valin skilaboð",
     "Link to most recent message": "Tengill í nýjustu skilaboðin",
-    "Invited people will be able to read old messages.": "Fólk sem er boðið mun geta lesið eldri skilaboð.",
-    "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
-    "Invite someone using their name, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
-    "Invite someone using their name, email address, username (like <userId/>) or <a>share this space</a>.": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
-    "Or send invite link": "Eða senda boðstengil",
     "To join a space you'll need an invite.": "Til að ganga til liðs við svæði þarftu boð.",
     "Thread options": "Valkostir spjallþráðar",
     "Unable to load backup status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
@@ -592,7 +577,6 @@
     "Create a new room with the same name, description and avatar": "Búa til nýja spjallrás með sama heiti, lýsingu og auðkennismynd",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Bara til að minna á; ef þú gleymir lykilorðinu þínu, <b>þá er engin leið til að endurheimta aðganginn þinn</b>.",
     "Sign out and remove encryption keys?": "Skrá út og fjarlægja dulritunarlykla?",
-    "Consult first": "Ráðfæra fyrst",
     "Live location enabled": "Staðsetning í rauntíma virkjuð",
     "Close sidebar": "Loka hliðarstiku",
     "View List": "Skoða lista",
@@ -619,7 +603,6 @@
     "Saved Items": "Vistuð atriði",
     "Show spaces": "Sýna svæði",
     "Show rooms": "Sýna spjallrásir",
-    "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. <default>Notaðu sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s(</default> eða sýslaðu með þetta í <settings>stillingunum</settings>.",
     "Unread email icon": "Táknmynd fyrir ólesinn tölvupóst",
     "No live locations": "Engar staðsetningar í rauntíma",
     "Live location error": "Villa í rauntímastaðsetningu",
@@ -627,10 +610,6 @@
     "Interactively verify by emoji": "Sannprófa gagnvirkt með táknmyndum",
     "Manually verify by text": "Sannreyna handvirkt með texta",
     "%(name)s started a video call": "%(name)s hóf myndsímtal",
-    "Start a conversation with someone using their name or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi eða notandanafn (eins og <userId/>).",
-    "Start a conversation with someone using their name, email address or username (like <userId/>).": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
-    "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í <settings>stillingunum</settings>.",
-    "Something went wrong trying to invite the users.": "Eitthvað fór úrskeiðis við að bjóða notendunum.",
     "If you can't find the room you're looking for, ask for an invite or create a new room.": "Ef þú finnur ekki spjallrásina sem þú leitar að, skaltu biðja um boð eða útbúa nýja spjallrás.",
     "If you can't see who you're looking for, send them your invite link.": "Ef þú sérð ekki þann sem þú ert að leita að, ættirðu að senda viðkomandi boðstengil.",
     "Some results may be hidden for privacy": "Sumar niðurstöður gætu verið faldar þar sem þær eru einkamál",
@@ -874,7 +853,8 @@
         "add_existing_room": "Bæta við fyrirliggjandi spjallrás",
         "explore_public_rooms": "Kanna almenningsspjallrásir",
         "reply_in_thread": "Svara í spjallþræði",
-        "click": "Smelltu"
+        "click": "Smelltu",
+        "transfer": "Flutningur"
     },
     "a11y": {
         "user_menu": "Valmynd notandans",
@@ -2322,7 +2302,8 @@
         "unable_to_access_audio_input_title": "Mistókst að ná aðgangi að hljóðnema",
         "unable_to_access_audio_input_description": "Gat ekki tengst hljóðnemanum þínum. Skoðaðu stillingar vafrans þíns og reyndu aftur.",
         "no_audio_input_title": "Enginn hljóðnemi fannst",
-        "no_audio_input_description": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur."
+        "no_audio_input_description": "Fundum ekki neinn hljóðnema á tækinu þínu. Skoðaðu stillingarnar þínar og reyndu aftur.",
+        "transfer_consult_first_label": "Ráðfæra fyrst"
     },
     "Other": "Annað",
     "room_settings": {
@@ -3450,7 +3431,26 @@
         "to_space": "Bjóða inn á %(spaceName)s",
         "unable_find_profiles_title": "Eftirfarandi notendur eru mögulega ekki til",
         "unable_find_profiles_invite_never_warn_label_default": "Bjóða samt og ekki vara mig við aftur",
-        "unable_find_profiles_invite_label_default": "Bjóða samt"
+        "unable_find_profiles_invite_label_default": "Bjóða samt",
+        "email_caption": "Bjóða með tölvupósti",
+        "error_dm": "Það tókst ekki að útbúa beinu skilaboðin þin.",
+        "error_find_room": "Eitthvað fór úrskeiðis við að bjóða notendunum.",
+        "error_find_user_title": "Mistókst að finna eftirfarandi notendur",
+        "recents_section": "Nýleg samtöl",
+        "suggestions_section": "Nýsend bein skilaboð",
+        "email_use_default_is": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. <default>Notaðu sjálfgefinn auðkennisþjón (%(defaultIdentityServerName)s(</default> eða sýslaðu með þetta í <settings>stillingunum</settings>.",
+        "email_use_is": "Notaðu auðkennisþjón til að geta boðið með tölvupósti. Sýslaðu með þetta í <settings>stillingunum</settings>.",
+        "start_conversation_name_email_mxid_prompt": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi, tölvupóstfang eða notandanafn (eins og <userId/>).",
+        "start_conversation_name_mxid_prompt": "Byrjaðu samtal með einhverjum með því að nota nafn viðkomandi eða notandanafn (eins og <userId/>).",
+        "send_link_prompt": "Eða senda boðstengil",
+        "to_room": "Bjóða í %(roomName)s",
+        "name_email_mxid_share_space": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
+        "name_mxid_share_space": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
+        "name_email_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
+        "name_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
+        "key_share_warning": "Fólk sem er boðið mun geta lesið eldri skilaboð.",
+        "transfer_user_directory_tab": "Mappa notanda",
+        "transfer_dial_pad_tab": "Talnaborð"
     },
     "scalar": {
         "error_create": "Gat ekki búið til viðmótshluta.",

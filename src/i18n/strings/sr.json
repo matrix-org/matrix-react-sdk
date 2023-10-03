@@ -84,8 +84,6 @@
     "Room Settings - %(roomName)s": "Подешавања собе - %(roomName)s",
     "Resend %(unsentCount)s reaction(s)": "Поново пошаљи укупно %(unsentCount)s реакција",
     "Light bulb": "сијалица",
-    "Recent Conversations": "Недавни разговори",
-    "Recently Direct Messaged": "Недавне директне поруке",
     "Looks good!": "Изгледа добро!",
     "Switch theme": "Промени тему",
     "Zimbabwe": "Зимбабве",
@@ -1461,7 +1459,9 @@
         "failed_title": "Нисам успео да пошаљем позивницу",
         "failed_generic": "Радња није успела",
         "error_permissions_room": "Немате дозволу за позивање људи у ову собу.",
-        "error_version_unsupported_room": "Корисников домаћи сервер не подржава верзију собе."
+        "error_version_unsupported_room": "Корисников домаћи сервер не подржава верзију собе.",
+        "recents_section": "Недавни разговори",
+        "suggestions_section": "Недавне директне поруке"
     },
     "scalar": {
         "error_create": "Не могу да направим виџет.",

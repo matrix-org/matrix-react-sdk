@@ -760,7 +760,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     role="group"
                     aria-labelledby="mx_SpotlightDialog_section_people"
                 >
-                    <h4 id="mx_SpotlightDialog_section_people">{_t("Recent Conversations")}</h4>
+                    <h4 id="mx_SpotlightDialog_section_people">{_t("invite|recents_section")}</h4>
                     <div>{results[Section.People].slice(0, SECTION_LIMIT).map(resultMapper)}</div>
                 </div>
             );

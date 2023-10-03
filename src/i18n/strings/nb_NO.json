@@ -125,7 +125,6 @@
     "Start using Key Backup": "Begynn å bruke Nøkkelsikkerhetskopiering",
     "To report a Matrix-related security issue, please read the Matrix.org <a>Security Disclosure Policy</a>.": "For å rapportere inn et Matrix-relatert sikkerhetsproblem, vennligst less Matrix.org sine <a>Retningslinjer for sikkerhetspublisering</a>.",
     "Create new room": "Opprett et nytt rom",
-    "Recent Conversations": "Nylige samtaler",
     "Room Settings - %(roomName)s": "Rominnstillinger - %(roomName)s",
     "%(count)s verified sessions": {
         "one": "1 verifisert økt",
@@ -221,7 +220,6 @@
     "Åland Islands": "Åland",
     "Afghanistan": "Afghanistan",
     "United Kingdom": "Storbritannia",
-    "Invite to %(roomName)s": "Inviter til %(roomName)s",
     "Resume": "Fortsett",
     "%(count)s members": {
         "one": "%(count)s medlem",
@@ -253,10 +251,7 @@
     "Not encrypted": "Ikke kryptert",
     "Continuing without email": "Fortsetter uten E-post",
     "Are you sure you want to sign out?": "Er du sikker på at du vil logge av?",
-    "Transfer": "Overfør",
-    "Invite by email": "Inviter gjennom E-post",
     "Upgrade Room Version": "Oppgrader romversjon",
-    "Dial pad": "Nummerpanel",
     "Zimbabwe": "Zimbabwe",
     "Yemen": "Jemen",
     "Zambia": "Zambia",
@@ -640,7 +635,8 @@
         "unignore": "Opphev ignorering",
         "explore_rooms": "Se alle rom",
         "add_existing_room": "Legg til et eksisterende rom",
-        "explore_public_rooms": "Utforsk offentlige rom"
+        "explore_public_rooms": "Utforsk offentlige rom",
+        "transfer": "Overfør"
     },
     "a11y": {
         "user_menu": "Brukermeny",
@@ -1722,7 +1718,11 @@
         "error_permissions_room": "Du har ikke tilgang til å invitere personer til dette rommet.",
         "error_unknown": "Ukjent tjenerfeil",
         "to_space": "Inviter til %(spaceName)s",
-        "unable_find_profiles_invite_label_default": "Inviter likevel"
+        "unable_find_profiles_invite_label_default": "Inviter likevel",
+        "email_caption": "Inviter gjennom E-post",
+        "recents_section": "Nylige samtaler",
+        "to_room": "Inviter til %(roomName)s",
+        "transfer_dial_pad_tab": "Nummerpanel"
     },
     "scalar": {
         "error_create": "Klarte ikke lage widgeten.",
