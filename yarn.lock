@@ -3083,10 +3083,10 @@
   dependencies:
     svg2vectordrawable "^2.9.1"
 
-"@vector-im/compound-web@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.5.0.tgz#93c814c49b1e3e3dc4597fa7ac067cb5adc09299"
-  integrity sha512-BsYh+GFpDx24Bwz9pYQ+/TI9ite2ezVDsGwoOEddIjIkaC52y3QgOJVW05sSKmqQjaH6GvrxKgwtIYTCk5lD3A==
+"@vector-im/compound-web@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.5.1.tgz#48ca84e403ca47c6e332924627934dde021e8050"
+  integrity sha512-iFtM755lVRhfYDdQiYTYpK1n+uNFyDGF2hFXWmiGx1Y9DovLQkcgUWfjncuyWTEx317iDU7JxaTYD3EzNaf2SA==
   dependencies:
     "@radix-ui/react-form" "^0.0.3"
     "@radix-ui/react-tooltip" "^1.0.6"

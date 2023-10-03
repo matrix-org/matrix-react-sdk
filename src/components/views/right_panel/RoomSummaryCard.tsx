@@ -17,6 +17,7 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/matrix";
+import { Root, Search } from "@vector-im/compound-web";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -53,6 +54,7 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { PollHistoryDialog } from "../dialogs/PollHistoryDialog";
+import { Flex } from "../../utils/Flex";
 
 interface IProps {
     room: Room;
@@ -337,7 +339,38 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
     return (
-        <BaseCard header={<span />} className="mx_RoomSummaryCard" onClose={onClose}>
+        <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
+            <Flex
+                as="header"
+                className="mx_RoomSummaryCard_header"
+                gap="var(--cpd-space-3x)"
+                align="center"
+                justify="between"
+            >
+                {/* Hiding this element from a11y technologies purposefully.
+                    entry point for the search experience. There's an accessible
+                    button in the list item below therefore this is not required
+                    to be accessible. */}
+                <Root
+                    aria-hidden={true}
+                    onClick={(e) => {
+                        e.nativeEvent.stopImmediatePropagation();
+                        onSearchClick?.();
+                    }}
+                    style={{
+                        flex: "1",
+                    }}
+                >
+                    <Search name="search" className="mx_RoomSummaryCard_search" placeholder={_t("action|search")} />
+                </Root>
+                <AccessibleButton
+                    data-testid="base-card-close-button"
+                    className="mx_BaseCard_close"
+                    onClick={onClose}
+                    title={_t("action|close")}
+                />
+            </Flex>
+
             {header}
             <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
                 <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>

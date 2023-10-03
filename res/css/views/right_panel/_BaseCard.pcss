@@ -44,43 +44,7 @@ limitations under the License.
             white-space: nowrap;
         }
 
-        .mx_BaseCard_back,
-        .mx_BaseCard_close {
-            position: relative;
-            background-color: rgba(141, 151, 165, 0.2);
-            width: var(--BaseCard_header-button-size);
-            height: var(--BaseCard_header-button-size);
-            border-radius: 50%;
 
-            &::before {
-                content: "";
-                position: absolute;
-                height: inherit;
-                width: inherit;
-                top: 0;
-                left: 0;
-                mask-repeat: no-repeat;
-                mask-position: center;
-                background-color: $icon-button-color;
-            }
-        }
-
-        .mx_BaseCard_back {
-            order: 0; /* always first! */
-            &::before {
-                transform: rotate(90deg);
-                mask-size: 22px;
-                mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
-            }
-        }
-
-        .mx_BaseCard_close {
-            order: 999; /* always last */
-            &::before {
-                mask-image: url("$(res)/img/icons-close.svg");
-                mask-size: 8px;
-            }
-        }
 
         .mx_BaseCard_header_title {
             display: flex;
@@ -190,6 +154,44 @@ limitations under the License.
         .mx_AccessibleButton_disabled {
             cursor: not-allowed;
         }
+    }
+}
+
+.mx_BaseCard_back,
+.mx_BaseCard_close {
+    position: relative;
+    background-color: rgba(141, 151, 165, 0.2);
+    width: var(--BaseCard_header-button-size);
+    height: var(--BaseCard_header-button-size);
+    border-radius: 50%;
+
+    &::before {
+        content: "";
+        position: absolute;
+        height: inherit;
+        width: inherit;
+        top: 0;
+        left: 0;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        background-color: $icon-button-color;
+    }
+}
+
+.mx_BaseCard_back {
+    order: 0; /* always first! */
+    &::before {
+        transform: rotate(90deg);
+        mask-size: 22px;
+        mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
+    }
+}
+
+.mx_BaseCard_close {
+    order: 999; /* always last */
+    &::before {
+        mask-image: url("$(res)/img/icons-close.svg");
+        mask-size: 8px;
     }
 }
 
