@@ -27,6 +27,7 @@ import {
     IStartClientOpts,
     MatrixClient,
     MemoryStore,
+    OidcTokenRefresher,
 } from "matrix-js-sdk/src/matrix";
 import * as utils from "matrix-js-sdk/src/utils";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
@@ -123,7 +124,7 @@ export interface IMatrixClientPeg {
      *
      * @param {IMatrixClientCreds} creds The new credentials to use.
      */
-    replaceUsingCreds(creds: IMatrixClientCreds): void;
+    replaceUsingCreds(creds: IMatrixClientCreds, tokenRefresher?: OidcTokenRefresher): void;
 }
 
 /**
@@ -196,8 +197,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public replaceUsingCreds(creds: IMatrixClientCreds): void {
-        this.createClient(creds);
+    public replaceUsingCreds(creds: IMatrixClientCreds, tokenRefresher?: OidcTokenRefresher): void {
+        this.createClient(creds, tokenRefresher);
     }
 
     private onUnexpectedStoreClose = async (): Promise<void> => {
@@ -378,11 +379,13 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         });
     }
 
-    private createClient(creds: IMatrixClientCreds): void {
+    private createClient(creds: IMatrixClientCreds, tokenRefresher?: OidcTokenRefresher): void {
         const opts: ICreateClientOpts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
             accessToken: creds.accessToken,
+            refreshToken: creds.refreshToken,
+            tokenRefreshFunction: tokenRefresher?.doRefreshAccessToken.bind(tokenRefresher),
             userId: creds.userId,
             deviceId: creds.deviceId,
             pickleKey: creds.pickleKey,
