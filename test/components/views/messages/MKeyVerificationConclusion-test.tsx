@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { EventEmitter } from "events";
 import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
@@ -24,20 +24,25 @@ import {
     Phase as VerificationPhase,
     VerificationRequest,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { mocked } from "jest-mock";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import MKeyVerificationConclusion from "../../../../src/components/views/messages/MKeyVerificationConclusion";
 import { getMockClientWithEventEmitter } from "../../../test-utils";
+import { MKeyVerificationConclusion } from "../../../../src/components/views/messages/MKeyVerificationConclusion";
 
-const trustworthy = { isCrossSigningVerified: () => true } as unknown as UserTrustLevel;
-const untrustworthy = { isCrossSigningVerified: () => false } as unknown as UserTrustLevel;
+const trustworthy = { isVerified: () => true } as unknown as UserTrustLevel;
+const untrustworthy = { isVerified: () => false } as unknown as UserTrustLevel;
 
 describe("MKeyVerificationConclusion", () => {
     const userId = "@user:server";
+
+    const mockCrypto = mocked({
+        getUserVerificationStatus: jest.fn(),
+    });
     const mockClient = getMockClientWithEventEmitter({
         getRoom: jest.fn(),
         getUserId: jest.fn().mockReturnValue(userId),
-        checkUserTrust: jest.fn(),
+        getCrypto: jest.fn().mockReturnValue(mockCrypto),
     });
 
     const getMockVerificationRequest = ({
@@ -71,7 +76,7 @@ describe("MKeyVerificationConclusion", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        mockClient.checkUserTrust.mockReturnValue(trustworthy);
+        mockCrypto.getUserVerificationStatus.mockReturnValue(trustworthy);
     });
 
     afterAll(() => {
@@ -81,41 +86,41 @@ describe("MKeyVerificationConclusion", () => {
     it("shouldn't render if there's no verificationRequest", () => {
         const event = new MatrixEvent({});
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the verificationRequest is pending", () => {
         const event = new MatrixEvent({});
         event.verificationRequest = getMockVerificationRequest({ pending: true });
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the event type is cancel but the request type isn't", () => {
         const event = new MatrixEvent({ type: EventType.KeyVerificationCancel });
         event.verificationRequest = getMockVerificationRequest({});
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the event type is done but the request type isn't", () => {
         const event = new MatrixEvent({ type: "m.key.verification.done" });
         event.verificationRequest = getMockVerificationRequest({});
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the user isn't actually trusted", () => {
-        mockClient.checkUserTrust.mockReturnValue(untrustworthy);
+        mockCrypto.getUserVerificationStatus.mockReturnValue(untrustworthy);
 
         const event = new MatrixEvent({ type: "m.key.verification.done" });
         event.verificationRequest = getMockVerificationRequest({ phase: VerificationPhase.Done });
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
     });
 
-    it("should rerender appropriately if user trust status changes", () => {
-        mockClient.checkUserTrust.mockReturnValue(untrustworthy);
+    it("should rerender appropriately if user trust status changes", async () => {
+        mockCrypto.getUserVerificationStatus.mockReturnValue(untrustworthy);
 
         const event = new MatrixEvent({ type: "m.key.verification.done" });
         event.verificationRequest = getMockVerificationRequest({
@@ -123,9 +128,9 @@ describe("MKeyVerificationConclusion", () => {
             otherUserId: "@someuser:domain",
         });
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
 
-        mockClient.checkUserTrust.mockReturnValue(trustworthy);
+        mockCrypto.getUserVerificationStatus.mockReturnValue(trustworthy);
 
         /* Ensure we don't rerender for every trust status change of any user */
         mockClient.emit(
@@ -133,7 +138,7 @@ describe("MKeyVerificationConclusion", () => {
             "@anotheruser:domain",
             new UserTrustLevel(true, true, true),
         );
-        expect(container).toBeEmpty();
+        expect(container).toBeEmptyDOMElement();
 
         /* But when our user changes, we do rerender */
         mockClient.emit(
@@ -141,16 +146,16 @@ describe("MKeyVerificationConclusion", () => {
             event.verificationRequest.otherUserId,
             new UserTrustLevel(true, true, true),
         );
-        expect(container).not.toBeEmpty();
+        await waitFor(() => expect(container).not.toBeEmptyDOMElement());
     });
 
-    it("should render appropriately if we cancelled the verification", () => {
+    it("should render appropriately if we cancelled the verification", async () => {
         const event = new MatrixEvent({ type: "m.key.verification.cancel" });
         event.verificationRequest = getMockVerificationRequest({
             phase: VerificationPhase.Cancelled,
             cancellingUserId: userId,
         });
         const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
-        expect(container).toHaveTextContent("You cancelled verifying");
+        await waitFor(() => expect(container).toHaveTextContent("You cancelled verifying"));
     });
 });
