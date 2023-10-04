@@ -19,6 +19,7 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MatrixClient, RoomMember, Device } from "matrix-js-sdk/src/matrix";
 import { UserVerificationStatus, DeviceVerificationStatus } from "matrix-js-sdk/src/crypto-api";
+import { mocked } from "jest-mock";
 
 import * as TestUtils from "../../../test-utils";
 import MemberTile from "../../../../src/components/views/rooms/MemberTile";
@@ -29,7 +30,7 @@ describe("MemberTile", () => {
 
     beforeEach(() => {
         matrixClient = TestUtils.stubClient();
-        jest.spyOn(matrixClient, "isRoomEncrypted").mockReturnValue(true);
+        mocked(matrixClient.isRoomEncrypted).mockReturnValue(true);
         member = new RoomMember("roomId", matrixClient.getUserId()!);
     });
 
@@ -40,7 +41,7 @@ describe("MemberTile", () => {
     });
 
     it("should display an warning E2EIcon when the e2E status = Warning", async () => {
-        jest.spyOn(matrixClient.getCrypto()!, "getUserVerificationStatus").mockResolvedValue({
+        mocked(matrixClient.getCrypto()!.getUserVerificationStatus).mockResolvedValue({
             isCrossSigningVerified: jest.fn().mockReturnValue(false),
             wasCrossSigningVerified: jest.fn().mockReturnValue(true),
         } as unknown as UserVerificationStatus);
@@ -58,11 +59,11 @@ describe("MemberTile", () => {
         const deviceMap = new Map<string, Map<string, Device>>();
         deviceMap.set(member.userId, new Map([["deviceId", {} as Device]]));
         // Return a DeviceMap = Map<string, Map<string, Device>>
-        jest.spyOn(matrixClient.getCrypto()!, "getUserDeviceInfo").mockResolvedValue(deviceMap);
-        jest.spyOn(matrixClient.getCrypto()!, "getUserVerificationStatus").mockResolvedValue({
+        mocked(matrixClient.getCrypto()!.getUserDeviceInfo).mockResolvedValue(deviceMap);
+        mocked(matrixClient.getCrypto()!.getUserVerificationStatus).mockResolvedValue({
             isCrossSigningVerified: jest.fn().mockReturnValue(true),
         } as unknown as UserVerificationStatus);
-        jest.spyOn(matrixClient.getCrypto()!, "getDeviceVerificationStatus").mockResolvedValue({
+        mocked(matrixClient.getCrypto()!.getDeviceVerificationStatus).mockResolvedValue({
             crossSigningVerified: true,
         } as DeviceVerificationStatus);
 
