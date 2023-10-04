@@ -34,7 +34,6 @@ import {
     VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { defer } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
 import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
@@ -158,7 +157,6 @@ beforeEach(() => {
         currentState: {
             on: jest.fn(),
         },
-        checkUserTrust: jest.fn(),
         getRoom: jest.fn(),
         credentials: {},
         setPowerLevel: jest.fn(),
@@ -327,7 +325,6 @@ describe("<UserInfo />", () => {
     describe("with crypto enabled", () => {
         beforeEach(() => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
-            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
             mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
 
             const device = new Device({
@@ -379,7 +376,6 @@ describe("<UserInfo />", () => {
         });
 
         it("renders unverified user info", async () => {
-            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
             mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(false, false, false));
             renderComponent({ room: mockRoom });
             await act(flushPromises);
@@ -391,7 +387,6 @@ describe("<UserInfo />", () => {
         });
 
         it("renders verified user info", async () => {
-            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(true, false, false));
             mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, false, false));
             renderComponent({ room: mockRoom });
             await act(flushPromises);
