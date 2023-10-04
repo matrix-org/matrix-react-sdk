@@ -47,6 +47,7 @@ describe("<JoinRuleSettings />", () => {
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         getRoom: jest.fn(),
+        getDomain: jest.fn(),
         getLocalAliases: jest.fn().mockReturnValue([]),
         sendStateEvent: jest.fn(),
         upgradeRoom: jest.fn(),
