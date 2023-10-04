@@ -52,7 +52,6 @@
         "test": "jest",
         "test:cypress": "cypress run",
         "test:cypress:open": "cypress open",
-        "test:screenshot:local": "PERCY_TOKEN=a04f2cc2bbfa5d01df2e234622896ad47bff8433a26c563ef551d2e1c15a171f PERCY_BRANCH=local yarn percy exec --parallel -- yarn test:cypress",
         "coverage": "yarn test --coverage"
     },
     "resolutions": {
