@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient, MatrixClient, SSOAction } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
@@ -65,8 +65,13 @@ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPaylo
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
-import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
 import { OidcClientStore } from "./stores/oidc/OidcClientStore";
+import {
+    getStoredOidcClientId,
+    getStoredOidcIdTokenClaims,
+    getStoredOidcTokenIssuer,
+    persistOidcAuthenticatedSettings,
+} from "./utils/oidc/persistOidcSettings";
 import GenericToast from "./components/views/toasts/GenericToast";
 import {
     ACCESS_TOKEN_IV,
@@ -79,6 +84,7 @@ import {
     REFRESH_TOKEN_STORAGE_KEY,
     tryDecryptToken,
 } from "./utils/tokens/tokens";
+import { TokenRefresher } from "./utils/oidc/TokenRefresher";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -273,7 +279,7 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } =
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, idTokenClaims, clientId, issuer } =
             await completeOidcLogin(queryParams);
 
         const {
@@ -295,7 +301,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
         logger.debug("Logged in via OIDC native flow");
         await onSuccessfulDelegatedAuthLogin(credentials);
         // this needs to happen after success handler which clears storages
-        persistOidcAuthenticatedSettings(clientId, issuer);
+        persistOidcAuthenticatedSettings(clientId, issuer, idTokenClaims);
         return true;
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
@@ -748,6 +754,43 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
 }
 
 /**
+ * When we have a refreshToken and an OIDC token issuer in storage
+ * @param credentials
+ * @returns Promise that resolves to a TokenRefresher, or undefined
+ */
+async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promise<OidcTokenRefresher | undefined> {
+    if (!credentials.refreshToken) {
+        return;
+    }
+    const tokenIssuer = getStoredOidcTokenIssuer();
+    if (!tokenIssuer) {
+        return;
+    }
+    try {
+        const clientId = getStoredOidcClientId();
+        const idTokenClaims = getStoredOidcIdTokenClaims();
+        // @TODO(kerrya) this should probably come from somewhere
+        const redirectUri = window.location.origin;
+        const deviceId = credentials.deviceId;
+        if (!deviceId) {
+            throw new Error("Expected deviceId in user credentials.");
+        }
+        const tokenRefresher = new TokenRefresher(
+            { issuer: tokenIssuer },
+            clientId,
+            redirectUri,
+            deviceId,
+            idTokenClaims!,
+            credentials.userId,
+        );
+        await tokenRefresher.oidcClientReady;
+        return tokenRefresher;
+    } catch (error) {
+        logger.error("Failed to initialise OIDC token refresher", error);
+    }
+}
+
+/**
  * optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
@@ -788,9 +831,11 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
+    const tokenRefresher = await createOidcTokenRefresher(credentials);
+
     // check the session lock just before creating the new client
     checkSessionLock();
-    MatrixClientPeg.replaceUsingCreds(credentials);
+    MatrixClientPeg.replaceUsingCreds(credentials, tokenRefresher);
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
@@ -884,19 +929,10 @@ let _isLoggingOut = false;
  */
 async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore): Promise<void> {
     if (oidcClientStore?.isUserAuthenticatedWithOidc) {
-        const accessToken = client.http.opts.accessToken;
+        const accessToken = client.getAccessToken() ?? undefined;
+        const refreshToken = client.getRefreshToken() ?? undefined;
 
-        // @TODO(kerrya) https://github.com/vector-im/element-web/issues/25444
-        // refresh token will be set somewhere better after refreshToken work
-        // and we can avoid decrypting here
-        const refreshToken = await getStoredToken(REFRESH_TOKEN_STORAGE_KEY);
-        const pickleKey =
-            (await PlatformPeg.get()?.getPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "")) || undefined;
-        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV);
-        if (!accessToken) {
-            throw new Error("Unexpectedly found no access token");
-        }
-        await oidcClientStore.revokeTokens(accessToken, decryptedRefreshToken!);
+        await oidcClientStore.revokeTokens(accessToken, refreshToken);
     } else {
         await client.logout(true);
     }
