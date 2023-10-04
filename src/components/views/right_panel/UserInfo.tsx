@@ -165,14 +165,17 @@ function useHasCrossSigningKeys(
     }, [cli, member, canVerify]);
 }
 
-export function DeviceItem({ userId, device }: { userId: string; device: IDevice }): JSX.Element {
+export function DeviceItem({
+    userId,
+    device,
+    isUserVerified,
+}: {
+    userId: string;
+    device: IDevice;
+    isUserVerified: boolean;
+}): JSX.Element {
     const cli = useContext(MatrixClientContext);
     const isMe = userId === cli.getUserId();
-
-    const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
-        async () => cli.getCrypto()?.getUserVerificationStatus(userId),
-        [userId],
-    );
 
     /** is the device verified? */
     const isVerified = useAsyncMemo(async () => {
@@ -192,9 +195,9 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
         mx_UserInfo_device_unverified: !isVerified,
     });
     const iconClasses = classNames("mx_E2EIcon", {
-        mx_E2EIcon_normal: !userTrust?.isVerified(),
+        mx_E2EIcon_normal: !isUserVerified,
         mx_E2EIcon_verified: isVerified,
-        mx_E2EIcon_warning: userTrust?.isVerified() && !isVerified,
+        mx_E2EIcon_warning: isUserVerified && !isVerified,
     });
 
     const onDeviceClick = (): void => {
@@ -212,7 +215,7 @@ export function DeviceItem({ userId, device }: { userId: string; device: IDevice
     }
 
     let trustedLabel: string | undefined;
-    if (userTrust?.isVerified()) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
+    if (isUserVerified) trustedLabel = isVerified ? _t("common|trusted") : _t("common|not_trusted");
 
     if (isVerified === undefined) {
         // we're still deciding if the device is verified
@@ -240,17 +243,14 @@ function DevicesSection({
     devices,
     userId,
     loading,
+    isUserVerified,
 }: {
     devices: IDevice[];
     userId: string;
     loading: boolean;
+    isUserVerified: boolean;
 }): JSX.Element {
     const cli = useContext(MatrixClientContext);
-
-    const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
-        async () => cli.getCrypto()?.getUserVerificationStatus(userId),
-        [userId],
-    );
 
     const [isExpanded, setExpanded] = useState(false);
 
@@ -273,7 +273,7 @@ function DevicesSection({
     let expandHideCaption;
     let expandIconClasses = "mx_E2EIcon";
 
-    if (userTrust?.isVerified()) {
+    if (isUserVerified) {
         for (let i = 0; i < devices.length; ++i) {
             const device = devices[i];
             const deviceTrust = deviceTrusts[i];
@@ -319,13 +319,15 @@ function DevicesSection({
     }
 
     let deviceList = unverifiedDevices.map((device, i) => {
-        return <DeviceItem key={i} userId={userId} device={device} />;
+        return <DeviceItem key={i} userId={userId} device={device} isUserVerified={isUserVerified} />;
     });
     if (isExpanded) {
         const keyStart = unverifiedDevices.length;
         deviceList = deviceList.concat(
             expandSectionDevices.map((device, i) => {
-                return <DeviceItem key={i + keyStart} userId={userId} device={device} />;
+                return (
+                    <DeviceItem key={i + keyStart} userId={userId} device={device} isUserVerified={isUserVerified} />
+                );
             }),
         );
     }
@@ -1446,10 +1448,10 @@ const BasicUserInfo: React.FC<{
         async () => cli.getCrypto()?.getUserVerificationStatus(member.userId),
         [member.userId],
     );
-    const userVerified = userTrust?.isCrossSigningVerified();
+    const isUserVerified = Boolean(userTrust?.isVerified());
     const isMe = member.userId === cli.getUserId();
     const canVerify =
-        cryptoEnabled && homeserverSupportsCrossSigning && !userVerified && !isMe && devices && devices.length > 0;
+        cryptoEnabled && homeserverSupportsCrossSigning && !isUserVerified && !isMe && devices && devices.length > 0;
 
     const setUpdating: SetUpdating = (updating) => {
         setPendingUpdateCount((count) => count + (updating ? 1 : -1));
@@ -1510,7 +1512,12 @@ const BasicUserInfo: React.FC<{
             <p>{text}</p>
             {verifyButton}
             {cryptoEnabled && (
-                <DevicesSection loading={showDeviceListSpinner} devices={devices} userId={member.userId} />
+                <DevicesSection
+                    loading={showDeviceListSpinner}
+                    devices={devices}
+                    userId={member.userId}
+                    isUserVerified={isUserVerified}
+                />
             )}
             {editDevices}
         </div>

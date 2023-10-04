@@ -448,6 +448,7 @@ describe("<DeviceItem />", () => {
     const defaultProps = {
         userId: defaultUserId,
         device,
+        isUserVerified: false,
     };
 
     const renderComponent = (props = {}) => {
@@ -460,11 +461,6 @@ describe("<DeviceItem />", () => {
         });
     };
 
-    const setMockUserTrust = (isVerified = false) => {
-        mockCrypto.getUserVerificationStatus.mockResolvedValue({
-            isVerified: () => isVerified,
-        } as UserVerificationStatus);
-    };
     const setMockDeviceTrust = (isVerified = false, isCrossSigningVerified = false) => {
         mockCrypto.getDeviceVerificationStatus.mockResolvedValue({
             isVerified: () => isVerified,
@@ -475,13 +471,11 @@ describe("<DeviceItem />", () => {
     const mockVerifyDevice = jest.spyOn(mockVerification, "verifyDevice");
 
     beforeEach(() => {
-        setMockUserTrust();
         setMockDeviceTrust();
     });
 
     afterEach(() => {
         mockCrypto.getDeviceVerificationStatus.mockReset();
-        mockCrypto.getUserVerificationStatus.mockReset();
         mockVerifyDevice.mockClear();
     });
 
@@ -498,8 +492,7 @@ describe("<DeviceItem />", () => {
     });
 
     it("with verified user only, displays button with a 'Not trusted' label", async () => {
-        setMockUserTrust(true);
-        renderComponent();
+        renderComponent({ isUserVerified: true });
         await act(flushPromises);
 
         expect(screen.getByRole("button", { name: `${device.displayName} Not trusted` })).toBeInTheDocument();
@@ -535,9 +528,8 @@ describe("<DeviceItem />", () => {
     });
 
     it("with verified user and device, displays no button and a 'Trusted' label", async () => {
-        setMockUserTrust(true);
         setMockDeviceTrust(true);
-        renderComponent();
+        renderComponent({ isUserVerified: true });
         await act(flushPromises);
 
         expect(screen.queryByRole("button")).not.toBeInTheDocument();
