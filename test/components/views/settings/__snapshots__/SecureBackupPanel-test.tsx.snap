@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<SecureBackupPanel /> handles absence of backup 1`] = `<div />`;
+
 exports[`<SecureBackupPanel /> handles error fetching backup 1`] = `
 <div>
   <div

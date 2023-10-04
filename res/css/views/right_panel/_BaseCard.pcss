@@ -29,7 +29,10 @@ limitations under the License.
         height: 64px;
         padding: var(--cpd-space-3x);
         box-sizing: border-box;
-        border-bottom: 1px solid $separator;
+        /* changing the color from $separator to transparent as it is
+           the best visual output during the transition period. This will be
+           reintroduced at a later stage. */
+        border-bottom: 1px solid transparent;
         display: flex;
         align-items: center;
         justify-content: space-between;

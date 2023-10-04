@@ -362,7 +362,11 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                     }}
                     data-testid="summary-search"
                 >
-                    <Search name="search" className="mx_RoomSummaryCard_search" placeholder={_t("action|search")} />
+                    <Search
+                        name="search"
+                        className="mx_RoomSummaryCard_search"
+                        placeholder={_t("action|search_placeholder")}
+                    />
                 </Root>
                 <AccessibleButton
                     data-testid="base-card-close-button"
@@ -378,16 +382,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                     {_t("common|people")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
-                {SettingsStore.getValue("feature_new_room_decoration_ui") && (
-                    <Button
-                        className="mx_RoomSummaryCard_icon_search"
-                        onClick={() => {
-                            onSearchClick?.();
-                        }}
-                    >
-                        {_t("right_panel|search_button")}
-                    </Button>
-                )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                         {_t("right_panel|files_button")}

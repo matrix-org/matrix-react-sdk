@@ -40,7 +40,7 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
               class="_input_49det_59"
               id=":r1:"
               name="search"
-              placeholder="Search"
+              placeholder="action"
               type="search"
             />
           </label>
