@@ -57,7 +57,7 @@ export class OidcClientStore {
      * @returns Promise that resolves when tokens have been revoked
      * @throws when OidcClient cannot be initialised, or revoking either token fails
      */
-    public async revokeTokens(accessToken: string, refreshToken: string): Promise<void> {
+    public async revokeTokens(accessToken?: string, refreshToken?: string): Promise<void> {
         const client = await this.getOidcClient();
 
         if (!client) {
@@ -83,11 +83,13 @@ export class OidcClientStore {
      */
     private async tryRevokeToken(
         oidcClient: OidcClient,
-        token: string,
+        token: string | undefined,
         tokenType: "access_token" | "refresh_token",
     ): Promise<boolean> {
         try {
-            console.log("here", tokenType);
+            if (!token) {
+                return false;
+            }
             await oidcClient.revokeToken(token, tokenType);
             return true;
         } catch (error) {
@@ -112,17 +114,17 @@ export class OidcClientStore {
      * @returns promise that resolves when initialising OidcClient succeeds or fails
      */
     private async initOidcClient(): Promise<void> {
-        const wellKnown = this.matrixClient.getClientWellKnown();
-        if (!wellKnown) {
-            logger.error("Cannot initialise OidcClientStore: client well known required.");
+        const wellKnown = await this.matrixClient.waitForClientWellKnown();
+        if (!wellKnown && !this.authenticatedIssuer) {
+            logger.error("Cannot initialise OIDC client without issuer.");
             return;
         }
-
-        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig>(wellKnown) ?? undefined;
+        const delegatedAuthConfig =
+            (wellKnown && M_AUTHENTICATION.findIn<IDelegatedAuthConfig>(wellKnown)) ?? undefined;
         try {
             const clientId = getStoredOidcClientId();
             const { account, metadata, signingKeys } = await discoverAndValidateAuthenticationConfig(
-                delegatedAuthConfig,
+                delegatedAuthConfig || { issuer: this.authenticatedIssuer! },
             );
             // if no account endpoint is configured default to the issuer
             this._accountManagementEndpoint = account ?? metadata.issuer;
