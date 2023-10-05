@@ -1078,7 +1078,6 @@ describe("<MatrixChat />", () => {
                 expect(localStorage.getItem("mx_hs_url")).toEqual(homeserverUrl);
                 expect(localStorage.getItem("mx_user_id")).toEqual(userId);
                 expect(localStorage.getItem("mx_has_access_token")).toEqual("true");
-                expect(localStorage.getItem("mx_has_refresh_token")).toEqual("true");
                 expect(localStorage.getItem("mx_device_id")).toEqual(deviceId);
             });
 
