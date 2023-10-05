@@ -67,5 +67,13 @@ describe("General room settings tab", () => {
                 widths: [580, 796],
             },
         );
+        
+        cy.get(".mx_Dialog").invoke("width").then((dialogWidth) => {
+            // Locate the div with class mx_Field and get its width.
+            cy.get(".mx_Field").invoke("width").then((fieldWidth) => {
+                // Assert that the width of the .mx_Field div is less than the .mx_Dialog div.
+                expect(fieldWidth).to.be.lessThan(dialogWidth);
+            });
+        });
     });
 });
