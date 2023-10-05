@@ -326,6 +326,7 @@ describe("<UserInfo />", () => {
         beforeEach(() => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
             mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+            mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(false, false, false));
 
             const device = new Device({
                 deviceId: "d1",
@@ -357,6 +358,8 @@ describe("<UserInfo />", () => {
         });
 
         it("renders <BasicUserInfo />", async () => {
+            mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(false, false, false));
+
             const { container } = renderComponent({
                 phase: RightPanelPhases.SpaceMemberInfo,
                 verificationRequest,

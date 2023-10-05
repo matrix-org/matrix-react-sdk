@@ -165,6 +165,16 @@ function useHasCrossSigningKeys(
     }, [cli, member, canVerify]);
 }
 
+/**
+ * Display one device and the related actions
+ * @param userId current user id
+ * @param device device to display
+ * @param isUserVerified is false when
+ *  - the user is not verified
+ *  - the crypto of `MatrixClient.getCrypto` is unavailable
+ *  - `MatrixClient.getCrypto.getUserVerificationStatus` async call is in progress
+ * @constructor
+ */
 export function DeviceItem({
     userId,
     device,
@@ -239,6 +249,17 @@ export function DeviceItem({
     }
 }
 
+/**
+ * Display a list of devices
+ * @param devices devices to display
+ * @param userId current user id
+ * @param loading displays a spinner instead of the device section
+ * @param isUserVerified is false when
+ *  - the user is not verified
+ *  - the crypto of `MatrixClient.getCrypto` is unavailable
+ *  - `MatrixClient.getCrypto.getUserVerificationStatus` async call is in progress
+ * @constructor
+ */
 function DevicesSection({
     devices,
     userId,
@@ -1447,18 +1468,26 @@ const BasicUserInfo: React.FC<{
     const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
         async () => cli.getCrypto()?.getUserVerificationStatus(member.userId),
         [member.userId],
+        // the user verification status is not initialized
+        undefined,
     );
+    const hasUserVerificationStatus = Boolean(userTrust);
     const isUserVerified = Boolean(userTrust?.isVerified());
     const isMe = member.userId === cli.getUserId();
     const canVerify =
-        cryptoEnabled && homeserverSupportsCrossSigning && !isUserVerified && !isMe && devices && devices.length > 0;
+        hasUserVerificationStatus &&
+        homeserverSupportsCrossSigning &&
+        !isUserVerified &&
+        !isMe &&
+        devices &&
+        devices.length > 0;
 
     const setUpdating: SetUpdating = (updating) => {
         setPendingUpdateCount((count) => count + (updating ? 1 : -1));
     };
     const hasCrossSigningKeys = useHasCrossSigningKeys(cli, member as User, canVerify, setUpdating);
 
-    const showDeviceListSpinner = devices === undefined;
+    const showDeviceListSpinner = !hasUserVerificationStatus || devices === undefined;
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
