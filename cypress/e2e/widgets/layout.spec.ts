@@ -129,4 +129,16 @@ describe("Widget Layout", () => {
 
         cy.get('iframe[title="widget"]').invoke("height").should("be.greaterThan", 400);
     });
+    it("open right panel with chat when maximizing widget", () => {
+        cy.get('iframe[title="widget"]').invoke("height").should("be.lessThan", 250);
+        cy.get('div[title="Maximise"]').click();
+        cy.get(".mx_RightPanel").should("exist");
+    });
+    it("close right panel with chat when unmaximizing widget", () => {
+        cy.get('iframe[title="widget"]').invoke("height").should("be.lessThan", 250);
+        cy.get('div[title="Maximise"]').click();
+        cy.get(".mx_RightPanel").should("exist");
+        cy.get('div[title="Minimise"]').click();
+        cy.get(".mx_RightPanel").should("not.exist");
+    });
 });
