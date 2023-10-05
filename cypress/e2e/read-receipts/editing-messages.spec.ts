@@ -180,8 +180,6 @@ describe("Read receipts", () => {
                 // Then the room remains read
                 assertStillRead(room2);
             });
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            // XXX: is the above comment outdated? it (normally) seems to pass
             // https://github.com/vector-im/element-web/issues/26273
             it.skip("A room with an edit is still read after restart", () => {
                 // Given a message is marked as read
