@@ -169,10 +169,7 @@ function useHasCrossSigningKeys(
  * Display one device and the related actions
  * @param userId current user id
  * @param device device to display
- * @param isUserVerified is false when
- *  - the user is not verified
- *  - the crypto of `MatrixClient.getCrypto` is unavailable
- *  - `MatrixClient.getCrypto.getUserVerificationStatus` async call is in progress
+ * @param isUserVerified false when the user is not verified
  * @constructor
  */
 export function DeviceItem({
@@ -255,9 +252,9 @@ export function DeviceItem({
  * @param userId current user id
  * @param loading displays a spinner instead of the device section
  * @param isUserVerified is false when
- *  - the user is not verified
- *  - the crypto of `MatrixClient.getCrypto` is unavailable
- *  - `MatrixClient.getCrypto.getUserVerificationStatus` async call is in progress
+ *  - the user is not verified, or
+ *  - crypto is not available (ie, `MatrixClient.getCrypto()` is undefined), or
+ *  - `MatrixClient.getCrypto.getUserVerificationStatus` async call is in progress (in which case `loading` will also be `true`)
  * @constructor
  */
 function DevicesSection({
