@@ -29,6 +29,7 @@ import { mocked } from "jest-mock";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { getMockClientWithEventEmitter } from "../../../test-utils";
 import { MKeyVerificationConclusion } from "../../../../src/components/views/messages/MKeyVerificationConclusion";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 const trustworthy = { isVerified: () => true } as unknown as UserTrustLevel;
 const untrustworthy = { isVerified: () => false } as unknown as UserTrustLevel;
@@ -74,6 +75,14 @@ describe("MKeyVerificationConclusion", () => {
         ) as unknown as VerificationRequest;
     };
 
+    function renderComponent(event: MatrixEvent) {
+        return render(
+            <MatrixClientContext.Provider value={mockClient}>
+                <MKeyVerificationConclusion mxEvent={event} />
+            </MatrixClientContext.Provider>,
+        );
+    }
+
     beforeEach(() => {
         jest.clearAllMocks();
         mockCrypto.getUserVerificationStatus.mockReturnValue(trustworthy);
@@ -85,28 +94,28 @@ describe("MKeyVerificationConclusion", () => {
 
     it("shouldn't render if there's no verificationRequest", () => {
         const event = new MatrixEvent({});
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the verificationRequest is pending", () => {
         const event = new MatrixEvent({});
         event.verificationRequest = getMockVerificationRequest({ pending: true });
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the event type is cancel but the request type isn't", () => {
         const event = new MatrixEvent({ type: EventType.KeyVerificationCancel });
         event.verificationRequest = getMockVerificationRequest({});
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         expect(container).toBeEmptyDOMElement();
     });
 
     it("shouldn't render if the event type is done but the request type isn't", () => {
         const event = new MatrixEvent({ type: "m.key.verification.done" });
         event.verificationRequest = getMockVerificationRequest({});
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         expect(container).toBeEmptyDOMElement();
     });
 
@@ -115,7 +124,7 @@ describe("MKeyVerificationConclusion", () => {
 
         const event = new MatrixEvent({ type: "m.key.verification.done" });
         event.verificationRequest = getMockVerificationRequest({ phase: VerificationPhase.Done });
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         expect(container).toBeEmptyDOMElement();
     });
 
@@ -127,7 +136,7 @@ describe("MKeyVerificationConclusion", () => {
             phase: VerificationPhase.Done,
             otherUserId: "@someuser:domain",
         });
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         expect(container).toBeEmptyDOMElement();
 
         mockCrypto.getUserVerificationStatus.mockReturnValue(trustworthy);
@@ -155,7 +164,7 @@ describe("MKeyVerificationConclusion", () => {
             phase: VerificationPhase.Cancelled,
             cancellingUserId: userId,
         });
-        const { container } = render(<MKeyVerificationConclusion mxEvent={event} />);
+        const { container } = renderComponent(event);
         await waitFor(() => expect(container).toHaveTextContent("You cancelled verifying"));
     });
 });

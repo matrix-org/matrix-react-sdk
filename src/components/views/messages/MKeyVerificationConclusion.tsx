@@ -16,16 +16,16 @@ limitations under the License.
 
 import React, { useState } from "react";
 import classNames from "classnames";
-import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, EventType, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import { getNameForEventRoom, userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import EventTileBubble from "./EventTileBubble";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     /* the MatrixEvent to show */
@@ -34,8 +34,8 @@ interface IProps {
 }
 
 export function MKeyVerificationConclusion({ mxEvent, timestamp }: IProps): JSX.Element | null {
+    const client = useMatrixClientContext();
     const request = mxEvent.verificationRequest;
-    const client = MatrixClientPeg.safeGet();
 
     // key is used to trigger rerender when we received event
     const [key, setKey] = useState(0);
@@ -53,8 +53,8 @@ export function MKeyVerificationConclusion({ mxEvent, timestamp }: IProps): JSX.
 
     // check at every received request event if the verification is still ongoing
     const isDisplayed = useAsyncMemo(
-        () => isVerificationOngoing(mxEvent, mxEvent.verificationRequest),
-        [mxEvent, mxEvent.verificationRequest, key],
+        () => isVerificationOngoing(mxEvent, client, mxEvent.verificationRequest),
+        [mxEvent, client, mxEvent.verificationRequest, key],
         false,
     );
 
@@ -102,9 +102,14 @@ export function MKeyVerificationConclusion({ mxEvent, timestamp }: IProps): JSX.
  * Check the verification is not pending, the other user is verified,
  * and we didn't receive a cancel or done event after the verification ending
  * @param mxEvent matrixEvent related to the verification request
+ * @param matrixClient current MatrixClient
  * @param request the verification request
  */
-export async function isVerificationOngoing(mxEvent: MatrixEvent, request?: VerificationRequest): Promise<boolean> {
+export async function isVerificationOngoing(
+    mxEvent: MatrixEvent,
+    matrixClient: MatrixClient,
+    request?: VerificationRequest,
+): Promise<boolean> {
     // normally should not happen
     if (!request) {
         return false;
@@ -124,9 +129,7 @@ export async function isVerificationOngoing(mxEvent: MatrixEvent, request?: Veri
     }
 
     // User isn't actually verified
-    const userVerificationStatus = await MatrixClientPeg.safeGet()
-        .getCrypto()
-        ?.getUserVerificationStatus(request.otherUserId);
+    const userVerificationStatus = await matrixClient.getCrypto()?.getUserVerificationStatus(request.otherUserId);
     if (!userVerificationStatus?.isVerified()) {
         return false;
     }
