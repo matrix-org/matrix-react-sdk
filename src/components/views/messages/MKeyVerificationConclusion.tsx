@@ -53,7 +53,7 @@ export function MKeyVerificationConclusion({ mxEvent, timestamp }: IProps): JSX.
 
     // check at every received request event if the verification is still ongoing
     const isDisplayed = useAsyncMemo(
-        () => isVerificationOngoing(mxEvent, client, mxEvent.verificationRequest),
+        () => isVerificationInProgress(mxEvent, client, mxEvent.verificationRequest),
         [mxEvent, client, mxEvent.verificationRequest, key],
         false,
     );
@@ -105,7 +105,7 @@ export function MKeyVerificationConclusion({ mxEvent, timestamp }: IProps): JSX.
  * @param matrixClient current MatrixClient
  * @param request the verification request
  */
-export async function isVerificationOngoing(
+export async function isVerificationInProgress(
     mxEvent: MatrixEvent,
     matrixClient: MatrixClient,
     request?: VerificationRequest,
