@@ -1462,6 +1462,7 @@ const BasicUserInfo: React.FC<{
     let verifyButton;
     const homeserverSupportsCrossSigning = useHomeserverSupportsCrossSigning(cli);
 
+    const isCryptoAvailable = Boolean(cli.getCrypto());
     const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
         async () => cli.getCrypto()?.getUserVerificationStatus(member.userId),
         [member.userId],
@@ -1484,7 +1485,10 @@ const BasicUserInfo: React.FC<{
     };
     const hasCrossSigningKeys = useHasCrossSigningKeys(cli, member as User, canVerify, setUpdating);
 
-    const showDeviceListSpinner = !hasUserVerificationStatus || devices === undefined;
+    // Display the spinner only when
+    // - the devices are not populated yet
+    // - the crypto is available and we don't have the user verification status yet
+    const showDeviceListSpinner = (isCryptoAvailable && !hasUserVerificationStatus) || devices === undefined;
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
