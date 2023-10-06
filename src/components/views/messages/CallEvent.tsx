@@ -67,7 +67,7 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                     <div className="mx_CallEvent_columns">
                         <div className="mx_CallEvent_details">
                             <span className="mx_CallEvent_title">
-                                {_t("%(name)s started a video call", { name: senderName })}
+                                {_t("timeline|m.call|video_call_started_text", { name: senderName })}
                             </span>
                             <LiveContentSummary
                                 type={LiveContentType.Video}
@@ -172,7 +172,7 @@ export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
             <div className="mx_CallEvent_wrapper" ref={ref}>
                 <div className="mx_CallEvent mx_CallEvent_inactive">
                     <div className="mx_CallEvent_columns">
-                        <span className="mx_CallEvent_title">{_t("Video call ended")}</span>
+                        <span className="mx_CallEvent_title">{_t("timeline|m.call|video_call_ended")}</span>
                         <CallDuration delta={latestEvent.getTs() - mxEvent.getTs()} />
                     </div>
                 </div>

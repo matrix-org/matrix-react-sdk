@@ -37,7 +37,7 @@ const FilteredDeviceListHeader: React.FC<Props> = ({
     children,
     ...rest
 }) => {
-    const checkboxLabel = isAllSelected ? _t("Deselect all") : _t("Select all");
+    const checkboxLabel = isAllSelected ? _t("common|deselect_all") : _t("common|select_all");
     return (
         <div className="mx_FilteredDeviceListHeader" {...rest}>
             {!isSelectDisabled && (
@@ -54,8 +54,8 @@ const FilteredDeviceListHeader: React.FC<Props> = ({
             )}
             <span className="mx_FilteredDeviceListHeader_label">
                 {selectedDeviceCount > 0
-                    ? _t("%(count)s sessions selected", { count: selectedDeviceCount })
-                    : _t("Sessions")}
+                    ? _t("settings|sessions|n_sessions_selected", { count: selectedDeviceCount })
+                    : _t("settings|sessions|title")}
             </span>
             {children}
         </div>

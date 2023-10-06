@@ -95,7 +95,7 @@ export class BannedUser extends React.Component<IBannedUserProps> {
             logger.error("Failed to unban: " + err);
             Modal.createDialog(ErrorDialog, {
                 title: _t("common|error"),
-                description: _t("Failed to unban"),
+                description: _t("room_settings|permissions|error_unbanning"),
             });
         });
     };
@@ -110,7 +110,7 @@ export class BannedUser extends React.Component<IBannedUserProps> {
                     kind="danger_sm"
                     onClick={this.onUnbanClick}
                 >
-                    {_t("Unban")}
+                    {_t("action|unban")}
                 </AccessibleButton>
             );
         }
@@ -119,9 +119,11 @@ export class BannedUser extends React.Component<IBannedUserProps> {
         return (
             <li>
                 {unbanButton}
-                <span title={_t("Banned by %(displayName)s", { displayName: this.props.by })}>
+                <span title={_t("room_settings|permissions|banned_by", { displayName: this.props.by })}>
                     <strong>{this.props.member.name}</strong> {userId}
-                    {this.props.reason ? " " + _t("Reason") + ": " + this.props.reason : ""}
+                    {this.props.reason
+                        ? " " + _t("room_settings|permissions|ban_reason") + ": " + this.props.reason
+                        : ""}
                 </span>
             </li>
         );
@@ -205,10 +207,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error changing power level requirement"),
-                description: _t(
-                    "An error occurred changing the room's power level requirements. Ensure you have sufficient permissions and try again.",
-                ),
+                title: _t("room_settings|permissions|error_changing_pl_reqs_title"),
+                description: _t("room_settings|permissions|error_changing_pl_reqs_description"),
             });
         });
     };
@@ -230,10 +230,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error changing power level"),
-                description: _t(
-                    "An error occurred changing the user's power level. Ensure you have sufficient permissions and try again.",
-                ),
+                title: _t("room_settings|permissions|error_changing_pl_title"),
+                description: _t("room_settings|permissions|error_changing_pl_description"),
             });
         });
     };
@@ -341,7 +339,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             parseIntWithDefault(plContent.events_default, powerLevelDescriptors.events_default.defaultValue),
         );
 
-        let privilegedUsersSection = <div>{_t("No users have specific privileges in this room")}</div>;
+        let privilegedUsersSection = <div>{_t("room_settings|permissions|no_privileged_users")}</div>;
         let mutedUsersSection;
         if (Object.keys(userLevels).length) {
             const privilegedUsers: JSX.Element[] = [];
@@ -391,11 +389,17 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             if (privilegedUsers.length) {
                 privilegedUsersSection = (
-                    <SettingsFieldset legend={_t("Privileged Users")}>{privilegedUsers}</SettingsFieldset>
+                    <SettingsFieldset legend={_t("room_settings|permissions|privileged_users_section")}>
+                        {privilegedUsers}
+                    </SettingsFieldset>
                 );
             }
             if (mutedUsers.length) {
-                mutedUsersSection = <SettingsFieldset legend={_t("Muted Users")}>{mutedUsers}</SettingsFieldset>;
+                mutedUsersSection = (
+                    <SettingsFieldset legend={_t("room_settings|permissions|muted_users_section")}>
+                        {mutedUsers}
+                    </SettingsFieldset>
+                );
             }
         }
 
@@ -404,7 +408,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         if (banned?.length) {
             const canBanUsers = currentUserLevel >= banLevel;
             bannedUsersSection = (
-                <SettingsFieldset legend={_t("Banned users")}>
+                <SettingsFieldset legend={_t("room_settings|permissions|banned_users_section")}>
                     <ul className="mx_RolesRoomSettingsTab_bannedList">
                         {banned.map((member) => {
                             const banEvent = member.events.member?.getContent();
@@ -468,7 +472,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
                     label = _t(translationKeyForEvent, { brand });
                 } else {
-                    label = _t("Send %(eventType)s events", { eventType });
+                    label = _t("room_settings|permissions|send_event_type", { eventType });
                 }
                 return (
                     <div key={eventType}>
@@ -487,17 +491,17 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
         return (
             <SettingsTab>
-                <SettingsSection heading={_t("Roles & Permissions")}>
+                <SettingsSection heading={_t("room_settings|permissions|title")}>
                     {privilegedUsersSection}
                     {canChangeLevels && <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} />}
                     {mutedUsersSection}
                     {bannedUsersSection}
                     <SettingsFieldset
-                        legend={_t("Permissions")}
+                        legend={_t("room_settings|permissions|permissions_section")}
                         description={
                             isSpaceRoom
-                                ? _t("Select the roles required to change various parts of the space")
-                                : _t("Select the roles required to change various parts of the room")
+                                ? _t("room_settings|permissions|permissions_section_description_space")
+                                : _t("room_settings|permissions|permissions_section_description_room")
                         }
                     >
                         {powerSelectors}

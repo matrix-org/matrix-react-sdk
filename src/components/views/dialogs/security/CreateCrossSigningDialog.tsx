@@ -112,21 +112,21 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         } else {
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
-                    title: _t("Use Single Sign On to continue"),
-                    body: _t("To continue, use Single Sign On to prove your identity."),
-                    continueText: _t("Single Sign On"),
+                    title: _t("auth|uia|sso_title"),
+                    body: _t("auth|uia|sso_preauth_body"),
+                    continueText: _t("auth|sso"),
                     continueKind: "primary",
                 },
                 [SSOAuthEntry.PHASE_POSTAUTH]: {
-                    title: _t("Confirm encryption setup"),
-                    body: _t("Click the button below to confirm setting up encryption."),
+                    title: _t("encryption|confirm_encryption_setup_title"),
+                    body: _t("encryption|confirm_encryption_setup_body"),
                     continueText: _t("action|confirm"),
                     continueKind: "primary",
                 },
             };
 
             const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                title: _t("Setting up keys"),
+                title: _t("encryption|bootstrap_title"),
                 matrixClient: MatrixClientPeg.safeGet(),
                 makeRequest,
                 aestheticsForStagePhases: {
@@ -173,7 +173,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
         if (this.state.error) {
             content = (
                 <div>
-                    <p>{_t("Unable to set up keys")}</p>
+                    <p>{_t("encryption|unable_to_setup_keys_error")}</p>
                     <div className="mx_Dialog_buttons">
                         <DialogButtons
                             primaryButton={_t("action|retry")}
@@ -195,7 +195,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             <BaseDialog
                 className="mx_CreateCrossSigningDialog"
                 onFinished={this.props.onFinished}
-                title={_t("Setting up keys")}
+                title={_t("encryption|bootstrap_title")}
                 hasCancel={false}
                 fixedWidth={false}
             >

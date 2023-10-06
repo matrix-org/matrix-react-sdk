@@ -224,7 +224,7 @@ $left-gutter: 64px;
             }
         }
 
-        &.focus-visible:focus-within,
+        &:focus-visible:focus-within,
         &.mx_EventTile_actionBarFocused,
         &.mx_EventTile_isEditing,
         &.mx_EventTile_selected {
@@ -846,17 +846,17 @@ $left-gutter: 64px;
     }
 
     &.mx_EventTile_e2eIcon_warning::after {
-        mask-image: url("$(res)/img/e2e/warning.svg");
-        background-color: $e2e-warning-color;
+        mask-image: url("$(res)/img/e2e/warning.svg"); // (!) in a shield
+        background-color: $e2e-warning-color; // red
     }
 
     &.mx_EventTile_e2eIcon_normal::after {
-        mask-image: url("$(res)/img/e2e/normal.svg");
-        background-color: $header-panel-text-primary-color;
+        mask-image: url("$(res)/img/e2e/normal.svg"); // regular shield
+        background-color: $header-panel-text-primary-color; // grey
     }
 
     &.mx_EventTile_e2eIcon_decryption_failure::after {
-        mask-image: url("$(res)/img/e2e/decryption-failure.svg");
+        mask-image: url("$(res)/img/e2e/decryption-failure.svg"); // key in a circle
         background-color: $secondary-content;
     }
 }
@@ -870,7 +870,7 @@ $left-gutter: 64px;
         border: 1px solid transparent;
 
         .mx_EventTile:hover &,
-        .mx_EventTile.focus-visible:focus-within & {
+        .mx_EventTile:focus-visible:focus-within & {
             border: 1px solid $tertiary-content;
         }
     }
@@ -993,7 +993,7 @@ $left-gutter: 64px;
 .mx_EventTile:hover .mx_MessageActionBar,
 .mx_EventTile.mx_EventTile_actionBarFocused .mx_MessageActionBar,
 [data-whatinput="keyboard"] .mx_EventTile:focus-within .mx_MessageActionBar,
-.mx_EventTile.focus-visible:focus-within .mx_MessageActionBar {
+.mx_EventTile:focus-visible:focus-within .mx_MessageActionBar {
     visibility: visible;
 }
 
@@ -1002,7 +1002,7 @@ $left-gutter: 64px;
 /* animation for when it's shown which means duplicating the style definition in */
 /* multiple places. */
 .mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput="keyboard"] :focus-within) {
-    &:not(.focus-visible:focus-within) .mx_MessageActionBar .mx_Indicator {
+    &:not(:focus-visible:focus-within) .mx_MessageActionBar .mx_Indicator {
         animation: none;
     }
 }

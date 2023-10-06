@@ -46,7 +46,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
     onLoginClick,
     onSubmitForm,
 }) => {
-    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("Send email");
+    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("auth|forgot_password_send_email");
 
     const emailFieldRef = useRef<Field>(null);
 
@@ -63,22 +63,18 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
     return (
         <>
             <EmailIcon className="mx_AuthBody_icon" />
-            <h1>{_t("Enter your email to reset password")}</h1>
+            <h1>{_t("auth|enter_email_heading")}</h1>
             <p className="mx_AuthBody_text">
-                {_t(
-                    "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.",
-                    { homeserver },
-                    { b: (t) => <b>{t}</b> },
-                )}
+                {_t("auth|enter_email_explainer", { homeserver }, { b: (t) => <b>{t}</b> })}
             </p>
             <form onSubmit={onSubmit}>
                 <fieldset disabled={loading}>
                     <div className="mx_AuthBody_fieldRow">
                         <EmailField
                             name="reset_email" // define a name so browser's password autofill gets less confused
-                            label="Email address"
-                            labelRequired={_td("The email address linked to your account must be entered.")}
-                            labelInvalid={_td("The email address doesn't appear to be valid.")}
+                            label={_td("common|email_address")}
+                            labelRequired={_td("auth|forgot_password_email_required")}
+                            labelInvalid={_td("auth|forgot_password_email_invalid")}
                             value={email}
                             autoFocus={true}
                             onChange={(event: React.FormEvent<HTMLInputElement>) => onInputChanged("email", event)}
@@ -99,7 +95,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
                                 onLoginClick();
                             }}
                         >
-                            {_t("Sign in instead")}
+                            {_t("auth|sign_in_instead")}
                         </AccessibleButton>
                     </div>
                 </fieldset>

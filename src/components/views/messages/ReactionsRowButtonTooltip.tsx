@@ -19,7 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { unicodeToShortcode } from "../../../HtmlUtils";
 import { _t } from "../../../languageHandler";
-import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
+import { formatList } from "../../../utils/FormattingUtils";
 import Tooltip from "../elements/Tooltip";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
@@ -60,13 +60,13 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
             tooltipLabel = (
                 <div>
                     {_t(
-                        "<reactors/><reactedWith>reacted with %(shortName)s</reactedWith>",
+                        "timeline|reactions|tooltip",
                         {
                             shortName,
                         },
                         {
                             reactors: () => {
-                                return <div className="mx_Tooltip_title">{formatCommaSeparatedList(senders, 6)}</div>;
+                                return <div className="mx_Tooltip_title">{formatList(senders, 6)}</div>;
                             },
                             reactedWith: (sub) => {
                                 if (!shortName) {

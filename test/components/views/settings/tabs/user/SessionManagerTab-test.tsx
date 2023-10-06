@@ -28,7 +28,7 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     IAuthData,
-    UNSTABLE_MSC3882_CAPABILITY,
+    GET_LOGIN_TOKEN_CAPABILITY,
     CryptoApi,
     DeviceVerificationStatus,
     MatrixError,
@@ -1279,7 +1279,7 @@ describe("<SessionManagerTab />", () => {
 
             await flushPromises();
 
-            expect(logSpy).toHaveBeenCalledWith("Error setting session display name", error);
+            expect(logSpy).toHaveBeenCalledWith("Error setting device name", error);
 
             // error displayed
             expect(getByTestId("device-rename-error")).toBeTruthy();
@@ -1534,7 +1534,7 @@ describe("<SessionManagerTab />", () => {
                 },
             });
             mockClient.getCapabilities.mockResolvedValue({
-                [UNSTABLE_MSC3882_CAPABILITY.name]: {
+                [GET_LOGIN_TOKEN_CAPABILITY.name]: {
                     enabled: true,
                 },
             });

@@ -16,6 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
+import cloudPlugin from "cypress-cloud/plugin";
+import { initPlugins } from "cypress-plugin-init";
 
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
@@ -32,15 +34,31 @@ import { mailhogDocker } from "./mailhog";
  * @type {Cypress.PluginConfig}
  */
 export default function (on: PluginEvents, config: PluginConfigOptions) {
-    docker(on, config);
-    synapseDocker(on, config);
-    dendriteDocker(on, config);
-    slidingSyncProxyDocker(on, config);
-    webserver(on, config);
-    oAuthServer(on, config);
-    log(on, config);
+    initPlugins(
+        on,
+        [
+            cloudPlugin,
+            docker,
+            synapseDocker,
+            dendriteDocker,
+            slidingSyncProxyDocker,
+            webserver,
+            oAuthServer,
+            log,
+            mailhogDocker,
+        ],
+        config,
+    );
     installLogsPrinter(on, {
-        // printLogsToConsole: "always",
+        printLogsToConsole: "never",
+
+        // write logs to cypress/results/cypresslogs/<spec>.txt
+        outputRoot: "cypress/results",
+        outputTarget: {
+            "cypresslogs|txt": "txt",
+        },
+
+        // strip 'cypress/e2e' from log filenames
+        specRoot: "cypress/e2e",
     });
-    mailhogDocker(on, config);
 }

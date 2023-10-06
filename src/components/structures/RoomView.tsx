@@ -129,6 +129,7 @@ import { WaitingForThirdPartyRoomView } from "./WaitingForThirdPartyRoomView";
 import { isNotUndefined } from "../../Typeguards";
 import { CancelAskToJoinPayload } from "../../dispatcher/payloads/CancelAskToJoinPayload";
 import { SubmitAskToJoinPayload } from "../../dispatcher/payloads/SubmitAskToJoinPayload";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
@@ -245,7 +246,6 @@ export interface IRoomState {
 
     canAskToJoin: boolean;
     promptAskToJoin: boolean;
-    knocked: boolean;
 }
 
 interface LocalRoomViewProps {
@@ -292,7 +292,7 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
 
         statusBar = (
             <RoomStatusBarUnsentMessages
-                title={_t("Some of your messages have not been sent")}
+                title={_t("room|status_bar|some_messages_not_sent")}
                 notificationState={StaticNotificationState.RED_EXCLAMATION}
                 buttons={buttons}
             />
@@ -359,7 +359,7 @@ interface ILocalRoomCreateLoaderProps {
  * @return {ReactElement}
  */
 function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement {
-    const text = _t("We're creating a room with %(names)s", { names: props.names });
+    const text = _t("room|creating_room_text", { names: props.names });
     return (
         <div className="mx_RoomView mx_RoomView--local">
             <ErrorBoundary>
@@ -458,7 +458,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             msc3946ProcessDynamicPredecessor: SettingsStore.getValue("feature_dynamic_room_predecessors"),
             canAskToJoin: this.askToJoinEnabled,
             promptAskToJoin: false,
-            knocked: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -664,7 +663,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
             promptAskToJoin: this.context.roomViewStore.promptAskToJoin(),
-            knocked: this.context.roomViewStore.knocked(),
         };
 
         if (
@@ -1083,9 +1081,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onPageUnload = (event: BeforeUnloadEvent): string | undefined => {
         if (ContentMessages.sharedInstance().getCurrentUploads().length > 0) {
-            return (event.returnValue = _t("You seem to be uploading files, are you sure you want to quit?"));
+            return (event.returnValue = _t("quit_warning|file_upload_in_progress"));
         } else if (this.getCallForRoom() && this.state.callState !== "ended") {
-            return (event.returnValue = _t("You seem to be in a call, are you sure you want to quit?"));
+            return (event.returnValue = _t("quit_warning|call_in_progress"));
         }
     };
 
@@ -1249,6 +1247,33 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             case "scroll_to_bottom":
                 if (payload.timelineRenderingType === TimelineRenderingType.Room) {
                     this.messagePanel?.jumpToLiveTimeline();
+                }
+                break;
+            case Action.ViewUser:
+                if (payload.member) {
+                    if (payload.push) {
+                        RightPanelStore.instance.pushCard({
+                            phase: RightPanelPhases.RoomMemberInfo,
+                            state: { member: payload.member },
+                        });
+                    } else {
+                        RightPanelStore.instance.setCards([
+                            { phase: RightPanelPhases.RoomSummary },
+                            { phase: RightPanelPhases.RoomMemberList },
+                            { phase: RightPanelPhases.RoomMemberInfo, state: { member: payload.member } },
+                        ]);
+                    }
+                } else {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                }
+                break;
+            case "view_3pid_invite":
+                if (payload.event) {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Room3pidMemberInfo, {
+                        memberInfoEvent: payload.event,
+                    });
+                } else {
+                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
                 }
                 break;
         }
@@ -1735,7 +1760,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                 const msg = error.message ? error.message : JSON.stringify(error);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to reject invite"),
+                    title: _t("room|failed_reject_invite"),
                     description: msg,
                 });
 
@@ -1768,7 +1793,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
             const msg = error instanceof Error ? error.message : JSON.stringify(error);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to reject invite"),
+                title: _t("room|failed_reject_invite"),
                 description: msg,
             });
 
@@ -1787,12 +1812,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private onSearchClick = (): void => {
-        this.setState({
-            timelineRenderingType:
-                this.state.timelineRenderingType === TimelineRenderingType.Search
-                    ? TimelineRenderingType.Room
-                    : TimelineRenderingType.Search,
-        });
+        if (this.state.timelineRenderingType === TimelineRenderingType.Search) {
+            this.onCancelSearchClick();
+        } else {
+            this.setState({
+                timelineRenderingType: TimelineRenderingType.Search,
+            });
+        }
     };
 
     private onCancelSearchClick = (): Promise<void> => {
@@ -2118,7 +2144,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                                 signUrl={this.props.threepidInvite?.signUrl}
                                 roomId={this.state.roomId}
                                 promptAskToJoin={this.state.promptAskToJoin}
-                                knocked={this.state.knocked}
                                 onSubmitAskToJoin={this.onSubmitAskToJoin}
                                 onCancelAskToJoin={this.onCancelAskToJoin}
                             />
@@ -2165,7 +2190,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 const myUserId = this.context.client.getSafeUserId();
                 const myMember = this.state.room.getMember(myUserId);
                 const inviteEvent = myMember ? myMember.events.member : null;
-                let inviterName = _t("Unknown");
+                let inviterName = _t("room|inviter_unknown");
                 if (inviteEvent) {
                     inviterName = inviteEvent.sender?.name ?? inviteEvent.getSender()!;
                 }
@@ -2202,7 +2227,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                         <RoomPreviewBar
                             room={this.state.room}
                             promptAskToJoin={myMembership === "leave" || this.state.promptAskToJoin}
-                            knocked={myMembership === "knock" || this.state.knocked}
+                            knocked={myMembership === "knock"}
                             onSubmitAskToJoin={this.onSubmitAskToJoin}
                             onCancelAskToJoin={this.onCancelAskToJoin}
                             onForgetClick={this.onForgetClick}
@@ -2310,7 +2335,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     className="mx_RoomView_auxPanel_hiddenHighlights"
                     onClick={this.onHiddenHighlightsClick}
                 >
-                    {_t("You have %(count)s unread notifications in a prior version of this room.", {
+                    {_t("room|unread_notifications_predecessor", {
                         count: hiddenHighlightCount,
                     })}
                 </AccessibleButton>
