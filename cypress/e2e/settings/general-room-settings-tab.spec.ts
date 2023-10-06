@@ -68,12 +68,12 @@ describe("General room settings tab", () => {
             },
         );
     });
-    
+
     it("long address should not cause dialog to overflow", () => {
         cy.openRoomSettings("General");
         // 1. Set the room-address to be a really long string
         const longString =
-        "abcasdhjasjhdaj1jh1asdhasjdhajsdhjavhjksdnfjasdhfjh21jh3j12h3jashfcjbabbabasdbdasjh1j23hk1l2j3lamajshdjkltyiuwioeuqpirjdfmngsdnf8378234jskdfjkdfnbnsdfbasjbdjashdajshfgngnsdkfsdkkqwijeqiwjeiqhrkldfnaskldklasdn";
+            "abcasdhjasjhdaj1jh1asdhasjdhajsdhjavhjksdnfjasdhfjh21jh3j12h3jashfcjbabbabasdbdasjh1j23hk1l2j3lamajshdjkltyiuwioeuqpirjdfmngsdnf8378234jskdfjkdfnbnsdfbasjbdjashdajshfgngnsdkfsdkkqwijeqiwjeiqhrkldfnaskldklasdn";
         cy.get("#roomAliases").within(() => {
             cy.get("input[label='Room address']").type(longString);
             cy.contains("Add").click();
@@ -83,11 +83,15 @@ describe("General room settings tab", () => {
         cy.get("#canonicalAlias").should("have.value", `#${longString}:localhost`);
 
         // 3. Check if the dialog overflows
-        cy.get(".mx_Dialog").invoke("outerWidth").then((dialogWidth) => {
-            cy.get("#canonicalAlias").invoke("outerWidth").then((fieldWidth) => {
-                // Assert that the width of the select element is less than that of .mx_Dialog div.
-                expect(fieldWidth).to.be.lessThan(dialogWidth);
+        cy.get(".mx_Dialog")
+            .invoke("outerWidth")
+            .then((dialogWidth) => {
+                cy.get("#canonicalAlias")
+                    .invoke("outerWidth")
+                    .then((fieldWidth) => {
+                        // Assert that the width of the select element is less than that of .mx_Dialog div.
+                        expect(fieldWidth).to.be.lessThan(dialogWidth);
+                    });
             });
-        });
     });
 });
