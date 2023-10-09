@@ -31,6 +31,7 @@ import SecurityCustomisations from "./customisations/Security";
 import { getOidcClientId } from "./utils/oidc/registerClient";
 import { IConfigOptions } from "./IConfigOptions";
 import SdkConfig from "./SdkConfig";
+import { isUserRegistrationSupported } from "./utils/oidc/isUserRegistrationSupported";
 
 /**
  * Login flows supported by this client
@@ -53,7 +54,7 @@ interface ILoginOptions {
 export default class Login {
     private flows: Array<ClientLoginFlow> = [];
     private readonly defaultDeviceDisplayName?: string;
-    private readonly delegatedAuthentication?: OidcClientConfig;
+    private delegatedAuthentication?: OidcClientConfig;
     private tempClient: MatrixClient | null = null; // memoize
 
     public constructor(
@@ -84,6 +85,11 @@ export default class Login {
         this.isUrl = isUrl;
     }
 
+    public setDelegatedAuthentication(delegatedAuthentication?: ValidatedDelegatedAuthConfig): void {
+        this.tempClient = null; // clear memoization
+        this.delegatedAuthentication = delegatedAuthentication;
+    }
+
     /**
      * Get a temporary MatrixClient, which can be used for login or register
      * requests.
@@ -99,7 +105,12 @@ export default class Login {
         return this.tempClient;
     }
 
-    public async getFlows(): Promise<Array<ClientLoginFlow>> {
+    /**
+     * Get supported login flows
+     * @param isRegistration OPTIONAL used to verify registration is supported in delegated authentication config
+     * @returns Promise that resolves to supported login flows
+     */
+    public async getFlows(isRegistration?: boolean): Promise<Array<ClientLoginFlow>> {
         // try to use oidc native flow if we have delegated auth config
         if (this.delegatedAuthentication) {
             try {
@@ -107,6 +118,7 @@ export default class Login {
                     this.delegatedAuthentication,
                     SdkConfig.get().brand,
                     SdkConfig.get().oidc_static_clients,
+                    isRegistration
                 );
                 return [oidcFlow];
             } catch (error) {
@@ -209,6 +221,7 @@ export interface OidcNativeFlow extends ILoginFlow {
  * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
  * @param clientName Client name to register with the OP, eg 'Element', used during client registration with OP
  * @param staticOidcClientIds static client config from config.json, used during client registration with OP
+ * @param isRegistration true when we are attempting registration
  * @returns Promise<OidcNativeFlow> when oidc native authentication flow is supported and correctly configured
  * @throws when client can't register with OP, or any unexpected error
  */
@@ -216,7 +229,12 @@ const tryInitOidcNativeFlow = async (
     delegatedAuthConfig: OidcClientConfig,
     brand: string,
     oidcStaticClients?: IConfigOptions["oidc_static_clients"],
+    isRegistration?: boolean,
 ): Promise<OidcNativeFlow> => {
+    // if registration is not supported, bail before attempting registration
+    if (isRegistration && !isUserRegistrationSupported(delegatedAuthConfig)) {
+        throw new Error("Registration is not supported by OP")
+    }
     const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClients);
 
     const flow = {
