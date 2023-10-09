@@ -231,7 +231,7 @@ const tryInitOidcNativeFlow = async (
     oidcStaticClients?: IConfigOptions["oidc_static_clients"],
     isRegistration?: boolean,
 ): Promise<OidcNativeFlow> => {
-    // if registration is not supported, bail before attempting registration
+    // if registration is not supported, bail before attempting to get the clientId
     if (isRegistration && !isUserRegistrationSupported(delegatedAuthConfig)) {
         throw new Error("Registration is not supported by OP")
     }
