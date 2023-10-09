@@ -185,8 +185,6 @@ describe("Cryptography", function () {
             }
 
             it("by recovery code", () => {
-                skipIfRustCrypto();
-
                 // Verified the device
                 if (isDeviceVerified) {
                     cy.bootstrapCrossSigning(aliceCredentials);
@@ -223,8 +221,6 @@ describe("Cryptography", function () {
             });
 
             it("by passphrase", () => {
-                skipIfRustCrypto();
-
                 // Verified the device
                 if (isDeviceVerified) {
                     cy.bootstrapCrossSigning(aliceCredentials);
@@ -260,6 +256,7 @@ describe("Cryptography", function () {
     }
 
     it("creating a DM should work, being e2e-encrypted / user verification", function (this: CryptoTestContext) {
+        skipIfRustCrypto(); // https://github.com/vector-im/element-web/issues/25618
         cy.bootstrapCrossSigning(aliceCredentials);
         startDMWithBob.call(this);
         // send first message
