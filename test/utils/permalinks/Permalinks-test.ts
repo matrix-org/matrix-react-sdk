@@ -24,6 +24,7 @@ import {
     parsePermalink,
     RoomPermalinkCreator,
 } from "../../../src/utils/permalinks/Permalinks";
+import { IConfigOptions } from "../../../src/IConfigOptions";
 import SdkConfig from "../../../src/SdkConfig";
 import { getMockClientWithEventEmitter } from "../../test-utils";
 
@@ -392,8 +393,8 @@ describe("Permalinks", function () {
     });
 
     it("should use permalink_prefix for permalinks", function () {
-        const sdkConfigGet = SdkConfig.get
-        jest.spyOn(SdkConfig, "get").mockImplementation((key: string, altCaseName?: string) => {
+        const sdkConfigGet = SdkConfig.get;
+        jest.spyOn(SdkConfig, "get").mockImplementation((key: keyof IConfigOptions, altCaseName?: string) => {
             if (key === "permalink_prefix") {
                 return "https://element.fs.tld";
             } else return sdkConfigGet(key, altCaseName);

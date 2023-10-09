@@ -32,21 +32,21 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
     }
 
     public forEvent(roomId: string, eventId: string, serverCandidates: string[], ispill = false): string {
-        if(ispill) {
+        if (ispill) {
             return `https://matrix.to/#/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
         }
         return `${this.elementUrl}/#/room/${roomId}/${eventId}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
     public forRoom(roomIdOrAlias: string, serverCandidates?: string[], ispill = false): string {
-        if(ispill) {
+        if (ispill) {
             return `https://matrix.to/#/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
         }
         return `${this.elementUrl}/#/room/${roomIdOrAlias}${this.encodeServerCandidates(serverCandidates)}`;
     }
 
     public forUser(userId: string, ispill = false): string {
-        if(ispill) {
+        if (ispill) {
             return `https://matrix.to/#/${userId}`;
         }
         return `${this.elementUrl}/#/user/${userId}`;

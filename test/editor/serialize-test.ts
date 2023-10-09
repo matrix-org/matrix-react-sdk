@@ -19,6 +19,7 @@ import { mocked } from "jest-mock";
 import EditorModel from "../../src/editor/model";
 import { htmlSerializeIfNeeded } from "../../src/editor/serialize";
 import { createPartCreator } from "./mock";
+import { IConfigOptions } from "../../src/IConfigOptions";
 import SettingsStore from "../../src/settings/SettingsStore";
 import SdkConfig from "../../src/SdkConfig";
 
@@ -108,9 +109,9 @@ describe("editor/serialize", function () {
             expect(html).toBe('<ol start="2021">\n<li>foo</li>\n</ol>\n');
         });
         describe("with permalink_prefix set", function () {
-            const sdkConfigGet = SdkConfig.get
+            const sdkConfigGet = SdkConfig.get;
             beforeEach(() => {
-                jest.spyOn(SdkConfig, "get").mockImplementation((key: string, altCaseName?: string) => {
+                jest.spyOn(SdkConfig, "get").mockImplementation((key: keyof IConfigOptions, altCaseName?: string) => {
                     if (key === "permalink_prefix") {
                         return "https://element.fs.tld";
                     } else return sdkConfigGet(key, altCaseName);
