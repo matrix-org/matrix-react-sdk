@@ -24,6 +24,7 @@ import {
     parsePermalink,
     RoomPermalinkCreator,
 } from "../../../src/utils/permalinks/Permalinks";
+import SdkConfig from "../../../src/SdkConfig";
 import { getMockClientWithEventEmitter } from "../../test-utils";
 
 describe("Permalinks", function () {
@@ -388,6 +389,17 @@ describe("Permalinks", function () {
     it("should generate a user permalink", function () {
         const result = makeUserPermalink("@someone:example.org");
         expect(result).toBe("https://matrix.to/#/@someone:example.org");
+    });
+
+    it("should use permalink_prefix for permalinks", function () {
+        const sdkConfigGet = SdkConfig.get
+        jest.spyOn(SdkConfig, "get").mockImplementation((key: string, altCaseName?: string) => {
+            if (key === "permalink_prefix") {
+                return "https://element.fs.tld";
+            } else return sdkConfigGet(key, altCaseName);
+        });
+        const result = makeUserPermalink("@someone:example.org");
+        expect(result).toBe("https://element.fs.tld/#/user/@someone:example.org");
     });
 
     describe("parsePermalink", () => {
