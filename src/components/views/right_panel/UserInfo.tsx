@@ -253,7 +253,6 @@ export function DeviceItem({
  * @param loading displays a spinner instead of the device section
  * @param isUserVerified is false when
  *  - the user is not verified, or
- *  - crypto is not available (ie, `MatrixClient.getCrypto()` is undefined), or
  *  - `MatrixClient.getCrypto.getUserVerificationStatus` async call is in progress (in which case `loading` will also be `true`)
  * @constructor
  */
