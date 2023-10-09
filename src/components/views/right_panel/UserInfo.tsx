@@ -1446,7 +1446,7 @@ const BasicUserInfo: React.FC<{
     }
 
     // only display the devices list if our client supports E2E
-    const cryptoEnabled = cli.isCryptoEnabled();
+    const cryptoEnabled = Boolean(cli.getCrypto());
 
     let text;
     if (!isRoomEncrypted) {
@@ -1462,7 +1462,6 @@ const BasicUserInfo: React.FC<{
     let verifyButton;
     const homeserverSupportsCrossSigning = useHomeserverSupportsCrossSigning(cli);
 
-    const isCryptoAvailable = Boolean(cli.getCrypto());
     const userTrust = useAsyncMemo<UserVerificationStatus | undefined>(
         async () => cli.getCrypto()?.getUserVerificationStatus(member.userId),
         [member.userId],
@@ -1486,9 +1485,9 @@ const BasicUserInfo: React.FC<{
     const hasCrossSigningKeys = useHasCrossSigningKeys(cli, member as User, canVerify, setUpdating);
 
     // Display the spinner only when
-    // - the devices are not populated yet
+    // - the devices are not populated yet, or
     // - the crypto is available and we don't have the user verification status yet
-    const showDeviceListSpinner = (isCryptoAvailable && !hasUserVerificationStatus) || devices === undefined;
+    const showDeviceListSpinner = (cryptoEnabled && !hasUserVerificationStatus) || devices === undefined;
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
