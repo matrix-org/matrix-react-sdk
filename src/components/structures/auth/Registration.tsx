@@ -161,9 +161,7 @@ export default class Registration extends React.Component<IProps, IState> {
         this.loginLogic = new Login(hsUrl, isUrl, null, {
             defaultDeviceDisplayName: "Element login check", // We shouldn't ever be used
             // if native OIDC is enabled in the client pass the server's delegated auth settings
-            delegatedAuthentication: this.oidcNativeFlowEnabled
-                ? delegatedAuthentication
-                : undefined,
+            delegatedAuthentication: this.oidcNativeFlowEnabled ? delegatedAuthentication : undefined,
         });
     }
 
@@ -234,9 +232,7 @@ export default class Registration extends React.Component<IProps, IState> {
         this.loginLogic.setHomeserverUrl(hsUrl);
         this.loginLogic.setIdentityServerUrl(isUrl);
         // if native OIDC is enabled in the client pass the server's delegated auth settings
-        const delegatedAuthentication = this.oidcNativeFlowEnabled
-            ? serverConfig.delegatedAuthentication
-            : undefined;
+        const delegatedAuthentication = this.oidcNativeFlowEnabled ? serverConfig.delegatedAuthentication : undefined;
 
         this.loginLogic.setDelegatedAuthentication(delegatedAuthentication);
 
@@ -246,8 +242,7 @@ export default class Registration extends React.Component<IProps, IState> {
             const loginFlows = await this.loginLogic.getFlows(true);
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as SSOFlow;
-            oidcNativeFlow = loginFlows.find(f => f.type === "oidcNativeFlow") as OidcNativeFlow;
-
+            oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
         } catch (e) {
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             logger.error("Failed to get login flows to check for SSO support", e);
@@ -267,7 +262,6 @@ export default class Registration extends React.Component<IProps, IState> {
         if (oidcNativeFlow) {
             return;
         }
-
 
         try {
             // We do the first registration request ourselves to discover whether we need to
@@ -546,24 +540,25 @@ export default class Registration extends React.Component<IProps, IState> {
                     <Spinner />
                 </div>
             );
-            } else if (this.state.matrixClient && this.state.oidcNativeFlow) {
-                return <AccessibleButton
-                className="mx_Login_fullWidthButton"
-                kind="primary"
-                onClick={async () => {
-                    await startOidcLogin(
-                        this.props.serverConfig.delegatedAuthentication!,
-                        this.state.oidcNativeFlow!.clientId,
-                        this.props.serverConfig.hsUrl,
-                        this.props.serverConfig.isUrl,
-                        true /* isRegistration */
-                    );
-                }}
-            >
-                {_t("action|continue")}
-            </AccessibleButton>
-            }
-        else if (this.state.matrixClient && this.state.flows.length) {
+        } else if (this.state.matrixClient && this.state.oidcNativeFlow) {
+            return (
+                <AccessibleButton
+                    className="mx_Login_fullWidthButton"
+                    kind="primary"
+                    onClick={async () => {
+                        await startOidcLogin(
+                            this.props.serverConfig.delegatedAuthentication!,
+                            this.state.oidcNativeFlow!.clientId,
+                            this.props.serverConfig.hsUrl,
+                            this.props.serverConfig.isUrl,
+                            true /* isRegistration */,
+                        );
+                    }}
+                >
+                    {_t("action|continue")}
+                </AccessibleButton>
+            );
+        } else if (this.state.matrixClient && this.state.flows.length) {
             let ssoSection: JSX.Element | undefined;
             if (this.state.ssoFlow) {
                 let continueWithSection;
