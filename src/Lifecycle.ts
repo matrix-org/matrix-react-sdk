@@ -753,14 +753,16 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
 }
 
 /**
- * When we have a refreshToken and an OIDC token issuer in storage
- * @param credentials
+ * When we have a authenticated via OIDC-native flow and have a refresh token
+ * try to create a token refresher.
+ * @param credentials from current session
  * @returns Promise that resolves to a TokenRefresher, or undefined
  */
 async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promise<OidcTokenRefresher | undefined> {
     if (!credentials.refreshToken) {
         return;
     }
+    // stored token issuer indicates we authenticated via OIDC-native flow
     const tokenIssuer = getStoredOidcTokenIssuer();
     if (!tokenIssuer) {
         return;
@@ -768,7 +770,6 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
     try {
         const clientId = getStoredOidcClientId();
         const idTokenClaims = getStoredOidcIdTokenClaims();
-        // @TODO(kerrya) this should probably come from somewhere
         const redirectUri = window.location.origin;
         const deviceId = credentials.deviceId;
         if (!deviceId) {
@@ -782,6 +783,7 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
             idTokenClaims!,
             credentials.userId,
         );
+        // wait for the OIDC client to initialise
         await tokenRefresher.oidcClientReady;
         return tokenRefresher;
     } catch (error) {
@@ -834,7 +836,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
 
     // check the session lock just before creating the new client
     checkSessionLock();
-    MatrixClientPeg.replaceUsingCreds(credentials, tokenRefresher);
+    MatrixClientPeg.replaceUsingCreds(credentials, tokenRefresher?.doRefreshAccessToken.bind(tokenRefresher));
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
