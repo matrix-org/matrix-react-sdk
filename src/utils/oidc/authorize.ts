@@ -53,8 +53,6 @@ export const startOidcLogin = async (
         prompt,
     });
 
-    console.log("hhh", authorizationUrl);
-
     window.location.href = authorizationUrl;
 };
 
