@@ -85,6 +85,10 @@ export default class Login {
         this.isUrl = isUrl;
     }
 
+    /**
+     * Set delegated authentication config, clears tempClient.
+     * @param delegatedAuthentication delegated auth config, from ValidatedServerConfig
+     */
     public setDelegatedAuthentication(delegatedAuthentication?: OidcClientConfig): void {
         this.tempClient = null; // clear memoization
         this.delegatedAuthentication = delegatedAuthentication;
