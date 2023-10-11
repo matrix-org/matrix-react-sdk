@@ -22,7 +22,7 @@ import { persistAccessTokenInStorage, persistRefreshTokenInStorage } from "../to
 
 /**
  * OidcTokenRefresher that implements token persistence
- * Stores tokens in the same was as login flows in Lifecycle
+ * Stores tokens in the same way as login flows in Lifecycle
  */
 export class TokenRefresher extends OidcTokenRefresher {
     private readonly deviceId!: string;
