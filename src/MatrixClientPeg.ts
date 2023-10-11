@@ -123,6 +123,8 @@ export interface IMatrixClientPeg {
      * homeserver / identity server URLs and active credentials
      *
      * @param {IMatrixClientCreds} creds The new credentials to use.
+     * @param {TokenRefreshFunction} tokenRefreshFunction OPTIONAL function used by MatrixClient to attempt token refresh
+     *          see {@link ICreateClientOpts.tokenRefreshFunction}
      */
     replaceUsingCreds(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void;
 }

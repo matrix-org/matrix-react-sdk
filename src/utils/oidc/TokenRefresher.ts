@@ -21,8 +21,8 @@ import PlatformPeg from "../../PlatformPeg";
 import { persistAccessTokenInStorage, persistRefreshTokenInStorage } from "../tokens/tokens";
 
 /**
- * OidcTokenRefresher that implements token persistence
- * Stores tokens in the same way as login flows in Lifecycle
+ * OidcTokenRefresher that implements token persistence.
+ * Stores tokens in the same way as login flow in Lifecycle.
  */
 export class TokenRefresher extends OidcTokenRefresher {
     private readonly deviceId!: string;
