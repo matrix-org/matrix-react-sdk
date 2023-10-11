@@ -35,7 +35,7 @@ interface IMinProps extends Pick<IDevtoolsProps, "onBack"> {
 }
 
 interface IProps extends IMinProps {
-    actionLabel: string;
+    actionLabel: TranslationKey;
     onAction(): Promise<string | void>;
 }
 
@@ -69,7 +69,7 @@ const BaseTool: React.FC<XOR<IMinProps, IProps>> = ({
             });
         };
 
-        actionButton = <button onClick={onActionClick}>{actionLabel}</button>;
+        actionButton = <button onClick={onActionClick}>{_t(actionLabel)}</button>;
     }
 
     return (
