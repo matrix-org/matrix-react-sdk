@@ -248,17 +248,18 @@ export default class Registration extends React.Component<IProps, IState> {
             logger.error("Failed to get login flows to check for SSO support", e);
         }
 
-        this.setState({
+        this.setState(({ flows }) => ({
             matrixClient: cli,
             ssoFlow,
             oidcNativeFlow,
             // if we are using oidc native we won't continue with flow discovery on HS
             // so set an empty array to indicate flows are no longer loading
-            flows: oidcNativeFlow ? [] : this.state.flows,
+            flows: oidcNativeFlow ? [] : flows,
             busy: false,
-        });
+        }));
 
         // don't need to check with homeserver for login flows
+        // since we are going to use OIDC native flow
         if (oidcNativeFlow) {
             return;
         }
