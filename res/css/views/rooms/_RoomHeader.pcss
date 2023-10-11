@@ -29,8 +29,8 @@ limitations under the License.
 
 .mx_RoomHeader_info {
     flex: 1;
-    /* Spacing of 64px between the topic and the buttons, but we have
-       to account for the gap of the flex items */
+    /* We want the spacing to be 64px, 13x = 52px but we have a flex gap of
+       12px set on the flex container, which sums up to 64 */
     padding-right: var(--cpd-space-13x);
 }
 
