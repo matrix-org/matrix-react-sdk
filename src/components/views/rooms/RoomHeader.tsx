@@ -123,7 +123,6 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                     size="lg"
                     weight="semibold"
                     dir="auto"
-                    title={roomName}
                     role="heading"
                     aria-level={1}
                     className="mx_RoomHeader_heading"
