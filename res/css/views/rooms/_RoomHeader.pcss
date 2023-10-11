@@ -29,6 +29,9 @@ limitations under the License.
 
 .mx_RoomHeader_info {
     flex: 1;
+    /* Spacing of 64px between the topic and the buttons, but we have
+       to account for the gap of the flex items */
+    padding-right: var(--cpd-space-13x);
 }
 
 .mx_RoomHeader_truncated {
@@ -46,9 +49,6 @@ limitations under the License.
     gap: var(--cpd-space-1x);
     align-items: center;
 
-    /* Spacing of 64px between the topic and the buttons, but we have
-       to account for the gap of the flex items */
-    padding-right: var(--cpd-space-13x);
 }
 
 .mx_RoomHeader_topic {
