@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactChild } from "react";
+import React from "react";
 import { Tooltip } from "@vector-im/compound-web";
 
 import { formatFullDate, formatTime, formatFullTime, formatRelativeTime } from "../../../DateUtils";
@@ -47,23 +47,18 @@ export default class MessageTimestamp extends React.Component<IProps> {
             timestamp = formatTime(date, this.props.showTwelveHour);
         }
 
-        let label: ReactChild = formatFullDate(date, this.props.showTwelveHour);
+        let line1 = formatFullDate(date, this.props.showTwelveHour);
+        let line2: string | undefined;
         if (this.props.receivedTs !== undefined) {
+            line1 = _t("timeline|message_timestamp_sent_at", { dateTime: line1 });
             const receivedDate = new Date(this.props.receivedTs);
-            label = (
-                <div>
-                    <div>{_t("timeline|message_timestamp_sent_at", { dateTime: label })}</div>
-                    <div>
-                        {_t("timeline|message_timestamp_received_at", {
-                            dateTime: formatFullDate(receivedDate, this.props.showTwelveHour),
-                        })}
-                    </div>
-                </div>
-            );
+            line2 = _t("timeline|message_timestamp_received_at", {
+                dateTime: formatFullDate(receivedDate, this.props.showTwelveHour),
+            });
         }
 
         return (
-            <Tooltip label={label}>
+            <Tooltip label={line1} shortcut={line2}>
                 <span className="mx_MessageTimestamp" aria-hidden={true} aria-live="off">
                     {timestamp}
                 </span>
