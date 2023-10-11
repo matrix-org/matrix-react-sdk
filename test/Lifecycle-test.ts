@@ -693,7 +693,7 @@ describe("Lifecycle", () => {
             beforeEach(() => {
                 // mock oidc config for oidc client initialisation
                 mockClient.getClientWellKnown.mockReturnValue({
-                    [MatrixJs.M_AUTHENTICATION.stable!]: {
+                    "m.authentication": {
                         issuer: issuer,
                     },
                 });
