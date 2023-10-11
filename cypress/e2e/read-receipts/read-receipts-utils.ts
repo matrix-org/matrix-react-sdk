@@ -15,7 +15,66 @@ limitations under the License.
 */
 
 import type { MatrixClient, MatrixEvent, Room, IndexedDBStore } from "matrix-js-sdk/src/matrix";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
+
+/**
+ * Set up for a read receipt test:
+ * - Create a user with the supplied name
+ * - As that user, create two rooms with the supplied names
+ * - Create a bot with the supplied name
+ * - Invite the bot to both rooms and ensure that it has joined
+ */
+export class ReadReceiptSetup {
+    roomAlpha: string;
+    roomBeta: string;
+    alphaRoomId: string;
+    betaRoomId: string;
+    bot: MatrixClient;
+
+    constructor(
+        homeserver: HomeserverInstance,
+        userName: string,
+        botName: string,
+        roomAlpha: string,
+        roomBeta: string,
+    ) {
+        this.roomAlpha = roomAlpha;
+        this.roomBeta = roomBeta;
+
+        // Create a user
+        cy.initTestUser(homeserver, userName)
+            // Create 2 rooms
+            .then(() => {
+                cy.createRoom({ name: roomAlpha }).then((createdRoomId) => {
+                    this.alphaRoomId = createdRoomId;
+                });
+            })
+            .then(() => {
+                cy.createRoom({ name: roomBeta }).then((createdRoomId) => {
+                    this.betaRoomId = createdRoomId;
+                });
+            })
+            // Create a bot
+            .then(() => {
+                cy.getBot(homeserver, { displayName: botName }).then((botClient) => {
+                    this.bot = botClient;
+                });
+            })
+            // Invite the bot to both rooms
+            .then(() => {
+                cy.inviteUser(this.alphaRoomId, this.bot.getUserId());
+                cy.viewRoomById(this.alphaRoomId);
+                cy.get(".mx_LegacyRoomHeader").within(() => cy.findByTitle(roomAlpha).should("exist"));
+                cy.findByText(botName + " joined the room").should("exist");
+
+                cy.inviteUser(this.betaRoomId, this.bot.getUserId());
+                cy.viewRoomById(this.betaRoomId);
+                cy.get(".mx_LegacyRoomHeader").within(() => cy.findByTitle(roomBeta).should("exist"));
+                cy.findByText(botName + " joined the room").should("exist");
+            });
+    }
+}
 
 /**
  * A utility that is able to find messages based on their content, by looking
@@ -262,6 +321,14 @@ export function sendMessageAsClient(cli: MatrixClient, room: string, messages: M
                 await message.performAction(cli, room);
             }
         });
+        // TODO: without this wait, some tests that send lots of messages flake
+        // from time to time. I (andyb) have done some investigation, but it
+        // needs more work to figure out. The messages do arrive over sync, but
+        // they never appear in the timeline, and they never fire a
+        // Room.timeline event. I think this only happens with events that refer
+        // to other events (e.g. replies), so it might be caused by the
+        // referring event arriving before the referred-to event.
+        cy.wait(200);
     }
 }
 
@@ -285,7 +352,9 @@ function findRoomByName(room: string): Chainable<Room> {
 export function openThread(rootMessage: string) {
     cy.log("Open thread", rootMessage);
     cy.get(".mx_RoomView_body", { log: false }).within(() => {
-        cy.contains(".mx_EventTile[data-scroll-tokens]", rootMessage, { log: false })
+        cy.findAllByText(rootMessage)
+            .filter(".mx_EventTile_body")
+            .parents(".mx_EventTile[data-scroll-tokens]")
             .realHover()
             .findByRole("button", { name: "Reply in thread", log: false })
             .click();
@@ -362,7 +431,7 @@ export function pageUp() {
  * @param howMany the number of strings to generate
  */
 export function many(prefix: string, howMany: number): Array<string> {
-    return Array.from(Array(howMany).keys()).map((i) => prefix + i.toFixed());
+    return Array.from(Array(howMany).keys()).map((i) => prefix + i.toString().padStart(4, "0"));
 }
 
 /**

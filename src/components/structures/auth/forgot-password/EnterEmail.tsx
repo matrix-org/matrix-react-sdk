@@ -46,7 +46,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
     onLoginClick,
     onSubmitForm,
 }) => {
-    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("Send email");
+    const submitButtonChild = loading ? <Spinner w={16} h={16} /> : _t("auth|forgot_password_send_email");
 
     const emailFieldRef = useRef<Field>(null);
 
@@ -72,7 +72,7 @@ export const EnterEmail: React.FC<EnterEmailProps> = ({
                     <div className="mx_AuthBody_fieldRow">
                         <EmailField
                             name="reset_email" // define a name so browser's password autofill gets less confused
-                            label="Email address"
+                            label={_td("common|email_address")}
                             labelRequired={_td("auth|forgot_password_email_required")}
                             labelInvalid={_td("auth|forgot_password_email_invalid")}
                             value={email}

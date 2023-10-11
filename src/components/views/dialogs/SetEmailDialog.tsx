@@ -67,8 +67,8 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
         const emailAddress = this.state.emailAddress;
         if (!Email.looksValid(emailAddress)) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Invalid Email Address"),
-                description: _t("This doesn't appear to be a valid email address"),
+                title: _t("settings|general|error_invalid_email"),
+                description: _t("settings|general|error_invalid_email_detail"),
             });
             return;
         }
@@ -76,10 +76,8 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
         this.addThreepid.addEmailAddress(emailAddress).then(
             () => {
                 Modal.createDialog(QuestionDialog, {
-                    title: _t("Verification Pending"),
-                    description: _t(
-                        "Please check your email and click on the link it contains. Once this is done, click continue.",
-                    ),
+                    title: _t("auth|set_email|verification_pending_title"),
+                    description: _t("auth|set_email|verification_pending_description"),
                     button: _t("action|continue"),
                     onFinished: this.onEmailDialogFinished,
                 });
@@ -88,7 +86,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                 this.setState({ emailBusy: false });
                 logger.error("Unable to add email address " + emailAddress + " " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to add email address"),
+                    title: _t("settings|general|error_add_email"),
                     description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                 });
             },
@@ -123,13 +121,11 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
 
                 if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                     const message =
-                        _t("Unable to verify email address.") +
+                        _t("settings|general|error_email_verification") +
                         " " +
-                        _t(
-                            "Please check your email and click on the link it contains. Once this is done, click continue.",
-                        );
+                        _t("auth|set_email|verification_pending_description");
                     Modal.createDialog(QuestionDialog, {
-                        title: _t("Verification Pending"),
+                        title: _t("auth|set_email|verification_pending_title"),
                         description: message,
                         button: _t("action|continue"),
                         onFinished: this.onEmailDialogFinished,
@@ -137,7 +133,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                 } else {
                     logger.error("Unable to verify email address: " + err);
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Unable to verify email address."),
+                        title: _t("settings|general|error_email_verification"),
                         description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                     });
                 }
@@ -152,7 +148,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
             <EditableText
                 initialValue={this.state.emailAddress}
                 className="mx_SetEmailDialog_email_input"
-                placeholder={_t("Email address")}
+                placeholder={_t("common|email_address")}
                 placeholderClassName="mx_SetEmailDialog_email_input_placeholder"
                 blurToCancel={false}
                 onValueChanged={this.onEmailAddressChanged}
@@ -167,9 +163,7 @@ export default class SetEmailDialog extends React.Component<IProps, IState> {
                 contentId="mx_Dialog_content"
             >
                 <div className="mx_Dialog_content">
-                    <p id="mx_Dialog_content">
-                        {_t("This will allow you to reset your password and receive notifications.")}
-                    </p>
+                    <p id="mx_Dialog_content">{_t("auth|set_email|description")}</p>
                     {emailInput}
                 </div>
                 <div className="mx_Dialog_buttons">

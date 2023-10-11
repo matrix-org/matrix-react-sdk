@@ -19,6 +19,7 @@ import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { AvatarStack, Tooltip } from "@vector-im/compound-web";
 
 import MemberAvatar from "../avatars/MemberAvatar";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
     members: RoomMember[];
@@ -28,6 +29,7 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
     tooltipShortcut?: string;
     children?: ReactNode;
     viewUserOnClick?: boolean;
+    onClick?: (e: ButtonEvent) => void | Promise<void>;
 }
 
 const FacePile: FC<IProps> = ({
@@ -57,16 +59,17 @@ const FacePile: FC<IProps> = ({
 
     const pileContents = (
         <>
-            {/* XXX: The margin-left is a workaround for Compound's styling excluding this element and being overly specific */}
-            {overflow ? <span className="mx_FacePile_more" style={{ marginLeft: `calc(${size} * -0.2)` }} /> : null}
             {faces}
+            {overflow ? <span className="mx_FacePile_more" /> : null}
         </>
     );
 
     const content = (
         <div className="mx_FacePile">
-            <AvatarStack>{pileContents}</AvatarStack>
-            {children}
+            <AccessibleButton kind="link_inline" onClick={props.onClick ?? null}>
+                <AvatarStack>{pileContents}</AvatarStack>
+                {children}
+            </AccessibleButton>
         </div>
     );
 

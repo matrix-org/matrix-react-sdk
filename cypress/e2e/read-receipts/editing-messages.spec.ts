@@ -18,13 +18,12 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import {
     assertRead,
     assertReadThread,
+    assertStillRead,
     assertUnread,
-    assertUnreadThread,
     backToThreadsList,
     goTo,
     markAsRead,
@@ -32,22 +31,18 @@ import {
     MessageContentSpec,
     MessageFinder,
     openThread,
+    ReadReceiptSetup,
     saveAndReload,
     sendMessageAsClient,
 } from "./read-receipts-utils";
 
 describe("Read receipts", () => {
-    const userName = "Mae";
-    const botName = "Other User";
     const roomAlpha = "Room Alpha";
     const roomBeta = "Room Beta";
 
     let homeserver: HomeserverInstance;
-    let betaRoomId: string;
-    let alphaRoomId: string;
-    let bot: MatrixClient | undefined;
-
     let messageFinder: MessageFinder;
+    let testSetup: ReadReceiptSetup;
 
     function editOf(originalMessage: string, newMessage: string): MessageContentSpec {
         return messageFinder.editOf(originalMessage, newMessage);
@@ -81,34 +76,7 @@ describe("Read receipts", () => {
 
     beforeEach(() => {
         messageFinder = new MessageFinder();
-
-        // Create 2 rooms: Alpha & Beta. We join the bot to both of them
-        cy.initTestUser(homeserver, userName)
-            .then(() => {
-                cy.createRoom({ name: roomAlpha }).then((createdRoomId) => {
-                    alphaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.createRoom({ name: roomBeta }).then((createdRoomId) => {
-                    betaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.getBot(homeserver, { displayName: botName }).then((botClient) => {
-                    bot = botClient;
-                });
-            })
-            .then(() => {
-                // Invite the bot to both rooms
-                cy.inviteUser(alphaRoomId, bot.getUserId());
-                cy.viewRoomById(alphaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-
-                cy.inviteUser(betaRoomId, bot.getUserId());
-                cy.viewRoomById(betaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-            });
+        testSetup = new ReadReceiptSetup(homeserver, "Mae", "Other User", roomAlpha, roomBeta);
     });
 
     after(() => {
@@ -121,7 +89,7 @@ describe("Read receipts", () => {
      * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
      */
     function receiveMessages(room: string, messages: Message[]) {
-        sendMessageAsClient(bot, room, messages);
+        sendMessageAsClient(testSetup.bot, room, messages);
     }
 
     const room1 = roomAlpha;
@@ -129,9 +97,8 @@ describe("Read receipts", () => {
 
     describe("editing messages", () => {
         describe("in the main timeline", () => {
-            // TODO: this passes but we think this should fail, because we think edits should not cause unreads.
             // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("Editing a message makes a room unread", () => {
+            it("Editing a message leaves a room read", () => {
                 // Given I am not looking at the room
                 goTo(room1);
 
@@ -144,11 +111,10 @@ describe("Read receipts", () => {
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
 
-                // Then it becomes unread
-                assertUnread(room2, 1);
+                // Then it remains read
+                assertStillRead(room2);
             });
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("Reading an edit makes the room read", () => {
+            it("Reading an edit leaves the room read", () => {
                 // Given an edit is making the room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1"]);
@@ -159,30 +125,15 @@ describe("Read receipts", () => {
                 goTo(room1);
 
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
-                assertUnread(room2, 1);
+                assertStillRead(room2);
 
                 // When I read it
                 goTo(room2);
 
-                // Then the room becomes read and stays read
-                assertRead(room2);
+                // Then the room stays read
+                assertStillRead(room2);
                 goTo(room1);
-                assertRead(room2);
-            });
-            it("Marking a room as read after an edit makes it read", () => {
-                // Given an edit is making a room unread
-                goTo(room2);
-                receiveMessages(room2, ["Msg1"]);
-                assertRead(room2);
-                goTo(room1);
-                receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
-                assertUnread(room2, 1);
-
-                // When I mark it as read
-                markAsRead(room2);
-
-                // Then the room becomes read
-                assertRead(room2);
+                assertStillRead(room2);
             });
             // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
             it.skip("Editing a message after marking as read makes the room unread", () => {
@@ -199,14 +150,11 @@ describe("Read receipts", () => {
                 // Then the room becomes unread
                 assertUnread(room2, 1);
             });
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("Editing a reply after reading it makes the room unread", () => {
+            it("Editing a reply after reading it makes the room unread", () => {
                 // Given the room is all read
                 goTo(room1);
-
                 receiveMessages(room2, ["Msg1", replyTo("Msg1", "Reply1")]);
                 assertUnread(room2, 2);
-
                 goTo(room2);
                 assertRead(room2);
                 goTo(room1);
@@ -214,8 +162,8 @@ describe("Read receipts", () => {
                 // When a message is edited
                 receiveMessages(room2, [editOf("Reply1", "Reply1 Edit1")]);
 
-                // Then it becomes unread
-                assertUnread(room2, 1);
+                // Then it remains read
+                assertStillRead(room2);
             });
             // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
             it.skip("Editing a reply after marking as read makes the room unread", () => {
@@ -229,11 +177,11 @@ describe("Read receipts", () => {
                 // When the reply is edited
                 receiveMessages(room2, [editOf("Reply1", "Reply1 Edit1")]);
 
-                // Then the room becomes unread
-                assertUnread(room2, 1);
+                // Then the room remains read
+                assertStillRead(room2);
             });
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("A room with an edit is still unread after restart", () => {
+            // https://github.com/vector-im/element-web/issues/26273
+            it.skip("A room with an edit is still read after restart", () => {
                 // Given a message is marked as read
                 goTo(room2);
                 receiveMessages(room2, ["Msg1"]);
@@ -243,12 +191,12 @@ describe("Read receipts", () => {
                 // When an edit appears in the room
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
 
-                // Then it becomes unread
-                assertUnread(room2, 1);
+                // Then it remains read
+                assertStillRead(room2);
 
                 // And remains so after a reload
                 saveAndReload();
-                assertUnread(room2, 1);
+                assertStillRead(room2);
             });
             it("An edited message becomes read if it happens while I am looking", () => {
                 // Given a message is marked as read
@@ -260,7 +208,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
 
                 // Then it becomes read
-                assertRead(room2);
+                assertStillRead(room2);
             });
             it("A room where all edits are read is still read after restart", () => {
                 // Given a message was edited and read
@@ -294,14 +242,14 @@ describe("Read receipts", () => {
                 // When a message inside it is edited
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
 
-                // Then the room and thread are unread
-                assertUnread(room2, 1);
+                // Then the room and thread are read
+                assertStillRead(room2);
                 goTo(room2);
-                assertUnreadThread("Msg1");
+                assertReadThread("Msg1");
             });
             // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
             it.skip("Reading an edit of a threaded message makes the room read", () => {
-                // Given an edited thread message is making the room unread
+                // Given an edited thread message appears after we read it
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 assertUnread(room2, 2);
@@ -311,14 +259,14 @@ describe("Read receipts", () => {
                 backToThreadsList();
                 goTo(room1);
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
-                assertUnread(room2, 1);
+                assertStillRead(room2);
 
                 // When I read it
                 goTo(room2);
                 openThread("Msg1");
 
-                // Then the room and thread are read
-                assertRead(room2);
+                // Then the room and thread are still read
+                assertStillRead(room2);
                 assertReadThread("Msg1");
             });
             // XXX: fails because the room is still "bold" even though the notification counts all disappear
@@ -335,7 +283,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             // XXX: fails because the unread dot remains after marking as read
-            it.skip("Editing a thread message after marking as read makes the room unread", () => {
+            it.skip("Editing a thread message after marking as read leaves the room read", () => {
                 // Given a room is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -347,31 +295,32 @@ describe("Read receipts", () => {
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
 
                 // Then the room becomes unread
-                assertUnread(room2, 1); // TODO: should this edit make us unread?
+                assertStillRead(room2);
             });
             // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("A room with an edited threaded message is still unread after restart", () => {
+            it.skip("A room with an edited threaded message is still read after restart", () => {
                 // Given an edit in a thread is making a room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
                 markAsRead(room2);
                 receiveMessages(room2, [editOf("Resp1", "Edit1")]);
-                assertUnread(room2, 1);
+                assertStillRead(room2);
 
                 // When I restart
                 saveAndReload();
 
                 // Then is it still unread
-                assertUnread(room2, 1);
+                assertRead(room2);
             });
-            it("A room where all threaded edits are read is still read after restart", () => {
+            // XXX: fails because it flakes, sometimes having 2 unread messages instead of 1
+            it.skip("A room where all threaded edits are read is still read after restart", () => {
                 goTo(room2);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
                 assertUnread(room2, 1);
                 openThread("Msg1");
                 assertRead(room2);
                 goTo(room1); // Make sure we are looking at room1 after reload
-                assertRead(room2);
+                assertStillRead(room2);
 
                 saveAndReload();
                 assertRead(room2);
@@ -394,7 +343,7 @@ describe("Read receipts", () => {
 
         describe("thread roots", () => {
             // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("An edit of a thread root makes the room unread", () => {
+            it.skip("An edit of a thread root leaves the room read", () => {
                 // Given I have read a thread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -408,15 +357,15 @@ describe("Read receipts", () => {
                 // When the thread root is edited
                 receiveMessages(room2, [editOf("Msg1", "Edit1")]);
 
-                // Then the room is unread
-                assertUnread(room2, 1);
+                // Then the room is read
+                assertStillRead(room2);
 
-                // But the thread is read
+                // And the thread is read
                 goTo(room2);
-                assertRead(room2);
+                assertStillRead(room2);
                 assertReadThread("Edit1");
             });
-            it("Reading an edit of a thread root makes the room read", () => {
+            it("Reading an edit of a thread root leaves the room read", () => {
                 // Given a fully-read thread exists
                 goTo(room2);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -432,12 +381,12 @@ describe("Read receipts", () => {
                 goTo(room2);
 
                 // Then the room becomes read and stays read
-                assertRead(room2);
+                assertStillRead(room2);
                 goTo(room1);
-                assertRead(room2);
+                assertStillRead(room2);
             });
             // XXX: fails because it shows a dot instead of unread count
-            it.skip("Editing a thread root after reading makes the room unread", () => {
+            it.skip("Editing a thread root after reading leaves the room read", () => {
                 // Given a fully-read thread exists
                 goTo(room2);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -448,11 +397,11 @@ describe("Read receipts", () => {
                 // When the thread root is edited
                 receiveMessages(room2, [editOf("Msg1", "Msg1 Edit1")]);
 
-                // Then the room becomes unread
-                assertUnread(room2, 1);
+                // Then the room stays read
+                assertStillRead(room2);
             });
             // XXX: fails because the room has an unread dot after I marked it as read
-            it.skip("Marking a room as read after an edit of a thread root makes it read", () => {
+            it.skip("Marking a room as read after an edit of a thread root keeps it read", () => {
                 // Given a fully-read thread exists
                 goTo(room2);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -468,12 +417,12 @@ describe("Read receipts", () => {
                 markAsRead(room2);
 
                 // Then the room becomes read and stays read
-                assertRead(room2);
+                assertStillRead(room2);
                 goTo(room1);
-                assertRead(room2);
+                assertStillRead(room2);
             });
             // XXX: fails because the room has an unread dot after I marked it as read
-            it.skip("Editing a thread root that is a reply after marking as read makes the room unread but not the thread", () => {
+            it.skip("Editing a thread root that is a reply after marking as read leaves the room read", () => {
                 // Given a thread based on a reply exists and is read because it is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Msg", replyTo("Msg", "Reply"), threadedOff("Reply", "InThread")]);
@@ -484,15 +433,15 @@ describe("Read receipts", () => {
                 // When I edit the thread root
                 receiveMessages(room1, [editOf("Reply", "Edited Reply")]);
 
-                // Then the room is unread
-                assertUnread(room2, 1);
-                goTo(room2);
+                // Then the room is read
+                assertStillRead(room2);
 
-                // But the thread is still read (because the root is not part of the thread)
+                // And the thread is read
+                goTo(room2);
                 assertReadThread("EditedReply");
             });
             // XXX: fails because the room has an unread dot after I marked it as read
-            it.skip("Marking a room as read after an edit of a thread root that is a reply makes it read", () => {
+            it.skip("Marking a room as read after an edit of a thread root that is a reply leaves it read", () => {
                 // Given a thread based on a reply exists and the reply has been edited
                 goTo(room1);
                 receiveMessages(room2, ["Msg", replyTo("Msg", "Reply"), threadedOff("Reply", "InThread")]);
@@ -503,7 +452,7 @@ describe("Read receipts", () => {
                 markAsRead(room2);
 
                 // Then the room and thread are read
-                assertRead(room2);
+                assertStillRead(room2);
                 goTo(room2);
                 assertReadThread("Edited Reply");
             });

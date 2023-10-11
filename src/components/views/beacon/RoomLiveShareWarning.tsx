@@ -32,12 +32,12 @@ import { Action } from "../../../dispatcher/actions";
 
 const getLabel = (hasLocationPublishError: boolean, hasStopSharingError: boolean): string => {
     if (hasLocationPublishError) {
-        return _t("An error occurred whilst sharing your live location, please try again");
+        return _t("location_sharing|error_sharing_live_location_try_again");
     }
     if (hasStopSharingError) {
-        return _t("An error occurred while stopping your live location, please try again");
+        return _t("location_sharing|error_stopping_live_location_try_again");
     }
-    return _t("You are sharing your live location");
+    return _t("location_sharing|live_location_active");
 };
 
 interface RoomLiveShareWarningInnerProps {
@@ -116,7 +116,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
             {hasLocationPublishError && (
                 <AccessibleButton
                     data-testid="room-live-share-wire-error-close-button"
-                    title={_t("Stop and close")}
+                    title={_t("location_sharing|stop_and_close")}
                     element="button"
                     className="mx_RoomLiveShareWarning_closeButton"
                     onClick={stopPropagationWrapper(onStopSharing)}

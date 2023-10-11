@@ -18,7 +18,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import {
     assertRead,
@@ -27,6 +26,7 @@ import {
     assertUnreadLessThan,
     assertUnreadThread,
     backToThreadsList,
+    ReadReceiptSetup,
     goTo,
     many,
     markAsRead,
@@ -39,17 +39,12 @@ import {
 } from "./read-receipts-utils";
 
 describe("Read receipts", () => {
-    const userName = "Mae";
-    const botName = "Other User";
     const roomAlpha = "Room Alpha";
     const roomBeta = "Room Beta";
 
     let homeserver: HomeserverInstance;
-    let betaRoomId: string;
-    let alphaRoomId: string;
-    let bot: MatrixClient | undefined;
-
     let messageFinder: MessageFinder;
+    let testSetup: ReadReceiptSetup;
 
     function replyTo(targetMessage: string, newMessage: string): MessageContentSpec {
         return messageFinder.replyTo(targetMessage, newMessage);
@@ -87,34 +82,7 @@ describe("Read receipts", () => {
 
     beforeEach(() => {
         messageFinder = new MessageFinder();
-
-        // Create 2 rooms: Alpha & Beta. We join the bot to both of them
-        cy.initTestUser(homeserver, userName)
-            .then(() => {
-                cy.createRoom({ name: roomAlpha }).then((createdRoomId) => {
-                    alphaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.createRoom({ name: roomBeta }).then((createdRoomId) => {
-                    betaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.getBot(homeserver, { displayName: botName }).then((botClient) => {
-                    bot = botClient;
-                });
-            })
-            .then(() => {
-                // Invite the bot to both rooms
-                cy.inviteUser(alphaRoomId, bot.getUserId());
-                cy.viewRoomById(alphaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-
-                cy.inviteUser(betaRoomId, bot.getUserId());
-                cy.viewRoomById(betaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-            });
+        testSetup = new ReadReceiptSetup(homeserver, "Mae", "Other User", roomAlpha, roomBeta);
     });
 
     after(() => {
@@ -127,7 +95,7 @@ describe("Read receipts", () => {
      * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
      */
     function receiveMessages(room: string, messages: Message[]) {
-        sendMessageAsClient(bot, room, messages);
+        sendMessageAsClient(testSetup.bot, room, messages);
     }
 
     /**
@@ -176,7 +144,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 30);
 
                 // When I jump to one of the older messages
-                jumpTo(room2, "Msg1");
+                jumpTo(room2, "Msg0001");
 
                 // Then the room is still unread, but some messages were read
                 assertUnreadLessThan(room2, 30);
@@ -321,7 +289,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 21);
 
                 // When I read an older message in the thread
-                jumpTo(room2, "InThread1", true);
+                jumpTo(room2, "InThread0001", true);
                 assertUnreadLessThan(room2, 21);
                 // TODO: for some reason, we can't find the first message
                 // "InThread0", so I am using the second here. Also, they appear
@@ -488,7 +456,7 @@ describe("Read receipts", () => {
                 assertUnread(room2, 62); // Sanity
 
                 // When I jump to an old message and read the thread
-                jumpTo(room2, "beforeThread0");
+                jumpTo(room2, "beforeThread0000");
                 openThread("ThreadRoot");
 
                 // Then the thread root is marked as read in the main timeline,

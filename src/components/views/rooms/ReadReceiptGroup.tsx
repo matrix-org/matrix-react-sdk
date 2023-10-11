@@ -30,6 +30,7 @@ import ContextMenu, { aboveLeftOf, MenuItem, useContextMenu } from "../../struct
 import { useTooltip } from "../../../utils/useTooltip";
 import { _t } from "../../../languageHandler";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { formatList } from "../../../utils/FormattingUtils";
 
 // #20547 Design specified that we should show the three latest read receipts
 const MAX_READ_AVATARS_PLUS_N = 3;
@@ -66,19 +67,8 @@ export function determineAvatarPosition(index: number, max: number): IAvatarPosi
     }
 }
 
-export function readReceiptTooltip(members: string[], hasMore: boolean): string | undefined {
-    if (hasMore) {
-        return _t("%(members)s and more", {
-            members: members.join(", "),
-        });
-    } else if (members.length > 1) {
-        return _t("%(members)s and %(last)s", {
-            last: members.pop(),
-            members: members.join(", "),
-        });
-    } else if (members.length) {
-        return members[0];
-    }
+export function readReceiptTooltip(members: string[], maxAvatars: number): string | undefined {
+    return formatList(members, maxAvatars);
 }
 
 export function ReadReceiptGroup({
@@ -94,13 +84,15 @@ export function ReadReceiptGroup({
     const hasMore = readReceipts.length > MAX_READ_AVATARS;
     const maxAvatars = hasMore ? MAX_READ_AVATARS_PLUS_N : MAX_READ_AVATARS;
 
-    const tooltipMembers: string[] = readReceipts.slice(0, maxAvatars).map((it) => it.roomMember?.name ?? it.userId);
-    const tooltipText = readReceiptTooltip(tooltipMembers, hasMore);
+    const tooltipMembers: string[] = readReceipts.map((it) => it.roomMember?.name ?? it.userId);
+    const tooltipText = readReceiptTooltip(tooltipMembers, maxAvatars);
 
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         label: (
             <>
-                <div className="mx_Tooltip_title">{_t("Seen by %(count)s people", { count: readReceipts.length })}</div>
+                <div className="mx_Tooltip_title">
+                    {_t("timeline|read_receipt_title", { count: readReceipts.length })}
+                </div>
                 <div className="mx_Tooltip_sub">{tooltipText}</div>
             </>
         ),
@@ -176,7 +168,7 @@ export function ReadReceiptGroup({
             <ContextMenu menuClassName="mx_ReadReceiptGroup_popup" onFinished={closeMenu} {...aboveLeftOf(buttonRect)}>
                 <AutoHideScrollbar>
                     <SectionHeader className="mx_ReadReceiptGroup_title">
-                        {_t("Seen by %(count)s people", { count: readReceipts.length })}
+                        {_t("timeline|read_receipt_title", { count: readReceipts.length })}
                     </SectionHeader>
                     {readReceipts.map((receipt) => (
                         <ReadReceiptPerson
@@ -193,7 +185,7 @@ export function ReadReceiptGroup({
 
     return (
         <div className="mx_EventTile_msgOption">
-            <div className="mx_ReadReceiptGroup" role="group" aria-label={_t("Read receipts")}>
+            <div className="mx_ReadReceiptGroup" role="group" aria-label={_t("timeline|read_receipts_label")}>
                 <AccessibleButton
                     className="mx_ReadReceiptGroup_button"
                     inputRef={button}

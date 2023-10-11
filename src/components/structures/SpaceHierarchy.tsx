@@ -150,7 +150,7 @@ const Tile: React.FC<ITileProps> = ({
                 kind="primary_outline"
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
-                title={_t("Joining")}
+                title={_t("space|joining_space")}
             >
                 <Spinner w={24} h={24} />
             </AccessibleTooltipButton>
@@ -181,7 +181,7 @@ const Tile: React.FC<ITileProps> = ({
         } else {
             checkbox = (
                 <TextWithTooltip
-                    tooltip={_t("You don't have permission")}
+                    tooltip={_t("space|user_lacks_permission")}
                     onClick={(ev) => {
                         ev.stopPropagation();
                     }}
@@ -206,9 +206,9 @@ const Tile: React.FC<ITileProps> = ({
         );
     }
 
-    let description = _t("%(count)s members", { count: room.num_joined_members ?? 0 });
+    let description = _t("common|n_members", { count: room.num_joined_members ?? 0 });
     if (numChildRooms !== undefined) {
-        description += " · " + _t("%(count)s rooms", { count: numChildRooms });
+        description += " · " + _t("common|n_rooms", { count: numChildRooms });
     }
 
     let topic: ReactNode | string | null;
@@ -240,7 +240,7 @@ const Tile: React.FC<ITileProps> = ({
 
     let joinedSection: ReactElement | undefined;
     if (joinedRoom) {
-        joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">{_t("Joined")}</div>;
+        joinedSection = <div className="mx_SpaceHierarchy_roomTile_joined">{_t("common|joined")}</div>;
     }
 
     let suggestedSection: ReactElement | undefined;
@@ -384,7 +384,7 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
         oob_data: {
             avatarUrl: room?.avatar_url,
             // XXX: This logic is duplicated from the JS SDK which would normally decide what the name is.
-            name: room?.name || roomAlias || _t("Unnamed room"),
+            name: room?.name || roomAlias || _t("common|unnamed_room"),
             roomType,
         } as IOOBData,
         metricsTrigger: "RoomDirectory",
@@ -410,7 +410,7 @@ export const joinRoom = async (cli: MatrixClient, hierarchy: RoomHierarchy, room
             logger.warn("Got a non-MatrixError while joining room", err);
             SdkContextClass.instance.roomViewStore.showJoinRoomError(
                 new MatrixError({
-                    error: _t("Unknown error"),
+                    error: _t("error|unknown"),
                 }),
                 roomId,
             );
@@ -673,7 +673,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
         };
     }
 
-    let buttonText = _t("Saving…");
+    let buttonText = _t("common|saving");
     if (!saving) {
         buttonText = selectionAllSuggested ? _t("space|unmark_suggested") : _t("space|mark_suggested");
     }
@@ -713,7 +713,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 kind="danger_outline"
                 disabled={disabled}
             >
-                {removing ? _t("Removing…") : _t("action|remove")}
+                {removing ? _t("redact|ongoing") : _t("action|remove")}
             </Button>
             <Button
                 {...props}
@@ -857,8 +857,8 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                     } else if (!hierarchy.canLoadMore) {
                         results = (
                             <div className="mx_SpaceHierarchy_noResults">
-                                <h3>{_t("No results found")}</h3>
-                                <div>{_t("You may want to try a different search or check for typos.")}</div>
+                                <h3>{_t("common|no_results_found")}</h3>
+                                <div>{_t("space|no_search_result_hint")}</div>
                             </div>
                         );
                     }
@@ -876,7 +876,9 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                         <>
                             <div className="mx_SpaceHierarchy_listHeader">
                                 <h4 className="mx_SpaceHierarchy_listHeader_header">
-                                    {query.trim() ? _t("Results") : _t("Rooms and spaces")}
+                                    {query.trim()
+                                        ? _t("space|title_when_query_available")
+                                        : _t("space|title_when_query_unavailable")}
                                 </h4>
                                 <div className="mx_SpaceHierarchy_listHeader_buttons">
                                     {additionalButtons}
@@ -908,7 +910,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                     <>
                         <SearchBox
                             className="mx_SpaceHierarchy_search mx_textinput_icon mx_textinput_search"
-                            placeholder={_t("Search names and descriptions")}
+                            placeholder={_t("space|search_placeholder")}
                             onSearch={setQuery}
                             autoFocus={true}
                             initialValue={initialText}

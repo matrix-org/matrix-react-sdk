@@ -18,36 +18,51 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import {
+    assertMessageLoaded,
+    assertMessageNotLoaded,
     assertRead,
+    assertReadThread,
     assertStillRead,
     assertUnread,
+    assertUnreadGreaterThan,
+    assertUnreadThread,
+    closeThreadsPanel,
     customEvent,
     goTo,
+    many,
     markAsRead,
     Message,
+    MessageContentSpec,
+    MessageFinder,
+    openThread,
+    openThreadList,
+    pageUp,
+    ReadReceiptSetup,
+    saveAndReload,
     sendMessageAsClient,
 } from "./read-receipts-utils";
 
 describe("Read receipts", () => {
-    const userName = "Mae";
-    const botName = "Other User";
     const roomAlpha = "Room Alpha";
     const roomBeta = "Room Beta";
 
     let homeserver: HomeserverInstance;
-    let betaRoomId: string;
-    let alphaRoomId: string;
-    let bot: MatrixClient | undefined;
+    let messageFinder: MessageFinder;
+    let testSetup: ReadReceiptSetup;
 
-    /**
-     * Map of message content -> event. Allows us to find e.g. edited or
-     * redacted messages even if their content has changed or disappeared from
-     * screen.
-     */
-    const messages = new Map<String, MatrixEvent>();
+    function threadedOff(rootMessage: string, newMessage: string): MessageContentSpec {
+        return messageFinder.threadedOff(rootMessage, newMessage);
+    }
+
+    function manyThreadedOff(rootMessage: string, newMessages: Array<string>): Array<MessageContentSpec> {
+        return messageFinder.manyThreadedOff(rootMessage, newMessages);
+    }
+
+    function jumpTo(room: string, message: string, includeThreads = false) {
+        return messageFinder.jumpTo(room, message, includeThreads);
+    }
 
     before(() => {
         // Note: unusually for the Cypress tests in this repo, we share a single
@@ -68,35 +83,8 @@ describe("Read receipts", () => {
     });
 
     beforeEach(() => {
-        messages.clear();
-
-        // Create 2 rooms: Alpha & Beta. We join the bot to both of them
-        cy.initTestUser(homeserver, userName)
-            .then(() => {
-                cy.createRoom({ name: roomAlpha }).then((createdRoomId) => {
-                    alphaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.createRoom({ name: roomBeta }).then((createdRoomId) => {
-                    betaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.getBot(homeserver, { displayName: botName }).then((botClient) => {
-                    bot = botClient;
-                });
-            })
-            .then(() => {
-                // Invite the bot to both rooms
-                cy.inviteUser(alphaRoomId, bot.getUserId());
-                cy.viewRoomById(alphaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-
-                cy.inviteUser(betaRoomId, bot.getUserId());
-                cy.viewRoomById(betaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-            });
+        messageFinder = new MessageFinder();
+        testSetup = new ReadReceiptSetup(homeserver, "Mae", "Other User", roomAlpha, roomBeta);
     });
 
     after(() => {
@@ -109,7 +97,7 @@ describe("Read receipts", () => {
      * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
      */
     function receiveMessages(room: string, messages: Message[]) {
-        sendMessageAsClient(bot, room, messages);
+        sendMessageAsClient(testSetup.bot, room, messages);
     }
 
     const room1 = roomAlpha;
@@ -183,11 +171,220 @@ describe("Read receipts", () => {
     });
 
     describe("Paging up", () => {
-        it.skip("Paging up through old messages after a room is read leaves the room read", () => {});
-        it.skip("Paging up through old messages of an unread room leaves the room unread", () => {});
-        it.skip("Paging up to find old threads that were previously read leaves the room read", () => {});
-        it.skip("?? Paging up to find old threads that were never read marks the room unread", () => {});
-        it.skip("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {});
+        it("Paging up through old messages after a room is read leaves the room read", () => {
+            // Given lots of messages are in the room, but we have read them
+            goTo(room1);
+            receiveMessages(room2, many("Msg", 110));
+            assertUnread(room2, 110);
+            goTo(room2);
+            assertRead(room2);
+            goTo(room1);
+
+            // When we restart, so only recent messages are loaded
+            saveAndReload();
+            goTo(room2);
+            assertMessageNotLoaded("Msg0010");
+
+            // And we page up, loading in old messages
+            pageUp();
+            cy.wait(200);
+            pageUp();
+            cy.wait(200);
+            pageUp();
+            assertMessageLoaded("Msg0010");
+
+            // Then the room remains read
+            assertStillRead(room2);
+        });
+        it("Paging up through old messages of an unread room leaves the room unread", () => {
+            // Given lots of messages are in the room, and they are not read
+            goTo(room1);
+            receiveMessages(room2, many("x\ny\nz\nMsg", 40)); // newline to spread out messages
+            assertUnread(room2, 40);
+
+            // When I jump to a message in the middle and page up
+            jumpTo(room2, "x\ny\nz\nMsg0020");
+            pageUp();
+
+            // Then the room is still unread
+            assertUnreadGreaterThan(room2, 1);
+        });
+        it("Paging up to find old threads that were previously read leaves the room read", () => {
+            // Given lots of messages in threads are all read
+            goTo(room1);
+            receiveMessages(room2, [
+                "Root1",
+                "Root2",
+                "Root3",
+                ...manyThreadedOff("Root1", many("T", 20)),
+                ...manyThreadedOff("Root2", many("T", 20)),
+                ...manyThreadedOff("Root3", many("T", 20)),
+            ]);
+            goTo(room2);
+            assertUnread(room2, 60);
+            openThread("Root1");
+            assertUnread(room2, 40);
+            assertReadThread("Root1");
+            openThread("Root2");
+            assertUnread(room2, 20);
+            assertReadThread("Root2");
+            openThread("Root3");
+            assertRead(room2);
+            assertReadThread("Root3");
+
+            // When I restart and page up to load old thread roots
+            goTo(room1);
+            saveAndReload();
+            goTo(room2);
+            pageUp();
+
+            // Then the room and threads remain read
+            assertRead(room2);
+            assertReadThread("Root1");
+            assertReadThread("Root2");
+            assertReadThread("Root3");
+        });
+        // https://github.com/vector-im/element-web/issues/26294
+        it.skip("Paging up to find old threads that were never read keeps the room unread", () => {
+            // Given lots of messages in threads that are unread
+            goTo(room1);
+            receiveMessages(room2, [
+                "Root1",
+                "Root2",
+                "Root3",
+                ...manyThreadedOff("Root1", many("T", 2)),
+                ...manyThreadedOff("Root2", many("T", 2)),
+                ...manyThreadedOff("Root3", many("T", 2)),
+                ...many("Msg", 100),
+            ]);
+            goTo(room2);
+            assertUnread(room2, 6);
+            assertUnreadThread("Root1");
+            assertUnreadThread("Root2");
+            assertUnreadThread("Root3");
+
+            // When I restart
+            closeThreadsPanel();
+            goTo(room1);
+            saveAndReload();
+
+            // Then the room remembers it's unread
+            // TODO: I (andyb) think this will fall in an encrypted room
+            assertUnread(room2, 6);
+
+            // And when I page up to load old thread roots
+            goTo(room2);
+            pageUp();
+
+            // Then the room remains unread
+            assertUnread(room2, 6);
+            assertUnreadThread("Root1");
+            assertUnreadThread("Root2");
+            assertUnreadThread("Root3");
+        });
+        it("Looking in thread view to find old threads that were never read makes the room unread", () => {
+            // Given lots of messages in threads that are unread
+            goTo(room1);
+            receiveMessages(room2, [
+                "Root1",
+                "Root2",
+                "Root3",
+                ...manyThreadedOff("Root1", many("T", 2)),
+                ...manyThreadedOff("Root2", many("T", 2)),
+                ...manyThreadedOff("Root3", many("T", 2)),
+                ...many("Msg", 100),
+            ]);
+            goTo(room2);
+            assertUnread(room2, 6);
+            assertUnreadThread("Root1");
+            assertUnreadThread("Root2");
+            assertUnreadThread("Root3");
+
+            // When I restart
+            closeThreadsPanel();
+            goTo(room1);
+            saveAndReload();
+
+            // Then the room remembers it's unread
+            // TODO: I (andyb) think this will fall in an encrypted room
+            assertUnread(room2, 6);
+
+            // And when I open the threads view
+            goTo(room2);
+            openThreadList();
+
+            // Then the room remains unread
+            assertUnread(room2, 6);
+            assertUnreadThread("Root1");
+            assertUnreadThread("Root2");
+            assertUnreadThread("Root3");
+        });
+        it("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {
+            // Given lots of messages in threads that are unread but I marked as read on a main timeline message
+            goTo(room1);
+            receiveMessages(room2, [
+                "Root1",
+                "Root2",
+                "Root3",
+                ...manyThreadedOff("Root1", many("T", 2)),
+                ...manyThreadedOff("Root2", many("T", 2)),
+                ...manyThreadedOff("Root3", many("T", 2)),
+                ...many("Msg", 100),
+            ]);
+            markAsRead(room2);
+            assertRead(room2);
+
+            // When I restart
+            saveAndReload();
+
+            // Then the room remembers it's read
+            assertRead(room2);
+
+            // And when I page up to load old thread roots
+            goTo(room2);
+            pageUp();
+            pageUp();
+            pageUp();
+
+            // Then the room remains read
+            assertStillRead(room2);
+            assertReadThread("Root1");
+            assertReadThread("Root2");
+            assertReadThread("Root3");
+        });
+        // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
+        it.skip("After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read", () => {
+            // Given lots of messages in threads that are unread but I marked as read on a thread message
+            goTo(room1);
+            receiveMessages(room2, [
+                "Root1",
+                "Root2",
+                "Root3",
+                ...manyThreadedOff("Root1", many("T1-", 2)),
+                ...manyThreadedOff("Root2", many("T2-", 2)),
+                ...manyThreadedOff("Root3", many("T3-", 2)),
+                ...many("Msg", 100),
+                threadedOff("Msg0099", "Thread off 99"),
+            ]);
+            markAsRead(room2);
+            assertRead(room2);
+
+            // When I restart
+            saveAndReload();
+
+            // Then the room remembers it's read
+            assertRead(room2);
+
+            // And when I page up to load old thread roots
+            goTo(room2);
+            openThreadList();
+
+            // Then the room remains read
+            assertStillRead(room2);
+            assertReadThread("Root1");
+            assertReadThread("Root2");
+            assertReadThread("Root3");
+        });
     });
 
     describe("Room list order", () => {
