@@ -19,22 +19,19 @@ limitations under the License.
     padding: 0 var(--cpd-space-3x);
     border-bottom: 1px solid $separator;
     background-color: $background;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.mx_RoomHeader:hover {
+    background-color: $header-panel-bg-hover;
 }
 
 .mx_RoomHeader_info {
-    cursor: pointer;
     flex: 1;
 }
 
-.mx_RoomHeader_heading {
-    display: flex;
-    gap: var(--cpd-space-1x);
-    align-items: center;
-}
-
-.mx_RoomHeader_topic {
-    height: 0;
-    opacity: 0;
+.mx_RoomHeader_truncated {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -42,7 +39,21 @@ limitations under the License.
     overflow: hidden;
     word-break: break-all;
     text-overflow: ellipsis;
+}
 
+.mx_RoomHeader_heading {
+    display: flex;
+    gap: var(--cpd-space-1x);
+    align-items: center;
+
+    /* Spacing of 64px between the topic and the buttons, but we have
+       to account for the gap of the flex items */
+    padding-right: var(--cpd-space-13x);
+}
+
+.mx_RoomHeader_topic {
+    height: 0;
+    opacity: 0;
     transition: all var(--transition-standard) ease 0.1s;
 }
 
@@ -51,10 +62,19 @@ limitations under the License.
         value in pixels */
     height: calc($font-13px * 1.5);
     opacity: 1;
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.mx_RoomHeader_icon {
+    flex-shrink: 0;
 }
 
 .mx_RoomHeader .mx_FacePile {
     color: $secondary-content;
+    background: $background;
     display: flex;
     align-items: center;
     gap: var(--cpd-space-2x);
