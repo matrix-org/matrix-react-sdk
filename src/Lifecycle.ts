@@ -923,9 +923,9 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
 let _isLoggingOut = false;
 
 /**
- * Logs out the current session
- * When user has authenticated using OIDC native flow, revoke tokens with OIDC provider
- * Otherwise, call /logout on the homeserver
+ * Logs out the current session.
+ * When user has authenticated using OIDC native flow revoke tokens with OIDC provider.
+ * Otherwise, call /logout on the homeserver.
  * @param client
  * @param oidcClientStore
  */
@@ -942,6 +942,7 @@ async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore)
 
 /**
  * Logs the current session out and transitions to the logged-out state
+ * @param oidcClientStore store instance from SDKConfig
  */
 export function logout(oidcClientStore?: OidcClientStore): void {
     const client = MatrixClientPeg.get();

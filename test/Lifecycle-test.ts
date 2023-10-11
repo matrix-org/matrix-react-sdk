@@ -55,6 +55,7 @@ describe("Lifecycle", () => {
             isVersionSupported: jest.fn().mockResolvedValue(true),
             getCrypto: jest.fn(),
             getClientWellKnown: jest.fn(),
+            waitForClientWellKnown: jest.fn(),
             getThirdpartyProtocols: jest.fn(),
             store: {
                 destroy: jest.fn(),
@@ -698,7 +699,7 @@ describe("Lifecycle", () => {
 
             beforeEach(() => {
                 // mock oidc config for oidc client initialisation
-                mockClient.getClientWellKnown.mockReturnValue({
+                mockClient.waitForClientWellKnown.mockResolvedValue({
                     "m.authentication": {
                         issuer: issuer,
                     },
