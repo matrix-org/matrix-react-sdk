@@ -20,6 +20,7 @@ limitations under the License.
 import * as React from "react";
 import { User, IContent, Direction, ContentHelpers, MRoomTopicEventContent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { split } from "lodash";
 
 import dis from "./dispatcher/dispatcher";
 import { _t, _td, UserFriendlyError } from "./languageHandler";
@@ -788,6 +789,28 @@ export const Commands = [
         runFn: function (cli, roomId, threadId, args) {
             if (!args) return reject(this.getUsage());
             return successSync(ContentHelpers.makeHtmlEmote(args, textToHtmlRainbow(args)));
+        },
+        category: CommandCategories.messages,
+    }),
+    new Command({
+        command: "mock",
+        description: _td("slash_command|mock"),
+        args: "<message>",
+        runFn: function (cli, roomId, threadId, args) {
+            if (!args) return reject(this.getUsage());
+            const message = split(args, "")
+                .map((c, i) => {
+                    if (c === " ") {
+                        return c;
+                    }
+                    if (i % 2 === 0) {
+                        return c.toUpperCase();
+                    } else {
+                        return c.toLowerCase();
+                    }
+                })
+                .join("");
+            return successSync(ContentHelpers.makeTextMessage(message));
         },
         category: CommandCategories.messages,
     }),

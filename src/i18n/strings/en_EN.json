@@ -2927,6 +2927,7 @@
         "jumptodate_invalid_input": "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.",
         "lenny": "Prepends ( ͡° ͜ʖ ͡°) to a plain-text message",
         "me": "Displays action",
+        "mock": "Sends the given message in a mocking tone",
         "msg": "Sends a message to the given user",
         "myavatar": "Changes your profile picture in all rooms",
         "myroomavatar": "Changes your profile picture in this current room only",

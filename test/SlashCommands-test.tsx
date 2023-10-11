@@ -315,6 +315,20 @@ describe("SlashCommands", () => {
         });
     });
 
+    describe.each(["mock"])("/%s", (commandName: string) => {
+        const command = findCommand(commandName)!;
+
+        it("should return usage if no args", () => {
+            expect(command.run(client, roomId, null, undefined).error).toBe(command.getUsage());
+        });
+
+        it("should make string to alternate between upper and lower case", () => {
+            return expect(
+                command.run(client, roomId, null, "this is a test message").promise,
+            ).resolves.toMatchSnapshot();
+        });
+    });
+
     describe.each(["shrug", "tableflip", "unflip", "lenny"])("/%s", (commandName: string) => {
         const command = findCommand(commandName)!;
 
