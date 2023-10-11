@@ -27,7 +27,7 @@ import {
     IStartClientOpts,
     MatrixClient,
     MemoryStore,
-    OidcTokenRefresher,
+    TokenRefreshFunction,
 } from "matrix-js-sdk/src/matrix";
 import * as utils from "matrix-js-sdk/src/utils";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
@@ -123,8 +123,10 @@ export interface IMatrixClientPeg {
      * homeserver / identity server URLs and active credentials
      *
      * @param {IMatrixClientCreds} creds The new credentials to use.
+     * @param {TokenRefreshFunction} tokenRefreshFunction OPTIONAL function used by MatrixClient to attempt token refresh
+     *          see {@link ICreateClientOpts.tokenRefreshFunction}
      */
-    replaceUsingCreds(creds: IMatrixClientCreds, tokenRefresher?: OidcTokenRefresher): void;
+    replaceUsingCreds(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void;
 }
 
 /**
@@ -197,8 +199,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public replaceUsingCreds(creds: IMatrixClientCreds, tokenRefresher?: OidcTokenRefresher): void {
-        this.createClient(creds, tokenRefresher);
+    public replaceUsingCreds(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void {
+        this.createClient(creds, tokenRefreshFunction);
     }
 
     private onUnexpectedStoreClose = async (): Promise<void> => {
@@ -379,13 +381,13 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         });
     }
 
-    private createClient(creds: IMatrixClientCreds, tokenRefresher?: OidcTokenRefresher): void {
+    private createClient(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void {
         const opts: ICreateClientOpts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
             accessToken: creds.accessToken,
             refreshToken: creds.refreshToken,
-            tokenRefreshFunction: tokenRefresher?.doRefreshAccessToken.bind(tokenRefresher),
+            tokenRefreshFunction,
             userId: creds.userId,
             deviceId: creds.deviceId,
             pickleKey: creds.pickleKey,
