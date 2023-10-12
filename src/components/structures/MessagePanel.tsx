@@ -753,9 +753,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     </li>,
                 );
             } else if (wantsSeparator === SeparatorKind.LateEvent) {
-                const info = getLateEventInfo(mxEv)!;
                 const text = _t("timeline|late_event_separator", {
-                    dateTime: formatDate(new Date(info.received_at)),
+                    dateTime: formatDate(mxEv.getDate() ?? new Date()),
                 });
                 ret.push(
                     <li key={ts1}>
