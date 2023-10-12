@@ -125,9 +125,9 @@ export class OidcClientStore {
         try {
             const clientId = getStoredOidcClientId();
             const { account, metadata, signingKeys } = await discoverAndValidateAuthenticationConfig(
-                delegatedAuthConfig ?? // if HS doesn't have .well-known configured, or we can't fetch it
-                // fallback to the known issuer
-                { issuer: this.authenticatedIssuer! },
+                // if HS has valid delegated auth config in .well-known, use it
+                // otherwise fallback to the known issuer
+                delegatedAuthConfig ?? { issuer: this.authenticatedIssuer! },
             );
             // if no account endpoint is configured default to the issuer
             this._accountManagementEndpoint = account ?? metadata.issuer;
