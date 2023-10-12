@@ -108,9 +108,9 @@ export class OidcClientStore {
     }
 
     /**
-     * Tries to initialise an OidcClient using stored clientId and oidc discovery
-     * Assigns this.oidcClient and accountManagement endpoint
-     * Logs errors and does not throw when oidc client cannot be initialised
+     * Tries to initialise an OidcClient using stored clientId and OIDC discovery.
+     * Assigns this.oidcClient and accountManagement endpoint.
+     * Logs errors and does not throw when oidc client cannot be initialised.
      * @returns promise that resolves when initialising OidcClient succeeds or fails
      */
     private async initOidcClient(): Promise<void> {
