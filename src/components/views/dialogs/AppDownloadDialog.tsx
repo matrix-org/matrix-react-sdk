@@ -30,6 +30,18 @@ interface Props {
     onFinished(): void;
 }
 
+export const showAppDownloadDialogPrompt = (): boolean => {
+    const desktopBuilds = SdkConfig.getObject("desktop_builds");
+    const mobileBuilds = SdkConfig.getObject("mobile_builds");
+
+    return (
+        !!desktopBuilds?.get("available") ||
+        !!mobileBuilds?.get("ios") ||
+        !!mobileBuilds?.get("android") ||
+        !!mobileBuilds?.get("fdroid")
+    );
+};
+
 export const AppDownloadDialog: FC<Props> = ({ onFinished }) => {
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
