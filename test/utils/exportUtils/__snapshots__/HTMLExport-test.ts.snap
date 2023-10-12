@@ -40,7 +40,7 @@ exports[`HTMLExport should export 1`] = `
                             <div class="mx_LegacyRoomHeader_topic" dir="auto">  </div>
                         </div>
                         </div>
-
+                        
                         <div class="mx_MainSplit">
                         <div class="mx_RoomView_body">
                             <div
@@ -78,7 +78,7 @@ exports[`HTMLExport should export 1`] = `
                             </div>
                         </div>
                         </div>
-
+                        
                     </main>
                     </div>
                 </div>
