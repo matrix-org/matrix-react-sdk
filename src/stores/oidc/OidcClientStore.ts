@@ -108,9 +108,9 @@ export class OidcClientStore {
     }
 
     /**
-     * Tries to initialise an OidcClient using stored clientId and oidc discovery
-     * Assigns this.oidcClient and accountManagement endpoint
-     * Logs errors and does not throw when oidc client cannot be initialised
+     * Tries to initialise an OidcClient using stored clientId and OIDC discovery.
+     * Assigns this.oidcClient and accountManagement endpoint.
+     * Logs errors and does not throw when oidc client cannot be initialised.
      * @returns promise that resolves when initialising OidcClient succeeds or fails
      */
     private async initOidcClient(): Promise<void> {
@@ -121,10 +121,13 @@ export class OidcClientStore {
         }
         const delegatedAuthConfig =
             (wellKnown && M_AUTHENTICATION.findIn<IDelegatedAuthConfig>(wellKnown)) ?? undefined;
+
         try {
             const clientId = getStoredOidcClientId();
             const { account, metadata, signingKeys } = await discoverAndValidateAuthenticationConfig(
-                delegatedAuthConfig || { issuer: this.authenticatedIssuer! },
+                delegatedAuthConfig ?? // if HS doesn't have .well-known configured, or we can't fetch it
+                // fallback to the known issuer
+                { issuer: this.authenticatedIssuer! },
             );
             // if no account endpoint is configured default to the issuer
             this._accountManagementEndpoint = account ?? metadata.issuer;

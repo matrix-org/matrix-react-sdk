@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IDelegatedAuthConfig, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
+import { IDelegatedAuthConfig, OidcTokenRefresher, AccessTokens } from "matrix-js-sdk/src/matrix";
 import { IdTokenClaims } from "oidc-client-ts";
 
 import PlatformPeg from "../../PlatformPeg";
 import { persistAccessTokenInStorage, persistRefreshTokenInStorage } from "../tokens/tokens";
 
+/**
+ * OidcTokenRefresher that implements token persistence.
+ * Stores tokens in the same way as login flow in Lifecycle.
+ */
 export class TokenRefresher extends OidcTokenRefresher {
     private readonly deviceId!: string;
 
@@ -35,13 +39,7 @@ export class TokenRefresher extends OidcTokenRefresher {
         this.deviceId = deviceId;
     }
 
-    public async persistTokens({
-        accessToken,
-        refreshToken,
-    }: {
-        accessToken: string;
-        refreshToken?: string | undefined;
-    }): Promise<void> {
+    public async persistTokens({ accessToken, refreshToken }: AccessTokens): Promise<void> {
         const pickleKey = (await PlatformPeg.get()?.getPickleKey(this.userId, this.deviceId)) ?? undefined;
         await persistAccessTokenInStorage(accessToken, pickleKey);
         await persistRefreshTokenInStorage(refreshToken, pickleKey);
