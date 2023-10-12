@@ -942,7 +942,7 @@ async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore)
 
 /**
  * Logs the current session out and transitions to the logged-out state
- * @param oidcClientStore store instance from SDKConfig
+ * @param oidcClientStore store instance from SDKContext
  */
 export function logout(oidcClientStore?: OidcClientStore): void {
     const client = MatrixClientPeg.get();
