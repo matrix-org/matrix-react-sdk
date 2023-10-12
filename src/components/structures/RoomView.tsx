@@ -2097,16 +2097,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
         }
 
+        const roomHeaderType = SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy";
+
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
             if (loading) {
                 // Assume preview loading if we don't have a ready client or a room ID (still resolving the alias)
                 const previewLoading = !this.state.matrixClientIsReady || !this.state.roomId || this.state.peekLoading;
                 return (
-                    <div
-                        className="mx_RoomView"
-                        data-room-header={SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy"}
-                    >
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 canPreview={false}
@@ -2131,10 +2130,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // We've got to this room by following a link, possibly a third party invite.
                 const roomAlias = this.state.roomAlias;
                 return (
-                    <div
-                        className="mx_RoomView"
-                        data-room-header={SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy"}
-                    >
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 onJoinClick={this.onJoinButtonClicked}
@@ -2207,10 +2203,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                 // We have a regular invite for this room.
                 return (
-                    <div
-                        className="mx_RoomView"
-                        data-room-header={SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy"}
-                    >
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 onJoinClick={this.onJoinButtonClicked}
@@ -2231,10 +2224,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (this.state.canAskToJoin && ["knock", "leave"].includes(myMembership)) {
             return (
-                <div
-                    className="mx_RoomView"
-                    data-room-header={SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy"}
-                >
+                <div className="mx_RoomView" data-room-header={roomHeaderType}>
                     <ErrorBoundary>
                         <RoomPreviewBar
                             room={this.state.room}
@@ -2339,10 +2329,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
             if (!this.state.canPeek && !this.state.room?.isSpaceRoom()) {
                 return (
-                    <div
-                        className="mx_RoomView"
-                        data-room-header={SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy"}
-                    >
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         {previewBar}
                     </div>
                 );
@@ -2594,7 +2581,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     className={mainClasses}
                     ref={this.roomView}
                     onKeyDown={this.onReactKeyDown}
-                    data-room-header={SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy"}
+                    data-room-header={roomHeaderType}
                 >
                     {showChatEffects && this.roomView.current && (
                         <EffectsOverlay roomWidth={this.roomView.current.offsetWidth} />
