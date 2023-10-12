@@ -20,7 +20,6 @@ import classNames from "classnames";
 import { Room, MatrixClient, RoomStateEvent, EventStatus, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
-import { Optional } from "matrix-events-sdk";
 
 import shouldHideEvent from "../../shouldHideEvent";
 import { wantsDateSeparator } from "../../DateUtils";
@@ -40,6 +39,7 @@ import LegacyCallEventGrouper from "./LegacyCallEventGrouper";
 import WhoIsTypingTile from "../views/rooms/WhoIsTypingTile";
 import ScrollPanel, { IScrollState } from "./ScrollPanel";
 import DateSeparator from "../views/messages/DateSeparator";
+import { SeparatorKind } from "../views/messages/TimelineSeparator";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import Spinner from "../views/elements/Spinner";
@@ -739,16 +739,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         const isEditing = this.props.editState?.getEvent().getId() === mxEv.getId();
         // local echoes have a fake date, which could even be yesterday. Treat them as 'today' for the date separators.
-        let ts1 = mxEv.getTs();
-        let eventDate = mxEv.getDate();
-        if (mxEv.status) {
-            eventDate = new Date();
-            ts1 = eventDate.getTime();
-        }
+        const ts1 = mxEv.getTs() ?? Date.now();
 
-        // do we need a date separator since the last event?
-        const wantsDateSeparator = this.wantsDateSeparator(prevEvent, eventDate);
-        if (wantsDateSeparator && !isGrouped && this.props.room) {
+        // do we need a separator since the last event?
+        const wantsSeparator = this.wantsSeparator(prevEvent, mxEv);
+        if (wantsSeparator === SeparatorKind.Date && !isGrouped && this.props.room) {
             const dateSeparator = (
                 <li key={ts1}>
                     <DateSeparator key={ts1} roomId={this.props.room.roomId} ts={ts1} />
@@ -761,9 +756,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         let lastInSection = true;
         if (nextEventWithTile) {
             const nextEv = nextEventWithTile;
-            const willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEv.getDate() || new Date());
+            const willWantSeparator = this.wantsSeparator(mxEv, nextEv);
             lastInSection =
-                willWantDateSeparator ||
+                willWantSeparator === SeparatorKind.Date ||
                 mxEv.getSender() !== nextEv.getSender() ||
                 getEventDisplayInfo(cli, nextEv, this.showHiddenEvents).isInfoMessage ||
                 !shouldFormContinuation(mxEv, nextEv, cli, this.showHiddenEvents, this.context.timelineRenderingType);
@@ -771,7 +766,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         // is this a continuation of the previous message?
         const continuation =
-            !wantsDateSeparator &&
+            wantsSeparator === SeparatorKind.None &&
             shouldFormContinuation(prevEvent, mxEv, cli, this.showHiddenEvents, this.context.timelineRenderingType);
 
         const eventId = mxEv.getId()!;
@@ -816,16 +811,22 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return ret;
     }
 
-    public wantsDateSeparator(prevEvent: MatrixEvent | null, nextEventDate: Optional<Date>): boolean {
+    public wantsSeparator(prevEvent: MatrixEvent | null, mxEvent: MatrixEvent): SeparatorKind {
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
-            return false;
+            return SeparatorKind.None;
         }
-        if (prevEvent == null) {
-            // first event in the panel: depends if we could back-paginate from
-            // here.
-            return !this.props.canBackPaginate;
+
+        // first event in the panel: depends on if we could back-paginate from here.
+        if (prevEvent === null && !this.props.canBackPaginate) {
+            return SeparatorKind.Date;
         }
-        return wantsDateSeparator(prevEvent.getDate() || undefined, nextEventDate);
+
+        const nextEventDate = mxEvent.getDate() ?? new Date();
+        if (prevEvent !== null && wantsDateSeparator(prevEvent.getDate() || undefined, nextEventDate)) {
+            return SeparatorKind.Date;
+        }
+
+        return SeparatorKind.None;
     }
 
     // Get a list of read receipts that should be shown next to this event
