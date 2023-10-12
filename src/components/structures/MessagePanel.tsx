@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { isSupportedReceiptType } from "matrix-js-sdk/src/utils";
 
 import shouldHideEvent from "../../shouldHideEvent";
-import { wantsDateSeparator } from "../../DateUtils";
+import { formatDate, wantsDateSeparator } from "../../DateUtils";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import SettingsStore from "../../settings/SettingsStore";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
@@ -39,7 +39,7 @@ import LegacyCallEventGrouper from "./LegacyCallEventGrouper";
 import WhoIsTypingTile from "../views/rooms/WhoIsTypingTile";
 import ScrollPanel, { IScrollState } from "./ScrollPanel";
 import DateSeparator from "../views/messages/DateSeparator";
-import { SeparatorKind } from "../views/messages/TimelineSeparator";
+import TimelineSeparator, { SeparatorKind } from "../views/messages/TimelineSeparator";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import Spinner from "../views/elements/Spinner";
@@ -54,6 +54,8 @@ import { hasThreadSummary } from "../../utils/EventUtils";
 import { BaseGrouper } from "./grouper/BaseGrouper";
 import { MainGrouper } from "./grouper/MainGrouper";
 import { CreationGrouper } from "./grouper/CreationGrouper";
+import { _t } from "../../languageHandler";
+import { getLateEventInfo } from "./grouper/LateEventGrouper";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -743,13 +745,26 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         // do we need a separator since the last event?
         const wantsSeparator = this.wantsSeparator(prevEvent, mxEv);
-        if (wantsSeparator === SeparatorKind.Date && !isGrouped && this.props.room) {
-            const dateSeparator = (
-                <li key={ts1}>
-                    <DateSeparator key={ts1} roomId={this.props.room.roomId} ts={ts1} />
-                </li>
-            );
-            ret.push(dateSeparator);
+        if (!isGrouped && this.props.room) {
+            if (wantsSeparator === SeparatorKind.Date) {
+                ret.push(
+                    <li key={ts1}>
+                        <DateSeparator key={ts1} roomId={this.props.room.roomId} ts={ts1} />
+                    </li>,
+                );
+            } else if (wantsSeparator === SeparatorKind.LateEvent) {
+                const info = getLateEventInfo(mxEv)!;
+                const text = _t("timeline|late_event_separator", {
+                    dateTime: formatDate(new Date(info.received_at)),
+                });
+                ret.push(
+                    <li key={ts1}>
+                        <TimelineSeparator key={ts1} label={text}>
+                            {text}
+                        </TimelineSeparator>
+                    </li>,
+                );
+            }
         }
 
         const cli = MatrixClientPeg.safeGet();
@@ -814,6 +829,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     public wantsSeparator(prevEvent: MatrixEvent | null, mxEvent: MatrixEvent): SeparatorKind {
         if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
             return SeparatorKind.None;
+        }
+
+        if (prevEvent !== null) {
+            // If the previous event was late but current is not then show a date separator for orientation
+            // Otherwise if the current event is of a different late group than the previous show a late event separator
+            const lateEventInfo = getLateEventInfo(mxEvent);
+            if (lateEventInfo?.group_id !== getLateEventInfo(prevEvent)?.group_id) {
+                return lateEventInfo !== undefined ? SeparatorKind.LateEvent : SeparatorKind.Date;
+            }
         }
 
         // first event in the panel: depends on if we could back-paginate from here.
