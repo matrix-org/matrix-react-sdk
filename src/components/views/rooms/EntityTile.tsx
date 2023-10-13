@@ -35,12 +35,13 @@ const PowerLabel: Record<PowerStatus, TranslationKey> = {
     [PowerStatus.Moderator]: _td("power_level|mod"),
 };
 
-export type PresenceState = "offline" | "online" | "unavailable";
+export type PresenceState = "offline" | "online" | "unreachable" | "unavailable";
 
 const PRESENCE_CLASS: Record<PresenceState, string> = {
     offline: "mx_EntityTile_offline",
     online: "mx_EntityTile_online",
     unavailable: "mx_EntityTile_unavailable",
+    unreachable: "mx_EntityTile_unreachable",
 };
 
 function presenceClassForMember(presenceState?: PresenceState, lastActiveAgo?: number, showPresence?: boolean): string {
@@ -106,6 +107,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
     }
 
     public render(): React.ReactNode {
+        const isPresenceUnreachable = this.props.presenceState === "unreachable";
         const mainClassNames: Record<string, boolean> = {
             mx_EntityTile: true,
             mx_EntityTile_noHover: !!this.props.suppressOnHover,
@@ -121,8 +123,14 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
 
         let nameEl;
         const name = this.props.nameJSX || this.props.name;
-
-        if (!this.props.suppressOnHover) {
+        if (this.props.subtextLabel) {
+            nameEl = (
+                <div className="mx_EntityTile_details">
+                    <div className="mx_EntityTile_name">{name}</div>
+                    <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>
+                </div>
+            );
+        } else if (!this.props.suppressOnHover || isPresenceUnreachable) {
             const activeAgo = this.props.presenceLastActiveAgo
                 ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
                 : -1;
@@ -137,20 +145,10 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                     />
                 );
             }
-            if (this.props.subtextLabel) {
-                presenceLabel = <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>;
-            }
             nameEl = (
                 <div className="mx_EntityTile_details">
                     <div className="mx_EntityTile_name">{name}</div>
                     {presenceLabel}
-                </div>
-            );
-        } else if (this.props.subtextLabel) {
-            nameEl = (
-                <div className="mx_EntityTile_details">
-                    <div className="mx_EntityTile_name">{name}</div>
-                    <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>
                 </div>
             );
         } else {
