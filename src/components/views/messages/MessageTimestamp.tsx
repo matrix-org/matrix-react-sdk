@@ -47,18 +47,18 @@ export default class MessageTimestamp extends React.Component<IProps> {
             timestamp = formatTime(date, this.props.showTwelveHour);
         }
 
-        let line1 = formatFullDate(date, this.props.showTwelveHour);
-        let line2: string | undefined;
+        let label = formatFullDate(date, this.props.showTwelveHour);
+        let caption: string | undefined;
         if (this.props.receivedTs !== undefined) {
-            line1 = _t("timeline|message_timestamp_sent_at", { dateTime: line1 });
+            label = _t("timeline|message_timestamp_sent_at", { dateTime: label });
             const receivedDate = new Date(this.props.receivedTs);
-            line2 = _t("timeline|message_timestamp_received_at", {
+            caption = _t("timeline|message_timestamp_received_at", {
                 dateTime: formatFullDate(receivedDate, this.props.showTwelveHour),
             });
         }
 
         return (
-            <Tooltip label={line1} shortcut={line2}>
+            <Tooltip label={label} caption={caption}>
                 <span className="mx_MessageTimestamp" aria-hidden={true} aria-live="off">
                     {timestamp}
                 </span>
