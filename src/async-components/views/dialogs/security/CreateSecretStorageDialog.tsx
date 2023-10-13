@@ -48,6 +48,7 @@ import Spinner from "../../../../components/views/elements/Spinner";
 import InteractiveAuthDialog from "../../../../components/views/dialogs/InteractiveAuthDialog";
 import { IValidationResult } from "../../../../components/views/elements/Validation";
 import { Icon as CheckmarkIcon } from "../../../../../res/img/element-icons/check.svg";
+import PassphraseConfirmField from "../../../../components/views/auth/PassphraseConfirmField";
 
 // I made a mistake while converting this and it has to be fixed!
 enum Phase {
@@ -710,14 +711,13 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             <form onSubmit={this.onPassPhraseConfirmNextClick}>
                 <p>{_t("settings|key_backup|setup_secure_backup|enter_phrase_to_confirm")}</p>
                 <div className="mx_CreateSecretStorageDialog_passPhraseContainer">
-                    <Field
-                        type="password"
+                    <PassphraseConfirmField
                         onChange={this.onPassPhraseConfirmChange}
                         value={this.state.passPhraseConfirm}
                         className="mx_CreateSecretStorageDialog_passPhraseField"
-                        label={_t("settings|key_backup|setup_secure_backup|confirm_security_phrase")}
+                        label={_td("settings|key_backup|setup_secure_backup|confirm_security_phrase")}
                         autoFocus={true}
-                        autoComplete="new-password"
+                        password={this.state.passPhrase}
                     />
                     <div className="mx_CreateSecretStorageDialog_passPhraseMatch">{passPhraseMatch}</div>
                 </div>
