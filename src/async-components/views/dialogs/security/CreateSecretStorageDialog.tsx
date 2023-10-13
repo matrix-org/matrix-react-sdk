@@ -650,7 +650,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
                 <div className="mx_CreateSecretStorageDialog_passPhraseContainer">
                     <PassphraseField
-                        id="mx_Field_SecretStoragePassphrase"
+                        id="mx_passPhraseInput"
                         className="mx_CreateSecretStorageDialog_passPhraseField"
                         onChange={this.onPassPhraseChange}
                         minScore={PASSWORD_MIN_SCORE}
@@ -713,7 +713,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 <p>{_t("settings|key_backup|setup_secure_backup|enter_phrase_to_confirm")}</p>
                 <div className="mx_CreateSecretStorageDialog_passPhraseContainer">
                     <PassphraseConfirmField
-                        id="mx_Field_SecretStoragePassphrase"
+                        id="mx_passPhraseInput"
                         onChange={this.onPassPhraseConfirmChange}
                         value={this.state.passPhraseConfirm}
                         className="mx_CreateSecretStorageDialog_passPhraseField"
