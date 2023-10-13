@@ -718,6 +718,8 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                         value={this.state.passPhraseConfirm}
                         className="mx_CreateSecretStorageDialog_passPhraseField"
                         label={_td("settings|key_backup|setup_secure_backup|confirm_security_phrase")}
+                        labelRequired={_td("settings|key_backup|setup_secure_backup|confirm_security_phrase")}
+                        labelInvalid={_td("settings|key_backup|setup_secure_backup|pass_phrase_match_failed")}
                         autoFocus={true}
                         password={this.state.passPhrase}
                     />
