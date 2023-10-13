@@ -48,7 +48,7 @@ describe("MessageTimestamp", () => {
     it("should show full date & time on hover", async () => {
         const { container } = render(<MessageTimestamp ts={nowDate.getTime()} />);
         await userEvent.hover(container.querySelector(".mx_MessageTimestamp")!);
-        await expect(screen.findByRole("tooltip")).resolves.toHaveTextContent("Fri, Dec 17, 2021, 08:09:00");
+        expect((await screen.findByRole("tooltip")).textContent).toMatchInlineSnapshot(`"Fri, Dec 17, 2021, 08:09:00"`);
     });
 
     it("should show sent & received time on hover if passed", async () => {
@@ -56,8 +56,8 @@ describe("MessageTimestamp", () => {
             <MessageTimestamp ts={nowDate.getTime()} receivedTs={nowDate.getTime() + DAY_MS} />,
         );
         await userEvent.hover(container.querySelector(".mx_MessageTimestamp")!);
-        await expect(screen.findByRole("tooltip")).resolves.toHaveTextContent(
-            "Sent at: Fri, Dec 17, 2021, 08:09:00\nRecovered at: Fri, Dec 18, 2021, 08:09:00",
+        expect((await screen.findByRole("tooltip")).textContent).toMatchInlineSnapshot(
+            `"Sent at: Fri, Dec 17, 2021, 08:09:00Recovered at: Sat, Dec 18, 2021, 08:09:00"`,
         );
     });
 });
