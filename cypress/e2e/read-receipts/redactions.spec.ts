@@ -156,8 +156,7 @@ describe("Read receipts", () => {
                 // Then it becomes read
                 assertStillRead(room2);
             });
-            // XXX: failed because it flakes saying 2 unread when it should be 1
-            it.skip("Marking an unread room as read after a redaction makes it read", () => {
+            it("Marking an unread room as read after a redaction makes it read", () => {
                 // Given an unread room where latest message is redacted
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -221,8 +220,7 @@ describe("Read receipts", () => {
                 // Then the unread count goes down again
                 assertUnread(room2, 1);
             });
-            // XXX: fails because it flakes saying 2 unread instead of 1
-            it.skip("Redacting one of the unread messages reduces the unread count after restart", () => {
+            it("Redacting one of the unread messages reduces the unread count after restart", () => {
                 // Given unread count was reduced by redacting messages
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2", "Msg3"]);
@@ -385,8 +383,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
 
-            // XXX: fails because the unread count is still 1 when it should be 0 (this is a genuine stuck unread case)
-            it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {
+            it("Reading an unread thread after a redaction of the latest message makes it read", () => {
                 // Given an unread thread where the latest message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -431,8 +428,7 @@ describe("Read receipts", () => {
                 // Then the room is still read
                 assertRead(room2);
             });
-            // XXX: fails because the unread count is still 1 when it should be 0
-            it.skip("Reading an unread thread after a redaction of an older message makes it read", () => {
+            it("Reading an unread thread after a redaction of an older message makes it read", () => {
                 // Given an unread thread where an older message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -453,8 +449,7 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-            // XXX: fails because the room has an unread dot after I marked it as read
-            it.skip("Marking an unread thread as read after a redaction makes it read", () => {
+            it("Marking an unread thread as read after a redaction makes it read", () => {
                 // Given an unread thread where an older message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
