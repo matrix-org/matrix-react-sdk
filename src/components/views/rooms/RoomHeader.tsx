@@ -48,6 +48,8 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import { formatCount } from "../../../utils/FormattingUtils";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
+import { Icon as ChatIcon } from "../../../../res/img/element-icons/feedback.svg";
+import { isVideoRoom as calcIsVideoRoom } from "../../../utils/video-rooms";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -74,6 +76,7 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
     const { voiceCallDisabledReason, voiceCallClick, videoCallDisabledReason, videoCallClick } = useRoomCall(room);
+    const isVideoRoom = useFeatureEnabled("feature_video_rooms") && calcIsVideoRoom(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     /**
@@ -189,6 +192,21 @@ export default function RoomHeader({ room }: { room: Room }): JSX.Element {
                         <VideoCallIcon />
                     </IconButton>
                 </Tooltip>
+                {/* Ensure that the chat button is only visible in video rooms */}
+                {isVideoRoom && (
+                    <Tooltip label={_t("right_panel|video_room_chat|title")}>
+                        <IconButton
+                            // indicator={notificationColorToIndicator(threadNotifications)}  TODO: This still needs work
+                            onClick={(evt) => {
+                                evt.stopPropagation();
+                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Timeline);
+                            }}
+                            aria-label={_t("right_panel|video_room_chat|title")}
+                        >
+                            <ChatIcon className="mx_RoomHeader_ChatIcon" />
+                        </IconButton>
+                    </Tooltip>
+                )}
                 <Tooltip label={_t("common|threads")}>
                     <IconButton
                         indicator={notificationColorToIndicator(threadNotifications)}
