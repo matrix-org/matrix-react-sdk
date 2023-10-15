@@ -71,15 +71,15 @@ export interface IConfigOptions {
     permalink_prefix?: string;
 
     update_base_url?: string;
-    desktop_builds?: {
+    desktop_builds: {
         available: boolean;
         logo: string; // url
         url: string; // download url
     };
-    mobile_builds?: {
-        ios?: string; // download url
-        android?: string; // download url
-        fdroid?: string; // download url
+    mobile_builds: {
+        ios: string | null; // download url
+        android: string | null; // download url
+        fdroid: string | null; // download url
     };
 
     mobile_guide_toast?: boolean;
@@ -95,7 +95,7 @@ export interface IConfigOptions {
     integrations_rest_url?: string;
     integrations_widgets_urls?: string[];
 
-    show_labs_settings?: boolean;
+    show_labs_settings: boolean;
     features?: Record<string, boolean>; // <FeatureName, EnabledBool>
 
     bug_report_endpoint_url?: string; // omission disables bug reporting
