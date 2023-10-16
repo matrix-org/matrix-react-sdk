@@ -1126,6 +1126,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
                 showTwelveHour={this.props.isTwelveHour}
                 ts={ts}
+                receivedTs={this.props.mxEvent.getUnsigned()["io.element.late_event"]?.received_at}
             />
         );
 
@@ -1298,7 +1299,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                 <span className="mx_EventTile_truncated">
                                     {" "}
                                     {_t(
-                                        " in <strong>%(room)s</strong>",
+                                        "timeline|in_room_name",
                                         { room: room.name },
                                         { strong: (sub) => <strong>{sub}</strong> },
                                     )}
