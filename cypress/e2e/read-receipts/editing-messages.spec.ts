@@ -18,7 +18,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import {
     assertRead,
@@ -32,22 +31,18 @@ import {
     MessageContentSpec,
     MessageFinder,
     openThread,
+    ReadReceiptSetup,
     saveAndReload,
     sendMessageAsClient,
 } from "./read-receipts-utils";
 
 describe("Read receipts", () => {
-    const userName = "Mae";
-    const botName = "Other User";
     const roomAlpha = "Room Alpha";
     const roomBeta = "Room Beta";
 
     let homeserver: HomeserverInstance;
-    let betaRoomId: string;
-    let alphaRoomId: string;
-    let bot: MatrixClient | undefined;
-
     let messageFinder: MessageFinder;
+    let testSetup: ReadReceiptSetup;
 
     function editOf(originalMessage: string, newMessage: string): MessageContentSpec {
         return messageFinder.editOf(originalMessage, newMessage);
@@ -81,34 +76,7 @@ describe("Read receipts", () => {
 
     beforeEach(() => {
         messageFinder = new MessageFinder();
-
-        // Create 2 rooms: Alpha & Beta. We join the bot to both of them
-        cy.initTestUser(homeserver, userName)
-            .then(() => {
-                cy.createRoom({ name: roomAlpha }).then((createdRoomId) => {
-                    alphaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.createRoom({ name: roomBeta }).then((createdRoomId) => {
-                    betaRoomId = createdRoomId;
-                });
-            })
-            .then(() => {
-                cy.getBot(homeserver, { displayName: botName }).then((botClient) => {
-                    bot = botClient;
-                });
-            })
-            .then(() => {
-                // Invite the bot to both rooms
-                cy.inviteUser(alphaRoomId, bot.getUserId());
-                cy.viewRoomById(alphaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-
-                cy.inviteUser(betaRoomId, bot.getUserId());
-                cy.viewRoomById(betaRoomId);
-                cy.findByText(botName + " joined the room").should("exist");
-            });
+        testSetup = new ReadReceiptSetup(homeserver, "Mae", "Other User", roomAlpha, roomBeta);
     });
 
     after(() => {
@@ -121,7 +89,7 @@ describe("Read receipts", () => {
      * @param messages - the list of messages to send, these can be strings or implementations of MessageSpec like `editOf`
      */
     function receiveMessages(room: string, messages: Message[]) {
-        sendMessageAsClient(bot, room, messages);
+        sendMessageAsClient(testSetup.bot, room, messages);
     }
 
     const room1 = roomAlpha;
@@ -212,8 +180,8 @@ describe("Read receipts", () => {
                 // Then the room remains read
                 assertStillRead(room2);
             });
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it("A room with an edit is still read after restart", () => {
+            // https://github.com/vector-im/element-web/issues/26273
+            it.skip("A room with an edit is still read after restart", () => {
                 // Given a message is marked as read
                 goTo(room2);
                 receiveMessages(room2, ["Msg1"]);

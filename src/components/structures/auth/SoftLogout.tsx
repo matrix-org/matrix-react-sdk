@@ -34,6 +34,7 @@ import AccessibleButton from "../../views/elements/AccessibleButton";
 import Spinner from "../../views/elements/Spinner";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
+import { SDKContext } from "../../../contexts/SDKContext";
 
 enum LoginView {
     Loading,
@@ -70,8 +71,13 @@ interface IState {
 }
 
 export default class SoftLogout extends React.Component<IProps, IState> {
-    public constructor(props: IProps) {
-        super(props);
+    public static contextType = SDKContext;
+    public context!: React.ContextType<typeof SDKContext>;
+
+    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+        super(props, context);
+
+        this.context = context;
 
         this.state = {
             loginView: LoginView.Loading,
@@ -98,7 +104,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 if (!wipeData) return;
 
                 logger.log("Clearing data from soft-logged-out session");
-                Lifecycle.logout();
+                Lifecycle.logout(this.context.oidcClientStore);
             },
         });
     };
@@ -315,7 +321,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     <p>{_t("auth|soft_logout_warning")}</p>
                     <div>
                         <AccessibleButton onClick={this.onClearAll} kind="danger">
-                            {_t("Clear all data")}
+                            {_t("auth|soft_logout|clear_data_button")}
                         </AccessibleButton>
                     </div>
                 </AuthBody>

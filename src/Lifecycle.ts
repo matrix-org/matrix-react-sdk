@@ -18,9 +18,9 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient, MatrixClient, SSOAction } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
-import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
+import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MINIMUM_MATRIX_VERSION } from "matrix-js-sdk/src/version-support";
@@ -65,28 +65,29 @@ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPaylo
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
-import { persistOidcAuthenticatedSettings } from "./utils/oidc/persistOidcSettings";
+import { OidcClientStore } from "./stores/oidc/OidcClientStore";
+import {
+    getStoredOidcClientId,
+    getStoredOidcIdTokenClaims,
+    getStoredOidcTokenIssuer,
+    persistOidcAuthenticatedSettings,
+} from "./utils/oidc/persistOidcSettings";
 import GenericToast from "./components/views/toasts/GenericToast";
+import {
+    ACCESS_TOKEN_IV,
+    ACCESS_TOKEN_STORAGE_KEY,
+    HAS_ACCESS_TOKEN_STORAGE_KEY,
+    HAS_REFRESH_TOKEN_STORAGE_KEY,
+    persistAccessTokenInStorage,
+    persistRefreshTokenInStorage,
+    REFRESH_TOKEN_IV,
+    REFRESH_TOKEN_STORAGE_KEY,
+    tryDecryptToken,
+} from "./utils/tokens/tokens";
+import { TokenRefresher } from "./utils/oidc/TokenRefresher";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
-
-/*
- * Keys used when storing the tokens in indexeddb or localstorage
- */
-const ACCESS_TOKEN_STORAGE_KEY = "mx_access_token";
-const REFRESH_TOKEN_STORAGE_KEY = "mx_refresh_token";
-/*
- * Used as initialization vector during encryption in persistTokenInStorage
- * And decryption in restoreFromLocalStorage
- */
-const ACCESS_TOKEN_IV = "access_token";
-const REFRESH_TOKEN_IV = "refresh_token";
-/*
- * Keys for localstorage items which indicate whether we expect a token in indexeddb.
- */
-const HAS_ACCESS_TOKEN_STORAGE_KEY = "mx_has_access_token";
-const HAS_REFRESH_TOKEN_STORAGE_KEY = "mx_has_refresh_token";
 
 dis.register((payload) => {
     if (payload.action === Action.TriggerLogout) {
@@ -278,7 +279,7 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, clientId, issuer } =
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, idTokenClaims, clientId, issuer } =
             await completeOidcLogin(queryParams);
 
         const {
@@ -300,7 +301,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
         logger.debug("Logged in via OIDC native flow");
         await onSuccessfulDelegatedAuthLogin(credentials);
         // this needs to happen after success handler which clears storages
-        persistOidcAuthenticatedSettings(clientId, issuer);
+        persistOidcAuthenticatedSettings(clientId, issuer, idTokenClaims);
         return true;
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
@@ -566,32 +567,6 @@ export async function getStoredSessionVars(): Promise<Partial<IStoredSession>> {
     return { hsUrl, isUrl, hasAccessToken, accessToken, refreshToken, hasRefreshToken, userId, deviceId, isGuest };
 }
 
-// The pickle key is a string of unspecified length and format.  For AES, we
-// need a 256-bit Uint8Array. So we HKDF the pickle key to generate the AES
-// key.  The AES key should be zeroed after it is used.
-async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
-    const pickleKeyBuffer = new Uint8Array(pickleKey.length);
-    for (let i = 0; i < pickleKey.length; i++) {
-        pickleKeyBuffer[i] = pickleKey.charCodeAt(i);
-    }
-    const hkdfKey = await window.crypto.subtle.importKey("raw", pickleKeyBuffer, "HKDF", false, ["deriveBits"]);
-    pickleKeyBuffer.fill(0);
-    return new Uint8Array(
-        await window.crypto.subtle.deriveBits(
-            {
-                name: "HKDF",
-                hash: "SHA-256",
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore: https://github.com/microsoft/TypeScript-DOM-lib-generator/pull/879
-                salt: new Uint8Array(32),
-                info: new Uint8Array(0),
-            },
-            hkdfKey,
-            256,
-        ),
-    );
-}
-
 async function abortLogin(): Promise<void> {
     const signOut = await showStorageEvictedDialog();
     if (signOut) {
@@ -600,36 +575,6 @@ async function abortLogin(): Promise<void> {
         // further and instead head back to sign in.
         throw new AbortLoginAndRebuildStorage("Aborting login in progress because of storage inconsistency");
     }
-}
-
-const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): token is IEncryptedPayload => {
-    return !!token && typeof token !== "string";
-};
-/**
- * Try to decrypt a token retrieved from storage
- * Where token is not encrypted (plain text) returns the plain text token
- * Where token is encrypted, attempts decryption. Returns successfully decrypted token, else undefined.
- * @param pickleKey pickle key used during encryption of token, or undefined
- * @param token
- * @param tokenIv initialization vector used during encryption of token eg ACCESS_TOKEN_IV
- * @returns the decrypted token, or the plain text token. Returns undefined when token cannot be decrypted
- */
-async function tryDecryptToken(
-    pickleKey: string | undefined,
-    token: IEncryptedPayload | string | undefined,
-    tokenIv: string,
-): Promise<string | undefined> {
-    if (pickleKey && isEncryptedPayload(token)) {
-        const encrKey = await pickleKeyToAesKey(pickleKey);
-        const decryptedToken = await decryptAES(token, encrKey, tokenIv);
-        encrKey.fill(0);
-        return decryptedToken;
-    }
-    // if the token wasn't encrypted (plain string) just return it back
-    if (typeof token === "string") {
-        return token;
-    }
-    // otherwise return undefined
 }
 
 // returns a promise which resolves to true if a session is found in
@@ -809,6 +754,45 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
 }
 
 /**
+ * When we have a authenticated via OIDC-native flow and have a refresh token
+ * try to create a token refresher.
+ * @param credentials from current session
+ * @returns Promise that resolves to a TokenRefresher, or undefined
+ */
+async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promise<OidcTokenRefresher | undefined> {
+    if (!credentials.refreshToken) {
+        return;
+    }
+    // stored token issuer indicates we authenticated via OIDC-native flow
+    const tokenIssuer = getStoredOidcTokenIssuer();
+    if (!tokenIssuer) {
+        return;
+    }
+    try {
+        const clientId = getStoredOidcClientId();
+        const idTokenClaims = getStoredOidcIdTokenClaims();
+        const redirectUri = window.location.origin;
+        const deviceId = credentials.deviceId;
+        if (!deviceId) {
+            throw new Error("Expected deviceId in user credentials.");
+        }
+        const tokenRefresher = new TokenRefresher(
+            { issuer: tokenIssuer },
+            clientId,
+            redirectUri,
+            deviceId,
+            idTokenClaims!,
+            credentials.userId,
+        );
+        // wait for the OIDC client to initialise
+        await tokenRefresher.oidcClientReady;
+        return tokenRefresher;
+    } catch (error) {
+        logger.error("Failed to initialise OIDC token refresher", error);
+    }
+}
+
+/**
  * optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
@@ -849,9 +833,11 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
         await abortLogin();
     }
 
+    const tokenRefresher = await createOidcTokenRefresher(credentials);
+
     // check the session lock just before creating the new client
     checkSessionLock();
-    MatrixClientPeg.replaceUsingCreds(credentials);
+    MatrixClientPeg.replaceUsingCreds(credentials, tokenRefresher?.doRefreshAccessToken.bind(tokenRefresher));
     const client = MatrixClientPeg.safeGet();
 
     setSentryUser(credentials.userId);
@@ -901,73 +887,6 @@ async function showStorageEvictedDialog(): Promise<boolean> {
 // `instanceof`. Babel 7 supports this natively in their class handling.
 class AbortLoginAndRebuildStorage extends Error {}
 
-/**
- * Persist a token in storage
- * When pickle key is present, will attempt to encrypt the token
- * Stores in idb, falling back to localStorage
- *
- * @param storageKey key used to store the token
- * @param initializationVector Initialization vector for encrypting the token. Only used when `pickleKey` is present
- * @param token the token to store, when undefined any existing token at the storageKey is removed from storage
- * @param pickleKey optional pickle key used to encrypt token
- * @param hasTokenStorageKey Localstorage key for an item which stores whether we expect to have a token in indexeddb, eg "mx_has_access_token".
- */
-async function persistTokenInStorage(
-    storageKey: string,
-    initializationVector: string,
-    token: string | undefined,
-    pickleKey: string | undefined,
-    hasTokenStorageKey: string,
-): Promise<void> {
-    // store whether we expect to find a token, to detect the case
-    // where IndexedDB is blown away
-    if (token) {
-        localStorage.setItem(hasTokenStorageKey, "true");
-    } else {
-        localStorage.removeItem(hasTokenStorageKey);
-    }
-
-    if (pickleKey) {
-        let encryptedToken: IEncryptedPayload | undefined;
-        try {
-            if (!token) {
-                throw new Error("No token: not attempting encryption");
-            }
-            // try to encrypt the access token using the pickle key
-            const encrKey = await pickleKeyToAesKey(pickleKey);
-            encryptedToken = await encryptAES(token, encrKey, initializationVector);
-            encrKey.fill(0);
-        } catch (e) {
-            logger.warn("Could not encrypt access token", e);
-        }
-        try {
-            // save either the encrypted access token, or the plain access
-            // token if we were unable to encrypt (e.g. if the browser doesn't
-            // have WebCrypto).
-            await StorageManager.idbSave("account", storageKey, encryptedToken || token);
-        } catch (e) {
-            // if we couldn't save to indexedDB, fall back to localStorage.  We
-            // store the access token unencrypted since localStorage only saves
-            // strings.
-            if (!!token) {
-                localStorage.setItem(storageKey, token);
-            } else {
-                localStorage.removeItem(storageKey);
-            }
-        }
-    } else {
-        try {
-            await StorageManager.idbSave("account", storageKey, token);
-        } catch (e) {
-            if (!!token) {
-                localStorage.setItem(storageKey, token);
-            } else {
-                localStorage.removeItem(storageKey);
-            }
-        }
-    }
-}
-
 async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
     localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
     if (credentials.identityServerUrl) {
@@ -976,20 +895,8 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     localStorage.setItem("mx_user_id", credentials.userId);
     localStorage.setItem("mx_is_guest", JSON.stringify(credentials.guest));
 
-    await persistTokenInStorage(
-        ACCESS_TOKEN_STORAGE_KEY,
-        ACCESS_TOKEN_IV,
-        credentials.accessToken,
-        credentials.pickleKey,
-        HAS_ACCESS_TOKEN_STORAGE_KEY,
-    );
-    await persistTokenInStorage(
-        REFRESH_TOKEN_STORAGE_KEY,
-        REFRESH_TOKEN_IV,
-        credentials.refreshToken,
-        credentials.pickleKey,
-        HAS_REFRESH_TOKEN_STORAGE_KEY,
-    );
+    await persistAccessTokenInStorage(credentials.accessToken, credentials.pickleKey);
+    await persistRefreshTokenInStorage(credentials.refreshToken, credentials.pickleKey);
 
     if (credentials.pickleKey) {
         localStorage.setItem("mx_has_pickle_key", String(true));
@@ -1016,9 +923,28 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
 let _isLoggingOut = false;
 
 /**
- * Logs the current session out and transitions to the logged-out state
+ * Logs out the current session.
+ * When user has authenticated using OIDC native flow revoke tokens with OIDC provider.
+ * Otherwise, call /logout on the homeserver.
+ * @param client
+ * @param oidcClientStore
  */
-export function logout(): void {
+async function doLogout(client: MatrixClient, oidcClientStore?: OidcClientStore): Promise<void> {
+    if (oidcClientStore?.isUserAuthenticatedWithOidc) {
+        const accessToken = client.getAccessToken() ?? undefined;
+        const refreshToken = client.getRefreshToken() ?? undefined;
+
+        await oidcClientStore.revokeTokens(accessToken, refreshToken);
+    } else {
+        await client.logout(true);
+    }
+}
+
+/**
+ * Logs the current session out and transitions to the logged-out state
+ * @param oidcClientStore store instance from SDKContext
+ */
+export function logout(oidcClientStore?: OidcClientStore): void {
     const client = MatrixClientPeg.get();
     if (!client) return;
 
@@ -1034,7 +960,8 @@ export function logout(): void {
 
     _isLoggingOut = true;
     PlatformPeg.get()?.destroyPickleKey(client.getSafeUserId(), client.getDeviceId() ?? "");
-    client.logout(true).then(onLoggedOut, (err) => {
+
+    doLogout(client, oidcClientStore).then(onLoggedOut, (err) => {
         // Just throwing an error here is going to be very unhelpful
         // if you're trying to log out because your server's down and
         // you want to log into a different server, so just forget the
