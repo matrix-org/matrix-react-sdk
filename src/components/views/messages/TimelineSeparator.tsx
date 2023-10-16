@@ -26,6 +26,12 @@ export const enum SeparatorKind {
     LateEvent,
 }
 
+/**
+ * Generic timeline separator component to render within a MessagePanel
+ *
+ * @param label the accessible label string describing the separator
+ * @param children the children to draw within the timeline separator
+ */
 const TimelineSeparator: React.FC<Props> = ({ label, children }) => {
     // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
     return (

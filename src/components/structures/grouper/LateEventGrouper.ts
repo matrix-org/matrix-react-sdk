@@ -19,10 +19,23 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 const UNSIGNED_KEY = "io.element.late_event";
 
 interface UnsignedLateEventInfo {
+    /**
+     * Milliseconds since epoch representing the time the event was received by the server
+     */
     received_at: number;
+    /**
+     * An opaque identifier representing the group the server has put the late arriving event into
+     */
     group_id: string;
 }
 
+/**
+ * Get io.element.late_event metadata from unsigned as sent by the server.
+ * This metadata describes when events arrive late after a net-split to offer improved UX.
+ *
+ * @experimental this is not in the Matrix spec and needs special server support
+ * @param mxEvent the Matrix Event to get UnsignedLateEventInfo on
+ */
 export function getLateEventInfo(mxEvent: MatrixEvent): UnsignedLateEventInfo | undefined {
     return mxEvent.getUnsigned()[UNSIGNED_KEY];
 }

@@ -53,6 +53,11 @@ interface IState {
     jumpToDateEnabled: boolean;
 }
 
+/**
+ * Timeline separator component to render within a MessagePanel bearing the date of the ts given
+ *
+ * Has additional jump to date functionality when labs flag is enabled
+ */
 export default class DateSeparator extends React.Component<IProps, IState> {
     private settingWatcherRef?: string;
 
