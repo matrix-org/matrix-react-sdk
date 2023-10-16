@@ -21,14 +21,13 @@ import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
 import SettingsStore, { CallbackFn } from "../../../settings/SettingsStore";
-import LabsUserSettingsTab from "../settings/tabs/user/LabsUserSettingsTab";
+import LabsUserSettingsTab, { showLabsFlags } from "../settings/tabs/user/LabsUserSettingsTab";
 import AppearanceUserSettingsTab from "../settings/tabs/user/AppearanceUserSettingsTab";
 import SecurityUserSettingsTab from "../settings/tabs/user/SecurityUserSettingsTab";
 import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserSettingsTab";
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
-import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
@@ -37,9 +36,11 @@ import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsT
 import SessionManagerTab from "../settings/tabs/user/SessionManagerTab";
 import { UserTab } from "./UserTab";
 import { NonEmptyArray } from "../../../@types/common";
+import { SDKContext, SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     initialTabId?: UserTab;
+    sdkContext: SdkContextClass;
     onFinished(): void;
 }
 
@@ -161,10 +162,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             ),
         );
         // Show the Labs tab if enabled or if there are any active betas
-        if (
-            SdkConfig.get("show_labs_settings") ||
-            SettingsStore.getFeatureSettingNames().some((k) => SettingsStore.getBetaInfo(k))
-        ) {
+        if (showLabsFlags() || SettingsStore.getFeatureSettingNames().some((k) => SettingsStore.getBetaInfo(k))) {
             tabs.push(
                 new Tab(
                     UserTab.Labs,
@@ -201,20 +199,25 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
 
     public render(): React.ReactNode {
         return (
-            <BaseDialog
-                className="mx_UserSettingsDialog"
-                hasCancel={true}
-                onFinished={this.props.onFinished}
-                title={_t("common|settings")}
-            >
-                <div className="mx_SettingsDialog_content">
-                    <TabbedView
-                        tabs={this.getTabs()}
-                        initialTabId={this.props.initialTabId}
-                        screenName="UserSettings"
-                    />
-                </div>
-            </BaseDialog>
+            // XXX: SDKContext is provided within the LoggedInView subtree.
+            // Modals function outside the MatrixChat React tree, so sdkContext is reprovided here to simulate that.
+            // The longer term solution is to move our ModalManager into the React tree to inherit contexts properly.
+            <SDKContext.Provider value={this.props.sdkContext}>
+                <BaseDialog
+                    className="mx_UserSettingsDialog"
+                    hasCancel={true}
+                    onFinished={this.props.onFinished}
+                    title={_t("common|settings")}
+                >
+                    <div className="mx_SettingsDialog_content">
+                        <TabbedView
+                            tabs={this.getTabs()}
+                            initialTabId={this.props.initialTabId}
+                            screenName="UserSettings"
+                        />
+                    </div>
+                </BaseDialog>
+            </SDKContext.Provider>
         );
     }
 }
