@@ -650,7 +650,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 Promise.all([
                     ...[...CallStore.instance.activeCalls].map((call) => call.disconnect()),
                     cleanUpBroadcasts(this.stores),
-                ]).finally(() => Lifecycle.logout());
+                ]).finally(() => Lifecycle.logout(this.stores.oidcClientStore));
                 break;
             case "require_registration":
                 startAnyRegistrationFlow(payload as any);
@@ -765,7 +765,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 const tabPayload = payload as OpenToTabPayload;
                 Modal.createDialog(
                     UserSettingsDialog,
-                    { initialTabId: tabPayload.initialTabId as UserTab },
+                    { initialTabId: tabPayload.initialTabId as UserTab, sdkContext: this.stores },
                     /*className=*/ undefined,
                     /*isPriority=*/ false,
                     /*isStatic=*/ true,
