@@ -173,9 +173,7 @@ jobs:
                   wait-on: "http://localhost:8080"
                   record: true
                   parallel: true
-                  command-prefix: "yarn percy exec --parallel --"
-                  command: "npx cypress-cloud run"
-                  config: '{"reporter":"cypress-multi-reporters", "reporterOptions": { "configFile": "cypress-ci-reporter-config.json" } }'
+                  command: "yarn percy exec --parallel -- npx cypress-cloud run"
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}
               env:
                   # pass the Dashboard record key as an environment variable
