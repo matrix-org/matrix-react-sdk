@@ -592,7 +592,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
     private verifyEvent(): void {
         this.doVerifyEvent().catch((e) => {
             const event = this.props.mxEvent;
-            logger.error("Error getting encryption info on event", e, event.getRoomId(), event.getId());
+            logger.error("Error getting encryption info on event", event.getRoomId(), event.getId(), e);
         });
     }
 
