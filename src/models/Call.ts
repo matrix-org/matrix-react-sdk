@@ -14,28 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
-import { logger } from "matrix-js-sdk/src/logger";
-import { randomString } from "matrix-js-sdk/src/randomstring";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomEvent } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { NamespacedValue } from "matrix-js-sdk/src/NamespacedValue";
-import { IWidgetApiRequest, MatrixWidgetType } from "matrix-widget-api";
 import {
+    TypedEventEmitter,
+    RoomEvent,
+    RoomStateEvent,
+    EventType,
+    MatrixClient,
     GroupCall,
     GroupCallEvent,
     GroupCallIntent,
     GroupCallState,
     GroupCallType,
-} from "matrix-js-sdk/src/webrtc/groupCall";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+} from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
+import { randomString } from "matrix-js-sdk/src/randomstring";
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { NamespacedValue } from "matrix-js-sdk/src/NamespacedValue";
+import { IWidgetApiRequest, MatrixWidgetType } from "matrix-widget-api";
 
 import type EventEmitter from "events";
-import type { IMyDevice } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { IMyDevice, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import type { IApp } from "../stores/WidgetStore";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";
@@ -48,10 +46,7 @@ import { ElementWidgetActions } from "../stores/widgets/ElementWidgetActions";
 import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
-import PlatformPeg from "../PlatformPeg";
 import { getCurrentLanguage } from "../languageHandler";
-import DesktopCapturerSourcePicker from "../components/views/elements/DesktopCapturerSourcePicker";
-import Modal from "../Modal";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 
@@ -162,7 +157,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.emit(CallEvent.Participants, value, prevValue);
     }
 
-    public constructor(
+    protected constructor(
         /**
          * The widget used to access this call.
          */
@@ -647,9 +642,10 @@ export class ElementCall extends Call {
 
         // Splice together the Element Call URL for this call
         const params = new URLSearchParams({
-            embed: "",
-            preload: "",
-            hideHeader: "",
+            embed: "true", // We're embedding EC within another application
+            preload: "true", // We want it to load in the background
+            skipLobby: "true", // Skip the lobby since we show a lobby component of our own
+            hideHeader: "true", // Hide the header since our room header is enough
             userId: client.getUserId()!,
             deviceId: client.getDeviceId()!,
             roomId: groupCall.room.roomId,
@@ -659,6 +655,7 @@ export class ElementCall extends Call {
             analyticsID,
         });
 
+        if (client.isRoomEncrypted(groupCall.room.roomId)) params.append("perParticipantE2EE", "");
         if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "");
         if (SettingsStore.getValue("feature_allow_screen_share_only_mode")) params.append("allowVoipWithNoMedia", "");
 
@@ -762,7 +759,6 @@ export class ElementCall extends Call {
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
-        this.messaging!.on(`action:${ElementWidgetActions.ScreenshareRequest}`, this.onScreenshareRequest);
     }
 
     protected async performDisconnection(): Promise<void> {
@@ -777,7 +773,6 @@ export class ElementCall extends Call {
         this.messaging!.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.off(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.off(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
-        this.messaging!.off(`action:${ElementWidgetActions.ScreenshareRequest}`, this.onScreenshareRequest);
         super.setDisconnected();
         this.groupCall.enteredViaAnotherSession = false;
     }
@@ -877,26 +872,5 @@ export class ElementCall extends Call {
         ev.preventDefault();
         this.layout = Layout.Spotlight;
         await this.messaging!.transport.reply(ev.detail, {}); // ack
-    };
-
-    private onScreenshareRequest = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
-        ev.preventDefault();
-
-        if (PlatformPeg.get()?.supportsDesktopCapturer()) {
-            await this.messaging!.transport.reply(ev.detail, { pending: true });
-
-            const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
-            const [source] = await finished;
-
-            if (source) {
-                await this.messaging!.transport.send(ElementWidgetActions.ScreenshareStart, {
-                    desktopCapturerSourceId: source,
-                });
-            } else {
-                await this.messaging!.transport.send(ElementWidgetActions.ScreenshareStop, {});
-            }
-        } else {
-            await this.messaging!.transport.reply(ev.detail, { pending: false });
-        }
     };
 }

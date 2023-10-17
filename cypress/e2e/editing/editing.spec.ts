@@ -16,9 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import type { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { IContent } from "matrix-js-sdk/src/models/event";
+import type { EventType, MsgType, ISendEventResponse, IContent } from "matrix-js-sdk/src/matrix";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import Chainable = Cypress.Chainable;
@@ -119,9 +117,9 @@ describe("Editing", () => {
                 cy.get(".mx_EventTile").should("have.css", "padding-block-start", "0px");
 
                 // Assert that the date separator is rendered at the top
-                cy.get("li:nth-child(1) .mx_DateSeparator").within(() => {
+                cy.get("li:nth-child(1) .mx_TimelineSeparator").within(() => {
                     cy.get("h2").within(() => {
-                        cy.findByText("Today");
+                        cy.findByText("today").should("have.css", "text-transform", "capitalize");
                     });
                 });
 
@@ -184,9 +182,9 @@ describe("Editing", () => {
             // Assert that the message edit history dialog is rendered again
             cy.get(".mx_MessageEditHistoryDialog").within(() => {
                 // Assert that the date is rendered
-                cy.get("li:nth-child(1) .mx_DateSeparator").within(() => {
+                cy.get("li:nth-child(1) .mx_TimelineSeparator").within(() => {
                     cy.get("h2").within(() => {
-                        cy.findByText("Today");
+                        cy.findByText("today").should("have.css", "text-transform", "capitalize");
                     });
                 });
 

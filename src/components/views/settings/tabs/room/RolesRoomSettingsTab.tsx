@@ -15,16 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { EventType, RoomMember, RoomState, RoomStateEvent, Room, IContent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle, get } from "lodash";
 import { compare } from "matrix-js-sdk/src/utils";
-import { IContent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td } from "../../../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
@@ -98,8 +94,8 @@ export class BannedUser extends React.Component<IBannedUserProps> {
         this.context.unban(this.props.member.roomId, this.props.member.userId).catch((err) => {
             logger.error("Failed to unban: " + err);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Failed to unban"),
+                title: _t("common|error"),
+                description: _t("room_settings|permissions|error_unbanning"),
             });
         });
     };
@@ -114,7 +110,7 @@ export class BannedUser extends React.Component<IBannedUserProps> {
                     kind="danger_sm"
                     onClick={this.onUnbanClick}
                 >
-                    {_t("Unban")}
+                    {_t("action|unban")}
                 </AccessibleButton>
             );
         }
@@ -123,9 +119,11 @@ export class BannedUser extends React.Component<IBannedUserProps> {
         return (
             <li>
                 {unbanButton}
-                <span title={_t("Banned by %(displayName)s", { displayName: this.props.by })}>
+                <span title={_t("room_settings|permissions|banned_by", { displayName: this.props.by })}>
                     <strong>{this.props.member.name}</strong> {userId}
-                    {this.props.reason ? " " + _t("Reason") + ": " + this.props.reason : ""}
+                    {this.props.reason
+                        ? " " + _t("room_settings|permissions|ban_reason") + ": " + this.props.reason
+                        : ""}
                 </span>
             </li>
         );
@@ -209,11 +207,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error changing power level requirement"),
-                description: _t(
-                    "An error occurred changing the room's power level requirements. Ensure you have sufficient " +
-                        "permissions and try again.",
-                ),
+                title: _t("room_settings|permissions|error_changing_pl_reqs_title"),
+                description: _t("room_settings|permissions|error_changing_pl_reqs_description"),
             });
         });
     };
@@ -235,11 +230,8 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error changing power level"),
-                description: _t(
-                    "An error occurred changing the user's power level. Ensure you have sufficient " +
-                        "permissions and try again.",
-                ),
+                title: _t("room_settings|permissions|error_changing_pl_title"),
+                description: _t("room_settings|permissions|error_changing_pl_description"),
             });
         });
     };
@@ -253,70 +245,76 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         const plContent = plEvent ? plEvent.getContent() || {} : {};
         const canChangeLevels = room.currentState.mayClientSendStateEvent(EventType.RoomPowerLevels, client);
 
-        const plEventsToLabels: Record<EventType | string, string | null> = {
+        const plEventsToLabels: Record<EventType | string, TranslationKey | null> = {
             // These will be translated for us later.
-            [EventType.RoomAvatar]: isSpaceRoom ? _td("Change space avatar") : _td("Change room avatar"),
-            [EventType.RoomName]: isSpaceRoom ? _td("Change space name") : _td("Change room name"),
+            [EventType.RoomAvatar]: isSpaceRoom
+                ? _td("room_settings|permissions|m.room.avatar_space")
+                : _td("room_settings|permissions|m.room.avatar"),
+            [EventType.RoomName]: isSpaceRoom
+                ? _td("room_settings|permissions|m.room.name_space")
+                : _td("room_settings|permissions|m.room.name"),
             [EventType.RoomCanonicalAlias]: isSpaceRoom
-                ? _td("Change main address for the space")
-                : _td("Change main address for the room"),
-            [EventType.SpaceChild]: _td("Manage rooms in this space"),
-            [EventType.RoomHistoryVisibility]: _td("Change history visibility"),
-            [EventType.RoomPowerLevels]: _td("Change permissions"),
-            [EventType.RoomTopic]: isSpaceRoom ? _td("Change description") : _td("Change topic"),
-            [EventType.RoomTombstone]: _td("Upgrade the room"),
-            [EventType.RoomEncryption]: _td("Enable room encryption"),
-            [EventType.RoomServerAcl]: _td("Change server ACLs"),
-            [EventType.Reaction]: _td("Send reactions"),
-            [EventType.RoomRedaction]: _td("Remove messages sent by me"),
+                ? _td("room_settings|permissions|m.room.canonical_alias_space")
+                : _td("room_settings|permissions|m.room.canonical_alias"),
+            [EventType.SpaceChild]: _td("room_settings|permissions|m.space.child"),
+            [EventType.RoomHistoryVisibility]: _td("room_settings|permissions|m.room.history_visibility"),
+            [EventType.RoomPowerLevels]: _td("room_settings|permissions|m.room.power_levels"),
+            [EventType.RoomTopic]: isSpaceRoom
+                ? _td("room_settings|permissions|m.room.topic_space")
+                : _td("room_settings|permissions|m.room.topic"),
+            [EventType.RoomTombstone]: _td("room_settings|permissions|m.room.tombstone"),
+            [EventType.RoomEncryption]: _td("room_settings|permissions|m.room.encryption"),
+            [EventType.RoomServerAcl]: _td("room_settings|permissions|m.room.server_acl"),
+            [EventType.Reaction]: _td("room_settings|permissions|m.reaction"),
+            [EventType.RoomRedaction]: _td("room_settings|permissions|m.room.redaction"),
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
-            "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),
-            [VoiceBroadcastInfoEventType]: _td("Voice broadcasts"),
+            "im.vector.modular.widgets": isSpaceRoom ? null : _td("room_settings|permissions|m.widget"),
+            [VoiceBroadcastInfoEventType]: _td("room_settings|permissions|io.element.voice_broadcast_info"),
         };
 
         if (SettingsStore.getValue("feature_pinning")) {
-            plEventsToLabels[EventType.RoomPinnedEvents] = _td("Manage pinned events");
+            plEventsToLabels[EventType.RoomPinnedEvents] = _td("room_settings|permissions|m.room.pinned_events");
         }
         // MSC3401: Native Group VoIP signaling
         if (SettingsStore.getValue("feature_group_calls")) {
-            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("Start %(brand)s calls");
-            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("Join %(brand)s calls");
+            plEventsToLabels[ElementCall.CALL_EVENT_TYPE.name] = _td("room_settings|permissions|m.call");
+            plEventsToLabels[ElementCall.MEMBER_EVENT_TYPE.name] = _td("room_settings|permissions|m.call.member");
         }
 
         const powerLevelDescriptors: Record<string, IPowerLevelDescriptor> = {
             "users_default": {
-                desc: _t("Default role"),
+                desc: _t("room_settings|permissions|users_default"),
                 defaultValue: 0,
             },
             "events_default": {
-                desc: _t("Send messages"),
+                desc: _t("room_settings|permissions|events_default"),
                 defaultValue: 0,
                 hideForSpace: true,
             },
             "invite": {
-                desc: _t("Invite users"),
+                desc: _t("room_settings|permissions|invite"),
                 defaultValue: 0,
             },
             "state_default": {
-                desc: _t("Change settings"),
+                desc: _t("room_settings|permissions|state_default"),
                 defaultValue: 50,
             },
             "kick": {
-                desc: _t("Remove users"),
+                desc: _t("room_settings|permissions|kick"),
                 defaultValue: 50,
             },
             "ban": {
-                desc: _t("Ban users"),
+                desc: _t("room_settings|permissions|ban"),
                 defaultValue: 50,
             },
             "redact": {
-                desc: _t("Remove messages sent by others"),
+                desc: _t("room_settings|permissions|redact"),
                 defaultValue: 50,
                 hideForSpace: true,
             },
             "notifications.room": {
-                desc: _t("Notify everyone"),
+                desc: _t("room_settings|permissions|notifications.room"),
                 defaultValue: 50,
                 hideForSpace: true,
             },
@@ -341,7 +339,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             parseIntWithDefault(plContent.events_default, powerLevelDescriptors.events_default.defaultValue),
         );
 
-        let privilegedUsersSection = <div>{_t("No users have specific privileges in this room")}</div>;
+        let privilegedUsersSection = <div>{_t("room_settings|permissions|no_privileged_users")}</div>;
         let mutedUsersSection;
         if (Object.keys(userLevels).length) {
             const privilegedUsers: JSX.Element[] = [];
@@ -391,11 +389,17 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
             if (privilegedUsers.length) {
                 privilegedUsersSection = (
-                    <SettingsFieldset legend={_t("Privileged Users")}>{privilegedUsers}</SettingsFieldset>
+                    <SettingsFieldset legend={_t("room_settings|permissions|privileged_users_section")}>
+                        {privilegedUsers}
+                    </SettingsFieldset>
                 );
             }
             if (mutedUsers.length) {
-                mutedUsersSection = <SettingsFieldset legend={_t("Muted Users")}>{mutedUsers}</SettingsFieldset>;
+                mutedUsersSection = (
+                    <SettingsFieldset legend={_t("room_settings|permissions|muted_users_section")}>
+                        {mutedUsers}
+                    </SettingsFieldset>
+                );
             }
         }
 
@@ -404,7 +408,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         if (banned?.length) {
             const canBanUsers = currentUserLevel >= banLevel;
             bannedUsersSection = (
-                <SettingsFieldset legend={_t("Banned users")}>
+                <SettingsFieldset legend={_t("room_settings|permissions|banned_users_section")}>
                     <ul className="mx_RolesRoomSettingsTab_bannedList">
                         {banned.map((member) => {
                             const banEvent = member.events.member?.getContent();
@@ -462,12 +466,13 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                     return null;
                 }
 
-                let label = plEventsToLabels[eventType];
-                if (label) {
+                const translationKeyForEvent = plEventsToLabels[eventType];
+                let label: string;
+                if (translationKeyForEvent) {
                     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
-                    label = _t(label, { brand });
+                    label = _t(translationKeyForEvent, { brand });
                 } else {
-                    label = _t("Send %(eventType)s events", { eventType });
+                    label = _t("room_settings|permissions|send_event_type", { eventType });
                 }
                 return (
                     <div key={eventType}>
@@ -486,17 +491,17 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
         return (
             <SettingsTab>
-                <SettingsSection heading={_t("Roles & Permissions")}>
+                <SettingsSection heading={_t("room_settings|permissions|title")}>
                     {privilegedUsersSection}
                     {canChangeLevels && <AddPrivilegedUsers room={room} defaultUserLevel={defaultUserLevel} />}
                     {mutedUsersSection}
                     {bannedUsersSection}
                     <SettingsFieldset
-                        legend={_t("Permissions")}
+                        legend={_t("room_settings|permissions|permissions_section")}
                         description={
                             isSpaceRoom
-                                ? _t("Select the roles required to change various parts of the space")
-                                : _t("Select the roles required to change various parts of the room")
+                                ? _t("room_settings|permissions|permissions_section_description_space")
+                                : _t("room_settings|permissions|permissions_section_description_room")
                         }
                     >
                         {powerSelectors}

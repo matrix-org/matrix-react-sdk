@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { useEffect, useState } from "react";
 import { PollAnswerSubevent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
-import { MatrixEvent, Poll, PollEvent } from "matrix-js-sdk/src/matrix";
-import { Relations } from "matrix-js-sdk/src/models/relations";
+import { MatrixEvent, Poll, PollEvent, Relations } from "matrix-js-sdk/src/matrix";
 
 import { Icon as PollIcon } from "../../../../../res/img/element-icons/room/composer/poll.svg";
 import { _t } from "../../../../languageHandler";
@@ -101,7 +100,7 @@ export const PollListItemEnded: React.FC<Props> = ({ event, poll, onClick }) => 
 
     return (
         <li data-testid={`pollListItem-${event.getId()!}`} className="mx_PollListItemEnded" onClick={onClick}>
-            <TooltipTarget label={_t("View poll")} alignment={Alignment.Top}>
+            <TooltipTarget label={_t("right_panel|poll|view_poll")} alignment={Alignment.Top}>
                 <div className="mx_PollListItemEnded_content">
                     <div className="mx_PollListItemEnded_title">
                         <PollIcon className="mx_PollListItemEnded_icon" />
@@ -125,7 +124,7 @@ export const PollListItemEnded: React.FC<Props> = ({ event, poll, onClick }) => 
                         </div>
                     )}
                     <div className="mx_PollListItemEnded_voteCount">
-                        <Caption>{_t("Final result based on %(count)s votes", { count: totalVoteCount })}</Caption>
+                        <Caption>{_t("right_panel|poll|final_result", { count: totalVoteCount })}</Caption>
                     </div>
                 </div>
             </TooltipTarget>

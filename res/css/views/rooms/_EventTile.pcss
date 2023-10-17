@@ -31,6 +31,11 @@ $left-gutter: 64px;
     padding-top: 18px;
     position: relative;
 
+    &.mx_EventTile_info {
+        font-size: var(--cpd-font-size-body-sm);
+        color: $secondary-content;
+    }
+
     .mx_EventTile_avatar {
         cursor: pointer;
         user-select: none;
@@ -219,7 +224,7 @@ $left-gutter: 64px;
             }
         }
 
-        &.focus-visible:focus-within,
+        &:focus-visible:focus-within,
         &.mx_EventTile_actionBarFocused,
         &.mx_EventTile_isEditing,
         &.mx_EventTile_selected {
@@ -251,21 +256,6 @@ $left-gutter: 64px;
         &:hover {
             .mx_EventTile_line {
                 background-color: $event-selected-color;
-            }
-
-            &.mx_EventTile_verified .mx_EventTile_line {
-                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
-                    $e2e-verified-color;
-            }
-
-            &.mx_EventTile_unverified .mx_EventTile_line {
-                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
-                    $e2e-unverified-color;
-            }
-
-            &.mx_EventTile_unknown .mx_EventTile_line {
-                box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
-                    $e2e-unknown-color;
             }
         }
     }
@@ -495,7 +485,11 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_e2eIcon {
-            inset: 6px 0 0 44px;
+            inset: 0 0 0 44px;
+
+            // Keep height equal to text for alignment
+            height: var(--EventTile_group_line-line-height);
+            margin: 1px;
         }
 
         .mx_EventTile_msgOption {
@@ -566,6 +560,7 @@ $left-gutter: 64px;
 
             .mx_EventTile_avatar,
             .mx_EventTile_e2eIcon {
+                line-height: 1;
                 margin: $spacing-block-start 0 $spacing-block-end;
             }
 
@@ -588,14 +583,6 @@ $left-gutter: 64px;
             &.mx_EventTile_selected .mx_EventTile_line {
                 /* TODO: check if this would be necessary; */
                 padding-inline-start: calc(var(--EventTile_group_line-spacing-inline-start) + 20px);
-            }
-        }
-
-        &:hover {
-            &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
-            &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
-            &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                padding-inline-start: calc($left-gutter + 18px + var(--selected-message-border-width));
             }
         }
     }
@@ -686,7 +673,7 @@ $left-gutter: 64px;
     .mx_EventTile_pendingModeration {
         user-select: none;
         font-size: $font-12px;
-        color: $roomtopic-color;
+        color: $secondary-content;
         display: inline-block;
         margin-left: 9px;
     }
@@ -770,6 +757,7 @@ $left-gutter: 64px;
 
         blockquote {
             border-left: 2px solid $blockquote-bar-color;
+            color: $secondary-content;
             border-radius: 2px;
             padding: 0 10px;
         }
@@ -803,6 +791,16 @@ $left-gutter: 64px;
 .mx_EventTile_spoiler {
     cursor: pointer;
 
+    // clear button styles
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+
     .mx_EventTile_spoiler_reason {
         color: $event-timestamp-color;
         font-size: $font-11px;
@@ -815,6 +813,7 @@ $left-gutter: 64px;
 
     &.visible > .mx_EventTile_spoiler_content {
         filter: none;
+        user-select: auto;
     }
 }
 
@@ -851,17 +850,17 @@ $left-gutter: 64px;
     }
 
     &.mx_EventTile_e2eIcon_warning::after {
-        mask-image: url("$(res)/img/e2e/warning.svg");
-        background-color: $e2e-warning-color;
+        mask-image: url("$(res)/img/e2e/warning.svg"); // (!) in a shield
+        background-color: $e2e-warning-color; // red
     }
 
     &.mx_EventTile_e2eIcon_normal::after {
-        mask-image: url("$(res)/img/e2e/normal.svg");
-        background-color: $header-panel-text-primary-color;
+        mask-image: url("$(res)/img/e2e/normal.svg"); // regular shield
+        background-color: $header-panel-text-primary-color; // grey
     }
 
     &.mx_EventTile_e2eIcon_decryption_failure::after {
-        mask-image: url("$(res)/img/e2e/decryption-failure.svg");
+        mask-image: url("$(res)/img/e2e/decryption-failure.svg"); // key in a circle
         background-color: $secondary-content;
     }
 }
@@ -875,7 +874,7 @@ $left-gutter: 64px;
         border: 1px solid transparent;
 
         .mx_EventTile:hover &,
-        .mx_EventTile.focus-visible:focus-within & {
+        .mx_EventTile:focus-visible:focus-within & {
             border: 1px solid $tertiary-content;
         }
     }
@@ -998,7 +997,7 @@ $left-gutter: 64px;
 .mx_EventTile:hover .mx_MessageActionBar,
 .mx_EventTile.mx_EventTile_actionBarFocused .mx_MessageActionBar,
 [data-whatinput="keyboard"] .mx_EventTile:focus-within .mx_MessageActionBar,
-.mx_EventTile.focus-visible:focus-within .mx_MessageActionBar {
+.mx_EventTile:focus-visible:focus-within .mx_MessageActionBar {
     visibility: visible;
 }
 
@@ -1007,7 +1006,7 @@ $left-gutter: 64px;
 /* animation for when it's shown which means duplicating the style definition in */
 /* multiple places. */
 .mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput="keyboard"] :focus-within) {
-    &:not(.focus-visible:focus-within) .mx_MessageActionBar .mx_Indicator {
+    &:not(:focus-visible:focus-within) .mx_MessageActionBar .mx_Indicator {
         animation: none;
     }
 }
@@ -1136,13 +1135,13 @@ $left-gutter: 64px;
     }
 
     &:hover {
-        background-color: $system;
+        background-color: $panels;
     }
 
     /* ThreadsList has always group layout */
     &[data-layout="group"]:hover {
         .mx_EventTile_line {
-            background-color: $system; /* override $event-selected-color */
+            background-color: inherit;
             box-shadow: none; /* don't show the verification left stroke in the thread list */
         }
     }
@@ -1154,6 +1153,7 @@ $left-gutter: 64px;
         display: flex;
         align-items: center;
         position: relative;
+        font: var(--cpd-font-body-sm-regular);
 
         &::before {
             @mixin ThreadSummaryIcon;
@@ -1161,8 +1161,6 @@ $left-gutter: 64px;
 
         .mx_ThreadPanel_replies_amount {
             @mixin ThreadRepliesAmount;
-            line-height: var(--EventTile_ThreadSummary-line-height);
-            font-size: $font-12px; /* Same font size as the counter on the main panel */
         }
 
         .mx_ThreadSummary_content {
@@ -1195,11 +1193,6 @@ $left-gutter: 64px;
                 margin-bottom: 0;
                 width: 14px; /* avatar img size */
                 height: 14px; /* avatar img size */
-            }
-
-            .mx_ViewSourceEvent_toggle {
-                display: none; /* hide the hidden event expand button, not enough
-                space, view source can still be used */
             }
 
             &.mx_EventTile_selected .mx_EventTile_line,
@@ -1315,14 +1308,6 @@ $left-gutter: 64px;
                 position: absolute; /* for IRC layout */
                 top: 2px; /* Align with mx_EventTile_content */
             }
-
-            &:hover {
-                &.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
-                &.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
-                &.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
-                    padding-inline-start: 0;
-                }
-            }
         }
 
         &[data-layout="bubble"] {
@@ -1369,7 +1354,6 @@ $left-gutter: 64px;
     .mx_EventTile[data-layout="group"] {
         --MatrixChat_useCompactLayout_group-padding-top: $spacing-4;
         --MatrixChat_useCompactLayout-top-avatar: 2px;
-        --MatrixChat_useCompactLayout-top-e2eIcon: 3px;
         --MatrixChat_useCompactLayout_line-spacing-block: 0px;
 
         padding-top: var(--MatrixChat_useCompactLayout_group-padding-top);
@@ -1429,7 +1413,7 @@ $left-gutter: 64px;
         }
 
         .mx_EventTile_e2eIcon {
-            top: var(--MatrixChat_useCompactLayout-top-e2eIcon);
+            margin: 0px;
         }
 
         .mx_DisambiguatedProfile {

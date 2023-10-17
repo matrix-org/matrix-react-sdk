@@ -59,6 +59,7 @@ export async function dockerRun(opts: {
         "--name",
         `${opts.containerName}-${crypto.randomBytes(4).toString("hex")}`,
         "-d",
+        "--rm",
         ...params,
         opts.image,
     ];
@@ -154,6 +155,14 @@ export function isPodman(): Promise<boolean> {
             else resolve(stdout.toLowerCase().includes("podman"));
         });
     });
+}
+
+/**
+ * Supply the right hostname to use to talk to the host machine. On Docker this
+ * is "host.docker.internal" and on Podman this is "host.containers.internal".
+ */
+export async function hostContainerName() {
+    return (await isPodman()) ? "host.containers.internal" : "host.docker.internal";
 }
 
 /**

@@ -64,9 +64,6 @@ describe("Threads", () => {
             "Hello there. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt " +
             "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi";
 
-        // --MessageTimestamp-color = #acacac = rgb(172, 172, 172)
-        // See: _MessageTimestamp.pcss
-        const MessageTimestampColor = "rgb(172, 172, 172)";
         const ThreadViewGroupSpacingStart = "56px"; // --ThreadView_group_spacing-start
         // Exclude timestamp and read marker from snapshots
         const percyCSS = ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker { visibility: hidden !important; }";
@@ -74,13 +71,6 @@ describe("Threads", () => {
         cy.get(".mx_RoomView_body").within(() => {
             // User sends message
             cy.findByRole("textbox", { name: "Send a message…" }).type("Hello Mr. Bot{enter}");
-
-            // Check the colour of timestamp on the main timeline
-            cy.get(".mx_EventTile_last .mx_EventTile_line .mx_MessageTimestamp").should(
-                "have.css",
-                "color",
-                MessageTimestampColor,
-            );
 
             // Wait for message to send, get its ID and save as @threadId
             cy.contains(".mx_EventTile[data-scroll-tokens]", "Hello Mr. Bot")
@@ -108,7 +98,7 @@ describe("Threads", () => {
         // Wait until the both messages are read
         cy.get(".mx_ThreadView .mx_EventTile_last[data-layout=group]").within(() => {
             cy.get(".mx_EventTile_line .mx_MTextBody").findByText(MessageLong).should("exist");
-            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar").should("be.visible");
 
             // Make sure the CSS style for spacing is applied to mx_EventTile_line on group/modern layout
             cy.get(".mx_EventTile_line").should("have.css", "padding-inline-start", ThreadViewGroupSpacingStart);
@@ -128,7 +118,7 @@ describe("Threads", () => {
             cy.get(".mx_EventTile_line .mx_MTextBody").findByText(MessageLong).should("exist");
 
             // Make sure the avatar inside ReadReceiptGroup is visible on the group layout
-            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar").should("be.visible");
         });
 
         // Enable the bubble layout
@@ -137,12 +127,12 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView .mx_EventTile[data-layout='bubble'].mx_EventTile_last").within(() => {
             // TODO: remove this after fixing the issue of ReadReceiptGroup being hidden on the bubble layout
             // See: https://github.com/vector-im/element-web/issues/23569
-            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("exist");
+            cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar").should("exist");
 
             // Make sure the avatar inside ReadReceiptGroup is visible on bubble layout
             // TODO: enable this after fixing the issue of ReadReceiptGroup being hidden on the bubble layout
             // See: https://github.com/vector-im/element-web/issues/23569
-            // cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar_image").should("be.visible");
+            // cy.get(".mx_ReadReceiptGroup .mx_BaseAvatar").should("be.visible");
         });
 
         // Re-enable the group layout
@@ -151,13 +141,6 @@ describe("Threads", () => {
         cy.get(".mx_ThreadView").within(() => {
             // User responds in thread
             cy.findByRole("textbox", { name: "Send a message…" }).type("Test{enter}");
-
-            // Check the colour of timestamp on EventTile in a thread (mx_ThreadView)
-            cy.get(".mx_EventTile_last[data-layout='group'] .mx_EventTile_line .mx_MessageTimestamp").should(
-                "have.css",
-                "color",
-                MessageTimestampColor,
-            );
         });
 
         // User asserts summary was updated correctly
@@ -296,7 +279,7 @@ describe("Threads", () => {
         });
 
         cy.findByRole("button", { name: "Threads" })
-            .should("have.class", "mx_RoomHeader_button--unread") // User asserts thread list unread indicator
+            .should("have.class", "mx_LegacyRoomHeader_button--unread") // User asserts thread list unread indicator
             .click(); // User opens thread list
 
         // User asserts thread with correct root & latest events & unread dot
@@ -306,9 +289,6 @@ describe("Threads", () => {
 
             // Check the number of the replies
             cy.get(".mx_ThreadPanel_replies_amount").findByText("2").should("exist");
-
-            // Check the colour of timestamp on thread list
-            cy.get(".mx_EventTile_details .mx_MessageTimestamp").should("have.css", "color", MessageTimestampColor);
 
             // Make sure the notification dot is visible
             cy.get(".mx_NotificationBadge_visible").should("be.visible");

@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { User } from "matrix-js-sdk/src/models/user";
+import { User, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 import { verificationMethods as VerificationMethods } from "matrix-js-sdk/src/crypto";
-import { MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 import { CrossSigningKey, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 
 import dis from "./dispatcher/dispatcher";
@@ -120,6 +119,6 @@ export function pendingVerificationRequestForUser(
 ): VerificationRequest | undefined {
     const dmRoom = findDMForUser(matrixClient, user.userId);
     if (dmRoom) {
-        return matrixClient.getCrypto()!.findVerificationRequestDMInProgress(dmRoom.roomId);
+        return matrixClient.getCrypto()!.findVerificationRequestDMInProgress(dmRoom.roomId, user.userId);
     }
 }

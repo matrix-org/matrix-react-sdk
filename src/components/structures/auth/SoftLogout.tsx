@@ -17,8 +17,7 @@ limitations under the License.
 import React, { ChangeEvent, SyntheticEvent } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { ISSOFlow, LoginFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { LoginFlow, MatrixError, SSOAction, SSOFlow } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -35,6 +34,7 @@ import AccessibleButton from "../../views/elements/AccessibleButton";
 import Spinner from "../../views/elements/Spinner";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
+import { SDKContext } from "../../../contexts/SDKContext";
 
 enum LoginView {
     Loading,
@@ -64,7 +64,6 @@ interface IProps {
 
 interface IState {
     loginView: LoginView;
-    keyBackupNeeded: boolean;
     busy: boolean;
     password: string;
     errorText: string;
@@ -72,12 +71,16 @@ interface IState {
 }
 
 export default class SoftLogout extends React.Component<IProps, IState> {
-    public constructor(props: IProps) {
-        super(props);
+    public static contextType = SDKContext;
+    public context!: React.ContextType<typeof SDKContext>;
+
+    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+        super(props, context);
+
+        this.context = context;
 
         this.state = {
             loginView: LoginView.Loading,
-            keyBackupNeeded: true, // assume we do while we figure it out (see componentDidMount)
             busy: false,
             password: "",
             errorText: "",
@@ -93,13 +96,6 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         }
 
         this.initLogin();
-
-        const cli = MatrixClientPeg.safeGet();
-        if (cli.isCryptoEnabled()) {
-            cli.countSessionsNeedingBackup().then((remaining) => {
-                this.setState({ keyBackupNeeded: remaining > 0 });
-            });
-        }
     }
 
     private onClearAll = (): void => {
@@ -108,7 +104,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 if (!wipeData) return;
 
                 logger.log("Clearing data from soft-logged-out session");
-                Lifecycle.logout();
+                Lifecycle.logout(this.context.oidcClientStore);
             },
         });
     };
@@ -165,13 +161,13 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         try {
             credentials = await sendLoginRequest(hsUrl, isUrl, loginType, loginParams);
         } catch (e) {
-            let errorText = _t("Failed to re-authenticate due to a homeserver problem");
+            let errorText = _t("auth|failed_soft_logout_homeserver");
             if (
                 e instanceof MatrixError &&
                 e.errcode === "M_FORBIDDEN" &&
                 (e.httpStatus === 401 || e.httpStatus === 403)
             ) {
-                errorText = _t("Incorrect password");
+                errorText = _t("auth|incorrect_password");
             }
 
             this.setState({
@@ -183,7 +179,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
         Lifecycle.hydrateSession(credentials).catch((e) => {
             logger.error(e);
-            this.setState({ busy: false, errorText: _t("Failed to re-authenticate") });
+            this.setState({ busy: false, errorText: _t("auth|failed_soft_logout_auth") });
         });
     };
 
@@ -235,7 +231,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 {error}
                 <Field
                     type="password"
-                    label={_t("Password")}
+                    label={_t("common|password")}
                     onChange={this.onPasswordChange}
                     value={this.state.password}
                     disabled={this.state.busy}
@@ -246,10 +242,10 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     type="submit"
                     disabled={this.state.busy}
                 >
-                    {_t("Sign In")}
+                    {_t("action|sign_in")}
                 </AccessibleButton>
                 <AccessibleButton onClick={this.onForgotPassword} kind="link">
-                    {_t("Forgotten your password?")}
+                    {_t("auth|forgot_password_prompt")}
                 </AccessibleButton>
             </form>
         );
@@ -257,7 +253,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
     private renderSsoForm(introText: Optional<string>): JSX.Element {
         const loginType = this.state.loginView === LoginView.CAS ? "cas" : "sso";
-        const flow = this.state.flows.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
+        const flow = this.state.flows.find((flow) => flow.type === "m.login." + loginType) as SSOFlow;
 
         return (
             <div>
@@ -279,45 +275,25 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             return <Spinner />;
         }
 
-        let introText: string | null = null; // null is translated to something area specific in this function
-        if (this.state.keyBackupNeeded) {
-            introText = _t(
-                "Regain access to your account and recover encryption keys stored in this session. " +
-                    "Without them, you won't be able to read all of your secure messages in any session.",
-            );
-        }
-
         if (this.state.loginView === LoginView.Password) {
-            if (!introText) {
-                introText = _t("Enter your password to sign in and regain access to your account.");
-            } // else we already have a message and should use it (key backup warning)
-
-            return this.renderPasswordForm(introText);
+            return this.renderPasswordForm(_t("auth|soft_logout_intro_password"));
         }
 
         if (this.state.loginView === LoginView.SSO || this.state.loginView === LoginView.CAS) {
-            if (!introText) {
-                introText = _t("Sign in and regain access to your account.");
-            } // else we already have a message and should use it (key backup warning)
-
-            return this.renderSsoForm(introText);
+            return this.renderSsoForm(_t("auth|soft_logout_intro_sso"));
         }
 
         if (this.state.loginView === LoginView.PasswordWithSocialSignOn) {
-            if (!introText) {
-                introText = _t("Sign in and regain access to your account.");
-            }
-
             // We render both forms with no intro/error to ensure the layout looks reasonably
             // okay enough.
             //
             // Note: "mx_AuthBody_centered" text taken from registration page.
             return (
                 <>
-                    <p>{introText}</p>
+                    <p>{_t("auth|soft_logout_intro_sso")}</p>
                     {this.renderSsoForm(null)}
                     <h2 className="mx_AuthBody_centered">
-                        {_t("%(ssoButtons)s Or %(usernamePassword)s", {
+                        {_t("auth|sso_or_username_password", {
                             ssoButtons: "",
                             usernamePassword: "",
                         }).trim()}
@@ -328,14 +304,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         }
 
         // Default: assume unsupported/error
-        return (
-            <p>
-                {_t(
-                    "You cannot sign in to your account. Please contact your " +
-                        "homeserver admin for more information.",
-                )}
-            </p>
-        );
+        return <p>{_t("auth|soft_logout_intro_unsupported_auth")}</p>;
     }
 
     public render(): React.ReactNode {
@@ -343,22 +312,16 @@ export default class SoftLogout extends React.Component<IProps, IState> {
             <AuthPage>
                 <AuthHeader />
                 <AuthBody>
-                    <h1>{_t("You're signed out")}</h1>
+                    <h1>{_t("auth|soft_logout_heading")}</h1>
 
-                    <h2>{_t("Sign in")}</h2>
+                    <h2>{_t("action|sign_in")}</h2>
                     <div>{this.renderSignInSection()}</div>
 
-                    <h2>{_t("Clear personal data")}</h2>
-                    <p>
-                        {_t(
-                            "Warning: your personal data (including encryption keys) is still stored " +
-                                "in this session. Clear it if you're finished using this session, or want to sign " +
-                                "in to another account.",
-                        )}
-                    </p>
+                    <h2>{_t("auth|soft_logout_subheading")}</h2>
+                    <p>{_t("auth|soft_logout_warning")}</p>
                     <div>
                         <AccessibleButton onClick={this.onClearAll} kind="danger">
-                            {_t("Clear all data")}
+                            {_t("auth|soft_logout|clear_data_button")}
                         </AccessibleButton>
                     </div>
                 </AuthBody>

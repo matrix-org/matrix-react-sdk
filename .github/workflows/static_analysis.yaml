@@ -20,7 +20,7 @@ jobs:
         name: "Typescript Syntax Check"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: actions/setup-node@v3
               with:
@@ -43,15 +43,25 @@ jobs:
             - name: Typecheck (release mode)
               run: "yarn run lint:types"
 
+            # Temporary while we directly import matrix-js-sdk/src/* which means we need
+            # certain @types/* packages to make sense of matrix-js-sdk types.
+            #- name: Typecheck (release mode; no yarn link)
+            #  if: github.event_name != 'pull_request' && github.ref_name != 'master'
+            #  run: |
+            #      yarn unlink matrix-js-sdk
+            #      yarn add github:matrix-org/matrix-js-sdk#develop
+            #      yarn install --force
+            #      yarn run lint:types
+
     i18n_lint:
         name: "i18n Check"
-        uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+        uses: matrix-org/matrix-web-i18n/.github/workflows/i18n_check.yml@main
 
     rethemendex_lint:
         name: "Rethemendex Check"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - run: ./res/css/rethemendex.sh
 
@@ -61,7 +71,7 @@ jobs:
         name: "ESLint"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: actions/setup-node@v3
               with:
@@ -78,7 +88,7 @@ jobs:
         name: "Style Lint"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: actions/setup-node@v3
               with:
@@ -95,7 +105,7 @@ jobs:
         name: "Analyse Dead Code"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - uses: actions/setup-node@v3
               with:

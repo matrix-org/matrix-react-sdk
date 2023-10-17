@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent, MatrixEventEvent, RelationType, Room } from "matrix-js-sdk/src/matrix";
-import { Thread } from "matrix-js-sdk/src/models/thread";
+import { MatrixClient, MatrixEvent, MatrixEventEvent, RelationType, Room, Thread } from "matrix-js-sdk/src/matrix";
 
 import { mkMessage, MessageEventProps } from "./test-utils";
 
@@ -135,10 +134,6 @@ export const mkThread = ({
     }
 
     const thread = room.createThread(rootEvent.getId()!, rootEvent, events, true);
-
-    events.forEach((event) => {
-        thread.timeline.push(event);
-    });
 
     // So that we do not have to mock the thread loading
     thread.initialEventsFetched = true;

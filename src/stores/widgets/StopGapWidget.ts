@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixEvent, MatrixEventEvent, MatrixClient, ClientEvent } from "matrix-js-sdk/src/matrix";
 import {
     ClientWidgetApi,
     IModalWidgetOpenRequest,
@@ -35,12 +35,9 @@ import {
 } from "matrix-widget-api";
 import { Optional } from "matrix-events-sdk";
 import { EventEmitter } from "events";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 
-import { _t } from "../../languageHandler";
+import { _t, getUserLanguage } from "../../languageHandler";
 import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -60,7 +57,6 @@ import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
-import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
@@ -222,6 +218,7 @@ export class StopGapWidget extends EventEmitter {
             clientTheme: SettingsStore.getValue("theme"),
             clientLanguage: getUserLanguage(),
             deviceId: this.client.getDeviceId() ?? undefined,
+            baseUrl: this.client.baseUrl,
         };
         const templated = this.mockWidget.getCompleteUrl(Object.assign(defaults, fromCustomisation), opts?.asPopout);
 
@@ -244,10 +241,6 @@ export class StopGapWidget extends EventEmitter {
         // Replace the encoded dollar signs back to dollar signs. They have no special meaning
         // in HTTP, but URL parsers encode them anyways.
         return parsed.toString().replace(/%24/g, "$");
-    }
-
-    public get isManagedByManager(): boolean {
-        return !!this.scalarToken;
     }
 
     public get started(): boolean {
@@ -285,6 +278,7 @@ export class StopGapWidget extends EventEmitter {
 
         this.messaging = new ClientWidgetApi(this.mockWidget, iframe, driver);
         this.messaging.on("preparing", () => this.emit("preparing"));
+        this.messaging.on("error:preparing", (err: unknown) => this.emit("error:preparing", err));
         this.messaging.on("ready", () => {
             WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging!);
             this.emit("ready");
@@ -409,8 +403,8 @@ export class StopGapWidget extends EventEmitter {
                 ev.preventDefault();
                 if (ev.detail.data?.errorMessage) {
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Connection lost"),
-                        description: _t("You were disconnected from the call. (Error: %(message)s)", {
+                        title: _t("widget|error_hangup_title"),
+                        description: _t("widget|error_hangup_description", {
                             message: ev.detail.data.errorMessage,
                         }),
                     });

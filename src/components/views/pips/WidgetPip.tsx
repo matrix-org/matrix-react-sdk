@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { FC, MutableRefObject, useCallback, useMemo } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 
 import PersistentApp from "../elements/PersistentApp";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -111,7 +111,7 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
                 <RovingAccessibleButton
                     onClick={onBackClick}
                     className="mx_WidgetPip_backButton"
-                    aria-label={_t("Back")}
+                    aria-label={_t("action|back")}
                 >
                     <BackIcon className="mx_Icon mx_Icon_16" />
                     {roomName}
@@ -127,8 +127,8 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
                 <Toolbar className="mx_WidgetPip_footer">
                     <RovingAccessibleTooltipButton
                         onClick={onLeaveClick}
-                        tooltip={_t("Leave")}
-                        aria-label={_t("Leave")}
+                        tooltip={_t("action|leave")}
+                        aria-label={_t("action|leave")}
                         alignment={Alignment.Top}
                     >
                         <HangupIcon className="mx_Icon mx_Icon_24" />

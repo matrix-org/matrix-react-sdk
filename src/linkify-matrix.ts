@@ -19,7 +19,7 @@ import * as linkifyjs from "linkifyjs";
 import { EventListeners, Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
-import { User } from "matrix-js-sdk/src/matrix";
+import { getHttpUriForMxc, User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
@@ -139,7 +139,6 @@ export const options: Opts = {
                     const permalink = parsePermalink(href);
                     if (permalink?.userId) {
                         return {
-                            // @ts-ignore see https://linkify.js.org/docs/options.html
                             click: function (e: MouseEvent) {
                                 onUserClick(e, permalink.userId!);
                             },
@@ -150,7 +149,6 @@ export const options: Opts = {
                         if (localHref !== href) {
                             // it could be converted to a localHref -> therefore handle locally
                             return {
-                                // @ts-ignore see https://linkify.js.org/docs/options.html
                                 click: function (e: MouseEvent) {
                                     e.preventDefault();
                                     window.location.hash = localHref;
@@ -165,17 +163,15 @@ export const options: Opts = {
             }
             case Type.UserId:
                 return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const userId = parsePermalink(href)?.userId;
+                        const userId = parsePermalink(href)?.userId ?? href;
                         if (userId) onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const alias = parsePermalink(href)?.roomIdOrAlias;
+                        const alias = parsePermalink(href)?.roomIdOrAlias ?? href;
                         if (alias) onAliasClick(e, alias);
                     },
                 };
@@ -186,6 +182,11 @@ export const options: Opts = {
 
     formatHref: function (href: string, type: Type | string): string {
         switch (type) {
+            case "url":
+                if (href.startsWith("mxc://") && MatrixClientPeg.get()) {
+                    return getHttpUriForMxc(MatrixClientPeg.get()!.baseUrl, href);
+                }
+            // fallthrough
             case Type.RoomAlias:
             case Type.UserId:
             default: {
@@ -269,6 +270,8 @@ PERMITTED_URL_SCHEMES.forEach((scheme) => {
         registerCustomProtocol(scheme, optionalSlashProtocols.includes(scheme));
     }
 });
+
+registerCustomProtocol("mxc", false);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;

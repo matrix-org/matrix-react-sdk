@@ -18,7 +18,7 @@ limitations under the License.
 
 import React, { createRef, CSSProperties } from "react";
 import FocusLock from "react-focus-lock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
@@ -477,9 +477,9 @@ export default class ImageView extends React.Component<IProps, IState> {
                 <MemberAvatar
                     member={mxEvent.sender}
                     fallbackUserId={mxEvent.getSender()}
-                    width={32}
-                    height={32}
+                    size="32px"
                     viewUserOnClick={true}
+                    className="mx_Dialog_nonDialogButton"
                 />
             );
 
@@ -504,7 +504,7 @@ export default class ImageView extends React.Component<IProps, IState> {
             contextMenuButton = (
                 <ContextMenuTooltipButton
                     className="mx_ImageView_button mx_ImageView_button_more"
-                    title={_t("Options")}
+                    title={_t("common|options")}
                     onClick={this.onOpenContextMenu}
                     inputRef={this.contextMenuButton}
                     isExpanded={this.state.contextMenuDisplayed}
@@ -515,14 +515,14 @@ export default class ImageView extends React.Component<IProps, IState> {
         const zoomOutButton = (
             <AccessibleTooltipButton
                 className="mx_ImageView_button mx_ImageView_button_zoomOut"
-                title={_t("Zoom out")}
+                title={_t("action|zoom_out")}
                 onClick={this.onZoomOutClick}
             />
         );
         const zoomInButton = (
             <AccessibleTooltipButton
                 className="mx_ImageView_button mx_ImageView_button_zoomIn"
-                title={_t("Zoom in")}
+                title={_t("action|zoom_in")}
                 onClick={this.onZoomInClick}
             />
         );
@@ -531,7 +531,7 @@ export default class ImageView extends React.Component<IProps, IState> {
         if (this.props.mxEvent?.getContent()) {
             title = (
                 <div className="mx_ImageView_title">
-                    {presentableTextForFile(this.props.mxEvent?.getContent(), _t("Image"), true)}
+                    {presentableTextForFile(this.props.mxEvent?.getContent(), _t("common|image"), true)}
                 </div>
             );
         }
@@ -542,7 +542,7 @@ export default class ImageView extends React.Component<IProps, IState> {
                 lockProps={{
                     "onKeyDown": this.onKeyDown,
                     "role": "dialog",
-                    "aria-label": _t("Image view"),
+                    "aria-label": _t("lightbox|title"),
                 }}
                 className="mx_ImageView"
                 ref={this.focusLock}
@@ -555,23 +555,23 @@ export default class ImageView extends React.Component<IProps, IState> {
                         {zoomInButton}
                         <AccessibleTooltipButton
                             className="mx_ImageView_button mx_ImageView_button_rotateCCW"
-                            title={_t("Rotate Left")}
+                            title={_t("lightbox|rotate_left")}
                             onClick={this.onRotateCounterClockwiseClick}
                         />
                         <AccessibleTooltipButton
                             className="mx_ImageView_button mx_ImageView_button_rotateCW"
-                            title={_t("Rotate Right")}
+                            title={_t("lightbox|rotate_right")}
                             onClick={this.onRotateClockwiseClick}
                         />
                         <AccessibleTooltipButton
                             className="mx_ImageView_button mx_ImageView_button_download"
-                            title={_t("Download")}
+                            title={_t("action|download")}
                             onClick={this.onDownloadClick}
                         />
                         {contextMenuButton}
                         <AccessibleTooltipButton
                             className="mx_ImageView_button mx_ImageView_button_close"
-                            title={_t("Close")}
+                            title={_t("action|close")}
                             onClick={this.props.onFinished}
                         />
                         {this.renderContextMenu()}

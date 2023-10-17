@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
@@ -40,7 +40,7 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
 
         let colorClass: string | undefined;
         if (colored) {
-            colorClass = getUserNameColorClass(fallbackName);
+            colorClass = getUserNameColorClass(mxid ?? "");
         }
 
         let mxidElement;
@@ -55,7 +55,7 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
             if (member?.disambiguate) {
                 mxidElement = <span className="mx_DisambiguatedProfile_mxid">{identifier}</span>;
             }
-            title = _t("%(displayName)s (%(matrixId)s)", {
+            title = _t("timeline|disambiguated_profile", {
                 displayName: rawDisplayName,
                 matrixId: identifier,
             });

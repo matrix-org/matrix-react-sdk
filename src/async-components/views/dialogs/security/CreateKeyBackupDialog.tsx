@@ -45,9 +45,13 @@ interface IState {
     error?: boolean;
 }
 
-/*
- * Walks the user through the process of creating an e2e key backup
- * on the server.
+/**
+ * Walks the user through the process of setting up e2e key backups to a new backup, and storing the decryption key in
+ * SSSS.
+ *
+ * Uses {@link accessSecretStorage}, which means that if 4S is not already configured, it will be bootstrapped (which
+ * involves displaying an {@link CreateSecretStorageDialog} so the user can enter a passphrase and/or download the 4S
+ * key).
  */
 export default class CreateKeyBackupDialog extends React.PureComponent<IProps, IState> {
     public constructor(props: IProps) {
@@ -75,6 +79,14 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         const cli = MatrixClientPeg.safeGet();
         try {
             await accessSecretStorage(async (): Promise<void> => {
+                // `accessSecretStorage` will have bootstrapped secret storage if necessary, so we can now
+                // set up key backup.
+                //
+                // XXX: `bootstrapSecretStorage` also sets up key backup as a side effect, so there is a 90% chance
+                // this is actually redundant.
+                //
+                // The only time it would *not* be redundant would be if, for some reason, we had working 4S but no
+                // working key backup. (For example, if the user clicked "Delete Backup".)
                 info = await cli.prepareKeyBackupVersion(null /* random key */, {
                     secureSecretStorage: true,
                 });
@@ -118,8 +130,8 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     private renderPhaseDone(): JSX.Element {
         return (
             <div>
-                <p>{_t("Your keys are being backed up (the first backup could take a few minutes).")}</p>
-                <DialogButtons primaryButton={_t("OK")} onPrimaryButtonClick={this.onDone} hasCancel={false} />
+                <p>{_t("settings|key_backup|backup_in_progress")}</p>
+                <DialogButtons primaryButton={_t("action|ok")} onPrimaryButtonClick={this.onDone} hasCancel={false} />
             </div>
         );
     }
@@ -127,11 +139,11 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     private titleForPhase(phase: Phase): string {
         switch (phase) {
             case Phase.BackingUp:
-                return _t("Starting backup…");
+                return _t("settings|key_backup|backup_starting");
             case Phase.Done:
-                return _t("Success!");
+                return _t("settings|key_backup|backup_success");
             default:
-                return _t("Create key backup");
+                return _t("settings|key_backup|create_title");
         }
     }
 
@@ -140,9 +152,9 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         if (this.state.error) {
             content = (
                 <div>
-                    <p>{_t("Unable to create key backup")}</p>
+                    <p>{_t("settings|key_backup|cannot_create_backup")}</p>
                     <DialogButtons
-                        primaryButton={_t("Retry")}
+                        primaryButton={_t("action|retry")}
                         onPrimaryButtonClick={this.createBackup}
                         hasCancel={true}
                         onCancel={this.onCancel}

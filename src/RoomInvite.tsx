@@ -15,12 +15,8 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
+import { Room, MatrixEvent, MatrixClient, User, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import MultiInviter, { CompletionStates } from "./utils/MultiInviter";
 import Modal from "./Modal";
@@ -120,8 +116,8 @@ export function inviteUsersToRoom(
         .catch((err) => {
             logger.error(err.stack);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to invite"),
-                description: err && err.message ? err.message : _t("Operation failed"),
+                title: _t("invite|failed_title"),
+                description: err && err.message ? err.message : _t("invite|failed_generic"),
             });
         });
 }
@@ -139,7 +135,7 @@ export function showAnyInviteErrors(
         // user. This usually means that no other users were attempted, making it
         // pointless for us to list who failed exactly.
         Modal.createDialog(ErrorDialog, {
-            title: _t("Failed to invite users to %(roomName)s", { roomName: room.name }),
+            title: _t("invite|room_failed_title", { roomName: room.name }),
             description: inviter.getErrorText(failedUsers[0]),
         });
         return false;
@@ -159,7 +155,7 @@ export function showAnyInviteErrors(
                 <div className="mx_InviteDialog_multiInviterError">
                     <h4>
                         {_t(
-                            "We sent the others, but the below people couldn't be invited to <RoomName/>",
+                            "invite|room_failed_partial",
                             {},
                             {
                                 RoomName: () => <b>{room.name}</b>,
@@ -181,8 +177,7 @@ export function showAnyInviteErrors(
                                             }
                                             name={name!}
                                             idName={user?.userId}
-                                            width={36}
-                                            height={36}
+                                            size="36px"
                                         />
                                     </div>
                                     <div className="mx_InviteDialog_tile_nameStack">
@@ -200,7 +195,7 @@ export function showAnyInviteErrors(
             );
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Some invites couldn't be sent"),
+                title: _t("invite|room_failed_partial_title"),
                 description,
             });
             return false;

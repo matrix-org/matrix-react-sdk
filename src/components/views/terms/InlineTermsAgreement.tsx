@@ -87,7 +87,7 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
         for (let i = 0; i < this.state.policies.length; i++) {
             const policy = this.state.policies[i];
             const introText = _t(
-                "Accept <policyLink /> to continue:",
+                "terms|inline_intro_text",
                 {},
                 {
                     policyLink: () => {
@@ -105,7 +105,7 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
                     <div>{introText}</div>
                     <div className="mx_InlineTermsAgreement_checkbox">
                         <StyledCheckbox onChange={() => this.togglePolicy(i)} checked={policy.checked}>
-                            {_t("Accept")}
+                            {_t("action|accept")}
                         </StyledCheckbox>
                     </div>
                 </div>,
@@ -126,7 +126,7 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
                     disabled={hasUnchecked || this.state.busy}
                     kind="primary_sm"
                 >
-                    {_t("Continue")}
+                    {_t("action|continue")}
                 </AccessibleButton>
             </div>
         );

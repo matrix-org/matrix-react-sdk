@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { getByLabelText, getAllByLabelText, render } from "@testing-library/react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
 import { stubClient } from "../../../test-utils";
@@ -66,7 +65,7 @@ describe("DevtoolsDialog", () => {
 
         expect(copiedBtn).toBeInTheDocument();
         expect(navigator.clipboard.writeText).toHaveBeenCalled();
-        expect(navigator.clipboard.readText()).resolves.toBe(room.roomId);
+        await expect(navigator.clipboard.readText()).resolves.toBe(room.roomId);
     });
 
     it("copies the thread root id when provided", async () => {
@@ -82,6 +81,6 @@ describe("DevtoolsDialog", () => {
 
         expect(copiedBtn).toBeInTheDocument();
         expect(navigator.clipboard.writeText).toHaveBeenCalled();
-        expect(navigator.clipboard.readText()).resolves.toBe(threadRootId);
+        await expect(navigator.clipboard.readText()).resolves.toBe(threadRootId);
     });
 });

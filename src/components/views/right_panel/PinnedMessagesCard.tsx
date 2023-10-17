@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { Room, RoomEvent, RoomStateEvent, MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
@@ -181,11 +178,10 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                     </div>
 
                     <Heading size="4" className="mx_PinnedMessagesCard_empty_header">
-                        {_t("Nothing pinned, yet")}
+                        {_t("right_panel|pinned_messages|empty")}
                     </Heading>
                     {_t(
-                        "If you have permissions, open the menu on any message and select " +
-                            "<b>Pin</b> to stick them here.",
+                        "right_panel|pinned_messages|explainer",
                         {},
                         {
                             b: (sub) => <b>{sub}</b>,
@@ -227,7 +223,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
             header={
                 <div className="mx_BaseCard_header_title">
                     <Heading size="4" className="mx_BaseCard_header_title_heading">
-                        {_t("Pinned messages")}
+                        {_t("right_panel|pinned_messages|title")}
                     </Heading>
                 </div>
             }

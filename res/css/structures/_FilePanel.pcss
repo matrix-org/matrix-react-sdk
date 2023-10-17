@@ -52,16 +52,6 @@ limitations under the License.
             padding-inline-start: 0;
         }
 
-        &:hover {
-            &.mx_EventTile_verified,
-            &.mx_EventTile_unverified,
-            &.mx_EventTile_unknown {
-                .mx_EventTile_line {
-                    box-shadow: none;
-                }
-            }
-        }
-
         .mx_MFileBody {
             line-height: 2.4rem;
         }
@@ -100,7 +90,8 @@ limitations under the License.
 
                 .mx_MessageTimestamp {
                     text-align: right;
-                    font: var(--cpd-font-body-md-regular);
+                    color: $secondary-content;
+                    font: var(--cpd-font-body-sm-regular);
                 }
             }
         }

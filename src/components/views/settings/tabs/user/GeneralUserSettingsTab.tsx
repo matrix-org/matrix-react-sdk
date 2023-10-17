@@ -17,11 +17,8 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { SERVICE_TYPES, HTTPError, IThreepid, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
-import { HTTPError } from "matrix-js-sdk/src/matrix";
 
 import { Icon as WarningIcon } from "../../../../../../res/img/feather-customised/warning-triangle.svg";
 import { UserFriendlyError, _t } from "../../../../../languageHandler";
@@ -39,7 +36,6 @@ import { Service, ServicePolicyPair, startTermsFlow } from "../../../../../Terms
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import { abbreviateUrl } from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from "../../../../../boundThreepids";
-import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
@@ -60,8 +56,8 @@ import SettingsSubsection, { SettingsSubsectionText } from "../../shared/Setting
 import { SettingsSubsectionHeading } from "../../shared/SettingsSubsectionHeading";
 import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
+import { SDKContext } from "../../../../../contexts/SDKContext";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -72,7 +68,6 @@ interface IState {
     spellCheckEnabled?: boolean;
     spellCheckLanguages: string[];
     haveIdServer: boolean;
-    serverSupportsSeparateAddAndBind?: boolean;
     idServerHasUnsignedTerms: boolean;
     requiredPolicyInfo:
         | {
@@ -94,23 +89,26 @@ interface IState {
     canChangePassword: boolean;
     idServerName?: string;
     externalAccountManagementUrl?: string;
+    canMake3pidChanges: boolean;
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public static contextType = SDKContext;
+    public context!: React.ContextType<typeof SDKContext>;
 
     private readonly dispatcherRef: string;
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
         super(props);
         this.context = context;
+
+        const cli = this.context.client!;
 
         this.state = {
             language: languageHandler.getCurrentLanguage(),
             spellCheckEnabled: false,
             spellCheckLanguages: [],
-            haveIdServer: Boolean(this.context.getIdentityServerUrl()),
+            haveIdServer: Boolean(cli.getIdentityServerUrl()),
             idServerHasUnsignedTerms: false,
             requiredPolicyInfo: {
                 // This object is passed along to a component for handling
@@ -123,6 +121,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             msisdns: [],
             loading3pids: true, // whether or not the emails and msisdns have been loaded
             canChangePassword: false,
+            canMake3pidChanges: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -152,7 +151,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.action === "id_server_changed") {
-            this.setState({ haveIdServer: Boolean(this.context.getIdentityServerUrl()) });
+            this.setState({ haveIdServer: Boolean(this.context.client!.getIdentityServerUrl()) });
             this.getThreepidState();
         }
     };
@@ -166,9 +165,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     };
 
     private async getCapabilities(): Promise<void> {
-        const cli = this.context;
-
-        const serverSupportsSeparateAddAndBind = await cli.doesServerSupportSeparateAddAndBind();
+        const cli = this.context.client!;
 
         const capabilities = await cli.getCapabilities(); // this is cached
         const changePasswordCap = capabilities["m.change_password"];
@@ -178,14 +175,17 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
-        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
-        const externalAccountManagementUrl = delegatedAuthConfig?.account;
+        const externalAccountManagementUrl = this.context.oidcClientStore.accountManagementEndpoint;
+        // https://spec.matrix.org/v1.7/client-server-api/#m3pid_changes-capability
+        // We support as far back as v1.1 which doesn't have m.3pid_changes
+        // so the behaviour for when it is missing has to be assume true
+        const canMake3pidChanges = !capabilities["m.3pid_changes"] || capabilities["m.3pid_changes"].enabled === true;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword, externalAccountManagementUrl });
+        this.setState({ canChangePassword, externalAccountManagementUrl, canMake3pidChanges });
     }
 
     private async getThreepidState(): Promise<void> {
-        const cli = this.context;
+        const cli = this.context.client!;
 
         // Check to see if terms need accepting
         this.checkTerms();
@@ -196,7 +196,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         try {
             threepids = await getThreepidsWithBindStatus(cli);
         } catch (e) {
-            const idServerUrl = this.context.getIdentityServerUrl();
+            const idServerUrl = cli.getIdentityServerUrl();
             logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` + `for 3PIDs bindings in Settings`,
             );
@@ -212,7 +212,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private async checkTerms(): Promise<void> {
         // By starting the terms flow we get the logic for checking which terms the user has signed
         // for free. So we might as well use that for our own purposes.
-        const idServerUrl = this.context.getIdentityServerUrl();
+        const idServerUrl = this.context.client!.getIdentityServerUrl();
         if (!this.state.haveIdServer || !idServerUrl) {
             this.setState({ idServerHasUnsignedTerms: false });
             return;
@@ -222,7 +222,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         try {
             const idAccessToken = await authClient.getAccessToken({ check: false });
             await startTermsFlow(
-                this.context,
+                this.context.client!,
                 [new Service(SERVICE_TYPES.IS, idServerUrl, idAccessToken!)],
                 (policiesAndServices, agreedUrls, extraClassNames) => {
                     return new Promise((resolve, reject) => {
@@ -283,16 +283,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         const errorMessage = extractErrorMessageFromError(
             err,
-            _t("Unknown password change error (%(stringifiedError)s)", {
+            _t("settings|general|error_password_change_unknown", {
                 stringifiedError: String(err),
             }),
         );
 
         let errorMessageToDisplay = errorMessage;
         if (underlyingError instanceof HTTPError && underlyingError.httpStatus === 403) {
-            errorMessageToDisplay = _t("Failed to change password. Is your password correct?");
+            errorMessageToDisplay = _t("settings|general|error_password_change_403");
         } else if (underlyingError instanceof HTTPError) {
-            errorMessageToDisplay = _t("%(errorMessage)s (HTTP status %(httpStatus)s)", {
+            errorMessageToDisplay = _t("settings|general|error_password_change_http", {
                 errorMessage,
                 httpStatus: underlyingError.httpStatus,
             });
@@ -300,20 +300,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createDialog(ErrorDialog, {
-            title: _t("Error changing password"),
+            title: _t("settings|general|error_password_change_title"),
             description: errorMessageToDisplay,
         });
     };
 
-    private onPasswordChanged = ({ didLogoutOutOtherDevices }: { didLogoutOutOtherDevices: boolean }): void => {
-        let description = _t("Your password was successfully changed.");
-        if (didLogoutOutOtherDevices) {
-            description +=
-                " " + _t("You will not receive push notifications on other devices until you sign back in to them.");
-        }
+    private onPasswordChanged = (): void => {
+        const description = _t("settings|general|password_change_success");
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createDialog(ErrorDialog, {
-            title: _t("Success"),
+            title: _t("common|success"),
             description,
         });
     };
@@ -329,29 +325,29 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
 
-        // For older homeservers without separate 3PID add and bind methods (MSC2290),
-        // we use a combo add with bind option API which requires an identity server to
-        // validate 3PID ownership even if we're just adding to the homeserver only.
-        // For newer homeservers with separate 3PID add and bind methods (MSC2290),
-        // there is no such concern, so we can always show the HS account 3PIDs.
-        if (
-            SettingsStore.getValue(UIFeature.ThirdPartyID) &&
-            (this.state.haveIdServer || this.state.serverSupportsSeparateAddAndBind === true)
-        ) {
+        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
             const emails = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
-                <AccountEmailAddresses emails={this.state.emails} onEmailsChange={this.onEmailsChange} />
+                <AccountEmailAddresses
+                    emails={this.state.emails}
+                    onEmailsChange={this.onEmailsChange}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             );
             const msisdns = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
-                <AccountPhoneNumbers msisdns={this.state.msisdns} onMsisdnsChange={this.onMsisdnsChange} />
+                <AccountPhoneNumbers
+                    msisdns={this.state.msisdns}
+                    onMsisdnsChange={this.onMsisdnsChange}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             );
             threepidSection = (
                 <>
                     <SettingsSubsection
-                        heading={_t("Email addresses")}
+                        heading={_t("settings|general|emails_heading")}
                         stretchContent
                         data-testid="mx_AccountEmailAddresses"
                     >
@@ -359,7 +355,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     </SettingsSubsection>
 
                     <SettingsSubsection
-                        heading={_t("Phone numbers")}
+                        heading={_t("settings|general|msisdns_heading")}
                         stretchContent
                         data-testid="mx_AccountPhoneNumbers"
                     >
@@ -367,15 +363,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     </SettingsSubsection>
                 </>
             );
-        } else if (this.state.serverSupportsSeparateAddAndBind === null) {
-            threepidSection = <Spinner />;
         }
 
         let passwordChangeSection: ReactNode = null;
         if (this.state.canChangePassword) {
             passwordChangeSection = (
                 <>
-                    <SettingsSubsectionText>{_t("Set a new account password…")}</SettingsSubsectionText>
+                    <SettingsSubsectionText>{_t("settings|general|password_change_section")}</SettingsSubsectionText>
                     <ChangePassword
                         className="mx_GeneralUserSettingsTab_section--account_changePassword"
                         rowClassName=""
@@ -395,7 +389,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                 <>
                     <SettingsSubsectionText data-testid="external-account-management-outer">
                         {_t(
-                            "Your account details are managed separately at <code>%(hostname)s</code>.",
+                            "settings|general|external_account_management",
                             { hostname },
                             { code: (sub) => <code>{sub}</code> },
                         )}
@@ -409,14 +403,18 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                         href={this.state.externalAccountManagementUrl}
                         data-testid="external-account-management-link"
                     >
-                        {_t("Manage account")}
+                        {_t("settings|general|oidc_manage_button")}
                     </AccessibleButton>
                 </>
             );
         }
         return (
             <>
-                <SettingsSubsection heading={_t("Account")} stretchContent data-testid="accountSection">
+                <SettingsSubsection
+                    heading={_t("settings|general|account_section")}
+                    stretchContent
+                    data-testid="accountSection"
+                >
                     {externalAccountManagement}
                     {passwordChangeSection}
                 </SettingsSubsection>
@@ -428,7 +426,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderLanguageSection(): JSX.Element {
         // TODO: Convert to new-styled Field
         return (
-            <SettingsSubsection heading={_t("Language and region")} stretchContent>
+            <SettingsSubsection heading={_t("settings|general|language_section")} stretchContent>
                 <LanguageDropdown
                     className="mx_GeneralUserSettingsTab_section_languageInput"
                     onOptionChange={this.onLanguageChange}
@@ -440,7 +438,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private renderSpellCheckSection(): JSX.Element {
         const heading = (
-            <SettingsSubsectionHeading heading={_t("Spell check")}>
+            <SettingsSubsectionHeading heading={_t("settings|general|spell_check_section")}>
                 <ToggleSwitch checked={!!this.state.spellCheckEnabled} onChange={this.onSpellCheckEnabledChange} />
             </SettingsSubsectionHeading>
         );
@@ -460,11 +458,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         if (this.state.requiredPolicyInfo.hasTerms) {
             const intro = (
                 <SettingsSubsectionText>
-                    {_t(
-                        "Agree to the identity server (%(serverName)s) Terms of Service to " +
-                            "allow yourself to be discoverable by email address or phone number.",
-                        { serverName: this.state.idServerName },
-                    )}
+                    {_t("settings|general|discovery_needs_terms", { serverName: this.state.idServerName })}
                 </SettingsSubsectionText>
             );
             return (
@@ -483,8 +477,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         const threepidSection = this.state.haveIdServer ? (
             <>
-                <DiscoveryEmailAddresses emails={this.state.emails} isLoading={this.state.loading3pids} />
-                <DiscoveryPhoneNumbers msisdns={this.state.msisdns} isLoading={this.state.loading3pids} />
+                <DiscoveryEmailAddresses
+                    emails={this.state.emails}
+                    isLoading={this.state.loading3pids}
+                    disabled={!this.state.canMake3pidChanges}
+                />
+                <DiscoveryPhoneNumbers
+                    msisdns={this.state.msisdns}
+                    isLoading={this.state.loading3pids}
+                    disabled={!this.state.canMake3pidChanges}
+                />
             </>
         ) : null;
 
@@ -500,14 +502,14 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderManagementSection(): JSX.Element {
         // TODO: Improve warning text for account deactivation
         return (
-            <SettingsSection heading={_t("Deactivate account")}>
+            <SettingsSection heading={_t("settings|general|deactivate_section")}>
                 <SettingsSubsection
-                    heading={_t("Account management")}
+                    heading={_t("settings|general|account_management_section")}
                     data-testid="account-management-section"
-                    description={_t("Deactivating your account is a permanent action — be careful!")}
+                    description={_t("settings|general|deactivate_warning")}
                 >
                     <AccessibleButton onClick={this.onDeactivateClicked} kind="danger">
-                        {_t("Deactivate Account")}
+                        {_t("settings|general|deactivate_section")}
                     </AccessibleButton>
                 </SettingsSubsection>
             </SettingsSection>
@@ -525,7 +527,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const supportsMultiLanguageSpellCheck = plaf?.supportsSpellCheckSettings();
 
         let accountManagementSection: JSX.Element | undefined;
-        if (SettingsStore.getValue(UIFeature.Deactivate)) {
+        const isAccountManagedExternally = !!this.state.externalAccountManagementUrl;
+        if (SettingsStore.getValue(UIFeature.Deactivate) && !isAccountManagedExternally) {
             accountManagementSection = this.renderManagementSection();
         }
 
@@ -538,13 +541,13 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     height="18"
                     // override icon default values
                     aria-hidden={false}
-                    aria-label={_t("Warning")}
+                    aria-label={_t("common|warning")}
                 />
             ) : null;
             const heading = (
                 <Heading size="2">
                     {discoWarning}
-                    {_t("Discovery")}
+                    {_t("settings|general|discovery_section")}
                 </Heading>
             );
             discoverySection = (
@@ -556,7 +559,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         return (
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
-                <SettingsSection heading={_t("General")}>
+                <SettingsSection heading={_t("common|general")}>
                     <ProfileSettings />
                     {this.renderAccountSection()}
                     {this.renderLanguageSection()}

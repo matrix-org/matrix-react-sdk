@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 @import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
+@import url("@vector-im/compound-web/dist/style.css");
 @import "./_font-sizes.pcss";
 @import "./_animations.pcss";
 @import "./_spacing.pcss";
@@ -92,6 +93,14 @@ html {
 body {
     font: var(--cpd-font-body-md-regular);
     letter-spacing: var(--cpd-font-letter-spacing-body-md);
+    /**
+     * We want to apply Inter Dynamic metrics (https://rsms.me/inter/dynmetrics/)
+     * We need to tweak the `letter-spacing` property and doing so, disables by
+     * default the optional ligatures
+     * `font-feature-settings` allows us to override this behaviour and have the
+     * correct ligatures and the proper dynamic metric spacing.
+     */
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 
     background-color: $background;
     color: $primary-content;
@@ -123,6 +132,22 @@ code {
 
 .text-muted {
     color: $muted-fg-color;
+}
+
+.text-primary {
+    color: $primary-content;
+}
+
+.text-secondary {
+    color: $secondary-content;
+}
+
+.mx_Verified {
+    color: $e2e-verified-color;
+}
+
+.mx_Untrusted {
+    color: $e2e-warning-color;
 }
 
 b {
@@ -205,7 +230,7 @@ textarea:focus {
 /* accessible (focusable) components. Not intended for buttons, but */
 /* should be used on things like focusable containers where the outline */
 /* is usually not helping anyone. */
-*:focus:not(.focus-visible) {
+*:focus:not(:focus-visible) {
     outline: none;
 }
 
@@ -250,7 +275,7 @@ legend {
         background-color: transparent;
         color: $input-darker-fg-color;
         border-radius: 4px;
-        border: 1px solid rgba($primary-content, 0.1);
+        border: 1px solid $secondary-hairline-color;
         /* these things should probably not be defined globally */
         margin: 9px;
     }
@@ -263,7 +288,7 @@ legend {
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="text"]::placeholder,
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="search"]::placeholder,
     .mx_textinput input::placeholder {
-        color: rgba($input-darker-fg-color, 0.75);
+        color: $input-placeholder;
     }
 }
 
@@ -411,6 +436,7 @@ legend {
 
         blockquote {
             border-left: 2px solid $blockquote-bar-color;
+            color: $secondary-content;
             border-radius: 2px;
             padding: 0 10px;
         }
@@ -559,7 +585,7 @@ legend {
     cursor: pointer;
     display: inline-block;
 
-    &:not(.focus-visible) {
+    &:not(:focus-visible) {
         outline: none;
     }
 }
@@ -584,9 +610,9 @@ legend {
 
     /* flip colours for the secondary ones */
     font-weight: var(--cpd-font-weight-semibold);
-    border: 1px solid $accent;
+    border: 1px solid currentColor;
     color: $accent;
-    background-color: $button-secondary-bg-color;
+    background-color: transparent;
     font-family: inherit;
 }
 
@@ -808,18 +834,19 @@ legend {
     mask-size: contain;
     height: 18px;
     min-width: 18px;
-    background-color: $secondary-content !important;
+    background-color: $icon-button-color !important;
 }
 
 @define-mixin composerButtonHighLight {
-    background: rgba($accent, 0.25);
+    /* TODO: Refactor as this will break for apps that override the accent color */
+    background: var(--cpd-color-green-300);
     /* make the icon the accent color too */
     &::before {
         background-color: $accent !important;
     }
 }
 
-@define-mixin composerButton $border-radius, $hover-color {
+@define-mixin composerButton $border-radius, $hover-color, $hover-bg {
     --size: 26px;
     position: relative;
     cursor: pointer;
@@ -840,6 +867,7 @@ legend {
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;
+        z-index: 2;
     }
 
     &::after {
@@ -855,7 +883,7 @@ legend {
 
     &:hover {
         &::after {
-            background: rgba($hover-color, 0.1);
+            background: $hover-bg;
         }
 
         &::before {

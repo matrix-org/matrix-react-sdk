@@ -24,11 +24,12 @@ import EMOJIBASE_REGEX from "emojibase-regex";
 import { merge } from "lodash";
 import katex from "katex";
 import { decode } from "html-entities";
-import { IContent } from "matrix-js-sdk/src/models/event";
+import { IContent } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 import _Linkify from "linkify-react";
 import escapeHtml from "escape-html";
 import GraphemeSplitter from "graphemer";
+import { getEmojiFromUnicode } from "@matrix-org/emojibase-bindings";
 
 import {
     _linkifyElement,
@@ -39,7 +40,6 @@ import {
 import { IExtendedSanitizeOptions } from "./@types/sanitize-html";
 import SettingsStore from "./settings/SettingsStore";
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
-import { getEmojiFromUnicode } from "./emoji";
 import { mediaFromMxc } from "./customisations/Media";
 import { stripHTMLReply, stripPlainReply } from "./utils/Reply";
 import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
@@ -52,8 +52,9 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 // (with plenty of false positives, but that's OK)
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
-// Regex pattern for non-emoji characters that can appear in an "all-emoji" message (Zero-Width Joiner, Zero-Width Space, other whitespace)
-const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]/g;
+// Regex pattern for non-emoji characters that can appear in an "all-emoji" message
+// (Zero-Width Joiner, Zero-Width Space, Emoji presentation character, other whitespace)
+const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]|\uFE0F/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { FormEvent } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import FocusLock from "react-focus-lock";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -29,6 +29,7 @@ export interface IScrollableBaseState {
     canSubmit: boolean;
     title: string;
     actionLabel: string;
+    cancelLabel?: string;
 }
 
 /**
@@ -96,14 +97,14 @@ export default abstract class ScrollableBaseModal<
                         <AccessibleButton
                             onClick={this.onCancel}
                             className="mx_CompoundDialog_cancelButton"
-                            aria-label={_t("Close dialog")}
+                            aria-label={_t("dialog_close_label")}
                         />
                     </div>
                     <form onSubmit={this.onSubmit} className="mx_CompoundDialog_form">
                         <div className="mx_CompoundDialog_content">{this.renderContent()}</div>
                         <div className="mx_CompoundDialog_footer">
                             <AccessibleButton onClick={this.onCancel} kind="primary_outline">
-                                {_t("Cancel")}
+                                {this.state.cancelLabel ?? _t("action|cancel")}
                             </AccessibleButton>
                             <AccessibleButton
                                 onClick={this.onSubmit}

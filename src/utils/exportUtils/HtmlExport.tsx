@@ -16,11 +16,10 @@ limitations under the License.
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { renderToStaticMarkup } from "react-dom/server";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import escapeHtml from "escape-html";
 
 import Exporter from "./Exporter";
 import { mediaFromMxc } from "../../customisations/Media";
@@ -58,8 +57,8 @@ export default class HTMLExporter extends Exporter {
         this.permalinkCreator = new RoomPermalinkCreator(this.room);
         this.totalSize = 0;
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
-            ? _t("Media omitted")
-            : _t("Media omitted - file size limit exceeded");
+            ? _t("export_chat|media_omitted")
+            : _t("export_chat|media_omitted_file_size");
     }
 
     protected async getRoomAvatar(): Promise<string> {
@@ -77,14 +76,7 @@ export default class HTMLExporter extends Exporter {
             }
         }
         const avatar = (
-            <BaseAvatar
-                width={32}
-                height={32}
-                name={this.room.name}
-                title={this.room.name}
-                url={blob ? avatarPath : ""}
-                resizeMethod="crop"
-            />
+            <BaseAvatar size="32px" name={this.room.name} title={this.room.name} url={blob ? avatarPath : ""} />
         );
         return renderToStaticMarkup(avatar);
     }
@@ -97,28 +89,36 @@ export default class HTMLExporter extends Exporter {
         const exporter = this.room.client.getSafeUserId();
         const exporterName = this.room.getMember(exporter)?.rawDisplayName;
         const topic = this.room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic || "";
-        const createdText = _t("%(creatorName)s created this room.", {
-            creatorName,
-        });
 
-        const exportedText = renderToStaticMarkup(
+        const safeCreatedText = escapeHtml(
+            _t("export_chat|creator_summary", {
+                creatorName,
+            }),
+        );
+        const safeExporter = escapeHtml(exporter);
+        const safeRoomName = escapeHtml(this.room.name);
+        const safeTopic = escapeHtml(topic);
+        const safeExportedText = renderToStaticMarkup(
             <p>
                 {_t(
-                    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.",
+                    "export_chat|export_info",
                     {
                         exportDate,
                     },
                     {
-                        roomName: () => <b>{this.room.name}</b>,
+                        roomName: () => <b>{safeRoomName}</b>,
                         exporterDetails: () => (
-                            <a href={`https://matrix.to/#/${exporter}`} target="_blank" rel="noopener noreferrer">
+                            <a
+                                href={`https://matrix.to/#/${encodeURIComponent(exporter)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
                                 {exporterName ? (
                                     <>
-                                        <b>{exporterName}</b>
-                                        {" (" + exporter + ")"}
+                                        <b>{escapeHtml(exporterName)}</b>I {" (" + safeExporter + ")"}
                                     </>
                                 ) : (
-                                    <b>{exporter}</b>
+                                    <b>{safeExporter}</b>
                                 )}
                             </a>
                         ),
@@ -127,12 +127,12 @@ export default class HTMLExporter extends Exporter {
             </p>,
         );
 
-        const topicText = topic ? _t("Topic: %(topic)s", { topic }) : "";
+        const safeTopicText = topic ? _t("export_chat|topic", { topic: safeTopic }) : "";
         const previousMessagesLink = renderToStaticMarkup(
             currentPage !== 0 ? (
                 <div style={{ textAlign: "center" }}>
                     <a href={`./messages${currentPage === 1 ? "" : currentPage}.html`} style={{ fontWeight: "bold" }}>
-                        {_t("Previous group of messages")}
+                        {_t("export_chat|previous_page")}
                     </a>
                 </div>
             ) : (
@@ -144,7 +144,7 @@ export default class HTMLExporter extends Exporter {
             currentPage < nbPages - 1 ? (
                 <div style={{ textAlign: "center", margin: "10px" }}>
                     <a href={"./messages" + (currentPage + 2) + ".html"} style={{ fontWeight: "bold" }}>
-                        {_t("Next group of messages")}
+                        {_t("export_chat|next_page")}
                     </a>
                 </div>
             ) : (
@@ -161,7 +161,7 @@ export default class HTMLExporter extends Exporter {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <link href="css/style.css" rel="stylesheet" />
                 <script src="js/script.js"></script>
-                <title>${_t("Exported Data")}</title>
+                <title>${_t("export_chat|html_title")}</title>
             </head>
             <body style="height: 100vh;">
                 <section
@@ -172,23 +172,23 @@ export default class HTMLExporter extends Exporter {
                 <div class="mx_MatrixChat_wrapper" aria-hidden="false">
                     <div class="mx_MatrixChat">
                     <main class="mx_RoomView">
-                        <div class="mx_RoomHeader light-panel">
-                        <div class="mx_RoomHeader_wrapper" aria-owns="mx_RightPanel">
-                            <div class="mx_RoomHeader_avatar">
+                        <div class="mx_LegacyRoomHeader light-panel">
+                        <div class="mx_LegacyRoomHeader_wrapper" aria-owns="mx_RightPanel">
+                            <div class="mx_LegacyRoomHeader_avatar">
                             <div class="mx_DecoratedRoomAvatar">
                                ${roomAvatar}
                             </div>
                             </div>
-                            <div class="mx_RoomHeader_name">
+                            <div class="mx_LegacyRoomHeader_name">
                             <div
                                 dir="auto"
-                                class="mx_RoomHeader_nametext"
-                                title="${this.room.name}"
+                                class="mx_LegacyRoomHeader_nametext"
+                                title="${safeRoomName}"
                             >
-                                ${this.room.name}
+                                ${safeRoomName}
                             </div>
                             </div>
-                            <div class="mx_RoomHeader_topic" dir="auto"> ${topic} </div>
+                            <div class="mx_LegacyRoomHeader_topic" dir="auto"> ${safeTopic} </div>
                         </div>
                         </div>
                         ${previousMessagesLink}
@@ -214,10 +214,10 @@ export default class HTMLExporter extends Exporter {
                                     currentPage == 0
                                         ? `<div class="mx_NewRoomIntro">
                                         ${roomAvatar}
-                                        <h2> ${this.room.name} </h2>
-                                        <p> ${createdText} <br/><br/> ${exportedText} </p>
+                                        <h2> ${safeRoomName} </h2>
+                                        <p> ${safeCreatedText} <br/><br/> ${safeExportedText} </p>
                                         <br/>
-                                        <p> ${topicText} </p>
+                                        <p> ${safeTopicText} </p>
                                     </div>`
                                         : ""
                                 }
@@ -385,7 +385,7 @@ export default class HTMLExporter extends Exporter {
                     } catch (e) {
                         logger.log("Error while fetching file" + e);
                         eventTile = await this.getEventTileMarkup(
-                            this.createModifiedEvent(_t("Error fetching file"), mxEv),
+                            this.createModifiedEvent(_t("export_chat|error_fetching_file"), mxEv),
                             joined,
                         );
                     }
@@ -421,7 +421,7 @@ export default class HTMLExporter extends Exporter {
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
             this.updateProgress(
-                _t("Processing event %(number)s out of %(total)s", {
+                _t("export_chat|processing_event_n", {
                     number: i + 1,
                     total: events.length,
                 }),
@@ -444,14 +444,14 @@ export default class HTMLExporter extends Exporter {
     }
 
     public async export(): Promise<void> {
-        this.updateProgress(_t("Starting export…"));
+        this.updateProgress(_t("export_chat|starting_export"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
         this.updateProgress(
-            _t("Fetched %(count)s events in %(seconds)ss", {
+            _t("export_chat|fetched_n_events_in_time", {
                 count: res.length,
                 seconds: (fetchEnd - fetchStart) / 1000,
             }),
@@ -459,7 +459,7 @@ export default class HTMLExporter extends Exporter {
             false,
         );
 
-        this.updateProgress(_t("Creating HTML…"));
+        this.updateProgress(_t("export_chat|creating_html"));
 
         const usedClasses = new Set<string>();
         for (let page = 0; page < res.length / 1000; page++) {
@@ -482,9 +482,9 @@ export default class HTMLExporter extends Exporter {
         if (this.cancelled) {
             logger.info("Export cancelled successfully");
         } else {
-            this.updateProgress(_t("Export successful!"));
+            this.updateProgress(_t("export_chat|export_successful"));
             this.updateProgress(
-                _t("Exported %(count)s events in %(seconds)s seconds", {
+                _t("export_chat|exported_n_events_in_time", {
                     count: res.length,
                     seconds: (exportEnd - fetchStart) / 1000,
                 }),

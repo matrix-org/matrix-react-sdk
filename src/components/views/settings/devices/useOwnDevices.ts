@@ -25,20 +25,20 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     UNSTABLE_MSC3852_LAST_SEEN_UA,
+    MatrixError,
+    LocalNotificationSettings,
 } from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
 import { getDeviceClientInformation, pruneClientInformation } from "../../../../utils/device/clientInformation";
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
 import { isDeviceVerified } from "../../../../utils/device/isDeviceVerified";
+import { SDKContext } from "../../../../contexts/SDKContext";
 
 const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyDevice): ExtendedDeviceAppInfo => {
     const { name, version, url } = getDeviceClientInformation(matrixClient, device.device_id);
@@ -90,7 +90,8 @@ export type DevicesState = {
     supportsMSC3881?: boolean | undefined;
 };
 export const useOwnDevices = (): DevicesState => {
-    const matrixClient = useContext(MatrixClientContext);
+    const sdkContext = useContext(SDKContext);
+    const matrixClient = sdkContext.client!;
 
     const currentDeviceId = matrixClient.getDeviceId()!;
     const userId = matrixClient.getSafeUserId();
@@ -194,8 +195,8 @@ export const useOwnDevices = (): DevicesState => {
                 await matrixClient.setDeviceDetails(deviceId, { display_name: deviceName });
                 await refreshDevices();
             } catch (error) {
-                logger.error("Error setting session display name", error);
-                throw new Error(_t("Failed to set display name"));
+                logger.error("Error setting device name", error);
+                throw new Error(_t("settings|sessions|error_set_name"));
             }
         },
         [matrixClient, devices, refreshDevices],
@@ -217,7 +218,7 @@ export const useOwnDevices = (): DevicesState => {
                 }
             } catch (error) {
                 logger.error("Error setting pusher state", error);
-                throw new Error(_t("Failed to set pusher state"));
+                throw new Error(_t("settings|sessions|error_pusher_state"));
             } finally {
                 await refreshDevices();
             }

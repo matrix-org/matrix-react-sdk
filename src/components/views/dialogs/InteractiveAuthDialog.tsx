@@ -17,9 +17,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, UIAResponse } from "matrix-js-sdk/src/matrix";
 import { AuthType } from "matrix-js-sdk/src/interactive-auth";
-import { UIAResponse } from "matrix-js-sdk/src/@types/uia";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -98,15 +97,15 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
     private getDefaultDialogAesthetics(): DialogAesthetics {
         const ssoAesthetics = {
             [SSOAuthEntry.PHASE_PREAUTH]: {
-                title: _t("Use Single Sign On to continue"),
-                body: _t("To continue, use Single Sign On to prove your identity."),
-                continueText: _t("Single Sign On"),
+                title: _t("auth|uia|sso_title"),
+                body: _t("auth|uia|sso_preauth_body"),
+                continueText: _t("auth|sso"),
                 continueKind: "primary",
             },
             [SSOAuthEntry.PHASE_POSTAUTH]: {
-                title: _t("Confirm to continue"),
-                body: _t("Click the button below to confirm your identity."),
-                continueText: _t("Confirm"),
+                title: _t("auth|uia|sso_postauth_title"),
+                body: _t("auth|uia|sso_postauth_body"),
+                continueText: _t("action|confirm"),
                 continueKind: "primary",
             },
         };
@@ -117,7 +116,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         };
     }
 
-    private onAuthFinished: InteractiveAuthCallback<T> = (success, result): void => {
+    private onAuthFinished: InteractiveAuthCallback<T> = async (success, result): Promise<void> => {
         if (success) {
             this.props.onFinished(true, result);
         } else {
@@ -144,7 +143,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         // Let's pick a title, body, and other params text that we'll show to the user. The order
         // is most specific first, so stagePhase > our props > defaults.
 
-        let title = this.state.authError ? "Error" : this.props.title || _t("Authentication");
+        let title = this.state.authError ? "Error" : this.props.title || _t("common|authentication");
         let body = this.state.authError ? null : this.props.body;
         let continueText: string | undefined;
         let continueKind: string | undefined;
@@ -172,7 +171,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
                     <div role="alert">{this.state.authError.message || this.state.authError.toString()}</div>
                     <br />
                     <AccessibleButton onClick={this.onDismissClick} className="mx_GeneralButton" autoFocus={true}>
-                        {_t("Dismiss")}
+                        {_t("action|dismiss")}
                     </AccessibleButton>
                 </div>
             );
