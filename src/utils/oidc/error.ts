@@ -15,27 +15,33 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import { _t } from "../../languageHandler";
 
+/**
+ * Errors thrown by EW during OIDC native flow authentication.
+ * Intended to be logged, not read by users.
+ */
 export enum OidcClientError {
     InvalidQueryParameters = "Invalid query parameters for OIDC native login. `code` and `state` are required.",
 }
 
-export const getErrorMessage = (error: Error | MatrixError): string | ReactNode => {
+/**
+ * Get a friendly translated error message for user consumption
+ * based on error encountered during authentication
+ * @param error
+ * @returns a friendly translated error message for user consumption
+ */
+export const getOidcErrorMessage = (error: Error): string | ReactNode => {
     switch (error.message) {
         case OidcError.MissingOrInvalidStoredState:
-            return _t(
-                "We asked the browser to remember which homeserver you use to let you sign in, " +
-                    "but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
-            );
+            return _t("auth|oidc|missing_or_invalid_stored_state");
         case OidcClientError.InvalidQueryParameters:
         case OidcError.CodeExchangeFailed:
         case OidcError.InvalidBearerTokenResponse:
         case OidcError.InvalidIdToken:
         default:
-            return _t("Something went wrong during authentication. Go to the sign in page and try again.");
+            return _t("auth|oidc|generic_auth_error");
     }
 };

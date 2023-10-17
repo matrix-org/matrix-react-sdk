@@ -65,7 +65,7 @@ import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPaylo
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
 import { completeOidcLogin } from "./utils/oidc/authorize";
-import { getErrorMessage } from "./utils/oidc/error";
+import { getOidcErrorMessage } from "./utils/oidc/error";
 import { OidcClientStore } from "./stores/oidc/OidcClientStore";
 import {
     getStoredOidcClientId,
@@ -307,7 +307,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
 
-        await onFailedDelegatedAuthLogin(getErrorMessage(error as Error));
+        await onFailedDelegatedAuthLogin(getOidcErrorMessage(error as Error));
         return false;
     }
 }

@@ -126,7 +126,9 @@ describe("OIDC authorization", () => {
         });
 
         it("should throw when query params do not include state and code", async () => {
-            expect(async () => await completeOidcLogin({})).rejects.toThrow(OidcClientError.InvalidQueryParameters);
+            await expect(async () => await completeOidcLogin({})).rejects.toThrow(
+                OidcClientError.InvalidQueryParameters,
+            );
         });
 
         it("should make request complete authorization code grant", async () => {
