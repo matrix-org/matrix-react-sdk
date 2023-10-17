@@ -501,7 +501,7 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-            // XXX: fails because sometimes the room is still unread after opening the thread (initially)
+            // XXX: fails because it flakes - sometimes the room is still unread after opening the thread (initially)
             it.skip("Reacting to a redacted message leaves the thread read", () => {
                 // Given a message in a thread was redacted and everything is read
                 goTo(room1);
