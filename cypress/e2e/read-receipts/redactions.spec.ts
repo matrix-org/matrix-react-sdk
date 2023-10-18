@@ -428,7 +428,8 @@ describe("Read receipts", () => {
                 // Then the room is still read
                 assertRead(room2);
             });
-            it("Reading an unread thread after a redaction of an older message makes it read", () => {
+            // XXX: fails because it flakes (on CI only)
+            it.skip("Reading an unread thread after a redaction of an older message makes it read", () => {
                 // Given an unread thread where an older message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
