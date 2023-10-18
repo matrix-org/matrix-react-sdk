@@ -259,16 +259,12 @@ export default class MultiInviter {
                             if (isSpace) {
                                 errorText =
                                     isFederated === false
-                                        ? _t(
-                                              "This space is unfederated. You cannot invite people from external servers.",
-                                          )
+                                        ? _t("invite|error_unfederated_space")
                                         : _t("invite|error_permissions_space");
                             } else {
                                 errorText =
                                     isFederated === false
-                                        ? _t(
-                                              "This room is unfederated. You cannot invite people from external servers.",
-                                          )
+                                        ? _t("invite|error_unfederated_room")
                                         : _t("invite|error_permissions_room");
                             }
                             fatal = true;
