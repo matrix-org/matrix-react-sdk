@@ -20,7 +20,7 @@ import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import type { VerificationRequest, Verifier } from "matrix-js-sdk/src/crypto-api";
 import { CypressBot } from "../../support/bot";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
-import { emitPromise, skipIfRustCrypto } from "../../support/util";
+import { emitPromise } from "../../support/util";
 import {
     checkDeviceIsConnectedKeyBackup,
     checkDeviceIsCrossSigned,
