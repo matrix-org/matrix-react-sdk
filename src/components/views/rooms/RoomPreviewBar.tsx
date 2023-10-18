@@ -510,19 +510,16 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 const avatar = <RoomAvatar room={this.props.room} oobData={this.props.oobData} />;
 
                 const inviteMember = this.getInviteMember();
+                const userName = (
+                    <span className="mx_RoomPreviewBar_inviter">
+                        {inviteMember?.rawDisplayName ?? this.props.inviterName}
+                    </span>
+                );
                 const inviterElement = (
                     <>
-                        {_t(
-                            isDM ? "room|dm_invite_subtitle" : "room|invite_subtitle",
-                            {},
-                            {
-                                userName: () => (
-                                    <span className="mx_RoomPreviewBar_inviter">
-                                        {inviteMember?.rawDisplayName ?? this.props.inviterName}
-                                    </span>
-                                ),
-                            },
-                        )}
+                        {isDM
+                            ? _t("room|dm_invite_subtitle", {}, { userName })
+                            : _t("room|invite_subtitle", {}, { userName })}
                         {inviteMember && (
                             <>
                                 <br />
