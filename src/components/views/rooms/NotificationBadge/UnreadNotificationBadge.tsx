@@ -14,23 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { useUnreadNotifications } from "../../../../hooks/useUnreadNotifications";
 import { StatelessNotificationBadge } from "./StatelessNotificationBadge";
 
 interface Props {
-    room: Room;
+    room?: Room;
     threadId?: string;
 }
 
-export function UnreadNotificationBadge({ room, threadId }: Props) {
+export function UnreadNotificationBadge({ room, threadId }: Props): JSX.Element {
     const { symbol, count, color } = useUnreadNotifications(room, threadId);
 
-    return <StatelessNotificationBadge
-        symbol={symbol}
-        count={count}
-        color={color}
-    />;
+    return <StatelessNotificationBadge symbol={symbol} count={count} color={color} />;
 }

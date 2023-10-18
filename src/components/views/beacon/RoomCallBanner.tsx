@@ -15,34 +15,27 @@ limitations under the License.
 */
 
 import React, { useCallback } from "react";
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { EventType, Room } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import dispatcher, { defaultDispatcher } from "../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
-import { Call, ConnectionState, ElementCall } from "../../../models/Call";
+import { ConnectionState, ElementCall } from "../../../models/Call";
 import { useCall } from "../../../hooks/useCall";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import {
-    OwnBeaconStore,
-    OwnBeaconStoreEvent,
-} from "../../../stores/OwnBeaconStore";
-import { CallDurationFromEvent } from "../voip/CallDuration";
+import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
+import { GroupCallDuration } from "../voip/CallDuration";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface RoomCallBannerProps {
     roomId: Room["roomId"];
-    call: Call;
+    call: ElementCall;
 }
 
-const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
-    roomId,
-    call,
-}) => {
-    const callEvent: MatrixEvent | null = (call as ElementCall)?.groupCall;
-
+const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) => {
     const connect = useCallback(
         (ev: ButtonEvent) => {
             ev.preventDefault();
@@ -57,33 +50,34 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({
     );
 
     const onClick = useCallback(() => {
+        const event = call.groupCall.room.currentState.getStateEvents(
+            EventType.GroupCallPrefix,
+            call.groupCall.groupCallId,
+        );
+        if (event === null) {
+            logger.error("Couldn't find a group call event to jump to");
+            return;
+        }
+
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
             metricsTrigger: undefined,
-            event_id: callEvent.getId(),
+            event_id: event.getId(),
             scroll_into_view: true,
             highlighted: true,
         });
-    }, [callEvent, roomId]);
+    }, [call, roomId]);
 
     return (
-        <div
-            className="mx_RoomCallBanner"
-            onClick={onClick}
-        >
+        <div className="mx_RoomCallBanner" onClick={onClick}>
             <div className="mx_RoomCallBanner_text">
-                <span className="mx_RoomCallBanner_label">{ _t("Video call") }</span>
-                <CallDurationFromEvent mxEvent={callEvent} />
+                <span className="mx_RoomCallBanner_label">{_t("voip|video_call")}</span>
+                <GroupCallDuration groupCall={call.groupCall} />
             </div>
 
-            <AccessibleButton
-                onClick={connect}
-                kind="primary"
-                element="button"
-                disabled={false}
-            >
-                { _t("Join") }
+            <AccessibleButton onClick={connect} kind="primary" element="button" disabled={false}>
+                {_t("action|join")}
             </AccessibleButton>
         </div>
     );
@@ -103,10 +97,8 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
         () => OwnBeaconStore.instance.isMonitoringLiveLocation,
     );
 
-    const liveBeaconIds = useEventEmitterState(
-        OwnBeaconStore.instance,
-        OwnBeaconStoreEvent.LivenessChange,
-        () => OwnBeaconStore.instance.getLiveBeaconIds(roomId),
+    const liveBeaconIds = useEventEmitterState(OwnBeaconStore.instance, OwnBeaconStoreEvent.LivenessChange, () =>
+        OwnBeaconStore.instance.getLiveBeaconIds(roomId),
     );
 
     if (isMonitoringLiveLocation && liveBeaconIds.length) {
@@ -119,12 +111,11 @@ const RoomCallBanner: React.FC<Props> = ({ roomId }) => {
     }
 
     // Split into outer/inner to avoid watching various parts if there is no call
-    if (call) {
-        // No banner if the call is connected (or connecting/disconnecting)
-        if (call.connectionState !== ConnectionState.Disconnected) return null;
-
-        return <RoomCallBannerInner call={call} roomId={roomId} />;
+    // No banner if the call is connected (or connecting/disconnecting)
+    if (call !== null && call.connectionState === ConnectionState.Disconnected) {
+        return <RoomCallBannerInner call={call as ElementCall} roomId={roomId} />;
     }
+
     return null;
 };
 

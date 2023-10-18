@@ -39,7 +39,7 @@ limitations under the License.
     position: absolute;
     top: calc(50% - 8px); /* center */
     right: -8px;
-    mask: url('$(res)/img/member_chevron.png');
+    mask: url("$(res)/img/member_chevron.png");
     mask-repeat: no-repeat;
     width: 16px;
     height: 16px;
@@ -67,12 +67,13 @@ limitations under the License.
     padding-top: 4px;
     padding-bottom: 4px;
     position: relative;
+    line-height: 0;
 }
 
 .mx_EntityTile_name {
     flex: 1 1 0;
     overflow: hidden;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -120,7 +121,7 @@ limitations under the License.
 .mx_EntityTile_power {
     padding-inline-start: 6px;
     font-size: $font-10px;
-    color: $tertiary-content;
+    color: $secondary-content;
     max-width: 6em;
     overflow: hidden;
     text-overflow: ellipsis;

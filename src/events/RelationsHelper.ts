@@ -14,9 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent, MatrixEventEvent, RelationType } from "matrix-js-sdk/src/matrix";
-import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import {
+    MatrixClient,
+    MatrixEvent,
+    MatrixEventEvent,
+    RelationType,
+    TypedEventEmitter,
+    Relations,
+    RelationsEvent,
+} from "matrix-js-sdk/src/matrix";
 
 import { IDestroyable } from "../utils/IDestroyable";
 
@@ -34,9 +40,7 @@ interface EventMap {
  * Optionally receive the current events by calling emitCurrent().
  * Clean up everything by calling destroy().
  */
-export class RelationsHelper
-    extends TypedEventEmitter<RelationsHelperEvent, EventMap>
-    implements IDestroyable {
+export class RelationsHelper extends TypedEventEmitter<RelationsHelperEvent, EventMap> implements IDestroyable {
     private relations?: Relations;
     private eventId: string;
     private roomId: string;
@@ -89,11 +93,9 @@ export class RelationsHelper
 
     private setRelations(): void {
         const room = this.client.getRoom(this.event.getRoomId());
-        this.relations = room?.getUnfilteredTimelineSet()?.relations?.getChildEventsForEvent(
-            this.eventId,
-            this.relationType,
-            this.relationEventType,
-        );
+        this.relations = room
+            ?.getUnfilteredTimelineSet()
+            ?.relations?.getChildEventsForEvent(this.eventId, this.relationType, this.relationEventType);
     }
 
     private onRelationsAdd = (event: MatrixEvent): void => {
@@ -101,7 +103,7 @@ export class RelationsHelper
     };
 
     public emitCurrent(): void {
-        this.relations?.getRelations()?.forEach(e => this.emit(RelationsHelperEvent.Add, e));
+        this.relations?.getRelations()?.forEach((e) => this.emit(RelationsHelperEvent.Add, e));
     }
 
     public getCurrent(): MatrixEvent[] {
@@ -125,8 +127,8 @@ export class RelationsHelper
                     limit: 50,
                 },
             );
-            nextBatch = response?.nextBatch;
-            response?.events.forEach(e => this.emit(RelationsHelperEvent.Add, e));
+            nextBatch = response?.nextBatch ?? undefined;
+            response?.events.forEach((e) => this.emit(RelationsHelperEvent.Add, e));
         } while (nextBatch);
     }
 

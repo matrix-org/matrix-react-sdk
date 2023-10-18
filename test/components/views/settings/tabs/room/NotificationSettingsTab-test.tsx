@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult, screen } from "@testing-library/react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
 import NotificationSettingsTab from "../../../../../../src/components/views/settings/tabs/room/NotificationSettingsTab";
@@ -33,16 +33,16 @@ describe("NotificatinSettingsTab", () => {
     let roomProps: RoomEchoChamber;
 
     const renderTab = (): RenderResult => {
-        return render(<NotificationSettingsTab roomId={roomId} closeSettingsFn={() => { }} />);
+        return render(<NotificationSettingsTab roomId={roomId} closeSettingsFn={() => {}} />);
     };
 
     beforeEach(() => {
         stubClient();
-        cli = MatrixClientPeg.get();
+        cli = MatrixClientPeg.safeGet();
         const room = mkStubRoom(roomId, "test room", cli);
         roomProps = EchoChamber.forRoom(room);
 
-        NotificationSettingsTab.contextType = React.createContext(cli);
+        NotificationSettingsTab.contextType = React.createContext<MatrixClient>(cli);
     });
 
     it("should prevent »Settings« link click from bubbling up to radio buttons", async () => {
@@ -50,7 +50,8 @@ describe("NotificatinSettingsTab", () => {
 
         // settings link of mentions_only volume
         const settingsLink = tab.container.querySelector(
-            "label.mx_NotificationSettingsTab_mentionsKeywordsEntry div.mx_AccessibleButton");
+            "label.mx_NotificationSettingsTab_mentionsKeywordsEntry div.mx_AccessibleButton",
+        );
         if (!settingsLink) throw new Error("settings link does not exist.");
 
         await userEvent.click(settingsLink);

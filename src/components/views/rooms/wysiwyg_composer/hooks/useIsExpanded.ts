@@ -16,12 +16,12 @@ limitations under the License.
 
 import { MutableRefObject, useEffect, useState } from "react";
 
-export function useIsExpanded(ref: MutableRefObject<HTMLElement | null>, breakingPoint: number) {
+export function useIsExpanded(ref: MutableRefObject<HTMLElement | null>, breakingPoint: number): boolean {
     const [isExpanded, setIsExpanded] = useState(false);
     useEffect(() => {
         if (ref.current) {
             const editor = ref.current;
-            const resizeObserver = new ResizeObserver(entries => {
+            const resizeObserver = new ResizeObserver((entries) => {
                 requestAnimationFrame(() => {
                     const height = entries[0]?.contentBoxSize?.[0].blockSize;
                     setIsExpanded(height >= breakingPoint);

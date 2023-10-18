@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 const STICKER_PICKER_WIDGET_ID = "fake-sticker-picker";
 const STICKER_PICKER_WIDGET_NAME = "Fake Stickers";
@@ -67,8 +67,7 @@ const WIDGET_HTML = `
 `;
 
 function openStickerPicker() {
-    cy.get('.mx_MessageComposer_buttonMenu').click();
-    cy.get('#stickersButton').click();
+    cy.openMessageComposerOptions().findByRole("menuitem", { name: "Sticker" }).click();
 }
 
 function sendStickerFromPicker() {
@@ -76,23 +75,21 @@ function sendStickerFromPicker() {
     // to use `chromeWebSecurity: false` in our cypress config. Not even cy.origin() can
     // break into the iframe for us :(
     cy.accessIframe(`iframe[title="${STICKER_PICKER_WIDGET_NAME}"]`).within({}, () => {
-        cy.get("#sendsticker").should('exist').click();
+        cy.get("#sendsticker").should("exist").click();
     });
 
     // Sticker picker should close itself after sending.
-    cy.get(".mx_AppTileFullWidth#stickers").should('not.exist');
+    cy.get(".mx_AppTileFullWidth#stickers").should("not.exist");
 }
 
 function expectTimelineSticker(roomId: string) {
     // Make sure it's in the right room
-    cy.get('.mx_EventTile_sticker > a')
-        .should("have.attr", "href")
-        .and("include", `/${roomId}/`);
+    cy.get(".mx_EventTile_sticker > a").should("have.attr", "href").and("include", `/${roomId}/`);
 
-    // Make sure the image points at the sticker image
-    cy.get<HTMLImageElement>(`img[alt="${STICKER_NAME}"]`)
-        .should("have.attr", "src")
-        .and("match", /thumbnail\/somewhere\?/);
+    // Make sure the image points at the sticker image. We will briefly show it
+    // using the thumbnail URL, but as soon as that fails, we will switch to the
+    // download URL.
+    cy.get<HTMLImageElement>(`img[alt="${STICKER_NAME}"][src*="download/somewhere"]`).should("exist");
 }
 
 describe("Stickers", () => {
@@ -104,25 +101,26 @@ describe("Stickers", () => {
     // See sendStickerFromPicker() for more detail on iframe comms.
 
     let stickerPickerUrl: string;
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
+    let userId: string;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Sally");
+            cy.initTestUser(homeserver, "Sally").then((user) => (userId = user.userId));
         });
-        cy.serveHtmlFile(WIDGET_HTML).then(url => {
+        cy.serveHtmlFile(WIDGET_HTML).then((url) => {
             stickerPickerUrl = url;
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 
-    it('should send a sticker to multiple rooms', () => {
+    it("should send a sticker to multiple rooms", () => {
         cy.createRoom({
             name: ROOM_NAME_1,
         }).as("roomId1");
@@ -135,7 +133,11 @@ describe("Stickers", () => {
                     type: "m.stickerpicker",
                     name: STICKER_PICKER_WIDGET_NAME,
                     url: stickerPickerUrl,
+                    creatorUserId: userId,
                 },
+                sender: userId,
+                state_key: STICKER_PICKER_WIDGET_ID,
+                type: "m.widget",
                 id: STICKER_PICKER_WIDGET_ID,
             },
         }).as("stickers");
@@ -158,6 +160,34 @@ describe("Stickers", () => {
             openStickerPicker();
             sendStickerFromPicker();
             expectTimelineSticker(roomId2);
+        });
+    });
+
+    it("should handle a sticker picker widget missing creatorUserId", () => {
+        cy.createRoom({
+            name: ROOM_NAME_1,
+        }).as("roomId1");
+        cy.setAccountData("m.widgets", {
+            [STICKER_PICKER_WIDGET_ID]: {
+                content: {
+                    type: "m.stickerpicker",
+                    name: STICKER_PICKER_WIDGET_NAME,
+                    url: stickerPickerUrl,
+                    // No creatorUserId
+                },
+                sender: userId,
+                state_key: STICKER_PICKER_WIDGET_ID,
+                type: "m.widget",
+                id: STICKER_PICKER_WIDGET_ID,
+            },
+        }).as("stickers");
+
+        cy.all([cy.get<string>("@roomId1"), cy.get<{}>("@stickers")]).then(([roomId1]) => {
+            cy.viewRoomByName(ROOM_NAME_1);
+            cy.url().should("contain", `/#/room/${roomId1}`);
+            openStickerPicker();
+            sendStickerFromPicker();
+            expectTimelineSticker(roomId1);
         });
     });
 });

@@ -17,7 +17,7 @@ limitations under the License.
 .mx_BaseCard {
     --BaseCard_padding-inline: $spacing-8;
     --BaseCard_EventTile_line-padding-block: 2px;
-    --BaseCard_EventTile-spacing-inline: 36px; /* TODO: Use a spacing variable */
+    --BaseCard_EventTile-spacing-inline: 36px;
     --BaseCard_header-button-size: 24px;
 
     padding: 0 var(--BaseCard_padding-inline);
@@ -25,6 +25,7 @@ limitations under the License.
     display: flex;
     flex-direction: column;
     flex: 1;
+    font-size: var(--cpd-font-size-body-md);
 
     .mx_BaseCard_header {
         --BaseCard_header_button-margin: $spacing-12;
@@ -32,9 +33,8 @@ limitations under the License.
         margin: $spacing-4 0 $spacing-12;
 
         > h2 {
-            margin: 0 44px; /* TODO: Use a spacing variable */
-            font-size: $font-18px;
-            font-weight: $font-semi-bold;
+            margin: 0 44px;
+            font: var(--cpd-font-body-sm-semibold);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -59,7 +59,7 @@ limitations under the License.
                 left: 0;
                 mask-repeat: no-repeat;
                 mask-position: center;
-                background-color: $header-panel-text-primary-color;
+                background-color: $icon-button-color;
             }
         }
 
@@ -70,7 +70,7 @@ limitations under the License.
             &::before {
                 transform: rotate(90deg);
                 mask-size: 22px;
-                mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+                mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
             }
 
             /* Header title with the back button */
@@ -79,7 +79,7 @@ limitations under the License.
                 margin-inline-start: var(--BaseCard_header-button-size);
 
                 .mx_BaseCard_header_title_heading {
-                    margin-inline-start: 6px; /* TODO: Use a spacing variable */
+                    margin-inline-start: 6px;
                 }
             }
         }
@@ -89,7 +89,7 @@ limitations under the License.
             margin-inline-end: calc(var(--BaseCard_header_button-margin) - $spacing-4);
 
             &::before {
-                mask-image: url('$(res)/img/icons-close.svg');
+                mask-image: url("$(res)/img/icons-close.svg");
                 mask-size: 8px;
             }
         }
@@ -103,7 +103,7 @@ limitations under the License.
             flex: 1;
 
             .mx_BaseCard_header_title_heading {
-                color: $secondary-content;
+                color: $icon-button-color;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -115,7 +115,7 @@ limitations under the License.
                 height: var(--BaseCard_header-button-size);
 
                 &::after {
-                    content: '';
+                    content: "";
                     position: absolute;
                     inset-block-start: 0;
                     inset-inline-start: 0;
@@ -151,20 +151,19 @@ limitations under the License.
             margin-right: $spacing-12;
         }
 
-        > h1 {
+        > h2 {
             color: $tertiary-content;
-            font-size: $font-12px;
-            font-weight: 500;
+            font: var(--cpd-font-body-sm-medium);
+            margin: $spacing-12;
         }
 
         .mx_BaseCard_Button {
-            padding: 10px; /* TODO: Use a spacing variable */
+            padding: 10px;
             padding-inline-start: $spacing-12;
             margin: 0;
             position: relative;
-            font-size: $font-13px;
+            font: var(--cpd-font-heading-sm-medium);
             height: 20px;
-            line-height: 20px;
             border-radius: 8px;
             overflow: hidden;
             white-space: nowrap;
@@ -198,8 +197,7 @@ limitations under the License.
         .mx_AccessibleButton_kind_secondary {
             color: $secondary-content;
             background-color: rgba(141, 151, 165, 0.2);
-            font-weight: $font-semi-bold;
-            font-size: $font-14px;
+            font: var(--cpd-font-body-md-semibold);
         }
 
         .mx_AccessibleButton_disabled {
@@ -210,7 +208,6 @@ limitations under the License.
 
 .mx_FilePanel,
 .mx_UserInfo,
-.mx_NotificationPanel,
 .mx_MemberList {
     &.mx_BaseCard {
         padding: $spacing-32 0 0;
@@ -227,15 +224,15 @@ limitations under the License.
         position: initial;
 
         span:first-of-type {
-            font-weight: $font-semi-bold;
+            font-weight: var(--cpd-font-weight-semibold);
             font-size: inherit;
             color: $primary-content;
         }
 
-        font-size: $font-12px;
+        font: var(--cpd-font-body-sm-regular);
         color: $secondary-content;
-        padding-top: 10px; /* TODO: Use a spacing variable */
-        padding-bottom: 10px; /* TODO: Use a spacing variable */
+        padding-top: 10px;
+        padding-bottom: 10px;
 
         border: 1px solid $quinary-content;
         box-shadow: 0px 1px 3px rgba(23, 25, 28, 0.05);
@@ -243,7 +240,7 @@ limitations under the License.
 
     .mx_ContextualMenu_chevron_top {
         left: auto;
-        right: 22px; /* TODO: Use a spacing variable */
+        right: 22px;
         border-bottom-color: $quinary-content;
 
         &::after {

@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from "react";
 
-import { Icon as WarningBadgeIcon } from "../../../res/img/element-icons/warning-badge.svg";
+import { Icon as WarningBadgeIcon } from "../../../res/img/compound/error-16px.svg";
 
 interface ErrorMessageProps {
     message: string | ReactNode | null;
@@ -26,15 +26,13 @@ interface ErrorMessageProps {
  * Error message component.
  * Reserves two lines to display errors to prevent layout shifts when the error pops up.
  */
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({
-    message,
-}) => {
-    const icon = message
-        ? <WarningBadgeIcon className="mx_Icon mx_Icon_16" />
-        : null;
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
+    const icon = message ? <WarningBadgeIcon className="mx_Icon mx_Icon_16" /> : null;
 
-    return <div className="mx_ErrorMessage">
-        { icon }
-        { message }
-    </div>;
+    return (
+        <div className="mx_ErrorMessage">
+            {icon}
+            {message}
+        </div>
+    );
 };

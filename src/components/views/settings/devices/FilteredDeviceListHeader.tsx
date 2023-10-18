@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLProps } from 'react';
+import React, { HTMLProps } from "react";
 
-import { _t } from '../../../../languageHandler';
-import StyledCheckbox, { CheckboxStyle } from '../../elements/StyledCheckbox';
-import { Alignment } from '../../elements/Tooltip';
-import TooltipTarget from '../../elements/TooltipTarget';
+import { _t } from "../../../../languageHandler";
+import StyledCheckbox, { CheckboxStyle } from "../../elements/StyledCheckbox";
+import { Alignment } from "../../elements/Tooltip";
+import TooltipTarget from "../../elements/TooltipTarget";
 
-interface Props extends Omit<HTMLProps<HTMLDivElement>, 'className'> {
+interface Props extends Omit<HTMLProps<HTMLDivElement>, "className"> {
     selectedDeviceCount: number;
     isAllSelected: boolean;
+    isSelectDisabled?: boolean;
     toggleSelectAll: () => void;
     children?: React.ReactNode;
 }
@@ -31,33 +32,34 @@ interface Props extends Omit<HTMLProps<HTMLDivElement>, 'className'> {
 const FilteredDeviceListHeader: React.FC<Props> = ({
     selectedDeviceCount,
     isAllSelected,
+    isSelectDisabled,
     toggleSelectAll,
     children,
     ...rest
 }) => {
-    const checkboxLabel = isAllSelected ? _t('Deselect all') : _t('Select all');
-    return <div className='mx_FilteredDeviceListHeader' {...rest}>
-        <TooltipTarget
-            label={checkboxLabel}
-            alignment={Alignment.Top}
-        >
-            <StyledCheckbox
-                kind={CheckboxStyle.Solid}
-                checked={isAllSelected}
-                onChange={toggleSelectAll}
-                id='device-select-all-checkbox'
-                data-testid='device-select-all-checkbox'
-                aria-label={checkboxLabel}
-            />
-        </TooltipTarget>
-        <span className='mx_FilteredDeviceListHeader_label'>
-            { selectedDeviceCount > 0
-                ? _t('%(selectedDeviceCount)s sessions selected', { selectedDeviceCount })
-                : _t('Sessions')
-            }
-        </span>
-        { children }
-    </div>;
+    const checkboxLabel = isAllSelected ? _t("common|deselect_all") : _t("common|select_all");
+    return (
+        <div className="mx_FilteredDeviceListHeader" {...rest}>
+            {!isSelectDisabled && (
+                <TooltipTarget label={checkboxLabel} alignment={Alignment.Top}>
+                    <StyledCheckbox
+                        kind={CheckboxStyle.Solid}
+                        checked={isAllSelected}
+                        onChange={toggleSelectAll}
+                        id="device-select-all-checkbox"
+                        data-testid="device-select-all-checkbox"
+                        aria-label={checkboxLabel}
+                    />
+                </TooltipTarget>
+            )}
+            <span className="mx_FilteredDeviceListHeader_label">
+                {selectedDeviceCount > 0
+                    ? _t("settings|sessions|n_sessions_selected", { count: selectedDeviceCount })
+                    : _t("settings|sessions|title")}
+            </span>
+            {children}
+        </div>
+    );
 };
 
 export default FilteredDeviceListHeader;

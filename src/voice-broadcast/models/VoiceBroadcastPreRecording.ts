@@ -14,37 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { MatrixClient, Room, RoomMember, TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import { IDestroyable } from "../../utils/IDestroyable";
+import { VoiceBroadcastPlaybacksStore } from "../stores/VoiceBroadcastPlaybacksStore";
 import { VoiceBroadcastRecordingsStore } from "../stores/VoiceBroadcastRecordingsStore";
 import { startNewVoiceBroadcastRecording } from "../utils/startNewVoiceBroadcastRecording";
 
 type VoiceBroadcastPreRecordingEvent = "dismiss";
 
 interface EventMap {
-    "dismiss": (voiceBroadcastPreRecording: VoiceBroadcastPreRecording) => void;
+    dismiss: (voiceBroadcastPreRecording: VoiceBroadcastPreRecording) => void;
 }
 
 export class VoiceBroadcastPreRecording
     extends TypedEventEmitter<VoiceBroadcastPreRecordingEvent, EventMap>
-    implements IDestroyable {
+    implements IDestroyable
+{
     public constructor(
         public room: Room,
         public sender: RoomMember,
         private client: MatrixClient,
+        private playbacksStore: VoiceBroadcastPlaybacksStore,
         private recordingsStore: VoiceBroadcastRecordingsStore,
     ) {
         super();
     }
 
     public start = async (): Promise<void> => {
-        await startNewVoiceBroadcastRecording(
-            this.room,
-            this.client,
-            this.recordingsStore,
-        );
+        await startNewVoiceBroadcastRecording(this.room, this.client, this.playbacksStore, this.recordingsStore);
         this.emit("dismiss", this);
     };
 

@@ -16,32 +16,40 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import type { UserCredentials } from "../../support/login";
 
 describe("User Menu", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let user: UserCredentials;
 
-    beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+    const USER_NAME = "Jeff";
 
-            cy.initTestUser(synapse, "Jeff").then(credentials => {
+    beforeEach(() => {
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
+
+            cy.initTestUser(homeserver, USER_NAME).then((credentials) => {
                 user = credentials;
             });
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should contain our name & userId", () => {
-        cy.get('[aria-label="User menu"]').click();
+        cy.findByRole("button", { name: "User menu" }).click();
+
         cy.get(".mx_UserMenu_contextMenu").within(() => {
-            cy.get(".mx_UserMenu_contextMenu_displayName").should("contain", "Jeff");
-            cy.get(".mx_UserMenu_contextMenu_userId").should("contain", user.userId);
+            cy.get(".mx_UserMenu_contextMenu_displayName").within(() => {
+                cy.findByText(USER_NAME).should("exist");
+            });
+
+            cy.get(".mx_UserMenu_contextMenu_userId").within(() => {
+                cy.findByText(user.userId).should("exist");
+            });
         });
     });
 });

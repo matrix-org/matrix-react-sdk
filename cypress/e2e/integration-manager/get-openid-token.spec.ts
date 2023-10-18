@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
 
 const ROOM_NAME = "Integration Manager Test";
@@ -59,36 +59,34 @@ const INTEGRATION_MANAGER_HTML = `
 `;
 
 function openIntegrationManager() {
-    cy.get(".mx_RightPanel_roomSummaryButton").click();
-    cy.get(".mx_RoomSummaryCard_appsGroup").within(() => {
-        cy.contains("Add widgets, bridges & bots").click();
-    });
+    cy.findByRole("button", { name: "Room info" }).click();
+    cy.findByRole("button", { name: "Add widgets, bridges & bots" }).click();
 }
 
 function sendActionFromIntegrationManager(integrationManagerUrl: string) {
     cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-        cy.get("#send-action").should("exist").click();
+        cy.findByRole("button", { name: "Press to send action" }).should("exist").click();
     });
 }
 
 describe("Integration Manager: Get OpenID Token", () => {
     let testUser: UserCredentials;
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let integrationManagerUrl: string;
 
     beforeEach(() => {
-        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then(url => {
+        cy.serveHtmlFile(INTEGRATION_MANAGER_HTML).then((url) => {
             integrationManagerUrl = url;
         });
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, USER_DISPLAY_NAME, () => {
-                cy.window().then(win => {
+            cy.initTestUser(homeserver, USER_DISPLAY_NAME, () => {
+                cy.window().then((win) => {
                     win.localStorage.setItem("mx_scalar_token", INTEGRATION_MANAGER_TOKEN);
                     win.localStorage.setItem(`mx_scalar_token_at_${integrationManagerUrl}`, INTEGRATION_MANAGER_TOKEN);
                 });
-            }).then(user => {
+            }).then((user) => {
                 testUser = user;
             });
 
@@ -107,8 +105,8 @@ describe("Integration Manager: Get OpenID Token", () => {
             }).as("integrationManager");
 
             // Succeed when checking the token is valid
-            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, req => {
-                req.continue(res => {
+            cy.intercept(`${integrationManagerUrl}/account?scalar_token=${INTEGRATION_MANAGER_TOKEN}*`, (req) => {
+                req.continue((res) => {
                     return res.send(200, {
                         user_id: testUser.userId,
                     });
@@ -122,21 +120,21 @@ describe("Integration Manager: Get OpenID Token", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
         cy.stopWebServers();
     });
 
     it("should successfully obtain an openID token", () => {
-        cy.all([
-            cy.get<{}>("@integrationManager"),
-        ]).then(() => {
+        cy.all([cy.get<{}>("@integrationManager")]).then(() => {
             cy.viewRoomByName(ROOM_NAME);
 
             openIntegrationManager();
             sendActionFromIntegrationManager(integrationManagerUrl);
 
             cy.accessIframe(`iframe[src*="${integrationManagerUrl}"]`).within(() => {
-                cy.get("#message-response").should('include.text', 'access_token');
+                cy.get("#message-response").within(() => {
+                    cy.findByText(/access_token/);
+                });
             });
         });
     });

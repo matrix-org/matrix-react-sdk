@@ -18,17 +18,15 @@ import React, { ReactElement } from "react";
 import classNames from "classnames";
 
 import {
-    VoiceBroadcastControl,
+    VoiceBroadcastError,
     VoiceBroadcastHeader,
     VoiceBroadcastPlayback,
+    VoiceBroadcastPlaybackControl,
     VoiceBroadcastPlaybackState,
 } from "../..";
-import Spinner from "../../../components/views/elements/Spinner";
 import { useVoiceBroadcastPlayback } from "../../hooks/useVoiceBroadcastPlayback";
-import { Icon as PlayIcon } from "../../../../res/img/element-icons/play.svg";
-import { Icon as PauseIcon } from "../../../../res/img/element-icons/pause.svg";
-import { Icon as Back30sIcon } from "../../../../res/img/element-icons/Back30s.svg";
-import { Icon as Forward30sIcon } from "../../../../res/img/element-icons/Forward30s.svg";
+import { Icon as Back30sIcon } from "../../../../res/img/compound/back-30s-24px.svg";
+import { Icon as Forward30sIcon } from "../../../../res/img/compound/forward-30s-24px.svg";
 import { _t } from "../../../languageHandler";
 import Clock from "../../../components/views/audio_messages/Clock";
 import SeekBar from "../../../components/views/audio_messages/SeekBar";
@@ -41,73 +39,36 @@ interface VoiceBroadcastPlaybackBodyProps {
     playback: VoiceBroadcastPlayback;
 }
 
-export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProps> = ({
-    pip = false,
-    playback,
-}) => {
-    const {
-        duration,
-        liveness,
-        playbackState,
-        position,
-        room,
-        sender,
-        toggle,
-    } = useVoiceBroadcastPlayback(playback);
-
-    let control: React.ReactNode;
-
-    if (playbackState === VoiceBroadcastPlaybackState.Buffering) {
-        control = <Spinner />;
-    } else {
-        let controlIcon: React.FC<React.SVGProps<SVGSVGElement>>;
-        let controlLabel: string;
-
-        switch (playbackState) {
-            case VoiceBroadcastPlaybackState.Stopped:
-                controlIcon = PlayIcon;
-                controlLabel = _t("play voice broadcast");
-                break;
-            case VoiceBroadcastPlaybackState.Paused:
-                controlIcon = PlayIcon;
-                controlLabel = _t("resume voice broadcast");
-                break;
-            case VoiceBroadcastPlaybackState.Playing:
-                controlIcon = PauseIcon;
-                controlLabel = _t("pause voice broadcast");
-                break;
-        }
-
-        control = <VoiceBroadcastControl
-            label={controlLabel}
-            icon={controlIcon}
-            onClick={toggle}
-        />;
-    }
+export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProps> = ({ pip = false, playback }) => {
+    const { times, liveness, playbackState, room, sender, toggle } = useVoiceBroadcastPlayback(playback);
 
     let seekBackwardButton: ReactElement | null = null;
     let seekForwardButton: ReactElement | null = null;
 
     if (playbackState !== VoiceBroadcastPlaybackState.Stopped) {
-        const onSeekBackwardButtonClick = () => {
-            playback.skipTo(Math.max(0, position - SEEK_TIME));
+        const onSeekBackwardButtonClick = (): void => {
+            playback.skipTo(Math.max(0, times.position - SEEK_TIME));
         };
 
-        seekBackwardButton = <SeekButton
-            icon={Back30sIcon}
-            label={_t("30s backward")}
-            onClick={onSeekBackwardButtonClick}
-        />;
+        seekBackwardButton = (
+            <SeekButton
+                icon={Back30sIcon}
+                label={_t("voice_broadcast|30s_backward")}
+                onClick={onSeekBackwardButtonClick}
+            />
+        );
 
-        const onSeekForwardButtonClick = () => {
-            playback.skipTo(Math.min(duration, position + SEEK_TIME));
+        const onSeekForwardButtonClick = (): void => {
+            playback.skipTo(Math.min(times.duration, times.position + SEEK_TIME));
         };
 
-        seekForwardButton = <SeekButton
-            icon={Forward30sIcon}
-            label={_t("30s forward")}
-            onClick={onSeekForwardButtonClick}
-        />;
+        seekForwardButton = (
+            <SeekButton
+                icon={Forward30sIcon}
+                label={_t("voice_broadcast|30s_forward")}
+                onClick={onSeekForwardButtonClick}
+            />
+        );
     }
 
     const classes = classNames({
@@ -115,23 +76,35 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         ["mx_VoiceBroadcastBody--pip"]: pip,
     });
 
+    const content =
+        playbackState === VoiceBroadcastPlaybackState.Error ? (
+            <VoiceBroadcastError message={playback.errorMessage} />
+        ) : (
+            <>
+                <div className="mx_VoiceBroadcastBody_controls">
+                    {seekBackwardButton}
+                    <VoiceBroadcastPlaybackControl state={playbackState} onClick={toggle} />
+                    {seekForwardButton}
+                </div>
+                <SeekBar playback={playback} />
+                <div className="mx_VoiceBroadcastBody_timerow">
+                    <Clock seconds={times.position} />
+                    <Clock seconds={-times.timeLeft} />
+                </div>
+            </>
+        );
+
     return (
         <div className={classes}>
             <VoiceBroadcastHeader
+                linkToRoom={pip}
                 live={liveness}
                 microphoneLabel={sender?.name}
                 room={room}
-                showBroadcast={true}
+                showBroadcast={playbackState !== VoiceBroadcastPlaybackState.Buffering}
+                showBuffering={playbackState === VoiceBroadcastPlaybackState.Buffering}
             />
-            <div className="mx_VoiceBroadcastBody_controls">
-                { seekBackwardButton }
-                { control }
-                { seekForwardButton }
-            </div>
-            <div className="mx_VoiceBroadcastBody_timerow">
-                <SeekBar playback={playback} />
-                <Clock seconds={duration} />
-            </div>
+            {content}
         </div>
     );
 };
