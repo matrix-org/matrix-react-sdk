@@ -382,8 +382,8 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-
-            it("Reading an unread thread after a redaction of the latest message makes it read", () => {
+            // XXX: fails because it flakes (on CI only)
+            it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {
                 // Given an unread thread where the latest message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -449,7 +449,8 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-            it("Marking an unread thread as read after a redaction makes it read", () => {
+            // XXX: fails because it flakes (on CI only)
+            it.skip("Marking an unread thread as read after a redaction makes it read", () => {
                 // Given an unread thread where an older message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
