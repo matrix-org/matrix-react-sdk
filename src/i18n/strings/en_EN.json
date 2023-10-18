@@ -3204,6 +3204,7 @@
       "you": "You ended a <a>voice broadcast</a>"
     },
     "io.element.widgets.layout": "%(senderName)s has updated the room layout",
+    "late_event_separator": "Originally sent %(dateTime)s",
     "load_error": {
       "no_permission": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
       "title": "Failed to load timeline position",
@@ -3418,6 +3419,8 @@
       "label": "Message Actions",
       "view_in_room": "View in room"
     },
+    "message_timestamp_received_at": "Received at: %(dateTime)s",
+    "message_timestamp_sent_at": "Sent at: %(dateTime)s",
     "mjolnir": {
       "changed_rule_glob": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
       "changed_rule_rooms": "%(senderName)s changed a rule that was banning rooms matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
@@ -3626,10 +3629,7 @@
         "one": "Show %(count)s other preview",
         "other": "Show %(count)s other previews"
       }
-    },
-    "message_timestamp_sent_at": "Sent at: %(dateTime)s",
-    "message_timestamp_received_at": "Received at: %(dateTime)s",
-    "late_event_separator": "Originally sent %(dateTime)s"
+    }
   },
   "truncated_list_n_more": {
     "other": "And %(count)s more..."
