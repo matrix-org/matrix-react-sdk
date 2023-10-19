@@ -18,7 +18,11 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
             class="mx_DecoratedRoomAvatar"
           >
             <span
+<<<<<<< HEAD
               class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -100,7 +104,11 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
             class="mx_DecoratedRoomAvatar"
           >
             <span
+<<<<<<< HEAD
               class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -179,7 +187,11 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
                 <button
                   aria-label="Avatar"
                   aria-live="off"
+<<<<<<< HEAD
                   class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+                  class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
                   data-color="3"
                   data-testid="avatar-img"
                   data-type="round"
@@ -267,7 +279,11 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
             class="mx_DecoratedRoomAvatar"
           >
             <span
+<<<<<<< HEAD
               class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -346,7 +362,11 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                 <button
                   aria-label="Avatar"
                   aria-live="off"
+<<<<<<< HEAD
                   class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+                  class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
                   data-color="3"
                   data-testid="avatar-img"
                   data-type="round"
@@ -509,7 +529,11 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
             class="mx_DecoratedRoomAvatar"
           >
             <span
+<<<<<<< HEAD
               class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -587,7 +611,11 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                 <button
                   aria-label="Avatar"
                   aria-live="off"
+<<<<<<< HEAD
                   class="_avatar_1e114_17 mx_BaseAvatar _avatar-imageless_1e114_60"
+=======
+                  class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+>>>>>>> develop
                   data-color="3"
                   data-testid="avatar-img"
                   data-type="round"
@@ -736,6 +764,7 @@ exports[`RoomView should show error view if failed to look up room alias 1`] = `
 <DocumentFragment>
   <div
     class="mx_RoomView"
+    data-room-header="legacy"
   >
     <div
       class="mx_RoomPreviewBar mx_RoomPreviewBar_RoomNotFound mx_RoomPreviewBar_dialog"
