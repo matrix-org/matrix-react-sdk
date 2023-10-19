@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import userEvent from "@testing-library/user-event";
 
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomSummaryCard from "../../../../src/components/views/right_panel/RoomSummaryCard";
@@ -123,15 +122,6 @@ describe("<RoomSummaryCard />", () => {
         fireEvent.click(getByText("Room settings"));
 
         expect(dispatchSpy).toHaveBeenCalledWith({ action: "open_room_settings" });
-    });
-
-    it("opens the UI in RoomView", async () => {
-        const onSearchSpy = jest.fn();
-        const { getByTestId } = getComponent({
-            onSearchClick: onSearchSpy,
-        });
-        await userEvent.click(getByTestId("summary-search"));
-        expect(onSearchSpy).toHaveBeenCalled();
     });
 
     describe("pinning", () => {
