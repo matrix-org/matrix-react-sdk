@@ -19,14 +19,19 @@ import { logger } from "matrix-js-sdk/src/logger";
 import * as MatrixJs from "matrix-js-sdk/src/matrix";
 import { setCrypto } from "matrix-js-sdk/src/crypto/crypto";
 import * as MatrixCryptoAes from "matrix-js-sdk/src/crypto/aes";
+import { MockedObject } from "jest-mock";
+import fetchMock from "fetch-mock-jest";
 
 import StorageEvictedDialog from "../src/components/views/dialogs/StorageEvictedDialog";
-import { restoreFromLocalStorage, setLoggedIn } from "../src/Lifecycle";
+import { logout, restoreFromLocalStorage, setLoggedIn } from "../src/Lifecycle";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import Modal from "../src/Modal";
 import * as StorageManager from "../src/utils/StorageManager";
-import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
+import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser, mockPlatformPeg } from "./test-utils";
 import ToastStore from "../src/stores/ToastStore";
+import { OidcClientStore } from "../src/stores/oidc/OidcClientStore";
+import { makeDelegatedAuthConfig } from "./test-utils/oidc";
+import { persistOidcAuthenticatedSettings } from "../src/utils/oidc/persistOidcSettings";
 
 const webCrypto = new Crypto();
 
@@ -37,24 +42,29 @@ describe("Lifecycle", () => {
 
     const realLocalStorage = global.localStorage;
 
-    const mockClient = getMockClientWithEventEmitter({
-        stopClient: jest.fn(),
-        removeAllListeners: jest.fn(),
-        clearStores: jest.fn(),
-        getAccountData: jest.fn(),
-        getUserId: jest.fn(),
-        getDeviceId: jest.fn(),
-        isVersionSupported: jest.fn().mockResolvedValue(true),
-        getCrypto: jest.fn(),
-        getClientWellKnown: jest.fn(),
-        getThirdpartyProtocols: jest.fn(),
-        store: {
-            destroy: jest.fn(),
-        },
-        getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
-    });
+    let mockClient!: MockedObject<MatrixJs.MatrixClient>;
 
     beforeEach(() => {
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(),
+            stopClient: jest.fn(),
+            removeAllListeners: jest.fn(),
+            clearStores: jest.fn(),
+            getAccountData: jest.fn(),
+            getDeviceId: jest.fn(),
+            isVersionSupported: jest.fn().mockResolvedValue(true),
+            getCrypto: jest.fn(),
+            getClientWellKnown: jest.fn(),
+            waitForClientWellKnown: jest.fn(),
+            getThirdpartyProtocols: jest.fn(),
+            store: {
+                destroy: jest.fn(),
+            },
+            getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
+            logout: jest.fn().mockResolvedValue(undefined),
+            getAccessToken: jest.fn(),
+            getRefreshToken: jest.fn(),
+        });
         // stub this
         jest.spyOn(MatrixClientPeg, "replaceUsingCreds").mockImplementation(() => {});
         jest.spyOn(MatrixClientPeg, "start").mockResolvedValue(undefined);
@@ -233,6 +243,7 @@ describe("Lifecycle", () => {
                             userId,
                             guest: true,
                         }),
+                        undefined,
                     );
                     expect(localStorage.setItem).toHaveBeenCalledWith("mx_is_guest", "true");
                 });
@@ -264,16 +275,19 @@ describe("Lifecycle", () => {
                 it("should create new matrix client with credentials", async () => {
                     expect(await restoreFromLocalStorage()).toEqual(true);
 
-                    expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
-                        userId,
-                        accessToken,
-                        homeserverUrl,
-                        identityServerUrl,
-                        deviceId,
-                        freshLogin: false,
-                        guest: false,
-                        pickleKey: undefined,
-                    });
+                    expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                        {
+                            userId,
+                            accessToken,
+                            homeserverUrl,
+                            identityServerUrl,
+                            deviceId,
+                            freshLogin: false,
+                            guest: false,
+                            pickleKey: undefined,
+                        },
+                        undefined,
+                    );
                 });
 
                 it("should remove fresh login flag from session storage", async () => {
@@ -312,18 +326,21 @@ describe("Lifecycle", () => {
                     it("should create new matrix client with credentials", async () => {
                         expect(await restoreFromLocalStorage()).toEqual(true);
 
-                        expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
-                            userId,
-                            accessToken,
-                            // refreshToken included in credentials
-                            refreshToken,
-                            homeserverUrl,
-                            identityServerUrl,
-                            deviceId,
-                            freshLogin: false,
-                            guest: false,
-                            pickleKey: undefined,
-                        });
+                        expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                            {
+                                userId,
+                                accessToken,
+                                // refreshToken included in credentials
+                                refreshToken,
+                                homeserverUrl,
+                                identityServerUrl,
+                                deviceId,
+                                freshLogin: false,
+                                guest: false,
+                                pickleKey: undefined,
+                            },
+                            undefined,
+                        );
                     });
                 });
             });
@@ -373,17 +390,20 @@ describe("Lifecycle", () => {
                 it("should create new matrix client with credentials", async () => {
                     expect(await restoreFromLocalStorage()).toEqual(true);
 
-                    expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
-                        userId,
-                        // decrypted accessToken
-                        accessToken,
-                        homeserverUrl,
-                        identityServerUrl,
-                        deviceId,
-                        freshLogin: true,
-                        guest: false,
-                        pickleKey: expect.any(String),
-                    });
+                    expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                        {
+                            userId,
+                            // decrypted accessToken
+                            accessToken,
+                            homeserverUrl,
+                            identityServerUrl,
+                            deviceId,
+                            freshLogin: true,
+                            guest: false,
+                            pickleKey: expect.any(String),
+                        },
+                        undefined,
+                    );
                 });
 
                 describe("with a refresh token", () => {
@@ -412,18 +432,21 @@ describe("Lifecycle", () => {
                     it("should create new matrix client with credentials", async () => {
                         expect(await restoreFromLocalStorage()).toEqual(true);
 
-                        expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
-                            userId,
-                            accessToken,
-                            // refreshToken included in credentials
-                            refreshToken,
-                            homeserverUrl,
-                            identityServerUrl,
-                            deviceId,
-                            freshLogin: false,
-                            guest: false,
-                            pickleKey: expect.any(String),
-                        });
+                        expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                            {
+                                userId,
+                                accessToken,
+                                // refreshToken included in credentials
+                                refreshToken,
+                                homeserverUrl,
+                                identityServerUrl,
+                                deviceId,
+                                freshLogin: false,
+                                guest: false,
+                                pickleKey: expect.any(String),
+                            },
+                            undefined,
+                        );
                     });
                 });
             });
@@ -529,16 +552,19 @@ describe("Lifecycle", () => {
             it("should create new matrix client with credentials", async () => {
                 expect(await setLoggedIn(credentials)).toEqual(mockClient);
 
-                expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
-                    userId,
-                    accessToken,
-                    homeserverUrl,
-                    identityServerUrl,
-                    deviceId,
-                    freshLogin: true,
-                    guest: false,
-                    pickleKey: null,
-                });
+                expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                    {
+                        userId,
+                        accessToken,
+                        homeserverUrl,
+                        identityServerUrl,
+                        deviceId,
+                        freshLogin: true,
+                        guest: false,
+                        pickleKey: null,
+                    },
+                    undefined,
+                );
             });
         });
 
@@ -628,17 +654,176 @@ describe("Lifecycle", () => {
             it("should create new matrix client with credentials", async () => {
                 expect(await setLoggedIn(credentials)).toEqual(mockClient);
 
-                expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith({
-                    userId,
-                    accessToken,
-                    homeserverUrl,
-                    identityServerUrl,
-                    deviceId,
-                    freshLogin: true,
-                    guest: false,
-                    pickleKey: expect.any(String),
+                expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                    {
+                        userId,
+                        accessToken,
+                        homeserverUrl,
+                        identityServerUrl,
+                        deviceId,
+                        freshLogin: true,
+                        guest: false,
+                        pickleKey: expect.any(String),
+                    },
+                    undefined,
+                );
+            });
+        });
+
+        describe("when authenticated via OIDC native flow", () => {
+            const clientId = "test-client-id";
+            const issuer = "https://auth.com/";
+
+            const delegatedAuthConfig = makeDelegatedAuthConfig(issuer);
+            const idTokenClaims = {
+                aud: "123",
+                iss: issuer,
+                sub: "123",
+                exp: 123,
+                iat: 456,
+            };
+
+            beforeAll(() => {
+                fetchMock.get(
+                    `${delegatedAuthConfig.issuer}.well-known/openid-configuration`,
+                    delegatedAuthConfig.metadata,
+                );
+                fetchMock.get(`${delegatedAuthConfig.issuer}jwks`, {
+                    status: 200,
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    keys: [],
                 });
             });
+
+            beforeEach(() => {
+                // mock oidc config for oidc client initialisation
+                mockClient.waitForClientWellKnown.mockResolvedValue({
+                    "m.authentication": {
+                        issuer: issuer,
+                    },
+                });
+                initSessionStorageMock();
+                // set values in session storage as they would be after a successful oidc authentication
+                persistOidcAuthenticatedSettings(clientId, issuer, idTokenClaims);
+            });
+
+            it("should not try to create a token refresher without a refresh token", async () => {
+                await setLoggedIn(credentials);
+
+                // didn't try to initialise token refresher
+                expect(fetchMock).not.toHaveFetched(`${delegatedAuthConfig.issuer}.well-known/openid-configuration`);
+            });
+
+            it("should not try to create a token refresher without a deviceId", async () => {
+                await setLoggedIn({
+                    ...credentials,
+                    refreshToken,
+                    deviceId: undefined,
+                });
+
+                // didn't try to initialise token refresher
+                expect(fetchMock).not.toHaveFetched(`${delegatedAuthConfig.issuer}.well-known/openid-configuration`);
+            });
+
+            it("should not try to create a token refresher without an issuer in session storage", async () => {
+                persistOidcAuthenticatedSettings(
+                    clientId,
+                    // @ts-ignore set undefined issuer
+                    undefined,
+                    idTokenClaims,
+                );
+                await setLoggedIn({
+                    ...credentials,
+                    refreshToken,
+                });
+
+                // didn't try to initialise token refresher
+                expect(fetchMock).not.toHaveFetched(`${delegatedAuthConfig.issuer}.well-known/openid-configuration`);
+            });
+
+            it("should create a client with a tokenRefreshFunction", async () => {
+                expect(
+                    await setLoggedIn({
+                        ...credentials,
+                        refreshToken,
+                    }),
+                ).toEqual(mockClient);
+
+                expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        accessToken,
+                        refreshToken,
+                    }),
+                    expect.any(Function),
+                );
+            });
+
+            it("should create a client when creating token refresher fails", async () => {
+                // set invalid value in session storage for a malformed oidc authentication
+                persistOidcAuthenticatedSettings(null as any, issuer, idTokenClaims);
+
+                // succeeded
+                expect(
+                    await setLoggedIn({
+                        ...credentials,
+                        refreshToken,
+                    }),
+                ).toEqual(mockClient);
+
+                expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        accessToken,
+                        refreshToken,
+                    }),
+                    // no token refresh function
+                    undefined,
+                );
+            });
+        });
+    });
+
+    describe("logout()", () => {
+        let oidcClientStore!: OidcClientStore;
+        const accessToken = "test-access-token";
+        const refreshToken = "test-refresh-token";
+
+        beforeEach(() => {
+            oidcClientStore = new OidcClientStore(mockClient);
+            // stub
+            jest.spyOn(oidcClientStore, "revokeTokens").mockResolvedValue(undefined);
+
+            mockClient.getAccessToken.mockReturnValue(accessToken);
+            mockClient.getRefreshToken.mockReturnValue(refreshToken);
+        });
+
+        it("should call logout on the client when oidcClientStore is falsy", async () => {
+            logout();
+
+            await flushPromises();
+
+            expect(mockClient.logout).toHaveBeenCalledWith(true);
+        });
+
+        it("should call logout on the client when oidcClientStore.isUserAuthenticatedWithOidc is falsy", async () => {
+            jest.spyOn(oidcClientStore, "isUserAuthenticatedWithOidc", "get").mockReturnValue(false);
+            logout(oidcClientStore);
+
+            await flushPromises();
+
+            expect(mockClient.logout).toHaveBeenCalledWith(true);
+            expect(oidcClientStore.revokeTokens).not.toHaveBeenCalled();
+        });
+
+        it("should revoke tokens when user is authenticated with oidc", async () => {
+            jest.spyOn(oidcClientStore, "isUserAuthenticatedWithOidc", "get").mockReturnValue(true);
+            logout(oidcClientStore);
+
+            await flushPromises();
+
+            expect(mockClient.logout).not.toHaveBeenCalled();
+            expect(oidcClientStore.revokeTokens).toHaveBeenCalledWith(accessToken, refreshToken);
         });
     });
 });
