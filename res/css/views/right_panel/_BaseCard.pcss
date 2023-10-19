@@ -17,7 +17,7 @@ limitations under the License.
 .mx_BaseCard {
     --BaseCard_EventTile_line-padding-block: 2px;
     --BaseCard_EventTile-spacing-inline: 36px;
-    --BaseCard_header-button-size: 24px;
+    --BaseCard_header-button-size: 28px;
 
     overflow: hidden;
     display: flex;
@@ -161,7 +161,7 @@ limitations under the License.
 .mx_BaseCard_back,
 .mx_BaseCard_close {
     position: relative;
-    background-color: rgba(141, 151, 165, 0.2);
+    background-color: var(--cpd-color-bg-subtle-secondary);
     width: var(--BaseCard_header-button-size);
     height: var(--BaseCard_header-button-size);
     border-radius: 50%;
@@ -175,7 +175,7 @@ limitations under the License.
         left: 0;
         mask-repeat: no-repeat;
         mask-position: center;
-        background-color: $icon-button-color;
+        background-color: var(--cpd-color-icon-secondary);
     }
 }
 
@@ -192,7 +192,6 @@ limitations under the License.
     order: 999; /* always last */
     &::before {
         mask-image: url("$(res)/img/icons-close.svg");
-        mask-size: 8px;
     }
 }
 

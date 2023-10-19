@@ -11,40 +11,19 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
     >
       <header
         class="mx_Flex mx_RoomSummaryCard_header"
-        style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: between; --mx-flex-gap: var(--cpd-space-3x);"
+        style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-3x);"
       >
-        <form
-          aria-hidden="true"
-          class="_root_1eiqo_23"
+        <button
+          aria-label="Search"
+          class="mx_RoomSummaryCard_searchBtn"
+          data-state="closed"
           data-testid="summary-search"
-          style="flex: 1;"
         >
-          <label
-            class="_label_1eiqo_41 _field_1eiqo_32 _search_49det_17 mx_RoomSummaryCard_search"
-            for=":r1:"
-          >
-            <svg
-              class="_icon_49det_44"
-              fill="none"
-              height="20"
-              viewBox="0 0 24 24"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M15.0491 16.4633C13.7873 17.4274 12.2105 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5C18 12.2105 17.4274 13.7873 16.4633 15.0491L19.7071 18.2929C20.0976 18.6834 20.0976 19.3166 19.7071 19.7071C19.3166 20.0977 18.6834 20.0977 18.2929 19.7071L15.0491 16.4633ZM16 10.5C16 7.46243 13.5376 5 10.5 5C7.46243 5 5 7.46243 5 10.5C5 13.5376 7.46243 16 10.5 16C13.5376 16 16 13.5376 16 10.5Z"
-                fill="currentColor"
-              />
-            </svg>
-            <input
-              class="_input_49det_59"
-              id=":r1:"
-              name="search"
-              placeholder="Search"
-              type="search"
-            />
-          </label>
-        </form>
+          <div
+            height="100%"
+            width="100%"
+          />
+        </button>
         <div
           class="mx_AccessibleButton mx_BaseCard_close"
           data-testid="base-card-close-button"

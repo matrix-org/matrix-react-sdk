@@ -421,15 +421,11 @@ export default class MemberList extends React.Component<IProps, IState> {
         return (
             <BaseCard
                 className="mx_MemberList"
-                header={
-                    <React.Fragment>
-                        {scopeHeader}
-                        {inviteButton}
-                    </React.Fragment>
-                }
+                header={<React.Fragment>{scopeHeader}</React.Fragment>}
                 footer={footer}
                 onClose={this.props.onClose}
             >
+                {inviteButton}
                 <div className="mx_MemberList_wrapper">
                     <TruncatedList
                         className="mx_MemberList_section mx_MemberList_joined"

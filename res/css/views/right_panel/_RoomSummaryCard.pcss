@@ -294,3 +294,19 @@ limitations under the License.
 .mx_RoomSummaryCard_icon_search::before {
     mask-image: url("$(res)/img/element-icons/room/search-inset.svg");
 }
+
+.mx_RoomSummaryCard_searchBtn {
+    background: var(--cpd-color-bg-canvas-default);
+    color: var(--cpd-color-icon-primary);
+    border: 1px solid var(--cpd-color-gray-400);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: var(--cpd-space-2x);
+    cursor: pointer;
+    transition: all .3s ease;
+
+    &:hover {
+        background: var(--cpd-color-bg-subtle-primary)
+    }
+}

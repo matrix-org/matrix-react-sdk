@@ -17,7 +17,8 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/matrix";
-import { Root, Search } from "@vector-im/compound-web";
+import { Tooltip } from "@vector-im/compound-web";
+import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -345,25 +346,20 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 className="mx_RoomSummaryCard_header"
                 gap="var(--cpd-space-3x)"
                 align="center"
-                justify="between"
+                justify="space-between"
             >
-                {/* Hiding this element from a11y technologies purposefully.
-                    entry point for the search experience. There's an accessible
-                    button in the list item below therefore this is not required
-                    to be accessible. */}
-                <Root
-                    aria-hidden={true}
-                    onClick={(e) => {
-                        e.nativeEvent.stopImmediatePropagation();
-                        onSearchClick?.();
-                    }}
-                    style={{
-                        flex: "1",
-                    }}
-                    data-testid="summary-search"
-                >
-                    <Search name="search" className="mx_RoomSummaryCard_search" placeholder={_t("action|search")} />
-                </Root>
+                <Tooltip label={_t("action|search")} side="right">
+                    <button
+                        className="mx_RoomSummaryCard_searchBtn"
+                        data-testid="summary-search"
+                        onClick={() => {
+                            onSearchClick?.();
+                        }}
+                        aria-label={_t("action|search")}
+                    >
+                        <SearchIcon width="100%" height="100%" />
+                    </button>
+                </Tooltip>
                 <AccessibleButton
                     data-testid="base-card-close-button"
                     className="mx_BaseCard_close"
