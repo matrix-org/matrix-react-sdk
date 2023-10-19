@@ -57,11 +57,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills appear for an 
         <span
           aria-hidden="true"
           aria-label="Profile picture"
-<<<<<<< HEAD
           class="_avatar_1e114_17 mx_BaseAvatar"
-=======
-          class="_avatar_1o69u_17 mx_BaseAvatar"
->>>>>>> develop
           data-color="8"
           data-testid="avatar-img"
           data-type="round"
@@ -69,11 +65,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills appear for an 
         >
           <img
             alt=""
-<<<<<<< HEAD
             class="_image_1e114_49"
-=======
-            class="_image_1o69u_49"
->>>>>>> develop
             crossorigin="anonymous"
             data-type="round"
             height="16px"
@@ -114,11 +106,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills appear for eve
             <span
               aria-hidden="true"
               aria-label="Avatar"
-<<<<<<< HEAD
               class="_avatar_1e114_17 mx_BaseAvatar"
-=======
-              class="_avatar_1o69u_17 mx_BaseAvatar"
->>>>>>> develop
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -126,11 +114,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills appear for eve
             >
               <img
                 alt=""
-<<<<<<< HEAD
                 class="_image_1e114_49"
-=======
-                class="_image_1o69u_49"
->>>>>>> develop
                 crossorigin="anonymous"
                 data-type="round"
                 height="16px"
@@ -173,11 +157,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills appear for roo
             <span
               aria-hidden="true"
               aria-label="Avatar"
-<<<<<<< HEAD
               class="_avatar_1e114_17 mx_BaseAvatar"
-=======
-              class="_avatar_1o69u_17 mx_BaseAvatar"
->>>>>>> develop
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -185,11 +165,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills appear for roo
             >
               <img
                 alt=""
-<<<<<<< HEAD
                 class="_image_1e114_49"
-=======
-                class="_image_1o69u_49"
->>>>>>> develop
                 crossorigin="anonymous"
                 data-type="round"
                 height="16px"
@@ -291,11 +267,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills get injected c
         <span
           aria-hidden="true"
           aria-label="Profile picture"
-<<<<<<< HEAD
           class="_avatar_1e114_17 mx_BaseAvatar"
-=======
-          class="_avatar_1o69u_17 mx_BaseAvatar"
->>>>>>> develop
           data-color="8"
           data-testid="avatar-img"
           data-type="round"
@@ -303,11 +275,7 @@ exports[`<TextualBody /> renders formatted m.text correctly pills get injected c
         >
           <img
             alt=""
-<<<<<<< HEAD
             class="_image_1e114_49"
-=======
-            class="_image_1o69u_49"
->>>>>>> develop
             crossorigin="anonymous"
             data-type="round"
             height="16px"
@@ -342,11 +310,7 @@ exports[`<TextualBody /> renders plain-text m.text correctly should pillify a pe
         data-testid="avatar-img"
         data-type="round"
         data-color="8"
-<<<<<<< HEAD
         class="_avatar_1e114_17 mx_BaseAvatar"
-=======
-        class="_avatar_1o69u_17 mx_BaseAvatar"
->>>>>>> develop
         style="--cpd-avatar-size: 16px"
         ><img
           loading="lazy"
@@ -354,11 +318,7 @@ exports[`<TextualBody /> renders plain-text m.text correctly should pillify a pe
           src="mxc://avatar.url/image.png"
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
-<<<<<<< HEAD
           class="_image_1e114_49"
-=======
-          class="_image_1o69u_49"
->>>>>>> develop
           data-type="round"
           width="16px"
           height="16px" /></span
@@ -383,11 +343,7 @@ exports[`<TextualBody /> renders plain-text m.text correctly should pillify a pe
         data-testid="avatar-img"
         data-type="round"
         data-color="4"
-<<<<<<< HEAD
         class="_avatar_1e114_17 mx_BaseAvatar"
-=======
-        class="_avatar_1o69u_17 mx_BaseAvatar"
->>>>>>> develop
         style="--cpd-avatar-size: 16px"
         ><img
           loading="lazy"
@@ -395,11 +351,7 @@ exports[`<TextualBody /> renders plain-text m.text correctly should pillify a pe
           src="mxc://avatar.url/room.png"
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
-<<<<<<< HEAD
           class="_image_1e114_49"
-=======
-          class="_image_1o69u_49"
->>>>>>> develop
           data-type="round"
           width="16px"
           height="16px" /></span
