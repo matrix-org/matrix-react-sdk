@@ -62,7 +62,7 @@ Code should be committed as follows:
     https://github.com/matrix-org/matrix-react-sdk/tree/master/res/themes
 
 React components in matrix-react-sdk come in two different flavours:
-'structures' and 'views'. Structures are stateful components which handle the
+`structures` and `views`. Structures are stateful components which handle the
 more complicated business logic of the app, delegating their actual presentation
 rendering to stateless 'view' components. For instance, the RoomView component
 that orchestrates the act of visualising the contents of a given Matrix chat
@@ -72,11 +72,11 @@ visual rendering via props.
 Good separation between the components is maintained by adopting various best
 practices that anyone working with the SDK needs to be aware of and uphold:
 
--   Components are named with upper camel case (e.g. views/rooms/EventTile.js)
+-   Components are named with upper camel case (e.g. views/rooms/EventTile.js).
 
 -   They are organised in a typically two-level hierarchy - first whether the
     component is a view or a structure, and then a broad functional grouping
-    (e.g. 'rooms' here)
+    (e.g. 'rooms' here).
 
 -   The view's CSS file MUST have the same name (e.g. view/rooms/MessageTile.css).
     CSS for matrix-react-sdk currently resides in
@@ -112,11 +112,11 @@ practices that anyone working with the SDK needs to be aware of and uphold:
     css-next to pull in features like CSS variable support.
 
 -   The CSS for a component can override the rules for child components.
-    For instance, .mx*RoomList .mx_RoomTile {} would be the selector to override
+    For instance, `.mx*RoomList .mx_RoomTile {}` would be the selector to override
     styles of RoomTiles when viewed in the context of a RoomList view.
     Overrides \_must* be scoped to the View's CSS class - i.e. don't just define
-    .mx_RoomTile {} in RoomList.css - only RoomTile.css is allowed to define its
-    own CSS. Instead, say .mx_RoomList .mx_RoomTile {} to scope the override
+    `.mx_RoomTile {}` in RoomList.css - only RoomTile.css is allowed to define its
+    own CSS. Instead, say `.mx_RoomList .mx_RoomTile {}` to scope the override
     only to the context of RoomList views. N.B. overrides should be relatively
     rare as in general CSS inheritance should be enough.
 
@@ -141,8 +141,8 @@ for now.
 
 Ensure you have the latest LTS version of Node.js installed.
 
-Using `yarn` instead of `npm` is recommended. Please see the Yarn 1 [install
-guide](https://classic.yarnpkg.com/docs/install) if you do not have it
+Using `yarn` instead of `npm` is recommended. Please see the Yarn 1 [`install
+guide`](https://classic.yarnpkg.com/docs/install) if you do not have it
 already. This project has not yet been migrated to Yarn 2, so please ensure
 `yarn --version` shows a version from the 1.x series.
 
@@ -169,7 +169,7 @@ yarn link matrix-js-sdk
 yarn install
 ```
 
-See the [help for `yarn link`](https://classic.yarnpkg.com/docs/cli/link) for
+See the [`help for yarn link`](https://classic.yarnpkg.com/docs/cli/link) for
 more details about this.
 
 ### Running tests
