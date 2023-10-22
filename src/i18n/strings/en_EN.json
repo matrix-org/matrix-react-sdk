@@ -228,9 +228,10 @@
         "msisdn_field_required_invalid": "Enter phone number",
         "no_hs_url_provided": "No homeserver URL provided",
         "oidc": {
-            "error_generic": "Something went wrong.",
             "error_title": "We couldn't log you in",
-            "logout_redirect_warning": "You will be redirected to your server's authentication provider to complete sign out."
+            "generic_auth_error": "Something went wrong during authentication. Go to the sign in page and try again.",
+            "logout_redirect_warning": "You will be redirected to your server's authentication provider to complete sign out.",
+            "missing_or_invalid_stored_state": "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again."
         },
         "password_field_keep_going_prompt": "Keep going…",
         "password_field_label": "Enter password",
@@ -1426,7 +1427,8 @@
         "notification_settings_beta_caption": "Introducing a simpler way to change your notification settings. Customize your %(brand)s, just the way you like.",
         "notification_settings_beta_title": "Notification Settings",
         "notifications": "Enable the notifications panel in the room header",
-        "oidc_native_flow": "Enable new native OIDC flows (Under active development)",
+        "oidc_native_flow": "OIDC native authentication",
+        "oidc_native_flow_description": "⚠ WARNING: Experimental. Use OIDC native authentication when supported by the server.",
         "pinning": "Message Pinning",
         "render_reaction_images": "Render custom images in reactions",
         "render_reaction_images_description": "Sometimes referred to as \"custom emojis\".",
@@ -1848,7 +1850,6 @@
         "room_summary_card": {
             "title": "Room info"
         },
-        "search_button": "Search",
         "settings_button": "Room settings",
         "share_button": "Share room",
         "thread_list": {
@@ -3203,6 +3204,7 @@
             "you": "You ended a <a>voice broadcast</a>"
         },
         "io.element.widgets.layout": "%(senderName)s has updated the room layout",
+        "late_event_separator": "Originally sent %(dateTime)s",
         "load_error": {
             "no_permission": "Tried to load a specific point in this room's timeline, but you do not have permission to view the message in question.",
             "title": "Failed to load timeline position",
@@ -3417,7 +3419,7 @@
             "label": "Message Actions",
             "view_in_room": "View in room"
         },
-        "message_timestamp_received_at": "Recovered at: %(dateTime)s",
+        "message_timestamp_received_at": "Received at: %(dateTime)s",
         "message_timestamp_sent_at": "Sent at: %(dateTime)s",
         "mjolnir": {
             "changed_rule_glob": "%(senderName)s updated a ban rule that was matching %(oldGlob)s to matching %(newGlob)s for %(reason)s",
