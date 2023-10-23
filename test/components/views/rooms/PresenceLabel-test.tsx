@@ -32,4 +32,17 @@ describe("<PresenceLabel/>", () => {
             </DocumentFragment>
         `);
     });
+
+    it("should render 'Unreachable' for presence=unreachable", () => {
+        const { asFragment } = render(<PresenceLabel presenceState="unreachable" />);
+        expect(asFragment()).toMatchInlineSnapshot(`
+            <DocumentFragment>
+              <div
+                class="mx_PresenceLabel"
+              >
+                User's server unreachable
+              </div>
+            </DocumentFragment>
+        `);
+    });
 });
