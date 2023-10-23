@@ -69,17 +69,23 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             });
     }
 
-    private getVersionInfo(): { appVersion: string; olmVersion: string } {
+    private getVersionInfo(): { appVersion: string; olmVersion: string | null; cryptoVersion: string | null } {
         const brand = SdkConfig.get().brand;
         const appVersion = this.state.appVersion || "unknown";
         const olmVersionTuple = this.context.olmVersion;
+
+        // New crypto version
+        const cryptoVersion = this.context.getCrypto()?.getVersion();
+
+        // XXXX: Remove when old crypto is gone
         const olmVersion = olmVersionTuple
             ? `${olmVersionTuple[0]}.${olmVersionTuple[1]}.${olmVersionTuple[2]}`
             : "<not-enabled>";
 
         return {
             appVersion: `${_t("setting|help_about|brand_version", { brand })} ${appVersion}`,
-            olmVersion: `${_t("setting|help_about|olm_version")} ${olmVersion}`,
+            olmVersion: olmVersionTuple ? `${_t("setting|help_about|olm_version")} ${olmVersion}` : null,
+            cryptoVersion: cryptoVersion ? `${_t("setting|help_about|crypto_version")} ${cryptoVersion}` : null,
         };
     }
 
@@ -220,8 +226,10 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     }
 
     private getVersionTextToCopy = (): string => {
-        const { appVersion, olmVersion } = this.getVersionInfo();
-        return `${appVersion}\n${olmVersion}`;
+        const { appVersion, olmVersion, cryptoVersion } = this.getVersionInfo();
+        // olmVersion for old crypto, cryptoVersion for new crypto
+        // we can only have one or the other
+        return `${appVersion}\n${olmVersion ?? cryptoVersion}`;
     };
 
     public render(): React.ReactNode {
@@ -302,7 +310,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             );
         }
 
-        const { appVersion, olmVersion } = this.getVersionInfo();
+        const { appVersion, olmVersion, cryptoVersion } = this.getVersionInfo();
 
         return (
             <SettingsTab>
@@ -314,7 +322,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             <CopyableText getTextToCopy={this.getVersionTextToCopy}>
                                 {appVersion}
                                 <br />
-                                {olmVersion}
+                                {olmVersion || cryptoVersion}
                                 <br />
                             </CopyableText>
                             {updateButton}
