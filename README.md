@@ -62,7 +62,7 @@ Code should be committed as follows:
     https://github.com/matrix-org/matrix-react-sdk/tree/master/res/themes
 
 React components in matrix-react-sdk come in two different flavours:
-`'structures'` and `'views'`. Structures are stateful components which handle the
+'structures' and 'views'. Structures are stateful components which handle the
 more complicated business logic of the app, delegating their actual presentation
 rendering to stateless 'view' components. For instance, the RoomView component
 that orchestrates the act of visualising the contents of a given Matrix chat
@@ -141,8 +141,8 @@ for now.
 
 Ensure you have the latest LTS version of Node.js installed.
 
-Using `yarn` instead of `npm` is recommended. Please see the Yarn 1 [`install
-guide`](https://classic.yarnpkg.com/docs/install) if you do not have it
+Using `yarn` instead of `npm` is recommended. Please see the Yarn 1 [install
+guide](https://classic.yarnpkg.com/docs/install) if you do not have it
 already. This project has not yet been migrated to Yarn 2, so please ensure
 `yarn --version` shows a version from the 1.x series.
 
@@ -169,7 +169,7 @@ yarn link matrix-js-sdk
 yarn install
 ```
 
-See the [`help for yarn link`](https://classic.yarnpkg.com/docs/cli/link) for
+See the [help for `yarn link`](https://classic.yarnpkg.com/docs/cli/link) for
 more details about this.
 
 ### Running tests
