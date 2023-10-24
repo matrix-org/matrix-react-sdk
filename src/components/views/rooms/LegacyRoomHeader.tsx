@@ -787,7 +787,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                         {icon}
                         {name}
                         {this.props.activeCall instanceof ElementCall && (
-                            <GroupCallDuration groupCall={this.props.activeCall.groupCall} />
+                            <GroupCallDuration groupCall={this.props.activeCall?.groupCall} />
                         )}
                         {/* Empty topic element to fill out space */}
                         <div className="mx_LegacyRoomHeader_topic" />

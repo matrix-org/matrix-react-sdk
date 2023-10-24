@@ -33,7 +33,7 @@ export const CallDuration: FC<CallDurationProps> = memo(({ delta }) => {
 });
 
 interface GroupCallDurationProps {
-    groupCall: GroupCall;
+    groupCall: GroupCall | undefined; //todo matrix rtc session
 }
 
 /**
@@ -46,6 +46,9 @@ export const GroupCallDuration: FC<GroupCallDurationProps> = ({ groupCall }) => 
         const timer = window.setInterval(() => setNow(Date.now()), 1000);
         return () => clearInterval(timer);
     }, []);
-
-    return groupCall.creationTs === null ? null : <CallDuration delta={now - groupCall.creationTs} />;
+    if (groupCall) {
+        return groupCall.creationTs === null ? null : <CallDuration delta={now - groupCall.creationTs} />;
+    } else {
+        return <CallDuration delta={0} />;
+    }
 };

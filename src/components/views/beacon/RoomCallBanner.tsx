@@ -49,12 +49,12 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) =>
         [roomId],
     );
 
+
+    // TODO matrix rtc
     const onClick = useCallback(() => {
-        const event = call.groupCall.room.currentState.getStateEvents(
-            EventType.GroupCallPrefix,
-            call.groupCall.groupCallId,
-        );
-        if (event === null) {
+        logger.log("clicking on the call banner is not supported anymore - there are no timeline events anymore.")
+        let messageLikeEventId: string | undefined;
+        if (event === messageLikeEventId) {
             logger.error("Couldn't find a group call event to jump to");
             return;
         }
@@ -63,17 +63,17 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) =>
             action: Action.ViewRoom,
             room_id: roomId,
             metricsTrigger: undefined,
-            event_id: event.getId(),
+            event_id: messageLikeEventId,
             scroll_into_view: true,
             highlighted: true,
         });
-    }, [call, roomId]);
+    }, [roomId]);
 
     return (
         <div className="mx_RoomCallBanner" onClick={onClick}>
             <div className="mx_RoomCallBanner_text">
                 <span className="mx_RoomCallBanner_label">{_t("voip|video_call")}</span>
-                <GroupCallDuration groupCall={call.groupCall} />
+                <GroupCallDuration groupCall={0} />
             </div>
 
             <AccessibleButton onClick={connect} kind="primary" element="button" disabled={false}>

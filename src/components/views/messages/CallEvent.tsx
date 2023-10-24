@@ -77,7 +77,7 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                             />
                             <FacePile members={facePileMembers} size="24px" overflow={facePileOverflow} />
                         </div>
-                        {call && <GroupCallDuration groupCall={call.groupCall} />}
+                        {call && <GroupCallDuration groupCall={0} />}
                         <AccessibleTooltipButton
                             className="mx_CallEvent_button"
                             kind={buttonKind}
