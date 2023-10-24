@@ -691,30 +691,14 @@ export class ElementCall extends Call {
             roomId,
         );
     }
-    private constructor(public session: MatrixRTCSession | undefined, widget: IApp, client: MatrixClient) {
+    private constructor(public session: MatrixRTCSession, widget: IApp, client: MatrixClient) {
         super(widget, client);
         this.session = session;
-        if (session) {
-            this.connectSession();
-        } else {
-            // postpone connect session until we actually have a session
-            this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSessionStarted);
-        }
+
+        this.session?.on(MatrixRTCSessionEvent.MembershipsChanged, this.onGroupCallParticipants);
         this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
-        // this.on(CallEvent.Participants, this.onParticipants);
-        // groupCall.on(GroupCallEvent.ParticipantsChanged, this.onGroupCallParticipants);
-        // groupCall.on(GroupCallEvent.GroupCallStateChanged, this.onGroupCallState);
-
         this.updateParticipants();
-    }
-    private connectSession(): void {
-        this.session?.on(MatrixRTCSessionEvent.MembershipsChanged, this.onGroupCallParticipants);
-        this.session?.on(MatrixRTCSessionEvent.JoinStateChanged, this.onGroupCallState);
-    }
-    private disconnectSession(): void {
-        this.session?.off(MatrixRTCSessionEvent.MembershipsChanged, this.onGroupCallParticipants);
-        this.session?.off(MatrixRTCSessionEvent.JoinStateChanged, this.onGroupCallState);
     }
 
     public static get(room: Room): ElementCall | null {
@@ -727,8 +711,8 @@ export class ElementCall extends Call {
         ) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             const ecWidget = apps.find((app) => WidgetType.CALL.matches(app.type));
-            const session = room.client.matrixRTC.getActiveRoomSession(room);
-
+            // const session = room.client.matrixRTC.getActiveRoomSession(room);
+            const session = room.client.matrixRTC.getRoomSession(room);
             if (ecWidget || (session?.memberships.length ?? 0 != 0)) {
                 const availableOrCreatedWidget = ecWidget ?? ElementCall.createCallWidget(room.roomId, room.client);
                 return new ElementCall(session, availableOrCreatedWidget, room.client);
@@ -799,8 +783,7 @@ export class ElementCall extends Call {
         ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.widget.roomId);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.widget.roomId);
 
-        this.disconnectSession();
-        this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSessionStarted);
+        this.session?.off(MatrixRTCSessionEvent.MembershipsChanged, this.onGroupCallParticipants);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
         if (this.terminationTimer !== null) {
@@ -842,19 +825,7 @@ export class ElementCall extends Call {
         this.participants = participants;
     }
 
-    private onGroupCallState = (isJoined: boolean): void => {
-        if (!isJoined) this.destroy();
-    };
-
     private onGroupCallParticipants = (): void => this.updateParticipants();
-
-    private onRTCSessionStarted = (roomId: string, session: MatrixRTCSession): void => {
-        if (roomId == this.roomId) {
-            this.session = session;
-            this.connectSession();
-            this.updateParticipants();
-        }
-    };
 
     private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
         if (roomId == this.roomId) {
