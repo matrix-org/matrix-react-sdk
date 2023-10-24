@@ -39,7 +39,7 @@ Platform Targets:
     (https://github.com/matrix-org/matrix-android-sdk2) SDKs.
 
 All code lands on the `develop` branch - `master` is only used for stable releases.
-**Please file PRs against `develop`!!**
+**Please file PRs against `development`!!**
 
 We use the same contribution guide as Element. Check it out here:
 https://github.com/vector-im/element-web/blob/develop/CONTRIBUTING.md
@@ -62,7 +62,7 @@ Code should be committed as follows:
     https://github.com/matrix-org/matrix-react-sdk/tree/master/res/themes
 
 React components in matrix-react-sdk come in two different flavours:
-'structures' and 'views'. Structures are stateful components which handle the
+'structures' and 'views'. Structures are stateful components that handle the
 more complicated business logic of the app, delegating their actual presentation
 rendering to stateless 'view' components. For instance, the RoomView component
 that orchestrates the act of visualising the contents of a given Matrix chat
