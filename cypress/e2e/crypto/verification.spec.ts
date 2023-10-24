@@ -95,7 +95,7 @@ describe("Device verification", () => {
         cy.wrap(promiseVerificationRequest).as("verificationRequest");
     }
 
-    it("Verify device during login with SAS", () => {
+    it("Verify device with SAS during login", () => {
         logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
         // Launch the verification request between alice and the bot
@@ -122,8 +122,8 @@ describe("Device verification", () => {
         checkDeviceIsConnectedKeyBackup();
     });
 
-    it("Verify device during login with QR code", () => {
-        skipIfRustCrypto(); // https://github.com/vector-im/element-web/issues/26293
+    it("Verify device with QR code during login", () => {
+        // A mode 0x02 verification: "self-verifying in which the current device does not yet trust the master key"
         logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
         // Launch the verification request between alice and the bot
@@ -156,6 +156,16 @@ describe("Device verification", () => {
         // the bot uploads the signatures asynchronously, so wait for that to happen
         cy.wait(1000);
 
+        // our device should trust the bot device
+        cy.getClient().then(async (cli) => {
+            const deviceStatus = await cli
+                .getCrypto()!
+                .getDeviceVerificationStatus(aliceBotClient.getUserId(), aliceBotClient.getDeviceId());
+            if (!deviceStatus.isVerified()) {
+                throw new Error("Bot device was not verified after QR code verification");
+            }
+        });
+
         // Check that our device is now cross-signed
         checkDeviceIsCrossSigned();
 
@@ -163,7 +173,7 @@ describe("Device verification", () => {
         checkDeviceIsConnectedKeyBackup();
     });
 
-    it("Verify device during login with Security Phrase", () => {
+    it("Verify device with Security Phrase during login", () => {
         logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
         // Select the security phrase
@@ -188,7 +198,7 @@ describe("Device verification", () => {
         checkDeviceIsConnectedKeyBackup();
     });
 
-    it("Verify device during login with Security Key", () => {
+    it("Verify device with Security Key during login", () => {
         logIntoElement(homeserver.baseUrl, aliceBotClient.getUserId(), aliceBotClient.__cypress_password);
 
         // Select the security phrase
@@ -307,6 +317,10 @@ describe("User verification", () => {
     });
 
     it("can receive a verification request when there is no existing DM", () => {
+        // Extremely flaky with rust crypto
+        // see https://github.com/vector-im/element-web/issues/26420
+        skipIfRustCrypto();
+
         cy.bootstrapCrossSigning(aliceCredentials);
 
         // the other user creates a DM
