@@ -85,6 +85,8 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
         const cryptoApi = client.getCrypto();
 
         if (cryptoApi) {
+            body.append("crypto_version", cryptoApi.getVersion());
+
             const keys = [`ed25519:${client.getDeviceEd25519Key()}`];
             if (client.getDeviceCurve25519Key) {
                 keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
