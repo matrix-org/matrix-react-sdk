@@ -27,6 +27,7 @@ import {
     screen,
     waitFor,
 } from "@testing-library/react";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { filterConsole, mkEvent, stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomHeader from "../../../../src/components/views/rooms/RoomHeader";
@@ -515,6 +516,22 @@ describe("RoomHeader", () => {
 
             await waitFor(() => expect(getByLabelText(container, expectedLabel)).toBeInTheDocument());
         });
+    });
+
+    it("renders additionalButtons", async () => {
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: () => {},
+            },
+        ];
+        render(
+            <RoomHeader room={room} additionalButtons={additionalButtons} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
+        expect(screen.getByRole("button", { name: "test-label" })).toBeInTheDocument();
     });
 });
 

@@ -20,6 +20,8 @@ import classNames from "classnames";
 import { throttle } from "lodash";
 import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { IconButton, Tooltip } from "@vector-im/compound-web";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import type { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
@@ -476,6 +478,7 @@ export interface IProps {
     enableRoomOptionsMenu?: boolean;
     viewingCall: boolean;
     activeCall: Call | null;
+    additionalButtons?: ViewRoomOpts["buttons"];
 }
 
 interface IState {
@@ -669,6 +672,19 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         return (
             <>
+                {this.props.additionalButtons?.map(({ icon, id, label, onClick }) => (
+                    <Tooltip label={label()} key={id}>
+                        <IconButton
+                            onClick={() => {
+                                onClick();
+                                this.forceUpdate();
+                            }}
+                            title={label()}
+                        >
+                            {icon}
+                        </IconButton>
+                    </Tooltip>
+                ))}
                 {startButtons}
                 <RoomHeaderButtons
                     room={this.props.room}

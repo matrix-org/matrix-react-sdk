@@ -29,6 +29,7 @@ import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
 import { setupJestCanvasMock } from "jest-canvas-mock";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import type { MatrixClient, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
@@ -738,6 +739,19 @@ describe("LegacyRoomHeader", () => {
             expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_name.mx_AccessibleButton")).toBeFalsy();
         },
     );
+
+    it("renders additionalButtons", async () => {
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: () => {},
+            },
+        ];
+        renderHeader({ additionalButtons });
+        expect(screen.getByRole("button", { name: "test-icon" })).toBeInTheDocument();
+    });
 });
 
 interface IRoomCreationInfo {
