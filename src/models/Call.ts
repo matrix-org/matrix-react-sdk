@@ -693,9 +693,8 @@ export class ElementCall extends Call {
     }
     private constructor(public session: MatrixRTCSession, widget: IApp, client: MatrixClient) {
         super(widget, client);
-        this.session = session;
 
-        this.session?.on(MatrixRTCSessionEvent.MembershipsChanged, this.updateParticipants);
+        this.session.on(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
         this.updateParticipants();
@@ -711,9 +710,13 @@ export class ElementCall extends Call {
         ) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             const ecWidget = apps.find((app) => WidgetType.CALL.matches(app.type));
-
             const session = room.client.matrixRTC.getRoomSession(room);
-            if (ecWidget || (session?.memberships.length ?? 0 != 0)) {
+
+            // I call is present if we
+            // - have a widget: This means the create function was called
+            // - or there is a running session where we have not yet created a widget for.
+            if (ecWidget || session.memberships.length !== 0) {
+                // create a widget for the case we are joining a running call and don't have on yet.
                 const availableOrCreatedWidget = ecWidget ?? ElementCall.createCallWidget(room.roomId, room.client);
                 return new ElementCall(session, availableOrCreatedWidget, room.client);
             }
@@ -766,11 +769,10 @@ export class ElementCall extends Call {
     }
 
     public destroy(): void {
-
         ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.widget.roomId);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.widget.roomId);
 
-        this.session?.off(MatrixRTCSessionEvent.MembershipsChanged, this.updateParticipants);
+        this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
         if (this.terminationTimer !== null) {
@@ -782,7 +784,7 @@ export class ElementCall extends Call {
     }
     private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
         if (roomId == this.roomId) {
-           this.destroy();
+            this.destroy();
         }
     };
 
@@ -792,9 +794,10 @@ export class ElementCall extends Call {
      */
     public async setLayout(layout: Layout): Promise<void> {
         const action = layout === Layout.Tile ? ElementWidgetActions.TileLayout : ElementWidgetActions.SpotlightLayout;
-
         await this.messaging!.transport.send(action, {});
     }
+
+    private onMembershipChanged = (): void => this.updateParticipants();
 
     private updateParticipants(): void {
         const participants = new Map<RoomMember, Set<string>>();
