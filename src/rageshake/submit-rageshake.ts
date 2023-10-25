@@ -90,7 +90,6 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
             }
             body.append("device_keys", keys.join(", "));
-            body.append("cross_signing_key", (await client.getCrypto()?.getCrossSigningKeyId()) ?? "n/a");
 
             // add cross-signing status information
             const crossSigningStatus = await cryptoApi.getCrossSigningStatus();
