@@ -218,8 +218,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
 
     private getVersionTextToCopy = (): string => {
         const { appVersion, cryptoVersion } = this.getVersionInfo();
-        // olmVersion for old crypto, cryptoVersion for new crypto
-        // we can only have one or the other
         return `${appVersion}\n${cryptoVersion}`;
     };
 
