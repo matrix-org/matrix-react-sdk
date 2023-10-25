@@ -54,7 +54,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) =>
     const onClick = useCallback(() => {
         logger.log("clicking on the call banner is not supported anymore - there are no timeline events anymore.")
         let messageLikeEventId: string | undefined;
-        if (event === messageLikeEventId) {
+        if (messageLikeEventId) {
             logger.error("Couldn't find a group call event to jump to");
             return;
         }
