@@ -231,7 +231,11 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                                 {},
                                 {
                                     a: (sub) => (
-                                        <a target="_blank" href={SdkConfig.get().feedback.new_issue_url}>
+                                        <a
+                                            target="_blank"
+                                            href={SdkConfig.get().feedback.new_issue_url}
+                                            rel="noreferrer noopener"
+                                        >
                                             {sub}
                                         </a>
                                     ),
