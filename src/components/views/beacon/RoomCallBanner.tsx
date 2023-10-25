@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback } from "react";
-import { EventType, Room } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -27,7 +27,7 @@ import { ConnectionState, ElementCall } from "../../../models/Call";
 import { useCall } from "../../../hooks/useCall";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
-import { GroupCallDuration } from "../voip/CallDuration";
+import { SessionDuration } from "../voip/CallDuration";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface RoomCallBannerProps {
@@ -73,7 +73,7 @@ const RoomCallBannerInner: React.FC<RoomCallBannerProps> = ({ roomId, call }) =>
         <div className="mx_RoomCallBanner" onClick={onClick}>
             <div className="mx_RoomCallBanner_text">
                 <span className="mx_RoomCallBanner_label">{_t("voip|video_call")}</span>
-                <GroupCallDuration groupCall={0} />
+                <SessionDuration session={call.session} />
             </div>
 
             <AccessibleButton onClick={connect} kind="primary" element="button" disabled={false}>

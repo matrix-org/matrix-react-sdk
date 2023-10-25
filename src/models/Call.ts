@@ -695,7 +695,7 @@ export class ElementCall extends Call {
         super(widget, client);
         this.session = session;
 
-        this.session?.on(MatrixRTCSessionEvent.MembershipsChanged, this.onGroupCallParticipants);
+        this.session?.on(MatrixRTCSessionEvent.MembershipsChanged, this.updateParticipants);
         this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
         this.updateParticipants();
@@ -711,15 +711,11 @@ export class ElementCall extends Call {
         ) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             const ecWidget = apps.find((app) => WidgetType.CALL.matches(app.type));
-            // const session = room.client.matrixRTC.getActiveRoomSession(room);
+
             const session = room.client.matrixRTC.getRoomSession(room);
             if (ecWidget || (session?.memberships.length ?? 0 != 0)) {
                 const availableOrCreatedWidget = ecWidget ?? ElementCall.createCallWidget(room.roomId, room.client);
                 return new ElementCall(session, availableOrCreatedWidget, room.client);
-            } else {
-                logger.log(
-                    "skip getting element call because the session is not yet ready. This most likely was triggered by adding the widget",
-                );
             }
         }
 
@@ -736,10 +732,6 @@ export class ElementCall extends Call {
         ElementCall.createCallWidget(room.roomId, room.client);
     }
 
-    public clean(): Promise<void> {
-        return Promise.resolve();
-    }
-
     protected async performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
@@ -753,7 +745,6 @@ export class ElementCall extends Call {
             throw new Error(`Failed to join call in room ${this.roomId}: ${e}`);
         }
 
-        // this.groupCall.enteredViaAnotherSession = true;
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
@@ -775,15 +766,11 @@ export class ElementCall extends Call {
     }
 
     public destroy(): void {
-        if (!this.session) {
-            logger.log("Did not destroy widget because there is no session");
-            return;
-        }
 
         ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.widget.roomId);
         WidgetStore.instance.removeVirtualWidget(this.widget.id, this.widget.roomId);
 
-        this.session?.off(MatrixRTCSessionEvent.MembershipsChanged, this.onGroupCallParticipants);
+        this.session?.off(MatrixRTCSessionEvent.MembershipsChanged, this.updateParticipants);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
 
         if (this.terminationTimer !== null) {
@@ -793,6 +780,11 @@ export class ElementCall extends Call {
 
         super.destroy();
     }
+    private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
+        if (roomId == this.roomId) {
+           this.destroy();
+        }
+    };
 
     /**
      * Sets the call's layout.
@@ -805,10 +797,6 @@ export class ElementCall extends Call {
     }
 
     private updateParticipants(): void {
-        if (!this.session) {
-            return;
-        }
-
         const participants = new Map<RoomMember, Set<string>>();
 
         for (const m of this.session.memberships) {
@@ -824,14 +812,6 @@ export class ElementCall extends Call {
 
         this.participants = participants;
     }
-
-    private onGroupCallParticipants = (): void => this.updateParticipants();
-
-    private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
-        if (roomId == this.roomId) {
-           this.destroy();
-        }
-    };
 
     private onHangup = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
         ev.preventDefault();
@@ -850,4 +830,8 @@ export class ElementCall extends Call {
         this.layout = Layout.Spotlight;
         await this.messaging!.transport.reply(ev.detail, {}); // ack
     };
+
+    public clean(): Promise<void> {
+        return Promise.resolve();
+    }
 }
