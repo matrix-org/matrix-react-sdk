@@ -635,7 +635,7 @@ export class ElementCall extends Call {
     private static createCallWidget(roomId: string, client: MatrixClient): IApp {
         const ecWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.CALL.matches(app.type));
         if (ecWidget) {
-            logger.log("There is already a widget in this room, so we recreate it")
+            logger.log("There is already a widget in this room, so we recreate it");
             ActiveWidgetStore.instance.destroyPersistentWidget(ecWidget.id, ecWidget.roomId);
             WidgetStore.instance.removeVirtualWidget(ecWidget.id, ecWidget.roomId);
         }

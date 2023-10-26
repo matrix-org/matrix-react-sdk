@@ -52,7 +52,6 @@ export const GroupCallDuration: FC<GroupCallDurationProps> = ({ groupCall }) => 
     return groupCall.creationTs === null ? null : <CallDuration delta={now - groupCall.creationTs} />;
 };
 
-
 interface SessionDurationProps {
     session: MatrixRTCSession | undefined;
 }

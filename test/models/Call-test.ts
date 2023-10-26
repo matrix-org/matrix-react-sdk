@@ -64,8 +64,6 @@ const enabledSettings = new Set(["feature_group_calls", "feature_video_rooms", "
 jest.spyOn(SettingsStore, "getValue").mockImplementation(
     (settingName) => enabledSettings.has(settingName) || undefined,
 );
-// jest.mock("matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager");
-// jest.mock("matrix-js-sdk/src/matrixrtc/MatrixRTCSession");
 
 const setUpClientRoomAndStores = (): {
     client: Mocked<MatrixClient>;
@@ -871,17 +869,11 @@ describe("ElementCall", () => {
 
         it("emits events when participants change", async () => {
             const onParticipants = jest.fn();
-            const myTest = (hi: any, lo: any) => {
-                console.log(hi, lo);
-            };
             call.session.memberships = [{ sender: alice.userId, deviceId: "alices_device" } as CallMembership];
             call.on(CallEvent.Participants, onParticipants);
-            call.on(CallEvent.Participants, myTest);
-
             call.session.emit(MatrixRTCSessionEvent.MembershipsChanged, [], []);
-            console.log(onParticipants.mock.calls);
+            
             expect(onParticipants.mock.calls).toEqual([[new Map([[alice, new Set(["alices_device"])]]), new Map()]]);
-            call.off(CallEvent.Participants, myTest);
 
             call.off(CallEvent.Participants, onParticipants);
         });

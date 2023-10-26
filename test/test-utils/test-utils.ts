@@ -55,7 +55,6 @@ import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
 
-
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
  * return it when get() is called.
@@ -667,11 +666,6 @@ export function mkStubRoom(
         timeline: [],
     } as unknown as Room;
 }
-
-// export function mkStubMatrixRTCSessionManager(
-// ): MatrixRTCSessionManager{
-
-// }
 
 export function mkServerConfig(
     hsUrl: string,
