@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { FC, useState, useEffect, memo } from "react";
-import { GroupCall } from "matrix-js-sdk/src/matrix";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
@@ -33,24 +32,6 @@ export const CallDuration: FC<CallDurationProps> = memo(({ delta }) => {
     if (delta <= 0) return null;
     return <div className="mx_CallDuration">{formatPreciseDuration(delta)}</div>;
 });
-
-interface GroupCallDurationProps {
-    groupCall: GroupCall;
-}
-
-/**
- * A call duration counter that automatically counts up, given a live GroupCall
- * object.
- */
-export const GroupCallDuration: FC<GroupCallDurationProps> = ({ groupCall }) => {
-    const [now, setNow] = useState(() => Date.now());
-    useEffect(() => {
-        const timer = window.setInterval(() => setNow(Date.now()), 1000);
-        return () => clearInterval(timer);
-    }, []);
-
-    return groupCall.creationTs === null ? null : <CallDuration delta={now - groupCall.creationTs} />;
-};
 
 interface SessionDurationProps {
     session: MatrixRTCSession | undefined;
