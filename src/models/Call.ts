@@ -633,6 +633,12 @@ export class ElementCall extends Call {
     }
 
     private static createCallWidget(roomId: string, client: MatrixClient): IApp {
+        const ecWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.CALL.matches(app.type));
+        if (ecWidget) {
+            logger.log("There is already a widget in this room, so we recreate it")
+            ActiveWidgetStore.instance.destroyPersistentWidget(ecWidget.id, ecWidget.roomId);
+            WidgetStore.instance.removeVirtualWidget(ecWidget.id, ecWidget.roomId);
+        }
         const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
         // The analyticsID is passed directly to element call (EC) since this codepath is only for EC and no other widget.
         // We really don't want the same analyticID's for the EC and EW posthog instances (Data on posthog should be limited/anonymized as much as possible).
@@ -712,7 +718,7 @@ export class ElementCall extends Call {
             const ecWidget = apps.find((app) => WidgetType.CALL.matches(app.type));
             const session = room.client.matrixRTC.getRoomSession(room);
 
-            // I call is present if we
+            // A call is present if we
             // - have a widget: This means the create function was called
             // - or there is a running session where we have not yet created a widget for.
             if (ecWidget || session.memberships.length !== 0) {
@@ -782,6 +788,7 @@ export class ElementCall extends Call {
 
         super.destroy();
     }
+
     private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
         if (roomId == this.roomId) {
             this.destroy();
@@ -803,7 +810,8 @@ export class ElementCall extends Call {
         const participants = new Map<RoomMember, Set<string>>();
 
         for (const m of this.session.memberships) {
-            const member = this.room.getMember(m.user);
+            if (m.sender == undefined) continue;
+            const member = this.room.getMember(m.sender);
             if (member) {
                 if (participants.has(member)) {
                     participants.get(member)?.add(m.deviceId);

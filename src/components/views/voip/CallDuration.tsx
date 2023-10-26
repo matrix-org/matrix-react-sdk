@@ -58,7 +58,7 @@ interface SessionDurationProps {
 }
 
 /**
- * A call duration counter that automatically counts up, given a live GroupCall
+ * A call duration counter that automatically counts up, given a matrixRTC session
  * object.
  */
 export const SessionDuration: FC<SessionDurationProps> = ({ session }) => {
