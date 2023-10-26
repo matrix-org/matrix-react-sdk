@@ -17,15 +17,14 @@ limitations under the License.
 import EventEmitter from "events";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
-import {
-    RoomType,
-    Room,
-    RoomEvent,
-    MatrixEvent,
-    RoomStateEvent,
-    PendingEventOrdering,
-} from "matrix-js-sdk/src/matrix";
+import { RoomType, Room, RoomEvent, MatrixEvent, RoomStateEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { CallMembership } from "matrix-js-sdk/src/matrixrtc/CallMembership";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession, MatrixRTCSessionEvent } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice, RoomMember } from "matrix-js-sdk/src/matrix";
@@ -65,6 +64,8 @@ const enabledSettings = new Set(["feature_group_calls", "feature_video_rooms", "
 jest.spyOn(SettingsStore, "getValue").mockImplementation(
     (settingName) => enabledSettings.has(settingName) || undefined,
 );
+// jest.mock("matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager");
+// jest.mock("matrix-js-sdk/src/matrixrtc/MatrixRTCSession");
 
 const setUpClientRoomAndStores = (): {
     client: Mocked<MatrixClient>;
@@ -95,9 +96,14 @@ const setUpClientRoomAndStores = (): {
                 return null;
         }
     });
+
     jest.spyOn(room, "getMyMembership").mockReturnValue("join");
 
     client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
+    client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
+    client.matrixRTC.getRoomSession.mockImplementation((roomId) => {
+        return new MatrixRTCSession(client, room, []);
+    });
     client.getRooms.mockReturnValue([room]);
     client.getUserId.mockReturnValue(alice.userId);
     client.getDeviceId.mockReturnValue("alices_device");
@@ -575,10 +581,9 @@ describe("ElementCall", () => {
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
-    let bob: RoomMember;
 
     beforeEach(() => {
-        ({ client, room, alice, bob } = setUpClientRoomAndStores());
+        ({ client, room, alice } = setUpClientRoomAndStores());
     });
 
     afterEach(() => cleanUpClientRoomAndStores(client, room));
@@ -593,15 +598,14 @@ describe("ElementCall", () => {
             expect(Call.get(room)).toBeInstanceOf(ElementCall);
         });
 
-        it("ignores terminated calls", async () => {
-            await ElementCall.create(room);
+        it("finds ongoing calls that are created by the session manager", async () => {
+            // There is an existing session created by another user in this room.
+            client.matrixRTC.getRoomSession.mockReturnValue({
+                on: (ev: any, fn: any) => {},
+                memberships: [{ fakeVal: "fake membership" }],
+            } as unknown as MatrixRTCSession);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
-
-            // Terminate the call
-            await call.session.stop();
-
-            expect(Call.get(room)).toBeNull();
         });
 
         it("passes font settings through widget URL", async () => {
@@ -729,10 +733,6 @@ describe("ElementCall", () => {
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
 
-        // it("has prompt intent", () => {
-        //     expect(call.session.intent).toBe(GroupCallIntent.Prompt);
-        // });
-
         it("connects muted", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
             audioMutedSpy.mockReturnValue(true);
@@ -826,57 +826,6 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
-        it("tracks participants in room state", async () => {
-            expect(call.participants).toEqual(new Map());
-
-            // A participant with multiple devices (should only show up once)
-            // await client.sendStateEvent(
-            //     room.roomId,
-            //     ElementCall.MEMBER_EVENT_TYPE.name,
-            //     {
-            //         "m.calls": [
-            //             {
-            //                 "m.call_id": call.groupCall.groupCallId,
-            //                 "m.devices": [
-            //                     { device_id: "bobweb", session_id: "1", feeds: [], expires_ts: 1000 * 60 * 10 },
-            //                     { device_id: "bobdesktop", session_id: "1", feeds: [], expires_ts: 1000 * 60 * 10 },
-            //                 ],
-            //             },
-            //         ],
-            //     },
-            //     bob.userId,
-            // );
-            // A participant with an expired device (should not show up)
-            // await client.sendStateEvent(
-            //     room.roomId,
-            //     ElementCall.MEMBER_EVENT_TYPE.name,
-            //     {
-            //         "m.calls": [
-            //             {
-            //                 "m.call_id": call.groupCall.groupCallId,
-            //                 "m.devices": [
-            //                     { device_id: "carolandroid", session_id: "1", feeds: [], expires_ts: -1000 * 60 },
-            //                 ],
-            //             },
-            //         ],
-            //     },
-            //     carol.userId,
-            // );
-
-            // Now, stub out client.sendStateEvent so we can test our local echo
-            client.sendStateEvent.mockReset();
-            await call.connect();
-            expect(call.participants).toEqual(
-                new Map([
-                    [alice, new Set(["alices_device"])],
-                    [bob, new Set(["bobweb", "bobdesktop"])],
-                ]),
-            );
-
-            await call.disconnect();
-            expect(call.participants).toEqual(new Map([[bob, new Set(["bobweb", "bobdesktop"])]]));
-        });
-
         it("tracks layout", async () => {
             await call.connect();
             expect(call.layout).toBe(Layout.Tile);
@@ -922,14 +871,17 @@ describe("ElementCall", () => {
 
         it("emits events when participants change", async () => {
             const onParticipants = jest.fn();
+            const myTest = (hi: any, lo: any) => {
+                console.log(hi, lo);
+            };
+            call.session.memberships = [{ sender: alice.userId, deviceId: "alices_device" } as CallMembership];
             call.on(CallEvent.Participants, onParticipants);
+            call.on(CallEvent.Participants, myTest);
 
-            await call.connect();
-            await call.disconnect();
-            expect(onParticipants.mock.calls).toEqual([
-                [new Map([[alice, new Set(["alices_device"])]]), new Map()],
-                [new Map(), new Map([[alice, new Set(["alices_device"])]])],
-            ]);
+            call.session.emit(MatrixRTCSessionEvent.MembershipsChanged, [], []);
+            console.log(onParticipants.mock.calls);
+            expect(onParticipants.mock.calls).toEqual([[new Map([[alice, new Set(["alices_device"])]]), new Map()]]);
+            call.off(CallEvent.Participants, myTest);
 
             call.off(CallEvent.Participants, onParticipants);
         });
@@ -952,60 +904,19 @@ describe("ElementCall", () => {
             call.off(CallEvent.Layout, onLayout);
         });
 
-        it("ends the call immediately if we're the last participant to leave", async () => {
+        it("ends the call immediately if the session ended", async () => {
             await call.connect();
             const onDestroy = jest.fn();
             call.on(CallEvent.Destroy, onDestroy);
             await call.disconnect();
+            // this will be called automatically
+            // disconnect -> widget sends state event -> session manager notices no-one left
+            client.matrixRTC.emit(
+                MatrixRTCSessionManagerEvents.SessionEnded,
+                room.roomId,
+                {} as unknown as MatrixRTCSession,
+            );
             expect(onDestroy).toHaveBeenCalled();
-            call.off(CallEvent.Destroy, onDestroy);
-        });
-
-        it("ends the call after a random delay if the last participant leaves without ending it", async () => {
-            // Bob connects
-            // await client.sendStateEvent(
-            //     room.roomId,
-            //     ElementCall.MEMBER_EVENT_TYPE.name,
-            //     {
-            //         "m.calls": [
-            //             {
-            //                 "m.call_id": call.groupCall.groupCallId,
-            //                 "m.devices": [
-            //                     { device_id: "bobweb", session_id: "1", feeds: [], expires_ts: 1000 * 60 * 10 },
-            //                 ],
-            //             },
-            //         ],
-            //     },
-            //     bob.userId,
-            // );
-
-            const onDestroy = jest.fn();
-            call.on(CallEvent.Destroy, onDestroy);
-
-            // Bob disconnects
-            // await client.sendStateEvent(
-            //     room.roomId,
-            //     ElementCall.MEMBER_EVENT_TYPE.name,
-            //     {
-            //         "m.calls": [
-            //             {
-            //                 "m.call_id": call.groupCall.groupCallId,
-            //                 "m.devices": [],
-            //             },
-            //         ],
-            //     },
-            //     bob.userId,
-            // );
-
-            // Nothing should happen for at least a second, to give Bob a chance
-            // to end the call on his own
-            jest.advanceTimersByTime(1000);
-            expect(onDestroy).not.toHaveBeenCalled();
-
-            // Within 10 seconds, our client should end the call on behalf of Bob
-            jest.advanceTimersByTime(9000);
-            expect(onDestroy).toHaveBeenCalled();
-
             call.off(CallEvent.Destroy, onDestroy);
         });
 
@@ -1037,10 +948,6 @@ describe("ElementCall", () => {
         });
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
-
-        // it("has room intent", () => {
-        //     expect(call.groupCall.intent).toBe(GroupCallIntent.Room);
-        // });
 
         it("doesn't end the call when the last participant leaves", async () => {
             await call.connect();
