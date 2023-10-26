@@ -43,6 +43,7 @@ import {
     saveAndReload,
     sendMessageAsClient,
 } from "./read-receipts-utils";
+import { skipIfRustCrypto } from "../../support/util";
 
 describe("Read receipts", () => {
     const roomAlpha = "Room Alpha";
@@ -171,7 +172,8 @@ describe("Read receipts", () => {
     });
 
     describe("Paging up", () => {
-        it("Paging up through old messages after a room is read leaves the room read", () => {
+        // Flaky test https://github.com/vector-im/element-web/issues/26437
+        it.skip("Paging up through old messages after a room is read leaves the room read", () => {
             // Given lots of messages are in the room, but we have read them
             goTo(room1);
             receiveMessages(room2, many("Msg", 110));
@@ -321,6 +323,10 @@ describe("Read receipts", () => {
             assertUnreadThread("Root3");
         });
         it("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {
+            // Flaky with rust crypto
+            // See https://github.com/vector-im/element-web/issues/26341
+            skipIfRustCrypto();
+
             // Given lots of messages in threads that are unread but I marked as read on a main timeline message
             goTo(room1);
             receiveMessages(room2, [
