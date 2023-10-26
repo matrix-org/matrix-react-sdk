@@ -45,6 +45,8 @@ import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManager } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 
 import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
@@ -52,6 +54,7 @@ import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
+
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
@@ -89,7 +92,20 @@ export function stubClient(): MatrixClient {
  */
 export function createTestClient(): MatrixClient {
     const eventEmitter = new EventEmitter();
+    const eventEmitterMatrixRTCSessionManager = new EventEmitter();
+
     let txnId = 1;
+
+    const stubMatrixRTC = {
+        start: jest.fn(),
+        stop: jest.fn(),
+        getActiveRoomSession: jest.fn(),
+        getRoomSession: jest.fn(),
+        on: eventEmitterMatrixRTCSessionManager.on.bind(eventEmitterMatrixRTCSessionManager),
+        off: eventEmitterMatrixRTCSessionManager.off.bind(eventEmitterMatrixRTCSessionManager),
+        removeListener: eventEmitterMatrixRTCSessionManager.removeListener.bind(eventEmitterMatrixRTCSessionManager),
+        emit: eventEmitterMatrixRTCSessionManager.emit.bind(eventEmitterMatrixRTCSessionManager),
+    } as unknown as MatrixRTCSessionManager;
 
     const client = {
         getHomeserverUrl: jest.fn(),
@@ -256,6 +272,7 @@ export function createTestClient(): MatrixClient {
         submitMsisdnToken: jest.fn(),
         getMediaConfig: jest.fn(),
         baseUrl: "https://matrix-client.matrix.org",
+        matrixRTC: stubMatrixRTC,
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -650,6 +667,11 @@ export function mkStubRoom(
         timeline: [],
     } as unknown as Room;
 }
+
+// export function mkStubMatrixRTCSessionManager(
+// ): MatrixRTCSessionManager{
+
+// }
 
 export function mkServerConfig(
     hsUrl: string,
