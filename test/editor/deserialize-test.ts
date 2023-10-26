@@ -301,7 +301,9 @@ describe("editor/deserialize", function () {
             expect(parts[0]).toStrictEqual({ type: "plain", text: "/me says _DON'T SHOUT_!" });
         });
         it("spoiler", function () {
-            const parts = normalize(parseEvent(htmlMessage("<span data-mx-spoiler>broiler</span>"), createPartCreator()));
+            const parts = normalize(
+                parseEvent(htmlMessage("<span data-mx-spoiler>broiler</span>"), createPartCreator()),
+            );
             expect(parts.length).toBe(1);
             expect(parts[0]).toStrictEqual({ type: "plain", text: "/spoiler broiler" });
         });
