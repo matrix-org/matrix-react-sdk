@@ -100,7 +100,9 @@ const setUpClientRoomAndStores = (): {
     client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
     client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
     client.matrixRTC.getRoomSession.mockImplementation((roomId) => {
-        return new MatrixRTCSession(client, room, []);
+        const session = new EventEmitter() as MatrixRTCSession;
+        session.memberships = [];
+        return session;
     });
     client.getRooms.mockReturnValue([room]);
     client.getUserId.mockReturnValue(alice.userId);
