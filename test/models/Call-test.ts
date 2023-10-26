@@ -874,7 +874,7 @@ describe("ElementCall", () => {
             call.session.memberships = [{ sender: alice.userId, deviceId: "alices_device" } as CallMembership];
             call.on(CallEvent.Participants, onParticipants);
             call.session.emit(MatrixRTCSessionEvent.MembershipsChanged, [], []);
-            
+
             expect(onParticipants.mock.calls).toEqual([[new Map([[alice, new Set(["alices_device"])]]), new Map()]]);
 
             call.off(CallEvent.Participants, onParticipants);
