@@ -40,6 +40,11 @@ declare global {
             openUserSettings(tab?: string): Chainable<JQuery<HTMLElement>>;
 
             /**
+             * Open room creation dialog.
+             */
+            openCreateRoomDialog(): Chainable<JQuery<HTMLElement>>;
+
+            /**
              * Open room settings (via room header menu), returning a handle to the resulting dialog.
              * @param tab the name of the tab to switch to after opening, optional.
              */
@@ -138,6 +143,12 @@ Cypress.Commands.add("openUserSettings", (tab?: string): Chainable<JQuery<HTMLEl
             cy.switchTab(tab);
         }
     });
+});
+
+Cypress.Commands.add("openCreateRoomDialog", (): Chainable<JQuery<HTMLElement>> => {
+    cy.findByRole("button", { name: "Add room" }).click();
+    cy.findByRole("menuitem", { name: "New room" }).click();
+    return cy.get(".mx_CreateRoomDialog");
 });
 
 Cypress.Commands.add("openRoomSettings", (tab?: string): Chainable<JQuery<HTMLElement>> => {
