@@ -18,7 +18,8 @@ limitations under the License.
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { waitForRoom, Filter } from "../utils";
+import { waitForRoom } from "../utils";
+import { Filter } from "../../support/settings";
 
 describe("Knock Into Room", () => {
     let homeserver: HomeserverInstance;

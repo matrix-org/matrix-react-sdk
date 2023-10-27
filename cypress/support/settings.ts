@@ -24,7 +24,7 @@ import Shadow = Cypress.Shadow;
 import type { SettingLevel } from "../../src/settings/SettingLevel";
 import type SettingsStore from "../../src/settings/SettingsStore";
 
-enum Filter {
+export enum Filter {
     People = "people",
     PublicRooms = "public_rooms",
 }

@@ -17,11 +17,13 @@ limitations under the License.
 
 import type { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
-export enum Filter {
-    People = "people",
-    PublicRooms = "public_rooms",
-}
-
+/**
+ * Resolves when room state matches predicate.
+ * @param win window object
+ * @param matrixClient MatrixClient instance that can be user or bot
+ * @param roomId room id to find room and check
+ * @param predicate defines condition that is used to check the room state
+ */
 export function waitForRoom(
     win: Cypress.AUTWindow,
     matrixClient: MatrixClient,

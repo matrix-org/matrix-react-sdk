@@ -17,7 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
-import { waitForRoom, Filter } from "../utils";
+import { waitForRoom } from "../utils";
+import { Filter } from "../../support/settings";
 
 describe("Create Knock Room", () => {
     let homeserver: HomeserverInstance;

@@ -23,7 +23,7 @@ import Loggable = Cypress.Loggable;
 import Timeoutable = Cypress.Timeoutable;
 import Withinable = Cypress.Withinable;
 import Shadow = Cypress.Shadow;
-import { Filter } from "../utils";
+import { Filter } from "../../support/settings";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
