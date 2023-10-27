@@ -21,6 +21,7 @@ import { _t } from "../../../languageHandler";
 import { formatDuration } from "../../../DateUtils";
 
 const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
+const UNREACHABLE_PRESENCE_NAME = new UnstableValue("unreachable", "io.element.unreachable");
 
 interface IProps {
     // number of milliseconds ago this user was last active.
@@ -44,9 +45,7 @@ export default class PresenceLabel extends React.Component<IProps> {
         // the 'active ago' ends up being 0.
         if (presence && BUSY_PRESENCE_NAME.matches(presence)) return _t("presence|busy");
 
-        if (presence === "unreachable") {
-            return _t("presence|unreachable");
-        }
+        if (presence && UNREACHABLE_PRESENCE_NAME.matches(presence)) return _t("presence|unreachable");
 
         if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
             const duration = formatDuration(activeAgo);
