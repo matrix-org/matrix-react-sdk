@@ -15,11 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { UserCredentials } from "../../support/login";
-import { waitForRoom } from "../utils";
+import { waitForRoom, Filter } from "../utils";
 
 describe("Knock Into Room", () => {
     let homeserver: HomeserverInstance;
@@ -175,5 +174,25 @@ describe("Knock Into Room", () => {
 
         // Room should disappear from the list completely when forgotten
         cy.findByRole("treeitem", { name: /Cybersecurity/ }).should("not.exist");
+    });
+
+    it("should knock into the public knock room via spotlight", () => {
+        cy.window().then((win) => {
+            bot.setRoomDirectoryVisibility(roomId, win.matrixcs.Visibility.Public);
+        });
+
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.PublicRooms);
+            cy.spotlightResults().eq(0).should("contain", "Cybersecurity");
+            cy.spotlightResults().eq(0).click();
+        });
+
+        cy.get(".mx_RoomPreviewBar").within(() => {
+            cy.findByRole("heading", { name: "Ask to join?" });
+            cy.findByRole("textbox");
+            cy.findByRole("button", { name: "Request access" }).click();
+
+            cy.findByRole("heading", { name: "Request to join sent" });
+        });
     });
 });

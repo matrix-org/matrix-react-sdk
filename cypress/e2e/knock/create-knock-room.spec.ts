@@ -17,7 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
-import { waitForRoom } from "../utils";
+import { waitForRoom, Filter } from "../utils";
 
 describe("Create Knock Room", () => {
     let homeserver: HomeserverInstance;
@@ -94,6 +94,42 @@ describe("Create Knock Room", () => {
                     );
                 });
             });
+        });
+    });
+
+    it("should create a public knock room", () => {
+        cy.openCreateRoomDialog().within(() => {
+            cy.findByRole("textbox", { name: "Name" }).type("Cybersecurity");
+            cy.findByRole("button", { name: "Room visibility" }).click();
+            cy.findByRole("option", { name: "Ask to join" }).click();
+            cy.findByRole("checkbox", { name: "Make this room visible in the public room directory." }).click({
+                force: true,
+            });
+
+            cy.findByRole("button", { name: "Create room" }).click();
+        });
+
+        cy.get(".mx_LegacyRoomHeader").within(() => {
+            cy.findByText("Cybersecurity");
+        });
+
+        cy.hash().then((urlHash) => {
+            const roomId = urlHash.replace("#/room/", "");
+
+            // Room should have a knock join rule
+            cy.window().then(async (win) => {
+                await waitForRoom(win, win.mxMatrixClientPeg.get(), roomId, (room) => {
+                    const events = room.getLiveTimeline().getEvents();
+                    return events.some(
+                        (e) => e.getType() === "m.room.join_rules" && e.getContent().join_rule === "knock",
+                    );
+                });
+            });
+        });
+
+        cy.openSpotlightDialog().within(() => {
+            cy.spotlightFilter(Filter.PublicRooms);
+            cy.spotlightResults().eq(0).should("contain", "Cybersecurity");
         });
     });
 });
