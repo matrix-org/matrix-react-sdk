@@ -810,7 +810,7 @@ export class ElementCall extends Call {
         const participants = new Map<RoomMember, Set<string>>();
 
         for (const m of this.session.memberships) {
-            if (m.sender == undefined) continue;
+            if (!m.sender) continue;
             const member = this.room.getMember(m.sender);
             if (member) {
                 if (participants.has(member)) {
