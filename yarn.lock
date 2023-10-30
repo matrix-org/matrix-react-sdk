@@ -1813,20 +1813,20 @@
     emojibase "^15.0.0"
     emojibase-data "^15.0.0"
 
-"@matrix-org/matrix-sdk-crypto-wasm@^1.2.3-alpha.0":
-  version "1.2.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-wasm/-/matrix-sdk-crypto-wasm-1.2.3-alpha.0.tgz#f6f93e3ee44c5f1e0e255badd26f4a7d3fb1dab8"
-  integrity sha512-BFLqfq/WbYZ+83r4UWLhwtBYvTp5DKTHNeWUSDBVvudFtqBvkntNAAUz+xmhmO1XkyNm+sBaElxF8IS9S8zdww==
+"@matrix-org/matrix-sdk-crypto-wasm@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-wasm/-/matrix-sdk-crypto-wasm-2.1.1.tgz#5b20125d73eb404b1c49b61380f443c5fcfbacd2"
+  integrity sha512-PNFdLr68uLNT81iFmJL0PH98t7/U4g+a51d5+BmbKo0LEqchLkEKNraD1vq/kzPK6X7p/3IapQI5P+5Lr8jHsg==
 
 "@matrix-org/matrix-wysiwyg@2.4.1":
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-2.4.1.tgz#e1325a42366a1c891b2ba90c88e597b39187b2cb"
   integrity sha512-RyUijZXVKenE9s3LczDUhWFeOfIyLcsOrAyHqYxnizXX5nxMkHxTgLeoTvaIJ+1dOhI+H2SS9G4VcN6odZ0aNg==
 
-"@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz":
-  version "3.2.14"
-  uid acd96c00a881d0f462e1f97a56c73742c8dbc984
-  resolved "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.14.tgz#acd96c00a881d0f462e1f97a56c73742c8dbc984"
+"@matrix-org/olm@3.2.15":
+  version "3.2.15"
+  resolved "https://registry.yarnpkg.com/@matrix-org/olm/-/olm-3.2.15.tgz#55f3c1b70a21bbee3f9195cecd6846b1083451ec"
+  integrity sha512-S7lOrndAK9/8qOtaTq/WhttJC/o4GAzdfK0MUPpo8ApzsJEC0QjtwrkC3KBXdFP1cD1MXi/mlKR7aaoVMKgs6Q==
 
 "@matrix-org/react-sdk-module-api@^2.1.1":
   version "2.1.1"
@@ -7692,11 +7692,11 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "29.0.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/3cf6f568f3d489e38ca14b5a8927ff27996d96bb"
+  version "29.1.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/d750e33ec955a9305a29426e5a64f05e66b14310"
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@matrix-org/matrix-sdk-crypto-wasm" "^1.2.3-alpha.0"
+    "@matrix-org/matrix-sdk-crypto-wasm" "^2.1.1"
     another-json "^0.2.0"
     bs58 "^5.0.0"
     content-type "^1.0.4"
