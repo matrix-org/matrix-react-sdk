@@ -161,7 +161,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             if (e?.httpStatus === 429) {
                 // 429: rate limit
                 this.setState({ phase: Phase.Error, failureReason: LoginWithQRFailureReason.RateLimited });
-                this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
                 return;
             }
             this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
