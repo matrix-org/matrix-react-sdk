@@ -41,7 +41,7 @@ describe("Presence tests", () => {
                                 type: "m.presence",
                                 sender: bob.getUserId(),
                                 content: {
-                                    presence: "unreachable",
+                                    presence: "io.element.unreachable",
                                     currently_active: false,
                                 },
                             },

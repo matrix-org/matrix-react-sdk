@@ -34,7 +34,7 @@ describe("<PresenceLabel/>", () => {
     });
 
     it("should render 'Unreachable' for presence=unreachable", () => {
-        const { asFragment } = render(<PresenceLabel presenceState="unreachable" />);
+        const { asFragment } = render(<PresenceLabel presenceState="io.element.unreachable" />);
         expect(asFragment()).toMatchInlineSnapshot(`
             <DocumentFragment>
               <div
