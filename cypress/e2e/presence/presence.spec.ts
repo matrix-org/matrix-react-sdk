@@ -53,7 +53,6 @@ describe("Presence tests", () => {
                 cy.viewRoomById(roomId);
             });
             cy.findByRole("button", { name: "Room info" }).click();
-            cy.contains(".mx_RightPanel", "People").click({ force: true });
             cy.get(".mx_RightPanel").within(() => {
                 cy.contains("People").click();
             });
