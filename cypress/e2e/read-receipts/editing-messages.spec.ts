@@ -97,7 +97,6 @@ describe("Read receipts", () => {
 
     describe("editing messages", () => {
         describe("in the main timeline", () => {
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
             it("Editing a message leaves a room read", () => {
                 // Given I am not looking at the room
                 goTo(room1);
