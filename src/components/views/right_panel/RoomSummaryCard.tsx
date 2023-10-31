@@ -389,18 +389,30 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onClick={onShareRoomClick} />
             <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onClick={onRoomSettingsClick} />
 
-            <Separator />
+            {!isVideoRoom && (
+                <>
+                    <Separator />
 
-            <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onClick={onRoomFilesClick} />
-            <MenuItem Icon={PollsIcon} label={_t("right_panel|polls_button")} onClick={onRoomPollHistoryClick} />
-            {pinningEnabled && (
-                <MenuItem Icon={PinIcon} label={_t("right_panel|pinned_messages_button")} onClick={onRoomPinsClick}>
-                    <Text as="span" size="sm">
-                        {pinCount}
-                    </Text>
-                </MenuItem>
+                    <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onClick={onRoomFilesClick} />
+                    <MenuItem
+                        Icon={PollsIcon}
+                        label={_t("right_panel|polls_button")}
+                        onClick={onRoomPollHistoryClick}
+                    />
+                    {pinningEnabled && (
+                        <MenuItem
+                            Icon={PinIcon}
+                            label={_t("right_panel|pinned_messages_button")}
+                            onClick={onRoomPinsClick}
+                        >
+                            <Text as="span" size="sm">
+                                {pinCount}
+                            </Text>
+                        </MenuItem>
+                    )}
+                    <MenuItem Icon={ExportArchiveIcon} label={_t("export_chat|title")} onClick={onRoomExportClick} />
+                </>
             )}
-            <MenuItem Icon={ExportArchiveIcon} label={_t("export_chat|title")} onClick={onRoomExportClick} />
 
             <Separator />
 

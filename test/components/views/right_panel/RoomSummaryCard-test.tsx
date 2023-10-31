@@ -96,14 +96,6 @@ describe("<RoomSummaryCard />", () => {
         expect(onSearchClick).toHaveBeenCalled();
     });
 
-    it("opens room members list on button click", () => {
-        const { getByText } = getComponent();
-
-        fireEvent.click(getByText("People"));
-
-        expect(rightPanelCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomMemberList }, true);
-    });
-
     it("opens room file panel on button click", () => {
         const { getByText } = getComponent();
 
@@ -115,7 +107,7 @@ describe("<RoomSummaryCard />", () => {
     it("opens room export dialog on button click", () => {
         const { getByText } = getComponent();
 
-        fireEvent.click(getByText("Export chat"));
+        fireEvent.click(getByText(_t("export_chat|title")));
 
         expect(modalSpy).toHaveBeenCalledWith(ExportDialog, { room });
     });
@@ -123,7 +115,7 @@ describe("<RoomSummaryCard />", () => {
     it("opens share room dialog on button click", () => {
         const { getByText } = getComponent();
 
-        fireEvent.click(getByText("Share room"));
+        fireEvent.click(getByText(_t("action|copy_link")));
 
         expect(modalSpy).toHaveBeenCalledWith(ShareDialog, { target: room });
     });
@@ -131,7 +123,7 @@ describe("<RoomSummaryCard />", () => {
     it("opens room settings on button click", () => {
         const { getByText } = getComponent();
 
-        fireEvent.click(getByText("Room settings"));
+        fireEvent.click(getByText(_t("common|settings")));
 
         expect(dispatchSpy).toHaveBeenCalledWith({ action: "open_room_settings" });
     });
