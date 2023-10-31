@@ -156,9 +156,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.setState({ rendezvous: undefined });
             }
             this.props.onFinished(true);
-        } catch (e: any) {
+        } catch (e) {
             logger.error("Error whilst approving sign in", e);
-            if (e?.httpStatus === 429) {
+            if (e instanceof HTTPError && e.httpStatus === 429) {
                 // 429: rate limit
                 this.setState({ phase: Phase.Error, failureReason: LoginWithQRFailureReason.RateLimited });
                 return;
