@@ -66,6 +66,7 @@
         "@matrix-org/matrix-wysiwyg": "2.4.1",
         "@matrix-org/react-sdk-module-api": "^2.1.1",
         "@matrix-org/spec": "^1.7.0",
+        "@playwright/test": "^1.39.0",
         "@sentry/browser": "^7.0.0",
         "@sentry/tracing": "^7.0.0",
         "@testing-library/react-hooks": "^8.0.1",
