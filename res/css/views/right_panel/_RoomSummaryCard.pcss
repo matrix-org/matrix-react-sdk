@@ -93,24 +93,6 @@ limitations under the License.
         }
     }
 
-    .mx_RoomSummaryCard_aboutGroup {
-        .mx_RoomSummaryCard_Button {
-            padding-left: 44px;
-
-            &::before {
-                content: "";
-                position: absolute;
-                top: 8px;
-                left: 10px;
-                height: 24px;
-                width: 24px;
-                mask-repeat: no-repeat;
-                mask-position: center;
-                background-color: $icon-button-color;
-            }
-        }
-    }
-
     .mx_RoomSummaryCard_appsGroup {
         .mx_RoomSummaryCard_Button {
             /* this button is special so we have to override some of the original styling */
@@ -257,42 +239,6 @@ limitations under the License.
     border: 0 !important;
     margin: 0 !important;
     cursor: pointer;
-}
-
-.mx_RoomSummaryCard_icon_people::before {
-    mask-image: url("$(res)/img/element-icons/room/members.svg");
-}
-
-.mx_RoomSummaryCard_icon_files::before {
-    mask-image: url("$(res)/img/element-icons/room/files.svg");
-}
-
-.mx_RoomSummaryCard_icon_pins::before {
-    mask-image: url("$(res)/img/element-icons/room/pin-upright.svg");
-}
-
-.mx_RoomSummaryCard_icon_threads::before {
-    mask-image: url("$(res)/img/element-icons/message/thread.svg");
-}
-
-.mx_RoomSummaryCard_icon_share::before {
-    mask-image: url("$(res)/img/element-icons/room/share.svg");
-}
-
-.mx_RoomSummaryCard_icon_settings::before {
-    mask-image: url("$(res)/img/element-icons/settings.svg");
-}
-
-.mx_RoomSummaryCard_icon_export::before {
-    mask-image: url("$(res)/img/element-icons/export.svg");
-}
-
-.mx_RoomSummaryCard_icon_poll::before {
-    mask-image: url("$(res)/img/element-icons/room/composer/poll.svg");
-}
-
-.mx_RoomSummaryCard_icon_search::before {
-    mask-image: url("$(res)/img/element-icons/room/search-inset.svg");
 }
 
 .mx_RoomSummaryCard_searchBtn {
