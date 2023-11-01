@@ -18,6 +18,7 @@ import React from "react";
 import { CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { EventType, JoinRule, MatrixClient, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
 import {
+    createEvent,
     fireEvent,
     getAllByLabelText,
     getByLabelText,
@@ -532,6 +533,31 @@ describe("RoomHeader", () => {
             withClientContextRenderOptions(MatrixClientPeg.get()!),
         );
         expect(screen.getByRole("button", { name: "test-label" })).toBeInTheDocument();
+    });
+
+    it("calls onClick-callback on additionalButtons", () => {
+        const callback = jest.fn();
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: callback,
+            },
+        ];
+
+        render(
+            <RoomHeader room={room} additionalButtons={additionalButtons} />,
+            withClientContextRenderOptions(MatrixClientPeg.get()!),
+        );
+
+        const button = screen.getByRole("button", { name: "test-label" });
+        const event = createEvent.click(button);
+        event.stopPropagation = jest.fn();
+        fireEvent(button, event);
+
+        expect(callback).toHaveBeenCalled();
+        expect(event.stopPropagation).toHaveBeenCalled();
     });
 });
 

@@ -752,6 +752,21 @@ describe("LegacyRoomHeader", () => {
         renderHeader({ additionalButtons });
         expect(screen.getByRole("button", { name: "test-icon" })).toBeInTheDocument();
     });
+
+    it("calls onClick-callback on additionalButtons", () => {
+        const callback = jest.fn();
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: callback,
+            },
+        ];
+        renderHeader({ additionalButtons });
+        fireEvent.click(screen.getByRole("button", { name: "test-icon" }));
+        expect(callback).toHaveBeenCalled();
+    });
 });
 
 interface IRoomCreationInfo {
