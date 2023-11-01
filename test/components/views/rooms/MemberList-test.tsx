@@ -324,7 +324,7 @@ describe("MemberList", () => {
                     type: "m.presence",
                     sender: defaultUsers[0].userId,
                     content: {
-                        presence: "unreachable",
+                        presence: "io.element.unreachable",
                         currently_active: false,
                     },
                 }),
