@@ -35,13 +35,13 @@ const PowerLabel: Record<PowerStatus, TranslationKey> = {
     [PowerStatus.Moderator]: _td("power_level|mod"),
 };
 
-export type PresenceState = "offline" | "online" | "unreachable" | "unavailable";
+export type PresenceState = "offline" | "online" | "unavailable" | "io.element.unreachable";
 
 const PRESENCE_CLASS: Record<PresenceState, string> = {
-    offline: "mx_EntityTile_offline",
-    online: "mx_EntityTile_online",
-    unavailable: "mx_EntityTile_unavailable",
-    unreachable: "mx_EntityTile_unreachable",
+    "offline": "mx_EntityTile_offline",
+    "online": "mx_EntityTile_online",
+    "unavailable": "mx_EntityTile_unavailable",
+    "io.element.unreachable": "mx_EntityTile_unreachable",
 };
 
 function presenceClassForMember(presenceState?: PresenceState, lastActiveAgo?: number, showPresence?: boolean): string {
@@ -107,7 +107,6 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
     }
 
     public render(): React.ReactNode {
-        const isPresenceUnreachable = this.props.presenceState === "unreachable";
         const mainClassNames: Record<string, boolean> = {
             mx_EntityTile: true,
             mx_EntityTile_noHover: !!this.props.suppressOnHover,
@@ -123,6 +122,8 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
 
         let nameEl;
         const name = this.props.nameJSX || this.props.name;
+        const isPresenceUnreachable = this.props.presenceState === "io.element.unreachable";
+        const shouldShowPresence = this.props.showPresence && (!this.props.suppressOnHover || isPresenceUnreachable);
         if (this.props.subtextLabel) {
             nameEl = (
                 <div className="mx_EntityTile_details">
@@ -130,21 +131,18 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                     <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>
                 </div>
             );
-        } else if (!this.props.suppressOnHover || isPresenceUnreachable) {
+        } else if (shouldShowPresence) {
             const activeAgo = this.props.presenceLastActiveAgo
                 ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
                 : -1;
 
-            let presenceLabel: JSX.Element | undefined;
-            if (this.props.showPresence) {
-                presenceLabel = (
-                    <PresenceLabel
-                        activeAgo={activeAgo}
-                        currentlyActive={this.props.presenceCurrentlyActive}
-                        presenceState={this.props.presenceState}
-                    />
-                );
-            }
+            const presenceLabel = (
+                <PresenceLabel
+                    activeAgo={activeAgo}
+                    currentlyActive={this.props.presenceCurrentlyActive}
+                    presenceState={this.props.presenceState}
+                />
+            );
             nameEl = (
                 <div className="mx_EntityTile_details">
                     <div className="mx_EntityTile_name">{name}</div>
