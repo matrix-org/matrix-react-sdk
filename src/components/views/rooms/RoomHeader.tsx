@@ -69,7 +69,7 @@ export default function RoomHeader({
     additionalButtons,
 }: {
     room: Room;
-    additionalButtons: ViewRoomOpts["buttons"];
+    additionalButtons?: ViewRoomOpts["buttons"];
 }): JSX.Element {
     const client = useMatrixClientContext();
 
