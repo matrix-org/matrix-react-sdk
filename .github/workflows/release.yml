@@ -11,9 +11,9 @@ on:
                     - rc
                     - final
             matrix-js-sdk:
-                description: JS SDK version to use (latest|current|vX.Y.Z)
+                description: JS SDK version to use (current|X.Y.Z)
                 required: false
-                default: latest
+                default: current
                 type: string
             npm:
                 description: Publish to npm
