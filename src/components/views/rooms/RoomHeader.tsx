@@ -67,10 +67,10 @@ function notificationColorToIndicator(color: NotificationColor): React.Component
 export default function RoomHeader({
     room,
     additionalButtons,
-}: {
+}: Readonly<{
     room: Room;
-    additionalButtons?: Readonly<ViewRoomOpts["buttons"]>;
-}): JSX.Element {
+    additionalButtons: ViewRoomOpts["buttons"];
+}>): JSX.Element {
     const client = useMatrixClientContext();
 
     const roomName = useRoomName(room);
