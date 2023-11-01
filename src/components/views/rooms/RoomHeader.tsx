@@ -176,19 +176,23 @@ export default function RoomHeader({
                 )}
             </Box>
             <Flex as="nav" align="center" gap="var(--cpd-space-2x)">
-                {additionalButtons?.map(({ icon, id, label, onClick }) => (
-                    <Tooltip label={label()} key={id}>
-                        <IconButton
-                            aria-label={label()}
-                            onClick={(event) => {
-                                event.stopPropagation();
-                                onClick();
-                            }}
-                        >
-                            {icon}
-                        </IconButton>
-                    </Tooltip>
-                ))}
+                {additionalButtons?.map((props) => {
+                    const label = props.label();
+
+                    return (
+                        <Tooltip label={label} key={props.id}>
+                            <IconButton
+                                aria-label={label}
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    props.onClick();
+                                }}
+                            >
+                                {props.icon}
+                            </IconButton>
+                        </Tooltip>
+                    );
+                })}
                 {!useElementCallExclusively && (
                     <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                         <IconButton

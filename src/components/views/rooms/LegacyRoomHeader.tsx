@@ -672,19 +672,23 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         return (
             <>
-                {this.props.additionalButtons?.map(({ icon, id, label, onClick }) => (
-                    <Tooltip label={label()} key={id}>
-                        <IconButton
-                            onClick={() => {
-                                onClick();
-                                this.forceUpdate();
-                            }}
-                            title={label()}
-                        >
-                            {icon}
-                        </IconButton>
-                    </Tooltip>
-                ))}
+                {this.props.additionalButtons?.map((props) => {
+                    const label = props.label();
+
+                    return (
+                        <Tooltip label={label} key={props.id}>
+                            <IconButton
+                                onClick={() => {
+                                    props.onClick();
+                                    this.forceUpdate();
+                                }}
+                                title={label}
+                            >
+                                {props.icon}
+                            </IconButton>
+                        </Tooltip>
+                    );
+                })}
                 {startButtons}
                 <RoomHeaderButtons
                     room={this.props.room}
