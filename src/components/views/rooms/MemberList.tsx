@@ -312,11 +312,9 @@ export default class MemberList extends React.Component<IProps, IState> {
                         key={m.userId}
                         member={m}
                         ref={(tile) => {
-                            if (tile) {
-                                this.tiles.set(m.userId, tile);
-                            } else {
-                                this.tiles.delete(m.userId);
-                            }
+                            if (tile) this.tiles.set(m.userId, tile);
+                            else this.tiles.delete(m.userId);
+
                         }}
                         showPresence={this.showPresence}
                     />
