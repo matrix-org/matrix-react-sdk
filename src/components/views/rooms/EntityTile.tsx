@@ -104,21 +104,18 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         };
     }
 
-    private getPresenceLabelOrSubtextLabel(): JSX.Element | undefined {
-        if (this.props.subtextLabel) {
-            return <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>;
-        } else if (this.props.showPresence) {
-            const activeAgo = this.props.presenceLastActiveAgo
-                ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
-                : -1;
-            return (
-                <PresenceLabel
-                    activeAgo={activeAgo}
-                    currentlyActive={this.props.presenceCurrentlyActive}
-                    presenceState={this.props.presenceState}
-                />
-            );
-        }
+    private getPresenceLabel(): JSX.Element | undefined {
+        if (!this.props.showPresence) return;
+        const activeAgo = this.props.presenceLastActiveAgo
+            ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
+            : -1;
+        return (
+            <PresenceLabel
+                activeAgo={activeAgo}
+                currentlyActive={this.props.presenceCurrentlyActive}
+                presenceState={this.props.presenceState}
+            />
+        );
     }
 
     public render(): React.ReactNode {
@@ -135,10 +132,10 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         mainClassNames[presenceClass] = true;
 
         const name = this.props.nameJSX || this.props.name;
-        const nameAndDetails = (
+        const nameAndPresence = (
             <div className="mx_EntityTile_details">
                 <div className="mx_EntityTile_name">{name}</div>
-                {this.getPresenceLabelOrSubtextLabel()}
+                {this.getPresenceLabel()}
             </div>
         );
 
@@ -183,7 +180,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                         {av}
                         {e2eIcon}
                     </div>
-                    {nameAndDetails}
+                    {nameAndPresence}
                     {powerLabel}
                     {inviteButton}
                 </AccessibleButton>
