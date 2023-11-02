@@ -76,7 +76,6 @@ interface IProps {
     presenceCurrentlyActive?: boolean;
     showInviteButton: boolean;
     onClick(): void;
-    suppressOnHover: boolean;
     showPresence: boolean;
     subtextLabel?: string;
     e2eStatus?: E2EState;
@@ -94,7 +93,6 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         presenceLastActiveAgo: 0,
         presenceLastTs: 0,
         showInviteButton: false,
-        suppressOnHover: false,
         showPresence: true,
     };
 
@@ -106,10 +104,26 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         };
     }
 
+    private getPresenceLabelOrSubtextLabel(): JSX.Element | undefined {
+        if (this.props.subtextLabel) {
+            return <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>;
+        } else if (this.props.showPresence) {
+            const activeAgo = this.props.presenceLastActiveAgo
+                ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
+                : -1;
+            return (
+                <PresenceLabel
+                    activeAgo={activeAgo}
+                    currentlyActive={this.props.presenceCurrentlyActive}
+                    presenceState={this.props.presenceState}
+                />
+            );
+        }
+    }
+
     public render(): React.ReactNode {
         const mainClassNames: Record<string, boolean> = {
             mx_EntityTile: true,
-            mx_EntityTile_noHover: !!this.props.suppressOnHover,
         };
         if (this.props.className) mainClassNames[this.props.className] = true;
 
@@ -120,38 +134,13 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         );
         mainClassNames[presenceClass] = true;
 
-        let nameEl;
         const name = this.props.nameJSX || this.props.name;
-        const isPresenceUnreachable = this.props.presenceState === "io.element.unreachable";
-        const shouldShowPresence = this.props.showPresence && (!this.props.suppressOnHover || isPresenceUnreachable);
-        if (this.props.subtextLabel) {
-            nameEl = (
-                <div className="mx_EntityTile_details">
-                    <div className="mx_EntityTile_name">{name}</div>
-                    <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>
-                </div>
-            );
-        } else if (shouldShowPresence) {
-            const activeAgo = this.props.presenceLastActiveAgo
-                ? Date.now() - (this.props.presenceLastTs - this.props.presenceLastActiveAgo)
-                : -1;
-
-            const presenceLabel = (
-                <PresenceLabel
-                    activeAgo={activeAgo}
-                    currentlyActive={this.props.presenceCurrentlyActive}
-                    presenceState={this.props.presenceState}
-                />
-            );
-            nameEl = (
-                <div className="mx_EntityTile_details">
-                    <div className="mx_EntityTile_name">{name}</div>
-                    {presenceLabel}
-                </div>
-            );
-        } else {
-            nameEl = <div className="mx_EntityTile_name">{name}</div>;
-        }
+        const nameAndDetails = (
+            <div className="mx_EntityTile_details">
+                <div className="mx_EntityTile_name">{name}</div>
+                {this.getPresenceLabelOrSubtextLabel()}
+            </div>
+        );
 
         let inviteButton;
         if (this.props.showInviteButton) {
@@ -194,7 +183,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                         {av}
                         {e2eIcon}
                     </div>
-                    {nameEl}
+                    {nameAndDetails}
                     {powerLabel}
                     {inviteButton}
                 </AccessibleButton>

@@ -246,8 +246,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                     <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." size="36px" />
                 }
                 name={text}
-                presenceState="online"
-                suppressOnHover={true}
+                showPresence={false}
                 onClick={onClick}
             />
         );
@@ -328,7 +327,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                     <EntityTile
                         key={m.getStateKey()}
                         name={m.getContent().display_name}
-                        suppressOnHover={true}
+                        showPresence={false}
                         onClick={() => this.onPending3pidInviteClick(m)}
                     />
                 );
