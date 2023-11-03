@@ -540,13 +540,13 @@ describe("TimelinePanel", () => {
                 type: "m.call.invite",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent1`,
-                origin_server_ts: 0,
+                origin_server_ts: 2,
             });
             const virtualCallMetaEvent = new MatrixEvent({
                 type: "org.matrix.call.sdp_stream_metadata_changed",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent2`,
-                origin_server_ts: 0,
+                origin_server_ts: 2,
             });
             const virtualEvents = [virtualCallInvite, ...mockEvents(virtualRoom), virtualCallMetaEvent];
             const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
