@@ -265,7 +265,7 @@ describe("Read receipts", () => {
                 assertReadThread("Msg1");
             });
             // XXX: fails because the unread dot remains after marking as read
-            it.skip("Marking a room as read after an edit in a thread makes it read", () => {
+            it.only("Marking a room as read after an edit in a thread makes it read", () => {
                 // Given an edit in a thread is making the room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
