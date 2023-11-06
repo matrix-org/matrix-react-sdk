@@ -20,6 +20,8 @@ import classNames from "classnames";
 import { throttle } from "lodash";
 import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { IconButton, Tooltip } from "@vector-im/compound-web";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import type { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
@@ -65,7 +67,7 @@ import IconizedContextMenu, {
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { GroupCallDuration } from "../voip/CallDuration";
+import { SessionDuration } from "../voip/CallDuration";
 import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
@@ -476,6 +478,7 @@ export interface IProps {
     enableRoomOptionsMenu?: boolean;
     viewingCall: boolean;
     activeCall: Call | null;
+    additionalButtons?: ViewRoomOpts["buttons"];
 }
 
 interface IState {
@@ -669,6 +672,23 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         return (
             <>
+                {this.props.additionalButtons?.map((props) => {
+                    const label = props.label();
+
+                    return (
+                        <Tooltip label={label} key={props.id}>
+                            <IconButton
+                                onClick={() => {
+                                    props.onClick();
+                                    this.forceUpdate();
+                                }}
+                                title={label}
+                            >
+                                {props.icon}
+                            </IconButton>
+                        </Tooltip>
+                    );
+                })}
                 {startButtons}
                 <RoomHeaderButtons
                     room={this.props.room}
@@ -787,7 +807,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                         {icon}
                         {name}
                         {this.props.activeCall instanceof ElementCall && (
-                            <GroupCallDuration groupCall={this.props.activeCall.groupCall} />
+                            <SessionDuration session={this.props.activeCall?.session} />
                         )}
                         {/* Empty topic element to fill out space */}
                         <div className="mx_LegacyRoomHeader_topic" />
