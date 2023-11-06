@@ -291,6 +291,6 @@ jobs:
                   kiwi-password: ${{ secrets.TCMS_PASSWORD }}
                   product: "Element Web"
                   product-version: ${{ github.event.workflow_run.head_branch }}
-                  build-id: ${{ github.event.workflow_run.head_sha }}
-                  suite-name: "Cypress E2E (${{ matrix.crypto }} crypto)"
+                  build-id: ${{ github.event.workflow_run.head_sha }}-${{ matrix.crypto }}-crypto
+                  suite-name: "Cypress E2E"
                   summary-template: "$name"
