@@ -706,7 +706,7 @@ export class ElementCall extends Call {
     }
 
     public static get(room: Room): ElementCall | null {
-        // Only supported in the new group call experience or in video rooms
+        // Only supported in the new group call experience or in video rooms.
         if (
             SettingsStore.getValue("feature_group_calls") ||
             (SettingsStore.getValue("feature_video_rooms") &&
@@ -718,7 +718,7 @@ export class ElementCall extends Call {
             const session = room.client.matrixRTC.getRoomSession(room);
 
             // A call is present if we
-            // - have a widget: This means the create function was called
+            // - have a widget: This means the create function was called.
             // - or there is a running session where we have not yet created a widget for.
             // - or this this is a call room. Then we also always want to show a call.
             if (hasEcWidget || session.memberships.length !== 0 || room.isCallRoom()) {
