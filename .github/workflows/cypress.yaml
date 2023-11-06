@@ -213,26 +213,26 @@ jobs:
                   # We manually finalize the build in the report stage
                   PERCY_PARALLEL_TOTAL: -1
 
-            - name: Upload Artifact
+            - name: 📤 Upload results artifact
               if: failure()
               uses: actions/upload-artifact@v3
               with:
-                  name: cypress-results
+                  name: cypress-results-${{ matrix.crypto }}-crypto
                   path: |
                       matrix-react-sdk/cypress/screenshots
                       matrix-react-sdk/cypress/videos
                       matrix-react-sdk/cypress/synapselogs
                       matrix-react-sdk/cypress/results/cypresslogs
 
-            - name: Upload reports
+            - name: 📤 Upload JUnit report artifact
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: cypress-junit
+                  name: cypress-junit-${{ matrix.crypto }}-crypto
                   path: matrix-react-sdk/cypress/results/junit
 
     report:
-        name: Report results
+        name: Finalize results
         needs:
             - prepare
             - tests
@@ -268,19 +268,22 @@ jobs:
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
     kiwi:
-        name: Report results to kiwi
+        name: 🥝 Report results to kiwi (${{ matrix.crypto }} crypto)
         needs:
             - prepare
             - tests
         environment: Kiwi
         runs-on: ubuntu-latest
         if: ${{ needs.prepare.outputs.kiwi_enable == '1' }}
+        strategy:
+            matrix:
+                crypto: [legacy, rust]
         steps:
-            - name: Download all zip files
+            - name: 📥 Download Junit report artifact
               uses: actions/download-artifact@v3
               with:
-                  name: cypress-junit
-            - name: Upload to kiwi
+                  name: cypress-junit-${{ matrix.crypto }}-crypto
+            - name: 📤 Upload results to kiwi
               uses: vector-im/kiwitcms-upload-action@main
               with:
                   file-pattern: results-*.xml
@@ -289,5 +292,5 @@ jobs:
                   product: "Element Web"
                   product-version: ${{ github.event.workflow_run.head_branch }}
                   build-id: ${{ github.event.workflow_run.head_sha }}
-                  suite-name: "Cypress E2E"
+                  suite-name: "Cypress E2E (${{ matrix.crypto }} crypto)"
                   summary-template: "$name"
