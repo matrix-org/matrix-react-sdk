@@ -104,6 +104,10 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         };
     }
 
+    /**
+     * Creates the PresenceLabel component if needed
+     * @returns The PresenceLabel component if we need to render it, undefined otherwise
+     */
     private getPresenceLabel(): JSX.Element | undefined {
         if (!this.props.showPresence) return;
         const activeAgo = this.props.presenceLastActiveAgo
