@@ -215,13 +215,6 @@ jobs:
                       matrix-react-sdk/cypress/synapselogs
                       matrix-react-sdk/cypress/results/cypresslogs
 
-            - name: 📤 Upload JUnit report artifact
-              if: always()
-              uses: actions/upload-artifact@v3
-              with:
-                  name: cypress-junit-${{ matrix.crypto }}-crypto
-                  path: matrix-react-sdk/cypress/results/junit
-
     report:
         name: Finalize results
         needs:
