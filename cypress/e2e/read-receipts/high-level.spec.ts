@@ -172,18 +172,18 @@ describe("Read receipts", () => {
             // Display room 1
             goTo(room1);
 
-            // The room 1 is read
-            assertRead(room1);
+            // The room 2 is read
+            assertRead(room2);
 
-            // We received 3 unimportant messages to room1
-            receiveMessages(room1, [
+            // We received 3 unimportant messages to room2
+            receiveMessages(room2, [
                 customEvent("org.custom.event", { body: "foobar1" }),
                 customEvent("org.custom.event", { body: "foobar2" }),
                 customEvent("org.custom.event", { body: "foobar3" }),
             ]);
 
-            // The room 1 is still read
-            assertStillRead(room1);
+            // The room 2 is still read
+            assertStillRead(room2);
         });
     });
 
