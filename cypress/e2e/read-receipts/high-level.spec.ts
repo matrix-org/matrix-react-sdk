@@ -156,7 +156,7 @@ describe("Read receipts", () => {
             assertRead(room2);
             goTo(room1);
 
-            // When we receive important messages
+            // When we receive unimportant messages
             receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
 
             // Then the room is still read
@@ -172,7 +172,7 @@ describe("Read receipts", () => {
     });
 
     describe("Paging up", () => {
-        // Flaky test https://github.com/vector-im/element-web/issues/26437
+        // XXX: Fails because flaky test https://github.com/vector-im/element-web/issues/26437
         it.skip("Paging up through old messages after a room is read leaves the room read", () => {
             // Given lots of messages are in the room, but we have read them
             goTo(room1);
