@@ -25,6 +25,7 @@ import { Layout } from "../src/settings/enums/Layout";
 import defaultDispatcher from "../src/dispatcher/dispatcher";
 import { Action } from "../src/dispatcher/actions";
 import { SettingLevel } from "../src/settings/SettingLevel";
+import { CryptoApi, MatrixClient } from "../../matrix-js-sdk";
 
 const getFakePosthog = (): PostHog =>
     ({
@@ -37,6 +38,7 @@ const getFakePosthog = (): PostHog =>
         persistence: {
             get_user_state: jest.fn(),
         },
+        identifyUser: jest.fn(),
     } as unknown as PostHog);
 
 interface ITestEvent extends IPosthogEvent {
@@ -272,6 +274,105 @@ describe("PosthogAnalytics", () => {
             expect(mocked(fakePosthog).capture.mock.calls[0][1]!["$set"]).toStrictEqual({
                 WebLayout: "Compact",
             });
+        });
+    });
+
+    describe("CryptoSdk", () => {
+        let analytics: PosthogAnalytics;
+        const getFakeClient = (): MatrixClient =>
+            ({
+                getCrypto: jest.fn(),
+                setAccountData: jest.fn(),
+                // just fake return an `im.vector.analytics` content
+                getAccountDataFromServer: jest.fn().mockReturnValue({
+                    id: "0000000",
+                    pseudonymousAnalyticsOptIn: true,
+                }),
+            } as unknown as MatrixClient);
+
+        beforeEach(async () => {
+            SdkConfig.put({
+                brand: "Testing",
+                posthog: {
+                    project_api_key: "foo",
+                    api_host: "bar",
+                },
+            });
+
+            analytics = new PosthogAnalytics(fakePosthog);
+        });
+
+        async function simulateLoginWorkaroundUntilMigration(pseudonymous = true) {
+            // To simulate a switch we call updateAnonymityFromSettings.
+            // As per documentation this function is called On login.
+            const mockClient = getFakeClient();
+            mocked(mockClient.getCrypto).mockReturnValue({
+                getVersion: () => "Rust SDK 0.6.0 (9c6b550), Vodozemac 0.5.0",
+            } as unknown as CryptoApi);
+            await analytics.updateAnonymityFromSettings(mockClient, pseudonymous);
+        }
+
+        it("should send rust cryptoSDK superProperty correctly", async () => {
+            analytics.setAnonymity(Anonymity.Pseudonymous);
+
+            await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, true);
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "feature_rust_crypto",
+                },
+                true,
+            );
+
+            // Has for now you need to logout and login again to make the switch, until then it sbould stay as Legacy
+            expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Legacy");
+            // Simulate a logout / login with a rust crypto backend
+            await simulateLoginWorkaroundUntilMigration();
+
+            // Super Properties are properties associated with events that are set once and then sent with every capture call.
+            // They are set using posthog.register
+            expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Rust");
+        });
+
+        it("should send Legacy cryptoSDK superProperty correctly", async () => {
+            analytics.setAnonymity(Anonymity.Pseudonymous);
+
+            await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, false);
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "feature_rust_crypto",
+                },
+                true,
+            );
+            // Super Properties are properties associated with events that are set once and then sent with every capture call.
+            // They are set using posthog.register
+            expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Legacy");
+        });
+
+        it("should send cryptoSDK superProperty when enabling analytics", async () => {
+            analytics.setAnonymity(Anonymity.Disabled);
+
+            await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, true);
+
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.SettingUpdated,
+                    settingName: "feature_rust_crypto",
+                },
+                true,
+            );
+
+            await simulateLoginWorkaroundUntilMigration(false);
+
+            // This initial call is due to the call to register platformSuperProperties
+            expect(mocked(fakePosthog).register.mock.lastCall![0]).toStrictEqual({});
+
+            // switching to pseudonymous should ensure that the cryptoSDK superProperty is set correctly
+            analytics.setAnonymity(Anonymity.Pseudonymous);
+            // Super Properties are properties associated with events that are set once and then sent with every capture call.
+            // They are set using posthog.register
+            expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Rust");
         });
     });
 });
