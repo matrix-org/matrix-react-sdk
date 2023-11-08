@@ -735,6 +735,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return;
         }
 
+        if (removed) {
+            this.timelineWindow?.removeEvent();
+        }
+
         if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
             if (toStartOfTimeline && !this.state.canBackPaginate) {
                 this.setState({

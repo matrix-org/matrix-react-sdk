@@ -534,6 +534,34 @@ describe("TimelinePanel", () => {
 
             expect(paginateSpy).toHaveBeenCalledTimes(2);
         });
+
+        it("reduces window size when event is removed", async () => {
+            // Given a TimelinePanel with some events
+            const [client, room, events] = setupTestData();
+
+            const virtualRoom = mkRoom(client, "virtualRoomId");
+            const virtualEvents = mockEvents(virtualRoom);
+            const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
+
+            const props = {
+                ...getProps(room, events),
+                overlayTimelineSet,
+            };
+
+            const removeEventSpy = jest.spyOn(TimelineWindow.prototype, "removeEvent").mockClear();
+
+            render(<TimelinePanel {...props} />);
+            await flushPromises();
+
+            // When an event is removed
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
+            const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
+            client.emit(RoomEvent.Timeline, event, room, false, true, data);
+            await flushPromises();
+
+            // Then we call removeEvent on the TimelineWindow
+            expect(removeEventSpy).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe("with overlayTimeline", () => {
