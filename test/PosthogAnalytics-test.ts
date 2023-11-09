@@ -16,6 +16,7 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import { PostHog } from "posthog-js";
+import { CryptoApi, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { Anonymity, getRedactedCurrentLocation, IPosthogEvent, PosthogAnalytics } from "../src/PosthogAnalytics";
 import SdkConfig from "../src/SdkConfig";
@@ -25,7 +26,6 @@ import { Layout } from "../src/settings/enums/Layout";
 import defaultDispatcher from "../src/dispatcher/dispatcher";
 import { Action } from "../src/dispatcher/actions";
 import { SettingLevel } from "../src/settings/SettingLevel";
-import { CryptoApi, MatrixClient } from "../../matrix-js-sdk";
 
 const getFakePosthog = (): PostHog =>
     ({
