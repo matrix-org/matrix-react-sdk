@@ -302,12 +302,16 @@ describe("PosthogAnalytics", () => {
             analytics = new PosthogAnalytics(fakePosthog);
         });
 
-        async function simulateLoginWorkaroundUntilMigration(pseudonymous = true) {
+        // `updateAnonymityFromSettings` is called On page load / login / account data change.
+        // We manually call it so we can test the behaviour.
+        async function simulateLogin(rustBackend: boolean, pseudonymous = true) {
             // To simulate a switch we call updateAnonymityFromSettings.
             // As per documentation this function is called On login.
             const mockClient = getFakeClient();
             mocked(mockClient.getCrypto).mockReturnValue({
-                getVersion: () => "Rust SDK 0.6.0 (9c6b550), Vodozemac 0.5.0",
+                getVersion: () => {
+                    return rustBackend ? "Rust SDK 0.6.0 (9c6b550), Vodozemac 0.5.0" : "Olm 3.2.0";
+                },
             } as unknown as CryptoApi);
             await analytics.updateAnonymityFromSettings(mockClient, pseudonymous);
         }
@@ -315,36 +319,16 @@ describe("PosthogAnalytics", () => {
         it("should send rust cryptoSDK superProperty correctly", async () => {
             analytics.setAnonymity(Anonymity.Pseudonymous);
 
-            await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, true);
-            defaultDispatcher.dispatch(
-                {
-                    action: Action.SettingUpdated,
-                    settingName: "feature_rust_crypto",
-                },
-                true,
-            );
+            await simulateLogin(false);
 
-            // Has for now you need to logout and login again to make the switch, until then it sbould stay as Legacy
             expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Legacy");
-            // Simulate a logout / login with a rust crypto backend
-            await simulateLoginWorkaroundUntilMigration();
-
-            // Super Properties are properties associated with events that are set once and then sent with every capture call.
-            // They are set using posthog.register
-            expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Rust");
         });
 
         it("should send Legacy cryptoSDK superProperty correctly", async () => {
             analytics.setAnonymity(Anonymity.Pseudonymous);
 
-            await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, false);
-            defaultDispatcher.dispatch(
-                {
-                    action: Action.SettingUpdated,
-                    settingName: "feature_rust_crypto",
-                },
-                true,
-            );
+            await simulateLogin(false);
+
             // Super Properties are properties associated with events that are set once and then sent with every capture call.
             // They are set using posthog.register
             expect(mocked(fakePosthog).register.mock.lastCall![0]["cryptoSDK"]).toStrictEqual("Legacy");
@@ -353,19 +337,10 @@ describe("PosthogAnalytics", () => {
         it("should send cryptoSDK superProperty when enabling analytics", async () => {
             analytics.setAnonymity(Anonymity.Disabled);
 
-            await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, true);
-
-            defaultDispatcher.dispatch(
-                {
-                    action: Action.SettingUpdated,
-                    settingName: "feature_rust_crypto",
-                },
-                true,
-            );
-
-            await simulateLoginWorkaroundUntilMigration(false);
+            await simulateLogin(true, false);
 
             // This initial call is due to the call to register platformSuperProperties
+            // The important thing is that the cryptoSDK superProperty is not set.
             expect(mocked(fakePosthog).register.mock.lastCall![0]).toStrictEqual({});
 
             // switching to pseudonymous should ensure that the cryptoSDK superProperty is set correctly

@@ -136,10 +136,8 @@ export class PosthogAnalytics {
     private authenticationType: Signup["authenticationType"] = "Other";
     private watchSettingRef?: string;
 
-    // Temporary flag until we can switch to the Rust SDK without restarting the app.
-    // Currently, you have to set up the flag then logout and login again to switch.
-    // On login the matrixClient is passed to the analytics object, and we can check the crypto backend version.
-    private hasLoggedInWithRustCrypto = false;
+    // Will be set when the matrixClient is passed to the analytics object (e.g. on login).
+    private currentCryptoBackend?: "Rust" | "Legacy" = undefined;
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -174,7 +172,6 @@ export class PosthogAnalytics {
         dis.register(this.onAction);
         SettingsStore.monitorSetting("layout", null);
         SettingsStore.monitorSetting("useCompactLayout", null);
-        SettingsStore.monitorSetting("feature_rust_crypto", null);
         this.onLayoutUpdated();
         this.updateCryptoSuperProperty();
     }
@@ -204,9 +201,6 @@ export class PosthogAnalytics {
         const settingsPayload = payload as SettingUpdatedPayload;
         if (["layout", "useCompactLayout"].includes(settingsPayload.settingName)) {
             this.onLayoutUpdated();
-        }
-        if (["feature_rust_crypto"].includes(settingsPayload.settingName)) {
-            this.updateCryptoSuperProperty();
         }
     };
 
@@ -259,14 +253,6 @@ export class PosthogAnalytics {
             appVersion,
             appPlatform: platform?.getHumanReadableName(),
         };
-    }
-
-    private getCryptoSDKPropertyValue(): "Rust" | "Legacy" {
-        // Until we have migration code to switch crypto sdk, we need to track which sdk is being used.
-        if (SettingsStore.getValue("feature_rust_crypto") && this.hasLoggedInWithRustCrypto) {
-            return "Rust";
-        }
-        return "Legacy";
     }
 
     // eslint-disable-nextline no-unused-vars
@@ -391,8 +377,9 @@ export class PosthogAnalytics {
         if (!this.enabled || this.anonymity === Anonymity.Disabled) return;
         // Update super property for cryptoSDK in posthog.
         // This property will be subsequently passed in every event.
-        const value = this.getCryptoSDKPropertyValue();
-        this.registerSuperProperties({ cryptoSDK: value });
+        if (this.currentCryptoBackend) {
+            this.registerSuperProperties({ cryptoSDK: this.currentCryptoBackend });
+        }
     }
 
     public async updateAnonymityFromSettings(client: MatrixClient, pseudonymousOptIn: boolean): Promise<void> {
@@ -401,8 +388,10 @@ export class PosthogAnalytics {
             const cryptoVersion = client.getCrypto()!.getVersion();
             // version for rust is something like "Rust SDK 0.6.0 (9c6b550), Vodozemac 0.5.0"
             // for legacy it will be 'Olm x.x.x"
-            if (cryptoVersion.indexOf("Rust SDK") != -1) {
-                this.hasLoggedInWithRustCrypto = true;
+            if (cryptoVersion.includes("Rust SDK")) {
+                this.currentCryptoBackend = "Rust";
+            } else {
+                this.currentCryptoBackend = "Legacy";
             }
         }
 
