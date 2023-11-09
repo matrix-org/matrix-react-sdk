@@ -16,10 +16,6 @@ on:
                 type: string
                 required: true
                 description: "The name of the github repository to check out and build."
-            rust-crypto:
-                type: boolean
-                required: false
-                description: "Enable Rust cryptography for the cypress run."
         secrets:
             CYPRESS_RECORD_KEY:
                 required: true
@@ -49,7 +45,6 @@ jobs:
             commit_author: ${{ steps.commit.outputs.author }}
             commit_email: ${{ steps.commit.outputs.email }}
             percy_enable: ${{ steps.percy.outputs.value || '0' }}
-            kiwi_enable: ${{ steps.kiwi.outputs.value || '1' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
             # This provides an easy link to this workflow_run from the PR before Cypress is done.
@@ -84,7 +79,7 @@ jobs:
                       core.setOutput("email", response.data.author.email);
 
             # Only run Percy when it is demanded or we are running the daily build
-            - name: Enable Percy if X-Needs-Percy
+            - name: Enable Percy
               id: percy
               if: |
                   github.event.workflow_run.event == 'schedule' ||
@@ -94,20 +89,12 @@ jobs:
                   )
               run: echo "value=1" >> $GITHUB_OUTPUT
 
-            # Only export to kiwi when it is demanded or on develop
-            - name: Disable Kiwi if not needed
-              id: kiwi
-              if: |
-                  github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Kiwi')
-              run: echo "value=0" >> $GITHUB_OUTPUT
-
             - name: Generate unique ID 💎
               id: uuid
               run: echo "value=sha-$GITHUB_SHA-time-$(date +"%s")" >> $GITHUB_OUTPUT
 
     tests:
-        name: "Run Tests"
+        name: "Run Tests (${{ matrix.crypto }} crypto)"
         needs: prepare
         runs-on: ubuntu-latest
         permissions:
@@ -118,8 +105,10 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # Run 4 instances in Parallel
-                runner: [1, 2, 3, 4]
+                # Naive segmentation of tests
+                segment: ["a-i", "j-p", "q-s", "t-z"]
+                # Run tests using both crypto stacks
+                crypto: [legacy, rust]
         steps:
             - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
@@ -158,12 +147,12 @@ jobs:
 
             # Enable rust crypto if the calling workflow requests it
             - name: Enable rust crypto
-              if: inputs.rust-crypto
+              if: matrix.crypto == 'rust'
               run: |
                   echo "CYPRESS_RUST_CRYPTO=1" >> "$GITHUB_ENV"
 
             - name: Run Cypress tests
-              uses: cypress-io/github-action@59810ebfa5a5ac6fcfdcfdf036d1cd4d083a88f2 # v6.5.0
+              uses: cypress-io/github-action@ebe8b24c4428922d0f793a5c4c96853a633180e3 # v6.6.0
               with:
                   working-directory: matrix-react-sdk
                   # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
@@ -172,9 +161,10 @@ jobs:
                   start: npx serve -p 8080 -L ../webapp
                   wait-on: "http://localhost:8080"
                   record: true
-                  parallel: true
+                  parallel: false
                   command: "yarn percy exec --parallel -- npx cypress-cloud run"
-                  ci-build-id: ${{ needs.prepare.outputs.uuid }}
+                  ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
+                  spec: cypress/e2e/[${{ matrix.segment }}]*/**
               env:
                   # pass the Dashboard record key as an environment variable
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -203,7 +193,9 @@ jobs:
 
                   # pass the Percy token as an environment variable
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-                  PERCY_ENABLE: ${{ needs.prepare.outputs.percy_enable }}
+
+                  # only run percy on legacy crypto (for now)
+                  PERCY_ENABLE: ${{ matrix.crypto == 'legacy' && needs.prepare.outputs.percy_enable || 0 }}
                   PERCY_BROWSER_EXECUTABLE: ${{ steps.setup-chrome.outputs.chrome-path }}
                   # tell Percy more details about the context of this run
                   PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
@@ -213,26 +205,19 @@ jobs:
                   # We manually finalize the build in the report stage
                   PERCY_PARALLEL_TOTAL: -1
 
-            - name: Upload Artifact
+            - name: 📤 Upload results artifact
               if: failure()
               uses: actions/upload-artifact@v3
               with:
-                  name: cypress-results
+                  name: cypress-results-${{ matrix.crypto }}-crypto
                   path: |
                       matrix-react-sdk/cypress/screenshots
                       matrix-react-sdk/cypress/videos
                       matrix-react-sdk/cypress/synapselogs
                       matrix-react-sdk/cypress/results/cypresslogs
 
-            - name: Upload reports
-              if: always()
-              uses: actions/upload-artifact@v3
-              with:
-                  name: cypress-junit
-                  path: matrix-react-sdk/cypress/results/junit
-
     report:
-        name: Report results
+        name: Finalize results
         needs:
             - prepare
             - tests
@@ -266,28 +251,3 @@ jobs:
                   context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-    kiwi:
-        name: Report results to kiwi
-        needs:
-            - prepare
-            - tests
-        environment: Kiwi
-        runs-on: ubuntu-latest
-        if: ${{ needs.prepare.outputs.kiwi_enable == '1' }}
-        steps:
-            - name: Download all zip files
-              uses: actions/download-artifact@v3
-              with:
-                  name: cypress-junit
-            - name: Upload to kiwi
-              uses: vector-im/kiwitcms-upload-action@main
-              with:
-                  file-pattern: results-*.xml
-                  kiwi-username: ${{ secrets.TCMS_USERNAME }}
-                  kiwi-password: ${{ secrets.TCMS_PASSWORD }}
-                  product: "Element Web"
-                  product-version: ${{ github.event.workflow_run.head_branch }}
-                  build-id: ${{ github.event.workflow_run.head_sha }}
-                  suite-name: "Cypress E2E"
-                  summary-template: "$name"
