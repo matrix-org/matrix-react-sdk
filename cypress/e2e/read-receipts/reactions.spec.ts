@@ -272,7 +272,7 @@ describe("Read receipts", () => {
                 cy.get(".mx_EmojiPicker_body").findByText("😀").click();
 
                 // And cancel the reaction
-                cy.get(".mx_ThreadPanel").findByLabelText("Mae reacted with 😀", { timeout: 1000000 }).click();
+                cy.get(".mx_ThreadPanel").findByLabelText("Mae reacted with 😀").click();
 
                 // Then it disappears
                 cy.get(".mx_ThreadPanel").findByLabelText("Mae reacted with 😀").should("not.exist");
@@ -281,7 +281,7 @@ describe("Read receipts", () => {
                 cy.get(".mx_ThreadPanel").findByText("Reply1a").realHover();
                 cy.findByRole("button", { name: "React" }).click();
                 cy.get(".mx_EmojiPicker_body").findAllByText("😀").first().click();
-                cy.get(".mx_ThreadPanel").findByLabelText("Mae reacted with 😀", { timeout: 1000000 }).click();
+                cy.get(".mx_ThreadPanel").findByLabelText("Mae reacted with 😀").click();
                 cy.get(".mx_ThreadPanel").findByLabelText("Mae reacted with 😀").should("not.exist");
             });
         });
