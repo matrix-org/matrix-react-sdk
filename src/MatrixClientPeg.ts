@@ -238,9 +238,10 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             } catch (err) {
                 if (dbType === "indexeddb") {
                     logger.error("Error starting matrixclient store - falling back to memory store", err);
-                    this.matrixClient.store = new MemoryStore({
+                    const fallbackStore = new MemoryStore({
                         localStorage: localStorage,
                     });
+                    this.matrixClient.setStore(fallbackStore);
                 } else {
                     logger.error("Failed to start memory store!", err);
                     throw err;
