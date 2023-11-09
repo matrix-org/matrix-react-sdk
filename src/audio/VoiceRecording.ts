@@ -28,6 +28,11 @@ import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { createAudioContext } from "./compat";
 import { FixedRollingArray } from "../utils/FixedRollingArray";
 import { clamp } from "../utils/numbers";
+// This import is needed for dead code analysis but not actually used because the
+// built-in worker / worklet handling in Webpack 5 only supports static paths
+// @ts-ignore no-unused-locals
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import mxRecorderWorkletPath from "./RecorderWorklet";
 
 const CHANNELS = 1; // stereo isn't important
 export const SAMPLE_RATE = 48000; // 48khz is what WebRTC uses. 12khz is where we lose quality.
