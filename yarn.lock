@@ -2528,6 +2528,11 @@
   resolved "https://registry.yarnpkg.com/@types/commonmark/-/commonmark-0.27.8.tgz#6a8fd4ff5e06d71118d7ee3c5ade226b073436a0"
   integrity sha512-Vw7d8ldJUipu16fffEUQ2r3mFG4JvzY4MI4ETSH8IiKG1sKNcA5Jglrm01gcc86CSnWlwlreBu0pABwHci++Qw==
 
+"@types/content-type@^1.1.5":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@types/content-type/-/content-type-1.1.8.tgz#319644d07ee6b4bfc734483008393b89b99f0219"
+  integrity sha512-1tBhmVUeso3+ahfyaKluXe38p+94lovUZdoVfQ3OnJo9uJC42JT7CBoN3k9HYhAae+GwiBYmHu+N9FZhOG+2Pg==
+
 "@types/counterpart@^0.18.1":
   version "0.18.3"
   resolved "https://registry.yarnpkg.com/@types/counterpart/-/counterpart-0.18.3.tgz#b009c32becea2e73e144d4a2e96fc88a940513fa"
@@ -2791,6 +2796,11 @@
   version "0.16.4"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.4.tgz#fedc3e5b15c26dc18faae96bf1317487cb3658cf"
   integrity sha512-2L9ifAGl7wmXwP4v3pN4p2FLhD0O1qsJpvKmNin5VA8+UvNVb447UDaAEV6UdrkA+m/Xs58U1RFps44x6TFsVQ==
+
+"@types/sdp-transform@^2.4.6":
+  version "2.4.9"
+  resolved "https://registry.yarnpkg.com/@types/sdp-transform/-/sdp-transform-2.4.9.tgz#26ef39f487a6909b0512f580b80920a366b27f52"
+  integrity sha512-bVr+/OoZZy7wrHlNcEAAa6PAgKA4BoXPYVN2EijMC5WnGgQ4ZEuixmKnVs2roiAvr7RhIFVH17QD27cojgIZCg==
 
 "@types/semver@^7.3.12":
   version "7.5.4"
