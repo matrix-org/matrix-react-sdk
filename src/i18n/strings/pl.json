@@ -485,7 +485,8 @@
         "mute": "Wycisz",
         "n_members": {
             "one": "%(count)s członek",
-            "other": "%(count)s członkowie"
+            "few": "%(count)s członki",
+            "many": "%(count)s członków"
         },
         "n_participants": {
             "one": "1 uczestnik",
@@ -3044,7 +3045,7 @@
         "suggested_tooltip": "Ten pokój jest polecany jako dobry do dołączenia",
         "title_when_query_available": "Wyniki",
         "title_when_query_unavailable": "Pokoje i przestrzenie",
-        "unmark_suggested": "Oznacz jako nie sugerowane",
+        "unmark_suggested": "Oznacz jako niesugerowane",
         "user_lacks_permission": "Nie masz uprawnień"
     },
     "space_settings": {
