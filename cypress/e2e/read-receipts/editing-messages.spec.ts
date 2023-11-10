@@ -333,8 +333,7 @@ describe("Read receipts", () => {
         });
 
         describe("thread roots", () => {
-            // XXX: fails because the room+thread become unread when I look at the room
-            it.skip("An edit of a thread root leaves the room read", () => {
+            it("An edit of a thread root leaves the room read", () => {
                 // Given I have read a thread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
