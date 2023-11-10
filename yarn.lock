@@ -3007,10 +3007,10 @@
   dependencies:
     svg2vectordrawable "^2.9.1"
 
-"@vector-im/compound-web@0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.6.3.tgz#e5d025a3e5de1d94e721b0f6a5127dfa90968a2b"
-  integrity sha512-Jw63AWRltUC/AH4f+0rxdeWgf/qin7fc9E3ZqtdI10tGAOz9YdHadeGg4aGTKjUgv8/J0GvF8VnEfVq9kRAbag==
+"@vector-im/compound-web@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-0.8.0.tgz#72ee186b017f57edad197ad7b2b65cc0d19170be"
+  integrity sha512-zbez9p3SUe1PoG8fWiSRhVj5l0/1eCH4abX2BUtY/ktm5VuMeDqmkgmYjM28bNw0od8ST+ok+WBcdgUID4g+NA==
   dependencies:
     "@radix-ui/react-form" "^0.0.3"
     "@radix-ui/react-separator" "^1.0.3"
