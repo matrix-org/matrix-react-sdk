@@ -312,7 +312,7 @@
         "set_email_prompt": "Möchtest du eine E-Mail-Adresse setzen?",
         "sign_in_description": "Nutze dein Konto, um fortzufahren.",
         "sign_in_instead": "Stattdessen anmelden",
-        "sign_in_instead_prompt": "Stattdessen anmelden",
+        "sign_in_instead_prompt": "Konto schon vorhanden? <a>Hier anmelden</a>",
         "sign_in_or_register": "Anmelden oder Konto erstellen",
         "sign_in_or_register_description": "Benutze dein Konto oder erstelle ein neues, um fortzufahren.",
         "sign_in_prompt": "Du hast bereits ein Konto? <a>Melde dich an</a>",
