@@ -44,7 +44,11 @@ jobs:
             commit_message: ${{ steps.commit.outputs.message }}
             commit_author: ${{ steps.commit.outputs.author }}
             commit_email: ${{ steps.commit.outputs.email }}
-            percy_enable: ${{ steps.percy.outputs.value || '0' }}
+            # Percy is disabled while we're figuring out https://github.com/vector-im/wat-internal/issues/36
+            # and https://github.com/vector-im/wat-internal/issues/56. We're hoping to turn it back on or switch
+            # to an alternative in the future.
+            percy_enable: 0
+            # percy_enable: ${{ steps.percy.outputs.value || '0' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
             # This provides an easy link to this workflow_run from the PR before Cypress is done.
