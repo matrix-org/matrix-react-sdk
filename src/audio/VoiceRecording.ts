@@ -133,7 +133,8 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
             if (this.recorderContext.audioWorklet) {
                 // Set up our worklet. We use this for timing information and waveform analysis: the
                 // web audio API prefers this be done async to avoid holding the main thread with math.
-                await this.recorderContext.audioWorklet.addModule("./RecorderWorklet");
+                const audioWorklet = this.recorderContext.audioWorklet;
+                await audioWorklet.addModule(new URL("./RecorderWorklet", import.meta.url));
                 this.recorderWorklet = new AudioWorkletNode(this.recorderContext, WORKLET_NAME);
                 this.recorderSource.connect(this.recorderWorklet);
                 this.recorderWorklet.connect(this.recorderContext.destination);
