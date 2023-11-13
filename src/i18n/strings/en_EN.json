@@ -1431,6 +1431,7 @@
         "notifications": "Enable the notifications panel in the room header",
         "oidc_native_flow": "OIDC native authentication",
         "oidc_native_flow_description": "⚠ WARNING: Experimental. Use OIDC native authentication when supported by the server.",
+        "persist_ssss_key": "Save SSSS key on platform-dependent keychain",
         "pinning": "Message Pinning",
         "render_reaction_images": "Render custom images in reactions",
         "render_reaction_images_description": "Sometimes referred to as \"custom emojis\".",

@@ -1161,4 +1161,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("settings|preferences|enable_hardware_acceleration"),
         default: true,
     },
+    "feature_persist_ssss_key": {
+        isFeature: true,
+        labsGroup: LabGroup.Encryption,
+        displayName: _td("labs|persist_ssss_key"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
 };
