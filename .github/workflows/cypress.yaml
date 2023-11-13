@@ -167,7 +167,7 @@ jobs:
                   parallel: false
                   command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
-                #   spec: cypress/e2e/[${{ matrix.segment }}]*/**
+                  #   spec: cypress/e2e/[${{ matrix.segment }}]*/**
               env:
                   # Knapsack token and config
                   KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS }}
