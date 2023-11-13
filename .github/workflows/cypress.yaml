@@ -108,10 +108,10 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # Naive segmentation of tests
-                segment: ["a-i", "j-p", "q-s", "t-z"]
                 # Run tests using both crypto stacks
                 crypto: [legacy, rust]
+                ci_node_total: [2]
+                ci_node_index: [0, 1]
         steps:
             - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
@@ -154,7 +154,7 @@ jobs:
               run: |
                   echo "CYPRESS_RUST_CRYPTO=1" >> "$GITHUB_ENV"
 
-            - name: Run Cypress tests
+            - name: Run Cypress tests via knapsack pro
               uses: cypress-io/github-action@ebe8b24c4428922d0f793a5c4c96853a633180e3 # v6.6.0
               with:
                   working-directory: matrix-react-sdk
@@ -165,10 +165,15 @@ jobs:
                   wait-on: "http://localhost:8080"
                   record: true
                   parallel: false
-                  command-prefix: "yarn percy exec --parallel --"
+                  command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
-                  spec: cypress/e2e/[${{ matrix.segment }}]*/**
+                #   spec: cypress/e2e/[${{ matrix.segment }}]*/**
               env:
+                  # Knapsack token and config
+                  KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS }}
+                  KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+                  KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+
                   # pass the Dashboard record key as an environment variable
                   CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
