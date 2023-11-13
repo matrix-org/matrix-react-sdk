@@ -144,6 +144,7 @@
         "@babel/register": "^7.12.10",
         "@babel/traverse": "^7.12.12",
         "@casualbot/jest-sonar-reporter": "2.2.7",
+        "@knapsack-pro/cypress": "^8.0.1",
         "@matrix-org/olm": "3.2.15",
         "@peculiar/webcrypto": "^1.4.3",
         "@percy/cli": "^1.11.0",
