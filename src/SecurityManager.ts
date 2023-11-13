@@ -17,7 +17,7 @@ limitations under the License.
 import { DeviceVerificationStatus, ICryptoCallbacks, MatrixClient, encodeBase64 } from "matrix-js-sdk/src/matrix";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
-import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
+import { decodeRecoveryKey, encodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import type CreateSecretStorageDialog from "./async-components/views/dialogs/security/CreateSecretStorageDialog";
@@ -31,6 +31,7 @@ import SettingsStore from "./settings/SettingsStore";
 import SecurityCustomisations from "./customisations/Security";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
+import { getSSSSKeyFromPlatformSecret, storeSSSSKeyAsPlatformSecret } from "./utils/KeyPersistenceUtils";
 
 // This stores the secret storage private keys in memory for the JS SDK. This is
 // only meant to act as a cache to avoid prompting the user multiple times
@@ -130,7 +131,10 @@ async function getSecretStorageKey({
         }
     }
 
-    const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
+    let keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
+    if (!keyFromCustomisations && SettingsStore.getValue("feature_persist_ssss_key")) {
+        keyFromCustomisations = await getSSSSKeyFromPlatformSecret(keyId, keyInfo);
+    }
     if (keyFromCustomisations) {
         logger.log("Using key from security customisations (secret storage)");
         cacheSecretStorageKey(keyId, keyInfo, keyFromCustomisations);
@@ -169,6 +173,9 @@ async function getSecretStorageKey({
         throw new AccessCancelledError();
     }
     const key = await inputToKey(keyParams);
+    if (SettingsStore.getValue("feature_persist_ssss_key")) {
+        await storeSSSSKeyAsPlatformSecret(keyId, encodeRecoveryKey(key)!);
+    }
 
     // Save to cache to avoid future prompts in the current session
     cacheSecretStorageKey(keyId, keyInfo, key);

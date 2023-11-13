@@ -49,6 +49,8 @@ import InteractiveAuthDialog from "../../../../components/views/dialogs/Interact
 import { IValidationResult } from "../../../../components/views/elements/Validation";
 import { Icon as CheckmarkIcon } from "../../../../../res/img/element-icons/check.svg";
 import PassphraseConfirmField from "../../../../components/views/auth/PassphraseConfirmField";
+import { storeSSSSKeyAsPlatformSecret } from "../../../../utils/KeyPersistenceUtils";
+import SettingsStore from "../../../../settings/SettingsStore";
 
 // I made a mistake while converting this and it has to be fixed!
 enum Phase {
@@ -194,6 +196,28 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         this.fetchBackupInfo();
     }
 
+    private async persistDefaultSSSSKey(): Promise<void> {
+        if (!this.recoveryKey) {
+            throw new Error("recoveryKey is undefined");
+        }
+        const cli = MatrixClientPeg.safeGet();
+        const secretStorage = cli.secretStorage;
+        const keyTuple = await secretStorage.getKey();
+        if (!keyTuple) {
+            throw new Error("could not get default key");
+        }
+        const [keyId, keyInfo] = keyTuple;
+        if (!(await secretStorage.checkKey(this.recoveryKey.privateKey, keyInfo))) {
+            throw new Error("default key does not match recovery key");
+        }
+        const saved = await storeSSSSKeyAsPlatformSecret(keyId, this.recoveryKey.encodedPrivateKey!);
+        if (!saved) {
+            throw new Error("failed to store SSSS key");
+        }
+        // Initialize the key backup explicitly as this does not always happen reliably.
+        await cli.getCrypto()?.checkKeyBackupAndEnable();
+    }
+
     /**
      * Attempt to get information on the current backup from the server, and update the state.
      *
@@ -218,6 +242,29 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 backupInfo,
                 backupTrustInfo,
             });
+
+            // FIXME: Regardless of the feature, instead of switching to a previous phase on error, a key should be
+            // 1. generated and saved in secret storage
+            // 2. shown to the user or automatically persisted on the platform
+            // 3. only then should the secret storage be migrated
+            // such that the key ID is known when the key is shown.
+            // This takes rework in matrix-js-sdk.
+            if (phase === Phase.ChooseKeyPassphrase && SettingsStore.getValue("feature_persist_ssss_key")) {
+                try {
+                    this.recoveryKey = await MatrixClientPeg.safeGet().getCrypto()?.createRecoveryKeyFromPassphrase();
+                    await this.bootstrapSecretStorage();
+                    await this.persistDefaultSSSSKey();
+                } catch (e) {
+                    logger.error("Error persisting SSSS key", e);
+                    this.setState({
+                        copied: false,
+                        downloaded: false,
+                        setPassphrase: false,
+                        phase: this.recoveryKey ? Phase.ShowKey : Phase.ChooseKeyPassphrase,
+                    });
+                    return undefined;
+                }
+            }
 
             return backupTrustInfo;
         } catch (e) {

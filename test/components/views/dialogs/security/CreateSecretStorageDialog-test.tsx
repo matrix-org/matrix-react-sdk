@@ -32,6 +32,11 @@ import {
 import CreateSecretStorageDialog from "../../../../../src/async-components/views/dialogs/security/CreateSecretStorageDialog";
 import Modal from "../../../../../src/Modal";
 import RestoreKeyBackupDialog from "../../../../../src/components/views/dialogs/security/RestoreKeyBackupDialog";
+import SettingsStore from "../../../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../../../src/settings/SettingLevel";
+import * as keyPersistenceUtils from "../../../../../src/utils/KeyPersistenceUtils";
+import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
+import type { SecretStorageKeyDescription, SecretStorageKeyTuple } from "matrix-js-sdk/src/secret-storage";
 
 describe("CreateSecretStorageDialog", () => {
     let mockClient: MockedObject<MatrixClient>;
@@ -46,12 +51,18 @@ describe("CreateSecretStorageDialog", () => {
                 throw new MatrixError({ flows: [] });
             }),
         });
+        Object.assign(mockClient.secretStorage, {
+            getKey: jest.fn(),
+            checkKey: jest.fn(),
+        });
 
         mockCrypto = mocked(mockClient.getCrypto()!);
         Object.assign(mockCrypto, {
             isKeyBackupTrusted: jest.fn(),
             bootstrapCrossSigning: jest.fn(),
             bootstrapSecretStorage: jest.fn(),
+            createRecoveryKeyFromPassphrase: jest.fn(),
+            checkKeyBackupAndEnable: jest.fn(),
         });
     });
 
@@ -219,6 +230,95 @@ describe("CreateSecretStorageDialog", () => {
 
             // simulate RestoreKeyBackupDialog completing, to run that code path
             restoreDialogFinishedDefer.resolve([]);
+        });
+    });
+
+    describe("when persist ssss key feature is enabled", () => {
+        let generatedKey: GeneratedSecretStorageKey;
+        let keyId: string;
+        let keyInfo: SecretStorageKeyDescription;
+        let storeSpy: jest.SpyInstance;
+        let onFinished: jest.Mock;
+
+        beforeEach(async () => {
+            await SettingsStore.setValue("feature_persist_ssss_key", null, SettingLevel.DEVICE, true);
+        });
+
+        beforeEach(() => {
+            generatedKey = { privateKey: {}, encodedPrivateKey: "encoded test key" } as GeneratedSecretStorageKey;
+            [keyId, keyInfo] = [{}, {}] as SecretStorageKeyTuple;
+
+            mockCrypto.createRecoveryKeyFromPassphrase.mockResolvedValue(generatedKey);
+            mockClient.secretStorage.getKey.mockResolvedValue([keyId, keyInfo]);
+            mockClient.secretStorage.checkKey.mockResolvedValue(true);
+            storeSpy = jest.spyOn(keyPersistenceUtils, "storeSSSSKeyAsPlatformSecret").mockResolvedValue(true);
+            onFinished = jest.fn();
+        });
+
+        it("should persist the secret strorage key", async () => {
+            const result = renderComponent();
+            await flushPromises();
+
+            expect(result.container).toMatchSnapshot();
+            expect(storeSpy).toHaveBeenCalledWith(keyId, generatedKey.encodedPrivateKey);
+        });
+
+        it("should show Done without user interaction", async () => {
+            const result = renderComponent({ onFinished });
+            await flushPromises();
+
+            expect(result.container).toMatchSnapshot();
+            expect(onFinished).not.toHaveBeenCalledWith(true);
+        });
+
+        it("should go back to start when crypto is not available", async () => {
+            mockClient.getCrypto.mockReturnValue(undefined);
+
+            const result = renderComponent({ onFinished });
+            await flushPromises();
+
+            expect(result.container).toMatchSnapshot();
+            await result.findByText("Set up Secure Backup");
+            expect(storeSpy).not.toHaveBeenCalled();
+            expect(onFinished).not.toHaveBeenCalled();
+        });
+
+        it("should show generated key when no default key is found", async () => {
+            mockClient.secretStorage.getKey.mockResolvedValue(null);
+
+            const result = renderComponent({ onFinished });
+            await flushPromises();
+
+            expect(result.container).toMatchSnapshot();
+            result.getByText("Save your Security Key");
+            result.getByText(generatedKey.encodedPrivateKey!);
+            expect(storeSpy).not.toHaveBeenCalled();
+            expect(onFinished).not.toHaveBeenCalled();
+        });
+
+        it("should show generated key when default key does not match generated key", async () => {
+            mockClient.secretStorage.checkKey.mockResolvedValue(false);
+
+            const result = renderComponent({ onFinished });
+            await flushPromises();
+
+            expect(result.container).toMatchSnapshot();
+            result.getByText("Save your Security Key");
+            result.getByText(generatedKey.encodedPrivateKey!);
+            expect(storeSpy).not.toHaveBeenCalled();
+            expect(onFinished).not.toHaveBeenCalled();
+        });
+
+        it("should show generated key when it cannot be stored", async () => {
+            storeSpy.mockResolvedValue(false);
+
+            const result = renderComponent({ onFinished });
+            await flushPromises();
+
+            expect(result.container).toMatchSnapshot();
+            result.getByText("Save your Security Key");
+            result.getByText(generatedKey.encodedPrivateKey!);
+            expect(onFinished).not.toHaveBeenCalled();
         });
     });
 });

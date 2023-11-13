@@ -29,6 +29,8 @@ import InteractiveAuthDialog from "../components/views/dialogs/InteractiveAuthDi
 import { _t } from "../languageHandler";
 import { SdkContextClass } from "../contexts/SDKContext";
 import { asyncSome } from "../utils/arrays";
+import SettingsStore from "../settings/SettingsStore";
+import { getSSSSKeyFromPlatformSecret } from "../utils/KeyPersistenceUtils";
 
 export enum Phase {
     Loading = 0,
@@ -122,6 +124,17 @@ export class SetupEncryptionStore extends EventEmitter {
             return !!verificationStatus?.signedByOwner;
         });
 
+        // FIXME: Very hacky attempt to skip verification method selection.
+        // We get the key from the platform hoping that the state machine deep within can do so too.
+        if (
+            SettingsStore.getValue("feature_persist_ssss_key") &&
+            this.keyId &&
+            this.keyInfo &&
+            (await getSSSSKeyFromPlatformSecret(this.keyId, this.keyInfo))
+        ) {
+            await this.usePassPhrase();
+            return;
+        }
         this.phase = Phase.Intro;
         this.emit("update");
     }
