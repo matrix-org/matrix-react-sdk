@@ -83,8 +83,16 @@ limitations under the License.
     cursor: pointer;
     user-select: none;
 
+    > div {
+        flex-shrink: 0;
+    }
+
     &:hover {
         color: $primary-content;
         background: var(--cpd-color-bg-subtle-primary);
     }
+}
+
+.mx_RoomHeader .mx_BaseAvatar {
+    flex-shrink: 0;
 }
