@@ -33,6 +33,8 @@ import { IWidgetApiRequest } from "matrix-widget-api";
 import { MatrixRTCSession, MatrixRTCSessionEvent } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
 
 import type EventEmitter from "events";
 import type { ClientWidgetApi } from "matrix-widget-api";
@@ -752,12 +754,13 @@ export class ElementCall extends Call {
         const RING_MEMBER_LIMIT = 10;
         if (!isVideoRoom && existingRoomCallMembers.length == 0 && room.getJoinedMemberCount() < RING_MEMBER_LIMIT) {
             // send ringing event
-            const content = {
+            const content: ICallNotifyContent = {
                 "application": "m.call",
                 "m.mentions": { user_ids: [], room: true },
-                "notify_type": "ring", // or notify
+                "notify_type": "ring",
                 "call_id": "",
             };
+
             await room.client.sendEvent(room.roomId, EventType.CallNotify, content);
         }
     }
