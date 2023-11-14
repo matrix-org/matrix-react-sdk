@@ -46,13 +46,13 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
           !
         </span>
         <h1
-          class="_font-heading-md-semibold_1jx6b_121 mx_RoomSummaryCard_roomName text-primary"
+          class="_typography_yh5dq_162 _font-heading-md-semibold_yh5dq_121 mx_RoomSummaryCard_roomName text-primary"
           title="!room:domain.org"
         >
           !room:domain.org
         </h1>
         <div
-          class="_font-body-sm-semibold_1jx6b_45 mx_RoomSummaryCard_alias text-secondary"
+          class="_typography_yh5dq_162 _font-body-sm-semibold_yh5dq_45 mx_RoomSummaryCard_alias text-secondary"
           title=""
         />
         <section
@@ -60,7 +60,7 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
           style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: start; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x);"
         >
           <span
-            class="_font-body-sm-medium_1jx6b_50 _badge_qipht_17"
+            class="_typography_yh5dq_162 _font-body-sm-medium_yh5dq_50 _badge_qipht_17"
             data-kind="default"
           >
             <div
@@ -76,19 +76,19 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         role="separator"
       />
       <label
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="primary"
         for=":r1:"
         role="menuitemcheckbox"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Favourite
         </span>
@@ -106,25 +106,25 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </div>
       </label>
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36 _disabled_zxa40_125"
         data-kind="primary"
         disabled=""
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Invite
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
@@ -138,24 +138,24 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </svg>
       </button>
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="primary"
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Copy link
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
@@ -169,24 +169,24 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </svg>
       </button>
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="primary"
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Settings
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
@@ -205,24 +205,24 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         role="separator"
       />
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="primary"
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Files
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
@@ -236,24 +236,24 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </svg>
       </button>
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="primary"
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Poll history
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
@@ -267,24 +267,24 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </svg>
       </button>
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="primary"
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Export Chat
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
@@ -303,24 +303,24 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         role="separator"
       />
       <button
-        class="_item_xppum_17 _interactive_xppum_36"
+        class="_item_zxa40_17 _interactive_zxa40_36"
         data-kind="critical"
         role="menuitem"
       >
         <div
           aria-hidden="true"
-          class="_icon_xppum_49"
+          class="_icon_zxa40_49"
           height="24"
           width="24"
         />
         <span
-          class="_font-body-md-medium_1jx6b_69 _label_xppum_58"
+          class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_zxa40_58"
         >
           Leave room
         </span>
         <svg
           aria-hidden="true"
-          class="_nav-hint_xppum_65"
+          class="_nav-hint_zxa40_65"
           fill="none"
           height="24"
           viewBox="0 0 24 24"
