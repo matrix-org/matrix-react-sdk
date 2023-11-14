@@ -97,7 +97,7 @@ describe("IncomingCallEvent", () => {
     });
 
     const renderToast = () => {
-        render(<IncomingCallToast callEvent={call.event} />);
+        render(<IncomingCallToast notifyEvent={call.event} />);
     };
 
     it("correctly shows all the information", () => {

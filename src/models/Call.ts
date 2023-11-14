@@ -738,10 +738,28 @@ export class ElementCall extends Call {
             SettingsStore.getValue("feature_video_rooms") &&
             SettingsStore.getValue("feature_element_call_video_rooms") &&
             room.isCallRoom();
-
-        console.log("Intend is ", isVideoRoom ? "VideoRoom" : "Prompt", " TODO, handle intent appropriately");
         ElementCall.createOrGetCallWidget(room.roomId, room.client);
         WidgetStore.instance.emit(UPDATE_EVENT, null);
+
+        // Send Call notify
+
+        const existingRoomCallMembers = MatrixRTCSession.callMembershipsForRoom(room).filter(
+            // filter all memberships where the application is m.call and the call_id is ""
+            (m) => m.application === "m.call" && m.callId === "",
+        );
+
+        // We only want to ring in rooms that have less then RING_MEMBER_LIMIT participants. For really large rooms we don't want to ring.
+        const RING_MEMBER_LIMIT = 10;
+        if (!isVideoRoom && existingRoomCallMembers.length == 0 && room.getJoinedMemberCount() < RING_MEMBER_LIMIT) {
+            // send ringing event
+            const content = {
+                "application": "m.call",
+                "m.mentions": { user_ids: [], room: true },
+                "notify_type": "ring", // or notify
+                "call_id": "",
+            };
+            await room.client.sendEvent(room.roomId, EventType.CallNotify, content);
+        }
     }
 
     protected async performConnection(
