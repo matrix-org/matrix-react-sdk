@@ -37,6 +37,7 @@ import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingSt
 import DMRoomMap from "../../src/utils/DMRoomMap";
 import ToastStore from "../../src/stores/ToastStore";
 import { getIncomingCallToastKey, IncomingCallToast } from "../../src/toasts/IncomingCallToast";
+import { AudioID } from "../../src/LegacyCallHandler";
 
 describe("IncomingCallEvent", () => {
     useMockedCalls();
@@ -58,6 +59,10 @@ describe("IncomingCallEvent", () => {
     beforeEach(async () => {
         stubClient();
         client = mocked(MatrixClientPeg.safeGet());
+
+        const audio = document.createElement("audio");
+        audio.id = AudioID.Ring;
+        document.body.appendChild(audio);
 
         room = new Room("!1:example.org", client, "@alice:example.org");
 
@@ -96,7 +101,12 @@ describe("IncomingCallEvent", () => {
         jest.restoreAllMocks();
     });
 
+    const notifyContent = {
+        call_id: "",
+    };
     const renderToast = () => {
+        call.event.getContent = () => notifyContent as any;
+
         render(<IncomingCallToast notifyEvent={call.event} />);
     };
 
@@ -141,7 +151,9 @@ describe("IncomingCallEvent", () => {
             }),
         );
         await waitFor(() =>
-            expect(toastStore.dismissToast).toHaveBeenCalledWith(getIncomingCallToastKey(call.event.getStateKey()!)),
+            expect(toastStore.dismissToast).toHaveBeenCalledWith(
+                getIncomingCallToastKey(notifyContent.call_id, room.roomId),
+            ),
         );
 
         defaultDispatcher.unregister(dispatcherRef);
@@ -155,7 +167,9 @@ describe("IncomingCallEvent", () => {
 
         fireEvent.click(screen.getByRole("button", { name: "Close" }));
         await waitFor(() =>
-            expect(toastStore.dismissToast).toHaveBeenCalledWith(getIncomingCallToastKey(call.event.getStateKey()!)),
+            expect(toastStore.dismissToast).toHaveBeenCalledWith(
+                getIncomingCallToastKey(notifyContent.call_id, room.roomId),
+            ),
         );
 
         defaultDispatcher.unregister(dispatcherRef);
@@ -171,7 +185,9 @@ describe("IncomingCallEvent", () => {
         });
 
         await waitFor(() =>
-            expect(toastStore.dismissToast).toHaveBeenCalledWith(getIncomingCallToastKey(call.event.getStateKey()!)),
+            expect(toastStore.dismissToast).toHaveBeenCalledWith(
+                getIncomingCallToastKey(notifyContent.call_id, room.roomId),
+            ),
         );
     });
 
@@ -182,7 +198,9 @@ describe("IncomingCallEvent", () => {
         event.emit(MatrixEventEvent.BeforeRedaction, event, {} as unknown as MatrixEvent);
 
         await waitFor(() =>
-            expect(toastStore.dismissToast).toHaveBeenCalledWith(getIncomingCallToastKey(call.event.getStateKey()!)),
+            expect(toastStore.dismissToast).toHaveBeenCalledWith(
+                getIncomingCallToastKey(notifyContent.call_id, room.roomId),
+            ),
         );
     });
 });
