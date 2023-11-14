@@ -33,6 +33,7 @@ import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } f
 import { PollHistoryDialog } from "../../../../src/components/views/dialogs/PollHistoryDialog";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { _t } from "../../../../src/languageHandler";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("<RoomSummaryCard />", () => {
     const userId = "@alice:domain.org";
@@ -138,6 +139,27 @@ describe("<RoomSummaryCard />", () => {
         fireEvent.click(getByText(_t("common|settings")));
 
         expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "open_room_settings" });
+    });
+
+    it("renders room members options when new room UI is not enabled", () => {
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        const { getByText } = getComponent();
+
+        fireEvent.click(getByText(_t("common|people")));
+
+        expect(RightPanelStore.instance.pushCard).toHaveBeenCalledWith(
+            { phase: RightPanelPhases.RoomMemberList },
+            true,
+        );
+    });
+
+    it("does not render room members option when new room UI is enabled", () => {
+        jest.spyOn(SettingsStore, "getValue").mockImplementation(
+            (settingName) => settingName === "feature_new_room_decoration_ui",
+        );
+        const { queryByText } = getComponent();
+
+        expect(queryByText(_t("common|people"))).not.toBeInTheDocument();
     });
 
     describe("pinning", () => {
