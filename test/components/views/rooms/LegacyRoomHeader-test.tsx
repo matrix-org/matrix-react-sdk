@@ -29,6 +29,7 @@ import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
 import { setupJestCanvasMock } from "jest-canvas-mock";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import type { MatrixClient, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
@@ -39,6 +40,7 @@ import {
     resetAsyncStoreWithClient,
     mockPlatformPeg,
     mkEvent,
+    filterConsole,
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
@@ -72,6 +74,10 @@ describe("LegacyRoomHeader", () => {
     let alice: RoomMember;
     let bob: RoomMember;
     let carol: RoomMember;
+
+    filterConsole(
+        "Age for event was not available, using `now - origin_server_ts` as a fallback. If the device clock is not correct issues might occur.",
+    );
 
     beforeEach(async () => {
         // some of our tests rely on the jest canvas mock, and `afterEach` will have reset the mock, so we need to
@@ -738,6 +744,34 @@ describe("LegacyRoomHeader", () => {
             expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_name.mx_AccessibleButton")).toBeFalsy();
         },
     );
+
+    it("renders additionalButtons", async () => {
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: () => <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: () => {},
+            },
+        ];
+        renderHeader({ additionalButtons });
+        expect(screen.getByRole("button", { name: "test-icon" })).toBeInTheDocument();
+    });
+
+    it("calls onClick-callback on additionalButtons", () => {
+        const callback = jest.fn();
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: () => <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: callback,
+            },
+        ];
+        renderHeader({ additionalButtons });
+        fireEvent.click(screen.getByRole("button", { name: "test-icon" }));
+        expect(callback).toHaveBeenCalled();
+    });
 });
 
 interface IRoomCreationInfo {

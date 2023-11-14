@@ -596,16 +596,19 @@ describe("ElementCall", () => {
         it("finds calls", async () => {
             await ElementCall.create(room);
             expect(Call.get(room)).toBeInstanceOf(ElementCall);
+            Call.get(room)?.destroy();
         });
 
         it("finds ongoing calls that are created by the session manager", async () => {
             // There is an existing session created by another user in this room.
             client.matrixRTC.getRoomSession.mockReturnValue({
                 on: (ev: any, fn: any) => {},
+                off: (ev: any, fn: any) => {},
                 memberships: [{ fakeVal: "fake membership" }],
             } as unknown as MatrixRTCSession);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+            call.destroy();
         });
 
         it("passes font settings through widget URL", async () => {
@@ -642,6 +645,7 @@ describe("ElementCall", () => {
 
             const urlParams1 = new URLSearchParams(new URL(call1.widget.url).hash.slice(1));
             expect(urlParams1.has("allowIceFallback")).toBe(false);
+            call1.destroy();
 
             // Now test with the preference set to true
             const originalGetValue = SettingsStore.getValue;
@@ -654,13 +658,14 @@ describe("ElementCall", () => {
                 }
             };
 
-            await ElementCall.create(room);
+            ElementCall.create(room);
             const call2 = Call.get(room);
             if (!(call2 instanceof ElementCall)) throw new Error("Failed to create call");
 
             const urlParams2 = new URLSearchParams(new URL(call2.widget.url).hash.slice(1));
             expect(urlParams2.has("allowIceFallback")).toBe(true);
 
+            call2.destroy();
             SettingsStore.getValue = originalGetValue;
         });
 
@@ -677,6 +682,7 @@ describe("ElementCall", () => {
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
             expect(urlParams.get("analyticsID")).toBe("123456789987654321");
+            call.destroy();
         });
 
         it("does not pass analyticsID if `pseudonymousAnalyticsOptIn` set to false", async () => {
@@ -918,6 +924,30 @@ describe("ElementCall", () => {
             const destroyPersistentWidgetSpy = jest.spyOn(ActiveWidgetStore.instance, "destroyPersistentWidget");
             call.destroy();
             expect(destroyPersistentWidgetSpy).toHaveBeenCalled();
+        });
+
+        it("the perParticipantE2EE url flag is used in encrypted rooms while respecting the feature_disable_call_per_sender_encryption flag", async () => {
+            // We destroy the call created in beforeEach because we test the call creation process.
+            call.destroy();
+            const addWidgetSpy = jest.spyOn(WidgetStore.instance, "addVirtualWidget");
+            // If a room is not encrypted we will never add the perParticipantE2EE flag.
+            client.isRoomEncrypted.mockReturnValue(true);
+
+            // should create call with perParticipantE2EE flag
+            ElementCall.create(room);
+
+            expect(addWidgetSpy.mock.calls[0][0].url).toContain("perParticipantE2EE=true");
+            ElementCall.get(room)?.destroy();
+
+            // should create call without perParticipantE2EE flag
+            enabledSettings.add("feature_disable_call_per_sender_encryption");
+            await ElementCall.create(room);
+            enabledSettings.delete("feature_disable_call_per_sender_encryption");
+
+            expect(addWidgetSpy.mock.calls[1][0].url).not.toContain("perParticipantE2EE=true");
+
+            client.isRoomEncrypted.mockClear();
+            addWidgetSpy.mockRestore();
         });
     });
 

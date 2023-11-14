@@ -50,6 +50,7 @@ import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidge
 import { getCurrentLanguage } from "../languageHandler";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
 import { PosthogAnalytics } from "../PosthogAnalytics";
+import { UPDATE_EVENT } from "../stores/AsyncStore";
 
 const TIMEOUT_MS = 16000;
 
@@ -225,7 +226,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         const messagingStore = WidgetMessagingStore.instance;
         this.messaging = messagingStore.getMessagingForUid(this.widgetUid) ?? null;
         if (!this.messaging) {
-            // The widget might still be initializing, so wait for it
+            // The widget might still be initializing, so wait for it.
             try {
                 await waitForEvent(
                     messagingStore,
@@ -632,12 +633,10 @@ export class ElementCall extends Call {
         this.emit(CallEvent.Layout, value);
     }
 
-    private static createCallWidget(roomId: string, client: MatrixClient): IApp {
+    private static createOrGetCallWidget(roomId: string, client: MatrixClient): IApp {
         const ecWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.CALL.matches(app.type));
         if (ecWidget) {
-            logger.log("There is already a widget in this room, so we recreate it");
-            ActiveWidgetStore.instance.destroyPersistentWidget(ecWidget.id, ecWidget.roomId);
-            WidgetStore.instance.removeVirtualWidget(ecWidget.id, ecWidget.roomId);
+            return ecWidget;
         }
         const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
         // The analyticsID is passed directly to element call (EC) since this codepath is only for EC and no other widget.
@@ -662,9 +661,11 @@ export class ElementCall extends Call {
             analyticsID,
         });
 
-        if (client.isRoomEncrypted(roomId)) params.append("perParticipantE2EE", "");
-        if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "");
-        if (SettingsStore.getValue("feature_allow_screen_share_only_mode")) params.append("allowVoipWithNoMedia", "");
+        if (client.isRoomEncrypted(roomId) && !SettingsStore.getValue("feature_disable_call_per_sender_encryption"))
+            params.append("perParticipantE2EE", "true");
+        if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "true");
+        if (SettingsStore.getValue("feature_allow_screen_share_only_mode"))
+            params.append("allowVoipWithNoMedia", "true");
 
         // Set custom fonts
         if (SettingsStore.getValue("useSystemFont")) {
@@ -707,7 +708,7 @@ export class ElementCall extends Call {
     }
 
     public static get(room: Room): ElementCall | null {
-        // Only supported in the new group call experience or in video rooms
+        // Only supported in the new group call experience or in video rooms.
         if (
             SettingsStore.getValue("feature_group_calls") ||
             (SettingsStore.getValue("feature_video_rooms") &&
@@ -715,15 +716,16 @@ export class ElementCall extends Call {
                 room.isCallRoom())
         ) {
             const apps = WidgetStore.instance.getApps(room.roomId);
-            const ecWidget = apps.find((app) => WidgetType.CALL.matches(app.type));
+            const hasEcWidget = apps.some((app) => WidgetType.CALL.matches(app.type));
             const session = room.client.matrixRTC.getRoomSession(room);
 
             // A call is present if we
-            // - have a widget: This means the create function was called
+            // - have a widget: This means the create function was called.
             // - or there is a running session where we have not yet created a widget for.
-            if (ecWidget || session.memberships.length !== 0) {
+            // - or this this is a call room. Then we also always want to show a call.
+            if (hasEcWidget || session.memberships.length !== 0 || room.isCallRoom()) {
                 // create a widget for the case we are joining a running call and don't have on yet.
-                const availableOrCreatedWidget = ecWidget ?? ElementCall.createCallWidget(room.roomId, room.client);
+                const availableOrCreatedWidget = ElementCall.createOrGetCallWidget(room.roomId, room.client);
                 return new ElementCall(session, availableOrCreatedWidget, room.client);
             }
         }
@@ -738,7 +740,8 @@ export class ElementCall extends Call {
             room.isCallRoom();
 
         console.log("Intend is ", isVideoRoom ? "VideoRoom" : "Prompt", " TODO, handle intent appropriately");
-        ElementCall.createCallWidget(room.roomId, room.client);
+        ElementCall.createOrGetCallWidget(room.roomId, room.client);
+        WidgetStore.instance.emit(UPDATE_EVENT, null);
     }
 
     protected async performConnection(
@@ -790,7 +793,8 @@ export class ElementCall extends Call {
     }
 
     private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
-        if (roomId == this.roomId) {
+        // Don't destroy widget on hangup for video call rooms.
+        if (roomId == this.roomId && !this.room.isCallRoom()) {
             this.destroy();
         }
     };
