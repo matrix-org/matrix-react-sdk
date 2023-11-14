@@ -27,7 +27,7 @@ import { UIComponent } from "../../settings/UIFeature";
 export function canInviteTo(room: Room): boolean {
     const client = room.client;
     const canInvite =
-        !!room?.canInvite(client.getSafeUserId()) || !!(room?.isSpaceRoom() && room.getJoinRule() === JoinRule.Public);
+        !!room.canInvite(client.getSafeUserId()) || !!(room.isSpaceRoom() && room.getJoinRule() === JoinRule.Public);
 
-    return canInvite && room?.getMyMembership() === "join" && shouldShowComponent(UIComponent.InviteUsers);
+    return canInvite && room.getMyMembership() === "join" && shouldShowComponent(UIComponent.InviteUsers);
 }
