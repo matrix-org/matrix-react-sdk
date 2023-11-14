@@ -110,8 +110,8 @@ jobs:
             matrix:
                 # Run tests using both crypto stacks
                 crypto: [legacy, rust]
-                ci_node_total: [2]
-                ci_node_index: [0, 1]
+                ci_node_total: [4]
+                ci_node_index: [0, 1, 2, 3]
         steps:
             - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
@@ -165,7 +165,7 @@ jobs:
                   wait-on: "http://localhost:8080"
                   record: true
                   parallel: false
-                  command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false
+                  command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser chrome
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
                   #   spec: cypress/e2e/[${{ matrix.segment }}]*/**
               env:
@@ -195,20 +195,6 @@ jobs:
                   COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
                   CYPRESS_PULL_REQUEST_ID: ${{ needs.prepare.outputs.pr_id }}
                   CYPRESS_PULL_REQUEST_URL: https://github.com/${{ github.repository }}/pull/${{ needs.prepare.outputs.pr_id }}
-
-                  # pass the Percy token as an environment variable
-                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-
-                  # only run percy on legacy crypto (for now)
-                  PERCY_ENABLE: ${{ matrix.crypto == 'legacy' && needs.prepare.outputs.percy_enable || 0 }}
-                  PERCY_BROWSER_EXECUTABLE: ${{ steps.setup-chrome.outputs.chrome-path }}
-                  # tell Percy more details about the context of this run
-                  PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
-                  PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
-                  PERCY_PULL_REQUEST: ${{ needs.prepare.outputs.pr_id }}
-                  PERCY_PARALLEL_NONCE: ${{ needs.prepare.outputs.uuid }}
-                  # We manually finalize the build in the report stage
-                  PERCY_PARALLEL_TOTAL: -1
 
             - name: 📤 Upload results artifact
               if: failure()
