@@ -113,7 +113,7 @@ jobs:
                 # Run tests using both crypto stacks
                 crypto: [legacy, rust]
         steps:
-            - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
+            - uses: browser-actions/setup-chrome@11cef13cde73820422f9263a707fb8029808e191 # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
