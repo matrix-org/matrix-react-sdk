@@ -433,7 +433,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 Icon={FavouriteIcon}
                 label={_t("room|context_menu|favourite")}
                 checked={isFavorite}
-                onClick={() => tagRoom(room, DefaultTagID.Favourite)}
+                onChange={() => tagRoom(room, DefaultTagID.Favourite)}
             />
             <MenuItem
                 Icon={UserAddIcon}
