@@ -84,6 +84,7 @@ import { isLocalRoom } from "../../../../utils/localRoom/isLocalRoom";
 import RoomAvatar from "../../avatars/RoomAvatar";
 import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
+import { clamp } from "../../../../utils/numbers";
 import { transformSearchTerm } from "../../../../utils/SearchInput";
 import { Filter } from "./Filter";
 
@@ -1120,6 +1121,43 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         );
     }
 
+    const calculateNumOfEleInSection = (refs: RefObject<HTMLElement>): number => {
+        return Math.floor((scrollContainerRef.current?.clientHeight || 1) / (refs.current?.clientHeight || 1));
+    };
+
+    const findNextElementIndex = ({
+        accessibilityAction,
+        idx,
+        numOfEle,
+        refs,
+    }: {
+        accessibilityAction: KeyBindingAction;
+        idx: number;
+        numOfEle: number;
+        refs: RefObject<HTMLElement>[];
+    }): number => {
+        let noOfEleToJump = 1;
+        if (accessibilityAction === KeyBindingAction.ArrowUp || accessibilityAction === KeyBindingAction.ArrowDown) {
+            // move to next element in either direct using arrow key
+            noOfEleToJump = clamp(
+                idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1),
+                0,
+                refs.length - 1,
+            );
+        } else if (
+            accessibilityAction === KeyBindingAction.PageUp ||
+            accessibilityAction === KeyBindingAction.PageDown
+        ) {
+            // jump 3 next element in either direct using page up and page down key
+            noOfEleToJump = clamp(
+                idx + (accessibilityAction === KeyBindingAction.PageUp ? -numOfEle : numOfEle),
+                0,
+                refs.length - 1,
+            );
+        }
+        return noOfEleToJump;
+    };
+
     const onDialogKeyDown = (ev: KeyboardEvent | React.KeyboardEvent): void => {
         const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navigationAction) {
@@ -1140,6 +1178,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 break;
             case KeyBindingAction.ArrowUp:
             case KeyBindingAction.ArrowDown:
+            case KeyBindingAction.PageUp:
+            case KeyBindingAction.PageDown:
                 ev.stopPropagation();
                 ev.preventDefault();
 
@@ -1154,9 +1194,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         // exclude all other recently viewed items from the list so up/down arrows skip them
                         refs = refs.filter((ref) => ref === keptRecentlyViewedRef || !refIsForRecentlyViewed(ref));
                     }
-
-                    const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowUp ? -1 : 1));
+                    if (rovingContext.state.activeRef) {
+                        const idx = refs.indexOf(rovingContext.state.activeRef);
+                        const numOfEle = calculateNumOfEleInSection(refs[0]);
+                        const nextElementIndex = findNextElementIndex({ accessibilityAction, idx, numOfEle, refs });
+                        ref = findSiblingElement(refs, nextElementIndex);
+                    }
                 }
                 break;
 
@@ -1175,8 +1218,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     ev.preventDefault();
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
-                    const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1));
+                    if (rovingContext.state.activeRef) {
+                        const idx = refs.indexOf(rovingContext.state.activeRef);
+                        ref = findSiblingElement(
+                            refs,
+                            idx + (accessibilityAction === KeyBindingAction.ArrowLeft ? -1 : 1),
+                        );
+                    }
                 }
                 break;
         }
