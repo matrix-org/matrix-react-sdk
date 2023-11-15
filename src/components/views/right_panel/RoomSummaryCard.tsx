@@ -20,6 +20,7 @@ import { MenuItem, Tooltip, Separator, ToggleMenuItem, Text, Badge, Heading } fr
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite-off.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
+import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
 import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
 import { Icon as SettingsIcon } from "@vector-im/compound-design-tokens/icons/settings.svg";
 import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/icons/export-archive.svg";
@@ -56,7 +57,7 @@ import RoomContext from "../../../contexts/RoomContext";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
-import { useFeatureEnabled } from "../../../hooks/useSettings";
+import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
 import { usePinnedEvents } from "./PinnedMessagesCard";
 import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import RoomName from "../elements/RoomName";
@@ -302,6 +303,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
         });
     };
 
+    const onRoomMembersClick = (ev: ButtonEvent): void => {
+        RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
+        PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
+    };
+
+    const isNewRoomDecorationUiEnabled = useSettingValue("feature_new_room_decoration_ui");
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -426,7 +433,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 Icon={FavouriteIcon}
                 label={_t("room|context_menu|favourite")}
                 checked={isFavorite}
-                onClick={() => tagRoom(room, DefaultTagID.Favourite)}
+                onChange={() => tagRoom(room, DefaultTagID.Favourite)}
             />
             <MenuItem
                 Icon={UserAddIcon}
@@ -434,6 +441,17 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 disabled={!canInviteTo(room)}
                 onClick={() => inviteToRoom(room)}
             />
+            {/* Legacy room header does not expose a link to the member list
+            so it needs to be exposed here in the room summary */}
+            {!isNewRoomDecorationUiEnabled && (
+                <MenuItem
+                    // this icon matches the legacy implementation
+                    // and is a short term solution until legacy room header is removed
+                    Icon={UserProfileSolidIcon}
+                    label={_t("common|people")}
+                    onClick={onRoomMembersClick}
+                />
+            )}
             <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onClick={onShareRoomClick} />
             <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onClick={onRoomSettingsClick} />
 
