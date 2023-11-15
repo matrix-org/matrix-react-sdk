@@ -41,7 +41,7 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { Call } from "../models/Call";
 import { AudioID } from "../LegacyCallHandler";
 
-export const getIncomingCallToastKey = (sessionId: string, roomId: string): string => `call_${sessionId}_${roomId}`;
+export const getIncomingCallToastKey = (callId: string, roomId: string): string => `call_${callId}_${roomId}`;
 const MAX_RING_TIME_MS = 10 * 1000;
 
 interface JoinCallButtonWithCallProps {
@@ -92,7 +92,7 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
     // Dismiss if session got ended remotely.
     const onSessionEnded = useCallback(
         (endedSessionRoomId: String, session: MatrixRTCSession): void => {
-            if (roomId == endedSessionRoomId && session.sessionId == notifyEvent.getContent().call_id) {
+            if (roomId == endedSessionRoomId && session.callId == notifyEvent.getContent().call_id) {
                 dismissToast();
             }
         },
