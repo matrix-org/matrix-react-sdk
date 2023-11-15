@@ -220,7 +220,7 @@ describe("Read receipts", () => {
                 // Then all messages are still read
                 assertRead(room2);
             });
-            it.only("Me sending a message from a different client marks room as read", () => {
+            it("Me sending a message from a different client marks room as read", () => {
                 // Given I have unread messages
                 goTo(room1);
                 assertRead(room2);
