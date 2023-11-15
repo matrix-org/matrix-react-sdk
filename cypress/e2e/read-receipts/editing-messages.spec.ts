@@ -292,8 +292,7 @@ describe("Read receipts", () => {
                 // Then the room becomes unread
                 assertStillRead(room2);
             });
-            // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-            it.skip("A room with an edited threaded message is still read after restart", () => {
+            it("A room with an edited threaded message is still read after restart", () => {
                 // Given an edit in a thread is making a room unread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
