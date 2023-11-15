@@ -57,7 +57,7 @@ import RoomContext from "../../../contexts/RoomContext";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
-import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { usePinnedEvents } from "./PinnedMessagesCard";
 import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import RoomName from "../elements/RoomName";
@@ -308,7 +308,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
         PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
     };
 
-    const isNewRoomDecorationUiEnabled = useSettingValue("feature_new_room_decoration_ui");
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -441,24 +440,19 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 disabled={!canInviteTo(room)}
                 onClick={() => inviteToRoom(room)}
             />
-            {/* Legacy room header does not expose a link to the member list
-            so it needs to be exposed here in the room summary */}
-            {!isNewRoomDecorationUiEnabled && (
-                <MenuItem
-                    // this icon matches the legacy implementation
-                    // and is a short term solution until legacy room header is removed
-                    Icon={UserProfileSolidIcon}
-                    label={_t("common|people")}
-                    onClick={onRoomMembersClick}
-                />
-            )}
             <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onClick={onShareRoomClick} />
             <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onClick={onRoomSettingsClick} />
 
+            <Separator />
+            <MenuItem
+                // this icon matches the legacy implementation
+                // and is a short term solution until legacy room header is removed
+                Icon={UserProfileSolidIcon}
+                label={_t("common|people")}
+                onClick={onRoomMembersClick}
+            />
             {!isVideoRoom && (
                 <>
-                    <Separator />
-
                     <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onClick={onRoomFilesClick} />
                     <MenuItem
                         Icon={PollsIcon}
