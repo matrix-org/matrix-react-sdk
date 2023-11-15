@@ -37,6 +37,7 @@ import {
     RelationType,
     JoinRule,
     IEventDecryptionResult,
+    OidcClientConfig,
 } from "matrix-js-sdk/src/matrix";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
@@ -44,10 +45,14 @@ import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManager } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
 import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
-import { ValidatedDelegatedAuthConfig, ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
+import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
@@ -88,6 +93,7 @@ export function stubClient(): MatrixClient {
  */
 export function createTestClient(): MatrixClient {
     const eventEmitter = new EventEmitter();
+
     let txnId = 1;
 
     const client = {
@@ -255,6 +261,7 @@ export function createTestClient(): MatrixClient {
         submitMsisdnToken: jest.fn(),
         getMediaConfig: jest.fn(),
         baseUrl: "https://matrix-client.matrix.org",
+        matrixRTC: createStubMatrixRTC(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -271,6 +278,26 @@ export function createTestClient(): MatrixClient {
     return client;
 }
 
+export function createStubMatrixRTC(): MatrixRTCSessionManager {
+    const eventEmitterMatrixRTCSessionManager = new EventEmitter();
+    const mockGetRoomSession = jest.fn();
+    mockGetRoomSession.mockImplementation((roomId) => {
+        const session = new EventEmitter() as MatrixRTCSession;
+        session.memberships = [];
+        session.getOldestMembership = () => undefined;
+        return session;
+    });
+    return {
+        start: jest.fn(),
+        stop: jest.fn(),
+        getActiveRoomSession: jest.fn(),
+        getRoomSession: mockGetRoomSession,
+        on: eventEmitterMatrixRTCSessionManager.on.bind(eventEmitterMatrixRTCSessionManager),
+        off: eventEmitterMatrixRTCSessionManager.off.bind(eventEmitterMatrixRTCSessionManager),
+        removeListener: eventEmitterMatrixRTCSessionManager.removeListener.bind(eventEmitterMatrixRTCSessionManager),
+        emit: eventEmitterMatrixRTCSessionManager.emit.bind(eventEmitterMatrixRTCSessionManager),
+    } as unknown as MatrixRTCSessionManager;
+}
 type MakeEventPassThruProps = {
     user: User["userId"];
     relatesTo?: IEventRelation;
@@ -290,13 +317,14 @@ type MakeEventProps = MakeEventPassThruProps & {
     unsigned?: IUnsigned;
 };
 
-export const mkRoomCreateEvent = (userId: string, roomId: string): MatrixEvent => {
+export const mkRoomCreateEvent = (userId: string, roomId: string, content?: IContent): MatrixEvent => {
     return mkEvent({
         event: true,
         type: EventType.RoomCreate,
         content: {
             creator: userId,
             room_version: KNOWN_SAFE_ROOM_VERSION,
+            ...content,
         },
         skey: "",
         user: userId,
@@ -653,7 +681,7 @@ export function mkStubRoom(
 export function mkServerConfig(
     hsUrl: string,
     isUrl: string,
-    delegatedAuthentication?: ValidatedDelegatedAuthConfig,
+    delegatedAuthentication?: OidcClientConfig,
 ): ValidatedServerConfig {
     return {
         hsUrl,

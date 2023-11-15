@@ -269,7 +269,7 @@ describe("Cryptography", function () {
         // Assert that verified icon is rendered
         cy.findByRole("button", { name: "Room members" }).click();
         cy.findByRole("button", { name: "Room information" }).click();
-        cy.get(".mx_RoomSummaryCard_e2ee_verified").should("exist");
+        cy.get('.mx_RoomSummaryCard_badges [data-kind="success"]').should("contain.text", "Encrypted");
 
         // Take a snapshot of RoomSummaryCard with a verified E2EE icon
         cy.get(".mx_RightPanel").percySnapshotElement("RoomSummaryCard - with a verified E2EE icon", {
@@ -278,6 +278,7 @@ describe("Cryptography", function () {
     });
 
     it("should allow verification when there is no existing DM", function (this: CryptoTestContext) {
+        skipIfRustCrypto(); // https://github.com/vector-im/element-web/issues/26447
         cy.bootstrapCrossSigning(aliceCredentials);
         autoJoin(this.bob);
 
@@ -452,7 +453,7 @@ describe("Cryptography", function () {
         });
 
         it("Should show a grey padlock for a key restored from backup", () => {
-            skipIfRustCrypto(); // requires key backup (https://github.com/vector-im/element-web/issues/24828)
+            skipIfRustCrypto(); // doesn't work due to https://github.com/vector-im/element-web/issues/26393
 
             enableKeyBackup();
 

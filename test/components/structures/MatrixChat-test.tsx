@@ -34,6 +34,7 @@ import { Action } from "../../../src/dispatcher/actions";
 import { UserTab } from "../../../src/components/views/dialogs/UserTab";
 import {
     clearAllModals,
+    createStubMatrixRTC,
     filterConsole,
     flushPromises,
     getMockClientWithEventEmitter,
@@ -44,6 +45,7 @@ import {
     unmockClientPeg,
 } from "../../test-utils";
 import * as leaveRoomUtils from "../../../src/utils/leave-behaviour";
+import { OidcClientError } from "../../../src/utils/oidc/error";
 import * as voiceBroadcastUtils from "../../../src/voice-broadcast/utils/cleanUpBroadcasts";
 import LegacyCallHandler from "../../../src/LegacyCallHandler";
 import { CallStore } from "../../../src/stores/CallStore";
@@ -108,6 +110,7 @@ describe("<MatrixChat />", () => {
         secretStorage: {
             isStored: jest.fn().mockReturnValue(null),
         },
+        matrixRTC: createStubMatrixRTC(),
         getDehydratedDevice: jest.fn(),
         whoami: jest.fn(),
         isRoomEncrypted: jest.fn(),
@@ -915,10 +918,13 @@ describe("<MatrixChat />", () => {
 
         let loginClient!: ReturnType<typeof getMockClientWithEventEmitter>;
 
-        // for now when OIDC fails for any reason we just bump back to welcome
-        // error handling screens in https://github.com/vector-im/element-web/issues/25665
-        const expectOIDCError = async (): Promise<void> => {
+        const expectOIDCError = async (
+            errorMessage = "Something went wrong during authentication. Go to the sign in page and try again.",
+        ): Promise<void> => {
             await flushPromises();
+            const dialog = await screen.findByRole("dialog");
+
+            expect(within(dialog).getByText(errorMessage)).toBeInTheDocument();
             // just check we're back on welcome page
             expect(document.querySelector(".mx_Welcome")!).toBeInTheDocument();
         };
@@ -972,7 +978,7 @@ describe("<MatrixChat />", () => {
 
             expect(logger.error).toHaveBeenCalledWith(
                 "Failed to login via OIDC",
-                new Error("Invalid query parameters for OIDC native login. `code` and `state` are required."),
+                new Error(OidcClientError.InvalidQueryParameters),
             );
 
             await expectOIDCError();
@@ -1025,6 +1031,24 @@ describe("<MatrixChat />", () => {
         describe("when login fails", () => {
             beforeEach(() => {
                 mocked(completeAuthorizationCodeGrant).mockRejectedValue(new Error(OidcError.CodeExchangeFailed));
+            });
+
+            it("should log and return to welcome page with correct error when login state is not found", async () => {
+                mocked(completeAuthorizationCodeGrant).mockRejectedValue(
+                    new Error(OidcError.MissingOrInvalidStoredState),
+                );
+                getComponent({ realQueryParams });
+
+                await flushPromises();
+
+                expect(logger.error).toHaveBeenCalledWith(
+                    "Failed to login via OIDC",
+                    new Error(OidcError.MissingOrInvalidStoredState),
+                );
+
+                await expectOIDCError(
+                    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.",
+                );
             });
 
             it("should log and return to welcome page", async () => {

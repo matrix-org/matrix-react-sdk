@@ -43,6 +43,7 @@ import {
     saveAndReload,
     sendMessageAsClient,
 } from "./read-receipts-utils";
+import { skipIfRustCrypto } from "../../support/util";
 
 describe("Read receipts", () => {
     const roomAlpha = "Room Alpha";
@@ -155,7 +156,7 @@ describe("Read receipts", () => {
             assertRead(room2);
             goTo(room1);
 
-            // When we receive important messages
+            // When we receive unimportant messages
             receiveMessages(room2, [customEvent("org.custom.event", { body: "foobar" })]);
 
             // Then the room is still read
@@ -167,11 +168,28 @@ describe("Read receipts", () => {
             // The room is unread again
             assertUnread(room2, 1);
         });
-        it.skip("A receipt for the last unimportant event makes the room read, even if all are unimportant", () => {});
+        it("A receipt for the last unimportant event makes the room read, even if all are unimportant", () => {
+            // Display room 1
+            goTo(room1);
+
+            // The room 2 is read
+            assertRead(room2);
+
+            // We received 3 unimportant messages to room2
+            receiveMessages(room2, [
+                customEvent("org.custom.event", { body: "foobar1" }),
+                customEvent("org.custom.event", { body: "foobar2" }),
+                customEvent("org.custom.event", { body: "foobar3" }),
+            ]);
+
+            // The room 2 is still read
+            assertStillRead(room2);
+        });
     });
 
     describe("Paging up", () => {
-        it("Paging up through old messages after a room is read leaves the room read", () => {
+        // Flaky test https://github.com/vector-im/element-web/issues/26437
+        it.skip("Paging up through old messages after a room is read leaves the room read", () => {
             // Given lots of messages are in the room, but we have read them
             goTo(room1);
             receiveMessages(room2, many("Msg", 110));
@@ -244,8 +262,11 @@ describe("Read receipts", () => {
             assertReadThread("Root2");
             assertReadThread("Root3");
         });
-        // https://github.com/vector-im/element-web/issues/26294
-        it.skip("Paging up to find old threads that were never read keeps the room unread", () => {
+        it("Paging up to find old threads that were never read keeps the room unread", () => {
+            // Flaky with rust crypto
+            // See https://github.com/vector-im/element-web/issues/26539
+            skipIfRustCrypto();
+
             // Given lots of messages in threads that are unread
             goTo(room1);
             receiveMessages(room2, [
@@ -282,7 +303,8 @@ describe("Read receipts", () => {
             assertUnreadThread("Root2");
             assertUnreadThread("Root3");
         });
-        it("Looking in thread view to find old threads that were never read makes the room unread", () => {
+        // XXX: fails because flaky: https://github.com/vector-im/element-web/issues/26331
+        it.skip("Looking in thread view to find old threads that were never read makes the room unread", () => {
             // Given lots of messages in threads that are unread
             goTo(room1);
             receiveMessages(room2, [
@@ -320,6 +342,10 @@ describe("Read receipts", () => {
             assertUnreadThread("Root3");
         });
         it("After marking room as read, paging up to find old threads that were never read leaves the room read", () => {
+            // Flaky with rust crypto
+            // See https://github.com/vector-im/element-web/issues/26341
+            skipIfRustCrypto();
+
             // Given lots of messages in threads that are unread but I marked as read on a main timeline message
             goTo(room1);
             receiveMessages(room2, [

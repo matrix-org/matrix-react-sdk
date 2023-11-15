@@ -16,7 +16,13 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { Badge, Heading, Text, Tooltip } from "@vector-im/compound-web";
+import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
+import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
+import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
+import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
+import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -32,7 +38,6 @@ import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
@@ -53,6 +58,9 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { PollHistoryDialog } from "../dialogs/PollHistoryDialog";
+import { Flex } from "../../utils/Flex";
+import { useAccountData } from "../../../hooks/useAccountData";
+import { useRoomState } from "../../../hooks/useRoomState";
 
 interface IProps {
     room: Room;
@@ -304,32 +312,75 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const isVideoRoom =
         videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
 
+    const roomState = useRoomState(room);
+    const directRoomsList = useAccountData<Record<string, string[]>>(room.client, EventType.Direct);
+    const [isDirectMessage, setDirectMessage] = useState(false);
+    useEffect(() => {
+        for (const [, dmRoomList] of Object.entries(directRoomsList)) {
+            if (dmRoomList.includes(room?.roomId ?? "")) {
+                setDirectMessage(true);
+                break;
+            }
+        }
+    }, [room, directRoomsList]);
+
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
-        <React.Fragment>
-            <div className="mx_RoomSummaryCard_avatar" role="presentation">
-                <RoomAvatar room={room} size="54px" viewAvatarOnClick />
-                <TextWithTooltip
-                    tooltip={isRoomEncrypted ? _t("common|encrypted") : _t("common|unencrypted")}
-                    class={classNames("mx_RoomSummaryCard_e2ee", {
-                        mx_RoomSummaryCard_e2ee_normal: isRoomEncrypted,
-                        mx_RoomSummaryCard_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
-                        mx_RoomSummaryCard_e2ee_verified: isRoomEncrypted && e2eStatus === E2EStatus.Verified,
-                    })}
-                />
-            </div>
-
+        <header className="mx_RoomSummaryCard_container">
+            <RoomAvatar room={room} size="80px" viewAvatarOnClick />
             <RoomName room={room}>
                 {(name) => (
-                    <h1 className="mx_RoomSummaryCard_roomName" title={name}>
+                    <Heading
+                        as="h1"
+                        size="md"
+                        weight="semibold"
+                        className="mx_RoomSummaryCard_roomName text-primary"
+                        title={name}
+                    >
                         {name}
-                    </h1>
+                    </Heading>
                 )}
             </RoomName>
-            <div className="mx_RoomSummaryCard_alias" title={alias}>
+            <Text
+                as="div"
+                size="sm"
+                weight="semibold"
+                className="mx_RoomSummaryCard_alias text-secondary"
+                title={alias}
+            >
                 {alias}
-            </div>
-        </React.Fragment>
+            </Text>
+
+            <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
+                {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
+                    <Badge kind="default">
+                        <PublicIcon width="1em" />
+                        {_t("common|public_room")}
+                    </Badge>
+                )}
+
+                {isRoomEncrypted && e2eStatus !== E2EStatus.Warning && (
+                    <Badge kind="success">
+                        <LockIcon width="1em" />
+                        {_t("common|encrypted")}
+                    </Badge>
+                )}
+
+                {!e2eStatus && (
+                    <Badge kind="default">
+                        <LockOffIcon width="1em" />
+                        {_t("common|unencrypted")}
+                    </Badge>
+                )}
+
+                {e2eStatus === E2EStatus.Warning && (
+                    <Badge kind="critical">
+                        <ErrorIcon width="1em" />
+                        {_t("common|not_trusted")}
+                    </Badge>
+                )}
+            </Flex>
+        </header>
     );
 
     const memberCount = useRoomMemberCount(room);
@@ -337,22 +388,40 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
 
     return (
-        <BaseCard header={header} className="mx_RoomSummaryCard" onClose={onClose}>
+        <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
+            <Flex
+                as="header"
+                className="mx_RoomSummaryCard_header"
+                gap="var(--cpd-space-3x)"
+                align="center"
+                justify="space-between"
+            >
+                <Tooltip label={_t("action|search")} side="right">
+                    <button
+                        className="mx_RoomSummaryCard_searchBtn"
+                        data-testid="summary-search"
+                        onClick={() => {
+                            onSearchClick?.();
+                        }}
+                        aria-label={_t("action|search")}
+                    >
+                        <SearchIcon width="100%" height="100%" />
+                    </button>
+                </Tooltip>
+                <AccessibleButton
+                    data-testid="base-card-close-button"
+                    className="mx_BaseCard_close"
+                    onClick={onClose}
+                    title={_t("action|close")}
+                />
+            </Flex>
+
+            {header}
             <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
                 <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
                     {_t("common|people")}
                     <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
                 </Button>
-                {SettingsStore.getValue("feature_new_room_decoration_ui") && (
-                    <Button
-                        className="mx_RoomSummaryCard_icon_search"
-                        onClick={() => {
-                            onSearchClick?.();
-                        }}
-                    >
-                        {_t("right_panel|search_button")}
-                    </Button>
-                )}
                 {!isVideoRoom && (
                     <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
                         {_t("right_panel|files_button")}

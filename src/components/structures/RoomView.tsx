@@ -42,6 +42,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import shouldHideEvent from "../../shouldHideEvent";
 import { _t } from "../../languageHandler";
@@ -246,6 +247,8 @@ export interface IRoomState {
 
     canAskToJoin: boolean;
     promptAskToJoin: boolean;
+
+    viewRoomOpts: ViewRoomOpts;
 }
 
 interface LocalRoomViewProps {
@@ -458,6 +461,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             msc3946ProcessDynamicPredecessor: SettingsStore.getValue("feature_dynamic_room_predecessors"),
             canAskToJoin: this.askToJoinEnabled,
             promptAskToJoin: false,
+            viewRoomOpts: { buttons: [] },
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -663,6 +667,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 : false,
             activeCall: roomId ? CallStore.instance.getActiveCall(roomId) : null,
             promptAskToJoin: this.context.roomViewStore.promptAskToJoin(),
+            viewRoomOpts: this.context.roomViewStore.getViewRoomOpts(),
         };
 
         if (
@@ -1407,6 +1412,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             tombstone: this.getRoomTombstone(room),
             liveTimeline: room.getLiveTimeline(),
         });
+
+        dis.dispatch<ActionPayload>({ action: Action.RoomLoaded });
     };
 
     private onRoomTimelineReset = (room?: Room): void => {
@@ -2097,13 +2104,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
         }
 
+        const roomHeaderType = SettingsStore.getValue("feature_new_room_decoration_ui") ? "new" : "legacy";
+
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
             if (loading) {
                 // Assume preview loading if we don't have a ready client or a room ID (still resolving the alias)
                 const previewLoading = !this.state.matrixClientIsReady || !this.state.roomId || this.state.peekLoading;
                 return (
-                    <div className="mx_RoomView">
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 canPreview={false}
@@ -2128,7 +2137,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // We've got to this room by following a link, possibly a third party invite.
                 const roomAlias = this.state.roomAlias;
                 return (
-                    <div className="mx_RoomView">
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 onJoinClick={this.onJoinButtonClicked}
@@ -2201,7 +2210,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
                 // We have a regular invite for this room.
                 return (
-                    <div className="mx_RoomView">
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
                         <ErrorBoundary>
                             <RoomPreviewBar
                                 onJoinClick={this.onJoinButtonClicked}
@@ -2222,7 +2231,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (this.state.canAskToJoin && ["knock", "leave"].includes(myMembership)) {
             return (
-                <div className="mx_RoomView">
+                <div className="mx_RoomView" data-room-header={roomHeaderType}>
                     <ErrorBoundary>
                         <RoomPreviewBar
                             room={this.state.room}
@@ -2326,7 +2335,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 />
             );
             if (!this.state.canPeek && !this.state.room?.isSpaceRoom()) {
-                return <div className="mx_RoomView">{previewBar}</div>;
+                return (
+                    <div className="mx_RoomView" data-room-header={roomHeaderType}>
+                        {previewBar}
+                    </div>
+                );
             }
         } else if (hiddenHighlightCount > 0) {
             aux = (
@@ -2571,32 +2584,16 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         return (
             <RoomContext.Provider value={this.state}>
-                <main className={mainClasses} ref={this.roomView} onKeyDown={this.onReactKeyDown}>
+                <main
+                    className={mainClasses}
+                    ref={this.roomView}
+                    onKeyDown={this.onReactKeyDown}
+                    data-room-header={roomHeaderType}
+                >
                     {showChatEffects && this.roomView.current && (
                         <EffectsOverlay roomWidth={this.roomView.current.offsetWidth} />
                     )}
                     <ErrorBoundary>
-                        {SettingsStore.getValue("feature_new_room_decoration_ui") ? (
-                            <RoomHeader room={this.state.room} />
-                        ) : (
-                            <LegacyRoomHeader
-                                room={this.state.room}
-                                searchInfo={this.state.search}
-                                oobData={this.props.oobData}
-                                inRoom={myMembership === "join"}
-                                onSearchClick={onSearchClick}
-                                onInviteClick={onInviteClick}
-                                onForgetClick={showForgetButton ? onForgetClick : null}
-                                e2eStatus={this.state.e2eStatus}
-                                onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
-                                appsShown={this.state.showApps}
-                                excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
-                                showButtons={!this.viewsLocalRoom}
-                                enableRoomOptionsMenu={!this.viewsLocalRoom}
-                                viewingCall={viewingCall}
-                                activeCall={this.state.activeCall}
-                            />
-                        )}
                         <MainSplit
                             panel={rightPanel}
                             resizeNotifier={this.props.resizeNotifier}
@@ -2610,6 +2607,31 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                                 ref={this.roomViewBody}
                                 data-layout={this.state.layout}
                             >
+                                {SettingsStore.getValue("feature_new_room_decoration_ui") ? (
+                                    <RoomHeader
+                                        room={this.state.room}
+                                        additionalButtons={this.state.viewRoomOpts.buttons}
+                                    />
+                                ) : (
+                                    <LegacyRoomHeader
+                                        room={this.state.room}
+                                        searchInfo={this.state.search}
+                                        oobData={this.props.oobData}
+                                        inRoom={myMembership === "join"}
+                                        onSearchClick={onSearchClick}
+                                        onInviteClick={onInviteClick}
+                                        onForgetClick={showForgetButton ? onForgetClick : null}
+                                        e2eStatus={this.state.e2eStatus}
+                                        onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
+                                        appsShown={this.state.showApps}
+                                        excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
+                                        showButtons={!this.viewsLocalRoom}
+                                        enableRoomOptionsMenu={!this.viewsLocalRoom}
+                                        viewingCall={viewingCall}
+                                        activeCall={this.state.activeCall}
+                                        additionalButtons={this.state.viewRoomOpts.buttons}
+                                    />
+                                )}
                                 {mainSplitBody}
                             </div>
                         </MainSplit>

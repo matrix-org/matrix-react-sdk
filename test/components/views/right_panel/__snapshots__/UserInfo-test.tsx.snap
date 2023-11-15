@@ -85,6 +85,16 @@ exports[`<UserInfo /> with crypto enabled renders <BasicUserInfo /> 1`] = `
         title="Close"
       />
       <div
+        class="mx_BaseCard_headerProp"
+      >
+        <span />
+      </div>
+    </div>
+    <div
+      class="mx_AutoHideScrollbar"
+      tabindex="-1"
+    >
+      <div
         class="mx_UserInfo_avatar"
       >
         <div
@@ -96,7 +106,7 @@ exports[`<UserInfo /> with crypto enabled renders <BasicUserInfo /> 1`] = `
             <button
               aria-label="Profile picture"
               aria-live="off"
-              class="_avatar_ylj7w_17 mx_BaseAvatar _avatar-imageless_ylj7w_56"
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
               data-color="3"
               data-testid="avatar-img"
               data-type="round"
@@ -141,11 +151,6 @@ exports[`<UserInfo /> with crypto enabled renders <BasicUserInfo /> 1`] = `
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="mx_AutoHideScrollbar"
-      tabindex="-1"
-    >
       <div
         class="mx_UserInfo_container"
       >

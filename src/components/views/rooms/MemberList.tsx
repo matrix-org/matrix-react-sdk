@@ -33,6 +33,8 @@ import {
     ClientEvent,
 } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
+import { Button, Tooltip } from "@vector-im/compound-web";
+import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add-solid.svg";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -44,7 +46,7 @@ import RoomName from "../elements/RoomName";
 import TruncatedList from "../elements/TruncatedList";
 import Spinner from "../elements/Spinner";
 import SearchBox from "../../structures/SearchBox";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from "../avatars/BaseAvatar";
@@ -52,7 +54,6 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { SDKContext } from "../../../contexts/SDKContext";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -80,6 +81,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     public static contextType = SDKContext;
     public context!: React.ContextType<typeof SDKContext>;
+    private tiles: Map<string, MemberTile> = new Map();
 
     public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
         super(props);
@@ -153,7 +155,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         // Attach a SINGLE listener for global presence changes then locate the
         // member tile and re-render it. This is more efficient than every tile
         // ever attaching their own listener.
-        const tile = this.refs[user.userId];
+        const tile = this.tiles.get(user.userId);
         if (tile) {
             this.updateList(); // reorder the membership list
         }
@@ -244,8 +246,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                     <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." size="36px" />
                 }
                 name={text}
-                presenceState="online"
-                suppressOnHover={true}
+                showPresence={false}
                 onClick={onClick}
             />
         );
@@ -306,14 +307,24 @@ export default class MemberList extends React.Component<IProps, IState> {
         return members.map((m) => {
             if (m instanceof RoomMember) {
                 // Is a Matrix invite
-                return <MemberTile key={m.userId} member={m} ref={m.userId} showPresence={this.showPresence} />;
+                return (
+                    <MemberTile
+                        key={m.userId}
+                        member={m}
+                        ref={(tile) => {
+                            if (tile) this.tiles.set(m.userId, tile);
+                            else this.tiles.delete(m.userId);
+                        }}
+                        showPresence={this.showPresence}
+                    />
+                );
             } else {
                 // Is a 3pid invite
                 return (
                     <EntityTile
                         key={m.getStateKey()}
                         name={m.getContent().display_name}
-                        suppressOnHover={true}
+                        showPresence={false}
                         onClick={() => this.onPending3pidInviteClick(m)}
                     />
                 );
@@ -361,20 +372,24 @@ export default class MemberList extends React.Component<IProps, IState> {
 
             if (this.state.canInvite) {
                 inviteButton = (
-                    <AccessibleButton className="mx_MemberList_invite" onClick={this.onInviteButtonClick}>
-                        <span>{inviteButtonText}</span>
-                    </AccessibleButton>
+                    <Button
+                        size="sm"
+                        kind="secondary"
+                        className="mx_MemberList_invite"
+                        onClick={this.onInviteButtonClick}
+                    >
+                        <UserAddIcon width="1em" height="1em" />
+                        {inviteButtonText}
+                    </Button>
                 );
             } else {
                 inviteButton = (
-                    <AccessibleTooltipButton
-                        className="mx_MemberList_invite"
-                        onClick={null}
-                        disabled
-                        tooltip={_t("member_list|invite_button_no_perms_tooltip")}
-                    >
-                        <span>{inviteButtonText}</span>
-                    </AccessibleTooltipButton>
+                    <Tooltip label={_t("member_list|invite_button_no_perms_tooltip")}>
+                        <Button size="sm" kind="secondary" className="mx_MemberList_invite" onClick={() => {}}>
+                            <UserAddIcon width="1em" height="1em" />
+                            {inviteButtonText}
+                        </Button>
+                    </Tooltip>
                 );
             }
         }
@@ -416,15 +431,11 @@ export default class MemberList extends React.Component<IProps, IState> {
         return (
             <BaseCard
                 className="mx_MemberList"
-                header={
-                    <React.Fragment>
-                        {scopeHeader}
-                        {inviteButton}
-                    </React.Fragment>
-                }
+                header={<React.Fragment>{scopeHeader}</React.Fragment>}
                 footer={footer}
                 onClose={this.props.onClose}
             >
+                {inviteButton}
                 <div className="mx_MemberList_wrapper">
                     <TruncatedList
                         className="mx_MemberList_section mx_MemberList_joined"

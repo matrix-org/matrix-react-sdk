@@ -17,16 +17,14 @@ limitations under the License.
 import EventEmitter from "events";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
-import {
-    RoomType,
-    Room,
-    RoomEvent,
-    MatrixEvent,
-    RoomStateEvent,
-    PendingEventOrdering,
-    GroupCallIntent,
-} from "matrix-js-sdk/src/matrix";
+import { RoomType, Room, RoomEvent, MatrixEvent, RoomStateEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import { Widget } from "matrix-widget-api";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { CallMembership } from "matrix-js-sdk/src/matrixrtc/CallMembership";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession, MatrixRTCSessionEvent } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice, RoomMember } from "matrix-js-sdk/src/matrix";
@@ -96,9 +94,16 @@ const setUpClientRoomAndStores = (): {
                 return null;
         }
     });
+
     jest.spyOn(room, "getMyMembership").mockReturnValue("join");
 
     client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
+    client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
+    client.matrixRTC.getRoomSession.mockImplementation((roomId) => {
+        const session = new EventEmitter() as MatrixRTCSession;
+        session.memberships = [];
+        return session;
+    });
     client.getRooms.mockReturnValue([room]);
     client.getUserId.mockReturnValue(alice.userId);
     client.getDeviceId.mockReturnValue("alices_device");
@@ -576,11 +581,9 @@ describe("ElementCall", () => {
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
-    let bob: RoomMember;
-    let carol: RoomMember;
 
     beforeEach(() => {
-        ({ client, room, alice, bob, carol } = setUpClientRoomAndStores());
+        ({ client, room, alice } = setUpClientRoomAndStores());
     });
 
     afterEach(() => cleanUpClientRoomAndStores(client, room));
@@ -593,17 +596,19 @@ describe("ElementCall", () => {
         it("finds calls", async () => {
             await ElementCall.create(room);
             expect(Call.get(room)).toBeInstanceOf(ElementCall);
+            Call.get(room)?.destroy();
         });
 
-        it("ignores terminated calls", async () => {
-            await ElementCall.create(room);
+        it("finds ongoing calls that are created by the session manager", async () => {
+            // There is an existing session created by another user in this room.
+            client.matrixRTC.getRoomSession.mockReturnValue({
+                on: (ev: any, fn: any) => {},
+                off: (ev: any, fn: any) => {},
+                memberships: [{ fakeVal: "fake membership" }],
+            } as unknown as MatrixRTCSession);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
-
-            // Terminate the call
-            await call.groupCall.terminate();
-
-            expect(Call.get(room)).toBeNull();
+            call.destroy();
         });
 
         it("passes font settings through widget URL", async () => {
@@ -640,6 +645,7 @@ describe("ElementCall", () => {
 
             const urlParams1 = new URLSearchParams(new URL(call1.widget.url).hash.slice(1));
             expect(urlParams1.has("allowIceFallback")).toBe(false);
+            call1.destroy();
 
             // Now test with the preference set to true
             const originalGetValue = SettingsStore.getValue;
@@ -652,13 +658,14 @@ describe("ElementCall", () => {
                 }
             };
 
-            await ElementCall.create(room);
+            ElementCall.create(room);
             const call2 = Call.get(room);
             if (!(call2 instanceof ElementCall)) throw new Error("Failed to create call");
 
             const urlParams2 = new URLSearchParams(new URL(call2.widget.url).hash.slice(1));
             expect(urlParams2.has("allowIceFallback")).toBe(true);
 
+            call2.destroy();
             SettingsStore.getValue = originalGetValue;
         });
 
@@ -675,6 +682,7 @@ describe("ElementCall", () => {
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
             expect(urlParams.get("analyticsID")).toBe("123456789987654321");
+            call.destroy();
         });
 
         it("does not pass analyticsID if `pseudonymousAnalyticsOptIn` set to false", async () => {
@@ -730,10 +738,6 @@ describe("ElementCall", () => {
         });
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
-
-        it("has prompt intent", () => {
-            expect(call.groupCall.intent).toBe(GroupCallIntent.Prompt);
-        });
 
         it("connects muted", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
@@ -828,57 +832,6 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
-        it("tracks participants in room state", async () => {
-            expect(call.participants).toEqual(new Map());
-
-            // A participant with multiple devices (should only show up once)
-            await client.sendStateEvent(
-                room.roomId,
-                ElementCall.MEMBER_EVENT_TYPE.name,
-                {
-                    "m.calls": [
-                        {
-                            "m.call_id": call.groupCall.groupCallId,
-                            "m.devices": [
-                                { device_id: "bobweb", session_id: "1", feeds: [], expires_ts: 1000 * 60 * 10 },
-                                { device_id: "bobdesktop", session_id: "1", feeds: [], expires_ts: 1000 * 60 * 10 },
-                            ],
-                        },
-                    ],
-                },
-                bob.userId,
-            );
-            // A participant with an expired device (should not show up)
-            await client.sendStateEvent(
-                room.roomId,
-                ElementCall.MEMBER_EVENT_TYPE.name,
-                {
-                    "m.calls": [
-                        {
-                            "m.call_id": call.groupCall.groupCallId,
-                            "m.devices": [
-                                { device_id: "carolandroid", session_id: "1", feeds: [], expires_ts: -1000 * 60 },
-                            ],
-                        },
-                    ],
-                },
-                carol.userId,
-            );
-
-            // Now, stub out client.sendStateEvent so we can test our local echo
-            client.sendStateEvent.mockReset();
-            await call.connect();
-            expect(call.participants).toEqual(
-                new Map([
-                    [alice, new Set(["alices_device"])],
-                    [bob, new Set(["bobweb", "bobdesktop"])],
-                ]),
-            );
-
-            await call.disconnect();
-            expect(call.participants).toEqual(new Map([[bob, new Set(["bobweb", "bobdesktop"])]]));
-        });
-
         it("tracks layout", async () => {
             await call.connect();
             expect(call.layout).toBe(Layout.Tile);
@@ -924,14 +877,11 @@ describe("ElementCall", () => {
 
         it("emits events when participants change", async () => {
             const onParticipants = jest.fn();
+            call.session.memberships = [{ sender: alice.userId, deviceId: "alices_device" } as CallMembership];
             call.on(CallEvent.Participants, onParticipants);
+            call.session.emit(MatrixRTCSessionEvent.MembershipsChanged, [], []);
 
-            await call.connect();
-            await call.disconnect();
-            expect(onParticipants.mock.calls).toEqual([
-                [new Map([[alice, new Set(["alices_device"])]]), new Map()],
-                [new Map(), new Map([[alice, new Set(["alices_device"])]])],
-            ]);
+            expect(onParticipants.mock.calls).toEqual([[new Map([[alice, new Set(["alices_device"])]]), new Map()]]);
 
             call.off(CallEvent.Participants, onParticipants);
         });
@@ -954,60 +904,19 @@ describe("ElementCall", () => {
             call.off(CallEvent.Layout, onLayout);
         });
 
-        it("ends the call immediately if we're the last participant to leave", async () => {
+        it("ends the call immediately if the session ended", async () => {
             await call.connect();
             const onDestroy = jest.fn();
             call.on(CallEvent.Destroy, onDestroy);
             await call.disconnect();
-            expect(onDestroy).toHaveBeenCalled();
-            call.off(CallEvent.Destroy, onDestroy);
-        });
-
-        it("ends the call after a random delay if the last participant leaves without ending it", async () => {
-            // Bob connects
-            await client.sendStateEvent(
+            // this will be called automatically
+            // disconnect -> widget sends state event -> session manager notices no-one left
+            client.matrixRTC.emit(
+                MatrixRTCSessionManagerEvents.SessionEnded,
                 room.roomId,
-                ElementCall.MEMBER_EVENT_TYPE.name,
-                {
-                    "m.calls": [
-                        {
-                            "m.call_id": call.groupCall.groupCallId,
-                            "m.devices": [
-                                { device_id: "bobweb", session_id: "1", feeds: [], expires_ts: 1000 * 60 * 10 },
-                            ],
-                        },
-                    ],
-                },
-                bob.userId,
+                {} as unknown as MatrixRTCSession,
             );
-
-            const onDestroy = jest.fn();
-            call.on(CallEvent.Destroy, onDestroy);
-
-            // Bob disconnects
-            await client.sendStateEvent(
-                room.roomId,
-                ElementCall.MEMBER_EVENT_TYPE.name,
-                {
-                    "m.calls": [
-                        {
-                            "m.call_id": call.groupCall.groupCallId,
-                            "m.devices": [],
-                        },
-                    ],
-                },
-                bob.userId,
-            );
-
-            // Nothing should happen for at least a second, to give Bob a chance
-            // to end the call on his own
-            jest.advanceTimersByTime(1000);
-            expect(onDestroy).not.toHaveBeenCalled();
-
-            // Within 10 seconds, our client should end the call on behalf of Bob
-            jest.advanceTimersByTime(9000);
             expect(onDestroy).toHaveBeenCalled();
-
             call.off(CallEvent.Destroy, onDestroy);
         });
 
@@ -1015,6 +924,30 @@ describe("ElementCall", () => {
             const destroyPersistentWidgetSpy = jest.spyOn(ActiveWidgetStore.instance, "destroyPersistentWidget");
             call.destroy();
             expect(destroyPersistentWidgetSpy).toHaveBeenCalled();
+        });
+
+        it("the perParticipantE2EE url flag is used in encrypted rooms while respecting the feature_disable_call_per_sender_encryption flag", async () => {
+            // We destroy the call created in beforeEach because we test the call creation process.
+            call.destroy();
+            const addWidgetSpy = jest.spyOn(WidgetStore.instance, "addVirtualWidget");
+            // If a room is not encrypted we will never add the perParticipantE2EE flag.
+            client.isRoomEncrypted.mockReturnValue(true);
+
+            // should create call with perParticipantE2EE flag
+            ElementCall.create(room);
+
+            expect(addWidgetSpy.mock.calls[0][0].url).toContain("perParticipantE2EE=true");
+            ElementCall.get(room)?.destroy();
+
+            // should create call without perParticipantE2EE flag
+            enabledSettings.add("feature_disable_call_per_sender_encryption");
+            await ElementCall.create(room);
+            enabledSettings.delete("feature_disable_call_per_sender_encryption");
+
+            expect(addWidgetSpy.mock.calls[1][0].url).not.toContain("perParticipantE2EE=true");
+
+            client.isRoomEncrypted.mockClear();
+            addWidgetSpy.mockRestore();
         });
     });
 
@@ -1039,10 +972,6 @@ describe("ElementCall", () => {
         });
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
-
-        it("has room intent", () => {
-            expect(call.groupCall.intent).toBe(GroupCallIntent.Room);
-        });
 
         it("doesn't end the call when the last participant leaves", async () => {
             await call.connect();

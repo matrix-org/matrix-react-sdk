@@ -404,6 +404,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new ReloadOnChangeController(),
         default: false,
     },
+    "feature_disable_call_per_sender_encryption": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.VoiceAndVideo,
+        displayName: _td("labs|feature_disable_call_per_sender_encryption"),
+        default: false,
+    },
     "feature_allow_screen_share_only_mode": {
         isFeature: true,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
@@ -444,8 +451,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: false,
     },
     [Features.OidcNativeFlow]: {
+        isFeature: true,
+        labsGroup: LabGroup.Developer,
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("labs|oidc_native_flow"),
+        description: _td("labs|oidc_native_flow_description"),
         default: false,
     },
     "feature_rust_crypto": {
