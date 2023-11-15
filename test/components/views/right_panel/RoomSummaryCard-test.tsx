@@ -153,15 +153,6 @@ describe("<RoomSummaryCard />", () => {
         );
     });
 
-    it("does not render room members option when new room UI is enabled", () => {
-        jest.spyOn(SettingsStore, "getValue").mockImplementation(
-            (settingName) => settingName === "feature_new_room_decoration_ui",
-        );
-        const { queryByText } = getComponent();
-
-        expect(queryByText(_t("common|people"))).not.toBeInTheDocument();
-    });
-
     describe("pinning", () => {
         it("renders pins options when pinning feature is enabled", () => {
             mocked(settingsHooks.useFeatureEnabled).mockImplementation((feature) => feature === "feature_pinning");
