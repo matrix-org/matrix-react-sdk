@@ -38,7 +38,7 @@ export default defineConfig({
         HOMESERVER: "synapse",
     },
     retries: {
-        runMode: 4,
+        runMode: 0,
         openMode: 0,
     },
 
