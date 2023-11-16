@@ -40,10 +40,6 @@ jobs:
             pull-requests: read
         outputs:
             uuid: ${{ steps.uuid.outputs.value }}
-            pr_id: ${{ steps.prdetails.outputs.pr_id }}
-            commit_message: ${{ steps.commit.outputs.message }}
-            commit_author: ${{ steps.commit.outputs.author }}
-            commit_email: ${{ steps.commit.outputs.email }}
             percy_enable: ${{ steps.percy.outputs.value || '0' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
@@ -63,20 +59,6 @@ jobs:
                   owner: ${{ github.event.workflow_run.head_repository.owner.login }}
                   branch: ${{ github.event.workflow_run.head_branch }}
 
-            - name: Get commit details
-              id: commit
-              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const response = await github.rest.git.getCommit({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        commit_sha: "${{ github.event.workflow_run.head_sha }}",
-                      });
-                      core.setOutput("message", response.data.message);
-                      core.setOutput("author", response.data.author.name);
-                      core.setOutput("email", response.data.author.email);
 
             # Percy is disabled while we're figuring out https://github.com/vector-im/wat-internal/issues/36
             # and https://github.com/vector-im/wat-internal/issues/56. We're hoping to turn it back on or switch
@@ -167,7 +149,6 @@ jobs:
                   parallel: false
                   # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
                   command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser chrome
-                  ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
               env:
                   # Knapsack token and config
                   KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ matrix.crypto == 'rust' && secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_RUST || secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_LEGACY }}
@@ -183,16 +164,6 @@ jobs:
 
                   # make Node's os.tmpdir() return something where we actually have permissions
                   TMPDIR: ${{ runner.temp }}
-
-                  # tell Cypress more details about the context of this run
-                  COMMIT_INFO_BRANCH: ${{ github.event.workflow_run.head_branch }}
-                  COMMIT_INFO_SHA: ${{ github.event.workflow_run.head_sha }}
-                  COMMIT_INFO_REMOTE: ${{ github.repositoryUrl }}
-                  COMMIT_INFO_MESSAGE: ${{ needs.prepare.outputs.commit_message }}
-                  COMMIT_INFO_AUTHOR: ${{ needs.prepare.outputs.commit_author }}
-                  COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
-                  CYPRESS_PULL_REQUEST_ID: ${{ needs.prepare.outputs.pr_id }}
-                  CYPRESS_PULL_REQUEST_URL: https://github.com/${{ github.repository }}/pull/${{ needs.prepare.outputs.pr_id }}
 
             - name: 📤 Upload results artifact
               if: failure()
