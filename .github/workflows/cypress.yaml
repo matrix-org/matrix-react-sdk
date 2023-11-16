@@ -95,8 +95,8 @@ jobs:
                 ci_node_total: [4]
                 ci_node_index: [0, 1, 2, 3]
         steps:
-            # We need to use a specific version of chrome rather than relying on the default
-            # see https://github.com/cypress-io/github-action/issues/518
+            # The version of chrome shipped by default may not be consistent across runners
+            # so we explicitly use a specific version of chrome here.
             - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
