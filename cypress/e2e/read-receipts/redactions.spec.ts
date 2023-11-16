@@ -170,8 +170,7 @@ describe("Read receipts", () => {
                 // Then it becomes read
                 assertRead(room2);
             });
-            // XXX: fails because it flakes with the room unread when it should be read
-            it.skip("Sending and redacting a message after marking the room as read makes it read", () => {
+            it("Sending and redacting a message after marking the room as read makes it read", () => {
                 // Given a room that is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -236,8 +235,7 @@ describe("Read receipts", () => {
                 // Then the unread count is still reduced
                 assertUnread(room2, 1);
             });
-            // XXX: fails because flakes with matrix-js-sdk#3798 (only when all other tests are enabled!)
-            it.skip("Redacting all unread messages makes the room read", () => {
+            it("Redacting all unread messages makes the room read", () => {
                 // Given an unread room
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -266,8 +264,7 @@ describe("Read receipts", () => {
                 // Then the room is still read
                 assertRead(room2);
             });
-            // Flakes because sometimes the unread count stays at 2
-            it.skip("Reacting to a redacted message leaves the room read", () => {
+            it("Reacting to a redacted message leaves the room read", () => {
                 // Given a redacted message exists
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -504,7 +501,7 @@ describe("Read receipts", () => {
                 goTo(room2);
                 assertReadThread("Root");
             });
-            // XXX: fails because sometimes the room is still unread after opening the thread (initially)
+            // XXX: fails because it flakes - sometimes the room is still unread after opening the thread (initially)
             it.skip("Reacting to a redacted message leaves the thread read", () => {
                 // Given a message in a thread was redacted and everything is read
                 goTo(room1);
@@ -544,8 +541,7 @@ describe("Read receipts", () => {
                 // Then the room is unread
                 assertStillRead(room2);
             });
-            // XXX: fails because the room still shows "1" even though we have read the thread (stuck unread)
-            it.skip("Reading a reaction to a redacted message marks the thread as read", () => {
+            it("Reading a thread after a reaction to a redacted message marks the thread as read", () => {
                 // Given a redacted message in a thread exists, but someone reacted to it before it was redacted
                 goTo(room1);
                 receiveMessages(room2, [
@@ -558,7 +554,7 @@ describe("Read receipts", () => {
                 receiveMessages(room2, [redactionOf("Msg3")]);
                 assertUnread(room2, 2);
 
-                // When we read the thread, creating a receipt that points at the reaction
+                // When we read the thread
                 goTo(room2);
                 openThread("Root");
 
