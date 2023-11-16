@@ -40,6 +40,7 @@ jobs:
             pull-requests: read
         outputs:
             uuid: ${{ steps.uuid.outputs.value }}
+            pr_id: ${{ steps.prdetails.outputs.pr_id }}
             percy_enable: ${{ steps.percy.outputs.value || '0' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
@@ -98,7 +99,6 @@ jobs:
             # The version of chrome shipped by default may not be consistent across runners
             # so we explicitly use a specific version of chrome here.
             - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
-            - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
             # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
@@ -148,7 +148,7 @@ jobs:
                   record: false
                   parallel: false
                   # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
-                  command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser ${{ env.BROWSER_PATH }}
+                  command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser ${{ steps.setup-chrome.outputs.chrome-path }}
               env:
                   # Knapsack token and config
                   KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ matrix.crypto == 'rust' && secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_RUST || secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_LEGACY }}
@@ -164,6 +164,20 @@ jobs:
 
                   # make Node's os.tmpdir() return something where we actually have permissions
                   TMPDIR: ${{ runner.temp }}
+
+                  # pass the Percy token as an environment variable
+                  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
+                  # only run percy on legacy crypto (for now)
+                  PERCY_ENABLE: ${{ matrix.crypto == 'legacy' && needs.prepare.outputs.percy_enable || 0 }}
+                  PERCY_BROWSER_EXECUTABLE: ${{ steps.setup-chrome.outputs.chrome-path }}
+                  # tell Percy more details about the context of this run
+                  PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
+                  PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
+                  PERCY_PULL_REQUEST: ${{ needs.prepare.outputs.pr_id }}
+                  PERCY_PARALLEL_NONCE: ${{ needs.prepare.outputs.uuid }}
+                  # We manually finalize the build in the report stage
+                  PERCY_PARALLEL_TOTAL: -1
 
             - name: 📤 Upload results artifact
               if: failure()
