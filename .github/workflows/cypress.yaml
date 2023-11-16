@@ -163,20 +163,17 @@ jobs:
                   headed: true
                   start: npx serve -p 8080 -L ../webapp
                   wait-on: "http://localhost:8080"
-                  record: true
+                  record: false
                   parallel: false
                   command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser chrome
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
                   #   spec: cypress/e2e/[${{ matrix.segment }}]*/**
               env:
                   # Knapsack token and config
-                  KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS }}
+                  KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ matrix.crypto == 'rust' && secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_RUST || secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS }}
                   KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
                   KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
                   KNAPSACK_PRO_TEST_FILE_PATTERN: cypress/e2e/**/*.spec.ts
-
-                  # pass the Dashboard record key as an environment variable
-                  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
                   # Use existing chromium rather than downloading another
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
