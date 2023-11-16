@@ -4,7 +4,6 @@
 [![Knapsack Pro Parallel CI builds for Cypress Test - Legacy Crypto](https://img.shields.io/badge/Knapsack%20Pro-Parallel%20%2F%20Cypress%20Test%20--%20Legacy%20Crypto-%230074ff)](https://knapsackpro.com/dashboard/organizations/3882/projects/2469/test_suites/3724/builds?utm_campaign=organization-id-3882&utm_content=test-suite-id-3724&utm_medium=readme&utm_source=knapsack-pro-badge&utm_term=project-id-2469)
 [![Knapsack Pro Parallel CI builds for Cypress Test - Rust Crypto](https://img.shields.io/badge/Knapsack%20Pro-Parallel%20%2F%20Cypress%20Test%20--%20Rust%20Crypto-%230074ff)](https://knapsackpro.com/dashboard/organizations/3882/projects/2469/test_suites/3729/builds?utm_campaign=organization-id-3882&utm_content=test-suite-id-3729&utm_medium=readme&utm_source=knapsack-pro-badge&utm_term=project-id-2469)
 
-
 <!--
 Percy is disabled while we're figuring out https://github.com/vector-im/wat-internal/issues/36
 and https://github.com/vector-im/wat-internal/issues/56. We're hoping to turn it back on or switch
