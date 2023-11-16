@@ -158,8 +158,6 @@ jobs:
               uses: cypress-io/github-action@ebe8b24c4428922d0f793a5c4c96853a633180e3 # v6.6.0
               with:
                   working-directory: matrix-react-sdk
-                  # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
-                  browser: ${{ steps.setup-chrome.outputs.chrome-path }}
                   headed: true
                   start: npx serve -p 8080 -L ../webapp
                   wait-on: "http://localhost:8080"
@@ -167,7 +165,6 @@ jobs:
                   parallel: false
                   command: npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser chrome
                   ci-build-id: ${{ needs.prepare.outputs.uuid }}-${{ matrix.crypto }}
-                  #   spec: cypress/e2e/[${{ matrix.segment }}]*/**
               env:
                   # Knapsack token and config
                   KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ matrix.crypto == 'rust' && secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_RUST || secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_LEGACY }}
