@@ -40,6 +40,7 @@ import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from "./utils/StorageManager";
 import SettingsStore from "./settings/SettingsStore";
+import { SettingLevel } from "./settings/SettingLevel";
 import ToastStore from "./stores/ToastStore";
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { Mjolnir } from "./mjolnir/Mjolnir";
@@ -1105,6 +1106,9 @@ export async function onLoggedOut(): Promise<void> {
  */
 async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void> {
     if (window.localStorage) {
+        // save the language code, if it has already been set
+        const language = SettingsStore.getValue("language");
+
         // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
         const registrationTime = window.localStorage.getItem("mx_registration_time");
@@ -1118,8 +1122,12 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
             logger.error("idbDelete failed for account:mx_access_token", e);
         }
 
-        // now restore those invites and registration time
+        // now restore those invites, registration time and previously set language
         if (!opts?.deleteEverything) {
+            if (language) {
+                await SettingsStore.setValue("language", null, SettingLevel.DEVICE, language);
+            }
+
             pendingInvites.forEach(({ roomId, ...invite }) => {
                 ThreepidInviteStore.instance.storeInvite(roomId, invite);
             });
