@@ -18,18 +18,20 @@ import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import {
     checkVoiceBroadcastPreConditions,
+    VoiceBroadcastPlaybacksStore,
     VoiceBroadcastPreRecording,
     VoiceBroadcastPreRecordingStore,
     VoiceBroadcastRecordingsStore,
 } from "..";
 
-export const setUpVoiceBroadcastPreRecording = (
+export const setUpVoiceBroadcastPreRecording = async (
     room: Room,
     client: MatrixClient,
+    playbacksStore: VoiceBroadcastPlaybacksStore,
     recordingsStore: VoiceBroadcastRecordingsStore,
     preRecordingStore: VoiceBroadcastPreRecordingStore,
-): VoiceBroadcastPreRecording | null => {
-    if (!checkVoiceBroadcastPreConditions(room, client, recordingsStore)) {
+): Promise<VoiceBroadcastPreRecording | null> => {
+    if (!(await checkVoiceBroadcastPreConditions(room, client, recordingsStore))) {
         return null;
     }
 
@@ -39,7 +41,11 @@ export const setUpVoiceBroadcastPreRecording = (
     const sender = room.getMember(userId);
     if (!sender) return null;
 
-    const preRecording = new VoiceBroadcastPreRecording(room, sender, client, recordingsStore);
+    // pause and clear current playback (if any)
+    playbacksStore.getCurrent()?.pause();
+    playbacksStore.clearCurrent();
+
+    const preRecording = new VoiceBroadcastPreRecording(room, sender, client, playbacksStore, recordingsStore);
     preRecordingStore.setCurrent(preRecording);
     return preRecording;
 };

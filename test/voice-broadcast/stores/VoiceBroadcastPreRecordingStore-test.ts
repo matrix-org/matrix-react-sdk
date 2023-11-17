@@ -18,19 +18,19 @@ import { mocked } from "jest-mock";
 import { MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import {
+    VoiceBroadcastPlaybacksStore,
     VoiceBroadcastPreRecording,
     VoiceBroadcastPreRecordingStore,
     VoiceBroadcastRecordingsStore,
 } from "../../../src/voice-broadcast";
 import { stubClient } from "../../test-utils";
 
-jest.mock("../../../src/voice-broadcast/stores/VoiceBroadcastRecordingsStore");
-
 describe("VoiceBroadcastPreRecordingStore", () => {
     const roomId = "!room:example.com";
     let client: MatrixClient;
     let room: Room;
     let sender: RoomMember;
+    let playbacksStore: VoiceBroadcastPlaybacksStore;
     let recordingsStore: VoiceBroadcastRecordingsStore;
     let store: VoiceBroadcastPreRecordingStore;
     let preRecording1: VoiceBroadcastPreRecording;
@@ -40,13 +40,14 @@ describe("VoiceBroadcastPreRecordingStore", () => {
         room = new Room(roomId, client, client.getUserId() || "");
         sender = new RoomMember(roomId, client.getUserId() || "");
         recordingsStore = new VoiceBroadcastRecordingsStore();
+        playbacksStore = new VoiceBroadcastPlaybacksStore(recordingsStore);
     });
 
     beforeEach(() => {
         store = new VoiceBroadcastPreRecordingStore();
         jest.spyOn(store, "emit");
         jest.spyOn(store, "removeAllListeners");
-        preRecording1 = new VoiceBroadcastPreRecording(room, sender, client, recordingsStore);
+        preRecording1 = new VoiceBroadcastPreRecording(room, sender, client, playbacksStore, recordingsStore);
         jest.spyOn(preRecording1, "off");
     });
 
@@ -117,7 +118,7 @@ describe("VoiceBroadcastPreRecordingStore", () => {
             beforeEach(() => {
                 mocked(store.emit).mockClear();
                 mocked(preRecording1.off).mockClear();
-                preRecording2 = new VoiceBroadcastPreRecording(room, sender, client, recordingsStore);
+                preRecording2 = new VoiceBroadcastPreRecording(room, sender, client, playbacksStore, recordingsStore);
                 store.setCurrent(preRecording2);
             });
 

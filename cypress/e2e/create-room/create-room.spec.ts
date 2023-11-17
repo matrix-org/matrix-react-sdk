@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,49 +16,45 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
-import Chainable = Cypress.Chainable;
-
-function openCreateRoomDialog(): Chainable<JQuery<HTMLElement>> {
-    cy.get('[aria-label="Add room"]').click();
-    cy.get('.mx_ContextualMenu [aria-label="New room"]').click();
-    return cy.get(".mx_CreateRoomDialog");
-}
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 
 describe("Create Room", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
 
     beforeEach(() => {
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Jim");
+            cy.initTestUser(homeserver, "Jim");
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     it("should allow us to create a public room with name, topic & address set", () => {
         const name = "Test room 1";
         const topic = "This room is dedicated to this test and this test only!";
 
-        openCreateRoomDialog().within(() => {
+        cy.openCreateRoomDialog().within(() => {
             // Fill name & topic
-            cy.get('[label="Name"]').type(name);
-            cy.get('[label="Topic (optional)"]').type(topic);
+            cy.findByRole("textbox", { name: "Name" }).type(name);
+            cy.findByRole("textbox", { name: "Topic (optional)" }).type(topic);
             // Change room to public
-            cy.get('[aria-label="Room visibility"]').click();
-            cy.get("#mx_JoinRuleDropdown__public").click();
+            cy.findByRole("button", { name: "Room visibility" }).click();
+            cy.findByRole("option", { name: "Public room" }).click();
             // Fill room address
-            cy.get('[label="Room address"]').type("test-room-1");
+            cy.findByRole("textbox", { name: "Room address" }).type("test-room-1");
             // Submit
-            cy.get(".mx_Dialog_primary").click();
+            cy.findByRole("button", { name: "Create room" }).click();
         });
 
         cy.url().should("contain", "/#/room/#test-room-1:localhost");
-        cy.contains(".mx_RoomHeader_nametext", name);
-        cy.contains(".mx_RoomHeader_topic", topic);
+
+        cy.get(".mx_LegacyRoomHeader").within(() => {
+            cy.findByText(name);
+            cy.findByText(topic);
+        });
     });
 });

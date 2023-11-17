@@ -24,6 +24,7 @@ import {
     VoiceBroadcastRecordingsStore,
     VoiceBroadcastRecording,
     getChunkLength,
+    VoiceBroadcastPlaybacksStore,
 } from "..";
 import { checkVoiceBroadcastPreConditions } from "./checkVoiceBroadcastPreConditions";
 
@@ -37,23 +38,20 @@ const startBroadcast = async (
     const userId = client.getUserId();
 
     if (!userId) {
-        reject("unable to start voice broadcast if current user is unkonwn");
+        reject("unable to start voice broadcast if current user is unknown");
         return promise;
     }
 
     let result: ISendEventResponse | null = null;
 
-    const onRoomStateEvents = () => {
+    const onRoomStateEvents = (): void => {
         if (!result) return;
 
         const voiceBroadcastEvent = room.currentState.getStateEvents(VoiceBroadcastInfoEventType, userId);
 
         if (voiceBroadcastEvent?.getId() === result.event_id) {
             room.off(RoomStateEvent.Events, onRoomStateEvents);
-            const recording = new VoiceBroadcastRecording(
-                voiceBroadcastEvent,
-                client,
-            );
+            const recording = new VoiceBroadcastRecording(voiceBroadcastEvent, client);
             recordingsStore.setCurrent(recording);
             recording.start();
             resolve(recording);
@@ -80,17 +78,23 @@ const startBroadcast = async (
 /**
  * Starts a new Voice Broadcast Recording, if
  * - the user has the permissions to do so in the room
+ * - the user is not already recording a voice broadcast
  * - there is no other broadcast being recorded in the room, yet
  * Sends a voice_broadcast_info state event and waits for the event to actually appear in the room state.
  */
 export const startNewVoiceBroadcastRecording = async (
     room: Room,
     client: MatrixClient,
+    playbacksStore: VoiceBroadcastPlaybacksStore,
     recordingsStore: VoiceBroadcastRecordingsStore,
 ): Promise<VoiceBroadcastRecording | null> => {
-    if (!checkVoiceBroadcastPreConditions(room, client, recordingsStore)) {
+    if (!(await checkVoiceBroadcastPreConditions(room, client, recordingsStore))) {
         return null;
     }
+
+    // pause and clear current playback (if any)
+    playbacksStore.getCurrent()?.pause();
+    playbacksStore.clearCurrent();
 
     return startBroadcast(room, client, recordingsStore);
 };

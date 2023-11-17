@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
@@ -44,7 +44,6 @@ interface IComposerInsertPlaintextPayload extends IBaseComposerInsertPayload {
 }
 
 export type ComposerInsertPayload =
-    IComposerInsertMentionPayload |
-    IComposerInsertQuotePayload |
-    IComposerInsertPlaintextPayload;
-
+    | IComposerInsertMentionPayload
+    | IComposerInsertQuotePayload
+    | IComposerInsertPlaintextPayload;

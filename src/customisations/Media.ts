@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { ResizeMethod } from "matrix-js-sdk/src/@types/partials";
+import { MatrixClient, ResizeMethod } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
+import { UserFriendlyError } from "../languageHandler";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -36,8 +36,8 @@ export class Media {
     private client: MatrixClient;
 
     // Per above, this constructor signature can be whatever is helpful for you.
-    constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
-        this.client = client ?? MatrixClientPeg.get();
+    public constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
+        this.client = client ?? MatrixClientPeg.safeGet();
         if (!this.client) {
             throw new Error("No possible MatrixClient for media resolution. Please provide one or log in.");
         }
@@ -75,19 +75,19 @@ export class Media {
     /**
      * The HTTP URL for the source media.
      */
-    public get srcHttp(): string {
+    public get srcHttp(): string | null {
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc);
+        return this.client.mxcUrlToHttp(this.srcMxc) || null;
     }
 
     /**
      * The HTTP URL for the thumbnail media (without any specified width, height, etc). Null/undefined
      * if no thumbnail media recorded.
      */
-    public get thumbnailHttp(): string | undefined | null {
+    public get thumbnailHttp(): string | null {
         if (!this.hasThumbnail) return null;
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!);
     }
 
     /**
@@ -98,13 +98,13 @@ export class Media {
      * @param {"scale"|"crop"} mode The desired thumbnailing mode. Defaults to scale.
      * @returns {string} The HTTP URL which points to the thumbnail.
      */
-    public getThumbnailHttp(width: number, height: number, mode: ResizeMethod = "scale"): string | null | undefined {
+    public getThumbnailHttp(width: number, height: number, mode: ResizeMethod = "scale"): string | null {
         if (!this.hasThumbnail) return null;
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc, width, height, mode);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode);
     }
 
     /**
@@ -114,7 +114,7 @@ export class Media {
      * @param {"scale"|"crop"} mode The desired thumbnailing mode. Defaults to scale.
      * @returns {string} The HTTP URL which points to the thumbnail.
      */
-    public getThumbnailOfSourceHttp(width: number, height: number, mode: ResizeMethod = "scale"): string {
+    public getThumbnailOfSourceHttp(width: number, height: number, mode: ResizeMethod = "scale"): string | null {
         // scale using the device pixel ratio to keep images clear
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
@@ -128,12 +128,12 @@ export class Media {
      * @param {number} dim The desired width and height.
      * @returns {string} An HTTP URL for the thumbnail.
      */
-    public getSquareThumbnailHttp(dim: number): string {
+    public getSquareThumbnailHttp(dim: number): string | null {
         dim = Math.floor(dim * window.devicePixelRatio); // scale using the device pixel ratio to keep images clear
         if (this.hasThumbnail) {
-            return this.getThumbnailHttp(dim, dim, 'crop');
+            return this.getThumbnailHttp(dim, dim, "crop");
         }
-        return this.getThumbnailOfSourceHttp(dim, dim, 'crop');
+        return this.getThumbnailOfSourceHttp(dim, dim, "crop");
     }
 
     /**
@@ -141,7 +141,11 @@ export class Media {
      * @returns {Promise<Response>} Resolves to the server's response for chaining.
      */
     public downloadSource(): Promise<Response> {
-        return fetch(this.srcHttp);
+        const src = this.srcHttp;
+        if (!src) {
+            throw new UserFriendlyError("error|download_media");
+        }
+        return fetch(src);
     }
 }
 
@@ -161,6 +165,6 @@ export function mediaFromContent(content: Partial<IMediaEventContent>, client?: 
  * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */
-export function mediaFromMxc(mxc: string, client?: MatrixClient): Media {
+export function mediaFromMxc(mxc?: string, client?: MatrixClient): Media {
     return mediaFromContent({ url: mxc }, client);
 }

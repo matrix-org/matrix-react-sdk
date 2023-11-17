@@ -20,15 +20,47 @@ limitations under the License.
     flex: 1;
     overflow-y: auto;
     margin-top: 8px;
+
+    h2 {
+        font-size: $font-18px;
+        font-weight: var(--cpd-font-weight-semibold);
+        margin: 16px 0 16px 15px;
+    }
+
+    .mx_RoomTile_titleContainer {
+        width: 154px;
+    }
+
+    .mx_RoomTile_badge {
+        display: none;
+    }
+
+    .mx_RoomTile_title {
+        width: 160px;
+    }
+
+    h3 {
+        text-transform: uppercase;
+        color: $input-darker-fg-color;
+        font-weight: bold;
+        font-size: $font-12px;
+        margin: 4px 0;
+    }
 }
 
 .mx_MemberInfo_name {
     align-items: center;
     display: flex;
-}
 
-.mx_MemberInfo_name > .mx_E2EIcon {
-    margin-right: 0;
+    > .mx_E2EIcon {
+        margin-right: 0;
+    }
+
+    h2 {
+        flex: 1;
+        overflow-x: auto;
+        max-height: 50px;
+    }
 }
 
 .mx_MemberInfo_cancel {
@@ -36,76 +68,37 @@ limitations under the License.
     width: 16px;
     padding: 10px 0 10px 10px;
     cursor: pointer;
-    mask-image: url('$(res)/img/minimise.svg');
+    mask-image: url("$(res)/img/minimise.svg");
     mask-repeat: no-repeat;
     mask-position: 16px center;
     background-color: $header-panel-text-primary-color;
 }
 
-.mx_MemberInfo_name h2 {
-    flex: 1;
-    overflow-x: auto;
-    max-height: 50px;
-}
-
-.mx_MemberInfo h2 {
-    font-size: $font-18px;
-    font-weight: 600;
-    margin: 16px 0 16px 15px;
-}
-
 .mx_MemberInfo_container {
     margin: 0 16px 16px 16px;
-}
 
-.mx_MemberInfo .mx_RoomTile_titleContainer {
-    width: 154px;
-}
-
-.mx_MemberInfo .mx_RoomTile_badge {
-    display: none;
-}
-
-.mx_MemberInfo .mx_RoomTile_title {
-    width: 160px;
+    &.mx_MemberInfo_container--profile {
+        margin-bottom: 16px;
+        font-size: $font-15px;
+        position: relative;
+    }
 }
 
 .mx_MemberInfo_avatar {
     background: $spacePanel-bg-color;
     margin-bottom: 16px;
-}
 
-.mx_MemberInfo_avatar > img {
-    height: auto;
-    width: 100%;
-    max-height: 30vh;
-    object-fit: contain;
-    display: block;
-}
+    > img {
+        height: auto;
+        width: 100%;
+        max-height: 30vh;
+        object-fit: contain;
+        display: block;
+    }
 
-.mx_MemberInfo_avatar .mx_BaseAvatar.mx_BaseAvatar_image {
-    cursor: zoom-in;
-}
-
-.mx_MemberInfo_profile {
-    margin-bottom: 16px;
-}
-
-.mx_MemberInfo h3 {
-    text-transform: uppercase;
-    color: $input-darker-fg-color;
-    font-weight: bold;
-    font-size: $font-12px;
-    margin: 4px 0;
-}
-
-.mx_MemberInfo_profileField {
-    font-size: $font-15px;
-    position: relative;
-}
-
-.mx_MemberInfo_buttons {
-    margin-bottom: 16px;
+    .mx_BaseAvatar img {
+        cursor: zoom-in;
+    }
 }
 
 .mx_MemberInfo_field {
@@ -113,44 +106,6 @@ limitations under the License.
     font-size: $font-15px;
     color: $primary-content;
     margin-left: 8px;
+    margin-bottom: 16px;
     line-height: $font-23px;
-}
-
-.mx_MemberInfo_createRoom {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 0 8px;
-}
-
-.mx_MemberInfo_createRoom_label {
-    width: initial !important;
-    cursor: pointer;
-}
-
-.mx_MemberInfo label {
-    font-size: $font-13px;
-}
-
-.mx_MemberInfo label .mx_MemberInfo_label_text {
-    display: inline-block;
-    max-width: 180px;
-    vertical-align: text-top;
-}
-
-.mx_MemberInfo input[type="radio"] {
-    vertical-align: -2px;
-    margin-right: 5px;
-    margin-left: 8px;
-}
-
-.mx_MemberInfo_statusMessage {
-    font-size: $font-11px;
-    opacity: 0.5;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: clip;
-}
-.mx_MemberInfo .mx_MemberInfo_scrollContainer {
-    flex: 1;
 }

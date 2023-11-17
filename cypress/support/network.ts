@@ -20,10 +20,12 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
-            // Intercept all /_matrix/ networking requests for the logged in user and fail them
+            // Intercept all /_matrix/ networking requests for the logged-in user and fail them
             goOffline(): void;
             // Remove intercept on all /_matrix/ networking requests
             goOnline(): void;
+            // Intercept calls to vector.im/matrix.org so a login page can be shown offline
+            stubDefaultServer(): void;
         }
     }
 }
@@ -33,30 +35,38 @@ declare global {
 
 Cypress.Commands.add("goOffline", (): void => {
     cy.log("Going offline");
-    cy.window({ log: false }).then(win => {
-        cy.intercept("**/_matrix/**", {
-            headers: {
-                "Authorization": "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+    cy.window({ log: false }).then((win) => {
+        cy.intercept(
+            "**/_matrix/**",
+            {
+                headers: {
+                    Authorization: "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+                },
             },
-        }, req => {
-            req.destroy();
-        });
+            (req) => {
+                req.destroy();
+            },
+        );
     });
 });
 
 Cypress.Commands.add("goOnline", (): void => {
     cy.log("Going online");
-    cy.window({ log: false }).then(win => {
-        cy.intercept("**/_matrix/**", {
-            headers: {
-                "Authorization": "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+    cy.window({ log: false }).then((win) => {
+        cy.intercept(
+            "**/_matrix/**",
+            {
+                headers: {
+                    Authorization: "Bearer " + win.mxMatrixClientPeg.matrixClient.getAccessToken(),
+                },
             },
-        }, req => {
-            req.continue();
-        });
+            (req) => {
+                req.continue();
+            },
+        );
         win.dispatchEvent(new Event("online"));
     });
 });
 
 // Needed to make this file a module
-export { };
+export {};

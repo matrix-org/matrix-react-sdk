@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { NotificationColor } from "./NotificationColor";
 import { arrayDiff } from "../../utils/arrays";
@@ -27,15 +27,15 @@ export class ListNotificationState extends NotificationState {
     private rooms: Room[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
-    constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
+    public constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
         super();
     }
 
-    public get symbol(): string {
+    public get symbol(): string | null {
         return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
-    public setRooms(rooms: Room[]) {
+    public setRooms(rooms: Room[]): void {
         // If we're only concerned about the tile count, don't bother setting up listeners.
         if (this.byTileCount) {
             this.rooms = rooms;
@@ -61,13 +61,13 @@ export class ListNotificationState extends NotificationState {
         this.calculateTotalState();
     }
 
-    public getForRoom(room: Room) {
+    public getForRoom(room: Room): RoomNotificationState {
         const state = this.states[room.roomId];
         if (!state) throw new Error("Unknown room for notification state");
         return state;
     }
 
-    public destroy() {
+    public destroy(): void {
         super.destroy();
         for (const state of Object.values(this.states)) {
             state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
@@ -75,11 +75,11 @@ export class ListNotificationState extends NotificationState {
         this.states = {};
     }
 
-    private onRoomNotificationStateUpdate = () => {
+    private onRoomNotificationStateUpdate = (): void => {
         this.calculateTotalState();
     };
 
-    private calculateTotalState() {
+    private calculateTotalState(): void {
         const snapshot = this.snapshot();
 
         if (this.byTileCount) {
@@ -98,4 +98,3 @@ export class ListNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

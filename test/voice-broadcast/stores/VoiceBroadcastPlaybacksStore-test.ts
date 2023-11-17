@@ -15,11 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import {
-    MatrixClient,
-    MatrixEvent,
-    Room,
-} from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastInfoState,
@@ -28,6 +24,7 @@ import {
     VoiceBroadcastPlaybacksStore,
     VoiceBroadcastPlaybacksStoreEvent,
     VoiceBroadcastPlaybackState,
+    VoiceBroadcastRecordingsStore,
 } from "../../../src/voice-broadcast";
 import { mkStubRoom, stubClient } from "../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../utils/test-utils";
@@ -43,7 +40,7 @@ describe("VoiceBroadcastPlaybacksStore", () => {
     let playback1: VoiceBroadcastPlayback;
     let playback2: VoiceBroadcastPlayback;
     let playbacks: VoiceBroadcastPlaybacksStore;
-    let onCurrentChanged: (playback: VoiceBroadcastPlayback) => void;
+    let onCurrentChanged: (playback: VoiceBroadcastPlayback | null) => void;
 
     beforeEach(() => {
         client = stubClient();
@@ -61,24 +58,15 @@ describe("VoiceBroadcastPlaybacksStore", () => {
             return null;
         });
 
-        infoEvent1 = mkVoiceBroadcastInfoStateEvent(
-            roomId,
-            VoiceBroadcastInfoState.Started,
-            userId,
-            deviceId,
-        );
-        infoEvent2 = mkVoiceBroadcastInfoStateEvent(
-            roomId,
-            VoiceBroadcastInfoState.Started,
-            userId,
-            deviceId,
-        );
-        playback1 = new VoiceBroadcastPlayback(infoEvent1, client);
+        infoEvent1 = mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Started, userId, deviceId);
+        infoEvent2 = mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Started, userId, deviceId);
+        const recordings = new VoiceBroadcastRecordingsStore();
+        playback1 = new VoiceBroadcastPlayback(infoEvent1, client, recordings);
         jest.spyOn(playback1, "off");
-        playback2 = new VoiceBroadcastPlayback(infoEvent2, client);
+        playback2 = new VoiceBroadcastPlayback(infoEvent2, client, recordings);
         jest.spyOn(playback2, "off");
 
-        playbacks = new VoiceBroadcastPlaybacksStore();
+        playbacks = new VoiceBroadcastPlaybacksStore(recordings);
         jest.spyOn(playbacks, "removeAllListeners");
         onCurrentChanged = jest.fn();
         playbacks.on(VoiceBroadcastPlaybacksStoreEvent.CurrentChanged, onCurrentChanged);

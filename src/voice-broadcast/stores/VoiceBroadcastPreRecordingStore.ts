@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import { VoiceBroadcastPreRecording } from "..";
 import { IDestroyable } from "../../utils/IDestroyable";
@@ -27,7 +27,8 @@ interface EventMap {
 
 export class VoiceBroadcastPreRecordingStore
     extends TypedEventEmitter<VoiceBroadcastPreRecordingEvent, EventMap>
-    implements IDestroyable {
+    implements IDestroyable
+{
     private current: VoiceBroadcastPreRecording | null = null;
 
     public setCurrent(current: VoiceBroadcastPreRecording): void {

@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventEmitter from 'events';
+import EventEmitter from "events";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "./settings/SettingsStore";
 import { SettingLevel } from "./settings/SettingLevel";
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import { _t } from './languageHandler';
+import { _t } from "./languageHandler";
 
 // XXX: MediaDeviceKind is a union type, so we make our own enum
 export enum MediaDeviceKindEnum {
@@ -37,7 +37,7 @@ export enum MediaDeviceHandlerEvent {
 }
 
 export default class MediaDeviceHandler extends EventEmitter {
-    private static internalInstance;
+    private static internalInstance?: MediaDeviceHandler;
 
     public static get instance(): MediaDeviceHandler {
         if (!MediaDeviceHandler.internalInstance) {
@@ -48,7 +48,7 @@ export default class MediaDeviceHandler extends EventEmitter {
 
     public static async hasAnyLabeledDevices(): Promise<boolean> {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        return devices.some(d => Boolean(d.label));
+        return devices.some((d) => Boolean(d.label));
     }
 
     /**
@@ -64,10 +64,10 @@ export default class MediaDeviceHandler extends EventEmitter {
      *
      * @return Promise<IMediaDevices> The available media devices
      */
-    public static async getDevices(): Promise<IMediaDevices> {
+    public static async getDevices(): Promise<IMediaDevices | undefined> {
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();
-            const output = {
+            const output: Record<MediaDeviceKindEnum, MediaDeviceInfo[]> = {
                 [MediaDeviceKindEnum.AudioOutput]: [],
                 [MediaDeviceKindEnum.AudioInput]: [],
                 [MediaDeviceKindEnum.VideoInput]: [],
@@ -76,7 +76,7 @@ export default class MediaDeviceHandler extends EventEmitter {
             devices.forEach((device) => output[device.kind].push(device));
             return output;
         } catch (error) {
-            logger.warn('Unable to refresh WebRTC Devices: ', error);
+            logger.warn("Unable to refresh WebRTC Devices: ", error);
         }
     }
 
@@ -84,11 +84,11 @@ export default class MediaDeviceHandler extends EventEmitter {
         // Note we're looking for a device with deviceId 'default' but adding a device
         // with deviceId == the empty string: this is because Chrome gives us a device
         // with deviceId 'default', so we're looking for this, not the one we are adding.
-        if (!devices.some((i) => i.deviceId === 'default')) {
-            devices.unshift({ deviceId: '', label: _t('Default Device') });
-            return '';
+        if (!devices.some((i) => i.deviceId === "default")) {
+            devices.unshift({ deviceId: "", label: _t("voip|default_device") });
+            return "";
         } else {
-            return 'default';
+            return "default";
         }
     };
 
@@ -99,14 +99,14 @@ export default class MediaDeviceHandler extends EventEmitter {
         const audioDeviceId = SettingsStore.getValue("webrtc_audioinput");
         const videoDeviceId = SettingsStore.getValue("webrtc_videoinput");
 
-        await MatrixClientPeg.get().getMediaHandler().setAudioInput(audioDeviceId);
-        await MatrixClientPeg.get().getMediaHandler().setVideoInput(videoDeviceId);
+        await MatrixClientPeg.safeGet().getMediaHandler().setAudioInput(audioDeviceId);
+        await MatrixClientPeg.safeGet().getMediaHandler().setVideoInput(videoDeviceId);
 
         await MediaDeviceHandler.updateAudioSettings();
     }
 
     private static async updateAudioSettings(): Promise<void> {
-        await MatrixClientPeg.get().getMediaHandler().setAudioSettings({
+        await MatrixClientPeg.safeGet().getMediaHandler().setAudioSettings({
             autoGainControl: MediaDeviceHandler.getAudioAutoGainControl(),
             echoCancellation: MediaDeviceHandler.getAudioEchoCancellation(),
             noiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression(),
@@ -125,7 +125,7 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public async setAudioInput(deviceId: string): Promise<void> {
         SettingsStore.setValue("webrtc_audioinput", null, SettingLevel.DEVICE, deviceId);
-        return MatrixClientPeg.get().getMediaHandler().setAudioInput(deviceId);
+        return MatrixClientPeg.safeGet().getMediaHandler().setAudioInput(deviceId);
     }
 
     /**
@@ -135,14 +135,20 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public async setVideoInput(deviceId: string): Promise<void> {
         SettingsStore.setValue("webrtc_videoinput", null, SettingLevel.DEVICE, deviceId);
-        return MatrixClientPeg.get().getMediaHandler().setVideoInput(deviceId);
+        return MatrixClientPeg.safeGet().getMediaHandler().setVideoInput(deviceId);
     }
 
     public async setDevice(deviceId: string, kind: MediaDeviceKindEnum): Promise<void> {
         switch (kind) {
-            case MediaDeviceKindEnum.AudioOutput: this.setAudioOutput(deviceId); break;
-            case MediaDeviceKindEnum.AudioInput: await this.setAudioInput(deviceId); break;
-            case MediaDeviceKindEnum.VideoInput: await this.setVideoInput(deviceId); break;
+            case MediaDeviceKindEnum.AudioOutput:
+                this.setAudioOutput(deviceId);
+                break;
+            case MediaDeviceKindEnum.AudioInput:
+                await this.setAudioInput(deviceId);
+                break;
+            case MediaDeviceKindEnum.VideoInput:
+                await this.setVideoInput(deviceId);
+                break;
         }
     }
 
@@ -192,9 +198,12 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public static getDevice(kind: MediaDeviceKindEnum): string {
         switch (kind) {
-            case MediaDeviceKindEnum.AudioOutput: return this.getAudioOutput();
-            case MediaDeviceKindEnum.AudioInput: return this.getAudioInput();
-            case MediaDeviceKindEnum.VideoInput: return this.getVideoInput();
+            case MediaDeviceKindEnum.AudioOutput:
+                return this.getAudioOutput();
+            case MediaDeviceKindEnum.AudioInput:
+                return this.getAudioInput();
+            case MediaDeviceKindEnum.VideoInput:
+                return this.getVideoInput();
         }
     }
 

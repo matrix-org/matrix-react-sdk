@@ -14,22 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from "react";
-
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { VoiceBroadcastPreRecordingStore } from "../stores/VoiceBroadcastPreRecordingStore";
+import { VoiceBroadcastPreRecording } from "../models/VoiceBroadcastPreRecording";
 
 export const useCurrentVoiceBroadcastPreRecording = (
     voiceBroadcastPreRecordingStore: VoiceBroadcastPreRecordingStore,
-) => {
-    const [currentVoiceBroadcastPreRecording, setCurrentVoiceBroadcastPreRecording] = useState(
-        voiceBroadcastPreRecordingStore.getCurrent(),
-    );
-
-    useTypedEventEmitter(
+): {
+    currentVoiceBroadcastPreRecording: VoiceBroadcastPreRecording | null;
+} => {
+    const currentVoiceBroadcastPreRecording = useTypedEventEmitterState(
         voiceBroadcastPreRecordingStore,
         "changed",
-        setCurrentVoiceBroadcastPreRecording,
+        (preRecording?: VoiceBroadcastPreRecording) => {
+            return preRecording ?? voiceBroadcastPreRecordingStore.getCurrent();
+        },
     );
 
     return {

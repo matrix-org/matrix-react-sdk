@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Relations } from "matrix-js-sdk/src/models/relations";
+import { Relations } from "matrix-js-sdk/src/matrix";
 import { RelationsContainer } from "matrix-js-sdk/src/models/relations-container";
 
 import { PublicInterface } from "../@types/common";
 
 export const mkRelations = (): Relations => {
-    return {
-
-    } as PublicInterface<Relations> as Relations;
+    return {} as PublicInterface<Relations> as Relations;
 };
 
 export const mkRelationsContainer = (): RelationsContainer => {

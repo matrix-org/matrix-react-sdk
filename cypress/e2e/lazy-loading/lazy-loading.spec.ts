@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker";
+import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { MatrixClient } from "../../global";
 import Chainable = Cypress.Chainable;
 
@@ -26,35 +26,35 @@ interface Charly {
 }
 
 describe("Lazy Loading", () => {
-    let synapse: SynapseInstance;
+    let homeserver: HomeserverInstance;
     let bob: MatrixClient;
     const charlies: Charly[] = [];
 
     beforeEach(() => {
-        cy.window().then(win => {
+        cy.window().then((win) => {
             win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
 
-        cy.startSynapse("default").then(data => {
-            synapse = data;
+        cy.startHomeserver("default").then((data) => {
+            homeserver = data;
 
-            cy.initTestUser(synapse, "Alice");
+            cy.initTestUser(homeserver, "Alice");
 
-            cy.getBot(synapse, {
+            cy.getBot(homeserver, {
                 displayName: "Bob",
                 startClient: false,
                 autoAcceptInvites: false,
-            }).then(_bob => {
+            }).then((_bob) => {
                 bob = _bob;
             });
 
             for (let i = 1; i <= 10; i++) {
                 const displayName = `Charly #${i}`;
-                cy.getBot(synapse, {
+                cy.getBot(homeserver, {
                     displayName,
                     startClient: false,
                     autoAcceptInvites: false,
-                }).then(client => {
+                }).then((client) => {
                     charlies[i - 1] = { displayName, client };
                 });
             }
@@ -62,7 +62,7 @@ describe("Lazy Loading", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        cy.stopHomeserver(homeserver);
     });
 
     const name = "Lazy Loading Test";
@@ -71,15 +71,22 @@ describe("Lazy Loading", () => {
     const charlyMsg2 = "how's it going??";
 
     function setupRoomWithBobAliceAndCharlies(charlies: Charly[]) {
-        cy.window({ log: false }).then(win => {
-            return cy.wrap(bob.createRoom({
-                name,
-                room_alias_name: "lltest",
-                visibility: win.matrixcs.Visibility.Public,
-            }).then(r => r.room_id), { log: false }).as("roomId");
+        cy.window({ log: false }).then((win) => {
+            return cy
+                .wrap(
+                    bob
+                        .createRoom({
+                            name,
+                            room_alias_name: "lltest",
+                            visibility: win.matrixcs.Visibility.Public,
+                        })
+                        .then((r) => r.room_id),
+                    { log: false },
+                )
+                .as("roomId");
         });
 
-        cy.get<string>("@roomId").then(async roomId => {
+        cy.get<string>("@roomId").then(async (roomId) => {
             for (const charly of charlies) {
                 await charly.client.joinRoom(alias);
             }
@@ -109,9 +116,12 @@ describe("Lazy Loading", () => {
     }
 
     function openMemberlist(): void {
-        cy.get('.mx_HeaderButtons [aria-label="Room info"]').click();
+        cy.get(".mx_LegacyRoomHeader").within(() => {
+            cy.findByRole("button", { name: "Room info" }).click();
+        });
+
         cy.get(".mx_RoomSummaryCard").within(() => {
-            cy.get(".mx_RoomSummaryCard_icon_people").click();
+            cy.findByRole("menuitem", { name: "People" }).click(); // \d represents the number of the room members
         });
     }
 
@@ -122,13 +132,13 @@ describe("Lazy Loading", () => {
     function checkMemberList(charlies: Charly[]) {
         getMemberInMemberlist("Alice").should("exist");
         getMemberInMemberlist("Bob").should("exist");
-        charlies.forEach(charly => {
+        charlies.forEach((charly) => {
             getMemberInMemberlist(charly.displayName).should("exist");
         });
     }
 
     function checkMemberListLacksCharlies(charlies: Charly[]) {
-        charlies.forEach(charly => {
+        charlies.forEach((charly) => {
             getMemberInMemberlist(charly.displayName).should("not.exist");
         });
     }
@@ -136,7 +146,7 @@ describe("Lazy Loading", () => {
     function joinCharliesWhileAliceIsOffline(charlies: Charly[]) {
         cy.goOffline();
 
-        cy.get<string>("@roomId").then(async roomId => {
+        cy.get<string>("@roomId").then(async (roomId) => {
             for (const charly of charlies) {
                 await charly.client.joinRoom(alias);
             }
@@ -163,7 +173,7 @@ describe("Lazy Loading", () => {
         joinCharliesWhileAliceIsOffline(charly6to10);
         checkMemberList(charly6to10);
 
-        cy.get<string>("@roomId").then(async roomId => {
+        cy.get<string>("@roomId").then(async (roomId) => {
             for (const charly of charlies) {
                 await charly.client.leave(roomId);
             }
