@@ -220,7 +220,9 @@ describe("Read receipts", () => {
                 // Then all messages are still read
                 assertRead(room2);
             });
-            it("Me sending a message from a different client marks room as read", () => {
+            // xxx: This test is not doing what it says it is doing.
+            // Send a message from the same Matrix client, it's different from sending a message from a different client.
+            it.skip("Me sending a message from a different client marks room as read", () => {
                 // Given I have unread messages
                 goTo(room1);
                 assertRead(room2);
