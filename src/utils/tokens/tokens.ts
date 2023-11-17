@@ -140,7 +140,7 @@ export async function persistTokenInStorage(
         }
         try {
             // Save either the encrypted access token, or the plain access
-            // token if this is no token or we were unable to encrypt (e.g. if the browser doesn't
+            // token if there is no token or we were unable to encrypt (e.g. if the browser doesn't
             // have WebCrypto).
             await StorageManager.idbSave("account", storageKey, encryptedToken || token);
         } catch (e) {
