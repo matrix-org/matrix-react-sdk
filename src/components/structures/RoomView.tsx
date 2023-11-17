@@ -545,6 +545,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             this.context.rightPanelStore.setCard({ phase: RightPanelPhases.Timeline });
         }
         this.checkWidgets(this.state.room);
+        dis.dispatch({ action: Action.WidgetLayoutChanged });
     };
 
     /**

@@ -375,7 +375,8 @@ export class RoomViewStore extends EventEmitter {
                 this.cancelAskToJoin(payload as CancelAskToJoinPayload);
                 break;
             }
-            case Action.RoomLoaded: {
+            case Action.RoomLoaded:
+            case Action.WidgetLayoutChanged: {
                 this.setViewRoomOpts();
                 break;
             }

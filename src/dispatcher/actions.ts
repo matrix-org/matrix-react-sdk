@@ -376,4 +376,9 @@ export enum Action {
      * Fired when the room loaded.
      */
     RoomLoaded = "room_loaded",
+
+    /**
+     * Fired when the widget layout changed.
+     */
+    WidgetLayoutChanged = "widget_layout_changed",
 }

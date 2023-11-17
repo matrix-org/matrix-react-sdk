@@ -66,6 +66,7 @@ import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
 import { ViewRoomErrorPayload } from "../../../src/dispatcher/payloads/ViewRoomErrorPayload";
+import { WidgetLayoutStore } from "../../../src/stores/widgets/WidgetLayoutStore";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);
 
@@ -590,5 +591,12 @@ describe("RoomView", () => {
         jest.spyOn(dis, "dispatch");
         await mountRoomView();
         expect(dis.dispatch).toHaveBeenCalledWith({ action: Action.RoomLoaded });
+    });
+
+    it("fires Action.WidgetLayoutChanged", async () => {
+        jest.spyOn(dis, "dispatch");
+        await mountRoomView();
+        WidgetLayoutStore.instance.emit(WidgetLayoutStore.emissionForRoom(room));
+        expect(dis.dispatch).toHaveBeenCalledWith({ action: Action.WidgetLayoutChanged });
     });
 });

@@ -139,6 +139,11 @@ describe("RoomViewStore", function () {
         await untilDispatch(Action.RoomLoaded, dis);
     };
 
+    const dispatchWidgetLayoutChanged = async () => {
+        dis.dispatch({ action: Action.WidgetLayoutChanged });
+        await untilDispatch(Action.WidgetLayoutChanged, dis);
+    };
+
     let roomViewStore: RoomViewStore;
     let slidingSyncManager: SlidingSyncManager;
     let dis: MatrixDispatcher;
@@ -599,6 +604,26 @@ describe("RoomViewStore", function () {
                 }
             });
             await dispatchRoomLoaded();
+            expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons });
+        });
+    });
+
+    describe("Action.WidgetLayoutChanged", () => {
+        it("updates viewRoomOpts", async () => {
+            const buttons: ViewRoomOpts["buttons"] = [
+                {
+                    icon: "test-icon",
+                    id: "test-id",
+                    label: () => "test-label",
+                    onClick: () => {},
+                },
+            ];
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts) => {
+                if (lifecycleEvent === RoomViewLifecycle.ViewRoom) {
+                    opts.buttons = buttons;
+                }
+            });
+            await dispatchWidgetLayoutChanged();
             expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons });
         });
     });
