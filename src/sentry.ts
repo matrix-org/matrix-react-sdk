@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as Sentry from "@sentry/browser";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, OwnDeviceKeys } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -121,10 +121,20 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
     if (!cryptoApi) {
         return {};
     }
-    const keys = [`ed25519:${client.getDeviceEd25519Key()}`];
-    if (client.getDeviceCurve25519Key) {
-        keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
+
+    let ownDeviceKeys: OwnDeviceKeys | null = null;
+    try {
+        ownDeviceKeys = await cryptoApi.getOwnDeviceKeys();
+    } catch (e) {
+        // Ignore. We'll just not send the keys
     }
+
+    const keys = [];
+    if (ownDeviceKeys) {
+        keys.push(`ed25519:${ownDeviceKeys.ed25519}`);
+        keys.push(`curve25519:${ownDeviceKeys.curve25519}`);
+    }
+
     const crossSigningStatus = await cryptoApi.getCrossSigningStatus();
     const secretStorage = client.secretStorage;
     const sessionBackupKeyFromCache = await cryptoApi.getSessionBackupPrivateKey();
