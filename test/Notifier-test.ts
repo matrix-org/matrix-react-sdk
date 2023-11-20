@@ -417,7 +417,7 @@ describe("Notifier", () => {
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    key: getIncomingCallToastKey(notifyEvent.getContent().call_id, roomId),
+                    key: getIncomingCallToastKey(notifyEvent.getContent().call_id ?? "", roomId),
                     priority: 100,
                     component: IncomingCallToast,
                     bodyClassName: "mx_IncomingCallToast",

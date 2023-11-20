@@ -522,7 +522,7 @@ class NotifierClass {
             (ev?.getAge() ?? 0) < 10000
         ) {
             ToastStore.sharedInstance().addOrReplaceToast({
-                key: getIncomingCallToastKey(ev.getContent()?.call_id, ev.getRoomId() ?? ""),
+                key: getIncomingCallToastKey(ev.getContent()?.call_id ?? "", ev.getRoomId() ?? ""),
                 priority: 100,
                 component: IncomingCallToast,
                 bodyClassName: "mx_IncomingCallToast",

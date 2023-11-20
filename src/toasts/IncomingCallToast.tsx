@@ -85,7 +85,9 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
 
     // Stop ringing on dismiss.
     const dismissToast = useCallback((): void => {
-        ToastStore.sharedInstance().dismissToast(getIncomingCallToastKey(notifyEvent.getContent().call_id, roomId));
+        ToastStore.sharedInstance().dismissToast(
+            getIncomingCallToastKey(notifyEvent.getContent().call_id ?? "", roomId),
+        );
         audio.pause();
     }, [audio, notifyEvent, roomId]);
 
