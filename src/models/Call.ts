@@ -750,14 +750,15 @@ export class ElementCall extends Call {
             (m) => m.application === "m.call" && m.callId === "",
         );
 
-        // We only want to ring in rooms that have less then RING_MEMBER_LIMIT participants. For really large rooms we don't want to ring.
-        const RING_MEMBER_LIMIT = 10;
-        if (!isVideoRoom && existingRoomCallMembers.length == 0 && room.getJoinedMemberCount() < RING_MEMBER_LIMIT) {
+        // We only want to ring in rooms that have less or equal to NOTIFY_MEMBER_LIMIT participants. For really large rooms we don't want to ring.
+        const NOTIFY_MEMBER_LIMIT = 15;
+        const memberCount = room.getJoinedMemberCount();
+        if (!isVideoRoom && existingRoomCallMembers.length == 0 && memberCount <= NOTIFY_MEMBER_LIMIT) {
             // send ringing event
             const content: ICallNotifyContent = {
                 "application": "m.call",
                 "m.mentions": { user_ids: [], room: true },
-                "notify_type": "ring",
+                "notify_type": memberCount == 2 ? "ring" : "notify",
                 "call_id": "",
             };
 
