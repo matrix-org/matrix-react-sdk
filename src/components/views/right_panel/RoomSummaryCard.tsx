@@ -16,25 +16,38 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/matrix";
-import { Tooltip } from "@vector-im/compound-web";
+import { MenuItem, Tooltip, Separator, ToggleMenuItem, Text, Badge, Heading } from "@vector-im/compound-web";
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
+import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite-off.svg";
+import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
+import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
+import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
+import { Icon as SettingsIcon } from "@vector-im/compound-design-tokens/icons/settings.svg";
+import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/icons/export-archive.svg";
+import { Icon as LeaveIcon } from "@vector-im/compound-design-tokens/icons/leave.svg";
+import { Icon as FilesIcon } from "@vector-im/compound-design-tokens/icons/files.svg";
+import { Icon as PollsIcon } from "@vector-im/compound-design-tokens/icons/polls.svg";
+import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin-off.svg";
+import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
+import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
+import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
+import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
+import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
 import BaseCard, { Group } from "./BaseCard";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
-import AccessibleButton, { ButtonEvent, IAccessibleButtonProps } from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import Modal from "../../../Modal";
 import ShareDialog from "../dialogs/ShareDialog";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import WidgetAvatar from "../avatars/WidgetAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
@@ -44,7 +57,6 @@ import RoomContext from "../../../contexts/RoomContext";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
-import { useRoomMemberCount } from "../../../hooks/useRoomMembers";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { usePinnedEvents } from "./PinnedMessagesCard";
 import { Container, MAX_PINNED, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
@@ -56,6 +68,13 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { PollHistoryDialog } from "../dialogs/PollHistoryDialog";
 import { Flex } from "../../utils/Flex";
+import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
+import { DefaultTagID } from "../../../stores/room-list/models";
+import { tagRoom } from "../../../utils/room/tagRoom";
+import { canInviteTo } from "../../../utils/room/canInviteTo";
+import { inviteToRoom } from "../../../utils/room/inviteToRoom";
+import { useAccountData } from "../../../hooks/useAccountData";
+import { useRoomState } from "../../../hooks/useRoomState";
 
 interface IProps {
     room: Room;
@@ -67,23 +86,6 @@ interface IProps {
 interface IAppsSectionProps {
     room: Room;
 }
-
-interface IButtonProps extends IAccessibleButtonProps {
-    className: string;
-    onClick(ev: ButtonEvent): void;
-}
-
-const Button: React.FC<IButtonProps> = ({ children, className, onClick, ...props }) => {
-    return (
-        <AccessibleButton
-            {...props}
-            className={classNames("mx_BaseCard_Button mx_RoomSummaryCard_Button", className)}
-            onClick={onClick}
-        >
-            {children}
-        </AccessibleButton>
-    );
-};
 
 export const useWidgets = (room: Room): IApp[] => {
     const [apps, setApps] = useState<IApp[]>(() => WidgetStore.instance.getApps(room.roomId));
@@ -258,11 +260,6 @@ const AppsSection: React.FC<IAppsSectionProps> = ({ room }) => {
     );
 };
 
-const onRoomMembersClick = (ev: ButtonEvent): void => {
-    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
-    PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
-};
-
 const onRoomFilesClick = (): void => {
     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, true);
 };
@@ -299,6 +296,18 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
         });
     };
 
+    const onLeaveRoomClick = (): void => {
+        defaultDispatcher.dispatch({
+            action: "leave_room",
+            room_id: room.roomId,
+        });
+    };
+
+    const onRoomMembersClick = (ev: ButtonEvent): void => {
+        RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
+        PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
+    };
+
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -307,37 +316,84 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const isVideoRoom =
         videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
 
+    const roomState = useRoomState(room);
+    const directRoomsList = useAccountData<Record<string, string[]>>(room.client, EventType.Direct);
+    const [isDirectMessage, setDirectMessage] = useState(false);
+    useEffect(() => {
+        for (const [, dmRoomList] of Object.entries(directRoomsList)) {
+            if (dmRoomList.includes(room?.roomId ?? "")) {
+                setDirectMessage(true);
+                break;
+            }
+        }
+    }, [room, directRoomsList]);
+
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
         <header className="mx_RoomSummaryCard_container">
-            <div className="mx_RoomSummaryCard_avatar" role="presentation">
-                <RoomAvatar room={room} size="54px" viewAvatarOnClick />
-                <TextWithTooltip
-                    tooltip={isRoomEncrypted ? _t("common|encrypted") : _t("common|unencrypted")}
-                    class={classNames("mx_RoomSummaryCard_e2ee", {
-                        mx_RoomSummaryCard_e2ee_normal: isRoomEncrypted,
-                        mx_RoomSummaryCard_e2ee_warning: isRoomEncrypted && e2eStatus === E2EStatus.Warning,
-                        mx_RoomSummaryCard_e2ee_verified: isRoomEncrypted && e2eStatus === E2EStatus.Verified,
-                    })}
-                />
-            </div>
-
+            <RoomAvatar room={room} size="80px" viewAvatarOnClick />
             <RoomName room={room}>
                 {(name) => (
-                    <h1 className="mx_RoomSummaryCard_roomName" title={name}>
+                    <Heading
+                        as="h1"
+                        size="md"
+                        weight="semibold"
+                        className="mx_RoomSummaryCard_roomName text-primary"
+                        title={name}
+                    >
                         {name}
-                    </h1>
+                    </Heading>
                 )}
             </RoomName>
-            <div className="mx_RoomSummaryCard_alias" title={alias}>
+            <Text
+                as="div"
+                size="sm"
+                weight="semibold"
+                className="mx_RoomSummaryCard_alias text-secondary"
+                title={alias}
+            >
                 {alias}
-            </div>
+            </Text>
+
+            <Flex as="section" justify="center" gap="var(--cpd-space-2x)" className="mx_RoomSummaryCard_badges">
+                {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
+                    <Badge kind="default">
+                        <PublicIcon width="1em" />
+                        {_t("common|public_room")}
+                    </Badge>
+                )}
+
+                {isRoomEncrypted && e2eStatus !== E2EStatus.Warning && (
+                    <Badge kind="success">
+                        <LockIcon width="1em" />
+                        {_t("common|encrypted")}
+                    </Badge>
+                )}
+
+                {!e2eStatus && (
+                    <Badge kind="default">
+                        <LockOffIcon width="1em" />
+                        {_t("common|unencrypted")}
+                    </Badge>
+                )}
+
+                {e2eStatus === E2EStatus.Warning && (
+                    <Badge kind="critical">
+                        <ErrorIcon width="1em" />
+                        {_t("common|not_trusted")}
+                    </Badge>
+                )}
+            </Flex>
         </header>
     );
 
-    const memberCount = useRoomMemberCount(room);
     const pinningEnabled = useFeatureEnabled("feature_pinning");
     const pinCount = usePinnedEvents(pinningEnabled ? room : undefined)?.length;
+
+    const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
+        RoomListStore.instance.getTagsForRoom(room),
+    );
+    const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
     return (
         <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
@@ -369,43 +425,58 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             </Flex>
 
             {header}
-            <Group title={_t("common|about")} className="mx_RoomSummaryCard_aboutGroup">
-                <Button className="mx_RoomSummaryCard_icon_people" onClick={onRoomMembersClick}>
-                    {_t("common|people")}
-                    <span className="mx_BaseCard_Button_sublabel">{memberCount}</span>
-                </Button>
-                {!isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_files" onClick={onRoomFilesClick}>
-                        {_t("right_panel|files_button")}
-                    </Button>
-                )}
-                {!isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_poll" onClick={onRoomPollHistoryClick}>
-                        {_t("right_panel|polls_button")}
-                    </Button>
-                )}
-                {pinningEnabled && !isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_pins" onClick={onRoomPinsClick}>
-                        {_t("right_panel|pinned_messages_button")}
-                        {pinCount > 0 && <span className="mx_BaseCard_Button_sublabel">{pinCount}</span>}
-                    </Button>
-                )}
-                {!isVideoRoom && (
-                    <Button className="mx_RoomSummaryCard_icon_export" onClick={onRoomExportClick}>
-                        {_t("right_panel|export_chat_button")}
-                    </Button>
-                )}
-                <Button
-                    data-testid="shareRoomButton"
-                    className="mx_RoomSummaryCard_icon_share"
-                    onClick={onShareRoomClick}
-                >
-                    {_t("right_panel|share_button")}
-                </Button>
-                <Button className="mx_RoomSummaryCard_icon_settings" onClick={onRoomSettingsClick}>
-                    {_t("right_panel|settings_button")}
-                </Button>
-            </Group>
+
+            <Separator />
+
+            <ToggleMenuItem
+                Icon={FavouriteIcon}
+                label={_t("room|context_menu|favourite")}
+                checked={isFavorite}
+                onChange={() => tagRoom(room, DefaultTagID.Favourite)}
+            />
+            <MenuItem
+                Icon={UserAddIcon}
+                label={_t("action|invite")}
+                disabled={!canInviteTo(room)}
+                onClick={() => inviteToRoom(room)}
+            />
+            <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onClick={onShareRoomClick} />
+            <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onClick={onRoomSettingsClick} />
+
+            <Separator />
+            <MenuItem
+                // this icon matches the legacy implementation
+                // and is a short term solution until legacy room header is removed
+                Icon={UserProfileSolidIcon}
+                label={_t("common|people")}
+                onClick={onRoomMembersClick}
+            />
+            {!isVideoRoom && (
+                <>
+                    <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onClick={onRoomFilesClick} />
+                    <MenuItem
+                        Icon={PollsIcon}
+                        label={_t("right_panel|polls_button")}
+                        onClick={onRoomPollHistoryClick}
+                    />
+                    {pinningEnabled && (
+                        <MenuItem
+                            Icon={PinIcon}
+                            label={_t("right_panel|pinned_messages_button")}
+                            onClick={onRoomPinsClick}
+                        >
+                            <Text as="span" size="sm">
+                                {pinCount}
+                            </Text>
+                        </MenuItem>
+                    )}
+                    <MenuItem Icon={ExportArchiveIcon} label={_t("export_chat|title")} onClick={onRoomExportClick} />
+                </>
+            )}
+
+            <Separator />
+
+            <MenuItem Icon={LeaveIcon} kind="critical" label={_t("action|leave_room")} onClick={onLeaveRoomClick} />
 
             {SettingsStore.getValue(UIFeature.Widgets) &&
                 !isVideoRoom &&
