@@ -66,4 +66,22 @@ export class ElementAppPage {
     async closeDialog(): Promise<void> {
         await this.page.getByRole("button", { name: "Close dialog" }).click();
     }
+
+    async joinBeta(name: string): Promise<void> {
+        await this.page
+            .locator(".mx_BetaCard")
+            .filter({ hasText: name })
+            .locator("mx_BetaCard_buttons")
+            .getByRole("button", { name: "Join the beta" })
+            .click();
+    }
+
+    async leaveBeta(name: string): Promise<void> {
+        await this.page
+            .locator(".mx_BetaCard")
+            .filter({ hasText: name })
+            .locator("mx_BetaCard_buttons")
+            .getByRole("button", { name: "Leave the beta" })
+            .click();
+    }
 }
