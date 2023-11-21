@@ -78,7 +78,7 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
 
     // Start ringing if not already.
     useEffect(() => {
-        const isRingToast = (notifyEvent.getContent() as unknown as { notify_type: String })["notify_type"] == "ring";
+        const isRingToast = (notifyEvent.getContent() as unknown as { notify_type: string })["notify_type"] == "ring";
         if (isRingToast && audio.paused) {
             audio.play();
         }
@@ -94,7 +94,7 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
 
     // Dismiss if session got ended remotely.
     const onSessionEnded = useCallback(
-        (endedSessionRoomId: String, session: MatrixRTCSession): void => {
+        (endedSessionRoomId: string, session: MatrixRTCSession): void => {
             if (roomId == endedSessionRoomId && session.callId == notifyEvent.getContent().call_id) {
                 dismissToast();
             }
