@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test, expect } from "@playwright/test";
 import { checkA11y, injectAxe } from "axe-playwright";
 
+import { test, expect } from "../../element-web-test";
 import { HomeserverInstance } from "../../plugins/utils/homeserver";
 import { startHomeserver, stopHomeserver } from "../../plugins/homeserver";
-import { ElementAppPage } from "../../pages/ElementAppPage";
 
 test.describe("Consent", () => {
     let homeserver: HomeserverInstance;
@@ -32,10 +31,10 @@ test.describe("Consent", () => {
         const username = "user1234";
         const password = "p4s5W0rD";
 
-        test.beforeEach(async ({ page, request }) => {
+        test.beforeEach(async ({ page, app }) => {
             homeserver = await startHomeserver("consent");
 
-            await new ElementAppPage(page, request).registerUser(homeserver, username, password);
+            await app.registerUser(homeserver, username, password);
             await page.goto("/#/login");
         });
 
@@ -60,8 +59,7 @@ test.describe("Consent", () => {
             await expect(page.locator(".mx_ServerPickerDialog")).toHaveCount(0);
             await expect(page.locator(".mx_Spinner")).toHaveCount(0);
             // name of default server
-            // TODO don't use matrix.org config.json
-            // await expect(page.locator(".mx_ServerPicker_server")).toHaveText("server.invalid");
+            await expect(page.locator(".mx_ServerPicker_server")).toHaveText("server.invalid");
 
             // switch back to the custom homeserver
             await page.getByRole("button", { name: "Edit" }).click();
