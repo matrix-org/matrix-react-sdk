@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Icon as ChatIcon } from "@vector-im/compound-design-tokens/icons/chat-solid.svg";
 import { Room } from "matrix-js-sdk/src/matrix";
 import { IconButton, Tooltip } from "@vector-im/compound-web";
@@ -29,9 +29,10 @@ import { SDKContext } from "../../../../contexts/SDKContext";
 import { ButtonEvent } from "../../elements/AccessibleButton";
 
 /**
- *
+ * Display a button to toggle timeline for video rooms
  * @param room
- * @returns
+ * @returns for a video room: a button to toggle timeline in the right panel
+ *          otherwise null
  */
 export const VideoRoomChatButton: React.FC<{ room: Room }> = ({ room }) => {
     const sdkContext = useContext(SDKContext);
@@ -44,12 +45,6 @@ export const VideoRoomChatButton: React.FC<{ room: Room }> = ({ room }) => {
         NotificationStateEvents.Update,
         () => notificationState?.color,
     );
-
-    useEffect(() => {
-        if (!isVideoRoom) {
-            return;
-        }
-    }, [room, isVideoRoom]);
 
     if (!isVideoRoom) {
         return null;
