@@ -1106,7 +1106,7 @@ export async function onLoggedOut(): Promise<void> {
  */
 async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void> {
     if (window.localStorage) {
-        // save the language code, if it has already been set
+        // get the currently defined language or the default language setting
         const language = SettingsStore.getValue("language");
 
         // try to save any 3pid invites from being obliterated and registration time
