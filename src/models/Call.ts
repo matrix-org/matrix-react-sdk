@@ -53,6 +53,7 @@ import { getCurrentLanguage } from "../languageHandler";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
+import { getFunctionalMembers } from "../utils/room/getFunctionalMembers";
 
 const TIMEOUT_MS = 16000;
 
@@ -752,7 +753,7 @@ export class ElementCall extends Call {
 
         // We only want to ring in rooms that have less or equal to NOTIFY_MEMBER_LIMIT participants. For really large rooms we don't want to ring.
         const NOTIFY_MEMBER_LIMIT = 15;
-        const memberCount = room.getJoinedMemberCount();
+        const memberCount = getFunctionalMembers(room).length;
         if (!isVideoRoom && existingRoomCallMembers.length == 0 && memberCount <= NOTIFY_MEMBER_LIMIT) {
             // send ringing event
             const content: ICallNotifyContent = {

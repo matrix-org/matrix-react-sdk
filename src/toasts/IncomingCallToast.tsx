@@ -40,6 +40,7 @@ import { useDispatcher } from "../hooks/useDispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { Call } from "../models/Call";
 import { AudioID } from "../LegacyCallHandler";
+import { useTypedEventEmitter } from "../hooks/useEventEmitter";
 
 export const getIncomingCallToastKey = (callId: string, roomId: string): string => `call_${callId}_${roomId}`;
 const MAX_RING_TIME_MS = 10 * 1000;
@@ -146,14 +147,11 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
         [dismissToast],
     );
 
-    useEffect(() => {
-        const matrixRTC = MatrixClientPeg.safeGet().matrixRTC;
-        matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, onSessionEnded);
-        function disconnect(): void {
-            matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, onSessionEnded);
-        }
-        return disconnect;
-    }, [audio, notifyEvent, onSessionEnded]);
+    useTypedEventEmitter(
+        MatrixClientPeg.safeGet().matrixRTC,
+        MatrixRTCSessionManagerEvents.SessionEnded,
+        onSessionEnded,
+    );
 
     return (
         <React.Fragment>

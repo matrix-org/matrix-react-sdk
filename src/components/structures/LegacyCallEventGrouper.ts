@@ -37,7 +37,7 @@ const CONNECTING_STATES = [
 const SUPPORTED_STATES = [CallState.Connected, CallState.Ringing, CallState.Ended];
 
 const isCallEventType = (eventType: string): boolean =>
-    eventType?.startsWith("m.call.") || eventType?.startsWith("org.matrix.call.");
+    eventType.startsWith("m.call.") || eventType.startsWith("org.matrix.call.");
 
 export const isCallEvent = (event: MatrixEvent): boolean => isCallEventType(event.getType());
 

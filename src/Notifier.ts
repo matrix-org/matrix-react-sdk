@@ -521,8 +521,18 @@ class NotifierClass {
             SettingsStore.getValue("feature_group_calls") &&
             (ev.getAge() ?? 0) < 10000
         ) {
+            const content = ev.getContent();
+            const roomId = ev.getRoomId();
+            if (typeof content.call_id !== "string") {
+                logger.warn("Received malformatted CallNotify event. Did not contain 'call_id' of type 'string'");
+                return;
+            }
+            if (!roomId) {
+                logger.warn("Could not get roomId for CallNotify event");
+                return;
+            }
             ToastStore.sharedInstance().addOrReplaceToast({
-                key: getIncomingCallToastKey(ev.getContent()?.call_id ?? "", ev.getRoomId() ?? ""),
+                key: getIncomingCallToastKey(content.call_id, roomId),
                 priority: 100,
                 component: IncomingCallToast,
                 bodyClassName: "mx_IncomingCallToast",
