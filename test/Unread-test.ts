@@ -335,53 +335,7 @@ describe("Unread", () => {
                 expect(doesRoomHaveUnreadMessages(room)).toBe(true);
             });
 
-            it("returns false when the event for a thread receipt can't be found, but the receipt ts is late", async () => {
-                // Given a room that is read
-                let receipt = new MatrixEvent({
-                    type: "m.receipt",
-                    room_id: "!foo:bar",
-                    content: {
-                        [event.getId()!]: {
-                            [ReceiptType.Read]: {
-                                [myId]: { ts: 1 },
-                            },
-                        },
-                    },
-                });
-                room.addReceipt(receipt);
-
-                // And a thread
-                const { rootEvent, events } = await populateThread({
-                    room,
-                    client,
-                    authorId: myId,
-                    participantUserIds: [aliceId],
-                });
-
-                // When we provide a receipt that points at an unknown event,
-                // but its timestamp is after all events in the thread
-                //
-                // (This could happen if we mis-filed a reaction into the main
-                // thread when it should actually have gone into this thread, or
-                // maybe the event is just not loaded for some reason.)
-                const receiptTs = Math.max(...events.map((e) => e.getTs())) + 100;
-                receipt = new MatrixEvent({
-                    type: "m.receipt",
-                    room_id: "!foo:bar",
-                    content: {
-                        ["UNKNOWN_EVENT_ID"]: {
-                            [ReceiptType.Read]: {
-                                [myId]: { ts: receiptTs, threadId: rootEvent.getId()! },
-                            },
-                        },
-                    },
-                });
-                room.addReceipt(receipt);
-
-                expect(doesRoomHaveUnreadMessages(room)).toBe(false);
-            });
-
-            it("returns true when the event for a thread receipt can't be found, and the receipt ts is early", async () => {
+            it("returns true when the event for a thread receipt can't be found", async () => {
                 // Given a room that is read
                 let receipt = new MatrixEvent({
                     type: "m.receipt",
@@ -502,32 +456,23 @@ describe("Unread", () => {
                 expect(doesRoomOrThreadHaveUnreadMessages(room)).toBe(false);
             });
 
-            it("an unthreaded receipt with later timestamp makes a new thread read", async () => {
-                // Provide an unthreaded read receipt with ts greater than the latest thread event
-                const receipt = new MatrixEvent({
-                    type: "m.receipt",
-                    room_id: "!foo:bar",
-                    content: {
-                        [event.getId()!]: {
-                            [ReceiptType.Read]: {
-                                [myId]: { ts: 10000000000 },
+            it("a threaded receipt for the event makes the room read", () => {
+                // Send threaded receipt into room pointing at the latest event
+                room.addReceipt(
+                    new MatrixEvent({
+                        type: "m.receipt",
+                        room_id: "!foo:bar",
+                        content: {
+                            [event.getId()!]: {
+                                [ReceiptType.Read]: {
+                                    [myId]: { ts: 1, thread_id: "main" },
+                                },
                             },
                         },
-                    },
-                });
-                room.addReceipt(receipt);
-
-                const { thread } = await populateThread({
-                    room,
-                    client,
-                    authorId: myId,
-                    participantUserIds: [aliceId],
-                });
-
-                expect(thread.replyToEvent!.getTs()).toBeLessThan(
-                    receipt.getContent()[event.getId()!][ReceiptType.Read][myId].ts,
+                    }),
                 );
-                expect(doesRoomOrThreadHaveUnreadMessages(thread)).toBe(false);
+
+                expect(doesRoomOrThreadHaveUnreadMessages(room)).toBe(false);
             });
         });
 
