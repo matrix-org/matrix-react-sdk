@@ -94,7 +94,7 @@ describe("EventTile", () => {
 
         room = new Room(ROOM_ID, client, client.getSafeUserId(), {
             pendingEventOrdering: PendingEventOrdering.Detached,
-            timelineSupport: true
+            timelineSupport: true,
         });
 
         jest.spyOn(client, "getRoom").mockReturnValue(room);

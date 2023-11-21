@@ -378,7 +378,7 @@ describe("RoomTile", () => {
                     {
                         lastReply: () => null,
                         timeline: [],
-                        findEventById: () => {}
+                        findEventById: () => {},
                     } as Thread,
                 ]);
             });
