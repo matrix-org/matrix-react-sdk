@@ -1106,8 +1106,8 @@ export async function onLoggedOut(): Promise<void> {
  */
 async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void> {
     if (window.localStorage) {
-        // get the currently defined language or the default language setting
-        const language = SettingsStore.getValue("language");
+        // get the currently defined device language, if set, so we can restore it later
+        const language = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
 
         // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
@@ -1122,7 +1122,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
             logger.error("idbDelete failed for account:mx_access_token", e);
         }
 
-        // now restore those invites, registration time and previously set language
+        // now restore those invites, registration time and previously set device language
         if (!opts?.deleteEverything) {
             if (language) {
                 await SettingsStore.setValue("language", null, SettingLevel.DEVICE, language);
