@@ -178,7 +178,7 @@ describe("Read receipts", () => {
                 assertStillRead(room2);
             });
             // XXX: fails because flaky: https://github.com/vector-im/element-web/issues/26341
-            it.skip("A room with an edit is still read after restart", () => {
+            it("A room with an edit is still read after restart", () => {
                 // Given a message is marked as read
                 goTo(room2);
                 receiveMessages(room2, ["Msg1"]);
@@ -317,7 +317,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             // XXX: fails because the room becomes unread after restart
-            it.skip("A room where all threaded edits are marked as read is still read after restart", () => {
+            it("A room where all threaded edits are marked as read is still read after restart", () => {
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1"), editOf("Resp1", "Edit1")]);
                 assertUnread(room2, 2);

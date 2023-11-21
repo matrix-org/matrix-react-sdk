@@ -137,7 +137,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             // XXX: fails (sometimes!) because the unread count stays high
-            it.skip("Reading an older message leaves the room unread", () => {
+            it("Reading an older message leaves the room unread", () => {
                 // Given there are lots of messages in a room
                 goTo(room1);
                 receiveMessages(room2, many("Msg", 30));

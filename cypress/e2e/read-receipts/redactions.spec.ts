@@ -249,7 +249,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             // XXX: fails because it flakes saying the room is unread when it should be read
-            it.skip("Redacting all unread messages makes the room read after restart", () => {
+            it("Redacting all unread messages makes the room read after restart", () => {
                 // Given all unread messages were redacted
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -304,7 +304,7 @@ describe("Read receipts", () => {
                 assertStillRead(room2);
             });
             // XXX: fails because flakes showing 2 unread instead of 1
-            it.skip("A reply to a redacted message makes the room unread", () => {
+            it("A reply to a redacted message makes the room unread", () => {
                 // Given a message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", "Msg2"]);
@@ -348,7 +348,7 @@ describe("Read receipts", () => {
 
         describe("in threads", () => {
             // XXX: fails because it flakes saying the room is unread when it should be read
-            it.skip("Redacting the threaded message pointed to by my receipt leaves the room read", () => {
+            it("Redacting the threaded message pointed to by my receipt leaves the room read", () => {
                 // Given I have some threads
                 goTo(room1);
                 receiveMessages(room2, [
@@ -380,7 +380,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because it flakes (on CI only)
-            it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {
+            it("Reading an unread thread after a redaction of the latest message makes it read", () => {
                 // Given an unread thread where the latest message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -402,7 +402,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because the unread count is still 1 when it should be 0
-            it.skip("Reading an unread thread after a redaction of the latest message makes it read after restart", () => {
+            it("Reading an unread thread after a redaction of the latest message makes it read after restart", () => {
                 // Given a redacted message is not counted in the unread count
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -426,7 +426,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             // XXX: fails because it flakes (on CI only)
-            it.skip("Reading an unread thread after a redaction of an older message makes it read", () => {
+            it("Reading an unread thread after a redaction of an older message makes it read", () => {
                 // Given an unread thread where an older message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -448,7 +448,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because it flakes (on CI only)
-            it.skip("Marking an unread thread as read after a redaction makes it read", () => {
+            it("Marking an unread thread as read after a redaction makes it read", () => {
                 // Given an unread thread where an older message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -466,7 +466,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because the room has an unread dot after I marked it as read
-            it.skip("Sending and redacting a message after marking the thread as read leaves it read", () => {
+            it("Sending and redacting a message after marking the thread as read leaves it read", () => {
                 // Given a thread exists and is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -485,7 +485,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because the room has an unread dot after I marked it as read
-            it.skip("Redacting a message after marking the thread as read leaves it read", () => {
+            it("Redacting a message after marking the thread as read leaves it read", () => {
                 // Given a thread exists and is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -502,7 +502,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because it flakes - sometimes the room is still unread after opening the thread (initially)
-            it.skip("Reacting to a redacted message leaves the thread read", () => {
+            it("Reacting to a redacted message leaves the thread read", () => {
                 // Given a message in a thread was redacted and everything is read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -522,7 +522,7 @@ describe("Read receipts", () => {
                 assertStillRead(room2);
             });
             // XXX: fails because the room is still unread after opening the thread (initially)
-            it.skip("Editing a redacted message leaves the thread read", () => {
+            it("Editing a redacted message leaves the thread read", () => {
                 // Given a message in a thread was redacted and everything is read
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2"), threadedOff("Root", "Msg3")]);
@@ -564,7 +564,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because the unread count stays at 1 instead of zero
-            it.skip("Reading a thread containing a redacted, edited message marks the thread as read", () => {
+            it("Reading a thread containing a redacted, edited message marks the thread as read", () => {
                 // Given a redacted message in a thread exists, but someone edited it before it was redacted
                 goTo(room1);
                 receiveMessages(room2, [
@@ -606,7 +606,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because flakes saying 2 unread instead of 1
-            it.skip("Reading a thread root when its only message has been redacted leaves the room read", () => {
+            it("Reading a thread root when its only message has been redacted leaves the room read", () => {
                 // Given we had a thread
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "Msg2")]);
@@ -623,7 +623,7 @@ describe("Read receipts", () => {
                 assertRead(room2);
             });
             // XXX: fails because flakes with matrix-js-sdk#3798 (only when all other tests are enabled!)
-            it.skip("A thread with a redacted unread is still read after restart", () => {
+            it("A thread with a redacted unread is still read after restart", () => {
                 // Given I sent and redacted a message in an otherwise-read thread
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);
@@ -649,7 +649,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because it flakes
-            it.skip("A thread with a read redaction is still read after restart", () => {
+            it("A thread with a read redaction is still read after restart", () => {
                 // Given my receipt points at a redacted thread message
                 goTo(room1);
                 receiveMessages(room2, [

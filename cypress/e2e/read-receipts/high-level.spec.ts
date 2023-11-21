@@ -189,7 +189,7 @@ describe("Read receipts", () => {
 
     describe("Paging up", () => {
         // XXX: Fails because flaky test https://github.com/vector-im/element-web/issues/26437
-        it.skip("Paging up through old messages after a room is read leaves the room read", () => {
+        it("Paging up through old messages after a room is read leaves the room read", () => {
             // Given lots of messages are in the room, but we have read them
             goTo(room1);
             receiveMessages(room2, many("Msg", 110));
@@ -304,7 +304,7 @@ describe("Read receipts", () => {
             assertUnreadThread("Root3");
         });
         // XXX: fails because flaky: https://github.com/vector-im/element-web/issues/26331
-        it.skip("Looking in thread view to find old threads that were never read makes the room unread", () => {
+        it("Looking in thread view to find old threads that were never read makes the room unread", () => {
             // Given lots of messages in threads that are unread
             goTo(room1);
             receiveMessages(room2, [
@@ -379,7 +379,7 @@ describe("Read receipts", () => {
             assertReadThread("Root3");
         });
         // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-        it.skip("After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read", () => {
+        it("After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read", () => {
             // Given lots of messages in threads that are unread but I marked as read on a thread message
             goTo(room1);
             receiveMessages(room2, [
