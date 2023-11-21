@@ -519,7 +519,7 @@ class NotifierClass {
         if (
             EventType.CallNotify === ev.getType() &&
             SettingsStore.getValue("feature_group_calls") &&
-            (ev?.getAge() ?? 0) < 10000
+            (ev.getAge() ?? 0) < 10000
         ) {
             ToastStore.sharedInstance().addOrReplaceToast({
                 key: getIncomingCallToastKey(ev.getContent()?.call_id ?? "", ev.getRoomId() ?? ""),
