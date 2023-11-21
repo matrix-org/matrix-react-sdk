@@ -99,7 +99,8 @@ function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>
 
 export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
     const room = roomOrThread instanceof Thread ? roomOrThread.room : roomOrThread;
-    return doesTimelineHaveUnreadMessages(room, roomOrThread.timeline);
+    const events = roomOrThread instanceof Thread ? roomOrThread.timeline : room.getLiveTimeline().getEvents();
+    return doesTimelineHaveUnreadMessages(room, events);
 }
 
 /**
