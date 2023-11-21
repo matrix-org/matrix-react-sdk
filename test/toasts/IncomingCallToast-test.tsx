@@ -26,7 +26,7 @@ import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 // eslint-disable-next-line no-restricted-imports
 import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
 
-import type { IContent, RoomMember } from "matrix-js-sdk/src/matrix";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
     MockedCall,
