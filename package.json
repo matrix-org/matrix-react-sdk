@@ -53,6 +53,8 @@
         "test": "jest",
         "test:cypress": "cypress run",
         "test:cypress:open": "cypress open",
+        "test:playwright": "playwright test",
+        "test:playwright:open": "yarn test:playwright --ui",
         "coverage": "yarn test --coverage"
     },
     "resolutions": {
