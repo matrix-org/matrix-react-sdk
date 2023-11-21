@@ -216,6 +216,7 @@ export default function RoomHeader({
                     </Tooltip>
                 )}
 
+                {/* Renders nothing when room is not a video room */}
                 <VideoRoomChatButton room={room} />
 
                 <Tooltip label={_t("common|threads")}>
