@@ -153,7 +153,8 @@ export class Synapse {
             "--silent",
             "http://localhost:8008/health",
         ]);
-        const synapse: HomeserverInstance = { serverId: synapseId, ...synCfg };
+        const host = await this.docker.getContainerIp();
+        const synapse: HomeserverInstance = { serverId: synapseId, ...synCfg, host };
         this.instance = synapse;
         return synapse;
     }
