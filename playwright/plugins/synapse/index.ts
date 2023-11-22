@@ -18,16 +18,25 @@ import * as path from "path";
 import * as os from "os";
 import * as crypto from "crypto";
 import * as fse from "fs-extra";
+import { APIRequestContext } from "@playwright/test";
 
 import { getFreePort } from "../utils/port";
 import { Docker } from "../docker";
-import { HomeserverConfig, HomeserverInstance, Homeserver, StartHomeserverOpts } from "../utils/homeserver";
+import {
+    HomeserverConfig,
+    HomeserverInstance,
+    Homeserver,
+    StartHomeserverOpts,
+    Credentials,
+} from "../utils/homeserver";
 
 function randB64Bytes(numBytes: number): string {
     return crypto.randomBytes(numBytes).toString("base64").replace(/=*$/, "");
 }
 
-async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<HomeserverConfig> {
+async function cfgDirFromTemplate(
+    opts: StartHomeserverOpts,
+): Promise<HomeserverConfig & { registrationSecret: string }> {
     const templateDir = path.join(__dirname, "templates", opts.template);
 
     const stats = await fse.stat(templateDir);
@@ -94,9 +103,11 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     };
 }
 
-export class Synapse implements Homeserver {
+export class Synapse implements Homeserver, HomeserverInstance {
     private docker: Docker = new Docker();
-    private instance: HomeserverInstance;
+    public config: HomeserverConfig & { serverId: string; registrationSecret: string };
+
+    public constructor(private readonly request: APIRequestContext) {}
 
     /**
      * Start a synapse instance: the template must be the name of
@@ -105,9 +116,11 @@ export class Synapse implements Homeserver {
      *
      * Any value in opts.variables that is set to `{{HOST_DOCKER_INTERNAL}}'
      * will be replaced with 'host.docker.internal' (if we are on Docker) or
-     * 'host.containers.interal' if we are on Podman.
+     * 'host.containers.internal' if we are on Podman.
      */
-    async start(opts: StartHomeserverOpts): Promise<HomeserverInstance> {
+    public async start(opts: StartHomeserverOpts): Promise<HomeserverInstance> {
+        if (this.config) await this.stop();
+
         const synCfg = await cfgDirFromTemplate(opts);
         console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
         const dockerSynapseParams = ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`];
@@ -140,14 +153,16 @@ export class Synapse implements Homeserver {
             "--silent",
             "http://localhost:8008/health",
         ]);
-        const synapse: HomeserverInstance = { serverId: synapseId, controller: this, ...synCfg };
-        this.instance = synapse;
-        return synapse;
-    }
 
-    async stop(): Promise<void> {
-        if (!this.instance) throw new Error("Missing existing synapse instance, did you call stop() before start()?");
-        const id = this.instance.serverId;
+        this.config = {
+            ...synCfg,
+            serverId: synapseId,
+        };
+        return this;
+    }
+    public async stop(): Promise<void> {
+        if (!this.config) throw new Error("Missing existing synapse instance, did you call stop() before start()?");
+        const id = this.config.serverId;
         const synapseLogsPath = path.join("playwright", "synapselogs", id);
         await fse.ensureDir(synapseLogsPath);
         await this.docker.persistLogsToFile({
@@ -155,7 +170,35 @@ export class Synapse implements Homeserver {
             stderrFile: path.join(synapseLogsPath, "stderr.log"),
         });
         await this.docker.stop();
-        await fse.remove(this.instance.configDir);
+        await fse.remove(this.config.configDir);
         console.log(`Stopped synapse id ${id}.`);
+    }
+
+    public async registerUser(username: string, password: string, displayName?: string): Promise<Credentials> {
+        const url = `${this.config.baseUrl}/_synapse/admin/v1/register`;
+        const { nonce } = await this.request.get(url).then((r) => r.json());
+        const mac = crypto
+            .createHmac("sha1", this.config.registrationSecret)
+            .update(`${nonce}\0${username}\0${password}\0notadmin`)
+            .digest("hex");
+        const res = await this.request.post(url, {
+            data: {
+                nonce,
+                username,
+                password,
+                mac,
+                admin: false,
+                displayname: displayName,
+            },
+        });
+
+        const data = await res.json();
+        return {
+            homeServer: data.home_server,
+            accessToken: data.access_token,
+            userId: data.user_id,
+            deviceId: data.device_id,
+            password,
+        };
     }
 }

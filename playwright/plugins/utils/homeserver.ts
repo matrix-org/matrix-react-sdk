@@ -15,15 +15,21 @@ limitations under the License.
 */
 
 export interface HomeserverConfig {
-    configDir: string;
-    registrationSecret: string;
-    baseUrl: string;
-    port: number;
+    readonly configDir: string;
+    readonly baseUrl: string;
+    readonly port: number;
 }
 
-export interface HomeserverInstance extends HomeserverConfig {
-    controller: Homeserver;
-    serverId: string;
+export interface HomeserverInstance {
+    readonly config: HomeserverConfig;
+
+    /**
+     * Register a user on the given Homeserver using the shared registration secret.
+     * @param username the username of the user to register
+     * @param password the password of the user to register
+     * @param displayName optional display name to set on the newly registered user
+     */
+    registerUser(username: string, password: string, displayName?: string): Promise<Credentials>;
 }
 
 export interface StartHomeserverOpts {

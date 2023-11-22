@@ -16,7 +16,8 @@ limitations under the License.
 
 import { test as base } from "@playwright/test";
 
-import { ElementAppPage } from "./pages/ElementAppPage";
+import { HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
+import { Synapse } from "./plugins/synapse";
 
 const CONFIG_JSON = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -34,7 +35,10 @@ const CONFIG_JSON = {
     map_style_url: "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
 };
 
-export const test = base.extend({
+export const test = base.extend<{
+    startHomeserverOpts: StartHomeserverOpts | string;
+    homeserver: HomeserverInstance;
+}>({
     page: async ({ context, page }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             await route.fulfill({ json: CONFIG_JSON });
@@ -42,9 +46,19 @@ export const test = base.extend({
 
         await use(page);
     },
-    app: async ({ page, request }, use) => {
-        await use(new ElementAppPage(page, request));
+
+    startHomeserverOpts: "default",
+    homeserver: async ({ page, request, startHomeserverOpts: opts }, use) => {
+        if (typeof opts === "string") {
+            opts = { template: opts };
+        }
+
+        const server = new Synapse(request);
+        await use(await server.start(opts));
+        await server.stop();
     },
 });
+
+test.use({});
 
 export { expect } from "@playwright/test";
