@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { test as base } from "@playwright/test";
+import { injectAxe } from "axe-playwright";
 
 import { HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
@@ -44,6 +45,7 @@ export const test = base.extend<{
             await route.fulfill({ json: CONFIG_JSON });
         });
 
+        await injectAxe(page);
         await use(page);
     },
 

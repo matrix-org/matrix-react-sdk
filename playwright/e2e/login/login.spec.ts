@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { checkA11y, injectAxe } from "axe-playwright";
+import { checkA11y } from "axe-playwright";
 
 import { test, expect } from "../../element-web-test";
 
@@ -31,8 +31,6 @@ test.describe("Consent", () => {
         });
 
         test("logs in with an existing account and lands on the home screen", async ({ page, homeserver }) => {
-            await injectAxe(page);
-
             // first pick the homeserver, as otherwise the user picker won't be visible
             await page.getByRole("button", { name: "Edit" }).click();
             await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
