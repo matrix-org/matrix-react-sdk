@@ -1,6 +1,6 @@
 {
     "name": "matrix-react-sdk",
-    "version": "3.84.1",
+    "version": "3.85.0",
     "description": "SDK for matrix.org using React",
     "author": "matrix.org",
     "repository": {
@@ -53,6 +53,8 @@
         "test": "jest",
         "test:cypress": "cypress run",
         "test:cypress:open": "cypress open",
+        "test:playwright": "playwright test",
+        "test:playwright:open": "yarn test:playwright --ui",
         "coverage": "yarn test --coverage"
     },
     "resolutions": {
@@ -68,7 +70,7 @@
         "@matrix-org/spec": "^1.7.0",
         "@sentry/browser": "^7.0.0",
         "@testing-library/react-hooks": "^8.0.1",
-        "@vector-im/compound-design-tokens": "^0.0.7",
+        "@vector-im/compound-design-tokens": "^0.1.0",
         "@vector-im/compound-web": "0.8.1",
         "@zxcvbn-ts/core": "^3.0.4",
         "@zxcvbn-ts/language-common": "^3.0.4",
@@ -146,6 +148,7 @@
         "@peculiar/webcrypto": "^1.4.3",
         "@percy/cli": "^1.11.0",
         "@percy/cypress": "^3.1.2",
+        "@playwright/test": "^1.40.0",
         "@testing-library/cypress": "^9.0.0",
         "@testing-library/dom": "^9.0.0",
         "@testing-library/jest-dom": "^6.0.0",
@@ -181,6 +184,7 @@
         "@typescript-eslint/parser": "^5.6.0",
         "allchange": "^1.1.0",
         "axe-core": "4.8.2",
+        "axe-playwright": "^1.2.3",
         "babel-jest": "^29.0.0",
         "blob-polyfill": "^7.0.0",
         "cypress": "^12.0.0",
