@@ -160,6 +160,7 @@ export class Synapse implements Homeserver, HomeserverInstance {
         };
         return this;
     }
+
     public async stop(): Promise<void> {
         if (!this.config) throw new Error("Missing existing synapse instance, did you call stop() before start()?");
         const id = this.config.serverId;
