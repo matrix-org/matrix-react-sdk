@@ -38,18 +38,21 @@ const CONFIG_JSON: Record<string, any> = {
 };
 
 export const test = base.extend<{
+    // The contents of the config.json to send
     config: typeof CONFIG_JSON;
+    // The options with which to run the `homeserver` fixture
     startHomeserverOpts: StartHomeserverOpts | string;
     homeserver: HomeserverInstance;
     oAuthServer: { port: number };
     user: Credentials & {
         displayName: string;
     };
+    displayName?: string;
 }>({
     config: CONFIG_JSON,
     page: async ({ context, page, config }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
-            await route.fulfill({ json: config });
+            await route.fulfill({ json: { ...CONFIG_JSON, ...config } });
         });
         await use(page);
     },
@@ -72,11 +75,12 @@ export const test = base.extend<{
         server.stop();
     },
 
-    user: async ({ page, homeserver }, use) => {
+    displayName: undefined,
+    user: async ({ page, homeserver, displayName: testDisplayName }, use) => {
         const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
         const username = _.uniqueId("user_");
         const password = _.uniqueId("password_");
-        const displayName = _.sample(names)!;
+        const displayName = testDisplayName ?? _.sample(names)!;
 
         const credentials = await homeserver.registerUser(username, password, displayName);
         console.log(`Registered test user ${username} with displayname ${displayName}`);
@@ -94,9 +98,6 @@ export const test = base.extend<{
 
                 // Ensure the language is set to a consistent value
                 window.localStorage.setItem("mx_local_settings", '{"language":"en"}');
-
-                // reset notification permissions, so we have predictable behaviour of notifications toast
-                Object.assign(window.Notification, { permission: "default" });
             },
             { baseUrl: homeserver.config.baseUrl, credentials },
         );

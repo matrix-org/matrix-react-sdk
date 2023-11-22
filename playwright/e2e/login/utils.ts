@@ -16,11 +16,14 @@ limitations under the License.
 
 import { Page, expect } from "@playwright/test";
 
-import { HomeserverInstance } from "../../plugins/utils/homeserver";
+import { Credentials, HomeserverInstance } from "../../plugins/utils/homeserver";
 
 /** Visit the login page, choose to log in with "OAuth test", register a new account, and redirect back to Element
  */
-export async function doTokenRegistration(page: Page, homeserver: HomeserverInstance) {
+export async function doTokenRegistration(
+    page: Page,
+    homeserver: HomeserverInstance,
+): Promise<Credentials & { displayName: string }> {
     await page.goto("/#/login");
 
     await page.getByRole("button", { name: "Edit" }).click();
@@ -51,6 +54,15 @@ export async function doTokenRegistration(page: Page, homeserver: HomeserverInst
     await page.getByRole("link", { name: "Continue" }).click();
 
     // Eventually, we should end up at the home screen.
-    await expect(page).toHaveURL(/\/#\/home$/);
+    await expect(page).toHaveURL(/\/#\/home$/, { timeout: 10000 });
     await expect(page.getByRole("heading", { name: "Welcome Alice", exact: true })).toBeVisible();
+
+    return page.evaluate(() => ({
+        accessToken: window.mxMatrixClientPeg.get().getAccessToken(),
+        userId: window.mxMatrixClientPeg.get().getUserId(),
+        deviceId: window.mxMatrixClientPeg.get().getDeviceId(),
+        homeServer: window.mxMatrixClientPeg.get().getHomeserverUrl(),
+        password: null,
+        displayName: "Alice",
+    }));
 }
