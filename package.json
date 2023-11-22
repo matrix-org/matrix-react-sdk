@@ -184,6 +184,7 @@
         "@typescript-eslint/parser": "^5.6.0",
         "allchange": "^1.1.0",
         "axe-core": "4.8.2",
+        "axe-playwright": "^1.2.3",
         "babel-jest": "^29.0.0",
         "blob-polyfill": "^7.0.0",
         "cypress": "^12.0.0",
@@ -225,7 +226,6 @@
         "stylelint-scss": "^5.0.0",
         "ts-node": "^10.9.1",
         "typescript": "5.1.6",
-        "axe-playwright": "^1.2.3",
         "@types/express": "^4.17.21"
     },
     "peerDependencies": {
