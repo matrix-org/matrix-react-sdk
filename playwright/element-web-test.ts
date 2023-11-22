@@ -48,7 +48,7 @@ export const test = base.extend<{
     },
 
     startHomeserverOpts: "default",
-    homeserver: async ({ page, request, startHomeserverOpts: opts }, use) => {
+    homeserver: async ({ request, startHomeserverOpts: opts }, use) => {
         if (typeof opts === "string") {
             opts = { template: opts };
         }
