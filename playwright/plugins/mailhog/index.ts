@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import mailhog from "mailhog";
+
 import { getFreePort } from "../utils/port";
 import { Docker } from "../docker";
-import mailhog from "mailhog";
 
 export interface Instance {
     host: string;

@@ -17,10 +17,13 @@ limitations under the License.
 import { test as base, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+import type mailhog from "mailhog";
+import type { IConfigOptions } from "../src/IConfigOptions";
 import { HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
+import { Instance } from "./plugins/mailhog";
 
-const CONFIG_JSON = {
+const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
     // actually work.
     //
@@ -47,6 +50,7 @@ export const test = base.extend<
         config: typeof CONFIG_JSON;
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
+        mailhog?: { api: mailhog.API; instance: Instance };
     }
 >({
     crypto: ["legacy", { option: true }],
