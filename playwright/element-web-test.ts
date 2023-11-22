@@ -51,7 +51,6 @@ export const test = base.extend<
     page: async ({ context, page, config, crypto }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...config };
-            // configure element to use rust crypto if the env var tells us so
             if (crypto === "rust") {
                 json["features"] = {
                     ...json["features"],
