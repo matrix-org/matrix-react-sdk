@@ -17,7 +17,6 @@ limitations under the License.
 import { checkA11y, injectAxe } from "axe-playwright";
 
 import { test, expect } from "../../element-web-test";
-import { OAuthServer } from "../../plugins/oauth_server";
 import { doTokenRegistration } from "./utils";
 
 test.describe("Login", () => {
@@ -80,15 +79,12 @@ test.describe("Login", () => {
 
     // tests for old-style SSO login, in which we exchange tokens with Synapse, and Synapse talks to an auth server
     test.describe("SSO login", () => {
-        const oAuthServer = new OAuthServer();
         test.use({
-            startHomeserverOpts: {
-                template: "default",
-                oAuthServerPort: oAuthServer.start(),
-            },
-        });
-        test.afterAll(() => {
-            oAuthServer.stop();
+            startHomeserverOpts: ({ oAuthServer }, use) =>
+                use({
+                    template: "default",
+                    oAuthServerPort: oAuthServer.port,
+                }),
         });
 
         test("logs in with SSO and lands on the home screen", async ({ page, homeserver }) => {
