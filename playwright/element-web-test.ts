@@ -66,7 +66,6 @@ export const test = base.extend<
             }
             await route.fulfill({ json });
         });
-
         await use(page);
     },
 
