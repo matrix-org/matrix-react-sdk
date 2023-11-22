@@ -129,6 +129,7 @@
         "what-input": "^5.2.10"
     },
     "devDependencies": {
+        "@axe-core/playwright": "^4.8.1",
         "@babel/cli": "^7.12.10",
         "@babel/core": "^7.12.10",
         "@babel/eslint-parser": "^7.12.10",
@@ -184,7 +185,6 @@
         "@typescript-eslint/parser": "^5.6.0",
         "allchange": "^1.1.0",
         "axe-core": "4.8.2",
-        "axe-playwright": "^1.2.3",
         "babel-jest": "^29.0.0",
         "blob-polyfill": "^7.0.0",
         "cypress": "^12.0.0",

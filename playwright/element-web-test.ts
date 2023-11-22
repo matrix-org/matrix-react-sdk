@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base } from "@playwright/test";
-import { injectAxe } from "axe-playwright";
+import { test as base, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 import { HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
@@ -42,6 +42,8 @@ export type TestOptions = {
 
 export const test = base.extend<
     TestOptions & {
+        axe: AxeBuilder;
+        checkA11y: () => Promise<void>;
         config: typeof CONFIG_JSON;
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
@@ -61,7 +63,6 @@ export const test = base.extend<
             await route.fulfill({ json });
         });
 
-        await injectAxe(page);
         await use(page);
     },
 
@@ -75,6 +76,21 @@ export const test = base.extend<
         await use(await server.start(opts));
         await server.stop();
     },
+
+    axe: async ({ page }, use) => {
+        await use(new AxeBuilder({ page }));
+    },
+    checkA11y: async ({ axe }, use, testInfo) =>
+        use(async () => {
+            const results = await axe.analyze();
+
+            await testInfo.attach("accessibility-scan-results", {
+                body: JSON.stringify(results, null, 2),
+                contentType: "application/json",
+            });
+
+            expect(results.violations).toEqual([]);
+        }),
 });
 
 test.use({});
