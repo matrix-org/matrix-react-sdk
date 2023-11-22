@@ -37,23 +37,38 @@ const CONFIG_JSON: Record<string, any> = {
     map_style_url: "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
 };
 
-export const test = base.extend<{
-    // The contents of the config.json to send
-    config: typeof CONFIG_JSON;
-    // The options with which to run the `homeserver` fixture
-    startHomeserverOpts: StartHomeserverOpts | string;
-    homeserver: HomeserverInstance;
-    oAuthServer: { port: number };
-    user: Credentials & {
-        displayName: string;
-    };
-    displayName?: string;
-}>({
+export type TestOptions = {
+    crypto: "legacy" | "rust";
+};
+
+export const test = base.extend<
+    TestOptions & {
+        // The contents of the config.json to send
+        config: typeof CONFIG_JSON;
+        // The options with which to run the `homeserver` fixture
+        startHomeserverOpts: StartHomeserverOpts | string;
+        homeserver: HomeserverInstance;
+        oAuthServer: { port: number };
+        user: Credentials & {
+            displayName: string;
+        };
+        displayName?: string;
+    }
+>({
+    crypto: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config }, use) => {
+    page: async ({ context, page, config, crypto }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
-            await route.fulfill({ json: { ...CONFIG_JSON, ...config } });
+            const json = { ...CONFIG_JSON, ...config };
+            if (crypto === "rust") {
+                json["features"] = {
+                    ...json["features"],
+                    feature_rust_crypto: true,
+                };
+            }
+            await route.fulfill({ json });
         });
+
         await use(page);
     },
 
