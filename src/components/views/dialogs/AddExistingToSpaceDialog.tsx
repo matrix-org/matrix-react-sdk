@@ -62,9 +62,9 @@ export const Entry: React.FC<{
     return (
         <label className="mx_AddExistingToSpace_entry">
             {room?.isSpaceRoom() ? (
-                <RoomAvatar room={room} height={32} width={32} />
+                <RoomAvatar room={room} size="32px" />
             ) : (
-                <DecoratedRoomAvatar room={room} avatarSize={32} />
+                <DecoratedRoomAvatar room={room} size="32px" />
             )}
             <span className="mx_AddExistingToSpace_entry_name">{room.name}</span>
             <StyledCheckbox
@@ -241,12 +241,14 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
                 />
 
                 <span className="mx_AddExistingToSpaceDialog_error">
-                    <div className="mx_AddExistingToSpaceDialog_errorHeading">{_t("Not all selected were added")}</div>
-                    <div className="mx_AddExistingToSpaceDialog_errorCaption">{_t("Try again")}</div>
+                    <div className="mx_AddExistingToSpaceDialog_errorHeading">
+                        {_t("space|add_existing_room_space|error_heading")}
+                    </div>
+                    <div className="mx_AddExistingToSpaceDialog_errorCaption">{_t("action|try_again")}</div>
                 </span>
 
                 <AccessibleButton className="mx_AddExistingToSpaceDialog_retryButton" onClick={addRooms}>
-                    {_t("Retry")}
+                    {_t("action|retry")}
                 </AccessibleButton>
             </>
         );
@@ -255,7 +257,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
             <span>
                 <ProgressBar value={progress} max={selectedToAdd.size} />
                 <div className="mx_AddExistingToSpaceDialog_progressText">
-                    {_t("Adding rooms... (%(progress)s out of %(count)s)", {
+                    {_t("space|add_existing_room_space|progress_text", {
                         count: selectedToAdd.size,
                         progress,
                     })}
@@ -267,7 +269,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         if (!button || selectedToAdd.size > 0) {
             button = (
                 <AccessibleButton kind="primary" disabled={selectedToAdd.size < 1} onClick={addRooms}>
-                    {_t("Add")}
+                    {_t("action|add")}
                 </AccessibleButton>
             );
         }
@@ -387,9 +389,9 @@ const defaultRendererFactory =
             </div>
         );
 
-export const defaultRoomsRenderer = defaultRendererFactory(_td("Rooms"));
-export const defaultSpacesRenderer = defaultRendererFactory(_td("Spaces"));
-export const defaultDmsRenderer = defaultRendererFactory(_td("Direct Messages"));
+export const defaultRoomsRenderer = defaultRendererFactory(_td("common|rooms"));
+export const defaultSpacesRenderer = defaultRendererFactory(_td("common|spaces"));
+export const defaultDmsRenderer = defaultRendererFactory(_td("space|add_existing_room_space|dm_heading"));
 
 interface ISubspaceSelectorProps {
     title: string;
@@ -418,7 +420,7 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
                     onChange(options.find((space) => space.roomId === key) || space);
                 }}
                 value={value.roomId}
-                label={_t("Space selection")}
+                label={_t("space|add_existing_room_space|space_dropdown_label")}
             >
                 {
                     options.map((space) => {
@@ -427,7 +429,7 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
                         });
                         return (
                             <div key={space.roomId} className={classes}>
-                                <RoomAvatar room={space} width={24} height={24} />
+                                <RoomAvatar room={space} size="24px" />
                                 {space.name || getDisplayAliasForRoom(space) || space.roomId}
                             </div>
                         );
@@ -445,7 +447,7 @@ export const SubspaceSelector: React.FC<ISubspaceSelectorProps> = ({ title, spac
 
     return (
         <div className="mx_SubspaceSelector">
-            <RoomAvatar room={value} height={40} width={40} />
+            <RoomAvatar room={value} size="40px" />
             <div>
                 <h1>{title}</h1>
                 {body}
@@ -461,7 +463,7 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
         <BaseDialog
             title={
                 <SubspaceSelector
-                    title={_t("Add existing rooms")}
+                    title={_t("space|add_existing_room_space|space_dropdown_title")}
                     space={space}
                     value={selectedSpace}
                     onChange={setSelectedSpace}
@@ -478,7 +480,7 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
                     onFinished={onFinished}
                     footerPrompt={
                         <>
-                            <div>{_t("Want to add a new room instead?")}</div>
+                            <div>{_t("space|add_existing_room_space|create")}</div>
                             <AccessibleButton
                                 kind="link"
                                 onClick={(ev: ButtonEvent) => {
@@ -486,15 +488,15 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
                                     onFinished();
                                 }}
                             >
-                                {_t("Create a new room")}
+                                {_t("space|add_existing_room_space|create_prompt")}
                             </AccessibleButton>
                         </>
                     }
-                    filterPlaceholder={_t("Search for rooms")}
+                    filterPlaceholder={_t("space|room_filter_placeholder")}
                     roomsRenderer={defaultRoomsRenderer}
                     spacesRenderer={() => (
                         <div className="mx_AddExistingToSpace_section">
-                            <h3>{_t("Spaces")}</h3>
+                            <h3>{_t("common|spaces")}</h3>
                             <AccessibleButton
                                 kind="link"
                                 onClick={() => {
@@ -502,7 +504,7 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
                                     onFinished();
                                 }}
                             >
-                                {_t("Adding spaces has moved.")}
+                                {_t("space|add_existing_room_space|subspace_moved_note")}
                             </AccessibleButton>
                         </div>
                     )}

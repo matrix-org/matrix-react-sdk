@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DeviceVerificationStatus, ICryptoCallbacks, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { DeviceVerificationStatus, ICryptoCallbacks, MatrixClient, encodeBase64 } from "matrix-js-sdk/src/matrix";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
-import { encodeBase64 } from "matrix-js-sdk/src/crypto/olmlib";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import type CreateSecretStorageDialog from "./async-components/views/dialogs/security/CreateSecretStorageDialog";
@@ -72,11 +71,11 @@ export class AccessCancelledError extends Error {
 
 async function confirmToDismiss(): Promise<boolean> {
     const [sure] = await Modal.createDialog(QuestionDialog, {
-        title: _t("Cancel entering passphrase?"),
-        description: _t("Are you sure you want to cancel entering passphrase?"),
+        title: _t("encryption|cancel_entering_passphrase_title"),
+        description: _t("encryption|cancel_entering_passphrase_description"),
         danger: false,
-        button: _t("Go Back"),
-        cancelButton: _t("Cancel"),
+        button: _t("action|go_back"),
+        cancelButton: _t("action|cancel"),
     }).finished;
     return !sure;
 }
@@ -356,7 +355,7 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
             await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                        title: _t("Setting up keys"),
+                        title: _t("encryption|bootstrap_title"),
                         matrixClient: cli,
                         makeRequest,
                     });

@@ -40,9 +40,9 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
 
     private onClearStorageClick = (): void => {
         Modal.createDialog(QuestionDialog, {
-            title: _t("Sign out"),
-            description: <div>{_t("Sign out and remove encryption keys?")}</div>,
-            button: _t("Sign out"),
+            title: _t("action|sign_out"),
+            description: <div>{_t("error|session_restore|clear_storage_description")}</div>,
+            button: _t("action|sign_out"),
             danger: true,
             onFinished: this.props.onFinished,
         });
@@ -59,7 +59,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
 
         const clearStorageButton = (
             <button onClick={this.onClearStorageClick} className="danger">
-                {_t("Clear Storage and Sign Out")}
+                {_t("error|session_restore|clear_storage_button")}
             </button>
         );
 
@@ -67,7 +67,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
         if (SdkConfig.get().bug_report_endpoint_url) {
             dialogButtons = (
                 <DialogButtons
-                    primaryButton={_t("Send Logs")}
+                    primaryButton={_t("bug_reporting|send_logs")}
                     onPrimaryButtonClick={this.sendBugReport}
                     focus={true}
                     hasCancel={false}
@@ -78,7 +78,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
         } else {
             dialogButtons = (
                 <DialogButtons
-                    primaryButton={_t("Refresh")}
+                    primaryButton={_t("action|refresh")}
                     onPrimaryButtonClick={this.onRefreshClick}
                     focus={true}
                     hasCancel={false}
@@ -92,25 +92,16 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
             <BaseDialog
                 className="mx_ErrorDialog"
                 onFinished={this.props.onFinished}
-                title={_t("Unable to restore session")}
+                title={_t("error|session_restore|title")}
                 contentId="mx_Dialog_content"
                 hasCancel={false}
             >
                 <div className="mx_Dialog_content" id="mx_Dialog_content">
-                    <p>{_t("We encountered an error trying to restore your previous session.")}</p>
+                    <p>{_t("error|session_restore|description_1")}</p>
 
-                    <p>
-                        {_t(
-                            "If you have previously used a more recent version of %(brand)s, your session may be incompatible with this version. Close this window and return to the more recent version.",
-                            { brand },
-                        )}
-                    </p>
+                    <p>{_t("error|session_restore|description_2", { brand })}</p>
 
-                    <p>
-                        {_t(
-                            "Clearing your browser's storage may fix the problem, but will sign you out and cause any encrypted chat history to become unreadable.",
-                        )}
-                    </p>
+                    <p>{_t("error|session_restore|description_3")}</p>
                 </div>
                 {dialogButtons}
             </BaseDialog>

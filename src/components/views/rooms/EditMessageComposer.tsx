@@ -306,7 +306,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         PosthogAnalytics.instance.trackEvent<ComposerEvent>({
             eventName: "Composer",
             isEditing: true,
-            isLocation: false,
+            messageType: "Text",
             inThread: !!editedEvent?.getThread(),
             isReply: !!editedEvent.replyEventId,
         });
@@ -482,15 +482,15 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     room={room}
                     threadId={this.props.editState?.getEvent()?.getThread()?.id}
                     initialCaret={this.props.editState.getCaret() ?? undefined}
-                    label={_t("Edit message")}
+                    label={_t("composer|edit_composer_label")}
                     onChange={this.onChange}
                 />
                 <div className="mx_EditMessageComposer_buttons">
                     <AccessibleButton kind="secondary" onClick={this.cancelEdit}>
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton kind="primary" onClick={this.sendEdit} disabled={this.state.saveDisabled}>
-                        {_t("Save")}
+                        {_t("action|save")}
                     </AccessibleButton>
                 </div>
             </div>

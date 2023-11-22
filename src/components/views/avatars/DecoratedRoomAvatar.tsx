@@ -33,7 +33,7 @@ import TooltipTarget from "../elements/TooltipTarget";
 
 interface IProps {
     room: Room;
-    avatarSize: number;
+    size: string;
     displayBadge?: boolean;
     forceCount?: boolean;
     oobData?: IOOBData;
@@ -61,15 +61,15 @@ enum Icon {
 function tooltipText(variant: Icon): string | undefined {
     switch (variant) {
         case Icon.Globe:
-            return _t("This room is public");
+            return _t("room|header|room_is_public");
         case Icon.PresenceOnline:
-            return _t("Online");
+            return _t("presence|online");
         case Icon.PresenceAway:
-            return _t("Away");
+            return _t("presence|away");
         case Icon.PresenceOffline:
-            return _t("common|offline");
+            return _t("presence|offline");
         case Icon.PresenceBusy:
-            return _t("Busy");
+            return _t("presence|busy");
     }
 }
 
@@ -207,8 +207,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             <div className={classes}>
                 <RoomAvatar
                     room={this.props.room}
-                    width={this.props.avatarSize}
-                    height={this.props.avatarSize}
+                    size={this.props.size}
                     oobData={this.props.oobData}
                     viewAvatarOnClick={this.props.viewAvatarOnClick}
                 />

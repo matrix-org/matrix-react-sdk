@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { render, waitFor, screen } from "@testing-library/react";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import {
+    ReceiptType,
     EventTimelineSet,
     EventType,
     MatrixClient,
@@ -89,16 +89,16 @@ const getProps = (room: Room, events: MatrixEvent[]): TimelinePanel["props"] => 
 const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
     const events: MatrixEvent[] = [];
     for (let index = 0; index < count; index++) {
-        events.push(
-            new MatrixEvent({
-                room_id: room.roomId,
-                event_id: `${room.roomId}_event_${index}`,
-                type: EventType.RoomMessage,
-                sender: "userId",
-                content: createMessageEventContent("`Event${index}`"),
-                origin_server_ts: index,
-            }),
-        );
+        const event = new MatrixEvent({
+            room_id: room.roomId,
+            event_id: `${room.roomId}_event_${index}`,
+            type: EventType.RoomMessage,
+            sender: "userId",
+            content: createMessageEventContent("`Event${index}`"),
+            origin_server_ts: index,
+        });
+        event.localTimestamp = index;
+        events.push(event);
     }
 
     return events;
@@ -291,6 +291,10 @@ describe("TimelinePanel", () => {
 
                     it("and forgetting the read markers, should send the stored marker again", async () => {
                         timelineSet.addLiveEvent(ev2, {});
+                        // Add the event to the room as well as the timeline, so we can find it when we
+                        // call findEventById in getEventReadUpTo. This is odd because in our test
+                        // setup, timelineSet is not actually the timelineSet of the room.
+                        await room.addLiveEvents([ev2], {});
                         room.addEphemeralEvents([newReceipt(ev2.getId()!, userId, 222, 200)]);
                         await timelinePanel.forgetReadMarker();
                         expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev2.getId());
@@ -542,12 +546,14 @@ describe("TimelinePanel", () => {
                 event_id: `virtualCallEvent1`,
                 origin_server_ts: 0,
             });
+            virtualCallInvite.localTimestamp = 2;
             const virtualCallMetaEvent = new MatrixEvent({
                 type: "org.matrix.call.sdp_stream_metadata_changed",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent2`,
                 origin_server_ts: 0,
             });
+            virtualCallMetaEvent.localTimestamp = 2;
             const virtualEvents = [virtualCallInvite, ...mockEvents(virtualRoom), virtualCallMetaEvent];
             const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
 
@@ -558,7 +564,6 @@ describe("TimelinePanel", () => {
                     overlayTimelineSetFilter={isCallEvent}
                 />,
             );
-
             await waitFor(() =>
                 expectEvents(container, [
                     // main timeline events are included

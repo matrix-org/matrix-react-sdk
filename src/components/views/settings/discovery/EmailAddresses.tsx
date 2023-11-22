@@ -105,7 +105,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: extractErrorMessageFromError(err, _t("Operation failed")),
+                description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
             });
         }
     }
@@ -116,7 +116,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         this.changeBinding({
             bind: false,
             label: "revoke",
-            errorTitle: _t("Unable to revoke sharing for email address"),
+            errorTitle: _t("settings|general|error_revoke_email_discovery"),
         });
     };
 
@@ -126,7 +126,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         this.changeBinding({
             bind: true,
             label: "share",
-            errorTitle: _t("Unable to share email address"),
+            errorTitle: _t("settings|general|error_share_email_discovery"),
         });
     };
 
@@ -152,16 +152,14 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
             if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Your email address hasn't been verified yet"),
-                    description: _t(
-                        "Click the link in the email you received to verify and then click continue again.",
-                    ),
+                    title: _t("settings|general|email_not_verified"),
+                    description: _t("settings|general|email_verification_instructions"),
                 });
             } else {
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to verify email address."),
-                    description: extractErrorMessageFromError(err, _t("Operation failed")),
+                    title: _t("settings|general|error_email_verification"),
+                    description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                 });
             }
         } finally {
@@ -178,14 +176,14 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         if (verifying) {
             status = (
                 <span>
-                    {_t("Verify the link in your inbox")}
+                    {_t("settings|general|discovery_email_verification_instructions")}
                     <AccessibleButton
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                         kind="primary_sm"
                         onClick={this.onContinueClick}
                         disabled={this.state.continueDisabled}
                     >
-                        {_t("Complete")}
+                        {_t("action|complete")}
                     </AccessibleButton>
                 </span>
             );
@@ -197,7 +195,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     onClick={this.onRevokeClick}
                     disabled={this.props.disabled}
                 >
-                    {_t("Revoke")}
+                    {_t("action|revoke")}
                 </AccessibleButton>
             );
         } else {
@@ -208,7 +206,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     onClick={this.onShareClick}
                     disabled={this.props.disabled}
                 >
-                    {_t("Share")}
+                    {_t("action|share")}
                 </AccessibleButton>
             );
         }
@@ -242,10 +240,8 @@ export default class EmailAddresses extends React.Component<IProps> {
 
         return (
             <SettingsSubsection
-                heading={_t("Email addresses")}
-                description={
-                    (!hasEmails && _t("Discovery options will appear once you have added an email above.")) || undefined
-                }
+                heading={_t("settings|general|emails_heading")}
+                description={(!hasEmails && _t("settings|general|discovery_email_empty")) || undefined}
                 stretchContent
             >
                 {content}

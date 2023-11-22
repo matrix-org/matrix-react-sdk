@@ -1,9 +1,17 @@
 [![npm](https://img.shields.io/npm/v/matrix-react-sdk)](https://www.npmjs.com/package/matrix-react-sdk)
 ![Tests](https://github.com/matrix-org/matrix-react-sdk/actions/workflows/tests.yml/badge.svg)
 ![Static Analysis](https://github.com/matrix-org/matrix-react-sdk/actions/workflows/static_analysis.yaml/badge.svg)
-[![matrix-react-sdk](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/ppvnzg/develop&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/ppvnzg/runs)
+[![Knapsack Pro Parallel CI builds for Cypress Test - Legacy Crypto](https://img.shields.io/badge/Knapsack%20Pro-Parallel%20%2F%20Cypress%20Test%20--%20Legacy%20Crypto-%230074ff)](https://knapsackpro.com/dashboard/organizations/3882/projects/2469/test_suites/3724/builds?utm_campaign=organization-id-3882&utm_content=test-suite-id-3724&utm_medium=readme&utm_source=knapsack-pro-badge&utm_term=project-id-2469)
+[![Knapsack Pro Parallel CI builds for Cypress Test - Rust Crypto](https://img.shields.io/badge/Knapsack%20Pro-Parallel%20%2F%20Cypress%20Test%20--%20Rust%20Crypto-%230074ff)](https://knapsackpro.com/dashboard/organizations/3882/projects/2469/test_suites/3729/builds?utm_campaign=organization-id-3882&utm_content=test-suite-id-3729&utm_medium=readme&utm_source=knapsack-pro-badge&utm_term=project-id-2469)
+
+<!--
+Percy is disabled while we're figuring out https://github.com/vector-im/wat-internal/issues/36
+and https://github.com/vector-im/wat-internal/issues/56. We're hoping to turn it back on or switch
+to an alternative in the future.
 [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/dfde73bd/matrix-react-sdk)
-[![Weblate](https://translate.element.io/widgets/element-web/-/matrix-react-sdk/svg-badge.svg)](https://translate.element.io/engage/element-web/)
+-->
+
+[![Localazy](https://img.shields.io/endpoint?url=https%3A%2F%2Fconnect.localazy.com%2Fstatus%2Felement-web%2Fdata%3Fcontent%3Dall%26title%3Dlocalazy%26logo%3Dtrue)](https://localazy.com/p/element-web)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=coverage)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
@@ -27,10 +35,6 @@ As of Aug 2018, the only skin that exists is
 `matrix-org/matrix-react-sdk` should effectively
 be considered as a single project (for instance, matrix-react-sdk bugs
 are currently filed against vector-im/element-web rather than this project).
-
-## Translation Status
-
-[![Translation status](https://translate.element.io/widgets/element-web/-/multi-auto.svg)](https://translate.element.io/engage/element-web/?utm_source=widget)
 
 ## Developer Guide
 
@@ -209,7 +213,5 @@ Now the yarn commands should work as normal.
 
 ### End-to-End tests
 
-Make sure you've got your Element development server running (by doing `yarn
-start` in element-web), and then in this project, run `yarn run test:cypress`. See
-[`docs/cypress.md`](https://github.com/matrix-org/matrix-react-sdk/blob/develop/docs/cypress.md)
-for more information.
+We use Cypress and Element Web for end-to-end tests. See
+[`docs/cypress.md`](docs/cypress.md) for more information.

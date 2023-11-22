@@ -14,10 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, ClientEvent, EventType, MatrixClient, RoomStateEvent, SyncState } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixEvent,
+    ClientEvent,
+    EventType,
+    MatrixClient,
+    RoomStateEvent,
+    SyncState,
+    ClientStoppedError,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import dis from "./dispatcher/dispatcher";
 import {
@@ -54,10 +62,10 @@ export default class DeviceListener {
     private dismissed = new Set<string>();
     // has the user dismissed any of the various nag toasts to setup encryption on this device?
     private dismissedThisDeviceToast = false;
-    // cache of the key backup info
-    private keyBackupInfo: IKeyBackupInfo | null = null;
+    /** Cache of the info about the current key backup on the server. */
+    private keyBackupInfo: KeyBackupInfo | null = null;
+    /** When `keyBackupInfo` was last updated */
     private keyBackupFetchedAt: number | null = null;
-    private keyBackupStatusChecked = false;
     // We keep a list of our own device IDs so we can batch ones that were already
     // there the last time the app launched into a single toast, but display new
     // ones in their own toasts.
@@ -235,9 +243,14 @@ export default class DeviceListener {
         this.updateClientInformation();
     };
 
-    // The server doesn't tell us when key backup is set up, so we poll
-    // & cache the result
-    private async getKeyBackupInfo(): Promise<IKeyBackupInfo | null> {
+    /**
+     * Fetch the key backup information from the server.
+     *
+     * The result is cached for `KEY_BACKUP_POLL_INTERVAL` ms to avoid repeated API calls.
+     *
+     * @returns The key backup info from the server, or `null` if there is no key backup.
+     */
+    private async getKeyBackupInfo(): Promise<KeyBackupInfo | null> {
         if (!this.client) return null;
         const now = new Date().getTime();
         if (
@@ -260,7 +273,17 @@ export default class DeviceListener {
         return cli?.getRooms().some((r) => cli.isRoomEncrypted(r.roomId)) ?? false;
     }
 
-    private async recheck(): Promise<void> {
+    private recheck(): void {
+        this.doRecheck().catch((e) => {
+            if (e instanceof ClientStoppedError) {
+                // the client was stopped while recheck() was running. Nothing left to do.
+            } else {
+                logger.error("Error during `DeviceListener.recheck`", e);
+            }
+        });
+    }
+
+    private async doRecheck(): Promise<void> {
         if (!this.running || !this.client) return; // we have been stopped
         const cli = this.client;
 
@@ -289,7 +312,7 @@ export default class DeviceListener {
 
             // cross signing isn't enabled - nag to enable it
             // There are 3 different toasts for:
-            if (!(await crypto.getCrossSigningKeyId()) && cli.getStoredCrossSigningForUser(cli.getSafeUserId())) {
+            if (!(await crypto.getCrossSigningKeyId()) && (await crypto.userHasCrossSigningKeys())) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
                 this.checkKeyBackupStatus();
@@ -384,18 +407,23 @@ export default class DeviceListener {
         this.displayingToastsForDeviceIds = newUnverifiedDeviceIds;
     }
 
+    /**
+     * Check if key backup is enabled, and if not, raise an `Action.ReportKeyBackupNotEnabled` event (which will
+     * trigger an auto-rageshake).
+     */
     private checkKeyBackupStatus = async (): Promise<void> => {
         if (this.keyBackupStatusChecked || !this.client) {
             return;
         }
-        // returns null when key backup status hasn't finished being checked
-        const isKeyBackupEnabled = this.client.getKeyBackupEnabled();
-        this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+        const activeKeyBackupVersion = await this.client.getCrypto()?.getActiveSessionBackupVersion();
+        // if key backup is enabled, no need to check this ever again (XXX: why only when it is enabled?)
+        this.keyBackupStatusChecked = !!activeKeyBackupVersion;
 
-        if (isKeyBackupEnabled === false) {
+        if (!activeKeyBackupVersion) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
         }
     };
+    private keyBackupStatusChecked = false;
 
     private onRecordClientInformationSettingChange: CallbackFn = (
         _originalSettingName,

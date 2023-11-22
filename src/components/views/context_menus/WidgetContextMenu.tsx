@@ -135,16 +135,20 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             } catch (err) {
                 logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
-                const message = err instanceof Error ? err.message : _t("Unable to start audio streaming.");
+                const message =
+                    err instanceof Error ? err.message : _t("widget|error_unable_start_audio_stream_description");
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failed to start livestream"),
+                    title: _t("widget|error_unable_start_audio_stream_title"),
                     description: message,
                 });
             }
             onFinished();
         };
         streamAudioStreamButton = (
-            <IconizedContextMenuOption onClick={onStreamAudioClick} label={_t("Start audio stream")} />
+            <IconizedContextMenuOption
+                onClick={onStreamAudioClick}
+                label={_t("widget|context_menu|start_audio_stream")}
+            />
         );
     }
 
@@ -159,7 +163,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
 
-        editButton = <IconizedContextMenuOption onClick={_onEditClick} label={_t("Edit")} />;
+        editButton = <IconizedContextMenuOption onClick={_onEditClick} label={_t("action|edit")} />;
     }
 
     let snapshotButton: JSX.Element | undefined;
@@ -179,7 +183,9 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
 
-        snapshotButton = <IconizedContextMenuOption onClick={onSnapshotClick} label={_t("Take a picture")} />;
+        snapshotButton = (
+            <IconizedContextMenuOption onClick={onSnapshotClick} label={_t("widget|context_menu|screenshot")} />
+        );
     }
 
     let deleteButton: JSX.Element | undefined;
@@ -190,11 +196,9 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             } else if (roomId) {
                 // Show delete confirmation dialog
                 Modal.createDialog(QuestionDialog, {
-                    title: _t("Delete Widget"),
-                    description: _t(
-                        "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?",
-                    ),
-                    button: _t("Delete widget"),
+                    title: _t("widget|context_menu|delete"),
+                    description: _t("widget|context_menu|delete_warning"),
+                    button: _t("widget|context_menu|delete"),
                     onFinished: (confirmed) => {
                         if (!confirmed) return;
                         WidgetUtils.setRoomWidget(cli, roomId, app.id);
@@ -208,7 +212,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
         deleteButton = (
             <IconizedContextMenuOption
                 onClick={_onDeleteClick}
-                label={userWidget ? _t("Remove") : _t("Remove for everyone")}
+                label={userWidget ? _t("action|remove") : _t("widget|context_menu|remove")}
             />
         );
     }
@@ -233,7 +237,9 @@ export const WidgetContextMenu: React.FC<IProps> = ({
                 onFinished();
             };
 
-            revokeButton = <IconizedContextMenuOption onClick={onRevokeClick} label={_t("Revoke permissions")} />;
+            revokeButton = (
+                <IconizedContextMenuOption onClick={onRevokeClick} label={_t("widget|context_menu|revoke")} />
+            );
         }
     }
 
@@ -246,7 +252,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
 
-        moveLeftButton = <IconizedContextMenuOption onClick={onClick} label={_t("Move left")} />;
+        moveLeftButton = <IconizedContextMenuOption onClick={onClick} label={_t("widget|context_menu|move_left")} />;
     }
 
     let moveRightButton: JSX.Element | undefined;
@@ -257,7 +263,7 @@ export const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
 
-        moveRightButton = <IconizedContextMenuOption onClick={onClick} label={_t("Move right")} />;
+        moveRightButton = <IconizedContextMenuOption onClick={onClick} label={_t("widget|context_menu|move_right")} />;
     }
 
     return (

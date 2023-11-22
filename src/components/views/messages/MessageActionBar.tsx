@@ -17,9 +17,15 @@ limitations under the License.
 */
 
 import React, { ReactElement, useCallback, useContext, useEffect } from "react";
-import { EventStatus, MatrixEvent, MatrixEventEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
+import {
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    MsgType,
+    RelationType,
+    M_BEACON_INFO,
+} from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { Icon as EditIcon } from "../../../../res/img/element-icons/room/message-bar/edit.svg";
@@ -116,7 +122,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         <React.Fragment>
             <ContextMenuTooltipButton
                 className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                title={_t("Options")}
+                title={_t("common|options")}
                 onClick={onOptionsClick}
                 onContextMenu={onOptionsClick}
                 isExpanded={menuDisplayed}
@@ -173,7 +179,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
         <React.Fragment>
             <ContextMenuTooltipButton
                 className="mx_MessageActionBar_iconButton"
-                title={_t("React")}
+                title={_t("action|react")}
                 onClick={onClick}
                 onContextMenu={onClick}
                 isExpanded={menuDisplayed}
@@ -231,16 +237,12 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
                 <>
                     <div className="mx_Tooltip_title">
                         {!hasARelation
-                            ? _t("Reply in thread")
-                            : _t("Can't create a thread from an event with an existing relation")}
+                            ? _t("action|reply_in_thread")
+                            : _t("threads|error_start_thread_existing_relation")}
                     </div>
                 </>
             }
-            title={
-                !hasARelation
-                    ? _t("Reply in thread")
-                    : _t("Can't create a thread from an event with an existing relation")
-            }
+            title={!hasARelation ? _t("action|reply_in_thread") : _t("threads|error_start_thread_existing_relation")}
             onClick={onClick}
             onContextMenu={onClick}
         >
@@ -391,7 +393,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             toolbarOpts.push(
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_iconButton"
-                    title={_t("Edit")}
+                    title={_t("action|edit")}
                     onClick={this.onEditClick}
                     onContextMenu={this.onEditClick}
                     key="edit"
@@ -404,7 +406,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         const cancelSendingButton = (
             <RovingAccessibleTooltipButton
                 className="mx_MessageActionBar_iconButton"
-                title={_t("Delete")}
+                title={_t("action|delete")}
                 onClick={this.onCancelClick}
                 onContextMenu={this.onCancelClick}
                 key="cancel"
@@ -429,7 +431,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 0,
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_iconButton"
-                    title={_t("Retry")}
+                    title={_t("action|retry")}
                     onClick={this.onResendClick}
                     onContextMenu={this.onResendClick}
                     key="resend"
@@ -455,7 +457,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         0,
                         <RovingAccessibleTooltipButton
                             className="mx_MessageActionBar_iconButton"
-                            title={_t("Reply")}
+                            title={_t("action|reply")}
                             onClick={this.onReplyClick}
                             onContextMenu={this.onReplyClick}
                             key="reply"
@@ -509,15 +511,23 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 const tooltip = (
                     <>
                         <div className="mx_Tooltip_title">
-                            {this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
+                            {this.props.isQuoteExpanded
+                                ? _t("timeline|mab|collapse_reply_chain")
+                                : _t("timeline|mab|expand_reply_chain")}
                         </div>
-                        <div className="mx_Tooltip_sub">{_t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click")}</div>
+                        <div className="mx_Tooltip_sub">
+                            {_t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("action|click")}
+                        </div>
                     </>
                 );
                 toolbarOpts.push(
                     <RovingAccessibleTooltipButton
                         className={expandClassName}
-                        title={this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
+                        title={
+                            this.props.isQuoteExpanded
+                                ? _t("timeline|mab|collapse_reply_chain")
+                                : _t("timeline|mab|expand_reply_chain")
+                        }
                         tooltip={tooltip}
                         onClick={this.props.toggleThreadExpanded}
                         key="expand"
@@ -543,7 +553,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
         // aria-live=off to not have this read out automatically as navigating around timeline, gets repetitive.
         return (
-            <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
+            <Toolbar className="mx_MessageActionBar" aria-label={_t("timeline|mab|label")} aria-live="off">
                 {toolbarOpts}
             </Toolbar>
         );

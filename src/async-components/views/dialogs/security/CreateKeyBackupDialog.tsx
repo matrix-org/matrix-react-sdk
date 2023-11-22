@@ -130,8 +130,8 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     private renderPhaseDone(): JSX.Element {
         return (
             <div>
-                <p>{_t("Your keys are being backed up (the first backup could take a few minutes).")}</p>
-                <DialogButtons primaryButton={_t("OK")} onPrimaryButtonClick={this.onDone} hasCancel={false} />
+                <p>{_t("settings|key_backup|backup_in_progress")}</p>
+                <DialogButtons primaryButton={_t("action|ok")} onPrimaryButtonClick={this.onDone} hasCancel={false} />
             </div>
         );
     }
@@ -139,11 +139,11 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
     private titleForPhase(phase: Phase): string {
         switch (phase) {
             case Phase.BackingUp:
-                return _t("Starting backup…");
+                return _t("settings|key_backup|backup_starting");
             case Phase.Done:
-                return _t("Success!");
+                return _t("settings|key_backup|backup_success");
             default:
-                return _t("Create key backup");
+                return _t("settings|key_backup|create_title");
         }
     }
 
@@ -152,9 +152,9 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         if (this.state.error) {
             content = (
                 <div>
-                    <p>{_t("Unable to create key backup")}</p>
+                    <p>{_t("settings|key_backup|cannot_create_backup")}</p>
                     <DialogButtons
-                        primaryButton={_t("Retry")}
+                        primaryButton={_t("action|retry")}
                         onPrimaryButtonClick={this.createBackup}
                         hasCancel={true}
                         onCancel={this.onCancel}

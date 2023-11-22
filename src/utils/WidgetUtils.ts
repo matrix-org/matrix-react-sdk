@@ -332,7 +332,7 @@ export default class WidgetUtils {
         client: MatrixClient,
         roomId: string,
         widgetId: string,
-        content: IWidget,
+        content: IWidget & Record<string, any>,
     ): Promise<void> {
         const addingWidget = !!content.url;
 
@@ -527,7 +527,7 @@ export default class WidgetUtils {
     }
 
     public static getWidgetName(app?: IWidget): string {
-        return app?.name?.trim() || _t("Unknown App");
+        return app?.name?.trim() || _t("widget|no_name");
     }
 
     public static getWidgetDataTitle(app?: IWidget): string {

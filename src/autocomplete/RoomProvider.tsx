@@ -122,7 +122,7 @@ export default class RoomProvider extends AutocompleteProvider {
                         href: makeRoomPermalink(this.room.client, room.displayedAlias),
                         component: (
                             <PillCompletion title={room.room.name} description={room.displayedAlias}>
-                                <RoomAvatar width={24} height={24} room={room.room} />
+                                <RoomAvatar size="24px" room={room.room} />
                             </PillCompletion>
                         ),
                         range: range!,
@@ -134,7 +134,7 @@ export default class RoomProvider extends AutocompleteProvider {
     }
 
     public getName(): string {
-        return _t("Rooms");
+        return _t("common|rooms");
     }
 
     public renderCompletions(completions: React.ReactNode[]): React.ReactNode {
@@ -142,7 +142,7 @@ export default class RoomProvider extends AutocompleteProvider {
             <div
                 className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate"
                 role="presentation"
-                aria-label={_t("Room Autocomplete")}
+                aria-label={_t("composer|autocomplete|room_a11y")}
             >
                 {completions}
             </div>

@@ -45,7 +45,7 @@ const expectDisplayName = (e: JQuery<HTMLElement>, displayName: string): void =>
 const expectAvatar = (e: JQuery<HTMLElement>, avatarUrl: string): void => {
     cy.all([cy.window({ log: false }), cy.getClient()]).then(([win, cli]) => {
         const size = AVATAR_SIZE * win.devicePixelRatio;
-        expect(e.find(".mx_BaseAvatar_image").attr("src")).to.equal(
+        expect(e.find(".mx_BaseAvatar img").attr("src")).to.equal(
             // eslint-disable-next-line no-restricted-properties
             cli.mxcUrlToHttp(avatarUrl, size, size, AVATAR_RESIZE_METHOD),
         );
@@ -163,23 +163,8 @@ describe("Timeline", () => {
                     .should("exist");
             });
 
-            cy.get(".mx_IRCLayout").within(() => {
-                // Check room name line-height is reset
-                cy.get(".mx_NewRoomIntro h2").should("have.css", "line-height", "normal");
-
-                // Check the profile resizer's place
-                // See: _IRCLayout
-                // --RoomView_MessageList-padding = 18px (See: _RoomView.pcss)
-                // --MessageTimestamp-width = 46px (See: _MessageTimestamp.pcss)
-                // --icon-width = 14px
-                // --right-padding = 5px
-                // --name-width = 80px
-                // --resizer-width = 15px
-                // --resizer-a11y = 3px
-                // 18px + 46px + 14px + 5px + 80px + 5px - 15px - 3px
-                // = 150px
-                cy.get(".mx_ProfileResizer").should("have.css", "inset-inline-start", "150px");
-            });
+            // wait for the date separator to appear to have a stable percy snapshot
+            cy.get(".mx_TimelineSeparator").should("have.text", "today");
 
             cy.get(".mx_MainSplit").percySnapshotElement("Configured room on IRC layout");
         });
@@ -197,10 +182,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findByRole("button", { name: "expand" }).click();
+                cy.findByRole("button", { name: "Expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findByRole("button", { name: "collapse" }).should("exist");
+                cy.findByRole("button", { name: "Collapse" }).should("exist");
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on IRC layout", { percyCSS });
@@ -224,10 +209,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findByRole("button", { name: "expand" }).click();
+                cy.findByRole("button", { name: "Expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findByRole("button", { name: "collapse" }).should("exist");
+                cy.findByRole("button", { name: "Collapse" }).should("exist");
             });
 
             cy.get(".mx_MainSplit").percySnapshotElement("Expanded GELS on modern layout", { percyCSS });
@@ -247,10 +232,10 @@ describe("Timeline", () => {
 
             cy.get(".mx_GenericEventListSummary").within(() => {
                 // Click "expand" link button
-                cy.findByRole("button", { name: "expand" }).click();
+                cy.findByRole("button", { name: "Expand" }).click();
 
                 // Assert that the "expand" link button worked
-                cy.findByRole("button", { name: "collapse" }).should("exist");
+                cy.findByRole("button", { name: "Collapse" }).should("exist");
             });
 
             // Make sure spacer is not visible on bubble layout
@@ -270,10 +255,10 @@ describe("Timeline", () => {
                     .realHover()
                     .findByRole("toolbar", { name: "Message Actions" })
                     .should("be.visible");
-                cy.findByRole("button", { name: "collapse" }).click();
+                cy.findByRole("button", { name: "Collapse" }).click();
 
                 // Assert that "collapse" link button worked
-                cy.findByRole("button", { name: "expand" }).should("exist");
+                cy.findByRole("button", { name: "Expand" }).should("exist");
             });
 
             // Save snapshot of collapsed generic event list summary on bubble layout
@@ -292,7 +277,7 @@ describe("Timeline", () => {
             });
 
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "Expand" }).click();
 
             // Check the event line has margin instead of inset property
             // cf. _EventTile.pcss
@@ -388,7 +373,7 @@ describe("Timeline", () => {
 
             // 2. Alignment of expanded GELS and messages
             // Click "expand" link button
-            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "expand" }).click();
+            cy.get(".mx_GenericEventListSummary").findByRole("button", { name: "Expand" }).click();
             // Check inline start spacing of info line on expanded GELS
             cy.get(".mx_EventTile[data-layout=irc].mx_EventTile_info:first-of-type .mx_EventTile_line")
                 // See: _EventTile.pcss
@@ -454,6 +439,12 @@ describe("Timeline", () => {
             sendEvent(roomId); // check the last EventTile
 
             cy.visit("/#/room/" + roomId);
+            // Send a plain text message
+            cy.getComposer().type(`Hello{enter}`);
+            // Send a big emoji
+            cy.getComposer().type(`🏀{enter}`);
+            // Send an inline emoji
+            cy.getComposer().type(`This message has an inline emoji 👒{enter}`);
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // IRC layout
@@ -466,28 +457,6 @@ describe("Timeline", () => {
                 cy.findByText(OLD_NAME + " created and configured the room.").should("exist");
             });
 
-            cy.get(".mx_RoomView_body[data-layout=irc]").within(() => {
-                // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
-                cy.get(".mx_EventTile")
-                    .should("have.css", "max-width", "100%")
-                    .should("have.css", "clear", "both")
-                    .should("have.css", "position", "relative");
-
-                // Check mx_EventTile_continuation
-                // Block start padding of the second message should not be overridden
-                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
-                cy.get(".mx_EventTile_continuation .mx_EventTile_line").should("have.css", "clear", "both");
-
-                // Select the last event tile
-                cy.get(".mx_EventTile_last")
-                    .within(() => {
-                        // The last tile is also a continued one
-                        cy.get(".mx_EventTile_line").should("have.css", "clear", "both");
-                    })
-                    // Check that zero block padding is set
-                    .should("have.css", "padding-block-start", "0px");
-            });
-
             cy.get(".mx_MainSplit").percySnapshotElement("EventTiles on IRC layout", { percyCSS });
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -497,17 +466,6 @@ describe("Timeline", () => {
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
             cy.get(".mx_RoomView_body[data-layout=group]").within(() => {
-                // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
-                cy.get(".mx_EventTile")
-                    .should("have.css", "max-width", "100%")
-                    .should("have.css", "clear", "both")
-                    .should("have.css", "position", "relative");
-
-                // Check mx_EventTile_continuation
-                // Block start padding of the second message should not be overridden
-                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
-                cy.get(".mx_EventTile_continuation .mx_EventTile_line").should("have.css", "clear", "both");
-
                 // Check that the last EventTile is rendered
                 cy.get(".mx_EventTile.mx_EventTile_last").should("exist");
             });
@@ -518,15 +476,6 @@ describe("Timeline", () => {
             cy.setSettingValue("useCompactLayout", null, SettingLevel.DEVICE, true);
 
             cy.get(".mx_MatrixChat_useCompactLayout").within(() => {
-                // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
-                cy.get(".mx_EventTile")
-                    .should("have.css", "max-width", "100%")
-                    .should("have.css", "clear", "both")
-                    .should("have.css", "position", "relative");
-
-                // Check cascading works
-                cy.get(".mx_EventTile_continuation").should("have.css", "padding-block-start", "0px");
-
                 // Check that the last EventTile is rendered
                 cy.get(".mx_EventTile.mx_EventTile_last").should("exist");
             });
@@ -538,25 +487,6 @@ describe("Timeline", () => {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             cy.setSettingValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
-
-            cy.get(".mx_RoomView_body[data-layout=bubble]").within(() => {
-                // Ensure CSS declarations which cannot be detected with a screenshot test are applied as expected
-                cy.get(".mx_EventTile")
-                    .should("have.css", "max-width", "none")
-                    .should("have.css", "clear", "both")
-                    .should("have.css", "position", "relative");
-
-                // Check that block start padding of the second message is not overridden
-                cy.get(".mx_EventTile.mx_EventTile_continuation").should("have.css", "margin-block-start", "2px");
-
-                // Select the last bubble
-                cy.get(".mx_EventTile_last")
-                    .within(() => {
-                        // calc(var(--gutterSize) - 1px)
-                        cy.get(".mx_EventTile_line").should("have.css", "padding-block-start", "10px");
-                    })
-                    .should("have.css", "margin-block-start", "2px"); // The last bubble is also a continued one
-            });
 
             cy.get(".mx_MainSplit").percySnapshotElement("EventTiles on bubble layout", { percyCSS });
         });

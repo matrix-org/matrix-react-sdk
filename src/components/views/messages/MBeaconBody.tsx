@@ -24,9 +24,9 @@ import {
     RelationType,
     IRedactOpts,
     ContentHelpers,
+    M_BEACON,
 } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import classNames from "classnames";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -228,7 +228,7 @@ const MBeaconBody = React.forwardRef<HTMLDivElement, IBodyProps>(({ mxEvent, get
                     className="mx_MBeaconBody_chin"
                     beacon={beacon}
                     displayStatus={displayStatus}
-                    label={_t("View live location")}
+                    label={_t("timeline|m.beacon_info|view_live_location")}
                     withIcon
                 />
             )}

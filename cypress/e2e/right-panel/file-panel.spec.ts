@@ -30,7 +30,7 @@ const viewRoomSummaryByName = (name: string): Chainable<JQuery<HTMLElement>> => 
 
 const checkRoomSummaryCard = (name: string): Chainable<JQuery<HTMLElement>> => {
     cy.get(".mx_RoomSummaryCard").should("have.length", 1);
-    return cy.get(".mx_BaseCard_header").should("contain", name);
+    return cy.get(".mx_RoomSummaryCard").should("contain", name);
 };
 
 const uploadFile = (file: string) => {
@@ -61,7 +61,7 @@ describe("FilePanel", () => {
 
         // Open the file panel
         viewRoomSummaryByName(ROOM_NAME);
-        cy.get(".mx_RoomSummaryCard_icon_files").click();
+        cy.findByRole("menuitem", { name: "Files" }).click();
         cy.get(".mx_FilePanel").should("have.length", 1);
     });
 
@@ -183,7 +183,8 @@ describe("FilePanel", () => {
             });
         });
 
-        it("should render the audio player and play the audio file on the panel", () => {
+        // https://github.com/vector-im/element-web/issues/26045
+        it.skip("should render the audio player and play the audio file on the panel", () => {
             // Upload an image file
             uploadFile("cypress/fixtures/1sec.ogg");
 

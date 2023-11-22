@@ -17,9 +17,15 @@ limitations under the License.
 import React from "react";
 import { chunk } from "lodash";
 import classNames from "classnames";
-import { MatrixClient, IdentityProviderBrand, SSOFlow, SSOAction } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixClient,
+    IdentityProviderBrand,
+    SSOFlow,
+    SSOAction,
+    IIdentityProvider,
+    DELEGATED_OIDC_COMPATIBILITY,
+} from "matrix-js-sdk/src/matrix";
 import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
-import { IIdentityProvider, DELEGATED_OIDC_COMPATIBILITY } from "matrix-js-sdk/src/@types/auth";
 
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
@@ -86,11 +92,11 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
 }) => {
     let label: string;
     if (idp) {
-        label = _t("Continue with %(provider)s", { provider: idp.name });
+        label = _t("auth|continue_with_idp", { provider: idp.name });
     } else if (DELEGATED_OIDC_COMPATIBILITY.findIn<boolean>(flow)) {
-        label = _t("Continue");
+        label = _t("action|continue");
     } else {
-        label = _t("Sign in with single sign-on");
+        label = _t("auth|sign_in_with_sso");
     }
 
     const onClick = (): void => {

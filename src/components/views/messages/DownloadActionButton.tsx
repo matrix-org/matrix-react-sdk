@@ -48,7 +48,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
 
         this.state = {
             loading: false,
-            tooltip: _td("Downloading"),
+            tooltip: _td("timeline|download_action_downloading"),
         };
     }
 
@@ -57,7 +57,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         if (this.state.loading || !mediaEventHelper) return;
 
         if (mediaEventHelper.media.isEncrypted) {
-            this.setState({ tooltip: _td("Decrypting") });
+            this.setState({ tooltip: _td("timeline|download_action_decrypting") });
         }
 
         this.setState({ loading: true });
@@ -95,7 +95,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
         return (
             <RovingAccessibleTooltipButton
                 className={classes}
-                title={spinner ? _t(this.state.tooltip) : _t("Download")}
+                title={spinner ? _t(this.state.tooltip) : _t("action|download")}
                 onClick={this.onDownloadClick}
                 disabled={!!spinner}
             >

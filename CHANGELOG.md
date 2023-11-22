@@ -1,3 +1,205 @@
+Changes in [3.85.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.85.0) (2023-11-21)
+=====================================================================================================
+## ✨ Features
+
+* Update room summary card header ([#11823](https://github.com/matrix-org/matrix-react-sdk/pull/11823)). Contributed by @germain-gg.
+* Add feature flag for disabling encryption in Element Call ([#11837](https://github.com/matrix-org/matrix-react-sdk/pull/11837)). Contributed by @toger5.
+* Adapt the rendering of extra icons in the room header ([#11835](https://github.com/matrix-org/matrix-react-sdk/pull/11835)). Contributed by @charlynguyen.
+* Implement new unreachable state and fix broken string ref  ([#11748](https://github.com/matrix-org/matrix-react-sdk/pull/11748)). Contributed by @MidhunSureshR.
+* Allow adding extra icons to the room header ([#11799](https://github.com/matrix-org/matrix-react-sdk/pull/11799)). Contributed by @charlynguyen.
+
+## 🐛 Bug Fixes
+
+* Room header: do not collapse avatar or facepile ([#11866](https://github.com/matrix-org/matrix-react-sdk/pull/11866)). Contributed by @kerryarchibald.
+* New right panel: fix button alignment in memberlist ([#11861](https://github.com/matrix-org/matrix-react-sdk/pull/11861)). Contributed by @kerryarchibald.
+* Use the correct video call icon variant ([#11859](https://github.com/matrix-org/matrix-react-sdk/pull/11859)). Contributed by @robintown.
+* fix broken warning icon ([#11862](https://github.com/matrix-org/matrix-react-sdk/pull/11862)). Contributed by @ara4n.
+* Fix rightpanel hiding scrollbar ([#11831](https://github.com/matrix-org/matrix-react-sdk/pull/11831)). Contributed by @kerryarchibald.
+* Switch to updating presence via /sync calls instead of PUT /presence ([#11824](https://github.com/matrix-org/matrix-react-sdk/pull/11824)). Contributed by @t3chguy.
+
+
+Changes in [3.84.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.84.1) (2023-11-13)
+=====================================================================================================
+
+## 🐛 Bug Fixes
+ * Ensure `setUserCreator` is called when a store is assigned ([\#3867](https://github.com/matrix-org/matrix-js-sdk/pull/3867)). Fixes vector-im/element-web#26520. Contributed by @MidhunSureshR.
+
+Changes in [3.84.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.84.0) (2023-11-07)
+=====================================================================================================
+
+## ✨ Features
+ * Knock on a ask-to-join room if a module wants to join the room when navigating to a room ([\#11787](https://github.com/matrix-org/matrix-react-sdk/pull/11787)). Contributed by @dhenneke.
+ * Element-R:  Include crypto info in sentry ([\#11798](https://github.com/matrix-org/matrix-react-sdk/pull/11798)). Contributed by @florianduros.
+ * Element-R:  Include crypto info in rageshake ([\#11797](https://github.com/matrix-org/matrix-react-sdk/pull/11797)). Contributed by @florianduros.
+ * Element-R: Add current version of the rust-sdk and vodozemac ([\#11785](https://github.com/matrix-org/matrix-react-sdk/pull/11785)). Contributed by @florianduros.
+ * Fix unfederated invite dialog ([\#9618](https://github.com/matrix-org/matrix-react-sdk/pull/9618)). Fixes vector-im/element-meta#1466 and vector-im/element-web#22102. Contributed by @owi92.
+ * New right panel visual language ([\#11664](https://github.com/matrix-org/matrix-react-sdk/pull/11664)).
+ * OIDC: add friendly errors ([\#11184](https://github.com/matrix-org/matrix-react-sdk/pull/11184)). Fixes vector-im/element-web#25665. Contributed by @kerryarchibald.
+
+## 🐛 Bug Fixes
+ * Fix rightpanel hiding scrollbar ([\#11831](https://github.com/matrix-org/matrix-react-sdk/pull/11831)). Contributed by @kerryarchibald.
+ * Fix multi-tab session lock on Firefox not being cleared ([\#11800](https://github.com/matrix-org/matrix-react-sdk/pull/11800)). Fixes vector-im/element-web#26165. Contributed by @ManuelHu.
+ * Deserialise spoilers back into slash command form ([\#11805](https://github.com/matrix-org/matrix-react-sdk/pull/11805)). Fixes vector-im/element-web#26344.
+ * Fix Incorrect message scaling for verification request ([\#11793](https://github.com/matrix-org/matrix-react-sdk/pull/11793)). Fixes vector-im/element-web#24304. Contributed by @capGoblin.
+ * Fix: Unable to restore a soft-logged-out session established via SSO ([\#11794](https://github.com/matrix-org/matrix-react-sdk/pull/11794)). Fixes vector-im/element-web#25957. Contributed by @kerryarchibald.
+ * Use configurable github issue links more consistently ([\#11796](https://github.com/matrix-org/matrix-react-sdk/pull/11796)).
+ * Fix io.element.late_event received_ts vs received_at ([\#11789](https://github.com/matrix-org/matrix-react-sdk/pull/11789)).
+ * Make invitation dialog scrollable when infos are too long ([\#11753](https://github.com/matrix-org/matrix-react-sdk/pull/11753)). Contributed by @nurjinjafar.
+ * Fix spoiler text-align ([\#11790](https://github.com/matrix-org/matrix-react-sdk/pull/11790)). Contributed by @ajbura.
+ * Fix: Right panel keeps showing chat when unmaximizing widget.  ([\#11697](https://github.com/matrix-org/matrix-react-sdk/pull/11697)). Fixes vector-im/element-web#26265. Contributed by @manancodes.
+ * Fix margin of invite to room button ([\#11780](https://github.com/matrix-org/matrix-react-sdk/pull/11780)). Fixes vector-im/element-web#26410.
+ * Update base64 import ([\#11784](https://github.com/matrix-org/matrix-react-sdk/pull/11784)).
+ * Set max size for Element logo in search warning ([\#11779](https://github.com/matrix-org/matrix-react-sdk/pull/11779)). Fixes vector-im/element-web#26408.
+ * Fix: emoji size in room header topic, remove obsolete emoji style ([\#11757](https://github.com/matrix-org/matrix-react-sdk/pull/11757)). Fixes vector-im/element-web#26326. Contributed by @kerryarchibald.
+ * Fix: Bubble layout design is broken ([\#11763](https://github.com/matrix-org/matrix-react-sdk/pull/11763)). Fixes vector-im/element-web#25818. Contributed by @manancodes.
+
+Changes in [3.83.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.83.0) (2023-10-24)
+=====================================================================================================
+
+## ✨ Features
+ * Iterate `io.element.late_event` decoration ([\#11760](https://github.com/matrix-org/matrix-react-sdk/pull/11760)). Fixes vector-im/element-web#26384.
+ * Render timeline separator for late event groups ([\#11739](https://github.com/matrix-org/matrix-react-sdk/pull/11739)).
+ * OIDC: revoke tokens on logout ([\#11718](https://github.com/matrix-org/matrix-react-sdk/pull/11718)). Fixes vector-im/element-web#25394. Contributed by @kerryarchibald.
+ * Show `io.element.late_event` in MessageTimestamp when known ([\#11733](https://github.com/matrix-org/matrix-react-sdk/pull/11733)).
+ * Show all labs flags if developerMode enabled ([\#11746](https://github.com/matrix-org/matrix-react-sdk/pull/11746)). Fixes vector-im/element-web#24571 and vector-im/element-web#8498.
+ * Use Compound tooltips on MessageTimestamp to improve UX of date time discovery ([\#11732](https://github.com/matrix-org/matrix-react-sdk/pull/11732)). Fixes vector-im/element-web#25913.
+ * Consolidate 4s passphrase input fields and use stable IDs ([\#11743](https://github.com/matrix-org/matrix-react-sdk/pull/11743)). Fixes vector-im/element-web#26228.
+ * Disable upgraderoom command without developer mode enabled ([\#11744](https://github.com/matrix-org/matrix-react-sdk/pull/11744)). Fixes vector-im/element-web#17620.
+ * Avoid rendering app download buttons if disabled in config ([\#11741](https://github.com/matrix-org/matrix-react-sdk/pull/11741)). Fixes vector-im/element-web#26309.
+ * OIDC: refresh tokens ([\#11699](https://github.com/matrix-org/matrix-react-sdk/pull/11699)). Fixes vector-im/element-web#25839. Contributed by @kerryarchibald.
+ * OIDC: register ([\#11727](https://github.com/matrix-org/matrix-react-sdk/pull/11727)). Fixes vector-im/element-web#25393. Contributed by @kerryarchibald.
+ * Use stable get_login_token and remove unstable MSC3882 support ([\#11001](https://github.com/matrix-org/matrix-react-sdk/pull/11001)). Contributed by @hughns.
+
+## 🐛 Bug Fixes
+ * Set max size for Element logo in search warning ([\#11779](https://github.com/matrix-org/matrix-react-sdk/pull/11779)). Fixes vector-im/element-web#26408.
+ * Avoid error when DMing oneself ([\#11754](https://github.com/matrix-org/matrix-react-sdk/pull/11754)). Fixes vector-im/element-web#7242.
+ * Fix: Message shield alignment is not right. ([\#11703](https://github.com/matrix-org/matrix-react-sdk/pull/11703)). Fixes vector-im/element-web#26142. Contributed by @manancodes.
+ * fix logging full event ([\#11755](https://github.com/matrix-org/matrix-react-sdk/pull/11755)). Fixes vector-im/element-web#26376.
+ * OIDC: use delegated auth account URL from `OidcClientStore` ([\#11723](https://github.com/matrix-org/matrix-react-sdk/pull/11723)). Fixes vector-im/element-web#26305. Contributed by @kerryarchibald.
+ * Fix: Members list shield alignment is not right. ([\#11700](https://github.com/matrix-org/matrix-react-sdk/pull/11700)). Fixes vector-im/element-web#26261. Contributed by @manancodes.
+ * Fix: <detail> HTML elements clickable area too wide. ([\#11666](https://github.com/matrix-org/matrix-react-sdk/pull/11666)). Fixes vector-im/element-web#25454. Contributed by @manancodes.
+ * Fix untranslated headings in the devtools dialog ([\#11734](https://github.com/matrix-org/matrix-react-sdk/pull/11734)).
+ * Fixes invite dialog alignment and pill color contrast ([\#11722](https://github.com/matrix-org/matrix-react-sdk/pull/11722)). Contributed by @gabrc52.
+ * Prevent select element in General settings overflowing in a room with very long room-id ([\#11597](https://github.com/matrix-org/matrix-react-sdk/pull/11597)). Contributed by @ABHIXIT2.
+ * Fix: Clicking on members pile does nothing. ([\#11657](https://github.com/matrix-org/matrix-react-sdk/pull/11657)). Fixes vector-im/element-web#26164. Contributed by @manancodes.
+ * Fix: Wierd shadow below room avatar in dark mode. ([\#11678](https://github.com/matrix-org/matrix-react-sdk/pull/11678)). Fixes vector-im/element-web#26153. Contributed by @manancodes.
+ * Fix start_sso / start_cas URLs failing to redirect to a authentication prompt ([\#11681](https://github.com/matrix-org/matrix-react-sdk/pull/11681)). Contributed by @Half-Shot.
+
+Changes in [3.82.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.82.0) (2023-10-10)
+=====================================================================================================
+
+## ✨ Features
+ * Use .well-known to discover a default rendezvous server for use with Sign in with QR ([\#11655](https://github.com/matrix-org/matrix-react-sdk/pull/11655)). Contributed by @hughns.
+ * Message layout will update according to the selected style  ([\#10170](https://github.com/matrix-org/matrix-react-sdk/pull/10170)). Fixes vector-im/element-web#21782. Contributed by @manancodes.
+ * Implement MSC4039: Add an MSC for a new Widget API action to upload files into the media repository ([\#11311](https://github.com/matrix-org/matrix-react-sdk/pull/11311)). Contributed by @dhenneke.
+ * Render space pills with square corners to match new avatar ([\#11632](https://github.com/matrix-org/matrix-react-sdk/pull/11632)). Fixes vector-im/element-web#26056.
+ * Linkify room topic ([\#11631](https://github.com/matrix-org/matrix-react-sdk/pull/11631)). Fixes vector-im/element-web#26185.
+ * Show knock rooms in the list ([\#11573](https://github.com/matrix-org/matrix-react-sdk/pull/11573)). Contributed by @maheichyk.
+
+## 🐛 Bug Fixes
+ * Fix: Avatar shrinks with long names ([\#11698](https://github.com/matrix-org/matrix-react-sdk/pull/11698)). Fixes vector-im/element-web#26252. Contributed by @manancodes.
+ * Update custom translations to support nested fields in structured JSON ([\#11685](https://github.com/matrix-org/matrix-react-sdk/pull/11685)).
+ * Fix: Edited message remove button is hard to reach. ([\#11674](https://github.com/matrix-org/matrix-react-sdk/pull/11674)). Fixes vector-im/element-web#24917. Contributed by @manancodes.
+ * Fix: Theme selector radio button not aligned in center with the text ([\#11676](https://github.com/matrix-org/matrix-react-sdk/pull/11676)). Fixes vector-im/element-web#25460. Contributed by @manancodes.
+ * Fix: Unread notification dot aligned ([\#11658](https://github.com/matrix-org/matrix-react-sdk/pull/11658)). Fixes vector-im/element-web#25285. Contributed by @manancodes.
+ * Fix: sync intentional mentions push rules with legacy rules ([\#11667](https://github.com/matrix-org/matrix-react-sdk/pull/11667)). Fixes vector-im/element-web#26227. Contributed by @kerryarchibald.
+ * Revert "Fix regression around FacePile with overflow (#11527)" ([\#11634](https://github.com/matrix-org/matrix-react-sdk/pull/11634)). Fixes vector-im/element-web#26209.
+ * Fix: Alignment Fixed ([\#11648](https://github.com/matrix-org/matrix-react-sdk/pull/11648)). Fixes vector-im/element-web#26169. Contributed by @manancodes.
+ * Fix: onFinished added which closes the menu ([\#11647](https://github.com/matrix-org/matrix-react-sdk/pull/11647)). Fixes vector-im/element-web#25556. Contributed by @manancodes.
+ * Don't start key backups when opening settings ([\#11640](https://github.com/matrix-org/matrix-react-sdk/pull/11640)).
+ * Fix add to space avatar text centering ([\#11643](https://github.com/matrix-org/matrix-react-sdk/pull/11643)). Fixes vector-im/element-web#26154.
+ * fix avatar styling in lightbox ([\#11641](https://github.com/matrix-org/matrix-react-sdk/pull/11641)). Fixes vector-im/element-web#26196.
+
+Changes in [3.81.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.81.1) (2023-09-29)
+=====================================================================================================
+
+## 🐛 Bug Fixes
+ * Fix Emoji font on Safari 17 ([\#11673](https://github.com/matrix-org/matrix-react-sdk/pull/11673)).
+
+Changes in [3.81.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.81.0) (2023-09-26)
+=====================================================================================================
+
+## ✨ Features
+ * Make video & voice call buttons pin conference widget if unpinned ([\#11576](https://github.com/matrix-org/matrix-react-sdk/pull/11576)). Fixes vector-im/customer-retainer#72.
+ * OIDC: persist refresh token ([\#11249](https://github.com/matrix-org/matrix-react-sdk/pull/11249)). Contributed by @kerryarchibald.
+ * ElementR: Cross user verification ([\#11364](https://github.com/matrix-org/matrix-react-sdk/pull/11364)). Fixes vector-im/element-web#25752. Contributed by @florianduros.
+ * Default intentional mentions ([\#11602](https://github.com/matrix-org/matrix-react-sdk/pull/11602)).
+ * Notify users about denied access on ask-to-join  rooms ([\#11480](https://github.com/matrix-org/matrix-react-sdk/pull/11480)). Contributed by @nurjinjafar.
+ * Allow setting knock room directory visibility ([\#11529](https://github.com/matrix-org/matrix-react-sdk/pull/11529)). Contributed by @charlynguyen.
+
+## 🐛 Bug Fixes
+ * Revert "Fix regression around FacePile with overflow (#11527)" ([\#11634](https://github.com/matrix-org/matrix-react-sdk/pull/11634)). Fixes vector-im/element-web#26209.
+ * Escape placeholder before injecting it into the style ([\#11607](https://github.com/matrix-org/matrix-react-sdk/pull/11607)).
+ * Move ViewUser action callback to RoomView ([\#11495](https://github.com/matrix-org/matrix-react-sdk/pull/11495)). Fixes vector-im/element-web#26040.
+ * Fix room timeline search toggling behaviour edge case ([\#11605](https://github.com/matrix-org/matrix-react-sdk/pull/11605)). Fixes vector-im/element-web#26105.
+ * Avoid rendering view-message link in RoomKnocksBar unnecessarily ([\#11598](https://github.com/matrix-org/matrix-react-sdk/pull/11598)). Contributed by @charlynguyen.
+ * Use knock rooms sync to reflect the knock state ([\#11596](https://github.com/matrix-org/matrix-react-sdk/pull/11596)). Fixes vector-im/element-web#26043 and vector-im/element-web#26044. Contributed by @charlynguyen.
+ * Fix avatar in right panel not using the correct font ([\#11593](https://github.com/matrix-org/matrix-react-sdk/pull/11593)). Fixes vector-im/element-web#26061. Contributed by @MidhunSureshR.
+ * Add waits in Spotlight Cypress tests, hoping this unflakes them ([\#11590](https://github.com/matrix-org/matrix-react-sdk/pull/11590)). Fixes vector-im/element-web#26053, vector-im/element-web#26140 vector-im/element-web#26139 and vector-im/element-web#26138. Contributed by @andybalaam.
+ * Fix vertical alignment of default avatar font ([\#11582](https://github.com/matrix-org/matrix-react-sdk/pull/11582)). Fixes vector-im/element-web#26081.
+ * Fix avatars in public room & space search being flex shrunk ([\#11580](https://github.com/matrix-org/matrix-react-sdk/pull/11580)). Fixes vector-im/element-web#26133.
+ * Fix EventTile avatars being rendered with a size of 0 instead of hidden ([\#11558](https://github.com/matrix-org/matrix-react-sdk/pull/11558)). Fixes vector-im/element-web#26075.
+
+Changes in [3.80.1](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.80.1) (2023-09-13)
+=====================================================================================================
+
+## 🐛 Bug Fixes
+ * Update Compound to fix Firefox-specific avatar regression ([\#11604](https://github.com/matrix-org/matrix-react-sdk/pull/11604))
+
+Changes in [3.80.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.80.0) (2023-09-12)
+=====================================================================================================
+
+## ✨ Features
+ * Allow creating public knock rooms ([\#11481](https://github.com/matrix-org/matrix-react-sdk/pull/11481)). Contributed by @charlynguyen.
+ * Render custom images in reactions according to MSC4027 ([\#11087](https://github.com/matrix-org/matrix-react-sdk/pull/11087)). Contributed by @sumnerevans.
+ * Introduce room knocks bar ([\#11475](https://github.com/matrix-org/matrix-react-sdk/pull/11475)). Contributed by @charlynguyen.
+ * Room header UI updates ([\#11507](https://github.com/matrix-org/matrix-react-sdk/pull/11507)). Fixes vector-im/element-web#25892.
+ * Remove green "verified" bar for encrypted events ([\#11496](https://github.com/matrix-org/matrix-react-sdk/pull/11496)).
+ * Update member count on room summary update ([\#11488](https://github.com/matrix-org/matrix-react-sdk/pull/11488)).
+ * Support for E2EE in Element Call  ([\#11492](https://github.com/matrix-org/matrix-react-sdk/pull/11492)).
+ * Allow requesting to join knock rooms via spotlight ([\#11482](https://github.com/matrix-org/matrix-react-sdk/pull/11482)). Contributed by @charlynguyen.
+ * Lock out the first tab if Element is opened in a second tab. ([\#11425](https://github.com/matrix-org/matrix-react-sdk/pull/11425)). Fixes vector-im/element-web#25157.
+ * Change avatar to use Compound implementation ([\#11448](https://github.com/matrix-org/matrix-react-sdk/pull/11448)).
+
+## 🐛 Bug Fixes
+ * Fix vertical alignment of default avatar font ([\#11582](https://github.com/matrix-org/matrix-react-sdk/pull/11582)). Fixes vector-im/element-web#26081.
+ * Fix avatars in public room & space search being flex shrunk ([\#11580](https://github.com/matrix-org/matrix-react-sdk/pull/11580)). Fixes vector-im/element-web#26133.
+ * Fix EventTile avatars being rendered with a size of 0 instead of hidden ([\#11558](https://github.com/matrix-org/matrix-react-sdk/pull/11558)). Fixes vector-im/element-web#26075.
+ * Use RoomStateEvent.Update for knocks ([\#11516](https://github.com/matrix-org/matrix-react-sdk/pull/11516)). Contributed by @charlynguyen.
+ * Prevent event propagation when clicking icon buttons ([\#11515](https://github.com/matrix-org/matrix-react-sdk/pull/11515)).
+ * Only display RoomKnocksBar when feature flag is enabled ([\#11513](https://github.com/matrix-org/matrix-react-sdk/pull/11513)). Contributed by @andybalaam.
+ * Fix avatars of knock members for people tab of room settings ([\#11506](https://github.com/matrix-org/matrix-react-sdk/pull/11506)). Fixes vector-im/element-web#26083. Contributed by @charlynguyen.
+ * Fixes read receipt avatar offset ([\#11483](https://github.com/matrix-org/matrix-react-sdk/pull/11483)). Fixes vector-im/element-web#26067, vector-im/element-web#26064 vector-im/element-web#26059 and vector-im/element-web#26061.
+ * Fix avatar defects ([\#11473](https://github.com/matrix-org/matrix-react-sdk/pull/11473)). Fixes vector-im/element-web#26051 and vector-im/element-web#26046.
+ * Fix consistent avatar output for Percy ([\#11472](https://github.com/matrix-org/matrix-react-sdk/pull/11472)). Fixes vector-im/element-web#26049 and vector-im/element-web#26052.
+ * Fix colour of avatar and colour matching with username ([\#11470](https://github.com/matrix-org/matrix-react-sdk/pull/11470)). Fixes vector-im/element-web#26042.
+ * Fix incompatibility of Soft Logout with Element-R ([\#11468](https://github.com/matrix-org/matrix-react-sdk/pull/11468)).
+ * Fix instances of double translation and guard translation calls using typescript ([\#11443](https://github.com/matrix-org/matrix-react-sdk/pull/11443)).
+
+Changes in [3.79.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.79.0) (2023-08-29)
+=====================================================================================================
+
+## ✨ Features
+ * Hide account deactivation for externally managed accounts ([\#11445](https://github.com/matrix-org/matrix-react-sdk/pull/11445)). Fixes vector-im/element-web#26022. Contributed by @kerryarchibald.
+ * OIDC: Redirect to delegated auth provider when signing out ([\#11432](https://github.com/matrix-org/matrix-react-sdk/pull/11432)). Fixes vector-im/element-web#26000. Contributed by @kerryarchibald.
+ * Disable 3pid fields in settings when `m.3pid_changes` capability is disabled ([\#11430](https://github.com/matrix-org/matrix-react-sdk/pull/11430)). Fixes vector-im/element-web#25995. Contributed by @kerryarchibald.
+ * OIDC: disable multi session signout for OIDC-aware servers in session manager ([\#11431](https://github.com/matrix-org/matrix-react-sdk/pull/11431)). Contributed by @kerryarchibald.
+ * Implement updated open dialog method of the Module API ([\#11395](https://github.com/matrix-org/matrix-react-sdk/pull/11395)). Contributed by @dhenneke.
+ * Polish & delabs `Exploring public spaces` feature ([\#11423](https://github.com/matrix-org/matrix-react-sdk/pull/11423)).
+ * Treat lists with a single empty item as plain text, not Markdown. ([\#6833](https://github.com/matrix-org/matrix-react-sdk/pull/6833)). Fixes vector-im/element-meta#1265.
+ * Allow managing room knocks ([\#11404](https://github.com/matrix-org/matrix-react-sdk/pull/11404)). Contributed by @charlynguyen.
+ * Pin the action buttons to the bottom of the scrollable dialogs ([\#11407](https://github.com/matrix-org/matrix-react-sdk/pull/11407)). Contributed by @dhenneke.
+ * Support Matrix 1.1 (drop legacy r0 versions) ([\#9819](https://github.com/matrix-org/matrix-react-sdk/pull/9819)).
+
+## 🐛 Bug Fixes
+ * Fix export type "Current timeline" to match its behaviour to its name ([\#11426](https://github.com/matrix-org/matrix-react-sdk/pull/11426)). Fixes vector-im/element-web#25988.
+ * Fix Room Settings > Notifications file upload input being shown superfluously ([\#11415](https://github.com/matrix-org/matrix-react-sdk/pull/11415)). Fixes vector-im/element-web#18392.
+ * Simplify registration with email validation ([\#11398](https://github.com/matrix-org/matrix-react-sdk/pull/11398)). Fixes vector-im/element-web#25832 vector-im/element-web#23601 and vector-im/element-web#22297.
+ * correct home server URL ([\#11391](https://github.com/matrix-org/matrix-react-sdk/pull/11391)). Fixes vector-im/element-web#25931. Contributed by @NSV1991.
+ * Include non-matching DMs in Spotlight recent conversations when the DM's userId is part of the search API results ([\#11374](https://github.com/matrix-org/matrix-react-sdk/pull/11374)). Contributed by @mgcm.
+ * Fix useRoomMembers missing updates causing incorrect membership counts ([\#11392](https://github.com/matrix-org/matrix-react-sdk/pull/11392)). Fixes vector-im/element-web#17096.
+ * Show error when searching public rooms fails ([\#11378](https://github.com/matrix-org/matrix-react-sdk/pull/11378)).
+
 Changes in [3.78.0](https://github.com/matrix-org/matrix-react-sdk/releases/tag/v3.78.0) (2023-08-15)
 =====================================================================================================
 

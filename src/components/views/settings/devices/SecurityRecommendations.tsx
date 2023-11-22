@@ -52,19 +52,17 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
 
     return (
         <SettingsSubsection
-            heading={_t("Security recommendations")}
-            description={_t("Improve your account security by following these recommendations.")}
+            heading={_t("settings|sessions|security_recommendations")}
+            description={_t("settings|sessions|security_recommendations_description")}
             data-testid="security-recommendations-section"
         >
             {!!unverifiedDevicesCount && (
                 <DeviceSecurityCard
                     variation={DeviceSecurityVariation.Unverified}
-                    heading={_t("Unverified sessions")}
+                    heading={_t("settings|sessions|unverified_sessions")}
                     description={
                         <>
-                            {_t(
-                                "Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.",
-                            )}
+                            {_t("settings|sessions|unverified_sessions_list_description")}
                             <DeviceSecurityLearnMore variation={DeviceSecurityVariation.Unverified} />
                         </>
                     }
@@ -74,7 +72,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                         onClick={() => goToFilteredList(DeviceSecurityVariation.Unverified)}
                         data-testid="unverified-devices-cta"
                     >
-                        {_t("View all") + ` (${unverifiedDevicesCount})`}
+                        {_t("action|view_all") + ` (${unverifiedDevicesCount})`}
                     </AccessibleButton>
                 </DeviceSecurityCard>
             )}
@@ -83,13 +81,10 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                     {!!unverifiedDevicesCount && <div className="mx_SecurityRecommendations_spacing" />}
                     <DeviceSecurityCard
                         variation={DeviceSecurityVariation.Inactive}
-                        heading={_t("Inactive sessions")}
+                        heading={_t("settings|sessions|inactive_sessions")}
                         description={
                             <>
-                                {_t(
-                                    "Consider signing out from old sessions (%(inactiveAgeDays)s days or older) you don't use anymore.",
-                                    { inactiveAgeDays },
-                                )}
+                                {_t("settings|sessions|inactive_sessions_list_description", { inactiveAgeDays })}
                                 <DeviceSecurityLearnMore variation={DeviceSecurityVariation.Inactive} />
                             </>
                         }
@@ -99,7 +94,7 @@ const SecurityRecommendations: React.FC<Props> = ({ devices, currentDeviceId, go
                             onClick={() => goToFilteredList(DeviceSecurityVariation.Inactive)}
                             data-testid="inactive-devices-cta"
                         >
-                            {_t("View all") + ` (${inactiveDevicesCount})`}
+                            {_t("action|view_all") + ` (${inactiveDevicesCount})`}
                         </AccessibleButton>
                     </DeviceSecurityCard>
                 </>

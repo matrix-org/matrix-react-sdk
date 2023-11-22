@@ -92,14 +92,14 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             case SERVICE_TYPES.IS:
                 return (
                     <div>
-                        {_t("Identity server")}
+                        {_t("common|identity_server")}
                         <br />({host})
                     </div>
                 );
             case SERVICE_TYPES.IM:
                 return (
                     <div>
-                        {_t("Integration manager")}
+                        {_t("common|integration_manager")}
                         <br />({host})
                     </div>
                 );
@@ -111,13 +111,13 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             case SERVICE_TYPES.IS:
                 return (
                     <div>
-                        {_t("Find others by phone or email")}
+                        {_t("terms|summary_identity_server_1")}
                         <br />
-                        {_t("Be found by phone or email")}
+                        {_t("terms|summary_identity_server_2")}
                     </div>
                 );
             case SERVICE_TYPES.IM:
-                return <div>{_t("Use bots, bridges, widgets and sticker packs")}</div>;
+                return <div>{_t("terms|integration_manager")}</div>;
         }
     }
 
@@ -192,20 +192,20 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             <BaseDialog
                 fixedWidth={false}
                 onFinished={this.onCancelClick}
-                title={_t("Terms of Service")}
+                title={_t("terms|tos")}
                 contentId="mx_Dialog_content"
                 hasCancel={false}
             >
                 <div id="mx_Dialog_content">
-                    <p>{_t("To continue you need to accept the terms of this service.")}</p>
+                    <p>{_t("terms|intro")}</p>
 
                     <table className="mx_TermsDialog_termsTable">
                         <tbody>
                             <tr className="mx_TermsDialog_termsTableHeader">
-                                <th>{_t("Service")}</th>
-                                <th>{_t("Summary")}</th>
-                                <th>{_t("Document")}</th>
-                                <th>{_t("Accept")}</th>
+                                <th>{_t("terms|column_service")}</th>
+                                <th>{_t("terms|column_summary")}</th>
+                                <th>{_t("terms|column_document")}</th>
+                                <th>{_t("action|accept")}</th>
                             </tr>
                             {rows}
                         </tbody>
@@ -213,7 +213,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                 </div>
 
                 <DialogButtons
-                    primaryButton={_t("Next")}
+                    primaryButton={_t("action|next")}
                     hasCancel={true}
                     onCancel={this.onCancelClick}
                     onPrimaryButtonClick={this.onNextClick}

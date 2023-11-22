@@ -97,14 +97,14 @@ export default abstract class ScrollableBaseModal<
                         <AccessibleButton
                             onClick={this.onCancel}
                             className="mx_CompoundDialog_cancelButton"
-                            aria-label={_t("Close dialog")}
+                            aria-label={_t("dialog_close_label")}
                         />
                     </div>
                     <form onSubmit={this.onSubmit} className="mx_CompoundDialog_form">
                         <div className="mx_CompoundDialog_content">{this.renderContent()}</div>
                         <div className="mx_CompoundDialog_footer">
                             <AccessibleButton onClick={this.onCancel} kind="primary_outline">
-                                {this.state.cancelLabel ?? _t("Cancel")}
+                                {this.state.cancelLabel ?? _t("action|cancel")}
                             </AccessibleButton>
                             <AccessibleButton
                                 onClick={this.onSubmit}

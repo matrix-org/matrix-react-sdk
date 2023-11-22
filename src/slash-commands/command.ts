@@ -83,13 +83,13 @@ export class Command {
     public run(matrixClient: MatrixClient, roomId: string, threadId: string | null, args?: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            return reject(new UserFriendlyError("Command error: Unable to handle slash command."));
+            return reject(new UserFriendlyError("slash_command|error_invalid_runfn"));
         }
 
         const renderingType = threadId ? TimelineRenderingType.Thread : TimelineRenderingType.Room;
         if (this.renderingTypes && !this.renderingTypes?.includes(renderingType)) {
             return reject(
-                new UserFriendlyError("Command error: Unable to find rendering type (%(renderingType)s)", {
+                new UserFriendlyError("slash_command|error_invalid_rendering_type", {
                     renderingType,
                     cause: undefined,
                 }),
@@ -107,7 +107,7 @@ export class Command {
     }
 
     public getUsage(): string {
-        return _t("Usage") + ": " + this.getCommandWithArgs();
+        return _t("slash_command|usage") + ": " + this.getCommandWithArgs();
     }
 
     public isEnabled(cli: MatrixClient | null): boolean {

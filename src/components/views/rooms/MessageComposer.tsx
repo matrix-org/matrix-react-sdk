@@ -64,6 +64,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
+import { formatTimeLeft } from "../../../DateUtils";
 
 let instanceCount = 0;
 
@@ -77,7 +78,7 @@ function SendButton(props: ISendButtonProps): JSX.Element {
         <AccessibleTooltipButton
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
-            title={props.title ?? _t("Send message")}
+            title={props.title ?? _t("composer|send_button_title")}
             data-testid="sendmessagebtn"
         />
     );
@@ -302,19 +303,19 @@ export class MessageComposer extends React.Component<IProps, IState> {
         if (this.props.replyToEvent) {
             const replyingToThread = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name;
             if (replyingToThread && this.props.e2eStatus) {
-                return _t("Reply to encrypted thread…");
+                return _t("composer|placeholder_thread_encrypted");
             } else if (replyingToThread) {
-                return _t("Reply to thread…");
+                return _t("composer|placeholder_thread");
             } else if (this.props.e2eStatus) {
-                return _t("Send an encrypted reply…");
+                return _t("composer|placeholder_reply_encrypted");
             } else {
-                return _t("Send a reply…");
+                return _t("composer|placeholder_reply");
             }
         } else {
             if (this.props.e2eStatus) {
-                return _t("Send an encrypted message…");
+                return _t("composer|placeholder_encrypted");
             } else {
-                return _t("Send a message…");
+                return _t("composer|placeholder");
             }
         }
     };
@@ -534,7 +535,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                     className="mx_MessageComposer_roomReplaced_link"
                     onClick={this.onTombstoneClick}
                 >
-                    {_t("The conversation continues here.")}
+                    {_t("composer|room_upgraded_link")}
                 </a>
             ) : (
                 ""
@@ -550,7 +551,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                             src={require("../../../../res/img/room_replaced.svg").default}
                         />
                         <span className="mx_MessageComposer_roomReplaced_header">
-                            {_t("This room has been replaced and is no longer active.")}
+                            {_t("composer|room_upgraded_notice")}
                         </span>
                         <br />
                         {continuesLink}
@@ -560,7 +561,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
-                    {_t("You do not have permission to post to this room")}
+                    {_t("composer|no_perms_notice")}
                 </div>,
             );
         }
@@ -569,11 +570,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         if (this.state.recordingTimeLeftSeconds) {
             const secondsLeft = Math.round(this.state.recordingTimeLeftSeconds);
             recordingTooltip = (
-                <Tooltip
-                    id={this.tooltipId}
-                    label={_t("%(seconds)ss left", { seconds: secondsLeft })}
-                    alignment={Alignment.Top}
-                />
+                <Tooltip id={this.tooltipId} label={formatTimeLeft(secondsLeft)} alignment={Alignment.Top} />
             );
         }
 
@@ -652,7 +649,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                 <SendButton
                                     key="controls_send"
                                     onClick={this.sendMessage}
-                                    title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                                    title={
+                                        this.state.haveRecording ? _t("composer|send_button_voice_message") : undefined
+                                    }
                                 />
                             )}
                         </div>

@@ -144,20 +144,6 @@ module.exports = {
                             "!matrix-js-sdk/src/models/read-receipt",
                             "!matrix-js-sdk/src/models/relations-container",
                             "!matrix-js-sdk/src/models/related-relations",
-                            "!matrix-js-sdk/src/@types",
-                            "!matrix-js-sdk/src/@types/global",
-                            "!matrix-js-sdk/src/@types/auth",
-                            "!matrix-js-sdk/src/@types/beacon",
-                            "!matrix-js-sdk/src/@types/threepids",
-                            "!matrix-js-sdk/src/@types/polls",
-                            "!matrix-js-sdk/src/@types/crypto",
-                            "!matrix-js-sdk/src/@types/local_notifications",
-                            "!matrix-js-sdk/src/@types/location",
-                            "!matrix-js-sdk/src/@types/topic",
-                            "!matrix-js-sdk/src/@types/registration",
-                            "!matrix-js-sdk/src/@types/read_receipts",
-                            "!matrix-js-sdk/src/@types/extensible_events",
-                            "!matrix-js-sdk/src/@types/IIdentityServerProvider",
                         ],
                         message: "Please use matrix-js-sdk/src/matrix instead",
                     },
@@ -183,7 +169,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "cypress/**/*.ts", "playwright/**/*.ts"],
             extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
             rules: {
                 "@typescript-eslint/explicit-function-return-type": [
@@ -247,7 +233,7 @@ module.exports = {
             },
         },
         {
-            files: ["test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            files: ["test/**/*.{ts,tsx}", "cypress/**/*.ts", "playwright/**/*.ts"],
             extends: ["plugin:matrix-org/jest"],
             rules: {
                 // We don't need super strict typing in test utilities
@@ -273,6 +259,18 @@ module.exports = {
             files: ["cypress/**/*.ts"],
             parserOptions: {
                 project: ["./cypress/tsconfig.json"],
+            },
+            rules: {
+                // Cypress "promises" work differently - disable some related rules
+                "jest/valid-expect": "off",
+                "jest/valid-expect-in-promise": "off",
+                "jest/no-done-callback": "off",
+            },
+        },
+        {
+            files: ["playwright/**/*.ts"],
+            parserOptions: {
+                project: ["./playwright/tsconfig.json"],
             },
             rules: {
                 // Cypress "promises" work differently - disable some related rules

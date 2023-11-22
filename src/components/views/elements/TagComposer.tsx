@@ -79,13 +79,13 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                         id={this.props.id ? this.props.id + "_field" : undefined}
                         value={this.state.newTag}
                         onChange={this.onInputChange}
-                        label={this.props.label || _t("Keyword")}
-                        placeholder={this.props.placeholder || _t("New keyword")}
+                        label={this.props.label || _t("notifications|keyword")}
+                        placeholder={this.props.placeholder || _t("notifications|keyword_new")}
                         disabled={this.props.disabled}
                         autoComplete="off"
                     />
                     <AccessibleButton onClick={this.onAdd} kind="primary" disabled={this.props.disabled}>
-                        {_t("Add")}
+                        {_t("action|add")}
                     </AccessibleButton>
                 </form>
                 <div className="mx_TagComposer_tags" role="list">

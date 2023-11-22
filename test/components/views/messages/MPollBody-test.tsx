@@ -16,16 +16,17 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { MatrixEvent, Relations } from "matrix-js-sdk/src/matrix";
 import {
+    MatrixEvent,
+    Relations,
     M_POLL_KIND_DISCLOSED,
     M_POLL_KIND_UNDISCLOSED,
     M_POLL_RESPONSE,
     M_POLL_START,
     PollStartEventContent,
     PollAnswer,
-} from "matrix-js-sdk/src/@types/polls";
-import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
+    M_TEXT,
+} from "matrix-js-sdk/src/matrix";
 
 import MPollBody, { allVotes, findTopAnswer, isPollEnded } from "../../../../src/components/views/messages/MPollBody";
 import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
@@ -39,6 +40,7 @@ import {
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
+import * as languageHandler from "../../../../src/languageHandler";
 
 const CHECKED = "mx_PollOption_checked";
 const userId = "@me:example.com";
@@ -57,6 +59,7 @@ describe("MPollBody", () => {
 
         mockClient.getRoom.mockReturnValue(null);
         mockClient.relations.mockResolvedValue({ events: [] });
+        jest.spyOn(languageHandler, "getUserLanguage").mockReturnValue("en-GB");
     });
 
     it("finds no votes if there are none", () => {

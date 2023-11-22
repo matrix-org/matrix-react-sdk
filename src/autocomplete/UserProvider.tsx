@@ -135,7 +135,7 @@ export default class UserProvider extends AutocompleteProvider {
                     href: makeUserPermalink(user.userId),
                     component: (
                         <PillCompletion title={displayName} description={description}>
-                            <MemberAvatar member={user} width={24} height={24} />
+                            <MemberAvatar member={user} size="24px" />
                         </PillCompletion>
                     ),
                     range: range!,
@@ -146,7 +146,7 @@ export default class UserProvider extends AutocompleteProvider {
     }
 
     public getName(): string {
-        return _t("Users");
+        return _t("composer|autocomplete|user_description");
     }
 
     private makeUsers(): void {
@@ -186,7 +186,7 @@ export default class UserProvider extends AutocompleteProvider {
             <div
                 className="mx_Autocomplete_Completion_container_pill"
                 role="presentation"
-                aria-label={_t("User Autocomplete")}
+                aria-label={_t("composer|autocomplete|user_a11y")}
             >
                 {completions}
             </div>

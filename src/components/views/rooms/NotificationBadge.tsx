@@ -114,7 +114,7 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const { notification, showUnsentTooltip, forceCount, onClick, tabIndex } = this.props;
 
-        if (notification.isIdle) return null;
+        if (notification.isIdle && !notification.knocked) return null;
         if (forceCount) {
             if (!notification.hasUnreadCount) return null; // Can't render a badge
         }
@@ -122,7 +122,7 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
         let label: string | undefined;
         let tooltip: JSX.Element | undefined;
         if (showUnsentTooltip && this.state.showTooltip && notification.color === NotificationColor.Unsent) {
-            label = _t("Message didn't send. Click for info.");
+            label = _t("notifications|message_didnt_send");
             tooltip = <Tooltip className="mx_NotificationBadge_tooltip" label={label} />;
         }
 
@@ -131,6 +131,7 @@ export default class NotificationBadge extends React.PureComponent<XOR<IProps, I
             symbol: notification.symbol,
             count: notification.count,
             color: notification.color,
+            knocked: notification.knocked,
             onMouseOver: this.onMouseOver,
             onMouseLeave: this.onMouseLeave,
         };

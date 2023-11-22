@@ -55,26 +55,26 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
         return [
             new Tab(
                 SpaceSettingsTab.General,
-                _td("General"),
+                _td("common|general"),
                 "mx_SpaceSettingsDialog_generalIcon",
                 <SpaceSettingsGeneralTab matrixClient={cli} space={space} />,
             ),
             new Tab(
                 SpaceSettingsTab.Visibility,
-                _td("Visibility"),
+                _td("room_settings|visibility|title"),
                 "mx_SpaceSettingsDialog_visibilityIcon",
                 <SpaceSettingsVisibilityTab matrixClient={cli} space={space} closeSettingsFn={onFinished} />,
             ),
             new Tab(
                 SpaceSettingsTab.Roles,
-                _td("Roles & Permissions"),
+                _td("room_settings|permissions|title"),
                 "mx_RoomSettingsDialog_rolesIcon",
                 <RolesRoomSettingsTab room={space} />,
             ),
             SettingsStore.getValue(UIFeature.AdvancedSettings)
                 ? new Tab(
                       SpaceSettingsTab.Advanced,
-                      _td("Advanced"),
+                      _td("common|advanced"),
                       "mx_RoomSettingsDialog_warningIcon",
                       <AdvancedRoomSettingsTab room={space} closeSettingsFn={onFinished} />,
                   )
@@ -84,7 +84,7 @@ const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFin
 
     return (
         <BaseDialog
-            title={_t("Settings - %(spaceName)s", { spaceName: space.name || _t("Unnamed Space") })}
+            title={_t("space_settings|title", { spaceName: space.name || _t("common|unnamed_space") })}
             className="mx_SpaceSettingsDialog"
             contentId="mx_SpaceSettingsDialog"
             onFinished={onFinished}

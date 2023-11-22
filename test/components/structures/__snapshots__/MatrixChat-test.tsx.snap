@@ -1,5 +1,176 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second tab opens after a session is restored 1`] = `
+<div>
+  <main
+    class="mx_SessionLockStolenView mx_SplashPage"
+  >
+    <h1>
+      Test is connected in another tab
+    </h1>
+    <h2>
+      Switch to the other tab to connect to Test. This tab can now be closed.
+    </h2>
+  </main>
+</div>
+`;
+
+exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second tab opens during crypto init 1`] = `
+<body>
+  <div>
+    <main
+      class="mx_SessionLockStolenView mx_SplashPage"
+    >
+      <h1>
+        Test is connected in another tab
+      </h1>
+      <h2>
+        Switch to the other tab to connect to Test. This tab can now be closed.
+      </h2>
+    </main>
+  </div>
+</body>
+`;
+
+exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second tab opens while we are checking the sync store 1`] = `
+<div>
+  <main
+    class="mx_SessionLockStolenView mx_SplashPage"
+  >
+    <h1>
+      Test is connected in another tab
+    </h1>
+    <h2>
+      Switch to the other tab to connect to Test. This tab can now be closed.
+    </h2>
+  </main>
+</div>
+`;
+
+exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second tab opens while we were waiting for the lock ourselves 1`] = `
+<div>
+  <main
+    class="mx_SessionLockStolenView mx_SplashPage"
+  >
+    <h1>
+      Test is connected in another tab
+    </h1>
+    <h2>
+      Switch to the other tab to connect to Test. This tab can now be closed.
+    </h2>
+  </main>
+</div>
+`;
+
+exports[`<MatrixChat /> Multi-tab lockout waits for other tab to stop during startup 1`] = `
+<div>
+  <div
+    class="mx_ConfirmSessionLockTheftView"
+  >
+    <div
+      class="mx_ConfirmSessionLockTheftView_body"
+    >
+      <p>
+        Test is open in another window. Click "Continue" to use Test here and disconnect the other window.
+      </p>
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        role="button"
+        tabindex="0"
+      >
+        Continue
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<MatrixChat /> Multi-tab lockout waits for other tab to stop during startup 2`] = `
+<div>
+  <div
+    class="mx_MatrixChat_splash"
+  >
+    <div
+      class="mx_Spinner"
+    >
+      <div
+        aria-label="Loading…"
+        class="mx_Spinner_icon"
+        data-testid="spinner"
+        role="progressbar"
+        style="width: 32px; height: 32px;"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<MatrixChat /> Multi-tab lockout waits for other tab to stop during startup 3`] = `
+<div>
+  <div
+    class="mx_AuthPage"
+  >
+    <div
+      class="mx_AuthPage_modal"
+    >
+      <div
+        class="mx_Welcome"
+      >
+        <div
+          class="mx_WelcomePage mx_WelcomePage_loggedIn"
+        >
+          <div
+            class="mx_WelcomePage_body"
+          >
+            <h1>
+              Hello
+            </h1>
+          </div>
+        </div>
+        <div
+          class="mx_Dropdown mx_LanguageDropdown mx_AuthBody_language"
+        >
+          <div
+            aria-describedby="mx_LanguageDropdown_value"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-label="Language Dropdown"
+            aria-owns="mx_LanguageDropdown_input"
+            class="mx_AccessibleButton mx_Dropdown_input mx_no_textinput"
+            role="button"
+            tabindex="0"
+          >
+            <div
+              class="mx_Dropdown_option"
+              id="mx_LanguageDropdown_value"
+            >
+              <div>
+                English
+              </div>
+            </div>
+            <span
+              class="mx_Dropdown_arrow"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer
+      class="mx_AuthFooter"
+      role="contentinfo"
+    >
+      <a
+        href="https://matrix.org"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        powered by Matrix
+      </a>
+    </footer>
+  </div>
+</div>
+`;
+
 exports[`<MatrixChat /> should render spinner while app is loading 1`] = `
 <div>
   <div
@@ -75,7 +246,7 @@ exports[`<MatrixChat /> with a soft-logged-out session should show the soft-logo
         <div>
           <form>
             <p>
-              Regain access to your account and recover encryption keys stored in this session. Without them, you won't be able to read all of your secure messages in any session.
+              Enter your password to sign in and regain access to your account.
             </p>
             <div
               class="mx_Field mx_Field_input"
@@ -99,7 +270,7 @@ exports[`<MatrixChat /> with a soft-logged-out session should show the soft-logo
               tabindex="0"
               type="submit"
             >
-              Sign In
+              Sign in
             </div>
             <div
               class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
@@ -188,8 +359,7 @@ exports[`<MatrixChat /> with an existing session onAction() room actions leave_r
         Cancel
       </button>
       <button
-        class="mx_Dialog_primary focus-visible"
-        data-focus-visible-added=""
+        class="mx_Dialog_primary"
         data-testid="dialog-primary-button"
         type="button"
       >
@@ -245,8 +415,7 @@ exports[`<MatrixChat /> with an existing session onAction() room actions leave_r
         Cancel
       </button>
       <button
-        class="mx_Dialog_primary focus-visible"
-        data-focus-visible-added=""
+        class="mx_Dialog_primary"
         data-testid="dialog-primary-button"
         type="button"
       >

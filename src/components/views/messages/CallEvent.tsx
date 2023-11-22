@@ -33,7 +33,7 @@ import MemberAvatar from "../avatars/MemberAvatar";
 import { LiveContentSummary, LiveContentType } from "../rooms/LiveContentSummary";
 import FacePile from "../elements/FacePile";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { CallDuration, GroupCallDuration } from "../voip/CallDuration";
+import { CallDuration, SessionDuration } from "../voip/CallDuration";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 
 const MAX_FACES = 8;
@@ -62,23 +62,22 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                         member={mxEvent.sender}
                         fallbackUserId={mxEvent.getSender()}
                         viewUserOnClick
-                        width={24}
-                        height={24}
+                        size="24px"
                     />
                     <div className="mx_CallEvent_columns">
                         <div className="mx_CallEvent_details">
                             <span className="mx_CallEvent_title">
-                                {_t("%(name)s started a video call", { name: senderName })}
+                                {_t("timeline|m.call|video_call_started_text", { name: senderName })}
                             </span>
                             <LiveContentSummary
                                 type={LiveContentType.Video}
-                                text={_t("Video call")}
+                                text={_t("voip|video_call")}
                                 active={false}
                                 participantCount={participatingMembers.length}
                             />
-                            <FacePile members={facePileMembers} faceSize={24} overflow={facePileOverflow} />
+                            <FacePile members={facePileMembers} size="24px" overflow={facePileOverflow} />
                         </div>
-                        {call && <GroupCallDuration groupCall={call.groupCall} />}
+                        {call && <SessionDuration session={call.session} />}
                         <AccessibleTooltipButton
                             className="mx_CallEvent_button"
                             kind={buttonKind}
@@ -129,13 +128,13 @@ const ActiveLoadedCallEvent = forwardRef<any, ActiveLoadedCallEventProps>(({ mxE
     const [buttonText, buttonKind, onButtonClick] = useMemo(() => {
         switch (connectionState) {
             case ConnectionState.Disconnected:
-                return [_t("Join"), "primary", connect];
+                return [_t("action|join"), "primary", connect];
             case ConnectionState.Connecting:
-                return [_t("Join"), "primary", null];
+                return [_t("action|join"), "primary", null];
             case ConnectionState.Connected:
-                return [_t("Leave"), "danger", disconnect];
+                return [_t("action|leave"), "danger", disconnect];
             case ConnectionState.Disconnecting:
-                return [_t("Leave"), "danger", null];
+                return [_t("action|leave"), "danger", null];
         }
     }, [connectionState, connect, disconnect]);
 
@@ -173,7 +172,7 @@ export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
             <div className="mx_CallEvent_wrapper" ref={ref}>
                 <div className="mx_CallEvent mx_CallEvent_inactive">
                     <div className="mx_CallEvent_columns">
-                        <span className="mx_CallEvent_title">{_t("Video call ended")}</span>
+                        <span className="mx_CallEvent_title">{_t("timeline|m.call|video_call_ended")}</span>
                         <CallDuration delta={latestEvent.getTs() - mxEvent.getTs()} />
                     </div>
                 </div>
@@ -189,7 +188,7 @@ export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
                 mxEvent={mxEvent}
                 call={null}
                 participatingMembers={[]}
-                buttonText={_t("Join")}
+                buttonText={_t("action|join")}
                 buttonKind="primary"
                 onButtonClick={null}
             />

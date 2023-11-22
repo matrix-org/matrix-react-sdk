@@ -45,7 +45,7 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
     const themeOptions = [
         {
             id: MATCH_SYSTEM_THEME_ID,
-            name: _t("Match system"),
+            name: _t("theme|match_system"),
         },
         ...orderedThemes,
     ];
@@ -80,12 +80,12 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
 
     return (
         <div className="mx_QuickThemeSwitcher">
-            <h4 className="mx_QuickThemeSwitcher_heading">{_t("Theme")}</h4>
+            <h4 className="mx_QuickThemeSwitcher_heading">{_t("common|theme")}</h4>
             <Dropdown
                 id="mx_QuickSettingsButton_themePickerDropdown"
                 onOptionChange={onOptionChange}
                 value={selectedTheme}
-                label={_t("Space selection")}
+                label={_t("common|theme")}
             >
                 {
                     themeOptions.map((theme) => <div key={theme.id}>{theme.name}</div>) as NonEmptyArray<

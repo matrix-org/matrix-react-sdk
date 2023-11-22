@@ -16,8 +16,8 @@ limitations under the License.
 
 import React, { PureComponent, RefCallback, RefObject } from "react";
 import classNames from "classnames";
-import zxcvbn from "zxcvbn";
 
+import type { ZxcvbnResult } from "@zxcvbn-ts/core";
 import SdkConfig from "../../../SdkConfig";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { _t, _td, TranslationKey } from "../../../languageHandler";
@@ -46,17 +46,17 @@ interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
 class PassphraseField extends PureComponent<IProps> {
     public static defaultProps = {
         label: _td("common|password"),
-        labelEnterPassword: _td("Enter password"),
-        labelStrongPassword: _td("Nice, strong password!"),
-        labelAllowedButUnsafe: _td("Password is allowed, but unsafe"),
+        labelEnterPassword: _td("auth|password_field_label"),
+        labelStrongPassword: _td("auth|password_field_strong_label"),
+        labelAllowedButUnsafe: _td("auth|password_field_weak_label"),
     };
 
-    public readonly validate = withValidation<this, zxcvbn.ZXCVBNResult | null>({
+    public readonly validate = withValidation<this, ZxcvbnResult | null>({
         description: function (complexity) {
             const score = complexity ? complexity.score : 0;
             return <progress className="mx_PassphraseField_progress" max={4} value={score} />;
         },
-        deriveData: async ({ value }): Promise<zxcvbn.ZXCVBNResult | null> => {
+        deriveData: async ({ value }): Promise<ZxcvbnResult | null> => {
             if (!value) return null;
             const { scorePassword } = await import("../../../utils/PasswordScorer");
             return scorePassword(MatrixClientPeg.get(), value, this.props.userInputs);
@@ -91,7 +91,7 @@ class PassphraseField extends PureComponent<IProps> {
                         return null;
                     }
                     const { feedback } = complexity;
-                    return feedback.warning || feedback.suggestions[0] || _t("Keep going…");
+                    return feedback.warning || feedback.suggestions[0] || _t("auth|password_field_keep_going_prompt");
                 },
             },
         ],

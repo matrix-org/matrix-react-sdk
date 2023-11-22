@@ -16,18 +16,26 @@ limitations under the License.
 
 .mx_RoomHeader {
     height: 64px;
+    box-sizing: border-box;
     padding: 0 var(--cpd-space-3x);
     border-bottom: 1px solid $separator;
     background-color: $background;
-
-    &:hover {
-        cursor: pointer;
-    }
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.mx_RoomHeader_topic {
-    height: 0;
-    opacity: 0;
+.mx_RoomHeader:hover {
+    background-color: $header-panel-bg-hover;
+}
+
+.mx_RoomHeader_info {
+    flex: 1;
+    /* We want the spacing to be 64px, 13x = 52px but we have a flex gap of
+       12px set on the flex container, which sums up to 64 */
+    padding-right: var(--cpd-space-13x);
+}
+
+.mx_RoomHeader_truncated {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -35,8 +43,23 @@ limitations under the License.
     overflow: hidden;
     word-break: break-all;
     text-overflow: ellipsis;
+}
 
-    transition: all var(--transition-standard) ease;
+.mx_RoomHeader_heading {
+    display: flex;
+    gap: var(--cpd-space-1x);
+    align-items: center;
+}
+
+.mx_RoomHeader_topic {
+    height: 0;
+    opacity: 0;
+    transition: all var(--transition-standard) ease 0.1s;
+    /* Emojis are rendered a bit bigger than text in the timeline
+        Make them compact/the same size as text here */
+    .mx_Emoji {
+        font-size: inherit;
+    }
 }
 
 .mx_RoomHeader:hover .mx_RoomHeader_topic {
@@ -44,4 +67,40 @@ limitations under the License.
         value in pixels */
     height: calc($font-13px * 1.5);
     opacity: 1;
+
+    a:hover {
+        text-decoration: underline;
+    }
+}
+
+.mx_RoomHeader_icon {
+    flex-shrink: 0;
+}
+
+.mx_RoomHeader .mx_FacePile {
+    color: $secondary-content;
+    background: $background;
+    display: flex;
+    align-items: center;
+    gap: var(--cpd-space-2x);
+    border-radius: 9999px;
+    padding: var(--cpd-space-1-5x);
+    cursor: pointer;
+    user-select: none;
+
+    /* RoomAvatar doesn't pass classes down to avatar
+    So set style here
+    using div because compound classes are not stable */
+    > div {
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        color: $primary-content;
+        background: var(--cpd-color-bg-subtle-primary);
+    }
+}
+
+.mx_RoomHeader .mx_BaseAvatar {
+    flex-shrink: 0;
 }

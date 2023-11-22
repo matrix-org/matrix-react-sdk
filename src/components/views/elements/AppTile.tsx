@@ -526,7 +526,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         return (
             <span>
-                <WidgetAvatar app={this.props.app} />
+                <WidgetAvatar app={this.props.app} size="20px" />
                 <b>{name}</b>
                 <span>
                     {title ? titleSpacer : ""}
@@ -629,7 +629,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.sgWidget === null) {
             appTileBody = (
                 <div className={appTileBodyClass} style={appTileBodyStyles}>
-                    <AppWarning errorMsg={_t("Error loading Widget")} />
+                    <AppWarning errorMsg={_t("widget|error_loading")} />
                 </div>
             );
         } else if (!this.state.hasPermissionToLoad && this.props.room) {
@@ -656,7 +656,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             if (this.isMixedContent()) {
                 appTileBody = (
                     <div className={appTileBodyClass} style={appTileBodyStyles}>
-                        <AppWarning errorMsg={_t("Error - Mixed content")} />
+                        <AppWarning errorMsg={_t("widget|error_mixed_content")} />
                     </div>
                 );
             } else {
@@ -737,7 +737,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <AccessibleButton
                     key="toggleMaximised"
                     className="mx_AppTileMenuBar_widgets_button"
-                    title={isMaximised ? _t("Un-maximise") : _t("Maximise")}
+                    title={isMaximised ? _t("widget|unmaximise") : _t("action|maximise")}
                     onClick={this.onToggleMaximisedClick}
                 >
                     {isMaximised ? (
@@ -752,7 +752,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 <AccessibleButton
                     key="minimise"
                     className="mx_AppTileMenuBar_widgets_button"
-                    title={_t("Minimise")}
+                    title={_t("action|minimise")}
                     onClick={this.onMinimiseClicked}
                 >
                     <MinimiseIcon className="mx_Icon mx_Icon_12" />
@@ -776,7 +776,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                 {this.props.showPopout && !this.state.requiresClient && (
                                     <AccessibleButton
                                         className="mx_AppTileMenuBar_widgets_button"
-                                        title={_t("Popout widget")}
+                                        title={_t("widget|popout")}
                                         onClick={this.onPopoutWidgetClick}
                                     >
                                         <PopoutIcon className="mx_Icon mx_Icon_12 mx_Icon--stroke" />
@@ -785,7 +785,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                 {this.state.hasContextMenuOptions && (
                                     <ContextMenuButton
                                         className="mx_AppTileMenuBar_widgets_button"
-                                        label={_t("Options")}
+                                        label={_t("common|options")}
                                         isExpanded={this.state.menuDisplayed}
                                         inputRef={this.contextMenuButton}
                                         onClick={this.onContextMenuClick}

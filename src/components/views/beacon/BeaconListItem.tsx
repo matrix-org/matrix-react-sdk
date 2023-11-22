@@ -53,7 +53,7 @@ const BeaconListItem: React.FC<Props & HTMLProps<HTMLLIElement>> = ({ beacon, ..
     return (
         <li className="mx_BeaconListItem" {...rest}>
             {isSelfLocation ? (
-                <MemberAvatar className="mx_BeaconListItem_avatar" member={beaconMember} height={32} width={32} />
+                <MemberAvatar className="mx_BeaconListItem_avatar" member={beaconMember} size="32px" />
             ) : (
                 <StyledLiveBeaconIcon className="mx_BeaconListItem_avatarIcon" />
             )}
@@ -71,7 +71,7 @@ const BeaconListItem: React.FC<Props & HTMLProps<HTMLLIElement>> = ({ beacon, ..
                     </div>
                 </BeaconStatus>
                 <span className="mx_BeaconListItem_lastUpdated">
-                    {_t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime })}
+                    {_t("location_sharing|live_update_time", { humanizedUpdateTime })}
                 </span>
             </div>
         </li>

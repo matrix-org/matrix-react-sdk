@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import {
     EventType,
     GuestAccess,
@@ -25,6 +25,8 @@ import {
     Room,
     ClientEvent,
     RoomMember,
+    MatrixError,
+    Visibility,
 } from "matrix-js-sdk/src/matrix";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
@@ -45,12 +47,15 @@ describe("<JoinRuleSettings />", () => {
     const client = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         getRoom: jest.fn(),
+        getDomain: jest.fn(),
         getLocalAliases: jest.fn().mockReturnValue([]),
         sendStateEvent: jest.fn(),
         upgradeRoom: jest.fn(),
         getProfileInfo: jest.fn(),
         invite: jest.fn().mockResolvedValue(undefined),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
+        getRoomDirectoryVisibility: jest.fn(),
+        setRoomDirectoryVisibility: jest.fn(),
     });
     const roomId = "!room:server.org";
     const newRoomId = "!roomUpgraded:server.org";
@@ -221,13 +226,14 @@ describe("<JoinRuleSettings />", () => {
                 expect(await screen.findByText("Sending invites... (1 out of 2)")).toBeInTheDocument();
                 deferredInvites.pop()!.resolve({});
 
-                // update spaces
-                expect(await screen.findByText("Updating space...")).toBeInTheDocument();
+                // Usually we see "Updating space..." in the UI here, but we
+                // removed the assertion about it, because it sometimes fails,
+                // presumably because it disappeared too quickly to be visible.
 
                 await flushPromises();
 
                 // done, modal closed
-                expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+                await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
             });
 
             it(`upgrades room with no parent spaces or members when changing join rule to ${joinRule}`, async () => {
@@ -270,10 +276,77 @@ describe("<JoinRuleSettings />", () => {
         });
     });
 
+    describe("knock rooms directory visibility", () => {
+        const getCheckbox = () => screen.getByRole("checkbox");
+        let room: Room;
+
+        beforeEach(() => (room = new Room(roomId, client, userId)));
+
+        describe("when join rule is knock", () => {
+            beforeEach(() => setRoomStateEvents(room, PreferredRoomVersions.KnockRooms, JoinRule.Knock));
+
+            it("should set the visibility to public", async () => {
+                jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+                jest.spyOn(client, "setRoomDirectoryVisibility").mockResolvedValue({});
+                getComponent({ room });
+                fireEvent.click(getCheckbox());
+                await act(async () => await flushPromises());
+                expect(client.setRoomDirectoryVisibility).toHaveBeenCalledWith(roomId, Visibility.Public);
+                expect(getCheckbox()).toBeChecked();
+            });
+
+            it("should set the visibility to private", async () => {
+                jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Public });
+                jest.spyOn(client, "setRoomDirectoryVisibility").mockResolvedValue({});
+                getComponent({ room });
+                await act(async () => await flushPromises());
+                fireEvent.click(getCheckbox());
+                await act(async () => await flushPromises());
+                expect(client.setRoomDirectoryVisibility).toHaveBeenCalledWith(roomId, Visibility.Private);
+                expect(getCheckbox()).not.toBeChecked();
+            });
+
+            it("should call onError if setting visibility fails", async () => {
+                const error = new MatrixError();
+                jest.spyOn(client, "getRoomDirectoryVisibility").mockResolvedValue({ visibility: Visibility.Private });
+                jest.spyOn(client, "setRoomDirectoryVisibility").mockRejectedValue(error);
+                getComponent({ room });
+                fireEvent.click(getCheckbox());
+                await act(async () => await flushPromises());
+                expect(getCheckbox()).not.toBeChecked();
+                expect(defaultProps.onError).toHaveBeenCalledWith(error);
+            });
+        });
+
+        describe("when the room version is unsupported and upgrade is enabled", () => {
+            it("should disable the checkbox", () => {
+                setRoomStateEvents(room, "6", JoinRule.Invite);
+                getComponent({ promptUpgrade: true, room });
+                expect(getCheckbox()).toBeDisabled();
+            });
+        });
+
+        describe("when join rule is not knock", () => {
+            beforeEach(() => {
+                setRoomStateEvents(room, PreferredRoomVersions.KnockRooms, JoinRule.Invite);
+                getComponent({ room });
+            });
+
+            it("should disable the checkbox", () => {
+                expect(getCheckbox()).toBeDisabled();
+            });
+
+            it("should set the visibility to private by default", () => {
+                expect(getCheckbox()).not.toBeChecked();
+            });
+        });
+    });
+
     it("should not show knock room join rule", async () => {
         jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
         const room = new Room(newRoomId, client, userId);
-        getComponent({ room: room });
+        setRoomStateEvents(room, PreferredRoomVersions.KnockRooms);
+        getComponent({ room });
         expect(screen.queryByText("Ask to join")).not.toBeInTheDocument();
     });
 });

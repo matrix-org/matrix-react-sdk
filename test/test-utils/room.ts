@@ -90,7 +90,7 @@ export function getRoomContext(room: Room, override: Partial<IRoomState>): IRoom
         msc3946ProcessDynamicPredecessor: false,
         canAskToJoin: false,
         promptAskToJoin: false,
-        knocked: false,
+        viewRoomOpts: { buttons: [] },
 
         ...override,
     };

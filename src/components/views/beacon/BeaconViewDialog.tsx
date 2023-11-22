@@ -160,13 +160,15 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                 )}
                 {!centerGeoUri && !mapDisplayError && (
                     <MapFallback data-testid="beacon-view-dialog-map-fallback" className="mx_BeaconViewDialog_map">
-                        <span className="mx_BeaconViewDialog_mapFallbackMessage">{_t("No live locations")}</span>
+                        <span className="mx_BeaconViewDialog_mapFallbackMessage">
+                            {_t("location_sharing|live_locations_empty")}
+                        </span>
                         <AccessibleButton
                             kind="primary"
                             onClick={onFinished}
                             data-testid="beacon-view-dialog-fallback-close"
                         >
-                            {_t("Close")}
+                            {_t("action|close")}
                         </AccessibleButton>
                     </MapFallback>
                 )}
@@ -185,7 +187,7 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                     >
                         <LiveLocationIcon height={12} />
                         &nbsp;
-                        {_t("View list")}
+                        {_t("action|view_list")}
                     </AccessibleButton>
                 )}
                 <DialogOwnBeaconStatus roomId={roomId} />

@@ -31,14 +31,14 @@ const LearnMore: React.FC<LearnMoreProps> = ({ title, description, ...rest }) =>
         Modal.createDialog(InfoDialog, {
             title,
             description,
-            button: _t("Got it"),
+            button: _t("action|got_it"),
             hasCloseButton: true,
         });
     };
 
     return (
         <AccessibleButton {...rest} kind="link_inline" onClick={onClick} className="mx_LearnMore_button">
-            {_t("Learn more")}
+            {_t("action|learn_more")}
         </AccessibleButton>
     );
 };

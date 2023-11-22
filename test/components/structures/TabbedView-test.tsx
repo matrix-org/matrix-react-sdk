@@ -22,8 +22,8 @@ import { NonEmptyArray } from "../../../src/@types/common";
 import { _t } from "../../../src/languageHandler";
 
 describe("<TabbedView />", () => {
-    const generalTab = new Tab("GENERAL", "General", "general", <div>general</div>);
-    const labsTab = new Tab("LABS", "Labs", "labs", <div>labs</div>);
+    const generalTab = new Tab("GENERAL", "common|general", "general", <div>general</div>);
+    const labsTab = new Tab("LABS", "common|labs", "labs", <div>labs</div>);
     const securityTab = new Tab("SECURITY", "common|security", "security", <div>security</div>);
     const defaultProps = {
         tabLocation: TabLocation.LEFT,
@@ -44,13 +44,13 @@ describe("<TabbedView />", () => {
 
     it("renders first tab as active tab when no initialTabId", () => {
         const { container } = render(getComponent());
-        expect(getActiveTab(container)?.textContent).toEqual(generalTab.label);
+        expect(getActiveTab(container)?.textContent).toEqual(_t(generalTab.label));
         expect(getActiveTabBody(container)?.textContent).toEqual("general");
     });
 
     it("renders first tab as active tab when initialTabId is not valid", () => {
         const { container } = render(getComponent({ initialTabId: "bad-tab-id" }));
-        expect(getActiveTab(container)?.textContent).toEqual(generalTab.label);
+        expect(getActiveTab(container)?.textContent).toEqual(_t(generalTab.label));
         expect(getActiveTabBody(container)?.textContent).toEqual("general");
     });
 
@@ -86,18 +86,18 @@ describe("<TabbedView />", () => {
         // start with middle tab active
         const { container, rerender } = render(getComponent({ initialTabId: labsTab.id }));
 
-        expect(getActiveTab(container)?.textContent).toEqual(labsTab.label);
+        expect(getActiveTab(container)?.textContent).toEqual(_t(labsTab.label));
 
         rerender(getComponent({ tabs: [labsTab, generalTab, securityTab] }));
 
         // labs tab still active
-        expect(getActiveTab(container)?.textContent).toEqual(labsTab.label);
+        expect(getActiveTab(container)?.textContent).toEqual(_t(labsTab.label));
     });
 
     it("does not reactivate inititalTabId on rerender", () => {
         const { container, getByTestId, rerender } = render(getComponent());
 
-        expect(getActiveTab(container)?.textContent).toEqual(generalTab.label);
+        expect(getActiveTab(container)?.textContent).toEqual(_t(generalTab.label));
 
         // make security tab active
         act(() => {

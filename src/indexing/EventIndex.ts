@@ -309,8 +309,7 @@ export default class EventIndex extends EventEmitter {
     }
 
     private eventToJson(ev: MatrixEvent): IEventWithRoomId {
-        const jsonEvent: any = ev.toJSON();
-        const e = ev.isEncrypted() ? jsonEvent.decrypted : jsonEvent;
+        const e = ev.getEffectiveEvent() as any;
 
         if (ev.isEncrypted()) {
             // Let us store some additional data so we can re-verify the event.
@@ -545,10 +544,7 @@ export default class EventIndex extends EventEmitter {
             const decryptionPromises = matrixEvents
                 .filter((event) => event.isEncrypted())
                 .map((event) => {
-                    return client.decryptEventIfNeeded(event, {
-                        isRetry: true,
-                        emit: false,
-                    });
+                    return client.decryptEventIfNeeded(event, { emit: false });
                 });
 
             // Let us wait for all the events to get decrypted.

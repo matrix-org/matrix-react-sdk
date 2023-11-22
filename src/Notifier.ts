@@ -27,9 +27,10 @@ import {
     SyncState,
     SyncStateData,
     IRoomTimelineData,
+    M_LOCATION,
+    EventType,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { PermissionChanged as PermissionChangedEvent } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -54,7 +55,6 @@ import { SdkContextClass } from "./contexts/SDKContext";
 import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded } from "./utils/notifications";
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
-import { ElementCall } from "./models/Call";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType } from "./voice-broadcast";
 import { getSenderName } from "./utils/event/getSenderName";
 import { stripPlainReply } from "./utils/Reply";
@@ -77,7 +77,7 @@ type of tile.
 const msgTypeHandlers: Record<string, (event: MatrixEvent) => string | null> = {
     [MsgType.KeyVerificationRequest]: (event: MatrixEvent) => {
         const name = (event.sender || {}).name;
-        return _t("%(name)s is requesting verification", { name });
+        return _t("notifier|m.key.verification.request", { name });
     },
     [M_LOCATION.name]: (event: MatrixEvent) => {
         return TextForEvent.textForLocationEvent(event)();
@@ -90,7 +90,7 @@ const msgTypeHandlers: Record<string, (event: MatrixEvent) => string | null> = {
             if (event.getContent()?.[VoiceBroadcastChunkEventType]?.sequence === 1) {
                 // Show a notification for the first broadcast chunk.
                 // At this point a user received something to listen to.
-                return _t("%(senderName)s started a voice broadcast", { senderName: getSenderName(event) });
+                return _t("notifier|io.element.voice_broadcast_chunk", { senderName: getSenderName(event) });
             }
 
             // Mute other broadcast chunks
@@ -298,15 +298,12 @@ class NotifierClass {
                     const brand = SdkConfig.get().brand;
                     const description =
                         result === "denied"
-                            ? _t(
-                                  "%(brand)s does not have permission to send you notifications - please check your browser settings",
-                                  { brand },
-                              )
-                            : _t("%(brand)s was not given permission to send notifications - please try again", {
+                            ? _t("settings|notifications|error_permissions_denied", { brand })
+                            : _t("settings|notifications|error_permissions_missing", {
                                   brand,
                               });
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Unable to enable Notifications"),
+                        title: _t("settings|notifications|error_title"),
                         description,
                     });
                     return;
@@ -519,13 +516,27 @@ class NotifierClass {
      * Some events require special handling such as showing in-app toasts
      */
     private performCustomEventHandling(ev: MatrixEvent): void {
-        if (ElementCall.CALL_EVENT_TYPE.names.includes(ev.getType()) && SettingsStore.getValue("feature_group_calls")) {
+        if (
+            EventType.CallNotify === ev.getType() &&
+            SettingsStore.getValue("feature_group_calls") &&
+            (ev.getAge() ?? 0) < 10000
+        ) {
+            const content = ev.getContent();
+            const roomId = ev.getRoomId();
+            if (typeof content.call_id !== "string") {
+                logger.warn("Received malformatted CallNotify event. Did not contain 'call_id' of type 'string'");
+                return;
+            }
+            if (!roomId) {
+                logger.warn("Could not get roomId for CallNotify event");
+                return;
+            }
             ToastStore.sharedInstance().addOrReplaceToast({
-                key: getIncomingCallToastKey(ev.getStateKey()!),
+                key: getIncomingCallToastKey(content.call_id, roomId),
                 priority: 100,
                 component: IncomingCallToast,
                 bodyClassName: "mx_IncomingCallToast",
-                props: { callEvent: ev },
+                props: { notifyEvent: ev },
             });
         }
     }

@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import Modal from "../../../../../Modal";
 import SettingsSubsection from "../../shared/SettingsSubsection";
 import SetupEncryptionDialog from "../../../dialogs/security/SetupEncryptionDialog";
@@ -39,23 +38,23 @@ import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
 import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionHeading";
 import { SettingsSection } from "../../shared/SettingsSection";
-import { getDelegatedAuthAccountUrl } from "../../../../../utils/oidc/getDelegatedAuthAccountUrl";
 import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
+import { SDKContext } from "../../../../../contexts/SDKContext";
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("Sign out"),
+        title: _t("action|sign_out"),
         description: (
             <div>
                 <p>
-                    {_t("Are you sure you want to sign out of %(count)s sessions?", {
+                    {_t("settings|sessions|sign_out_confirm_description", {
                         count: sessionsToSignOutCount,
                     })}
                 </p>
             </div>
         ),
-        cancelButton: _t("Cancel"),
-        button: _t("Sign out"),
+        cancelButton: _t("action|cancel"),
+        button: _t("action|sign_out"),
     });
     const [confirmed] = await finished;
 
@@ -167,19 +166,21 @@ const SessionManagerTab: React.FC = () => {
     const filteredDeviceListRef = useRef<HTMLDivElement>(null);
     const scrollIntoViewTimeoutRef = useRef<number>();
 
-    const matrixClient = useContext(MatrixClientContext);
+    const sdkContext = useContext(SDKContext);
+    const matrixClient = sdkContext.client!;
     /**
      * If we have a delegated auth account management URL, all sessions but the current session need to be managed in the
      * delegated auth provider.
      * See https://github.com/matrix-org/matrix-spec-proposals/pull/3824
      */
-    const delegatedAuthAccountUrl = getDelegatedAuthAccountUrl(matrixClient.getClientWellKnown());
+    const delegatedAuthAccountUrl = sdkContext.oidcClientStore.accountManagementEndpoint;
     const disableMultipleSignout = !!delegatedAuthAccountUrl;
 
     const userId = matrixClient?.getUserId();
     const currentUserMember = (userId && matrixClient?.getUser(userId)) || undefined;
     const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
     const capabilities = useAsyncMemo(async () => matrixClient?.getCapabilities(), [matrixClient]);
+    const wellKnown = useMemo(() => matrixClient?.getClientWellKnown(), [matrixClient]);
 
     const onDeviceExpandToggle = (deviceId: ExtendedDevice["device_id"]): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -275,7 +276,7 @@ const SessionManagerTab: React.FC = () => {
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("Sessions")}>
+            <SettingsSection heading={_t("settings|sessions|title")}>
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}
@@ -302,9 +303,7 @@ const SessionManagerTab: React.FC = () => {
                                 disabled={!!signingOutDeviceIds.length}
                             />
                         }
-                        description={_t(
-                            "For best security, verify your sessions and sign out from any session that you don't recognize or use anymore.",
-                        )}
+                        description={_t("settings|sessions|best_security_note")}
                         data-testid="other-sessions-section"
                         stretchContent
                     >
@@ -331,7 +330,12 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
-                <LoginWithQRSection onShowQr={onShowQrClicked} versions={clientVersions} capabilities={capabilities} />
+                <LoginWithQRSection
+                    onShowQr={onShowQrClicked}
+                    versions={clientVersions}
+                    capabilities={capabilities}
+                    wellKnown={wellKnown}
+                />
             </SettingsSection>
         </SettingsTab>
     );
