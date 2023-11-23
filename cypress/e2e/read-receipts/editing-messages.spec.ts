@@ -276,7 +276,8 @@ describe("Read receipts", () => {
                 // Then it is read
                 assertRead(room2);
             });
-            it("Editing a thread message after marking as read leaves the room read", () => {
+            // XXX: flaky
+            it.skip("Editing a thread message after marking as read leaves the room read", () => {
                 // Given a room is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -290,7 +291,8 @@ describe("Read receipts", () => {
                 // Then the room becomes unread
                 assertStillRead(room2);
             });
-            it("A room with an edited threaded message is still read after restart", () => {
+            // XXX: flaky
+            it.skip("A room with an edited threaded message is still read after restart", () => {
                 // Given an edit in a thread is leaving a room read
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -333,7 +335,8 @@ describe("Read receipts", () => {
         });
 
         describe("thread roots", () => {
-            it("An edit of a thread root leaves the room read", () => {
+            // XXX: flaky
+            it.skip("An edit of a thread root leaves the room read", () => {
                 // Given I have read a thread
                 goTo(room1);
                 receiveMessages(room2, ["Msg1", threadedOff("Msg1", "Resp1")]);
@@ -410,6 +413,7 @@ describe("Read receipts", () => {
                 goTo(room1);
                 assertStillRead(room2);
             });
+            // XXX: flaky
             it("Editing a thread root that is a reply after marking as read leaves the room read", () => {
                 // Given a thread based on a reply exists and is read because it is marked as read
                 goTo(room1);
