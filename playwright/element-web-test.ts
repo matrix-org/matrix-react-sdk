@@ -24,7 +24,6 @@ import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Credentials, HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
 import { Instance } from "./plugins/mailhog";
-import { OAuthServer } from "./plugins/oauth_server";
 import { ElementAppPage } from "./pages/ElementAppPage";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
@@ -93,13 +92,6 @@ export const test = base.extend<
         const server = new Synapse(request);
         await use(await server.start(opts));
         await server.stop();
-    },
-    // eslint-disable-next-line no-empty-pattern
-    oAuthServer: async ({}, use) => {
-        const server = new OAuthServer();
-        const port = server.start();
-        await use({ port });
-        server.stop();
     },
 
     displayName: undefined,
