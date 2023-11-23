@@ -36,7 +36,7 @@ test.describe("User Onboarding (new user)", () => {
     });
 
     test("page is shown and preference exists", async ({ page, app }) => {
-        // await expect(page.locator(".mx_UserOnboardingPage")).toHaveScreenshot();
+        await expect(page.locator(".mx_UserOnboardingPage")).toHaveScreenshot();
         await app.openUserSettings("Preferences");
         await expect(page.getByText("Show shortcut to welcome checklist above the room list")).toBeVisible();
     });
@@ -46,7 +46,7 @@ test.describe("User Onboarding (new user)", () => {
         await expect(
             page.getByRole("dialog").getByRole("heading", { level: 2, name: "Download Element" }),
         ).toBeVisible();
-        // await expect(page.getByRole("dialog")).toHaveScreenshot();
+        await expect(page.getByRole("dialog")).toHaveScreenshot();
     });
 
     test.skip("using find friends action should increase progress", async ({ page, bot }) => {
