@@ -2,18 +2,11 @@
     "compilerOptions": {
         "target": "es2016",
         "jsx": "react",
-        "lib": [
-            "es2021",
-            "dom",
-            "dom.iterable"
-        ],
+        "lib": ["es2021", "dom", "dom.iterable"],
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "module": "es2022"
-    },
-    "include": [
-        "**/*.ts",
-        "../src/@types/global.d.ts"
-    ]
+    },ress
+    "include": ["**/*.ts", "../src/@types/global.d.ts"]
 }
