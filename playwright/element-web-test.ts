@@ -20,6 +20,7 @@ import _ from "lodash";
 
 import type mailhog from "mailhog";
 import type { IConfigOptions } from "../src/IConfigOptions";
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Credentials, HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
 import { Instance } from "./plugins/mailhog";
@@ -62,6 +63,8 @@ export const test = base.extend<
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        botName?: string;
+        bot: MatrixClient;
     }
 >({
     crypto: ["legacy", { option: true }],
@@ -133,6 +136,21 @@ export const test = base.extend<
             ...credentials,
             displayName,
         });
+    },
+
+    botName: undefined,
+    bot: async ({ homeserver, botName }, use) => {
+        const username = _.uniqueId("bot_");
+        const password = _.uniqueId("password_");
+        const credentials = await homeserver.registerUser(username, password, botName);
+        const { MatrixClient } = await import("matrix-js-sdk/src/matrix");
+        const client = new MatrixClient({
+            baseUrl: homeserver.config.baseUrl,
+            accessToken: credentials.accessToken,
+            userId: credentials.userId,
+            deviceId: credentials.deviceId,
+        });
+        await use(client);
     },
 
     axe: async ({ page }, use) => {

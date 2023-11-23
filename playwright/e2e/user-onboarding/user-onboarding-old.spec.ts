@@ -31,6 +31,6 @@ test.describe("User Onboarding (old user)", () => {
         await expect(page.locator(".mx_UserOnboardingPage")).not.toBeVisible();
         await expect(page.locator(".mx_UserOnboardingButton")).not.toBeVisible();
         await app.openUserSettings("Preferences");
-        await expect(page.getByText("Show shortcut to welcome page above the room list")).not.toBeVisible();
+        await expect(page.getByText("Show shortcut to welcome checklist above the room list")).not.toBeVisible();
     });
 });
