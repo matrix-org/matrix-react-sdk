@@ -26,7 +26,6 @@ import { slidingSyncProxyDocker } from "./sliding-sync";
 import { webserver } from "./webserver";
 import { docker } from "./docker";
 import { log } from "./log";
-import { mailhogDocker } from "./mailhog";
 
 /**
  * @type {Cypress.PluginConfig}
@@ -34,7 +33,7 @@ import { mailhogDocker } from "./mailhog";
 export default function (on: PluginEvents, config: PluginConfigOptions) {
     initPlugins(
         on,
-        [docker, synapseDocker, dendriteDocker, slidingSyncProxyDocker, webserver, log, mailhogDocker],
+        [docker, synapseDocker, dendriteDocker, slidingSyncProxyDocker, webserver, log],
         config,
     );
     installLogsPrinter(on, {

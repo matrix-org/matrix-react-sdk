@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { checkA11y, injectAxe } from "axe-playwright";
-
 import { test, expect } from "../../element-web-test";
 import { doTokenRegistration } from "./utils";
 
@@ -31,9 +29,11 @@ test.describe("Login", () => {
             await page.goto("/#/login");
         });
 
-        test("logs in with an existing account and lands on the home screen", async ({ page, homeserver }) => {
-            await injectAxe(page);
-
+        test("logs in with an existing account and lands on the home screen", async ({
+            page,
+            homeserver,
+            checkA11y,
+        }) => {
             // first pick the homeserver, as otherwise the user picker won't be visible
             await page.getByRole("button", { name: "Edit" }).click();
             await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
@@ -67,7 +67,7 @@ test.describe("Login", () => {
             await expect(page.getByRole("textbox", { name: "Username" })).toBeVisible();
             // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24688
             // cy.percySnapshot("Login");
-            await checkA11y(page);
+            await checkA11y();
 
             await page.getByRole("textbox", { name: "Username" }).fill(username);
             await page.getByPlaceholder("Password").fill(password);

@@ -2,12 +2,18 @@
     "compilerOptions": {
         "target": "es2016",
         "jsx": "react",
-        "lib": ["es2021", "dom", "dom.iterable"],
-        "types": ["axe-playwright"],
+        "lib": [
+            "es2021",
+            "dom",
+            "dom.iterable"
+        ],
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "module": "es2022"
     },
-    "include": ["**/*.ts", "../src/@types/global.d.ts"]
+    "include": [
+        "**/*.ts",
+        "../src/@types/global.d.ts"
+    ]
 }

@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
 
+import type mailhog from "mailhog";
+import type { IConfigOptions } from "../src/IConfigOptions";
 import { Credentials, HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
+import { Instance } from "./plugins/mailhog";
 import { OAuthServer } from "./plugins/oauth_server";
 
-const CONFIG_JSON: Record<string, any> = {
+const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
     // actually work.
     //
@@ -43,6 +47,8 @@ export type TestOptions = {
 
 export const test = base.extend<
     TestOptions & {
+        axe: AxeBuilder;
+        checkA11y: () => Promise<void>;
         // The contents of the config.json to send
         config: typeof CONFIG_JSON;
         // The options with which to run the `homeserver` fixture
@@ -53,6 +59,7 @@ export const test = base.extend<
             displayName: string;
         };
         displayName?: string;
+        mailhog?: { api: mailhog.API; instance: Instance };
     }
 >({
     crypto: ["legacy", { option: true }],
@@ -125,6 +132,21 @@ export const test = base.extend<
             displayName,
         });
     },
+
+    axe: async ({ page }, use) => {
+        await use(new AxeBuilder({ page }));
+    },
+    checkA11y: async ({ axe }, use, testInfo) =>
+        use(async () => {
+            const results = await axe.analyze();
+
+            await testInfo.attach("accessibility-scan-results", {
+                body: JSON.stringify(results, null, 2),
+                contentType: "application/json",
+            });
+
+            expect(results.violations).toEqual([]);
+        }),
 });
 
 test.use({});
