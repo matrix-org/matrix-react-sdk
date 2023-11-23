@@ -151,4 +151,4 @@ export const test = base.extend<
 
 test.use({});
 
-export { expect } from "@playwright/test";
+export { expect };
