@@ -19,7 +19,6 @@ import { test, expect } from "../../element-web-test";
 test.describe("User Onboarding (new user)", () => {
     test.use({
         displayName: "Jane Doe",
-        botName: "BotBob",
     });
 
     // This first beforeEach happens before the `user` fixture runs
@@ -49,14 +48,19 @@ test.describe("User Onboarding (new user)", () => {
         await expect(page.getByRole("dialog")).toHaveScreenshot();
     });
 
-    test.skip("using find friends action should increase progress", async ({ page, bot }) => {
-        const oldProgress = await page.getByRole("progressbar").getAttribute("value");
+    test("using find friends action should increase progress", async ({ page, homeserver }) => {
+        const bot = await homeserver.registerUser("botbob", "password", "BotBob");
+
+        const oldProgress = parseFloat(await page.getByRole("progressbar").getAttribute("value"));
         await page.getByRole("button", { name: "Find friends" }).click();
-        await page.locator(".mx_InviteDialog_editor").getByRole("textbox").fill(bot.getUserId());
+        await page.locator(".mx_InviteDialog_editor").getByRole("textbox").fill(bot.userId);
         await page.getByRole("button", { name: "Go" }).click();
         await expect(page.locator(".mx_InviteDialog_buttonAndSpinner")).not.toBeVisible();
+
         const message = "Hi!";
-        await page.getByRole("textbox", { name: "Send a message…" }).fill(`${message}\n`);
+        const composer = page.getByRole("textbox", { name: "Send a message…" });
+        await composer.fill(`${message}`);
+        await composer.press("Enter");
         await expect(page.locator(".mx_MTextBody.mx_EventTile_content", { hasText: message })).toBeVisible();
 
         await page.goto("/#/home");
@@ -64,6 +68,8 @@ test.describe("User Onboarding (new user)", () => {
         await expect(page.getByRole("button", { name: "Welcome" })).toBeVisible();
         await expect(page.locator(".mx_UserOnboardingList")).toBeVisible();
 
-        await expect(page.getByRole("progressbar")).toHaveAttribute("value", oldProgress + 1);
+        await page.waitForTimeout(500); // await progress bar animation
+        const progress = parseFloat(await page.getByRole("progressbar").getAttribute("value"));
+        expect(progress).toBeGreaterThan(oldProgress);
     });
 });
