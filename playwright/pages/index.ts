@@ -16,9 +16,11 @@ limitations under the License.
 import { Page } from "playwright-core";
 
 import { ElementLabsPage } from "./labs";
+import { ElementClientPage } from "./client";
 
 export class ElementAppPage {
     constructor(private page: Page) {}
 
     public labs = new ElementLabsPage(this.page);
+    public client = new ElementClientPage(this.page);
 }
