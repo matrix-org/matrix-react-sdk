@@ -34,6 +34,9 @@ async function setSystemFont(font: string): Promise<void> {
 const getFontFamily = () => {
     return document.body.style.getPropertyValue(FontWatcher.FONT_FAMILY_CUSTOM_PROPERTY);
 };
+const getEmojiFontFamily = () => {
+    return document.body.style.getPropertyValue(FontWatcher.EMOJI_FONT_FAMILY_CUSTOM_PROPERTY);
+};
 
 describe("FontWatcher", function () {
     it("should load font on start()", async () => {
@@ -82,6 +85,30 @@ describe("FontWatcher", function () {
         it("trims whitespace, encloses the fonts by double quotes, and sets them as the system font", async () => {
             await setSystemFont(`  Fira Code  ,  "Commodore 64" `);
             expect(getFontFamily()).toBe(`"Fira Code","Commodore 64"`);
+        });
+    });
+
+    describe("Sets bundled emoji font as expected", () => {
+        let fontWatcher: FontWatcher;
+        beforeEach(async () => {
+            fontWatcher = new FontWatcher();
+            await fontWatcher.start();
+        });
+        afterEach(() => {
+            fontWatcher.stop();
+        });
+
+        it("by default does not add Twemoji font", async () => {
+            expect(getEmojiFontFamily()).toMatchInlineSnapshot(`""`);
+        });
+        it("adds Twemoji font when enabled", async () => {
+            await SettingsStore.setValue("useBundledEmojiFont", null, SettingLevel.DEVICE, true);
+            expect(getEmojiFontFamily()).toMatchInlineSnapshot(`""`);
+        });
+        it("works in conjunction with useSystemFont", async () => {
+            await setSystemFont(`"Commodore 64"`);
+            await SettingsStore.setValue("useBundledEmojiFont", null, SettingLevel.DEVICE, true);
+            expect(getFontFamily()).toMatchInlineSnapshot(`""Commodore 64", Twemoji"`);
         });
     });
 
