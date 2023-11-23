@@ -105,7 +105,7 @@ test.describe("Login", () => {
             await page.getByRole("button", { name: "User menu" }).click();
             await expect(page.getByText(user.displayName, { exact: true })).toBeVisible();
 
-            // give a change for the outstanding requests queue to settle before logging out
+            // Allow the outstanding requests queue to settle before logging out
             await page.waitForTimeout(2000);
 
             await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Sign out" }).click();
