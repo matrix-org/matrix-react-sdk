@@ -3,11 +3,10 @@
         "target": "es2016",
         "jsx": "react",
         "lib": ["es2021", "dom", "dom.iterable"],
-        "types": ["axe-playwright"],
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "moduleResolution": "node",
         "module": "es2022"
     },
-    "include": ["**/*.ts"]
+    "include": ["**/*.ts", "../src/@types/global.d.ts"]
 }

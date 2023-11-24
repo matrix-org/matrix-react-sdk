@@ -45,7 +45,7 @@
         "start": "echo THIS IS FOR LEGACY PURPOSES ONLY. && yarn start:all",
         "start:all": "echo THIS IS FOR LEGACY PURPOSES ONLY. && yarn start:build",
         "start:build": "babel src -w -s -d lib --verbose --extensions \".ts,.js\"",
-        "lint": "yarn lint:types && yarn lint:js && yarn lint:style",
+        "lint": "yarn lint:types && yarn lint:js && yarn lint:style && yarn lint:workflows",
         "lint:js": "eslint --max-warnings 0 src test cypress && prettier --check .",
         "lint:js-fix": "eslint --fix src test cypress && prettier --loglevel=warn --write .",
         "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress",
@@ -55,7 +55,8 @@
         "test:cypress:open": "cypress open",
         "test:playwright": "playwright test",
         "test:playwright:open": "yarn test:playwright --ui",
-        "coverage": "yarn test --coverage"
+        "coverage": "yarn test --coverage",
+        "lint:workflows": "find .github/workflows -type f \\( -iname '*.yaml' -o -iname '*.yml' \\) | xargs -I {} sh -c 'echo \"Linting {}\"; action-validator \"{}\"'"
     },
     "resolutions": {
         "@types/react-dom": "17.0.21",
@@ -159,6 +160,7 @@
         "@types/counterpart": "^0.18.1",
         "@types/diff-match-patch": "^1.0.32",
         "@types/escape-html": "^1.0.1",
+        "@types/express": "^4.17.21",
         "@types/file-saver": "^2.0.3",
         "@types/fs-extra": "^11.0.0",
         "@types/glob-to-regexp": "^0.4.1",
@@ -184,7 +186,6 @@
         "@typescript-eslint/parser": "^5.6.0",
         "allchange": "^1.1.0",
         "axe-core": "4.8.2",
-        "axe-playwright": "^1.2.3",
         "babel-jest": "^29.0.0",
         "blob-polyfill": "^7.0.0",
         "cypress": "^12.0.0",
@@ -225,7 +226,10 @@
         "stylelint-config-standard": "^34.0.0",
         "stylelint-scss": "^5.0.0",
         "ts-node": "^10.9.1",
-        "typescript": "5.1.6"
+        "typescript": "5.1.6",
+        "@axe-core/playwright": "^4.8.1",
+        "@action-validator/core": "^0.5.3",
+        "@action-validator/cli": "^0.5.3"
     },
     "peerDependencies": {
         "postcss": "^8.4.19",
