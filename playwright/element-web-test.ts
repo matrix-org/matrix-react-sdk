@@ -25,6 +25,7 @@ import { Synapse } from "./plugins/synapse";
 import { Instance } from "./plugins/mailhog";
 import { OAuthServer } from "./plugins/oauth_server";
 import { ElementAppPage } from "./pages/ElementAppPage";
+import { OAuthServer } from "./plugins/oauth_server";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
