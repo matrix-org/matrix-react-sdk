@@ -135,42 +135,6 @@ export const test = base.extend<
         });
     },
 
-    displayName: undefined,
-    user: async ({ page, homeserver, displayName: testDisplayName }, use) => {
-        const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
-        const username = _.uniqueId("user_");
-        const password = _.uniqueId("password_");
-        const displayName = testDisplayName ?? _.sample(names)!;
-
-        const credentials = await homeserver.registerUser(username, password, displayName);
-        console.log(`Registered test user ${username} with displayname ${displayName}`);
-
-        await page.addInitScript(
-            ({ baseUrl, credentials }) => {
-                // Seed the localStorage with the required credentials
-                window.localStorage.setItem("mx_hs_url", baseUrl);
-                window.localStorage.setItem("mx_user_id", credentials.userId);
-                window.localStorage.setItem("mx_access_token", credentials.accessToken);
-                window.localStorage.setItem("mx_device_id", credentials.deviceId);
-                window.localStorage.setItem("mx_is_guest", "false");
-                window.localStorage.setItem("mx_has_pickle_key", "false");
-                window.localStorage.setItem("mx_has_access_token", "true");
-
-                // Ensure the language is set to a consistent value
-                window.localStorage.setItem("mx_local_settings", '{"language":"en"}');
-            },
-            { baseUrl: homeserver.config.baseUrl, credentials },
-        );
-        await page.goto("/");
-
-        await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
-
-        await use({
-            ...credentials,
-            displayName,
-        });
-    },
-
     axe: async ({ page }, use) => {
         await use(new AxeBuilder({ page }));
     },
