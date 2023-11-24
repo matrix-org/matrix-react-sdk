@@ -207,7 +207,7 @@ describe("DateSeparator", () => {
             // Jump to "last week"
             mockClient.timestampToEvent.mockResolvedValue({
                 event_id: "$abc",
-                origin_server_ts: "0",
+                origin_server_ts: 0,
             });
             const jumpToLastWeekButton = await screen.findByTestId("jump-to-date-last-week");
             fireEvent.click(jumpToLastWeekButton);
