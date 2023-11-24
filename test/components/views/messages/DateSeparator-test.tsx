@@ -170,7 +170,7 @@ describe("DateSeparator", () => {
                 const returnedEventId = "$abc";
                 mockClient.timestampToEvent.mockResolvedValue({
                     event_id: returnedEventId,
-                    origin_server_ts: String(returnedDate.getTime()),
+                    origin_server_ts: returnedDate.getTime(),
                 } satisfies TimestampToEventResponse);
                 const jumpToXButton = await screen.findByTestId(testCase.jumpButtonTestId);
                 fireEvent.click(jumpToXButton);
