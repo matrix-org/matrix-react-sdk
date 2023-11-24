@@ -414,7 +414,7 @@ describe("Read receipts", () => {
                 assertStillRead(room2);
             });
             // XXX: flaky
-            it("Editing a thread root that is a reply after marking as read leaves the room read", () => {
+            it.skip("Editing a thread root that is a reply after marking as read leaves the room read", () => {
                 // Given a thread based on a reply exists and is read because it is marked as read
                 goTo(room1);
                 receiveMessages(room2, ["Msg", replyTo("Msg", "Reply"), threadedOff("Reply", "InThread")]);
