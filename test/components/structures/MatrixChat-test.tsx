@@ -243,7 +243,6 @@ describe("<MatrixChat />", () => {
         const userId = "@alice:server.org";
         const deviceId = "test-device-id";
         const accessToken = "test-access-token-from-oidc";
-        const localSettings = '{"language":"en"}';
 
         const tokenResponse: BearerTokenResponse = {
             access_token: accessToken,
@@ -505,7 +504,6 @@ describe("<MatrixChat />", () => {
                 const languageAfter = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
                 expect(languageBefore).toEqual(languageAfter);
             });
-
         });
     });
 
