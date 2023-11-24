@@ -55,6 +55,8 @@ import PlatformPeg from "../../../src/PlatformPeg";
 import EventIndexPeg from "../../../src/indexing/EventIndexPeg";
 import * as Lifecycle from "../../../src/Lifecycle";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY } from "../../../src/BasePlatform";
+import SettingsStore from "../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
 
 jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
     completeAuthorizationCodeGrant: jest.fn(),
@@ -477,7 +479,8 @@ describe("<MatrixChat />", () => {
             });
 
             it("should persist device language when available", async () => {
-                localStorage.setItem("mx_local_settings", localSettings);
+                await SettingsStore.setValue("language", null, SettingLevel.DEVICE, "en");
+                const languageBefore = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
 
                 jest.spyOn(Lifecycle, "attemptDelegatedAuthLogin");
 
@@ -485,7 +488,22 @@ describe("<MatrixChat />", () => {
                 await flushPromises();
 
                 expect(Lifecycle.attemptDelegatedAuthLogin).toHaveBeenCalled();
-                expect(localStorage.getItem("mx_local_settings")).toEqual(localSettings);
+                const languageAfter = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
+                expect(languageBefore).toEqual(languageAfter);
+            });
+
+            it("should not persist device language when not available", async () => {
+                await SettingsStore.setValue("language", null, SettingLevel.DEVICE, undefined);
+                const languageBefore = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
+
+                jest.spyOn(Lifecycle, "attemptDelegatedAuthLogin");
+
+                getComponent({ realQueryParams });
+                await flushPromises();
+
+                expect(Lifecycle.attemptDelegatedAuthLogin).toHaveBeenCalled();
+                const languageAfter = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
+                expect(languageBefore).toEqual(languageAfter);
             });
 
         });
