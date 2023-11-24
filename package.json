@@ -46,9 +46,9 @@
         "start:all": "echo THIS IS FOR LEGACY PURPOSES ONLY. && yarn start:build",
         "start:build": "babel src -w -s -d lib --verbose --extensions \".ts,.js\"",
         "lint": "yarn lint:types && yarn lint:js && yarn lint:style && yarn lint:workflows",
-        "lint:js": "eslint --max-warnings 0 src test cypress && prettier --check .",
-        "lint:js-fix": "eslint --fix src test cypress && prettier --loglevel=warn --write .",
-        "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress",
+        "lint:js": "eslint --max-warnings 0 src test cypress playwright && prettier --check .",
+        "lint:js-fix": "eslint --fix src test cypress playwright && prettier --loglevel=warn --write .",
+        "lint:types": "tsc --noEmit --jsx react && tsc --noEmit --jsx react -p cypress && tsc --noEmit --jsx react -p playwright",
         "lint:style": "stylelint \"res/css/**/*.pcss\"",
         "test": "jest",
         "test:cypress": "cypress run",
@@ -160,7 +160,6 @@
         "@types/counterpart": "^0.18.1",
         "@types/diff-match-patch": "^1.0.32",
         "@types/escape-html": "^1.0.1",
-        "@types/express": "^4.17.21",
         "@types/file-saver": "^2.0.3",
         "@types/fs-extra": "^11.0.0",
         "@types/glob-to-regexp": "^0.4.1",
@@ -229,7 +228,8 @@
         "typescript": "5.1.6",
         "@axe-core/playwright": "^4.8.1",
         "@action-validator/core": "^0.5.3",
-        "@action-validator/cli": "^0.5.3"
+        "@action-validator/cli": "^0.5.3",
+        "@types/express": "^4.17.21"
     },
     "peerDependencies": {
         "postcss": "^8.4.19",
