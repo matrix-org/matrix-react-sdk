@@ -1756,14 +1756,13 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
 
     const header = (
         <>
-            {scopeHeader}
             <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
         </>
     );
     return (
         <BaseCard
             className={classes.join(" ")}
-            header={<span />}
+            header={scopeHeader}
             onClose={onClose}
             closeLabel={closeLabel}
             cardState={cardState}
