@@ -19,6 +19,7 @@ import { test as base } from "@playwright/test";
 import { HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
 import { ElementAppPage } from "./pages";
+import { SlidingSyncProxy } from "./plugins/sliding-sync-proxy";
 
 const CONFIG_JSON = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -45,6 +46,7 @@ type FixtureOptions = {
     startHomeserverOpts: StartHomeserverOpts | string;
     homeserver: HomeserverInstance;
     app: ElementAppPage;
+    slidingSyncProxy: SlidingSyncProxy;
 } & TestOptions;
 
 export const test = base.extend<FixtureOptions>({
@@ -78,6 +80,11 @@ export const test = base.extend<FixtureOptions>({
     app: async ({ page }, use) => {
         const app = new ElementAppPage(page);
         await use(app);
+    },
+
+    slidingSyncProxy: async ({ homeserver }, use) => {
+        const proxy = new SlidingSyncProxy(homeserver.config.baseUrl);
+        await use(proxy);
     },
 });
 
