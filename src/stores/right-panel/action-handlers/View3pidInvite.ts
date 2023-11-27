@@ -18,12 +18,13 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import RightPanelStore from "../RightPanelStore";
 import { RightPanelPhases } from "../RightPanelStorePhases";
 
-export const onView3pidInvite = (rightPanelStore: RightPanelStore) => (payload: ActionPayload): void => {
+export const onView3pidInvite = (payload: ActionPayload, rightPanelStore: RightPanelStore): void => {
     if (payload.event) {
-        rightPanelStore.showOrHidePanel(RightPanelPhases.Room3pidMemberInfo, {
-            memberInfoEvent: payload.event,
+        rightPanelStore.pushCard({
+            phase: RightPanelPhases.Room3pidMemberInfo,
+            state: { memberInfoEvent: payload.event },
         });
     } else {
         rightPanelStore.showOrHidePanel(RightPanelPhases.RoomMemberList);
     }
-}
+};

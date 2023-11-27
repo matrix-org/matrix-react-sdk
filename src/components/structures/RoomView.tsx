@@ -1274,7 +1274,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 }
                 break;
             case Action.View3pidInvite:
-                onView3pidInvite(RightPanelStore.instance)(payload);
+                onView3pidInvite(payload, RightPanelStore.instance);
                 break;
         }
     };
