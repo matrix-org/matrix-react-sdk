@@ -60,7 +60,7 @@ export class ElementAppPage {
         await this.page.getByRole("menuitem", { name: "New room", exact: true }).click();
         return this.page.locator(".mx_CreateRoomDialog");
     }
-  
+
     /**
      * Create a room with given options.
      * @param options the options to apply when creating the room
