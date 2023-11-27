@@ -1272,7 +1272,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
                 }
                 break;
-            case "view_3pid_invite":
+            case Action.View3pidInvite:
                 if (payload.event) {
                     RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Room3pidMemberInfo, {
                         memberInfoEvent: payload.event,
