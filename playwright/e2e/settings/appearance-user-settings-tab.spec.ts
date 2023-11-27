@@ -23,9 +23,8 @@ test.describe("Appearance user settings tab", () => {
     });
 
     test("should be rendered properly", async ({ page, user, app }) => {
-        await app.openUserSettings("Appearance");
+        const tab = await app.openUserSettings("Appearance");
 
-        const tab = page.getByTestId("mx_AppearanceUserSettingsTab");
         await expect(tab.getByRole("heading", { name: "Customise your appearance" })).toBeVisible();
 
         // Click "Show advanced" link button

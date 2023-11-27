@@ -80,7 +80,7 @@ export class ElementAppPage {
         const locator = await this.openUserMenu();
         await locator.getByRole("menuitem", { name: "All settings", exact: true }).click();
         if (tab) await this.switchTab(tab);
-        return this.page.locator(".mx_UserSettingsDialog");
+        return this.page.locator(".mx_Dialog").filter({ has: this.page.locator(".mx_UserSettingsDialog") });
     }
 
     /**
@@ -91,7 +91,7 @@ export class ElementAppPage {
         await this.page.getByRole("main").getByRole("button", { name: "Room options", exact: true }).click();
         await this.page.locator(".mx_RoomTile_contextMenu").getByRole("menuitem", { name: "Settings" }).click();
         if (tab) await this.switchTab(tab);
-        return this.page.locator(".mx_RoomSettingsDialog");
+        return this.page.locator(".mx_Dialog").filter({ has: this.page.locator(".mx_RoomSettingsDialog") });
     }
 
     /**
