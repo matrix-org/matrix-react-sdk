@@ -24,6 +24,7 @@ import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
 import { isValid3pidInvite } from "../../../RoomInvite";
+import { Action } from "../../../dispatcher/actions";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import BaseCard from "../right_panel/BaseCard";
 import { Flex } from "../../utils/Flex";
@@ -93,7 +94,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
 
     public onCancel = (): void => {
         dis.dispatch({
-            action: "view_3pid_invite",
+            action: Action.View3pidInvite,
             event: null,
         });
     };

@@ -53,6 +53,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { SDKContext } from "../../../contexts/SDKContext";
 import { canInviteTo } from "../../../utils/room/canInviteTo";
 import { inviteToRoom } from "../../../utils/room/inviteToRoom";
+import { Action } from "../../../dispatcher/actions";
 import { SpaceScopeHeader } from "./SpaceScopeHeader";
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
@@ -274,7 +275,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     private onPending3pidInviteClick = (inviteEvent: MatrixEvent): void => {
         dis.dispatch({
-            action: "view_3pid_invite",
+            action: Action.View3pidInvite,
             event: inviteEvent,
         });
     };
