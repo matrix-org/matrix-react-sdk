@@ -34,7 +34,14 @@ export const SpaceScopeHeader: React.FC<{ room: Room }> = ({ room }) => {
     }
 
     return (
-        <Text as="div" size="lg" weight="semibold" className="mx_SpaceScopeHeader" title={roomName}>
+        <Text
+            as="div"
+            size="lg"
+            weight="semibold"
+            className="mx_SpaceScopeHeader"
+            title={roomName}
+            data-testid="space-header"
+        >
             <RoomAvatar room={room} size="32px" />
             {roomName}
         </Text>
