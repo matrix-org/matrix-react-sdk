@@ -25,6 +25,7 @@ import { Synapse } from "./plugins/synapse";
 import { Instance } from "./plugins/mailhog";
 import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
+import { Crypto } from "./pages/crypto";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -43,7 +44,7 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
 };
 
 export type TestOptions = {
-    crypto: "legacy" | "rust";
+    cryptoBackend: "legacy" | "rust";
 };
 
 export const test = base.extend<
@@ -62,14 +63,15 @@ export const test = base.extend<
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        crypto: Crypto;
     }
 >({
-    crypto: ["legacy", { option: true }],
+    cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, crypto }, use) => {
+    page: async ({ context, page, config, cryptoBackend }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
-            if (crypto === "rust") {
+            if (cryptoBackend === "rust") {
                 json["features"] = {
                     ...json["features"],
                     feature_rust_crypto: true,
@@ -152,6 +154,9 @@ export const test = base.extend<
 
     app: async ({ page }, use) => {
         await use(new ElementAppPage(page));
+    },
+    crypto: async ({ page, homeserver, request }, use) => {
+        await use(new Crypto(page, homeserver, request));
     },
 });
 
