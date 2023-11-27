@@ -23,6 +23,7 @@ import type { IConfigOptions } from "../src/IConfigOptions";
 import { Credentials, HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
 import { Synapse } from "./plugins/synapse";
 import { Instance } from "./plugins/mailhog";
+import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
@@ -59,6 +60,7 @@ export const test = base.extend<
             displayName: string;
         };
         displayName?: string;
+        app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
     }
 >({
@@ -147,6 +149,10 @@ export const test = base.extend<
 
             expect(results.violations).toEqual([]);
         }),
+
+    app: async ({ page }, use) => {
+        await use(new ElementAppPage(page));
+    },
 });
 
 test.use({});
