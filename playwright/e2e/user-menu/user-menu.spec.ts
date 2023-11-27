@@ -17,14 +17,13 @@ limitations under the License.
 import { test, expect } from "../../element-web-test";
 
 test.describe("User Menu", () => {
-    const USER_NAME = "Jeff";
-    test.use({ displayName: USER_NAME });
+    test.use({ displayName: "Jeff" });
 
     test("should contain our name & userId", async ({ page, user }) => {
         await page.getByRole("button", { name: "User menu", exact: true }).click();
         const menu = page.getByRole("menu");
 
-        await expect(menu.locator(".mx_UserMenu_contextMenu_displayName", { hasText: USER_NAME })).toBeVisible();
+        await expect(menu.locator(".mx_UserMenu_contextMenu_displayName", { hasText: user.displayName })).toBeVisible();
         await expect(menu.locator(".mx_UserMenu_contextMenu_userId", { hasText: user.userId })).toBeVisible();
     });
 });
