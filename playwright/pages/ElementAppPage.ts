@@ -50,4 +50,13 @@ export class ElementAppPage {
         if (tab) await this.switchTab(tab);
         return this.page.locator(".mx_UserSettingsDialog");
     }
+
+    /**
+     * Open room creation dialog.
+     */
+    public async openCreateRoomDialog(): Promise<Locator> {
+        await this.page.getByRole("button", { name: "Add room", exact: true }).click();
+        await this.page.getByRole("menuitem", { name: "New room", exact: true }).click();
+        return this.page.locator(".mx_CreateRoomDialog");
+    }
 }
