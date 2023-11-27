@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base, expect } from "@playwright/test";
+import { test as base, expect, Locator } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
 
@@ -65,6 +65,7 @@ export const test = base.extend<
         mailhog?: { api: mailhog.API; instance: Instance };
         room?: { roomId: string };
         toasts: Toasts;
+        uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
     }
 >({
     crypto: ["legacy", { option: true }],
