@@ -63,6 +63,7 @@ export const test = base.extend<
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        room?: { roomId: string };
         toasts: Toasts;
     }
 >({
