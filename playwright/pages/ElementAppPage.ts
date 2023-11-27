@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { type Locator, type Page } from "@playwright/test";
+import { type ICreateRoomOpts } from "matrix-js-sdk/src/matrix";
 
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
@@ -49,5 +50,19 @@ export class ElementAppPage {
         await locator.getByRole("menuitem", { name: "All settings", exact: true }).click();
         if (tab) await this.switchTab(tab);
         return this.page.locator(".mx_UserSettingsDialog");
+    }
+
+    /**
+     * Create a room with given options.
+     * @param options the options to apply when creating the room
+     * @return the ID of the newly created room
+     */
+    public async createRoom(options: ICreateRoomOpts): Promise<string> {
+        return this.page.evaluate<Promise<string>, ICreateRoomOpts>(async (options) => {
+            return window.mxMatrixClientPeg
+                .get()
+                .createRoom(options)
+                .then((res) => res.room_id);
+        }, options);
     }
 }
