@@ -84,6 +84,13 @@ export class ElementAppPage {
     }
 
     /**
+     * Close dialog currently open dialog
+     */
+    public async closeDialog(): Promise<void> {
+        return this.page.getByRole("button", { name: "Close dialog", exact: true }).click();
+    }
+
+    /**
      * Create a room with given options.
      * @param options the options to apply when creating the room
      * @return the ID of the newly created room
