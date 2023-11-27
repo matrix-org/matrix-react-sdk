@@ -30,6 +30,13 @@ export interface HomeserverInstance {
      * @param displayName optional display name to set on the newly registered user
      */
     registerUser(username: string, password: string, displayName?: string): Promise<Credentials>;
+
+    /**
+     * Logs into homeserver with the given username/password
+     * @param username login username
+     * @param password login password
+     */
+    loginUser(username: string, password: string): Promise<UserCredentials>;
 }
 
 export interface StartHomeserverOpts {
@@ -55,3 +62,7 @@ export interface Credentials {
     homeServer: string;
     password: string;
 }
+
+export interface UserCredentials extends Credentials {
+    username: string
+};

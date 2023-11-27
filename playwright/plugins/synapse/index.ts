@@ -28,6 +28,7 @@ import {
     Homeserver,
     StartHomeserverOpts,
     Credentials,
+    UserCredentials,
 } from "../utils/homeserver";
 
 function randB64Bytes(numBytes: number): string {
@@ -200,6 +201,34 @@ export class Synapse implements Homeserver, HomeserverInstance {
             userId: data.user_id,
             deviceId: data.device_id,
             password,
+        };
+    }
+
+    /**
+     * Logs into homeserver with the given username/password
+     * @param username login username
+     * @param password login password
+     */
+    public async loginUser(username: string, password: string): Promise<UserCredentials> {
+        const url = `${this.config.baseUrl}/_matrix/client/v3/login`;
+        const res = await this.request.post(url, {
+            data: {
+                type: "m.login.password",
+                identifier: {
+                    type: "m.id.user",
+                    user: username,
+                },
+                password: password,
+            },
+        });
+        const data = await res.json();
+        return {
+            password,
+            username,
+            accessToken: data.access_token,
+            userId: data.user_id,
+            deviceId: data.device_id,
+            homeServer: data.home_server,
         };
     }
 }
