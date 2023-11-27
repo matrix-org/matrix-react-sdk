@@ -15,10 +15,41 @@ limitations under the License.
 */
 
 import { type Locator, type Page } from "@playwright/test";
-import { type ICreateRoomOpts } from "matrix-js-sdk/src/matrix";
+
+import type { IContent, ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/matrix";
+import type { SettingLevel } from "../../src/settings/SettingLevel";
 
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
+
+    /**
+     * Sets the value for a setting. The room ID is optional if the
+     * setting is not being set for a particular room, otherwise it
+     * should be supplied. The value may be null to indicate that the
+     * level should no longer have an override.
+     * @param {string} settingName The name of the setting to change.
+     * @param {String} roomId The room ID to change the value in, may be
+     * null.
+     * @param {SettingLevel} level The level to change the value at.
+     * @param {*} value The new value of the setting, may be null.
+     * @return {Promise} Resolves when the setting has been changed.
+     */
+    public async setSettingValue(settingName: string, roomId: string, level: SettingLevel, value: any): Promise<void> {
+        return this.page.evaluate<
+            Promise<void>,
+            {
+                settingName: string;
+                roomId: string | null;
+                level: SettingLevel;
+                value: any;
+            }
+        >(
+            ({ settingName, roomId, level, value }) => {
+                return window.mxSettingsStore.setValue(settingName, roomId, level, value);
+            },
+            { settingName, roomId, level, value },
+        );
+    }
 
     /**
      * Open the top left user menu, returning a Locator to the resulting context menu.
@@ -53,6 +84,13 @@ export class ElementAppPage {
     }
 
     /**
+     * Close dialog currently open dialog
+     */
+    public async closeDialog(): Promise<void> {
+        return this.page.getByRole("button", { name: "Close dialog", exact: true }).click();
+    }
+
+    /**
      * Create a room with given options.
      * @param options the options to apply when creating the room
      * @return the ID of the newly created room
@@ -64,5 +102,52 @@ export class ElementAppPage {
                 .createRoom(options)
                 .then((res) => res.room_id);
         }, options);
+    }
+
+    /**
+     * @param {string} roomId
+     * @param {string} threadId
+     * @param {string} eventType
+     * @param {Object} content
+     */
+    public async sendEvent(
+        roomId: string,
+        threadId: string | null,
+        eventType: string,
+        content: IContent,
+    ): Promise<ISendEventResponse> {
+        return this.page.evaluate<
+            Promise<ISendEventResponse>,
+            {
+                roomId: string;
+                threadId: string | null;
+                eventType: string;
+                content: IContent;
+            }
+        >(
+            async ({ roomId, threadId, eventType, content }) => {
+                return window.mxMatrixClientPeg.get().sendEvent(roomId, threadId, eventType, content);
+            },
+            { roomId, threadId, eventType, content },
+        );
+    }
+
+    /**
+     * Get the composer element
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public async getComposer(isRightPanel?: boolean): Promise<Locator> {
+        const panelClass = isRightPanel ? ".mx_RightPanel" : ".mx_RoomView_body";
+        return this.page.locator(`${panelClass} .mx_MessageComposer`);
+    }
+
+    /**
+     * Open the message composer kebab menu
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public async openMessageComposerOptions(isRightPanel?: boolean): Promise<Locator> {
+        const composer = await this.getComposer(isRightPanel);
+        await composer.getByRole("button", { name: "More options", exact: true }).click();
+        return this.page.getByRole("menu");
     }
 }
