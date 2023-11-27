@@ -24,6 +24,7 @@ import { Credentials, Homeserver, HomeserverInstance, StartHomeserverOpts } from
 import { Synapse } from "./plugins/homeserver/synapse";
 import { Dendrite, Pinecone } from "./plugins/homeserver/dendrite";
 import { Instance } from "./plugins/mailhog";
+import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
 import { Toasts } from "./pages/toasts";
 
@@ -61,6 +62,7 @@ export const test = base.extend<
             displayName: string;
         };
         displayName?: string;
+        app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
         toasts: Toasts;
     }
@@ -163,6 +165,9 @@ export const test = base.extend<
             expect(results.violations).toEqual([]);
         }),
 
+    app: async ({ page }, use) => {
+        await use(new ElementAppPage(page));
+    },
     toasts: async ({ page }, use) => {
         await use(new Toasts(page));
     },
