@@ -25,6 +25,7 @@ import { Synapse } from "./plugins/synapse";
 import { Instance } from "./plugins/mailhog";
 import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
+import { Toasts } from "./pages/toasts";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -62,6 +63,7 @@ export const test = base.extend<
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        toasts: Toasts;
     }
 >({
     crypto: ["legacy", { option: true }],
@@ -152,6 +154,9 @@ export const test = base.extend<
 
     app: async ({ page }, use) => {
         await use(new ElementAppPage(page));
+    },
+    toasts: async ({ page }, use) => {
+        await use(new Toasts(page));
     },
 });
 
