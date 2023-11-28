@@ -18,7 +18,6 @@ import { type Locator, type Page, expect } from "@playwright/test";
 
 import type { IContent, ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import type { SettingLevel } from "../../src/settings/SettingLevel";
-
 import { ElementLabsPage } from "./labs";
 
 export class ElementAppPage {
