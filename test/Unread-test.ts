@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { haveRendererForEvent } from "../src/events/EventTileFactory";
 import { makeBeaconEvent, mkEvent, stubClient } from "./test-utils";
-import { makeThreadEvents, populateThread } from "./test-utils/threads";
+import { makeThreadEvents, mkThread, populateThread } from "./test-utils/threads";
 import {
     doesRoomHaveUnreadMessages,
     doesRoomOrThreadHaveUnreadMessages,
@@ -228,6 +228,22 @@ describe("Unread", () => {
                 });
                 room.addReceipt(receipt);
 
+                // Create a read thread, so we don't consider all threads read
+                // because there are no threaded read receipts.
+                const { rootEvent, events } = mkThread({ room, client, authorId: myId, participantUserIds: [aliceId] });
+                const receipt2 = new MatrixEvent({
+                    type: "m.receipt",
+                    room_id: "!foo:bar",
+                    content: {
+                        [events[events.length - 1].getId()!]: {
+                            [ReceiptType.Read]: {
+                                [myId]: { ts: 1, thread_id: rootEvent.getId() },
+                            },
+                        },
+                    },
+                });
+                room.addReceipt(receipt2);
+
                 // Create a thread as a different user.
                 await populateThread({ room, client, authorId: myId, participantUserIds: [aliceId] });
 
@@ -325,7 +341,7 @@ describe("Unread", () => {
                     content: {
                         [events[0].getId()!]: {
                             [ReceiptType.Read]: {
-                                [myId]: { ts: 1, threadId: rootEvent.getId()! },
+                                [myId]: { ts: 1, thread_id: rootEvent.getId()! },
                             },
                         },
                     },
@@ -371,7 +387,7 @@ describe("Unread", () => {
                     content: {
                         ["UNKNOWN_EVENT_ID"]: {
                             [ReceiptType.Read]: {
-                                [myId]: { ts: receiptTs, threadId: rootEvent.getId()! },
+                                [myId]: { ts: receiptTs, thread_id: rootEvent.getId()! },
                             },
                         },
                     },
