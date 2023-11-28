@@ -62,4 +62,5 @@ export interface Credentials {
     deviceId: string;
     homeServer: string;
     password: string | null; // null for password-less users
+    displayName?: string;
 }

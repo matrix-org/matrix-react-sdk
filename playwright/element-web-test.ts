@@ -26,6 +26,7 @@ import { Dendrite, Pinecone } from "./plugins/homeserver/dendrite";
 import { Instance } from "./plugins/mailhog";
 import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
+import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
@@ -45,7 +46,7 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
 };
 
 export type TestOptions = {
-    crypto: "legacy" | "rust";
+    cryptoBackend: "legacy" | "rust";
 };
 
 export const test = base.extend<
@@ -58,23 +59,22 @@ export const test = base.extend<
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
         oAuthServer: { port: number };
-        user: Credentials & {
-            displayName: string;
-        };
+        user: Credentials;
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        crypto: Crypto;
         room?: { roomId: string };
         toasts: Toasts;
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
     }
 >({
-    crypto: ["legacy", { option: true }],
+    cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, crypto }, use) => {
+    page: async ({ context, page, config, cryptoBackend }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
-            if (crypto === "rust") {
+            if (cryptoBackend === "rust") {
                 json["features"] = {
                     ...json["features"],
                     feature_rust_crypto: true,
@@ -146,10 +146,7 @@ export const test = base.extend<
 
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
 
-        await use({
-            ...credentials,
-            displayName,
-        });
+        await use(credentials);
     },
 
     axe: async ({ page }, use) => {
@@ -169,6 +166,9 @@ export const test = base.extend<
 
     app: async ({ page }, use) => {
         await use(new ElementAppPage(page));
+    },
+    crypto: async ({ page, homeserver, request }, use) => {
+        await use(new Crypto(page, homeserver, request));
     },
     toasts: async ({ page }, use) => {
         await use(new Toasts(page));
