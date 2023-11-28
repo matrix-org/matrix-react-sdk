@@ -28,6 +28,7 @@ import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
 import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
+import { Bot, CreateBotOpts } from "./pages/bot";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -66,6 +67,9 @@ export const test = base.extend<
         crypto: Crypto;
         room?: { roomId: string };
         toasts: Toasts;
+        botName?: string;
+        botCreateOpts: CreateBotOpts;
+        bot: Bot;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
@@ -171,6 +175,14 @@ export const test = base.extend<
     },
     toasts: async ({ page }, use) => {
         await use(new Toasts(page));
+    },
+
+    botName: undefined,
+    botCreateOpts: {},
+    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+        const bot = new Bot(page, homeserver, botCreateOpts);
+        await bot.start();
+        await use(bot);
     },
 });
 

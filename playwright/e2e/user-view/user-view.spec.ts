@@ -19,16 +19,15 @@ import { test, expect } from "../../element-web-test";
 test.describe("UserView", () => {
     test.use({
         displayName: "Violet",
+        botCreateOpts: { displayName: "Usman" },
     });
 
-    test("should render the user view as expected", async ({ page, homeserver, user }) => {
-        const bot = await homeserver.registerUser("usman", "password", "Usman");
-        await page.goto(`/#/user/${bot.userId}`);
+    test("should render the user view as expected", async ({ page, homeserver, user, bot }) => {
+        await page.goto(`/#/user/${bot.credentials.userId}`);
 
         const rightPanel = page.getByRole("complementary");
-        await expect(rightPanel.getByRole("heading", { name: "Usman", exact: true })).toBeVisible();
-        // TODO this does not yet work, we can wire it back up after we get the `bot` fixture working
-        // await expect(rightPanel).toHaveText("1 session");
+        await expect(rightPanel.getByRole("heading", { name: bot.credentials.displayName, exact: true })).toBeVisible();
+        await expect(rightPanel.getByText("1 session")).toBeVisible();
         await expect(rightPanel).toHaveScreenshot();
     });
 });

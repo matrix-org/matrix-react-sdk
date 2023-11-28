@@ -14,7 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type MatrixClient } from "matrix-js-sdk/src/matrix";
+import {
+    ICreateClientOpts,
+    type MatrixClient,
+    MatrixScheduler,
+    MemoryCryptoStore,
+    MemoryStore,
+} from "matrix-js-sdk/src/matrix";
 
 import { type SettingLevel } from "../src/settings/SettingLevel";
 
@@ -26,5 +32,15 @@ declare global {
         mxSettingsStore: {
             setValue(settingName: string, roomId: string | null, level: SettingLevel, value: any): Promise<void>;
         };
+        // Partial type for the matrix-js-sdk module, exported by browser-matrix
+        matrixcs: {
+            MatrixClient: typeof MatrixClient;
+            MatrixScheduler: typeof MatrixScheduler;
+            MemoryStore: typeof MemoryStore;
+            MemoryCryptoStore: typeof MemoryCryptoStore;
+            createClient(opts: ICreateClientOpts | string);
+        };
+
+        bots: Map<string, MatrixClient>;
     }
 }
