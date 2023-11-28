@@ -112,7 +112,8 @@ describe("LegacyRoomHeaderButtons-test.tsx", function () {
             type: "m.receipt",
             room_id: room.roomId,
             content: {
-                [events[0].getId()!]: { // Receipt for the first event in the thread
+                [events[0].getId()!]: {
+                    // Receipt for the first event in the thread
                     [ReceiptType.Read]: {
                         [client.getUserId()!]: { ts: 1, thread_id: rootEvent.getId() },
                     },
