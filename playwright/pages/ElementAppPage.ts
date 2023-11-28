@@ -84,6 +84,15 @@ export class ElementAppPage {
     }
 
     /**
+     * Open room creation dialog.
+     */
+    public async openCreateRoomDialog(): Promise<Locator> {
+        await this.page.getByRole("button", { name: "Add room", exact: true }).click();
+        await this.page.getByRole("menuitem", { name: "New room", exact: true }).click();
+        return this.page.locator(".mx_CreateRoomDialog");
+    }
+
+    /**
      * Close dialog currently open dialog
      */
     public async closeDialog(): Promise<void> {
@@ -102,6 +111,25 @@ export class ElementAppPage {
                 .createRoom(options)
                 .then((res) => res.room_id);
         }, options);
+    }
+
+    /**
+     * Get the composer element
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public async getComposer(isRightPanel?: boolean): Promise<Locator> {
+        const panelClass = isRightPanel ? ".mx_RightPanel" : ".mx_RoomView_body";
+        return this.page.locator(`${panelClass} .mx_MessageComposer`);
+    }
+
+    /**
+     * Open the message composer kebab menu
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public async openMessageComposerOptions(isRightPanel?: boolean): Promise<Locator> {
+        const composer = await this.getComposer(isRightPanel);
+        await composer.getByRole("button", { name: "More options", exact: true }).click();
+        return this.page.getByRole("menu");
     }
 
     /**
@@ -130,24 +158,5 @@ export class ElementAppPage {
             },
             { roomId, threadId, eventType, content },
         );
-    }
-
-    /**
-     * Get the composer element
-     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
-     */
-    public async getComposer(isRightPanel?: boolean): Promise<Locator> {
-        const panelClass = isRightPanel ? ".mx_RightPanel" : ".mx_RoomView_body";
-        return this.page.locator(`${panelClass} .mx_MessageComposer`);
-    }
-
-    /**
-     * Open the message composer kebab menu
-     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
-     */
-    public async openMessageComposerOptions(isRightPanel?: boolean): Promise<Locator> {
-        const composer = await this.getComposer(isRightPanel);
-        await composer.getByRole("button", { name: "More options", exact: true }).click();
-        return this.page.getByRole("menu");
     }
 }
