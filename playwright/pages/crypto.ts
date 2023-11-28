@@ -16,7 +16,7 @@ limitations under the License.
 
 import { APIRequestContext, Page, expect } from "@playwright/test";
 
-import { HomeserverInstance } from "../plugins/utils/homeserver";
+import { HomeserverInstance } from "../plugins/homeserver";
 
 export class Crypto {
     public constructor(
