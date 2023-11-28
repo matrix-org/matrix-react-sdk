@@ -28,6 +28,8 @@ test.describe("UserView", () => {
         const rightPanel = page.getByRole("complementary");
         await expect(rightPanel.getByRole("heading", { name: bot.credentials.displayName, exact: true })).toBeVisible();
         await expect(rightPanel.getByText("1 session")).toBeVisible();
-        await expect(rightPanel).toHaveScreenshot();
+        await expect(rightPanel).toHaveScreenshot("user-info.png", {
+            mask: [page.locator(".mx_BaseAvatar, .mx_UserInfo_profile_mxid")],
+        });
     });
 });
