@@ -268,7 +268,7 @@ test.describe("Editing", () => {
 
         {
             // Edit message
-            const tile = page.locator(".mx_RoomView_body .mx_EventTile");
+            const tile = page.locator(".mx_RoomView_body .mx_EventTile").last();
             await expect(tile.getByText("Message", { exact: true })).toBeVisible();
             const line = tile.locator(".mx_EventTile_line");
             await line.hover();
