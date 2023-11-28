@@ -27,8 +27,7 @@ test.describe("Registration", () => {
         await page.getByRole("button", { name: "Edit", exact: true }).click();
         await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeVisible();
 
-        // Only snapshot the server picker otherwise in the background `matrix.org` may or may not be available
-        await expect(page.getByRole("dialog")).toHaveScreenshot("server-picker.png");
+        await expect(page.locator(".mx_Dialog")).toHaveScreenshot("server-picker.png");
         await checkA11y();
 
         await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
