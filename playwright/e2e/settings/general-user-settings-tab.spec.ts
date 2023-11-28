@@ -37,7 +37,7 @@ test.describe("General user settings tab", () => {
     test("should be rendered properly", async ({ uut }) => {
         await expect(uut).toHaveScreenshot("general.png", {
             // Exclude userId from snapshots
-            mask: [uut.locator(".mx_ProfileSettings_profile_controls_userId")],
+            mask: [uut.locator(".mx_ProfileSettings_profile_controls > p")],
         });
 
         // Assert that the top heading is rendered
