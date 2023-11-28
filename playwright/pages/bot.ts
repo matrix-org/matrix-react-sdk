@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Page } from "@playwright/test";
+import { JSHandle, Page } from "@playwright/test";
 import { uniqueId } from "lodash";
 
-import type { ISendEventResponse } from "matrix-js-sdk/src/matrix";
+import type { MatrixClient, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
 import type { Credentials, HomeserverInstance } from "../plugins/homeserver";
 
@@ -60,7 +60,7 @@ const defaultCreateBotOptions = {
 } satisfies CreateBotOpts;
 
 export class Bot {
-    private id = uniqueId("bot_");
+    private client: JSHandle<MatrixClient>;
     public credentials?: Credentials;
 
     constructor(private page: Page, private homeserver: HomeserverInstance, private readonly opts: CreateBotOpts) {
@@ -69,7 +69,7 @@ export class Bot {
 
     public async start(): Promise<void> {
         this.credentials = await this.getCredentials();
-        await this.setupBotClient();
+        this.client = await this.setupBotClient();
     }
 
     private async getCredentials(): Promise<Credentials> {
@@ -79,11 +79,9 @@ export class Bot {
         return await this.homeserver.registerUser(username, password, this.opts.displayName);
     }
 
-    private async setupBotClient(): Promise<void> {
-        await this.page.evaluate(
-            async ({ id, homeserver, credentials, opts }) => {
-                if (!window.bots) window.bots = new Map();
-
+    private async setupBotClient(): Promise<JSHandle<MatrixClient>> {
+        return this.page.evaluateHandle(
+            async ({ homeserver, credentials, opts }) => {
                 const keys = {};
 
                 const getCrossSigningKey = (type: string) => {
@@ -171,10 +169,9 @@ export class Bot {
                     });
                 }
 
-                window.bots.set(id, cli);
+                return cli;
             },
             {
-                id: this.id,
                 homeserver: this.homeserver.config,
                 credentials: this.credentials,
                 opts: this.opts,
@@ -187,9 +184,8 @@ export class Bot {
      * @param roomName Name of the room to join
      */
     public async joinRoomByName(roomName: string): Promise<void> {
-        await this.page.evaluate(
-            ({ id, roomName }) => {
-                const client = window.bots.get(id);
+        await this.client.evaluate(
+            (client, { roomName }) => {
                 const room = client.getRooms().find((r) => r.getDefaultRoomName(client.getUserId()) === roomName);
                 if (room) {
                     return client.joinRoom(room.roomId);
@@ -197,7 +193,6 @@ export class Bot {
                 throw new Error(`Bot room join failed. Cannot find room '${roomName}'`);
             },
             {
-                id: this.id,
                 roomName,
             },
         );
@@ -209,16 +204,14 @@ export class Bot {
      * @param message the message body to send
      */
     public async sendStringMessage(roomId: string, message: string): Promise<ISendEventResponse> {
-        return this.page.evaluate(
-            ({ id, roomId, message }) => {
-                const client = window.bots.get(id);
+        return this.client.evaluate(
+            (client, { roomId, message }) => {
                 return client.sendMessage(roomId, {
                     msgtype: "m.text",
                     body: message,
                 });
             },
             {
-                id: this.id,
                 roomId,
                 message,
             },

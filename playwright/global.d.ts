@@ -40,7 +40,5 @@ declare global {
             MemoryCryptoStore: typeof MemoryCryptoStore;
             createClient(opts: ICreateClientOpts | string);
         };
-
-        bots: Map<string, MatrixClient>;
     }
 }
