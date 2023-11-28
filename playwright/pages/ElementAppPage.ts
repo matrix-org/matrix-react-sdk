@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page, expect } from "@playwright/test";
 import { type ICreateRoomOpts } from "matrix-js-sdk/src/matrix";
 
 export class ElementAppPage {
@@ -53,6 +53,17 @@ export class ElementAppPage {
     }
 
     /**
+     * Open room settings (via room menu), returns a locator to the dialog
+     * @param tab the name of the tab to switch to after opening, optional.
+     */
+    public async openRoomSettings(tab?: string): Promise<Locator> {
+        await this.page.getByRole("main").getByRole("button", { name: "Room options", exact: true }).click();
+        await this.page.locator(".mx_RoomTile_contextMenu").getByRole("menuitem", { name: "Settings" }).click();
+        if (tab) await this.switchTab(tab);
+        return this.page.locator(".mx_Dialog").filter({ has: this.page.locator(".mx_RoomSettingsDialog") });
+    }
+
+    /**
      * Open room creation dialog.
      */
     public async openCreateRoomDialog(): Promise<Locator> {
@@ -80,6 +91,21 @@ export class ElementAppPage {
                 .createRoom(options)
                 .then((res) => res.room_id);
         }, options);
+    }
+
+    /**
+     * Create a space with given options.
+     * @param options the options to apply when creating the space
+     * @return the ID of the newly created space (room)
+     */
+    public async createSpace(options: ICreateRoomOpts): Promise<string> {
+        return this.createRoom({
+            ...options,
+            creation_content: {
+                ...options.creation_content,
+                type: "m.space",
+            },
+        });
     }
 
     /**
@@ -127,5 +153,26 @@ export class ElementAppPage {
         const composer = await this.getComposer(isRightPanel);
         await composer.getByRole("button", { name: "More options", exact: true }).click();
         return this.page.getByRole("menu");
+    }
+
+    /**
+     * Returns the space panel space button based on a name. The space
+     * must be visible in the space panel
+     * @param name The space name to find
+     */
+    public async getSpacePanelButton(name: string): Promise<Locator> {
+        const button = this.page.getByRole("button", { name: name });
+        await expect(button).toHaveClass(/mx_SpaceButton/);
+        return button;
+    }
+
+    /**
+     * Opens the given space home by name. The space must be visible in
+     * the space list.
+     * @param name The space name to find and click on/open.
+     */
+    public async viewSpaceHomeByName(name: string): Promise<void> {
+        const button = await this.getSpacePanelButton(name);
+        return button.dblclick();
     }
 }
