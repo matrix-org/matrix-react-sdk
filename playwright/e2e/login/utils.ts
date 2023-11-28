@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Page, expect } from "@playwright/test";
 
-import { Credentials, HomeserverInstance } from "../../plugins/utils/homeserver";
+import { Credentials, HomeserverInstance } from "../../plugins/homeserver";
 
 /** Visit the login page, choose to log in with "OAuth test", register a new account, and redirect back to Element
  */
@@ -43,7 +43,7 @@ export async function doTokenRegistration(
 
     // Synapse prompts us to pick a user ID
     await expect(page.getByRole("heading", { name: "Create your account" })).toBeVisible();
-    await page.getByRole("textbox", { name: "Username (required)" }).type("alice");
+    await page.getByRole("textbox", { name: "Username (required)" }).fill("alice");
 
     // wait for username validation to start, and complete
     await expect(page.locator("#field-username-output")).toHaveText("");

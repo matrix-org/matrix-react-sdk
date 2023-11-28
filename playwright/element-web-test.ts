@@ -20,10 +20,13 @@ import _ from "lodash";
 
 import type mailhog from "mailhog";
 import type { IConfigOptions } from "../src/IConfigOptions";
-import { Credentials, HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
-import { Synapse } from "./plugins/synapse";
+import { Credentials, Homeserver, HomeserverInstance, StartHomeserverOpts } from "./plugins/homeserver";
+import { Synapse } from "./plugins/homeserver/synapse";
+import { Dendrite, Pinecone } from "./plugins/homeserver/dendrite";
 import { Instance } from "./plugins/mailhog";
+import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
+import { Toasts } from "./pages/toasts";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -59,7 +62,9 @@ export const test = base.extend<
             displayName: string;
         };
         displayName?: string;
+        app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        toasts: Toasts;
     }
 >({
     crypto: ["legacy", { option: true }],
@@ -85,7 +90,19 @@ export const test = base.extend<
             opts = { template: opts };
         }
 
-        const server = new Synapse(request);
+        let server: Homeserver;
+        const homeserverName = process.env["PLAYWRIGHT_HOMESERVER"];
+        switch (homeserverName) {
+            case "dendrite":
+                server = new Dendrite(request);
+                break;
+            case "pinecone":
+                server = new Pinecone(request);
+                break;
+            default:
+                server = new Synapse(request);
+        }
+
         await use(await server.start(opts));
         await server.stop();
     },
@@ -147,6 +164,13 @@ export const test = base.extend<
 
             expect(results.violations).toEqual([]);
         }),
+
+    app: async ({ page }, use) => {
+        await use(new ElementAppPage(page));
+    },
+    toasts: async ({ page }, use) => {
+        await use(new Toasts(page));
+    },
 });
 
 test.use({});
