@@ -17,8 +17,12 @@ limitations under the License.
 import { type Locator, type Page, expect } from "@playwright/test";
 import { type ICreateRoomOpts } from "matrix-js-sdk/src/matrix";
 
+import { ElementLabsPage } from "./labs";
+
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
+
+    public labs = new ElementLabsPage(this.page);
 
     /**
      * Open the top left user menu, returning a Locator to the resulting context menu.
