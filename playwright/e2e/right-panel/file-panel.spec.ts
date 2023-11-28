@@ -136,10 +136,10 @@ test.describe("FilePanel", () => {
 
             // Take a snapshot of file tiles list on FilePanel
             await expect(filePanelMessageList).toHaveScreenshot("file-tiles-list.png", {
-                // Exclude timestamps, read marker, avatars & flaky seek bar from snapshot
+                // Exclude timestamps, read marker, profiles, avatars & flaky seek bar from snapshot
                 mask: [
                     page.locator(
-                        ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mx_BaseAvatar, .mx_AudioPlayer_seek",
+                        ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mx_DisambiguatedProfile, .mx_BaseAvatar, .mx_AudioPlayer_seek",
                     ),
                 ],
             });
