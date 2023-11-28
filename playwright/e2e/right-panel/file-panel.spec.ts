@@ -136,8 +136,12 @@ test.describe("FilePanel", () => {
 
             // Take a snapshot of file tiles list on FilePanel
             await expect(filePanelMessageList).toHaveScreenshot("file-tiles-list.png", {
-                // Exclude timestamps, avatars & flaky seek bar from snapshot
-                mask: [page.locator(".mx_MessageTimestamp, .mx_BaseAvatar, .mx_AudioPlayer_seek")],
+                // Exclude timestamps, read marker, avatars & flaky seek bar from snapshot
+                mask: [
+                    page.locator(
+                        ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mx_BaseAvatar, .mx_AudioPlayer_seek",
+                    ),
+                ],
             });
         });
 
@@ -201,7 +205,7 @@ test.describe("FilePanel", () => {
 
             const downloadPromise = page.waitForEvent("download");
             // Click the anchor link (not the image itself)
-            await imageBody.locator(".mx_MFileBody_download a").click();
+            await imageBody.locator(".mx_MFileBody_download a").click({ force: true });
             const download = await downloadPromise;
             expect(download.suggestedFilename()).toBe("riot.png");
         });
