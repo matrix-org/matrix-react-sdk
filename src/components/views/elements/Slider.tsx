@@ -31,7 +31,7 @@ interface IProps {
     step: number | "any";
 
     // A function for formatting the values
-    displayFunc: (value: number) => string;
+    displayFunc?: (value: number) => string;
 
     // Whether the slider is disabled
     disabled?: boolean;
@@ -53,8 +53,11 @@ export default class Slider extends React.Component<IProps> {
 
     public render(): React.ReactNode {
         let selection: JSX.Element | undefined;
+        const { value, displayFunc, disabled } = this.props;
 
-        if (!this.props.disabled) {
+        const formattedValue = displayFunc ? displayFunc(value) : value;
+
+        if (!disabled) {
             const position = this.position;
             selection = (
                 <output
@@ -63,7 +66,7 @@ export default class Slider extends React.Component<IProps> {
                         left: `calc(2px + ${position}% + ${THUMB_SIZE / 2}em - ${(position / 100) * THUMB_SIZE}em)`,
                     }}
                 >
-                    <span className="mx_Slider_selection_label">{this.props.value}</span>
+                    <span className="mx_Slider_selection_label">{formattedValue}</span>
                 </output>
             );
         }

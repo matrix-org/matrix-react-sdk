@@ -40,6 +40,14 @@ interface IState {
     avatarUrl?: string;
 }
 
+const formatRelativeFontSize = (fontSize: number): string => {
+    const delta = fontSize - FontWatcher.DEFAULT_SIZE;
+    if (delta === 0) {
+        return _t("settings|appearance|font_size_default");
+    }
+    return new Intl.NumberFormat(undefined, { signDisplay: "always" }).format(delta);
+};
+
 export default class FontScalingPanel extends React.Component<IProps, IState> {
     private readonly MESSAGE_PREVIEW_TEXT = _t("common|preview_message");
     private layoutWatcherRef?: string;
@@ -112,7 +120,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                         step={1}
                         value={parseInt(this.state.fontSize, 10)}
                         onChange={this.onFontSizeChanged}
-                        displayFunc={(_) => ""}
+                        displayFunc={formatRelativeFontSize}
                         label={_t("settings|appearance|font_size")}
                     />
                     <div className="mx_FontScalingPanel_fontSlider_largeText">Aa</div>
