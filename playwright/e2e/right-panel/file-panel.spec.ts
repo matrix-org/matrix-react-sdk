@@ -135,11 +135,15 @@ test.describe("FilePanel", () => {
             await expect(senderDetails.locator(".mx_MessageTimestamp")).toBeVisible();
 
             // Take a snapshot of file tiles list on FilePanel
+            // XXX: We remove the RM as masking it in different locations causes a false positive
+            await page.evaluate(() => {
+                document.querySelectorAll(".mx_MessagePanel_myReadMarker").forEach((e) => e.remove());
+            });
             await expect(filePanelMessageList).toHaveScreenshot("file-tiles-list.png", {
-                // Exclude timestamps, read marker, profiles, avatars & flaky seek bar from snapshot
+                // Exclude timestamps, profiles, avatars & flaky seek bar from snapshot
                 mask: [
                     page.locator(
-                        ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mx_DisambiguatedProfile, .mx_BaseAvatar, .mx_AudioPlayer_seek",
+                        ".mx_MessageTimestamp, .mx_DisambiguatedProfile, .mx_BaseAvatar, .mx_AudioPlayer_seek",
                     ),
                 ],
             });
