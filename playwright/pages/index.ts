@@ -26,7 +26,7 @@ export class ElementAppPage {
 
     public labs = new ElementLabsPage(this.page);
     public client = new ElementClientPage(this.page);
-    public bot = new BotCreator(this.page);
+    public bot = new BotCreator();
 
     async initTestUser(
         homeserver: HomeserverInstance,

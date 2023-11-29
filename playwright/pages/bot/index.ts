@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Page } from "@playwright/test";
 import { uniqueId } from "lodash";
+import { MatrixScheduler, MemoryCryptoStore, MemoryStore, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
+import Olm from "@matrix-org/olm";
 
 import { getLogger } from "./log";
 import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
 import type { Credentials, HomeserverInstance } from "../../plugins/utils/homeserver";
-import { addBotMethodsToClient, type MatrixBotClient } from "./bot";
+import { MatrixBotClient } from "./MatrixBotClient";
 
 interface CreateBotOpts {
     /**
@@ -61,106 +62,110 @@ const defaultCreateBotOptions = {
 } as CreateBotOpts;
 
 export class BotCreator {
-    constructor(private page: Page) {}
+    private olmPromise = (async () => {
+        globalThis.Olm = Olm;
+        await globalThis.Olm.init();
+    })();
 
     private async setupBotClient(
         homeserver: HomeserverInstance,
         credentials: Credentials,
         opts: CreateBotOpts,
     ): Promise<MatrixBotClient> {
+        await this.olmPromise;
         opts = Object.assign({}, defaultCreateBotOptions, opts);
-        return await this.page.evaluate(async () => {
-            const logger = getLogger(window, `cypress bot ${credentials.userId}`);
+        const logger = getLogger(`playwright bot ${credentials.userId}`);
 
-            const keys = {};
+        const keys = {};
 
-            const getCrossSigningKey = (type: string) => {
-                return keys[type];
+        const getCrossSigningKey = (type: string) => {
+            return keys[type];
+        };
+
+        const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
+            Object.assign(keys, k);
+        };
+
+        // Store the cached secret storage key and return it when `getSecretStorageKey` is called
+        let cachedKey: { keyId: string; key: Uint8Array };
+        const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
+            cachedKey = {
+                keyId,
+                key,
             };
+        };
 
-            const saveCrossSigningKeys = (k: Record<string, Uint8Array>) => {
-                Object.assign(keys, k);
-            };
+        const getSecretStorageKey = () => Promise.resolve<[string, Uint8Array]>([cachedKey.keyId, cachedKey.key]);
 
-            // Store the cached secret storage key and return it when `getSecretStorageKey` is called
-            let cachedKey: { keyId: string; key: Uint8Array };
-            const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
-                cachedKey = {
-                    keyId,
-                    key,
-                };
-            };
+        const cryptoCallbacks = {
+            getCrossSigningKey,
+            saveCrossSigningKeys,
+            cacheSecretStorageKey,
+            getSecretStorageKey,
+        };
 
-            const getSecretStorageKey = () => Promise.resolve<[string, Uint8Array]>([cachedKey.keyId, cachedKey.key]);
-
-            const cryptoCallbacks = {
-                getCrossSigningKey,
-                saveCrossSigningKeys,
-                cacheSecretStorageKey,
-                getSecretStorageKey,
-            };
-
-            const cli = new (window as any).matrixcs.MatrixClient({
-                baseUrl: homeserver.config.baseUrl,
-                userId: credentials.userId,
-                deviceId: credentials.deviceId,
-                accessToken: credentials.accessToken,
-                store: new (window as any).matrixcs.MemoryStore(),
-                scheduler: new (window as any).matrixcs.MatrixScheduler(),
-                cryptoStore: new (window as any).matrixcs.MemoryCryptoStore(),
-                logger: logger,
-                cryptoCallbacks,
-            });
-
-            if (opts.autoAcceptInvites) {
-                cli.on((window as any).matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                    if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                        cli.joinRoom(member.roomId);
-                    }
-                });
-            }
-
-            if (!opts.startClient) {
-                return cli;
-            }
-
-            if (opts.rustCrypto) {
-                await cli.initRustCrypto({ useIndexedDB: false });
-            } else {
-                await cli.initCrypto();
-            }
-            cli.setGlobalErrorOnUnknownDevices(false);
-            await cli.startClient();
-
-            if (opts.bootstrapCrossSigning) {
-                await cli.getCrypto()!.bootstrapCrossSigning({
-                    authUploadDeviceSigningKeys: async (func) => {
-                        await func({
-                            type: "m.login.password",
-                            identifier: {
-                                type: "m.id.user",
-                                user: credentials.userId,
-                            },
-                            password: credentials.password,
-                        });
-                    },
-                });
-            }
-
-            if (opts.bootstrapSecretStorage) {
-                const passphrase = "new passphrase";
-                const recoveryKey = await cli.getCrypto().createRecoveryKeyFromPassphrase(passphrase);
-                Object.assign(cli, { __playwright_recovery_key: recoveryKey });
-
-                await cli.getCrypto()!.bootstrapSecretStorage({
-                    setupNewSecretStorage: true,
-                    setupNewKeyBackup: true,
-                    createSecretStorageKey: () => Promise.resolve(recoveryKey),
-                });
-            }
-
-            return addBotMethodsToClient(cli);
+        const cli = new MatrixBotClient({
+            baseUrl: homeserver.config.baseUrl,
+            userId: credentials.userId,
+            deviceId: credentials.deviceId,
+            accessToken: credentials.accessToken,
+            store: new MemoryStore(),
+            scheduler: new MatrixScheduler(),
+            cryptoStore: new MemoryCryptoStore(),
+            logger: logger,
+            cryptoCallbacks,
         });
+
+        if (opts.autoAcceptInvites) {
+            cli.on(RoomMemberEvent.Membership, (event, member) => {
+                if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                    cli.joinRoom(member.roomId);
+                }
+            });
+        }
+
+        if (!opts.startClient) {
+            return cli;
+        }
+
+        if (opts.rustCrypto) {
+            await cli.initRustCrypto({ useIndexedDB: false });
+        } else {
+            await cli.initCrypto();
+            console.log("initialized crypto!");
+        }
+
+        cli.setGlobalErrorOnUnknownDevices(false);
+        await cli.startClient();
+
+        if (opts.bootstrapCrossSigning) {
+            await cli.getCrypto()!.bootstrapCrossSigning({
+                authUploadDeviceSigningKeys: async (func) => {
+                    await func({
+                        type: "m.login.password",
+                        identifier: {
+                            type: "m.id.user",
+                            user: credentials.userId,
+                        },
+                        password: credentials.password,
+                    });
+                },
+            });
+        }
+
+        if (opts.bootstrapSecretStorage) {
+            const passphrase = "new passphrase";
+            const recoveryKey = await cli.getCrypto().createRecoveryKeyFromPassphrase(passphrase);
+            Object.assign(cli, { __playwright_recovery_key: recoveryKey });
+
+            await cli.getCrypto()!.bootstrapSecretStorage({
+                setupNewSecretStorage: true,
+                setupNewKeyBackup: true,
+                createSecretStorageKey: () => Promise.resolve(recoveryKey),
+            });
+        }
+
+        return cli;
     }
 
     /**

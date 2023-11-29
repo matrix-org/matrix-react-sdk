@@ -19,13 +19,13 @@ import * as loglevel from "loglevel";
 import type { Logger } from "matrix-js-sdk/src/logger";
 
 /** Get a Logger implementation based on `loglevel` with the given logger name */
-export function getLogger(win: Window, loggerName: string): Logger {
+export function getLogger(loggerName: string): Logger {
     const logger = loglevel.getLogger(loggerName);
 
     // If this is the first time this logger has been returned, turn it into a `Logger` and set the default level
     if (!("extend" in logger)) {
-        logger["extend"] = (namespace: string) => getLogger(win, loggerName + ":" + namespace);
-        logger.methodFactory = makeLogMethodFactory(win);
+        logger["extend"] = (namespace: string) => getLogger(loggerName + ":" + namespace);
+        logger.methodFactory = makeLogMethodFactory();
         logger.setLevel(loglevel.levels.DEBUG);
     }
 
@@ -35,7 +35,7 @@ export function getLogger(win: Window, loggerName: string): Logger {
 /**
  * Helper for getLogger: a factory for loglevel method factories.
  */
-function makeLogMethodFactory(win: Window): loglevel.MethodFactory {
+function makeLogMethodFactory(): loglevel.MethodFactory {
     function methodFactory(
         methodName: loglevel.LogLevelNames,
         level: loglevel.LogLevelNumbers,
@@ -49,7 +49,6 @@ function makeLogMethodFactory(win: Window): loglevel.MethodFactory {
             // ... and delegate to the corresponding method in the console of the application under test.
             // Doing so (rather than using the global `console`) ensures that the output is collected
             // by the `cypress-terminal-report` plugin.
-            const console = (win as any).console;
             if (methodName in console) {
                 console[methodName](first, ...rest);
             } else {
