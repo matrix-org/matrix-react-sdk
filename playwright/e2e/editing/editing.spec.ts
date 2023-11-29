@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import { Locator, Page } from "@playwright/test";
-import { Visibility } from "matrix-js-sdk/src/matrix";
 
-import type { EventType, IContent, ISendEventResponse, MsgType } from "matrix-js-sdk/src/matrix";
+import type { EventType, IContent, ISendEventResponse, MsgType, Visibility } from "matrix-js-sdk/src/matrix";
 import { expect, test } from "../../element-web-test";
 import { ElementAppPage } from "../../pages/ElementAppPage";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
@@ -322,7 +321,7 @@ test.describe("Editing", () => {
 
         // "bob" now creates the room, and sends a load of events in it. Note that all of this happens via calls on
         // the js-sdk rather than Cypress commands, so uses regular async/await.
-        const testRoomId = await bob.createRoom({ name: "TestRoom", visibility: Visibility.Public });
+        const testRoomId = await bob.createRoom({ name: "TestRoom", visibility: "public" as Visibility });
 
         const { event_id: originalEventId } = await bob.sendMessage(testRoomId, {
             body: "original",
