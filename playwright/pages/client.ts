@@ -26,7 +26,7 @@ export class Client {
         return this.page.evaluateHandle(() => window.mxMatrixClientPeg.get());
     }
 
-    private async getClient(): Promise<JSHandle<MatrixClient>> {
+    public async prepareClient(): Promise<JSHandle<MatrixClient>> {
         if (!this.client) {
             this.client = await this.getClientHandle();
         }
@@ -48,7 +48,7 @@ export class Client {
         arg?: any,
     ): Promise<R>;
     public async evaluate<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<T> {
-        await this.getClient();
+        await this.prepareClient();
         return this.client.evaluate(fn, arg);
     }
 
@@ -64,7 +64,7 @@ export class Client {
         eventType: string,
         content: IContent,
     ): Promise<ISendEventResponse> {
-        const client = await this.getClient();
+        const client = await this.prepareClient();
         return client.evaluate(
             async (client, { roomId, threadId, eventType, content }) => {
                 return client.sendEvent(roomId, threadId, eventType, content);
@@ -79,7 +79,7 @@ export class Client {
      * @param content the event content to send
      */
     public async sendMessage(roomId: string, content: IContent): Promise<ISendEventResponse> {
-        const client = await this.getClient();
+        const client = await this.prepareClient();
         return client.evaluate(
             (client, { roomId, content }) => {
                 return client.sendMessage(roomId, content);
@@ -97,7 +97,7 @@ export class Client {
      * @return the ID of the newly created room
      */
     public async createRoom(options: ICreateRoomOpts): Promise<string> {
-        const client = await this.getClient();
+        const client = await this.prepareClient();
         return await client.evaluate(async (cli, options) => {
             const resp = await cli.createRoom(options);
             const roomId = resp.room_id;
@@ -121,7 +121,7 @@ export class Client {
      * @param roomIdOrAlias the id or alias of the room to join
      */
     public async joinRoom(roomIdOrAlias: string): Promise<void> {
-        const client = await this.getClient();
+        const client = await this.prepareClient();
         await client.evaluate(async (client, roomIdOrAlias) => {
             return await client.joinRoom(roomIdOrAlias);
         }, roomIdOrAlias);
@@ -132,7 +132,7 @@ export class Client {
      * @param roomName Name of the room to join
      */
     public async joinRoomByName(roomName: string): Promise<void> {
-        const client = await this.getClient();
+        const client = await this.prepareClient();
         await client.evaluate(
             (client, { roomName }) => {
                 const room = client.getRooms().find((r) => r.getDefaultRoomName(client.getUserId()) === roomName);

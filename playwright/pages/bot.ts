@@ -69,14 +69,15 @@ export class Bot extends Client {
     }
 
     private async getCredentials(): Promise<Credentials> {
+        if (this.credentials) return this.credentials;
         const username = uniqueId(this.opts.userIdPrefix);
         const password = uniqueId("password_");
         console.log(`getBot: Create bot user ${username} with opts ${JSON.stringify(this.opts)}`);
-        return await this.homeserver.registerUser(username, password, this.opts.displayName);
+        this.credentials = await this.homeserver.registerUser(username, password, this.opts.displayName);
+        return this.credentials;
     }
 
     protected async getClientHandle(): Promise<JSHandle<MatrixClient>> {
-        this.credentials = await this.getCredentials();
         return this.page.evaluateHandle(
             async ({ homeserver, credentials, opts }) => {
                 const keys = {};
@@ -170,7 +171,7 @@ export class Bot extends Client {
             },
             {
                 homeserver: this.homeserver.config,
-                credentials: this.credentials,
+                credentials: await this.getCredentials(),
                 opts: this.opts,
             },
         );
