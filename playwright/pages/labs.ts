@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Page } from "playwright-core";
 
-export class ElementLabsPage {
+export class Labs {
     constructor(private page: Page) {}
 
     /**
