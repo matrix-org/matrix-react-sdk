@@ -116,9 +116,12 @@ export class ElementClientPage {
      */
     async inviteUser(roomId: string, userId: string): Promise<{}> {
         const handle = await this.getClientHandle();
-        const res = await handle.evaluate(async (client, userId) => {
-            return await client.invite(roomId, userId);
-        }, userId);
+        const res = await handle.evaluate(
+            async (client, { roomId, userId }) => {
+                return await client.invite(roomId, userId);
+            },
+            { roomId, userId },
+        );
         console.log(`sent invite in ${roomId} for ${userId}`);
         return res;
     }
