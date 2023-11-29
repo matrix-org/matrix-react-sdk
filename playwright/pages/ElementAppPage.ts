@@ -22,12 +22,7 @@ import { Client } from "./client";
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
 
-    public client: Client;
-
-    public async start(): Promise<void> {
-        const handle = await this.page.evaluateHandle(() => window.mxMatrixClientPeg.get());
-        this.client = new Client(handle);
-    }
+    public client: Client = new Client(this.page);
 
     /**
      * Sets the value for a setting. The room ID is optional if the

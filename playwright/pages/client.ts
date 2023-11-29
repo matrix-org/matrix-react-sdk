@@ -14,13 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { JSHandle } from "@playwright/test";
+import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
 import type { IContent, ICreateRoomOpts, ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 export class Client {
-    public constructor(protected client: JSHandle<MatrixClient>) {}
+    protected client: JSHandle<MatrixClient>;
+
+    protected getClientHandle(): Promise<JSHandle<MatrixClient>> {
+        return this.page.evaluateHandle(() => window.mxMatrixClientPeg.get());
+    }
+
+    private async getClient(): Promise<JSHandle<MatrixClient>> {
+        if (!this.client) {
+            this.client = await this.getClientHandle();
+        }
+        return this.client;
+    }
+
+    public constructor(protected readonly page: Page) {
+        page.on("framenavigated", async () => {
+            this.client = null;
+        });
+    }
 
     public evaluate<R, Arg, O extends MatrixClient = MatrixClient>(
         pageFunction: PageFunctionOn<O, Arg, R>,
@@ -30,7 +47,8 @@ export class Client {
         pageFunction: PageFunctionOn<O, void, R>,
         arg?: any,
     ): Promise<R>;
-    public evaluate<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<T> {
+    public async evaluate<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<T> {
+        await this.getClient();
         return this.client.evaluate(fn, arg);
     }
 
@@ -46,7 +64,8 @@ export class Client {
         eventType: string,
         content: IContent,
     ): Promise<ISendEventResponse> {
-        return this.client.evaluate(
+        const client = await this.getClient();
+        return client.evaluate(
             async (client, { roomId, threadId, eventType, content }) => {
                 return client.sendEvent(roomId, threadId, eventType, content);
             },
@@ -60,7 +79,8 @@ export class Client {
      * @param content the event content to send
      */
     public async sendMessage(roomId: string, content: IContent): Promise<ISendEventResponse> {
-        return this.client.evaluate(
+        const client = await this.getClient();
+        return client.evaluate(
             (client, { roomId, content }) => {
                 return client.sendMessage(roomId, content);
             },
@@ -77,7 +97,8 @@ export class Client {
      * @return the ID of the newly created room
      */
     public async createRoom(options: ICreateRoomOpts): Promise<string> {
-        return await this.client.evaluate(async (cli, options) => {
+        const client = await this.getClient();
+        return await client.evaluate(async (cli, options) => {
             const resp = await cli.createRoom(options);
             const roomId = resp.room_id;
             if (!cli.getRoom(roomId)) {
@@ -100,7 +121,8 @@ export class Client {
      * @param roomIdOrAlias the id or alias of the room to join
      */
     public async joinRoom(roomIdOrAlias: string): Promise<void> {
-        await this.client.evaluate(async (client, roomIdOrAlias) => {
+        const client = await this.getClient();
+        await client.evaluate(async (client, roomIdOrAlias) => {
             return await client.joinRoom(roomIdOrAlias);
         }, roomIdOrAlias);
     }
@@ -110,7 +132,8 @@ export class Client {
      * @param roomName Name of the room to join
      */
     public async joinRoomByName(roomName: string): Promise<void> {
-        await this.client.evaluate(
+        const client = await this.getClient();
+        await client.evaluate(
             (client, { roomName }) => {
                 const room = client.getRooms().find((r) => r.getDefaultRoomName(client.getUserId()) === roomName);
                 if (room) {

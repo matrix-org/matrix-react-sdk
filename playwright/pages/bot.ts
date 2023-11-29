@@ -63,14 +63,9 @@ const defaultCreateBotOptions = {
 export class Bot extends Client {
     public credentials?: Credentials;
 
-    constructor(private page: Page, private homeserver: HomeserverInstance, private readonly opts: CreateBotOpts) {
-        super(null); // will be set during `start`
+    constructor(page: Page, private homeserver: HomeserverInstance, private readonly opts: CreateBotOpts) {
+        super(page);
         this.opts = Object.assign({}, defaultCreateBotOptions, opts);
-    }
-
-    public async start(): Promise<void> {
-        this.credentials = await this.getCredentials();
-        this.client = await this.setupBotClient();
     }
 
     private async getCredentials(): Promise<Credentials> {
@@ -80,7 +75,8 @@ export class Bot extends Client {
         return await this.homeserver.registerUser(username, password, this.opts.displayName);
     }
 
-    private async setupBotClient(): Promise<JSHandle<MatrixClient>> {
+    protected async getClientHandle(): Promise<JSHandle<MatrixClient>> {
+        this.credentials = await this.getCredentials();
         return this.page.evaluateHandle(
             async ({ homeserver, credentials, opts }) => {
                 const keys = {};
