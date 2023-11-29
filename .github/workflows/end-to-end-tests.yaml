@@ -6,6 +6,14 @@ on:
         types:
             - completed
 
+    # support calls from other workflows for downstream testing
+    workflow_call:
+        inputs:
+            react-sdk-repository:
+                type: string
+                required: true
+                description: "The name of the github repository to check out and build."
+
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.run_id }}
     cancel-in-progress: ${{ github.event.workflow_run.event == 'pull_request' }}
@@ -78,7 +86,7 @@ jobs:
                   path: matrix-react-sdk
                   repository: ${{ inputs.react-sdk-repository || github.repository }}
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
                   cache-dependency-path: matrix-react-sdk/yarn.lock
@@ -115,9 +123,9 @@ jobs:
             statuses: write
             deployments: write
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 
