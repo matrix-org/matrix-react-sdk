@@ -289,7 +289,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                     <span
                       class="mx_Slider_selection_label"
                     >
-                      16
+                      Default
                     </span>
                   </output>
                 </div>
