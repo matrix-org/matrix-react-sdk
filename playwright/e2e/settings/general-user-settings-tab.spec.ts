@@ -29,7 +29,7 @@ test.describe("General user settings tab", () => {
             default_country_code: "US", // For checking the international country calling code
         },
         uut: async ({ app, user }, use) => {
-            const locator = await app.openUserSettings("General");
+            const locator = await app.settings.openUserSettings("General");
             await use(locator);
         },
     });

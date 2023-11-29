@@ -29,7 +29,7 @@ test.describe("Device manager", () => {
     });
 
     test("should display sessions", async ({ page, app }) => {
-        await app.openUserSettings("Sessions");
+        await app.settings.openUserSettings("Sessions");
         const tab = page.locator(".mx_SettingsTab");
 
         await expect(tab.getByText("Current session", { exact: true })).toBeVisible();

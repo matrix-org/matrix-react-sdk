@@ -22,7 +22,7 @@ test.describe("Preferences user settings tab", () => {
     });
 
     test("should be rendered properly", async ({ app, user }) => {
-        const tab = await app.openUserSettings("Preferences");
+        const tab = await app.settings.openUserSettings("Preferences");
 
         // Assert that the top heading is rendered
         await expect(tab.getByRole("heading", { name: "Preferences" })).toBeVisible();

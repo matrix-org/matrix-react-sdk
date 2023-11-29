@@ -23,7 +23,7 @@ test.describe("Appearance user settings tab", () => {
     });
 
     test("should be rendered properly", async ({ page, user, app }) => {
-        const tab = await app.openUserSettings("Appearance");
+        const tab = await app.settings.openUserSettings("Appearance");
 
         await expect(tab.getByRole("heading", { name: "Customise your appearance" })).toBeVisible();
 
@@ -41,7 +41,7 @@ test.describe("Appearance user settings tab", () => {
         await app.createRoom({ name: "Test Room" });
         await app.viewRoomByName("Test Room");
 
-        await app.openUserSettings("Appearance");
+        await app.settings.openUserSettings("Appearance");
 
         const buttons = page.locator(".mx_LayoutSwitcher_RadioButton");
 
@@ -74,7 +74,7 @@ test.describe("Appearance user settings tab", () => {
     });
 
     test("should support changing font size by clicking the font slider", async ({ page, app, user }) => {
-        await app.openUserSettings("Appearance");
+        await app.settings.openUserSettings("Appearance");
 
         const tab = page.getByTestId("mx_AppearanceUserSettingsTab");
         const fontSliderSection = tab.locator(".mx_FontScalingPanel_fontSlider");
@@ -108,7 +108,7 @@ test.describe("Appearance user settings tab", () => {
     });
 
     test("should disable font size slider when custom font size is used", async ({ page, app, user }) => {
-        await app.openUserSettings("Appearance");
+        await app.settings.openUserSettings("Appearance");
 
         const panel = page.getByTestId("mx_FontScalingPanel");
         await panel.locator("label", { hasText: "Use custom size" }).click();
@@ -122,7 +122,7 @@ test.describe("Appearance user settings tab", () => {
         await app.createRoom({ name: "Test Room" });
         await app.viewRoomByName("Test Room");
 
-        await app.openUserSettings("Appearance");
+        await app.settings.openUserSettings("Appearance");
 
         // Click "Show advanced" link button
         const tab = page.getByTestId("mx_AppearanceUserSettingsTab");
@@ -139,7 +139,7 @@ test.describe("Appearance user settings tab", () => {
         app,
         user,
     }) => {
-        await app.openUserSettings("Appearance");
+        await app.settings.openUserSettings("Appearance");
         const tab = page.getByTestId("mx_AppearanceUserSettingsTab");
 
         const checkDisabled = async () => {
@@ -169,7 +169,7 @@ test.describe("Appearance user settings tab", () => {
     });
 
     test("should support enabling system font", async ({ page, app, user }) => {
-        await app.openUserSettings("Appearance");
+        await app.settings.openUserSettings("Appearance");
         const tab = page.getByTestId("mx_AppearanceUserSettingsTab");
 
         // Click "Show advanced" link button
@@ -185,11 +185,11 @@ test.describe("Appearance user settings tab", () => {
     test.describe("Theme Choice Panel", () => {
         test.beforeEach(async ({ app, user }) => {
             // Disable the default theme for consistency in case ThemeWatcher automatically chooses it
-            await app.setSettingValue("use_system_theme", null, SettingLevel.DEVICE, false);
+            await app.settings.setValue("use_system_theme", null, SettingLevel.DEVICE, false);
         });
 
         test("should be rendered with the light theme selected", async ({ page, app }) => {
-            await app.openUserSettings("Appearance");
+            await app.settings.openUserSettings("Appearance");
             const themePanel = page.getByTestId("mx_ThemeChoicePanel");
 
             const useSystemTheme = themePanel.getByTestId("checkbox-use-system-theme");
@@ -215,7 +215,7 @@ test.describe("Appearance user settings tab", () => {
             page,
             app,
         }) => {
-            await app.openUserSettings("Appearance");
+            await app.settings.openUserSettings("Appearance");
             const themePanel = page.getByTestId("mx_ThemeChoicePanel");
 
             await themePanel.locator(".mx_Checkbox", { hasText: "Match system theme" }).click();
@@ -235,7 +235,7 @@ test.describe("Appearance user settings tab", () => {
             page,
             app,
         }) => {
-            await app.openUserSettings("Appearance");
+            await app.settings.openUserSettings("Appearance");
             const themePanel = page.getByTestId("mx_ThemeChoicePanel");
 
             // Assert that the checkbox and the label to enable the high contrast theme should exist
