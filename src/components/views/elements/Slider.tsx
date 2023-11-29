@@ -34,7 +34,7 @@ interface IProps {
     displayFunc: (value: number) => string;
 
     // Whether the slider is disabled
-    disabled: boolean;
+    disabled?: boolean;
 
     label: string;
 }

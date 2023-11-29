@@ -145,7 +145,7 @@ describe("FontWatcher", function () {
         });
     });
 
-    describe('font size', () => {
+    describe("font size", () => {
         let watcher!: FontWatcher;
 
         beforeEach(async () => {
@@ -159,19 +159,19 @@ describe("FontWatcher", function () {
 
         it("should set font size to 100% when it matches default size", async () => {
             await watcher.start();
-            expect(getHtmlFontSize()).toEqual('100%');
+            expect(getHtmlFontSize()).toEqual("100%");
         });
 
         it("should set relative font size when it is larger than default size", async () => {
             await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 19);
             await watcher.start();
-            expect(getHtmlFontSize()).toEqual('calc(100% + 3px)');
+            expect(getHtmlFontSize()).toEqual("calc(100% + 3px)");
         });
 
         it("should set relative font size when it is smaller than default size", async () => {
             await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 11);
             await watcher.start();
-            expect(getHtmlFontSize()).toEqual('calc(100% + -5px)');
+            expect(getHtmlFontSize()).toEqual("calc(100% + -5px)");
         });
     });
 });

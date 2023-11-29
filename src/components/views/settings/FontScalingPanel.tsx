@@ -14,20 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent } from "react";
+import React from "react";
 
 import EventTilePreview from "../elements/EventTilePreview";
-import Field from "../elements/Field";
-import SettingsFlag from "../elements/SettingsFlag";
 import SettingsStore from "../../../settings/SettingsStore";
 import Slider from "../elements/Slider";
 import { FontWatcher } from "../../../settings/watchers/FontWatcher";
-import { IValidationResult, IFieldState } from "../elements/Validation";
 import { Layout } from "../../../settings/enums/Layout";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { _t } from "../../../languageHandler";
-import { clamp } from "../../../utils/numbers";
 import SettingsSubsection from "./shared/SettingsSubsection";
 
 interface IProps {}
@@ -37,7 +33,6 @@ interface IState {
     // Needs to be string for things like '17.' without
     // trailing 0s.
     fontSize: string;
-    useCustomFontSize: boolean;
     layout: Layout;
     // User profile data for the message preview
     userId?: string;
@@ -55,7 +50,6 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
 
         this.state = {
             fontSize: SettingsStore.getValue("baseFontSizeV2", null).toString(),
-            useCustomFontSize: SettingsStore.getValue("useCustomFontSize"),
             layout: SettingsStore.getValue("layout"),
         };
     }
@@ -95,27 +89,6 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, size);
     };
 
-    private onValidateFontSize = async ({ value }: Pick<IFieldState, "value">): Promise<IValidationResult> => {
-        const parsedSize = parseFloat(value!);
-        const min = FontWatcher.MIN_SIZE;
-        const max = FontWatcher.MAX_SIZE;
-
-        if (isNaN(parsedSize)) {
-            return { valid: false, feedback: _t("settings|appearance|font_size_nan") };
-        }
-
-        if (!(min <= parsedSize && parsedSize <= max)) {
-            return {
-                valid: false,
-                feedback: _t("settings|appearance|font_size_limit", { min, max }),
-            };
-        }
-
-        SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, parseInt(value!, 10));
-
-        return { valid: true, feedback: _t("settings|appearance|font_size_valid", { min, max }) };
-    };
-
     public render(): React.ReactNode {
         return (
             <SettingsSubsection
@@ -140,40 +113,10 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                         value={parseInt(this.state.fontSize, 10)}
                         onChange={this.onFontSizeChanged}
                         displayFunc={(_) => ""}
-                        disabled={this.state.useCustomFontSize}
                         label={_t("settings|appearance|font_size")}
                     />
                     <div className="mx_FontScalingPanel_fontSlider_largeText">Aa</div>
                 </div>
-
-                <SettingsFlag
-                    name="useCustomFontSize"
-                    level={SettingLevel.ACCOUNT}
-                    onChange={(checked) => {
-                        this.setState({ useCustomFontSize: checked });
-                        if (!checked) {
-                            const size = parseInt(this.state.fontSize, 10);
-                            const clamped = clamp(size, FontWatcher.MIN_SIZE, FontWatcher.MAX_SIZE);
-                            if (clamped !== size) {
-                                this.onFontSizeChanged(clamped);
-                            }
-                        }
-                    }}
-                    useCheckbox={true}
-                />
-
-                <Field
-                    type="number"
-                    label={_t("settings|appearance|font_size")}
-                    autoComplete="off"
-                    placeholder={this.state.fontSize.toString()}
-                    value={this.state.fontSize.toString()}
-                    id="font_size_field"
-                    onValidate={this.onValidateFontSize}
-                    onChange={(value: ChangeEvent<HTMLInputElement>) => this.setState({ fontSize: value.target.value })}
-                    disabled={!this.state.useCustomFontSize}
-                    className="mx_AppearanceUserSettingsTab_checkboxControlledField"
-                />
             </SettingsSubsection>
         );
     }

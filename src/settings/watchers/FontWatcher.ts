@@ -119,10 +119,13 @@ export class FontWatcher implements IWatcher {
         if (fontSize !== size) {
             await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, fontSize);
         }
-        
+
         // To respect browser font scaling we need to set the base font-size to 100%
         // When user has set a custom font size, apply it as a delta to 100% using calc
-        const cssFontSize = fontSize === FontWatcher.DEFAULT_SIZE ? '100%' : `calc(100% + ${toPx(fontSize - FontWatcher.DEFAULT_SIZE)})`
+        const cssFontSize =
+            fontSize === FontWatcher.DEFAULT_SIZE
+                ? "100%"
+                : `calc(100% + ${toPx(fontSize - FontWatcher.DEFAULT_SIZE)})`;
 
         document.querySelector<HTMLElement>(":root")!.style.fontSize = cssFontSize;
     };

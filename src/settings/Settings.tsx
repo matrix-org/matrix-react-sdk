@@ -494,11 +494,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: FontWatcher.DEFAULT_SIZE,
         controller: new FontSizeController(),
     },
-    "useCustomFontSize": {
-        displayName: _td("settings|appearance|custom_font_size"),
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: false,
-    },
     "MessageComposerInput.suggestEmoji": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|emoji_autocomplete"),

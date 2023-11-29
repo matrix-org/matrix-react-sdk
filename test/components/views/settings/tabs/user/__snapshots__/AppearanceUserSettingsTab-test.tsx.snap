@@ -299,46 +299,6 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                   Aa
                 </div>
               </div>
-              <span
-                class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
-              >
-                <input
-                  id="checkbox_vY7Q4uEh9K"
-                  type="checkbox"
-                />
-                <label
-                  for="checkbox_vY7Q4uEh9K"
-                >
-                  <div
-                    class="mx_Checkbox_background"
-                  >
-                    <div
-                      class="mx_Checkbox_checkmark"
-                    />
-                  </div>
-                  <div>
-                    Use custom size
-                  </div>
-                </label>
-              </span>
-              <div
-                class="mx_Field mx_Field_input mx_AppearanceUserSettingsTab_checkboxControlledField"
-              >
-                <input
-                  autocomplete="off"
-                  disabled=""
-                  id="font_size_field"
-                  label="Font size"
-                  placeholder="16"
-                  type="number"
-                  value="16"
-                />
-                <label
-                  for="font_size_field"
-                >
-                  Font size
-                </label>
-              </div>
             </div>
           </div>
           <div

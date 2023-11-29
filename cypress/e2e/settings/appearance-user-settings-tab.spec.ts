@@ -148,17 +148,6 @@ describe("Appearance user settings tab", () => {
         });
     });
 
-    it("should disable font size slider when custom font size is used", () => {
-        cy.openUserSettings("Appearance");
-
-        cy.findByTestId("mx_FontScalingPanel").within(() => {
-            cy.findByLabelText("Use custom size").click({ force: true }); // force click as checkbox size is zero
-
-            // Assert that the font slider is disabled
-            cy.get(".mx_FontScalingPanel_fontSlider input[disabled]").should("exist");
-        });
-    });
-
     it("should support enabling compact group (modern) layout", () => {
         // Create and view a room first
         cy.createRoom({ name: "Test Room" }).viewRoomByName("Test Room");

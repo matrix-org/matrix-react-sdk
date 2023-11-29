@@ -15,31 +15,33 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import * as TestUtils from "../../../test-utils";
 import FontScalingPanel from "../../../../src/components/views/settings/FontScalingPanel";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("FontScalingPanel", () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
     it("renders the font scaling UI", () => {
         TestUtils.stubClient();
         const { asFragment } = render(<FontScalingPanel />);
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it("should clamp custom font size when disabling it", async () => {
-        jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
+    it("updates the font size", () => {
+        jest.spyOn(SettingsStore, "setValue");
         TestUtils.stubClient();
-        const { container, getByText } = render(<FontScalingPanel />);
-        fireEvent.click(getByText("Use custom size"));
-        await waitFor(() => {
-            expect(container.querySelector("input[checked]")).toBeDefined();
-        });
-        fireEvent.change(container.querySelector("#font_size_field")!, { target: { value: "25" } });
-        fireEvent.click(getByText("Use custom size"));
-        await waitFor(() => {
-            expect(container.querySelector("#font_size_field")).toHaveValue(21);
-        });
+        render(<FontScalingPanel />);
+
+        const slider = screen.getByLabelText("Font size");
+
+        fireEvent.change(slider, { target: { value: 19 } });
+
+        expect(SettingsStore.setValue).toHaveBeenCalledWith("baseFontSizeV2", null, "device", 19);
+
+        expect(screen.getByLabelText("Font size")).toHaveValue("19");
     });
 });
