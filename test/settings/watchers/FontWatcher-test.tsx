@@ -43,6 +43,9 @@ const getFontFamily = () => {
 const getEmojiFontFamily = () => {
     return document.body.style.getPropertyValue(FontWatcher.EMOJI_FONT_FAMILY_CUSTOM_PROPERTY);
 };
+const getHtmlFontSize = (): string => {
+    return document.querySelector<HTMLElement>(":root")!.style.fontSize;
+};
 
 describe("FontWatcher", function () {
     it("should load font on start()", async () => {
@@ -139,6 +142,36 @@ describe("FontWatcher", function () {
             await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, 13);
             await watcher!.start();
             expect(SettingsStore.getValue("baseFontSizeV2")).toBe(19);
+        });
+    });
+
+    describe('font size', () => {
+        let watcher!: FontWatcher;
+
+        beforeEach(async () => {
+            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 16);
+            watcher = new FontWatcher();
+        });
+
+        afterEach(() => {
+            watcher!.stop();
+        });
+
+        it("should set font size to 100% when it matches default size", async () => {
+            await watcher.start();
+            expect(getHtmlFontSize()).toEqual('100%');
+        });
+
+        it("should set relative font size when it is larger than default size", async () => {
+            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 19);
+            await watcher.start();
+            expect(getHtmlFontSize()).toEqual('calc(100% + 3px)');
+        });
+
+        it("should set relative font size when it is smaller than default size", async () => {
+            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 11);
+            await watcher.start();
+            expect(getHtmlFontSize()).toEqual('calc(100% + -5px)');
         });
     });
 });
