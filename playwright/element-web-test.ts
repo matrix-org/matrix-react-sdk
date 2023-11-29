@@ -67,7 +67,6 @@ export const test = base.extend<
         crypto: Crypto;
         room?: { roomId: string };
         toasts: Toasts;
-        botName?: string;
         botCreateOpts: CreateBotOpts;
         bot: Bot;
     }
@@ -168,7 +167,9 @@ export const test = base.extend<
         }),
 
     app: async ({ page }, use) => {
-        await use(new ElementAppPage(page));
+        const app = new ElementAppPage(page);
+        await app.start();
+        await use(app);
     },
     crypto: async ({ page, homeserver, request }, use) => {
         await use(new Crypto(page, homeserver, request));
@@ -177,7 +178,6 @@ export const test = base.extend<
         await use(new Toasts(page));
     },
 
-    botName: undefined,
     botCreateOpts: {},
     bot: async ({ page, homeserver, botCreateOpts }, use) => {
         const bot = new Bot(page, homeserver, botCreateOpts);

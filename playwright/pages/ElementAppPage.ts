@@ -16,11 +16,18 @@ limitations under the License.
 
 import { type Locator, type Page } from "@playwright/test";
 
-import type { IContent, ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import type { SettingLevel } from "../../src/settings/SettingLevel";
+import { Client } from "./client";
 
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
+
+    public client: Client;
+
+    public async start(): Promise<void> {
+        const handle = await this.page.evaluateHandle(() => window.mxMatrixClientPeg.get());
+        this.client = new Client(handle);
+    }
 
     /**
      * Sets the value for a setting. The room ID is optional if the
@@ -100,20 +107,6 @@ export class ElementAppPage {
     }
 
     /**
-     * Create a room with given options.
-     * @param options the options to apply when creating the room
-     * @return the ID of the newly created room
-     */
-    public async createRoom(options: ICreateRoomOpts): Promise<string> {
-        return this.page.evaluate<Promise<string>, ICreateRoomOpts>(async (options) => {
-            return window.mxMatrixClientPeg
-                .get()
-                .createRoom(options)
-                .then((res) => res.room_id);
-        }, options);
-    }
-
-    /**
      * Get the composer element
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
      */
@@ -133,30 +126,30 @@ export class ElementAppPage {
     }
 
     /**
-     * @param {string} roomId
-     * @param {string} threadId
-     * @param {string} eventType
-     * @param {Object} content
+     * Opens the given room by name. The room must be visible in the
+     * room list, but the room list may be folded horizontally, and the
+     * room may contain unread messages.
+     *
+     * @param name The exact room name to find and click on/open.
      */
-    public async sendEvent(
-        roomId: string,
-        threadId: string | null,
-        eventType: string,
-        content: IContent,
-    ): Promise<ISendEventResponse> {
-        return this.page.evaluate<
-            Promise<ISendEventResponse>,
-            {
-                roomId: string;
-                threadId: string | null;
-                eventType: string;
-                content: IContent;
-            }
-        >(
-            async ({ roomId, threadId, eventType, content }) => {
-                return window.mxMatrixClientPeg.get().sendEvent(roomId, threadId, eventType, content);
-            },
-            { roomId, threadId, eventType, content },
-        );
+    public async viewRoomByName(name: string): Promise<void> {
+        // We look for the room inside the room list, which is a tree called Rooms.
+        //
+        // There are 3 cases:
+        // - the room list is folded:
+        //     then the aria-label on the room tile is the name (with nothing extra)
+        // - the room list is unfolder and the room has messages:
+        //     then the aria-label contains the unread count, but the title of the
+        //     div inside the titleContainer equals the room name
+        // - the room list is unfolded and the room has no messages:
+        //     then the aria-label is the name and so is the title of a div
+        //
+        // So by matching EITHER title=name OR aria-label=name we find this exact
+        // room in all three cases.
+        return this.page
+            .getByRole("tree", { name: "Rooms" })
+            .locator(`[title="${name}"],[aria-label="${name}"]`)
+            .first()
+            .click();
     }
 }
