@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base, expect } from "@playwright/test";
+import { test as base, expect, Locator } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
 
@@ -50,6 +50,10 @@ export type TestOptions = {
     cryptoBackend: "legacy" | "rust";
 };
 
+interface CredentialsWithDisplayName extends Credentials {
+    displayName: string;
+}
+
 export const test = base.extend<
     TestOptions & {
         axe: AxeBuilder;
@@ -60,13 +64,15 @@ export const test = base.extend<
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
         oAuthServer: { port: number };
-        user: Credentials;
+        credentials: CredentialsWithDisplayName;
+        user: CredentialsWithDisplayName;
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
         crypto: Crypto;
         room?: { roomId: string };
         toasts: Toasts;
+        uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
         botCreateOpts: CreateBotOpts;
         bot: Bot;
     }
@@ -119,7 +125,7 @@ export const test = base.extend<
     },
 
     displayName: undefined,
-    user: async ({ page, homeserver, displayName: testDisplayName }, use) => {
+    credentials: async ({ homeserver, displayName: testDisplayName }, use) => {
         const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
         const username = _.uniqueId("user_");
         const password = _.uniqueId("password_");
@@ -128,6 +134,12 @@ export const test = base.extend<
         const credentials = await homeserver.registerUser(username, password, displayName);
         console.log(`Registered test user ${username} with displayname ${displayName}`);
 
+        await use({
+            ...credentials,
+            displayName,
+        });
+    },
+    user: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
             ({ baseUrl, credentials }) => {
                 // Seed the localStorage with the required credentials
