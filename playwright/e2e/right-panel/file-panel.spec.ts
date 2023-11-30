@@ -207,9 +207,12 @@ test.describe("FilePanel", () => {
                 ".mx_FilePanel .mx_RoomView_MessageList .mx_EventTile_mediaLine.mx_EventTile_image .mx_MImageBody",
             );
 
+            const link = imageBody.locator(".mx_MFileBody_download a");
+            await expect(link).toBeVisible();
+
             const downloadPromise = page.waitForEvent("download");
             // Click the anchor link (not the image itself)
-            await imageBody.locator(".mx_MFileBody_download a").click({ force: true });
+            await link.click();
             const download = await downloadPromise;
             expect(download.suggestedFilename()).toBe("riot.png");
         });
