@@ -37,6 +37,15 @@ interface MKeyVerificationRequestContent {
     to: string;
 }
 
+/**
+ * Event tile created when we receive an m.key.verification.request event.
+ *
+ * Displays a simple message saying that a verification was requested, either by
+ * this user or someone else.
+ *
+ * EventTileFactory has logic meaning we only display this tile if the request
+ * was sent to/from this user.
+ */
 const MKeyVerificationRequest: React.FC<Props> = ({ mxEvent, timestamp }) => {
     const client = useMatrixClientContext();
 
