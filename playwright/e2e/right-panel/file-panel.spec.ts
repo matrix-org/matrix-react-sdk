@@ -198,7 +198,7 @@ test.describe("FilePanel", () => {
     });
 
     test.describe("download", () => {
-        test("should download an image via the link on the panel", async ({ page }) => {
+        test("should download an image via the link on the panel", async ({ page, context }) => {
             // Upload an image file
             await uploadFile(page, "cypress/fixtures/riot.png");
 
@@ -208,14 +208,21 @@ test.describe("FilePanel", () => {
             );
 
             const link = imageBody.locator(".mx_MFileBody_download a");
-            await expect(link).toBeVisible();
-            await page.waitForTimeout(1000); // XXX: stability in CI
 
+            const newPagePromise = context.waitForEvent("page");
             const downloadPromise = page.waitForEvent("download");
+
             // Click the anchor link (not the image itself)
             await link.click();
-            const download = await downloadPromise;
-            expect(download.suggestedFilename()).toBe("riot.png");
+
+            const newPage = await newPagePromise;
+            try {
+                const download = await downloadPromise;
+                expect(download.suggestedFilename()).toBe("riot.png");
+            } catch {
+                // XXX: Clicking the link opens the image in a new tab on some browsers rather than downloading, so handle that case
+                await expect(newPage).toHaveURL("*/_matrix/media/r0/download/matrix.org/riot.png");
+            }
         });
     });
 });

@@ -32,7 +32,7 @@ test.describe("Consent", () => {
     }) => {
         // Attempt to create a room using the js-sdk which should return an error with `M_CONSENT_NOT_GIVEN`
         await app.createRoom({}).catch(() => {});
-        const newPagePromise = new Promise<Page>((resolve) => context.once("page", resolve));
+        const newPagePromise = context.waitForEvent("page");
 
         const dialog = page.locator(".mx_QuestionDialog");
         // Accept terms & conditions
