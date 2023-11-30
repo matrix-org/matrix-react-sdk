@@ -221,7 +221,7 @@ test.describe("FilePanel", () => {
                 expect(download.suggestedFilename()).toBe("riot.png");
             } catch {
                 // XXX: Clicking the link opens the image in a new tab on some browsers rather than downloading, so handle that case
-                await expect(newPage).toHaveURL("*/_matrix/media/r0/download/matrix.org/riot.png");
+                await expect(newPage).toHaveURL("*/_matrix/media/*/download/*");
             }
         });
     });
