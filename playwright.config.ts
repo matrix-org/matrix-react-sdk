@@ -22,10 +22,9 @@ const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
 
 export default defineConfig<TestOptions>({
     use: {
-        headless: false,
         viewport: { width: 1280, height: 720 },
         ignoreHTTPSErrors: true,
-        video: "on-first-retry",
+        video: "retain-on-failure",
         baseURL,
     },
     webServer: {
@@ -40,11 +39,13 @@ export default defineConfig<TestOptions>({
     projects: [
         {
             name: "Legacy Crypto",
-            use: { crypto: "legacy" },
+            use: { cryptoBackend: "legacy" },
         },
         {
             name: "Rust Crypto",
-            use: { crypto: "rust" },
+            use: { cryptoBackend: "rust" },
         },
     ],
+    snapshotDir: "playwright/snapshots",
+    snapshotPathTemplate: "{snapshotDir}/{testFilePath}/{arg}-{platform}{ext}",
 });

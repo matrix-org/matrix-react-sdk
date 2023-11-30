@@ -14,12 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base } from "@playwright/test";
+import { test as base, expect, Locator } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+import _ from "lodash";
 
-import { HomeserverInstance, StartHomeserverOpts } from "./plugins/utils/homeserver";
-import { Synapse } from "./plugins/synapse";
+import type mailhog from "mailhog";
+import type { IConfigOptions } from "../src/IConfigOptions";
+import { Credentials, Homeserver, HomeserverInstance, StartHomeserverOpts } from "./plugins/homeserver";
+import { Synapse } from "./plugins/homeserver/synapse";
+import { Dendrite, Pinecone } from "./plugins/homeserver/dendrite";
+import { Instance } from "./plugins/mailhog";
+import { ElementAppPage } from "./pages/ElementAppPage";
+import { OAuthServer } from "./plugins/oauth_server";
+import { Crypto } from "./pages/crypto";
+import { Toasts } from "./pages/toasts";
+import { Bot, CreateBotOpts } from "./pages/bot";
 
-const CONFIG_JSON = {
+const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
     // actually work.
     //
@@ -36,22 +47,42 @@ const CONFIG_JSON = {
 };
 
 export type TestOptions = {
-    crypto: "legacy" | "rust";
+    cryptoBackend: "legacy" | "rust";
 };
+
+interface CredentialsWithDisplayName extends Credentials {
+    displayName: string;
+}
 
 export const test = base.extend<
     TestOptions & {
+        axe: AxeBuilder;
+        checkA11y: () => Promise<void>;
+        // The contents of the config.json to send
         config: typeof CONFIG_JSON;
+        // The options with which to run the `homeserver` fixture
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
+        oAuthServer: { port: number };
+        credentials: CredentialsWithDisplayName;
+        user: CredentialsWithDisplayName;
+        displayName?: string;
+        app: ElementAppPage;
+        mailhog?: { api: mailhog.API; instance: Instance };
+        crypto: Crypto;
+        room?: { roomId: string };
+        toasts: Toasts;
+        uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
+        botCreateOpts: CreateBotOpts;
+        bot: Bot;
     }
 >({
-    crypto: ["legacy", { option: true }],
+    cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, crypto }, use) => {
+    page: async ({ context, page, config, cryptoBackend }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
-            const json = { ...config };
-            if (crypto === "rust") {
+            const json = { ...CONFIG_JSON, ...config };
+            if (cryptoBackend === "rust") {
                 json["features"] = {
                     ...json["features"],
                     feature_rust_crypto: true,
@@ -59,6 +90,7 @@ export const test = base.extend<
             }
             await route.fulfill({ json });
         });
+
         await use(page);
     },
 
@@ -68,12 +100,102 @@ export const test = base.extend<
             opts = { template: opts };
         }
 
-        const server = new Synapse(request);
+        let server: Homeserver;
+        const homeserverName = process.env["PLAYWRIGHT_HOMESERVER"];
+        switch (homeserverName) {
+            case "dendrite":
+                server = new Dendrite(request);
+                break;
+            case "pinecone":
+                server = new Pinecone(request);
+                break;
+            default:
+                server = new Synapse(request);
+        }
+
         await use(await server.start(opts));
         await server.stop();
+    },
+    // eslint-disable-next-line no-empty-pattern
+    oAuthServer: async ({}, use) => {
+        const server = new OAuthServer();
+        const port = server.start();
+        await use({ port });
+        server.stop();
+    },
+
+    displayName: undefined,
+    credentials: async ({ homeserver, displayName: testDisplayName }, use) => {
+        const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
+        const username = _.uniqueId("user_");
+        const password = _.uniqueId("password_");
+        const displayName = testDisplayName ?? _.sample(names)!;
+
+        const credentials = await homeserver.registerUser(username, password, displayName);
+        console.log(`Registered test user ${username} with displayname ${displayName}`);
+
+        await use({
+            ...credentials,
+            displayName,
+        });
+    },
+    user: async ({ page, homeserver, credentials }, use) => {
+        await page.addInitScript(
+            ({ baseUrl, credentials }) => {
+                // Seed the localStorage with the required credentials
+                window.localStorage.setItem("mx_hs_url", baseUrl);
+                window.localStorage.setItem("mx_user_id", credentials.userId);
+                window.localStorage.setItem("mx_access_token", credentials.accessToken);
+                window.localStorage.setItem("mx_device_id", credentials.deviceId);
+                window.localStorage.setItem("mx_is_guest", "false");
+                window.localStorage.setItem("mx_has_pickle_key", "false");
+                window.localStorage.setItem("mx_has_access_token", "true");
+
+                // Ensure the language is set to a consistent value
+                window.localStorage.setItem("mx_local_settings", '{"language":"en"}');
+            },
+            { baseUrl: homeserver.config.baseUrl, credentials },
+        );
+        await page.goto("/");
+
+        await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
+
+        await use(credentials);
+    },
+
+    axe: async ({ page }, use) => {
+        await use(new AxeBuilder({ page }));
+    },
+    checkA11y: async ({ axe }, use, testInfo) =>
+        use(async () => {
+            const results = await axe.analyze();
+
+            await testInfo.attach("accessibility-scan-results", {
+                body: JSON.stringify(results, null, 2),
+                contentType: "application/json",
+            });
+
+            expect(results.violations).toEqual([]);
+        }),
+
+    app: async ({ page }, use) => {
+        await use(new ElementAppPage(page));
+    },
+    crypto: async ({ page, homeserver, request }, use) => {
+        await use(new Crypto(page, homeserver, request));
+    },
+    toasts: async ({ page }, use) => {
+        await use(new Toasts(page));
+    },
+
+    botCreateOpts: {},
+    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+        const bot = new Bot(page, homeserver, botCreateOpts);
+        await bot.start();
+        await use(bot);
     },
 });
 
 test.use({});
 
-export { expect } from "@playwright/test";
+export { expect };

@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { checkA11y, injectAxe } from "axe-playwright";
-
 import { test, expect } from "../../element-web-test";
+import { doTokenRegistration } from "./utils";
+import { isDendrite } from "../../plugins/homeserver/dendrite";
 
-test.describe("Consent", () => {
+test.describe("Login", () => {
     test.describe("m.login.password", () => {
         test.use({ startHomeserverOpts: "consent" });
 
@@ -30,9 +30,11 @@ test.describe("Consent", () => {
             await page.goto("/#/login");
         });
 
-        test("logs in with an existing account and lands on the home screen", async ({ page, homeserver }) => {
-            await injectAxe(page);
-
+        test("logs in with an existing account and lands on the home screen", async ({
+            page,
+            homeserver,
+            checkA11y,
+        }) => {
             // first pick the homeserver, as otherwise the user picker won't be visible
             await page.getByRole("button", { name: "Edit" }).click();
             await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
@@ -66,13 +68,76 @@ test.describe("Consent", () => {
             await expect(page.getByRole("textbox", { name: "Username" })).toBeVisible();
             // Disabled because flaky - see https://github.com/vector-im/element-web/issues/24688
             // cy.percySnapshot("Login");
-            await checkA11y(page);
+            await checkA11y();
 
             await page.getByRole("textbox", { name: "Username" }).fill(username);
             await page.getByPlaceholder("Password").fill(password);
             await page.getByRole("button", { name: "Sign in" }).click();
 
             await expect(page).toHaveURL(/\/#\/home$/);
+        });
+    });
+
+    // tests for old-style SSO login, in which we exchange tokens with Synapse, and Synapse talks to an auth server
+    test.describe("SSO login", () => {
+        test.skip(isDendrite, "does not yet support SSO");
+
+        test.use({
+            startHomeserverOpts: ({ oAuthServer }, use) =>
+                use({
+                    template: "default",
+                    oAuthServerPort: oAuthServer.port,
+                }),
+        });
+
+        test("logs in with SSO and lands on the home screen", async ({ page, homeserver }) => {
+            // If this test fails with a screen showing "Timeout connecting to remote server", it is most likely due to
+            // your firewall settings: Synapse is unable to reach the OIDC server.
+            //
+            // If you are using ufw, try something like:
+            //    sudo ufw allow in on docker0
+            //
+            await doTokenRegistration(page, homeserver);
+        });
+    });
+
+    test.describe("logout", () => {
+        test.use({ startHomeserverOpts: "consent" });
+
+        test("should go to login page on logout", async ({ page, user }) => {
+            await page.getByRole("button", { name: "User menu" }).click();
+            await expect(page.getByText(user.displayName, { exact: true })).toBeVisible();
+
+            // Allow the outstanding requests queue to settle before logging out
+            await page.waitForTimeout(2000);
+
+            await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Sign out" }).click();
+            await expect(page).toHaveURL(/\/#\/login$/);
+        });
+    });
+
+    test.describe("logout with logout_redirect_url", () => {
+        test.use({
+            startHomeserverOpts: "consent",
+            config: {
+                // We redirect to decoder-ring because it's a predictable page that isn't Element itself.
+                // We could use example.org, matrix.org, or something else, however this puts dependency of external
+                // infrastructure on our tests. In the same vein, we don't really want to figure out how to ship a
+                // `test-landing.html` page when running with an uncontrolled Element (via `yarn start`).
+                // Using the decoder-ring is just as fine, and we can search for strategic names.
+                logout_redirect_url: "/decoder-ring/",
+            },
+        });
+
+        test("should respect logout_redirect_url", async ({ page, user }) => {
+            await page.getByRole("button", { name: "User menu" }).click();
+            await expect(page.getByText(user.displayName, { exact: true })).toBeVisible();
+
+            // give a change for the outstanding requests queue to settle before logging out
+            await page.waitForTimeout(2000);
+
+            await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Sign out" }).click();
+            await expect(page).toHaveURL(/\/decoder-ring\/$/);
         });
     });
 });
