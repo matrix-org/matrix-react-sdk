@@ -39,7 +39,7 @@ test.describe("FilePanel", () => {
     });
 
     test.beforeEach(async ({ page, user, app }) => {
-        await app.createRoom({ name: ROOM_NAME });
+        await app.client.createRoom({ name: ROOM_NAME });
 
         // Open the file panel
         await viewRoomSummaryByName(page, app, ROOM_NAME);

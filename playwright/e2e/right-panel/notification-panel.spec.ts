@@ -25,7 +25,7 @@ test.describe("NotificationPanel", () => {
     });
 
     test.beforeEach(async ({ app, user }) => {
-        await app.createRoom({ name: ROOM_NAME });
+        await app.client.createRoom({ name: ROOM_NAME });
     });
 
     test("should render empty state", async ({ page, app }) => {

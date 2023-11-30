@@ -40,7 +40,7 @@ test.describe("Appearance user settings tab", () => {
 
     test("should support switching layouts", async ({ page, user, app }) => {
         // Create and view a room first
-        await app.createRoom({ name: "Test Room" });
+        await app.client.createRoom({ name: "Test Room" });
         await app.viewRoomByName("Test Room");
 
         await app.settings.openUserSettings("Appearance");
@@ -121,7 +121,7 @@ test.describe("Appearance user settings tab", () => {
 
     test("should support enabling compact group (modern) layout", async ({ page, app, user }) => {
         // Create and view a room first
-        await app.createRoom({ name: "Test Room" });
+        await app.client.createRoom({ name: "Test Room" });
         await app.viewRoomByName("Test Room");
 
         await app.settings.openUserSettings("Appearance");

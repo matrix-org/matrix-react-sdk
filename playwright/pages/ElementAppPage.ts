@@ -16,8 +16,8 @@ limitations under the License.
 
 import { type Locator, type Page, expect } from "@playwright/test";
 
-import type { IContent, ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import { Settings } from "./settings";
+import { Client } from "./client";
 import { Labs } from "./labs";
 
 export class ElementAppPage {
@@ -25,6 +25,7 @@ export class ElementAppPage {
 
     public labs = new Labs(this.page);
     public settings = new Settings(this.page);
+    public client: Client = new Client(this.page);
 
     /**
      * Open the top left user menu, returning a Locator to the resulting context menu.
@@ -47,35 +48,6 @@ export class ElementAppPage {
      */
     public async closeDialog(): Promise<void> {
         return this.settings.closeDialog();
-    }
-
-    /**
-     * Create a room with given options.
-     * @param options the options to apply when creating the room
-     * @return the ID of the newly created room
-     */
-    public async createRoom(options: ICreateRoomOpts): Promise<string> {
-        return this.page.evaluate<Promise<string>, ICreateRoomOpts>(async (options) => {
-            return window.mxMatrixClientPeg
-                .get()
-                .createRoom(options)
-                .then((res) => res.room_id);
-        }, options);
-    }
-
-    /**
-     * Create a space with given options.
-     * @param options the options to apply when creating the space
-     * @return the ID of the newly created space (room)
-     */
-    public async createSpace(options: ICreateRoomOpts): Promise<string> {
-        return this.createRoom({
-            ...options,
-            creation_content: {
-                ...options.creation_content,
-                type: "m.space",
-            },
-        });
     }
 
     /**
@@ -123,34 +95,6 @@ export class ElementAppPage {
         const composer = await this.getComposer(isRightPanel);
         await composer.getByRole("button", { name: "More options", exact: true }).click();
         return this.page.getByRole("menu");
-    }
-
-    /**
-     * @param {string} roomId
-     * @param {string} threadId
-     * @param {string} eventType
-     * @param {Object} content
-     */
-    public async sendEvent(
-        roomId: string,
-        threadId: string | null,
-        eventType: string,
-        content: IContent,
-    ): Promise<ISendEventResponse> {
-        return this.page.evaluate<
-            Promise<ISendEventResponse>,
-            {
-                roomId: string;
-                threadId: string | null;
-                eventType: string;
-                content: IContent;
-            }
-        >(
-            async ({ roomId, threadId, eventType, content }) => {
-                return window.mxMatrixClientPeg.get().sendEvent(roomId, threadId, eventType, content);
-            },
-            { roomId, threadId, eventType, content },
-        );
     }
 
     /**

@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Page } from "@playwright/test";
-
 import { test, expect } from "../../element-web-test";
 
 test.describe("Consent", () => {
@@ -31,7 +29,7 @@ test.describe("Consent", () => {
         app,
     }) => {
         // Attempt to create a room using the js-sdk which should return an error with `M_CONSENT_NOT_GIVEN`
-        await app.createRoom({}).catch(() => {});
+        await app.client.createRoom({}).catch(() => {});
         const newPagePromise = context.waitForEvent("page");
 
         const dialog = page.locator(".mx_QuestionDialog");
@@ -49,7 +47,7 @@ test.describe("Consent", () => {
         await expect(page.locator(".mx_MatrixChat")).toBeVisible();
 
         // attempt to perform the same action again and expect it to not fail
-        await app.createRoom({ name: "Test Room" });
+        await app.client.createRoom({ name: "Test Room" });
         await expect(page.getByText("Test Room")).toBeVisible();
     });
 });

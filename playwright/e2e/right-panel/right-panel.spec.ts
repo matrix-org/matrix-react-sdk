@@ -41,13 +41,13 @@ test.describe("RightPanel", () => {
     });
 
     test.beforeEach(async ({ app, user }) => {
-        await app.createRoom({ name: ROOM_NAME });
-        await app.createSpace({ name: SPACE_NAME });
+        await app.client.createRoom({ name: ROOM_NAME });
+        await app.client.createSpace({ name: SPACE_NAME });
     });
 
     test.describe("in rooms", () => {
         test("should handle long room address and long room name", async ({ page, app }) => {
-            await app.createRoom({ name: ROOM_NAME_LONG });
+            await app.client.createRoom({ name: ROOM_NAME_LONG });
             await viewRoomSummaryByName(page, app, ROOM_NAME_LONG);
 
             await app.settings.openRoomSettings();
