@@ -209,6 +209,7 @@ test.describe("FilePanel", () => {
 
             const link = imageBody.locator(".mx_MFileBody_download a");
             await expect(link).toBeVisible();
+            await page.waitForTimeout(1000); // XXX: stability in CI
 
             const downloadPromise = page.waitForEvent("download");
             // Click the anchor link (not the image itself)
