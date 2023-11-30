@@ -28,7 +28,6 @@ import {
     logOutOfElement,
     waitForVerificationRequest,
 } from "./utils";
-import { skipIfRustCrypto } from "../../support/util";
 
 interface CryptoTestContext extends Mocha.Context {
     homeserver: HomeserverInstance;
