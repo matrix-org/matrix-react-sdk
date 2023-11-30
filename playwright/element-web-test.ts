@@ -28,6 +28,7 @@ import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
 import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
+import { Bot, CreateBotOpts } from "./pages/bot";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -49,6 +50,10 @@ export type TestOptions = {
     cryptoBackend: "legacy" | "rust";
 };
 
+interface CredentialsWithDisplayName extends Credentials {
+    displayName: string;
+}
+
 export const test = base.extend<
     TestOptions & {
         axe: AxeBuilder;
@@ -59,7 +64,8 @@ export const test = base.extend<
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
         oAuthServer: { port: number };
-        user: Credentials;
+        credentials: CredentialsWithDisplayName;
+        user: CredentialsWithDisplayName;
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
@@ -67,6 +73,8 @@ export const test = base.extend<
         room?: { roomId: string };
         toasts: Toasts;
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
+        botCreateOpts: CreateBotOpts;
+        bot: Bot;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
@@ -117,7 +125,7 @@ export const test = base.extend<
     },
 
     displayName: undefined,
-    user: async ({ page, homeserver, displayName: testDisplayName }, use) => {
+    credentials: async ({ homeserver, displayName: testDisplayName }, use) => {
         const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
         const username = _.uniqueId("user_");
         const password = _.uniqueId("password_");
@@ -126,6 +134,12 @@ export const test = base.extend<
         const credentials = await homeserver.registerUser(username, password, displayName);
         console.log(`Registered test user ${username} with displayname ${displayName}`);
 
+        await use({
+            ...credentials,
+            displayName,
+        });
+    },
+    user: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
             ({ baseUrl, credentials }) => {
                 // Seed the localStorage with the required credentials
@@ -172,6 +186,13 @@ export const test = base.extend<
     },
     toasts: async ({ page }, use) => {
         await use(new Toasts(page));
+    },
+
+    botCreateOpts: {},
+    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+        const bot = new Bot(page, homeserver, botCreateOpts);
+        await bot.start();
+        await use(bot);
     },
 });
 
