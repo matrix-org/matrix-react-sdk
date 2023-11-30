@@ -14,12 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type MatrixClient } from "matrix-js-sdk/src/matrix";
+import type * as Matrix from "matrix-js-sdk/src/matrix";
+import { type SettingLevel } from "../src/settings/SettingLevel";
 
 declare global {
     interface Window {
         mxMatrixClientPeg: {
-            get(): MatrixClient;
+            get(): Matrix.MatrixClient;
         };
+        mxSettingsStore: {
+            setValue(settingName: string, roomId: string | null, level: SettingLevel, value: any): Promise<void>;
+        };
+        matrixcs: typeof Matrix;
     }
 }

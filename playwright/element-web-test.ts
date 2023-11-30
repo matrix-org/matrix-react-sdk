@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base, expect } from "@playwright/test";
+import { test as base, expect, Locator } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
 
@@ -26,7 +26,9 @@ import { Dendrite, Pinecone } from "./plugins/homeserver/dendrite";
 import { Instance } from "./plugins/mailhog";
 import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
+import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
+import { Bot, CreateBotOpts } from "./pages/bot";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -45,8 +47,12 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
 };
 
 export type TestOptions = {
-    crypto: "legacy" | "rust";
+    cryptoBackend: "legacy" | "rust";
 };
+
+interface CredentialsWithDisplayName extends Credentials {
+    displayName: string;
+}
 
 export const test = base.extend<
     TestOptions & {
@@ -58,21 +64,25 @@ export const test = base.extend<
         startHomeserverOpts: StartHomeserverOpts | string;
         homeserver: HomeserverInstance;
         oAuthServer: { port: number };
-        user: Credentials & {
-            displayName: string;
-        };
+        credentials: CredentialsWithDisplayName;
+        user: CredentialsWithDisplayName;
         displayName?: string;
         app: ElementAppPage;
         mailhog?: { api: mailhog.API; instance: Instance };
+        crypto: Crypto;
+        room?: { roomId: string };
         toasts: Toasts;
+        uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
+        botCreateOpts: CreateBotOpts;
+        bot: Bot;
     }
 >({
-    crypto: ["legacy", { option: true }],
+    cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, crypto }, use) => {
+    page: async ({ context, page, config, cryptoBackend }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
-            if (crypto === "rust") {
+            if (cryptoBackend === "rust") {
                 json["features"] = {
                     ...json["features"],
                     feature_rust_crypto: true,
@@ -115,7 +125,7 @@ export const test = base.extend<
     },
 
     displayName: undefined,
-    user: async ({ page, homeserver, displayName: testDisplayName }, use) => {
+    credentials: async ({ homeserver, displayName: testDisplayName }, use) => {
         const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
         const username = _.uniqueId("user_");
         const password = _.uniqueId("password_");
@@ -124,6 +134,12 @@ export const test = base.extend<
         const credentials = await homeserver.registerUser(username, password, displayName);
         console.log(`Registered test user ${username} with displayname ${displayName}`);
 
+        await use({
+            ...credentials,
+            displayName,
+        });
+    },
+    user: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
             ({ baseUrl, credentials }) => {
                 // Seed the localStorage with the required credentials
@@ -144,10 +160,7 @@ export const test = base.extend<
 
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
 
-        await use({
-            ...credentials,
-            displayName,
-        });
+        await use(credentials);
     },
 
     axe: async ({ page }, use) => {
@@ -166,10 +179,21 @@ export const test = base.extend<
         }),
 
     app: async ({ page }, use) => {
-        await use(new ElementAppPage(page));
+        const app = new ElementAppPage(page);
+        await use(app);
+    },
+    crypto: async ({ page, homeserver, request }, use) => {
+        await use(new Crypto(page, homeserver, request));
     },
     toasts: async ({ page }, use) => {
         await use(new Toasts(page));
+    },
+
+    botCreateOpts: {},
+    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+        const bot = new Bot(page, homeserver, botCreateOpts);
+        await bot.prepareClient(); // eagerly register the bot
+        await use(bot);
     },
 });
 
