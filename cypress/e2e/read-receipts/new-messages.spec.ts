@@ -377,9 +377,13 @@ describe("Read receipts", () => {
             it("Sending a new different-thread message after marking as read makes it unread", () => {
                 // Given 2 threads exist, and Thread2 has the latest message in it
                 goTo(room1);
-                receiveMessages(room2, ["Thread1", "Thread2", threadedOff("Thread1", "t1a")]);
-                assertUnread(room2, 3);
-                receiveMessages(room2, [threadedOff("Thread2", "t2a")]);
+                receiveMessages(room2, [
+                    "Thread1",
+                    "Thread2",
+                    threadedOff("Thread1", "t1a"),
+                    threadedOff("Thread2", "t2a"),
+                ]);
+                assertUnread(room2, 4);
 
                 // When I mark the room as read (making an unthreaded receipt for t2a)
                 markAsRead(room2);
