@@ -24,7 +24,7 @@ export default defineConfig<TestOptions>({
     use: {
         viewport: { width: 1280, height: 720 },
         ignoreHTTPSErrors: true,
-        video: "on-first-retry",
+        video: "retain-on-failure",
         baseURL,
     },
     webServer: {
@@ -35,15 +35,18 @@ export default defineConfig<TestOptions>({
     testDir: "playwright/e2e",
     outputDir: "playwright/test-results",
     workers: 1,
+    retries: process.env.CI ? 2 : 0,
     reporter: process.env.CI ? "blob" : [["html", { outputFolder: "playwright/html-report" }]],
     projects: [
         {
             name: "Legacy Crypto",
-            use: { crypto: "legacy" },
+            use: { cryptoBackend: "legacy" },
         },
         {
             name: "Rust Crypto",
-            use: { crypto: "rust" },
+            use: { cryptoBackend: "rust" },
         },
     ],
+    snapshotDir: "playwright/snapshots",
+    snapshotPathTemplate: "{snapshotDir}/{testFilePath}/{arg}-{platform}{ext}",
 });

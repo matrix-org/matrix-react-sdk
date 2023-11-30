@@ -285,13 +285,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_state_counters": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        displayName: _td("labs|state_counters"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-    },
     "feature_mjolnir": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
@@ -713,7 +706,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     },
     "useBundledEmojiFont": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        default: false,
+        default: true,
         displayName: _td("settings|appearance|bundled_emoji_font"),
         controller: new SystemFontController(),
     },
