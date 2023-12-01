@@ -18,7 +18,6 @@ import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
 import type { IContent, ICreateRoomOpts, ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import roomName from "../../src/components/views/elements/RoomName";
 
 export class Client {
     protected client: JSHandle<MatrixClient>;
