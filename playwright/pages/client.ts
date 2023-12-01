@@ -18,6 +18,7 @@ import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
 import type { IContent, ICreateRoomOpts, ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import roomName from "../../src/components/views/elements/RoomName";
 
 export class Client {
     protected client: JSHandle<MatrixClient>;
@@ -160,5 +161,18 @@ export class Client {
                 roomName,
             },
         );
+    }
+
+    /**
+     * Invites the given user to the given room.
+     * @param roomId the id of the room to invite to
+     * @param userId the id of the user to invite
+     */
+    public async inviteUser(roomId: string, userId: string): Promise<void> {
+        const client = await this.prepareClient();
+        await client.evaluate((client, { roomId, userId }) => client.invite(roomId, userId), {
+            roomId,
+            userId,
+        });
     }
 }
