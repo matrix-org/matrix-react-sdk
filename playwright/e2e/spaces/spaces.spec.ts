@@ -67,7 +67,7 @@ test.describe("Spaces", () => {
         const contextMenu = await openSpaceCreateMenu(page);
         await expect(contextMenu).toMatchScreenshot("space-create-menu.png");
 
-        await contextMenu.getByRole("button", { name: "Public" }).click();
+        await contextMenu.getByRole("button", { name: /Public/ }).click();
 
         await contextMenu
             .locator('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
@@ -121,9 +121,9 @@ test.describe("Spaces", () => {
         await page.getByRole("button", { name: "Skip for now" }).click();
 
         // Assert rooms exist in the room list
-        await expect(page.getByRole("treeitem", { name: "General" })).toBeVisible();
-        await expect(page.getByRole("treeitem", { name: "Random" })).toBeVisible();
-        await expect(page.getByRole("treeitem", { name: "Projects" })).toBeVisible();
+        await expect(page.getByRole("treeitem", { name: "General", exact: true })).toBeVisible();
+        await expect(page.getByRole("treeitem", { name: "Random", exact: true })).toBeVisible();
+        await expect(page.getByRole("treeitem", { name: "Projects", exact: true })).toBeVisible();
 
         // Assert rooms exist in the space explorer
         await expect(
