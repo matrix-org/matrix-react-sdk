@@ -210,18 +210,19 @@ test.describe("FilePanel", () => {
             const link = imageBody.locator(".mx_MFileBody_download a");
 
             const newPagePromise = context.waitForEvent("page");
-            // const downloadPromise = page.waitForEvent("download");
+            const downloadPromise = page.waitForEvent("download");
 
             // Click the anchor link (not the image itself)
             await link.click();
 
             const newPage = await newPagePromise;
             // XXX: Clicking the link opens the image in a new tab on some browsers rather than downloading, so handle that case
-            await expect(newPage).toHaveURL("*/_matrix/media/*/download/*");
-            // .catch(async () => {
-            //     const download = await downloadPromise;
-            //     expect(download.suggestedFilename()).toBe("riot.png");
-            // });
+            await expect(newPage)
+                .toHaveURL(/.+\/_matrix\/media\/\w+\/download\/localhost\/\w+/)
+                .catch(async () => {
+                    const download = await downloadPromise;
+                    expect(download.suggestedFilename()).toBe("riot.png");
+                });
         });
     });
 });
