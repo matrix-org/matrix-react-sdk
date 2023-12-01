@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { EventType, MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { EventType } from "matrix-js-sdk/src/matrix";
 import { test, expect } from "../../element-web-test";
 import { Bot } from "../../pages/bot";
 
