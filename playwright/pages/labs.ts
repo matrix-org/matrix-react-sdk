@@ -25,8 +25,14 @@ export class Labs {
      * @param feature labsFeature to enable (e.g. "feature_spotlight")
      */
     public async enableLabsFeature(feature: string): Promise<void> {
-        await this.page.evaluate((feature) => {
-            window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
-        }, feature);
+        if (this.page.url() === "about:blank") {
+            await this.page.addInitScript((feature) => {
+                window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
+            }, feature);
+        } else {
+            await this.page.evaluate((feature) => {
+                window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
+            }, feature);
+        }
     }
 }
