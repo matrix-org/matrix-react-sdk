@@ -216,13 +216,13 @@ test.describe("FilePanel", () => {
             await link.click();
 
             const newPage = await newPagePromise;
-            try {
-                const download = await downloadPromise;
-                expect(download.suggestedFilename()).toBe("riot.png");
-            } catch {
-                // XXX: Clicking the link opens the image in a new tab on some browsers rather than downloading, so handle that case
-                await expect(newPage).toHaveURL("*/_matrix/media/*/download/*");
-            }
+            // XXX: Clicking the link opens the image in a new tab on some browsers rather than downloading, so handle that case
+            await expect(newPage)
+                .toHaveURL("*/_matrix/media/*/download/*")
+                .catch(async () => {
+                    const download = await downloadPromise;
+                    expect(download.suggestedFilename()).toBe("riot.png");
+                });
         });
     });
 });
