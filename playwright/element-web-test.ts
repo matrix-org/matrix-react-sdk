@@ -29,6 +29,7 @@ import { OAuthServer } from "./plugins/oauth_server";
 import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
 import { Bot, CreateBotOpts } from "./pages/bot";
+import { ProxyInstance, SlidingSyncProxy } from "./plugins/sliding-sync-proxy";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -75,22 +76,26 @@ export const test = base.extend<
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
         botCreateOpts: CreateBotOpts;
         bot: Bot;
+        slidingSyncProxy: ProxyInstance;
+        usesSlidingSyncProxy: boolean;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, cryptoBackend }, use) => {
-        await context.route(`http://localhost:8080/config.json*`, async (route) => {
-            const json = { ...CONFIG_JSON, ...config };
-            if (cryptoBackend === "rust") {
-                json["features"] = {
-                    ...json["features"],
-                    feature_rust_crypto: true,
-                };
-            }
-            await route.fulfill({ json });
-        });
-
+    usesSlidingSyncProxy: false,
+    page: async ({ context, usesSlidingSyncProxy, page, config, cryptoBackend }, use) => {
+        if (!usesSlidingSyncProxy) {
+            await context.route(`http://localhost:8080/config.json*`, async (route) => {
+                const json = { ...CONFIG_JSON, ...config };
+                if (cryptoBackend === "rust") {
+                    json["features"] = {
+                        ...json["features"],
+                        feature_rust_crypto: true,
+                    };
+                }
+                await route.fulfill({ json });
+            });
+        }
         await use(page);
     },
 
@@ -194,6 +199,41 @@ export const test = base.extend<
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
+    },
+
+    slidingSyncProxy: async ({ usesSlidingSyncProxy, cryptoBackend, context, config, homeserver }, use) => {
+        if (!usesSlidingSyncProxy) {
+            throw new Error("Use test.use({ usesSlidingSyncProxy: true }) before using the sliding-sync-proxy!");
+        }
+        const proxy = new SlidingSyncProxy(homeserver.config.dockerUrl);
+        const proxyInstance = await proxy.start();
+        /**
+         * When the sliding sync proxy is used, we handle the route here rather than in the page
+         * fixture because we need to add the proxy address to the config.
+         *
+         * The proper way to mutate the config for a test is by overriding the config fixture
+         * via test.use(...); that can't be done here because the sliding sync proxy is only
+         * available within beforeAll and by that point it's too late to override the fixture.
+         */
+        await context.route(`http://localhost:8080/config.json*`, async (route) => {
+            const json = {
+                ...CONFIG_JSON,
+                ...config,
+                setting_defaults: {
+                    feature_sliding_sync: true,
+                    feature_sliding_sync_proxy_url: `http://localhost:${proxyInstance.port}`,
+                },
+            };
+            if (cryptoBackend === "rust") {
+                json["features"] = {
+                    ...json["features"],
+                    feature_rust_crypto: true,
+                };
+            }
+            await route.fulfill({ json });
+        });
+        await use(proxyInstance);
+        await proxy.stop();
     },
 });
 
