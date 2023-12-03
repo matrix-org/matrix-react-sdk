@@ -28,5 +28,7 @@ export class Labs {
         await this.page.evaluate((feature) => {
             window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
         }, feature);
+        // Reload page so that this applies
+        await this.page.reload();
     }
 }
