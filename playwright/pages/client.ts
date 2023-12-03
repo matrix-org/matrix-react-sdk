@@ -74,7 +74,7 @@ export class Client {
     }
 
     /**
-     * Send a message as a bot into a room
+     * Send a message into a room
      * @param roomId ID of the room to send the message into
      * @param content the event content to send
      */
@@ -89,6 +89,15 @@ export class Client {
                 content,
             },
         );
+    }
+
+    /**
+     * Send a text message into a room
+     * @param roomId ID of the room to send the message into
+     * @param content the event content to send
+     */
+    public async sendTextMessage(roomId: string, message: string): Promise<ISendEventResponse> {
+        return await this.sendMessage(roomId, { msgtype: "m.text", body: message });
     }
 
     /**
