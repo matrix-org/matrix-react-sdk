@@ -18,8 +18,10 @@ import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
 import type { IContent, ICreateRoomOpts, ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { Network } from "./network";
 
 export class Client {
+    public network: Network;
     protected client: JSHandle<MatrixClient>;
 
     protected getClientHandle(): Promise<JSHandle<MatrixClient>> {
@@ -37,6 +39,7 @@ export class Client {
         page.on("framenavigated", async () => {
             this.client = null;
         });
+        this.network = new Network(page, this);
     }
 
     public evaluate<R, Arg, O extends MatrixClient = MatrixClient>(
