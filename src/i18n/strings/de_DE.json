@@ -226,7 +226,8 @@
         "msisdn_field_required_invalid": "Telefonnummer eingeben",
         "no_hs_url_provided": "Keine Heim-Server-URL angegeben",
         "oidc": {
-            "error_title": "Wir konnten dich nicht anmelden"
+            "error_title": "Wir konnten dich nicht anmelden",
+            "missing_or_invalid_stored_state": "Wir haben deinen Browser gebeten, sich zu merken, bei welchem Heim-Server du dich anmeldest, aber dein Browser hat dies leider vergessen. Gehe zur Anmeldeseite und versuche es erneut."
         },
         "password_field_keep_going_prompt": "Fortfahren …",
         "password_field_label": "Passwort eingeben",
@@ -312,7 +313,7 @@
         "set_email_prompt": "Möchtest du eine E-Mail-Adresse setzen?",
         "sign_in_description": "Nutze dein Konto, um fortzufahren.",
         "sign_in_instead": "Stattdessen anmelden",
-        "sign_in_instead_prompt": "Stattdessen anmelden",
+        "sign_in_instead_prompt": "Konto schon vorhanden? <a>Hier anmelden</a>",
         "sign_in_or_register": "Anmelden oder Konto erstellen",
         "sign_in_or_register_description": "Benutze dein Konto oder erstelle ein neues, um fortzufahren.",
         "sign_in_prompt": "Du hast bereits ein Konto? <a>Melde dich an</a>",
@@ -412,7 +413,6 @@
         "spaceinvaders_message": "sendet Space Invaders"
     },
     "common": {
-        "about": "Über",
         "access_token": "Zugriffstoken",
         "accessibility": "Barrierefreiheit",
         "advanced": "Erweitert",
@@ -441,7 +441,7 @@
         "edited": "bearbeitet",
         "email_address": "E-Mail-Adresse",
         "emoji": "Emojis",
-        "encrypted": "Verschlüsseln",
+        "encrypted": "Verschlüsselt",
         "encryption_enabled": "Verschlüsselung aktiviert",
         "error": "Fehler",
         "faq": "Häufige Fragen",
@@ -1394,7 +1394,6 @@
         "sliding_sync_server_no_support": "Dein Server unterstützt dies nicht nativ",
         "sliding_sync_server_specify_proxy": "Dein Server unterstützt dies nicht nativ, du musst einen Proxy angeben",
         "sliding_sync_server_support": "Dein Server unterstützt dies nativ",
-        "state_counters": "Einfache Zähler in Raumkopfzeile anzeigen",
         "under_active_development": "In aktiver Entwicklung.",
         "video_rooms": "Videoräume",
         "video_rooms_a_new_way_to_chat": "Eine neue Möglichkeit in %(brand)s über Audio und Video zu kommunizieren.",
@@ -1785,8 +1784,6 @@
         "room_summary_card": {
             "title": "Raum-Info"
         },
-        "settings_button": "Raumeinstellungen",
-        "share_button": "Raum teilen",
         "thread_list": {
             "context_menu_label": "Thread-Optionen"
         },
@@ -1858,6 +1855,10 @@
             "close_call_button": "Anruf schließen",
             "forget_room_button": "Raum entfernen",
             "hide_widgets_button": "Widgets verstecken",
+            "n_people_asking_to_join": {
+                "one": "Möchte beitreten",
+                "other": "%(count)s Personen möchten beitreten"
+            },
             "room_is_public": "Dieser Raum ist öffentlich",
             "show_widgets_button": "Widgets anzeigen",
             "video_call_button_ec": "Videoanruf (%(brand)s)",
@@ -1915,6 +1916,8 @@
         "kicked_by": "Du wurdest von %(memberName)s entfernt",
         "kicked_from_room_by": "%(memberName)s hat dich aus %(roomName)s entfernt",
         "knock_cancel_action": "Anfrage abbrechen",
+        "knock_denied_subtitle": "Da deine Beitrittsanfrage abgelehnt wurde, bitten wir um Geduld, bis du eine Einladung vom Administrator oder Moderator erhältst.",
+        "knock_denied_title": "Deine Beitrittsanfrage wurde abgelehnt",
         "knock_message_field_placeholder": "Nachricht (optional)",
         "knock_prompt": "Beitrittsanfrage stellen?",
         "knock_prompt_name": "Beitrittsanfrage für %(roomName)s stellen?",
@@ -2237,6 +2240,8 @@
             },
             "join_rule_upgrade_upgrading_room": "Raum wird aktualisiert",
             "public_without_alias_warning": "Um den Raum zu verlinken, füge bitte eine Adresse hinzu.",
+            "publish_room": "Diesen Raum im Raumverzeichnis veröffentlichen.",
+            "publish_space": "Diesen Space im Raumerzeichnis veröffentlichen.",
             "strict_encryption": "Niemals verschlüsselte Nachrichten von dieser Sitzung zu unverifizierten Sitzungen in diesem Raum senden",
             "title": "Sicherheit"
         },
@@ -3161,20 +3166,8 @@
             "sent": "%(senderDisplayName)s hat ein Bild gesendet.",
             "show_image": "Bild anzeigen"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s hat die Verifizierung abgebrochen",
-            "you_cancelled": "Du hast die Verifizierung von %(name)s abgebrochen"
-        },
-        "m.key.verification.done": "Du hast %(name)s verifiziert",
         "m.key.verification.request": {
-            "declining": "Ablehnen …",
-            "user_accepted": "%(name)s hat akzeptiert",
-            "user_cancelled": "%(name)s hat abgebrochen",
-            "user_declined": "%(name)s hat abgelehnt",
             "user_wants_to_verify": "%(name)s will eine Verifizierung",
-            "you_accepted": "Du hast angenommen",
-            "you_cancelled": "Du brachst ab",
-            "you_declined": "Du hast abgelehnt",
             "you_started": "Du hast eine Verifizierungsanfrage gesendet"
         },
         "m.location": {

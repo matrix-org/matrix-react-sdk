@@ -1056,7 +1056,8 @@
         "unknown_error_code": "unknown error code",
         "update_power_level": "Failed to change power level"
     },
-    "error_app_open_in_another_tab": "%(brand)s has been opened in another tab.",
+    "error_app_open_in_another_tab": "Switch to the other tab to connect to %(brand)s. This tab can now be closed.",
+    "error_app_open_in_another_tab_title": "%(brand)s is connected in another tab",
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
     "error_database_closed_description": "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
     "error_database_closed_title": "Database unexpectedly closed",
@@ -1449,7 +1450,6 @@
         "sliding_sync_server_no_support": "Your server lacks native support",
         "sliding_sync_server_specify_proxy": "Your server lacks native support, you must specify a proxy",
         "sliding_sync_server_support": "Your server has native support",
-        "state_counters": "Render simple counters in room header",
         "under_active_development": "Under active development.",
         "unrealiable_e2e": "Unreliable in encrypted rooms",
         "video_rooms": "Video rooms",
@@ -1933,6 +1933,7 @@
             "show_widgets_button": "Show Widgets",
             "video_call_button_ec": "Video call (%(brand)s)",
             "video_call_button_jitsi": "Video call (Jitsi)",
+            "video_call_button_legacy": "Legacy video call",
             "video_call_ec_change_layout": "Change layout",
             "video_call_ec_layout_freedom": "Freedom",
             "video_call_ec_layout_spotlight": "Spotlight",
@@ -2398,6 +2399,7 @@
         "all_rooms_home_description": "All rooms you're in will appear in Home.",
         "always_show_message_timestamps": "Always show message timestamps",
         "appearance": {
+            "bundled_emoji_font": "Use bundled emoji font",
             "custom_font": "Use a system font",
             "custom_font_description": "Set the name of a font installed on your system & %(brand)s will attempt to use it.",
             "custom_font_name": "System font name",
@@ -2909,7 +2911,7 @@
         "devtools": "Opens the Developer Tools dialog",
         "discardsession": "Forces the current outbound group session in an encrypted room to be discarded",
         "error_invalid_rendering_type": "Command error: Unable to find rendering type (%(renderingType)s)",
-        "error_invalid_room": "Command failed: Unable to find room (%(roomId)s",
+        "error_invalid_room": "Command failed: Unable to find room (%(roomId)s)",
         "error_invalid_runfn": "Command error: Unable to handle slash command.",
         "error_invalid_user_in_room": "Could not find user in room",
         "help": "Displays list of commands with usages and descriptions",
@@ -3259,20 +3261,8 @@
             "sent": "%(senderDisplayName)s sent an image.",
             "show_image": "Show image"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s cancelled verifying",
-            "you_cancelled": "You cancelled verifying %(name)s"
-        },
-        "m.key.verification.done": "You verified %(name)s",
         "m.key.verification.request": {
-            "declining": "Declining…",
-            "user_accepted": "%(name)s accepted",
-            "user_cancelled": "%(name)s cancelled",
-            "user_declined": "%(name)s declined",
             "user_wants_to_verify": "%(name)s wants to verify",
-            "you_accepted": "You accepted",
-            "you_cancelled": "You cancelled",
-            "you_declined": "You declined",
             "you_started": "You sent a verification request"
         },
         "m.location": {

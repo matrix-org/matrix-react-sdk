@@ -205,7 +205,8 @@
         "msisdn_field_required_invalid": "ໃສ່ເບີໂທລະສັບ",
         "no_hs_url_provided": "ບໍ່ມີການສະໜອງ URL homeserver",
         "oidc": {
-            "error_title": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້"
+            "error_title": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້",
+            "missing_or_invalid_stored_state": "ພວກເຮົາໃຫ້ບຣາວເຊີຈື່ homeserver ທີ່ທ່ານໃຊ້ ເຂົ້າສູ່ລະບົບ, ແຕ່ເສຍດາຍບຣາວເຊີຂອງທ່ານລືມມັນ. ກັບໄປທີ່ໜ້າເຂົ້າສູ່ລະບົບແລ້ວ ລອງໃໝ່ອີກຄັ້ງ."
         },
         "password_field_label": "ໃສ່ລະຫັດຜ່ານ",
         "password_field_strong_label": "ດີ, ລະຫັດຜ່ານທີ່ເຂັ້ມແຂງ!",
@@ -349,7 +350,6 @@
         "spaceinvaders_message": "ສົ່ງຜູ້ຮຸກຮານພື້ນທີ່"
     },
     "common": {
-        "about": "ກ່ຽວກັບ",
         "access_token": "ເຂົ້າເຖິງToken",
         "accessibility": "ການເຂົ້າເຖິງ",
         "advanced": "ຂັ້ນສູງ",
@@ -1195,8 +1195,7 @@
         "latex_maths": "ສະແດງຜົນຄະນິດສາດ LaTeX ໃນຂໍ້ຄວາມ",
         "leave_beta": "ອອກຈາກເບຕ້າ",
         "msc3531_hide_messages_pending_moderation": "ໃຫ້ຜູ້ຄວບຄຸມການເຊື່ອງຂໍ້ຄວາມທີ່ລໍຖ້າການກັ່ນຕອງ.",
-        "pinning": "ການປັກໝຸດຂໍ້ຄວາມ",
-        "state_counters": "ສະເເດງຕົວຢ່າງກົງກັນຂ້າມໃຫ້ຫົວຂໍ້ຂອງຫ້ອງ"
+        "pinning": "ການປັກໝຸດຂໍ້ຄວາມ"
     },
     "labs_mjolnir": {
         "advanced_warning": "⚠ ການຕັ້ງຄ່າເຫຼົ່ານີ້ແມ່ນຫມາຍເຖິງຜູ້ໃຊ້ຂັ້ນສູງ.",
@@ -1484,8 +1483,6 @@
                 "other": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ"
             }
         },
-        "settings_button": "ການຕັ້ງຄ່າຫ້ອງ",
-        "share_button": "ແບ່ງປັນຫ້ອງ",
         "thread_list": {
             "context_menu_label": "ຕົວເລືອກກະທູ້"
         },
@@ -2593,19 +2590,8 @@
             "sent": "%(senderDisplayName)s ສົ່ງຮູບ.",
             "show_image": "ສະແດງຮູບພາບ"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "ຍົກເລີກການຢັ້ງຢືນ %(name)s",
-            "you_cancelled": "ທ່ານໄດ້ຍົກເລີກການຢືນຢັນ %(name)s"
-        },
-        "m.key.verification.done": "ທ່ານໄດ້ຢັ້ງຢືນ %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "ຍອມຮັບ %(name)s",
-            "user_cancelled": "%(name)s ຖືກຍົກເລີກ",
-            "user_declined": "%(name)s ປະຕິເສດ",
             "user_wants_to_verify": "%(name)s ຕ້ອງການກວດສອບ",
-            "you_accepted": "ທ່ານຍອມຮັບ",
-            "you_cancelled": "ທ່ານໄດ້ຍົກເລີກ",
-            "you_declined": "ທ່ານປະຕິເສດ",
             "you_started": "ທ່ານໄດ້ສົ່ງຄໍາຮ້ອງຂໍການຢັ້ງຢືນ"
         },
         "m.location": {

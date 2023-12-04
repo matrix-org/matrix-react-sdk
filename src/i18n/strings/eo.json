@@ -196,7 +196,8 @@
         "msisdn_field_required_invalid": "Enigu telefonnumeron",
         "no_hs_url_provided": "Neniu hejmservila URL donita",
         "oidc": {
-            "error_title": "Ni ne povis salutigi vin"
+            "error_title": "Ni ne povis salutigi vin",
+            "missing_or_invalid_stored_state": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu."
         },
         "password_field_label": "Enigu pasvorton",
         "password_field_strong_label": "Bona, forta pasvorto!",
@@ -329,7 +330,6 @@
         "spaceinvaders_message": "sendas imiton de ludo « Space Invaders »"
     },
     "common": {
-        "about": "Prio",
         "access_token": "Alirpeco",
         "accessibility": "Alirebleco",
         "advanced": "Altnivela",
@@ -1067,7 +1067,6 @@
         "mjolnir": "Novaj manieroj ignori personojn",
         "pinning": "Fiksado de mesaĝoj",
         "report_to_moderators": "Raportu al moderigaĵoj",
-        "state_counters": "Bildigi simplajn kalkulilojn en la ĉapo de la fenestro",
         "video_rooms": "Videoĉambroj",
         "video_rooms_a_new_way_to_chat": "Nova maniero babili per voĉo kaj video en %(brand)s.",
         "video_rooms_always_on_voip_channels": "Videoĉambroj estas ĉiam ŝaltitaj VoIP-kanaloj enkonstruitaj en ĉambro en %(brand)s.",
@@ -1308,8 +1307,6 @@
             },
             "title": "Fiksitaj mesaĝoj"
         },
-        "settings_button": "Agordoj de ĉambro",
-        "share_button": "Kunhavigi ĉambron",
         "widgets_section": "Fenestraĵoj"
     },
     "room": {
@@ -2315,19 +2312,8 @@
             "sent": "%(senderDisplayName)s sendis bildon.",
             "show_image": "Montri bildon"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s nuligis kontrolon",
-            "you_cancelled": "Vi nuligis kontrolon de %(name)s"
-        },
-        "m.key.verification.done": "Vi kontrolis %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s akceptis",
-            "user_cancelled": "%(name)s nuligis",
-            "user_declined": "%(name)s rifuzis",
             "user_wants_to_verify": "%(name)s volas kontroli",
-            "you_accepted": "Vi akceptis",
-            "you_cancelled": "Vi nuligis",
-            "you_declined": "Vi rifuzis",
             "you_started": "Vi sendis peton de kontrolo"
         },
         "m.location": {

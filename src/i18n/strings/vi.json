@@ -40,6 +40,7 @@
         "create_a_room": "Tạo phòng",
         "decline": "Từ chối",
         "delete": "Xoá",
+        "deny": "Từ chối",
         "disable": "Tắt",
         "disconnect": "Ngắt kết nối",
         "dismiss": "Bỏ qua",
@@ -220,7 +221,8 @@
         "msisdn_field_required_invalid": "Nhập số điện thoại",
         "no_hs_url_provided": "Không có đường dẫn server",
         "oidc": {
-            "error_title": "Chúng tôi không thể đăng nhập cho bạn"
+            "error_title": "Chúng tôi không thể đăng nhập cho bạn",
+            "missing_or_invalid_stored_state": "Chúng tôi đã yêu cầu trình duyệt ghi nhớ máy chủ bạn đã sử dụng để bạn có thể đăng nhập lại, nhưng có vẻ như trình duyệt của bạn đã quên máy chủ đó :( Truy cập trang đăng nhập và thử lại."
         },
         "password_field_label": "Nhập mật khẩu",
         "password_field_strong_label": "Mật khẩu mạnh, tốt đó!",
@@ -369,7 +371,6 @@
         "spaceinvaders_message": "gửi những kẻ xâm lược space"
     },
     "common": {
-        "about": "Giới thiệu",
         "access_token": "Token truy cập",
         "advanced": "Nâng cao",
         "all_rooms": "Tất cả các phòng",
@@ -378,11 +379,13 @@
             "one": "và một cái khác…",
             "other": "và %(count)s khác…"
         },
+        "android": "Android",
         "appearance": "Giao diện",
         "application": "Ứng dụng",
         "are_you_sure": "Bạn có chắc không?",
         "attachment": "Tập tin đính kèm",
         "authentication": "Đăng nhập",
+        "beta": "Thử nghiệm",
         "camera": "Máy ảnh",
         "cameras": "Máy quay",
         "copied": "Đã sao chép!",
@@ -414,6 +417,7 @@
         "identity_server": "Máy chủ định danh",
         "image": "Hình ảnh",
         "integration_manager": "Quản lý tích hợp",
+        "ios": "iOS",
         "joined": "Đã tham gia",
         "labs": "Chức năng thí nghiệm",
         "legal": "Pháp lý",
@@ -421,6 +425,7 @@
         "loading": "Đang tải…",
         "location": "Vị trí",
         "low_priority": "Ưu tiên thấp",
+        "matrix": "Matrix",
         "message": "Tin nhắn",
         "message_layout": "Bố cục tin nhắn",
         "microphone": "Micrô",
@@ -1295,7 +1300,6 @@
         "sliding_sync_server_no_support": "Máy chủ của bạn không hoàn toàn hỗ trợ",
         "sliding_sync_server_specify_proxy": "Máy chủ của bạn không hỗ trợ, bạn cần chỉ định máy chủ ủy nhiệm (proxy)",
         "sliding_sync_server_support": "Máy chủ của bạn hoàn toàn hỗ trợ",
-        "state_counters": "Hiển thị số đếm giản đơn ở tiêu đề phòng",
         "under_active_development": "Đang được phát triển tích cực.",
         "video_rooms": "Phòng video",
         "video_rooms_a_new_way_to_chat": "Một cách mới để trò chuyện bằng thoại và video trong %(brand)s.",
@@ -1625,8 +1629,6 @@
         "room_summary_card": {
             "title": "Thông tin phòng"
         },
-        "settings_button": "Cài đặt phòng",
-        "share_button": "Phòng chia sẻ",
         "thread_list": {
             "context_menu_label": "Tùy chọn theo chủ đề"
         },
@@ -2923,20 +2925,8 @@
             "sent": "%(senderDisplayName)s đã gửi một hình.",
             "show_image": "Hiển thị hình ảnh"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s đã hủy xác thực",
-            "you_cancelled": "Bạn đã hủy xác thực %(name)s"
-        },
-        "m.key.verification.done": "Bạn đã xác thực %(name)s",
         "m.key.verification.request": {
-            "declining": "Đang từ chối…",
-            "user_accepted": "%(name)s được chấp nhận",
-            "user_cancelled": "%(name)s đã bị hủy",
-            "user_declined": "%(name)s đã từ chối",
             "user_wants_to_verify": "%(name)s muốn xác thực",
-            "you_accepted": "Bạn đã chấp nhận",
-            "you_cancelled": "Bạn đã hủy bỏ",
-            "you_declined": "Bạn đã từ chối",
             "you_started": "Bạn đã gửi một yêu cầu xác thực"
         },
         "m.location": {

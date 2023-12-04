@@ -982,4 +982,42 @@ describe("ElementCall", () => {
             call.off(CallEvent.Destroy, onDestroy);
         });
     });
+    describe("create call", () => {
+        function setRoomMembers(memberIds: string[]) {
+            jest.spyOn(room, "getJoinedMembers").mockReturnValue(memberIds.map((id) => ({ userId: id } as RoomMember)));
+        }
+        beforeEach(async () => {
+            setRoomMembers(["@user:example.com", "@user2:example.com", "@user4:example.com"]);
+        });
+        it("sends notify event on create in a room with more than two members", async () => {
+            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
+            await ElementCall.create(room);
+            expect(sendEventSpy).toHaveBeenCalledWith("!1:example.org", "org.matrix.msc4075.call.notify", {
+                "application": "m.call",
+                "call_id": "",
+                "m.mentions": { room: true, user_ids: [] },
+                "notify_type": "notify",
+            });
+        });
+        it("sends ring on create in a DM (two participants) room", async () => {
+            setRoomMembers(["@user:example.com", "@user2:example.com"]);
+
+            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
+            await ElementCall.create(room);
+            expect(sendEventSpy).toHaveBeenCalledWith("!1:example.org", "org.matrix.msc4075.call.notify", {
+                "application": "m.call",
+                "call_id": "",
+                "m.mentions": { room: true, user_ids: [] },
+                "notify_type": "ring",
+            });
+        });
+        it("don't sent notify event if there are existing room call members", async () => {
+            jest.spyOn(MatrixRTCSession, "callMembershipsForRoom").mockReturnValue([
+                { application: "m.call", callId: "" } as unknown as CallMembership,
+            ]);
+            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
+            await ElementCall.create(room);
+            expect(sendEventSpy).not.toHaveBeenCalled();
+        });
+    });
 });

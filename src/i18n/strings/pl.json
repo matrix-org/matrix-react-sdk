@@ -418,7 +418,6 @@
         "spaceinvaders_message": "wysyła kosmicznych najeźdźców"
     },
     "common": {
-        "about": "Informacje",
         "access_token": "Token dostępu",
         "accessibility": "Ułatwienia dostępu",
         "advanced": "Zaawansowane",
@@ -485,7 +484,8 @@
         "mute": "Wycisz",
         "n_members": {
             "one": "%(count)s członek",
-            "other": "%(count)s członkowie"
+            "few": "%(count)s członki",
+            "many": "%(count)s członków"
         },
         "n_participants": {
             "one": "1 uczestnik",
@@ -1057,7 +1057,7 @@
         "unknown_error_code": "nieznany kod błędu",
         "update_power_level": "Nie udało się zmienić poziomu mocy"
     },
-    "error_app_open_in_another_tab": "%(brand)s został otwarty w innej karcie.",
+    "error_app_open_in_another_tab": "Zmień kartę aby połączyć się do %(brand)s. Ta karta może zostać zamknięta.",
     "error_app_opened_in_another_window": "%(brand)s jest już otwarty w innym oknie. Kliknij \"%(label)s\", aby otworzyć tutaj %(brand)s i odłączyć drugie okno.",
     "error_database_closed_description": "Może być to spowodowane przez aplikacje otwartą w wielu kartach lub po wyczyszczeniu danych przeglądarki.",
     "error_database_closed_title": "Baza danych została nieoczekiwanie zamknięta",
@@ -1395,9 +1395,10 @@
         "dehydration": "Szyfrowane wiadomości offline korzystające z urządzeń odwodnionych",
         "dynamic_room_predecessors": "Dynamiczne poprzedniki pokoju",
         "dynamic_room_predecessors_description": "Włącz MSC3946 (dla opóźnionych archiwów pokoju)",
-        "element_call_video_rooms": "Pokoje rozmów wideo Element",
+        "element_call_video_rooms": "Pokoje rozmów wideo Element Call",
         "experimental_description": "Chcesz poeksperymentować? Wypróbuj nasze najnowsze pomysły w trakcie rozwoju. Przedstawione funkcje nie zostały w pełni ukończone; mogą być niestabilne; mogą się zmienić lub zostać kompletnie porzucone. <a>Dowiedz się więcej</a>.",
         "experimental_section": "Wczesny podgląd",
+        "feature_disable_call_per_sender_encryption": "Wyłącz szyfrowanie nadawcy dla Element Call",
         "feature_wysiwyg_composer_description": "Użyj bogatego edytora tekstu zamiast edytora Markdown podczas tworzenia wiadomości.",
         "group_calls": "Nowe wrażenia rozmów grupowych",
         "group_developer": "Deweloper",
@@ -1449,7 +1450,6 @@
         "sliding_sync_server_no_support": "Twój serwer nie posiada wsparcia natywnego",
         "sliding_sync_server_specify_proxy": "Twój serwer nie posiada wsparcia natywnego, musisz podać serwer proxy",
         "sliding_sync_server_support": "Twój serwer posiada wsparcie natywne",
-        "state_counters": "Wyświetl proste liczniki w nagłówku pokoju",
         "under_active_development": "W trakcie aktywnego rozwoju.",
         "unrealiable_e2e": "Problematyczny w pokojach szyfrowanych",
         "video_rooms": "Pokoje wideo",
@@ -1740,7 +1740,8 @@
         "online": "Dostępny",
         "online_for": "Online przez %(duration)s",
         "unknown": "Nieznany",
-        "unknown_for": "Nieznany przez %(duration)s"
+        "unknown_for": "Nieznany przez %(duration)s",
+        "unreachable": "Serwer użytkownika jest nieosiągalny"
     },
     "quick_settings": {
         "all_settings": "Wszystkie ustawienia",
@@ -1852,8 +1853,6 @@
         "room_summary_card": {
             "title": "Informacje pokoju"
         },
-        "settings_button": "Ustawienia pokoju",
-        "share_button": "Udostępnij pokój",
         "thread_list": {
             "context_menu_label": "Opcje wątków"
         },
@@ -1935,6 +1934,7 @@
             "show_widgets_button": "Pokaż widżety",
             "video_call_button_ec": "Rozmowa wideo (%(brand)s)",
             "video_call_button_jitsi": "Rozmowa wideo (Jitsi)",
+            "video_call_button_legacy": "Stary tryb połączenia video",
             "video_call_ec_change_layout": "Zmień układ",
             "video_call_ec_layout_freedom": "Wolność",
             "video_call_ec_layout_spotlight": "Centrum uwagi",
@@ -2400,6 +2400,7 @@
         "all_rooms_home_description": "Wszystkie pokoje w których jesteś zostaną pokazane na ekranie głównym.",
         "always_show_message_timestamps": "Zawsze pokazuj znaczniki czasu wiadomości",
         "appearance": {
+            "bundled_emoji_font": "Użyj wbudowanej czcionki emoji",
             "custom_font": "Użyj czcionki systemowej",
             "custom_font_description": "Wybierz nazwę czcionki zainstalowanej w systemie, a %(brand)s spróbuje jej użyć.",
             "custom_font_name": "Nazwa czcionki systemowej",
@@ -2911,7 +2912,7 @@
         "devtools": "Otwiera narzędzia deweloperskie",
         "discardsession": "Wymusza odrzucenie bieżącej sesji grupowej wychodzącej z zaszyfrowanego pokoju",
         "error_invalid_rendering_type": "Błąd polecenia: Nie można znaleźć renderowania typu (%(renderingType)s)",
-        "error_invalid_room": "Błąd komendy: Nie można znaleźć pokoju (%(roomId)s",
+        "error_invalid_room": "Błąd komendy: Nie można znaleźć pokoju (%(roomId)s)",
         "error_invalid_runfn": "Błąd polecenia: Nie można obsłużyć polecenia z ukośnikiem.",
         "error_invalid_user_in_room": "Nie można znaleźć użytkownika w pokoju",
         "help": "Wyświetla listę komend z przykładami i opisami",
@@ -3044,7 +3045,7 @@
         "suggested_tooltip": "Ten pokój jest polecany jako dobry do dołączenia",
         "title_when_query_available": "Wyniki",
         "title_when_query_unavailable": "Pokoje i przestrzenie",
-        "unmark_suggested": "Oznacz jako nie sugerowane",
+        "unmark_suggested": "Oznacz jako niesugerowane",
         "user_lacks_permission": "Nie masz uprawnień"
     },
     "space_settings": {
@@ -3261,20 +3262,8 @@
             "sent": "%(senderDisplayName)s wysłał obraz.",
             "show_image": "Pokaż obraz"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s anulował weryfikację",
-            "you_cancelled": "Anulowałeś weryfikację %(name)s"
-        },
-        "m.key.verification.done": "Zweryfikowałeś %(name)s",
         "m.key.verification.request": {
-            "declining": "Odrzucanie…",
-            "user_accepted": "%(name)s zaakceptował",
-            "user_cancelled": "%(name)s anulował",
-            "user_declined": "%(name)s odrzucił",
             "user_wants_to_verify": "%(name)s chce weryfikacji",
-            "you_accepted": "Zaakceptowałeś",
-            "you_cancelled": "Anulowałeś",
-            "you_declined": "Odrzuciłeś",
             "you_started": "Wysłałeś żądanie weryfikacji"
         },
         "m.location": {

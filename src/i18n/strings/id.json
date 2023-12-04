@@ -223,7 +223,8 @@
         "msisdn_field_required_invalid": "Masukkan nomor telepon",
         "no_hs_url_provided": "Tidak ada URL homeserver yang disediakan",
         "oidc": {
-            "error_title": "Kami tidak dapat memasukkan Anda"
+            "error_title": "Kami tidak dapat memasukkan Anda",
+            "missing_or_invalid_stored_state": "Kami menanyakan browser ini untuk mengingat homeserver apa yang Anda gunakan untuk membantu Anda masuk, tetapi sayangnya browser ini melupakannya. Pergi ke halaman masuk dan coba lagi."
         },
         "password_field_keep_going_prompt": "Lanjutkan…",
         "password_field_label": "Masukkan kata sandi",
@@ -408,7 +409,6 @@
         "spaceinvaders_message": "mengirim penjajah luar angkasa"
     },
     "common": {
-        "about": "Tentang",
         "access_token": "Token Akses",
         "accessibility": "Aksesibilitas",
         "advanced": "Tingkat Lanjut",
@@ -1394,7 +1394,6 @@
         "sliding_sync_server_no_support": "Server Anda belum mendukungnya",
         "sliding_sync_server_specify_proxy": "Server Anda belum mendukungnya, Anda harus menetapkan sebuah proksi",
         "sliding_sync_server_support": "Server Anda mendukungnya",
-        "state_counters": "Tampilkan penghitung sederhana di tajukan ruangan",
         "under_active_development": "Dalam pengembangan aktif.",
         "video_rooms": "Ruangan video",
         "video_rooms_a_new_way_to_chat": "Sebuah cara baru untuk mengobrol melalui suara dan video di %(brand)s.",
@@ -1785,8 +1784,6 @@
         "room_summary_card": {
             "title": "Informasi ruangan"
         },
-        "settings_button": "Pengaturan ruangan",
-        "share_button": "Bagikan ruangan",
         "thread_list": {
             "context_menu_label": "Opsi utasan"
         },
@@ -3162,20 +3159,8 @@
             "sent": "%(senderDisplayName)s mengirim sebuah gambar.",
             "show_image": "Tampilkan gambar"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s membatalkan verifikasi",
-            "you_cancelled": "Anda membatalkan memverifikasi %(name)s"
-        },
-        "m.key.verification.done": "Anda memverifikasi %(name)s",
         "m.key.verification.request": {
-            "declining": "Menolak…",
-            "user_accepted": "%(name)s menerima",
-            "user_cancelled": "%(name)s membatalkan",
-            "user_declined": "%(name)s menolak",
             "user_wants_to_verify": "%(name)s ingin memverifikasi",
-            "you_accepted": "Anda menerima",
-            "you_cancelled": "Anda membatalkan",
-            "you_declined": "Anda menolak",
             "you_started": "Anda mengirim sebuah permintaan verifikasi"
         },
         "m.location": {

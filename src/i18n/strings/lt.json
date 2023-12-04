@@ -172,7 +172,8 @@
         "msisdn_field_label": "Telefonas",
         "no_hs_url_provided": "Nepateiktas serverio URL",
         "oidc": {
-            "error_title": "Mes negalėjome jūsų prijungti"
+            "error_title": "Mes negalėjome jūsų prijungti",
+            "missing_or_invalid_stored_state": "Paprašėme naršyklės įsiminti, kurį namų serverį naudojate prisijungimui, bet, deja, naršyklė tai pamiršo. Eikite į prisijungimo puslapį ir bandykite dar kartą."
         },
         "password_field_strong_label": "Puiku, stiprus slaptažodis!",
         "phone_label": "Telefonas",
@@ -286,7 +287,6 @@
         "spaceinvaders_message": "siunčia kosmoso įsibrovėlius"
     },
     "common": {
-        "about": "Apie",
         "access_token": "Prieigos žetonas",
         "advanced": "Išplėstiniai",
         "all_rooms": "Visi kambariai",
@@ -890,7 +890,6 @@
         "leave_beta": "Palikti beta versiją",
         "msc3531_hide_messages_pending_moderation": "Leisti moderatoriams slėpti žinutes, laukiančias moderavimo.",
         "pinning": "Žinučių prisegimas",
-        "state_counters": "Užkrauti paprastus skaitiklius kambario antraštėje",
         "video_rooms": "Vaizdo kambariai",
         "video_rooms_a_new_way_to_chat": "Naujas būdas kalbėtis balsu ir vaizdu per %(brand)s.",
         "video_rooms_always_on_voip_channels": "Vaizdo kambariai - tai visada veikiantys VoIP kanalai, įterpti į %(brand)s kambarį.",
@@ -1108,8 +1107,6 @@
             "title": "Prisegtos žinutės"
         },
         "pinned_messages_button": "Prisegta",
-        "settings_button": "Kambario nustatymai",
-        "share_button": "Bendrinti kambarį",
         "video_room_chat": {
             "title": "Pokalbis"
         },
@@ -2071,19 +2068,8 @@
             "sent": "%(senderDisplayName)s išsiuntė vaizdą.",
             "show_image": "Rodyti vaizdą"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s atšaukė patvirtinimą",
-            "you_cancelled": "Jūs atšaukėte %(name)s patvirtinimą"
-        },
-        "m.key.verification.done": "Jūs patvirtinote %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s priimtas",
-            "user_cancelled": "%(name)s atšauktas",
-            "user_declined": "%(name)s atmestas",
             "user_wants_to_verify": "%(name)s nori patvirtinti",
-            "you_accepted": "Jūs priėmėte",
-            "you_cancelled": "Jūs atšaukėte",
-            "you_declined": "Jūs atsisakėte",
             "you_started": "Jūs išsiuntėte patvirtinimo užklausą"
         },
         "m.location": {

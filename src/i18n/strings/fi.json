@@ -219,7 +219,8 @@
         "msisdn_field_required_invalid": "Syötä puhelinnumero",
         "no_hs_url_provided": "Kotipalvelimen osoite puuttuu",
         "oidc": {
-            "error_title": "Emme voineet kirjata sinua sisään"
+            "error_title": "Emme voineet kirjata sinua sisään",
+            "missing_or_invalid_stored_state": "Pyysimme selainta muistamaan kirjautumista varten mitä kotipalvelinta käytät, mutta selain on unohtanut sen. Mene kirjautumissivulle ja yritä uudelleen."
         },
         "password_field_keep_going_prompt": "Jatka…",
         "password_field_label": "Syötä salasana",
@@ -385,7 +386,6 @@
         "spaceinvaders_description": "Lähetä annettu viesti avaruusteemaisella tehosteella"
     },
     "common": {
-        "about": "Tietoa",
         "access_token": "Käyttöpoletti",
         "accessibility": "Saavutettavuus",
         "advanced": "Lisäasetukset",
@@ -1268,7 +1268,6 @@
         "sliding_sync_proxy_url_optional_label": "Välityspalvelimen URL-osoite (valinnainen)",
         "sliding_sync_server_no_support": "Palvelimellasi ei ole natiivitukea",
         "sliding_sync_server_support": "Palvelimellasi on natiivituki",
-        "state_counters": "Näytä yksinkertaiset laskurit huoneen yläpalkissa",
         "under_active_development": "Aktiivisen kehityksen kohteena.",
         "video_rooms": "Videohuoneet",
         "video_rooms_a_new_way_to_chat": "Uusi tapa keskustella äänen ja videon välityksellä %(brand)sissä.",
@@ -1617,8 +1616,6 @@
         "room_summary_card": {
             "title": "Huoneen tiedot"
         },
-        "settings_button": "Huoneen asetukset",
-        "share_button": "Jaa huone",
         "thread_list": {
             "context_menu_label": "Ketjun valinnat"
         },
@@ -2869,19 +2866,8 @@
             "sent": "%(senderDisplayName)s lähetti kuvan.",
             "show_image": "Näytä kuva"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s peruutti varmennuksen",
-            "you_cancelled": "Peruutit käyttäjän %(name)s varmennuksen"
-        },
-        "m.key.verification.done": "Varmensit käyttäjän %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s hyväksyi",
-            "user_cancelled": "%(name)s peruutti",
-            "user_declined": "%(name)s kieltäytyi",
             "user_wants_to_verify": "%(name)s haluaa varmentaa",
-            "you_accepted": "Hyväksyit",
-            "you_cancelled": "Peruutit",
-            "you_declined": "Kieltäydyit",
             "you_started": "Lähetit varmennuspyynnön"
         },
         "m.location": {

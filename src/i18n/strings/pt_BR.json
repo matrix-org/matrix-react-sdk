@@ -192,7 +192,8 @@
         "msisdn_field_required_invalid": "Digite o número de telefone",
         "no_hs_url_provided": "Nenhum endereço fornecido do servidor local",
         "oidc": {
-            "error_title": "Não foi possível fazer login"
+            "error_title": "Não foi possível fazer login",
+            "missing_or_invalid_stored_state": "Anteriormente, pedimos ao seu navegador para lembrar qual servidor local você usa para fazer login, mas infelizmente o navegador se esqueceu disso. Vá para a página de login e tente novamente."
         },
         "password_field_label": "Digite a senha",
         "password_field_strong_label": "Muito bem, uma senha forte!",
@@ -319,7 +320,6 @@
         "spaceinvaders_message": "envia os invasores do espaço"
     },
     "common": {
-        "about": "Sobre a sala",
         "access_token": "Símbolo de acesso",
         "advanced": "Avançado",
         "all_rooms": "Todas as salas",
@@ -1004,7 +1004,6 @@
         "group_voip": "Voz e vídeo",
         "latex_maths": "Renderizar fórmulas matemáticas LaTeX em mensagens",
         "pinning": "Fixar mensagem",
-        "state_counters": "Renderizar contadores simples no cabeçalho da sala",
         "video_rooms": "Salas de vídeo"
     },
     "labs_mjolnir": {
@@ -1223,8 +1222,6 @@
                 "other": "Resultado final baseado em %(count)s votos"
             }
         },
-        "settings_button": "Configurações da sala",
-        "share_button": "Compartilhar sala",
         "video_room_chat": {
             "title": "Bate-papo"
         }
@@ -2212,19 +2209,8 @@
             "sent": "%(senderDisplayName)s enviou uma imagem.",
             "show_image": "Mostrar imagem"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s cancelou a confirmação",
-            "you_cancelled": "Você cancelou a confirmação de %(name)s"
-        },
-        "m.key.verification.done": "Você confirmou %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s aceitou",
-            "user_cancelled": "%(name)s cancelou",
-            "user_declined": "%(name)s recusou",
             "user_wants_to_verify": "%(name)s solicita confirmação",
-            "you_accepted": "Você aceitou",
-            "you_cancelled": "Você cancelou",
-            "you_declined": "Você recusou",
             "you_started": "Você enviou uma solicitação de confirmação"
         },
         "m.location": {

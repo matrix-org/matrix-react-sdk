@@ -209,7 +209,8 @@
         "msisdn_field_required_invalid": "Settu inn símanúmer",
         "no_hs_url_provided": "Engin slóð heimaþjóns tilgreind",
         "oidc": {
-            "error_title": "Við gátum ekki skráð þig inn"
+            "error_title": "Við gátum ekki skráð þig inn",
+            "missing_or_invalid_stored_state": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur."
         },
         "password_field_label": "Settu inn lykilorð",
         "password_field_strong_label": "Fínt, sterkt lykilorð!",
@@ -351,7 +352,6 @@
         "spaceinvaders_message": "sendir geimverur til árásar"
     },
     "common": {
-        "about": "Um hugbúnaðinn",
         "access_token": "Aðgangsteikn",
         "accessibility": "Auðveldað aðgengi",
         "advanced": "Nánar",
@@ -1175,7 +1175,6 @@
         "report_to_moderators_description": "Í spjallrásum sem styðja eftirlit umsjónarmanna, mun 'Kæra'-hnappurinn gefa þér færi á að tilkynna misnotkun til umsjónarmanna spjallrása.",
         "sliding_sync_proxy_url_label": "Slóð milliþjóns",
         "sliding_sync_proxy_url_optional_label": "Slóð milliþjóns (valfrjálst)",
-        "state_counters": "Myndgera einfalda teljara í haus spjallrása",
         "under_active_development": "Í virkri þróun.",
         "video_rooms": "Myndspjallrásir",
         "video_rooms_a_new_way_to_chat": "Ný leið til að spjalla með tali og myndmerki í %(brand)s.",
@@ -1504,8 +1503,6 @@
         "room_summary_card": {
             "title": "Upplýsingar um spjallrás"
         },
-        "settings_button": "Stillingar spjallrásar",
-        "share_button": "Deila spjallrás",
         "thread_list": {
             "context_menu_label": "Valkostir spjallþráðar"
         },
@@ -2658,19 +2655,8 @@
             "sent": "%(senderDisplayName)s sendi mynd.",
             "show_image": "Birta mynd"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s hætti við sannvottun",
-            "you_cancelled": "Þú hættir við sannvottun á %(name)s"
-        },
-        "m.key.verification.done": "Þú sannreyndir %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s samþykkti",
-            "user_cancelled": "%(name)s hætti við",
-            "user_declined": "%(name)s hafnaði",
             "user_wants_to_verify": "%(name)s vill sannreyna",
-            "you_accepted": "Þú samþykktir",
-            "you_cancelled": "Þú hættir við",
-            "you_declined": "Þú hafnaðir",
             "you_started": "Þú sendir beiðni um sannvottun"
         },
         "m.location": {

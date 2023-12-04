@@ -209,7 +209,8 @@
         "msisdn_field_required_invalid": "Telefoonnummer invoeren",
         "no_hs_url_provided": "Geen homeserver-URL opgegeven",
         "oidc": {
-            "error_title": "We konden je niet inloggen"
+            "error_title": "We konden je niet inloggen",
+            "missing_or_invalid_stored_state": "De browser is verzocht de homeserver te onthouden die je gebruikt om in te loggen, maar helaas is de browser deze vergeten. Ga naar de inlog-pagina en probeer het opnieuw."
         },
         "password_field_label": "Voer wachtwoord in",
         "password_field_strong_label": "Dit is een sterk wachtwoord!",
@@ -372,7 +373,6 @@
         "spaceinvaders_message": "stuurt space invaders"
     },
     "common": {
-        "about": "Over",
         "access_token": "Toegangstoken",
         "accessibility": "Toegankelijkheid",
         "advanced": "Geavanceerd",
@@ -1218,7 +1218,6 @@
         "sliding_sync_server_no_support": "Jouw server heeft geen native ondersteuning",
         "sliding_sync_server_specify_proxy": "Jouw server heeft geen native ondersteuning, je moet een proxy opgeven",
         "sliding_sync_server_support": "Jouw server heeft native ondersteuning",
-        "state_counters": "Eenvoudige tellers bovenaan de kamer tonen",
         "video_rooms": "Video kamers",
         "video_rooms_a_new_way_to_chat": "Een nieuwe manier om te chatten via spraak en video in %(brand)s.",
         "video_rooms_always_on_voip_channels": "Videoruimten zijn altijd-aan VoIP-kanalen die zijn geïntegreerd in een kamer in %(brand)s.",
@@ -1567,8 +1566,6 @@
         "room_summary_card": {
             "title": "Kamer informatie"
         },
-        "settings_button": "Kamerinstellingen",
-        "share_button": "Kamer delen",
         "thread_list": {
             "context_menu_label": "Draad opties"
         }
@@ -2781,19 +2778,8 @@
             "sent": "%(senderDisplayName)s heeft een afbeelding gestuurd.",
             "show_image": "Afbeelding tonen"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s heeft de verificatie geannuleerd",
-            "you_cancelled": "Je hebt de verificatie van %(name)s geannuleerd"
-        },
-        "m.key.verification.done": "Je hebt %(name)s geverifieerd",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s heeft aanvaard",
-            "user_cancelled": "%(name)s heeft geannuleerd",
-            "user_declined": "%(name)s heeft geweigerd",
             "user_wants_to_verify": "%(name)s wil verifiëren",
-            "you_accepted": "Je hebt aanvaard",
-            "you_cancelled": "Je hebt geannuleerd",
-            "you_declined": "Je hebt geweigerd",
             "you_started": "Je hebt een verificatieverzoek verstuurd"
         },
         "m.location": {
@@ -2879,7 +2865,7 @@
             "reject_invite": "%(targetName)s heeft de uitnodiging geweigerd",
             "remove_avatar": "%(senderName)s profielfoto is verwijderd",
             "remove_name": "%(senderName)s weergavenaam (%(oldDisplayName)s) is verwijderd",
-            "set_avatar": "%(senderName)s profielfoto is ingesteld",
+            "set_avatar": "%(senderName)s heeft een profielfoto ingesteld",
             "set_name": "%(senderName)s heeft de weergavenaam %(displayName)s aangenomen",
             "unban": "%(senderName)s heeft %(targetName)s ontbannen",
             "withdrew_invite": "%(senderName)s heeft de uitnodiging van %(targetName)s ingetrokken",

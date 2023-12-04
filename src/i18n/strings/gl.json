@@ -209,7 +209,8 @@
         "msisdn_field_required_invalid": "Escribe número de teléfono",
         "no_hs_url_provided": "Non se estableceu URL do servidor",
         "oidc": {
-            "error_title": "Non puidemos conectarte"
+            "error_title": "Non puidemos conectarte",
+            "missing_or_invalid_stored_state": "Pedíramoslle ao teu navegador que lembrase o teu servidor de inicio para acceder, pero o navegador esqueceuno. Vaite á páxina de conexión e inténtao outra vez."
         },
         "password_field_label": "Escribe contrasinal",
         "password_field_strong_label": "Ben, bo contrasinal!",
@@ -352,7 +353,6 @@
         "spaceinvaders_message": "enviar invasores espaciais"
     },
     "common": {
-        "about": "Acerca de",
         "access_token": "Token de acceso",
         "accessibility": "Accesibilidade",
         "advanced": "Avanzado",
@@ -1223,7 +1223,6 @@
         "sliding_sync_server_no_support": "O teu servidor non ten soporte nativo",
         "sliding_sync_server_specify_proxy": "O teu servidor non ten servidor nativo, tes que indicar un proxy",
         "sliding_sync_server_support": "O teu servidor ten soporte nativo",
-        "state_counters": "Mostrar contadores simples na cabeceira da sala",
         "video_rooms": "Salas de vídeo",
         "video_rooms_a_new_way_to_chat": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
         "video_rooms_always_on_voip_channels": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
@@ -1573,8 +1572,6 @@
                 "other": "Resultado final baseado en %(count)s votos"
             }
         },
-        "settings_button": "Axustes da sala",
-        "share_button": "Compartir sala",
         "thread_list": {
             "context_menu_label": "Opcións da conversa"
         }
@@ -2748,19 +2745,8 @@
             "sent": "%(senderDisplayName)s enviou unha imaxe.",
             "show_image": "Mostrar imaxe"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s cancelou a verificación",
-            "you_cancelled": "Cancelaches a verificación de %(name)s"
-        },
-        "m.key.verification.done": "Verificaches a %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s aceptou",
-            "user_cancelled": "%(name)s cancelou",
-            "user_declined": "%(name)s declinou",
             "user_wants_to_verify": "%(name)s desexa verificar",
-            "you_accepted": "Aceptaches",
-            "you_cancelled": "Cancelaches",
-            "you_declined": "Declinaches",
             "you_started": "Enviaches unha solicitude de verificación"
         },
         "m.location": {

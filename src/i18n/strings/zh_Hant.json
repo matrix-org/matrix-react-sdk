@@ -226,7 +226,8 @@
         "msisdn_field_required_invalid": "輸入電話號碼",
         "no_hs_url_provided": "未提供家伺服器網址",
         "oidc": {
-            "error_title": "我們無法讓您登入"
+            "error_title": "我們無法讓您登入",
+            "missing_or_invalid_stored_state": "我們要求瀏覽器記住它讓您登入時使用的家伺服器，但不幸的是，您的瀏覽器忘了它。到登入頁面然後重試。"
         },
         "password_field_keep_going_prompt": "繼續前進…",
         "password_field_label": "輸入密碼",
@@ -412,7 +413,6 @@
         "spaceinvaders_message": "傳送太空侵略者"
     },
     "common": {
-        "about": "關於",
         "access_token": "存取權杖",
         "accessibility": "可近用性",
         "advanced": "進階",
@@ -1412,7 +1412,6 @@
         "sliding_sync_server_no_support": "您的伺服器缺乏原生支援",
         "sliding_sync_server_specify_proxy": "您的伺服器缺乏原生支援，您必須指定代理",
         "sliding_sync_server_support": "您的伺服器有原生支援",
-        "state_counters": "在聊天室標頭顯示簡單的計數器",
         "under_active_development": "正在積極開發中。",
         "video_rooms": "視訊聊天室",
         "video_rooms_a_new_way_to_chat": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
@@ -1808,8 +1807,6 @@
         "room_summary_card": {
             "title": "聊天室資訊"
         },
-        "settings_button": "聊天室設定",
-        "share_button": "分享聊天室",
         "thread_list": {
             "context_menu_label": "討論串選項"
         },
@@ -3181,20 +3178,8 @@
             "sent": "%(senderDisplayName)s 傳了一張圖片。",
             "show_image": "顯示圖片"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s 已取消驗證",
-            "you_cancelled": "您已取消驗證 %(name)s"
-        },
-        "m.key.verification.done": "您驗證了 %(name)s",
         "m.key.verification.request": {
-            "declining": "正在拒絕…",
-            "user_accepted": "%(name)s 已接受",
-            "user_cancelled": "%(name)s 已取消",
-            "user_declined": "%(name)s 拒絕了",
             "user_wants_to_verify": "%(name)s 想要驗證",
-            "you_accepted": "您已接受",
-            "you_cancelled": "您已取消",
-            "you_declined": "您拒絕了",
             "you_started": "您已傳送了驗證請求"
         },
         "m.location": {
