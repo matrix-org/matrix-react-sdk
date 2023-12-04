@@ -140,7 +140,7 @@ test.describe("Sliding Sync", () => {
         await bob.sendTextMessage(roomId, "Hello World");
 
         const treeItemLocator1 = page.getByRole("treeitem", { name: "Test Room 1 unread message." });
-        await expect(treeItemLocator1.locator(".mx_NotificationBadge_count")).toHaveText("1", { timeout: 10000 });
+        await expect(treeItemLocator1.locator(".mx_NotificationBadge_count")).toHaveText("1");
         // await expect(page.locator(".mx_NotificationBadge")).not.toHaveClass("mx_NotificationBadge_highlighted");
         await expect(treeItemLocator1.locator(".mx_NotificationBadge")).not.toHaveClass(
             /mx_NotificationBadge_highlighted/,
@@ -151,7 +151,7 @@ test.describe("Sliding Sync", () => {
         const treeItemLocator2 = page.getByRole("treeitem", {
             name: "Test Room 2 unread messages including mentions.",
         });
-        await expect(treeItemLocator2.locator(".mx_NotificationBadge_count")).toHaveText("2", { timeout: 10000 });
+        await expect(treeItemLocator2.locator(".mx_NotificationBadge_count")).toHaveText("2");
         await expect(treeItemLocator2.locator(".mx_NotificationBadge")).toHaveClass(/mx_NotificationBadge_highlighted/);
 
         // click on the room, the notif counts should disappear
