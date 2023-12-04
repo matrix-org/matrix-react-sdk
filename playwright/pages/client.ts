@@ -161,4 +161,15 @@ export class Client {
             },
         );
     }
+
+    /**
+     * Wait until next sync from this client
+     */
+    public async waitForNextSync(): Promise<void> {
+        await this.page.waitForResponse(async (response) => {
+            const accessToken = await this.evaluate((client) => client.getAccessToken());
+            const authHeader = await response.request().headerValue("authorization");
+            return response.url().includes("/sync") && authHeader.includes(accessToken);
+        });
+    }
 }
