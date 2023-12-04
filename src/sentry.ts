@@ -16,12 +16,12 @@ limitations under the License.
 
 import * as Sentry from "@sentry/browser";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { OwnDeviceKeys } from "matrix-js-sdk/src/crypto-api";
 
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
 import { IConfigOptions } from "./IConfigOptions";
-import { OwnDeviceKeys } from "../../matrix-js-sdk/src/crypto-api";
 
 /* eslint-disable camelcase */
 

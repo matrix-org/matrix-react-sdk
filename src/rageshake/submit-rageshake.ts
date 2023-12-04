@@ -18,6 +18,7 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { Method } from "matrix-js-sdk/src/matrix";
+import { OwnDeviceKeys } from "matrix-js-sdk/src/crypto-api";
 
 import type * as Pako from "pako";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -27,7 +28,6 @@ import * as rageshake from "./rageshake";
 import SettingsStore from "../settings/SettingsStore";
 import SdkConfig from "../SdkConfig";
 import { getServerVersionFromFederationApi } from "../components/views/dialogs/devtools/ServerInfo";
-import { OwnDeviceKeys } from "../../../matrix-js-sdk/src/crypto-api";
 
 interface IOpts {
     labels?: string[];
