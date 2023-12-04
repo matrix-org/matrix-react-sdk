@@ -30,5 +30,6 @@ export class Labs {
         }, feature);
         // Reload page so that this applies
         await this.page.reload();
+        await this.page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
     }
 }
