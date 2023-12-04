@@ -96,7 +96,7 @@ test.describe("Invite dialog", function () {
 
         // Take a snapshot of the invite dialog
         await expect(page.locator(".mx_Dialog")).toMatchScreenshot("invite-dialog-dm-without-user.png", {
-            mask: [page.locator(".mx_InviteDialog_footer_link, .mx_InviteDialog_helpText")],
+            mask: [page.locator(".mx_InviteDialog_footer_link, .mx_InviteDialog_helpText a")],
         });
 
         await other.getByTestId("invite-dialog-input").fill(bot.credentials.userId);
@@ -110,7 +110,7 @@ test.describe("Invite dialog", function () {
 
         // Take a snapshot of the invite dialog with a user pill
         await expect(page.locator(".mx_Dialog")).toMatchScreenshot("invite-dialog-dm-with-user-pill.png", {
-            mask: [page.locator(".mx_InviteDialog_footer_link, .mx_InviteDialog_helpText")],
+            mask: [page.locator(".mx_InviteDialog_footer_link, .mx_InviteDialog_helpText a")],
         });
 
         // Open a direct message UI
