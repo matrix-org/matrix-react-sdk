@@ -19,6 +19,7 @@ import { type Locator, type Page, expect } from "@playwright/test";
 import { Settings } from "./settings";
 import { Client } from "./client";
 import { Labs } from "./labs";
+import { Timeline } from "./timeline";
 
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
@@ -26,6 +27,7 @@ export class ElementAppPage {
     public labs = new Labs(this.page);
     public settings = new Settings(this.page);
     public client: Client = new Client(this.page);
+    public timeline: Timeline = new Timeline(this.page);
 
     /**
      * Open the top left user menu, returning a Locator to the resulting context menu.
