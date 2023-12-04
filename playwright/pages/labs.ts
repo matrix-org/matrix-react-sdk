@@ -21,7 +21,6 @@ export class Labs {
 
     /**
      * Enables a labs feature for an element session.
-     * Has to be called before the session is initialized
      * @param feature labsFeature to enable (e.g. "feature_spotlight")
      */
     public async enableLabsFeature(feature: string): Promise<void> {
