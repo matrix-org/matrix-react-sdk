@@ -17,7 +17,15 @@ limitations under the License.
 import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
-import type { IContent, ICreateRoomOpts, ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import type {
+    IContent,
+    ICreateRoomOpts,
+    ISendEventResponse,
+    MatrixClient,
+    Room,
+    MatrixEvent,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
 
 export class Client {
     protected client: JSHandle<MatrixClient>;
@@ -50,6 +58,19 @@ export class Client {
     public async evaluate<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<T> {
         await this.prepareClient();
         return this.client.evaluate(fn, arg);
+    }
+
+    public evaluateHandle<R, Arg, O extends MatrixClient = MatrixClient>(
+        pageFunction: PageFunctionOn<O, Arg, R>,
+        arg: Arg,
+    ): Promise<JSHandle<R>>;
+    public evaluateHandle<R, O extends MatrixClient = MatrixClient>(
+        pageFunction: PageFunctionOn<O, void, R>,
+        arg?: any,
+    ): Promise<JSHandle<R>>;
+    public async evaluateHandle<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<JSHandle<T>> {
+        await this.prepareClient();
+        return this.client.evaluateHandle(fn, arg);
     }
 
     /**
@@ -159,6 +180,25 @@ export class Client {
             {
                 roomName,
             },
+        );
+    }
+
+    /**
+     * @param {MatrixEvent} event
+     * @param {ReceiptType} receiptType
+     * @param {boolean} unthreaded
+     */
+    public async sendReadReceipt(
+        event: JSHandle<MatrixEvent>,
+        receiptType?: ReceiptType,
+        unthreaded?: boolean,
+    ): Promise<{}> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            (client, { event, receiptType, unthreaded }) => {
+                return client.sendReadReceipt(event, receiptType, unthreaded);
+            },
+            { event, receiptType, unthreaded },
         );
     }
 }
