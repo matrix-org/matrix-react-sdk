@@ -75,6 +75,7 @@ export const test = base.extend<
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
         botCreateOpts: CreateBotOpts;
         bot: Bot;
+        createBot: (opts: CreateBotOpts) => Promise<Bot>;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
@@ -194,6 +195,14 @@ export const test = base.extend<
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
+    },
+    createBot: async ({ page, homeserver }, use) => {
+        const creator = async (opts: CreateBotOpts) => {
+            const bot = new Bot(page, homeserver, opts);
+            await bot.prepareClient();
+            return bot;
+        };
+        await use(creator);
     },
 });
 
