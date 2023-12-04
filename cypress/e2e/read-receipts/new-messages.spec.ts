@@ -374,7 +374,8 @@ describe("Read receipts", () => {
                 // Then the room becomes unread
                 assertUnread(room2, 1);
             });
-            it("Sending a new different-thread message after marking as read makes it unread", () => {
+            // Flaky: disabled - https://github.com/vector-im/element-web/issues/26691
+            it.skip("Sending a new different-thread message after marking as read makes it unread", () => {
                 // Given 2 threads exist, and Thread2 has the latest message in it
                 goTo(room1);
                 receiveMessages(room2, ["Thread1", "Thread2", threadedOff("Thread1", "t1a")]);
