@@ -23,7 +23,6 @@ import type { Bot } from "../../pages/bot";
 test.describe("Sliding Sync", () => {
     test.use({
         usesSlidingSyncProxy: true,
-        enableLabFeatures: ["feature_sliding_sync"],
     });
 
     let roomId: string;
@@ -335,7 +334,7 @@ test.describe("Sliding Sync", () => {
         await expect(page.locator(".mx_ReplyPreview")).toBeVisible();
     });
 
-    test.skip("should send unsubscribe_rooms for every room switch", async ({ page, app }) => {
+    test("should send unsubscribe_rooms for every room switch", async ({ page, app }) => {
         // create rooms and check room names are correct
         const roomIds: string[] = [];
         for (const fruit of ["Apple", "Pineapple", "Orange"]) {

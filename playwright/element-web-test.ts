@@ -225,12 +225,14 @@ export const test = base.extend<
          * available within beforeAll and by that point it's too late to override the fixture.
          */
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
-            const json = {
+            const json: typeof CONFIG_JSON = {
                 ...CONFIG_JSON,
                 ...config,
                 setting_defaults: {
-                    feature_sliding_sync: true,
                     feature_sliding_sync_proxy_url: `http://localhost:${proxyInstance.port}`,
+                },
+                features: {
+                    feature_sliding_sync: true,
                 },
             };
             if (cryptoBackend === "rust") {
