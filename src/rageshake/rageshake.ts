@@ -45,8 +45,11 @@ import { getCircularReplacer } from "../utils/JSON";
 
 const FLUSH_RATE_MS = 30 * 1000;
 
-// the length of log data we keep in indexeddb (and include in the reports)
+/** the length of log data we keep in indexeddb (and include in the reports), if there are more than 24 hours of logs */
 const MAX_LOG_SIZE = 1024 * 1024 * 5; // 5 MB
+
+/** the length of log data we keep in indexeddb (and include in the reports), if there are less than 24 hours of logs */
+const MAX_LOG_SIZE_24H = 1024 * 1024 * 100; // 100 MB
 
 type LogFunction = (...args: (Error | DOMException | object | string)[]) => void;
 const consoleFunctionsToLevels = {
@@ -273,6 +276,11 @@ export class IndexedDBLogStore {
             // If fetchLogs truncated we'll now be at or over the size limit,
             // in which case we should stop and remove the rest of the log files.
             if (truncated) {
+                logger.log(
+                    `rageshake: reached size limit while processing instance ${i + 1}/${
+                        allLogIds.length
+                    } (${instanceId}), with ${size} bytes of logs: will drop further instances`,
+                );
                 // the remaining log IDs should be removed. If we go out of
                 // bounds this is just []
                 removeLogIds = allLogIds.slice(i + 1);
@@ -280,7 +288,7 @@ export class IndexedDBLogStore {
             }
         }
         if (removeLogIds.length > 0) {
-            logger.log("Removing logs: ", removeLogIds);
+            logger.log(`rageshake: removing logs: ${removeLogIds}`);
             // Don't await this because it's non-fatal if we can't clean up
             // logs.
             Promise.all(removeLogIds.map((id) => this.deleteLogs(id))).then(
@@ -341,6 +349,28 @@ export class IndexedDBLogStore {
 
         const objectStore = db.transaction("logs", "readonly").objectStore("logs");
 
+        /** Determine whether we should stop collecting logs after this batch.
+         *
+         * @param sizeSoFar - The total amount of logs collected so far.
+         * @param logBatchTimestamp - The timestamp of the most recent batch of logs collected.
+         *
+         * @returns `true` if we should stop after this batch.
+         */
+        function shouldTruncateAfterLogBatch(sizeSoFar: number, logBatchTimestamp: number): boolean {
+            // First check if we have exceeded the absolute limit
+            if (sizeSoFar >= MAX_LOG_SIZE_24H) {
+                return true;
+            }
+
+            // Otherwise, check if the most recent batch is more than 24H old, and we have exceeded the limit for logs over 24H
+            if (Date.now() - logBatchTimestamp >= 24 * 3600 * 1000 && sizeSoFar >= MAX_LOG_SIZE) {
+                return true;
+            }
+
+            // Otherwise, we're good.
+            return false;
+        }
+
         return new Promise((resolve, reject) => {
             const query = objectStore.index("id").openCursor(IDBKeyRange.only(id), "prev");
             let lines = "";
@@ -354,10 +384,12 @@ export class IndexedDBLogStore {
                     resolve({ lines, truncated: false });
                     return;
                 }
-                lines = cursor.value.lines + lines;
+                const newLines = cursor.value.lines;
+                lines += newLines;
+                sizeSoFar += newLines.length;
 
                 // If we have now exceeded the size limit, stop.
-                if (lines.length + sizeSoFar >= MAX_LOG_SIZE) {
+                if (shouldTruncateAfterLogBatch(sizeSoFar, cursor.value.ts ?? 0)) {
                     resolve({ lines, truncated: true });
                 } else {
                     cursor.continue();
@@ -400,11 +432,14 @@ export class IndexedDBLogStore {
         });
     }
 
-    private generateLogEntry(lines: string): { id: string; lines: string; index: number } {
+    /** Generate the object to be stored in the `logs` store */
+    private generateLogEntry(lines: string): { id: string; lines: string; index: number; ts: number } {
         return {
             id: this.id,
             lines: lines,
             index: this.index++,
+            /** The timestamp at which the line was *flushed* (not necessarily when it was written). */
+            ts: Date.now(),
         };
     }
 
