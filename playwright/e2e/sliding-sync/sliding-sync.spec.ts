@@ -21,10 +21,6 @@ import type { ElementAppPage } from "../../pages/ElementAppPage";
 import type { Bot } from "../../pages/bot";
 
 test.describe("Sliding Sync", () => {
-    test.use({
-        usesSlidingSyncProxy: true,
-    });
-
     let roomId: string;
 
     test.beforeEach(async ({ slidingSyncProxy, page, user, app }) => {
