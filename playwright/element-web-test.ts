@@ -78,6 +78,7 @@ export const test = base.extend<
         bot: Bot;
         slidingSyncProxy: ProxyInstance;
         usesSlidingSyncProxy: boolean;
+        enableLabFeatures: string[];
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
@@ -144,9 +145,10 @@ export const test = base.extend<
             displayName,
         });
     },
-    user: async ({ page, homeserver, credentials }, use) => {
+    enableLabFeatures: [],
+    user: async ({ page, homeserver, credentials, enableLabFeatures }, use) => {
         await page.addInitScript(
-            ({ baseUrl, credentials }) => {
+            ({ baseUrl, credentials, enableLabFeatures }) => {
                 // Seed the localStorage with the required credentials
                 window.localStorage.setItem("mx_hs_url", baseUrl);
                 window.localStorage.setItem("mx_user_id", credentials.userId);
@@ -158,8 +160,13 @@ export const test = base.extend<
 
                 // Ensure the language is set to a consistent value
                 window.localStorage.setItem("mx_local_settings", '{"language":"en"}');
+
+                // Enable the lab features
+                for (const feature of enableLabFeatures) {
+                    window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
+                }
             },
-            { baseUrl: homeserver.config.baseUrl, credentials },
+            { baseUrl: homeserver.config.baseUrl, credentials, enableLabFeatures },
         );
         await page.goto("/");
 

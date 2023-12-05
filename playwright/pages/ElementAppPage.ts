@@ -18,12 +18,10 @@ import { type Locator, type Page, expect } from "@playwright/test";
 
 import { Settings } from "./settings";
 import { Client } from "./client";
-import { Labs } from "./labs";
 
 export class ElementAppPage {
     public constructor(private readonly page: Page) {}
 
-    public labs = new Labs(this.page);
     public settings = new Settings(this.page);
     public client: Client = new Client(this.page);
 

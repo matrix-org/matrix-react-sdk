@@ -21,12 +21,14 @@ import type { ElementAppPage } from "../../pages/ElementAppPage";
 import type { Bot } from "../../pages/bot";
 
 test.describe("Sliding Sync", () => {
-    test.use({ usesSlidingSyncProxy: true });
+    test.use({
+        usesSlidingSyncProxy: true,
+        enableLabFeatures: ["feature_sliding_sync"],
+    });
 
     let roomId: string;
 
     test.beforeEach(async ({ slidingSyncProxy, page, user, app }) => {
-        await app.labs.enableLabsFeature("feature_sliding_sync");
         roomId = await app.client.createRoom({ name: "Test Room" });
     });
 
