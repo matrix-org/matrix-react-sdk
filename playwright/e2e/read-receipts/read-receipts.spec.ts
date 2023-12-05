@@ -278,19 +278,17 @@ test.describe("Read receipts", () => {
         );
 
         const numberOfMessages = 20;
-        const sendMessagePromises: Promise<ISendEventResponse>[] = [];
+        const sendMessageResponses: ISendEventResponse[] = [];
 
         for (let i = 1; i <= numberOfMessages; i++) {
-            sendMessagePromises.push(sendMessage(bot, i));
-            await page.waitForTimeout(50);
+            sendMessageResponses.push(await sendMessage(bot, i));
         }
 
-        const sendMessageResponses = await Promise.all(sendMessagePromises);
         const lastMessageId = sendMessageResponses.at(-1).event_id;
         const uriEncodedLastMessageId = encodeURIComponent(lastMessageId);
 
         // wait until all messages have been received
-        await expect(page.getByLabel(`${otherRoomName} ${sendMessagePromises.length} unread messages.`)).toBeVisible();
+        await expect(page.getByLabel(`${otherRoomName} ${sendMessageResponses.length} unread messages.`)).toBeVisible();
 
         // switch to the room with the messages
         await page.goto(`/#/room/${otherRoomId}`);
