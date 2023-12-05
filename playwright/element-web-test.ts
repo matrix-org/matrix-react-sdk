@@ -78,7 +78,7 @@ export const test = base.extend<
         botCreateOpts: CreateBotOpts;
         bot: Bot;
         slidingSyncProxy: ProxyInstance;
-        enableLabFeatures: string[];
+        labsFlags: string[];
         webserver: Webserver;
     }
 >({
@@ -143,10 +143,10 @@ export const test = base.extend<
             displayName,
         });
     },
-    enableLabFeatures: [],
-    user: async ({ page, homeserver, credentials, enableLabFeatures }, use) => {
+    labsFlags: [],
+    user: async ({ page, homeserver, credentials, labsFlags }, use) => {
         await page.addInitScript(
-            ({ baseUrl, credentials, enableLabFeatures }) => {
+            ({ baseUrl, credentials, labsFlags }) => {
                 // Seed the localStorage with the required credentials
                 window.localStorage.setItem("mx_hs_url", baseUrl);
                 window.localStorage.setItem("mx_user_id", credentials.userId);
@@ -160,11 +160,11 @@ export const test = base.extend<
                 window.localStorage.setItem("mx_local_settings", '{"language":"en"}');
 
                 // Enable the lab features
-                for (const feature of enableLabFeatures) {
+                for (const feature of labsFlags) {
                     window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
                 }
             },
-            { baseUrl: homeserver.config.baseUrl, credentials, enableLabFeatures },
+            { baseUrl: homeserver.config.baseUrl, credentials, labsFlags },
         );
         await page.goto("/");
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });

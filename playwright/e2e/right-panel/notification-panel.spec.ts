@@ -22,7 +22,7 @@ const NAME = "Alice";
 test.describe("NotificationPanel", () => {
     test.use({
         displayName: NAME,
-        enableLabFeatures: ["feature_notifications"],
+        labsFlags: ["feature_notifications"],
     });
 
     test.beforeEach(async ({ app, user }) => {
