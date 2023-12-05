@@ -1211,6 +1211,17 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             case Action.EditEvent: {
                 // Quit early if we're trying to edit events in wrong rendering context
                 if (payload.timelineRenderingType !== this.state.timelineRenderingType) return;
+                if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
+                    // If the event is in a different room, we need to view that room first
+                    dis.dispatch<ViewRoomPayload>({
+                        action: Action.ViewRoom,
+                        room_id: payload.even?.getRoomId(),
+                        metricsTrigger: "MessageSearch",
+                        deferred_action: payload,
+                    });
+                    return;
+                }
+
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : undefined;
                 this.setState(
                     {
