@@ -80,7 +80,7 @@ export class ElementAppPage {
      * Get the composer element
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
      */
-    public async getComposer(isRightPanel?: boolean): Promise<Locator> {
+    public getComposer(isRightPanel?: boolean): Locator {
         const panelClass = isRightPanel ? ".mx_RightPanel" : ".mx_RoomView_body";
         return this.page.locator(`${panelClass} .mx_MessageComposer`);
     }
@@ -90,7 +90,7 @@ export class ElementAppPage {
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
      */
     public async openMessageComposerOptions(isRightPanel?: boolean): Promise<Locator> {
-        const composer = await this.getComposer(isRightPanel);
+        const composer = this.getComposer(isRightPanel);
         await composer.getByRole("button", { name: "More options", exact: true }).click();
         return this.page.getByRole("menu");
     }
@@ -114,5 +114,19 @@ export class ElementAppPage {
     public async viewSpaceHomeByName(name: string): Promise<void> {
         const button = await this.getSpacePanelButton(name);
         return button.dblclick();
+    }
+
+    /**
+     * Opens the given space by name. The space must be visible in the
+     * space list.
+     * @param name The space name to find and click on/open.
+     */
+    public async viewSpaceByName(name: string): Promise<void> {
+        const button = await this.getSpacePanelButton(name);
+        return button.click();
+    }
+
+    public async getClipboardText(): Promise<string> {
+        return this.page.evaluate("navigator.clipboard.readText()");
     }
 }

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base, expect, Locator } from "@playwright/test";
+import { test as base, expect as baseExpect, Locator, Page, ExpectMatcherState, ElementHandle } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
 
@@ -30,6 +30,7 @@ import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
 import { Bot, CreateBotOpts } from "./pages/bot";
 import { ProxyInstance, SlidingSyncProxy } from "./plugins/sliding-sync-proxy";
+import { Webserver } from "./plugins/webserver";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -79,6 +80,7 @@ export const test = base.extend<
         slidingSyncProxy: ProxyInstance;
         usesSlidingSyncProxy: boolean;
         enableLabFeatures: string[];
+        webserver: Webserver;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
@@ -242,8 +244,43 @@ export const test = base.extend<
         await use(proxyInstance);
         await proxy.stop();
     },
+    // eslint-disable-next-line no-empty-pattern
+    webserver: async ({}, use) => {
+        const webserver = new Webserver();
+        await use(webserver);
+        webserver.stop();
+    },
 });
 
-test.use({});
+export const expect = baseExpect.extend({
+    async toMatchScreenshot(this: ExpectMatcherState, receiver: Page | Locator, ...args) {
+        const page = "page" in receiver ? receiver.page() : receiver;
 
-export { expect };
+        // We add a custom style tag before taking screenshots
+        const style = (await page.addStyleTag({
+            content: `
+                .mx_MessagePanel_myReadMarker {
+                    display: none !important;
+                }
+                .mx_RoomView_MessageList {
+                    height: auto !important;
+                }
+                .mx_DisambiguatedProfile_displayName {
+                    color: var(--cpd-color-blue-1200) !important;
+                }
+                .mx_BaseAvatar {
+                    background-color: var(--cpd-color-fuchsia-1200) !important;
+                    color: white !important;
+                }
+                .mx_ReplyChain {
+                    border-left-color: var(--cpd-color-blue-1200) !important;
+                }
+            `,
+        })) as ElementHandle<Element>;
+
+        await baseExpect(receiver).toHaveScreenshot(...args);
+
+        await style.evaluate((tag) => tag.remove());
+        return { pass: true, message: () => "", name: "toMatchScreenshot" };
+    },
+});

@@ -52,6 +52,19 @@ export class Client {
         return this.client.evaluate(fn, arg);
     }
 
+    public evaluateHandle<R, Arg, O extends MatrixClient = MatrixClient>(
+        pageFunction: PageFunctionOn<O, Arg, R>,
+        arg: Arg,
+    ): Promise<JSHandle<R>>;
+    public evaluateHandle<R, O extends MatrixClient = MatrixClient>(
+        pageFunction: PageFunctionOn<O, void, R>,
+        arg?: any,
+    ): Promise<JSHandle<R>>;
+    public async evaluateHandle<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<JSHandle<T>> {
+        await this.prepareClient();
+        return this.client.evaluateHandle(fn, arg);
+    }
+
     /**
      * @param roomId ID of the room to send the event into
      * @param threadId ID of the thread to send into or null for main timeline
@@ -88,6 +101,15 @@ export class Client {
                 roomId,
                 content,
             },
+        );
+    }
+
+    public async redactEvent(roomId: string, eventId: string, reason?: string): Promise<ISendEventResponse> {
+        return this.evaluate(
+            async (client, { roomId, eventId, reason }) => {
+                return client.redactEvent(roomId, eventId, reason);
+            },
+            { roomId, eventId, reason },
         );
     }
 
@@ -169,5 +191,18 @@ export class Client {
                 roomName,
             },
         );
+    }
+
+    /**
+     * Invites the given user to the given room.
+     * @param roomId the id of the room to invite to
+     * @param userId the id of the user to invite
+     */
+    public async inviteUser(roomId: string, userId: string): Promise<void> {
+        const client = await this.prepareClient();
+        await client.evaluate((client, { roomId, userId }) => client.invite(roomId, userId), {
+            roomId,
+            userId,
+        });
     }
 }
