@@ -287,8 +287,7 @@ test.describe("Read receipts", () => {
                 // Then is it still read
                 await util.assertRead(room2);
             });
-            // XXX: Failing since migration to Playwright
-            test.skip("A room where all threaded edits are read is still read after restart", async ({
+            test("A room where all threaded edits are read is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
@@ -309,8 +308,7 @@ test.describe("Read receipts", () => {
                 await util.saveAndReload();
                 await util.assertRead(room2);
             });
-            // XXX: fails because the room becomes unread after restart
-            test.skip("A room where all threaded edits are marked as read is still read after restart", async ({
+            test("A room where all threaded edits are marked as read is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
