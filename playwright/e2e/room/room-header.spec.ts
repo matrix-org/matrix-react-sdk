@@ -22,13 +22,10 @@ import { ElementAppPage } from "../../pages/ElementAppPage";
 test.describe("Room Header", () => {
     test.use({
         displayName: "Sakura",
+        labsFlags: ["feature_notifications"],
     });
 
     test.describe("with feature_notifications enabled", () => {
-        test.beforeEach(async ({ app }) => {
-            await app.labs.enableLabsFeature("feature_notifications");
-        });
-
         test("should render default buttons properly", async ({ page, app, user }) => {
             await app.client.createRoom({ name: "Test Room" });
             await app.viewRoomByName("Test Room");
@@ -101,9 +98,7 @@ test.describe("Room Header", () => {
     });
 
     test.describe("with feature_pinning enabled", () => {
-        test.beforeEach(async ({ app }) => {
-            await app.labs.enableLabsFeature("feature_pinning");
-        });
+        test.use({ labsFlags: ["feature_pinning"] });
 
         test("should render the pin button for pinned messages card", async ({ page, app, user }) => {
             await app.client.createRoom({ name: "Test Room" });
@@ -126,9 +121,7 @@ test.describe("Room Header", () => {
     });
 
     test.describe("with a video room", () => {
-        test.beforeEach(async ({ app }) => {
-            await app.labs.enableLabsFeature("feature_video_rooms");
-        });
+        test.use({ labsFlags: ["feature_video_rooms", "feature_notifications"] });
 
         const createVideoRoom = async (page: Page, app: ElementAppPage) => {
             await page.locator(".mx_LeftPanel_roomListContainer").getByRole("button", { name: "Add room" }).click();
@@ -147,7 +140,6 @@ test.describe("Room Header", () => {
             app,
             user,
         }) => {
-            await app.labs.enableLabsFeature("feature_notifications");
             await createVideoRoom(page, app);
 
             const header = page.locator(".mx_LegacyRoomHeader");
