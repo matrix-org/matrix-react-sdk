@@ -17,7 +17,14 @@ limitations under the License.
 import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
-import type { IContent, ICreateRoomOpts, ISendEventResponse, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import type {
+    IContent,
+    ICreateRoomOpts,
+    ISendEventResponse,
+    MatrixClient,
+    Room,
+    IRoomDirectoryOptions,
+} from "matrix-js-sdk/src/matrix";
 
 export class Client {
     protected client: JSHandle<MatrixClient>;
@@ -173,5 +180,12 @@ export class Client {
             roomId,
             userId,
         });
+    }
+
+    public async publicRooms(options?: IRoomDirectoryOptions): ReturnType<MatrixClient["publicRooms"]> {
+        const client = await this.prepareClient();
+        return await client.evaluate((client, options) => {
+            return client.publicRooms(options);
+        }, options);
     }
 }
