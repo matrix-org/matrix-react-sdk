@@ -23,6 +23,8 @@ import type {
     ISendEventResponse,
     MatrixClient,
     Room,
+    MatrixEvent,
+    ReceiptType,
     IRoomDirectoryOptions,
 } from "matrix-js-sdk/src/matrix";
 
@@ -57,6 +59,19 @@ export class Client {
     public async evaluate<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<T> {
         await this.prepareClient();
         return this.client.evaluate(fn, arg);
+    }
+
+    public evaluateHandle<R, Arg, O extends MatrixClient = MatrixClient>(
+        pageFunction: PageFunctionOn<O, Arg, R>,
+        arg: Arg,
+    ): Promise<JSHandle<R>>;
+    public evaluateHandle<R, O extends MatrixClient = MatrixClient>(
+        pageFunction: PageFunctionOn<O, void, R>,
+        arg?: any,
+    ): Promise<JSHandle<R>>;
+    public async evaluateHandle<T>(fn: (client: MatrixClient) => T, arg?: any): Promise<JSHandle<T>> {
+        await this.prepareClient();
+        return this.client.evaluateHandle(fn, arg);
     }
 
     /**
@@ -95,6 +110,15 @@ export class Client {
                 roomId,
                 content,
             },
+        );
+    }
+
+    public async redactEvent(roomId: string, eventId: string, reason?: string): Promise<ISendEventResponse> {
+        return this.evaluate(
+            async (client, { roomId, eventId, reason }) => {
+                return client.redactEvent(roomId, eventId, reason);
+            },
+            { roomId, eventId, reason },
         );
     }
 
@@ -180,6 +204,25 @@ export class Client {
             roomId,
             userId,
         });
+    }
+
+    /**
+     * @param {MatrixEvent} event
+     * @param {ReceiptType} receiptType
+     * @param {boolean} unthreaded
+     */
+    public async sendReadReceipt(
+        event: JSHandle<MatrixEvent>,
+        receiptType?: ReceiptType,
+        unthreaded?: boolean,
+    ): Promise<{}> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            (client, { event, receiptType, unthreaded }) => {
+                return client.sendReadReceipt(event, receiptType, unthreaded);
+            },
+            { event, receiptType, unthreaded },
+        );
     }
 
     public async publicRooms(options?: IRoomDirectoryOptions): ReturnType<MatrixClient["publicRooms"]> {
