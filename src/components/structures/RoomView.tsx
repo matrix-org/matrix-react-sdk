@@ -1212,11 +1212,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // Quit early if we're trying to edit events in wrong rendering context
                 if (payload.timelineRenderingType !== this.state.timelineRenderingType) return;
                 if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
-                    // If the event is in a different room, we need to view that room first
+                    // If the event is in a different room (e.g. all rooms search), we need to view that room first
                     dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
-                        room_id: payload.even?.getRoomId(),
-                        metricsTrigger: "MessageSearch",
+                        room_id: payload.event?.getRoomId(),
+                        metricsTrigger: undefined,
                         deferred_action: payload,
                     });
                     return;
@@ -1226,7 +1226,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.setState(
                     {
                         editState,
-                        // Clear the search state as we don't consume editState in SearchRoomView
+                        // Close any ongoing search as the RoomSearchView doesn't pass editState and thus won't render the edit composer
                         search: undefined,
                     },
                     () => {
