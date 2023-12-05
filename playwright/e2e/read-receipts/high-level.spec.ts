@@ -367,23 +367,23 @@ test.describe("Read receipts", () => {
             await util.markAsRead(room2);
             await util.assertRead(room2);
 
-            // // When I restart
-            // await helpers.saveAndReload();
-            //
-            // // Then the room remembers it's read
-            // await helpers.assertRead(room2);
-            //
-            // // And when I page up to load old thread roots
-            // await helpers.goTo(room2);
-            // await helpers.pageUp();
-            // await helpers.pageUp();
-            // await helpers.pageUp();
-            //
-            // // Then the room remains read
-            // await helpers.assertStillRead(room2);
-            // await helpers.assertReadThread("Root1");
-            // await helpers.assertReadThread("Root2");
-            // await helpers.assertReadThread("Root3");
+            // When I restart
+            await util.saveAndReload();
+
+            // Then the room remembers it's read
+            await util.assertRead(room2);
+
+            // And when I page up to load old thread roots
+            await util.goTo(room2);
+            await util.pageUp();
+            await util.pageUp();
+            await util.pageUp();
+
+            // Then the room remains read
+            await util.assertStillRead(room2);
+            await util.assertReadThread("Root1");
+            await util.assertReadThread("Root2");
+            await util.assertReadThread("Root3");
         });
         // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
         test.skip("After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read", async ({

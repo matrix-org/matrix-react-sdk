@@ -266,7 +266,7 @@ test.describe("Read receipts", () => {
                 // When a message is edited
                 await util.receiveMessages(room2, [msg.editOf("Resp1", "Edit1")]);
 
-                // Then the room becomes unread
+                // Then the room remains read
                 await util.assertStillRead(room2);
             });
             // XXX: flaky
