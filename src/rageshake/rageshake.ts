@@ -259,25 +259,20 @@ export class IndexedDBLogStore {
     public async consume(): Promise<{ lines: string; id: string }[]> {
         const allLogIds = await this.fetchLogIds();
         let removeLogIds: string[] = [];
-        const logs: {
-            lines: string;
-            id: string;
-        }[] = [];
+        const logs: { lines: string; id: string }[] = [];
         let size = 0;
         for (let i = 0; i < allLogIds.length; i++) {
-            const lines = await this.fetchLogs(allLogIds[i], MAX_LOG_SIZE - size);
+            const instanceId = allLogIds[i];
+            const { lines, truncated } = await this.fetchLogs(instanceId, size);
 
-            // always add the log file: fetchLogs will truncate once the maxSize we give it is
-            // exceeded, so we'll go over the max but only by one fragment's worth.
-            logs.push({
-                lines,
-                id: allLogIds[i],
-            });
+            // always add the returned logs: fetchLogs will truncate once it hits the size limit,
+            // so we'll go over the max but only by one fragment's worth.
+            logs.push({ lines, id: instanceId });
             size += lines.length;
 
             // If fetchLogs truncated we'll now be at or over the size limit,
             // in which case we should stop and remove the rest of the log files.
-            if (size >= MAX_LOG_SIZE) {
+            if (truncated) {
                 // the remaining log IDs should be removed. If we go out of
                 // bounds this is just []
                 removeLogIds = allLogIds.slice(i + 1);
@@ -325,14 +320,22 @@ export class IndexedDBLogStore {
     }
 
     /**
-     * Fetch logs for a given application instance from the database, up to a certain size limit.
+     * Fetch logs for a given application instance from the database, stopping once we hit the size limit.
      *
      * @param id - Application instance to fetch logs for.
-     * @param maxSize - Maximum number of characters (UTF-16 codepoints) to return.
+     * @param sizeSoFar - Amount of logs we have already retrieved from other instances.
      *
-     * @returns A string representing the concatenated logs for this ID.
+     * @returns An object with the properties:
+     *  * `lines`: the concatenated logs for this ID
+     *  * `truncated`: whether the output was truncated due to hitting the size limit.
      */
-    private fetchLogs(id: string, maxSize: number): Promise<string> {
+    private fetchLogs(
+        id: string,
+        sizeSoFar: number,
+    ): Promise<{
+        lines: string;
+        truncated: boolean;
+    }> {
         const db = this.db;
         if (!db) return Promise.reject("DB unavailable");
 
@@ -347,12 +350,15 @@ export class IndexedDBLogStore {
             query.onsuccess = () => {
                 const cursor = query.result;
                 if (!cursor) {
-                    resolve(lines);
-                    return; // end of results
+                    // end of results
+                    resolve({ lines, truncated: false });
+                    return;
                 }
                 lines = cursor.value.lines + lines;
-                if (lines.length >= maxSize) {
-                    resolve(lines);
+
+                // If we have now exceeded the size limit, stop.
+                if (lines.length + sizeSoFar >= MAX_LOG_SIZE) {
+                    resolve({ lines, truncated: true });
                 } else {
                     cursor.continue();
                 }
