@@ -186,6 +186,9 @@ export interface IRoomState {
     initialEventScrollIntoView?: boolean;
     replyToEvent?: MatrixEvent;
     numUnreadMessages: number;
+    /**
+     * The state of an ongoing search if there is one.
+     */
     search?: ISearchInfo;
     callState?: CallState;
     activeCall: Call | null;
@@ -1209,11 +1212,18 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 // Quit early if we're trying to edit events in wrong rendering context
                 if (payload.timelineRenderingType !== this.state.timelineRenderingType) return;
                 const editState = payload.event ? new EditorStateTransfer(payload.event) : undefined;
-                this.setState({ editState, search: undefined }, () => {
-                    if (payload.event) {
-                        this.messagePanel?.scrollToEventIfNeeded(payload.event.getId());
-                    }
-                });
+                this.setState(
+                    {
+                        editState,
+                        // Clear the search state as we don't consume editState in SearchRoomView
+                        search: undefined,
+                    },
+                    () => {
+                        if (payload.event) {
+                            this.messagePanel?.scrollToEventIfNeeded(payload.event.getId());
+                        }
+                    },
+                );
                 break;
             }
 
