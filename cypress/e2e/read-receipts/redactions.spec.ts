@@ -380,7 +380,7 @@ describe("Read receipts", () => {
                 assertReadThread("Root");
             });
             // XXX: fails because it flakes (on CI only)
-            it.skip("Reading an unread thread after a redaction of the latest message makes it read", () => {
+            it.only("Reading an unread thread after a redaction of the latest message makes it read", () => {
                 // Given an unread thread where the latest message was redacted
                 goTo(room1);
                 receiveMessages(room2, ["Root", threadedOff("Root", "ThreadMsg1"), threadedOff("Root", "ThreadMsg2")]);

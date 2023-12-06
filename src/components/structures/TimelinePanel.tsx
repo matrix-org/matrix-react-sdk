@@ -80,9 +80,9 @@ const READ_MARKER_DEBOUNCE_MS = 100;
 const VISIBLE_DECRYPTION_FAILURE_MARGIN = 100;
 
 const debuglog = (...args: any[]): void => {
-    if (SettingsStore.getValue("debug_timeline_panel")) {
-        logger.log.call(console, "TimelinePanel debuglog:", ...args);
-    }
+    //if (SettingsStore.getValue("debug_timeline_panel")) {
+    logger.log.call(console, "TimelinePanel debuglog:", ...args);
+    //}
 };
 
 const overlaysBefore = (overlayEvent: MatrixEvent, mainEvent: MatrixEvent): boolean =>

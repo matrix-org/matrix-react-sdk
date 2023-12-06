@@ -124,6 +124,11 @@ jobs:
             deployments: write
         steps:
             - uses: actions/checkout@v4
+              with:
+                  ref: ${{ steps.sha.outputs.sha }}
+                  persist-credentials: false
+                  path: matrix-react-sdk
+                  repository: ${{ inputs.react-sdk-repository || github.repository }}
 
             - uses: actions/setup-node@v4
               with:

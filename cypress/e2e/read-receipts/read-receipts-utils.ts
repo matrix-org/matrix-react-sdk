@@ -359,7 +359,8 @@ export function openThread(rootMessage: string) {
             .findByRole("button", { name: "Reply in thread", log: false })
             .click();
     });
-    cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).should("have.length", 1);
+    //cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).should("have.length", 1);
+    cy.get(".mx_ThreadView_timelinePanelWrapper", { log: false }).get(".mx_Spinner").should("not.exist");
 }
 
 /**
