@@ -95,7 +95,7 @@ test.describe("Audio player", () => {
         await expect(page.locator(".mx_EventTile_last")).toMatchScreenshot(
             `${detail.replaceAll(" ", "-")}-irc-layout.png`,
             {
-                mask: [page.locator(".mx_MessageTimestamp")],
+                mask: [page.locator(".mx_MessageTimestamp, .mx_AudioPlayer_seek")],
             },
         );
 
@@ -107,7 +107,7 @@ test.describe("Audio player", () => {
         await expect(page.locator(".mx_EventTile_last")).toMatchScreenshot(
             `${detail.replaceAll(" ", "-")}-group-layout.png`,
             {
-                mask: [page.locator(".mx_MessageTimestamp")],
+                mask: [page.locator(".mx_MessageTimestamp, .mx_AudioPlayer_seek")],
             },
         );
 
@@ -119,7 +119,7 @@ test.describe("Audio player", () => {
         await expect(page.locator(".mx_EventTile_last")).toMatchScreenshot(
             `${detail.replaceAll(" ", "-")}-bubble-layout.png`,
             {
-                mask: [page.locator(".mx_MessageTimestamp")],
+                mask: [page.locator(".mx_MessageTimestamp, .mx_AudioPlayer_seek")],
             },
         );
     };
