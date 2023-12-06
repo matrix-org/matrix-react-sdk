@@ -35,10 +35,11 @@ test.describe("permalinks", () => {
     test("shoud render permalinks as expected", async ({ page, app, user, homeserver }) => {
         const bob = new Bot(page, homeserver, { displayName: "Bob" });
         const charlotte = new Bot(page, homeserver, { displayName: "Charlotte" });
-        const danielle = new Bot(page, homeserver, { displayName: "Danielle" });
-        for (const bot of [bob, charlotte, danielle]) {
-            await bot.prepareClient();
-        }
+        await bob.prepareClient();
+        await charlotte.prepareClient();
+
+        // We don't use a bot for danielle as we want a stable MXID.
+        const danielleId = "@danielle:localhost";
 
         const room1Id = await app.client.createRoom({ name: room1Name });
         const room2Id = await app.client.createRoom({ name: room2Name });
@@ -80,7 +81,7 @@ test.describe("permalinks", () => {
         );
         await app.client.sendMessage(
             room1Id,
-            `Permalink to a user with whom alice doesn't share a room: ${permalinkPrefix}${danielle.credentials.userId}`,
+            `Permalink to a user with whom alice doesn't share a room: ${permalinkPrefix}${danielleId}`,
         );
 
         const timeline = page.locator(".mx_RoomView_timeline");
@@ -97,7 +98,7 @@ test.describe("permalinks", () => {
         getPill(timeline, "Charlotte");
         // This is the permalink to Danielle's profile. It should only display the MXID
         // because the profile is unknown (not sharing any room with Danielle).
-        getPill(timeline, danielle.credentials.userId);
+        getPill(timeline, danielleId);
 
         await expect(timeline).toMatchScreenshot("permalink-rendering.png", {
             mask: [
