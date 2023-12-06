@@ -100,7 +100,14 @@ export class Client {
      * @param roomId ID of the room to send the message into
      * @param content the event content to send
      */
-    public async sendMessage(roomId: string, content: IContent): Promise<ISendEventResponse> {
+    public async sendMessage(roomId: string, content: IContent | string): Promise<ISendEventResponse> {
+        if (typeof content === "string") {
+            content = {
+                msgtype: "m.text",
+                body: content,
+            };
+        }
+
         const client = await this.prepareClient();
         return client.evaluate(
             (client, { roomId, content }) => {
