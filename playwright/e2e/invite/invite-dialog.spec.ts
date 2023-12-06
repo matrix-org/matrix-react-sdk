@@ -130,7 +130,7 @@ test.describe("Invite dialog", function () {
         );
 
         // Send a message to invite the bots
-        const composer = (await app.getComposer()).locator("[contenteditable]");
+        const composer = app.getComposer().locator("[contenteditable]");
         await composer.fill("Hello}");
         await composer.press("Enter");
 
