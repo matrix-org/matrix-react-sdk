@@ -184,7 +184,7 @@ already familiar with Playwright.
    testing that the user can send a reaction to a message, it's best to send a message using a REST
    API, then react to it using the UI, rather than using the element-web UI to send the message.
 1. Avoid explicit waits. Playwright locators & assertions will implicitly wait for the specified
-   element to appear and all assertions are retired until they either pass or time out, so you should
+   element to appear and all assertions are retried until they either pass or time out, so you should
    never need to manually wait for an element.
     - For example, for asserting about editing an already-edited message, you can't wait for the
       'edited' element to appear as there was already one there, but you can assert that the body
