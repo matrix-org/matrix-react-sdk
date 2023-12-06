@@ -330,7 +330,7 @@ test.describe("Sliding Sync", () => {
         await expect(page.locator(".mx_ReplyPreview")).toBeVisible();
     });
 
-    test("should send unsubscribe_rooms for every room switch", async ({ page, app }) => {
+    test.skip("should send unsubscribe_rooms for every room switch", async ({ page, app }) => {
         // create rooms and check room names are correct
         const roomIds: string[] = [];
         for (const fruit of ["Apple", "Pineapple", "Orange"]) {

@@ -84,13 +84,18 @@ export const test = base.extend<
 >({
     cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, cryptoBackend }, use) => {
+    page: async ({ context, page, config, cryptoBackend, labsFlags }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
             if (cryptoBackend === "rust") {
                 json["features"] = {
                     ...json["features"],
                     feature_rust_crypto: true,
+                    // Enable the lab features
+                    ...labsFlags.reduce((obj, flag) => {
+                        obj[flag] = true;
+                        return obj;
+                    }, {}),
                 };
             }
             await route.fulfill({ json });
@@ -144,9 +149,9 @@ export const test = base.extend<
         });
     },
     labsFlags: [],
-    user: async ({ page, homeserver, credentials, labsFlags }, use) => {
+    user: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
-            ({ baseUrl, credentials, labsFlags }) => {
+            ({ baseUrl, credentials }) => {
                 // Seed the localStorage with the required credentials
                 window.localStorage.setItem("mx_hs_url", baseUrl);
                 window.localStorage.setItem("mx_user_id", credentials.userId);
@@ -158,13 +163,8 @@ export const test = base.extend<
 
                 // Ensure the language is set to a consistent value
                 window.localStorage.setItem("mx_local_settings", '{"language":"en"}');
-
-                // Enable the lab features
-                for (const feature of labsFlags) {
-                    window.localStorage.setItem(`mx_labs_feature_${feature}`, "true");
-                }
             },
-            { baseUrl: homeserver.config.baseUrl, credentials, labsFlags },
+            { baseUrl: homeserver.config.baseUrl, credentials },
         );
         await page.goto("/");
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
