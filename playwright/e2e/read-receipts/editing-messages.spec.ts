@@ -294,12 +294,11 @@ test.describe("Read receipts", () => {
                 msg,
             }) => {
                 await util.goTo(room2);
-                await util.receiveMessages(room2, [
-                    "Msg1",
-                    msg.threadedOff("Msg1", "Resp1"),
-                    msg.editOf("Resp1", "Edit1"),
-                ]);
+                await util.receiveMessages(room2, ["Msg1", msg.threadedOff("Msg1", "Resp1")]);
                 await util.assertUnread(room2, 1);
+                await util.receiveMessages(room2, [msg.editOf("Resp1", "Edit1")]);
+                await util.assertStillRead(room2);
+
                 await util.openThread("Msg1");
                 await util.assertRead(room2);
                 await util.goTo(room1); // Make sure we are looking at room1 after reload
