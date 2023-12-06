@@ -28,8 +28,8 @@ export interface ProxyInstance {
 }
 
 export class SlidingSyncProxy {
-    private readonly postgresDocker: Docker = new Docker();
-    private readonly proxyDocker: Docker = new Docker();
+    private readonly postgresDocker = new Docker();
+    private readonly proxyDocker = new Docker();
     private instance: ProxyInstance;
 
     constructor(private synapseIp: string) {}
