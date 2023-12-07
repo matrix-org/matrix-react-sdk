@@ -9,6 +9,8 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=bugs)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
 
+Dummy change, do not merge
+
 # matrix-react-sdk
 
 This is a react-based SDK for inserting a Matrix chat/voip client into a web page.
