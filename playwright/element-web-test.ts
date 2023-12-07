@@ -214,6 +214,7 @@ export const expect = baseExpect.extend({
             mask?: Array<Locator>;
             omitBackground?: boolean;
             timeout?: number;
+            css?: string;
         },
     ) {
         const page = "page" in receiver ? receiver.page() : receiver;
@@ -237,6 +238,7 @@ export const expect = baseExpect.extend({
                 .mx_ReplyChain {
                     border-left-color: var(--cpd-color-blue-1200) !important;
                 }
+                ${options.css ?? ""}
             `,
         })) as ElementHandle<Element>;
 

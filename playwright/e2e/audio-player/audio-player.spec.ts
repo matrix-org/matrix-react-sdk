@@ -91,12 +91,20 @@ test.describe("Audio player", () => {
         // Assert that rendering of the player settled and the play button is visible before taking a snapshot
         await checkPlayerVisibility(ircTile);
 
+        const screenshotOptions = {
+            css: `
+                /* The timestamp is of inconsistent width depending on the time the test runs at */
+                .mx_MessageTimestamp {
+                    display: none !important;
+                }
+            `,
+            mask: [page.locator(".mx_AudioPlayer_seek")],
+        };
+
         // Take a snapshot of mx_EventTile_last on IRC layout
         await expect(page.locator(".mx_EventTile_last")).toMatchScreenshot(
             `${detail.replaceAll(" ", "-")}-irc-layout.png`,
-            {
-                mask: [page.locator(".mx_MessageTimestamp, .mx_AudioPlayer_seek")],
-            },
+            screenshotOptions,
         );
 
         // Take a snapshot on modern/group layout
@@ -106,9 +114,7 @@ test.describe("Audio player", () => {
         await checkPlayerVisibility(groupTile);
         await expect(page.locator(".mx_EventTile_last")).toMatchScreenshot(
             `${detail.replaceAll(" ", "-")}-group-layout.png`,
-            {
-                mask: [page.locator(".mx_MessageTimestamp, .mx_AudioPlayer_seek")],
-            },
+            screenshotOptions,
         );
 
         // Take a snapshot on bubble layout
@@ -118,9 +124,7 @@ test.describe("Audio player", () => {
         await checkPlayerVisibility(bubbleTile);
         await expect(page.locator(".mx_EventTile_last")).toMatchScreenshot(
             `${detail.replaceAll(" ", "-")}-bubble-layout.png`,
-            {
-                mask: [page.locator(".mx_MessageTimestamp, .mx_AudioPlayer_seek")],
-            },
+            screenshotOptions,
         );
     };
 
