@@ -314,7 +314,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             case KeyBindingAction.NextLandmark:
                 ev.stopPropagation();
                 ev.preventDefault();
-                document.querySelector('.mx_RoomTile_selected')?.focus();
+                (document.querySelector('.mx_RoomTile_selected') || document.querySelector('.mx_RoomListHeader_contextMenuButton'))?.focus();
                 break;
             case KeyBindingAction.PreviousLandmark:
                 ev.stopPropagation();
