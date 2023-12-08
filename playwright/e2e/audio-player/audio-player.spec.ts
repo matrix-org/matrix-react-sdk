@@ -48,9 +48,7 @@ test.describe("Audio player", () => {
     /**
      * Take snapshots of mx_EventTile_last on each layout, outputting log for reference/debugging.
      * @param detail The snapshot name. Used for outputting logs too.
-     * @param monospace This changes the font used to render the UI from a default one to a monospace one.
-     * Set to false by default. Note that the font applied to Percy snapshots can be different from the test result
-     * on your local environment.
+     * @param monospace This changes the font used to render the UI from a default one to Inconsolata. Set to false by default.
      */
     const takeSnapshots = async (page: Page, app: ElementAppPage, detail: string, monospace = false) => {
         // Check that the audio player is rendered and its button becomes visible
@@ -68,7 +66,7 @@ test.describe("Audio player", () => {
 
             if (monospace) {
                 // Assert that the monospace timer is visible
-                await expect(locator.locator("[role='timer']")).toHaveCSS("font-family", '"monospace"');
+                await expect(locator.locator("[role='timer']")).toHaveCSS("font-family", "Inconsolata");
             }
         };
 
@@ -76,7 +74,7 @@ test.describe("Audio player", () => {
             // Enable system font and monospace setting
             await app.settings.setValue("useBundledEmojiFont", null, SettingLevel.DEVICE, false);
             await app.settings.setValue("useSystemFont", null, SettingLevel.DEVICE, true);
-            await app.settings.setValue("systemFont", null, SettingLevel.DEVICE, "monospace");
+            await app.settings.setValue("systemFont", null, SettingLevel.DEVICE, "Inconsolata");
         }
 
         // Check the status of the seek bar
