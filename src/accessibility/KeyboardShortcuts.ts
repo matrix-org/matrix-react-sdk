@@ -133,6 +133,10 @@ export enum KeyBindingAction {
     PreviousVisitedRoomOrSpace = "KeyBinding.PreviousVisitedRoomOrSpace",
     /** Navigates forward */
     NextVisitedRoomOrSpace = "KeyBinding.NextVisitedRoomOrSpace",
+    /** Navigates to the next Landmark */
+    NextLandmark = "KeyBinding.nextLandmark",
+    /** Navigates to the next Landmark */
+    PreviousLandmark = "KeyBinding.previousLandmark",
 
     /** Toggles microphone while on a call */
     ToggleMicInCall = "KeyBinding.toggleMicInCall",
@@ -258,7 +262,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.ExpandRoomListSection,
             KeyBindingAction.NextRoom,
             KeyBindingAction.PrevRoom,
-        ],
+       ],
     },
     [CategoryName.ACCESSIBILITY]: {
         categoryLabel: _td("common|accessibility"),
@@ -296,6 +300,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.SwitchToSpaceByNumber,
             KeyBindingAction.PreviousVisitedRoomOrSpace,
             KeyBindingAction.NextVisitedRoomOrSpace,
+            KeyBindingAction.NextLandmark,
+            KeyBindingAction.PreviousLandmark,
         ],
     },
     [CategoryName.AUTOCOMPLETE]: {
@@ -732,5 +738,20 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         default: {
             key: Key.COMMA,
         },
+    },
+    [KeyBindingAction.NextLandmark]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.F6,
+        },
+        displayName: _td("keyboard|next_landmark"),
+    },
+    [KeyBindingAction.PreviousLandmark]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.F6,
+            shiftKey: true,
+        },
+        displayName: _td("keyboard|prev_landmark"),
     },
 };

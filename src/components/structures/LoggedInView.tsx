@@ -481,6 +481,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
 
+            case KeyBindingAction.NextLandmark:
+                document.querySelector('.mx_SpaceButton_active')?.focus();
+                handled = true;
+                break;
             case KeyBindingAction.FilterRooms:
                 dis.dispatch({
                     action: "focus_room_filter",

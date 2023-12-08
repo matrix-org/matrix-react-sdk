@@ -19,6 +19,7 @@ import React, { ComponentType, createRef, ReactComponentElement, SyntheticEvent 
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -61,6 +62,8 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -645,7 +648,30 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     <div
                         onFocus={this.props.onFocus}
                         onBlur={this.props.onBlur}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            switch (navAction) {
+                                case KeyBindingAction.NextLandmark:
+                                    const inThread = !!document.activeElement?.closest(".mx_ThreadView");
+                                    defaultDispatcher.dispatch(
+                                        {
+                                            action: Action.FocusSendMessageComposer,
+                                            context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+                                        },
+                                        true,
+                                    );
+                                    ev.stopPropagation();
+                                    ev.preventDefault();
+                                    return;
+                                case KeyBindingAction.PreviousLandmark:
+                                    document.querySelector('.mx_RoomSearch')?.focus();
+                                    ev.stopPropagation();
+                                    ev.preventDefault();
+                                    return;
+                            }
+
+                            onKeyDownHandler(ev)
+                        }}
                         className="mx_RoomList"
                         role="tree"
                         aria-label={_t("common|rooms")}

@@ -29,6 +29,7 @@ export const Key = {
     ARROW_DOWN: "ArrowDown",
     ARROW_LEFT: "ArrowLeft",
     ARROW_RIGHT: "ArrowRight",
+    F6: "F6",
     TAB: "Tab",
     ESCAPE: "Escape",
     ENTER: "Enter",

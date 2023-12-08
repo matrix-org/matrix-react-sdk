@@ -536,6 +536,17 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         }
 
+        const navAction = getKeyBindingsManager().getNavigationAction(event);
+        switch (navAction) {
+            case KeyBindingAction.PreviousLandmark:
+                document.querySelector('.mx_RoomTile_selected')?.focus();
+                handled = true;
+                break;
+            case KeyBindingAction.NextLandmark:
+                document.querySelector('.mx_SpaceButton_active')?.focus();
+                handled = true;
+                break;
+        }
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {

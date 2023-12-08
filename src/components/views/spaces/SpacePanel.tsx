@@ -52,6 +52,7 @@ import {
     UPDATE_STATUS_INDICATOR,
 } from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
+import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
     IconizedContextMenuOptionList,
@@ -69,7 +70,8 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
-import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
@@ -369,7 +371,30 @@ const SpacePanel: React.FC = () => {
                 >
                     <nav
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            switch (navAction) {
+                                case KeyBindingAction.PreviousLandmark:
+                                    const inThread = !!document.activeElement?.closest(".mx_ThreadView");
+                                    defaultDispatcher.dispatch(
+                                        {
+                                            action: Action.FocusSendMessageComposer,
+                                            context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+                                        },
+                                        true,
+                                    );
+                                    ev.stopPropagation();
+                                    ev.preventDefault();
+                                    return;
+                                case KeyBindingAction.NextLandmark:
+                                    document.querySelector('.mx_RoomSearch')?.focus();
+                                    ev.stopPropagation();
+                                    ev.preventDefault();
+                                    return;
+                            }
+
+                            onKeyDownHandler(ev);
+                        }}
                         ref={ref}
                         aria-label={_t("common|spaces")}
                     >
