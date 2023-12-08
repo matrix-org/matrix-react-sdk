@@ -123,10 +123,6 @@ declare global {
              */
             getDmRooms(userId: string): Chainable<string[]>;
             /**
-             * Boostraps cross-signing.
-             */
-            bootstrapCrossSigning(credendtials: UserCredentials): Chainable<void>;
-            /**
              * Joins the given room by alias or ID
              * @param roomIdOrAlias the id or alias of the room to join
              */
@@ -215,23 +211,6 @@ Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chain
 Cypress.Commands.add("setAvatarUrl", (url: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setAvatarUrl(url);
-    });
-});
-
-Cypress.Commands.add("bootstrapCrossSigning", (credentials: UserCredentials) => {
-    cy.window({ log: false }).then((win) => {
-        win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
-            authUploadDeviceSigningKeys: async (func) => {
-                await func({
-                    type: "m.login.password",
-                    identifier: {
-                        type: "m.id.user",
-                        user: credentials.userId,
-                    },
-                    password: credentials.password,
-                });
-            },
-        });
     });
 });
 
