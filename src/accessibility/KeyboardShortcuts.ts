@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import { _td, TranslationKey } from "../languageHandler";
-import { IS_MAC, Key } from "../Keyboard";
+import { IS_MAC, IS_ELECTRON, Key } from "../Keyboard";
 import { IBaseSetting } from "../settings/Settings";
 import { KeyCombo } from "../KeyBindingsManager";
 
@@ -748,7 +748,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.PreviousLandmark]: {
         default: {
-            ctrlOrCmdKey: true,
+            ctrlOrCmdKey: !IS_ELECTRON,
             key: Key.F6,
             shiftKey: true,
         },

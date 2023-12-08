@@ -78,6 +78,7 @@ export const Key = {
 };
 
 export const IS_MAC = navigator.platform.toUpperCase().includes("MAC");
+export const IS_ELECTRON = window.electron;
 
 export function isOnlyCtrlOrCmdKeyEvent(ev: React.KeyboardEvent | KeyboardEvent): boolean {
     if (IS_MAC) {
