@@ -386,7 +386,7 @@ export class IndexedDBLogStore {
                 }
                 const newLines = cursor.value.lines;
                 // The query returns log chunks in reverse time order, so prepend this new chunk to the buffer.
-                lines = newLine + lines;
+                lines = newLines + lines;
                 sizeSoFar += newLines.length;
 
                 // If we have now exceeded the size limit, stop.
