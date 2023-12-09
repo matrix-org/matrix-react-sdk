@@ -27,7 +27,6 @@ import type {
     ISendEventResponse,
 } from "matrix-js-sdk/src/matrix";
 import Chainable = Cypress.Chainable;
-import { UserCredentials } from "./login";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
