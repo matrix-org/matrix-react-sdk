@@ -116,18 +116,18 @@ test.describe("Read receipts", () => {
                 // Then the room remains read
                 await util.assertStillRead(room2);
             });
-            // XXX: fails because flaky: https://github.com/vector-im/element-web/issues/26341
-            test.skip("A room with an edit is still read after restart", async ({
+            test("A room with an edit is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
                 msg,
             }) => {
                 // Given a message is marked as read
-                await util.goTo(room2);
-                await util.receiveMessages(room2, ["Msg1"]);
-                await util.assertRead(room2);
                 await util.goTo(room1);
+                await util.receiveMessages(room2, ["Msg1"]);
+                await util.assertUnread(room2, 1);
+                await util.markAsRead(room2);
+                await util.assertRead(room2);
 
                 // When an edit appears in the room
                 await util.receiveMessages(room2, [msg.editOf("Msg1", "Msg1 Edit1")]);
@@ -249,8 +249,7 @@ test.describe("Read receipts", () => {
                 // Then it is read
                 await util.assertRead(room2);
             });
-            // XXX: flaky
-            test.skip("Editing a thread message after marking as read leaves the room read", async ({
+            test("Editing a thread message after marking as read leaves the room read", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
@@ -269,8 +268,7 @@ test.describe("Read receipts", () => {
                 // Then the room remains read
                 await util.assertStillRead(room2);
             });
-            // XXX: flaky
-            test.skip("A room with an edited threaded message is still read after restart", async ({
+            test("A room with an edited threaded message is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
@@ -289,20 +287,20 @@ test.describe("Read receipts", () => {
                 // Then is it still read
                 await util.assertRead(room2);
             });
-            // XXX: Failing since migration to Playwright
-            test.skip("A room where all threaded edits are read is still read after restart", async ({
+            test("A room where all threaded edits are read is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
                 msg,
             }) => {
+                await util.goTo(room1);
+                await util.receiveMessages(room2, ["Msg1", msg.threadedOff("Msg1", "Resp1")]);
+                await util.assertUnread(room2, 2);
+                await util.receiveMessages(room2, [msg.editOf("Resp1", "Edit1")]);
+                await util.assertUnread(room2, 2);
+
                 await util.goTo(room2);
-                await util.receiveMessages(room2, [
-                    "Msg1",
-                    msg.threadedOff("Msg1", "Resp1"),
-                    msg.editOf("Resp1", "Edit1"),
-                ]);
-                await util.assertUnread(room2, 1);
+
                 await util.openThread("Msg1");
                 await util.assertRead(room2);
                 await util.goTo(room1); // Make sure we are looking at room1 after reload
@@ -311,8 +309,7 @@ test.describe("Read receipts", () => {
                 await util.saveAndReload();
                 await util.assertRead(room2);
             });
-            // XXX: fails because the room becomes unread after restart
-            test.skip("A room where all threaded edits are marked as read is still read after restart", async ({
+            test("A room where all threaded edits are marked as read is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
@@ -337,8 +334,7 @@ test.describe("Read receipts", () => {
         });
 
         test.describe("thread roots", () => {
-            // XXX: flaky
-            test.skip("An edit of a thread root leaves the room read", async ({
+            test("An edit of a thread root leaves the room read", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
@@ -435,8 +431,7 @@ test.describe("Read receipts", () => {
                 await util.goTo(room1);
                 await util.assertStillRead(room2);
             });
-            // XXX: flaky
-            test.skip("Editing a thread root that is a reply after marking as read leaves the room read", async ({
+            test("Editing a thread root that is a reply after marking as read leaves the room read", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
