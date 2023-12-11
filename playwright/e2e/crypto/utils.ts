@@ -61,6 +61,9 @@ export async function waitForVerificationRequest(client: Client): Promise<JSHand
  */
 export function handleSasVerification(verifier: JSHandle<Verifier>): Promise<EmojiMapping[]> {
     return verifier.evaluate((verifier) => {
+        const event = verifier.getShowSasCallbacks();
+        if (event) return event.sas.emoji;
+
         return new Promise<EmojiMapping[]>((resolve) => {
             const onShowSas = (event: ISasEvent) => {
                 verifier.off("show_sas" as VerifierEvent, onShowSas);
