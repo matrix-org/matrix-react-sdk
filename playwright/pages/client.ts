@@ -26,6 +26,8 @@ import type {
     MatrixEvent,
     ReceiptType,
     IRoomDirectoryOptions,
+    UploadOpts,
+    Upload,
 } from "matrix-js-sdk/src/matrix";
 
 export class Client {
@@ -100,7 +102,14 @@ export class Client {
      * @param roomId ID of the room to send the message into
      * @param content the event content to send
      */
-    public async sendMessage(roomId: string, content: IContent): Promise<ISendEventResponse> {
+    public async sendMessage(roomId: string, content: IContent | string): Promise<ISendEventResponse> {
+        if (typeof content === "string") {
+            content = {
+                msgtype: "m.text",
+                body: content,
+            };
+        }
+
         const client = await this.prepareClient();
         return client.evaluate(
             (client, { roomId, content }) => {
@@ -230,5 +239,45 @@ export class Client {
         return await client.evaluate((client, options) => {
             return client.publicRooms(options);
         }, options);
+    }
+
+    /**
+     * @param {string} name
+     * @param {module:client.callback} callback Optional.
+     * @return {Promise} Resolves: {} an empty object.
+     * @return {module:http-api.MatrixError} Rejects: with an error response.
+     */
+    public async setDisplayName(name: string): Promise<{}> {
+        const client = await this.prepareClient();
+        return client.evaluate(async (cli: MatrixClient, name) => cli.setDisplayName(name), name);
+    }
+
+    /**
+     * @param {string} url
+     * @param {module:client.callback} callback Optional.
+     * @return {Promise} Resolves: {} an empty object.
+     * @return {module:http-api.MatrixError} Rejects: with an error response.
+     */
+    public async setAvatarUrl(url: string): Promise<{}> {
+        const client = await this.prepareClient();
+        return client.evaluate(async (cli: MatrixClient, url) => cli.setAvatarUrl(url), url);
+    }
+
+    /**
+     * Upload a file to the media repository on the homeserver.
+     *
+     * @param {object} file The object to upload. On a browser, something that
+     *   can be sent to XMLHttpRequest.send (typically a File).  Under node.js,
+     *   a Buffer, String or ReadStream.
+     */
+    public async uploadContent(file: Buffer, opts?: UploadOpts): Promise<Awaited<Upload["promise"]>> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (cli: MatrixClient, { file, opts }) => cli.uploadContent(new Uint8Array(file), opts),
+            {
+                file: [...file],
+                opts,
+            },
+        );
     }
 }

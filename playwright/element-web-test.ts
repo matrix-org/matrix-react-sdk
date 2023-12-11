@@ -233,6 +233,7 @@ export const expect = baseExpect.extend({
                 .mx_ReplyChain {
                     border-left-color: var(--cpd-color-blue-1200) !important;
                 }
+                ${args[1]?.css ?? ""}
             `,
         })) as ElementHandle<Element>;
 

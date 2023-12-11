@@ -101,6 +101,14 @@ export class ElementAppPage {
     }
 
     /**
+     * Get the composer input field
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public getComposerField(isRightPanel?: boolean): Locator {
+        return this.getComposer(isRightPanel).locator("[contenteditable]");
+    }
+
+    /**
      * Open the message composer kebab menu
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
      */
@@ -143,5 +151,11 @@ export class ElementAppPage {
 
     public async getClipboardText(): Promise<string> {
         return this.page.evaluate("navigator.clipboard.readText()");
+    }
+
+    public async scrollToBottom(page: Page): Promise<void> {
+        await page
+            .locator(".mx_ScrollPanel")
+            .evaluate((scrollPanel) => scrollPanel.scrollTo(0, scrollPanel.scrollHeight));
     }
 }
