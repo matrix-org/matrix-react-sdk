@@ -53,7 +53,7 @@ export interface StartHomeserverOpts {
 
 export interface Homeserver {
     start(opts: StartHomeserverOpts): Promise<HomeserverInstance>;
-    stop(): Promise<void>;
+    stop(): Promise<string[]>;
 }
 
 export interface Credentials {
