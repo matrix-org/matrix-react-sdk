@@ -282,6 +282,7 @@ test.describe("Cryptography", function () {
             const bobSecondDevice = new Bot(page, homeserver, {
                 bootstrapSecretStorage: false,
                 bootstrapCrossSigning: false,
+                startClient: false,
             });
             bobSecondDevice.setCredentials(
                 await homeserver.loginUser(bob.credentials.userId, bob.credentials.password),
@@ -431,6 +432,7 @@ test.describe("Cryptography", function () {
             const bobSecondDevice = new Bot(page, homeserver, {
                 bootstrapSecretStorage: false,
                 bootstrapCrossSigning: false,
+                startClient: false,
             });
             bobSecondDevice.setCredentials(
                 await homeserver.loginUser(bob.credentials.userId, bob.credentials.password),
