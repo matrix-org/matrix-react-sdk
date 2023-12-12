@@ -741,7 +741,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.NextLandmark]: {
         default: {
-            ctrlOrCmdKey: true,
+            ctrlOrCmdKey: !IS_ELECTRON,
             key: Key.F6,
         },
         displayName: _td("keyboard|next_landmark"),
