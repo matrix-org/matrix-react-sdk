@@ -56,6 +56,9 @@ import { MainGrouper } from "./grouper/MainGrouper";
 import { CreationGrouper } from "./grouper/CreationGrouper";
 import { _t } from "../../languageHandler";
 import { getLateEventInfo } from "./grouper/LateEventGrouper";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { highlightEvent } from "../../utils/EventUtils";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -205,6 +208,7 @@ interface IReadReceiptForUser {
  */
 export default class MessagePanel extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
+    public focusedEventId?: string;
     public context!: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
@@ -422,6 +426,46 @@ export default class MessagePanel extends React.Component<IProps, IState> {
      * @param {KeyboardEvent} ev: the keyboard event to handle
      */
     public handleScrollKey(ev: React.KeyboardEvent | KeyboardEvent): void {
+        const navAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navAction) {
+            case KeyBindingAction.SelectPrevMessage:
+            case KeyBindingAction.SelectNextMessage:
+                const events: WrappedEvent[] = this.props.events.map((event) => {
+                    return { event, shouldShow: this.shouldShowEvent(event) };
+                });
+                const currentEventId = this.focusedEventId || this.props.highlightedEventId || events[events.length-1]?.event.getId()!;
+                if ( navAction === KeyBindingAction.SelectPrevMessage ) {
+                    events.reverse();
+                }
+                let previousEventId = null;
+                for (let i = events.length - 1; i >= 0; i--) {
+                    const { event, shouldShow } = events[i];
+                    if (!shouldShow) {
+                        continue;
+                    }
+                    const eventId = event.getId()!;
+                    if ( previousEventId && eventId === currentEventId ) {
+                        console.log('.mx_EventTile[data-event-id="' + previousEventId + '"]');
+
+                        document.querySelector('.mx_EventTile[data-event-id="' + previousEventId + '"]')?.focus();
+                        this.focusedEventId = previousEventId;
+                        ev.preventDefault();
+                        return;
+                    }
+                    previousEventId = eventId;
+                }
+                if ( navAction === KeyBindingAction.SelectNextMessage ) {
+                    defaultDispatcher.dispatch(
+                        {
+                            action: Action.FocusSendMessageComposer,
+                            context: TimelineRenderingType.Room,
+                        },
+                        true,
+                     );
+                }
+                break;
+        }
+
         this.scrollPanel.current?.handleScrollKey(ev);
     }
 
