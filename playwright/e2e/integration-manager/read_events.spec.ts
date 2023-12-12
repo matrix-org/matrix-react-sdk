@@ -30,7 +30,6 @@ const INTEGRATION_MANAGER_HTML = `
             <input type="text" id="target-room-id"/>
             <input type="text" id="event-type"/>
             <input type="text" id="state-key"/>
-            <input type="text" id="event-content"/>
             <button name="Send" id="send-action">Press to send action</button>
             <button name="Close" id="close">Press to close</button>
             <p id="message-response">No response</p>
@@ -38,11 +37,10 @@ const INTEGRATION_MANAGER_HTML = `
                 document.getElementById("send-action").onclick = () => {
                     window.parent.postMessage(
                         {
-                            action: "send_event",
+                            action: "read_events",
                             room_id: document.getElementById("target-room-id").value,
                             type: document.getElementById("event-type").value,
-                            state_key: document.getElementById("state-key").value,
-                            content: JSON.parse(document.getElementById("event-content").value),
+                            state_key: JSON.parse(document.getElementById("state-key").value),
                         },
                         '*',
                     );
@@ -69,20 +67,16 @@ async function sendActionFromIntegrationManager(
     integrationManagerUrl: string,
     targetRoomId: string,
     eventType: string,
-    stateKey: string,
-    content: Record<string, unknown>,
+    stateKey: string | boolean,
 ) {
     const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
     await iframe.locator("#target-room-id").fill(targetRoomId);
     await iframe.locator("#event-type").fill(eventType);
-    if (stateKey) {
-        await iframe.locator("#state-key").fill(stateKey);
-    }
-    await iframe.locator("#event-content").fill(JSON.stringify(content));
+    await iframe.locator("#state-key").fill(JSON.stringify(stateKey));
     await iframe.locator("#send-action").click();
 }
 
-test.describe("Integration Manager: Send Event", () => {
+test.describe("Integration Manager: Read Events", () => {
     test.use({
         displayName: "Alice",
         room: async ({ user, app }, use) => {
@@ -137,119 +131,103 @@ test.describe("Integration Manager: Send Event", () => {
         );
 
         await app.viewRoomByName(ROOM_NAME);
+    });
+
+    test("should read a state event by state key", async ({ page, app, room }) => {
+        const eventType = "io.element.integrations.installations";
+        const eventContent = {
+            foo: "bar",
+        };
+        const stateKey = "state-key-123";
+
+        // Send a state event
+        const sendEventResponse = await app.client.sendStateEvent(room.roomId, eventType, eventContent, stateKey);
         await openIntegrationManager(page);
-    });
 
-    test("should send a state event", async ({ page, app, room }) => {
-        const eventType = "io.element.integrations.installations";
-        const eventContent = {
-            foo: "bar",
-        };
-        const stateKey = "state-key-123";
-
-        // Send the event
-        await sendActionFromIntegrationManager(
-            page,
-            integrationManagerUrl,
-            room.roomId,
-            eventType,
-            stateKey,
-            eventContent,
-        );
+        // Read state events
+        await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, eventType, stateKey);
 
         // Check the response
         const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
-        await expect(iframe.locator("#message-response")).toContainText("event_id");
-
-        // Check the event
-        const event = await app.client.evaluate(
-            (cli, { room, eventType, stateKey }) => {
-                return cli.getStateEvent(room.roomId, eventType, stateKey);
-            },
-            { room, eventType, stateKey },
-        );
-        expect(event).toMatchObject(eventContent);
+        await expect(iframe.locator("#message-response")).toContainText(sendEventResponse.event_id);
+        await expect(iframe.locator("#message-response")).toContainText(`"content":${JSON.stringify(eventContent)}`);
     });
 
-    test("should send a state event with empty content", async ({ page, app, room }) => {
-        const eventType = "io.element.integrations.installations";
-        const eventContent = {};
-        const stateKey = "state-key-123";
-
-        // Send the event
-        await sendActionFromIntegrationManager(
-            page,
-            integrationManagerUrl,
-            room.roomId,
-            eventType,
-            stateKey,
-            eventContent,
-        );
-
-        // Check the response
-        const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
-        await expect(iframe.locator("#message-response")).toContainText("event_id");
-
-        // Check the event
-        const event = await app.client.evaluate(
-            (cli, { room, eventType, stateKey }) => {
-                return cli.getStateEvent(room.roomId, eventType, stateKey);
-            },
-            { room, eventType, stateKey },
-        );
-        expect(event).toMatchObject({});
-    });
-
-    test("should send a state event with empty state key", async ({ page, app, room }) => {
+    test("should read a state event with empty state key", async ({ page, app, room }) => {
         const eventType = "io.element.integrations.installations";
         const eventContent = {
             foo: "bar",
         };
         const stateKey = "";
 
-        // Send the event
+        // Send a state event
+        const sendEventResponse = await app.client.sendStateEvent(room.roomId, eventType, eventContent, stateKey);
+        await openIntegrationManager(page);
+
+        // Read state events
+        await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, eventType, stateKey);
+
+        // Check the response
+        const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
+        await expect(iframe.locator("#message-response")).toContainText(sendEventResponse.event_id);
+        await expect(iframe.locator("#message-response")).toContainText(`"content":${JSON.stringify(eventContent)}`);
+    });
+
+    test("should read state events with any state key", async ({ page, app, room }) => {
+        const eventType = "io.element.integrations.installations";
+
+        const stateKey1 = "state-key-123";
+        const eventContent1 = {
+            foo1: "bar1",
+        };
+        const stateKey2 = "state-key-456";
+        const eventContent2 = {
+            foo2: "bar2",
+        };
+        const stateKey3 = "state-key-789";
+        const eventContent3 = {
+            foo3: "bar3",
+        };
+
+        // Send state events
+        const sendEventResponses = await Promise.all([
+            app.client.sendStateEvent(room.roomId, eventType, eventContent1, stateKey1),
+            app.client.sendStateEvent(room.roomId, eventType, eventContent2, stateKey2),
+            app.client.sendStateEvent(room.roomId, eventType, eventContent3, stateKey3),
+        ]);
+
+        await openIntegrationManager(page);
+
+        // Read state events
         await sendActionFromIntegrationManager(
             page,
             integrationManagerUrl,
             room.roomId,
             eventType,
-            stateKey,
-            eventContent,
+            true, // Any state key
         );
 
         // Check the response
         const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
-        await expect(iframe.locator("#message-response")).toContainText("event_id");
-
-        // Check the event
-        const event = await app.client.evaluate(
-            (cli, { room, eventType, stateKey }) => {
-                return cli.getStateEvent(room.roomId, eventType, stateKey);
-            },
-            { room, eventType, stateKey },
-        );
-        expect(event).toMatchObject(eventContent);
+        await expect(iframe.locator("#message-response")).toContainText(sendEventResponses[0].event_id);
+        await expect(iframe.locator("#message-response")).toContainText(`"content":${JSON.stringify(eventContent1)}`);
+        await expect(iframe.locator("#message-response")).toContainText(sendEventResponses[1].event_id);
+        await expect(iframe.locator("#message-response")).toContainText(`"content":${JSON.stringify(eventContent2)}`);
+        await expect(iframe.locator("#message-response")).toContainText(sendEventResponses[2].event_id);
+        await expect(iframe.locator("#message-response")).toContainText(`"content":${JSON.stringify(eventContent3)}`);
     });
 
-    test("should fail to send an event type which is not allowed", async ({ page, room }) => {
+    test("should fail to read an event type which is not allowed", async ({ page, room }) => {
         const eventType = "com.example.event";
-        const eventContent = {
-            foo: "bar",
-        };
         const stateKey = "";
 
-        // Send the event
-        await sendActionFromIntegrationManager(
-            page,
-            integrationManagerUrl,
-            room.roomId,
-            eventType,
-            stateKey,
-            eventContent,
-        );
+        await openIntegrationManager(page);
+
+        // Read state events
+        await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, eventType, stateKey);
 
         // Check the response
         const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
-        await expect(iframe.locator("#message-response")).toContainText("Failed to send event");
+        await expect(iframe.locator("#message-response")).toContainText("Failed to read events");
     });
 });

@@ -276,4 +276,26 @@ export class Client {
             { type, content },
         );
     }
+
+    /**
+     * Sends a state event into the room.
+     * @param roomId ID of the room to send the event into
+     * @param eventType type of event to send
+     * @param content the event content to send
+     * @param stateKey the state key to use
+     */
+    public async sendStateEvent(
+        roomId: string,
+        eventType: string,
+        content: IContent,
+        stateKey?: string,
+    ): Promise<ISendEventResponse> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (client, { roomId, eventType, content, stateKey }) => {
+                return client.sendStateEvent(roomId, eventType, content, stateKey);
+            },
+            { roomId, eventType, content, stateKey },
+        );
+    }
 }
