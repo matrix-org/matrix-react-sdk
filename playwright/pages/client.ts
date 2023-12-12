@@ -282,7 +282,7 @@ export class Client {
             },
         );
     }
-      
+
     /**
      * Boostraps cross-signing.
      */
