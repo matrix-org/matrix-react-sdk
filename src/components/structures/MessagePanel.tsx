@@ -439,20 +439,16 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 }
                 let previousEventId = null;
                 for (let i = events.length - 1; i >= 0; i--) {
-                    const { event, shouldShow } = events[i];
-                    if (!shouldShow) {
-                        continue;
-                    }
-                    const eventId = event.getId()!;
+                    const eventId = events[i].event.getId()!;
                     if ( previousEventId && eventId === currentEventId ) {
-                        console.log('.mx_EventTile[data-event-id="' + previousEventId + '"]');
-
                         document.querySelector('.mx_EventTile[data-event-id="' + previousEventId + '"]')?.focus();
                         this.focusedEventId = previousEventId;
                         ev.preventDefault();
                         return;
                     }
-                    previousEventId = eventId;
+                    if ( document.querySelector('.mx_EventTile[data-event-id="' + eventId + '"]') ) {
+                        previousEventId = eventId;
+                    }
                 }
                 if ( navAction === KeyBindingAction.SelectNextMessage ) {
                     defaultDispatcher.dispatch(
