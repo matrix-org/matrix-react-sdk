@@ -57,7 +57,6 @@ test.describe("Presence tests", () => {
             );
             await app.client.createRoom({}); // trigger sync
 
-
             await page.getByRole("button", { name: "Room info" }).click();
             await page.locator(".mx_RightPanel").getByText("People").click();
             await expect(page.locator(".mx_EntityTile_unreachable")).toContainText("Bob");
