@@ -379,7 +379,6 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.EditPrevMessage]: {
         default: {
-            ctrlOrCmdKey: true,
             key: Key.ARROW_UP,
         },
         displayName: _td("keyboard|navigate_prev_message_edit"),
@@ -567,12 +566,14 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
     [KeyBindingAction.SelectNextMessage]: {
         default: {
+            ctrlOrCmdKey: true,
             key: Key.ARROW_DOWN,
         },
         displayName: _td("keyboard|next_message"),
     },
     [KeyBindingAction.SelectPrevMessage]: {
         default: {
+            ctrlOrCmdKey: true,
             key: Key.ARROW_UP,
         },
         displayName: _td("keyboard|prev_message"),
