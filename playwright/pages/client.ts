@@ -261,4 +261,19 @@ export class Client {
             });
         }, credentials);
     }
+
+    /**
+     * Sets account data for the user.
+     * @param type The type of account data to set
+     * @param content The content to set
+     */
+    public async setAccountData(type: string, content: IContent): Promise<void> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (client, { type, content }) => {
+                await client.setAccountData(type, content);
+            },
+            { type, content },
+        );
+    }
 }
