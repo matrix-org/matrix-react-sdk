@@ -18,6 +18,11 @@ import { Locator, Page } from "@playwright/test";
 
 import type { SettingLevel } from "../../src/settings/SettingLevel";
 
+export enum Filter {
+    People = "people",
+    PublicRooms = "public_rooms",
+}
+
 export class Settings {
     public constructor(private readonly page: Page) {}
 
@@ -98,5 +103,43 @@ export class Settings {
         await this.page.locator(".mx_RoomTile_contextMenu").getByRole("menuitem", { name: "Settings" }).click();
         if (tab) await this.switchTab(tab);
         return this.page.locator(".mx_Dialog").filter({ has: this.page.locator(".mx_RoomSettingsDialog") });
+    }
+
+    /**
+     * Opens the spotlight dialog
+     */
+    public async openSpotlightDialog(): Promise<Locator> {
+        await this.page.locator(".mx_RoomSearch_spotlightTrigger").dispatchEvent("click");
+        return this.spotlightDialog();
+    }
+
+    public spotlightDialog(): Locator {
+        return this.page.locator('[role=dialog][aria-label="Search Dialog"]');
+    }
+
+    public async spotlightFilter(filter: Filter | null, locator?: Locator): Promise<void> {
+        let selector: string;
+        switch (filter) {
+            case Filter.People:
+                selector = "#mx_SpotlightDialog_button_startChat";
+                break;
+            case Filter.PublicRooms:
+                selector = "#mx_SpotlightDialog_button_explorePublicRooms";
+                break;
+            default:
+                selector = ".mx_SpotlightDialog_filter";
+                break;
+        }
+        await (locator ?? this.page).locator(selector).click();
+    }
+
+    public spotlightSearch(locator?: Locator): Locator {
+        return (locator ?? this.page).locator(".mx_SpotlightDialog_searchBox").getByRole("textbox", { name: "Search" });
+    }
+
+    public spotlightResults(locator?: Locator): Locator {
+        return (locator ?? this.page).locator(
+            ".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option",
+        );
     }
 }
