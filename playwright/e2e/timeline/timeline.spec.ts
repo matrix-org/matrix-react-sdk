@@ -499,6 +499,9 @@ test.describe("Timeline", () => {
             ).toBeVisible();
 
             await app.scrollToBottom(page);
+            await expect(
+                page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
+            ).toBeInViewport();
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
                 "event-tiles-irc-layout.png",
                 screenshotOptions,
@@ -511,11 +514,10 @@ test.describe("Timeline", () => {
             await app.settings.setValue("layout", null, SettingLevel.DEVICE, Layout.Group);
 
             // Check that the last EventTile is rendered
-            await expect(
-                page.locator(".mx_RoomView_body[data-layout=group] .mx_EventTile.mx_EventTile_last"),
-            ).toBeVisible();
-
             await app.scrollToBottom(page);
+            await expect(
+                page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
+            ).toBeInViewport();
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
                 "event-tiles-modern-layout.png",
                 screenshotOptions,
@@ -525,9 +527,10 @@ test.describe("Timeline", () => {
             await app.settings.setValue("useCompactLayout", null, SettingLevel.DEVICE, true);
 
             // Check that the last EventTile is rendered
-            await expect(page.locator(".mx_MatrixChat_useCompactLayout .mx_EventTile.mx_EventTile_last")).toBeVisible();
-
             await app.scrollToBottom(page);
+            await expect(
+                page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
+            ).toBeInViewport();
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
                 "event-tiles-compact-modern-layout.png",
                 screenshotOptions,
@@ -540,6 +543,9 @@ test.describe("Timeline", () => {
             await app.settings.setValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
 
             await app.scrollToBottom(page);
+            await expect(
+                page.locator(".mx_RoomView").getByText("This message has an inline emoji 👒"),
+            ).toBeInViewport();
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot(
                 "event-tiles-bubble-layout.png",
                 screenshotOptions,
