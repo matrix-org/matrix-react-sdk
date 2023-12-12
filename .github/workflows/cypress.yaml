@@ -99,7 +99,7 @@ jobs:
         steps:
             # The version of chrome shipped by default may not be consistent across runners
             # so we explicitly use a specific version of chrome here.
-            - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
+            - uses: browser-actions/setup-chrome@52f10de5479c69bcbbab2eab094c9d373148005e # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
