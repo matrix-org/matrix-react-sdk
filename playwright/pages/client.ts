@@ -298,4 +298,31 @@ export class Client {
             { roomId, eventType, content, stateKey },
         );
     }
+
+    /**
+     * Leaves the given room.
+     * @param roomId ID of the room to leave
+     */
+    public async leave(roomId: string): Promise<void> {
+        const client = await this.prepareClient();
+        return client.evaluate(async (client, roomId) => {
+            await client.leave(roomId);
+        }, roomId);
+    }
+
+    /**
+     * Kicks the given user from the given room.
+     * @param roomId ID of the room to kick from
+     * @param userId ID of the user to kick
+     * @param reason Optional reason for the kick
+     */
+    public async ban(roomId: string, userId: string, reason?: string): Promise<void> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (client, { roomId, userId, reason }) => {
+                await client.ban(roomId, userId, reason);
+            },
+            { roomId, userId, reason },
+        );
+    }
 }
