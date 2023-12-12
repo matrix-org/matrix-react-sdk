@@ -21,7 +21,7 @@ import { Client } from "./client";
 import { Labs } from "./labs";
 
 export class ElementAppPage {
-    public constructor(private readonly page: Page) {}
+    public constructor(public readonly page: Page) {}
 
     public labs = new Labs(this.page);
     public settings = new Settings(this.page);
@@ -50,6 +50,19 @@ export class ElementAppPage {
         return this.settings.closeDialog();
     }
 
+    public async getClipboard(): Promise<string> {
+        return await this.page.evaluate(() => navigator.clipboard.readText());
+    }
+
+    /**
+     * Find an open dialog by its title
+     */
+    public async getDialogByTitle(title: string, timeout = 5000): Promise<Locator> {
+        const dialog = this.page.locator(".mx_Dialog");
+        await dialog.getByRole("heading", { name: title }).waitFor({ timeout });
+        return dialog;
+    }
+
     /**
      * Opens the given room by name. The room must be visible in the
      * room list, but the room list may be folded horizontally, and the
@@ -76,6 +89,10 @@ export class ElementAppPage {
             .locator(`[title="${name}"],[aria-label="${name}"]`)
             .first()
             .click();
+    }
+
+    public async viewRoomById(roomId: string): Promise<void> {
+        await this.page.goto(`/#/room/${roomId}`);
     }
 
     /**
