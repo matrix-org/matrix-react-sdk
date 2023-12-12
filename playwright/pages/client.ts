@@ -316,6 +316,22 @@ export class Client {
      * @param userId ID of the user to kick
      * @param reason Optional reason for the kick
      */
+    public async kick(roomId: string, userId: string, reason?: string): Promise<void> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (client, { roomId, userId, reason }) => {
+                await client.kick(roomId, userId, reason);
+            },
+            { roomId, userId, reason },
+        );
+    }
+
+    /**
+     * Kicks the given user from the given room.
+     * @param roomId ID of the room to kick from
+     * @param userId ID of the user to kick
+     * @param reason Optional reason for the kick
+     */
     public async ban(roomId: string, userId: string, reason?: string): Promise<void> {
         const client = await this.prepareClient();
         return client.evaluate(
