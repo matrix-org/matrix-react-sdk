@@ -114,6 +114,6 @@ test.describe("Widget Layout", () => {
             "",
         );
 
-        expect((await iframe.boundingBox()).height).toBeGreaterThan(400);
+        await expect.poll(async () => (await iframe.boundingBox()).height).toBeGreaterThan(400);
     });
 });
