@@ -16,7 +16,6 @@ limitations under the License.
 
 import type * as Matrix from "matrix-js-sdk/src/matrix";
 import { type SettingLevel } from "../src/settings/SettingLevel";
-import type ActiveWidgetStore from "../src/stores/ActiveWidgetStore";
 
 declare global {
     interface Window {
@@ -26,7 +25,9 @@ declare global {
         mxSettingsStore: {
             setValue(settingName: string, roomId: string | null, level: SettingLevel, value: any): Promise<void>;
         };
-        mxActiveWidgetStore?: ActiveWidgetStore;
+        mxActiveWidgetStore: {
+            setWidgetPersistence(widgetId: string, roomId: string | null, val: boolean): void;
+        };
         matrixcs: typeof Matrix;
     }
 }
