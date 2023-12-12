@@ -43,6 +43,11 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
         },
     },
 
+    // The default language is set here for test consistency
+    setting_defaults: {
+        language: "en-GB",
+    },
+
     // the location tests want a map style url.
     map_style_url: "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
 };
@@ -191,7 +196,7 @@ export const test = base.extend<
     },
 
     botCreateOpts: {},
-    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+    bot: async ({ page, homeserver, botCreateOpts, user }, use) => {
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
@@ -206,7 +211,17 @@ export const test = base.extend<
 });
 
 export const expect = baseExpect.extend({
-    async toMatchScreenshot(this: ExpectMatcherState, receiver: Page | Locator, ...args) {
+    async toMatchScreenshot(
+        this: ExpectMatcherState,
+        receiver: Page | Locator,
+        name?: `${string}.png`,
+        options?: {
+            mask?: Array<Locator>;
+            omitBackground?: boolean;
+            timeout?: number;
+            css?: string;
+        },
+    ) {
         const page = "page" in receiver ? receiver.page() : receiver;
 
         // We add a custom style tag before taking screenshots
@@ -228,10 +243,11 @@ export const expect = baseExpect.extend({
                 .mx_ReplyChain {
                     border-left-color: var(--cpd-color-blue-1200) !important;
                 }
+                ${options?.css ?? ""}
             `,
         })) as ElementHandle<Element>;
 
-        await baseExpect(receiver).toHaveScreenshot(...args);
+        await baseExpect(receiver).toHaveScreenshot(name, options);
 
         await style.evaluate((tag) => tag.remove());
         return { pass: true, message: () => "", name: "toMatchScreenshot" };

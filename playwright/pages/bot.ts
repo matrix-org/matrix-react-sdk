@@ -18,6 +18,7 @@ import { JSHandle, Page } from "@playwright/test";
 import { uniqueId } from "lodash";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { Logger } from "matrix-js-sdk/src/logger";
 import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
 import type { Credentials, HomeserverInstance } from "../plugins/homeserver";
 import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
@@ -101,6 +102,31 @@ export class Bot extends Client {
 
         this.handlePromise = this.page.evaluateHandle(
             async ({ homeserver, credentials, opts }) => {
+                function getLogger(loggerName: string): Logger {
+                    const logger = {
+                        getChild: (namespace: string) => getLogger(`${loggerName}:${namespace}`),
+                        trace(...msg: any[]): void {
+                            console.trace(loggerName, ...msg);
+                        },
+                        debug(...msg: any[]): void {
+                            console.debug(loggerName, ...msg);
+                        },
+                        info(...msg: any[]): void {
+                            console.info(loggerName, ...msg);
+                        },
+                        warn(...msg: any[]): void {
+                            console.warn(loggerName, ...msg);
+                        },
+                        error(...msg: any[]): void {
+                            console.error(loggerName, ...msg);
+                        },
+                    } satisfies Logger;
+
+                    return logger as unknown as Logger;
+                }
+
+                const logger = getLogger(`cypress bot ${credentials.userId}`);
+
                 const keys = {};
 
                 const getCrossSigningKey = (type: string) => {
@@ -139,6 +165,7 @@ export class Bot extends Client {
                     scheduler: new window.matrixcs.MatrixScheduler(),
                     cryptoStore: new window.matrixcs.MemoryCryptoStore(),
                     cryptoCallbacks,
+                    logger,
                 }) as ExtendedMatrixClient;
 
                 if (opts.autoAcceptInvites) {
