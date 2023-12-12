@@ -24,7 +24,6 @@ test.describe("Presence tests", () => {
 
     test.describe("bob unreachable", () => {
         test("renders unreachable presence state correctly", async ({ page, app, user, bot: bob }) => {
-            await page.pause();
             await app.client.createRoom({ name: "My Room", invite: [bob.credentials.userId] });
             await app.viewRoomByName("My Room");
 
@@ -58,7 +57,6 @@ test.describe("Presence tests", () => {
             );
             await app.client.createRoom({}); // trigger sync
 
-            await page.pause();
 
             await page.getByRole("button", { name: "Room info" }).click();
             await page.locator(".mx_RightPanel").getByText("People").click();
