@@ -446,7 +446,7 @@ export function init(setUpPersistence = true): Promise<void> {
 
     // log unhandled rejections in the rageshake
     window.addEventListener("unhandledrejection", (event) => {
-        logger.error(`Unhandled promise rejection: ${event.reason}`);
+        global.mx_rage_logger.log("error", `Unhandled promise rejection: ${event.reason}`);
     });
 
     if (setUpPersistence) {
