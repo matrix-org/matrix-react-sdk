@@ -432,7 +432,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 Icon={FavouriteIcon}
                 label={_t("room|context_menu|favourite")}
                 checked={isFavorite}
-                onSelect={() => tagRoom(room, DefaultTagID.Favourite)}
+                onChange={() => tagRoom(room, DefaultTagID.Favourite)}
+                // XXX: Compound is broken and requires onSelect here where it doesn't work
+                onSelect={() => {}}
             />
             <MenuItem
                 Icon={UserAddIcon}
