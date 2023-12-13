@@ -106,9 +106,8 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </div>
       </label>
       <button
-        class="_item_1bcsk_17 _interactive_1bcsk_36 _disabled_1bcsk_120"
+        class="_item_1bcsk_17 _interactive_1bcsk_36"
         data-kind="primary"
-        disabled=""
         role="menuitem"
       >
         <div
