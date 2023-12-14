@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../src/@types/react";
 // eslint-disable-next-line no-restricted-imports
 import "matrix-js-sdk/src/@types/global";
 import type {
