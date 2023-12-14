@@ -43,6 +43,11 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
         },
     },
 
+    // The default language is set here for test consistency
+    setting_defaults: {
+        language: "en-GB",
+    },
+
     // the location tests want a map style url.
     map_style_url: "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
 };
@@ -76,19 +81,25 @@ export const test = base.extend<
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
         botCreateOpts: CreateBotOpts;
         bot: Bot;
+        labsFlags: string[];
         webserver: Webserver;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, cryptoBackend }, use) => {
+    page: async ({ context, page, config, cryptoBackend, labsFlags }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
+            json["features"] = {
+                ...json["features"],
+                // Enable the lab features
+                ...labsFlags.reduce((obj, flag) => {
+                    obj[flag] = true;
+                    return obj;
+                }, {}),
+            };
             if (cryptoBackend === "rust") {
-                json["features"] = {
-                    ...json["features"],
-                    feature_rust_crypto: true,
-                };
+                json.features.feature_rust_crypto = true;
             }
             await route.fulfill({ json });
         });
@@ -140,6 +151,7 @@ export const test = base.extend<
             displayName,
         });
     },
+    labsFlags: [],
     user: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
             ({ baseUrl, credentials }) => {
@@ -191,7 +203,7 @@ export const test = base.extend<
     },
 
     botCreateOpts: {},
-    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+    bot: async ({ page, homeserver, botCreateOpts, user }, use) => {
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
@@ -206,7 +218,17 @@ export const test = base.extend<
 });
 
 export const expect = baseExpect.extend({
-    async toMatchScreenshot(this: ExpectMatcherState, receiver: Page | Locator, ...args) {
+    async toMatchScreenshot(
+        this: ExpectMatcherState,
+        receiver: Page | Locator,
+        name?: `${string}.png`,
+        options?: {
+            mask?: Array<Locator>;
+            omitBackground?: boolean;
+            timeout?: number;
+            css?: string;
+        },
+    ) {
         const page = "page" in receiver ? receiver.page() : receiver;
 
         // We add a custom style tag before taking screenshots
@@ -228,10 +250,15 @@ export const expect = baseExpect.extend({
                 .mx_ReplyChain {
                     border-left-color: var(--cpd-color-blue-1200) !important;
                 }
+                /* Use monospace font for timestamp for consistent mask width */
+                .mx_MessageTimestamp {
+                    font-family: Inconsolata !important;
+                }
+                ${options?.css ?? ""}
             `,
         })) as ElementHandle<Element>;
 
-        await baseExpect(receiver).toHaveScreenshot(...args);
+        await baseExpect(receiver).toHaveScreenshot(name, options);
 
         await style.evaluate((tag) => tag.remove());
         return { pass: true, message: () => "", name: "toMatchScreenshot" };
