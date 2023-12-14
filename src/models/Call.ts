@@ -37,7 +37,7 @@ import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/Matri
 import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
 
 import type EventEmitter from "events";
-import type { ClientWidgetApi } from "matrix-widget-api";
+import type { ClientWidgetApi, IWidgetData } from "matrix-widget-api";
 import type { IApp } from "../stores/WidgetStore";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";
 import SettingsStore from "../settings/SettingsStore";
@@ -620,7 +620,7 @@ export class JitsiCall extends Call {
  * (somewhat cheekily named)
  */
 export class ElementCall extends Call {
-    // TODO this is only there to support backwards compatiblity in timeline rendering
+    // TODO this is only there to support backwards compatibility in timeline rendering
     // this should not be part of this class since it has nothing to do with it.
     public static readonly CALL_EVENT_TYPE = new NamespacedValue(null, EventType.GroupCallPrefix);
     public static readonly MEMBER_EVENT_TYPE = new NamespacedValue(null, EventType.GroupCallMemberPrefix);
@@ -649,8 +649,10 @@ export class ElementCall extends Call {
         // Splice together the Element Call URL for this call
         const params = new URLSearchParams({
             embed: "true", // We're embedding EC within another application
-            preload: "true", // We want it to load in the background
-            skipLobby: "true", // Skip the lobby since we show a lobby component of our own
+            // Template variables are used, so that this can be configured using the widget data.
+            preload: "$preload", // We want it to load in the background.
+            skipLobby: "$skipLobby", // Skip the lobby in case we show a lobby component of our own.
+            perParticipantE2EE: "$perParticipantE2EE",
             hideHeader: "true", // Hide the header since our room header is enough
             userId: client.getUserId()!,
             deviceId: client.getDeviceId()!,
@@ -661,8 +663,6 @@ export class ElementCall extends Call {
             analyticsID,
         });
 
-        if (client.isRoomEncrypted(roomId) && !SettingsStore.getValue("feature_disable_call_per_sender_encryption"))
-            params.append("perParticipantE2EE", "true");
         if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "true");
         if (SettingsStore.getValue("feature_allow_screen_share_only_mode"))
             params.append("allowVoipWithNoMedia", "true");
@@ -682,24 +682,42 @@ export class ElementCall extends Call {
 
         const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
         url.pathname = "/room";
-        url.hash = `#?${params.toString()}`;
+        const replacedUrl = params.toString().replace(/%24/g, "$");
+        url.hash = `#?${replacedUrl}`;
         return url;
     }
 
-    private static createOrGetCallWidget(roomId: string, client: MatrixClient): IApp {
+    // Creates a new widget if there isn't any widget of typ Call in this room.
+    // Defaults for creating a new widget are: skipLobby = false, preload = false
+    // When there is already a widget the current widget configuration will be used or can be overwritten
+    // by passing the according parameters (skipLobby, preload).
+    //
+    // `preload` is deprecated. We used it for optimizing EC by using a custom EW call lobby and preloading the iframe.
+    // now it should always be false.
+    private static createOrGetCallWidget(
+        roomId: string,
+        client: MatrixClient,
+        skipLobby: boolean | undefined,
+        preload: boolean | undefined,
+    ): IApp {
         const ecWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.CALL.matches(app.type));
-        const url = ElementCall.generateWidgetUrl(client, roomId);
-
         if (ecWidget) {
-            // always update the url because even if the widget is already created
+            // Always update the widget data because even if the widget is already created,
             // we might have settings changes that update the widget.
-            ecWidget.url = url.toString();
-
+            const overwrites: IWidgetData = {};
+            if (skipLobby !== undefined) {
+                overwrites.skipLobby = skipLobby;
+            }
+            if (preload !== undefined) {
+                overwrites.preload = preload;
+            }
+            ecWidget.data = ElementCall.getWidgetData(client, roomId, ecWidget?.data ?? {}, overwrites);
             return ecWidget;
         }
 
         // To use Element Call without touching room state, we create a virtual
         // widget (one that doesn't have a corresponding state event)
+        const url = ElementCall.generateWidgetUrl(client, roomId);
         return WidgetStore.instance.addVirtualWidget(
             {
                 id: randomString(24), // So that it's globally unique
@@ -708,13 +726,38 @@ export class ElementCall extends Call {
                 type: WidgetType.CALL.preferred,
                 url: url.toString(),
                 // waitForIframeLoad: false,
+                data: ElementCall.getWidgetData(
+                    client,
+                    roomId,
+                    {},
+                    {
+                        skipLobby: skipLobby ?? false,
+                        preload: preload ?? false,
+                    },
+                ),
             },
             roomId,
         );
     }
 
+    private static getWidgetData(
+        client: MatrixClient,
+        roomId: string,
+        currentData: IWidgetData,
+        overwriteData: IWidgetData,
+    ): IWidgetData {
+        let perParticipantE2EE = false;
+        if (client.isRoomEncrypted(roomId) && !SettingsStore.getValue("feature_disable_call_per_sender_encryption"))
+            perParticipantE2EE = true;
+        return {
+            ...currentData,
+            ...overwriteData,
+            perParticipantE2EE,
+        };
+    }
+
     private onCallEncryptionSettingsChange(): void {
-        this.widget.url = ElementCall.generateWidgetUrl(this.client, this.roomId).toString();
+        this.widget.data = ElementCall.getWidgetData(this.client, this.roomId, this.widget.data ?? {}, {});
     }
 
     private constructor(public session: MatrixRTCSession, widget: IApp, client: MatrixClient) {
@@ -745,10 +788,15 @@ export class ElementCall extends Call {
             // A call is present if we
             // - have a widget: This means the create function was called.
             // - or there is a running session where we have not yet created a widget for.
-            // - or this this is a call room. Then we also always want to show a call.
+            // - or this is a call room. Then we also always want to show a call.
             if (hasEcWidget || session.memberships.length !== 0 || room.isCallRoom()) {
                 // create a widget for the case we are joining a running call and don't have on yet.
-                const availableOrCreatedWidget = ElementCall.createOrGetCallWidget(room.roomId, room.client);
+                const availableOrCreatedWidget = ElementCall.createOrGetCallWidget(
+                    room.roomId,
+                    room.client,
+                    undefined,
+                    undefined,
+                );
                 return new ElementCall(session, availableOrCreatedWidget, room.client);
             }
         }
@@ -756,12 +804,13 @@ export class ElementCall extends Call {
         return null;
     }
 
-    public static async create(room: Room): Promise<void> {
+    public static async create(room: Room, skipLobby = false): Promise<void> {
         const isVideoRoom =
             SettingsStore.getValue("feature_video_rooms") &&
             SettingsStore.getValue("feature_element_call_video_rooms") &&
             room.isCallRoom();
-        ElementCall.createOrGetCallWidget(room.roomId, room.client);
+
+        ElementCall.createOrGetCallWidget(room.roomId, room.client, skipLobby, false);
         WidgetStore.instance.emit(UPDATE_EVENT, null);
 
         // Send Call notify
@@ -789,18 +838,33 @@ export class ElementCall extends Call {
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
     ): Promise<void> {
-        try {
-            await this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
-                audioInput: audioInput?.label ?? null,
-                videoInput: videoInput?.label ?? null,
-            });
-        } catch (e) {
-            throw new Error(`Failed to join call in room ${this.roomId}: ${e}`);
+        // the JoinCall action is only send if the widget is waiting for it.
+        if ((this.widget.data ?? {}).preload) {
+            try {
+                await this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
+                    audioInput: audioInput?.label ?? null,
+                    videoInput: videoInput?.label ?? null,
+                });
+            } catch (e) {
+                throw new Error(`Failed to join call in room ${this.roomId}: ${e}`);
+            }
         }
-
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
+        if (!(this.widget.data ?? {}).skipLobby) {
+            await new Promise<void>((resolve) => {
+                const waitForLobbyJoin = (roomId: string, session: MatrixRTCSession): void => {
+                    if (this.session.callId === session.callId && roomId === this.roomId) {
+                        resolve();
+                        // This listener is not needed anymore. The promise resolved and we updated to the connection state
+                        // when `performConnection` resolves.
+                        this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, waitForLobbyJoin);
+                    }
+                };
+                this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, waitForLobbyJoin);
+            });
+        }
     }
 
     protected async performDisconnection(): Promise<void> {

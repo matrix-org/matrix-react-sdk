@@ -17,17 +17,10 @@ limitations under the License.
 import React, { FC, ReactNode, useState, useContext, useEffect, useMemo, useRef, useCallback } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
-import type { ConnectionState } from "../../../models/Call";
-import { Call, CallEvent, ElementCall, isConnected } from "../../../models/Call";
-import {
-    useCall,
-    useConnectionState,
-    useJoinCallButtonDisabledTooltip,
-    useParticipatingMembers,
-} from "../../../hooks/useCall";
+import { Call, ElementCall } from "../../../models/Call";
+import { useCall } from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
@@ -42,7 +35,6 @@ import { aboveRightOf, ContextMenuButton, useContextMenu } from "../../structure
 import { Alignment } from "../elements/Tooltip";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
 
 interface DeviceButtonProps {
@@ -120,8 +112,6 @@ const DeviceButton: FC<DeviceButtonProps> = ({
         </div>
     );
 };
-
-const MAX_FACES = 8;
 
 interface LobbyProps {
     room: Room;
@@ -297,39 +287,24 @@ interface StartCallViewProps {
     resizing: boolean;
     call: Call | null;
     setStartingCall: (value: boolean) => void;
+    startingCall: boolean;
+    skipLobby?: boolean;
 }
 
-const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStartingCall }) => {
+const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStartingCall, startingCall, skipLobby }) => {
     const cli = useContext(MatrixClientContext);
 
-    // Since connection has to be split across two different callbacks, we
-    // create a promise to communicate the results back to the caller
-    const connectDeferredRef = useRef<IDeferred<void>>();
-    if (connectDeferredRef.current === undefined) {
-        connectDeferredRef.current = defer();
-    }
-    const connectDeferred = connectDeferredRef.current!;
-
-    // Since the call might be null, we have to track connection state by hand.
-    // The alternative would be to split this component in two depending on
-    // whether we've received the call, so we could use the useConnectionState
-    // hook, but then React would remount the lobby when the call arrives.
-    const [connected, setConnected] = useState(() => call !== null && isConnected(call.connectionState));
+    // We need to do this awkward double effect system,
+    // because otherwise we will not have subscribed to the CallStore
+    // before we create the call which emits the UPDATE_ROOM event.
     useEffect(() => {
-        if (call !== null) {
-            const onConnectionState = (state: ConnectionState): void => setConnected(isConnected(state));
-            call.on(CallEvent.ConnectionState, onConnectionState);
-            return () => {
-                call.off(CallEvent.ConnectionState, onConnectionState);
-            };
-        }
-    }, [call]);
-
-    const connect = useCallback(async (): Promise<void> => {
         setStartingCall(true);
-        await ElementCall.create(room);
-        await connectDeferred.promise;
-    }, [room, setStartingCall, connectDeferred]);
+    }, [setStartingCall]);
+    useEffect(() => {
+        if (startingCall) {
+            ElementCall.create(room, skipLobby);
+        }
+    }, [room, skipLobby, startingCall]);
 
     useEffect(() => {
         (async (): Promise<void> => {
@@ -339,17 +314,15 @@ const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStarti
                     // Disconnect from any other active calls first, since we don't yet support holding
                     await Promise.all([...CallStore.instance.activeCalls].map((call) => call.disconnect()));
                     await call.connect();
-                    connectDeferred.resolve();
                 } catch (e) {
-                    connectDeferred.reject(e);
+                    logger.error(e);
                 }
             }
         })();
-    }, [call, connectDeferred]);
+    }, [call]);
 
     return (
         <div className="mx_CallView">
-            {connected ? null : <Lobby room={room} connect={connect} />}
             {call !== null && (
                 <AppTile
                     app={call.widget}
@@ -369,13 +342,11 @@ interface JoinCallViewProps {
     room: Room;
     resizing: boolean;
     call: Call;
+    skipLobby?: boolean;
 }
 
-const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
+const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby }) => {
     const cli = useContext(MatrixClientContext);
-    const connected = isConnected(useConnectionState(call));
-    const members = useParticipatingMembers(call);
-    const joinCallButtonDisabledTooltip = useJoinCallButtonDisabledTooltip(call);
 
     const connect = useCallback(async (): Promise<void> => {
         // Disconnect from any other active calls first, since we don't yet support holding
@@ -387,37 +358,15 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
     useEffect(() => {
         call.clean();
     }, [call]);
-
-    let lobby: JSX.Element | null = null;
-    if (!connected) {
-        let facePile: JSX.Element | null = null;
-        if (members.length) {
-            const shownMembers = members.slice(0, MAX_FACES);
-            const overflow = members.length > shownMembers.length;
-
-            facePile = (
-                <div className="mx_CallView_participants">
-                    {_t("voip|n_people_joined", { count: members.length })}
-                    <FacePile members={shownMembers} size="24px" overflow={overflow} />
-                </div>
-            );
+    useEffect(() => {
+        if (call.connectionState === "disconnected") {
+            (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
+            connect();
         }
-
-        lobby = (
-            <Lobby
-                room={room}
-                connect={connect}
-                joinCallButtonDisabledTooltip={joinCallButtonDisabledTooltip ?? undefined}
-            >
-                {facePile}
-            </Lobby>
-        );
-    }
+    }, [call.connectionState, call.widget.data, connect, skipLobby]);
 
     return (
         <div className="mx_CallView">
-            {lobby}
-            {/* We render the widget even if we're disconnected, so it stays loaded */}
             <AppTile
                 app={call.widget}
                 room={room}
@@ -439,16 +388,26 @@ interface CallViewProps {
      * button will create a call if there isn't already one.
      */
     waitForCall: boolean;
+    skipLobby?: boolean;
 }
 
-export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall }) => {
+export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipLobby }) => {
     const call = useCall(room.roomId);
     const [startingCall, setStartingCall] = useState(false);
 
     if (call === null || startingCall) {
         if (waitForCall) return null;
-        return <StartCallView room={room} resizing={resizing} call={call} setStartingCall={setStartingCall} />;
+        return (
+            <StartCallView
+                room={room}
+                resizing={resizing}
+                call={call}
+                setStartingCall={setStartingCall}
+                startingCall={startingCall}
+                skipLobby={skipLobby}
+            />
+        );
     } else {
-        return <JoinCallView room={room} resizing={resizing} call={call} />;
+        return <JoinCallView room={room} resizing={resizing} call={call} skipLobby={skipLobby} />;
     }
 };
