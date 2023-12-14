@@ -169,7 +169,7 @@ export const useRoomCall = (
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-                placeCall(room, CallType.Voice, callType);
+                placeCall(room, CallType.Voice, callType, evt.shiftKey);
             }
         },
         [promptPinWidget, room, widget, callType],
@@ -180,7 +180,7 @@ export const useRoomCall = (
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-                placeCall(room, CallType.Video, callType);
+                placeCall(room, CallType.Video, callType, evt.shiftKey);
             }
         },
         [widget, promptPinWidget, room, callType],
