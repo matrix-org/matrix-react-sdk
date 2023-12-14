@@ -33,6 +33,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       <div
         aria-disabled="true"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
+        data-state="closed"
         disabled=""
         role="button"
         tabindex="0"
@@ -42,6 +43,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       <div
         aria-disabled="true"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
+        data-state="closed"
         disabled=""
         role="button"
         tabindex="0"
@@ -321,8 +323,8 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             Join
           </div>
           <div
-            aria-describedby="mx_TooltipTarget_EetmBG4y"
-            class="mx_TextWithTooltip_target"
+            class=""
+            data-state="closed"
             tabindex="0"
           >
             <span
@@ -330,12 +332,12 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             >
               <input
                 disabled=""
-                id="checkbox_VCeEefiPqp"
+                id="checkbox_EetmBG4yVC"
                 tabindex="-1"
                 type="checkbox"
               />
               <label
-                for="checkbox_VCeEefiPqp"
+                for="checkbox_EetmBG4yVC"
               >
                 <div
                   class="mx_Checkbox_background"
