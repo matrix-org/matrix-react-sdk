@@ -40,6 +40,7 @@ export const ContextMenuTooltipButton = forwardRef(function <T extends keyof JSX
             aria-haspopup={true}
             aria-expanded={isExpanded}
             forceHide={isExpanded}
+            ref={ref}
         >
             {children}
         </AccessibleTooltipButton>

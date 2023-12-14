@@ -39,6 +39,7 @@ export const ContextMenuButton = forwardRef(function <T extends keyof JSX.Intrin
             aria-label={label}
             aria-haspopup={true}
             aria-expanded={isExpanded}
+            ref={ref}
         >
             {children}
         </AccessibleButton>
