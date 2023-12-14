@@ -789,6 +789,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     newState.initialEventPixelOffset = roomScrollState.pixelOffset;
                 }
             }
+        } else {
+            newState.initialEventId = this.state.initialEventId;
         }
 
         // Clear the search results when clicking a search result (which changes the
