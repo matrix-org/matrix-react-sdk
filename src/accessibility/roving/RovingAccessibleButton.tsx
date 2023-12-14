@@ -45,7 +45,7 @@ export const RovingAccessibleButton: React.FC<IProps> = ({
                 if (focusOnMouseOver) onFocusInternal();
                 onMouseOver?.(event);
             }}
-            inputRef={ref}
+            ref={ref}
             tabIndex={isActive ? 0 : -1}
         />
     );

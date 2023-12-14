@@ -151,7 +151,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
             onClick={onClick}
             onContextMenu={openMenu}
             forceHide={!isNarrow || menuDisplayed}
-            inputRef={handle}
+            ref={handle}
             tabIndex={tabIndex}
             onFocus={onFocus}
         >

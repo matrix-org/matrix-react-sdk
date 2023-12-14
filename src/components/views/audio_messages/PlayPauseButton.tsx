@@ -22,7 +22,8 @@ import { _t } from "../../../languageHandler";
 import { Playback, PlaybackState } from "../../../audio/Playback";
 
 // omitted props are handled by render function
-interface IProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick" | "disabled"> {
+interface IProps
+    extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick" | "disabled" | "ref"> {
     // Playback instance to manipulate. Cannot change during the component lifecycle.
     playback: Playback;
 

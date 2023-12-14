@@ -19,9 +19,9 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import InfoDialog from "../dialogs/InfoDialog";
-import AccessibleButton, { IAccessibleButtonProps } from "./AccessibleButton";
+import AccessibleButton, { Props as AccessibleButtonProps } from "./AccessibleButton";
 
-export interface LearnMoreProps extends IAccessibleButtonProps {
+export interface LearnMoreProps extends Omit<AccessibleButtonProps<"div">, "kind" | "onClick" | "className"> {
     title: string;
     description: string | React.ReactNode;
 }

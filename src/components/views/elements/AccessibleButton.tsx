@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { HTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import React, { forwardRef, HTMLAttributes, InputHTMLAttributes, NamedExoticComponent, ReactNode, Ref } from "react";
 import classnames from "classnames";
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -50,7 +50,7 @@ type AccessibleButtonKind =
  *
  * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
  */
-type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
+export type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
 type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
     Omit<JSX.IntrinsicElements[T], "ref" | "onClick" | "onMouseDown" | "onKeyUp" | "onKeyDown">
@@ -63,8 +63,7 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
  * onClick:  (required) Event handler for button activation. Should be
  *           implemented exactly like a normal onClick handler.
  */
-type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
-    inputRef?: React.Ref<Element>;
+export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     element?: T;
     children?: ReactNode;
     // The kind of button, similar to how Bootstrap works.
@@ -80,7 +79,7 @@ type IProps<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> 
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 
-export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -92,20 +91,27 @@ export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Elemen
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
-export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>({
-    element = "div" as T,
-    onClick,
-    children,
-    kind,
-    disabled,
-    inputRef,
-    className,
-    onKeyDown,
-    onKeyUp,
-    triggerOnMouseDown,
-    ...restProps
-}: IProps<T>): JSX.Element {
+const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
+    {
+        element = "div" as T,
+        role = "button",
+        tabIndex = 0,
+        onClick,
+        children,
+        kind,
+        disabled,
+        className,
+        onKeyDown,
+        onKeyUp,
+        triggerOnMouseDown,
+        ...restProps
+    }: Props<T>,
+    ref: Ref<HTMLElement>,
+): JSX.Element {
     const newProps: IAccessibleButtonProps = restProps;
+    newProps.tabIndex = tabIndex;
+    newProps.role = role;
+
     if (disabled) {
         newProps["aria-disabled"] = true;
         newProps["disabled"] = true;
@@ -158,7 +164,7 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
     }
 
     // Pass through the ref - used for keyboard shortcut access to some buttons
-    newProps.ref = inputRef;
+    newProps.ref = ref;
 
     newProps.className = classnames("mx_AccessibleButton", className, {
         mx_AccessibleButton_hasKind: kind,
@@ -168,11 +174,9 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
 
     // React.createElement expects InputHTMLAttributes
     return React.createElement(element, newProps, children);
-}
+});
 
-AccessibleButton.defaultProps = {
-    role: "button",
-    tabIndex: 0,
-};
+// Type assertion required due to forwardRef type workaround in react.d.ts
+(AccessibleButton as NamedExoticComponent).displayName = "AccessibleButton";
 
-AccessibleButton.displayName = "AccessibleButton";
+export default AccessibleButton;

@@ -35,7 +35,7 @@ export const RovingAccessibleTooltipButton: React.FC<IProps> = ({ inputRef, onFo
                 onFocusInternal();
                 onFocus?.(event);
             }}
-            inputRef={ref}
+            ref={ref}
             tabIndex={isActive ? 0 : -1}
         />
     );
