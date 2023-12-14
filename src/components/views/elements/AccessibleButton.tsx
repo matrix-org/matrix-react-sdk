@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { forwardRef, HTMLAttributes, InputHTMLAttributes, NamedExoticComponent, ReactNode, Ref } from "react";
+import React, { forwardRef, FunctionComponent, HTMLAttributes, InputHTMLAttributes, ReactNode, Ref } from "react";
 import classnames from "classnames";
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -94,8 +94,6 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
 const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
     {
         element = "div" as T,
-        role = "button",
-        tabIndex = 0,
         onClick,
         children,
         kind,
@@ -109,8 +107,6 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
     ref: Ref<HTMLElement>,
 ): JSX.Element {
     const newProps: IAccessibleButtonProps = restProps;
-    newProps.tabIndex = tabIndex;
-    newProps.role = role;
 
     if (disabled) {
         newProps["aria-disabled"] = true;
@@ -177,6 +173,10 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
 });
 
 // Type assertion required due to forwardRef type workaround in react.d.ts
-(AccessibleButton as NamedExoticComponent).displayName = "AccessibleButton";
+(AccessibleButton as FunctionComponent).defaultProps = {
+    role: "button",
+    tabIndex: 0,
+};
+(AccessibleButton as FunctionComponent).displayName = "AccessibleButton";
 
 export default AccessibleButton;

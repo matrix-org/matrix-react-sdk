@@ -14,34 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, useContext } from "react";
+import React, { forwardRef, useContext } from "react";
 import classNames from "classnames";
 
+import { Props as AccessibleButtonProps } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { MenuItem } from "../../structures/ContextMenu";
 import { OverflowMenuContext } from "./MessageComposerButtons";
 import { IconizedContextMenuOption } from "../context_menus/IconizedContextMenu";
 
-interface ICollapsibleButtonProps extends ComponentProps<typeof MenuItem> {
+interface ICollapsibleButtonProps extends Omit<AccessibleButtonProps<"div">, "element"> {
     title: string;
     iconClassName: string;
 }
 
-export const CollapsibleButton: React.FC<ICollapsibleButtonProps> = ({
-    title,
-    children,
-    className,
-    iconClassName,
-    ...props
-}) => {
-    const inOverflowMenu = !!useContext(OverflowMenuContext);
-    if (inOverflowMenu) {
-        return <IconizedContextMenuOption {...props} iconClassName={iconClassName} label={title} />;
-    }
+export const CollapsibleButton = forwardRef<HTMLElement, ICollapsibleButtonProps>(
+    ({ title, children, className, iconClassName, ...props }, ref) => {
+        const inOverflowMenu = !!useContext(OverflowMenuContext);
+        if (inOverflowMenu) {
+            return <IconizedContextMenuOption {...props} iconClassName={iconClassName} label={title} ref={ref} />;
+        }
 
-    return (
-        <AccessibleTooltipButton {...props} title={title} className={classNames(className, iconClassName)}>
-            {children}
-        </AccessibleTooltipButton>
-    );
-};
+        return (
+            <AccessibleTooltipButton
+                {...props}
+                title={title}
+                className={classNames(className, iconClassName)}
+                ref={ref}
+            >
+                {children}
+            </AccessibleTooltipButton>
+        );
+    },
+);
