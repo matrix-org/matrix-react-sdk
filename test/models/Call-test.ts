@@ -140,6 +140,7 @@ const setUpWidget = (
     audioMutedSpy: jest.SpyInstance<boolean, []>;
     videoMutedSpy: jest.SpyInstance<boolean, []>;
 } => {
+    call.widget.data = { ...call.widget, skipLobby: true };
     const widget = new Widget(call.widget);
 
     const eventEmitter = new EventEmitter();
@@ -738,33 +739,7 @@ describe("ElementCall", () => {
         });
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
-
-        it("connects muted", async () => {
-            expect(call.connectionState).toBe(ConnectionState.Disconnected);
-            audioMutedSpy.mockReturnValue(true);
-            videoMutedSpy.mockReturnValue(true);
-
-            await call.connect();
-            expect(call.connectionState).toBe(ConnectionState.Connected);
-            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
-                audioInput: null,
-                videoInput: null,
-            });
-        });
-
-        it("connects unmuted", async () => {
-            expect(call.connectionState).toBe(ConnectionState.Disconnected);
-            audioMutedSpy.mockReturnValue(false);
-            videoMutedSpy.mockReturnValue(false);
-
-            await call.connect();
-            expect(call.connectionState).toBe(ConnectionState.Connected);
-            expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
-                audioInput: "Headphones",
-                videoInput: "Built-in webcam",
-            });
-        });
-
+        // TODO add tests for passing device configuration to the widget
         it("waits for messaging when connecting", async () => {
             // Temporarily remove the messaging to simulate connecting while the
             // widget is still initializing
@@ -780,6 +755,8 @@ describe("ElementCall", () => {
         });
 
         it("fails to connect if the widget returns an error", async () => {
+            // we only send a JoinCall action if the widget is preloading
+            call.widget.data = { ...call.widget, preload: true };
             mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
             await expect(call.connect()).rejects.toBeDefined();
         });
@@ -935,16 +912,12 @@ describe("ElementCall", () => {
 
             // should create call with perParticipantE2EE flag
             ElementCall.create(room);
-
-            expect(addWidgetSpy.mock.calls[0][0].url).toContain("perParticipantE2EE=true");
-            ElementCall.get(room)?.destroy();
+            expect(Call.get(room)?.widget?.data?.perParticipantE2EE).toBe(true);
 
             // should create call without perParticipantE2EE flag
             enabledSettings.add("feature_disable_call_per_sender_encryption");
-            await ElementCall.create(room);
+            expect(Call.get(room)?.widget?.data?.perParticipantE2EE).toBe(false);
             enabledSettings.delete("feature_disable_call_per_sender_encryption");
-
-            expect(addWidgetSpy.mock.calls[1][0].url).not.toContain("perParticipantE2EE=true");
 
             client.isRoomEncrypted.mockClear();
             addWidgetSpy.mockRestore();

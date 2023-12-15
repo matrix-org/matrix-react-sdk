@@ -272,6 +272,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -405,6 +406,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -430,6 +432,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -560,7 +563,11 @@ describe("LegacyRoomHeader", () => {
         mockEnabledSettings(["feature_group_calls"]);
 
         await withCall(async (call) => {
+            // we set the call to skip lobby because otherwise the connection will wait until
+            // the user clicks the "join" button, inside the widget lobby which is hard to mock.
+            call.widget.data = { ...call.widget.data, skipLobby: true };
             await call.connect();
+
             const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(call.widget))!;
             renderHeader({ viewingCall: true, activeCall: call });
 

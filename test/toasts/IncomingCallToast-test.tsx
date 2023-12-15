@@ -167,6 +167,7 @@ describe("IncomingCallEvent", () => {
             expect(dispatcherSpy).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
+                skipLobby: false,
                 view_call: true,
             }),
         );
