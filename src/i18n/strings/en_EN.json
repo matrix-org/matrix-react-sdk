@@ -11,7 +11,8 @@
         },
         "room_name": "Room %(name)s",
         "unread_messages": "Unread messages.",
-        "user_menu": "User menu"
+        "user_menu": "User menu",
+        "seek_bar_label": "Audio seek bar"
     },
     "a11y_jump_first_unread_room": "Jump to first unread room.",
     "action": {
@@ -1940,6 +1941,7 @@
             "video_room_view_chat_button": "View chat timeline"
         },
         "header_untrusted_label": "Untrusted",
+        "header_face_pile_tooltip": "View room members",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
         "inaccessible_subtitle_1": "Try again later, or ask a room or space admin to check if you have access.",

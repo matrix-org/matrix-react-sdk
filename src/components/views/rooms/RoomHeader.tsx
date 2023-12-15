@@ -269,6 +269,7 @@ export default function RoomHeader({
                         size="20px"
                         overflow={false}
                         viewUserOnClick={false}
+                        tooltipLabel={_t("room|header_face_pile_tooltip")}
                     >
                         {formatCount(memberCount)}
                     </FacePile>
