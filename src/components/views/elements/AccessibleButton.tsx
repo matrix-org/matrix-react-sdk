@@ -50,7 +50,7 @@ type AccessibleButtonKind =
  *
  * To remain compatible with existing code, we’ll continue to support InputHTMLAttributes<Element>
  */
-export type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
+type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
 type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
     Omit<JSX.IntrinsicElements[T], "ref" | "onClick" | "onMouseDown" | "onKeyUp" | "onKeyDown">
