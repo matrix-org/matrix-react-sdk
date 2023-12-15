@@ -26,6 +26,7 @@ type Props<T extends keyof JSX.IntrinsicElements> = AccessibleButtonProps<T> & {
     isExpanded: boolean;
 };
 
+// Semantic component for representing the AccessibleButton which launches a <ContextMenu />
 export const ContextMenuButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
     { label, isExpanded, children, onClick, onContextMenu, ...props }: Props<T>,
     ref: Ref<HTMLElement>,
