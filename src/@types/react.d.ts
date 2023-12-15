@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { PropsWithChildren } from "react";
 
 declare module "react" {
     // Fix forwardRef types for Generic components - https://stackoverflow.com/a/58473012
     function forwardRef<T, P = {}>(
-        render: (props: P, ref: React.ForwardedRef<T>) => React.ReactElement | null,
+        render: (props: PropsWithChildren<P>, ref: React.ForwardedRef<T>) => React.ReactElement | null,
     ): (props: P & React.RefAttributes<T>) => React.ReactElement | null;
 }
