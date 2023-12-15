@@ -125,7 +125,7 @@ describe("IncomingCallEvent", () => {
 
         screen.getByText("Video call started");
         screen.getByText("Video");
-        screen.getByLabelText("3 participants");
+        screen.getByLabelText("3 people joined");
 
         screen.getByRole("button", { name: "Join" });
         screen.getByRole("button", { name: "Close" });

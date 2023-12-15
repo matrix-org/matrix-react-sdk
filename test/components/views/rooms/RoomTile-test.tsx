@@ -274,12 +274,12 @@ describe("RoomTile", () => {
                 act(() => {
                     call.participants = new Map([alice]);
                 });
-                expect(screen.getByLabelText("1 participant").textContent).toBe("1");
+                expect(screen.getByLabelText("1 person joined").textContent).toBe("1");
 
                 act(() => {
                     call.participants = new Map([alice, bob, carol]);
                 });
-                expect(screen.getByLabelText("4 participants").textContent).toBe("4");
+                expect(screen.getByLabelText("4 people joined").textContent).toBe("4");
 
                 act(() => {
                     call.participants = new Map();
