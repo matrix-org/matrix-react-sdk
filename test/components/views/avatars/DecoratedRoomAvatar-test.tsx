@@ -14,17 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { JoinRule, MatrixClient, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
+import userEvent from "@testing-library/user-event";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import { stubClient } from "../../../test-utils/test-utils";
+import { stubClient } from "../../../test-utils";
 import DecoratedRoomAvatar from "../../../../src/components/views/avatars/DecoratedRoomAvatar";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import userEvent from "@testing-library/user-event";
-import { sleep } from "matrix-js-sdk/src/utils";
 
 describe("DecoratedRoomAvatar", () => {
     const ROOM_ID = "roomId";
@@ -53,9 +52,13 @@ describe("DecoratedRoomAvatar", () => {
         const globe = container.querySelector(".mx_DecoratedRoomAvatar_icon_globe")!;
         expect(globe).toBeVisible();
         await userEvent.hover(globe!);
-        await sleep(500); // wait for the tooltip to open
 
-        const tooltip = document.getElementById(globe.getAttribute("aria-describedby")!)!;
+        // wait for the tooltip to open
+        const tooltip = await waitFor(() => {
+            const tooltip = document.getElementById(globe.getAttribute("aria-describedby")!);
+            expect(tooltip).toBeVisible();
+            return tooltip;
+        });
         expect(tooltip).toHaveTextContent("This room is public");
 
         expect(asFragment()).toMatchSnapshot();
