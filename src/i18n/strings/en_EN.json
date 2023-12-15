@@ -486,10 +486,6 @@
             "one": "%(count)s member",
             "other": "%(count)s members"
         },
-        "n_participants": {
-            "one": "1 participant",
-            "other": "%(count)s participants"
-        },
         "n_rooms": {
             "one": "%(count)s room",
             "other": "%(count)s rooms"
@@ -3826,6 +3822,10 @@
         "msisdn_lookup_failed": "Unable to look up phone number",
         "msisdn_lookup_failed_description": "There was an error looking up the phone number",
         "msisdn_transfer_failed": "Unable to transfer call",
+        "n_people_joined": {
+            "one": "%(count)s person joined",
+            "other": "%(count)s people joined"
+        },
         "no_audio_input_description": "We didn't find a microphone on your device. Please check your settings and try again.",
         "no_audio_input_title": "No microphone found",
         "no_media_perms_description": "You may need to manually permit %(brand)s to access your microphone/webcam",
