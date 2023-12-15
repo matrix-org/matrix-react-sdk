@@ -174,41 +174,4 @@ describe("CallView", () => {
             WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
         });
     });
-
-    describe("device buttons", () => {
-        const fakeVideoInput1: MediaDeviceInfo = {
-            deviceId: "v1",
-            groupId: "v1",
-            label: "Webcam",
-            kind: "videoinput",
-            toJSON: () => {},
-        };
-        const fakeVideoInput2: MediaDeviceInfo = {
-            deviceId: "v2",
-            groupId: "v2",
-            label: "Othercam",
-            kind: "videoinput",
-            toJSON: () => {},
-        };
-        const fakeAudioInput1: MediaDeviceInfo = {
-            deviceId: "v1",
-            groupId: "v1",
-            label: "Headphones",
-            kind: "audioinput",
-            toJSON: () => {},
-        };
-        const fakeAudioInput2: MediaDeviceInfo = {
-            deviceId: "v2",
-            groupId: "v2",
-            label: "Tailphones",
-            kind: "audioinput",
-            toJSON: () => {},
-        };
-
-        it("hide when no devices are available", async () => {
-            await renderView();
-            expect(screen.queryByRole("button", { name: /microphone/ })).toBe(null);
-            expect(screen.queryByRole("button", { name: /camera/ })).toBe(null);
-        });
-    });
 });
