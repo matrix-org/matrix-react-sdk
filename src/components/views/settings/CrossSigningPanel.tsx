@@ -26,7 +26,7 @@ import Spinner from "../elements/Spinner";
 import InteractiveAuthDialog from "../dialogs/InteractiveAuthDialog";
 import ConfirmDestroyCrossSigningDialog from "../dialogs/security/ConfirmDestroyCrossSigningDialog";
 import SetupEncryptionDialog from "../dialogs/security/SetupEncryptionDialog";
-import { accessSecretStorage } from "../../../SecurityManager";
+import { accessSecretStorage, withSecretStorageKeyCache } from "../../../SecurityManager";
 import AccessibleButton from "../elements/AccessibleButton";
 import { SettingsSubsectionText } from "./shared/SettingsSubsection";
 
@@ -124,19 +124,21 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         this.setState({ error: false });
         try {
             const cli = MatrixClientPeg.safeGet();
-            await cli.bootstrapCrossSigning({
-                authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
-                    const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                        title: _t("encryption|bootstrap_title"),
-                        matrixClient: cli,
-                        makeRequest,
-                    });
-                    const [confirmed] = await finished;
-                    if (!confirmed) {
-                        throw new Error("Cross-signing key upload auth canceled");
-                    }
-                },
-                setupNewCrossSigning: true,
+            await withSecretStorageKeyCache(async () => {
+                await cli.getCrypto()!.bootstrapCrossSigning({
+                    authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
+                        const { finished } = Modal.createDialog(InteractiveAuthDialog, {
+                            title: _t("encryption|bootstrap_title"),
+                            matrixClient: cli,
+                            makeRequest,
+                        });
+                        const [confirmed] = await finished;
+                        if (!confirmed) {
+                            throw new Error("Cross-signing key upload auth canceled");
+                        }
+                    },
+                    setupNewCrossSigning: true,
+                });
             });
         } catch (e) {
             this.setState({ error: true });
