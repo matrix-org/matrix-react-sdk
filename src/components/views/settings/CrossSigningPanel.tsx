@@ -118,15 +118,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     }
 
     /**
-     * Bootstrapping cross-signing take one of these paths:
-     * 1. Create cross-signing keys locally and store in secret storage (if it
-     *    already exists on the account).
-     * 2. Access existing secret storage by requesting passphrase and accessing
-     *    cross-signing keys as needed.
-     * 3. All keys are loaded and there's nothing to do.
-     * @param {bool} [forceReset] Bootstrap again even if keys already present
+     * Reset the user's cross-signing keys.
      */
-    private bootstrapCrossSigning = async ({ forceReset = false }): Promise<void> => {
+    private async resetCrossSigning(): Promise<void> {
         this.setState({ error: false });
         try {
             const cli = MatrixClientPeg.safeGet();
@@ -142,7 +136,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
                         throw new Error("Cross-signing key upload auth canceled");
                     }
                 },
-                setupNewCrossSigning: forceReset,
+                setupNewCrossSigning: true,
             });
         } catch (e) {
             this.setState({ error: true });
@@ -150,13 +144,18 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         }
         if (this.unmounted) return;
         this.getUpdatedStatus();
-    };
+    }
 
-    private resetCrossSigning = (): void => {
+    /**
+     * Callback for when the user clicks the "reset cross signing" button.
+     *
+     * Shows a confirmation dialog, and then does the reset if confirmed.
+     */
+    private onResetCrossSigningClick = (): void => {
         Modal.createDialog(ConfirmDestroyCrossSigningDialog, {
-            onFinished: (act) => {
+            onFinished: async (act) => {
                 if (!act) return;
-                this.bootstrapCrossSigning({ forceReset: true });
+                this.resetCrossSigning();
             },
         });
     };
@@ -243,7 +242,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
 
         if (keysExistAnywhere) {
             actions.push(
-                <AccessibleButton key="reset" kind="danger" onClick={this.resetCrossSigning}>
+                <AccessibleButton key="reset" kind="danger" onClick={this.onResetCrossSigningClick}>
                     {_t("action|reset")}
                 </AccessibleButton>,
             );
