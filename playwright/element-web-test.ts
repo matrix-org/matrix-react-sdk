@@ -17,6 +17,7 @@ limitations under the License.
 import { test as base, expect as baseExpect, Locator, Page, ExpectMatcherState, ElementHandle } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
+import { basename } from "node:path";
 
 import type mailhog from "mailhog";
 import type { IConfigOptions } from "../src/IConfigOptions";
@@ -101,10 +102,7 @@ export const test = base.extend<
                 }, {}),
             };
             if (cryptoBackend === "rust") {
-                json["features"] = {
-                    ...json["features"],
-                    feature_rust_crypto: true,
-                };
+                json.features.feature_rust_crypto = true;
             }
             await route.fulfill({ json });
         });
@@ -112,7 +110,7 @@ export const test = base.extend<
     },
 
     startHomeserverOpts: "default",
-    homeserver: async ({ request, startHomeserverOpts: opts }, use) => {
+    homeserver: async ({ request, startHomeserverOpts: opts }, use, testInfo) => {
         if (typeof opts === "string") {
             opts = { template: opts };
         }
@@ -131,7 +129,16 @@ export const test = base.extend<
         }
 
         await use(await server.start(opts));
-        await server.stop();
+        const logs = await server.stop();
+
+        if (testInfo.status !== "passed") {
+            for (const path of logs) {
+                await testInfo.attach(`homeserver-${basename(path)}`, {
+                    path,
+                    contentType: "text/plain",
+                });
+            }
+        }
     },
     // eslint-disable-next-line no-empty-pattern
     oAuthServer: async ({}, use) => {
@@ -206,7 +213,7 @@ export const test = base.extend<
     },
 
     botCreateOpts: {},
-    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+    bot: async ({ page, homeserver, botCreateOpts, user }, use) => {
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
@@ -240,7 +247,17 @@ export const test = base.extend<
 });
 
 export const expect = baseExpect.extend({
-    async toMatchScreenshot(this: ExpectMatcherState, receiver: Page | Locator, ...args) {
+    async toMatchScreenshot(
+        this: ExpectMatcherState,
+        receiver: Page | Locator,
+        name?: `${string}.png`,
+        options?: {
+            mask?: Array<Locator>;
+            omitBackground?: boolean;
+            timeout?: number;
+            css?: string;
+        },
+    ) {
         const page = "page" in receiver ? receiver.page() : receiver;
 
         // We add a custom style tag before taking screenshots
@@ -262,10 +279,15 @@ export const expect = baseExpect.extend({
                 .mx_ReplyChain {
                     border-left-color: var(--cpd-color-blue-1200) !important;
                 }
+                /* Use monospace font for timestamp for consistent mask width */
+                .mx_MessageTimestamp {
+                    font-family: Inconsolata !important;
+                }
+                ${options?.css ?? ""}
             `,
         })) as ElementHandle<Element>;
 
-        await baseExpect(receiver).toHaveScreenshot(...args);
+        await baseExpect(receiver).toHaveScreenshot(name, options);
 
         await style.evaluate((tag) => tag.remove());
         return { pass: true, message: () => "", name: "toMatchScreenshot" };

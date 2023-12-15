@@ -157,8 +157,7 @@ test.describe("Read receipts", () => {
     });
 
     test.describe("Paging up", () => {
-        // XXX: Fails because flaky test https://github.com/vector-im/element-web/issues/26437
-        test.skip("Paging up through old messages after a room is read leaves the room read", async ({
+        test("Paging up through old messages after a room is read leaves the room read", async ({
             page,
             roomAlpha: room1,
             roomBeta: room2,
@@ -256,10 +255,6 @@ test.describe("Read receipts", () => {
             msg,
         }) => {
             test.slow();
-            test.skip(
-                cryptoBackend === "rust",
-                "Flaky with rust crypto - see https://github.com/vector-im/element-web/issues/26539",
-            );
 
             // Given lots of messages in threads that are unread
             await util.goTo(room1);
@@ -297,8 +292,7 @@ test.describe("Read receipts", () => {
             await util.assertUnreadThread("Root2");
             await util.assertUnreadThread("Root3");
         });
-        // XXX: fails because flaky: https://github.com/vector-im/element-web/issues/26331
-        test.skip("Looking in thread view to find old threads that were never read makes the room unread", async ({
+        test("Looking in thread view to find old threads that were never read makes the room unread", async ({
             roomAlpha: room1,
             roomBeta: room2,
             util,
@@ -348,10 +342,6 @@ test.describe("Read receipts", () => {
             msg,
         }) => {
             test.slow();
-            test.skip(
-                cryptoBackend === "rust",
-                "Flaky with rust crypto - see https://github.com/vector-im/element-web/issues/26341",
-            );
 
             // Given lots of messages in threads that are unread but I marked as read on a main timeline message
             await util.goTo(room1);
@@ -385,8 +375,7 @@ test.describe("Read receipts", () => {
             await util.assertReadThread("Root2");
             await util.assertReadThread("Root3");
         });
-        // XXX: fails because we see a dot instead of an unread number - probably the server and client disagree
-        test.skip("After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read", async ({
+        test("After marking room as read based on a thread message, opening threads view to find old threads that were never read leaves the room read", async ({
             roomAlpha: room1,
             roomBeta: room2,
             util,

@@ -84,6 +84,10 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Omit<Homes
     console.log(`Gen -> ${outputSigningKey}`);
     await fse.writeFile(outputSigningKey, `ed25519 x ${signingKey}`);
 
+    // Allow anyone to read, write and execute in the /temp/react-sdk-synapsedocker-xxx directory
+    // so that the DIND setup that we use to update the playwright screenshots work without any issues.
+    await fse.chmod(tempDir, 0o757);
+
     return {
         port,
         baseUrl,
@@ -151,7 +155,7 @@ export class Synapse implements Homeserver, HomeserverInstance {
         return this;
     }
 
-    public async stop(): Promise<void> {
+    public async stop(): Promise<string[]> {
         if (!this.config) throw new Error("Missing existing synapse instance, did you call stop() before start()?");
         const id = this.config.serverId;
         const synapseLogsPath = path.join("playwright", "synapselogs", id);
@@ -163,6 +167,8 @@ export class Synapse implements Homeserver, HomeserverInstance {
         await this.docker.stop();
         await fse.remove(this.config.configDir);
         console.log(`Stopped synapse id ${id}.`);
+
+        return [path.join(synapseLogsPath, "stdout.log"), path.join(synapseLogsPath, "stderr.log")];
     }
 
     public async registerUser(username: string, password: string, displayName?: string): Promise<Credentials> {
