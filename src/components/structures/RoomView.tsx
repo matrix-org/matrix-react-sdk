@@ -790,7 +790,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 }
             }
         } else {
-            newState.initialEventId = this.state.initialEventId;
+            // newState.initialEventId = this.state.initialEventId;
         }
 
         // Clear the search results when clicking a search result (which changes the
