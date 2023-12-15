@@ -25,6 +25,9 @@ export type Props<T extends keyof JSX.IntrinsicElements> = AccessibleButtonProps
     tooltip?: React.ReactNode;
     label?: string;
     tooltipClassName?: string;
+    /**
+     * Force the tooltip to be hidden
+     */
     forceHide?: boolean;
     alignment?: Alignment;
     onHover?: (hovering: boolean) => void;
@@ -38,6 +41,7 @@ const AccessibleTooltipButton = forwardRef(function <T extends keyof JSX.Intrins
     const [hover, setHover] = useState(false);
 
     useEffect(() => {
+        // If forceHide is set then force hover to off
         if (forceHide && hover) {
             setHover(false);
         }
