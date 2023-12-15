@@ -34,9 +34,9 @@ export default class TextWithTooltip extends React.Component<IProps> {
 
         return (
             <Tooltip label={tooltip} side="right">
-                <div className={className} tabIndex={tooltipProps?.tabIndex ?? 0}>
+                <span className={className} tabIndex={tooltipProps?.tabIndex ?? 0}>
                     {children}
-                </div>
+                </span>
             </Tooltip>
         );
     }
