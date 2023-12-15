@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room, RoomEvent, MatrixEvent, User, UserEvent, EventType, JoinRule } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule, MatrixEvent, Room, RoomEvent, User, UserEvent } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 import { Tooltip } from "@vector-im/compound-web";
 
@@ -95,9 +95,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     }
 
     private get isPublicRoom(): boolean {
-        const joinRules = this.props.room.currentState.getStateEvents(EventType.RoomJoinRules, "");
-        const joinRule = joinRules && joinRules.getContent().join_rule;
-        return joinRule === JoinRule.Public;
+        return this.props.room.getJoinRule() === JoinRule.Public;
     }
 
     private get dmUser(): User | null {
