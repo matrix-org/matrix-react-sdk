@@ -1941,7 +1941,7 @@
             "video_room_view_chat_button": "View chat timeline"
         },
         "header_untrusted_label": "Untrusted",
-        "header_face_pile_tooltip": "View room members",
+        "header_face_pile_tooltip": "Toggle member list",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
         "inaccessible_subtitle_1": "Try again later, or ask a room or space admin to check if you have access.",
