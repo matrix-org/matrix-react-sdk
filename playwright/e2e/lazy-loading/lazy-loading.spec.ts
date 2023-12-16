@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Bot } from "../../pages/bot";
+import { Bot } from "../../pages/bot";
 import type { Locator, Page } from "@playwright/test";
 import type { ElementAppPage } from "../../pages/ElementAppPage";
 import { test, expect } from "../../element-web-test";
@@ -30,17 +30,13 @@ test.describe("Lazy Loading", () => {
     test.use({ displayName: "Alice" });
     test.use({ botCreateOpts: { displayName: "Bob" } });
 
-    test.beforeEach(async ({ page, user, bot, createBot }) => {
+    test.beforeEach(async ({ page, homeserver, user, bot }) => {
         await page.evaluate(() => {
             window.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
         for (let i = 1; i <= 10; i++) {
             const displayName = `Charly #${i}`;
-            const bot = await createBot({
-                displayName,
-                startClient: false,
-                autoAcceptInvites: false,
-            });
+            const bot = new Bot(page, homeserver, { displayName, startClient: false, autoAcceptInvites: false });
             charlies.push({ displayName, bot });
         }
     });
@@ -61,26 +57,14 @@ test.describe("Lazy Loading", () => {
 
         await Promise.all(charlies.map((charly) => charly.bot).map((bot) => bot.joinRoom(alias)));
         for (const charly of charlies) {
-            // todo: replace with sendTextMessage from other PR
-            await charly.bot.sendMessage(roomId, {
-                msgtype: "m.text",
-                body: charlyMsg1,
-            });
+            await charly.bot.sendMessage(roomId, charlyMsg1);
         }
         for (const charly of charlies) {
-            // todo: replace with sendTextMessage from other PR
-            await charly.bot.sendMessage(roomId, {
-                msgtype: "m.text",
-                body: charlyMsg2,
-            });
+            await charly.bot.sendMessage(roomId, charlyMsg2);
         }
 
         for (let i = 20; i >= 1; --i) {
-            // todo: replace with sendTextMessage from other PR
-            await bob.sendMessage(roomId, {
-                msgtype: "m.text",
-                body: `I will only say this ${i} time(s)!`,
-            });
+            await bob.sendMessage(roomId, `I will only say this ${i} time(s)!`);
         }
         await app.client.joinRoom(alias);
         await app.viewRoomByName(name);
@@ -123,10 +107,7 @@ test.describe("Lazy Loading", () => {
             await charly.bot.joinRoom(alias);
         }
         for (let i = 20; i >= 1; --i) {
-            await charlies[0].bot.sendMessage(roomId, {
-                msgtype: "m.text",
-                body: "where is charly?",
-            });
+            await charlies[0].bot.sendMessage(roomId, "where is charly?");
         }
         await app.client.network.goOnline();
         await app.client.waitForNextSync();

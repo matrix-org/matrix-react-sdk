@@ -138,15 +138,6 @@ export class Client {
     }
 
     /**
-     * Send a text message into a room
-     * @param roomId ID of the room to send the message into
-     * @param content the event content to send
-     */
-    public async sendTextMessage(roomId: string, message: string): Promise<ISendEventResponse> {
-        return await this.sendMessage(roomId, { msgtype: "m.text", body: message });
-    }
-
-    /**
      * Create a room with given options.
      * @param options the options to apply when creating the room
      * @return the ID of the newly created room
