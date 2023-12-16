@@ -22,10 +22,12 @@ import { ElementAppPage } from "../../pages/ElementAppPage";
 test.describe("Room Header", () => {
     test.use({
         displayName: "Sakura",
-        labsFlags: ["feature_notifications"],
     });
 
     test.describe("with feature_notifications enabled", () => {
+        test.use({
+            labsFlags: ["feature_notifications"],
+        });
         test("should render default buttons properly", async ({ page, app, user }) => {
             await app.client.createRoom({ name: "Test Room" });
             await app.viewRoomByName("Test Room");
