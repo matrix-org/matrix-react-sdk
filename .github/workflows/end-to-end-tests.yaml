@@ -28,7 +28,7 @@ jobs:
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
             # This provides an easy link to this workflow_run from the PR before the tests are done.
-            - uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+            - uses: Sibz/github-status-action@071b5370da85afbb16637d6eed8524a06bc2053e # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: pending
@@ -48,16 +48,13 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # Run 2 instances in Parallel
-                runner: [1, 2]
+                # Run multiple instances in parallel to speed up the tests
+                runner: [1, 2, 3, 4, 5, 6, 7, 8]
         steps:
-            - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
-            - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
-
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
             # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
             - name: 📥 Download artifact
-              uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+              uses: dawidd6/action-download-artifact@f29d1b6a8930683e80acedfbe6baa2930cd646b4 # v2
               with:
                   run_id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
@@ -95,7 +92,19 @@ jobs:
               working-directory: matrix-react-sdk
               run: yarn install --frozen-lockfile
 
+            - name: Get installed Playwright version
+              run: echo "PLAYWRIGHT_VERSION=$(yarn info @playwright/test -A --json | jq -r .data.version)" >> $GITHUB_ENV
+
+            - name: Cache playwright binaries
+              uses: actions/cache@v3
+              id: playwright-cache
+              with:
+                  path: |
+                      ~/.cache/ms-playwright
+                  key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
             - name: Install Playwright browsers
+              if: steps.playwright-cache.outputs.cache-hit != 'true'
               working-directory: matrix-react-sdk
               run: yarn playwright install --with-deps
 
@@ -124,6 +133,9 @@ jobs:
             deployments: write
         steps:
             - uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
+                  repository: ${{ inputs.react-sdk-repository || github.repository }}
 
             - uses: actions/setup-node@v4
               with:
@@ -148,7 +160,7 @@ jobs:
                   path: playwright-report
                   retention-days: 14
 
-            - uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+            - uses: Sibz/github-status-action@071b5370da85afbb16637d6eed8524a06bc2053e # v1
               if: always()
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}

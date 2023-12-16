@@ -22,6 +22,7 @@ const NAME = "Alice";
 test.describe("NotificationPanel", () => {
     test.use({
         displayName: NAME,
+        labsFlags: ["feature_notifications"],
     });
 
     test.beforeEach(async ({ app, user }) => {
@@ -29,7 +30,6 @@ test.describe("NotificationPanel", () => {
     });
 
     test("should render empty state", async ({ page, app }) => {
-        await app.labs.enableLabsFeature("feature_notifications");
         await app.viewRoomByName(ROOM_NAME);
 
         await page.getByRole("button", { name: "Notifications" }).click();
@@ -38,6 +38,6 @@ test.describe("NotificationPanel", () => {
         await expect(page.locator(".mx_NotificationPanel_empty")).toBeVisible();
 
         // Take a snapshot of RightPanel
-        await expect(page.locator(".mx_RightPanel")).toHaveScreenshot("empty.png");
+        await expect(page.locator(".mx_RightPanel")).toMatchScreenshot("empty.png");
     });
 });

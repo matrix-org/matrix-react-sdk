@@ -25,7 +25,7 @@ import { Docker } from "../../docker";
 import { HomeserverConfig, HomeserverInstance, Homeserver, StartHomeserverOpts, Credentials } from "..";
 import { randB64Bytes } from "../../utils/rand";
 
-async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<HomeserverConfig> {
+async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Omit<HomeserverConfig, "dockerUrl">> {
     const templateDir = path.join(__dirname, "templates", opts.template);
 
     const stats = await fse.stat(templateDir);
@@ -83,6 +83,10 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     const outputSigningKey = path.join(tempDir, "localhost.signing.key");
     console.log(`Gen -> ${outputSigningKey}`);
     await fse.writeFile(outputSigningKey, `ed25519 x ${signingKey}`);
+
+    // Allow anyone to read, write and execute in the /temp/react-sdk-synapsedocker-xxx directory
+    // so that the DIND setup that we use to update the playwright screenshots work without any issues.
+    await fse.chmod(tempDir, 0o757);
 
     return {
         port,
@@ -142,15 +146,16 @@ export class Synapse implements Homeserver, HomeserverInstance {
             "--silent",
             "http://localhost:8008/health",
         ]);
-
+        const dockerUrl = `http://${await this.docker.getContainerIp()}:8008`;
         this.config = {
             ...synCfg,
             serverId: synapseId,
+            dockerUrl,
         };
         return this;
     }
 
-    public async stop(): Promise<void> {
+    public async stop(): Promise<string[]> {
         if (!this.config) throw new Error("Missing existing synapse instance, did you call stop() before start()?");
         const id = this.config.serverId;
         const synapseLogsPath = path.join("playwright", "synapselogs", id);
@@ -162,6 +167,8 @@ export class Synapse implements Homeserver, HomeserverInstance {
         await this.docker.stop();
         await fse.remove(this.config.configDir);
         console.log(`Stopped synapse id ${id}.`);
+
+        return [path.join(synapseLogsPath, "stdout.log"), path.join(synapseLogsPath, "stderr.log")];
     }
 
     public async registerUser(username: string, password: string, displayName?: string): Promise<Credentials> {

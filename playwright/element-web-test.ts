@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test as base, expect, Locator } from "@playwright/test";
+import { test as base, expect as baseExpect, Locator, Page, ExpectMatcherState, ElementHandle } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
+import { basename } from "node:path";
 
 import type mailhog from "mailhog";
 import type { IConfigOptions } from "../src/IConfigOptions";
@@ -29,6 +30,8 @@ import { OAuthServer } from "./plugins/oauth_server";
 import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
 import { Bot, CreateBotOpts } from "./pages/bot";
+import { ProxyInstance, SlidingSyncProxy } from "./plugins/sliding-sync-proxy";
+import { Webserver } from "./plugins/webserver";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -40,6 +43,11 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
         "m.homeserver": {
             base_url: "https://server.invalid",
         },
+    },
+
+    // The default language is set here for test consistency
+    setting_defaults: {
+        language: "en-GB",
     },
 
     // the location tests want a map style url.
@@ -75,28 +83,34 @@ export const test = base.extend<
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
         botCreateOpts: CreateBotOpts;
         bot: Bot;
-        createBot: (opts: CreateBotOpts) => Promise<Bot>;
+        slidingSyncProxy: ProxyInstance;
+        labsFlags: string[];
+        webserver: Webserver;
     }
 >({
     cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, cryptoBackend }, use) => {
+    page: async ({ context, page, config, cryptoBackend, labsFlags }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
+            json["features"] = {
+                ...json["features"],
+                // Enable the lab features
+                ...labsFlags.reduce((obj, flag) => {
+                    obj[flag] = true;
+                    return obj;
+                }, {}),
+            };
             if (cryptoBackend === "rust") {
-                json["features"] = {
-                    ...json["features"],
-                    feature_rust_crypto: true,
-                };
+                json.features.feature_rust_crypto = true;
             }
             await route.fulfill({ json });
         });
-
         await use(page);
     },
 
     startHomeserverOpts: "default",
-    homeserver: async ({ request, startHomeserverOpts: opts }, use) => {
+    homeserver: async ({ request, startHomeserverOpts: opts }, use, testInfo) => {
         if (typeof opts === "string") {
             opts = { template: opts };
         }
@@ -115,7 +129,16 @@ export const test = base.extend<
         }
 
         await use(await server.start(opts));
-        await server.stop();
+        const logs = await server.stop();
+
+        if (testInfo.status !== "passed") {
+            for (const path of logs) {
+                await testInfo.attach(`homeserver-${basename(path)}`, {
+                    path,
+                    contentType: "text/plain",
+                });
+            }
+        }
     },
     // eslint-disable-next-line no-empty-pattern
     oAuthServer: async ({}, use) => {
@@ -128,18 +151,18 @@ export const test = base.extend<
     displayName: undefined,
     credentials: async ({ homeserver, displayName: testDisplayName }, use) => {
         const names = ["Alice", "Bob", "Charlie", "Daniel", "Eve", "Frank", "Grace", "Hannah", "Isaac", "Judy"];
-        const username = _.uniqueId("user_");
         const password = _.uniqueId("password_");
         const displayName = testDisplayName ?? _.sample(names)!;
 
-        const credentials = await homeserver.registerUser(username, password, displayName);
-        console.log(`Registered test user ${username} with displayname ${displayName}`);
+        const credentials = await homeserver.registerUser("user", password, displayName);
+        console.log(`Registered test user @user:localhost with displayname ${displayName}`);
 
         await use({
             ...credentials,
             displayName,
         });
     },
+    labsFlags: [],
     user: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
             ({ baseUrl, credentials }) => {
@@ -158,7 +181,6 @@ export const test = base.extend<
             { baseUrl: homeserver.config.baseUrl, credentials },
         );
         await page.goto("/");
-
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
 
         await use(credentials);
@@ -191,21 +213,87 @@ export const test = base.extend<
     },
 
     botCreateOpts: {},
-    bot: async ({ page, homeserver, botCreateOpts }, use) => {
+    bot: async ({ page, homeserver, botCreateOpts, user }, use) => {
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
     },
-    createBot: async ({ page, homeserver }, use) => {
-        const creator = async (opts: CreateBotOpts) => {
-            const bot = new Bot(page, homeserver, opts);
-            await bot.prepareClient();
-            return bot;
-        };
-        await use(creator);
+
+    slidingSyncProxy: async ({ page, user, homeserver }, use) => {
+        const proxy = new SlidingSyncProxy(homeserver.config.dockerUrl);
+        const proxyInstance = await proxy.start();
+        const proxyAddress = `http://localhost:${proxyInstance.port}`;
+        await page.addInitScript((proxyAddress) => {
+            window.localStorage.setItem(
+                "mx_local_settings",
+                JSON.stringify({
+                    feature_sliding_sync_proxy_url: proxyAddress,
+                }),
+            );
+            window.localStorage.setItem("mx_labs_feature_feature_sliding_sync", "true");
+        }, proxyAddress);
+        await page.goto("/");
+        await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
+        await use(proxyInstance);
+        await proxy.stop();
+    },
+
+    // eslint-disable-next-line no-empty-pattern
+    webserver: async ({}, use) => {
+        const webserver = new Webserver();
+        await use(webserver);
+        webserver.stop();
     },
 });
 
-test.use({});
+export const expect = baseExpect.extend({
+    async toMatchScreenshot(
+        this: ExpectMatcherState,
+        receiver: Page | Locator,
+        name?: `${string}.png`,
+        options?: {
+            mask?: Array<Locator>;
+            omitBackground?: boolean;
+            timeout?: number;
+            css?: string;
+        },
+    ) {
+        const page = "page" in receiver ? receiver.page() : receiver;
 
-export { expect };
+        // We add a custom style tag before taking screenshots
+        const style = (await page.addStyleTag({
+            content: `
+                .mx_MessagePanel_myReadMarker {
+                    display: none !important;
+                }
+                .mx_RoomView_MessageList {
+                    height: auto !important;
+                }
+                .mx_DisambiguatedProfile_displayName {
+                    color: var(--cpd-color-blue-1200) !important;
+                }
+                .mx_BaseAvatar {
+                    background-color: var(--cpd-color-fuchsia-1200) !important;
+                    color: white !important;
+                }
+                .mx_ReplyChain {
+                    border-left-color: var(--cpd-color-blue-1200) !important;
+                }
+                /* Use monospace font for timestamp for consistent mask width */
+                .mx_MessageTimestamp {
+                    font-family: Inconsolata !important;
+                }
+                ${options?.css ?? ""}
+            `,
+        })) as ElementHandle<Element>;
+
+        await baseExpect(receiver).toHaveScreenshot(name, options);
+
+        await style.evaluate((tag) => tag.remove());
+        return { pass: true, message: () => "", name: "toMatchScreenshot" };
+    },
+});
+
+test.use({
+    permissions: ["clipboard-read"],
+});

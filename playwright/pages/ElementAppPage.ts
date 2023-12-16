@@ -18,13 +18,12 @@ import { type Locator, type Page, expect } from "@playwright/test";
 
 import { Settings } from "./settings";
 import { Client } from "./client";
-import { Labs } from "./labs";
 import { Timeline } from "./timeline";
+import { Spotlight } from "./Spotlight";
 
 export class ElementAppPage {
-    public constructor(private readonly page: Page) {}
+    public constructor(public readonly page: Page) {}
 
-    public labs = new Labs(this.page);
     public settings = new Settings(this.page);
     public client: Client = new Client(this.page);
     public timeline: Timeline = new Timeline(this.page);
@@ -50,6 +49,19 @@ export class ElementAppPage {
      */
     public async closeDialog(): Promise<void> {
         return this.settings.closeDialog();
+    }
+
+    public async getClipboard(): Promise<string> {
+        return await this.page.evaluate(() => navigator.clipboard.readText());
+    }
+
+    /**
+     * Find an open dialog by its title
+     */
+    public async getDialogByTitle(title: string, timeout = 5000): Promise<Locator> {
+        const dialog = this.page.locator(".mx_Dialog");
+        await dialog.getByRole("heading", { name: title }).waitFor({ timeout });
+        return dialog;
     }
 
     /**
@@ -80,13 +92,25 @@ export class ElementAppPage {
             .click();
     }
 
+    public async viewRoomById(roomId: string): Promise<void> {
+        await this.page.goto(`/#/room/${roomId}`);
+    }
+
     /**
      * Get the composer element
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
      */
-    public async getComposer(isRightPanel?: boolean): Promise<Locator> {
+    public getComposer(isRightPanel?: boolean): Locator {
         const panelClass = isRightPanel ? ".mx_RightPanel" : ".mx_RoomView_body";
         return this.page.locator(`${panelClass} .mx_MessageComposer`);
+    }
+
+    /**
+     * Get the composer input field
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public getComposerField(isRightPanel?: boolean): Locator {
+        return this.getComposer(isRightPanel).locator("[contenteditable]");
     }
 
     /**
@@ -94,7 +118,7 @@ export class ElementAppPage {
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
      */
     public async openMessageComposerOptions(isRightPanel?: boolean): Promise<Locator> {
-        const composer = await this.getComposer(isRightPanel);
+        const composer = this.getComposer(isRightPanel);
         await composer.getByRole("button", { name: "More options", exact: true }).click();
         return this.page.getByRole("menu");
     }
@@ -118,5 +142,31 @@ export class ElementAppPage {
     public async viewSpaceHomeByName(name: string): Promise<void> {
         const button = await this.getSpacePanelButton(name);
         return button.dblclick();
+    }
+
+    /**
+     * Opens the given space by name. The space must be visible in the
+     * space list.
+     * @param name The space name to find and click on/open.
+     */
+    public async viewSpaceByName(name: string): Promise<void> {
+        const button = await this.getSpacePanelButton(name);
+        return button.click();
+    }
+
+    public async getClipboardText(): Promise<string> {
+        return this.page.evaluate("navigator.clipboard.readText()");
+    }
+
+    public async openSpotlight(): Promise<Spotlight> {
+        const spotlight = new Spotlight(this.page);
+        await spotlight.open();
+        return spotlight;
+    }
+
+    public async scrollToBottom(page: Page): Promise<void> {
+        await page
+            .locator(".mx_ScrollPanel")
+            .evaluate((scrollPanel) => scrollPanel.scrollTo(0, scrollPanel.scrollHeight));
     }
 }

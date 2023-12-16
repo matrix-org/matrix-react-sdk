@@ -36,7 +36,6 @@ import "./webserver";
 import "./views";
 import "./iframes";
 import "./composer";
-import "./proxy";
 import "./axe";
 import "./promise";
 
