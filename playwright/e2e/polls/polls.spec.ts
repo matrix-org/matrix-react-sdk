@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Locator, Page } from "@playwright/test";
-
 import { test, expect } from "../../element-web-test";
 import { Bot } from "../../pages/bot";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Layout } from "../../../src/settings/enums/Layout";
+import type { Locator, Page } from "@playwright/test";
 
 test.describe("Polls", () => {
     type CreatePollOptions = {
