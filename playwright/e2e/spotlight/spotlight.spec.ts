@@ -181,7 +181,7 @@ test.describe("Spotlight", () => {
     });
 
     // TODO: We currently can’t test finding rooms on other homeservers/other protocols
-    // We obviously don’t have federation or bridges in cypress tests
+    // We obviously don’t have federation or bridges in local e2e tests
     test.skip("should find unknown public rooms on other homeservers", async ({ page, app }) => {
         const spotlight = await app.openSpotlight();
         await page.waitForTimeout(500); // wait for the dialog to settle
