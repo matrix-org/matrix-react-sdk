@@ -18,11 +18,6 @@ import { Locator, Page } from "@playwright/test";
 
 import type { SettingLevel } from "../../src/settings/SettingLevel";
 
-export enum Filter {
-    People = "people",
-    PublicRooms = "public_rooms",
-}
-
 export class Settings {
     public constructor(private readonly page: Page) {}
 

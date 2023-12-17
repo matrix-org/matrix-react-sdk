@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { test, expect } from "../../element-web-test";
-import { Filter } from "../../pages/settings";
+import { Filter } from "../../pages/Spotlight";
 import { Bot } from "../../pages/bot";
 import type { Locator, Page } from "@playwright/test";
 import type { ElementAppPage } from "../../pages/ElementAppPage";
