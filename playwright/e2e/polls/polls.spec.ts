@@ -131,7 +131,10 @@ test.describe("Polls", () => {
             .filter({ hasText: pollParams.title })
             .getAttribute("data-scroll-tokens");
 
-        // await getPollTile(pollId).percySnapshotElement("Polls Timeline tile - no votes", { percyCSS: hidePercyCSS });
+        await page.pause();
+        await expect(getPollTile(page, pollId)).toMatchScreenshot("Polls_Timeline_tile_no_votes.png", {
+            mask: [page.locator(".mx_MessageTimestamp")],
+        });
 
         // Bot votes 'Maybe' in the poll
         await botVoteForOption(page, bot, roomId, pollId, pollParams.options[2]);
@@ -296,15 +299,16 @@ test.describe("Polls", () => {
         // Take snapshots of poll on ThreadView
         await app.settings.setValue("layout", null, SettingLevel.DEVICE, Layout.Bubble);
         await expect(page.locator(".mx_ThreadView .mx_EventTile[data-layout='bubble']").first()).toBeVisible();
-        // cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with a poll on bubble layout", {
-        //     percyCSS: hidePercyCSS,
-        // });
+        await expect(page.locator(".mx_ThreadView")).toMatchScreenshot("ThreadView_with_a_poll_on_bubble_layout.png", {
+            mask: [page.locator(".mx_MessageTimestamp")],
+        });
 
         await app.settings.setValue("layout", null, SettingLevel.DEVICE, Layout.Group);
         await expect(page.locator(".mx_ThreadView .mx_EventTile[data-layout='group']").first()).toBeVisible();
-        // cy.get(".mx_ThreadView").percySnapshotElement("ThreadView with a poll on group layout", {
-        //     percyCSS: hidePercyCSS,
-        // });
+
+        await expect(page.locator(".mx_ThreadView")).toMatchScreenshot("ThreadView_with_a_poll_on_group_layout.png", {
+            mask: [page.locator(".mx_MessageTimestamp")],
+        });
 
         const roomViewLocator = page.locator(".mx_RoomView_body");
         // vote 'Maybe' in the main timeline poll
