@@ -23,13 +23,18 @@ export enum Filter {
 }
 
 export class Spotlight {
-    private root: Locator;
+    public root: Locator;
 
     constructor(private page: Page) {}
 
     public async open() {
-        await this.page.keyboard.press(`${CommandOrControl}+KeyK`);
         this.root = this.page.locator('[role=dialog][aria-label="Search Dialog"]');
+        const isSpotlightAlreadyOpen = !!(await this.root.count());
+        if (isSpotlightAlreadyOpen) {
+            // Close the spotlight dialog if it's already open!
+            await this.page.keyboard.press(`${CommandOrControl}+KeyK`);
+        }
+        await this.page.keyboard.press(`${CommandOrControl}+KeyK`);
     }
 
     public async filter(filter: Filter) {
@@ -49,7 +54,11 @@ export class Spotlight {
     }
 
     public async search(query: string) {
-        await this.root.locator(".mx_SpotlightDialog_searchBox").getByRole("textbox", { name: "Search" }).fill(query);
+        await this.searchLocator.getByRole("textbox", { name: "Search" }).fill(query);
+    }
+
+    public get searchLocator() {
+        return this.root.locator(".mx_SpotlightDialog_searchBox");
     }
 
     public get results() {
