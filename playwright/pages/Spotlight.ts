@@ -31,7 +31,7 @@ export class Spotlight {
         this.root = this.page.locator('[role=dialog][aria-label="Search Dialog"]');
         const isSpotlightAlreadyOpen = !!(await this.root.count());
         if (isSpotlightAlreadyOpen) {
-            // Close the spotlight dialog if it's already open!
+            // Close dialog if it is already open
             await this.page.keyboard.press(`${CommandOrControl}+KeyK`);
         }
         await this.page.keyboard.press(`${CommandOrControl}+KeyK`);
