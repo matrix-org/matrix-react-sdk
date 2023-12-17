@@ -23,7 +23,7 @@ export enum Filter {
 }
 
 export class Spotlight {
-    public root: Locator;
+    private root: Locator;
 
     constructor(private page: Page) {}
 
@@ -54,14 +54,18 @@ export class Spotlight {
     }
 
     public async search(query: string) {
-        await this.searchLocator.getByRole("textbox", { name: "Search" }).fill(query);
+        await this.searchBox.getByRole("textbox", { name: "Search" }).fill(query);
     }
 
-    public get searchLocator() {
+    public get searchBox() {
         return this.root.locator(".mx_SpotlightDialog_searchBox");
     }
 
     public get results() {
         return this.root.locator(".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option");
+    }
+
+    public get dialog() {
+        return this.root;
     }
 }

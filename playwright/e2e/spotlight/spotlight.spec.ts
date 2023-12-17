@@ -29,7 +29,7 @@ async function startDM(app: ElementAppPage, page: Page, name: string): Promise<v
     await spotlight.filter(Filter.People);
     await spotlight.search(name);
     await page.waitForTimeout(1000); // wait for the dialog code to settle
-    await expect(spotlight.root.locator(".mx_Spinner")).not.toBeAttached();
+    await expect(spotlight.dialog.locator(".mx_Spinner")).not.toBeAttached();
     const result = spotlight.results;
     await expect(result).toHaveCount(1);
     await expect(result.first()).toContainText(name);
@@ -101,27 +101,27 @@ test.describe("Spotlight", () => {
         await page.waitForTimeout(1000); // wait for the dialog to settle, otherwise our keypresses might race with an update
 
         // initially, public spaces should be highlighted (because there are no other suggestions)
-        await expect(spotlight.root.locator("#mx_SpotlightDialog_button_explorePublicSpaces")).toHaveAttribute(
+        await expect(spotlight.dialog.locator("#mx_SpotlightDialog_button_explorePublicSpaces")).toHaveAttribute(
             "aria-selected",
             "true",
         );
 
         // hitting enter should enable the public rooms filter
-        await spotlight.searchLocator.press("Enter");
-        await expect(spotlight.root.locator(".mx_SpotlightDialog_filter")).toHaveText("Public spaces");
-        await spotlight.searchLocator.press("Backspace");
-        await expect(spotlight.root.locator(".mx_SpotlightDialog_filter")).not.toBeAttached();
+        await spotlight.searchBox.press("Enter");
+        await expect(spotlight.dialog.locator(".mx_SpotlightDialog_filter")).toHaveText("Public spaces");
+        await spotlight.searchBox.press("Backspace");
+        await expect(spotlight.dialog.locator(".mx_SpotlightDialog_filter")).not.toBeAttached();
         await page.waitForTimeout(200); // Again, wait to settle so keypresses arrive correctly
 
-        await spotlight.searchLocator.press("ArrowDown");
-        await expect(spotlight.root.locator("#mx_SpotlightDialog_button_explorePublicRooms")).toHaveAttribute(
+        await spotlight.searchBox.press("ArrowDown");
+        await expect(spotlight.dialog.locator("#mx_SpotlightDialog_button_explorePublicRooms")).toHaveAttribute(
             "aria-selected",
             "true",
         );
-        await spotlight.searchLocator.press("Enter");
-        await expect(spotlight.root.locator(".mx_SpotlightDialog_filter")).toHaveText("Public rooms");
-        await spotlight.searchLocator.press("Backspace");
-        await expect(spotlight.root.locator(".mx_SpotlightDialog_filter")).not.toBeAttached();
+        await spotlight.searchBox.press("Enter");
+        await expect(spotlight.dialog.locator(".mx_SpotlightDialog_filter")).toHaveText("Public rooms");
+        await spotlight.searchBox.press("Backspace");
+        await expect(spotlight.dialog.locator(".mx_SpotlightDialog_filter")).not.toBeAttached();
     });
 
     test("should find joined rooms", async ({ page, app }) => {
@@ -281,7 +281,7 @@ test.describe("Spotlight", () => {
         resultLocator = spotlight.results;
         await expect(resultLocator).toHaveCount(2);
         await expect(
-            spotlight.root
+            spotlight.dialog
                 .locator(".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option")
                 .filter({ hasText: groupDmName }),
         ).toBeAttached();
@@ -294,7 +294,7 @@ test.describe("Spotlight", () => {
         resultLocator = spotlight.results;
         await expect(resultLocator).toHaveCount(2);
         await expect(
-            spotlight.root
+            spotlight.dialog
                 .locator(".mx_SpotlightDialog_section.mx_SpotlightDialog_results .mx_SpotlightDialog_option")
                 .filter({ hasText: groupDmName })
                 .last(),
@@ -334,8 +334,10 @@ test.describe("Spotlight", () => {
         await expect(resultLocator).toHaveCount(1);
         await expect(resultLocator.first()).toContainText(bot2Name);
 
-        await expect(spotlight.root.locator(".mx_SpotlightDialog_startGroupChat")).toContainText("Start a group chat");
-        await spotlight.root.locator(".mx_SpotlightDialog_startGroupChat").click();
+        await expect(spotlight.dialog.locator(".mx_SpotlightDialog_startGroupChat")).toContainText(
+            "Start a group chat",
+        );
+        await spotlight.dialog.locator(".mx_SpotlightDialog_startGroupChat").click();
         await expect(page.getByRole("dialog")).toContainText("Direct Messages");
     });
 
@@ -352,7 +354,7 @@ test.describe("Spotlight", () => {
         await spotlight.filter(Filter.People);
         await spotlight.search(bot1Name);
         await page.waitForTimeout(3000); // wait for the dialog to settle
-        await expect(spotlight.root.locator(".mx_Spinner")).not.toBeAttached();
+        await expect(spotlight.dialog.locator(".mx_Spinner")).not.toBeAttached();
         const resultLocator = spotlight.results;
         await expect(resultLocator).toHaveCount(1);
     });
@@ -368,22 +370,22 @@ test.describe("Spotlight", () => {
         await expect(resultLocator.first()).toHaveAttribute("aria-selected", "true");
         await expect(resultLocator.last()).toHaveAttribute("aria-selected", "false");
 
-        await spotlight.searchLocator.press("ArrowDown");
+        await spotlight.searchBox.press("ArrowDown");
         resultLocator = spotlight.results;
         await expect(resultLocator.first()).toHaveAttribute("aria-selected", "false");
         await expect(resultLocator.last()).toHaveAttribute("aria-selected", "true");
 
-        await spotlight.searchLocator.press("ArrowDown");
+        await spotlight.searchBox.press("ArrowDown");
         resultLocator = spotlight.results;
         await expect(resultLocator.first()).toHaveAttribute("aria-selected", "false");
         await expect(resultLocator.last()).toHaveAttribute("aria-selected", "false");
 
-        await spotlight.searchLocator.press("ArrowUp");
+        await spotlight.searchBox.press("ArrowUp");
         resultLocator = spotlight.results;
         await expect(resultLocator.first()).toHaveAttribute("aria-selected", "false");
         await expect(resultLocator.last()).toHaveAttribute("aria-selected", "true");
 
-        await spotlight.searchLocator.press("ArrowUp");
+        await spotlight.searchBox.press("ArrowUp");
         resultLocator = spotlight.results;
         await expect(resultLocator.first()).toHaveAttribute("aria-selected", "true");
         await expect(resultLocator.last()).toHaveAttribute("aria-selected", "false");
