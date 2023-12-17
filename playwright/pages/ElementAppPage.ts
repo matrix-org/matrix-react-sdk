@@ -18,12 +18,11 @@ import { type Locator, type Page, expect } from "@playwright/test";
 
 import { Settings } from "./settings";
 import { Client } from "./client";
-import { Labs } from "./labs";
+import { Spotlight } from "./Spotlight";
 
 export class ElementAppPage {
-    public constructor(private readonly page: Page) {}
+    public constructor(public readonly page: Page) {}
 
-    public labs = new Labs(this.page);
     public settings = new Settings(this.page);
     public client: Client = new Client(this.page);
 
@@ -91,6 +90,10 @@ export class ElementAppPage {
             .click();
     }
 
+    public async viewRoomById(roomId: string): Promise<void> {
+        await this.page.goto(`/#/room/${roomId}`);
+    }
+
     /**
      * Get the composer element
      * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
@@ -98,6 +101,14 @@ export class ElementAppPage {
     public getComposer(isRightPanel?: boolean): Locator {
         const panelClass = isRightPanel ? ".mx_RightPanel" : ".mx_RoomView_body";
         return this.page.locator(`${panelClass} .mx_MessageComposer`);
+    }
+
+    /**
+     * Get the composer input field
+     * @param isRightPanel whether to select the right panel composer, otherwise the main timeline composer
+     */
+    public getComposerField(isRightPanel?: boolean): Locator {
+        return this.getComposer(isRightPanel).locator("[contenteditable]");
     }
 
     /**
@@ -143,5 +154,17 @@ export class ElementAppPage {
 
     public async getClipboardText(): Promise<string> {
         return this.page.evaluate("navigator.clipboard.readText()");
+    }
+
+    public async openSpotlight(): Promise<Spotlight> {
+        const spotlight = new Spotlight(this.page);
+        await spotlight.open();
+        return spotlight;
+    }
+
+    public async scrollToBottom(page: Page): Promise<void> {
+        await page
+            .locator(".mx_ScrollPanel")
+            .evaluate((scrollPanel) => scrollPanel.scrollTo(0, scrollPanel.scrollHeight));
     }
 }
