@@ -27,8 +27,7 @@ test.describe("Threads", () => {
     });
 
     test.beforeEach(async ({ page }) => {
-        await page.goto("/");
-        await page.evaluate(() => {
+        await page.addInitScript(() => {
             window.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
     });
@@ -350,6 +349,13 @@ test.describe("Threads", () => {
     test.describe("with larger viewport", async () => {
         // Increase viewport size so that voice messages fit
         test.use({ viewport: { width: 1280, height: 720 } });
+
+        test.beforeEach(async ({ page }) => {
+            // Increase right-panel size, so that voice messages fit
+            await page.addInitScript(() => {
+                window.localStorage.setItem("mx_rhs_size", "600");
+            });
+        });
 
         test("can send voice messages", async ({ page, app, user }) => {
             // Increase right-panel size, so that voice messages fit
