@@ -420,6 +420,10 @@ describe("RoomViewStore", function () {
             });
         });
 
+        afterEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReset();
+        });
+
         it("subscribes to the room", async () => {
             const setRoomVisible = jest
                 .spyOn(slidingSyncManager, "setRoomVisible")
