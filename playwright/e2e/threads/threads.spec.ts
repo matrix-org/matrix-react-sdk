@@ -89,7 +89,7 @@ test.describe("Threads", () => {
             ThreadViewGroupSpacingStart,
         );
 
-        // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
+        // Take snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         await expect(page.locator(".mx_ThreadView")).toMatchScreenshot("Initial_ThreadView_on_group_layout.png", {
             mask: mask,
         });
@@ -167,7 +167,7 @@ test.describe("Threads", () => {
             ),
         ).toHaveCSS("padding-inline-start", ThreadViewGroupSpacingStart);
 
-        // Take Percy snapshot of group layout (IRC layout is not available on ThreadView)
+        // Take snapshot of group layout (IRC layout is not available on ThreadView)
         expect(page.locator(".mx_ThreadView")).toMatchScreenshot(
             "ThreadView_with_reaction_and_a_hidden_event_on_group_layout.png",
             {
@@ -191,7 +191,7 @@ test.describe("Threads", () => {
             // Make sure the margin is NOT applied to mx_EventTile_line
             .toHaveCSS("margin-inline-start", "0px");
 
-        // Take Percy snapshot of bubble layout
+        // Take snapshot of bubble layout
         expect(page.locator(".mx_ThreadView")).toMatchScreenshot(
             "ThreadView_with_reaction_and_a_hidden_event_on_bubble_layout.png",
             {
@@ -224,7 +224,7 @@ test.describe("Threads", () => {
             page.locator(".mx_ThreadView").locator(".mx_EventTile_last .mx_EventTile_receiptSent"),
         ).toBeVisible();
 
-        // Take Percy snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
+        // Take snapshots in group layout and bubble layout (IRC layout is not available on ThreadView)
         await expect(page.locator(".mx_ThreadView .mx_EventTile[data-layout='group']")).toBeVisible();
         await expect(page.locator(".mx_ThreadView")).toMatchScreenshot(
             "ThreadView_with_redacted_messages_on_group_layout.png",
