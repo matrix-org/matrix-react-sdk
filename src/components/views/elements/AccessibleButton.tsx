@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { forwardRef, FunctionComponent, HTMLAttributes, InputHTMLAttributes, ReactNode, Ref } from "react";
+import React, { forwardRef, FunctionComponent, HTMLAttributes, InputHTMLAttributes, Ref } from "react";
 import classnames from "classnames";
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -22,7 +22,10 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
 
-type AccessibleButtonKind =
+/**
+ * The kind of button, similar to how Bootstrap works.
+ */
+export type AccessibleButtonKind =
     | "primary"
     | "primary_outline"
     | "primary_sm"
@@ -58,24 +61,29 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
     Omit<InputHTMLAttributes<Element>, "onClick">;
 
 /**
- * children: React's magic prop. Represents all children given to the element.
- * element:  (optional) The base element type. "div" by default.
- * onClick:  (required) Event handler for button activation. Should be
- *           implemented exactly like a normal onClick handler.
+ * Type of props accepted by AccessibleButton, extends that of the props accepted by the underlying Element rendered,
+ * see `element`..
  */
 export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
+    /**
+     * The base element type. "div" by default.
+     */
     element?: T;
-    children?: ReactNode;
-    // The kind of button, similar to how Bootstrap works.
-    // See available classes for AccessibleButton for options.
-    kind?: AccessibleButtonKind | string;
-    // The ARIA role
-    role?: string;
-    // The tabIndex
-    tabIndex?: number;
+    /**
+     * The kind of button, similar to how Bootstrap works.
+     */
+    kind?: AccessibleButtonKind;
+    /**
+     * Whether the button should be disabled.
+     */
     disabled?: boolean;
-    className?: string;
+    /**
+     * Whether the button should trigger on mousedown event instead of on click event.
+     */
     triggerOnMouseDown?: boolean;
+    /**
+     * Event handler for button activation. Should be implemented exactly like a normal onClick handler.
+     */
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 

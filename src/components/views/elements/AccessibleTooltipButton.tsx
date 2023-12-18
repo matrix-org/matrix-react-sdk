@@ -20,17 +20,41 @@ import React, { SyntheticEvent, FocusEvent, forwardRef, useEffect, Ref, useState
 import AccessibleButton, { Props as AccessibleButtonProps } from "./AccessibleButton";
 import Tooltip, { Alignment } from "./Tooltip";
 
+/**
+ * Type of props accepted by AccessibleTooltipButton, extends that of AccessibleButton.
+ */
 export type Props<T extends keyof JSX.IntrinsicElements> = AccessibleButtonProps<T> & {
+    /**
+     * Title to show in the tooltip and use as aria-label
+     */
     title?: string;
+    /**
+     * Tooltip node to show in the tooltip, takes precedence over `title`
+     */
     tooltip?: React.ReactNode;
+    /**
+     * Trigger label to render
+     */
     label?: string;
+    /**
+     * Classname to apply to the tooltip
+     */
     tooltipClassName?: string;
     /**
      * Force the tooltip to be hidden
      */
     forceHide?: boolean;
+    /**
+     * Alignment to render the tooltip with
+     */
     alignment?: Alignment;
+    /**
+     * Function to call when the children are hovered over
+     */
     onHover?: (hovering: boolean) => void;
+    /**
+     * Function to call when the tooltip goes from shown to hidden.
+     */
     onHideTooltip?(ev: SyntheticEvent): void;
 };
 

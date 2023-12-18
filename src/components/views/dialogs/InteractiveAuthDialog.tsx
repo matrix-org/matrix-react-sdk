@@ -21,7 +21,7 @@ import { MatrixClient, UIAResponse } from "matrix-js-sdk/src/matrix";
 import { AuthType } from "matrix-js-sdk/src/interactive-auth";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { AccessibleButtonKind } from "../elements/AccessibleButton";
 import InteractiveAuth, {
     ERROR_USER_CANCELLED,
     InteractiveAuthCallback,
@@ -36,7 +36,7 @@ type DialogAesthetics = Partial<{
             title: string;
             body: string;
             continueText: string;
-            continueKind: string;
+            continueKind: Extract<AccessibleButtonKind, "primary" | "danger">;
         };
     };
 }>;
@@ -146,7 +146,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         let title = this.state.authError ? "Error" : this.props.title || _t("common|authentication");
         let body = this.state.authError ? null : this.props.body;
         let continueText: string | undefined;
-        let continueKind: string | undefined;
+        let continueKind: Extract<AccessibleButtonKind, "primary" | "danger"> | undefined;
         const dialogAesthetics = this.props.aestheticsForStagePhases || this.getDefaultDialogAesthetics();
         if (!this.state.authError && dialogAesthetics) {
             if (

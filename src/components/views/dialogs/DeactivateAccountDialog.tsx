@@ -28,13 +28,14 @@ import StyledCheckbox from "../elements/StyledCheckbox";
 import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
+import { AccessibleButtonKind } from "../elements/AccessibleButton";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
         [x: number]: {
             body: string;
             continueText?: string;
-            continueKind?: string;
+            continueKind?: Extract<AccessibleButtonKind, "primary" | "danger">;
         };
     };
 }>;
@@ -53,7 +54,7 @@ interface IState {
     // next to the InteractiveAuth component.
     bodyText?: string;
     continueText?: string;
-    continueKind?: string;
+    continueKind?: Extract<AccessibleButtonKind, "primary" | "danger">;
 }
 
 export default class DeactivateAccountDialog extends React.Component<IProps, IState> {
@@ -98,7 +99,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         const aesthetics = DEACTIVATE_AESTHETICS[stage];
         let bodyText: string | undefined;
         let continueText: string | undefined;
-        let continueKind: string | undefined;
+        let continueKind: Extract<AccessibleButtonKind, "primary" | "danger"> | undefined;
         if (aesthetics) {
             const phaseAesthetics = aesthetics[phase];
             if (phaseAesthetics) {
