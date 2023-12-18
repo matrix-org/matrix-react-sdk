@@ -61,16 +61,7 @@ test.describe("Threads", () => {
             .getAttribute("data-scroll-tokens");
 
         // Bot starts thread
-        await bot.evaluate(
-            (bot, { roomId, threadId, MessageLong }) => {
-                return bot.sendMessage(roomId, threadId, {
-                    // Send a message long enough to be wrapped to check if avatars inside the ReadReceiptGroup are visible
-                    body: MessageLong,
-                    msgtype: "m.text",
-                });
-            },
-            { roomId, threadId, MessageLong },
-        );
+        await bot.sendMessage(roomId, MessageLong, threadId);
 
         // User asserts timeline thread summary visible & clicks it
         let locator = page.locator(".mx_RoomView_body .mx_ThreadSummary");
@@ -254,15 +245,7 @@ test.describe("Threads", () => {
         locator.getByRole("button", { name: "Close" }).click();
 
         // Bot responds to thread
-        await bot.evaluate(
-            (bot, { roomId, threadId }) => {
-                return bot.sendMessage(roomId, threadId, {
-                    body: "How are things?",
-                    msgtype: "m.text",
-                });
-            },
-            { roomId, threadId },
-        );
+        await bot.sendMessage(roomId, "How are things?", threadId);
 
         locator = page.locator(".mx_RoomView_body .mx_ThreadSummary");
         await expect(locator.locator(".mx_ThreadSummary_sender").getByText("BotBob")).toBeAttached();
@@ -310,16 +293,7 @@ test.describe("Threads", () => {
         await page.locator(".mx_ThreadPanel").getByRole("button", { name: "Close" }).click();
 
         // Bot responds to thread and saves the id of their message to @eventId
-        const eventId = await bot.evaluate(
-            async (bot, { roomId, threadId }) => {
-                const { event_id: eventId } = await bot.sendMessage(roomId, threadId, {
-                    body: "I'm very good thanks",
-                    msgtype: "m.text",
-                });
-                return eventId;
-            },
-            { roomId, threadId },
-        );
+        const { event_id: eventId } = await bot.sendMessage(roomId, threadId, "I'm very good thanks");
 
         // User asserts
         locator = page.locator(".mx_RoomView_body .mx_ThreadSummary");
@@ -409,15 +383,7 @@ test.describe("Threads", () => {
             .getAttribute("data-scroll-tokens");
 
         // Bot starts thread
-        await bot.evaluate(
-            (bot, { roomId, threadId }) => {
-                return bot.sendMessage(roomId, threadId, {
-                    body: "Hello there",
-                    msgtype: "m.text",
-                });
-            },
-            { roomId, threadId },
-        );
+        await bot.sendMessage(roomId, "Hello there", threadId);
 
         // User clicks thread summary
         await page.locator(".mx_RoomView_body .mx_ThreadSummary").click();
