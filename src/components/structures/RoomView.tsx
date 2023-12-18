@@ -2280,7 +2280,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // if statusBar does not exist then statusBarArea is blank and takes up unnecessary space on the screen
         // show statusBarArea only if statusBar is present
         const statusBarArea = statusBar && (
-            <div role="region" className={statusBarAreaClass}>
+            <div role="region" className={statusBarAreaClass} aria-label={_t("a11y|room_status_bar")}>
                 <div className="mx_RoomView_statusAreaBox">
                     <div className="mx_RoomView_statusAreaBox_line" />
                     {statusBar}

@@ -14,7 +14,8 @@
         "recent_rooms": "Recent rooms",
         "room_name": "Room %(name)s",
         "unread_messages": "Unread messages.",
-        "user_menu": "User menu"
+        "user_menu": "User menu",
+        "room_status_bar": "Room status bar"
     },
     "a11y_jump_first_unread_room": "Jump to first unread room.",
     "action": {
