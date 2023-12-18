@@ -134,11 +134,6 @@ describe("RoomViewStore", function () {
         await untilDispatch(Action.CancelAskToJoin, dis);
     };
 
-    const dispatchRoomLoaded = async () => {
-        dis.dispatch({ action: Action.RoomLoaded });
-        await untilDispatch(Action.RoomLoaded, dis);
-    };
-
     let roomViewStore: RoomViewStore;
     let slidingSyncManager: SlidingSyncManager;
     let dis: MatrixDispatcher;
@@ -598,7 +593,10 @@ describe("RoomViewStore", function () {
                     opts.buttons = buttons;
                 }
             });
-            await dispatchRoomLoaded();
+
+            dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+            await untilDispatch(Action.ViewRoom, dis);
+
             expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons });
         });
     });
