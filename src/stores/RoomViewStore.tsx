@@ -440,6 +440,7 @@ export class RoomViewStore extends EventEmitter {
             }
 
             const viewRoomOpts: ViewRoomOpts = { buttons: [] };
+            // Allow modules to update the list of buttons for the room by updating `viewRoomOpts`.
             ModuleRunner.instance.invoke(RoomViewLifecycle.ViewRoom, viewRoomOpts, this.getRoomId());
 
             const newState: Partial<State> = {
