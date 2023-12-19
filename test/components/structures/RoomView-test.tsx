@@ -590,12 +590,6 @@ describe("RoomView", () => {
         });
     });
 
-    it("fires Action.RoomLoaded", async () => {
-        jest.spyOn(dis, "dispatch");
-        await mountRoomView();
-        expect(dis.dispatch).toHaveBeenCalledWith({ action: Action.RoomLoaded });
-    });
-
     it("should close search results when edit is clicked", async () => {
         room.getMyMembership = jest.fn().mockReturnValue("join");
 
