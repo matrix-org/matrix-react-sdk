@@ -102,8 +102,7 @@ test.describe("Poll history", () => {
 
         const roomId = await app.client.createRoom({});
 
-        const botUserId = await bot.evaluate((bot) => bot.getUserId());
-        await app.client.inviteUser(roomId, botUserId);
+        await app.client.inviteUser(roomId, bot.credentials.userId);
         await page.goto("/#/room/" + roomId);
         // wait until Bob joined
         await expect(page.getByText("BotBob joined the room")).toBeAttached();
