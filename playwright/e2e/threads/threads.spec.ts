@@ -365,11 +365,8 @@ test.describe("Threads", () => {
         await page.goto("/#/room/" + roomId);
 
         // Exclude timestamp, read marker, and mapboxgl-map from snapshots
-        const mask = [
-            page.locator(".mx_MessageTimestamp"),
-            page.locator(".mx_MessagePanel_myReadMarker"),
-            page.locator(".mapboxgl-map"),
-        ];
+        const css =
+            ".mx_MessageTimestamp, .mx_MessagePanel_myReadMarker, .mapboxgl-map { visibility: hidden !important; }";
 
         let locator = page.locator(".mx_RoomView_body");
         // User sends message
@@ -390,7 +387,9 @@ test.describe("Threads", () => {
 
         // User sends location on ThreadView
         await expect(page.locator(".mx_ThreadView")).toBeAttached();
-        await (await app.openMessageComposerOptions(true)).getByRole("menuitem", { name: "Location" }).click();
+        await(await app.openMessageComposerOptions(true))
+            .getByRole("menuitem", { name: "Location" })
+            .click();
         await page.getByTestId(`share-location-option-Pin`).click();
         await page.locator("#mx_LocationPicker_map").click();
         await page.getByRole("button", { name: "Share location" }).click();
@@ -409,9 +408,8 @@ test.describe("Threads", () => {
         await expect(locator.locator(".mx_EventTile_last .mx_EventTile_receiptSent")).toBeVisible();
 
         // Take a snapshot of reply to the shared location
-        await expect(page.locator(".mx_ThreadView")).toMatchScreenshot("Reply_to_the_location_on_ThreadView.png", {
-            mask,
-        });
+        await page.addStyleTag({ content: css });
+        await expect(page.locator(".mx_ThreadView")).toMatchScreenshot("Reply_to_the_location_on_ThreadView.png");
     });
 
     test("right panel behaves correctly", async ({ page, app, user }) => {
