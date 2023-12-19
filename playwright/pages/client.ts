@@ -109,7 +109,7 @@ export class Client {
     public async sendMessage(
         roomId: string,
         content: IContent | string,
-        threadId?: string,
+        threadId: string | null = null,
     ): Promise<ISendEventResponse> {
         if (typeof content === "string") {
             content = {
