@@ -29,6 +29,12 @@ export class Timeline {
         });
     }
 
+    public async scrollToBottom(): Promise<void> {
+        await this.page
+            .locator(".mx_ScrollPanel")
+            .evaluate((scrollPanel) => scrollPanel.scrollTo(0, scrollPanel.scrollHeight));
+    }
+
     // Find the event tile matching the given sender & body
     async findEventTile(sender: string, body: string): Promise<Locator> {
         const locators = await this.page.locator(".mx_RoomView_MessageList .mx_EventTile").all();

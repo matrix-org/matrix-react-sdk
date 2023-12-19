@@ -163,10 +163,4 @@ export class ElementAppPage {
         await spotlight.open();
         return spotlight;
     }
-
-    public async scrollToBottom(page: Page): Promise<void> {
-        await page
-            .locator(".mx_ScrollPanel")
-            .evaluate((scrollPanel) => scrollPanel.scrollTo(0, scrollPanel.scrollHeight));
-    }
 }
