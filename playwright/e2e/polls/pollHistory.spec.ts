@@ -44,36 +44,26 @@ test.describe("Poll history", () => {
 
     const botVoteForOption = async (bot: Bot, roomId: string, pollId: string, optionId: string): Promise<void> => {
         // We can't use the js-sdk types for this stuff directly, so manually construct the event.
-        await bot.evaluate(
-            (bot, { roomId, pollId, optionId }) => {
-                return bot.sendEvent(roomId, "org.matrix.msc3381.poll.response", {
-                    "m.relates_to": {
-                        rel_type: "m.reference",
-                        event_id: pollId,
-                    },
-                    "org.matrix.msc3381.poll.response": {
-                        answers: [optionId],
-                    },
-                });
+        await bot.sendEvent(roomId, null, "org.matrix.msc3381.poll.response", {
+            "m.relates_to": {
+                rel_type: "m.reference",
+                event_id: pollId,
             },
-            { roomId, pollId, optionId },
-        );
+            "org.matrix.msc3381.poll.response": {
+                answers: [optionId],
+            },
+        });
     };
 
     const endPoll = async (bot: Bot, roomId: string, pollId: string): Promise<void> => {
         // We can't use the js-sdk types for this stuff directly, so manually construct the event.
-        await bot.evaluate(
-            (bot, { roomId, pollId }) => {
-                return bot.sendEvent(roomId, "org.matrix.msc3381.poll.end", {
-                    "m.relates_to": {
-                        rel_type: "m.reference",
-                        event_id: pollId,
-                    },
-                    "org.matrix.msc1767.text": "The poll has ended",
-                });
+        await bot.sendEvent(roomId, null, "org.matrix.msc3381.poll.end", {
+            "m.relates_to": {
+                rel_type: "m.reference",
+                event_id: pollId,
             },
-            { roomId, pollId },
-        );
+            "org.matrix.msc1767.text": "The poll has ended",
+        });
     };
 
     async function openPollHistory(page: Page): Promise<void> {
@@ -86,14 +76,14 @@ test.describe("Poll history", () => {
         botCreateOpts: { displayName: "BotBob" },
     });
 
-    test.beforeEach(async ({ page, user }) => {
-        await page.evaluate(() => {
+    test.beforeEach(async ({ page }) => {
+        await page.addInitScript(() => {
             // Collapse left panel for these tests
             window.localStorage.setItem("mx_lhs_size", "0");
         });
     });
 
-    test("Should display active and past polls", async ({ page, app, bot }) => {
+    test("Should display active and past polls", async ({ page, app, user, bot }) => {
         const pollParams1 = {
             title: "Does the polls feature work?",
             options: ["Yes", "No", "Maybe"].map((option) => ({
