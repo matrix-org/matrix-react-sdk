@@ -94,8 +94,8 @@ test.describe("Polls", () => {
         botCreateOpts: { displayName: "BotBob" },
     });
 
-    test.beforeEach(async ({ page, user }) => {
-        await page.evaluate(() => {
+    test.beforeEach(async ({ page }) => {
+        await page.addInitScript(() => {
             // Collapse left panel for these tests
             window.localStorage.setItem("mx_lhs_size", "0");
         });
@@ -168,7 +168,7 @@ test.describe("Polls", () => {
         await expectPollOptionVoteCount(page, pollId, pollParams.options[2], 0);
     });
 
-    test("should be editable from context menu if no votes have been cast", async ({ page, app, bot }) => {
+    test("should be editable from context menu if no votes have been cast", async ({ page, app, user, bot }) => {
         const roomId: string = await app.client.createRoom({});
         const botUserId = await bot.evaluate((bot) => bot.getUserId());
         await app.client.inviteUser(roomId, botUserId);
@@ -199,10 +199,9 @@ test.describe("Polls", () => {
         await expect(page.locator(".mx_PollCreateDialog")).toBeAttached();
     });
 
-    test("should not be editable from context menu if votes have been cast", async ({ page, app, bot }) => {
+    test("should not be editable from context menu if votes have been cast", async ({ page, app, user, bot }) => {
         const roomId: string = await app.client.createRoom({});
-        const botUserId = await bot.evaluate((bot) => bot.getUserId());
-        await app.client.inviteUser(roomId, botUserId);
+        await app.client.inviteUser(roomId, bot.credentials.userId);
         await page.goto("/#/room/" + roomId);
 
         const locator = await app.openMessageComposerOptions();
@@ -236,14 +235,13 @@ test.describe("Polls", () => {
         await expect(page.locator(".mx_ErrorDialog")).toBeAttached();
     });
 
-    test("should be displayed correctly in thread panel", async ({ page, app, bot, homeserver }) => {
+    test("should be displayed correctly in thread panel", async ({ page, app, user, bot, homeserver }) => {
         const botCharlie = new Bot(page, homeserver, { displayName: "BotCharlie" });
+        await botCharlie.prepareClient();
 
         const roomId: string = await app.client.createRoom({});
-        const botBobUserId = await bot.evaluate((bot) => bot.getUserId());
-        const botCharlieUserId = await botCharlie.evaluate((bot) => bot.getUserId());
-        await app.client.inviteUser(roomId, botBobUserId);
-        await app.client.inviteUser(roomId, botCharlieUserId);
+        await app.client.inviteUser(roomId, bot.credentials.userId);
+        await app.client.inviteUser(roomId, botCharlie.credentials.userId);
         await page.goto("/#/room/" + roomId);
 
         // wait until the bots joined
