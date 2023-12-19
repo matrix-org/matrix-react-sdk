@@ -17,6 +17,7 @@ limitations under the License.
 import { test as base, expect as baseExpect, Locator, Page, ExpectMatcherState, ElementHandle } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
+import { basename } from "node:path";
 
 import type mailhog from "mailhog";
 import type { IConfigOptions } from "../src/IConfigOptions";
@@ -29,6 +30,7 @@ import { OAuthServer } from "./plugins/oauth_server";
 import { Crypto } from "./pages/crypto";
 import { Toasts } from "./pages/toasts";
 import { Bot, CreateBotOpts } from "./pages/bot";
+import { ProxyInstance, SlidingSyncProxy } from "./plugins/sliding-sync-proxy";
 import { Webserver } from "./plugins/webserver";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
@@ -81,6 +83,7 @@ export const test = base.extend<
         uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
         botCreateOpts: CreateBotOpts;
         bot: Bot;
+        slidingSyncProxy: ProxyInstance;
         labsFlags: string[];
         webserver: Webserver;
     }
@@ -103,12 +106,11 @@ export const test = base.extend<
             }
             await route.fulfill({ json });
         });
-
         await use(page);
     },
 
     startHomeserverOpts: "default",
-    homeserver: async ({ request, startHomeserverOpts: opts }, use) => {
+    homeserver: async ({ request, startHomeserverOpts: opts }, use, testInfo) => {
         if (typeof opts === "string") {
             opts = { template: opts };
         }
@@ -127,7 +129,16 @@ export const test = base.extend<
         }
 
         await use(await server.start(opts));
-        await server.stop();
+        const logs = await server.stop();
+
+        if (testInfo.status !== "passed") {
+            for (const path of logs) {
+                await testInfo.attach(`homeserver-${basename(path)}`, {
+                    path,
+                    contentType: "text/plain",
+                });
+            }
+        }
     },
     // eslint-disable-next-line no-empty-pattern
     oAuthServer: async ({}, use) => {
@@ -170,7 +181,6 @@ export const test = base.extend<
             { baseUrl: homeserver.config.baseUrl, credentials },
         );
         await page.goto("/");
-
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
 
         await use(credentials);
@@ -207,6 +217,25 @@ export const test = base.extend<
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
+    },
+
+    slidingSyncProxy: async ({ page, user, homeserver }, use) => {
+        const proxy = new SlidingSyncProxy(homeserver.config.dockerUrl);
+        const proxyInstance = await proxy.start();
+        const proxyAddress = `http://localhost:${proxyInstance.port}`;
+        await page.addInitScript((proxyAddress) => {
+            window.localStorage.setItem(
+                "mx_local_settings",
+                JSON.stringify({
+                    feature_sliding_sync_proxy_url: proxyAddress,
+                }),
+            );
+            window.localStorage.setItem("mx_labs_feature_feature_sliding_sync", "true");
+        }, proxyAddress);
+        await page.goto("/");
+        await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
+        await use(proxyInstance);
+        await proxy.stop();
     },
 
     // eslint-disable-next-line no-empty-pattern

@@ -35,10 +35,7 @@ import "./percy";
 import "./webserver";
 import "./views";
 import "./iframes";
-import "./timeline";
-import "./network";
 import "./composer";
-import "./proxy";
 import "./axe";
 import "./promise";
 
