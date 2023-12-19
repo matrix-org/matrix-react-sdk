@@ -387,9 +387,7 @@ test.describe("Threads", () => {
 
         // User sends location on ThreadView
         await expect(page.locator(".mx_ThreadView")).toBeAttached();
-        await(await app.openMessageComposerOptions(true))
-            .getByRole("menuitem", { name: "Location" })
-            .click();
+        await (await app.openMessageComposerOptions(true)).getByRole("menuitem", { name: "Location" }).click();
         await page.getByTestId(`share-location-option-Pin`).click();
         await page.locator("#mx_LocationPicker_map").click();
         await page.getByRole("button", { name: "Share location" }).click();
