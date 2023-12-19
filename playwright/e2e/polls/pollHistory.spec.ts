@@ -27,24 +27,19 @@ test.describe("Poll history", () => {
         }[];
     };
     const createPoll = async (createOptions: CreatePollOptions, roomId: string, client: Client) => {
-        return await client.evaluate(
-            (client, { createOptions, roomId }) => {
-                return client.sendEvent(roomId, "org.matrix.msc3381.poll.start", {
-                    "org.matrix.msc3381.poll.start": {
-                        question: {
-                            "org.matrix.msc1767.text": createOptions.title,
-                            "body": createOptions.title,
-                            "msgtype": "m.text",
-                        },
-                        kind: "org.matrix.msc3381.poll.disclosed",
-                        max_selections: 1,
-                        answers: createOptions.options,
-                    },
-                    "org.matrix.msc1767.text": "poll fallback text",
-                });
+        return client.sendEvent(roomId, null, "org.matrix.msc3381.poll.start", {
+            "org.matrix.msc3381.poll.start": {
+                question: {
+                    "org.matrix.msc1767.text": createOptions.title,
+                    "body": createOptions.title,
+                    "msgtype": "m.text",
+                },
+                kind: "org.matrix.msc3381.poll.disclosed",
+                max_selections: 1,
+                answers: createOptions.options,
             },
-            { createOptions, roomId },
-        );
+            "org.matrix.msc1767.text": "poll fallback text",
+        });
     };
 
     const botVoteForOption = async (bot: Bot, roomId: string, pollId: string, optionId: string): Promise<void> => {
