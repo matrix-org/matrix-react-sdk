@@ -876,6 +876,7 @@ test.describe("Read receipts", () => {
                 // And I can open the thread and read it
                 await util.goTo(room2);
                 await util.assertUnread(room2, 2);
+                // The redacted message gets collapsed into, "foo was invited, joined and removed a message"
                 await util.openCollapsedMessage(1);
                 await util.openThread("Message deleted");
                 await util.assertRead(room2);
