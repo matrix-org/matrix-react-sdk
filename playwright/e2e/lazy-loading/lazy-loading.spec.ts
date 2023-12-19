@@ -19,25 +19,25 @@ import type { Locator, Page } from "@playwright/test";
 import type { ElementAppPage } from "../../pages/ElementAppPage";
 import { test, expect } from "../../element-web-test";
 
-interface Charly {
-    bot: Bot;
-    displayName: string;
-}
-
 test.describe("Lazy Loading", () => {
-    const charlies: Charly[] = [];
+    const charlies: Bot[] = [];
 
-    test.use({ displayName: "Alice" });
-    test.use({ botCreateOpts: { displayName: "Bob" } });
+    test.use({
+        displayName: "Alice",
+        botCreateOpts: { displayName: "Bob" },
+    });
 
-    test.beforeEach(async ({ page, homeserver, user, bot }) => {
-        await page.evaluate(() => {
+    test.beforeEach(async ({ page }) => {
+        await page.addInitScript(() => {
             window.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
         });
+    });
+
+    test.beforeEach(async ({ page, homeserver, user, bot }) => {
         for (let i = 1; i <= 10; i++) {
             const displayName = `Charly #${i}`;
             const bot = new Bot(page, homeserver, { displayName, startClient: false, autoAcceptInvites: false });
-            charlies.push({ displayName, bot });
+            charlies.push(bot);
         }
     });
 
@@ -47,7 +47,7 @@ test.describe("Lazy Loading", () => {
     const charlyMsg2 = "how's it going??";
     let roomId: string;
 
-    async function setupRoomWithBobAliceAndCharlies(page: Page, app: ElementAppPage, bob: Bot, charlies: Charly[]) {
+    async function setupRoomWithBobAliceAndCharlies(page: Page, app: ElementAppPage, bob: Bot, charlies: Bot[]) {
         const visibility = await page.evaluate(() => (window as any).matrixcs.Visibility.Public);
         roomId = await bob.createRoom({
             name,
@@ -55,12 +55,12 @@ test.describe("Lazy Loading", () => {
             visibility,
         });
 
-        await Promise.all(charlies.map((charly) => charly.bot).map((bot) => bot.joinRoom(alias)));
+        await Promise.all(charlies.map((bot) => bot.joinRoom(alias)));
         for (const charly of charlies) {
-            await charly.bot.sendMessage(roomId, charlyMsg1);
+            await charly.sendMessage(roomId, charlyMsg1);
         }
         for (const charly of charlies) {
-            await charly.bot.sendMessage(roomId, charlyMsg2);
+            await charly.sendMessage(roomId, charlyMsg2);
         }
 
         for (let i = 20; i >= 1; --i) {
@@ -70,11 +70,11 @@ test.describe("Lazy Loading", () => {
         await app.viewRoomByName(name);
     }
 
-    async function checkPaginatedDisplayNames(app: ElementAppPage, charlies: Charly[]) {
+    async function checkPaginatedDisplayNames(app: ElementAppPage, charlies: Bot[]) {
         await app.timeline.scrollToTop();
         for (const charly of charlies) {
-            await expect(await app.timeline.findEventTile(charly.displayName, charlyMsg1)).toBeAttached();
-            await expect(await app.timeline.findEventTile(charly.displayName, charlyMsg2)).toBeAttached();
+            await expect(await app.timeline.findEventTile(charly.credentials.displayName, charlyMsg1)).toBeAttached();
+            await expect(await app.timeline.findEventTile(charly.credentials.displayName, charlyMsg2)).toBeAttached();
         }
     }
 
@@ -87,27 +87,27 @@ test.describe("Lazy Loading", () => {
         return page.locator(".mx_MemberList .mx_EntityTile_name").filter({ hasText: name });
     }
 
-    async function checkMemberList(page: Page, charlies: Charly[]) {
+    async function checkMemberList(page: Page, charlies: Bot[]) {
         await expect(getMemberInMemberlist(page, "Alice")).toBeAttached();
         await expect(getMemberInMemberlist(page, "Bob")).toBeAttached();
         for (const charly of charlies) {
-            await expect(getMemberInMemberlist(page, charly.displayName)).toBeAttached();
+            await expect(getMemberInMemberlist(page, charly.credentials.displayName)).toBeAttached();
         }
     }
 
-    async function checkMemberListLacksCharlies(page: Page, charlies: Charly[]) {
+    async function checkMemberListLacksCharlies(page: Page, charlies: Bot[]) {
         for (const charly of charlies) {
-            await expect(getMemberInMemberlist(page, charly.displayName)).not.toBeAttached();
+            await expect(getMemberInMemberlist(page, charly.credentials.displayName)).not.toBeAttached();
         }
     }
 
-    async function joinCharliesWhileAliceIsOffline(page: Page, app: ElementAppPage, charlies: Charly[]) {
+    async function joinCharliesWhileAliceIsOffline(page: Page, app: ElementAppPage, charlies: Bot[]) {
         await app.client.network.goOffline();
         for (const charly of charlies) {
-            await charly.bot.joinRoom(alias);
+            await charly.joinRoom(alias);
         }
         for (let i = 20; i >= 1; --i) {
-            await charlies[0].bot.sendMessage(roomId, "where is charly?");
+            await charlies[0].sendMessage(roomId, "where is charly?");
         }
         await app.client.network.goOnline();
         await app.client.waitForNextSync();
@@ -129,7 +129,7 @@ test.describe("Lazy Loading", () => {
         await checkMemberList(page, charly6to10);
 
         for (const charly of charlies) {
-            await charly.bot.evaluate((client, roomId) => client.leave(roomId), roomId);
+            await charly.evaluate((client, roomId) => client.leave(roomId), roomId);
         }
 
         await checkMemberListLacksCharlies(page, charlies);
