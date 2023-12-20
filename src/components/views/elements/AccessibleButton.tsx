@@ -100,6 +100,8 @@ interface RenderedElementProps extends React.InputHTMLAttributes<Element> {
  * as a button.  Identifies the element as a button, setting proper tab
  * indexing and keyboard activation behavior.
  *
+ * If a ref is passed, it will be forwarded to the rendered element.
+ *
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
