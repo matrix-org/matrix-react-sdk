@@ -65,7 +65,7 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
  *
  * Extends props accepted by the underlying element.
  */
-export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
+type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     /**
      * The base element type. "div" by default.
      */
