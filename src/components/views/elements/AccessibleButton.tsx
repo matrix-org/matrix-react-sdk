@@ -79,7 +79,7 @@ export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementPro
      */
     disabled?: boolean;
     /**
-     * Whether the button should trigger on mousedown event instead of on click event.
+     * Whether the button should trigger on mousedown event instead of on click event. Defaults to false (click event).
      */
     triggerOnMouseDown?: boolean;
     /**
@@ -88,7 +88,10 @@ export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementPro
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 
-interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+/**
+ * Type of the props passed to the element that is rendered by AccessibleButton.
+ */
+interface RenderedElementProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -115,8 +118,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
     }: Props<T>,
     ref: Ref<HTMLElement>,
 ): JSX.Element {
-    const newProps: IAccessibleButtonProps = restProps;
-
+    const newProps: RenderedElementProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
         newProps["disabled"] = true;
