@@ -61,8 +61,9 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
     Omit<InputHTMLAttributes<Element>, "onClick">;
 
 /**
- * Type of props accepted by AccessibleButton, extends that of the props accepted by the underlying Element rendered,
- * see `element`..
+ * Type of props accepted by {@link AccessibleButton}.
+ *
+ * Extends props accepted by the underlying element.
  */
 export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     /**
@@ -82,7 +83,7 @@ export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementPro
      */
     triggerOnMouseDown?: boolean;
     /**
-     * Event handler for button activation. Should be implemented exactly like a normal onClick handler.
+     * Event handler for button activation. Should be implemented exactly like a normal `onClick` handler.
      */
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };

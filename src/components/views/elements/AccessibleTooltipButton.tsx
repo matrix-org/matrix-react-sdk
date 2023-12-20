@@ -21,7 +21,9 @@ import AccessibleButton, { Props as AccessibleButtonProps } from "./AccessibleBu
 import Tooltip, { Alignment } from "./Tooltip";
 
 /**
- * Type of props accepted by AccessibleTooltipButton, extends that of AccessibleButton.
+ * Type of props accepted by {@link AccessibleTooltipButton}.
+ *
+ * Extends that of {@link AccessibleButton}.
  */
 export type Props<T extends keyof JSX.IntrinsicElements> = AccessibleButtonProps<T> & {
     /**
