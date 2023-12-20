@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, FocusEvent } from "react";
+import React, { SyntheticEvent, FocusEvent, useEffect, useState } from "react";
 
 import AccessibleButton from "./AccessibleButton";
 import Tooltip, { Alignment } from "./Tooltip";
@@ -60,69 +60,60 @@ interface Props extends React.ComponentProps<typeof AccessibleButton> {
     onHideTooltip?(ev: SyntheticEvent): void;
 }
 
-interface IState {
-    hover: boolean;
-}
+function AccessibleTooltipButton({
+    title,
+    tooltip,
+    children,
+    forceHide,
+    alignment,
+    onHideTooltip,
+    tooltipClassName,
+    ...props
+}: Props): JSX.Element {
+    const [hover, setHover] = useState(false);
 
-export default class AccessibleTooltipButton extends React.PureComponent<Props, IState> {
-    public constructor(props: Props) {
-        super(props);
-        this.state = {
-            hover: false,
-        };
-    }
-
-    public componentDidUpdate(prevProps: Readonly<Props>): void {
-        if (!prevProps.forceHide && this.props.forceHide && this.state.hover) {
-            this.setState({
-                hover: false,
-            });
+    useEffect(() => {
+        // If forceHide is set then force hover to off to hide the tooltip
+        if (forceHide && hover) {
+            setHover(false);
         }
-    }
+    }, [forceHide, hover]);
 
-    private showTooltip = (): void => {
-        if (this.props.onHover) this.props.onHover(true);
-        if (this.props.forceHide) return;
-        this.setState({
-            hover: true,
-        });
+    const showTooltip = (): void => {
+        props.onHover?.(true);
+        if (forceHide) return;
+        setHover(true);
     };
 
-    private hideTooltip = (ev: SyntheticEvent): void => {
-        if (this.props.onHover) this.props.onHover(false);
-        this.setState({
-            hover: false,
-        });
-        this.props.onHideTooltip?.(ev);
+    const hideTooltip = (ev: SyntheticEvent): void => {
+        props.onHover?.(false);
+        setHover(false);
+        onHideTooltip?.(ev);
     };
 
-    private onFocus = (ev: FocusEvent): void => {
+    const onFocus = (ev: FocusEvent): void => {
         // We only show the tooltip if focus arrived here from some other
         // element, to avoid leaving tooltips hanging around when a modal closes
-        if (ev.relatedTarget) this.showTooltip();
+        if (ev.relatedTarget) showTooltip();
     };
 
-    public render(): React.ReactNode {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { title, tooltip, children, tooltipClassName, forceHide, alignment, onHideTooltip, ...props } =
-            this.props;
-
-        const tip = this.state.hover && (title || tooltip) && (
-            <Tooltip tooltipClassName={tooltipClassName} label={tooltip || title} alignment={alignment} />
-        );
-        return (
-            <AccessibleButton
-                {...props}
-                onMouseOver={this.showTooltip || props.onMouseOver}
-                onMouseLeave={this.hideTooltip || props.onMouseLeave}
-                onFocus={this.onFocus || props.onFocus}
-                onBlur={this.hideTooltip || props.onBlur}
-                aria-label={title || props["aria-label"]}
-            >
-                {children}
-                {this.props.label}
-                {(tooltip || title) && tip}
-            </AccessibleButton>
-        );
-    }
+    const tip = hover && (title || tooltip) && (
+        <Tooltip tooltipClassName={tooltipClassName} label={tooltip || title} alignment={alignment} />
+    );
+    return (
+        <AccessibleButton
+            {...props}
+            onMouseOver={showTooltip}
+            onMouseLeave={hideTooltip}
+            onFocus={onFocus}
+            onBlur={hideTooltip}
+            aria-label={title || props["aria-label"]}
+        >
+            {children}
+            {props.label}
+            {(tooltip || title) && tip}
+        </AccessibleButton>
+    );
 }
+
+export default AccessibleTooltipButton;
