@@ -16,14 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, Ref } from "react";
+import React, { ComponentProps, forwardRef, Ref } from "react";
 
-import AccessibleTooltipButton, {
-    Props as AccessibleTooltipButtonProps,
-} from "../../components/views/elements/AccessibleTooltipButton";
+import AccessibleTooltipButton from "../../components/views/elements/AccessibleTooltipButton";
 
-type Props<T extends keyof JSX.IntrinsicElements> = AccessibleTooltipButtonProps<T> & {
-    // whether or not the context menu is currently open
+type Props<T extends keyof JSX.IntrinsicElements> = ComponentProps<typeof AccessibleTooltipButton<T>> & {
+    // whether the context menu is currently open
     isExpanded: boolean;
 };
 

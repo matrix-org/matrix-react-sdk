@@ -780,9 +780,12 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
     }
 }
 
+// Subset of AccessibleButtonKind which can be specified for the continue button
+export type ContinueKind = Extract<AccessibleButtonKind, "primary" | "danger">;
+
 interface ISSOAuthEntryProps extends IAuthEntryProps {
     continueText?: string;
-    continueKind?: Extract<AccessibleButtonKind, "primary" | "danger">;
+    continueKind?: ContinueKind;
     onCancel?: () => void;
 }
 
@@ -985,7 +988,7 @@ export interface IStageComponentProps extends IAuthEntryProps {
     inputs?: IInputs;
     stageState?: IStageStatus;
     continueText?: string;
-    continueKind?: Extract<AccessibleButtonKind, "primary" | "danger">;
+    continueKind?: ContinueKind;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
     requestEmailToken?(): Promise<void>;

@@ -61,10 +61,11 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
     Omit<InputHTMLAttributes<Element>, "onClick">;
 
 /**
- * Type of props accepted by AccessibleButton, extends that of the props accepted by the underlying Element rendered,
- * see `element`..
+ * Type of props accepted by {@link AccessibleButton}.
+ *
+ * Extends props accepted by the underlying element specified using the `element` prop.
  */
-export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
+type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     /**
      * The base element type. "div" by default.
      */
@@ -78,16 +79,19 @@ export type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementPro
      */
     disabled?: boolean;
     /**
-     * Whether the button should trigger on mousedown event instead of on click event.
+     * Whether the button should trigger on mousedown event instead of on click event. Defaults to false (click event).
      */
     triggerOnMouseDown?: boolean;
     /**
-     * Event handler for button activation. Should be implemented exactly like a normal onClick handler.
+     * Event handler for button activation. Should be implemented exactly like a normal `onClick` handler.
      */
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 
-interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+/**
+ * Type of the props passed to the element that is rendered by AccessibleButton.
+ */
+interface RenderedElementProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -95,6 +99,8 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
  * AccessibleButton is a generic wrapper for any element that should be treated
  * as a button.  Identifies the element as a button, setting proper tab
  * indexing and keyboard activation behavior.
+ *
+ * If a ref is passed, it will be forwarded to the rendered element as specified using the `element` prop.
  *
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
@@ -114,8 +120,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
     }: Props<T>,
     ref: Ref<HTMLElement>,
 ): JSX.Element {
-    const newProps: IAccessibleButtonProps = restProps;
-
+    const newProps: RenderedElementProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
         newProps["disabled"] = true;

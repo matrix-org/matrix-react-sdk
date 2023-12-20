@@ -23,19 +23,18 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
-import { DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
+import { ContinueKind, DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import BaseDialog from "./BaseDialog";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { AccessibleButtonKind } from "../elements/AccessibleButton";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
         [x: number]: {
             body: string;
             continueText?: string;
-            continueKind?: Extract<AccessibleButtonKind, "primary" | "danger">;
+            continueKind?: ContinueKind;
         };
     };
 }>;
@@ -54,7 +53,7 @@ interface IState {
     // next to the InteractiveAuth component.
     bodyText?: string;
     continueText?: string;
-    continueKind?: Extract<AccessibleButtonKind, "primary" | "danger">;
+    continueKind?: ContinueKind;
 }
 
 export default class DeactivateAccountDialog extends React.Component<IProps, IState> {
@@ -99,7 +98,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         const aesthetics = DEACTIVATE_AESTHETICS[stage];
         let bodyText: string | undefined;
         let continueText: string | undefined;
-        let continueKind: Extract<AccessibleButtonKind, "primary" | "danger"> | undefined;
+        let continueKind: ContinueKind | undefined;
         if (aesthetics) {
             const phaseAesthetics = aesthetics[phase];
             if (phaseAesthetics) {

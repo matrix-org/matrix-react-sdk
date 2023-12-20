@@ -15,15 +15,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, FocusEvent, forwardRef, useEffect, Ref, useState } from "react";
+import React, { SyntheticEvent, FocusEvent, forwardRef, useEffect, Ref, useState, ComponentProps } from "react";
 
-import AccessibleButton, { Props as AccessibleButtonProps } from "./AccessibleButton";
+import AccessibleButton from "./AccessibleButton";
 import Tooltip, { Alignment } from "./Tooltip";
 
 /**
- * Type of props accepted by AccessibleTooltipButton, extends that of AccessibleButton.
+ * Type of props accepted by {@link AccessibleTooltipButton}.
+ *
+ * Extends that of {@link AccessibleButton}.
  */
-export type Props<T extends keyof JSX.IntrinsicElements> = AccessibleButtonProps<T> & {
+type Props<T extends keyof JSX.IntrinsicElements> = ComponentProps<typeof AccessibleButton<T>> & {
     /**
      * Title to show in the tooltip and use as aria-label
      */
@@ -65,7 +67,7 @@ const AccessibleTooltipButton = forwardRef(function <T extends keyof JSX.Intrins
     const [hover, setHover] = useState(false);
 
     useEffect(() => {
-        // If forceHide is set then force hover to off
+        // If forceHide is set then force hover to off to hide the tooltip
         if (forceHide && hover) {
             setHover(false);
         }
