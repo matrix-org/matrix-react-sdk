@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, RefObject } from "react";
+import React, { createRef } from "react";
 import { RoomMember } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import NodeAnimator from "../../../NodeAnimator";
 import { toPx } from "../../../utils/units";
-import { LegacyMemberAvatar as MemberAvatar } from "../avatars/MemberAvatar";
+import MemberAvatar from "../avatars/MemberAvatar";
 import { READ_AVATAR_SIZE } from "./ReadReceiptGroup";
 
 export interface IReadReceiptInfo {
@@ -73,7 +73,7 @@ interface IReadReceiptMarkerStyle {
 }
 
 export default class ReadReceiptMarker extends React.PureComponent<IProps, IState> {
-    private avatar: React.RefObject<HTMLDivElement | HTMLImageElement | HTMLSpanElement> = createRef();
+    private avatar = createRef<HTMLDivElement>();
 
     public constructor(props: IProps) {
         super(props);
@@ -199,7 +199,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
 
     public render(): React.ReactNode {
         if (this.state.suppressDisplay) {
-            return <div ref={this.avatar as RefObject<HTMLDivElement>} />;
+            return <div ref={this.avatar} />;
         }
 
         const style = {
@@ -216,7 +216,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
                     aria-live="off"
                     size="14px"
                     style={style}
-                    inputRef={this.avatar as RefObject<HTMLImageElement>}
+                    ref={this.avatar}
                     hideTitle
                     tabIndex={-1}
                 />
