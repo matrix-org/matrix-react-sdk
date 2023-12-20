@@ -51,7 +51,6 @@ import MatrixClientBackedController from "./settings/controllers/MatrixClientBac
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import PlatformPeg from "./PlatformPeg";
 import { formatList } from "./utils/FormattingUtils";
-import { parseUserAgent, DeviceType } from "./utils/device/parseUserAgent";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -213,22 +212,19 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             // If the user is not a guest then prompt them to reload rather than doing it for them
             // For guests this is likely to happen during e-mail verification as part of registration
 
-            const ua = navigator.userAgent;
-            const deviceType = parseUserAgent(ua).deviceType;
-            let reload: boolean | undefined;
-            if (deviceType === DeviceType.Web) {
-                [reload] = await Modal.createDialog(ErrorDialog, {
-                    title: _t("error_database_closed_title"),
-                    description: _t("error_database_closed_description|for_web"),
-                    button: _t("action|reload"),
-                }).finished;
-            } else {
-                [reload] = await Modal.createDialog(ErrorDialog, {
-                    title: _t("error_database_closed_title"),
-                    description: _t("error_database_closed_description|for_desktop"),
-                    button: _t("action|reload"),
-                }).finished;
-            }
+            const platform = PlatformPeg.get()?.getHumanReadableName();
+
+            // Determine the description based on the platform
+            const description = platform === "Web Platform"
+                ? _t("error_database_closed_description|for_web")
+                : _t("error_database_closed_description|for_desktop");
+
+            const [reload] = await Modal.createDialog(ErrorDialog, {
+                title: _t("error_database_closed_title"),
+                description,
+                button: _t("action|reload"),
+            }).finished;
+
             if (!reload) return;
         }
 
