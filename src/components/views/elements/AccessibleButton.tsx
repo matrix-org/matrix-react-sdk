@@ -63,7 +63,7 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
 /**
  * Type of props accepted by {@link AccessibleButton}.
  *
- * Extends props accepted by the underlying element.
+ * Extends props accepted by the underlying element specified using the `element` prop.
  */
 type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
     /**
@@ -100,7 +100,7 @@ interface RenderedElementProps extends React.InputHTMLAttributes<Element> {
  * as a button.  Identifies the element as a button, setting proper tab
  * indexing and keyboard activation behavior.
  *
- * If a ref is passed, it will be forwarded to the rendered element.
+ * If a ref is passed, it will be forwarded to the rendered element as specified using the `element` prop.
  *
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
