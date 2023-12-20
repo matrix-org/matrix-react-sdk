@@ -20,14 +20,43 @@ import React, { SyntheticEvent, FocusEvent } from "react";
 import AccessibleButton from "./AccessibleButton";
 import Tooltip, { Alignment } from "./Tooltip";
 
-interface IProps extends React.ComponentProps<typeof AccessibleButton> {
+/**
+ * Type of props accepted by {@link AccessibleTooltipButton}.
+ *
+ * Extends that of {@link AccessibleButton}.
+ */
+interface Props extends React.ComponentProps<typeof AccessibleButton> {
+    /**
+     * Title to show in the tooltip and use as aria-label
+     */
     title?: string;
+    /**
+     * Tooltip node to show in the tooltip, takes precedence over `title`
+     */
     tooltip?: React.ReactNode;
+    /**
+     * Trigger label to render
+     */
     label?: string;
+    /**
+     * Classname to apply to the tooltip
+     */
     tooltipClassName?: string;
+    /**
+     * Force the tooltip to be hidden
+     */
     forceHide?: boolean;
+    /**
+     * Alignment to render the tooltip with
+     */
     alignment?: Alignment;
+    /**
+     * Function to call when the children are hovered over
+     */
     onHover?: (hovering: boolean) => void;
+    /**
+     * Function to call when the tooltip goes from shown to hidden.
+     */
     onHideTooltip?(ev: SyntheticEvent): void;
 }
 
@@ -35,15 +64,15 @@ interface IState {
     hover: boolean;
 }
 
-export default class AccessibleTooltipButton extends React.PureComponent<IProps, IState> {
-    public constructor(props: IProps) {
+export default class AccessibleTooltipButton extends React.PureComponent<Props, IState> {
+    public constructor(props: Props) {
         super(props);
         this.state = {
             hover: false,
         };
     }
 
-    public componentDidUpdate(prevProps: Readonly<IProps>): void {
+    public componentDidUpdate(prevProps: Readonly<Props>): void {
         if (!prevProps.forceHide && this.props.forceHide && this.state.hover) {
             this.setState({
                 hover: false,
