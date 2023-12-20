@@ -21,7 +21,6 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
 import { Playback, PlaybackState } from "../../../audio/Playback";
 
-// omitted props are handled by render function
 type Props = Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick" | "disabled" | "element"> & {
     // Playback instance to manipulate. Cannot change during the component lifecycle.
     playback: Playback;
