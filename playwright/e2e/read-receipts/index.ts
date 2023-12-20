@@ -155,10 +155,19 @@ export class MessageBuilder {
             public async getContent(room: JSHandle<Room>): Promise<Record<string, unknown>> {
                 const ev = await this.messageFinder.getMessage(room, targetMessage, true);
                 return ev.evaluate((ev, newMessage) => {
+                    const threadRel =
+                        ev.getRelation()?.rel_type === "m.thread"
+                            ? {
+                                  rel_type: "m.thread",
+                                  event_id: ev.getRelation().event_id,
+                              }
+                            : {};
+
                     return {
                         "msgtype": "m.text",
                         "body": newMessage,
                         "m.relates_to": {
+                            ...threadRel,
                             "m.in_reply_to": {
                                 event_id: ev.getId(),
                             },
@@ -359,6 +368,15 @@ class Helpers {
      */
     async goTo(room: string | { name: string }) {
         await this.app.viewRoomByName(typeof room === "string" ? room : room.name);
+    }
+
+    /**
+     * Expand the message with the supplied index in the timeline.
+     * @param index
+     */
+    async openCollapsedMessage(index: number) {
+        const button = this.page.locator(".mx_GenericEventListSummary_toggle");
+        await button.nth(index).click();
     }
 
     /**
