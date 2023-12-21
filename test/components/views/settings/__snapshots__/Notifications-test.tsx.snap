@@ -27,7 +27,6 @@ exports[`<Notifications /> main notification switches renders only enable notifi
       aria-disabled="false"
       aria-labelledby="mx_LabelledToggleSwitch_testid_0"
       class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
-      id="mx_LabelledToggleSwitch_testid_0"
       role="switch"
       tabindex="0"
     >

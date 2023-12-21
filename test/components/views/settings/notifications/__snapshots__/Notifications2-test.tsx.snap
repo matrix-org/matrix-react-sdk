@@ -36,7 +36,6 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               aria-disabled="true"
               aria-labelledby="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
-              id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               role="switch"
               tabindex="0"
             >
@@ -62,7 +61,6 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               role="switch"
               tabindex="0"
             >
@@ -88,7 +86,6 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               role="switch"
               tabindex="0"
             >
@@ -114,7 +111,6 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               role="switch"
               tabindex="0"
             >
@@ -759,7 +755,6 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               role="switch"
               tabindex="0"
             >
@@ -785,7 +780,6 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               role="switch"
               tabindex="0"
             >
@@ -811,7 +805,6 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               role="switch"
               tabindex="0"
             >
@@ -837,7 +830,6 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               aria-disabled="false"
               aria-labelledby="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
-              id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               role="switch"
               tabindex="0"
             >

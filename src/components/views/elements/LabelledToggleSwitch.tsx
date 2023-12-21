@@ -57,7 +57,6 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
         );
         let secondPart = (
             <ToggleSwitch
-                id={this.id}
                 checked={this.props.value}
                 disabled={this.props.disabled}
                 onChange={this.props.onChange}
