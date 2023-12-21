@@ -9,11 +9,11 @@ exports[`<Notifications /> main notification switches renders only enable notifi
     <span
       class="mx_SettingsFlag_label"
     >
-      <div
-        id="mx_LabelledToggleSwitch_testid_0"
+      <label
+        for="mx_LabelledToggleSwitch_testid_0"
       >
         Enable notifications for this account
-      </div>
+      </label>
       <span
         class="mx_Caption"
         id="mx_LabelledToggleSwitch_testid_0_caption"
@@ -25,8 +25,8 @@ exports[`<Notifications /> main notification switches renders only enable notifi
       aria-checked="false"
       aria-describedby="mx_LabelledToggleSwitch_testid_0_caption"
       aria-disabled="false"
-      aria-labelledby="mx_LabelledToggleSwitch_testid_0"
       class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+      id="mx_LabelledToggleSwitch_testid_0"
       role="switch"
       tabindex="0"
     >

@@ -121,17 +121,17 @@ exports[`<SpaceSettingsVisibilityTab /> renders container 1`] = `
                   <span
                     class="mx_SettingsFlag_label"
                   >
-                    <div
-                      id="mx_LabelledToggleSwitch_testid_0"
+                    <label
+                      for="mx_LabelledToggleSwitch_testid_0"
                     >
                       Preview Space
-                    </div>
+                    </label>
                   </span>
                   <div
                     aria-checked="true"
                     aria-disabled="false"
-                    aria-labelledby="mx_LabelledToggleSwitch_testid_0"
                     class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+                    id="mx_LabelledToggleSwitch_testid_0"
                     role="switch"
                     tabindex="0"
                   >

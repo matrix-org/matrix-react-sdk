@@ -25,17 +25,17 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
+              <label
+                for="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               >
                 Enable notifications for this account
-              </div>
+              </label>
             </span>
             <div
               aria-checked="true"
               aria-disabled="true"
-              aria-labelledby="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+              id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               role="switch"
               tabindex="0"
             >
@@ -50,17 +50,17 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
+              <label
+                for="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               >
                 Enable desktop notifications for this session
-              </div>
+              </label>
             </span>
             <div
               aria-checked="false"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               role="switch"
               tabindex="0"
             >
@@ -75,17 +75,17 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_6hpi3YEetmBG"
+              <label
+                for="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               >
                 Show message preview in desktop notification
-              </div>
+              </label>
             </span>
             <div
               aria-checked="false"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               role="switch"
               tabindex="0"
             >
@@ -100,17 +100,17 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
+              <label
+                for="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               >
                 Enable audible notifications for this session
-              </div>
+              </label>
             </span>
             <div
               aria-checked="true"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               role="switch"
               tabindex="0"
             >
@@ -744,17 +744,17 @@ exports[`<Notifications /> matches the snapshot 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
+              <label
+                for="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               >
                 Enable notifications for this account
-              </div>
+              </label>
             </span>
             <div
               aria-checked="true"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
               role="switch"
               tabindex="0"
             >
@@ -769,17 +769,17 @@ exports[`<Notifications /> matches the snapshot 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
+              <label
+                for="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               >
                 Enable desktop notifications for this session
-              </div>
+              </label>
             </span>
             <div
               aria-checked="false"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               role="switch"
               tabindex="0"
             >
@@ -794,17 +794,17 @@ exports[`<Notifications /> matches the snapshot 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_6hpi3YEetmBG"
+              <label
+                for="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               >
                 Show message preview in desktop notification
-              </div>
+              </label>
             </span>
             <div
               aria-checked="false"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_6hpi3YEetmBG"
               role="switch"
               tabindex="0"
             >
@@ -819,17 +819,17 @@ exports[`<Notifications /> matches the snapshot 1`] = `
             <span
               class="mx_SettingsFlag_label"
             >
-              <div
-                id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
+              <label
+                for="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               >
                 Enable audible notifications for this session
-              </div>
+              </label>
             </span>
             <div
               aria-checked="true"
               aria-disabled="false"
-              aria-labelledby="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+              id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               role="switch"
               tabindex="0"
             >
