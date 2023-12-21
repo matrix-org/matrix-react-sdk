@@ -40,6 +40,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_vY7Q4uEh9K38"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -52,6 +53,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_vY7Q4uEh9K38"
                   role="switch"
                   tabindex="0"
                 >
@@ -82,6 +84,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_QgU2PomxwKpa"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -99,6 +102,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_QgU2PomxwKpa"
                   role="switch"
                   tabindex="0"
                 >
@@ -148,6 +152,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_6hpi3YEetmBG"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -160,6 +165,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_6hpi3YEetmBG"
                   role="switch"
                   tabindex="0"
                 >
@@ -190,6 +196,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_4yVCeEefiPqp"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -202,6 +209,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_4yVCeEefiPqp"
                   role="switch"
                   tabindex="0"
                 >
@@ -215,6 +223,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_MRMwbPDmfGtm"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -227,6 +236,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_MRMwbPDmfGtm"
                   role="switch"
                   tabindex="0"
                 >
@@ -266,6 +276,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_GQvdMWe954DV"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -278,6 +289,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_GQvdMWe954DV"
                   role="switch"
                   tabindex="0"
                   tooltip="settings|send_read_receipts_unsupported"
@@ -292,6 +304,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_IAu5CsiHRD7n"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -304,6 +317,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_IAu5CsiHRD7n"
                   role="switch"
                   tabindex="0"
                 >
@@ -334,6 +348,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_yrA2ohjWVJIP"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -346,6 +361,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_yrA2ohjWVJIP"
                   role="switch"
                   tabindex="0"
                 >
@@ -359,6 +375,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_auy1OmnTidX4"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -382,6 +399,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_auy1OmnTidX4"
                   role="switch"
                   tabindex="0"
                 >
@@ -395,6 +413,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_ePDS0OpWwAHG"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -407,6 +426,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_ePDS0OpWwAHG"
                   role="switch"
                   tabindex="0"
                 >
@@ -420,6 +440,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_75JNTNkNU64r"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -432,6 +453,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_75JNTNkNU64r"
                   role="switch"
                   tabindex="0"
                 >
@@ -445,6 +467,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_aTLcRsQRlYy7"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -457,6 +480,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_aTLcRsQRlYy7"
                   role="switch"
                   tabindex="0"
                 >
@@ -470,6 +494,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_5nfv5bOEPN1s"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -482,6 +507,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_5nfv5bOEPN1s"
                   role="switch"
                   tabindex="0"
                 >
@@ -495,6 +521,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_u1JYVtOyR5kb"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -507,6 +534,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_u1JYVtOyR5kb"
                   role="switch"
                   tabindex="0"
                 >
@@ -537,6 +565,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_u3pEwuLn9Enn"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -549,6 +578,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_u3pEwuLn9Enn"
                   role="switch"
                   tabindex="0"
                 >
@@ -562,6 +592,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_YuxfFEpOsztW"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -574,6 +605,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_YuxfFEpOsztW"
                   role="switch"
                   tabindex="0"
                 >
@@ -587,6 +619,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_hQkBerF1ejc4"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -599,6 +632,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_hQkBerF1ejc4"
                   role="switch"
                   tabindex="0"
                 >
@@ -629,6 +663,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_GFes1UFzOK2n"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -641,6 +676,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_GFes1UFzOK2n"
                   role="switch"
                   tabindex="0"
                 >
@@ -654,6 +690,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_vfGFMldL2r2v"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -666,6 +703,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_vfGFMldL2r2v"
                   role="switch"
                   tabindex="0"
                 >
@@ -679,6 +717,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_bsSwicmKUiOB"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -691,6 +730,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_bsSwicmKUiOB"
                   role="switch"
                   tabindex="0"
                 >
@@ -704,6 +744,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_dvqsxEaZtl3A"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -716,6 +757,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_dvqsxEaZtl3A"
                   role="switch"
                   tabindex="0"
                 >
@@ -746,6 +788,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_NIiWzqsApP1c"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -758,6 +801,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_NIiWzqsApP1c"
                   role="switch"
                   tabindex="0"
                 >
@@ -771,6 +815,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_q1SIAPqLMVXh"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -783,6 +828,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_q1SIAPqLMVXh"
                   role="switch"
                   tabindex="0"
                 >
@@ -796,6 +842,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_dXFDGgBsKXay"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -808,6 +855,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_dXFDGgBsKXay"
                   role="switch"
                   tabindex="0"
                 >
@@ -821,6 +869,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_7Az0xw4Bs4Tt"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -833,6 +882,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_7Az0xw4Bs4Tt"
                   role="switch"
                   tabindex="0"
                 >
@@ -846,6 +896,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_8jmzPIlPoBCv"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -858,6 +909,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_8jmzPIlPoBCv"
                   role="switch"
                   tabindex="0"
                 >
@@ -871,6 +923,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_enFRaTjdsFou"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -883,6 +936,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_enFRaTjdsFou"
                   role="switch"
                   tabindex="0"
                 >
@@ -896,6 +950,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_bfwnd5rz4XNX"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -908,6 +963,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_bfwnd5rz4XNX"
                   role="switch"
                   tabindex="0"
                 >
@@ -921,6 +977,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_gs5uWEzYzZrS"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -933,6 +990,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_gs5uWEzYzZrS"
                   role="switch"
                   tabindex="0"
                 >
@@ -946,6 +1004,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_qWg7OgID1yRR"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -958,6 +1017,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_qWg7OgID1yRR"
                   role="switch"
                   tabindex="0"
                 >
@@ -971,6 +1031,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_pOPewl7rtMbV"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -983,6 +1044,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_pOPewl7rtMbV"
                   role="switch"
                   tabindex="0"
                 >
@@ -996,6 +1058,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_cmt3PZSyNp3v"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -1008,6 +1071,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_cmt3PZSyNp3v"
                   role="switch"
                   tabindex="0"
                 >
@@ -1038,6 +1102,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_dJJz3lHUv9XX"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -1050,6 +1115,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch"
                   data-state="closed"
+                  id="mx_SettingsFlag_dJJz3lHUv9XX"
                   role="switch"
                   tabindex="0"
                 >
@@ -1080,6 +1146,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_SBSSOZDRlzlA"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -1092,6 +1159,7 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                   aria-disabled="true"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
                   data-state="closed"
+                  id="mx_SettingsFlag_SBSSOZDRlzlA"
                   role="switch"
                   tabindex="0"
                 >
