@@ -50,8 +50,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show shortcuts to recently viewed rooms above the room list"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -97,8 +97,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Show all rooms in Home"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -158,8 +158,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Use Ctrl + F to search timeline"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -200,8 +200,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Show timestamps in 12 hour format (e.g. 2:30pm)"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -225,8 +225,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Always show message timestamps"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -276,10 +276,11 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Send read receipts"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
+                  tooltip="settings|send_read_receipts_unsupported"
                 >
                   <div
                     class="mx_ToggleSwitch_ball"
@@ -301,8 +302,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Send typing notifications"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -343,8 +344,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Automatically replace plain text Emoji"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -379,8 +380,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Enable Markdown"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -404,8 +405,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Enable Emoji suggestions while typing"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -429,8 +430,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Use Ctrl + Enter to send a message"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -454,8 +455,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Surround selected text when typing special characters"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -479,8 +480,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show stickers button"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -504,8 +505,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Insert a trailing colon after user mentions at the start of a message"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -546,8 +547,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Enable automatic language detection for syntax highlighting"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -571,8 +572,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Expand code blocks by default"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -596,8 +597,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show line numbers in code blocks"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -638,8 +639,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Enable inline URL previews by default"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -663,8 +664,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Autoplay GIFs"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -688,8 +689,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Autoplay videos"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -713,8 +714,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show previews/thumbnails for images"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -755,8 +756,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show typing notifications"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -780,8 +781,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show a placeholder for removed messages"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -805,8 +806,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show read receipts sent by other users"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -830,8 +831,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show join/leave messages (invites/removes/bans unaffected)"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -855,8 +856,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show display name changes"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -880,8 +881,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show chat effects (animations when receiving e.g. confetti)"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -905,8 +906,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show profile picture changes"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -930,8 +931,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Show avatars in user, room and event mentions"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -955,8 +956,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Enable big emoji in chat"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -980,8 +981,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Jump to the bottom of the timeline when you send a message"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -1005,8 +1006,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Show current profile picture and name for users in message history"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -1047,8 +1048,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="true"
-                  aria-label="Show NSFW content"
                   class="mx_AccessibleButton mx_ToggleSwitch"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -1089,8 +1090,8 @@ exports[`PreferencesUserSettingsTab should render 1`] = `
                 <div
                   aria-checked="true"
                   aria-disabled="true"
-                  aria-label="Prompt before sending invites to potentially invalid matrix IDs"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >

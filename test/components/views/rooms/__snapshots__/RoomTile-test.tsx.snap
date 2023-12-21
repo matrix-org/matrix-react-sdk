@@ -57,16 +57,16 @@ exports[`RoomTile when message previews are enabled and there is a message in a 
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
+      data-state="closed"
       role="button"
       tabindex="0"
     />
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
+      data-state="closed"
       role="button"
       tabindex="-1"
     />
@@ -139,16 +139,16 @@ exports[`RoomTile when message previews are enabled and there is a message in th
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
+      data-state="closed"
       role="button"
       tabindex="0"
     />
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
+      data-state="closed"
       role="button"
       tabindex="-1"
     />
@@ -202,16 +202,16 @@ exports[`RoomTile when message previews are enabled should render a room without
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
+      data-state="closed"
       role="button"
       tabindex="0"
     />
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
+      data-state="closed"
       role="button"
       tabindex="-1"
     />
@@ -264,16 +264,16 @@ exports[`RoomTile when message previews are not enabled should render the room 1
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
+      data-state="closed"
       role="button"
       tabindex="0"
     />
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
+      data-state="closed"
       role="button"
       tabindex="-1"
     />

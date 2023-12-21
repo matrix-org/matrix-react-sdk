@@ -27,8 +27,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -156,8 +156,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a pause/not-live broadcast sh
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -281,8 +281,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast in pip mo
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -394,8 +394,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast should re
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -507,8 +507,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing/live broadcast shou
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -628,8 +628,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering a stopped broadcast should re
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -721,8 +721,8 @@ exports[`VoiceBroadcastPlaybackBody when rendering an error broadcast should ren
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >

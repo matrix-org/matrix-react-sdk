@@ -4,8 +4,8 @@ exports[`QuickSettingsButton should render the quick settings button in expanded
 <DocumentFragment>
   <div
     aria-expanded="true"
-    aria-label="Quick settings"
     class="mx_AccessibleButton mx_QuickSettingsButton expanded"
+    data-state="closed"
     role="button"
     tabindex="0"
   >

@@ -395,43 +395,43 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   role="toolbar"
                 >
                   <button
-                    aria-label="Bold"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconBold"
+                    data-state="closed"
                     role="button"
                     tabindex="0"
                     type="button"
                   />
                   <button
-                    aria-label="Italics"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconItalic"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Strikethrough"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconStrikethrough"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Code block"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconCode"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Quote"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconQuote"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Insert link"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconInsertLink"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -462,20 +462,20 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
               class="mx_MessageComposer_actions"
             >
               <div
-                aria-label="Emoji"
                 class="mx_AccessibleButton mx_EmojiButton mx_MessageComposer_button mx_EmojiButton_icon"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
-                aria-label="Attachment"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_upload"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
-                aria-label="More options"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_buttonMenu"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               />
@@ -638,43 +638,43 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   role="toolbar"
                 >
                   <button
-                    aria-label="Bold"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconBold"
+                    data-state="closed"
                     role="button"
                     tabindex="0"
                     type="button"
                   />
                   <button
-                    aria-label="Italics"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconItalic"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Strikethrough"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconStrikethrough"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Code block"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconCode"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Quote"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconQuote"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
                   />
                   <button
-                    aria-label="Insert link"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconInsertLink"
+                    data-state="closed"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -705,20 +705,20 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
               class="mx_MessageComposer_actions"
             >
               <div
-                aria-label="Emoji"
                 class="mx_AccessibleButton mx_EmojiButton mx_MessageComposer_button mx_EmojiButton_icon"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
-                aria-label="Attachment"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_upload"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
-                aria-label="More options"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_buttonMenu"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               />

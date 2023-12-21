@@ -3,8 +3,8 @@
 exports[`SpaceButton metaspace should render notificationState if one is provided 1`] = `
 <DocumentFragment>
   <div
-    aria-label="People"
     class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_active"
+    data-state="closed"
     data-testid="create-space-button"
     role="button"
     tabindex="-1"

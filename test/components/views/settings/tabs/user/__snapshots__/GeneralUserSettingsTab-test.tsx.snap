@@ -202,6 +202,7 @@ exports[`<GeneralUserSettingsTab /> Manage integrations should render manage int
       aria-checked="false"
       aria-disabled="false"
       class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+      data-state="closed"
       id="toggle_integration"
       role="switch"
       tabindex="0"

@@ -33,6 +33,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       <div
         aria-disabled="true"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
+        data-state="closed"
         disabled=""
         role="button"
         tabindex="0"
@@ -42,6 +43,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       <div
         aria-disabled="true"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
+        data-state="closed"
         disabled=""
         role="button"
         tabindex="0"

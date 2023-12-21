@@ -39,8 +39,8 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
     >
       Room ID: !id
       <div
-        aria-label="Copy"
         class="mx_AccessibleButton mx_CopyableText_copyButton"
+        data-state="closed"
         role="button"
         tabindex="0"
       />
@@ -130,8 +130,8 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Developer mode"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
             role="switch"
             tabindex="0"
           >
@@ -155,8 +155,8 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Show hidden events in timeline"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
             role="switch"
             tabindex="0"
           >
@@ -180,8 +180,8 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Enable widget screenshots on supported widgets"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
             role="switch"
             tabindex="0"
           >
@@ -205,8 +205,8 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Force 15s voice broadcast chunk length"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
             role="switch"
             tabindex="0"
           >

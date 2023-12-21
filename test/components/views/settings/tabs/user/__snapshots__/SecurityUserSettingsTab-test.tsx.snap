@@ -303,8 +303,8 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="false"
-                  aria-label="Never send encrypted messages to unverified sessions from this session"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
@@ -380,8 +380,8 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 <div
                   aria-checked="false"
                   aria-disabled="false"
-                  aria-label="Manually verify all remote sessions"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  data-state="closed"
                   role="switch"
                   tabindex="0"
                 >
