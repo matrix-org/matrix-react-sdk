@@ -51,7 +51,7 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
         const { label, caption } = this.props;
         let firstPart = (
             <span className="mx_SettingsFlag_label">
-                <label htmlFor={this.id}>{label}</label>
+                <div id={this.id}>{label}</div>
                 {caption && <Caption id={`${this.id}_caption`}>{caption}</Caption>}
             </span>
         );
@@ -62,6 +62,7 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
                 disabled={this.props.disabled}
                 onChange={this.props.onChange}
                 tooltip={this.props.tooltip}
+                aria-labelledby={this.id}
                 aria-describedby={caption ? `${this.id}_caption` : undefined}
             />
         );
