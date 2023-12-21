@@ -3197,7 +3197,6 @@
         "download_action_decrypting": "Decrypting",
         "download_action_downloading": "Downloading",
         "edits": {
-            "tooltip_label": "Edited at %(date)s. Click to view edits.",
             "tooltip_sub": "Click to view edits",
             "tooltip_title": "Edited at %(date)s"
         },

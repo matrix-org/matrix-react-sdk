@@ -34,7 +34,6 @@ import { WidgetType } from "../../../widgets/WidgetType";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
-import { Alignment } from "../elements/Tooltip";
 
 interface Props {
     widgetId: string;
@@ -125,12 +124,7 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
             />
             {(call !== null || WidgetType.JITSI.matches(widget?.type)) && (
                 <Toolbar className="mx_WidgetPip_footer">
-                    <RovingAccessibleTooltipButton
-                        onClick={onLeaveClick}
-                        tooltip={_t("action|leave")}
-                        aria-label={_t("action|leave")}
-                        alignment={Alignment.Top}
-                    >
+                    <RovingAccessibleTooltipButton onClick={onLeaveClick} title={_t("action|leave")} side="top">
                         <HangupIcon className="mx_Icon mx_Icon_24" />
                     </RovingAccessibleTooltipButton>
                 </Toolbar>

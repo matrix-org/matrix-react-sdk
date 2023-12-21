@@ -31,37 +31,22 @@ import { Icon as CodeBlockIcon } from "../../../../../../res/img/element-icons/r
 import { Icon as IndentIcon } from "../../../../../../res/img/element-icons/room/composer/indent_increase.svg";
 import { Icon as UnIndentIcon } from "../../../../../../res/img/element-icons/room/composer/indent_decrease.svg";
 import AccessibleTooltipButton from "../../../elements/AccessibleTooltipButton";
-import { Alignment } from "../../../elements/Tooltip";
-import { KeyboardShortcut } from "../../../settings/KeyboardShortcut";
-import { KeyCombo } from "../../../../../KeyBindingsManager";
 import { _t } from "../../../../../languageHandler";
 import { ButtonEvent } from "../../../elements/AccessibleButton";
 import { openLinkModal } from "./LinkModal";
 import { useComposerContext } from "../ComposerContext";
+import { IS_MAC, Key } from "../../../../../Keyboard";
+import { ALTERNATE_KEY_NAME } from "../../../../../accessibility/KeyboardShortcuts";
 
-interface TooltipProps {
+interface ButtonProps {
     label: string;
-    keyCombo?: KeyCombo;
-}
-
-function Tooltip({ label, keyCombo }: TooltipProps): JSX.Element {
-    return (
-        <div className="mx_FormattingButtons_Tooltip">
-            {label}
-            {keyCombo && (
-                <KeyboardShortcut value={keyCombo} className="mx_FormattingButtons_Tooltip_KeyboardShortcut" />
-            )}
-        </div>
-    );
-}
-
-interface ButtonProps extends TooltipProps {
+    shortcut?: string;
     icon: ReactNode;
     actionState: ActionState;
     onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-function Button({ label, keyCombo, onClick, actionState, icon }: ButtonProps): JSX.Element {
+function Button({ label, shortcut, onClick, actionState, icon }: ButtonProps): JSX.Element {
     return (
         <AccessibleTooltipButton
             element="button"
@@ -72,9 +57,9 @@ function Button({ label, keyCombo, onClick, actionState, icon }: ButtonProps): J
                 mx_FormattingButtons_Button_hover: actionState === "enabled",
                 mx_FormattingButtons_disabled: actionState === "disabled",
             })}
-            tooltip={keyCombo && <Tooltip label={label} keyCombo={keyCombo} />}
+            caption={shortcut}
             forceHide={actionState === "disabled"}
-            alignment={Alignment.Top}
+            side="top"
         >
             {icon}
         </AccessibleTooltipButton>
@@ -86,6 +71,10 @@ interface FormattingButtonsProps {
     actionStates: AllActionStates;
 }
 
+function ctrlShortcutLabel(key: string): string {
+    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) + "+" + key;
+}
+
 export function FormattingButtons({ composer, actionStates }: FormattingButtonsProps): JSX.Element {
     const composerContext = useComposerContext();
     const isInList = actionStates.unorderedList === "reversed" || actionStates.orderedList === "reversed";
@@ -94,21 +83,21 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             <Button
                 actionState={actionStates.bold}
                 label={_t("composer|format_bold")}
-                keyCombo={{ ctrlOrCmdKey: true, key: "b" }}
+                shortcut={ctrlShortcutLabel("B")}
                 onClick={() => composer.bold()}
                 icon={<BoldIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.italic}
                 label={_t("composer|format_italic")}
-                keyCombo={{ ctrlOrCmdKey: true, key: "i" }}
+                shortcut={ctrlShortcutLabel("I")}
                 onClick={() => composer.italic()}
                 icon={<ItalicIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.underline}
                 label={_t("composer|format_underline")}
-                keyCombo={{ ctrlOrCmdKey: true, key: "u" }}
+                shortcut={ctrlShortcutLabel("U")}
                 onClick={() => composer.underline()}
                 icon={<UnderlineIcon className="mx_FormattingButtons_Icon" />}
             />
@@ -155,7 +144,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             <Button
                 actionState={actionStates.inlineCode}
                 label={_t("composer|format_inline_code")}
-                keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
+                shortcut={ctrlShortcutLabel("E")}
                 onClick={() => composer.inlineCode()}
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
             />

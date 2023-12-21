@@ -521,19 +521,12 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const date = this.props.mxEvent.replacingEventDate();
         const dateString = date && formatDate(date);
 
-        const tooltip = (
-            <div>
-                <div className="mx_Tooltip_title">{_t("timeline|edits|tooltip_title", { date: dateString })}</div>
-                <div className="mx_Tooltip_sub">{_t("timeline|edits|tooltip_sub")}</div>
-            </div>
-        );
-
         return (
             <AccessibleTooltipButton
                 className="mx_EventTile_edited"
                 onClick={this.openHistoryDialog}
-                title={_t("timeline|edits|tooltip_label", { date: dateString })}
-                tooltip={tooltip}
+                title={_t("timeline|edits|tooltip_title", { date: dateString })}
+                caption={_t("timeline|edits|tooltip_sub")}
             >
                 <span>{`(${_t("common|edited")})`}</span>
             </AccessibleTooltipButton>

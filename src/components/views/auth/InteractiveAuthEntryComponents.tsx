@@ -29,7 +29,6 @@ import AccessibleButton, { AccessibleButtonKind, ButtonEvent } from "../elements
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
-import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
 
 /* This file contains a collection of components which are used by the
@@ -509,7 +508,7 @@ export class EmailIdentityAuthEntry extends React.Component<
                                             title={
                                                 this.state.requested ? _t("auth|uia|email_resent") : _t("action|resend")
                                             }
-                                            alignment={Alignment.Right}
+                                            side="right"
                                             onHideTooltip={
                                                 this.state.requested
                                                     ? () => this.setState({ requested: false })

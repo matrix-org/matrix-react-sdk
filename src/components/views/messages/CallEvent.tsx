@@ -83,7 +83,7 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                             kind={buttonKind}
                             disabled={onButtonClick === null || buttonDisabledTooltip !== undefined}
                             onClick={onButtonClick}
-                            tooltip={buttonDisabledTooltip}
+                            title={buttonDisabledTooltip}
                         >
                             {buttonText}
                         </AccessibleTooltipButton>

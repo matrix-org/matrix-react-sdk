@@ -114,9 +114,8 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
         <AccessibleTooltipButton
             className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_voiceCallButton"
             onClick={onClick}
-            title={_t("voip|voice_call")}
-            tooltip={tooltip ?? _t("voip|voice_call")}
-            alignment={Alignment.Bottom}
+            title={tooltip ?? _t("voip|voice_call")}
+            side="bottom"
             disabled={disabled || busy}
         />
     );
@@ -237,9 +236,8 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
                 ref={buttonRef}
                 className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
-                title={_t("voip|video_call")}
-                tooltip={tooltip ?? _t("voip|video_call")}
-                alignment={Alignment.Bottom}
+                title={tooltip ?? _t("voip|video_call")}
+                side="bottom"
                 disabled={disabled || busy}
             />
             {menu}
@@ -446,7 +444,7 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
                 })}
                 onClick={onClick}
                 title={_t("room|header|video_call_ec_change_layout")}
-                alignment={Alignment.Bottom}
+                side="bottom"
                 key="layout"
             />
             {menu}
@@ -600,7 +598,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_forgetButton"
                     onClick={this.props.onForgetClick}
                     title={_t("room|header|forget_room_button")}
-                    alignment={Alignment.Bottom}
+                    side="bottom"
                     key="forget"
                 />,
             );
@@ -619,7 +617,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                             : _t("room|header|show_widgets_button")
                     }
                     aria-checked={this.props.appsShown}
-                    alignment={Alignment.Bottom}
+                    side="bottom"
                     key="apps"
                 />,
             );
@@ -631,7 +629,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
                     title={_t("action|search")}
-                    alignment={Alignment.Bottom}
+                    side="bottom"
                     key="search"
                 />,
             );
@@ -643,7 +641,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_inviteButton"
                     onClick={this.props.onInviteClick}
                     title={_t("action|invite")}
-                    alignment={Alignment.Bottom}
+                    side="bottom"
                     key="invite"
                 />,
             );
@@ -667,7 +665,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                         className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_minimiseButton"
                         onClick={this.onHideCallClick}
                         title={_t("room|header|video_room_view_chat_button")}
-                        alignment={Alignment.Bottom}
+                        side="bottom"
                         key="minimise"
                     />,
                 );
@@ -750,7 +748,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     onClick={this.onContextMenuOpenClick}
                     isExpanded={!!this.state.contextMenuPosition}
                     title={_t("room|context_menu|title")}
-                    alignment={Alignment.Bottom}
+                    side="bottom"
                 >
                     {roomName}
                     {this.props.room && <div className="mx_LegacyRoomHeader_chevron" />}

@@ -58,7 +58,7 @@ function JoinCallButtonWithCall({ onClick, call }: JoinCallButtonWithCallProps):
             className="mx_IncomingCallToast_joinButton"
             onClick={onClick}
             disabled={disabledTooltip !== null}
-            tooltip={disabledTooltip ?? undefined}
+            title={disabledTooltip ?? undefined}
             kind="primary"
         >
             {_t("action|join")}

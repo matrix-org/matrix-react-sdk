@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
 import {
     IContent,
@@ -39,7 +39,6 @@ import { avatarUrlForUser } from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
 import SearchBox from "../../structures/SearchBox";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import { Alignment } from "../elements/Tooltip";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
@@ -107,10 +106,10 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         }
     };
 
-    let className;
+    let className: string;
     let disabled = false;
-    let title;
-    let icon;
+    let title: string | undefined;
+    let icon: ReactNode | undefined;
     if (sendState === SendState.CanSend) {
         className = "mx_ForwardList_canSend";
         if (!room.maySendMessage()) {
@@ -140,7 +139,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
                 className="mx_ForwardList_roomButton"
                 onClick={jumpToRoom}
                 title={_t("forward|open_room")}
-                alignment={Alignment.Top}
+                side="top"
             >
                 <DecoratedRoomAvatar room={room} size="32px" />
                 <span className="mx_ForwardList_entry_name">{room.name}</span>
@@ -152,7 +151,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
                 onClick={send}
                 disabled={disabled}
                 title={title}
-                alignment={Alignment.Top}
+                side="top"
             >
                 <div className="mx_ForwardList_sendLabel">{_t("forward|send_label")}</div>
                 {icon}

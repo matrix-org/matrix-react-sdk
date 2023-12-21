@@ -16,9 +16,9 @@ limitations under the License.
 */
 
 import React, { SyntheticEvent, FocusEvent, forwardRef, useEffect, Ref, useState, ComponentProps } from "react";
+import { Tooltip } from "@vector-im/compound-web";
 
 import AccessibleButton from "./AccessibleButton";
-import Tooltip, { Alignment } from "./Tooltip";
 
 /**
  * Type of props accepted by {@link AccessibleTooltipButton}.
@@ -27,29 +27,17 @@ import Tooltip, { Alignment } from "./Tooltip";
  */
 type Props<T extends keyof JSX.IntrinsicElements> = ComponentProps<typeof AccessibleButton<T>> & {
     /**
-     * Title to show in the tooltip and use as aria-label
+     * Title to show in the tooltip
      */
     title?: string;
-    /**
-     * Tooltip node to show in the tooltip, takes precedence over `title`
-     */
-    tooltip?: React.ReactNode;
     /**
      * Trigger label to render
      */
     label?: string;
     /**
-     * Classname to apply to the tooltip
-     */
-    tooltipClassName?: string;
-    /**
      * Force the tooltip to be hidden
      */
     forceHide?: boolean;
-    /**
-     * Alignment to render the tooltip with
-     */
-    alignment?: Alignment;
     /**
      * Function to call when the children are hovered over
      */
@@ -58,10 +46,10 @@ type Props<T extends keyof JSX.IntrinsicElements> = ComponentProps<typeof Access
      * Function to call when the tooltip goes from shown to hidden.
      */
     onHideTooltip?(ev: SyntheticEvent): void;
-};
+} & Pick<ComponentProps<typeof Tooltip>, "caption" | "side" | "align">;
 
 const AccessibleTooltipButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
-    { title, tooltip, children, forceHide, alignment, onHideTooltip, tooltipClassName, ...props }: Props<T>,
+    { title, children, forceHide, side, align, onHideTooltip, caption, ...props }: Props<T>,
     ref: Ref<HTMLElement>,
 ) {
     const [hover, setHover] = useState(false);
@@ -91,23 +79,20 @@ const AccessibleTooltipButton = forwardRef(function <T extends keyof JSX.Intrins
         if (ev.relatedTarget) showTooltip();
     };
 
-    const tip = hover && (title || tooltip) && (
-        <Tooltip tooltipClassName={tooltipClassName} label={tooltip || title} alignment={alignment} />
-    );
     return (
-        <AccessibleButton
-            {...props}
-            onMouseOver={showTooltip}
-            onMouseLeave={hideTooltip}
-            onFocus={onFocus}
-            onBlur={hideTooltip}
-            aria-label={title || props["aria-label"]}
-            ref={ref}
-        >
-            {children}
-            {props.label}
-            {(tooltip || title) && tip}
-        </AccessibleButton>
+        <Tooltip label={title ?? ""} caption={caption} side={side} align={align} open={hover && !!title}>
+            <AccessibleButton
+                {...props}
+                onMouseOver={showTooltip}
+                onMouseLeave={hideTooltip}
+                onFocus={onFocus}
+                onBlur={hideTooltip}
+                ref={ref}
+            >
+                {children}
+                {props.label}
+            </AccessibleButton>
+        </Tooltip>
     );
 });
 

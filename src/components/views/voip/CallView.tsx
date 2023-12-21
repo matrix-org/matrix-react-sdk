@@ -39,7 +39,6 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import { aboveRightOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
-import { Alignment } from "../elements/Tooltip";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
@@ -103,7 +102,7 @@ const DeviceButton: FC<DeviceButtonProps> = ({
                 className={`mx_CallView_deviceButton mx_CallView_deviceButton_${kind}`}
                 ref={buttonRef}
                 title={muted ? mutedTitle : unmutedTitle}
-                alignment={Alignment.Top}
+                side="top"
                 onClick={toggle}
                 disabled={disabled}
             />
@@ -285,8 +284,8 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
                 disabled={connecting || joinCallButtonDisabledTooltip !== undefined}
                 onClick={onConnectClick}
                 label={_t("action|join")}
-                tooltip={connecting ? _t("voip|connecting") : joinCallButtonDisabledTooltip}
-                alignment={Alignment.Bottom}
+                title={connecting ? _t("voip|connecting") : joinCallButtonDisabledTooltip}
+                side="bottom"
             />
         </div>
     );

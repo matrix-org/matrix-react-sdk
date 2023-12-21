@@ -23,7 +23,6 @@ import classNames from "classnames";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ButtonEvent } from "../elements/AccessibleButton";
-import { Alignment } from "../elements/Tooltip";
 
 interface IProps {
     // Whether this button is highlighted
@@ -56,7 +55,7 @@ export default class HeaderButton extends React.Component<IProps> {
                 {...props}
                 aria-current={isHighlighted ? "true" : "false"}
                 title={title}
-                alignment={Alignment.Bottom}
+                side="bottom"
                 className={classes}
                 onClick={onClick}
             />
