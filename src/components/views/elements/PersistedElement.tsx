@@ -39,6 +39,7 @@ function getOrCreateContainer(containerId: string): HTMLDivElement {
     if (!container) {
         container = document.createElement("div");
         container.id = containerId;
+        container.className = "mx_PersistedElement_container";
         document.body.appendChild(container);
     }
 

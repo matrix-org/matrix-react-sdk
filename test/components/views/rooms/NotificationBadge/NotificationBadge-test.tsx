@@ -27,14 +27,7 @@ describe("NotificationBadge", () => {
             const cb = jest.fn();
 
             const { container } = render(
-                <StatelessNotificationBadge
-                    symbol=""
-                    color={NotificationColor.Red}
-                    count={5}
-                    onClick={cb}
-                    onMouseOver={cb}
-                    onMouseLeave={cb}
-                />,
+                <StatelessNotificationBadge symbol="" color={NotificationColor.Red} count={5} onClick={cb} />,
             );
 
             fireEvent.click(container.firstChild!);
