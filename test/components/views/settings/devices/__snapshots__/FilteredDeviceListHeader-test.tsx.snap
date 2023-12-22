@@ -7,27 +7,31 @@ exports[`<FilteredDeviceListHeader /> renders correctly when all devices are sel
     data-testid="test123"
   >
     <span
-      class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+      data-state="closed"
+      tabindex="0"
     >
-      <input
-        aria-label="Deselect all"
-        checked=""
-        data-state="closed"
-        data-testid="device-select-all-checkbox"
-        id="device-select-all-checkbox"
-        type="checkbox"
-      />
-      <label
-        for="device-select-all-checkbox"
+      <span
+        class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
       >
-        <div
-          class="mx_Checkbox_background"
+        <input
+          aria-label="Deselect all"
+          checked=""
+          data-testid="device-select-all-checkbox"
+          id="device-select-all-checkbox"
+          type="checkbox"
+        />
+        <label
+          for="device-select-all-checkbox"
         >
           <div
-            class="mx_Checkbox_checkmark"
-          />
-        </div>
-      </label>
+            class="mx_Checkbox_background"
+          >
+            <div
+              class="mx_Checkbox_checkmark"
+            />
+          </div>
+        </label>
+      </span>
     </span>
     <span
       class="mx_FilteredDeviceListHeader_label"
