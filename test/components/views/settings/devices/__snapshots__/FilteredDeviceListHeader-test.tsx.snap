@@ -6,33 +6,29 @@ exports[`<FilteredDeviceListHeader /> renders correctly when all devices are sel
     class="mx_FilteredDeviceListHeader"
     data-testid="test123"
   >
-    <div
-      aria-describedby="mx_TooltipTarget_vY7Q4uEh"
-      tabindex="0"
+    <span
+      class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
     >
-      <span
-        class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+      <input
+        aria-label="Deselect all"
+        checked=""
+        data-state="closed"
+        data-testid="device-select-all-checkbox"
+        id="device-select-all-checkbox"
+        type="checkbox"
+      />
+      <label
+        for="device-select-all-checkbox"
       >
-        <input
-          aria-label="Deselect all"
-          checked=""
-          data-testid="device-select-all-checkbox"
-          id="device-select-all-checkbox"
-          type="checkbox"
-        />
-        <label
-          for="device-select-all-checkbox"
+        <div
+          class="mx_Checkbox_background"
         >
           <div
-            class="mx_Checkbox_background"
-          >
-            <div
-              class="mx_Checkbox_checkmark"
-            />
-          </div>
-        </label>
-      </span>
-    </div>
+            class="mx_Checkbox_checkmark"
+          />
+        </div>
+      </label>
+    </span>
     <span
       class="mx_FilteredDeviceListHeader_label"
     >
@@ -51,8 +47,8 @@ exports[`<FilteredDeviceListHeader /> renders correctly when no devices are sele
     class="mx_FilteredDeviceListHeader"
     data-testid="test123"
   >
-    <div
-      aria-describedby="mx_TooltipTarget_vY7Q4uEh"
+    <span
+      data-state="closed"
       tabindex="0"
     >
       <span
@@ -76,7 +72,7 @@ exports[`<FilteredDeviceListHeader /> renders correctly when no devices are sele
           </div>
         </label>
       </span>
-    </div>
+    </span>
     <span
       class="mx_FilteredDeviceListHeader_label"
     >
