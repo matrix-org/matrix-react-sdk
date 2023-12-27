@@ -33,6 +33,9 @@ import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
 import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
 import { IApp } from "../../stores/WidgetStore";
+import defaultDispatcher from "../../dispatcher/dispatcher";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { Action } from "../../dispatcher/actions";
 
 export type PlatformCallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
 
@@ -167,7 +170,13 @@ export const useRoomCall = (
         (evt: React.MouseEvent): void => {
             evt.stopPropagation();
             if (widget && promptPinWidget) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
+                defaultDispatcher.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: room.roomId,
+                    view_call: true,
+                    metricsTrigger: undefined,
+                    skipLobby: evt.shiftKey,
+                });
             } else {
                 placeCall(room, CallType.Voice, callType, evt.shiftKey);
             }
@@ -178,7 +187,13 @@ export const useRoomCall = (
         (evt: React.MouseEvent): void => {
             evt.stopPropagation();
             if (widget && promptPinWidget) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
+                defaultDispatcher.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: room.roomId,
+                    view_call: true,
+                    metricsTrigger: undefined,
+                    skipLobby: evt.shiftKey,
+                });
             } else {
                 placeCall(room, CallType.Video, callType, evt.shiftKey);
             }
