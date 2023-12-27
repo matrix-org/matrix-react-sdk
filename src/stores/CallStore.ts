@@ -29,6 +29,8 @@ import WidgetStore from "./WidgetStore";
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
 import { Call, CallEvent, ConnectionState } from "../models/Call";
+import { SdkContextClass } from "../contexts/SDKContext";
+import ActiveWidgetStore from "./ActiveWidgetStore";
 
 export enum CallStoreEvent {
     // Signals a change in the call associated with a given room
@@ -66,6 +68,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         }
         this.matrixClient.on(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
         this.matrixClient.on(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
+        SdkContextClass.instance.roomViewStore.on(UPDATE_EVENT, this.onRoomViewStoreUpdate);
         this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSession);
         this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSession);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgets);
@@ -202,5 +205,26 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     private onGroupCall = (groupCall: GroupCall): void => this.updateRoom(groupCall.room);
     private onRTCSession = (roomId: string, session: MatrixRTCSession): void => {
         this.updateRoom(session.room);
+    };
+    private onRoomViewStoreUpdate = (): void => {
+        this.calls.forEach((call) => {
+            // All calls where the user has not connected (calls in lobby or disconnected)
+            // should be destroyed if the user does not view the call anymore.
+            // A call in lobby state can easily be closed by not viewing the call anymore.
+            let viewedCallRoomId = null;
+            if (SdkContextClass.instance.roomViewStore.isViewingCall()) {
+                viewedCallRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+            }
+
+            if (
+                viewedCallRoomId !== call.roomId &&
+                (call.connectionState === ConnectionState.Disconnected ||
+                    call.connectionState === ConnectionState.Lobby) &&
+                // Only destroy the call if it is associated with an active widget. (the call is already shown)
+                ActiveWidgetStore.instance.getWidgetPersistence(call.widget.id, call.roomId)
+            ) {
+                call?.destroy();
+            }
+        });
     };
 }
