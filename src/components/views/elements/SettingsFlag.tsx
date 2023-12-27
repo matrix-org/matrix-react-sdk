@@ -108,7 +108,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         const label = this.props.label ?? SettingsStore.getDisplayName(this.props.name, this.props.level);
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
-        const disabled = this.state.disabled || !canChange;
+        const disabled = this.isSettingDisabled() || !canChange;
 
         if (this.props.useCheckbox) {
             return (
