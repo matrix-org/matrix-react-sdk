@@ -131,13 +131,13 @@ const ActiveLoadedCallEvent = forwardRef<any, ActiveLoadedCallEventProps>(({ mxE
         switch (connectionState) {
             case ConnectionState.Disconnected:
                 return [_t("action|join"), "primary", connect];
-            case ConnectionState.Connecting:
-                return [_t("action|join"), "primary", null];
             case ConnectionState.Connected:
                 return [_t("action|leave"), "danger", disconnect];
             case ConnectionState.Disconnecting:
                 return [_t("action|leave"), "danger", null];
         }
+        // ConnectionState.Connecting || ConnectionState.Lobby || ConnectionState.WidgetLoading
+        return [_t("action|join"), "primary", null];
     }, [connectionState, connect, disconnect]);
 
     return (
