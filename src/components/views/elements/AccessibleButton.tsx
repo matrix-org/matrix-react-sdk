@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-import React, { HTMLAttributes, InputHTMLAttributes } from "react";
+import React, { forwardRef, FunctionComponent, HTMLAttributes, InputHTMLAttributes, Ref } from "react";
 import classnames from "classnames";
 
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
@@ -66,7 +66,6 @@ type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<
  * Extends props accepted by the underlying element specified using the `element` prop.
  */
 type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> & {
-    inputRef?: React.Ref<Element>;
     /**
      * The base element type. "div" by default.
      */
@@ -89,7 +88,10 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 
-export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
+/**
+ * Type of the props passed to the element that is rendered by AccessibleButton.
+ */
+interface RenderedElementProps extends React.InputHTMLAttributes<Element> {
     ref?: React.Ref<Element>;
 }
 
@@ -98,23 +100,27 @@ export interface IAccessibleButtonProps extends React.InputHTMLAttributes<Elemen
  * as a button.  Identifies the element as a button, setting proper tab
  * indexing and keyboard activation behavior.
  *
+ * If a ref is passed, it will be forwarded to the rendered element as specified using the `element` prop.
+ *
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
-export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>({
-    element = "div" as T,
-    onClick,
-    children,
-    kind,
-    disabled,
-    inputRef,
-    className,
-    onKeyDown,
-    onKeyUp,
-    triggerOnMouseDown,
-    ...restProps
-}: Props<T>): JSX.Element {
-    const newProps: IAccessibleButtonProps = restProps;
+const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
+    {
+        element = "div" as T,
+        onClick,
+        children,
+        kind,
+        disabled,
+        className,
+        onKeyDown,
+        onKeyUp,
+        triggerOnMouseDown,
+        ...restProps
+    }: Props<T>,
+    ref: Ref<HTMLElement>,
+): JSX.Element {
+    const newProps: RenderedElementProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
         newProps["disabled"] = true;
@@ -167,7 +173,7 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
     }
 
     // Pass through the ref - used for keyboard shortcut access to some buttons
-    newProps.ref = inputRef;
+    newProps.ref = ref;
 
     newProps.className = classnames("mx_AccessibleButton", className, {
         mx_AccessibleButton_hasKind: kind,
@@ -177,11 +183,13 @@ export default function AccessibleButton<T extends keyof JSX.IntrinsicElements>(
 
     // React.createElement expects InputHTMLAttributes
     return React.createElement(element, newProps, children);
-}
+});
 
-AccessibleButton.defaultProps = {
+// Type assertion required due to forwardRef type workaround in react.d.ts
+(AccessibleButton as FunctionComponent).defaultProps = {
     role: "button",
     tabIndex: 0,
 };
+(AccessibleButton as FunctionComponent).displayName = "AccessibleButton";
 
-AccessibleButton.displayName = "AccessibleButton";
+export default AccessibleButton;

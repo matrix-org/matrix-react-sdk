@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useState, useContext, useEffect, useCallback } from "react";
+import React, { FC, useState, useContext, useEffect, useCallback, AriaRole } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
@@ -31,9 +31,18 @@ interface StartCallViewProps {
     setStartingCall: (value: boolean) => void;
     startingCall: boolean;
     skipLobby?: boolean;
+    role?: AriaRole;
 }
 
-const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStartingCall, startingCall, skipLobby }) => {
+const StartCallView: FC<StartCallViewProps> = ({
+    room,
+    resizing,
+    call,
+    setStartingCall,
+    startingCall,
+    skipLobby,
+    role,
+}) => {
     const cli = useContext(MatrixClientContext);
 
     // We need to do this awkward double effect system,
@@ -85,9 +94,10 @@ interface JoinCallViewProps {
     resizing: boolean;
     call: Call;
     skipLobby?: boolean;
+    role?: AriaRole;
 }
 
-const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby }) => {
+const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, role }) => {
     const cli = useContext(MatrixClientContext);
 
     const connect = useCallback(async (): Promise<void> => {
@@ -131,9 +141,10 @@ interface CallViewProps {
      */
     waitForCall: boolean;
     skipLobby?: boolean;
+    role?: AriaRole;
 }
 
-export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipLobby }) => {
+export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipLobby, role }) => {
     const call = useCall(room.roomId);
     const [startingCall, setStartingCall] = useState(false);
 
@@ -147,9 +158,10 @@ export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipL
                 setStartingCall={setStartingCall}
                 startingCall={startingCall}
                 skipLobby={skipLobby}
+                role={role}
             />
         );
     } else {
-        return <JoinCallView room={room} resizing={resizing} call={call} skipLobby={skipLobby} />;
+        return <JoinCallView room={room} resizing={resizing} call={call} skipLobby={skipLobby} role={role} />;
     }
 };

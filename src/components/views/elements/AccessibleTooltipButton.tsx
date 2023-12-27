@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, FocusEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, FocusEvent, forwardRef, useEffect, Ref, useState, ComponentProps } from "react";
 
 import AccessibleButton from "./AccessibleButton";
 import Tooltip, { Alignment } from "./Tooltip";
@@ -25,7 +25,7 @@ import Tooltip, { Alignment } from "./Tooltip";
  *
  * Extends that of {@link AccessibleButton}.
  */
-interface Props extends React.ComponentProps<typeof AccessibleButton> {
+type Props<T extends keyof JSX.IntrinsicElements> = ComponentProps<typeof AccessibleButton<T>> & {
     /**
      * Title to show in the tooltip and use as aria-label
      */
@@ -58,18 +58,12 @@ interface Props extends React.ComponentProps<typeof AccessibleButton> {
      * Function to call when the tooltip goes from shown to hidden.
      */
     onHideTooltip?(ev: SyntheticEvent): void;
-}
+};
 
-function AccessibleTooltipButton({
-    title,
-    tooltip,
-    children,
-    forceHide,
-    alignment,
-    onHideTooltip,
-    tooltipClassName,
-    ...props
-}: Props): JSX.Element {
+const AccessibleTooltipButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
+    { title, tooltip, children, forceHide, alignment, onHideTooltip, tooltipClassName, ...props }: Props<T>,
+    ref: Ref<HTMLElement>,
+) {
     const [hover, setHover] = useState(false);
 
     useEffect(() => {
@@ -108,12 +102,13 @@ function AccessibleTooltipButton({
             onFocus={onFocus}
             onBlur={hideTooltip}
             aria-label={title || props["aria-label"]}
+            ref={ref}
         >
             {children}
             {props.label}
             {(tooltip || title) && tip}
         </AccessibleButton>
     );
-}
+});
 
 export default AccessibleTooltipButton;

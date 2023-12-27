@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useState } from "react";
+import React, { ComponentProps, createRef, useState } from "react";
 import classNames from "classnames";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 
@@ -42,14 +42,13 @@ const CONTEXT_MENU_VPADDING = 8; // How far the context menu sits above the butt
 
 const CONTROLS_HIDE_DELAY = 2000;
 
-interface IButtonProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title"> {
+type ButtonProps = Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "element"> & {
     state: boolean;
-    className: string;
     onLabel?: string;
     offLabel?: string;
-}
+};
 
-const LegacyCallViewToggleButton: React.FC<IButtonProps> = ({
+const LegacyCallViewToggleButton: React.FC<ButtonProps> = ({
     children,
     state: isOn,
     className,
@@ -74,7 +73,7 @@ const LegacyCallViewToggleButton: React.FC<IButtonProps> = ({
     );
 };
 
-interface IDropdownButtonProps extends IButtonProps {
+interface IDropdownButtonProps extends ButtonProps {
     deviceKinds: MediaDeviceKindEnum[];
 }
 
@@ -93,7 +92,7 @@ const LegacyCallViewDropdownButton: React.FC<IDropdownButtonProps> = ({ state, d
 
     return (
         <LegacyCallViewToggleButton
-            inputRef={buttonRef}
+            ref={buttonRef}
             forceHide={menuDisplayed || hoveringDropdown}
             state={state}
             {...props}
@@ -266,7 +265,7 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                 {this.props.buttonsVisibility.dialpad && (
                     <ContextMenuTooltipButton
                         className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_dialpad"
-                        inputRef={this.dialpadButton}
+                        ref={this.dialpadButton}
                         onClick={this.onDialpadClick}
                         isExpanded={this.state.showDialpad}
                         title={_t("voip|dialpad")}
@@ -313,7 +312,7 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                     <ContextMenuTooltipButton
                         className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_button_more"
                         onClick={this.onMoreClick}
-                        inputRef={this.contextMenuButton}
+                        ref={this.contextMenuButton}
                         isExpanded={this.state.showMoreMenu}
                         title={_t("voip|more_button")}
                         alignment={Alignment.Top}
