@@ -259,9 +259,9 @@ export default function RoomHeader({
 
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
-                    {videoCallButton}
+                    {!isVideoRoom(room) && videoCallButton}
 
-                    {!useElementCallExclusively && (
+                    {!useElementCallExclusively && !isVideoRoom(room) && (
                         <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                             <IconButton
                                 disabled={!!voiceCallDisabledReason}
