@@ -33,6 +33,11 @@ import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
 import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
 import { IApp } from "../../stores/WidgetStore";
+import { SdkContextClass } from "../../contexts/SDKContext";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import defaultDispatcher from "../../dispatcher/dispatcher";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { Action } from "../../dispatcher/actions";
 
 export type PlatformCallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
 
@@ -56,6 +61,10 @@ export const useRoomCall = (
     voiceCallClick(evt: React.MouseEvent): void;
     videoCallDisabledReason: string | null;
     videoCallClick(evt: React.MouseEvent): void;
+    toggleCallMaximized: () => void;
+    isViewingCall: boolean;
+    isConnectedToCall: boolean;
+    hasActiveCallSession: boolean;
 } => {
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
@@ -135,6 +144,12 @@ export const useRoomCall = (
         updateWidgetState();
     }, [room, jitsiWidget, groupCall, updateWidgetState]);
 
+    const [isViewingCall, setIsViewingCall] = useState(SdkContextClass.instance.roomViewStore.isViewingCall());
+    const onRoomViewStoreUpdate = useCallback(() => {
+        setIsViewingCall(SdkContextClass.instance.roomViewStore.isViewingCall());
+    }, []);
+
+    useEventEmitter(SdkContextClass.instance.roomViewStore, UPDATE_EVENT, onRoomViewStoreUpdate);
     const state = useMemo((): State => {
         if (hasGroupCall || hasJitsiWidget || hasManagedHybridWidget) {
             return promptPinWidget ? State.Unpinned : State.Ongoing;
@@ -206,6 +221,14 @@ export const useRoomCall = (
             voiceCallDisabledReason = null;
             videoCallDisabledReason = null;
     }
+    const toggleCallMaximized = useCallback(() => {
+        defaultDispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: room.roomId,
+            metricsTrigger: undefined,
+            view_call: !isViewingCall,
+        });
+    }, [isViewingCall, room.roomId]);
 
     /**
      * We've gone through all the steps
@@ -215,5 +238,9 @@ export const useRoomCall = (
         voiceCallClick,
         videoCallDisabledReason,
         videoCallClick,
+        toggleCallMaximized: toggleCallMaximized,
+        isViewingCall: isViewingCall,
+        isConnectedToCall: groupCall?.connected ?? false,
+        hasActiveCallSession: hasGroupCall,
     };
 };

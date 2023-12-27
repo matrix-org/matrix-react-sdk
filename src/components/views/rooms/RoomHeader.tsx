@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Body as BodyText, IconButton, Tooltip } from "@vector-im/compound-web";
+import { Body as BodyText, Button, IconButton, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
+import { Icon as CloseCallIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
 import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
@@ -52,6 +53,7 @@ import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
+import { isVideoRoom } from "../../../utils/video-rooms";
 
 /**
  * A helper to transform a notification color to the what the Compound Icon Button
@@ -83,7 +85,16 @@ export default function RoomHeader({
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
-    const { voiceCallDisabledReason, voiceCallClick, videoCallDisabledReason, videoCallClick } = useRoomCall(room);
+    const {
+        voiceCallDisabledReason,
+        voiceCallClick,
+        videoCallDisabledReason,
+        videoCallClick,
+        toggleCallMaximized: toggleCall,
+        isViewingCall,
+        isConnectedToCall,
+        hasActiveCallSession,
+    } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     /**
@@ -118,6 +129,47 @@ export default function RoomHeader({
 
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
 
+    const toggleCallButton = (
+        <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
+            <IconButton onClick={toggleCall}>
+                <VideoCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+    const joinCallButton = (
+        <Button size="sm" onClick={videoCallClick}>
+            Join
+        </Button>
+    );
+    const startCallButton = (
+        <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
+            <IconButton
+                disabled={!!videoCallDisabledReason}
+                aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                onClick={videoCallClick}
+            >
+                <VideoCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+    const closeLobbyButton = (
+        <Tooltip label={_t("voip|close_lobby")}>
+            <IconButton onClick={toggleCall}>
+                <CloseCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+    let videoCallButton = startCallButton;
+    if (isConnectedToCall) {
+        videoCallButton = toggleCallButton;
+    } else {
+        if (hasActiveCallSession && !isViewingCall) {
+            videoCallButton = joinCallButton;
+        }
+        if (isViewingCall) {
+            videoCallButton = closeLobbyButton;
+        }
+    }
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
@@ -204,15 +256,11 @@ export default function RoomHeader({
                             </Tooltip>
                         );
                     })}
-                    <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
-                        <IconButton
-                            disabled={!!videoCallDisabledReason}
-                            aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
-                            onClick={videoCallClick}
-                        >
-                            <VideoCallIcon />
-                        </IconButton>
-                    </Tooltip>
+
+                    {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
+
+                    {videoCallButton}
+
                     {!useElementCallExclusively && (
                         <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
                             <IconButton
@@ -224,10 +272,6 @@ export default function RoomHeader({
                             </IconButton>
                         </Tooltip>
                     )}
-
-                    {/* Renders nothing when room is not a video room */}
-                    <VideoRoomChatButton room={room} />
-
                     <Tooltip label={_t("common|threads")}>
                         <IconButton
                             indicator={notificationLevelToIndicator(threadNotifications)}
@@ -241,6 +285,21 @@ export default function RoomHeader({
                             <ThreadsIcon />
                         </IconButton>
                     </Tooltip>
+                    {notificationsEnabled && (
+                        <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
+                            <IconButton
+                                indicator={notificationLevelToIndicator(threadNotifications)}
+                                onClick={(evt) => {
+                                    evt.stopPropagation();
+                                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
+                                    PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
+                                }}
+                                aria-label={_t("common|threads")}
+                            >
+                                <ThreadsIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                     {notificationsEnabled && (
                         <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
                             <IconButton
