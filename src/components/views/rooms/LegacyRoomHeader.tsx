@@ -309,7 +309,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
             } else {
                 return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call")));
             }
-        } else if (hasLegacyCall || hasJitsiWidget || hasGroupCall) {
+        } else if (hasLegacyCall || hasJitsiWidget) {
             return (
                 <>
                     {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")))}
