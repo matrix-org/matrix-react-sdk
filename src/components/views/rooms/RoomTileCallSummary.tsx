@@ -35,6 +35,10 @@ export const RoomTileCallSummary: FC<Props> = ({ call }) => {
             text = _t("common|video");
             active = false;
             break;
+        case ConnectionState.Lobby:
+            text = _t("common|lobby");
+            active = false;
+            break;
         case ConnectionState.Connecting:
             text = _t("room|joining");
             active = true;

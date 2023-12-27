@@ -18,7 +18,7 @@ import React, { FC, useState, useContext, useEffect, useCallback } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
-import { Call, ElementCall } from "../../../models/Call";
+import { Call, ConnectionState, ElementCall } from "../../../models/Call";
 import { useCall } from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
@@ -101,8 +101,8 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby }
         call.clean();
     }, [call]);
     useEffect(() => {
-        if (call.connectionState === "disconnected") {
-            (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
+        (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
+        if (call.connectionState == ConnectionState.Disconnected) {
             connect();
         }
     }, [call.connectionState, call.widget.data, connect, skipLobby]);

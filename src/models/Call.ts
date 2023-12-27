@@ -32,6 +32,8 @@ import { IWidgetApiRequest } from "matrix-widget-api";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession, MatrixRTCSessionEvent } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 // eslint-disable-next-line no-restricted-imports
+import { CallMembership } from "matrix-js-sdk/src/matrixrtc/CallMembership";
+// eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
 import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
@@ -77,7 +79,12 @@ const waitForEvent = async (
 };
 
 export enum ConnectionState {
+    // Widget related states that are equivalent to disconnected,
+    // but hold additional information about the state of the widget.
+    Lobby = "lobby",
+    WidgetLoading = "widget_loading",
     Disconnected = "disconnected",
+
     Connecting = "connecting",
     Connected = "connected",
     Disconnecting = "disconnecting",
@@ -210,7 +217,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
      * for this to succeed.
      */
     public async connect(): Promise<void> {
-        this.connectionState = ConnectionState.Connecting;
+        this.connectionState = ConnectionState.WidgetLoading;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
             (await MediaDeviceHandler.getDevices())!;
@@ -246,7 +253,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
                 throw new Error(`Failed to bind call widget in room ${this.roomId}: ${e}`);
             }
         }
-
+        this.connectionState = ConnectionState.Connecting;
         try {
             await this.performConnection(audioInput, videoInput);
         } catch (e) {
@@ -264,7 +271,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
      * Disconnects the user from the call.
      */
     public async disconnect(): Promise<void> {
-        if (this.connectionState !== ConnectionState.Connected) throw new Error("Not connected");
+        if (!this.connected) throw new Error("Not connected");
 
         this.connectionState = ConnectionState.Disconnecting;
         await this.performDisconnection();
@@ -853,16 +860,36 @@ export class ElementCall extends Call {
         this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
         if (!(this.widget.data ?? {}).skipLobby) {
+            // If we do not skip the lobby we need to wait until the widget has
+            // connected to matrixRTC. This is either observed through the session state
+            // or the MatrixRTCSessionManager session started event.
+            this.connectionState = ConnectionState.Lobby;
             await new Promise<void>((resolve) => {
-                const waitForLobbyJoin = (roomId: string, session: MatrixRTCSession): void => {
-                    if (this.session.callId === session.callId && roomId === this.roomId) {
-                        resolve();
-                        // This listener is not needed anymore. The promise resolved and we updated to the connection state
-                        // when `performConnection` resolves.
-                        this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, waitForLobbyJoin);
-                    }
-                };
-                this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, waitForLobbyJoin);
+                const session = this.client.matrixRTC.getActiveRoomSession(this.room);
+                if (session) {
+                    const waitForLobbyJoin = (
+                        oldMemberships: CallMembership[],
+                        newMemberships: CallMembership[],
+                    ): void => {
+                        if (newMemberships.some((m) => m.sender === this.client.getUserId())) {
+                            resolve();
+                            // This listener is not needed anymore. The promise resolved and we updated to the connection state
+                            // when `performConnection` resolves.
+                            session.off(MatrixRTCSessionEvent.MembershipsChanged, waitForLobbyJoin);
+                        }
+                    };
+                    session.on(MatrixRTCSessionEvent.MembershipsChanged, waitForLobbyJoin);
+                } else {
+                    const waitForLobbyJoin = (roomId: string, session: MatrixRTCSession): void => {
+                        if (this.session.callId === session.callId && roomId === this.roomId) {
+                            resolve();
+                            // This listener is not needed anymore. The promise resolved and we updated to the connection state
+                            // when `performConnection` resolves.
+                            this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, waitForLobbyJoin);
+                        }
+                    };
+                    this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, waitForLobbyJoin);
+                }
             });
         }
     }
