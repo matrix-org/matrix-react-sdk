@@ -217,13 +217,14 @@ export class CallStore extends AsyncStoreWithClient<{}> {
             }
 
             if (
-                viewedCallRoomId !== call.roomId &&
-                (call.connectionState === ConnectionState.Disconnected ||
-                    call.connectionState === ConnectionState.Lobby) &&
-                // Only destroy the call if it is associated with an active widget. (the call is already shown)
-                ActiveWidgetStore.instance.getWidgetPersistence(call.widget.id, call.roomId)
+                (viewedCallRoomId !== call.roomId &&
+                    (call.connectionState === ConnectionState.Disconnected ||
+                        call.connectionState === ConnectionState.Lobby) &&
+                    // Only destroy the call if it is associated with an active widget. (the call is already shown)
+                    ActiveWidgetStore.instance.getWidgetPersistence(call.widget.id, call.roomId)) ||
+                call.connectionState === ConnectionState.WidgetLoading
             ) {
-                call?.destroy();
+                call.destroy();
             }
         });
     };
