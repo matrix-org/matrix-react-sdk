@@ -217,9 +217,10 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             const platform = PlatformPeg.get()?.getHumanReadableName();
 
             // Determine the description based on the platform
-            const description = platform === "Web Platform"
-                ? _t("error_database_closed_description|for_web", { brand })
-                : _t("error_database_closed_description|for_desktop");
+            const description =
+                platform === "Web Platform"
+                    ? _t("error_database_closed_description|for_web", { brand })
+                    : _t("error_database_closed_description|for_desktop");
 
             const [reload] = await Modal.createDialog(ErrorDialog, {
                 title: _t("error_database_closed_title", { brand }),
