@@ -279,7 +279,7 @@ describe("PipContainer", () => {
         const widget = WidgetStore.instance.addVirtualWidget(
             {
                 id: "1",
-                creatorUserId: "@alice:exaxmple.org",
+                creatorUserId: "@alice:example.org",
                 type: WidgetType.CUSTOM.preferred,
                 url: "https://example.org",
                 name: "Example widget",
@@ -293,7 +293,7 @@ describe("PipContainer", () => {
 
             // The return button should maximize the widget
             const moveSpy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
-            await user.click(screen.getByRole("button", { name: "Back" }));
+            await user.click(await screen.findByRole("button", { name: "Back" }));
             expect(moveSpy).toHaveBeenCalledWith(room, widget, Container.Center);
 
             expect(screen.queryByRole("button", { name: "Leave" })).toBeNull();
@@ -309,7 +309,7 @@ describe("PipContainer", () => {
         const widget = WidgetStore.instance.addVirtualWidget(
             {
                 id: "1",
-                creatorUserId: "@alice:exaxmple.org",
+                creatorUserId: "@alice:example.org",
                 type: WidgetType.JITSI.preferred,
                 url: "https://meet.example.org",
                 name: "Jitsi example",
@@ -324,7 +324,7 @@ describe("PipContainer", () => {
             // The return button should view the room
             const dispatcherSpy = jest.fn();
             const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
-            await user.click(screen.getByRole("button", { name: "Back" }));
+            await user.click(await screen.findByRole("button", { name: "Back" }));
             expect(dispatcherSpy).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
