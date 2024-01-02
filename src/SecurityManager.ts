@@ -341,12 +341,12 @@ export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Prom
  * @param {Function} [func] An operation to perform once secret storage has been
  * bootstrapped. Optional.
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
- * @param {bool} [setupNewKeyBackup] Reset secret storage even if it's already set up
+ * @param {bool} [setupNewKeyBackup] Force setup a new server side room keys backup even if it's already set up
  */
 export async function accessSecretStorage(
     func = async (): Promise<void> => {},
     forceReset = false,
-    setupNewKeyBackup = true,
+    setupNewKeyBackup = false,
 ): Promise<void> {
     await withSecretStorageKeyCache(() => doAccessSecretStorage(func, forceReset, setupNewKeyBackup));
 }
