@@ -42,13 +42,13 @@ export default function LoginSplashView(props: Props): React.JSX.Element {
     let errorBox;
 
     if (props.syncError) {
-        errorBox = <div className="mx_MatrixChat_syncError">{messageForSyncError(props.syncError)}</div>;
+        errorBox = <div className="mx_LoginSplashView_syncError">{messageForSyncError(props.syncError)}</div>;
     }
     return (
         <div className="mx_MatrixChat_splash">
             {errorBox}
             <Spinner />
-            <div className="mx_MatrixChat_splashButtons">
+            <div className="mx_LoginSplashView_splashButtons">
                 <AccessibleButton kind="link_inline" onClick={props.onLogoutClick}>
                     {_t("action|logout")}
                 </AccessibleButton>

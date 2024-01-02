@@ -17,7 +17,7 @@ exports[`<LoginSplashView /> Renders a spinner 1`] = `
       />
     </div>
     <div
-      class="mx_MatrixChat_splashButtons"
+      class="mx_LoginSplashView_splashButtons"
     >
       <div
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
@@ -37,7 +37,7 @@ exports[`<LoginSplashView /> Renders an error message 1`] = `
     class="mx_MatrixChat_splash"
   >
     <div
-      class="mx_MatrixChat_syncError"
+      class="mx_LoginSplashView_syncError"
     >
       <div>
         Unable to connect to Homeserver. Retrying…
@@ -55,7 +55,7 @@ exports[`<LoginSplashView /> Renders an error message 1`] = `
       />
     </div>
     <div
-      class="mx_MatrixChat_splashButtons"
+      class="mx_LoginSplashView_splashButtons"
     >
       <div
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
