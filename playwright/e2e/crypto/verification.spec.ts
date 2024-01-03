@@ -83,6 +83,10 @@ test.describe("Device verification", () => {
         await infoDialog.getByRole("button", { name: "They match" }).click();
         await infoDialog.getByRole("button", { name: "Got it" }).click();
 
+        // After the verification, the new device will request the secret to the existing device
+        // give some time for the request to be sent and received.
+        await page.waitForTimeout(1000);
+
         // Check that our device is now cross-signed
         await checkDeviceIsCrossSigned(app);
 
