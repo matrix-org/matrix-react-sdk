@@ -81,6 +81,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    Threads,
     VoiceAndVideo,
     Moderation,
     Analytics,
@@ -103,6 +104,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Spaces]: _td("labs|group_spaces"),
     [LabGroup.Widgets]: _td("labs|group_widgets"),
     [LabGroup.Rooms]: _td("labs|group_rooms"),
+    [LabGroup.Threads]: _td("labs|group_threads"),
     [LabGroup.VoiceAndVideo]: _td("labs|group_voip"),
     [LabGroup.Moderation]: _td("labs|group_moderation"),
     [LabGroup.Analytics]: _td("common|analytics"),
@@ -1137,6 +1139,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [UIFeature.BulkUnverifiedSessionsReminder]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
+    },
+    "threadActivityCentre": {
+        supportedLevels: LEVELS_FEATURE,
+        isFeature: true,
+        labsGroup: LabGroup.Threads,
+        displayName: _td("labs|thread_activity_centre"),
+        default: false,
     },
 
     // Electron-specific settings, they are stored by Electron and set/read over an IPC.
