@@ -32,6 +32,7 @@ import { Bot } from "../../pages/bot";
 
 test.describe("Device verification", () => {
     let aliceBotClient: Bot;
+    let expectedBackupVersion: string;
 
     test.beforeEach(async ({ page, homeserver, credentials }) => {
         // Visit the login page of the app, to load the matrix sdk
@@ -49,7 +50,10 @@ test.describe("Device verification", () => {
             bootstrapSecretStorage: true,
         });
         aliceBotClient.setCredentials(credentials);
-        await aliceBotClient.prepareClient();
+        const mxClientHandle = await aliceBotClient.prepareClient();
+        expectedBackupVersion = await mxClientHandle.evaluate(async (mxClient) => {
+            return await mxClient.getCrypto()!.getActiveSessionBackupVersion();
+        });
 
         await page.waitForTimeout(20000);
     });
@@ -87,7 +91,7 @@ test.describe("Device verification", () => {
         await checkDeviceIsCrossSigned(app);
 
         // Check that the current device is connected to key backup
-        await checkDeviceIsConnectedKeyBackup(page);
+        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion);
     });
 
     test("Verify device with QR code during login", async ({ page, app, credentials, homeserver }) => {
@@ -130,7 +134,7 @@ test.describe("Device verification", () => {
         await checkDeviceIsCrossSigned(app);
 
         // Check that the current device is connected to key backup
-        await checkDeviceIsConnectedKeyBackup(page);
+        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion);
     });
 
     test("Verify device with Security Phrase during login", async ({ page, app, credentials, homeserver }) => {
@@ -150,7 +154,7 @@ test.describe("Device verification", () => {
         await checkDeviceIsCrossSigned(app);
 
         // Check that the current device is connected to key backup
-        await checkDeviceIsConnectedKeyBackup(page);
+        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion);
     });
 
     test("Verify device with Security Key during login", async ({ page, app, credentials, homeserver }) => {
@@ -172,7 +176,7 @@ test.describe("Device verification", () => {
         await checkDeviceIsCrossSigned(app);
 
         // Check that the current device is connected to key backup
-        await checkDeviceIsConnectedKeyBackup(page);
+        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion);
     });
 
     test("Handle incoming verification request with SAS", async ({ page, credentials, homeserver, toasts }) => {
