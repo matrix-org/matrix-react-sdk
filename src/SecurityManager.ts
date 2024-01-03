@@ -341,22 +341,13 @@ export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Prom
  * @param {Function} [func] An operation to perform once secret storage has been
  * bootstrapped. Optional.
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
- * @param {bool} [setupNewKeyBackup] Force setup a new server side room keys backup even if it's already set up
  */
-export async function accessSecretStorage(
-    func = async (): Promise<void> => {},
-    forceReset = false,
-    setupNewKeyBackup = false,
-): Promise<void> {
-    await withSecretStorageKeyCache(() => doAccessSecretStorage(func, forceReset, setupNewKeyBackup));
+export async function accessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
+    await withSecretStorageKeyCache(() => doAccessSecretStorage(func, forceReset));
 }
 
 /** Helper for {@link #accessSecretStorage} */
-async function doAccessSecretStorage(
-    func: () => Promise<void>,
-    forceReset: boolean,
-    setupNewKeyBackup: boolean,
-): Promise<void> {
+async function doAccessSecretStorage(func: () => Promise<void>, forceReset: boolean): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
         if (!(await cli.hasSecretStorageKey()) || forceReset) {
@@ -407,7 +398,6 @@ async function doAccessSecretStorage(
             });
             await crypto.bootstrapSecretStorage({
                 getKeyBackupPassphrase: promptForBackupPassphrase,
-                setupNewKeyBackup,
             });
 
             const keyId = Object.keys(secretStorageKeys)[0];

@@ -76,23 +76,23 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         });
         const cli = MatrixClientPeg.safeGet();
         try {
-            // We don't want accessSecretStorage to create a backup for us - we
-            // will create one ourselves in the closure we pass in by calling
-            // resetKeyBackup.
-            const setupNewKeyBackup = false;
             const forceReset = false;
+            // Check if 4S already setup
+            const secretStorageAlreadySetup = await cli.hasSecretStorageKey();
 
-            await accessSecretStorage(
-                async (): Promise<void> => {
+            await accessSecretStorage(async (): Promise<void> => {
+                // The first time we create secret storage a backup version is automatically
+                // created, so we don't need to do anything here.
+                // If the user has already created the secret storage, we need to create a new
+                // backup version.
+                if (secretStorageAlreadySetup) {
                     const crypto = cli.getCrypto();
                     if (!crypto) {
                         throw new Error("End-to-end encryption is disabled - unable to create backup.");
                     }
                     await crypto.resetKeyBackup();
-                },
-                forceReset,
-                setupNewKeyBackup,
-            );
+                }
+            }, forceReset);
             this.setState({
                 phase: Phase.Done,
             });
