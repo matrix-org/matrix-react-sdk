@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
-import { accessSecretStorage } from "../../../../SecurityManager";
+import {accessSecretStorage, withSecretStorageKeyCache} from "../../../../SecurityManager";
 import Spinner from "../../../../components/views/elements/Spinner";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
@@ -76,23 +76,28 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         });
         const cli = MatrixClientPeg.safeGet();
         try {
-            const forceReset = false;
             // Check if 4S already setup
             const secretStorageAlreadySetup = await cli.hasSecretStorageKey();
 
-            await accessSecretStorage(async (): Promise<void> => {
-                // The first time we create secret storage a backup version is automatically
-                // created, so we don't need to do anything here.
-                // If the user has already created the secret storage, we need to create a new
-                // backup version.
-                if (secretStorageAlreadySetup) {
-                    const crypto = cli.getCrypto();
-                    if (!crypto) {
-                        throw new Error("End-to-end encryption is disabled - unable to create backup.");
-                    }
-                    await crypto.resetKeyBackup();
-                }
-            }, forceReset);
+            if (!secretStorageAlreadySetup) {
+                // bootstrap secret storage, that will also create a backup version
+                await accessSecretStorage(async (): Promise<void> => {
+                    // do nothing, all is now setup correctly
+                });
+            } else {
+                // Secret storage exists, we need to ensure that we can write to it before
+                // we create a new backup version. It ensures that we can write to it and keep it in sync.
+                await withSecretStorageKeyCache(async () => {
+                    // this is the secret that will need to be updated, ensure that we can access it.
+                    // This will ask the user to enter their passphrase/key.
+                    await cli.secretStorage.get("m.megolm_backup.v1");
+                    // if we get here, we can access the secret storage, so we can create a backup version.
+                    // We don't reset if we can't access the secret storage, as the secret storage will then
+                    // have an outdated secret for backup that future sessions will not be able to use.
+                    await cli.getCrypto()?.resetKeyBackup();
+                });
+            }
+
             this.setState({
                 phase: Phase.Done,
             });
