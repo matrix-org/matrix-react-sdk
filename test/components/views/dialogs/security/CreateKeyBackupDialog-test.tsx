@@ -46,6 +46,7 @@ describe("CreateKeyBackupDialog", () => {
 
         it("should display an error message when backup creation failed", async () => {
             const matrixClient = createTestClient();
+            mocked(matrixClient.hasSecretStorageKey).mockResolvedValue(true);
             mocked(matrixClient.getCrypto()!.resetKeyBackup).mockImplementation(() => {
                 throw new Error("failed");
             });
@@ -60,6 +61,7 @@ describe("CreateKeyBackupDialog", () => {
 
         it("should display an error message when there is no Crypto available", async () => {
             const matrixClient = createTestClient();
+            mocked(matrixClient.hasSecretStorageKey).mockResolvedValue(true);
             mocked(matrixClient.getCrypto).mockReturnValue(undefined);
             MatrixClientPeg.safeGet = MatrixClientPeg.get = () => matrixClient;
 
