@@ -414,6 +414,8 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
         logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
+    } finally {
+        secretStorageBeingAccessed = false;
     }
 }
 
