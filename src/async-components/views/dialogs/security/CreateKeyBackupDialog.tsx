@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
-import {accessSecretStorage, withSecretStorageKeyCache} from "../../../../SecurityManager";
+import { accessSecretStorage, withSecretStorageKeyCache } from "../../../../SecurityManager";
 import Spinner from "../../../../components/views/elements/Spinner";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import DialogButtons from "../../../../components/views/elements/DialogButtons";
@@ -76,7 +76,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         });
         const cli = MatrixClientPeg.safeGet();
         try {
-            // Check if 4S already setup
+            // Check if 4S already set up
             const secretStorageAlreadySetup = await cli.hasSecretStorageKey();
 
             if (!secretStorageAlreadySetup) {
