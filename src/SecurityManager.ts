@@ -343,7 +343,11 @@ export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Prom
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
  */
 export async function accessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
-    secretStorageBeingAccessed = true;
+    await withSecretStorageKeyCache(() => doAccessSecretStorage(func, forceReset));
+}
+
+/** Helper for {@link #accessSecretStorage} */
+export async function doAccessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
         if (!(await cli.hasSecretStorageKey()) || forceReset) {
@@ -414,8 +418,6 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
         logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
-    } finally {
-        secretStorageBeingAccessed = false;
     }
 }
 
