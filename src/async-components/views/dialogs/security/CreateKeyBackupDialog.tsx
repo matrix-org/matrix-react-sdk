@@ -17,7 +17,6 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -75,7 +74,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         this.setState({
             error: undefined,
         });
-        let info: IKeyBackupInfo | undefined;
         const cli = MatrixClientPeg.safeGet();
         try {
             // Check if 4S already set up
@@ -109,9 +107,6 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             // delete the version, disable backup, or do nothing?  If we just
             // disable without deleting, we'll enable on next app reload since
             // it is trusted.
-            if (info?.version) {
-                cli.deleteKeyBackupVersion(info.version);
-            }
             this.setState({
                 error: true,
             });

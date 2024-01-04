@@ -19,11 +19,11 @@ import { type Page } from "@playwright/test";
 import { test, expect } from "../../element-web-test";
 
 async function expectBackupVersionToBe(page: Page, version: string) {
-    const serverVersion = await page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(5) td").textContent();
-    expect(serverVersion.trim()).toBe(version + " (Algorithm: m.megolm_backup.v1.curve25519-aes-sha2)");
+    await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(5) td")).toHaveText(
+        version + " (Algorithm: m.megolm_backup.v1.curve25519-aes-sha2)",
+    );
 
-    const activeVersion = await page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(6) td").textContent();
-    expect(activeVersion.trim()).toBe(version);
+    await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(6) td")).toHaveText(version);
 }
 
 test.describe("Backups", () => {
