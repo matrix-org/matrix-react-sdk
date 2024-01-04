@@ -17,7 +17,7 @@ limitations under the License.
 import { render, RenderResult } from "@testing-library/react";
 import React, { ComponentProps } from "react";
 
-import LoginSplashView from "../../../../src/components/structures/auth/LoginSplashView";
+import { LoginSplashView } from "../../../../src/components/structures/auth/LoginSplashView";
 
 describe("<LoginSplashView />", () => {
     function getComponent(props: Partial<ComponentProps<typeof LoginSplashView>> = {}): RenderResult {

@@ -146,7 +146,7 @@ import { Filter } from "../views/dialogs/spotlight/Filter";
 import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
-import LoginSplashView from "./auth/LoginSplashView";
+import { LoginSplashView } from "./auth/LoginSplashView";
 
 // legacy export
 export { default as Views } from "../../Views";

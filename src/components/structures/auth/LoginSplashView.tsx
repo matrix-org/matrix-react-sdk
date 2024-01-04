@@ -38,8 +38,8 @@ interface Props {
 /**
  * The view that is displayed after we have logged in, before the first /sync is completed.
  */
-export default function LoginSplashView(props: Props): React.JSX.Element {
-    let errorBox;
+export function LoginSplashView(props: Props): React.JSX.Element {
+    let errorBox: React.JSX.Element | undefined;
 
     if (props.syncError) {
         errorBox = <div className="mx_LoginSplashView_syncError">{messageForSyncError(props.syncError)}</div>;
