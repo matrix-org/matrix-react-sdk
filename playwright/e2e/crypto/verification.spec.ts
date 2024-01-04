@@ -32,6 +32,8 @@ import { Bot } from "../../pages/bot";
 
 test.describe("Device verification", () => {
     let aliceBotClient: Bot;
+
+    /** The backup version that was set up by the bot client. */
     let expectedBackupVersion: string;
 
     test.beforeEach(async ({ page, homeserver, credentials }) => {

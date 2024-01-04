@@ -120,19 +120,18 @@ export async function checkDeviceIsConnectedKeyBackup(
     await expect(page.locator(".mx_Dialog").getByRole("button", { name: "Restore from Backup" })).toBeVisible();
 
     // expand the advanced section to see the active version in the reports
-    const summary = page.locator(".mx_SecureBackupPanel_advanced");
-    await summary.locator("..").click();
+    await page.locator(".mx_SecureBackupPanel_advanced").locator("..").click();
 
     if (checkBackupKeyInCache) {
         const cacheDecryptionKeyStatusElement = page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(2) td");
         await expect(cacheDecryptionKeyStatusElement).toHaveText("cached locally, well formed");
     }
 
-    const serverVersion = await page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(5) td").textContent();
-    expect(serverVersion.trim()).toBe(expectedBackupVersion + " (Algorithm: m.megolm_backup.v1.curve25519-aes-sha2)");
+    await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(5) td")).toHaveText(
+        expectedBackupVersion + " (Algorithm: m.megolm_backup.v1.curve25519-aes-sha2)",
+    );
 
-    const activeVersion = await page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(6) td").textContent();
-    expect(activeVersion.trim()).toBe(expectedBackupVersion);
+    await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(6) td")).toHaveText(expectedBackupVersion);
 }
 
 /**
