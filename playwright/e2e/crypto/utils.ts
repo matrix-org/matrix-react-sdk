@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { expect, JSHandle, type Page } from "@playwright/test";
-import { CryptoEvent } from "matrix-js-sdk/src/matrix";
 
 import type { ICreateRoomOpts, MatrixClient } from "matrix-js-sdk/src/matrix";
 import type {
@@ -94,7 +93,8 @@ export async function checkDeviceIsCrossSigned(app: ElementAppPage, expectedMast
                         resolve();
                     }
                 };
-                cli.on(CryptoEvent.UserTrustStatusChanged, onUserTrustStatusChanged);
+                // @ts-ignore
+                cli.on("userTrustStatusChanged", onUserTrustStatusChanged);
             });
         }
 
