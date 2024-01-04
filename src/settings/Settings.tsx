@@ -1144,7 +1144,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_FEATURE,
         isFeature: true,
         labsGroup: LabGroup.Threads,
-        displayName: _td("labs|thread_activity_centre"),
+        displayName: _td("thread_activity_centre|title"),
         default: false,
     },
 
