@@ -19,13 +19,11 @@ import React from "react";
 import { mocked } from "jest-mock";
 
 import CreateKeyBackupDialog from "../../../../../src/async-components/views/dialogs/security/CreateKeyBackupDialog";
-import { createTestClient, filterConsole } from "../../../../test-utils";
+import { createTestClient } from "../../../../test-utils";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 
 jest.mock("../../../../../src/SecurityManager", () => ({
-    accessSecretStorage: async (func = async () => Promise<void>) => {
-        await func();
-    },
+    accessSecretStorage: jest.fn().mockResolvedValue(undefined),
 }));
 
 describe("CreateKeyBackupDialog", () => {
@@ -41,8 +39,10 @@ describe("CreateKeyBackupDialog", () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
-    describe("expecting failure", () => {
-        filterConsole("Error creating key backup");
+    it("should display the error message when backup creation failed", async () => {
+        const matrixClient = createTestClient();
+        mocked(matrixClient.scheduleAllGroupSessionsForBackup).mockRejectedValue("my error");
+        MatrixClientPeg.safeGet = MatrixClientPeg.get = () => matrixClient;
 
         it("should display an error message when backup creation failed", async () => {
             const matrixClient = createTestClient();

@@ -378,12 +378,7 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
                 throw new Error("Secret storage creation canceled");
             }
         } else {
-            const crypto = cli.getCrypto();
-            if (!crypto) {
-                throw new Error("End-to-end encryption is disabled - unable to access secret storage.");
-            }
-
-            await crypto.bootstrapCrossSigning({
+            await cli.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("encryption|bootstrap_title"),
@@ -396,7 +391,7 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
                     }
                 },
             });
-            await crypto.bootstrapSecretStorage({
+            await cli.bootstrapSecretStorage({
                 getKeyBackupPassphrase: promptForBackupPassphrase,
             });
 

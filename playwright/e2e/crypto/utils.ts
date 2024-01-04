@@ -103,34 +103,35 @@ export async function checkDeviceIsCrossSigned(app: ElementAppPage): Promise<voi
 }
 
 /**
- * Check that the current device is connected to the key backup.
+ * Check that the current device is connected to the expected key backup.
+ * Also checks that the decryption key is known and cached locally.
+ *
+ * @param page - the page to check
+ * @param expectedBackupVersion - the version of the backup we expect to be connected to.
+ * @param checkBackupKeyInCache - whether to check that the backup key is cached locally.
  */
-export async function checkDeviceIsConnectedKeyBackup(page: Page) {
+export async function checkDeviceIsConnectedKeyBackup(
+    page: Page,
+    expectedBackupVersion: string,
+    checkBackupKeyInCache: boolean,
+): Promise<void> {
     await page.getByRole("button", { name: "User menu" }).click();
     await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Security & Privacy" }).click();
     await expect(page.locator(".mx_Dialog").getByRole("button", { name: "Restore from Backup" })).toBeVisible();
 
     // expand the advanced section to see the active version in the reports
-    const summary = page.locator(".mx_Dialog .mx_SettingsSubsection_content details .mx_SecureBackupPanel_advanced");
-    await summary.locator("..").click();
+    await page.locator(".mx_SecureBackupPanel_advanced").locator("..").click();
 
-    const decryptionKeyCached = await page
-        .locator(".mx_Dialog .mx_SecureBackupPanel_statusList tr:nth-child(2) td")
-        .textContent();
-    expect(decryptionKeyCached.trim()).toBe("cached locally, well formed");
+    if (checkBackupKeyInCache) {
+        const cacheDecryptionKeyStatusElement = page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(2) td");
+        await expect(cacheDecryptionKeyStatusElement).toHaveText("cached locally, well formed");
+    }
 
-    // when initially setting up the key backup, the server version is 1,
-    // it should not change after that unless explicitly reset
-    const expectedBackupVersion = "1";
-    const serverVersion = await page
-        .locator(".mx_Dialog .mx_SecureBackupPanel_statusList tr:nth-child(5) td")
-        .textContent();
-    expect(serverVersion.trim()).toBe(expectedBackupVersion + " (Algorithm: m.megolm_backup.v1.curve25519-aes-sha2)");
+    await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(5) td")).toHaveText(
+        expectedBackupVersion + " (Algorithm: m.megolm_backup.v1.curve25519-aes-sha2)",
+    );
 
-    const activeVersion = await page
-        .locator(".mx_Dialog .mx_SecureBackupPanel_statusList tr:nth-child(6) td")
-        .textContent();
-    expect(activeVersion.trim()).toBe(expectedBackupVersion);
+    await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(6) td")).toHaveText(expectedBackupVersion);
 }
 
 /**
