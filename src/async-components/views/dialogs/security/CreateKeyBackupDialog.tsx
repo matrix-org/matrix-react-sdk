@@ -88,13 +88,18 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                 // Secret storage exists, we need to ensure that we can write to it before
                 // we create a new backup version. It ensures that we can write to it and keep it in sync.
                 await withSecretStorageKeyCache(async () => {
+                    const crypto = cli.getCrypto();
+                    if (!crypto) {
+                        throw new Error("End-to-end encryption is disabled - unable to create backup.");
+                    }
+
                     // this is the secret that will need to be updated, ensure that we can access it.
                     // This will ask the user to enter their passphrase/key.
                     await cli.secretStorage.get("m.megolm_backup.v1");
                     // if we get here, we can access the secret storage, so we can create a backup version.
                     // We don't reset if we can't access the secret storage, as the secret storage will then
                     // have an outdated secret for backup that future sessions will not be able to use.
-                    await cli.getCrypto()?.resetKeyBackup();
+                    await crypto.resetKeyBackup();
                 });
             }
 

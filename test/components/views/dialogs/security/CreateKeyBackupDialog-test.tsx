@@ -24,6 +24,7 @@ import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";
 
 jest.mock("../../../../../src/SecurityManager", () => ({
     accessSecretStorage: jest.fn().mockResolvedValue(undefined),
+    withSecretStorageKeyCache: jest.fn().mockImplementation((fn) => fn()),
 }));
 
 describe("CreateKeyBackupDialog", () => {

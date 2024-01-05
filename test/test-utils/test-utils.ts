@@ -56,6 +56,7 @@ import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
+import { ServerSideSecretStorage } from "../../../matrix-js-sdk/src/secret-storage";
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
@@ -115,6 +116,10 @@ export function createTestClient(): MatrixClient {
         credentials: { userId: "@userId:matrix.org" },
         bootstrapCrossSigning: jest.fn(),
         hasSecretStorageKey: jest.fn(),
+
+        secretStorage: {
+            get: jest.fn(),
+        } as unknown as ServerSideSecretStorage,
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
