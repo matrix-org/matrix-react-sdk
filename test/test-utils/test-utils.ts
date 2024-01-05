@@ -49,6 +49,7 @@ import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 import { MatrixRTCSessionManager } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
+import { ServerSideSecretStorage } from "matrix-js-sdk/src/secret-storage";
 
 import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
@@ -56,7 +57,6 @@ import { ValidatedServerConfig } from "../../src/utils/ValidatedServerConfig";
 import { EnhancedMap } from "../../src/utils/maps";
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
-import { ServerSideSecretStorage } from "../../../matrix-js-sdk/src/secret-storage";
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
