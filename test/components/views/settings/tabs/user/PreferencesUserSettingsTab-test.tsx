@@ -50,7 +50,11 @@ describe("PreferencesUserSettingsTab", () => {
             jest.resetAllMocks();
         });
 
-        const getToggle = () => renderTab().getByRole("switch", { name: "Send read receipts" });
+        const getToggle = () => {
+            const tab = renderTab();
+            const label = tab.getByText("Send read receipts").parentElement!;
+            return tab.container.querySelector(`#${label.attributes.getNamedItem("for")?.value}`)!;
+        };
 
         const mockIsVersionSupported = (val: boolean) => {
             const client = MatrixClientPeg.safeGet();
