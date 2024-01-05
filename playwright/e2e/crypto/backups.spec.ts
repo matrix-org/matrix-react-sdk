@@ -64,7 +64,7 @@ test.describe("Backups", () => {
 
         // Create another
         await tab.getByRole("button", { name: "Set up", exact: true }).click();
-        dialog.getByLabel("Security Key").fill(securityKey);
+        await dialog.getByLabel("Security Key").fill(securityKey);
         await dialog.getByRole("button", { name: "Continue", exact: true }).click();
         await expect(dialog.getByRole("heading", { name: "Success!" })).toBeVisible();
         await dialog.getByRole("button", { name: "OK", exact: true }).click();
@@ -81,6 +81,29 @@ test.describe("Backups", () => {
 
         await expectBackupVersionToBe(page, "2");
 
-        await page.pause();
+        // ==
+        // Ensure that if you don't have the secret storage passphrase the backup won't be created
+        // ==
+
+        // First delete version 2
+        await tab.getByRole("button", { name: "Delete Backup", exact: true }).click();
+        await dialog.getByTestId("dialog-primary-button").click(); // Click "Delete Backup"
+
+        // Try to create another
+        await tab.getByRole("button", { name: "Set up", exact: true }).click();
+        // But cancel the security key dialog, to simulate not having the secret storage passphrase
+        await dialog.getByTestId("dialog-cancel-button").click();
+
+        const dialog2 = await app.getDialogByTitle("Starting backup…", 60000);
+        // check that it failed
+        await expect(dialog2.getByText("Unable to create key backup")).toBeVisible();
+
+        // cancel
+        await dialog2.getByTestId("dialog-cancel-button").click();
+
+        // go back to the settings to check that no backup was created (the setup button should still be there)
+        const tab2 = await app.settings.openUserSettings("Security & Privacy");
+
+        await expect(tab2.getByRole("button", { name: "Set up", exact: true })).toBeVisible();
     });
 });
