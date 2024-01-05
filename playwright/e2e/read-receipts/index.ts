@@ -68,7 +68,11 @@ export const test = base.extend<{
  * which finds a message and then constructs a reply to it.
  */
 export class MessageBuilder {
-    constructor(private page: Page, private app: ElementAppPage, private helpers: Helpers) {}
+    constructor(
+        private page: Page,
+        private app: ElementAppPage,
+        private helpers: Helpers,
+    ) {}
 
     /**
      * Map of message content -> event.
@@ -334,7 +338,11 @@ export abstract class BotActionSpec {
 export type Message = string | MessageContentSpec | BotActionSpec;
 
 class Helpers {
-    constructor(private page: Page, private app: ElementAppPage, private bot: Bot) {}
+    constructor(
+        private page: Page,
+        private app: ElementAppPage,
+        private bot: Bot,
+    ) {}
 
     /**
      * Use the supplied client to send messages or perform actions as specified by
@@ -589,6 +597,37 @@ class Helpers {
      */
     async receiveMessages(room: string | { name: string }, messages: Message[]) {
         await this.sendMessageAsClient(this.bot, room, messages);
+    }
+
+    /**
+     * Open the room list menu
+     */
+    async toggleRoomListMenu() {
+        const tile = this.getRoomListTile("Rooms");
+        await tile.hover();
+        const button = tile.getByLabel("List options");
+        await button.click();
+    }
+
+    /**
+     * Toggle the `Show rooms with unread messages first` option for the room list
+     */
+    async toggleRoomUnreadOrder() {
+        await this.toggleRoomListMenu();
+        await this.page.getByText("Show rooms with unread messages first").click();
+        // Close contextual menu
+        await this.page.locator(".mx_ContextualMenu_background").click();
+    }
+
+    /**
+     * Assert that the room list is ordered as expected
+     * @param rooms
+     */
+    async assertRoomListOrder(rooms: Array<{ name: string }>) {
+        const roomList = this.page.locator(".mx_RoomTile_title");
+        for (const [i, room] of rooms.entries()) {
+            await expect(roomList.nth(i)).toHaveText(room.name);
+        }
     }
 }
 

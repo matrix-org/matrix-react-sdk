@@ -10,9 +10,13 @@
             "other": "%(count)s unread messages including mentions."
         },
         "room_name": "Room %(name)s",
-        "seek_bar_label": "Audio seek bar",
         "unread_messages": "Unread messages.",
-        "user_menu": "User menu"
+        "user_menu": "User menu",
+        "seek_bar_label": "Audio seek bar",
+        "room_status_bar": "Room status bar",
+        "recent_rooms": "Recent rooms",
+        "message_composer": "Message composer",
+        "emoji_picker": "Emoji picker"
     },
     "a11y_jump_first_unread_room": "Jump to first unread room.",
     "action": {
@@ -1060,8 +1064,11 @@
     "error_app_open_in_another_tab": "Switch to the other tab to connect to %(brand)s. This tab can now be closed.",
     "error_app_open_in_another_tab_title": "%(brand)s is connected in another tab",
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-    "error_database_closed_description": "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
-    "error_database_closed_title": "Database unexpectedly closed",
+    "error_database_closed_description": {
+        "for_desktop": "Your disk may be full. Please clear up some space and reload.",
+        "for_web": "If you cleared browsing data then this message is expected. %(brand)s may also be open in another tab, or your disk is full. Please clear up some space and reload"
+    },
+    "error_database_closed_title": "%(brand)s stopped working",
     "error_dialog": {
         "copy_room_link_failed": {
             "description": "Unable to copy a link to the room to the clipboard.",
@@ -1940,7 +1947,6 @@
             "video_call_ec_layout_spotlight": "Spotlight",
             "video_room_view_chat_button": "View chat timeline"
         },
-        "header_face_pile_tooltip": "Toggle member list",
         "header_untrusted_label": "Untrusted",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
@@ -2058,7 +2064,8 @@
         },
         "view_failed_enable_video_rooms": "To view, please enable video rooms in Labs first",
         "waiting_for_join_subtitle": "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted",
-        "waiting_for_join_title": "Waiting for users to join %(brand)s"
+        "waiting_for_join_title": "Waiting for users to join %(brand)s",
+        "header_face_pile_tooltip": "Toggle member list"
     },
     "room_list": {
         "add_room_label": "Add room",

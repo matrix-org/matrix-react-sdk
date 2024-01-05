@@ -180,11 +180,11 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
     }
 
     return (
-        <aside className="mx_ThreadPanel_empty">
+        <div className="mx_ThreadPanel_empty">
             <div className="mx_ThreadPanel_largeIcon" />
             <h2>{_t("threads|empty_heading")}</h2>
             {body}
-        </aside>
+        </div>
     );
 };
 
@@ -204,7 +204,8 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
-        room?.createThreadsTimelineSets()
+        room
+            ?.createThreadsTimelineSets()
             .then(() => room.fetchRoomThreads())
             .then(() => {
                 setFilterOption(ThreadFilterType.All);
