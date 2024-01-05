@@ -175,66 +175,68 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 <table
                   class="mx_CrossSigningPanel_statusList"
                 >
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Cross-signing public keys:
-                    </th>
-                    <td>
-                      not found
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Cross-signing private keys:
-                    </th>
-                    <td>
-                      not found in storage
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Master private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Self signing private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      User signing private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Homeserver feature support:
-                    </th>
-                    <td>
-                      not found
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Cross-signing public keys:
+                      </th>
+                      <td>
+                        not found
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Cross-signing private keys:
+                      </th>
+                      <td>
+                        not found in storage
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Master private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Self signing private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        User signing private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Homeserver feature support:
+                      </th>
+                      <td>
+                        not found
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </details>
             </div>
@@ -291,6 +293,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_vY7Q4uEh9K38"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -303,6 +306,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   aria-disabled="false"
                   aria-label="Never send encrypted messages to unverified sessions from this session"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  id="mx_SettingsFlag_vY7Q4uEh9K38"
                   role="switch"
                   tabindex="0"
                 >
@@ -368,6 +372,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_QgU2PomxwKpa"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -380,6 +385,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   aria-disabled="false"
                   aria-label="Manually verify all remote sessions"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  id="mx_SettingsFlag_QgU2PomxwKpa"
                   role="switch"
                   tabindex="0"
                 >

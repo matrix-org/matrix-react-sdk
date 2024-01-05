@@ -52,6 +52,16 @@ limitations under the License.
     --dialog-zIndex-standard: calc(var(--dialog-zIndex-standard-background) + 1); /* 4012 */
 }
 
+#matrixchat {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    contain: strict;
+}
+.mx_Dialog_StaticContainer,
+.mx_Dialog_Container {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    isolation: isolate;
+}
+
 /**
  * We need to increase the specificity of the selector to override the
  * custom property set by the design tokens package
@@ -92,7 +102,10 @@ body {
      * `font-feature-settings` allows us to override this behaviour and have the
      * correct ligatures and the proper dynamic metric spacing.
      */
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-feature-settings:
+        "kern" 1,
+        "liga" 1,
+        "calt" 1;
 
     background-color: $background;
     color: $primary-content;
