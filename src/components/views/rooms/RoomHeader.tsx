@@ -228,58 +228,59 @@ export default function RoomHeader({
                     {/* Renders nothing when room is not a video room */}
                     <VideoRoomChatButton room={room} />
 
-                <Tooltip label={_t("common|threads")}>
-                    <IconButton
-                        indicator={notificationColorToIndicator(threadNotifications)}
-                        onClick={(evt) => {
-                            evt.stopPropagation();
-                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
-                            PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
-                        }}
-                        aria-label={_t("common|threads")}
-                    >
-                        <ThreadsIcon />
-                    </IconButton>
-                </Tooltip>
-                {notificationsEnabled && (
-                    <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
+                    <Tooltip label={_t("common|threads")}>
                         <IconButton
-                            indicator={notificationColorToIndicator(globalNotificationState.color)}
+                            indicator={notificationColorToIndicator(threadNotifications)}
                             onClick={(evt) => {
                                 evt.stopPropagation();
-                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.NotificationPanel);
+                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
+                                PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
                             }}
-                            aria-label={_t("notifications|enable_prompt_toast_title")}
+                            aria-label={_t("common|threads")}
                         >
-                            <NotificationsIcon />
+                            <ThreadsIcon />
                         </IconButton>
                     </Tooltip>
+                    {notificationsEnabled && (
+                        <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
+                            <IconButton
+                                indicator={notificationColorToIndicator(globalNotificationState.color)}
+                                onClick={(evt) => {
+                                    evt.stopPropagation();
+                                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.NotificationPanel);
+                                }}
+                                aria-label={_t("notifications|enable_prompt_toast_title")}
+                            >
+                                <NotificationsIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                </Flex>
+                {!isDirectMessage && (
+                    <BodyText
+                        as="div"
+                        size="sm"
+                        weight="medium"
+                        aria-label={_t("common|n_members", { count: memberCount })}
+                        onClick={(e: React.MouseEvent) => {
+                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                            e.stopPropagation();
+                        }}
+                    >
+                        <FacePile
+                            className="mx_RoomHeader_members"
+                            members={members.slice(0, 3)}
+                            size="20px"
+                            overflow={false}
+                            viewUserOnClick={false}
+                            tooltipLabel={_t("room|header_face_pile_tooltip")}
+                        >
+                            {formatCount(memberCount)}
+                        </FacePile>
+                    </BodyText>
                 )}
             </Flex>
-            {!isDirectMessage && (
-                <BodyText
-                    as="div"
-                    size="sm"
-                    weight="medium"
-                    aria-label={_t("common|n_members", { count: memberCount })}
-                    onClick={(e: React.MouseEvent) => {
-                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
-                        e.stopPropagation();
-                    }}
-                >
-                    <FacePile
-                        className="mx_RoomHeader_members"
-                        members={members.slice(0, 3)}
-                        size="20px"
-                        overflow={false}
-                        viewUserOnClick={false}
-                        tooltipLabel={_t("room|header_face_pile_tooltip")}
-                    >
-                        {formatCount(memberCount)}
-                    </FacePile>
-                </BodyText>
-            )}
-        </Flex>{askToJoinEnabled && <RoomKnocksBar room={room} />}
+            {askToJoinEnabled && <RoomKnocksBar room={room} />}
         </>
     );
 }
