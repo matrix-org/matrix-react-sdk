@@ -14,9 +14,9 @@
         "recent_rooms": "Recent rooms",
         "room_name": "Room %(name)s",
         "room_status_bar": "Room status bar",
+        "seek_bar_label": "Audio seek bar",
         "unread_messages": "Unread messages.",
-        "user_menu": "User menu",
-        "seek_bar_label": "Audio seek bar"
+        "user_menu": "User menu"
     },
     "a11y_jump_first_unread_room": "Jump to first unread room.",
     "action": {
@@ -1947,6 +1947,7 @@
             "video_call_ec_layout_spotlight": "Spotlight",
             "video_room_view_chat_button": "View chat timeline"
         },
+        "header_face_pile_tooltip": "Toggle member list",
         "header_untrusted_label": "Untrusted",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
@@ -2064,8 +2065,7 @@
         },
         "view_failed_enable_video_rooms": "To view, please enable video rooms in Labs first",
         "waiting_for_join_subtitle": "Once invited users have joined %(brand)s, you will be able to chat and the room will be end-to-end encrypted",
-        "waiting_for_join_title": "Waiting for users to join %(brand)s",
-        "header_face_pile_tooltip": "Toggle member list"
+        "waiting_for_join_title": "Waiting for users to join %(brand)s"
     },
     "room_list": {
         "add_room_label": "Add room",
