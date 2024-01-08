@@ -68,7 +68,11 @@ export const test = base.extend<{
  * which finds a message and then constructs a reply to it.
  */
 export class MessageBuilder {
-    constructor(private page: Page, private app: ElementAppPage, private helpers: Helpers) {}
+    constructor(
+        private page: Page,
+        private app: ElementAppPage,
+        private helpers: Helpers,
+    ) {}
 
     /**
      * Map of message content -> event.
@@ -155,10 +159,19 @@ export class MessageBuilder {
             public async getContent(room: JSHandle<Room>): Promise<Record<string, unknown>> {
                 const ev = await this.messageFinder.getMessage(room, targetMessage, true);
                 return ev.evaluate((ev, newMessage) => {
+                    const threadRel =
+                        ev.getRelation()?.rel_type === "m.thread"
+                            ? {
+                                  rel_type: "m.thread",
+                                  event_id: ev.getRelation().event_id,
+                              }
+                            : {};
+
                     return {
                         "msgtype": "m.text",
                         "body": newMessage,
                         "m.relates_to": {
+                            ...threadRel,
                             "m.in_reply_to": {
                                 event_id: ev.getId(),
                             },
@@ -325,7 +338,11 @@ export abstract class BotActionSpec {
 export type Message = string | MessageContentSpec | BotActionSpec;
 
 class Helpers {
-    constructor(private page: Page, private app: ElementAppPage, private bot: Bot) {}
+    constructor(
+        private page: Page,
+        private app: ElementAppPage,
+        private bot: Bot,
+    ) {}
 
     /**
      * Use the supplied client to send messages or perform actions as specified by
@@ -359,6 +376,15 @@ class Helpers {
      */
     async goTo(room: string | { name: string }) {
         await this.app.viewRoomByName(typeof room === "string" ? room : room.name);
+    }
+
+    /**
+     * Expand the message with the supplied index in the timeline.
+     * @param index
+     */
+    async openCollapsedMessage(index: number) {
+        const button = this.page.locator(".mx_GenericEventListSummary_toggle");
+        await button.nth(index).click();
     }
 
     /**
@@ -571,6 +597,37 @@ class Helpers {
      */
     async receiveMessages(room: string | { name: string }, messages: Message[]) {
         await this.sendMessageAsClient(this.bot, room, messages);
+    }
+
+    /**
+     * Open the room list menu
+     */
+    async toggleRoomListMenu() {
+        const tile = this.getRoomListTile("Rooms");
+        await tile.hover();
+        const button = tile.getByLabel("List options");
+        await button.click();
+    }
+
+    /**
+     * Toggle the `Show rooms with unread messages first` option for the room list
+     */
+    async toggleRoomUnreadOrder() {
+        await this.toggleRoomListMenu();
+        await this.page.getByText("Show rooms with unread messages first").click();
+        // Close contextual menu
+        await this.page.locator(".mx_ContextualMenu_background").click();
+    }
+
+    /**
+     * Assert that the room list is ordered as expected
+     * @param rooms
+     */
+    async assertRoomListOrder(rooms: Array<{ name: string }>) {
+        const roomList = this.page.locator(".mx_RoomTile_title");
+        for (const [i, room] of rooms.entries()) {
+            await expect(roomList.nth(i)).toHaveText(room.name);
+        }
     }
 }
 

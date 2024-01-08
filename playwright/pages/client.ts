@@ -17,6 +17,7 @@ limitations under the License.
 import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
+import { Network } from "./network";
 import type {
     IContent,
     ICreateRoomOpts,
@@ -34,6 +35,7 @@ import type {
 import { Credentials } from "../plugins/homeserver";
 
 export class Client {
+    public network: Network;
     protected client: JSHandle<MatrixClient>;
 
     protected getClientHandle(): Promise<JSHandle<MatrixClient>> {
@@ -51,6 +53,7 @@ export class Client {
         page.on("framenavigated", async () => {
             this.client = null;
         });
+        this.network = new Network(page, this);
     }
 
     public evaluate<R, Arg, O extends MatrixClient = MatrixClient>(
@@ -104,8 +107,13 @@ export class Client {
      * Send a message into a room
      * @param roomId ID of the room to send the message into
      * @param content the event content to send
+     * @param threadId optional thread id
      */
-    public async sendMessage(roomId: string, content: IContent | string): Promise<ISendEventResponse> {
+    public async sendMessage(
+        roomId: string,
+        content: IContent | string,
+        threadId: string | null = null,
+    ): Promise<ISendEventResponse> {
         if (typeof content === "string") {
             content = {
                 msgtype: "m.text",
@@ -115,12 +123,13 @@ export class Client {
 
         const client = await this.prepareClient();
         return client.evaluate(
-            (client, { roomId, content }) => {
-                return client.sendMessage(roomId, content);
+            (client, { roomId, content, threadId }) => {
+                return client.sendMessage(roomId, threadId, content);
             },
             {
                 roomId,
                 content,
+                threadId,
             },
         );
     }
@@ -132,15 +141,6 @@ export class Client {
             },
             { roomId, eventId, reason },
         );
-    }
-
-    /**
-     * Send a text message into a room
-     * @param roomId ID of the room to send the message into
-     * @param content the event content to send
-     */
-    public async sendTextMessage(roomId: string, message: string): Promise<ISendEventResponse> {
-        return await this.sendMessage(roomId, { msgtype: "m.text", body: message });
     }
 
     /**
@@ -213,6 +213,17 @@ export class Client {
                 roomName,
             },
         );
+    }
+
+    /**
+     * Wait until next sync from this client
+     */
+    public async waitForNextSync(): Promise<void> {
+        await this.page.waitForResponse(async (response) => {
+            const accessToken = await this.evaluate((client) => client.getAccessToken());
+            const authHeader = await response.request().headerValue("authorization");
+            return response.url().includes("/sync") && authHeader.includes(accessToken);
+        });
     }
 
     /**

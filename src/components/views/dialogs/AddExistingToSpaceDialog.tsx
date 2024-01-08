@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, ReactNode, RefObject, useContext, useMemo, useRef, useState } from "react";
+import React, { ReactElement, ReactNode, useContext, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
@@ -144,7 +144,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         [cli, msc3946ProcessDynamicPredecessor],
     );
 
-    const scrollRef = useRef() as RefObject<AutoHideScrollbar<"div">>;
+    const scrollRef = useRef<AutoHideScrollbar<"div">>(null);
     const [scrollState, setScrollState] = useState<IScrollState>({
         // these are estimates which update as soon as it mounts
         scrollTop: 0,
@@ -362,32 +362,31 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
 const defaultRendererFactory =
     (title: TranslationKey): Renderer =>
-    (rooms, selectedToAdd, { scrollTop, height }, onChange) =>
-        (
-            <div className="mx_AddExistingToSpace_section">
-                <h3>{_t(title)}</h3>
-                <LazyRenderList
-                    itemHeight={ROW_HEIGHT}
-                    items={rooms}
-                    scrollTop={scrollTop}
-                    height={height}
-                    renderItem={(room) => (
-                        <Entry
-                            key={room.roomId}
-                            room={room}
-                            checked={selectedToAdd.has(room)}
-                            onChange={
-                                onChange
-                                    ? (checked: boolean) => {
-                                          onChange(checked, room);
-                                      }
-                                    : undefined
-                            }
-                        />
-                    )}
-                />
-            </div>
-        );
+    (rooms, selectedToAdd, { scrollTop, height }, onChange) => (
+        <div className="mx_AddExistingToSpace_section">
+            <h3>{_t(title)}</h3>
+            <LazyRenderList
+                itemHeight={ROW_HEIGHT}
+                items={rooms}
+                scrollTop={scrollTop}
+                height={height}
+                renderItem={(room) => (
+                    <Entry
+                        key={room.roomId}
+                        room={room}
+                        checked={selectedToAdd.has(room)}
+                        onChange={
+                            onChange
+                                ? (checked: boolean) => {
+                                      onChange(checked, room);
+                                  }
+                                : undefined
+                        }
+                    />
+                )}
+            />
+        </div>
+    );
 
 export const defaultRoomsRenderer = defaultRendererFactory(_td("common|rooms"));
 export const defaultSpacesRenderer = defaultRendererFactory(_td("common|spaces"));

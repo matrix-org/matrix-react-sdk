@@ -389,7 +389,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
     let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{title}</div>;
     if (canShowMainMenu) {
         const commonProps = {
-            inputRef: mainMenuHandle,
+            ref: mainMenuHandle,
             onClick: openMainMenu,
             isExpanded: mainMenuDisplayed,
             className: "mx_RoomListHeader_contextMenuButton",
@@ -409,7 +409,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
     }
 
     return (
-        <div className="mx_RoomListHeader">
+        <aside className="mx_RoomListHeader" aria-label={_t("room|context_menu|title")}>
             {contextMenuButton}
             {pendingActionSummary ? (
                 <TooltipTarget label={pendingActionSummary}>
@@ -418,7 +418,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
             ) : null}
             {canShowPlusMenu && (
                 <ContextMenuTooltipButton
-                    inputRef={plusMenuHandle}
+                    ref={plusMenuHandle}
                     onClick={openPlusMenu}
                     isExpanded={plusMenuDisplayed}
                     className="mx_RoomListHeader_plusButton"
@@ -427,7 +427,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
             )}
 
             {contextMenu}
-        </div>
+        </aside>
     );
 };
 

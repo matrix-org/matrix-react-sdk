@@ -18,6 +18,7 @@ import { type Locator, type Page, expect } from "@playwright/test";
 
 import { Settings } from "./settings";
 import { Client } from "./client";
+import { Timeline } from "./timeline";
 import { Spotlight } from "./Spotlight";
 
 export class ElementAppPage {
@@ -25,6 +26,7 @@ export class ElementAppPage {
 
     public settings = new Settings(this.page);
     public client: Client = new Client(this.page);
+    public timeline: Timeline = new Timeline(this.page);
 
     /**
      * Open the top left user menu, returning a Locator to the resulting context menu.
@@ -47,19 +49,6 @@ export class ElementAppPage {
      */
     public async closeDialog(): Promise<void> {
         return this.settings.closeDialog();
-    }
-
-    public async getClipboard(): Promise<string> {
-        return await this.page.evaluate(() => navigator.clipboard.readText());
-    }
-
-    /**
-     * Find an open dialog by its title
-     */
-    public async getDialogByTitle(title: string, timeout = 5000): Promise<Locator> {
-        const dialog = this.page.locator(".mx_Dialog");
-        await dialog.getByRole("heading", { name: title }).waitFor({ timeout });
-        return dialog;
     }
 
     /**
@@ -160,11 +149,5 @@ export class ElementAppPage {
         const spotlight = new Spotlight(this.page);
         await spotlight.open();
         return spotlight;
-    }
-
-    public async scrollToBottom(page: Page): Promise<void> {
-        await page
-            .locator(".mx_ScrollPanel")
-            .evaluate((scrollPanel) => scrollPanel.scrollTo(0, scrollPanel.scrollHeight));
     }
 }
