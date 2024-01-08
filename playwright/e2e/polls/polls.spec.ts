@@ -103,8 +103,7 @@ test.describe("Polls", () => {
 
     test("should be creatable and votable", async ({ page, app, bot, user }) => {
         const roomId: string = await app.client.createRoom({});
-        const botUserId = await bot.evaluate((bot) => bot.getUserId());
-        await app.client.inviteUser(roomId, botUserId);
+        await app.client.inviteUser(roomId, bot.credentials.userId);
         await page.goto("/#/room/" + roomId);
         // wait until Bob joined
         await expect(page.getByText("BotBob joined the room")).toBeAttached();
@@ -164,8 +163,7 @@ test.describe("Polls", () => {
 
     test("should be editable from context menu if no votes have been cast", async ({ page, app, user, bot }) => {
         const roomId: string = await app.client.createRoom({});
-        const botUserId = await bot.evaluate((bot) => bot.getUserId());
-        await app.client.inviteUser(roomId, botUserId);
+        await app.client.inviteUser(roomId, bot.credentials.userId);
         await page.goto("/#/room/" + roomId);
 
         const locator = await app.openMessageComposerOptions();
