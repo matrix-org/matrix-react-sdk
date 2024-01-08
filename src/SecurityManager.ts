@@ -350,7 +350,7 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
 async function doAccessSecretStorage(func: () => Promise<void>, forceReset: boolean): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
-        if (!(await cli.hasSecretStorageKey()) || forceReset) {
+        if (!(await cli.secretStorage.hasKey()) || forceReset) {
             // This dialog calls bootstrap itself after guiding the user through
             // passphrase creation.
             const { finished } = Modal.createDialogAsync(
