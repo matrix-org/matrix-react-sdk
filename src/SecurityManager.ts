@@ -350,31 +350,11 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
 async function doAccessSecretStorage(func: () => Promise<void>, forceReset: boolean): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
-        if (!(await cli.secretStorage.hasKey()) || forceReset) {
-            // This dialog calls bootstrap itself after guiding the user through
-            // passphrase creation.
-            const { finished } = Modal.createDialogAsync(
-                import("./async-components/views/dialogs/security/CreateSecretStorageDialog") as unknown as Promise<
-                    typeof CreateSecretStorageDialog
-                >,
-                {
-                    forceReset,
-                },
-                undefined,
-                /* priority = */ false,
-                /* static = */ true,
-                /* options = */ {
-                    onBeforeClose: async (reason): Promise<boolean> => {
-                        // If Secure Backup is required, you cannot leave the modal.
-                        if (reason === "backgroundClick") {
-                            return !isSecureBackupRequired(cli);
-                        }
-                        return true;
-                    },
-                },
-            );
-            const [confirmed] = await finished;
-            if (!confirmed) {
+        const isSecretStorageConfigured = await cli.secretStorage.hasKey();
+        const shouldCreateSecretStorage = !isSecretStorageConfigured || forceReset;
+        if (shouldCreateSecretStorage) {
+            const created = await performSecretStorageCreationFlow(cli, forceReset);
+            if (!created) {
                 throw new Error("Secret storage creation canceled");
             }
         } else {
@@ -400,19 +380,7 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
                 getKeyBackupPassphrase: promptForBackupPassphrase,
             });
 
-            const keyId = Object.keys(secretStorageKeys)[0];
-            if (keyId && SettingsStore.getValue("feature_dehydration")) {
-                let dehydrationKeyInfo = {};
-                if (secretStorageKeyInfo[keyId] && secretStorageKeyInfo[keyId].passphrase) {
-                    dehydrationKeyInfo = { passphrase: secretStorageKeyInfo[keyId].passphrase };
-                }
-                logger.log("Setting dehydration key");
-                await cli.setDehydrationKey(secretStorageKeys[keyId], dehydrationKeyInfo, "Backup device");
-            } else if (!keyId) {
-                logger.warn("Not setting dehydration key: no SSSS key found");
-            } else {
-                logger.log("Not setting dehydration key: feature disabled");
-            }
+            await handleDeviceDehydration(cli);
         }
 
         // `return await` needed here to ensure `finally` block runs after the
@@ -423,6 +391,56 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
         logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
+    }
+}
+
+/**
+ * Opens the CreateSecretStorageDialog and returns whether the user completed the flow.
+ * This will create the secret storage then bootstrap cross-signing and backup if needed.
+ *
+ * @param {MatrixClient} cli The client to use for the operation.
+ * @param {bool} forceReset Reset secret storage even if it's already set up
+ */
+async function performSecretStorageCreationFlow(cli: MatrixClient, forceReset: boolean): Promise<boolean | undefined> {
+    // This dialog calls bootstrap itself after guiding the user through
+    // passphrase creation.
+    const { finished } = Modal.createDialogAsync(
+        import("./async-components/views/dialogs/security/CreateSecretStorageDialog") as unknown as Promise<
+            typeof CreateSecretStorageDialog
+        >,
+        {
+            forceReset,
+        },
+        undefined,
+        /* priority = */ false,
+        /* static = */ true,
+        /* options = */ {
+            onBeforeClose: async (reason): Promise<boolean> => {
+                // If Secure Backup is required, you cannot leave the modal.
+                if (reason === "backgroundClick") {
+                    return !isSecureBackupRequired(cli);
+                }
+                return true;
+            },
+        },
+    );
+    const [confirmed] = await finished;
+    return confirmed;
+}
+
+async function handleDeviceDehydration(cli: MatrixClient): Promise<void> {
+    const keyId = Object.keys(secretStorageKeys)[0];
+    if (keyId && SettingsStore.getValue("feature_dehydration")) {
+        let dehydrationKeyInfo = {};
+        if (secretStorageKeyInfo[keyId] && secretStorageKeyInfo[keyId].passphrase) {
+            dehydrationKeyInfo = { passphrase: secretStorageKeyInfo[keyId].passphrase };
+        }
+        logger.log("Setting dehydration key");
+        await cli.setDehydrationKey(secretStorageKeys[keyId], dehydrationKeyInfo, "Backup device");
+    } else if (!keyId) {
+        logger.warn("Not setting dehydration key: no SSSS key found");
+    } else {
+        logger.log("Not setting dehydration key: feature disabled");
     }
 }
 
