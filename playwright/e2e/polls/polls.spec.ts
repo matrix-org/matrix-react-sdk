@@ -257,14 +257,13 @@ test.describe("Polls", () => {
             .getAttribute("data-scroll-tokens");
 
         // Bob starts thread on the poll
-        await bot.evaluate(
-            (client, { pollId, roomId }) => {
-                client.sendMessage(roomId, pollId, {
-                    body: "Hello there",
-                    msgtype: "m.text",
-                });
+        await bot.sendMessage(
+            roomId,
+            {
+                body: "Hello there",
+                msgtype: "m.text",
             },
-            { pollId, roomId },
+            pollId,
         );
 
         // open the thread summary
