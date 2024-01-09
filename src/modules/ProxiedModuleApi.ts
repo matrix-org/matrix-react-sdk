@@ -218,4 +218,8 @@ export class ProxiedModuleApi implements ModuleApi {
         if (!maybeObj || !(typeof maybeObj === "object")) return undefined;
         return maybeObj[key];
     }
+
+    public getUserId(): string | undefined {
+        return MatrixClientPeg.get()?.getUserId() ?? undefined;
+    }
 }
