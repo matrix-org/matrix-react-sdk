@@ -80,13 +80,11 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
             const secretStorageAlreadySetup = await cli.hasSecretStorageKey();
 
             if (!secretStorageAlreadySetup) {
-                // bootstrap secret storage, that will also create a backup version
+                // bootstrap secret storage; that will also create a backup version
                 await accessSecretStorage(async (): Promise<void> => {
-                    // do nothing, all is now setup correctly
+                    // do nothing, all is now set up correctly
                 });
             } else {
-                // Secret storage exists, we need to ensure that we can write to it before
-                // we create a new backup version. It ensures that we can write to it and keep it in sync.
                 await withSecretStorageKeyCache(async () => {
                     const crypto = cli.getCrypto();
                     if (!crypto) {
