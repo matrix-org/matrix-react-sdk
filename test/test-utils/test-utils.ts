@@ -49,7 +49,6 @@ import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 import { MatrixRTCSessionManager } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
-import { ServerSideSecretStorage } from "matrix-js-sdk/src/secret-storage";
 
 import type { GroupCall } from "matrix-js-sdk/src/matrix";
 import { MatrixClientPeg as peg } from "../../src/MatrixClientPeg";
@@ -119,7 +118,7 @@ export function createTestClient(): MatrixClient {
 
         secretStorage: {
             get: jest.fn(),
-        } as unknown as ServerSideSecretStorage,
+        },
 
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
