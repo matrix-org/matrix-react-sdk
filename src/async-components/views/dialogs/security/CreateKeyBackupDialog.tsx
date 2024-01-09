@@ -93,12 +93,15 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
                         throw new Error("End-to-end encryption is disabled - unable to create backup.");
                     }
 
-                    // this is the secret that will need to be updated, ensure that we can access it.
-                    // This will ask the user to enter their passphrase/key.
+                    // Before we reset the backup, let's make sure we can access secret storage, to
+                    // reduce the chance of us getting into a broken state where we have an outdated
+                    // secret in secret storage.
+                    // `SecretStorage.get` will ask the user to enter their passphrase/key if necessary;
+                    // it will then be cached for the actual backup reset operation.
                     await cli.secretStorage.get("m.megolm_backup.v1");
-                    // if we get here, we can access the secret storage, so we can create a backup version.
-                    // We don't reset if we can't access the secret storage, as the secret storage will then
-                    // have an outdated secret for backup that future sessions will not be able to use.
+
+                    // We now know we can store the new backup key in secret storage, so it is safe to
+                    // go ahead with the reset.
                     await crypto.resetKeyBackup();
                 });
             }
