@@ -16,6 +16,7 @@ limitations under the License.
 
 import { EventType, RoomType, Room, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
 import React, { useContext, useEffect, useState } from "react";
+import { Tooltip } from "@vector-im/compound-web";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
@@ -57,7 +58,6 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import InlineSpinner from "../elements/InlineSpinner";
-import TooltipTarget from "../elements/TooltipTarget";
 import { HomeButtonContextMenu } from "../spaces/SpacePanel";
 
 const contextMenuBelow = (elementRect: DOMRect): MenuProps => {
@@ -389,7 +389,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
     let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{title}</div>;
     if (canShowMainMenu) {
         const commonProps = {
-            inputRef: mainMenuHandle,
+            ref: mainMenuHandle,
             onClick: openMainMenu,
             isExpanded: mainMenuDisplayed,
             className: "mx_RoomListHeader_contextMenuButton",
@@ -409,16 +409,16 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
     }
 
     return (
-        <div className="mx_RoomListHeader">
+        <aside className="mx_RoomListHeader" aria-label={_t("room|context_menu|title")}>
             {contextMenuButton}
             {pendingActionSummary ? (
-                <TooltipTarget label={pendingActionSummary}>
+                <Tooltip label={pendingActionSummary} isTriggerInteractive={false}>
                     <InlineSpinner />
-                </TooltipTarget>
+                </Tooltip>
             ) : null}
             {canShowPlusMenu && (
                 <ContextMenuTooltipButton
-                    inputRef={plusMenuHandle}
+                    ref={plusMenuHandle}
                     onClick={openPlusMenu}
                     isExpanded={plusMenuDisplayed}
                     className="mx_RoomListHeader_plusButton"
@@ -427,7 +427,7 @@ const RoomListHeader: React.FC<IProps> = ({ onVisibilityChange }) => {
             )}
 
             {contextMenu}
-        </div>
+        </aside>
     );
 };
 

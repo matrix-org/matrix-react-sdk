@@ -16,7 +16,15 @@ limitations under the License.
 
 import React from "react";
 import { CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
-import { EventType, JoinRule, MatrixClient, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
+import {
+    EventType,
+    JoinRule,
+    MatrixClient,
+    MatrixEvent,
+    PendingEventOrdering,
+    Room,
+    RoomMember,
+} from "matrix-js-sdk/src/matrix";
 import {
     createEvent,
     fireEvent,
@@ -238,7 +246,7 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
             for (const button of getAllByLabelText(container, "There's no one here to call")) {
-                expect(button).toBeDisabled();
+                expect(button).toHaveAttribute("aria-disabled", "true");
             }
         });
 
@@ -250,8 +258,8 @@ describe("RoomHeader", () => {
             );
             const voiceButton = getByLabelText(container, "Voice call");
             const videoButton = getByLabelText(container, "Video call");
-            expect(voiceButton).not.toBeDisabled();
-            expect(videoButton).not.toBeDisabled();
+            expect(voiceButton).not.toHaveAttribute("aria-disabled", "true");
+            expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
 
             const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
 
@@ -273,7 +281,7 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
             for (const button of getAllByLabelText(container, "Ongoing call")) {
-                expect(button).toBeDisabled();
+                expect(button).toHaveAttribute("aria-disabled", "true");
             }
         });
 
@@ -285,8 +293,8 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
 
-            expect(getByLabelText(container, "Voice call")).not.toBeDisabled();
-            expect(getByLabelText(container, "Video call")).not.toBeDisabled();
+            expect(getByLabelText(container, "Voice call")).not.toHaveAttribute("aria-disabled", "true");
+            expect(getByLabelText(container, "Video call")).not.toHaveAttribute("aria-disabled", "true");
         });
 
         it("disable calls in large rooms by default", () => {
@@ -298,10 +306,10 @@ describe("RoomHeader", () => {
             );
             expect(
                 getByLabelText(container, "You do not have permission to start voice calls", { selector: "button" }),
-            ).toBeDisabled();
+            ).toHaveAttribute("aria-disabled", "true");
             expect(
                 getByLabelText(container, "You do not have permission to start video calls", { selector: "button" }),
-            ).toBeDisabled();
+            ).toHaveAttribute("aria-disabled", "true");
         });
     });
 
@@ -324,7 +332,7 @@ describe("RoomHeader", () => {
             expect(screen.queryByTitle("Voice call")).toBeNull();
 
             const videoCallButton = getByLabelText(container, "Video call");
-            expect(videoCallButton).not.toBeDisabled();
+            expect(videoCallButton).not.toHaveAttribute("aria-disabled", "true");
 
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
 
@@ -345,7 +353,7 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            expect(getByLabelText(container, "Ongoing call")).toBeDisabled();
+            expect(getByLabelText(container, "Ongoing call")).toHaveAttribute("aria-disabled", "true");
         });
 
         it("clicking on ongoing (unpinned) call re-pins it", () => {
@@ -362,7 +370,7 @@ describe("RoomHeader", () => {
                 <RoomHeader room={room} />,
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
-            expect(getByLabelText(container, "Video call")).not.toBeDisabled();
+            expect(getByLabelText(container, "Video call")).not.toHaveAttribute("aria-disabled", "true");
             fireEvent.click(getByLabelText(container, "Video call"));
             expect(spy).toHaveBeenCalledWith(room, widget, Container.Top);
         });
@@ -378,7 +386,7 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
             for (const button of getAllByLabelText(container, "Ongoing call")) {
-                expect(button).toBeDisabled();
+                expect(button).toHaveAttribute("aria-disabled", "true");
             }
         });
 
@@ -389,7 +397,7 @@ describe("RoomHeader", () => {
                 withClientContextRenderOptions(MatrixClientPeg.get()!),
             );
             for (const button of getAllByLabelText(container, "There's no one here to call")) {
-                expect(button).toBeDisabled();
+                expect(button).toHaveAttribute("aria-disabled", "true");
             }
         });
 
@@ -402,8 +410,8 @@ describe("RoomHeader", () => {
 
             const voiceButton = getByLabelText(container, "Voice call");
             const videoButton = getByLabelText(container, "Video call");
-            expect(voiceButton).not.toBeDisabled();
-            expect(videoButton).not.toBeDisabled();
+            expect(voiceButton).not.toHaveAttribute("aria-disabled", "true");
+            expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
 
             const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
             fireEvent.click(voiceButton);
@@ -428,8 +436,8 @@ describe("RoomHeader", () => {
 
             const voiceButton = getByLabelText(container, "Voice call");
             const videoButton = getByLabelText(container, "Video call");
-            expect(voiceButton).not.toBeDisabled();
-            expect(videoButton).not.toBeDisabled();
+            expect(voiceButton).not.toHaveAttribute("aria-disabled", "true");
+            expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
 
             const placeCallSpy = jest.spyOn(LegacyCallHandler.instance, "placeCall");
             fireEvent.click(voiceButton);
@@ -455,8 +463,8 @@ describe("RoomHeader", () => {
 
             const voiceButton = getByLabelText(container, "Voice call");
             const videoButton = getByLabelText(container, "Video call");
-            expect(voiceButton).not.toBeDisabled();
-            expect(videoButton).not.toBeDisabled();
+            expect(voiceButton).not.toHaveAttribute("aria-disabled", "true");
+            expect(videoButton).not.toHaveAttribute("aria-disabled", "true");
 
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
             fireEvent.click(videoButton);
@@ -561,6 +569,25 @@ describe("RoomHeader", () => {
 
         expect(callback).toHaveBeenCalled();
         expect(event.stopPropagation).toHaveBeenCalled();
+    });
+
+    describe("ask to join disabled", () => {
+        it("does not render the RoomKnocksBar", () => {
+            render(<RoomHeader room={room} />, withClientContextRenderOptions(MatrixClientPeg.get()!));
+            expect(screen.queryByRole("heading", { name: "Asking to join" })).not.toBeInTheDocument();
+        });
+    });
+
+    describe("ask to join enabled", () => {
+        it("does render the RoomKnocksBar", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_ask_to_join");
+            jest.spyOn(room, "canInvite").mockReturnValue(true);
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+            jest.spyOn(room, "getMembersWithMembership").mockReturnValue([new RoomMember(room.roomId, "@foo")]);
+
+            render(<RoomHeader room={room} />, withClientContextRenderOptions(MatrixClientPeg.get()!));
+            expect(screen.getByRole("heading", { name: "Asking to join" })).toBeInTheDocument();
+        });
     });
 });
 

@@ -19,7 +19,7 @@ import { uniqueId } from "lodash";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import type { Logger } from "matrix-js-sdk/src/logger";
-import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
+import type { SecretStorageKeyDescription } from "matrix-js-sdk/src/secret-storage";
 import type { Credentials, HomeserverInstance } from "../plugins/homeserver";
 import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
 import { Client } from "./client";
@@ -68,7 +68,11 @@ export class Bot extends Client {
     public credentials?: Credentials;
     private handlePromise: Promise<JSHandle<ExtendedMatrixClient>>;
 
-    constructor(page: Page, private homeserver: HomeserverInstance, private readonly opts: CreateBotOpts) {
+    constructor(
+        page: Page,
+        private homeserver: HomeserverInstance,
+        private readonly opts: CreateBotOpts,
+    ) {
         super(page);
         this.opts = Object.assign({}, defaultCreateBotOptions, opts);
     }
@@ -139,7 +143,11 @@ export class Bot extends Client {
 
                 // Store the cached secret storage key and return it when `getSecretStorageKey` is called
                 let cachedKey: { keyId: string; key: Uint8Array };
-                const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
+                const cacheSecretStorageKey = (
+                    keyId: string,
+                    keyInfo: SecretStorageKeyDescription,
+                    key: Uint8Array,
+                ) => {
                     cachedKey = {
                         keyId,
                         key,
@@ -189,6 +197,10 @@ export class Bot extends Client {
                 await cli.startClient();
 
                 if (opts.bootstrapCrossSigning) {
+                    // XXX: workaround https://github.com/element-hq/element-web/issues/26755
+                    //   wait for out device list to be available, as a proxy for the device keys having been uploaded.
+                    await cli.getCrypto()!.getUserDeviceInfo([credentials.userId]);
+
                     await cli.getCrypto()!.bootstrapCrossSigning({
                         authUploadDeviceSigningKeys: async (func) => {
                             await func({

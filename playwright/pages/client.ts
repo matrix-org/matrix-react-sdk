@@ -17,6 +17,7 @@ limitations under the License.
 import { JSHandle, Page } from "@playwright/test";
 import { PageFunctionOn } from "playwright-core/types/structs";
 
+import { Network } from "./network";
 import type {
     IContent,
     ICreateRoomOpts,
@@ -28,10 +29,13 @@ import type {
     IRoomDirectoryOptions,
     KnockRoomOpts,
     Visibility,
+    UploadOpts,
+    Upload,
 } from "matrix-js-sdk/src/matrix";
 import { Credentials } from "../plugins/homeserver";
 
 export class Client {
+    public network: Network;
     protected client: JSHandle<MatrixClient>;
 
     protected getClientHandle(): Promise<JSHandle<MatrixClient>> {
@@ -49,6 +53,7 @@ export class Client {
         page.on("framenavigated", async () => {
             this.client = null;
         });
+        this.network = new Network(page, this);
     }
 
     public evaluate<R, Arg, O extends MatrixClient = MatrixClient>(
@@ -99,11 +104,16 @@ export class Client {
     }
 
     /**
-     * Send a message as a bot into a room
+     * Send a message into a room
      * @param roomId ID of the room to send the message into
      * @param content the event content to send
+     * @param threadId optional thread id
      */
-    public async sendMessage(roomId: string, content: IContent | string): Promise<ISendEventResponse> {
+    public async sendMessage(
+        roomId: string,
+        content: IContent | string,
+        threadId: string | null = null,
+    ): Promise<ISendEventResponse> {
         if (typeof content === "string") {
             content = {
                 msgtype: "m.text",
@@ -113,12 +123,13 @@ export class Client {
 
         const client = await this.prepareClient();
         return client.evaluate(
-            (client, { roomId, content }) => {
-                return client.sendMessage(roomId, content);
+            (client, { roomId, content, threadId }) => {
+                return client.sendMessage(roomId, threadId, content);
             },
             {
                 roomId,
                 content,
+                threadId,
             },
         );
     }
@@ -202,6 +213,17 @@ export class Client {
                 roomName,
             },
         );
+    }
+
+    /**
+     * Wait until next sync from this client
+     */
+    public async waitForNextSync(): Promise<void> {
+        await this.page.waitForResponse(async (response) => {
+            const accessToken = await this.evaluate((client) => client.getAccessToken());
+            const authHeader = await response.request().headerValue("authorization");
+            return response.url().includes("/sync") && authHeader.includes(accessToken);
+        });
     }
 
     /**
@@ -294,6 +316,46 @@ export class Client {
     }
 
     /**
+     * @param {string} name
+     * @param {module:client.callback} callback Optional.
+     * @return {Promise} Resolves: {} an empty object.
+     * @return {module:http-api.MatrixError} Rejects: with an error response.
+     */
+    public async setDisplayName(name: string): Promise<{}> {
+        const client = await this.prepareClient();
+        return client.evaluate(async (cli: MatrixClient, name) => cli.setDisplayName(name), name);
+    }
+
+    /**
+     * @param {string} url
+     * @param {module:client.callback} callback Optional.
+     * @return {Promise} Resolves: {} an empty object.
+     * @return {module:http-api.MatrixError} Rejects: with an error response.
+     */
+    public async setAvatarUrl(url: string): Promise<{}> {
+        const client = await this.prepareClient();
+        return client.evaluate(async (cli: MatrixClient, url) => cli.setAvatarUrl(url), url);
+    }
+
+    /**
+     * Upload a file to the media repository on the homeserver.
+     *
+     * @param {object} file The object to upload. On a browser, something that
+     *   can be sent to XMLHttpRequest.send (typically a File).  Under node.js,
+     *   a Buffer, String or ReadStream.
+     */
+    public async uploadContent(file: Buffer, opts?: UploadOpts): Promise<Awaited<Upload["promise"]>> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (cli: MatrixClient, { file, opts }) => cli.uploadContent(new Uint8Array(file), opts),
+            {
+                file: [...file],
+                opts,
+            },
+        );
+    }
+
+    /**
      * Boostraps cross-signing.
      */
     public async bootstrapCrossSigning(credentials: Credentials): Promise<void> {
@@ -312,6 +374,54 @@ export class Client {
                 },
             });
         }, credentials);
+    }
+
+    /**
+     * Sets account data for the user.
+     * @param type The type of account data to set
+     * @param content The content to set
+     */
+    public async setAccountData(type: string, content: IContent): Promise<void> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (client, { type, content }) => {
+                await client.setAccountData(type, content);
+            },
+            { type, content },
+        );
+    }
+
+    /**
+     * Sends a state event into the room.
+     * @param roomId ID of the room to send the event into
+     * @param eventType type of event to send
+     * @param content the event content to send
+     * @param stateKey the state key to use
+     */
+    public async sendStateEvent(
+        roomId: string,
+        eventType: string,
+        content: IContent,
+        stateKey?: string,
+    ): Promise<ISendEventResponse> {
+        const client = await this.prepareClient();
+        return client.evaluate(
+            async (client, { roomId, eventType, content, stateKey }) => {
+                return client.sendStateEvent(roomId, eventType, content, stateKey);
+            },
+            { roomId, eventType, content, stateKey },
+        );
+    }
+
+    /**
+     * Leaves the given room.
+     * @param roomId ID of the room to leave
+     */
+    public async leave(roomId: string): Promise<void> {
+        const client = await this.prepareClient();
+        return client.evaluate(async (client, roomId) => {
+            await client.leave(roomId);
+        }, roomId);
     }
 
     /**
