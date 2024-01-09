@@ -504,6 +504,10 @@ export default class SettingsStore {
      * level for a particular room. The room ID is optional if the setting is not being
      * set for a particular room, otherwise it should be supplied.
      *
+     * This takes into account both the value of {@link SettingController#settingDisabled} of the
+     * `SettingController`, if any; and, for settings where {@link IBaseSetting#configDisablesSetting} is true,
+     * whether the setting has been given a value in `config.json`.
+     *
      * Typically, if the user cannot set the setting, it should be hidden, to declutter the UI;
      * however some settings (typically, the labs flags) are exposed but greyed out, to unveil
      * what features are available with the right server support.
@@ -525,7 +529,7 @@ export default class SettingsStore {
         }
 
         // When non-beta features are specified in the config.json, we force them as enabled or disabled.
-        if (SettingsStore.isFeature(settingName) && !SETTINGS[settingName]?.betaInfo) {
+        if (SETTINGS[settingName]?.configDisablesSetting) {
             const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
             if (configVal === true || configVal === false) return false;
         }
