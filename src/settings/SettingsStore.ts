@@ -321,19 +321,6 @@ export default class SettingsStore {
     }
 
     /**
-     * Determines if a setting is enabled.
-     * If a setting is disabled then it should normally be hidden from the user to de-clutter the user interface.
-     * This rule is intentionally ignored for labs flags to unveil what features are available with
-     * the right server support.
-     * @param {string} settingName The setting to look up.
-     * @return {boolean} True if the setting is enabled.
-     */
-    public static isEnabled(settingName: string): boolean {
-        if (!SETTINGS[settingName]) return false;
-        return !SETTINGS[settingName].controller?.settingDisabled ?? true;
-    }
-
-    /**
      * Retrieves the reason a setting is disabled if one is assigned.
      * If a setting is not disabled, or no reason is given by the `SettingController`,
      * this will return undefined.
@@ -516,6 +503,11 @@ export default class SettingsStore {
      * Determines if the current user is permitted to set the given setting at the given
      * level for a particular room. The room ID is optional if the setting is not being
      * set for a particular room, otherwise it should be supplied.
+     *
+     * Typically, if the user cannot set the setting, it should be hidden, to declutter the UI;
+     * however some settings (typically, the labs flags) are exposed but greyed out, to unveil
+     * what features are available with the right server support.
+     *
      * @param {string} settingName The name of the setting to check.
      * @param {String} roomId The room ID to check in, may be null.
      * @param {SettingLevel} level The level to
