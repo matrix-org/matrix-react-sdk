@@ -528,7 +528,7 @@ export default class SettingsStore {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
         }
 
-        if (!SettingsStore.isEnabled(settingName)) {
+        if (SETTINGS[settingName].controller?.settingDisabled) {
             return false;
         }
 
