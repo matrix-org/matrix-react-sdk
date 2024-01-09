@@ -36,22 +36,26 @@ test.describe("Backups", () => {
         const tab = await app.settings.openUserSettings("Security & Privacy");
 
         await expect(tab.getByRole("heading", { name: "Secure Backup" })).toBeVisible();
+
+        let securityKey = "";
+
+        const currentDialogLocator = page.locator(".mx_Dialog");
+
         await tab.getByRole("button", { name: "Set up", exact: true }).click();
-        const dialog = page.locator(".mx_Dialog");
 
         // It's the first time and secure storage not setup, so it will create one
-        await expect(dialog.getByRole("heading", { name: "Set up Secure Backup" })).toBeVisible();
-        await dialog.getByRole("button", { name: "Continue", exact: true }).click();
+        await expect(currentDialogLocator.getByRole("heading", { name: "Set up Secure Backup" })).toBeVisible();
+        await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
 
-        await expect(dialog.getByRole("heading", { name: "Save your Security Key" })).toBeVisible();
-        await dialog.getByRole("button", { name: "Copy", exact: true }).click();
+        await expect(currentDialogLocator.getByRole("heading", { name: "Save your Security Key" })).toBeVisible();
+        await currentDialogLocator.getByRole("button", { name: "Copy", exact: true }).click();
 
         // copy the recovery key to use it later
-        const securityKey = await app.getClipboard();
-        await dialog.getByRole("button", { name: "Continue", exact: true }).click();
+        securityKey = await app.getClipboard();
+        await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
 
-        await expect(dialog.getByRole("heading", { name: "Secure Backup successful" })).toBeVisible();
-        await dialog.getByRole("button", { name: "Done", exact: true }).click();
+        await expect(currentDialogLocator.getByRole("heading", { name: "Secure Backup successful" })).toBeVisible();
+        await currentDialogLocator.getByRole("button", { name: "Done", exact: true }).click();
 
         // Open the settings again
         await app.settings.openUserSettings("Security & Privacy");
@@ -66,23 +70,23 @@ test.describe("Backups", () => {
         await expectBackupVersionToBe(page, "1");
 
         await tab.getByRole("button", { name: "Delete Backup", exact: true }).click();
-        {
-            const dialog = await app.getDialogByTitle("Delete Backup", 60000);
-            // Delete it
-            await dialog.getByTestId("dialog-primary-button").click(); // Click "Delete Backup"
 
-            // Create another
-            await tab.getByRole("button", { name: "Set up", exact: true }).click();
+        await expect(currentDialogLocator.getByRole("heading", { name: "Delete Backup" })).toBeVisible();
 
-            const dialog2 = await app.getDialogByTitle("Security Key", 60000);
+        // Delete it
+        await currentDialogLocator.getByTestId("dialog-primary-button").click(); // Click "Delete Backup"
 
-            await dialog2.getByLabel("Security Key").fill(securityKey);
-            await dialog2.getByRole("button", { name: "Continue", exact: true }).click();
+        // Create another
+        await tab.getByRole("button", { name: "Set up", exact: true }).click();
 
-            const dialog3 = await app.getDialogByTitle("Success!", 60000);
+        await expect(currentDialogLocator.getByRole("heading", { name: "Security Key" })).toBeVisible();
 
-            await dialog3.getByRole("button", { name: "OK", exact: true }).click();
-        }
+        await currentDialogLocator.getByLabel("Security Key").fill(securityKey);
+        await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
+
+        await expect(currentDialogLocator.getByRole("heading", { name: "Success!" })).toBeVisible();
+
+        await currentDialogLocator.getByRole("button", { name: "OK", exact: true }).click();
 
         // Open the settings again
         await app.settings.openUserSettings("Security & Privacy");
@@ -102,27 +106,27 @@ test.describe("Backups", () => {
 
         // First delete version 2
         await tab.getByRole("button", { name: "Delete Backup", exact: true }).click();
-        {
-            const dialog = await app.getDialogByTitle("Delete Backup", 60000);
-            await dialog.getByTestId("dialog-primary-button").click(); // Click "Delete Backup"
 
-            // Try to create another
-            await tab.getByRole("button", { name: "Set up", exact: true }).click();
+        await expect(currentDialogLocator.getByRole("heading", { name: "Delete Backup" })).toBeVisible();
+        await currentDialogLocator.getByTestId("dialog-primary-button").click(); // Click "Delete Backup"
 
-            const dialog2 = await app.getDialogByTitle("Security Key", 60000);
-            // But cancel the security key dialog, to simulate not having the secret storage passphrase
-            await dialog2.getByTestId("dialog-cancel-button").click();
+        // Try to create another
+        await tab.getByRole("button", { name: "Set up", exact: true }).click();
 
-            const dialog3 = await app.getDialogByTitle("Starting backup…", 60000);
-            // check that it failed
-            await expect(dialog3.getByText("Unable to create key backup")).toBeVisible();
+        await expect(currentDialogLocator.getByRole("heading", { name: "Security Key" })).toBeVisible();
 
-            // cancel
-            await dialog3.getByTestId("dialog-cancel-button").click();
+        // But cancel the security key dialog, to simulate not having the secret storage passphrase
+        await currentDialogLocator.getByTestId("dialog-cancel-button").click();
 
-            // go back to the settings to check that no backup was created (the setup button should still be there)
-            const tab2 = await app.settings.openUserSettings("Security & Privacy");
-            await expect(tab2.getByRole("button", { name: "Set up", exact: true })).toBeVisible();
-        }
+        await expect(currentDialogLocator.getByRole("heading", { name: "Starting backup…" })).toBeVisible();
+        // check that it failed
+        await expect(currentDialogLocator.getByText("Unable to create key backup")).toBeVisible();
+
+        // cancel
+        await currentDialogLocator.getByTestId("dialog-cancel-button").click();
+
+        // go back to the settings to check that no backup was created (the setup button should still be there)
+        const tab2 = await app.settings.openUserSettings("Security & Privacy");
+        await expect(tab2.getByRole("button", { name: "Set up", exact: true })).toBeVisible();
     });
 });
