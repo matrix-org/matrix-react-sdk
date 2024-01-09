@@ -67,7 +67,6 @@ const LEVELS_ROOM_SETTINGS_WITH_ROOM = [
     SettingLevel.ROOM,
 ];
 const LEVELS_ACCOUNT_SETTINGS = [SettingLevel.DEVICE, SettingLevel.ACCOUNT, SettingLevel.CONFIG];
-const LEVELS_FEATURE = [SettingLevel.DEVICE, SettingLevel.CONFIG];
 const LEVELS_DEVICE_ONLY_SETTINGS = [SettingLevel.DEVICE];
 const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = [SettingLevel.DEVICE, SettingLevel.CONFIG];
 const LEVELS_UI_FEATURE = [
@@ -203,7 +202,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
         displayName: _td("labs|video_rooms"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
         // Reload to ensure that the left panel etc. get remounted
         controller: new ReloadOnChangeController(),
@@ -241,7 +240,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [Features.NotificationSettings2]: {
         isFeature: true,
         labsGroup: LabGroup.Experimental,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|notification_settings"),
         default: false,
         betaInfo: {
@@ -264,7 +263,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         // Requires a reload since this setting is cached in EventUtils
         controller: new ReloadOnChangeController(),
         displayName: _td("labs|msc3531_hide_messages_pending_moderation"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_report_to_moderators": {
@@ -273,7 +272,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         displayName: _td("labs|report_to_moderators"),
         description: _td("labs|report_to_moderators_description"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_latex_maths": {
@@ -281,7 +280,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Messaging,
         configDisablesSetting: true,
         displayName: _td("labs|latex_maths"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_pinning": {
@@ -289,7 +288,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Messaging,
         configDisablesSetting: true,
         displayName: _td("labs|pinning"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_wysiwyg_composer": {
@@ -298,7 +297,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         displayName: _td("labs|wysiwyg_composer"),
         description: _td("labs|feature_wysiwyg_composer_description"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_mjolnir": {
@@ -307,7 +306,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         displayName: _td("labs|mjolnir"),
         description: _td("labs|currently_experimental"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_custom_themes": {
@@ -315,7 +314,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Themes,
         configDisablesSetting: true,
         displayName: _td("labs|custom_themes"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "feature_dehydration": {
@@ -323,7 +322,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Encryption,
         configDisablesSetting: true,
         displayName: _td("labs|dehydration"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "useOnlyCurrentProfiles": {
@@ -343,7 +342,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|html_topic"),
         default: false,
     },
@@ -351,7 +350,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|bridge_state"),
         default: false,
     },
@@ -360,7 +359,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Messaging,
         configDisablesSetting: true,
         displayName: _td("labs|jump_to_date"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
         controller: new ServerSupportUnstableFeatureController(
             "feature_jump_to_date",
@@ -407,7 +406,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|element_call_video_rooms"),
         controller: new ReloadOnChangeController(),
         default: false,
@@ -416,7 +415,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|group_calls"),
         controller: new ReloadOnChangeController(),
         default: false,
@@ -425,7 +424,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|feature_disable_call_per_sender_encryption"),
         default: false,
     },
@@ -443,7 +442,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|location_share_live"),
         description: _td("labs|location_share_live_description"),
         shouldWarn: true,
@@ -453,7 +452,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|dynamic_room_predecessors"),
         description: _td("labs|dynamic_room_predecessors_description"),
         shouldWarn: true,
@@ -463,7 +462,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|voice_broadcast"),
         default: false,
     },
@@ -476,7 +475,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Developer,
         configDisablesSetting: true,
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|oidc_native_flow"),
         description: _td("labs|oidc_native_flow_description"),
         default: false,
@@ -505,7 +504,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         displayName: _td("labs|render_reaction_images"),
         description: _td("labs|render_reaction_images_description"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     /**
@@ -566,7 +565,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         default: false,
         displayName: _td("labs|ask_to_join"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
     },
     "feature_new_room_decoration_ui": {
         isFeature: true,
@@ -574,7 +573,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         displayName: _td("labs|new_room_decoration_ui"),
         description: _td("labs|under_active_development"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
         controller: new ReloadOnChangeController(),
     },
@@ -584,7 +583,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         configDisablesSetting: true,
         displayName: _td("labs|notifications"),
         description: _td("labs|unrealiable_e2e"),
-        supportedLevels: LEVELS_FEATURE,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
     },
     "useCompactLayout": {
