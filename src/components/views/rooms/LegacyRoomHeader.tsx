@@ -234,7 +234,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
     return (
         <>
             <AccessibleTooltipButton
-                inputRef={buttonRef}
+                ref={buttonRef}
                 className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
                 title={_t("voip|video_call")}
@@ -439,7 +439,7 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
     return (
         <>
             <AccessibleTooltipButton
-                inputRef={buttonRef}
+                ref={buttonRef}
                 className={classNames("mx_LegacyRoomHeader_button", {
                     "mx_LegacyRoomHeader_layoutButton--freedom": layout === Layout.Tile,
                     "mx_LegacyRoomHeader_layoutButton--spotlight": layout === Layout.Spotlight,
@@ -780,11 +780,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const icon = this.props.viewingCall ? (
             <div className="mx_LegacyRoomHeader_icon mx_LegacyRoomHeader_icon_video" />
         ) : this.props.e2eStatus ? (
-            <E2EIcon
-                className="mx_LegacyRoomHeader_icon"
-                status={this.props.e2eStatus}
-                tooltipAlignment={Alignment.Bottom}
-            />
+            <E2EIcon className="mx_LegacyRoomHeader_icon" status={this.props.e2eStatus} tooltipSide="bottom" />
         ) : // If we're expecting an E2EE status to come in, but it hasn't
         // yet been loaded, insert a blank div to reserve space
         this.client.isRoomEncrypted(this.props.room.roomId) && this.client.isCryptoEnabled() ? (
