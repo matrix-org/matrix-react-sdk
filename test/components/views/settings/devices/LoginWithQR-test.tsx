@@ -18,7 +18,7 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import { MockedObject, mocked } from "jest-mock";
 import React from "react";
 import { MSC3906Rendezvous, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
-import { LoginTokenPostResponse } from "matrix-js-sdk/src/matrix";
+import { HTTPError, LoginTokenPostResponse } from "matrix-js-sdk/src/matrix";
 
 import LoginWithQR, { Click, Mode, Phase } from "../../../../../src/components/views/auth/LoginWithQR";
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
@@ -344,10 +344,7 @@ describe("<LoginWithQR />", () => {
     });
 
     test("approve - rate limited", async () => {
-        mocked(client.requestLoginToken).mockRejectedValue({
-            message: "rate limit reached",
-            httpStatus: 429,
-        });
+        mocked(client.requestLoginToken).mockRejectedValue(new HTTPError("rate limit reached", 429));
         const onFinished = jest.fn();
         render(getComponent({ client, onFinished }));
         const rendezvous = mocked(MSC3906Rendezvous).mock.instances[0];
