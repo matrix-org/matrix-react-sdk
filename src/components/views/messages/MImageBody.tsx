@@ -21,6 +21,7 @@ import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
+import { Tooltip } from "@vector-im/compound-web";
 
 import MFileBody from "./MFileBody";
 import Modal from "../../../Modal";
@@ -520,7 +521,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             );
         }
 
-        const thumbnail = (
+        let thumbnail = (
             <div
                 className="mx_MImageBody_thumbnail_container"
                 style={{ maxHeight, maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}
@@ -537,10 +538,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 {!this.props.forExport && !this.state.imgLoaded && (
                     <div style={{ height: maxHeight, width: maxWidth }} />
                 )}
-
-                {this.state.hover && this.getTooltip()}
             </div>
         );
+
+        const tooltipProps = this.getTooltipProps();
+        if (tooltipProps) {
+            thumbnail = (
+                <Tooltip {...tooltipProps} isTriggerInteractive={false} open={this.state.hover}>
+                    {thumbnail}
+                </Tooltip>
+            );
+        }
 
         return this.wrapImage(contentUrl, thumbnail);
     }
@@ -578,7 +586,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     // Overridden by MStickerBody
-    protected getTooltip(): ReactNode {
+    protected getTooltipProps(): ComponentProps<typeof Tooltip> | null {
         return null;
     }
 
